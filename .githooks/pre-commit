@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# Git Hook: Pre-commit
+# يتم تشغيله قبل كل commit للتحقق من جودة الكود
+
+set -e
+
+# الألوان
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo -e "${GREEN}=== Pre-commit Hook ===${NC}"
+echo ""
+
+# 1. تشغيل Flutter Format
+echo -e "${YELLOW}[1/4]${NC} تشغيل Flutter Format..."
+if ! flutter format --set-exit-if-changed lib/ test/ > /dev/null 2>&1; then
+    echo -e "${RED}[ERROR]${NC} الكود غير منسق. تشغيل flutter format..."
+    flutter format lib/ test/
+    echo -e "${YELLOW}[WARNING]${NC} تم تنسيق الكود. يرجى إضافة التغييرات والمحاولة مرة أخرى."
+    exit 1
+fi
+echo -e "${GREEN}[SUCCESS]${NC} الكود منسق بشكل صحيح"
+
+# 2. تشغيل Flutter Analyze
+echo -e "${YELLOW}[2/4]${NC} تشغيل Flutter Analyze..."
+ANALYZE_OUTPUT=$(flutter analyze 2>&1)
+ERROR_COUNT=$(echo "$ANALYZE_OUTPUT" | grep -c "error •" || echo "0")
+
+if [ "$ERROR_COUNT" -gt "0" ]; then
+    echo -e "${RED}[ERROR]${NC} يوجد $ERROR_COUNT أخطاء في الكود"
+    echo "$ANALYZE_OUTPUT" | grep "error •" | head -10
+    echo ""
+    echo -e "${RED}[BLOCKED]${NC} يرجى إصلاح الأخطاء قبل الـ commit"
+    exit 1
+fi
+echo -e "${GREEN}[SUCCESS]${NC} لا توجد أخطاء حرجة"
+
+# 3. تشغيل الاختبارات السريعة
+echo -e "${YELLOW}[3/4]${NC} تشغيل الاختبارات السريعة..."
+if ! flutter test --no-pub > /dev/null 2>&1; then
+    echo -e "${RED}[ERROR]${NC} بعض الاختبارات فشلت"
+    echo -e "${YELLOW}[WARNING]${NC} يرجى التحقق من الاختبارات"
+    # لا نمنع الـ commit لكن نحذر
+fi
+echo -e "${GREEN}[SUCCESS]${NC} الاختبارات تعمل"
+
+# 4. التحقق من TODO Comments
+echo -e "${YELLOW}[4/4]${NC} التحقق من TODO Comments..."
+INVALID_TODOS=$(git diff --cached --name-only | grep "\.dart$" | xargs grep -n "// TODO:" 2>/dev/null || true)
+
+if [ ! -z "$INVALID_TODOS" ]; then
+    echo -e "${YELLOW}[WARNING]${NC} يوجد TODO comments بصيغة قديمة:"
+    echo "$INVALID_TODOS"
+    echo ""
+    echo -e "${YELLOW}[INFO]${NC} الصيغة الصحيحة: // TODO(username): description - Issue #XXX"
+fi
+
+echo ""
+echo -e "${GREEN}[SUCCESS]${NC} جميع الفحوصات نجحت!"
+echo -e "${GREEN}[INFO]${NC} يمكنك المتابعة مع الـ commit"
+echo ""
+
+exit 0

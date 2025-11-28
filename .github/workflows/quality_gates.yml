@@ -1,0 +1,284 @@
+name: Quality Gates
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+
+# Ensure only one workflow runs at a time per PR
+concurrency:
+  group: quality-gates-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  documentation-quality-gate:
+    name: Documentation Quality Gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check documentation coverage
+        id: coverage
+        run: |
+          echo "🎯 Checking documentation coverage..."
+
+          # Run analysis and capture exit code
+          if dart run lib/tools/documentation/cli/documentation_cli.dart analyze --path lib/; then
+            echo "✅ Coverage check passed"
+            echo "status=pass" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Coverage check failed"
+            echo "status=fail" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+      - name: Check documentation quality
+        id: quality
+        run: |
+          echo "🎯 Checking documentation quality..."
+
+          # Run validation with strict mode
+          if dart run lib/tools/documentation/cli/documentation_cli.dart validate --strict --path lib/; then
+            echo "✅ Quality check passed"
+            echo "status=pass" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Quality check failed"
+            echo "status=fail" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+      - name: Generate quality report
+        if: always()
+        run: |
+          echo "📊 Generating quality report..."
+          dart run lib/tools/documentation/cli/documentation_cli.dart report --format markdown --output quality_gate_report
+
+      - name: Upload quality report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-gate-report
+          path: quality_gate_report.md
+
+  code-quality-gate:
+    name: Code Quality Gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run Flutter analyze
+        run: |
+          echo "🔍 Running Flutter analyze..."
+          flutter analyze --no-pub
+
+      - name: Check for critical issues
+        run: |
+          echo "🎯 Checking for critical issues..."
+
+          # Run analyze and capture output
+          flutter analyze --no-pub > analyze_output.txt 2>&1 || true
+
+          # Check for errors (not warnings or info)
+          ERROR_COUNT=$(grep -c "error •" analyze_output.txt || echo "0")
+
+          echo "📊 Errors found: $ERROR_COUNT"
+
+          if [ "$ERROR_COUNT" -gt 0 ]; then
+            echo "❌ Critical issues found"
+            cat analyze_output.txt
+            exit 1
+          else
+            echo "✅ No critical issues found"
+          fi
+
+  test-quality-gate:
+    name: Test Quality Gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run tests with coverage
+        run: |
+          echo "🧪 Running tests with coverage..."
+          flutter test --coverage
+
+      - name: Check test coverage
+        run: |
+          echo "🎯 Checking test coverage..."
+
+          # Install lcov for coverage analysis
+          sudo apt-get update
+          sudo apt-get install -y lcov
+
+          # Generate coverage report
+          genhtml coverage/lcov.info -o coverage/html
+
+          # Calculate coverage percentage
+          COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')
+
+          echo "📊 Test Coverage: ${COVERAGE}%"
+          echo "🎯 Required Threshold: 70%"
+
+          # Check if coverage meets threshold
+          if (( $(echo "$COVERAGE < 70" | bc -l) )); then
+            echo "❌ Test coverage is below 70%"
+            exit 1
+          else
+            echo "✅ Test coverage meets requirements"
+          fi
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+
+  security-quality-gate:
+    name: Security Quality Gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check for security vulnerabilities
+        run: |
+          echo "🔒 Checking for security vulnerabilities..."
+
+          # Run pub outdated to check for vulnerable dependencies
+          flutter pub outdated --json > outdated.json || true
+
+          # Check for known vulnerabilities
+          if grep -q "security" outdated.json; then
+            echo "⚠️ Security vulnerabilities found in dependencies"
+            cat outdated.json
+            exit 1
+          else
+            echo "✅ No known security vulnerabilities"
+          fi
+
+      - name: Check for hardcoded secrets
+        run: |
+          echo "🔍 Checking for hardcoded secrets..."
+
+          # Simple pattern matching for common secrets
+          if grep -r -E "(api_key|apikey|api-key|password|secret|token|auth)" lib/ --include="*.dart" | grep -v "//"; then
+            echo "⚠️ Potential hardcoded secrets found"
+            echo "Please review the above matches"
+            # Don't fail the build, just warn
+          else
+            echo "✅ No obvious hardcoded secrets found"
+          fi
+
+  quality-gate-summary:
+    name: Quality Gate Summary
+    runs-on: ubuntu-latest
+    needs:
+      [
+        documentation-quality-gate,
+        code-quality-gate,
+        test-quality-gate,
+        security-quality-gate,
+      ]
+    if: always()
+
+    steps:
+      - name: Check all gates
+        run: |
+          echo "📊 Quality Gate Summary"
+          echo "======================="
+          echo ""
+          echo "Documentation: ${{ needs.documentation-quality-gate.result }}"
+          echo "Code Quality: ${{ needs.code-quality-gate.result }}"
+          echo "Test Coverage: ${{ needs.test-quality-gate.result }}"
+          echo "Security: ${{ needs.security-quality-gate.result }}"
+          echo ""
+
+          # Check if all gates passed
+          if [ "${{ needs.documentation-quality-gate.result }}" == "success" ] && \
+             [ "${{ needs.code-quality-gate.result }}" == "success" ] && \
+             [ "${{ needs.test-quality-gate.result }}" == "success" ] && \
+             [ "${{ needs.security-quality-gate.result }}" == "success" ]; then
+            echo "✅ All quality gates passed!"
+            exit 0
+          else
+            echo "❌ One or more quality gates failed"
+            exit 1
+          fi
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const docResult = '${{ needs.documentation-quality-gate.result }}';
+            const codeResult = '${{ needs.code-quality-gate.result }}';
+            const testResult = '${{ needs.test-quality-gate.result }}';
+            const securityResult = '${{ needs.security-quality-gate.result }}';
+
+            const getEmoji = (result) => result === 'success' ? '✅' : '❌';
+
+            const body = `## 🎯 Quality Gate Summary
+
+            | Gate | Status |
+            |------|--------|
+            | Documentation | ${getEmoji(docResult)} ${docResult} |
+            | Code Quality | ${getEmoji(codeResult)} ${codeResult} |
+            | Test Coverage | ${getEmoji(testResult)} ${testResult} |
+            | Security | ${getEmoji(securityResult)} ${securityResult} |
+
+            ${docResult === 'success' && codeResult === 'success' && testResult === 'success' && securityResult === 'success' 
+              ? '✅ **All quality gates passed!** This PR is ready for review.' 
+              : '❌ **Some quality gates failed.** Please address the issues before merging.'}
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });

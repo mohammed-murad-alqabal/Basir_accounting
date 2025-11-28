@@ -1,0 +1,50 @@
+{
+  "editor_version": "1.0",
+  "description": "إعدادات محرر Kiro لمشروع بصير MVP",
+  "project": {
+    "name": "بصير MVP",
+    "type": "flutter",
+    "language": "dart",
+    "framework": "flutter"
+  },
+  "formatting": {
+    "enabled": true,
+    "format_on_save": true,
+    "line_length": 80,
+    "formatter": "dart format"
+  },
+  "linting": {
+    "enabled": true,
+    "lint_on_save": true,
+    "rules_file": "analysis_options.yaml",
+    "show_warnings": true,
+    "show_errors": true
+  },
+  "testing": {
+    "auto_run": false,
+    "coverage_enabled": true,
+    "coverage_threshold": 70,
+    "test_on_save": false
+  },
+  "code_generation": {
+    "auto_generate": false,
+    "generators": [
+      "build_runner",
+      "isar_generator",
+      "riverpod_generator"
+    ]
+  },
+  "imports": {
+    "organize_on_save": true,
+    "remove_unused": true,
+    "sort_imports": true
+  },
+  "snippets": {
+    "enabled": true,
+    "custom_snippets_path": ".kiro/snippets/"
+  },
+  "file_templates": {
+    "enabled": true,
+    "templates_path": ".kiro/templates/"
+  }
+}
