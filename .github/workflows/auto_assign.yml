@@ -1,0 +1,109 @@
+name: Auto Assign
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+  issues:
+    types: [opened]
+
+jobs:
+  auto-assign:
+    name: تعيين تلقائي للمراجعين
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Auto assign PR reviewers
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const author = pr.user.login;
+
+            // قائمة المراجعين المحتملين (استبعاد المؤلف)
+            const reviewers = ['team-member-1', 'team-member-2', 'team-member-3']
+              .filter(r => r !== author);
+
+            // اختيار مراجعين عشوائيين
+            const selectedReviewers = reviewers
+              .sort(() => 0.5 - Math.random())
+              .slice(0, 2);
+
+            if (selectedReviewers.length > 0) {
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                reviewers: selectedReviewers
+              });
+              
+              console.log(`تم تعيين المراجعين: ${selectedReviewers.join(', ')}`);
+            }
+
+      - name: Auto assign issue
+        if: github.event_name == 'issues'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const labels = issue.labels.map(l => l.name);
+
+            // تعيين بناءً على التصنيف
+            let assignee = null;
+
+            if (labels.includes('bug')) {
+              assignee = 'bug-team-lead';
+            } else if (labels.includes('enhancement')) {
+              assignee = 'feature-team-lead';
+            } else if (labels.includes('documentation')) {
+              assignee = 'doc-team-lead';
+            }
+
+            if (assignee) {
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                assignees: [assignee]
+              });
+              
+              console.log(`تم تعيين Issue إلى: ${assignee}`);
+            }
+
+      - name: Add labels based on files
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            // الحصول على الملفات المعدلة
+            const files = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number
+            });
+
+            const labels = new Set();
+
+            // إضافة تصنيفات بناءً على الملفات
+            for (const file of files.data) {
+              if (file.filename.includes('auth')) labels.add('auth');
+              if (file.filename.includes('customer')) labels.add('customers');
+              if (file.filename.includes('invoice')) labels.add('invoices');
+              if (file.filename.includes('dashboard')) labels.add('dashboard');
+              if (file.filename.includes('test')) labels.add('tests');
+              if (file.filename.includes('.md')) labels.add('documentation');
+              if (file.filename.includes('.github')) labels.add('ci-cd');
+            }
+
+            if (labels.size > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                labels: Array.from(labels)
+              });
+              
+              console.log(`تم إضافة التصنيفات: ${Array.from(labels).join(', ')}`);
+            }

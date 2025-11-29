@@ -1,0 +1,137 @@
+name: CodeQL Security Analysis
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run at 2 AM UTC every day
+    - cron: "0 2 * * *"
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: تحليل الأمان
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ["javascript"]
+        # CodeQL supports: cpp, csharp, go, java, javascript, python, ruby
+        # For Dart/Flutter, we use JavaScript analysis for any JS/TS code
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: +security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
+
+  dart-security-scan:
+    name: فحص أمان Dart
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run security audit
+        run: |
+          echo "🔒 Running security audit..."
+
+          # Check for known vulnerabilities
+          flutter pub outdated --mode=null-safety
+
+          # Run static analysis with security focus
+          flutter analyze --no-pub
+
+          echo "✅ Security audit completed"
+
+      - name: Check for hardcoded secrets
+        run: |
+          echo "🔍 Scanning for hardcoded secrets..."
+
+          # Patterns to search for
+          PATTERNS=(
+            "password\s*=\s*['\"][^'\"]{8,}['\"]"
+            "api[_-]?key\s*=\s*['\"][^'\"]{20,}['\"]"
+            "secret\s*=\s*['\"][^'\"]{20,}['\"]"
+            "token\s*=\s*['\"][^'\"]{20,}['\"]"
+            "private[_-]?key"
+            "-----BEGIN.*PRIVATE KEY-----"
+          )
+
+          FOUND=0
+          for pattern in "${PATTERNS[@]}"; do
+            if grep -r -E "$pattern" lib/ --include="*.dart" | grep -v "// TODO\|// FIXME\|test"; then
+              echo "⚠️ Potential secret found: $pattern"
+              FOUND=$((FOUND + 1))
+            fi
+          done
+
+          if [ $FOUND -gt 0 ]; then
+            echo "❌ Found $FOUND potential secrets"
+            echo "Please review and remove any hardcoded secrets"
+            exit 1
+          else
+            echo "✅ No hardcoded secrets detected"
+          fi
+
+      - name: Check file permissions
+        run: |
+          echo "🔐 Checking file permissions..."
+
+          # Check for files with overly permissive permissions
+          find . -type f -perm /o+w -not -path "./.git/*" -not -path "./build/*"
+
+          echo "✅ Permission check completed"
+
+      - name: Scan for SQL injection vulnerabilities
+        run: |
+          echo "💉 Scanning for SQL injection vulnerabilities..."
+
+          # Check for potential SQL injection patterns
+          if grep -r "SELECT.*\$\|INSERT.*\$\|UPDATE.*\$\|DELETE.*\$" lib/ --include="*.dart"; then
+            echo "⚠️ Potential SQL injection vulnerability found"
+            echo "Please use parameterized queries"
+          else
+            echo "✅ No SQL injection vulnerabilities detected"
+          fi
+
+      - name: Check for insecure random number generation
+        run: |
+          echo "🎲 Checking random number generation..."
+
+          # Check for use of insecure random
+          if grep -r "Random()" lib/ --include="*.dart" | grep -v "import.*Random"; then
+            echo "⚠️ Insecure random number generation detected"
+            echo "Consider using crypto.Random.secure()"
+          else
+            echo "✅ Random number generation is secure"
+          fi

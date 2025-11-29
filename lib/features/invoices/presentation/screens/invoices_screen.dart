@@ -238,9 +238,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           ListTile(
             leading: const Icon(Icons.picture_as_pdf),
             title: const Text('تصدير PDF'),
-            onTap: () {
+            onTap: () async {
               Navigator.pop(context);
-              _exportInvoice();
+              await _exportInvoice();
             },
           ),
           ListTile(

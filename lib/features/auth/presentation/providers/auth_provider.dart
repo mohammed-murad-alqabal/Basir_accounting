@@ -106,7 +106,7 @@ final loginProvider =
       ref.read(currentUsernameProvider.notifier).state = username;
     }
     return result;
-  } catch (e) {
+  } on Exception {
     return false;
   }
 });
@@ -143,7 +143,7 @@ final setupProvider =
     ref.read(isLoggedInProvider.notifier).state = true;
     ref.read(currentUsernameProvider.notifier).state = username;
     return true;
-  } catch (e) {
+  } on Exception {
     return false;
   }
 });
@@ -174,7 +174,7 @@ final logoutProvider = FutureProvider<bool>((ref) async {
     ref.read(isLoggedInProvider.notifier).state = false;
     ref.read(currentUsernameProvider.notifier).state = null;
     return true;
-  } catch (e) {
+  } on Exception {
     return false;
   }
 });
@@ -205,7 +205,7 @@ final changePasswordProvider =
   try {
     await authService.changePassword(oldPassword, newPassword);
     return true;
-  } catch (e) {
+  } on Exception {
     return false;
   }
 });

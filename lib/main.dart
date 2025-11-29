@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basser_app/core/constants.dart';
 import 'package:basser_app/core/router.dart';
 import 'package:basser_app/core/theme.dart';
@@ -73,7 +75,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _checkAuthStatus();
+    unawaited(_checkAuthStatus());
   }
 
   Future<void> _checkAuthStatus() async {
@@ -87,11 +89,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     if (!mounted) return;
 
     if (!hasAccount) {
-      Navigator.of(context).pushReplacementNamed('/setup');
+      await Navigator.of(context).pushReplacementNamed('/setup');
     } else if (isLoggedIn) {
-      Navigator.of(context).pushReplacementNamed('/dashboard');
+      await Navigator.of(context).pushReplacementNamed('/dashboard');
     } else {
-      Navigator.of(context).pushReplacementNamed('/login');
+      await Navigator.of(context).pushReplacementNamed('/login');
     }
   }
 

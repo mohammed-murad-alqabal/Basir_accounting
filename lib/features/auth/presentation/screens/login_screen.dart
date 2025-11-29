@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // TODO: استدعاء authService.login()
+      // TODO(dev): استدعاء authService.login()
       // final result = await authService.login(
       //   _usernameController.text,
       //   _passwordController.text,
@@ -61,13 +61,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text(AppMessages.loginSuccess)),
-      );
+      await ScaffoldMessenger.of(context)
+          .showSnackBar(
+            const SnackBar(content: Text(AppMessages.loginSuccess)),
+          )
+          .closed;
 
       // الانتقال إلى لوحة التحكم
-      Navigator.of(context).pushReplacementNamed('/dashboard');
-    } catch (e) {
+      if (!mounted) return;
+      await Navigator.of(context).pushReplacementNamed('/dashboard');
+    } on Exception catch (e) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -152,8 +155,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             AppTextButton(
                               label: 'أنشئ حساباً الآن',
-                              onPressed: () {
-                                Navigator.of(context).pushNamed('/setup');
+                              onPressed: () async {
+                                await Navigator.of(context).pushNamed('/setup');
                               },
                             ),
                           ],
@@ -178,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
               borderRadius: BorderRadius.circular(AppBorderRadius.lg),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withOpacity(0.2),
+                  color: AppColors.primary.withValues(alpha: 0.2),
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),

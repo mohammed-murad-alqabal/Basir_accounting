@@ -280,7 +280,7 @@ bash .kiro/hooks/on-commit/10_security_scan.sh
 ### للدعم
 
 - راجع `.kiro/README.md`
-- اطلب من Kiro Agent
+- اطلب من فريق وكلاء تطوير مشروع بصير
 - افتح issue
 
 ---

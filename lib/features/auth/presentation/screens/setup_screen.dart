@@ -61,7 +61,7 @@ class _SetupScreenState extends State<SetupScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // TODO: استدعاء authService.createAccount()
+      // TODO(dev): استدعاء authService.createAccount()
       // await authService.createAccount(
       //   _usernameController.text,
       //   _passwordController.text,
@@ -69,13 +69,16 @@ class _SetupScreenState extends State<SetupScreen> {
 
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text(AppMessages.setupSuccess)),
-      );
+      await ScaffoldMessenger.of(context)
+          .showSnackBar(
+            const SnackBar(content: Text(AppMessages.setupSuccess)),
+          )
+          .closed;
 
       // الانتقال إلى شاشة الإعدادات الإضافية أو لوحة التحكم
-      Navigator.of(context).pushReplacementNamed('/dashboard');
-    } catch (e) {
+      if (!mounted) return;
+      await Navigator.of(context).pushReplacementNamed('/dashboard');
+    } on Exception catch (e) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -188,7 +191,7 @@ class _SetupScreenState extends State<SetupScreen> {
               borderRadius: BorderRadius.circular(AppBorderRadius.lg),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withOpacity(0.2),
+                  color: AppColors.primary.withValues(alpha: 0.2),
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),

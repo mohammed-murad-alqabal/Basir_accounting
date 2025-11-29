@@ -414,7 +414,7 @@ ValidationIssue? _checkCustomRule(String documentation) {
 
 ## 👥 الفريق
 
-- **المطور الرئيسي:** Kiro AI Agent
+- **المطور الرئيسي:** فريق وكلاء تطوير مشروع بصير
 - **المشروع:** بصير MVP
 - **التاريخ:** نوفمبر 2025
 

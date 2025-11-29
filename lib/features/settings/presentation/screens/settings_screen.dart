@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 /// شاشة الإعدادات (Settings Screen)
 /// تسمح للمستخدم بتخصيص إعدادات التطبيق
 class SettingsScreen extends StatefulWidget {
+  /// إنشاء شاشة الإعدادات
   const SettingsScreen({super.key});
 
   @override
@@ -34,7 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 subtitle: 'غيّر اسم المستخدم وكلمة المرور',
                 leading: const Icon(Icons.person, color: AppColors.primary),
                 onTap: () {
-                  // TODO: فتح شاشة تعديل الحساب
+                  // TODO(dev): فتح شاشة تعديل الحساب
                 },
               ),
               const SizedBox(height: AppSpacing.lg),
@@ -77,7 +78,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 subtitle: 'الإصدار 1.0.0',
                 leading: const Icon(Icons.info, color: AppColors.primary),
                 onTap: () {
-                  // TODO: عرض معلومات التطبيق
+                  // TODO(dev): عرض معلومات التطبيق
                 },
               ),
               const SizedBox(height: AppSpacing.sm),
@@ -87,7 +88,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 leading:
                     const Icon(Icons.privacy_tip, color: AppColors.primary),
                 onTap: () {
-                  // TODO: فتح سياسة الخصوصية
+                  // TODO(dev): فتح سياسة الخصوصية
                 },
               ),
               const SizedBox(height: AppSpacing.sm),
@@ -97,7 +98,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 leading:
                     const Icon(Icons.description, color: AppColors.primary),
                 onTap: () {
-                  // TODO: فتح شروط الخدمة
+                  // TODO(dev): فتح شروط الخدمة
                 },
               ),
               const SizedBox(height: AppSpacing.xl),
@@ -122,8 +123,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       );
 
-  void _showLogoutDialog() {
-    showDialog<void>(
+  Future<void> _showLogoutDialog() async {
+    await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('تسجيل الخروج'),
@@ -134,10 +135,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: const Text('إلغاء'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context);
-              // TODO: استدعاء authService.logout()
-              Navigator.of(context).pushReplacementNamed('/login');
+              // TODO(dev): استدعاء authService.logout()
+              await Navigator.of(context).pushReplacementNamed('/login');
             },
             child: const Text('تسجيل الخروج'),
           ),

@@ -4,7 +4,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 /// خدمة الإعدادات (Settings Service)
 /// تتعامل مع تخزين واسترجاع إعدادات التطبيق
 class SettingsService {
+  /// إنشاء خدمة الإعدادات
   SettingsService({required this.secureStorage});
+
+  /// خدمة التخزين الآمن
   final FlutterSecureStorage secureStorage;
 
   /// الحصول على نسبة الضريبة
@@ -12,7 +15,7 @@ class SettingsService {
     try {
       final taxRate = await secureStorage.read(key: StorageKeys.taxRate);
       return double.tryParse(taxRate ?? '') ?? AppConfig.defaultTaxRate;
-    } catch (e) {
+    } on Exception {
       return AppConfig.defaultTaxRate;
     }
   }
@@ -33,7 +36,7 @@ class SettingsService {
   Future<String?> getCompanyName() async {
     try {
       return await secureStorage.read(key: StorageKeys.companyName);
-    } catch (e) {
+    } on Exception {
       return null;
     }
   }
@@ -54,7 +57,7 @@ class SettingsService {
   Future<String?> getCompanyTaxNumber() async {
     try {
       return await secureStorage.read(key: StorageKeys.companyTaxNumber);
-    } catch (e) {
+    } on Exception {
       return null;
     }
   }

@@ -47,13 +47,13 @@ final customersProvider = FutureProvider<List<Customer>>((ref) async {
 /// ```
 ///
 /// **Side Effects:**
-/// - يحدث [customersProvider] تلقائيًا بعد الإضافة
+/// - يحدث customersProvider تلقائيًا بعد الإضافة
 /// - يعيد true عند النجاح، false عند الفشل
 ///
 /// **Parameters:**
-/// - [customer]: بيانات العميل الجديد
+/// - customer: بيانات العميل الجديد
 ///
-/// **Returns:** [bool] true إذا نجحت العملية، false إذا فشلت
+/// **Returns:** bool true إذا نجحت العملية، false إذا فشلت
 final addCustomerProvider =
     FutureProvider.family<bool, Customer>((ref, customer) async {
   final repository = ref.watch(customerRepositoryProvider);
@@ -78,20 +78,22 @@ final addCustomerProvider =
 ///   updatedAt: DateTime.now(),
 /// );
 ///
-/// final result = await ref.read(updateCustomerProvider(updatedCustomer).future);
+/// final result = await ref.read(
+///   updateCustomerProvider(updatedCustomer).future,
+/// );
 /// if (result) {
 ///   // تم التحديث بنجاح
 /// }
 /// ```
 ///
 /// **Side Effects:**
-/// - يحدث [customersProvider] تلقائيًا بعد التحديث
+/// - يحدث customersProvider تلقائيًا بعد التحديث
 /// - يعيد true عند النجاح، false عند الفشل
 ///
 /// **Parameters:**
-/// - [customer]: بيانات العميل المحدثة (يجب أن يحتوي على نفس المعرف)
+/// - customer: بيانات العميل المحدثة (يجب أن يحتوي على نفس المعرف)
 ///
-/// **Returns:** [bool] true إذا نجحت العملية، false إذا فشلت
+/// **Returns:** bool true إذا نجحت العملية، false إذا فشلت
 final updateCustomerProvider =
     FutureProvider.family<bool, Customer>((ref, customer) async {
   final repository = ref.watch(customerRepositoryProvider);
@@ -118,14 +120,14 @@ final updateCustomerProvider =
 /// ```
 ///
 /// **Side Effects:**
-/// - يحدث [customersProvider] تلقائيًا بعد الحذف
+/// - يحدث customersProvider تلقائيًا بعد الحذف
 /// - يعيد true عند النجاح، false عند الفشل
 /// - لا يفعل شيئًا إذا لم يُعثر على العميل
 ///
 /// **Parameters:**
-/// - [customerId]: معرف العميل المراد حذفه
+/// - customerId: معرف العميل المراد حذفه
 ///
-/// **Returns:** [bool] true إذا نجحت العملية، false إذا فشلت
+/// **Returns:** bool true إذا نجحت العملية، false إذا فشلت
 final deleteCustomerProvider =
     FutureProvider.family<bool, String>((ref, customerId) async {
   final repository = ref.watch(customerRepositoryProvider);

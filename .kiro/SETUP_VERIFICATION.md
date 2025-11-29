@@ -64,30 +64,35 @@
 ## 🔍 اختبارات التحقق
 
 ### اختبار 1: عدد ملفات Steering
+
 ```bash
 ls -1 .kiro/steering/ | wc -l
 # المتوقع: 12
 ```
 
 ### اختبار 2: عدد ملفات Prompts
+
 ```bash
 ls -1 .kiro/prompts/ | wc -l
 # المتوقع: 5
 ```
 
 ### اختبار 3: وجود mcp.json
+
 ```bash
 test -f .kiro/settings/mcp.json && echo "✅ موجود" || echo "❌ غير موجود"
 # المتوقع: ✅ موجود
 ```
 
 ### اختبار 4: بنية Hooks
+
 ```bash
 ls -d .kiro/hooks/*/ | wc -l
 # المتوقع: 4 (on-commit, on-save, on-push, manual)
 ```
 
 ### اختبار 5: Specs الموجودة
+
 ```bash
 ls -d .kiro/specs/*/ | wc -l
 # المتوقع: 2 (testing-system, critical-fixes)
@@ -112,6 +117,7 @@ ls -d .kiro/specs/*/ | wc -l
 ## 🎯 الخطوات التالية
 
 ### 1. مراجعة الإعداد
+
 ```bash
 # اقرأ دليل الإعداد
 cat .kiro/README.md
@@ -121,6 +127,7 @@ cat KIRO_STRATEGIC_ANALYSIS.md
 ```
 
 ### 2. فهم المبادئ
+
 ```bash
 # اقرأ الفلسفة الهندسية
 cat .kiro/steering/philosophy.md
@@ -133,6 +140,7 @@ cat .kiro/steering/flutter-best-practices.md
 ```
 
 ### 3. البدء بالتطوير
+
 ```bash
 # راجع المهام الحالية
 cat .kiro/specs/testing-system/tasks.md
@@ -146,6 +154,7 @@ cat .kiro/specs/testing-system/tasks.md
 ### المشكلة: ملفات ناقصة
 
 **الحل:**
+
 ```bash
 # تحقق من البنية
 tree .kiro -L 2
@@ -158,6 +167,7 @@ cp -r /tmp/kiro-blueprint/.kiro/* .kiro/
 ### المشكلة: mcp.json غير مخصص
 
 **الحل:**
+
 ```bash
 # تحقق من المحتوى
 cat .kiro/settings/mcp.json | grep "Flutter"
@@ -168,6 +178,7 @@ cat .kiro/settings/mcp.json | grep "Flutter"
 ### المشكلة: ملفات steering غير محدثة
 
 **الحل:**
+
 ```bash
 # تحقق من التواريخ
 ls -lt .kiro/steering/
@@ -180,13 +191,13 @@ cat .kiro/steering/flutter-best-practices.md
 
 ### الإعداد الحالي
 
-| المقياس | الحالة | الملاحظات |
-|:---|:---|:---|
+| المقياس            | الحالة  | الملاحظات            |
+| :----------------- | :------ | :------------------- |
 | **البنية الكاملة** | ✅ 100% | جميع المجلدات موجودة |
-| **ملفات Steering** | ✅ 100% | 12/12 ملف |
-| **ملفات Prompts** | ✅ 100% | 5/5 ملف |
-| **التخصيص** | ✅ 100% | مخصص لـ Flutter |
-| **التوثيق** | ✅ 100% | شامل ومفصل |
+| **ملفات Steering** | ✅ 100% | 12/12 ملف            |
+| **ملفات Prompts**  | ✅ 100% | 5/5 ملف              |
+| **التخصيص**        | ✅ 100% | مخصص لـ Flutter      |
+| **التوثيق**        | ✅ 100% | شامل ومفصل           |
 
 ### الجاهزية للاستخدام
 
@@ -215,6 +226,6 @@ cat .kiro/steering/flutter-best-practices.md
 
 ---
 
-**تم التحقق بواسطة:** Kiro Strategic Agent  
+**تم التحقق بواسطة:** فريق وكلاء تطوير مشروع بصير  
 **التاريخ:** 27 نوفمبر 2025  
 **النتيجة:** ✅ نجح بنسبة 100%

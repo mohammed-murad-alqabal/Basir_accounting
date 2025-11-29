@@ -105,11 +105,13 @@ class PdfService {
                 style: pw.TextStyle(font: font, fontSize: 12),
               ),
               pw.Text(
-                'تاريخ الإصدار: ${invoice.issuedDate.toLocal().toString().split(' ')[0]}',
+                'تاريخ الإصدار: '
+                '${invoice.issuedDate.toLocal().toString().split(' ')[0]}',
                 style: pw.TextStyle(font: font, fontSize: 12),
               ),
               pw.Text(
-                'تاريخ الاستحقاق: ${invoice.dueDate.toLocal().toString().split(' ')[0]}',
+                'تاريخ الاستحقاق: '
+                '${invoice.dueDate.toLocal().toString().split(' ')[0]}',
                 style: pw.TextStyle(font: font, fontSize: 12),
               ),
             ],
@@ -194,7 +196,7 @@ class PdfService {
       ]);
     }
 
-    return pw.Table.fromTextArray(
+    return pw.TableHelper.fromTextArray(
       headers: tableHeaders.reversed.toList(), // عكس الترتيب ليتوافق مع RTL
       data: tableData
           .map((row) => row.reversed.toList())
@@ -297,7 +299,8 @@ class PdfService {
           pw.SizedBox(height: 20),
           pw.Center(
             child: pw.Text(
-              'شكرًا لتعاملك معنا. هذه الفاتورة تم إنشاؤها بواسطة تطبيق بصير MVP.',
+              'شكرًا لتعاملك معنا. '
+              'هذه الفاتورة تم إنشاؤها بواسطة تطبيق بصير MVP.',
               style: pw.TextStyle(
                 font: font,
                 fontSize: 10,

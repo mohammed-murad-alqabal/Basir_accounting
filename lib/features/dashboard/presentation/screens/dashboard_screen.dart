@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basser_app/core/theme.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 /// شاشة لوحة التحكم (Dashboard Screen)
 /// تعرض ملخص الإحصائيات والعمليات الرئيسية
 class DashboardScreen extends StatefulWidget {
+  /// إنشاء شاشة لوحة التحكم
   const DashboardScreen({super.key});
 
   @override
@@ -51,11 +54,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 // البقاء في لوحة التحكم
                 break;
               case 1:
-                Navigator.of(context).pushNamed('/invoices');
+                unawaited(Navigator.of(context).pushNamed('/invoices'));
               case 2:
-                Navigator.of(context).pushNamed('/customers');
+                unawaited(Navigator.of(context).pushNamed('/customers'));
               case 3:
-                Navigator.of(context).pushNamed('/settings');
+                unawaited(Navigator.of(context).pushNamed('/settings'));
             }
           },
           items: const [
@@ -166,7 +169,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: AppPrimaryButton(
                   label: 'فاتورة جديدة',
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/invoices');
+                    unawaited(Navigator.of(context).pushNamed('/invoices'));
                   },
                 ),
               ),
@@ -175,7 +178,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: AppSecondaryButton(
                   label: 'عميل جديد',
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/customers');
+                    unawaited(Navigator.of(context).pushNamed('/customers'));
                   },
                 ),
               ),

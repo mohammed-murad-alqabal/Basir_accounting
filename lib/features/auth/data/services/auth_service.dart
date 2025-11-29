@@ -210,7 +210,7 @@ class AuthService {
     try {
       final isLoggedIn = await secureStorage.read(key: StorageKeys.isLoggedIn);
       return isLoggedIn == 'true';
-    } catch (e) {
+    } on Exception {
       return false;
     }
   }
@@ -231,7 +231,7 @@ class AuthService {
   Future<String?> getCurrentUsername() async {
     try {
       return await secureStorage.read(key: StorageKeys.username);
-    } catch (e) {
+    } on Exception {
       return null;
     }
   }

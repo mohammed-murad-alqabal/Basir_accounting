@@ -1,0 +1,58 @@
+name: Stale Issues and PRs
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # يومياً في منتصف الليل
+  workflow_dispatch:
+
+jobs:
+  stale:
+    name: إدارة Issues و PRs القديمة
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mark stale issues and PRs
+        uses: actions/stale@v8
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+          # Issues
+          stale-issue-message: |
+            🕐 هذا الـ Issue لم يشهد أي نشاط منذ 30 يوماً.
+
+            سيتم إغلاقه تلقائياً بعد 7 أيام إذا لم يكن هناك نشاط.
+
+            إذا كان هذا الـ Issue لا يزال ذا صلة، يرجى التعليق عليه.
+
+          close-issue-message: |
+            🔒 تم إغلاق هذا الـ Issue تلقائياً بسبب عدم النشاط.
+
+            إذا كنت تعتقد أن هذا خطأ، يمكنك إعادة فتحه.
+
+          stale-issue-label: "stale"
+          exempt-issue-labels: "pinned,security,critical"
+          days-before-issue-stale: 30
+          days-before-issue-close: 7
+
+          # Pull Requests
+          stale-pr-message: |
+            🕐 هذا الـ Pull Request لم يشهد أي نشاط منذ 14 يوماً.
+
+            سيتم إغلاقه تلقائياً بعد 7 أيام إذا لم يكن هناك نشاط.
+
+            إذا كان هذا الـ PR لا يزال قيد العمل، يرجى التحديث.
+
+          close-pr-message: |
+            🔒 تم إغلاق هذا الـ Pull Request تلقائياً بسبب عدم النشاط.
+
+            يمكنك إعادة فتحه إذا كنت تريد المتابعة.
+
+          stale-pr-label: "stale"
+          exempt-pr-labels: "pinned,security,work-in-progress"
+          days-before-pr-stale: 14
+          days-before-pr-close: 7
+
+          # عام
+          operations-per-run: 100
+          remove-stale-when-updated: true
+          ascending: true

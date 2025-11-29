@@ -19,16 +19,19 @@
 ## 🎨 ملفات Steering (الحوكمة)
 
 ### المبادئ الأساسية
+
 1. **philosophy.md** - الفلسفة الهندسية (SDD + Security First)
 2. **security.md** - معايير الأمان (OWASP)
 3. **product.md** - نظرة عامة على المنتج
 
 ### المعايير التقنية
+
 4. **tech-stack.md** - المكدس التقني المعتمد (Flutter/Dart)
 5. **structure.md** - البنية الهيكلية والمعمارية
 6. **tech.md** - التوجيهات التقنية العامة
 
 ### أفضل الممارسات
+
 7. **flutter-best-practices.md** - أفضل ممارسات Flutter ⭐
 8. **testing-best-practices.md** - أفضل ممارسات الاختبارات
 9. **git-best-practices.md** - أفضل ممارسات Git
@@ -47,7 +50,9 @@
 ## 🔧 ملفات Settings
 
 ### mcp.json (Model Context Protocol)
+
 يحدد مصادر المعرفة الخارجية:
+
 - Project Documentation (Priority: 95)
 - Kiro Docs (Priority: 90)
 - Flutter Docs (Priority: 88)
@@ -69,24 +74,30 @@ hooks/
 ## 📋 Specs (المواصفات)
 
 ### البنية
+
 كل spec يحتوي على:
+
 1. **requirements.md** - المتطلبات (User Stories + Acceptance Criteria)
 2. **design.md** - التصميم (Architecture + Components + Testing Strategy)
 3. **tasks.md** - المهام (Implementation Plan)
 
 ### Specs الحالية
+
 - **testing-system/** - نظام الاختبارات الشامل
 - **critical-fixes/** - الإصلاحات الحرجة
 
 ## 🎯 المبادئ الأساسية
 
 ### 0. المبدأ الصفري: Security First
+
 > "يجب أن تلتزم جميع أنشطة التطوير بمعايير الأمان المحددة في `steering/security.md`"
 
 ### 1. المبدأ الأساسي: Spec-Driven Development
+
 > "كل عمل يجب أن يكون ناتجاً عن مواصفة واضحة ومكتملة وموافق عليها"
 
 ### 2. القيم الأساسية
+
 - **الاستدامة (Sustainability)** - حلول قابلة للصيانة
 - **الشفافية (Transparency)** - قرارات موثقة
 - **الجودة أولاً (Quality First)** - تغطية 70%+ اختبارات
@@ -96,6 +107,7 @@ hooks/
 ### للمطورين
 
 #### 1. إنشاء ميزة جديدة
+
 ```bash
 # 1. إنشاء spec جديد
 # افتح Kiro IDE واطلب: "أريد إنشاء spec لميزة X"
@@ -108,6 +120,7 @@ hooks/
 ```
 
 #### 2. تنفيذ مهمة
+
 ```bash
 # 1. افتح .kiro/specs/[feature-name]/tasks.md
 # 2. اختر المهمة التالية
@@ -115,6 +128,7 @@ hooks/
 ```
 
 #### 3. مراجعة الكود
+
 ```bash
 # الوكيل سيستخدم prReview.prompt.md تلقائياً
 # للتحقق من:
@@ -123,9 +137,10 @@ hooks/
 # - الجودة
 ```
 
-### للوكيل (Kiro Agent)
+### للوكيل (فريق وكلاء تطوير مشروع بصير)
 
 #### القواعد الإلزامية
+
 1. **اقرأ steering/** قبل أي عمل
 2. **التزم بـ tech-stack.md** - لا استثناءات
 3. **اتبع structure.md** - البنية إلزامية
@@ -133,6 +148,7 @@ hooks/
 5. **استخدم flutter-best-practices.md** - دائماً
 
 #### عند إنشاء كود
+
 ```
 1. تحقق من وجود spec
 2. اقرأ requirements.md
@@ -145,16 +161,19 @@ hooks/
 ## 📊 معايير الجودة
 
 ### Code Quality
+
 - **Test Coverage:** ≥ 70%
 - **Linting:** 0 errors, 0 warnings
 - **Documentation:** جميع public APIs موثقة
 
 ### Security
+
 - **OWASP Compliance:** إلزامي
 - **No Hardcoded Secrets:** إلزامي
 - **Input Validation:** إلزامي
 
 ### Performance
+
 - **Build Time:** < 30s (debug)
 - **App Size:** < 50 MB (release)
 - **Startup Time:** < 2s
@@ -162,6 +181,7 @@ hooks/
 ## 🔍 التحقق من الإعداد
 
 ### تحقق من اكتمال البنية
+
 ```bash
 # يجب أن ترى:
 tree .kiro -L 2
@@ -177,6 +197,7 @@ tree .kiro -L 2
 ```
 
 ### تحقق من ملفات steering
+
 ```bash
 ls -1 .kiro/steering/
 
@@ -198,11 +219,13 @@ ls -1 .kiro/steering/
 ## 📚 الموارد
 
 ### التوثيق
+
 - [KIRO_STRATEGIC_ANALYSIS.md](../KIRO_STRATEGIC_ANALYSIS.md) - تحليل شامل
 - [README.md](../README.md) - دليل المشروع
 - [DEVELOPMENT_GUIDE.md](../DEVELOPMENT_GUIDE.md) - دليل التطوير
 
 ### المراجع الخارجية
+
 - [Kiro IDE Docs](https://kiro.dev/docs)
 - [Flutter Docs](https://docs.flutter.dev)
 - [Riverpod Docs](https://riverpod.dev)
@@ -211,6 +234,7 @@ ls -1 .kiro/steering/
 ## 🤝 المساهمة
 
 ### تحديث ملفات Steering
+
 ```
 ⚠️ تحذير: لا تعدل ملفات steering مباشرة!
 
@@ -222,6 +246,7 @@ ls -1 .kiro/steering/
 ```
 
 ### إضافة spec جديد
+
 ```bash
 # 1. إنشاء مجلد جديد
 mkdir -p .kiro/specs/[feature-name]
@@ -237,6 +262,7 @@ touch .kiro/specs/[feature-name]/tasks.md
 ## ⚠️ تحذيرات مهمة
 
 ### ❌ لا تفعل
+
 - ❌ لا تعدل ملفات steering بدون spec
 - ❌ لا تتجاوز المكدس التقني المعتمد
 - ❌ لا تكتب كود بدون spec موافق عليه
@@ -244,6 +270,7 @@ touch .kiro/specs/[feature-name]/tasks.md
 - ❌ لا تتجاهل معايير الأمان
 
 ### ✅ افعل
+
 - ✅ اقرأ steering/ قبل البدء
 - ✅ اتبع دورة SDD
 - ✅ اكتب اختبارات شاملة
@@ -253,13 +280,14 @@ touch .kiro/specs/[feature-name]/tasks.md
 ## 📞 الدعم
 
 للحصول على المساعدة:
+
 1. راجع التوثيق في `Documentation/`
 2. اقرأ `KIRO_STRATEGIC_ANALYSIS.md`
 3. افتح issue في المستودع
 
 ---
 
-**تم الإعداد بواسطة:** Kiro Strategic Agent  
+**تم الإعداد بواسطة:** فريق وكلاء تطوير مشروع بصير  
 **التاريخ:** 27 نوفمبر 2025  
 **الإصدار:** 1.0  
 **الحالة:** ✅ جاهز للاستخدام

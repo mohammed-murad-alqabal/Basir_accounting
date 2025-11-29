@@ -1,16 +1,18 @@
+import 'package:flutter/foundation.dart';
+
 /// كيان العميل
 ///
 /// يمثل بيانات العميل في طبقة Domain
 /// هذا الكيان مستقل عن التفاصيل التقنية ويحتوي فقط على منطق الأعمال
 ///
 /// Properties:
-/// - [id]: معرف فريد للعميل
-/// - [name]: اسم العميل (مطلوب)
-/// - [phone]: رقم الهاتف (اختياري)
-/// - [email]: البريد الإلكتروني (اختياري)
-/// - [address]: العنوان (اختياري)
-/// - [createdAt]: تاريخ الإنشاء
-/// - [updatedAt]: تاريخ آخر تحديث
+/// - معرف فريد للعميل
+/// - اسم العميل (مطلوب)
+/// - رقم الهاتف (اختياري)
+/// - البريد الإلكتروني (اختياري)
+/// - العنوان (اختياري)
+/// - تاريخ الإنشاء
+/// - تاريخ آخر تحديث
 ///
 /// Example:
 /// ```dart
@@ -24,13 +26,9 @@
 ///   updatedAt: DateTime.now(),
 /// );
 /// ```
-library;
-
-import 'package:flutter/foundation.dart';
-
 @immutable
 class Customer {
-  /// إنشاء كيان عميل
+  /// إنشاء كيان عميل جديد
   ///
   /// Parameters:
   /// - [id]: معرف فريد للعميل (مطلوب)
@@ -40,6 +38,16 @@ class Customer {
   /// - [phone]: رقم الهاتف (اختياري)
   /// - [email]: البريد الإلكتروني (اختياري)
   /// - [address]: العنوان (اختياري)
+  ///
+  /// Example:
+  /// ```dart
+  /// final customer = Customer(
+  ///   id: 'customer-1',
+  ///   name: 'أحمد محمد',
+  ///   createdAt: DateTime.now(),
+  ///   updatedAt: DateTime.now(),
+  /// );
+  /// ```
   const Customer({
     required this.id,
     required this.name,
