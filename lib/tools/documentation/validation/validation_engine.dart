@@ -46,6 +46,7 @@ class ValidationEngine {
   /// - [documentation]: نص التوثيق
   ///
   /// Returns: true إذا كانت الصيغة صحيحة
+  // ignore: unused_element
   bool _validateDartDocFormat(String documentation) {
     // TODO(dev): تنفيذ التحقق من الصيغة
     throw UnimplementedError('_validateDartDocFormat not implemented yet');
@@ -59,6 +60,7 @@ class ValidationEngine {
   /// - [documentation]: نص التوثيق
   ///
   /// Returns: درجة الجودة (0-100)
+  // ignore: unused_element
   QualityScore _calculateQualityScore(String documentation) {
     // TODO(dev): تنفيذ حساب الجودة
     throw UnimplementedError('_calculateQualityScore not implemented yet');
@@ -72,6 +74,7 @@ class ValidationEngine {
   /// - [documentation]: نص التوثيق
   ///
   /// Returns: قائمة المشاكل المكتشفة
+  // ignore: unused_element
   List<ValidationIssue> _detectIssues(String documentation) {
     // TODO(dev): تنفيذ اكتشاف المشاكل
     throw UnimplementedError('_detectIssues not implemented yet');

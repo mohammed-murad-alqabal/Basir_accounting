@@ -35,7 +35,7 @@ class MockCustomerRepository {
   Future<Customer?> getCustomerById(String id) async {
     try {
       return _customers.firstWhere((c) => c.id == id);
-    } catch (e) {
+    } on StateError {
       return null;
     }
   }

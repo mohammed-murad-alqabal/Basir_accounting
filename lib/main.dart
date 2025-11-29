@@ -125,6 +125,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 /// شاشة تجريبية مؤقتة
 ///
 /// تستخدم كـ placeholder للشاشات قيد التطوير
+// ignore_for_file: unreachable_from_main
 class PlaceholderScreen extends StatelessWidget {
   /// إنشاء شاشة تجريبية
   const PlaceholderScreen({required this.title, super.key});

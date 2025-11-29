@@ -55,6 +55,7 @@ class GenerationEngine {
   /// - [element]: العنصر المراد استخراج سياقه
   ///
   /// Returns: خريطة تحتوي على معلومات السياق
+  // ignore: unused_element
   Map<String, dynamic> _extractContext(UndocumentedElement element) {
     // TODO(dev): تنفيذ استخراج السياق
     throw UnimplementedError('_extractContext not implemented yet');
@@ -68,6 +69,7 @@ class GenerationEngine {
   /// - [element]: العنصر المراد توليد وصف له
   ///
   /// Returns: الوصف المولد
+  // ignore: unused_element
   String _generateDescription(UndocumentedElement element) {
     // TODO(dev): تنفيذ توليد الوصف
     throw UnimplementedError('_generateDescription not implemented yet');
@@ -81,6 +83,7 @@ class GenerationEngine {
   /// - [signature]: توقيع الدالة
   ///
   /// Returns: توثيق المعاملات
+  // ignore: unused_element
   String _generateParametersDoc(String signature) {
     // TODO(dev): تنفيذ توليد توثيق المعاملات
     throw UnimplementedError('_generateParametersDoc not implemented yet');
@@ -94,6 +97,7 @@ class GenerationEngine {
   /// - [signature]: توقيع الدالة
   ///
   /// Returns: توثيق القيمة المرجعة
+  // ignore: unused_element
   String _generateReturnsDoc(String signature) {
     // TODO(dev): تنفيذ توليد توثيق القيمة المرجعة
     throw UnimplementedError('_generateReturnsDoc not implemented yet');

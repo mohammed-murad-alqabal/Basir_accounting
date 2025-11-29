@@ -4,8 +4,8 @@
 /// للاستخدام في الاختبارات.
 library;
 
-import '../../lib/features/customers/domain/entities/customer.dart';
-import '../../lib/features/invoices/domain/entities/invoice.dart';
+import 'package:basser_app/features/customers/domain/entities/customer.dart';
+import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
 
 /// فئة تحتوي على دوال لإنشاء بيانات اختبار
 class MockData {
@@ -85,8 +85,8 @@ class MockData {
           const InvoiceItem(
             id: 'test-item-1',
             name: 'منتج اختبار',
-            quantity: 1.0,
-            price: 100.0,
+            quantity: 1,
+            price: 100,
           ),
         ];
 
@@ -127,14 +127,13 @@ class MockData {
     String? name,
     double? quantity,
     double? price,
-  }) {
-    return InvoiceItem(
-      id: id ?? 'test-item-1',
-      name: name ?? 'بند اختبار',
-      quantity: quantity ?? 1.0,
-      price: price ?? 100.0,
-    );
-  }
+  }) =>
+      InvoiceItem(
+        id: id ?? 'test-item-1',
+        name: name ?? 'بند اختبار',
+        quantity: quantity ?? 1.0,
+        price: price ?? 100.0,
+      );
 
   /// إنشاء قائمة من العملاء للاختبار
   ///
@@ -146,16 +145,14 @@ class MockData {
   /// ```dart
   /// final customers = MockData.createTestCustomers(count: 5);
   /// ```
-  static List<Customer> createTestCustomers({int count = 3}) {
-    return List.generate(
-      count,
-      (index) => createTestCustomer(
-        id: 'test-customer-${index + 1}',
-        name: 'عميل اختبار ${index + 1}',
-        phone: '050${1234567 + index}',
-      ),
-    );
-  }
+  static List<Customer> createTestCustomers({int count = 3}) => List.generate(
+        count,
+        (index) => createTestCustomer(
+          id: 'test-customer-${index + 1}',
+          name: 'عميل اختبار ${index + 1}',
+          phone: '050${1234567 + index}',
+        ),
+      );
 
   /// إنشاء قائمة من الفواتير للاختبار
   ///
@@ -171,14 +168,13 @@ class MockData {
   static List<Invoice> createTestInvoices({
     int count = 3,
     String? customerId,
-  }) {
-    return List.generate(
-      count,
-      (index) => createTestInvoice(
-        id: 'test-invoice-${index + 1}',
-        customerId: customerId ?? 'test-customer-${index + 1}',
-        customerName: 'عميل اختبار ${index + 1}',
-      ),
-    );
-  }
+  }) =>
+      List.generate(
+        count,
+        (index) => createTestInvoice(
+          id: 'test-invoice-${index + 1}',
+          customerId: customerId ?? 'test-customer-${index + 1}',
+          customerName: 'عميل اختبار ${index + 1}',
+        ),
+      );
 }

@@ -35,7 +35,7 @@ class MockInvoiceRepository {
   Future<Invoice?> getInvoiceById(String id) async {
     try {
       return _invoices.firstWhere((i) => i.id == id);
-    } catch (e) {
+    } on StateError {
       return null;
     }
   }
