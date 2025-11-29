@@ -301,8 +301,8 @@ void main() {
           'undocumentedElements': 25,
           'coveragePercentage': 75.0,
         },
-        'analyzedFiles': ['lib/main.dart'],
-        'lowCoverageFiles': [],
+        'analyzedFiles': <String>['lib/main.dart'],
+        'lowCoverageFiles': <String>[],
         'notes': 'Test',
       };
 
@@ -329,8 +329,8 @@ void main() {
           'undocumentedElements': 25,
           'coveragePercentage': 75.0,
         },
-        'analyzedFiles': ['lib/main.dart'],
-        'lowCoverageFiles': [],
+        'analyzedFiles': <String>['lib/main.dart'],
+        'lowCoverageFiles': <String>[],
         'notes': null,
       };
 

@@ -32,13 +32,11 @@ class MockInvoiceRepository {
   /// [id] معرف الفاتورة
   ///
   /// Returns الفاتورة إذا وُجدت، null إذا لم تُوجد
-  Future<Invoice?> getInvoiceById(String id) async {
-    try {
-      return _invoices.firstWhere((i) => i.id == id);
-    } on StateError {
-      return null;
-    }
-  }
+  Future<Invoice?> getInvoiceById(String id) async =>
+      _invoices.cast<Invoice?>().firstWhere(
+            (i) => i?.id == id,
+            orElse: () => null,
+          );
 
   /// الحصول على فواتير عميل معين
   ///

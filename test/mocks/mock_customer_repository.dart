@@ -32,13 +32,11 @@ class MockCustomerRepository {
   /// [id] معرف العميل
   ///
   /// Returns العميل إذا وُجد، null إذا لم يُوجد
-  Future<Customer?> getCustomerById(String id) async {
-    try {
-      return _customers.firstWhere((c) => c.id == id);
-    } on StateError {
-      return null;
-    }
-  }
+  Future<Customer?> getCustomerById(String id) async =>
+      _customers.cast<Customer?>().firstWhere(
+            (c) => c?.id == id,
+            orElse: () => null,
+          );
 
   /// إضافة عميل جديد
   ///
