@@ -165,7 +165,7 @@ void main() {
 
   group('GenerationOptions', () {
     test('should create default options', () {
-      const options = GenerationOptions();
+      const options = GenerationOptions.defaults;
 
       expect(options.useArabic, isTrue);
       expect(options.useEnglish, isFalse);
@@ -202,7 +202,7 @@ void main() {
     });
 
     test('should support Arabic-only documentation', () {
-      const options = GenerationOptions();
+      const options = GenerationOptions.defaults;
 
       expect(options.useArabic, isTrue);
       expect(options.useEnglish, isFalse);
@@ -236,7 +236,7 @@ void main() {
     });
 
     test('should support details inclusion', () {
-      const options = GenerationOptions();
+      const options = GenerationOptions.defaults;
 
       expect(options.includeDetails, isTrue);
     });
@@ -343,7 +343,9 @@ void main() {
 
       expect(
         () => engine.applyDocumentation(
-            'lib/repositories/user_repository.dart', docs),
+          'lib/repositories/user_repository.dart',
+          docs,
+        ),
         throwsA(isA<UnimplementedError>()),
       );
     });

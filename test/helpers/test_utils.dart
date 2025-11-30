@@ -27,14 +27,13 @@ class TestUtils {
   static Widget wrapWithMaterialApp({
     required Widget child,
     Locale locale = const Locale('ar', 'SA'),
-  }) {
-    return MaterialApp(
-      locale: locale,
-      home: Scaffold(
-        body: child,
-      ),
-    );
-  }
+  }) =>
+      MaterialApp(
+        locale: locale,
+        home: Scaffold(
+          body: child,
+        ),
+      );
 
   /// الانتظار حتى تكتمل جميع الـ animations
   ///
@@ -67,15 +66,13 @@ class TestUtils {
   /// ```dart
   /// expect(TestUtils.findByText('مرحباً'), findsOneWidget);
   /// ```
-  static Finder findByText(String text) {
-    return find.text(text);
-  }
+  static Finder findByText(String text) => find.text(text);
 
   /// البحث عن widget بالنوع
   ///
   /// يُستخدم هذا للبحث عن widget من نوع معين.
   ///
-  /// [type] نوع الـ widget
+  /// [T] نوع الـ widget
   ///
   /// Returns Finder للـ widget
   ///
@@ -83,9 +80,7 @@ class TestUtils {
   /// ```dart
   /// expect(TestUtils.findByType<ElevatedButton>(), findsOneWidget);
   /// ```
-  static Finder findByType<T>() {
-    return find.byType(T);
-  }
+  static Finder findByType<T>() => find.byType(T);
 
   /// البحث عن widget بالـ Key
   ///
@@ -99,9 +94,7 @@ class TestUtils {
   /// ```dart
   /// expect(TestUtils.findByKey(Key('my-widget')), findsOneWidget);
   /// ```
-  static Finder findByKey(Key key) {
-    return find.byKey(key);
-  }
+  static Finder findByKey(Key key) => find.byKey(key);
 
   /// الضغط على widget
   ///
@@ -156,9 +149,7 @@ class TestUtils {
   /// ```dart
   /// final exists = TestUtils.widgetExists(find.text('مرحباً'));
   /// ```
-  static bool widgetExists(Finder finder) {
-    return finder.evaluate().isNotEmpty;
-  }
+  static bool widgetExists(Finder finder) => finder.evaluate().isNotEmpty;
 
   /// الانتظار لمدة معينة
   ///

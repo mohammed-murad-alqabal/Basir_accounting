@@ -57,10 +57,10 @@ void main() {
 
   group('AnalysisResult', () {
     test('should create instance with required fields', () {
-      final result = AnalysisResult(
+      const result = AnalysisResult(
         filePath: 'test.dart',
-        undocumentedElements: const [],
-        coveragePercentage: 100.0,
+        undocumentedElements: [],
+        coveragePercentage: 100,
       );
 
       expect(result.filePath, equals('test.dart'));
@@ -69,17 +69,17 @@ void main() {
     });
 
     test('should store undocumented elements', () {
-      final element = UndocumentedElement(
+      const element = UndocumentedElement(
         name: 'TestClass',
         type: ElementType.classType,
         lineNumber: 10,
         signature: 'class TestClass',
       );
 
-      final result = AnalysisResult(
+      const result = AnalysisResult(
         filePath: 'test.dart',
         undocumentedElements: [element],
-        coveragePercentage: 50.0,
+        coveragePercentage: 50,
       );
 
       expect(result.undocumentedElements, hasLength(1));
@@ -87,20 +87,20 @@ void main() {
     });
 
     test('should handle zero coverage', () {
-      final result = AnalysisResult(
+      const result = AnalysisResult(
         filePath: 'test.dart',
-        undocumentedElements: const [],
-        coveragePercentage: 0.0,
+        undocumentedElements: [],
+        coveragePercentage: 0,
       );
 
       expect(result.coveragePercentage, equals(0.0));
     });
 
     test('should handle full coverage', () {
-      final result = AnalysisResult(
+      const result = AnalysisResult(
         filePath: 'test.dart',
-        undocumentedElements: const [],
-        coveragePercentage: 100.0,
+        undocumentedElements: [],
+        coveragePercentage: 100,
       );
 
       expect(result.coveragePercentage, equals(100.0));
@@ -109,7 +109,7 @@ void main() {
 
   group('UndocumentedElement', () {
     test('should create class element', () {
-      final element = UndocumentedElement(
+      const element = UndocumentedElement(
         name: 'MyClass',
         type: ElementType.classType,
         lineNumber: 5,
@@ -123,7 +123,7 @@ void main() {
     });
 
     test('should create method element', () {
-      final element = UndocumentedElement(
+      const element = UndocumentedElement(
         name: 'myMethod',
         type: ElementType.method,
         lineNumber: 10,
@@ -137,7 +137,7 @@ void main() {
     });
 
     test('should create property element', () {
-      final element = UndocumentedElement(
+      const element = UndocumentedElement(
         name: 'myProperty',
         type: ElementType.property,
         lineNumber: 15,
@@ -151,7 +151,7 @@ void main() {
     });
 
     test('should create enum element', () {
-      final element = UndocumentedElement(
+      const element = UndocumentedElement(
         name: 'MyEnum',
         type: ElementType.enumType,
         lineNumber: 20,
@@ -162,7 +162,7 @@ void main() {
     });
 
     test('should create typedef element', () {
-      final element = UndocumentedElement(
+      const element = UndocumentedElement(
         name: 'MyTypedef',
         type: ElementType.typedef,
         lineNumber: 25,
@@ -186,12 +186,12 @@ void main() {
 
   group('CoverageStats', () {
     test('should create instance with all fields', () {
-      final stats = CoverageStats(
+      const stats = CoverageStats(
         totalElements: 100,
         documentedElements: 95,
         undocumentedElements: 5,
-        coveragePercentage: 95.0,
-        elementBreakdown: const {
+        coveragePercentage: 95,
+        elementBreakdown: {
           ElementType.classType: 20,
           ElementType.method: 60,
           ElementType.property: 20,
@@ -236,12 +236,12 @@ void main() {
     });
 
     test('should validate total equals documented plus undocumented', () {
-      final stats = CoverageStats(
+      const stats = CoverageStats(
         totalElements: 100,
         documentedElements: 70,
         undocumentedElements: 30,
-        coveragePercentage: 70.0,
-        elementBreakdown: const {},
+        coveragePercentage: 70,
+        elementBreakdown: {},
       );
 
       expect(
@@ -263,7 +263,7 @@ void main() {
         totalElements: 100,
         documentedElements: 80,
         undocumentedElements: 20,
-        coveragePercentage: 80.0,
+        coveragePercentage: 80,
         elementBreakdown: breakdown,
       );
 
@@ -275,12 +275,12 @@ void main() {
     });
 
     test('should handle empty element breakdown', () {
-      final stats = CoverageStats(
+      const stats = CoverageStats(
         totalElements: 0,
         documentedElements: 0,
         undocumentedElements: 0,
-        coveragePercentage: 100.0,
-        elementBreakdown: const {},
+        coveragePercentage: 100,
+        elementBreakdown: {},
       );
 
       expect(stats.elementBreakdown, isEmpty);
@@ -290,13 +290,13 @@ void main() {
   group('Integration scenarios', () {
     test('should represent file with no documentation', () {
       final elements = [
-        UndocumentedElement(
+        const UndocumentedElement(
           name: 'Class1',
           type: ElementType.classType,
           lineNumber: 1,
           signature: 'class Class1',
         ),
-        UndocumentedElement(
+        const UndocumentedElement(
           name: 'method1',
           type: ElementType.method,
           lineNumber: 5,
@@ -307,7 +307,7 @@ void main() {
       final result = AnalysisResult(
         filePath: 'undocumented.dart',
         undocumentedElements: elements,
-        coveragePercentage: 0.0,
+        coveragePercentage: 0,
       );
 
       expect(result.undocumentedElements, hasLength(2));
@@ -315,10 +315,10 @@ void main() {
     });
 
     test('should represent file with full documentation', () {
-      final result = AnalysisResult(
+      const result = AnalysisResult(
         filePath: 'documented.dart',
-        undocumentedElements: const [],
-        coveragePercentage: 100.0,
+        undocumentedElements: [],
+        coveragePercentage: 100,
       );
 
       expect(result.undocumentedElements, isEmpty);
@@ -327,7 +327,7 @@ void main() {
 
     test('should represent file with partial documentation', () {
       final elements = [
-        UndocumentedElement(
+        const UndocumentedElement(
           name: 'undocumentedMethod',
           type: ElementType.method,
           lineNumber: 10,
@@ -338,7 +338,7 @@ void main() {
       final result = AnalysisResult(
         filePath: 'partial.dart',
         undocumentedElements: elements,
-        coveragePercentage: 75.0,
+        coveragePercentage: 75,
       );
 
       expect(result.undocumentedElements, hasLength(1));
@@ -346,12 +346,12 @@ void main() {
     });
 
     test('should calculate project-wide statistics', () {
-      final stats = CoverageStats(
+      const stats = CoverageStats(
         totalElements: 500,
         documentedElements: 475,
         undocumentedElements: 25,
-        coveragePercentage: 95.0,
-        elementBreakdown: const {
+        coveragePercentage: 95,
+        elementBreakdown: {
           ElementType.classType: 50,
           ElementType.method: 300,
           ElementType.property: 150,

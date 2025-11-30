@@ -9,7 +9,7 @@ void main() {
         id: '1',
         customerId: 'cust_1',
         customerName: 'أحمد محمد',
-        items: [],
+        items: const [],
         issuedDate: now,
         dueDate: now.add(const Duration(days: 30)),
         taxRate: 0.15,
@@ -27,13 +27,13 @@ void main() {
 
     test('Invoice total calculation', () {
       final now = DateTime.now();
-      final item1 = InvoiceItem(
+      const item1 = InvoiceItem(
         id: '1',
         name: 'خدمة استشارة',
         quantity: 2,
         price: 500,
       );
-      final item2 = InvoiceItem(
+      const item2 = InvoiceItem(
         id: '2',
         name: 'خدمة تطوير',
         quantity: 1,
@@ -44,7 +44,7 @@ void main() {
         id: '1',
         customerId: 'cust_1',
         customerName: 'أحمد محمد',
-        items: [item1, item2],
+        items: const [item1, item2],
         issuedDate: now,
         dueDate: now.add(const Duration(days: 30)),
         taxRate: 0.15,
@@ -59,7 +59,7 @@ void main() {
     });
 
     test('InvoiceItem total calculation', () {
-      final item = InvoiceItem(
+      const item = InvoiceItem(
         id: '1',
         name: 'خدمة',
         quantity: 3,
@@ -75,7 +75,7 @@ void main() {
         id: '1',
         customerId: 'cust_1',
         customerName: 'أحمد',
-        items: [],
+        items: const [],
         issuedDate: now,
         dueDate: now.add(const Duration(days: 30)),
         taxRate: 0.15,
@@ -87,7 +87,7 @@ void main() {
         id: '1',
         customerId: 'cust_1',
         customerName: 'أحمد',
-        items: [],
+        items: const [],
         issuedDate: now,
         dueDate: now.add(const Duration(days: 30)),
         taxRate: 0.15,

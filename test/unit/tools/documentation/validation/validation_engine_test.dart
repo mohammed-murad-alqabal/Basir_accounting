@@ -65,11 +65,7 @@ void main() {
 
   group('ValidationResult', () {
     test('should create instance with required fields', () {
-      const result = ValidationResult(
-        isValid: true,
-        issues: [],
-        qualityScore: QualityScore.perfect,
-      );
+      const result = ValidationResult.valid;
 
       expect(result.isValid, isTrue);
       expect(result.issues, isEmpty);
