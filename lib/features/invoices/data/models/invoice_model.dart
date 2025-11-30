@@ -18,6 +18,20 @@ part 'invoice_model.g.dart';
 /// ```
 @embedded
 class InvoiceItemModel {
+  /// إنشاء نموذج من كيان
+  ///
+  /// يحول كيان [InvoiceItem] إلى نموذج Isar.
+  ///
+  /// **Parameters:**
+  /// - [item]: كيان البند المراد تحويله
+  ///
+  /// **Returns:** نموذج Isar جاهز للحفظ
+  factory InvoiceItemModel.fromEntity(InvoiceItem item) => InvoiceItemModel()
+    ..id = item.id
+    ..name = item.name
+    ..quantity = item.quantity
+    ..price = item.price;
+
   /// معرف البند الفريد
   late String id;
 
@@ -41,20 +55,6 @@ class InvoiceItemModel {
         quantity: quantity,
         price: price,
       );
-
-  /// إنشاء نموذج من كيان
-  ///
-  /// يحول كيان [InvoiceItem] إلى نموذج Isar.
-  ///
-  /// **Parameters:**
-  /// - [item]: كيان البند المراد تحويله
-  ///
-  /// **Returns:** نموذج Isar جاهز للحفظ
-  static InvoiceItemModel fromEntity(InvoiceItem item) => InvoiceItemModel()
-    ..id = item.id
-    ..name = item.name
-    ..quantity = item.quantity
-    ..price = item.price;
 }
 
 /// نموذج الفاتورة (Invoice Model)
@@ -152,7 +152,7 @@ class InvoiceModel {
   /// - [invoice]: كيان الفاتورة المراد تحويله
   ///
   /// **Returns:** نموذج Isar جاهز للحفظ
-  static InvoiceModel fromEntity(Invoice invoice) => InvoiceModel()
+  factory InvoiceModel.fromEntity(Invoice invoice) => InvoiceModel()
     ..invoiceId = invoice.id
     ..customerId = invoice.customerId
     ..customerName = invoice.customerName

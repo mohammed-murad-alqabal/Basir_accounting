@@ -126,7 +126,7 @@ class CustomerModel {
   /// - [customer]: كيان العميل المراد تحويله
   ///
   /// **Returns:** نموذج Isar جاهز للحفظ
-  static CustomerModel fromEntity(Customer customer) => CustomerModel()
+  factory CustomerModel.fromEntity(Customer customer) => CustomerModel()
     ..customerId = customer.id
     ..name = customer.name
     ..phone = customer.phone

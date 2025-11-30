@@ -12,31 +12,8 @@ class DocumentationTemplate {
     required this.requiredSections,
   });
 
-  /// نوع العنصر
-  final ElementType type;
-
-  /// القالب العربي
-  final String arabicTemplate;
-
-  /// القالب الإنجليزي
-  final String englishTemplate;
-
-  /// الأقسام المطلوبة
-  final List<String> requiredSections;
-
-  /// توليد documentation بناءً على السياق
-  ///
-  /// Parameters:
-  /// - [context]: معلومات السياق للعنصر
-  ///
-  /// Returns: نص التوثيق المولد
-  String generate(Map<String, dynamic> context) {
-    // TODO(dev): تنفيذ توليد التوثيق
-    throw UnimplementedError('generate not implemented yet');
-  }
-
   /// قالب للكلاسات
-  static DocumentationTemplate get classTemplate => const DocumentationTemplate(
+  factory DocumentationTemplate.classTemplate() => const DocumentationTemplate(
         type: ElementType.classType,
         arabicTemplate: '''
 /// {description}
@@ -52,8 +29,7 @@ class DocumentationTemplate {
       );
 
   /// قالب للدوال
-  static DocumentationTemplate get methodTemplate =>
-      const DocumentationTemplate(
+  factory DocumentationTemplate.methodTemplate() => const DocumentationTemplate(
         type: ElementType.method,
         arabicTemplate: '''
 /// {description}
@@ -79,7 +55,7 @@ class DocumentationTemplate {
       );
 
   /// قالب للخصائص
-  static DocumentationTemplate get propertyTemplate =>
+  factory DocumentationTemplate.propertyTemplate() =>
       const DocumentationTemplate(
         type: ElementType.property,
         arabicTemplate: '''
@@ -91,8 +67,31 @@ class DocumentationTemplate {
         requiredSections: ['description'],
       );
 
+  /// نوع العنصر
+  final ElementType type;
+
+  /// القالب العربي
+  final String arabicTemplate;
+
+  /// القالب الإنجليزي
+  final String englishTemplate;
+
+  /// الأقسام المطلوبة
+  final List<String> requiredSections;
+
+  /// توليد documentation بناءً على السياق
+  ///
+  /// Parameters:
+  /// - [context]: معلومات السياق للعنصر
+  ///
+  /// Returns: نص التوثيق المولد
+  String generate(Map<String, dynamic> context) {
+    // TODO(dev): تنفيذ توليد التوثيق
+    throw UnimplementedError('generate not implemented yet');
+  }
+
   /// قالب للـ enums
-  static DocumentationTemplate get enumTemplate => const DocumentationTemplate(
+  factory DocumentationTemplate.enumTemplate() => const DocumentationTemplate(
         type: ElementType.enumType,
         arabicTemplate: '''
 /// {description}
