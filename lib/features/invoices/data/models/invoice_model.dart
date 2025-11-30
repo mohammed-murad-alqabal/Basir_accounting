@@ -18,6 +18,22 @@ part 'invoice_model.g.dart';
 /// ```
 @embedded
 class InvoiceItemModel {
+  /// إنشاء نموذج من كيان
+  ///
+  /// يحول كيان [InvoiceItem] إلى نموذج Isar.
+  ///
+  /// **Parameters:**
+  /// - [item]: كيان البند المراد تحويله
+  ///
+  /// **Returns:** نموذج Isar جاهز للحفظ
+  factory InvoiceItemModel.fromEntity(InvoiceItem item) {
+    return InvoiceItemModel()
+      ..id = item.id
+      ..name = item.name
+      ..quantity = item.quantity
+      ..price = item.price;
+  }
+
   /// معرف البند الفريد
   late String id;
 
@@ -41,20 +57,6 @@ class InvoiceItemModel {
         quantity: quantity,
         price: price,
       );
-
-  /// إنشاء نموذج من كيان
-  ///
-  /// يحول كيان [InvoiceItem] إلى نموذج Isar.
-  ///
-  /// **Parameters:**
-  /// - [item]: كيان البند المراد تحويله
-  ///
-  /// **Returns:** نموذج Isar جاهز للحفظ
-  static InvoiceItemModel fromEntity(InvoiceItem item) => InvoiceItemModel()
-    ..id = item.id
-    ..name = item.name
-    ..quantity = item.quantity
-    ..price = item.price;
 }
 
 /// نموذج الفاتورة (Invoice Model)
@@ -76,6 +78,36 @@ class InvoiceItemModel {
 /// ```
 @collection
 class InvoiceModel {
+  /// إنشاء نموذج من كيان
+  ///
+  /// يحول كيان [Invoice] إلى نموذج Isar للتخزين المحلي.
+  ///
+  /// **الاستخدام:**
+  /// ```dart
+  /// final invoice = Invoice(...);
+  /// final model = InvoiceModel.fromEntity(invoice);
+  /// await isar.invoiceModels.put(model);
+  /// ```
+  ///
+  /// **Parameters:**
+  /// - [invoice]: كيان الفاتورة المراد تحويله
+  ///
+  /// **Returns:** نموذج Isar جاهز للحفظ
+  factory InvoiceModel.fromEntity(Invoice invoice) {
+    return InvoiceModel()
+      ..invoiceId = invoice.id
+      ..customerId = invoice.customerId
+      ..customerName = invoice.customerName
+      ..items = invoice.items.map(InvoiceItemModel.fromEntity).toList()
+      ..issuedDate = invoice.issuedDate
+      ..dueDate = invoice.dueDate
+      ..taxRate = invoice.taxRate
+      ..status = invoice.status
+      ..notes = invoice.notes
+      ..createdAt = invoice.createdAt
+      ..updatedAt = invoice.updatedAt;
+  }
+
   /// معرف Isar التلقائي (Auto-increment)
   Id id = Isar.autoIncrement;
 
@@ -136,32 +168,4 @@ class InvoiceModel {
         createdAt: createdAt,
         updatedAt: updatedAt,
       );
-
-  /// إنشاء نموذج من كيان
-  ///
-  /// يحول كيان [Invoice] إلى نموذج Isar للتخزين المحلي.
-  ///
-  /// **الاستخدام:**
-  /// ```dart
-  /// final invoice = Invoice(...);
-  /// final model = InvoiceModel.fromEntity(invoice);
-  /// await isar.invoiceModels.put(model);
-  /// ```
-  ///
-  /// **Parameters:**
-  /// - [invoice]: كيان الفاتورة المراد تحويله
-  ///
-  /// **Returns:** نموذج Isar جاهز للحفظ
-  factory InvoiceModel.fromEntity(Invoice invoice) => InvoiceModel()
-    ..invoiceId = invoice.id
-    ..customerId = invoice.customerId
-    ..customerName = invoice.customerName
-    ..items = invoice.items.map(InvoiceItemModel.fromEntity).toList()
-    ..issuedDate = invoice.issuedDate
-    ..dueDate = invoice.dueDate
-    ..taxRate = invoice.taxRate
-    ..status = invoice.status
-    ..notes = invoice.notes
-    ..createdAt = invoice.createdAt
-    ..updatedAt = invoice.updatedAt;
 }

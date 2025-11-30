@@ -29,6 +29,36 @@ part 'customer_model.g.dart';
 /// ```
 @collection
 class CustomerModel {
+  /// إنشاء نموذج من كيان (Entity)
+  ///
+  /// يحول كيان العميل (Customer Entity) إلى نموذج Isar
+  /// للتخزين في قاعدة البيانات المحلية.
+  ///
+  /// **الاستخدام:**
+  /// ```dart
+  /// final customer = Customer(
+  ///   id: 'customer-1',
+  ///   name: 'أحمد محمد',
+  ///   phone: '0501234567',
+  /// );
+  ///
+  /// final model = CustomerModel.fromEntity(customer);
+  /// await isar.customerModels.put(model);
+  /// ```
+  ///
+  /// **Parameters:**
+  /// - [customer]: كيان العميل المراد تحويله
+  ///
+  /// **Returns:** نموذج Isar جاهز للحفظ
+  factory CustomerModel.fromEntity(Customer customer) => CustomerModel()
+    ..customerId = customer.id
+    ..name = customer.name
+    ..phone = customer.phone
+    ..email = customer.email
+    ..address = customer.address
+    ..createdAt = customer.createdAt
+    ..updatedAt = customer.updatedAt;
+
   /// معرف Isar التلقائي (Auto-increment)
   ///
   /// يتم توليده تلقائيًا بواسطة Isar عند الحفظ.
@@ -104,34 +134,13 @@ class CustomerModel {
         createdAt: createdAt,
         updatedAt: updatedAt,
       );
-
-  /// إنشاء نموذج من كيان (Entity)
-  ///
-  /// يحول كيان العميل (Customer Entity) إلى نموذج Isar
-  /// للتخزين في قاعدة البيانات المحلية.
-  ///
-  /// **الاستخدام:**
-  /// ```dart
-  /// final customer = Customer(
-  ///   id: 'customer-1',
-  ///   name: 'أحمد محمد',
-  ///   phone: '0501234567',
-  /// );
-  ///
-  /// final model = CustomerModel.fromEntity(customer);
-  /// await isar.customerModels.put(model);
-  /// ```
-  ///
-  /// **Parameters:**
-  /// - [customer]: كيان العميل المراد تحويله
-  ///
-  /// **Returns:** نموذج Isar جاهز للحفظ
-  factory CustomerModel.fromEntity(Customer customer) => CustomerModel()
-    ..customerId = customer.id
-    ..name = customer.name
-    ..phone = customer.phone
-    ..email = customer.email
-    ..address = customer.address
-    ..createdAt = customer.createdAt
-    ..updatedAt = customer.updatedAt;
 }
+
+CustomerModel fromEntity(Customer customer) => CustomerModel()
+  ..customerId = customer.id
+  ..name = customer.name
+  ..phone = customer.phone
+  ..email = customer.email
+  ..address = customer.address
+  ..createdAt = customer.createdAt
+  ..updatedAt = customer.updatedAt;
