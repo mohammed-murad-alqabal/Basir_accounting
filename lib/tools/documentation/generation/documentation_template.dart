@@ -12,6 +12,22 @@ class DocumentationTemplate {
     required this.requiredSections,
   });
 
+  /// قالب للـ enums
+  factory DocumentationTemplate.enumTemplate() => const DocumentationTemplate(
+        type: ElementType.enumType,
+        arabicTemplate: '''
+/// {description}
+///
+/// {details}
+''',
+        englishTemplate: '''
+/// {description}
+///
+/// {details}
+''',
+        requiredSections: ['description', 'details'],
+      );
+
   /// قالب للكلاسات
   factory DocumentationTemplate.classTemplate() => const DocumentationTemplate(
         type: ElementType.classType,
@@ -90,35 +106,20 @@ class DocumentationTemplate {
     throw UnimplementedError('generate not implemented yet');
   }
 
-  /// قالب للـ enums
-  factory DocumentationTemplate.enumTemplate() => const DocumentationTemplate(
-        type: ElementType.enumType,
-        arabicTemplate: '''
-/// {description}
-///
-/// {details}
-''',
-        englishTemplate: '''
-/// {description}
-///
-/// {details}
-''',
-        requiredSections: ['description', 'details'],
-      );
-
   /// الحصول على القالب المناسب حسب النوع
   static DocumentationTemplate getTemplate(ElementType type) {
     switch (type) {
       case ElementType.classType:
-        return classTemplate;
+        return DocumentationTemplate.classTemplate();
       case ElementType.method:
-        return methodTemplate;
+        return DocumentationTemplate.methodTemplate();
       case ElementType.property:
-        return propertyTemplate;
+        return DocumentationTemplate.propertyTemplate();
       case ElementType.enumType:
-        return enumTemplate;
+        return DocumentationTemplate.enumTemplate();
       case ElementType.typedef:
-        return classTemplate; // استخدام قالب الكلاس للـ typedef
+        return DocumentationTemplate
+            .classTemplate(); // استخدام قالب الكلاس للـ typedef
     }
   }
 }
