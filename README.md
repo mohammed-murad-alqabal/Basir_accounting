@@ -5,6 +5,8 @@
 [![Kiro Strategic Blueprint](https://img.shields.io/badge/Kiro-Strategic%20Blueprint-green.svg)](https://github.com/mohammed-murad-alqabal/Kiro-Strategic-Blueprint)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+> ⚠️ **ملاحظة مهمة للمطورين:** الفرع النشط للتطوير هو `master` وليس `main`. يرجى التأكد من العمل على الفرع الصحيح.
+
 **بصير** هو تطبيق موبايل احترافي لإدارة الفواتير والعملاء، مصمم خصيصًا للعاملين بالقطاع الخاص والشركات الصغيرة والمتوسطة في الشرق الأوسط.
 
 > 🎯 **تم تطبيق Kiro Strategic Blueprint** - يتبع المشروع منهجية Spec-Driven Development (SDD) ومبدأ Security First
