@@ -28,13 +28,11 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  # Flutter SDK
-  flutter:
-    sdk: flutter
-
   # Dependencies (sorted alphabetically)
   crypto: ^3.0.7
   cupertino_icons: ^1.0.8
+  flutter:
+    sdk: flutter
   flutter_riverpod: ^2.4.0
   flutter_secure_storage: ^9.0.0
   get_it: ^7.6.0
@@ -49,18 +47,15 @@ dependencies:
   uuid: ^4.0.0
 
 dev_dependencies:
-  # Flutter SDK
-  flutter_test:
-    sdk: flutter
-
   # Dev Dependencies (sorted alphabetically)
   build_runner: ^2.4.0
   flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
   isar_generator: ^3.1.0+1
   mockito: ^5.4.4
   riverpod_generator: ^2.3.0
   yaml: ^3.1.2
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

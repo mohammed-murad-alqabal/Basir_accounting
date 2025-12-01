@@ -29,6 +29,9 @@ part 'customer_model.g.dart';
 /// ```
 @collection
 class CustomerModel {
+  /// Constructor افتراضي (مطلوب لـ Isar)
+  CustomerModel();
+
   /// إنشاء نموذج من كيان (Entity)
   ///
   /// يحول كيان العميل (Customer Entity) إلى نموذج Isar
@@ -135,12 +138,3 @@ class CustomerModel {
         updatedAt: updatedAt,
       );
 }
-
-CustomerModel fromEntity(Customer customer) => CustomerModel()
-  ..customerId = customer.id
-  ..name = customer.name
-  ..phone = customer.phone
-  ..email = customer.email
-  ..address = customer.address
-  ..createdAt = customer.createdAt
-  ..updatedAt = customer.updatedAt;

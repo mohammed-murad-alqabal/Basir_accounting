@@ -12,6 +12,23 @@ class DocumentationTemplate {
     required this.requiredSections,
   });
 
+  /// الحصول على القالب المناسب حسب النوع
+  factory DocumentationTemplate.fromType(ElementType type) {
+    switch (type) {
+      case ElementType.classType:
+        return DocumentationTemplate.classTemplate();
+      case ElementType.method:
+        return DocumentationTemplate.methodTemplate();
+      case ElementType.property:
+        return DocumentationTemplate.propertyTemplate();
+      case ElementType.enumType:
+        return DocumentationTemplate.enumTemplate();
+      case ElementType.typedef:
+        return DocumentationTemplate
+            .classTemplate(); // استخدام قالب الكلاس للـ typedef
+    }
+  }
+
   /// قالب للـ enums
   factory DocumentationTemplate.enumTemplate() => const DocumentationTemplate(
         type: ElementType.enumType,
@@ -104,22 +121,5 @@ class DocumentationTemplate {
   String generate(Map<String, dynamic> context) {
     // TODO(dev): تنفيذ توليد التوثيق
     throw UnimplementedError('generate not implemented yet');
-  }
-
-  /// الحصول على القالب المناسب حسب النوع
-  static DocumentationTemplate getTemplate(ElementType type) {
-    switch (type) {
-      case ElementType.classType:
-        return DocumentationTemplate.classTemplate();
-      case ElementType.method:
-        return DocumentationTemplate.methodTemplate();
-      case ElementType.property:
-        return DocumentationTemplate.propertyTemplate();
-      case ElementType.enumType:
-        return DocumentationTemplate.enumTemplate();
-      case ElementType.typedef:
-        return DocumentationTemplate
-            .classTemplate(); // استخدام قالب الكلاس للـ typedef
-    }
   }
 }

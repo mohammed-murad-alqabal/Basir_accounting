@@ -18,6 +18,9 @@ part 'invoice_model.g.dart';
 /// ```
 @embedded
 class InvoiceItemModel {
+  /// Constructor افتراضي (مطلوب لـ Isar)
+  InvoiceItemModel();
+
   /// إنشاء نموذج من كيان
   ///
   /// يحول كيان [InvoiceItem] إلى نموذج Isar.
@@ -26,13 +29,11 @@ class InvoiceItemModel {
   /// - [item]: كيان البند المراد تحويله
   ///
   /// **Returns:** نموذج Isar جاهز للحفظ
-  factory InvoiceItemModel.fromEntity(InvoiceItem item) {
-    return InvoiceItemModel()
-      ..id = item.id
-      ..name = item.name
-      ..quantity = item.quantity
-      ..price = item.price;
-  }
+  factory InvoiceItemModel.fromEntity(InvoiceItem item) => InvoiceItemModel()
+    ..id = item.id
+    ..name = item.name
+    ..quantity = item.quantity
+    ..price = item.price;
 
   /// معرف البند الفريد
   late String id;
@@ -78,6 +79,9 @@ class InvoiceItemModel {
 /// ```
 @collection
 class InvoiceModel {
+  /// Constructor افتراضي (مطلوب لـ Isar)
+  InvoiceModel();
+
   /// إنشاء نموذج من كيان
   ///
   /// يحول كيان [Invoice] إلى نموذج Isar للتخزين المحلي.
@@ -93,20 +97,18 @@ class InvoiceModel {
   /// - [invoice]: كيان الفاتورة المراد تحويله
   ///
   /// **Returns:** نموذج Isar جاهز للحفظ
-  factory InvoiceModel.fromEntity(Invoice invoice) {
-    return InvoiceModel()
-      ..invoiceId = invoice.id
-      ..customerId = invoice.customerId
-      ..customerName = invoice.customerName
-      ..items = invoice.items.map(InvoiceItemModel.fromEntity).toList()
-      ..issuedDate = invoice.issuedDate
-      ..dueDate = invoice.dueDate
-      ..taxRate = invoice.taxRate
-      ..status = invoice.status
-      ..notes = invoice.notes
-      ..createdAt = invoice.createdAt
-      ..updatedAt = invoice.updatedAt;
-  }
+  factory InvoiceModel.fromEntity(Invoice invoice) => InvoiceModel()
+    ..invoiceId = invoice.id
+    ..customerId = invoice.customerId
+    ..customerName = invoice.customerName
+    ..items = invoice.items.map(InvoiceItemModel.fromEntity).toList()
+    ..issuedDate = invoice.issuedDate
+    ..dueDate = invoice.dueDate
+    ..taxRate = invoice.taxRate
+    ..status = invoice.status
+    ..notes = invoice.notes
+    ..createdAt = invoice.createdAt
+    ..updatedAt = invoice.updatedAt;
 
   /// معرف Isar التلقائي (Auto-increment)
   Id id = Isar.autoIncrement;

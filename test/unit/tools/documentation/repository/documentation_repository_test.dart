@@ -17,10 +17,10 @@ void main() {
       );
     });
 
-    tearDown(() async {
+    tearDown(() {
       // حذف المجلد المؤقت بعد الاختبار
-      if (await tempDir.exists()) {
-        await tempDir.delete(recursive: true);
+      if (tempDir.existsSync()) {
+        tempDir.deleteSync(recursive: true);
       }
     });
 
@@ -280,12 +280,13 @@ void main() {
 
       // Act
       final json = report.toJson();
+      final stats = json['stats'] as Map<String, dynamic>;
 
       // Assert
       expect(json['timestamp'], equals('2025-11-27T10:00:00.000'));
-      expect(json['stats']['totalElements'], equals(100));
-      expect(json['stats']['documentedElements'], equals(75));
-      expect(json['stats']['coveragePercentage'], equals(75.0));
+      expect(stats['totalElements'], equals(100));
+      expect(stats['documentedElements'], equals(75));
+      expect(stats['coveragePercentage'], equals(75.0));
       expect(json['analyzedFiles'], equals(['lib/main.dart']));
       expect(json['lowCoverageFiles'], equals([]));
       expect(json['notes'], equals('Test'));
