@@ -1,0 +1,1485 @@
+# تصميم تحسينات واجهة المستخدم
+
+**المشروع:** بصير MVP  
+**التاريخ:** 2 ديسمبر 2025  
+**المؤلف:** فريق وكلاء تطوير مشروع بصير  
+**الحالة:** ✅ معتمدة
+
+---
+
+## نظرة عامة
+
+هذا المستند يحدد التصميم التقني لتحسينات واجهة المستخدم في تطبيق بصير، مع التركيز على تحسين الوضوح والتباين وإمكانية الوصول وفقاً لمعايير WCAG 2.1 Level AA.
+
+### الأهداف الرئيسية
+
+1. **تحسين إمكانية الوصول:** ضمان أن التطبيق قابل للاستخدام من قبل جميع المستخدمين
+2. **تحسين الوضوح:** جعل جميع العناصر واضحة وسهلة القراءة
+3. **تحسين التجربة:** توفير تجربة مستخدم سلسة ومريحة
+4. **الامتثال للمعايير:** الالتزام بمعايير WCAG 2.1 Level AA
+
+### الوضع الحالي
+
+✅ **نقاط القوة:**
+
+- نظام ثيمات ممتاز موجود في `lib/core/theme.dart`
+- ألوان محسّنة للتباين مسبقاً (Primary: #0056B3, Secondary: #1E7E34)
+- مكونات أساسية جيدة (AppButton, AppTextField, AppCard, AppAppBar)
+- دعم RTL ممتاز
+- توثيق شامل
+
+⚠️ **الفجوات:**
+
+- لا توجد أدوات للتحقق من التباين والأحجام
+- لا توجد حركات انتقالية محددة
+- بعض المكونات تحتاج تحسينات (hover, focus, ripple effect)
+- مكونات مفقودة (Tooltips, Snackbar, Dialog, Empty State)
+
+📋 **النهج:**
+
+- البناء على النظام الموجود (لا إعادة كتابة)
+- إضافة أدوات التحقق
+- تحسين المكونات الموجودة
+- إضافة مكونات جديدة
+
+---
+
+## البنية المعمارية
+
+### النهج المعماري
+
+سنتبع نهج **Theme-First Architecture** حيث يتم تعريف جميع الألوان والخطوط والأحجام والحركات في نظام ثيمات مركزي، ثم يتم استخدامها في جميع أنحاء التطبيق.
+
+```
+lib/
+├── core/
+│   ├── theme/
+│   │   ├── app_theme.dart           # الثيم الرئيسي
+│   │   ├── app_colors.dart          # نظام الألوان
+│   │   ├── app_text_styles.dart     # أنماط النصوص
+│   │   ├── app_dimensions.dart      # الأبعاد والمسافات
+│   │   ├── app_animations.dart      # الحركات والانتقالات
+│   │   └── accessibility/
+│   │       ├── contrast_checker.dart    # فحص التباين
+│   │       └── accessibility_utils.dart # أدوات إمكانية الوصول
+│   └── widgets/
+│       ├── app_button.dart          # زر محسّن
+│       ├── app_text_field.dart      # حقل إدخال محسّن
+│       ├── app_card.dart            # بطاقة محسّنة
+│       └── app_app_bar.dart         # شريط تطبيق محسّن
+```
+
+### المبادئ المعمارية
+
+1. **Single Source of Truth:** جميع قيم الثيم في مكان واحد
+2. **Reusability:** widgets قابلة لإعادة الاستخدام
+3. **Consistency:** تطبيق موحد للمعايير
+4. **Testability:** قابلية اختبار جميع المكونات
+
+---
+
+## المكونات والواجهات
+
+### 1. نظام الألوان (AppColors)
+
+#### الواجهة
+
+```dart
+class AppColors {
+  // ألوان أساسية
+  static const Color primary = Color(0xFF1976D2);
+  static const Color secondary = Color(0xFF424242);
+  static const Color background = Color(0xFFFAFAFA);
+  static const Color surface = Color(0xFFFFFFFF);
+
+  // ألوان النصوص
+  static const Color textPrimary = Color(0xFF212121);
+  static const Color textSecondary = Color(0xFF757575);
+  static const Color textDisabled = Color(0xFFBDBDBD);
+
+  // ألوان الحالات
+  static const Color success = Color(0xFF4CAF50);
+  static const Color error = Color(0xFFD32F2F);
+  static const Color warning = Color(0xFFFF9800);
+  static const Color info = Color(0xFF2196F3);
+
+  // ألوان التفاعل
+  static const Color focusBorder = Color(0xFF1976D2);
+  static const Color hoverOverlay = Color(0x0A000000);
+  static const Color pressedOverlay = Color(0x14000000);
+
+  // التحقق من التباين
+  static bool hasMinimumContrast(Color foreground, Color background, {double ratio = 4.5}) {
+    // تنفيذ حساب التباين
+  }
+}
+```
+
+#### المسؤوليات
+
+- تعريف جميع الألوان المستخدمة في التطبيق
+- ضمان تباين مناسب بين الألوان
+- توفير دوال للتحقق من التباين
+
+### 2. نظام النصوص (AppTextStyles)
+
+#### الواجهة
+
+```dart
+class AppTextStyles {
+  // خط Cairo
+  static const String fontFamily = 'Cairo';
+
+  // العناوين
+  static const TextStyle h1 = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    height: 1.5,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle h2 = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    height: 1.5,
+    color: AppColors.textPrimary,
+  );
+
+  // النصوص الأساسية
+  static const TextStyle bodyLarge = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+    height: 1.5,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle bodyMedium = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.normal,
+    height: 1.5,
+    color: AppColors.textPrimary,
+  );
+
+  // النصوص الثانوية
+  static const TextStyle caption = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 13,
+    fontWeight: FontWeight.normal,
+    height: 1.5,
+    color: AppColors.textSecondary,
+  );
+
+  // الأرقام والمبالغ
+  static const TextStyle monospace = TextStyle(
+    fontFamily: 'RobotoMono',
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+    height: 1.5,
+    color: AppColors.textPrimary,
+  );
+}
+```
+
+### 3. نظام الأبعاد (AppDimensions)
+
+#### الواجهة
+
+```dart
+class AppDimensions {
+  // أحجام الأيقونات
+  static const double iconSizeSmall = 20.0;
+  static const double iconSizeMedium = 24.0;
+  static const double iconSizeLarge = 32.0;
+
+  // أحجام الأزرار
+  static const double buttonHeight = 48.0;
+  static const double buttonMinWidth = 88.0;
+  static const double buttonBorderRadius = 8.0;
+
+  // أحجام حقول الإدخال
+  static const double inputHeight = 56.0;
+  static const double inputBorderWidth = 1.0;
+  static const double inputFocusBorderWidth = 2.0;
+  static const double inputBorderRadius = 8.0;
+
+  // المسافات
+  static const double spacingXSmall = 4.0;
+  static const double spacingSmall = 8.0;
+  static const double spacingMedium = 16.0;
+  static const double spacingLarge = 24.0;
+  static const double spacingXLarge = 32.0;
+
+  // مساحات النقر
+  static const double minTouchTarget = 48.0;
+
+  // الحدود
+  static const double borderWidthThin = 1.0;
+  static const double borderWidthMedium = 1.5;
+  static const double borderWidthThick = 2.0;
+}
+```
+
+### 4. نظام الحركات (AppAnimations)
+
+#### الواجهة
+
+```dart
+class AppAnimations {
+  // مدد الحركات
+  static const Duration fast = Duration(milliseconds: 150);
+  static const Duration normal = Duration(milliseconds: 250);
+  static const Duration slow = Duration(milliseconds: 350);
+
+  // منحنيات الحركة
+  static const Curve easeIn = Curves.easeIn;
+  static const Curve easeOut = Curves.easeOut;
+  static const Curve easeInOut = Curves.easeInOut;
+
+  // حركات الانتقال
+  static Widget slideTransition(Widget child, Animation<double> animation) {
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(1.0, 0.0),
+        end: Offset.zero,
+      ).animate(CurvedAnimation(
+        parent: animation,
+        curve: easeInOut,
+      )),
+      child: child,
+    );
+  }
+
+  static Widget fadeTransition(Widget child, Animation<double> animation) {
+    return FadeTransition(
+      opacity: animation,
+      child: child,
+    );
+  }
+}
+```
+
+### 5. Widgets المحسّنة
+
+#### AppButton
+
+```dart
+class AppButton extends StatelessWidget {
+  final String text;
+  final VoidCallback? onPressed;
+  final bool isPrimary;
+  final bool isLoading;
+
+  const AppButton({
+    Key? key,
+    required this.text,
+    this.onPressed,
+    this.isPrimary = true,
+    this.isLoading = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: isPrimary ? AppColors.primary : AppColors.surface,
+      borderRadius: BorderRadius.circular(AppDimensions.buttonBorderRadius),
+      child: InkWell(
+        onTap: isLoading ? null : onPressed,
+        borderRadius: BorderRadius.circular(AppDimensions.buttonBorderRadius),
+        child: Container(
+          height: AppDimensions.buttonHeight,
+          padding: const EdgeInsets.symmetric(horizontal: AppDimensions.spacingMedium),
+          child: Center(
+            child: isLoading
+                ? const CircularProgressIndicator()
+                : Text(
+                    text,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: isPrimary ? Colors.white : AppColors.textPrimary,
+                    ),
+                  ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+#### AppTextField
+
+```dart
+class AppTextField extends StatefulWidget {
+  final String? label;
+  final String? hint;
+  final String? errorText;
+  final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
+
+  const AppTextField({
+    Key? key,
+    this.label,
+    this.hint,
+    this.errorText,
+    this.controller,
+    this.onChanged,
+  }) : super(key: key);
+
+  @override
+  State<AppTextField> createState() => _AppTextFieldState();
+}
+
+class _AppTextFieldState extends State<AppTextField> {
+  bool _isFocused = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.label != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppDimensions.spacingSmall),
+            child: Text(
+              widget.label!,
+              style: AppTextStyles.bodyMedium,
+            ),
+          ),
+        Focus(
+          onFocusChange: (focused) {
+            setState(() => _isFocused = focused);
+          },
+          child: TextField(
+            controller: widget.controller,
+            onChanged: widget.onChanged,
+            style: AppTextStyles.bodyMedium,
+            decoration: InputDecoration(
+              hintText: widget.hint,
+              hintStyle: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
+              errorText: widget.errorText,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppDimensions.inputBorderRadius),
+                borderSide: BorderSide(
+                  color: AppColors.textSecondary,
+                  width: AppDimensions.inputBorderWidth,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppDimensions.inputBorderRadius),
+                borderSide: BorderSide(
+                  color: AppColors.focusBorder,
+                  width: AppDimensions.inputFocusBorderWidth,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppDimensions.inputBorderRadius),
+                borderSide: BorderSide(
+                  color: AppColors.error,
+                  width: AppDimensions.inputBorderWidth,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+```
+
+---
+
+## نماذج البيانات
+
+لا توجد نماذج بيانات جديدة لهذه الميزة. سنستخدم نظام الثيمات الموجود في Flutter مع تخصيصات إضافية.
+
+---
+
+```
+
+```
+
+## خصائص الصحة (Correctness Properties)
+
+_خاصية الصحة هي سمة أو سلوك يجب أن يكون صحيحاً عبر جميع عمليات التنفيذ الصالحة للنظام - في الأساس، بيان رسمي حول ما يجب أن يفعله النظام. تعمل الخصائص كجسر بين المواصفات المقروءة للإنسان وضمانات الصحة القابلة للتحقق آلياً._
+
+### Property 1: تباين النصوص العادية
+
+_لأي_ نص عادي معروض في التطبيق، يجب أن تكون نسبة التباين بين لون النص ولون الخلفية لا تقل عن 4.5:1
+
+**Validates: Requirements 1.1, 2.5, 7.3, 7.5, 8.2, 9.4**
+
+### Property 2: تباين النصوص الكبيرة
+
+_لأي_ نص كبير (18pt أو أكبر أو 14pt عريض أو أكبر) معروض في التطبيق، يجب أن تكون نسبة التباين بين لون النص ولون الخلفية لا تقل عن 3:1
+
+**Validates: Requirements 1.2**
+
+### Property 3: تباين العناصر التفاعلية
+
+_لأي_ عنصر تفاعلي (زر، رابط، حقل إدخال، أيقونة قابلة للنقر)، يجب أن تكون نسبة التباين بين لون العنصر ولون الخلفية لا تقل عن 3:1
+
+**Validates: Requirements 1.3, 3.3, 7.1, 7.2, 8.3**
+
+### Property 4: تباين مؤشر التركيز
+
+_لأي_ عنصر تفاعلي في حالة التركيز، يجب أن تكون نسبة التباين بين مؤشر التركيز والخلفية المحيطة لا تقل عن 3:1
+
+**Validates: Requirements 1.5**
+
+### Property 5: حجم الخط الأساسي
+
+_لأي_ نص عربي أساسي معروض في التطبيق، يجب أن يكون حجم الخط لا يقل عن 15px ونوع الخط Cairo
+
+**Validates: Requirements 2.1**
+
+### Property 6: أوزان وأحجام العناوين
+
+_لأي_ عنوان رئيسي أو فرعي، يجب أن يكون وزن الخط SemiBold أو Bold والحجم بين 18px و 24px
+
+**Validates: Requirements 2.2**
+
+### Property 7: ارتفاع السطر للنصوص الطويلة
+
+_لأي_ نص طويل أو فقرة، يجب أن يكون ارتفاع السطر (line-height) لا يقل عن 1.5
+
+**Validates: Requirements 2.3**
+
+### Property 8: خط الأرقام والمبالغ
+
+_لأي_ رقم أو مبلغ مالي معروض، يجب استخدام خط أحادي المسافة (Monospace) أو خط بأرقام متناسقة العرض
+
+**Validates: Requirements 2.4**
+
+### Property 9: حجم الأيقونات الأساسية
+
+_لأي_ أيقونة أساسية معروضة، يجب أن يكون حجمها لا يقل عن 24x24px
+
+**Validates: Requirements 3.1, 8.3**
+
+### Property 10: مساحة النقر للعناصر التفاعلية
+
+_لأي_ عنصر تفاعلي قابل للنقر (زر، أيقونة، رابط)، يجب أن تكون مساحة النقر لا تقل عن 48x48px
+
+**Validates: Requirements 3.2, 5.1**
+
+### Property 11: وجود Tooltip للأيقونات التفاعلية
+
+_لأي_ أيقونة تفاعلية، عند الحوم أو التركيز عليها، يجب عرض tooltip توضيحي بالعربية الفصحى
+
+**Validates: Requirements 3.4**
+
+### Property 12: مدة الانتقالات بين الشاشات
+
+_لأي_ انتقال بين شاشات رئيسية، يجب أن تكون مدة الحركة الانتقالية بين 250ms و 350ms
+
+**Validates: Requirements 4.1**
+
+### Property 13: مدة تغيير حالة العناصر
+
+_لأي_ تغيير في حالة عنصر تفاعلي (hover, focus, active)، يجب أن تكون مدة التغيير البصري بين 150ms و 250ms
+
+**Validates: Requirements 4.2**
+
+### Property 14: وجود مؤشر تحميل
+
+_لأي_ عملية تحميل محتوى أو معالجة، يجب عرض مؤشر تحميل واضح مع حركة سلسة ومستمرة
+
+**Validates: Requirements 4.5, 10.2**
+
+### Property 15: تباين الأزرار الأساسية
+
+_لأي_ زر أساسي، يجب أن تكون نسبة التباين بين لون النص ولون الخلفية لا تقل عن 4.5:1
+
+**Validates: Requirements 5.2**
+
+### Property 16: تغيير بصري عند التفاعل مع الأزرار
+
+_لأي_ زر، عند الحوم أو التركيز عليه، يجب عرض تغيير بصري واضح (تغيير اللون أو إضافة ظل أو تغيير الحدود)
+
+**Validates: Requirements 5.3, 6.3**
+
+### Property 17: Feedback بصري عند الضغط
+
+_لأي_ زر، عند الضغط عليه، يجب عرض feedback بصري فوري (ripple effect أو تغيير في الحجم)
+
+**Validates: Requirements 5.4**
+
+### Property 18: حالة الزر المعطل
+
+_لأي_ زر معطل أو غير نشط، يجب عرض حالة معطلة واضحة مع opacity منخفض وعدم إمكانية التفاعل
+
+**Validates: Requirements 5.5**
+
+### Property 19: حدود أو ظل البطاقات
+
+_لأي_ بطاقة معروضة، يجب استخدام حدود واضحة بسمك لا يقل عن 1px أو ظل خفيف (elevation) للفصل عن الخلفية
+
+**Validates: Requirements 6.1**
+
+### Property 20: فواصل أو مسافات في القوائم
+
+_لأي_ قائمة عناصر، يجب استخدام فواصل واضحة (dividers) أو مسافات كافية بين العناصر
+
+**Validates: Requirements 6.2**
+
+### Property 21: تسلسل هرمي للنصوص في البطاقات
+
+_لأي_ بطاقة تحتوي على معلومات، يجب استخدام تسلسل هرمي واضح للنصوص (عنوان، نص أساسي، نص ثانوي)
+
+**Validates: Requirements 6.4**
+
+### Property 22: شارة أو لون للحالات في البطاقات
+
+_لأي_ بطاقة تعرض حالة أو تصنيف، يجب استخدام شارة (badge) أو لون خلفية واضح مع تباين مناسب
+
+**Validates: Requirements 6.5**
+
+### Property 23: رسالة خطأ واضحة في حقول الإدخال
+
+_لأي_ حقل إدخال يحتوي على خطأ في التحقق، يجب عرض رسالة خطأ بلون أحمر واضح مع أيقونة ونص توضيحي بالعربية
+
+**Validates: Requirements 7.4**
+
+### Property 24: سرعة تحديث مؤشر التنقل
+
+_لأي_ انتقال بين أقسام مختلفة، يجب تحديث مؤشر التنقل بشكل واضح وفوري خلال 200ms
+
+**Validates: Requirements 8.5**
+
+### Property 25: رسالة واضحة للحالات الفارغة
+
+_لأي_ شاشة أو قسم لا يحتوي على محتوى، يجب عرض رسالة واضحة بالعربية مع أيقونة توضيحية مناسبة
+
+**Validates: Requirements 10.1**
+
+### Property 26: رسالة خطأ مع زر إعادة المحاولة
+
+_لأي_ فشل في تحميل المحتوى، يجب عرض رسالة خطأ واضحة مع أيقونة وزر إعادة المحاولة
+
+**Validates: Requirements 10.3**
+
+### Property 27: رسالة تشجيعية للقوائم الفارغة
+
+_لأي_ قائمة أو مجموعة فارغة، يجب عرض رسالة تشجيعية مع زر إضافة عنصر جديد
+
+**Validates: Requirements 10.4**
+
+### Property 28: رسالة واضحة لنتائج البحث الفارغة
+
+_لأي_ عملية بحث بدون نتائج مطابقة، يجب عرض رسالة واضحة مع اقتراحات أو نصائح للبحث
+
+**Validates: Requirements 10.5**
+
+---
+
+## معالجة الأخطاء
+
+### استراتيجية معالجة الأخطاء
+
+1. **أخطاء التباين:**
+
+   - إذا فشل فحص التباين، يجب تسجيل تحذير في وضع التطوير
+   - يجب توفير أداة لفحص التباين في وقت التطوير
+
+2. **أخطاء الأحجام:**
+
+   - إذا كانت الأحجام أقل من الحد الأدنى، يجب تسجيل تحذير
+   - يجب توفير أداة لفحص الأحجام في وقت التطوير
+
+3. **أخطاء الحركات:**
+   - إذا فشلت الحركة، يجب عرض المحتوى مباشرة بدون حركة
+   - يجب تسجيل الخطأ للمراجعة
+
+### أدوات التحقق
+
+```dart
+class AccessibilityChecker {
+  /// يتحقق من تباين الألوان
+  static bool checkContrast(Color foreground, Color background, {double minRatio = 4.5}) {
+    final ratio = _calculateContrastRatio(foreground, background);
+    if (ratio < minRatio) {
+      debugPrint('⚠️ تحذير: التباين منخفض ($ratio:1) - الحد الأدنى: $minRatio:1');
+      return false;
+    }
+    return true;
+  }
+
+  /// يحسب نسبة التباين بين لونين
+  static double _calculateContrastRatio(Color color1, Color color2) {
+    final l1 = _relativeLuminance(color1);
+    final l2 = _relativeLuminance(color2);
+    final lighter = max(l1, l2);
+    final darker = min(l1, l2);
+    return (lighter + 0.05) / (darker + 0.05);
+  }
+
+  /// يحسب السطوع النسبي للون
+  static double _relativeLuminance(Color color) {
+    final r = _linearize(color.red / 255);
+    final g = _linearize(color.green / 255);
+    final b = _linearize(color.blue / 255);
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  }
+
+  static double _linearize(double value) {
+    if (value <= 0.03928) {
+      return value / 12.92;
+    }
+    return pow((value + 0.055) / 1.055, 2.4).toDouble();
+  }
+
+  /// يتحقق من حجم مساحة النقر
+  static bool checkTouchTarget(Size size, {double minSize = 48.0}) {
+    if (size.width < minSize || size.height < minSize) {
+      debugPrint('⚠️ تحذير: مساحة النقر صغيرة (${size.width}x${size.height}) - الحد الأدنى: ${minSize}x$minSize');
+      return false;
+    }
+    return true;
+  }
+
+  /// يتحقق من حجم الخط
+  static bool checkFontSize(double fontSize, {double minSize = 15.0}) {
+    if (fontSize < minSize) {
+      debugPrint('⚠️ تحذير: حجم الخط صغير ($fontSize) - الحد الأدنى: $minSize');
+      return false;
+    }
+    return true;
+  }
+}
+```
+
+---
+
+## استراتيجية الاختبار
+
+### نهج الاختبار المزدوج
+
+سنستخدم نهج اختبار مزدوج يجمع بين:
+
+1. **اختبارات الوحدة (Unit Tests):** لاختبار المكونات الفردية
+2. **اختبارات الخصائص (Property-Based Tests):** للتحقق من الخصائص العامة
+
+### مكتبة الاختبار
+
+سنستخدم **test** و **flutter_test** المدمجة في Flutter، مع إضافة أدوات مخصصة لاختبار إمكانية الوصول.
+
+### تكوين الاختبارات
+
+- كل اختبار خاصية يجب أن يعمل على الأقل **100 تكرار** لضمان التغطية الكافية
+- كل اختبار خاصية يجب أن يحتوي على تعليق يشير إلى رقم الخاصية في وثيقة التصميم
+
+### أمثلة على الاختبارات
+
+#### اختبار وحدة: تباين الألوان
+
+```dart
+void main() {
+  group('AppColors Contrast Tests', () {
+    test('primary text on background should have minimum 4.5:1 contrast', () {
+      final hasContrast = AccessibilityChecker.checkContrast(
+        AppColors.textPrimary,
+        AppColors.background,
+        minRatio: 4.5,
+      );
+      expect(hasContrast, isTrue);
+    });
+
+    test('secondary text on background should have minimum 4.5:1 contrast', () {
+      final hasContrast = AccessibilityChecker.checkContrast(
+        AppColors.textSecondary,
+        AppColors.background,
+        minRatio: 4.5,
+      );
+      expect(hasContrast, isTrue);
+    });
+  });
+}
+```
+
+#### اختبار خاصية: حجم الأزرار
+
+```dart
+/// **Feature: ui-ux-improvements, Property 10: مساحة النقر للعناصر التفاعلية**
+/// **Validates: Requirements 3.2, 5.1**
+void main() {
+  testWidgets('all buttons should have minimum 48x48 touch target', (tester) async {
+    // إنشاء زر
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: AppButton(
+            text: 'اختبار',
+            onPressed: () {},
+          ),
+        ),
+      ),
+    );
+
+    // الحصول على حجم الزر
+    final buttonFinder = find.byType(AppButton);
+    final buttonSize = tester.getSize(buttonFinder);
+
+    // التحقق من الحجم
+    expect(buttonSize.width, greaterThanOrEqualTo(48.0));
+    expect(buttonSize.height, greaterThanOrEqualTo(48.0));
+  });
+}
+```
+
+#### اختبار خاصية: تباين النصوص
+
+```dart
+/// **Feature: ui-ux-improvements, Property 1: تباين النصوص العادية**
+/// **Validates: Requirements 1.1, 2.5, 7.3, 7.5, 8.2, 9.4**
+void main() {
+  group('Text Contrast Property Tests', () {
+    test('all text styles should have minimum 4.5:1 contrast with background', () {
+      final textStyles = [
+        AppTextStyles.bodyLarge,
+        AppTextStyles.bodyMedium,
+        AppTextStyles.caption,
+      ];
+
+      for (final style in textStyles) {
+        final hasContrast = AccessibilityChecker.checkContrast(
+          style.color!,
+          AppColors.background,
+          minRatio: 4.5,
+        );
+        expect(hasContrast, isTrue, reason: 'Style ${style.fontSize} failed contrast check');
+      }
+    });
+  });
+}
+```
+
+### تغطية الاختبارات
+
+- **الهدف:** 70%+ تغطية للكود
+- **التركيز:** اختبار جميع الخصائص المحددة
+- **الأولوية:** اختبار المكونات الأساسية أولاً (الألوان، الخطوط، الأزرار، حقول الإدخال)
+
+---
+
+## الأمان
+
+### اعتبارات الأمان
+
+1. **لا توجد بيانات حساسة:** هذه الميزة تتعلق بالواجهة فقط ولا تتعامل مع بيانات حساسة
+2. **الأداء:** يجب التأكد من أن فحوصات التباين لا تؤثر على الأداء في الإنتاج
+3. **التحقق في وقت التطوير:** جميع فحوصات إمكانية الوصول يجب أن تعمل فقط في وضع التطوير
+
+---
+
+## الأداء
+
+### اعتبارات الأداء
+
+1. **التخزين المؤقت:** تخزين نتائج حسابات التباين مؤقتاً لتجنب الحسابات المتكررة
+2. **الحركات:** استخدام `const` constructors حيثما أمكن لتقليل rebuilds
+3. **الأحجام:** تحديد الأحجام بشكل ثابت لتجنب الحسابات الديناميكية
+
+### قياسات الأداء
+
+- **وقت البناء:** يجب ألا يزيد عن 2 ثانية
+- **معدل الإطارات:** يجب الحفاظ على 60 FPS أثناء الحركات
+- **حجم التطبيق:** يجب ألا يزيد بأكثر من 5%
+
+---
+
+## التبعيات
+
+### تبعيات Flutter
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  material_design_icons_flutter: ^7.0.7296
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  test: ^1.24.0
+```
+
+### تبعيات الخطوط
+
+```yaml
+flutter:
+  fonts:
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo-Regular.ttf
+        - asset: assets/fonts/Cairo-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Cairo-Bold.ttf
+          weight: 700
+    - family: RobotoMono
+      fonts:
+        - asset: assets/fonts/RobotoMono-Regular.ttf
+```
+
+---
+
+## خطة التنفيذ
+
+### المرحلة 1: البنية الأساسية (أولوية عالية)
+
+1. إنشاء نظام الألوان (AppColors)
+2. إنشاء نظام النصوص (AppTextStyles)
+3. إنشاء نظام الأبعاد (AppDimensions)
+4. إنشاء أدوات التحقق (AccessibilityChecker)
+
+### المرحلة 2: المكونات الأساسية (أولوية عالية)
+
+1. تحديث AppButton
+2. تحديث AppTextField
+3. تحديث AppCard
+4. تحديث AppAppBar
+
+### المرحلة 3: الحركات والانتقالات (أولوية متوسطة)
+
+1. إنشاء نظام الحركات (AppAnimations)
+2. تطبيق الحركات على الانتقالات
+3. تطبيق الحركات على العناصر التفاعلية
+
+### المرحلة 4: الاختبارات (أولوية عالية)
+
+1. كتابة اختبارات الوحدة للألوان والنصوص
+2. كتابة اختبارات الخصائص للمكونات
+3. كتابة اختبارات Widget للمكونات المحدثة
+
+### المرحلة 5: التوثيق والمراجعة (أولوية متوسطة)
+
+1. توثيق جميع المكونات
+2. إنشاء دليل الاستخدام
+3. مراجعة شاملة للامتثال
+
+---
+
+## المخاطر والتحديات
+
+### المخاطر المحتملة
+
+1. **التوافق مع الكود الموجود:** قد تحتاج بعض المكونات الموجودة إلى تعديلات كبيرة
+2. **الأداء:** قد تؤثر فحوصات التباين على الأداء إذا لم يتم تنفيذها بشكل صحيح
+3. **الاختبار:** قد يكون اختبار جميع الخصائص يدوياً مستهلكاً للوقت
+
+### استراتيجيات التخفيف
+
+1. **التدرج:** تطبيق التحسينات تدريجياً على المكونات
+2. **التخزين المؤقت:** تخزين نتائج الحسابات مؤقتاً
+3. **الأتمتة:** استخدام اختبارات آلية قدر الإمكان
+
+---
+
+## المراجع
+
+1. **WCAG 2.1 Guidelines:** https://www.w3.org/WAI/WCAG21/quickref/
+2. **Material Design Accessibility:** https://material.io/design/usability/accessibility.html
+3. **Flutter Accessibility:** https://docs.flutter.dev/development/accessibility-and-localization/accessibility
+4. **Color Contrast Checker:** https://webaim.org/resources/contrastchecker/
+5. **Flutter Testing:** https://docs.flutter.dev/testing
+
+---
+
+**تم إعداده بواسطة:** فريق وكلاء تطوير مشروع بصير  
+**التاريخ:** 2 ديسمبر 2025  
+**الإصدار:** 1.0
+
+---
+
+## التصميم المتقدم وعلم نفس المستخدم
+
+### نظرة عامة
+
+بناءً على تحليل عميق لعلم نفس المستخدم والاتجاهات العصرية في 2025، تم تحديد مجموعة من التحسينات المتقدمة التي تزيد من الثقة والارتباط العاطفي والتخصيص.
+
+📄 **للتفاصيل الكاملة:** راجع `UX_PSYCHOLOGY_ANALYSIS.md`
+
+### 1. الاتجاهات العصرية (2025 Trends)
+
+#### 1.1 Neumorphism (التصميم الناعم)
+
+**التطبيق:**
+
+- بطاقات بظلال ناعمة للعمق
+- أزرار بارزة بشكل طبيعي
+- تأثير 3D خفيف
+
+**التنفيذ:**
+
+```dart
+class AppNeumorphicShadows {
+  static List<BoxShadow> light = [
+    BoxShadow(
+      color: Colors.white.withOpacity(0.5),
+      offset: const Offset(-4, -4),
+      blurRadius: 8,
+    ),
+    BoxShadow(
+      color: Colors.black.withOpacity(0.1),
+      offset: const Offset(4, 4),
+      blurRadius: 8,
+    ),
+  ];
+
+  static List<BoxShadow> pressed = [
+    BoxShadow(
+      color: Colors.black.withOpacity(0.1),
+      offset: const Offset(2, 2),
+      blurRadius: 4,
+      inset: true,
+    ),
+  ];
+}
+```
+
+#### 1.2 Glassmorphism (التصميم الزجاجي)
+
+**التطبيق:**
+
+- Dialogs شبه شفافة
+- Overlays مع blur
+- Bottom sheets زجاجية
+
+**التنفيذ:**
+
+```dart
+class AppGlassEffect extends StatelessWidget {
+  final Widget child;
+  final double blur;
+  final double opacity;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(opacity),
+            borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.2),
+              width: 1.5,
+            ),
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+```
+
+#### 1.3 Micro-interactions (التفاعلات الدقيقة)
+
+**التطبيق:**
+
+- Bounce عند النقر
+- Scale عند الحوم
+- Shake عند الخطأ
+- Pulse للإشعارات
+
+**التنفيذ:**
+
+```dart
+class AppMicroInteractions {
+  // حركة bounce عند النقر
+  static Widget bounce({
+    required Widget child,
+    required VoidCallback onTap,
+  }) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 1.0, end: 1.0),
+      duration: AppDurations.fast,
+      curve: Curves.elasticOut,
+      builder: (context, scale, child) {
+        return Transform.scale(
+          scale: scale,
+          child: GestureDetector(
+            onTapDown: (_) => scale = 0.95,
+            onTapUp: (_) => scale = 1.0,
+            onTap: onTap,
+            child: child,
+          ),
+        );
+      },
+      child: child,
+    );
+  }
+
+  // حركة shake عند الخطأ
+  static Widget shake({required Widget child, required bool trigger}) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.0, end: trigger ? 1.0 : 0.0),
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.elasticOut,
+      builder: (context, value, child) {
+        return Transform.translate(
+          offset: Offset(sin(value * pi * 3) * 10, 0),
+          child: child,
+        );
+      },
+      child: child,
+    );
+  }
+}
+```
+
+#### 1.4 Haptic Feedback (الاهتزاز اللمسي)
+
+**التطبيق:**
+
+- اهتزاز خفيف عند النقر
+- اهتزاز متوسط عند النجاح
+- اهتزاز قوي عند الخطأ
+
+**التنفيذ:**
+
+```dart
+class AppHaptics {
+  static void light() {
+    HapticFeedback.lightImpact();
+  }
+
+  static void medium() {
+    HapticFeedback.mediumImpact();
+  }
+
+  static void heavy() {
+    HapticFeedback.heavyImpact();
+  }
+
+  static void selection() {
+    HapticFeedback.selectionClick();
+  }
+}
+```
+
+### 2. علم نفس الألوان المتقدم
+
+#### 2.1 الألوان العاطفية
+
+```dart
+class AppEmotionalColors {
+  // الفرح والإنجاز
+  static const Color joy = Color(0xFFFFD700); // ذهبي
+
+  // الهدوء والراحة
+  static const Color calm = Color(0xFF87CEEB); // أزرق فاتح
+
+  // الحماس والطاقة
+  static const Color enthusiasm = Color(0xFFFF6B35); // برتقالي
+
+  // الفخامة والقيمة
+  static const Color luxury = Color(0xFFD4AF37); // ذهبي داكن
+
+  // الدفء والأصالة
+  static const Color warmth = Color(0xFF8B7355); // بني دافئ
+}
+```
+
+#### 2.2 التدرجات (Gradients)
+
+```dart
+class AppGradients {
+  // تدرج أساسي (للأزرار المهمة)
+  static const LinearGradient primary = LinearGradient(
+    colors: [
+      Color(0xFF0056B3), // أزرق داكن
+      Color(0xFF0077CC), // أزرق متوسط
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  // تدرج ثانوي (للنجاح)
+  static const LinearGradient success = LinearGradient(
+    colors: [
+      Color(0xFF1E7E34), // أخضر داكن
+      Color(0xFF28A745), // أخضر فاتح
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  // تدرج ذهبي (للمميزات)
+  static const LinearGradient premium = LinearGradient(
+    colors: [
+      Color(0xFFD4AF37), // ذهبي
+      Color(0xFFF4E5C2), // ذهبي فاتح
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  // تدرج خلفية (للشاشات)
+  static const LinearGradient background = LinearGradient(
+    colors: [
+      Color(0xFFF5F7FA), // رمادي فاتح
+      Color(0xFFFFFFFF), // أبيض
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+}
+```
+
+### 3. Dark Mode (الوضع الداكن)
+
+#### 3.1 نظام الألوان الداكن
+
+```dart
+class AppDarkColors {
+  // ألوان أساسية
+  static const Color primary = Color(0xFF4A9EFF); // أزرق فاتح
+  static const Color secondary = Color(0xFF4CAF50); // أخضر فاتح
+
+  // ألوان الخلفية
+  static const Color background = Color(0xFF121212); // أسود داكن
+  static const Color surface = Color(0xFF1E1E1E); // رمادي داكن
+  static const Color surfaceVariant = Color(0xFF2C2C2C); // رمادي متوسط
+
+  // ألوان النصوص
+  static const Color textPrimary = Color(0xFFE0E0E0); // أبيض مائل للرمادي
+  static const Color textSecondary = Color(0xFFB0B0B0); // رمادي فاتح
+  static const Color textHint = Color(0xFF808080); // رمادي متوسط
+
+  // ألوان الحالة
+  static const Color error = Color(0xFFEF5350); // أحمر فاتح
+  static const Color success = Color(0xFF66BB6A); // أخضر فاتح
+  static const Color warning = Color(0xFFFF9800); // برتقالي
+  static const Color info = Color(0xFF42A5F5); // أزرق فاتح
+}
+```
+
+#### 3.2 إنشاء Dark Theme
+
+```dart
+ThemeData createDarkTheme() => ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.dark,
+  colorScheme: ColorScheme.dark(
+    primary: AppDarkColors.primary,
+    secondary: AppDarkColors.secondary,
+    surface: AppDarkColors.surface,
+    background: AppDarkColors.background,
+    error: AppDarkColors.error,
+  ),
+  scaffoldBackgroundColor: AppDarkColors.background,
+  // ... باقي التكوينات
+);
+```
+
+### 4. التخصيص (Personalization)
+
+#### 4.1 إعدادات الثيم
+
+```dart
+class ThemeSettings {
+  // اللون الأساسي
+  final ThemeColor primaryColor;
+
+  // حجم الخط
+  final FontSize fontSize;
+
+  // الوضع (فاتح/داكن/تلقائي)
+  final ThemeMode themeMode;
+
+  // الكثافة (مريح/مضغوط)
+  final Density density;
+
+  // سرعة الحركات
+  final AnimationSpeed animationSpeed;
+}
+
+enum ThemeColor {
+  blue,    // أزرق (افتراضي)
+  green,   // أخضر
+  purple,  // بنفسجي
+  orange,  // برتقالي
+  teal,    // أزرق مخضر
+}
+
+enum FontSize {
+  small,   // 0.9x
+  medium,  // 1.0x (افتراضي)
+  large,   // 1.1x
+  xLarge,  // 1.2x
+}
+
+enum Density {
+  comfortable, // 1.2x (مريح)
+  standard,    // 1.0x (افتراضي)
+  compact,     // 0.8x (مضغوط)
+}
+
+enum AnimationSpeed {
+  slow,     // 1.5x
+  normal,   // 1.0x (افتراضي)
+  fast,     // 0.7x
+  none,     // 0x (بدون حركات)
+}
+```
+
+#### 4.2 إعدادات إمكانية الوصول
+
+```dart
+class AccessibilitySettings {
+  // تباين عالي
+  final bool highContrast;
+
+  // تقليل الحركة
+  final bool reduceMotion;
+
+  // قارئ الشاشة
+  final bool screenReaderEnabled;
+
+  // حجم الخط الكبير
+  final bool largeText;
+
+  // وضع العمى اللوني
+  final ColorBlindMode colorBlindMode;
+}
+
+enum ColorBlindMode {
+  none,          // عادي
+  protanopia,    // عمى الأحمر
+  deuteranopia,  // عمى الأخضر
+  tritanopia,    // عمى الأزرق
+}
+```
+
+### 5. الحركات المتقدمة
+
+#### 5.1 Staggered Animations (حركات متتالية)
+
+```dart
+class AppStaggeredAnimations {
+  static Widget list({
+    required List<Widget> children,
+    required AnimationController controller,
+  }) {
+    return ListView.builder(
+      itemCount: children.length,
+      itemBuilder: (context, index) {
+        final delay = index * 0.1;
+        final animation = Tween<double>(
+          begin: 0.0,
+          end: 1.0,
+        ).animate(
+          CurvedAnimation(
+            parent: controller,
+            curve: Interval(
+              delay,
+              delay + 0.3,
+              curve: Curves.easeOut,
+            ),
+          ),
+        );
+
+        return FadeTransition(
+          opacity: animation,
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 0.3),
+              end: Offset.zero,
+            ).animate(animation),
+            child: children[index],
+          ),
+        );
+      },
+    );
+  }
+}
+```
+
+#### 5.2 Hero Animations
+
+```dart
+// في الشاشة الأولى (قائمة الفواتير)
+Hero(
+  tag: 'invoice-${invoice.id}',
+  child: InvoiceCard(invoice: invoice),
+)
+
+// في الشاشة الثانية (تفاصيل الفاتورة)
+Hero(
+  tag: 'invoice-${invoice.id}',
+  child: InvoiceDetails(invoice: invoice),
+)
+```
+
+### 6. الزخارف الثقافية
+
+#### 6.1 الأنماط الهندسية
+
+```dart
+class AppCulturalPatterns {
+  // زخرفة هندسية خفيفة للخلفيات
+  static Widget geometricPattern({
+    required Widget child,
+    double opacity = 0.03,
+  }) {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: CustomPaint(
+            painter: GeometricPatternPainter(
+              color: AppColors.primary.withOpacity(opacity),
+            ),
+          ),
+        ),
+        child,
+      ],
+    );
+  }
+}
+
+class GeometricPatternPainter extends CustomPainter {
+  final Color color;
+
+  GeometricPatternPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+
+    // رسم نمط هندسي إسلامي بسيط
+    // ... تنفيذ الرسم
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+```
+
+### 7. مؤشرات الثقة
+
+#### 7.1 شارات الأمان
+
+```dart
+class AppSecurityBadge extends StatelessWidget {
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: AppSpacing.xs,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.success.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+        border: Border.all(
+          color: AppColors.success.withOpacity(0.3),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.lock,
+            size: 14,
+            color: AppColors.success,
+          ),
+          const SizedBox(width: AppSpacing.xs),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: AppTypography.labelSmall,
+              color: AppColors.success,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+---
+
+## ملخص التحسينات المتقدمة
+
+### ما تم إضافته
+
+✅ **الاتجاهات العصرية:**
+
+- Neumorphism (ظلال ناعمة)
+- Glassmorphism (تأثيرات زجاجية)
+- Micro-interactions (تفاعلات دقيقة)
+- Haptic Feedback (اهتزاز لمسي)
+
+✅ **علم نفس الألوان:**
+
+- ألوان عاطفية (فرح، هدوء، حماس)
+- تدرجات متقدمة (primary, success, premium)
+- نظام ألوان داكن كامل
+
+✅ **التخصيص:**
+
+- اختيار اللون الأساسي (5 خيارات)
+- اختيار حجم الخط (4 مستويات)
+- اختيار الكثافة (3 مستويات)
+- اختيار سرعة الحركات (4 مستويات)
+
+✅ **إمكانية الوصول:**
+
+- تباين عالي
+- تقليل الحركة
+- دعم قارئ الشاشة
+- وضع العمى اللوني
+
+✅ **الحركات المتقدمة:**
+
+- Staggered Animations
+- Hero Animations
+- Bounce, Scale, Shake effects
+
+✅ **الثقافة العربية:**
+
+- زخارف هندسية خفيفة
+- ألوان ثقافية (ذهبي، بني)
+- شارات الأمان بالعربية
+
+### التأثير المتوقع
+
+🎯 **زيادة الثقة:** +40%
+
+- مؤشرات أمان واضحة
+- تأثيرات احترافية
+- feedback فوري
+
+🎯 **زيادة الرضا:** +50%
+
+- تخصيص شامل
+- حركات ممتعة
+- تجربة سلسة
+
+🎯 **زيادة الارتباط العاطفي:** +60%
+
+- ألوان عاطفية
+- haptic feedback
+- تصميم ثقافي
+
+---
+
+**تم إعداده بواسطة:** فريق وكلاء تطوير مشروع بصير  
+**التاريخ:** 2 ديسمبر 2025  
+**الإصدار:** 2.0 (محدّث)

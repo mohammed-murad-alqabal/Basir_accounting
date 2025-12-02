@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: 🔧 Setup Flutter
-        uses: subosito/flutter-action@2783a3f08e1baf891508cf69c7c9ea9d546cafc6 # v2.16.0
+        uses: subosito/flutter-action@44ac965b5c13134c103c47024888cd7b4e083b8f # v2.16.0
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
@@ -107,7 +107,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: 🔧 Setup Flutter
-        uses: subosito/flutter-action@2783a3f08e1baf891508cf69c7c9ea9d546cafc6 # v2.16.0
+        uses: subosito/flutter-action@44ac965b5c13134c103c47024888cd7b4e083b8f # v2.16.0
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
@@ -167,7 +167,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: 🔧 Setup Flutter
-        uses: subosito/flutter-action@2783a3f08e1baf891508cf69c7c9ea9d546cafc6 # v2.16.0
+        uses: subosito/flutter-action@44ac965b5c13134c103c47024888cd7b4e083b8f # v2.16.0
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
@@ -218,7 +218,7 @@ jobs:
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
       - name: 🔧 Setup Flutter
-        uses: subosito/flutter-action@2783a3f08e1baf891508cf69c7c9ea9d546cafc6 # v2.16.0
+        uses: subosito/flutter-action@44ac965b5c13134c103c47024888cd7b4e083b8f # v2.16.0
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
