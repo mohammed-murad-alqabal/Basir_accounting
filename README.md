@@ -1,9 +1,10 @@
 # تطبيق بصير - نظام إدارة الفواتير والعملاء
 
-[![Flutter](https://img.shields.io/badge/Flutter-3.35.5-blue.svg)](https://flutter.dev)
-[![Dart](https://img.shields.io/badge/Dart-3.9.2-blue.svg)](https://dart.dev)
-[![Tests](https://img.shields.io/badge/Tests-263%20Passed-success.svg)](test/)
-[![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg)](coverage/)
+[![Flutter](https://img.shields.io/badge/Flutter-3.24.0-blue.svg)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.5.0-blue.svg)](https://dart.dev)
+[![CI/CD](https://github.com/YOUR_USERNAME/Basser_MVP/workflows/Flutter%20CI/CD%20-%20بصير%20MVP/badge.svg)](https://github.com/YOUR_USERNAME/Basser_MVP/actions)
+[![Tests](https://img.shields.io/badge/Tests-497%20Passed-success.svg)](test/)
+[![Coverage](https://img.shields.io/badge/Coverage-53%25-yellow.svg)](coverage/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **بصير** هو تطبيق موبايل احترافي لإدارة الفواتير والعملاء، مصمم خصيصًا للعاملين بالقطاع الخاص والشركات الصغيرة والمتوسطة في الشرق الأوسط.
@@ -97,13 +98,43 @@ flutter run
 
 ### تشغيل الاختبارات
 
+#### الطريقة السريعة (باستخدام السكريبت)
+
+```bash
+# تشغيل جميع الاختبارات
+./test/run_tests.sh
+
+# تشغيل الاختبارات مع تقرير التغطية
+./test/run_tests.sh --coverage
+
+# تشغيل الاختبارات وفتح تقرير التغطية
+./test/run_tests.sh --coverage --open
+```
+
+#### الطريقة اليدوية
+
 ```bash
 # تشغيل جميع الاختبارات
 flutter test
 
 # تشغيل الاختبارات مع تقرير التغطية
 flutter test --coverage
+
+# توليد HTML report
+genhtml coverage/lcov.info -o coverage/html
+
+# فتح التقرير في المتصفح
+open coverage/html/index.html  # macOS
+xdg-open coverage/html/index.html  # Linux
 ```
+
+#### أنواع الاختبارات
+
+- **Unit Tests** - اختبار الوحدات المعزولة (Models, Repositories, Services)
+- **Widget Tests** - اختبار الواجهات (Widgets, Screens)
+- **Integration Tests** - اختبار التدفقات الكاملة
+
+📊 **الحالة الحالية:** 497 اختبار ناجح + 2 skipped (معدل نجاح 100%)
 
 ---
 
@@ -139,12 +170,13 @@ lib/
 
 | المقياس              | القيمة | الحالة |
 | -------------------- | ------ | ------ |
-| تغطية الاختبارات     | 100%   | ✅     |
-| عدد الاختبارات       | 263    | ✅     |
+| تغطية الاختبارات     | ~53%   | 🔄     |
+| عدد الاختبارات       | 497    | ✅     |
 | نجاح الاختبارات      | 100%   | ✅     |
 | تغطية التوثيق        | 95%+   | ✅     |
 | المشاكل الحرجة       | 0      | ✅     |
-| وقت تشغيل الاختبارات | ~9s    | ✅     |
+| وقت تشغيل الاختبارات | ~15s   | ✅     |
+| CI/CD Status         | Active | ✅     |
 
 ### DORA Metrics
 
@@ -154,6 +186,61 @@ lib/
 | Lead Time for Changes   | < 1 يوم  | 🏆 Elite |
 | Time to Restore Service | < 1 ساعة | 🏆 Elite |
 | Change Failure Rate     |    0%    | 🏆 Elite |
+
+---
+
+## 🔄 CI/CD Pipeline
+
+يستخدم المشروع **GitHub Actions** لأتمتة عملية الاختبار والبناء:
+
+### Workflow الرئيسي
+
+```yaml
+name: Flutter CI/CD - بصير MVP
+on: [push, pull_request]
+```
+
+### المراحل
+
+1. **🔍 تحليل واختبار**
+
+   - تحليل الكود (flutter analyze)
+   - تشغيل جميع الاختبارات
+   - التحقق من التغطية (≥ 70%)
+   - رفع تقرير التغطية
+
+2. **🤖 بناء Android**
+
+   - بناء APK
+   - التحقق من حجم APK (< 50 MB)
+   - رفع APK كـ artifact
+
+3. **🍎 بناء iOS** (اختياري)
+
+   - بناء iOS build
+   - رفع build كـ artifact
+
+4. **🔒 فحص الأمان**
+
+   - فحص الأسرار المشفرة
+   - فحص الثغرات في التبعيات
+
+5. **📊 تقرير النتائج**
+   - تقرير شامل لجميع المراحل
+   - حالة النجاح/الفشل
+
+### Quality Gates
+
+- ✅ جميع الاختبارات يجب أن تنجح
+- ✅ التغطية يجب أن تكون ≥ 70%
+- ✅ لا أخطاء في flutter analyze
+- ✅ لا أسرار مشفرة في الكود
+- ✅ حجم APK < 50 MB
+
+### الملفات ذات الصلة
+
+- [`.github/workflows/flutter_ci.yml`](.github/workflows/flutter_ci.yml) - Workflow الرئيسي
+- [`test/run_tests.sh`](test/run_tests.sh) - سكريبت تشغيل الاختبارات محلياً
 
 ---
 
