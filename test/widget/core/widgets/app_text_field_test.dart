@@ -74,8 +74,7 @@ void main() {
       );
 
       // Trigger validation
-      final formState = tester.state<FormState>(find.byType(Form));
-      formState.validate();
+      tester.state<FormState>(find.byType(Form)).validate();
       await tester.pump();
 
       // Assert
@@ -103,8 +102,7 @@ void main() {
       );
 
       // Trigger validation
-      final formState = tester.state<FormState>(find.byType(Form));
-      formState.validate();
+      tester.state<FormState>(find.byType(Form)).validate();
       await tester.pump();
 
       // Assert

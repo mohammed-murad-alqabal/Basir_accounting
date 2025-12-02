@@ -292,13 +292,19 @@
   - ✅ 26 اختبار ناجح
   - _Requirements: 3.1_
 
-- [ ] 8.3 اختبار AppTextField
+- [x] 8.3 اختبار AppTextField
 
-  - كتابة `test/widget/core/widgets/app_text_field_test.dart`
-  - اختبار إدخال النص
-  - اختبار validation rules
-  - اختبار عرض رسائل الخطأ
-  - اختبار حالة disabled
+  - ✅ كتابة `test/widget/core/widgets/app_text_field_test.dart`
+  - ✅ اختبار إدخال النص
+  - ✅ اختبار validation rules
+  - ✅ اختبار عرض رسائل الخطأ
+  - ✅ اختبار password visibility toggle
+  - ✅ اختبار prefix و suffix icons
+  - ✅ اختبار onChanged callback
+  - ✅ اختبار AppSearchField
+  - ✅ اختبار clear button
+  - ✅ اختبار multiple fields together
+  - ✅ 16 اختبار ناجح
   - _Requirements: 3.3_
 
 - [ ] 8.4 اختبار AppAppBar
