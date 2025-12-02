@@ -84,3 +84,4 @@ test_output.txt
 # Platform specific
 .fvm/
 .flutter-plugins-dependencies
+libisar.so
