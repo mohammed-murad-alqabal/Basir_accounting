@@ -13,8 +13,16 @@ import 'package:basser_app/features/customers/domain/repositories/customer_repos
 class MockCustomerRepository implements CustomerRepository {
   final List<Customer> _customers = [];
 
+  /// للتحكم في رمي الأخطاء في الاختبارات
+  bool shouldThrowError = false;
+
   @override
-  Future<List<Customer>> getAllCustomers() async => List.from(_customers);
+  Future<List<Customer>> getAllCustomers() async {
+    if (shouldThrowError) {
+      throw Exception('Mock error: Failed to get customers');
+    }
+    return List.from(_customers);
+  }
 
   @override
   Future<Customer?> getCustomerById(String id) async {
@@ -28,6 +36,9 @@ class MockCustomerRepository implements CustomerRepository {
 
   @override
   Future<void> addCustomer(Customer customer) async {
+    if (shouldThrowError) {
+      throw Exception('Mock error: Failed to add customer');
+    }
     // التحقق من عدم وجود عميل بنفس الـ ID
     if (_customers.any((c) => c.id == customer.id)) {
       throw Exception('Customer with ID ${customer.id} already exists');
@@ -37,6 +48,9 @@ class MockCustomerRepository implements CustomerRepository {
 
   @override
   Future<void> updateCustomer(Customer customer) async {
+    if (shouldThrowError) {
+      throw Exception('Mock error: Failed to update customer');
+    }
     final index = _customers.indexWhere((c) => c.id == customer.id);
     if (index == -1) {
       throw Exception('Customer with ID ${customer.id} not found');
@@ -46,6 +60,9 @@ class MockCustomerRepository implements CustomerRepository {
 
   @override
   Future<void> deleteCustomer(String id) async {
+    if (shouldThrowError) {
+      throw Exception('Mock error: Failed to delete customer');
+    }
     _customers.removeWhere((c) => c.id == id);
   }
 
