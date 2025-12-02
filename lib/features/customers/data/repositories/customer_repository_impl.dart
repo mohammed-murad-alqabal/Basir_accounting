@@ -138,17 +138,35 @@ class CustomerRepositoryImpl implements CustomerRepository {
   /// {@macro customer_repository.updateCustomer}
   ///
   /// **التطبيق:**
-  /// - يحول الكيان المحدث إلى نموذج Isar
-  /// - يستبدل النموذج القديم بالجديد داخل معاملة
-  /// - يستخدم نفس المعرف للتحديث
+  /// - يبحث عن النموذج الموجود بالمعرف
+  /// - يحدث الحقول المطلوبة
+  /// - يحفظ التحديثات داخل معاملة
   ///
-  /// **Throws:** [Exception] إذا حدث خطأ في التحديث
+  /// **Throws:** [Exception] إذا حدث خطأ في التحديث أو إذا لم يُعثر على العميل
   @override
   Future<void> updateCustomer(Customer customer) async {
     try {
-      final model = CustomerModel.fromEntity(customer);
       await isar.writeTxn(() async {
-        await isar.customerModels.put(model);
+        // البحث عن النموذج الموجود
+        final existingModel = await isar.customerModels
+            .filter()
+            .customerIdEqualTo(customer.id)
+            .findFirst();
+
+        if (existingModel == null) {
+          throw Exception('العميل غير موجود: ${customer.id}');
+        }
+
+        // تحديث الحقول
+        existingModel
+          ..name = customer.name
+          ..phone = customer.phone
+          ..email = customer.email
+          ..address = customer.address
+          ..updatedAt = customer.updatedAt;
+
+        // حفظ التحديثات
+        await isar.customerModels.put(existingModel);
       });
     } catch (e) {
       throw Exception('خطأ في تحديث العميل: $e');

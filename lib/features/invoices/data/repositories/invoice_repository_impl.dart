@@ -74,9 +74,22 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   @override
   Future<void> updateInvoice(Invoice invoice) async {
     try {
-      final model = InvoiceModel.fromEntity(invoice);
       await isar.writeTxn(() async {
-        await isar.invoiceModels.put(model);
+        // البحث عن الفاتورة الموجودة
+        final models = await isar.invoiceModels.where().findAll();
+        final existingModel = models.cast<InvoiceModel?>().firstWhere(
+              (m) => m?.invoiceId == invoice.id,
+              orElse: () => null,
+            );
+
+        if (existingModel == null) {
+          throw Exception('الفاتورة غير موجودة');
+        }
+
+        // تحديث الفاتورة مع الاحتفاظ بنفس id
+        final updatedModel = InvoiceModel.fromEntity(invoice)
+          ..id = existingModel.id;
+        await isar.invoiceModels.put(updatedModel);
       });
     } catch (e) {
       throw Exception('خطأ في تحديث الفاتورة: $e');

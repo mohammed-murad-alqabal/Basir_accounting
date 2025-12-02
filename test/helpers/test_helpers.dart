@@ -1,7 +1,7 @@
-/// دوال مساعدة للاختبارات
+/// Test Helpers - دوال مساعدة للاختبارات
 ///
-/// يوفر هذا الملف مجموعة من الدوال المساعدة لتسهيل كتابة الاختبارات
-/// في تطبيق بصير.
+/// يوفر هذا الملف دوال مساعدة لإنشاء وإدارة موارد الاختبار
+/// مثل قاعدة البيانات والـ Providers.
 library;
 
 import 'package:basser_app/features/customers/data/models/customer_model.dart';
@@ -9,17 +9,17 @@ import 'package:basser_app/features/invoices/data/models/invoice_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 
-/// فئة تحتوي على دوال مساعدة للاختبارات
+/// دوال مساعدة للاختبارات
 class TestHelpers {
   /// إنشاء Isar instance للاختبار في الذاكرة
   ///
-  /// يُستخدم هذا لإنشاء قاعدة بيانات مؤقتة في الذاكرة للاختبارات.
-  /// القاعدة تُحذف تلقائياً بعد إغلاقها.
+  /// يُنشئ قاعدة بيانات Isar في الذاكرة لاستخدامها في الاختبارات.
+  /// كل اختبار يحصل على قاعدة بيانات منفصلة باستخدام timestamp فريد.
   ///
   /// مثال:
   /// ```dart
   /// final isar = await TestHelpers.createTestIsar();
-  /// // استخدام isar في الاختبارات
+  /// // استخدام isar في الاختبار
   /// await TestHelpers.cleanupTestIsar(isar);
   /// ```
   static Future<Isar> createTestIsar() async => Isar.open(
@@ -30,13 +30,14 @@ class TestHelpers {
 
   /// تنظيف قاعدة البيانات بعد الاختبار
   ///
-  /// يُستخدم هذا لإغلاق وحذف قاعدة البيانات المؤقتة بعد انتهاء الاختبار.
-  ///
-  /// [isar] قاعدة البيانات المراد تنظيفها
+  /// يُغلق قاعدة البيانات ويحذفها من القرص.
+  /// يجب استدعاء هذه الدالة في tearDown لكل اختبار.
   ///
   /// مثال:
   /// ```dart
-  /// await TestHelpers.cleanupTestIsar(isar);
+  /// tearDown(() async {
+  ///   await TestHelpers.cleanupTestIsar(isar);
+  /// });
   /// ```
   static Future<void> cleanupTestIsar(Isar isar) async {
     await isar.close(deleteFromDisk: true);
@@ -44,9 +45,8 @@ class TestHelpers {
 
   /// إنشاء ProviderContainer للاختبار
   ///
-  /// يُستخدم هذا لإنشاء container لاختبار Riverpod providers.
-  ///
-  /// [overrides] قائمة بالـ overrides للـ providers (اختياري)
+  /// يُنشئ container لاختبار Riverpod providers مع إمكانية
+  /// override للـ providers.
   ///
   /// مثال:
   /// ```dart
@@ -65,9 +65,7 @@ class TestHelpers {
 
   /// تنظيف ProviderContainer بعد الاختبار
   ///
-  /// يُستخدم هذا لإغلاق الـ container وتحرير الموارد.
-  ///
-  /// [container] الـ container المراد تنظيفه
+  /// يُغلق الـ container ويحرر الموارد.
   static void cleanupTestContainer(ProviderContainer container) {
     container.dispose();
   }

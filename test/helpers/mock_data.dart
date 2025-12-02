@@ -1,32 +1,24 @@
-/// بيانات اختبار جاهزة
+/// Mock Data - بيانات اختبار جاهزة
 ///
-/// يوفر هذا الملف مجموعة من الدوال لإنشاء بيانات اختبار جاهزة
-/// للاستخدام في الاختبارات.
+/// يوفر هذا الملف دوال لإنشاء بيانات اختبار نموذجية
+/// للعملاء والفواتير وغيرها.
 library;
 
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
 
-/// فئة تحتوي على دوال لإنشاء بيانات اختبار
+/// بيانات اختبار نموذجية
 class MockData {
   /// إنشاء عميل اختبار افتراضي
   ///
-  /// يُستخدم هذا لإنشاء عميل بسيط للاختبارات.
-  ///
-  /// [id] معرف العميل (اختياري، القيمة الافتراضية: 'test-customer-1')
-  /// [name] اسم العميل (اختياري، القيمة الافتراضية: 'عميل اختبار')
-  /// [phone] رقم الهاتف (اختياري، القيمة الافتراضية: '0501234567')
-  /// [email] البريد الإلكتروني (اختياري)
-  /// [address] العنوان (اختياري)
-  /// [createdAt] تاريخ الإنشاء (اختياري)
-  /// [updatedAt] تاريخ التحديث (اختياري)
+  /// يُنشئ عميل بقيم افتراضية يمكن تخصيصها.
   ///
   /// مثال:
   /// ```dart
   /// final customer = MockData.createTestCustomer();
-  /// final customer2 = MockData.createTestCustomer(
+  /// final customCustomer = MockData.createTestCustomer(
   ///   id: 'custom-id',
-  ///   name: 'أحمد محمد',
+  ///   name: 'اسم مخصص',
   /// );
   /// ```
   static Customer createTestCustomer({
@@ -35,111 +27,22 @@ class MockData {
     String? phone,
     String? email,
     String? address,
-    DateTime? createdAt,
-    DateTime? updatedAt,
   }) {
     final now = DateTime.now();
     return Customer(
-      id: id ?? 'test-customer-1',
+      id: id ?? 'test-customer-${now.millisecondsSinceEpoch}',
       name: name ?? 'عميل اختبار',
       phone: phone ?? '0501234567',
-      email: email,
-      address: address,
-      createdAt: createdAt ?? now,
-      updatedAt: updatedAt ?? now,
+      email: email ?? 'test@example.com',
+      address: address ?? 'عنوان اختبار، الرياض',
+      createdAt: now,
+      updatedAt: now,
     );
   }
-
-  /// إنشاء فاتورة اختبار افتراضية
-  ///
-  /// يُستخدم هذا لإنشاء فاتورة بسيطة للاختبارات.
-  ///
-  /// [id] معرف الفاتورة (اختياري، القيمة الافتراضية: 'test-invoice-1')
-  /// [customerId] معرف العميل (اختياري، القيمة الافتراضية: 'test-customer-1')
-  /// [customerName] اسم العميل (اختياري، القيمة الافتراضية: 'عميل اختبار')
-  /// [status] حالة الفاتورة (اختياري، القيمة الافتراضية: 'draft')
-  /// [items] بنود الفاتورة (اختياري، القيمة الافتراضية: بند واحد)
-  /// [createdAt] تاريخ الإنشاء (اختياري)
-  /// [updatedAt] تاريخ التحديث (اختياري)
-  ///
-  /// مثال:
-  /// ```dart
-  /// final invoice = MockData.createTestInvoice();
-  /// final invoice2 = MockData.createTestInvoice(
-  ///   id: 'custom-id',
-  ///   customerId: 'customer-123',
-  /// );
-  /// ```
-  static Invoice createTestInvoice({
-    String? id,
-    String? customerId,
-    String? customerName,
-    String? status,
-    List<InvoiceItem>? items,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) {
-    final now = DateTime.now();
-    final invoiceItems = items ??
-        [
-          const InvoiceItem(
-            id: 'test-item-1',
-            name: 'منتج اختبار',
-            quantity: 1,
-            price: 100,
-          ),
-        ];
-
-    return Invoice(
-      id: id ?? 'test-invoice-1',
-      customerId: customerId ?? 'test-customer-1',
-      customerName: customerName ?? 'عميل اختبار',
-      issuedDate: now,
-      dueDate: now.add(const Duration(days: 30)),
-      status: status ?? 'draft',
-      items: invoiceItems,
-      taxRate: 0.15,
-      createdAt: createdAt ?? now,
-      updatedAt: updatedAt ?? now,
-    );
-  }
-
-  /// إنشاء بند فاتورة اختبار
-  ///
-  /// يُستخدم هذا لإنشاء بند فاتورة بسيط للاختبارات.
-  ///
-  /// [id] معرف البند (اختياري، القيمة الافتراضية: 'test-item-1')
-  /// [name] اسم البند (اختياري، القيمة الافتراضية: 'بند اختبار')
-  /// [quantity] الكمية (اختياري، القيمة الافتراضية: 1.0)
-  /// [price] السعر (اختياري، القيمة الافتراضية: 100.0)
-  ///
-  /// مثال:
-  /// ```dart
-  /// final item = MockData.createTestInvoiceItem();
-  /// final item2 = MockData.createTestInvoiceItem(
-  ///   name: 'خدمة استشارية',
-  ///   quantity: 2.0,
-  ///   price: 500.0,
-  /// );
-  /// ```
-  static InvoiceItem createTestInvoiceItem({
-    String? id,
-    String? name,
-    double? quantity,
-    double? price,
-  }) =>
-      InvoiceItem(
-        id: id ?? 'test-item-1',
-        name: name ?? 'بند اختبار',
-        quantity: quantity ?? 1.0,
-        price: price ?? 100.0,
-      );
 
   /// إنشاء قائمة من العملاء للاختبار
   ///
-  /// يُستخدم هذا لإنشاء عدة عملاء للاختبارات.
-  ///
-  /// [count] عدد العملاء (القيمة الافتراضية: 3)
+  /// يُنشئ عدد محدد من العملاء بأسماء مختلفة.
   ///
   /// مثال:
   /// ```dart
@@ -148,33 +51,102 @@ class MockData {
   static List<Customer> createTestCustomers({int count = 3}) => List.generate(
         count,
         (index) => createTestCustomer(
-          id: 'test-customer-${index + 1}',
+          id: 'test-customer-$index',
           name: 'عميل اختبار ${index + 1}',
           phone: '050${1234567 + index}',
+          email: 'test$index@example.com',
         ),
       );
 
+  /// إنشاء فاتورة اختبار افتراضية
+  ///
+  /// يُنشئ فاتورة بقيم افتراضية يمكن تخصيصها.
+  ///
+  /// مثال:
+  /// ```dart
+  /// final invoice = MockData.createTestInvoice();
+  /// final customInvoice = MockData.createTestInvoice(
+  ///   id: 'custom-id',
+  ///   customerId: 'customer-1',
+  ///   status: 'paid',
+  ///   itemCount: 5,
+  ///   itemName: 'خدمة مخصصة',
+  ///   itemPrice: 500.0,
+  /// );
+  /// ```
+  static Invoice createTestInvoice({
+    String? id,
+    String? customerId,
+    String? customerName,
+    DateTime? issuedDate,
+    DateTime? dueDate,
+    String? status,
+    List<InvoiceItem>? items,
+    double? taxRate,
+    String? notes,
+    int? itemCount,
+    String? itemName,
+    double? itemPrice,
+  }) {
+    final now = DateTime.now();
+
+    // إنشاء البنود بناءً على المعاملات
+    List<InvoiceItem> invoiceItems;
+    if (items != null) {
+      invoiceItems = items;
+    } else if (itemCount != null) {
+      // إنشاء عدد محدد من البنود
+      invoiceItems = List.generate(
+        itemCount,
+        (index) => InvoiceItem(
+          id: 'test-item-${index + 1}',
+          name: itemName ?? 'خدمة اختبار ${index + 1}',
+          quantity: 1,
+          price: itemPrice ?? 1000,
+        ),
+      );
+    } else {
+      // البند الافتراضي
+      invoiceItems = [
+        InvoiceItem(
+          id: 'test-item-1',
+          name: itemName ?? 'خدمة اختبار',
+          quantity: 1,
+          price: itemPrice ?? 1000,
+        ),
+      ];
+    }
+
+    return Invoice(
+      id: id ?? 'test-invoice-${now.millisecondsSinceEpoch}',
+      customerId: customerId ?? 'test-customer-1',
+      customerName: customerName ?? 'عميل اختبار',
+      issuedDate: issuedDate ?? now,
+      dueDate: dueDate ?? now.add(const Duration(days: 30)),
+      status: status ?? 'draft',
+      items: invoiceItems,
+      taxRate: taxRate ?? 0.15,
+      notes: notes,
+      createdAt: now,
+      updatedAt: now,
+    );
+  }
+
   /// إنشاء قائمة من الفواتير للاختبار
   ///
-  /// يُستخدم هذا لإنشاء عدة فواتير للاختبارات.
-  ///
-  /// [count] عدد الفواتير (القيمة الافتراضية: 3)
-  /// [customerId] معرف العميل (اختياري)
+  /// يُنشئ عدد محدد من الفواتير بحالات مختلفة.
   ///
   /// مثال:
   /// ```dart
   /// final invoices = MockData.createTestInvoices(count: 5);
   /// ```
-  static List<Invoice> createTestInvoices({
-    int count = 3,
-    String? customerId,
-  }) =>
-      List.generate(
+  static List<Invoice> createTestInvoices({int count = 3}) => List.generate(
         count,
         (index) => createTestInvoice(
-          id: 'test-invoice-${index + 1}',
-          customerId: customerId ?? 'test-customer-${index + 1}',
+          id: 'test-invoice-$index',
+          customerId: 'test-customer-$index',
           customerName: 'عميل اختبار ${index + 1}',
+          status: index.isEven ? 'draft' : 'paid',
         ),
       );
 }

@@ -1,132 +1,103 @@
-/// Mock لـ InvoiceRepository
+/// Mock Invoice Repository - محاكاة لمستودع الفواتير
 ///
-/// يوفر هذا الملف mock object لـ InvoiceRepository للاستخدام في الاختبارات.
-/// يحاكي سلوك repository بدون الحاجة لقاعدة بيانات فعلية.
+/// يوفر تطبيق وهمي لـ InvoiceRepository للاستخدام في الاختبارات
 library;
 
 import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basser_app/features/invoices/domain/repositories/invoice_repository.dart';
 
 /// Mock implementation لـ InvoiceRepository
 ///
-/// يستخدم List في الذاكرة لتخزين الفواتير بدلاً من قاعدة البيانات الفعلية.
-///
-/// مثال:
-/// ```dart
-/// final mockRepo = MockInvoiceRepository();
-/// final invoice = MockData.createTestInvoice();
-/// await mockRepo.addInvoice(invoice);
-/// final invoices = await mockRepo.getAllInvoices();
-/// expect(invoices.length, 1);
-/// ```
-class MockInvoiceRepository {
-  /// قائمة الفواتير في الذاكرة
+/// يخزن الفواتير في List في الذاكرة بدلاً من قاعدة البيانات.
+/// مفيد لاختبار Providers والـ Services بدون الاعتماد على قاعدة البيانات.
+class MockInvoiceRepository implements InvoiceRepository {
   final List<Invoice> _invoices = [];
 
-  /// الحصول على جميع الفواتير
-  ///
-  /// Returns قائمة بجميع الفواتير المخزنة
+  @override
   Future<List<Invoice>> getAllInvoices() async => List.from(_invoices);
 
-  /// الحصول على فاتورة بواسطة المعرف
-  ///
-  /// [id] معرف الفاتورة
-  ///
-  /// Returns الفاتورة إذا وُجدت، null إذا لم تُوجد
-  Future<Invoice?> getInvoiceById(String id) async =>
-      _invoices.cast<Invoice?>().firstWhere(
-            (i) => i?.id == id,
-            orElse: () => null,
-          );
+  @override
+  Future<Invoice?> getInvoiceById(String id) async {
+    try {
+      return _invoices.firstWhere((i) => i.id == id);
+    } on Object {
+      // الفاتورة غير موجودة أو خطأ آخر
+      return null;
+    }
+  }
 
-  /// الحصول على فواتير عميل معين
-  ///
-  /// [customerId] معرف العميل
-  ///
-  /// Returns قائمة فواتير العميل
+  @override
   Future<List<Invoice>> getInvoicesByCustomerId(String customerId) async =>
       _invoices.where((i) => i.customerId == customerId).toList();
 
-  /// الحصول على فواتير بحالة معينة
-  ///
-  /// [status] حالة الفاتورة (draft, issued, paid, overdue, cancelled)
-  ///
-  /// Returns قائمة الفواتير بالحالة المحددة
+  @override
   Future<List<Invoice>> getInvoicesByStatus(String status) async =>
       _invoices.where((i) => i.status == status).toList();
 
-  /// إضافة فاتورة جديدة
-  ///
-  /// [invoice] الفاتورة المراد إضافتها
-  ///
-  /// Throws Exception إذا كان المعرف موجود مسبقاً
+  @override
   Future<void> addInvoice(Invoice invoice) async {
-    // التحقق من عدم وجود فاتورة بنفس المعرف
-    final exists = _invoices.any((i) => i.id == invoice.id);
-    if (exists) {
-      throw Exception('فاتورة بنفس المعرف موجودة مسبقاً');
+    // التحقق من عدم وجود فاتورة بنفس الـ ID
+    if (_invoices.any((i) => i.id == invoice.id)) {
+      throw Exception('Invoice with ID ${invoice.id} already exists');
     }
     _invoices.add(invoice);
   }
 
-  /// تحديث بيانات فاتورة موجودة
-  ///
-  /// [invoice] الفاتورة المراد تحديثها
-  ///
-  /// Throws Exception إذا لم تكن الفاتورة موجودة
+  @override
   Future<void> updateInvoice(Invoice invoice) async {
     final index = _invoices.indexWhere((i) => i.id == invoice.id);
     if (index == -1) {
-      throw Exception('الفاتورة غير موجودة');
+      throw Exception('Invoice with ID ${invoice.id} not found');
     }
     _invoices[index] = invoice;
   }
 
-  /// حذف فاتورة
-  ///
-  /// [id] معرف الفاتورة المراد حذفها
-  ///
-  /// Throws Exception إذا لم تكن الفاتورة موجودة
+  @override
   Future<void> deleteInvoice(String id) async {
-    final initialLength = _invoices.length;
     _invoices.removeWhere((i) => i.id == id);
-    if (_invoices.length == initialLength) {
-      throw Exception('الفاتورة غير موجودة');
+  }
+
+  @override
+  Future<void> deleteAllInvoices() async {
+    _invoices.clear();
+  }
+
+  @override
+  Future<InvoiceStatistics> getInvoiceStatistics() async {
+    final totalInvoices = _invoices.length;
+    final paidInvoices = _invoices.where((i) => i.status == 'paid').length;
+    final overdueInvoices =
+        _invoices.where((i) => i.status == 'overdue').length;
+    final totalRevenue =
+        _invoices.fold<double>(0, (sum, invoice) => sum + invoice.grandTotal);
+    final paidRevenue = _invoices
+        .where((i) => i.status == 'paid')
+        .fold<double>(0, (sum, invoice) => sum + invoice.grandTotal);
+
+    return InvoiceStatistics(
+      totalInvoices: totalInvoices,
+      paidInvoices: paidInvoices,
+      overdueInvoices: overdueInvoices,
+      totalRevenue: totalRevenue,
+      paidRevenue: paidRevenue,
+    );
+  }
+
+  /// دالة مساعدة لإضافة عدة فواتير دفعة واحدة
+  Future<void> addAll(List<Invoice> invoices) async {
+    for (final invoice in invoices) {
+      await addInvoice(invoice);
     }
   }
 
-  /// حساب إجمالي الفواتير
-  ///
-  /// Returns مجموع grandTotal لجميع الفواتير
-  Future<double> getTotalAmount() async => _invoices.fold<double>(
-        0,
-        (sum, invoice) => sum + invoice.grandTotal,
-      );
-
-  /// حساب إجمالي الفواتير المدفوعة
-  ///
-  /// Returns مجموع grandTotal للفواتير المدفوعة فقط
-  Future<double> getPaidAmount() async => _invoices
-      .where((i) => i.status == 'paid')
-      .fold<double>(0, (sum, invoice) => sum + invoice.grandTotal);
-
-  /// حساب إجمالي الفواتير المعلقة
-  ///
-  /// Returns مجموع grandTotal للفواتير غير المدفوعة
-  Future<double> getUnpaidAmount() async => _invoices
-      .where((i) => i.status != 'paid' && i.status != 'cancelled')
-      .fold<double>(0, (sum, invoice) => sum + invoice.grandTotal);
-
-  /// تنظيف القائمة (للاستخدام في tearDown)
+  /// دالة مساعدة لمسح جميع الفواتير (للاختبارات)
   void clear() {
     _invoices.clear();
   }
 
-  /// الحصول على عدد الفواتير
+  /// دالة مساعدة للحصول على عدد الفواتير
   int get count => _invoices.length;
 
-  /// التحقق من أن القائمة فارغة
+  /// دالة مساعدة للتحقق من أن المستودع فارغ
   bool get isEmpty => _invoices.isEmpty;
-
-  /// التحقق من أن القائمة تحتوي على فواتير
-  bool get isNotEmpty => _invoices.isNotEmpty;
 }

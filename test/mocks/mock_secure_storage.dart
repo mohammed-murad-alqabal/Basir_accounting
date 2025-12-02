@@ -1,29 +1,33 @@
-/// Mock لـ FlutterSecureStorage
+/// Mock Secure Storage - محاكاة للتخزين الآمن
 ///
-/// يوفر هذا الملف mock object لـ FlutterSecureStorage للاستخدام في الاختبارات.
-/// يحاكي سلوك التخزين الآمن بدون الحاجة للنظام الفعلي.
+/// يوفر تطبيق وهمي لـ FlutterSecureStorage للاستخدام في الاختبارات
 library;
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// Mock implementation لـ FlutterSecureStorage
 ///
-/// يستخدم Map في الذاكرة لتخزين البيانات بدلاً من التخزين الآمن الفعلي.
+/// يخزن البيانات في Map في الذاكرة بدلاً من التخزين الآمن الفعلي.
+/// مفيد للاختبارات لتجنب الاعتماد على النظام الفعلي.
 ///
-/// مثال:
-/// ```dart
-/// final mockStorage = MockSecureStorage();
-/// await mockStorage.write(key: 'username', value: 'test');
-/// final value = await mockStorage.read(key: 'username');
-/// expect(value, 'test');
-/// ```
-class MockSecureStorage {
-  /// التخزين الداخلي في الذاكرة
+/// ملاحظة: هذا Mock بسيط يوفر فقط الدوال الأساسية المستخدمة في الاختبارات.
+class MockSecureStorage extends FlutterSecureStorage {
+  MockSecureStorage() : super();
+
   final Map<String, String> _storage = {};
 
   /// كتابة قيمة في التخزين
-  ///
-  /// [key] المفتاح
-  /// [value] القيمة (إذا كانت null، يتم حذف المفتاح)
-  Future<void> write({required String key, required String? value}) async {
+  @override
+  Future<void> write({
+    required String key,
+    required String? value,
+    IOSOptions? iOptions,
+    AndroidOptions? aOptions,
+    LinuxOptions? lOptions,
+    WebOptions? webOptions,
+    MacOsOptions? mOptions,
+    WindowsOptions? wOptions,
+  }) async {
     if (value != null) {
       _storage[key] = value;
     } else {
@@ -32,48 +36,81 @@ class MockSecureStorage {
   }
 
   /// قراءة قيمة من التخزين
-  ///
-  /// [key] المفتاح
-  ///
-  /// Returns القيمة أو null إذا لم يكن المفتاح موجوداً
-  Future<String?> read({required String key}) async => _storage[key];
-
-  /// قراءة جميع القيم من التخزين
-  ///
-  /// Returns نسخة من جميع البيانات المخزنة
-  Future<Map<String, String>> readAll() async => Map.from(_storage);
+  @override
+  Future<String?> read({
+    required String key,
+    IOSOptions? iOptions,
+    AndroidOptions? aOptions,
+    LinuxOptions? lOptions,
+    WebOptions? webOptions,
+    MacOsOptions? mOptions,
+    WindowsOptions? wOptions,
+  }) async =>
+      _storage[key];
 
   /// حذف قيمة من التخزين
-  ///
-  /// [key] المفتاح المراد حذفه
-  Future<void> delete({required String key}) async {
+  @override
+  Future<void> delete({
+    required String key,
+    IOSOptions? iOptions,
+    AndroidOptions? aOptions,
+    LinuxOptions? lOptions,
+    WebOptions? webOptions,
+    MacOsOptions? mOptions,
+    WindowsOptions? wOptions,
+  }) async {
     _storage.remove(key);
   }
 
   /// حذف جميع القيم من التخزين
-  Future<void> deleteAll() async {
+  @override
+  Future<void> deleteAll({
+    IOSOptions? iOptions,
+    AndroidOptions? aOptions,
+    LinuxOptions? lOptions,
+    WebOptions? webOptions,
+    MacOsOptions? mOptions,
+    WindowsOptions? wOptions,
+  }) async {
     _storage.clear();
   }
 
   /// التحقق من وجود مفتاح في التخزين
-  ///
-  /// [key] المفتاح
-  ///
-  /// Returns true إذا كان المفتاح موجوداً
-  Future<bool> containsKey({required String key}) async =>
+  @override
+  Future<bool> containsKey({
+    required String key,
+    IOSOptions? iOptions,
+    AndroidOptions? aOptions,
+    LinuxOptions? lOptions,
+    WebOptions? webOptions,
+    MacOsOptions? mOptions,
+    WindowsOptions? wOptions,
+  }) async =>
       _storage.containsKey(key);
 
-  /// تنظيف التخزين (للاستخدام في tearDown)
+  /// قراءة جميع القيم من التخزين
+  @override
+  Future<Map<String, String>> readAll({
+    IOSOptions? iOptions,
+    AndroidOptions? aOptions,
+    LinuxOptions? lOptions,
+    WebOptions? webOptions,
+    MacOsOptions? mOptions,
+    WindowsOptions? wOptions,
+  }) async =>
+      Map.from(_storage);
+
+  /// دالة مساعدة للحصول على جميع المفاتيح المخزنة
+  Set<String> get keys => _storage.keys.toSet();
+
+  /// دالة مساعدة للحصول على عدد العناصر المخزنة
+  int get length => _storage.length;
+
+  /// دالة مساعدة للتحقق من أن التخزين فارغ
+  bool get isEmpty => _storage.isEmpty;
+
+  /// دالة مساعدة لمسح جميع البيانات (للاختبارات)
   void clear() {
     _storage.clear();
   }
-
-  /// الحصول على عدد العناصر المخزنة
-  int get length => _storage.length;
-
-  /// التحقق من أن التخزين فارغ
-  bool get isEmpty => _storage.isEmpty;
-
-  /// التحقق من أن التخزين يحتوي على بيانات
-  bool get isNotEmpty => _storage.isNotEmpty;
 }

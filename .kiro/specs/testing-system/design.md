@@ -1,14 +1,16 @@
 # Design Document - نظام الاختبارات لتطبيق بصير
 
-**التاريخ:** 24 نوفمبر 2025  
-**الإصدار:** 1.0  
-**الحالة:** Draft
+**المشروع:** بصير MVP  
+**التاريخ:** 2 ديسمبر 2025  
+**المؤلف:** فريق وكلاء تطوير مشروع بصير  
+**الإصدار:** 1.1  
+**الحالة:** معتمد
 
 ---
 
 ## Overview
 
-هذا المستند يصف التصميم الشامل لنظام الاختبارات في تطبيق بصير. الهدف هو بناء نظام اختبار قوي وشامل يغطي جميع طبقات التطبيق (Data, Domain, Presentation) لضمان جودة الكود واستقراره.
+هذا المستند يصف التصميم الشامل لنظام الاختبارات في تطبيق بصير. الهدف هو بناء نظام اختبار قوي وشامل يغطي جميع طبقات التطبيق (Data, Domain, Presentation) لضمان جودة الكود واستقراره. يعتمد التصميم على أفضل الممارسات في اختبارات Flutter ويستخدم مكتبات موثوقة مثل flutter_test و mockito لضمان اختبارات فعالة وقابلة للصيانة.
 
 ### الأهداف الرئيسية
 
@@ -78,12 +80,12 @@ class TestHelpers {
       name: 'test_${DateTime.now().millisecondsSinceEpoch}',
     );
   }
-  
+
   /// تنظيف قاعدة البيانات بعد الاختبار
   static Future<void> cleanupTestIsar(Isar isar) async {
     await isar.close(deleteFromDisk: true);
   }
-  
+
   /// إنشاء ProviderContainer للاختبار
   static ProviderContainer createTestContainer({
     List<Override>? overrides,
@@ -111,7 +113,7 @@ class MockData {
       email: 'test@example.com',
     );
   }
-  
+
   /// فاتورة اختبار افتراضية
   static Invoice createTestInvoice({
     String? id,
@@ -141,7 +143,7 @@ class MockData {
 ```dart
 class MockSecureStorage extends Mock implements FlutterSecureStorage {
   final Map<String, String> _storage = {};
-  
+
   @override
   Future<void> write({
     required String key,
@@ -151,17 +153,17 @@ class MockSecureStorage extends Mock implements FlutterSecureStorage {
       _storage[key] = value;
     }
   }
-  
+
   @override
   Future<String?> read({required String key}) async {
     return _storage[key];
   }
-  
+
   @override
   Future<void> delete({required String key}) async {
     _storage.remove(key);
   }
-  
+
   @override
   Future<void> deleteAll() async {
     _storage.clear();
@@ -174,17 +176,17 @@ class MockSecureStorage extends Mock implements FlutterSecureStorage {
 ```dart
 class MockCustomerRepository extends Mock implements CustomerRepository {
   final List<Customer> _customers = [];
-  
+
   @override
   Future<List<Customer>> getAllCustomers() async {
     return List.from(_customers);
   }
-  
+
   @override
   Future<void> addCustomer(Customer customer) async {
     _customers.add(customer);
   }
-  
+
   @override
   Future<void> updateCustomer(Customer customer) async {
     final index = _customers.indexWhere((c) => c.id == customer.id);
@@ -192,7 +194,7 @@ class MockCustomerRepository extends Mock implements CustomerRepository {
       _customers[index] = customer;
     }
   }
-  
+
   @override
   Future<void> deleteCustomer(String id) async {
     _customers.removeWhere((c) => c.id == id);
@@ -213,14 +215,14 @@ class CustomerFixtures {
     email: 'ahmed@example.com',
     address: 'الرياض، السعودية',
   );
-  
+
   static final customer2 = Customer(
     id: 'customer-2',
     name: 'فاطمة علي',
     phone: '0507654321',
     email: 'fatima@example.com',
   );
-  
+
   static List<Customer> get allCustomers => [customer1, customer2];
 }
 ```
@@ -278,33 +280,35 @@ class CustomerFixtures {
 **الهدف:** اختبار عمليات CRUD على قاعدة البيانات
 
 **الاستراتيجية:**
+
 - استخدام Isar في الذاكرة
 - اختبار كل عملية بشكل منفصل
 - التحقق من معالجة الأخطاء
 
 **مثال:**
+
 ```dart
 group('CustomerRepository', () {
   late Isar isar;
   late CustomerRepositoryImpl repository;
-  
+
   setUp(() async {
     isar = await TestHelpers.createTestIsar();
     repository = CustomerRepositoryImpl(isar);
   });
-  
+
   tearDown(() async {
     await TestHelpers.cleanupTestIsar(isar);
   });
-  
+
   test('should add customer successfully', () async {
     // Arrange
     final customer = MockData.createTestCustomer();
-    
+
     // Act
     await repository.addCustomer(customer);
     final customers = await repository.getAllCustomers();
-    
+
     // Assert
     expect(customers.length, 1);
     expect(customers.first.name, customer.name);
@@ -317,30 +321,32 @@ group('CustomerRepository', () {
 **الهدف:** اختبار منطق الأعمال
 
 **الاستراتيجية:**
+
 - استخدام Mock للاعتماديات الخارجية
 - اختبار جميع السيناريوهات (نجاح، فشل)
 - التحقق من معالجة الأخطاء
 
 **مثال:**
+
 ```dart
 group('AuthService', () {
   late MockSecureStorage mockStorage;
   late AuthService authService;
-  
+
   setUp(() {
     mockStorage = MockSecureStorage();
     authService = AuthService(secureStorage: mockStorage);
   });
-  
+
   test('should register user successfully', () async {
     // Arrange
     const username = 'testuser';
     const password = 'redacted';
-    
+
     // Act
     await authService.register(username, password);
     final hasAccount = await authService.hasAccount();
-    
+
     // Assert
     expect(hasAccount, true);
   });
@@ -352,25 +358,27 @@ group('AuthService', () {
 **الهدف:** اختبار تحويل البيانات والتحقق من الصحة
 
 **الاستراتيجية:**
+
 - اختبار تحويل من/إلى JSON
 - اختبار قواعد التحقق
 - اختبار الخصائص المحسوبة
 
 **مثال:**
+
 ```dart
 group('Customer Model', () {
   test('should convert to JSON correctly', () {
     // Arrange
     final customer = CustomerFixtures.customer1;
-    
+
     // Act
     final json = customer.toJson();
-    
+
     // Assert
     expect(json['name'], customer.name);
     expect(json['phone'], customer.phone);
   });
-  
+
   test('should create from JSON correctly', () {
     // Arrange
     final json = {
@@ -378,10 +386,10 @@ group('Customer Model', () {
       'name': 'Test Customer',
       'phone': '0501234567',
     };
-    
+
     // Act
     final customer = Customer.fromJson(json);
-    
+
     // Assert
     expect(customer.name, json['name']);
     expect(customer.phone, json['phone']);
@@ -396,17 +404,19 @@ group('Customer Model', () {
 **الهدف:** اختبار المكونات الأساسية
 
 **الاستراتيجية:**
+
 - اختبار العرض الصحيح
 - اختبار التفاعلات
 - اختبار الحالات المختلفة
 
 **مثال:**
+
 ```dart
 group('AppButton', () {
   testWidgets('should display text correctly', (tester) async {
     // Arrange
     const buttonText = 'اضغط هنا';
-    
+
     // Act
     await tester.pumpWidget(
       MaterialApp(
@@ -418,15 +428,15 @@ group('AppButton', () {
         ),
       ),
     );
-    
+
     // Assert
     expect(find.text(buttonText), findsOneWidget);
   });
-  
+
   testWidgets('should call onPressed when tapped', (tester) async {
     // Arrange
     var pressed = false;
-    
+
     // Act
     await tester.pumpWidget(
       MaterialApp(
@@ -438,9 +448,9 @@ group('AppButton', () {
         ),
       ),
     );
-    
+
     await tester.tap(find.byType(AppButton));
-    
+
     // Assert
     expect(pressed, true);
   });
@@ -452,24 +462,26 @@ group('AppButton', () {
 **الهدف:** اختبار الشاشات الكاملة
 
 **الاستراتيجية:**
+
 - استخدام Mock Providers
 - اختبار عرض البيانات
 - اختبار التفاعلات الأساسية
 
 **مثال:**
+
 ```dart
 group('CustomersScreen', () {
   testWidgets('should display list of customers', (tester) async {
     // Arrange
     final mockRepository = MockCustomerRepository();
     mockRepository._customers.addAll(CustomerFixtures.allCustomers);
-    
+
     final container = TestHelpers.createTestContainer(
       overrides: [
         customerRepositoryProvider.overrideWithValue(mockRepository),
       ],
     );
-    
+
     // Act
     await tester.pumpWidget(
       UncontrolledProviderScope(
@@ -479,9 +491,9 @@ group('CustomersScreen', () {
         ),
       ),
     );
-    
+
     await tester.pumpAndSettle();
-    
+
     // Assert
     expect(find.text('أحمد محمد'), findsOneWidget);
     expect(find.text('فاطمة علي'), findsOneWidget);
@@ -494,28 +506,30 @@ group('CustomersScreen', () {
 **الهدف:** اختبار إدارة الحالة
 
 **الاستراتيجية:**
+
 - استخدام Mock Repository
 - اختبار تحميل البيانات
 - اختبار تحديث الحالة
 - التحقق من إشعار المستمعين
 
 **مثال:**
+
 ```dart
 group('CustomerProvider', () {
   test('should load customers successfully', () async {
     // Arrange
     final mockRepository = MockCustomerRepository();
     mockRepository._customers.addAll(CustomerFixtures.allCustomers);
-    
+
     final container = TestHelpers.createTestContainer(
       overrides: [
         customerRepositoryProvider.overrideWithValue(mockRepository),
       ],
     );
-    
+
     // Act
     final customers = await container.read(customersProvider.future);
-    
+
     // Assert
     expect(customers.length, 2);
   });
@@ -524,16 +538,147 @@ group('CustomerProvider', () {
 
 ---
 
+## Correctness Properties
+
+_A property is a characteristic or behavior that should hold true across all valid executions of a system-essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees._
+
+### Property 1: Repository CRUD Completeness
+
+_For any_ Repository implementation, all CRUD operations (Create, Read, Update, Delete) should work correctly and maintain data integrity.
+
+**Validates: Requirements 1.1, 1.2**
+
+**Test Strategy:**
+
+- Create: Adding an entity should increase collection size by 1
+- Read: Retrieved entities should match stored entities
+- Update: Modified entities should reflect changes
+- Delete: Removed entities should not be retrievable
+
+### Property 2: Mock Isolation
+
+_For any_ test using external dependencies (Secure Storage, Isar), the test should use mocks and not depend on the actual system.
+
+**Validates: Requirements 2.3, 2.4**
+
+**Test Strategy:**
+
+- All tests using FlutterSecureStorage use MockSecureStorage
+- All tests using Isar use in-memory database
+- No test should fail due to external system unavailability
+
+### Property 3: Widget Interaction Consistency
+
+_For any_ interactive widget, all user interactions should trigger the expected callbacks and state changes.
+
+**Validates: Requirements 3.2, 3.4**
+
+**Test Strategy:**
+
+- Button taps trigger onPressed callbacks
+- Text field inputs update state correctly
+- All interactive elements respond to user actions
+
+### Property 4: Test Data Availability
+
+_For any_ test requiring data, fixtures and mock data should be readily available without manual creation.
+
+**Validates: Requirements 4.2, 4.4**
+
+**Test Strategy:**
+
+- Helper functions provide test data easily
+- Fixtures cover common test scenarios
+- Mock objects are reusable across tests
+
+### Property 5: Test Execution Speed
+
+_For any_ test suite execution, the total time should be less than 30 seconds.
+
+**Validates: Requirements 5.1**
+
+**Test Strategy:**
+
+- Individual tests complete in < 100ms
+- Use of in-memory databases
+- Parallel test execution where possible
+
+### Property 6: Provider State Management
+
+_For any_ Provider state change, all listeners should be notified correctly.
+
+**Validates: Requirements 6.4**
+
+**Test Strategy:**
+
+- State changes trigger listener notifications
+- AsyncValue states (loading, data, error) work correctly
+- Provider rebuilds happen when expected
+
+### Property 7: Model Serialization Round-Trip
+
+_For any_ model with JSON serialization, converting to JSON and back should produce an equivalent object.
+
+**Validates: Requirements 7.1, 7.2**
+
+**Test Strategy:**
+
+- Customer: `fromJson(toJson(customer)) == customer`
+- Invoice: `fromJson(toJson(invoice)) == invoice`
+- All fields preserved through serialization
+
+### Property 8: Screen Navigation Consistency
+
+_For any_ screen with navigation, navigating to another screen should work correctly and maintain state.
+
+**Validates: Requirements 8.4**
+
+**Test Strategy:**
+
+- Navigation actions trigger route changes
+- Back navigation works correctly
+- Screen state is preserved when appropriate
+
+### Property 9: Error Handling Completeness
+
+_For any_ service operation that can fail, errors should be handled gracefully with appropriate messages.
+
+**Validates: Requirements 9.3**
+
+**Test Strategy:**
+
+- Failed operations throw appropriate exceptions
+- Error messages are clear and actionable
+- System remains stable after errors
+
+### Property 10: Test Coverage Threshold
+
+_For any_ code module, test coverage should meet or exceed the defined thresholds (70% overall, 100% for critical components).
+
+**Validates: Requirements 5.3**
+
+**Test Strategy:**
+
+- Repositories: 100% coverage
+- Services: 100% coverage
+- Models: 100% coverage
+- Widgets: ≥ 80% coverage
+- Providers: ≥ 90% coverage
+
+---
+
 ## Error Handling
 
 ### استراتيجية معالجة الأخطاء في الاختبارات
 
 1. **Database Errors**
+
    - اختبار فشل الاتصال
    - اختبار فشل العمليات
    - التحقق من رسائل الخطأ
 
 2. **Validation Errors**
+
    - اختبار البيانات غير الصحيحة
    - اختبار القيم الفارغة
    - اختبار القيود
@@ -554,7 +699,7 @@ test('should throw exception when adding invalid customer', () async {
     name: '',  // Invalid: empty name
     phone: '',
   );
-  
+
   // Act & Assert
   expect(
     () => repository.addCustomer(invalidCustomer),
@@ -569,13 +714,13 @@ test('should throw exception when adding invalid customer', () async {
 
 ### المكتبات المستخدمة
 
-| المكتبة | الإصدار | الاستخدام |
-|---------|---------|-----------|
-| **flutter_test** | SDK | إطار الاختبار الأساسي |
-| **mockito** | ^5.4.0 | إنشاء Mock objects |
-| **build_runner** | ^2.4.0 | توليد Mocks |
-| **flutter_riverpod** | ^2.4.0 | اختبار Providers |
-| **isar** | ^3.1.0+1 | قاعدة بيانات الاختبار |
+| المكتبة              | الإصدار  | الاستخدام             |
+| -------------------- | -------- | --------------------- |
+| **flutter_test**     | SDK      | إطار الاختبار الأساسي |
+| **mockito**          | ^5.4.0   | إنشاء Mock objects    |
+| **build_runner**     | ^2.4.0   | توليد Mocks           |
+| **flutter_riverpod** | ^2.4.0   | اختبار Providers      |
+| **isar**             | ^3.1.0+1 | قاعدة بيانات الاختبار |
 
 ### إضافة المكتبات إلى pubspec.yaml
 
@@ -611,14 +756,17 @@ open coverage/html/index.html
 ### تحسين أداء الاختبارات
 
 1. **استخدام setUpAll و tearDownAll**
+
    - لتهيئة موارد مشتركة مرة واحدة
    - تقليل وقت التنفيذ
 
 2. **Parallel Execution**
+
    - تشغيل الاختبارات بالتوازي
    - استخدام `flutter test --concurrency=4`
 
 3. **In-Memory Database**
+
    - استخدام Isar في الذاكرة
    - تجنب عمليات القرص البطيئة
 
@@ -646,20 +794,20 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v3
-      
+
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
-      
+          flutter-version: "3.24.0"
+
       - name: Install dependencies
         run: flutter pub get
-      
+
       - name: Run tests
         run: flutter test --coverage
-      
+
       - name: Check coverage
         run: |
           COVERAGE=$(lcov --summary coverage/lcov.info | grep lines | awk '{print $2}' | sed 's/%//')
@@ -667,7 +815,7 @@ jobs:
             echo "Coverage is below 70%: $COVERAGE%"
             exit 1
           fi
-      
+
       - name: Upload coverage
         uses: codecov/codecov-action@v3
         with:
@@ -682,7 +830,7 @@ jobs:
 
 ```dart
 /// اختبار إضافة عميل جديد
-/// 
+///
 /// يتحقق من:
 /// - إضافة العميل إلى قاعدة البيانات
 /// - استرجاع العميل بنجاح
@@ -697,6 +845,7 @@ test('should add customer successfully', () async {
 **القاعدة:** `should [expected behavior] when [condition]`
 
 **أمثلة:**
+
 - `should add customer successfully when valid data provided`
 - `should throw exception when invalid data provided`
 - `should return empty list when no customers exist`
@@ -706,25 +855,30 @@ test('should add customer successfully', () async {
 ## Next Steps
 
 ### المرحلة 1: الأساسيات (أسبوع 1)
+
 1. إعداد البنية التحتية
 2. إنشاء Helpers و Mocks
 3. اختبارات Models
 4. اختبارات Repositories
 
 ### المرحلة 2: منطق الأعمال (أسبوع 2)
+
 5. اختبارات Services
 6. اختبارات Providers
 
 ### المرحلة 3: الواجهات (أسبوع 3)
+
 7. اختبارات Widgets
 8. اختبارات Screens
 
 ### المرحلة 4: التكامل (أسبوع 4)
+
 9. إعداد CI/CD
 10. تحقيق التغطية المستهدفة
 11. اختبارات الخدمات الإضافية
 
 ---
 
-**تاريخ آخر تحديث:** 24 نوفمبر 2025  
-**الحالة:** جاهز للمراجعة
+**تم إعداد هذا المستند بواسطة:** فريق وكلاء تطوير مشروع بصير  
+**آخر تحديث:** 2 ديسمبر 2025  
+**الحالة:** ✅ معتمد ونشط

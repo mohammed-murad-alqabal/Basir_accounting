@@ -1,171 +1,144 @@
-/// أدوات مساعدة إضافية للاختبارات
+/// Test Utils - أدوات مساعدة إضافية للاختبارات
 ///
-/// يوفر هذا الملف مجموعة من الأدوات المساعدة الإضافية
-/// لتسهيل كتابة الاختبارات.
+/// يوفر هذا الملف أدوات مساعدة إضافية مثل matchers مخصصة
+/// ودوال للتحقق من القيم.
 library;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// فئة تحتوي على أدوات مساعدة للاختبارات
+/// أدوات مساعدة للاختبارات
 class TestUtils {
-  /// إنشاء MaterialApp بسيط للاختبارات
+  /// التحقق من أن قيمتين متساويتان تقريباً (للأرقام العشرية)
   ///
-  /// يُستخدم هذا لتغليف widget في MaterialApp للاختبار.
-  ///
-  /// [child] الـ widget المراد اختباره
-  /// [locale] اللغة (اختياري، القيمة الافتراضية: العربية)
+  /// مفيد عند مقارنة أرقام عشرية قد تحتوي على أخطاء تقريب.
   ///
   /// مثال:
   /// ```dart
-  /// await tester.pumpWidget(
-  ///   TestUtils.wrapWithMaterialApp(
-  ///     child: MyWidget(),
-  ///   ),
-  /// );
+  /// expect(TestUtils.approximatelyEqual(1.0000001, 1.0), isTrue);
   /// ```
-  static Widget wrapWithMaterialApp({
-    required Widget child,
-    Locale locale = const Locale('ar', 'SA'),
+  static bool approximatelyEqual(
+    double a,
+    double b, {
+    double epsilon = 0.001,
   }) =>
-      MaterialApp(
-        locale: locale,
-        home: Scaffold(
-          body: child,
-        ),
+      (a - b).abs() < epsilon;
+
+  /// Matcher للتحقق من أن رقم عشري يساوي قيمة تقريباً
+  ///
+  /// مثال:
+  /// ```dart
+  /// expect(1.0000001, approximatelyEquals(1.0));
+  /// ```
+  static Matcher approximatelyEquals(double value, {double epsilon = 0.001}) =>
+      predicate<double>(
+        (actual) => approximatelyEqual(actual, value, epsilon: epsilon),
+        'approximately equals $value',
       );
 
-  /// الانتظار حتى تكتمل جميع الـ animations
+  /// التحقق من أن تاريخين متساويان (بدون الوقت)
   ///
-  /// يُستخدم هذا بعد pumpWidget للتأكد من اكتمال جميع الـ animations.
-  ///
-  /// [tester] الـ WidgetTester
-  /// [duration] المدة القصوى للانتظار (اختياري)
+  /// يقارن التواريخ بدون النظر إلى الوقت.
   ///
   /// مثال:
   /// ```dart
-  /// await tester.pumpWidget(widget);
-  /// await TestUtils.pumpAndSettle(tester);
+  /// final date1 = DateTime(2025, 12, 1, 10, 30);
+  /// final date2 = DateTime(2025, 12, 1, 15, 45);
+  /// expect(TestUtils.isSameDate(date1, date2), isTrue);
   /// ```
-  static Future<void> pumpAndSettle(
-    WidgetTester tester, {
-    Duration duration = const Duration(seconds: 10),
-  }) async {
-    await tester.pumpAndSettle(duration);
+  static bool isSameDate(DateTime a, DateTime b) =>
+      a.year == b.year && a.month == b.month && a.day == b.day;
+
+  /// Matcher للتحقق من أن تاريخين متساويان (بدون الوقت)
+  ///
+  /// مثال:
+  /// ```dart
+  /// final expected = DateTime(2025, 12, 1);
+  /// expect(DateTime(2025, 12, 1, 10, 30), isSameDateAs(expected));
+  /// ```
+  static Matcher isSameDateAs(DateTime date) => predicate<DateTime>(
+        (actual) => isSameDate(actual, date),
+        'is same date as ${date.year}-${date.month}-${date.day}',
+      );
+
+  /// انتظار حتى يتم تنفيذ جميع العمليات الغير متزامنة
+  ///
+  /// مفيد في الاختبارات عند الحاجة للانتظار حتى تكتمل جميع
+  /// العمليات الغير متزامنة.
+  ///
+  /// مثال:
+  /// ```dart
+  /// await TestUtils.waitForAsync();
+  /// ```
+  static Future<void> waitForAsync() async {
+    await Future<void>.delayed(Duration.zero);
   }
 
-  /// البحث عن widget بالنص
+  /// انتظار لمدة محددة (للاختبارات فقط)
   ///
-  /// يُستخدم هذا للبحث عن widget يحتوي على نص معين.
-  ///
-  /// [text] النص المراد البحث عنه
-  ///
-  /// Returns Finder للـ widget
+  /// استخدم بحذر - يفضل استخدام waitForAsync() بدلاً منها.
   ///
   /// مثال:
   /// ```dart
-  /// expect(TestUtils.findByText('مرحباً'), findsOneWidget);
+  /// await TestUtils.wait(milliseconds: 100);
   /// ```
-  static Finder findByText(String text) => find.text(text);
-
-  /// البحث عن widget بالنوع
-  ///
-  /// يُستخدم هذا للبحث عن widget من نوع معين.
-  ///
-  /// [T] نوع الـ widget
-  ///
-  /// Returns Finder للـ widget
-  ///
-  /// مثال:
-  /// ```dart
-  /// expect(TestUtils.findByType<ElevatedButton>(), findsOneWidget);
-  /// ```
-  static Finder findByType<T>() => find.byType(T);
-
-  /// البحث عن widget بالـ Key
-  ///
-  /// يُستخدم هذا للبحث عن widget بـ key معين.
-  ///
-  /// [key] الـ key المراد البحث عنه
-  ///
-  /// Returns Finder للـ widget
-  ///
-  /// مثال:
-  /// ```dart
-  /// expect(TestUtils.findByKey(Key('my-widget')), findsOneWidget);
-  /// ```
-  static Finder findByKey(Key key) => find.byKey(key);
-
-  /// الضغط على widget
-  ///
-  /// يُستخدم هذا للضغط على widget.
-  ///
-  /// [tester] الـ WidgetTester
-  /// [finder] الـ Finder للـ widget
-  ///
-  /// مثال:
-  /// ```dart
-  /// await TestUtils.tap(tester, find.text('اضغط هنا'));
-  /// ```
-  static Future<void> tap(WidgetTester tester, Finder finder) async {
-    await tester.tap(finder);
-    await tester.pump();
+  static Future<void> wait({int milliseconds = 100}) async {
+    await Future<void>.delayed(Duration(milliseconds: milliseconds));
   }
 
-  /// إدخال نص في TextField
-  ///
-  /// يُستخدم هذا لإدخال نص في TextField.
-  ///
-  /// [tester] الـ WidgetTester
-  /// [finder] الـ Finder للـ TextField
-  /// [text] النص المراد إدخاله
+  /// التحقق من أن قائمة تحتوي على عناصر بترتيب معين
   ///
   /// مثال:
   /// ```dart
-  /// await TestUtils.enterText(
-  ///   tester,
-  ///   find.byType(TextField),
-  ///   'نص الاختبار',
-  /// );
+  /// final list = [1, 2, 3, 4, 5];
+  /// expect(TestUtils.isOrdered(list), isTrue);
   /// ```
-  static Future<void> enterText(
-    WidgetTester tester,
-    Finder finder,
-    String text,
-  ) async {
-    await tester.enterText(finder, text);
-    await tester.pump();
+  static bool isOrdered<T extends Comparable<T>>(
+    List<T> list, {
+    bool ascending = true,
+  }) {
+    for (var i = 0; i < list.length - 1; i++) {
+      final comparison = list[i].compareTo(list[i + 1]);
+      if (ascending && comparison > 0) return false;
+      if (!ascending && comparison < 0) return false;
+    }
+    return true;
   }
 
-  /// التحقق من وجود widget
-  ///
-  /// يُستخدم هذا للتحقق من وجود widget.
-  ///
-  /// [finder] الـ Finder للـ widget
-  ///
-  /// Returns true إذا كان الـ widget موجود
+  /// Matcher للتحقق من أن قائمة مرتبة
   ///
   /// مثال:
   /// ```dart
-  /// final exists = TestUtils.widgetExists(find.text('مرحباً'));
+  /// expect([1, 2, 3], TestUtils.isOrderedAscending);
+  /// expect([3, 2, 1], TestUtils.isOrderedDescending);
   /// ```
-  static bool widgetExists(Finder finder) => finder.evaluate().isNotEmpty;
+  static Matcher get isOrderedAscending => predicate<List<num>>(
+        (list) => isOrdered<num>(list),
+        'is ordered ascending',
+      );
 
-  /// الانتظار لمدة معينة
-  ///
-  /// يُستخدم هذا للانتظار لمدة معينة في الاختبار.
-  ///
-  /// [tester] الـ WidgetTester
-  /// [duration] المدة
+  static Matcher get isOrderedDescending => predicate<List<num>>(
+        (list) => isOrdered<num>(list, ascending: false),
+        'is ordered descending',
+      );
+
+  /// التحقق من أن نص يحتوي على جميع الكلمات المحددة
   ///
   /// مثال:
   /// ```dart
-  /// await TestUtils.wait(tester, Duration(seconds: 1));
+  /// final text = 'مرحباً بك في تطبيق بصير';
+  /// expect(TestUtils.containsAllWords(text, ['مرحباً', 'بصير']), isTrue);
   /// ```
-  static Future<void> wait(
-    WidgetTester tester,
-    Duration duration,
-  ) async {
-    await tester.pump(duration);
-  }
+  static bool containsAllWords(String text, List<String> words) =>
+      words.every((word) => text.contains(word));
+
+  /// Matcher للتحقق من أن نص يحتوي على جميع الكلمات
+  ///
+  /// مثال:
+  /// ```dart
+  /// expect('مرحباً بك في بصير', containsWords(['مرحباً', 'بصير']));
+  /// ```
+  static Matcher containsWords(List<String> words) => predicate<String>(
+        (text) => TestUtils.containsAllWords(text, words),
+        'contains all words: ${words.join(", ")}',
+      );
 }

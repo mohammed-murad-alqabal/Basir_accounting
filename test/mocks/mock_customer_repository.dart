@@ -1,103 +1,87 @@
-/// Mock لـ CustomerRepository
+/// Mock Customer Repository - محاكاة لمستودع العملاء
 ///
-/// يوفر هذا الملف mock object لـ CustomerRepository للاستخدام في الاختبارات.
-/// يحاكي سلوك repository بدون الحاجة لقاعدة بيانات فعلية.
+/// يوفر تطبيق وهمي لـ CustomerRepository للاستخدام في الاختبارات
 library;
 
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
+import 'package:basser_app/features/customers/domain/repositories/customer_repository.dart';
 
 /// Mock implementation لـ CustomerRepository
 ///
-/// يستخدم List في الذاكرة لتخزين العملاء بدلاً من قاعدة البيانات الفعلية.
-///
-/// مثال:
-/// ```dart
-/// final mockRepo = MockCustomerRepository();
-/// final customer = MockData.createTestCustomer();
-/// await mockRepo.addCustomer(customer);
-/// final customers = await mockRepo.getAllCustomers();
-/// expect(customers.length, 1);
-/// ```
-class MockCustomerRepository {
-  /// قائمة العملاء في الذاكرة
+/// يخزن العملاء في List في الذاكرة بدلاً من قاعدة البيانات.
+/// مفيد لاختبار Providers والـ Services بدون الاعتماد على قاعدة البيانات.
+class MockCustomerRepository implements CustomerRepository {
   final List<Customer> _customers = [];
 
-  /// الحصول على جميع العملاء
-  ///
-  /// Returns قائمة بجميع العملاء المخزنين
+  @override
   Future<List<Customer>> getAllCustomers() async => List.from(_customers);
 
-  /// الحصول على عميل بواسطة المعرف
-  ///
-  /// [id] معرف العميل
-  ///
-  /// Returns العميل إذا وُجد، null إذا لم يُوجد
-  Future<Customer?> getCustomerById(String id) async =>
-      _customers.cast<Customer?>().firstWhere(
-            (c) => c?.id == id,
-            orElse: () => null,
-          );
+  @override
+  Future<Customer?> getCustomerById(String id) async {
+    try {
+      return _customers.firstWhere((c) => c.id == id);
+    } on Object {
+      // العميل غير موجود أو خطأ آخر
+      return null;
+    }
+  }
 
-  /// إضافة عميل جديد
-  ///
-  /// [customer] العميل المراد إضافته
-  ///
-  /// Throws Exception إذا كان المعرف موجود مسبقاً
+  @override
   Future<void> addCustomer(Customer customer) async {
-    // التحقق من عدم وجود عميل بنفس المعرف
-    final exists = _customers.any((c) => c.id == customer.id);
-    if (exists) {
-      throw Exception('عميل بنفس المعرف موجود مسبقاً');
+    // التحقق من عدم وجود عميل بنفس الـ ID
+    if (_customers.any((c) => c.id == customer.id)) {
+      throw Exception('Customer with ID ${customer.id} already exists');
     }
     _customers.add(customer);
   }
 
-  /// تحديث بيانات عميل موجود
-  ///
-  /// [customer] العميل المراد تحديثه
-  ///
-  /// Throws Exception إذا لم يكن العميل موجوداً
+  @override
   Future<void> updateCustomer(Customer customer) async {
     final index = _customers.indexWhere((c) => c.id == customer.id);
     if (index == -1) {
-      throw Exception('العميل غير موجود');
+      throw Exception('Customer with ID ${customer.id} not found');
     }
     _customers[index] = customer;
   }
 
-  /// حذف عميل
-  ///
-  /// [id] معرف العميل المراد حذفه
-  ///
-  /// Throws Exception إذا لم يكن العميل موجوداً
+  @override
   Future<void> deleteCustomer(String id) async {
-    final initialLength = _customers.length;
     _customers.removeWhere((c) => c.id == id);
-    if (_customers.length == initialLength) {
-      throw Exception('العميل غير موجود');
+  }
+
+  @override
+  Future<void> deleteAllCustomers() async {
+    _customers.clear();
+  }
+
+  @override
+  Future<List<Customer>> searchCustomers(String query) async {
+    final lowerQuery = query.toLowerCase();
+    return _customers
+        .where(
+          (c) =>
+              c.name.toLowerCase().contains(lowerQuery) ||
+              (c.phone?.contains(query) ?? false) ||
+              (c.email?.toLowerCase().contains(lowerQuery) ?? false),
+        )
+        .toList();
+  }
+
+  /// دالة مساعدة لإضافة عدة عملاء دفعة واحدة
+  Future<void> addAll(List<Customer> customers) async {
+    for (final customer in customers) {
+      await addCustomer(customer);
     }
   }
 
-  /// البحث عن عملاء بالاسم
-  ///
-  /// [query] نص البحث
-  ///
-  /// Returns قائمة العملاء الذين يحتوي اسمهم على نص البحث
-  Future<List<Customer>> searchCustomers(String query) async => _customers
-      .where((c) => c.name.toLowerCase().contains(query.toLowerCase()))
-      .toList();
-
-  /// تنظيف القائمة (للاستخدام في tearDown)
+  /// دالة مساعدة لمسح جميع العملاء (للاختبارات)
   void clear() {
     _customers.clear();
   }
 
-  /// الحصول على عدد العملاء
+  /// دالة مساعدة للحصول على عدد العملاء
   int get count => _customers.length;
 
-  /// التحقق من أن القائمة فارغة
+  /// دالة مساعدة للتحقق من أن المستودع فارغ
   bool get isEmpty => _customers.isEmpty;
-
-  /// التحقق من أن القائمة تحتوي على عملاء
-  bool get isNotEmpty => _customers.isNotEmpty;
 }
