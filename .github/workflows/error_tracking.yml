@@ -17,15 +17,16 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@2783a3f08e1baf891508cf69c7c9ea9d546cafc6 # v2.16.0
         with:
           flutter-version: "3.24.0"
           channel: "stable"
+          cache: true
 
       - name: Get dependencies
         run: flutter pub get
@@ -106,7 +107,7 @@ jobs:
           EOF
 
       - name: Upload Error Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
           name: error-report-${{ github.run_number }}
           path: logs/reports/
@@ -114,7 +115,7 @@ jobs:
 
       - name: Create Issue on Critical Errors
         if: steps.analyze.outputs.errors_count > 0
-        uses: actions/github-script@v6
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
           script: |
             const errorsCount = ${{ steps.analyze.outputs.errors_count }};
@@ -162,7 +163,7 @@ jobs:
 
       - name: Comment on PR
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v6
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
           script: |
             const errorsCount = ${{ steps.analyze.outputs.errors_count }};

@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main, develop]
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   build-size-analysis:
     name: تحليل حجم البناء
@@ -13,21 +17,23 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@2783a3f08e1baf891508cf69c7c9ea9d546cafc6 # v2.16.0
         with:
           flutter-version: "3.24.0"
           channel: "stable"
+          cache: true
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9 # v4.2.1
         with:
           distribution: "zulu"
           java-version: "21"
+          cache: "gradle"
 
       - name: Install dependencies
         run: flutter pub get
@@ -39,6 +45,12 @@ jobs:
         id: size
         run: |
           APK_PATH="build/app/outputs/flutter-apk/app-release.apk"
+
+          if [ ! -f "$APK_PATH" ]; then
+            echo "❌ APK file not found"
+            exit 1
+          fi
+
           SIZE_MB=$(du -m "$APK_PATH" | cut -f1)
           SIZE_KB=$(du -k "$APK_PATH" | cut -f1)
 
@@ -57,6 +69,7 @@ jobs:
 
       - name: Compare with base branch
         if: github.event_name == 'pull_request'
+        continue-on-error: true
         run: |
           echo "📊 Comparing with base branch..."
 
@@ -84,14 +97,15 @@ jobs:
           fi
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
           name: apk-release
           path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
 
       - name: Comment on PR
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
           script: |
             const sizeMB = '${{ steps.size.outputs.size_mb }}';
@@ -111,12 +125,16 @@ jobs:
             ${status === 'warning' ? '⚠️ **Warning:** APK size exceeds recommended threshold. Consider optimizing assets and dependencies.' : ''}
             `;
 
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: body
-            });
+            try {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+            } catch (error) {
+              console.log(`⚠️ Failed to post comment: ${error.message}`);
+            }
 
   startup-performance:
     name: أداء بدء التشغيل
@@ -124,13 +142,14 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@2783a3f08e1baf891508cf69c7c9ea9d546cafc6 # v2.16.0
         with:
           flutter-version: "3.24.0"
           channel: "stable"
+          cache: true
 
       - name: Install dependencies
         run: flutter pub get
@@ -146,13 +165,13 @@ jobs:
           echo "🔍 Checking for performance anti-patterns..."
 
           # Check for synchronous file I/O in main
-          if grep -r "File.*readAsStringSync\|File.*writeAsStringSync" lib/main.dart; then
+          if grep -r "File.*readAsStringSync\|File.*writeAsStringSync" lib/main.dart 2>/dev/null; then
             echo "⚠️ Synchronous file I/O detected in main.dart"
             echo "Consider using async methods for better startup performance"
           fi
 
           # Check for heavy computations in build methods
-          if grep -r "for.*in.*build\|while.*build" lib/ --include="*.dart" | grep -v "// Performance: OK"; then
+          if grep -r "for.*in.*build\|while.*build" lib/ --include="*.dart" 2>/dev/null | grep -v "// Performance: OK"; then
             echo "⚠️ Potential heavy computation in build method"
             echo "Consider moving to initState or using compute()"
           fi
@@ -165,13 +184,14 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@2783a3f08e1baf891508cf69c7c9ea9d546cafc6 # v2.16.0
         with:
           flutter-version: "3.24.0"
           channel: "stable"
+          cache: true
 
       - name: Install dependencies
         run: flutter pub get
@@ -181,17 +201,27 @@ jobs:
           echo "🧠 Checking for potential memory leaks..."
 
           # Check for missing dispose calls
-          if grep -r "StreamController\|AnimationController\|TextEditingController" lib/ --include="*.dart" | \
-             grep -v "dispose()" | grep -v "// Disposed by"; then
-            echo "⚠️ Potential memory leak: Controller without dispose"
-            echo "Ensure all controllers are properly disposed"
+          CONTROLLERS=$(grep -r "StreamController\|AnimationController\|TextEditingController" lib/ --include="*.dart" 2>/dev/null || true)
+
+          if [ -n "$CONTROLLERS" ]; then
+            echo "$CONTROLLERS" | while read -r line; do
+              FILE=$(echo "$line" | cut -d: -f1)
+              if ! grep -q "dispose()" "$FILE" && ! grep -q "// Disposed by" "$FILE"; then
+                echo "⚠️ Potential memory leak in $FILE: Controller without dispose"
+              fi
+            done
           fi
 
           # Check for listeners without removal
-          if grep -r "addListener" lib/ --include="*.dart" | \
-             grep -v "removeListener" | grep -v "// Listener removed"; then
-            echo "⚠️ Potential memory leak: Listener without removal"
-            echo "Ensure all listeners are properly removed"
+          LISTENERS=$(grep -r "addListener" lib/ --include="*.dart" 2>/dev/null || true)
+
+          if [ -n "$LISTENERS" ]; then
+            echo "$LISTENERS" | while read -r line; do
+              FILE=$(echo "$line" | cut -d: -f1)
+              if ! grep -q "removeListener" "$FILE" && ! grep -q "// Listener removed" "$FILE"; then
+                echo "⚠️ Potential memory leak in $FILE: Listener without removal"
+              fi
+            done
           fi
 
           echo "✅ Memory analysis completed"
@@ -202,13 +232,14 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@2783a3f08e1baf891508cf69c7c9ea9d546cafc6 # v2.16.0
         with:
           flutter-version: "3.24.0"
           channel: "stable"
+          cache: true
 
       - name: Install dependencies
         run: flutter pub get
@@ -219,18 +250,14 @@ jobs:
 
           # Count lines of code
           echo "📝 Lines of Code:"
-          find lib -name "*.dart" | xargs wc -l | tail -1
+          find lib -name "*.dart" -type f | xargs wc -l | tail -1
 
           # Count number of files
           echo "📁 Number of Dart files:"
-          find lib -name "*.dart" | wc -l
+          find lib -name "*.dart" -type f | wc -l
 
           # Check for large files (>500 lines)
           echo "📏 Large files (>500 lines):"
-          find lib -name "*.dart" -exec wc -l {} \; | awk '$1 > 500 {print $2 " (" $1 " lines)"}' || echo "None"
-
-          # Check for long methods (>50 lines)
-          echo "🔍 Checking for long methods..."
-          # This is a simplified check
+          find lib -name "*.dart" -type f -exec wc -l {} \; | awk '$1 > 500 {print $2 " (" $1 " lines)"}' || echo "None"
 
           echo "✅ Complexity analysis completed"

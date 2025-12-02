@@ -10,6 +10,10 @@ on:
       - main
       - develop
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   validate-commits:
     name: التحقق من رسائل الـ Commits
@@ -17,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
 
@@ -91,7 +95,7 @@ jobs:
           PATCH=$(echo $VERSION | cut -d. -f3)
 
           # الحصول على الـ commits منذ آخر tag
-          COMMITS=$(git log $LAST_TAG..HEAD --format=%s)
+          COMMITS=$(git log $LAST_TAG..HEAD --format=%s 2>/dev/null || git log --format=%s -10)
 
           # تحديد نوع الإصدار
           if echo "$COMMITS" | grep -q "^feat!:"; then
@@ -119,7 +123,7 @@ jobs:
 
       - name: Comment on PR
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v6
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
           script: |
             const comment = `
@@ -137,9 +141,13 @@ jobs:
             مثال: \`feat!: تغيير واجهة API\`
             `;
 
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: comment
-            });
+            try {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+            } catch (error) {
+              console.log(`⚠️ Failed to post comment: ${error.message}`);
+            }

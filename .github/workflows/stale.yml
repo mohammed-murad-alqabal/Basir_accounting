@@ -5,6 +5,10 @@ on:
     - cron: "0 0 * * *" # يومياً في منتصف الليل
   workflow_dispatch:
 
+permissions:
+  issues: write
+  pull-requests: write
+
 jobs:
   stale:
     name: إدارة Issues و PRs القديمة
@@ -12,7 +16,7 @@ jobs:
 
     steps:
       - name: Mark stale issues and PRs
-        uses: actions/stale@v8
+        uses: actions/stale@28ca1036281a5e5922ead5184a1bbf96e5fc984e # v9.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
