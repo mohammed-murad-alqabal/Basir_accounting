@@ -1,8 +1,3 @@
-/// اختبارات AppAppBar Widgets
-///
-/// يختبر جميع أشرطة التطبيق في التطبيق
-library;
-
 import 'package:basser_app/core/theme.dart';
 import 'package:basser_app/core/widgets/app_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('AppAppBar', () {
-    testWidgets('should display title', (tester) async {
+    testWidgets('should display title correctly', (tester) async {
       // Arrange
       const title = 'العملاء';
 
@@ -28,11 +23,11 @@ void main() {
     });
 
     testWidgets('should show back button by default', (tester) async {
-      // Act
+      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            appBar: AppAppBar(title: 'العنوان'),
+            appBar: AppAppBar(title: 'Test'),
           ),
         ),
       );
@@ -43,12 +38,12 @@ void main() {
 
     testWidgets('should hide back button when showBackButton is false',
         (tester) async {
-      // Act
+      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
             appBar: AppAppBar(
-              title: 'العنوان',
+              title: 'Test',
               showBackButton: false,
             ),
           ),
@@ -59,105 +54,53 @@ void main() {
       expect(find.byIcon(Icons.arrow_back), findsNothing);
     });
 
-    testWidgets('should call Navigator.pop when back button pressed',
+    testWidgets('should call Navigator.pop when back button is pressed',
         (tester) async {
       // Arrange
-      var popped = false;
+      var navigatorPopped = false;
 
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Builder(
             builder: (context) => Scaffold(
+              appBar: const AppAppBar(title: 'Test'),
               body: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
+                onPressed: () async {
+                  await Navigator.of(context).push(
                     MaterialPageRoute<void>(
-                      builder: (context) => Scaffold(
+                      builder: (_) => Scaffold(
                         appBar: AppAppBar(
-                          title: 'الصفحة الثانية',
+                          title: 'Second Screen',
                           onBackPressed: () {
-                            popped = true;
-                            Navigator.pop(context);
+                            navigatorPopped = true;
+                            Navigator.of(context).pop();
                           },
                         ),
                       ),
                     ),
                   );
                 },
-                child: const Text('اذهب'),
+                child: const Text('Navigate'),
               ),
             ),
           ),
         ),
       );
 
-      // Navigate to second page
-      await tester.tap(find.text('اذهب'));
+      // Navigate to second screen
+      await tester.tap(find.text('Navigate'));
       await tester.pumpAndSettle();
 
-      // Tap back button
+      // Act - Tap back button
       await tester.tap(find.byIcon(Icons.arrow_back));
       await tester.pumpAndSettle();
 
       // Assert
-      expect(popped, isTrue);
+      expect(navigatorPopped, isTrue);
+      expect(find.text('Second Screen'), findsNothing);
     });
 
     testWidgets('should display actions when provided', (tester) async {
-      // Arrange
-      const actionIcon = Icons.add;
-
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            appBar: AppAppBar(
-              title: 'العنوان',
-              actions: [
-                IconButton(
-                  icon: const Icon(actionIcon),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-
-      // Assert
-      expect(find.byIcon(actionIcon), findsOneWidget);
-    });
-
-    testWidgets('should display multiple actions', (tester) async {
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            appBar: AppAppBar(
-              title: 'العنوان',
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: const Icon(Icons.more_vert),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-
-      // Assert
-      expect(find.byIcon(Icons.search), findsOneWidget);
-      expect(find.byIcon(Icons.more_vert), findsOneWidget);
-    });
-
-    testWidgets('should call action onPressed when tapped', (tester) async {
       // Arrange
       var actionPressed = false;
 
@@ -166,11 +109,17 @@ void main() {
         MaterialApp(
           home: Scaffold(
             appBar: AppAppBar(
-              title: 'العنوان',
+              title: 'Test',
               actions: [
                 IconButton(
                   icon: const Icon(Icons.add),
-                  onPressed: () => actionPressed = true,
+                  onPressed: () {
+                    actionPressed = true;
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {},
                 ),
               ],
             ),
@@ -178,39 +127,29 @@ void main() {
         ),
       );
 
+      // Assert
+      expect(find.byIcon(Icons.add), findsOneWidget);
+      expect(find.byIcon(Icons.search), findsOneWidget);
+
+      // Test action button press
       await tester.tap(find.byIcon(Icons.add));
       await tester.pump();
-
-      // Assert
       expect(actionPressed, isTrue);
     });
 
-    testWidgets('should use default background color', (tester) async {
-      // Act
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            appBar: AppAppBar(title: 'العنوان'),
-          ),
-        ),
-      );
-
-      // Assert
-      final appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, AppColors.surface);
-    });
-
-    testWidgets('should respect custom background color', (tester) async {
+    testWidgets('should use custom colors when provided', (tester) async {
       // Arrange
-      const customColor = Colors.blue;
+      const customBgColor = Colors.blue;
+      const customFgColor = Colors.white;
 
       // Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
             appBar: AppAppBar(
-              title: 'العنوان',
-              backgroundColor: customColor,
+              title: 'Test',
+              backgroundColor: customBgColor,
+              foregroundColor: customFgColor,
             ),
           ),
         ),
@@ -218,30 +157,32 @@ void main() {
 
       // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, customColor);
+      expect(appBar.backgroundColor, customBgColor);
+      expect(appBar.foregroundColor, customFgColor);
     });
 
-    testWidgets('should use default foreground color', (tester) async {
-      // Act
+    testWidgets('should use default colors when not provided', (tester) async {
+      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            appBar: AppAppBar(title: 'العنوان'),
+            appBar: AppAppBar(title: 'Test'),
           ),
         ),
       );
 
       // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
+      expect(appBar.backgroundColor, AppColors.surface);
       expect(appBar.foregroundColor, AppColors.textPrimary);
     });
 
-    testWidgets('should have zero elevation', (tester) async {
-      // Act
+    testWidgets('should have elevation of 0', (tester) async {
+      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            appBar: AppAppBar(title: 'العنوان'),
+            appBar: AppAppBar(title: 'Test'),
           ),
         ),
       );
@@ -252,11 +193,11 @@ void main() {
     });
 
     testWidgets('should center title', (tester) async {
-      // Act
+      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            appBar: AppAppBar(title: 'العنوان'),
+            appBar: AppAppBar(title: 'Test'),
           ),
         ),
       );
@@ -265,10 +206,18 @@ void main() {
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
       expect(appBar.centerTitle, isTrue);
     });
+
+    testWidgets('should have correct preferred size', (tester) async {
+      // Arrange
+      const appBar = AppAppBar(title: 'Test');
+
+      // Assert
+      expect(appBar.preferredSize, const Size.fromHeight(kToolbarHeight));
+    });
   });
 
   group('AppSimpleAppBar', () {
-    testWidgets('should display title', (tester) async {
+    testWidgets('should display title correctly', (tester) async {
       // Arrange
       const title = 'لوحة التحكم';
 
@@ -286,11 +235,11 @@ void main() {
     });
 
     testWidgets('should not show back button', (tester) async {
-      // Act
+      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            appBar: AppSimpleAppBar(title: 'العنوان'),
+            appBar: AppSimpleAppBar(title: 'Test'),
           ),
         ),
       );
@@ -301,58 +250,6 @@ void main() {
 
     testWidgets('should display actions when provided', (tester) async {
       // Arrange
-      const actionIcon = Icons.settings;
-
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            appBar: AppSimpleAppBar(
-              title: 'العنوان',
-              actions: [
-                IconButton(
-                  icon: const Icon(actionIcon),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-
-      // Assert
-      expect(find.byIcon(actionIcon), findsOneWidget);
-    });
-
-    testWidgets('should display multiple actions', (tester) async {
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            appBar: AppSimpleAppBar(
-              title: 'العنوان',
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.notifications),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: const Icon(Icons.settings),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-
-      // Assert
-      expect(find.byIcon(Icons.notifications), findsOneWidget);
-      expect(find.byIcon(Icons.settings), findsOneWidget);
-    });
-
-    testWidgets('should call action onPressed when tapped', (tester) async {
-      // Arrange
       var actionPressed = false;
 
       // Act
@@ -360,11 +257,13 @@ void main() {
         MaterialApp(
           home: Scaffold(
             appBar: AppSimpleAppBar(
-              title: 'العنوان',
+              title: 'Test',
               actions: [
                 IconButton(
                   icon: const Icon(Icons.settings),
-                  onPressed: () => actionPressed = true,
+                  onPressed: () {
+                    actionPressed = true;
+                  },
                 ),
               ],
             ),
@@ -372,39 +271,28 @@ void main() {
         ),
       );
 
+      // Assert
+      expect(find.byIcon(Icons.settings), findsOneWidget);
+
+      // Test action button press
       await tester.tap(find.byIcon(Icons.settings));
       await tester.pump();
-
-      // Assert
       expect(actionPressed, isTrue);
     });
 
-    testWidgets('should use default background color', (tester) async {
-      // Act
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            appBar: AppSimpleAppBar(title: 'العنوان'),
-          ),
-        ),
-      );
-
-      // Assert
-      final appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, AppColors.surface);
-    });
-
-    testWidgets('should respect custom background color', (tester) async {
+    testWidgets('should use custom colors when provided', (tester) async {
       // Arrange
-      const customColor = Colors.green;
+      const customBgColor = Colors.green;
+      const customFgColor = Colors.black;
 
       // Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
             appBar: AppSimpleAppBar(
-              title: 'العنوان',
-              backgroundColor: customColor,
+              title: 'Test',
+              backgroundColor: customBgColor,
+              foregroundColor: customFgColor,
             ),
           ),
         ),
@@ -412,15 +300,32 @@ void main() {
 
       // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, customColor);
+      expect(appBar.backgroundColor, customBgColor);
+      expect(appBar.foregroundColor, customFgColor);
     });
 
-    testWidgets('should have zero elevation', (tester) async {
-      // Act
+    testWidgets('should use default colors when not provided', (tester) async {
+      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            appBar: AppSimpleAppBar(title: 'العنوان'),
+            appBar: AppSimpleAppBar(title: 'Test'),
+          ),
+        ),
+      );
+
+      // Assert
+      final appBar = tester.widget<AppBar>(find.byType(AppBar));
+      expect(appBar.backgroundColor, AppColors.surface);
+      expect(appBar.foregroundColor, AppColors.textPrimary);
+    });
+
+    testWidgets('should have elevation of 0', (tester) async {
+      // Arrange & Act
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            appBar: AppSimpleAppBar(title: 'Test'),
           ),
         ),
       );
@@ -431,11 +336,11 @@ void main() {
     });
 
     testWidgets('should center title', (tester) async {
-      // Act
+      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            appBar: AppSimpleAppBar(title: 'العنوان'),
+            appBar: AppSimpleAppBar(title: 'Test'),
           ),
         ),
       );
@@ -446,11 +351,11 @@ void main() {
     });
 
     testWidgets('should not automatically imply leading', (tester) async {
-      // Act
+      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            appBar: AppSimpleAppBar(title: 'العنوان'),
+            appBar: AppSimpleAppBar(title: 'Test'),
           ),
         ),
       );
@@ -459,70 +364,13 @@ void main() {
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
       expect(appBar.automaticallyImplyLeading, isFalse);
     });
-  });
 
-  group('AppBar Interactions', () {
-    testWidgets('should handle both AppBar types together', (tester) async {
+    testWidgets('should have correct preferred size', (tester) async {
       // Arrange
-      var action1Pressed = false;
-      var action2Pressed = false;
+      const appBar = AppSimpleAppBar(title: 'Test');
 
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Builder(
-            builder: (context) => Scaffold(
-              appBar: AppSimpleAppBar(
-                title: 'الرئيسية',
-                actions: [
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    onPressed: () => action1Pressed = true,
-                  ),
-                ],
-              ),
-              body: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (context) => Scaffold(
-                        appBar: AppAppBar(
-                          title: 'الصفحة الثانية',
-                          actions: [
-                            IconButton(
-                              icon: const Icon(Icons.save),
-                              onPressed: () => action2Pressed = true,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                child: const Text('اذهب'),
-              ),
-            ),
-          ),
-        ),
-      );
-
-      // Test first AppBar
-      await tester.tap(find.byIcon(Icons.add));
-      await tester.pump();
-      expect(action1Pressed, isTrue);
-
-      // Navigate to second page
-      await tester.tap(find.text('اذهب'));
-      await tester.pumpAndSettle();
-
-      // Test second AppBar
-      await tester.tap(find.byIcon(Icons.save));
-      await tester.pump();
-      expect(action2Pressed, isTrue);
-
-      // Test back button
-      expect(find.byIcon(Icons.arrow_back), findsOneWidget);
+      // Assert
+      expect(appBar.preferredSize, const Size.fromHeight(kToolbarHeight));
     });
   });
 }
