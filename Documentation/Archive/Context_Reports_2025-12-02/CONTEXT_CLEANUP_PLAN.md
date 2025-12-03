@@ -150,7 +150,7 @@ Basser_MVP/
 ├── CODING_STANDARDS.md          # معايير الكود
 ├── SECURITY.md                  # الأمان
 │
-├── .kiro/                       # Kiro Strategic Blueprint
+├── .kiro/                       # Kiro Strategic Workspace
 │   ├── specs/                   # المواصفات فقط
 │   │   ├── testing-system/
 │   │   └── documentation-system/

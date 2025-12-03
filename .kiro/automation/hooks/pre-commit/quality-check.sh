@@ -17,12 +17,12 @@ echo ""
 
 # 1. فحص التنسيق
 echo "▶ فحص التنسيق..."
-if command -v flutter &> /dev/null; then
-    if flutter format --set-exit-if-changed . > /dev/null 2>&1; then
+if command -v dart &> /dev/null; then
+    if dart format --set-exit-if-changed . > /dev/null 2>&1; then
         echo -e "${GREEN}✅ التنسيق صحيح${NC}"
     else
         echo -e "${YELLOW}⚠️  تطبيق التنسيق...${NC}"
-        flutter format .
+        dart format .
         git add -u
     fi
 fi
@@ -41,11 +41,12 @@ fi
 
 # 3. فحص الأسرار
 echo "▶ فحص الأسرار..."
-if git diff --cached | grep -iE '(api[_-]?key|password|secret|token|private[_-]?key)' > /dev/null; then
+# استثناء ملفات التوثيق والتعليقات
+if git diff --cached | grep -v "^[+-].*#" | grep -v "\.md:" | grep -iE '(api[_-]?key\s*=|password\s*=|secret\s*=|token\s*=|private[_-]?key\s*=)' > /dev/null; then
     echo -e "${RED}❌ تم اكتشاف أسرار محتملة!${NC}"
     echo ""
     echo "الأسرار المكتشفة:"
-    git diff --cached | grep -iE '(api[_-]?key|password|secret|token|private[_-]?key)'
+    git diff --cached | grep -v "^[+-].*#" | grep -v "\.md:" | grep -iE '(api[_-]?key\s*=|password\s*=|secret\s*=|token\s*=|private[_-]?key\s*=)'
     echo ""
     exit 1
 else

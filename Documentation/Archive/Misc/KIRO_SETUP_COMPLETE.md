@@ -1,4 +1,4 @@
-# 🎉 إعداد Kiro Strategic Blueprint مكتمل!
+# 🎉 إعداد Kiro Strategic Workspace مكتمل!
 
 **التاريخ:** 27 نوفمبر 2025  
 **المشروع:** بصير MVP - نظام إدارة الفواتير والعملاء  
@@ -70,7 +70,7 @@
 
 ```
 Basser_MVP/
-├── .kiro/                          ✨ جديد - Kiro Strategic Blueprint
+├── .kiro/                          ✨ جديد - Kiro Strategic Workspace
 │   ├── specs/                      📋 المواصفات
 │   │   ├── testing-system/        ✅ موجود مسبقاً
 │   │   └── critical-fixes/        ✅ موجود مسبقاً
@@ -290,7 +290,7 @@ cat .kiro/specs/testing-system/tasks.md
 ```
 ╔═══════════════════════════════════════════════════╗
 ║                                                   ║
-║        🎉 Kiro Strategic Blueprint                ║
+║        🎉 Kiro Strategic Workspace                ║
 ║        ✅ تم الإعداد بنجاح 100%                   ║
 ║        🚀 جاهز للاستخدام الفوري                  ║
 ║                                                   ║

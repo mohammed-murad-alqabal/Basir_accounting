@@ -1,4 +1,4 @@
-# 🎁 المكونات الإضافية - Kiro Strategic Blueprint
+# 🎁 المكونات الإضافية - Kiro Strategic Workspace
 
 **التاريخ:** 27 نوفمبر 2025  
 **المشروع:** بصير MVP  
