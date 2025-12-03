@@ -55,7 +55,7 @@ generate_invalid_commit_message() {
         message=$(generate_valid_commit_message)
         
         if validate_commit_message "$message"; then
-            ((success_count++))
+            success_count=$((success_count + 1))
         else
             echo "Failed on valid message: $message" >&2
         fi
@@ -73,7 +73,7 @@ generate_invalid_commit_message() {
         message=$(generate_invalid_commit_message)
         
         if ! validate_commit_message "$message"; then
-            ((failure_count++))
+            failure_count=$((failure_count + 1))
         else
             echo "Accepted invalid message: $message" >&2
         fi
@@ -132,7 +132,7 @@ generate_invalid_commit_message() {
         message="${type}(scope): description"
         
         if validate_commit_message "$message"; then
-            ((success_count++))
+            success_count=$((success_count + 1))
         fi
     done
     
@@ -149,7 +149,7 @@ generate_invalid_commit_message() {
         message="${type}: description"
         
         if validate_commit_message "$message"; then
-            ((success_count++))
+            success_count=$((success_count + 1))
         fi
     done
     
