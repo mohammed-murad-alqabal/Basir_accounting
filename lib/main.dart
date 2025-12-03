@@ -100,14 +100,22 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
     final hasAccount = await authService.hasAccount();
     final isLoggedIn = await authService.isLoggedIn();
+    final isGuest = await authService.isGuest();
+    final keepLoggedIn = await authService.shouldKeepLoggedIn();
 
     if (!mounted) return;
 
-    if (!hasAccount) {
-      await Navigator.of(context).pushReplacementNamed('/setup');
+    // إذا كان ضيف أو مسجل دخول مع البقاء مسجلاً
+    if (isGuest || (isLoggedIn && keepLoggedIn)) {
+      await Navigator.of(context).pushReplacementNamed('/dashboard');
+    } else if (!hasAccount) {
+      // لا يوجد حساب - اذهب للإعداد أو تسجيل الدخول
+      await Navigator.of(context).pushReplacementNamed('/login');
     } else if (isLoggedIn) {
+      // مسجل دخول لكن بدون البقاء مسجلاً
       await Navigator.of(context).pushReplacementNamed('/dashboard');
     } else {
+      // يوجد حساب لكن غير مسجل دخول
       await Navigator.of(context).pushReplacementNamed('/login');
     }
   }

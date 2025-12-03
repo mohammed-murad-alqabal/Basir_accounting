@@ -37,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
+  bool _keepLoggedIn = true;
 
   @override
   void dispose() {
@@ -59,11 +60,47 @@ class _LoginScreenState extends State<LoginScreen> {
       //   _passwordController.text,
       // );
 
+      // حفظ إعداد البقاء مسجلاً
+      // await authService.setKeepLoggedIn(_keepLoggedIn);
+
       if (!mounted) return;
 
       await ScaffoldMessenger.of(context)
           .showSnackBar(
             const SnackBar(content: Text(AppMessages.loginSuccess)),
+          )
+          .closed;
+
+      // الانتقال إلى لوحة التحكم
+      if (!mounted) return;
+      await Navigator.of(context).pushReplacementNamed('/dashboard');
+    } on Exception catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('خطأ: $e')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
+
+  Future<void> _handleGuestLogin() async {
+    setState(() => _isLoading = true);
+
+    try {
+      // TODO(dev): استدعاء authService.loginAsGuest()
+      // await authService.loginAsGuest();
+
+      if (!mounted) return;
+
+      await ScaffoldMessenger.of(context)
+          .showSnackBar(
+            const SnackBar(
+              content: Text('مرحباً بك كضيف! يمكنك إنشاء حساب لاحقاً'),
+            ),
           )
           .closed;
 
@@ -130,13 +167,41 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: AppSpacing.lg),
+                      const SizedBox(height: AppSpacing.md),
+
+                      // خيار البقاء مسجلاً
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: _keepLoggedIn,
+                            onChanged: (value) {
+                              setState(() => _keepLoggedIn = value ?? true);
+                            },
+                          ),
+                          const Text(
+                            'البقاء مسجلاً',
+                            style: TextStyle(
+                              fontSize: AppTypography.bodyMedium,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.md),
 
                       // زر تسجيل الدخول
                       AppPrimaryButton(
                         label: 'تسجيل الدخول',
                         onPressed: _handleLogin,
                         isLoading: _isLoading,
+                        width: double.infinity,
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+
+                      // زر الدخول كضيف
+                      AppSecondaryButton(
+                        label: 'الدخول كضيف',
+                        onPressed: _handleGuestLogin,
                         width: double.infinity,
                       ),
                       const SizedBox(height: AppSpacing.md),

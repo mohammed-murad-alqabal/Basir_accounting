@@ -215,6 +215,104 @@ class AuthService {
     }
   }
 
+  /// تفعيل ميزة البقاء مسجلاً
+  ///
+  /// يحفظ إعداد البقاء مسجلاً للدخول التلقائي
+  ///
+  /// Parameters:
+  /// - [keepLoggedIn]: true للبقاء مسجلاً، false لعدم البقاء
+  ///
+  /// Example:
+  /// ```dart
+  /// await authService.setKeepLoggedIn(keepLoggedIn: true);
+  /// ```
+  Future<void> setKeepLoggedIn({required bool keepLoggedIn}) async {
+    try {
+      await secureStorage.write(
+        key: StorageKeys.keepLoggedIn,
+        value: keepLoggedIn.toString(),
+      );
+    } catch (e) {
+      throw Exception('خطأ في حفظ إعداد البقاء مسجلاً: $e');
+    }
+  }
+
+  /// التحقق من إعداد البقاء مسجلاً
+  ///
+  /// Returns: true إذا كان البقاء مسجلاً مفعل
+  ///
+  /// Example:
+  /// ```dart
+  /// final keepLoggedIn = await authService.shouldKeepLoggedIn();
+  /// ```
+  Future<bool> shouldKeepLoggedIn() async {
+    try {
+      final keepLoggedIn =
+          await secureStorage.read(key: StorageKeys.keepLoggedIn);
+      return keepLoggedIn == 'true';
+    } on Exception {
+      return false;
+    }
+  }
+
+  /// تفعيل وضع الضيف (الدخول بدون حساب)
+  ///
+  /// يسمح للمستخدم بالدخول كضيف بدون إنشاء حساب
+  ///
+  /// Example:
+  /// ```dart
+  /// await authService.loginAsGuest();
+  /// ```
+  Future<void> loginAsGuest() async {
+    try {
+      await secureStorage.write(key: StorageKeys.isGuest, value: 'true');
+      await secureStorage.write(key: StorageKeys.isLoggedIn, value: 'true');
+    } catch (e) {
+      throw Exception('خطأ في تسجيل الدخول كضيف: $e');
+    }
+  }
+
+  /// التحقق من وضع الضيف
+  ///
+  /// Returns: true إذا كان المستخدم ضيف
+  ///
+  /// Example:
+  /// ```dart
+  /// final isGuest = await authService.isGuest();
+  /// ```
+  Future<bool> isGuest() async {
+    try {
+      final isGuest = await secureStorage.read(key: StorageKeys.isGuest);
+      return isGuest == 'true';
+    } on Exception {
+      return false;
+    }
+  }
+
+  /// تحويل الضيف إلى مستخدم مسجل
+  ///
+  /// يسمح للضيف بإنشاء حساب والاحتفاظ ببياناته
+  ///
+  /// Parameters:
+  /// - [username]: اسم المستخدم الجديد
+  /// - [password]: كلمة المرور الجديدة
+  ///
+  /// Example:
+  /// ```dart
+  /// await authService.convertGuestToUser('admin', 'password123');
+  /// ```
+  Future<void> convertGuestToUser(String username, String password) async {
+    try {
+      // إنشاء الحساب
+      await createAccount(username, password);
+
+      // إزالة وضع الضيف
+      await secureStorage.delete(key: StorageKeys.isGuest);
+    } catch (e) {
+      throw Exception('خطأ في تحويل الضيف إلى مستخدم: $e');
+    }
+  }
+
   /// الحصول على اسم المستخدم الحالي
   ///
   /// يسترجع اسم المستخدم المسجل من التخزين الآمن

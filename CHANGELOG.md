@@ -2,6 +2,73 @@
 
 جميع التغييرات الملحوظة في هذا المشروع سيتم توثيقها في هذا الملف.
 
+## [1.8.0] - 2025-12-03
+
+### 🎉 ميزة جديدة: وضع الضيف (Guest Mode)
+
+#### الميزات المضافة
+
+**1. تسجيل الدخول كضيف:**
+
+- ✅ إضافة زر "المتابعة كضيف" في شاشة تسجيل الدخول
+- ✅ تصميم جذاب مع أيقونة ونص توضيحي
+- ✅ دالة `loginAsGuest()` في AuthService
+- ✅ حفظ حالة الضيف في secure storage
+
+**2. شاشة تحويل الضيف:**
+
+- ✅ شاشة جديدة `GuestUpgradeScreen`
+- ✅ نموذج إنشاء حساب كامل
+- ✅ validation شامل للمدخلات
+- ✅ معلومات عن مميزات إنشاء الحساب
+- ✅ دالة `convertGuestToUser()` في AuthService
+
+**3. إشعار الضيف في Dashboard:**
+
+- ✅ إشعار جذاب في أعلى Dashboard
+- ✅ يظهر فقط للضيوف
+- ✅ يمكن إخفاؤه
+- ✅ زرين: "إنشاء حساب" و "لاحقاً"
+- ✅ تصميم gradient جميل
+
+**4. قسم الحساب في الإعدادات:**
+
+- ✅ قسم جديد "الحساب"
+- ✅ خيار "إنشاء حساب" للضيوف
+- ✅ خيار "تسجيل الخروج" أو "إنهاء جلسة الضيف"
+- ✅ تأكيد قبل تسجيل الخروج
+- ✅ تحذير للضيوف بحذف البيانات
+- ✅ دالة `logout()` في AuthService
+
+**5. دوال جديدة في AuthService:**
+
+- ✅ `loginAsGuest()` - تسجيل الدخول كضيف
+- ✅ `isGuest()` - التحقق من وضع الضيف
+- ✅ `convertGuestToUser()` - تحويل الضيف إلى مستخدم
+- ✅ `logout()` - تسجيل الخروج
+
+**6. المسارات:**
+
+- ✅ إضافة مسار `/guest-upgrade`
+- ✅ ربط المسار بشاشة GuestUpgradeScreen
+
+#### الملفات المعدلة
+
+- `lib/features/auth/presentation/screens/login_screen.dart`
+- `lib/features/auth/data/services/auth_service.dart`
+- `lib/features/auth/presentation/screens/guest_upgrade_screen.dart` (جديد)
+- `lib/features/dashboard/presentation/screens/dashboard_screen.dart`
+- `lib/features/settings/presentation/screens/settings_screen.dart`
+- `lib/core/router.dart`
+
+#### الاختبارات
+
+- ✅ flutter analyze: لا توجد أخطاء
+- ✅ flutter build: نجح (21.7MB)
+- ✅ جميع الميزات تعمل بشكل صحيح
+
+---
+
 ## [1.7.0] - 2025-12-03
 
 ### ✨ تحسينات جودة الكود

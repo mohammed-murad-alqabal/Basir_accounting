@@ -67,6 +67,12 @@ class StorageKeys {
   /// مفتاح حالة تسجيل الدخول
   static const String isLoggedIn = 'is_logged_in';
 
+  /// مفتاح البقاء مسجلاً
+  static const String keepLoggedIn = 'keep_logged_in';
+
+  /// مفتاح وضع الضيف
+  static const String isGuest = 'is_guest';
+
   /// مفتاح نسبة الضريبة
   static const String taxRate = 'tax_rate';
 
