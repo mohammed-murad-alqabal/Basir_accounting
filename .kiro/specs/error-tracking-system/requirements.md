@@ -1,21 +1,33 @@
 # Requirements Document - نظام تتبع الأخطاء والسجلات
 
+**المشروع:** بصير MVP  
+**التاريخ:** 3 ديسمبر 2025  
+**المؤلف:** فريق وكلاء تطوير مشروع بصير  
+**الإصدار:** 1.0  
+**الحالة:** ✅ نشط
+
+---
+
 ## Introduction
 
-نظام تتبع الأخطاء والسجلات هو منظومة متكاملة لإدارة، تسجيل، تحليل، وتوثيق الأخطاء والمشكلات في مشروع بصير MVP. يهدف النظام إلى ضمان جودة عالية للكود، تتبع دقيق للمشكلات، وأتمتة كاملة لعملية الإبلاغ والمعالجة.
+نظام تتبع الأخطاء والسجلات هو منظومة متكاملة لإدارة، تسجيل، تحليل، وتوثيق الأخطاء والمشكلات في مشروع بصير MVP. يهدف النظام إلى ضمان جودة عالية للكود، تتبع دقيق للمشكلات، وأتمتة كاملة لعملية الإبلاغ والمعالجة من خلال Git Hooks، GitHub Actions، وأدوات التحليل الآلي.
 
 ## Glossary
 
-- **Error Tracking System**: نظام تتبع الأخطاء - منظومة متكاملة لإدارة الأخطاء
-- **Log Collection**: جمع السجلات - عملية تجميع سجلات التطبيق والأخطاء
-- **Git Hooks**: خطافات Git - سكريبتات تُنفذ عند أحداث Git محددة
-- **GitHub Actions**: إجراءات GitHub - أتمتة CI/CD على GitHub
-- **Issue Template**: قالب Issue - نموذج موحد لإنشاء Issues
-- **Conventional Commits**: التزامات تقليدية - معيار لكتابة رسائل commit
-- **Flutter Analyze**: تحليل Flutter - أداة فحص جودة كود Dart/Flutter
-- **Coverage Report**: تقرير التغطية - تقرير نسبة الكود المغطى بالاختبارات
-- **Archive**: أرشيف - تخزين السجلات القديمة بشكل مضغوط
-- **Semantic Versioning**: الترقيم الدلالي - نظام ترقيم الإصدارات
+- **Error Tracking System (نظام تتبع الأخطاء)**: منظومة متكاملة لإدارة وتتبع الأخطاء والمشكلات في المشروع
+- **Log Collection (جمع السجلات)**: عملية تجميع وتنظيم سجلات التطبيق والأخطاء بشكل تلقائي
+- **Git Hooks (خطافات Git)**: سكريبتات تُنفذ تلقائياً عند أحداث Git محددة (commit، push)
+- **GitHub Actions (إجراءات GitHub)**: نظام أتمتة CI/CD المدمج في GitHub
+- **Issue Template (قالب Issue)**: نموذج موحد ومنظم لإنشاء Issues على GitHub
+- **Conventional Commits (الالتزامات التقليدية)**: معيار موحد لكتابة رسائل commit بصيغة محددة
+- **Flutter Analyze (تحليل Flutter)**: أداة فحص جودة كود Dart/Flutter المدمجة في Flutter SDK
+- **Coverage Report (تقرير التغطية)**: تقرير يوضح نسبة الكود المغطى بالاختبارات
+- **Archive (الأرشيف)**: مجلد لتخزين السجلات القديمة بشكل مضغوط
+- **Semantic Versioning (الترقيم الدلالي)**: نظام ترقيم الإصدارات بصيغة MAJOR.MINOR.PATCH
+- **Pre-commit Hook (خطاف ما قبل الالتزام)**: سكريبت يُنفذ قبل إتمام عملية commit
+- **Pre-push Hook (خطاف ما قبل الدفع)**: سكريبت يُنفذ قبل إتمام عملية push
+- **Workflow (سير العمل)**: مجموعة من الإجراءات المؤتمتة في GitHub Actions
+- **Artifact (الأثر)**: ملف ناتج عن تنفيذ workflow يتم حفظه للمراجعة
 
 ## Requirements
 
@@ -25,11 +37,11 @@
 
 #### Acceptance Criteria
 
-1. WHEN Flutter Analyze يُنفذ THEN النظام SHALL يجمع جميع الأخطاء والتحذيرات في ملف سجل
-2. WHEN الاختبارات تُنفذ THEN النظام SHALL يسجل نتائج جميع الاختبارات مع التفاصيل
-3. WHEN خطأ يُكتشف THEN النظام SHALL يحفظ معلومات كاملة (النوع، الرسالة، الملف، السطر، الوقت)
-4. WHEN سجل يُنشأ THEN النظام SHALL يضيف timestamp وmetadata كاملة
-5. WHEN أخطاء متعددة تحدث THEN النظام SHALL يمنع التكرار ويجمع الأخطاء المتشابهة
+1. WHEN Flutter Analyze يُنفذ، THEN THE Error Tracking System SHALL يجمع جميع الأخطاء والتحذيرات في ملف سجل منظم
+2. WHEN الاختبارات تُنفذ، THEN THE Error Tracking System SHALL يسجل نتائج جميع الاختبارات مع التفاصيل الكاملة
+3. WHEN خطأ يُكتشف، THEN THE Error Tracking System SHALL يحفظ معلومات كاملة تتضمن النوع والرسالة واسم الملف ورقم السطر والوقت
+4. WHEN سجل جديد يُنشأ، THEN THE Error Tracking System SHALL يضيف timestamp دقيق وmetadata كاملة للسجل
+5. WHEN أخطاء متعددة متشابهة تحدث، THEN THE Error Tracking System SHALL يمنع التكرار ويجمع الأخطاء المتشابهة في مجموعة واحدة
 
 ### Requirement 2: إنشاء التقارير الشاملة
 
@@ -37,11 +49,11 @@
 
 #### Acceptance Criteria
 
-1. WHEN يوم جديد يبدأ THEN النظام SHALL ينشئ تقرير يومي شامل
-2. WHEN تقرير يُنشأ THEN النظام SHALL يتضمن إحصائيات المشروع (عدد الملفات، الحجم، Commits)
-3. WHEN تقرير يُنشأ THEN النظام SHALL يتضمن ملخص الأخطاء والتحذيرات
-4. WHEN تقرير يُنشأ THEN النظام SHALL يتضمن نتائج الاختبارات والتغطية
-5. WHEN تقرير يُنشأ THEN النظام SHALL يقدم توصيات للتحسين بناءً على البيانات
+1. WHEN يوم جديد يبدأ، THEN THE Error Tracking System SHALL ينشئ تقرير يومي شامل بصيغة Markdown
+2. WHEN تقرير يُنشأ، THEN THE Error Tracking System SHALL يتضمن إحصائيات المشروع الكاملة (عدد الملفات، الحجم الإجمالي، عدد Commits)
+3. WHEN تقرير يُنشأ، THEN THE Error Tracking System SHALL يتضمن ملخص تفصيلي للأخطاء والتحذيرات مع التصنيف
+4. WHEN تقرير يُنشأ، THEN THE Error Tracking System SHALL يتضمن نتائج الاختبارات ونسبة التغطية الحالية
+5. WHEN تقرير يُنشأ، THEN THE Error Tracking System SHALL يقدم توصيات قابلة للتنفيذ للتحسين بناءً على تحليل البيانات
 
 ### Requirement 3: Git Hooks للتحقق من الجودة
 
@@ -49,11 +61,11 @@
 
 #### Acceptance Criteria
 
-1. WHEN مطور يحاول commit THEN النظام SHALL يتحقق من تنسيق الكود (Flutter Format)
-2. WHEN مطور يحاول commit THEN النظام SHALL يشغل Flutter Analyze ويمنع commit عند وجود errors
-3. WHEN مطور يحاول commit THEN النظام SHALL يتحقق من صحة رسالة commit (Conventional Commits)
-4. WHEN مطور يحاول push THEN النظام SHALL يشغل جميع الاختبارات ويمنع push عند الفشل
-5. WHEN مطور يحاول push THEN النظام SHALL يفحص الأسرار المكشوفة ويحذر المطور
+1. WHEN مطور يحاول commit، THEN THE Pre-commit Hook SHALL يتحقق من تنسيق الكود باستخدام Flutter Format
+2. WHEN مطور يحاول commit، THEN THE Pre-commit Hook SHALL يشغل Flutter Analyze ويمنع commit عند وجود أخطاء حرجة
+3. WHEN مطور يحاول commit، THEN THE Pre-commit Hook SHALL يتحقق من صحة رسالة commit وفقاً لمعيار Conventional Commits
+4. WHEN مطور يحاول push، THEN THE Pre-push Hook SHALL يشغل جميع الاختبارات ويمنع push عند فشل أي اختبار
+5. WHEN مطور يحاول push، THEN THE Pre-push Hook SHALL يفحص الكود عن الأسرار المكشوفة ويمنع push عند اكتشاف أي سر
 
 ### Requirement 4: GitHub Actions للتحليل المستمر
 
@@ -61,11 +73,11 @@
 
 #### Acceptance Criteria
 
-1. WHEN push يحدث إلى main/develop THEN النظام SHALL يشغل Flutter Analyze تلقائياً
-2. WHEN push يحدث THEN النظام SHALL يشغل جميع الاختبارات ويحسب التغطية
-3. WHEN أخطاء حرجة تُكتشف THEN النظام SHALL ينشئ Issue تلقائياً على GitHub
-4. WHEN Pull Request يُنشأ THEN النظام SHALL يضيف تعليق بملخص جودة الكود
-5. WHEN workflow يكتمل THEN النظام SHALL يحفظ التقارير كـ artifacts
+1. WHEN push يحدث إلى فرع main أو develop، THEN THE GitHub Actions Workflow SHALL يشغل Flutter Analyze تلقائياً
+2. WHEN push يحدث إلى أي فرع، THEN THE GitHub Actions Workflow SHALL يشغل جميع الاختبارات ويحسب نسبة التغطية
+3. WHEN أخطاء حرجة تُكتشف في التحليل، THEN THE GitHub Actions Workflow SHALL ينشئ Issue تلقائياً على GitHub مع التفاصيل الكاملة
+4. WHEN Pull Request يُنشأ، THEN THE GitHub Actions Workflow SHALL يضيف تعليق يحتوي على ملخص جودة الكود ونتائج الاختبارات
+5. WHEN workflow يكتمل بنجاح، THEN THE GitHub Actions Workflow SHALL يحفظ جميع التقارير كـ artifacts قابلة للتحميل
 
 ### Requirement 5: إدارة السجلات والأرشفة
 
@@ -73,11 +85,11 @@
 
 #### Acceptance Criteria
 
-1. WHEN سجلات عمرها أكثر من 7 أيام THEN النظام SHALL ينقلها إلى مجلد الأرشيف
-2. WHEN حجم الأرشيف يتجاوز 10MB THEN النظام SHALL يضغط السجلات في ملف tar.gz
-3. WHEN أرشفة تحدث THEN النظام SHALL يحتفظ بالسجلات الحديثة في مكانها الأصلي
-4. WHEN سجلات تُحذف THEN النظام SHALL يحتفظ بنسخة مضغوطة في الأرشيف
-5. WHEN مستخدم يطلب سجل قديم THEN النظام SHALL يوفر طريقة سهلة لاستخراجه من الأرشيف
+1. WHEN سجلات عمرها أكثر من 7 أيام، THEN THE Error Tracking System SHALL ينقلها تلقائياً إلى مجلد الأرشيف
+2. WHEN حجم الأرشيف يتجاوز 10 ميجابايت، THEN THE Error Tracking System SHALL يضغط السجلات في ملف tar.gz واحد
+3. WHEN عملية أرشفة تحدث، THEN THE Error Tracking System SHALL يحتفظ بالسجلات الحديثة (أقل من 7 أيام) في مكانها الأصلي
+4. WHEN سجلات قديمة تُحذف من المجلد الأصلي، THEN THE Error Tracking System SHALL يحتفظ بنسخة مضغوطة منها في الأرشيف
+5. WHEN مستخدم يطلب استخراج سجل قديم، THEN THE Error Tracking System SHALL يوفر أمر بسيط لفك ضغط واستخراج السجل المطلوب
 
 ### Requirement 6: دفع السجلات إلى Git
 
@@ -85,11 +97,11 @@
 
 #### Acceptance Criteria
 
-1. WHEN سكريبت يُنفذ مع --push THEN النظام SHALL يضيف السجلات الجديدة إلى Git
-2. WHEN commit للسجلات يُنشأ THEN النظام SHALL يستخدم رسالة موحدة بصيغة Conventional Commits
-3. WHEN commit للسجلات يُنشأ THEN النظام SHALL يضيف [skip ci] لتجنب تشغيل workflows
-4. WHEN push يفشل THEN النظام SHALL يحذر المستخدم دون إيقاف العملية
-5. WHEN لا توجد تغييرات THEN النظام SHALL يتخطى عملية الـ commit والـ push
+1. WHEN سكريبت جمع السجلات يُنفذ مع خيار --push، THEN THE Error Tracking System SHALL يضيف جميع السجلات الجديدة إلى Git staging area
+2. WHEN commit للسجلات يُنشأ، THEN THE Error Tracking System SHALL يستخدم رسالة موحدة بصيغة Conventional Commits (مثل: "chore(logs): update logs")
+3. WHEN commit للسجلات يُنشأ، THEN THE Error Tracking System SHALL يضيف [skip ci] في رسالة الـ commit لتجنب تشغيل workflows غير ضرورية
+4. WHEN عملية push تفشل لأي سبب، THEN THE Error Tracking System SHALL يعرض رسالة تحذير للمستخدم دون إيقاف العملية بالكامل
+5. WHEN لا توجد تغييرات جديدة في السجلات، THEN THE Error Tracking System SHALL يتخطى عملية الـ commit والـ push ويعرض رسالة إعلامية
 
 ### Requirement 7: Issue Templates الموحدة
 
@@ -97,11 +109,11 @@
 
 #### Acceptance Criteria
 
-1. WHEN مستخدم ينشئ Issue THEN النظام SHALL يعرض قوالب متعددة (Bug, Feature, Code Quality)
-2. WHEN قالب Bug يُستخدم THEN النظام SHALL يطلب (الوصف، خطوات الإعادة، السلوك المتوقع، البيئة)
-3. WHEN قالب Feature يُستخدم THEN النظام SHALL يطلب (الوصف، المشكلة، الحل المقترح، الأولوية)
-4. WHEN Issue يُنشأ THEN النظام SHALL يضيف labels تلقائياً بناءً على النوع
-5. WHEN Issue يُنشأ تلقائياً THEN النظام SHALL يضيف label "automated"
+1. WHEN مستخدم ينشئ Issue جديد على GitHub، THEN THE Error Tracking System SHALL يعرض قوالب متعددة (Bug Report، Feature Request، Code Quality)
+2. WHEN قالب Bug Report يُستخدم، THEN THE Issue Template SHALL يطلب حقول إلزامية (الوصف، خطوات الإعادة، السلوك المتوقع، معلومات البيئة)
+3. WHEN قالب Feature Request يُستخدم، THEN THE Issue Template SHALL يطلب حقول إلزامية (الوصف، المشكلة المراد حلها، الحل المقترح، الأولوية)
+4. WHEN Issue يُنشأ من أي قالب، THEN THE GitHub System SHALL يضيف labels تلقائياً بناءً على نوع القالب المستخدم
+5. WHEN Issue يُنشأ تلقائياً بواسطة GitHub Actions، THEN THE Error Tracking System SHALL يضيف label "automated" للتمييز
 
 ### Requirement 8: التوثيق الشامل
 
@@ -109,11 +121,11 @@
 
 #### Acceptance Criteria
 
-1. WHEN مطور يبحث عن دليل THEN النظام SHALL يوفر ERROR_TRACKING_GUIDE.md شامل
-2. WHEN مطور يبحث عن دليل Git THEN النظام SHALL يوفر GIT_GITHUB_GUIDE.md مفصل
-3. WHEN دليل يُقرأ THEN النظام SHALL يتضمن أمثلة عملية وأوامر جاهزة
-4. WHEN مشكلة شائعة تحدث THEN النظام SHALL يوفر قسم استكشاف الأخطاء
-5. WHEN دليل يُحدث THEN النظام SHALL يضيف تاريخ التحديث ورقم الإصدار
+1. WHEN مطور يبحث عن دليل نظام تتبع الأخطاء، THEN THE Error Tracking System SHALL يوفر ملف ERROR_TRACKING_GUIDE.md شامل في مجلد Documentation
+2. WHEN مطور يبحث عن دليل Git وGitHub، THEN THE Error Tracking System SHALL يوفر ملف GIT_GITHUB_GUIDE.md مفصل يشرح جميع العمليات
+3. WHEN مطور يقرأ أي دليل، THEN THE Documentation SHALL يتضمن أمثلة عملية قابلة للتنفيذ وأوامر جاهزة للنسخ
+4. WHEN مشكلة شائعة تحدث، THEN THE Documentation SHALL يوفر قسم "استكشاف الأخطاء وإصلاحها" مع حلول واضحة
+5. WHEN دليل يُحدث، THEN THE Documentation SHALL يضيف تاريخ التحديث الأخير ورقم الإصدار في رأس الملف
 
 ### Requirement 9: الأمان والخصوصية
 
@@ -121,11 +133,11 @@
 
 #### Acceptance Criteria
 
-1. WHEN سجل يُنشأ THEN النظام SHALL يفحص ويزيل أي معلومات حساسة (passwords, tokens, keys)
-2. WHEN pre-push hook يُنفذ THEN النظام SHALL يفحص الكود عن أنماط الأسرار المكشوفة
-3. WHEN سر مكشوف يُكتشف THEN النظام SHALL يمنع push ويحذر المطور
-4. WHEN .gitignore يُحدث THEN النظام SHALL يتضمن جميع الملفات الحساسة
-5. WHEN سجلات تُدفع إلى Git THEN النظام SHALL يتأكد من عدم احتوائها على بيانات حساسة
+1. WHEN سجل جديد يُنشأ، THEN THE Error Tracking System SHALL يفحص المحتوى ويزيل تلقائياً أي معلومات حساسة (كلمات المرور، الرموز، المفاتيح السرية)
+2. WHEN pre-push hook يُنفذ، THEN THE Pre-push Hook SHALL يفحص جميع الملفات المعدلة عن أنماط الأسرار المكشوفة باستخدام regex patterns
+3. WHEN سر مكشوف يُكتشف في الكود، THEN THE Pre-push Hook SHALL يمنع عملية push ويعرض رسالة تحذير واضحة للمطور مع موقع السر
+4. WHEN ملف .gitignore يُحدث، THEN THE Error Tracking System SHALL يتضمن جميع أنواع الملفات الحساسة (مفاتيح، شهادات، ملفات بيئة)
+5. WHEN سجلات تُدفع إلى Git، THEN THE Error Tracking System SHALL يتحقق مسبقاً من عدم احتواء السجلات على أي بيانات حساسة
 
 ### Requirement 10: الأداء والكفاءة
 
@@ -133,8 +145,13 @@
 
 #### Acceptance Criteria
 
-1. WHEN pre-commit hook يُنفذ THEN النظام SHALL يكمل في أقل من 30 ثانية
-2. WHEN pre-push hook يُنفذ THEN النظام SHALL يكمل في أقل من 2 دقيقة
-3. WHEN سكريبت جمع السجلات يُنفذ THEN النظام SHALL يكمل في أقل من 1 دقيقة
-4. WHEN أرشفة تحدث THEN النظام SHALL يستخدم ضغط فعال لتقليل الحجم
-5. WHEN عمليات متعددة تُنفذ THEN النظام SHALL يستخدم caching لتحسين الأداء
+1. WHEN pre-commit hook يُنفذ، THEN THE Pre-commit Hook SHALL يكمل جميع الفحوصات في أقل من 30 ثانية
+2. WHEN pre-push hook يُنفذ، THEN THE Pre-push Hook SHALL يكمل جميع الاختبارات والفحوصات في أقل من دقيقتين
+3. WHEN سكريبت جمع السجلات يُنفذ، THEN THE Log Collection Script SHALL يكمل عملية الجمع والتنظيم في أقل من دقيقة واحدة
+4. WHEN عملية أرشفة تحدث، THEN THE Error Tracking System SHALL يستخدم خوارزمية ضغط فعالة (gzip) لتقليل حجم الملفات بنسبة 70% على الأقل
+5. WHEN عمليات متعددة تُنفذ بشكل متكرر، THEN THE Error Tracking System SHALL يستخدم آلية caching ذكية لتحسين الأداء وتقليل وقت التنفيذ
+
+---
+
+**تم إعداد هذه الوثيقة بواسطة:** فريق وكلاء تطوير مشروع بصير  
+**آخر تحديث:** 3 ديسمبر 2025

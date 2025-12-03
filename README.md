@@ -1,15 +1,15 @@
 # تطبيق بصير - نظام إدارة الفواتير والعملاء
 
-[![Flutter](https://img.shields.io/badge/Flutter-3.24.0-blue.svg)](https://flutter.dev)
-[![Dart](https://img.shields.io/badge/Dart-3.5.0-blue.svg)](https://dart.dev)
+[![Flutter](https://img.shields.io/badge/Flutter-3.35.5-blue.svg)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.9.2-blue.svg)](https://dart.dev)
 [![CI/CD](https://github.com/YOUR_USERNAME/Basser_MVP/workflows/Flutter%20CI/CD%20-%20بصير%20MVP/badge.svg)](https://github.com/YOUR_USERNAME/Basser_MVP/actions)
-[![Tests](https://img.shields.io/badge/Tests-497%20Passed-success.svg)](test/)
-[![Coverage](https://img.shields.io/badge/Coverage-53%25-yellow.svg)](coverage/)
+[![Tests](https://img.shields.io/badge/Tests-518%20Passed-success.svg)](test/)
+[![Coverage](https://img.shields.io/badge/Coverage-70%25+-green.svg)](coverage/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **بصير** هو تطبيق موبايل احترافي لإدارة الفواتير والعملاء، مصمم خصيصًا للعاملين بالقطاع الخاص والشركات الصغيرة والمتوسطة في الشرق الأوسط.
 
-> 🎯 **Kiro Strategic Blueprint** - يتبع المشروع منهجية Spec-Driven Development (SDD) ومبدأ Security First
+> 🎯 **Kiro Strategic Workspace** - يتبع المشروع منهجية Spec-Driven Development (SDD) ومبدأ Security First
 
 ---
 
@@ -78,6 +78,7 @@
 - Flutter 3.35.5 أو أحدث
 - Dart 3.9.2 أو أحدث
 - Java 21 (للـ Android)
+- Android SDK 36.1.0 أو أحدث
 
 ### خطوات التثبيت
 
@@ -134,7 +135,7 @@ xdg-open coverage/html/index.html  # Linux
 - **Widget Tests** - اختبار الواجهات (Widgets, Screens)
 - **Integration Tests** - اختبار التدفقات الكاملة
 
-📊 **الحالة الحالية:** 497 اختبار ناجح + 2 skipped (معدل نجاح 100%)
+📊 **الحالة الحالية:** 518 اختبار ناجح + 2 skipped (معدل نجاح 100%)
 
 ---
 
@@ -153,10 +154,13 @@ lib/
 
 ### المكتبات الرئيسية
 
-- **flutter_riverpod** - إدارة الحالة
-- **isar** - قاعدة بيانات محلية
-- **flutter_secure_storage** - تخزين آمن
-- **crypto** - تشفير البيانات
+- **flutter_riverpod** ^2.4.0 - إدارة الحالة
+- **isar** ^3.1.0+1 - قاعدة بيانات محلية عالية الأداء
+- **flutter_secure_storage** ^9.0.0 - تخزين آمن للبيانات الحساسة
+- **crypto** ^3.0.7 - تشفير البيانات
+- **freezed** ^2.4.5 - توليد immutable classes ✨ (جديد في v1.7.0)
+- **pdf** ^3.10.4 - توليد فواتير PDF
+- **printing** ^5.11.1 - طباعة الفواتير
 
 📖 **للتفاصيل الكاملة:** راجع [ARCHITECTURE.md](ARCHITECTURE.md)
 
@@ -168,15 +172,16 @@ lib/
 
 **آخر تحديث:** 2 ديسمبر 2025
 
-| المقياس              | القيمة | الحالة |
-| -------------------- | ------ | ------ |
-| تغطية الاختبارات     | ~53%   | 🔄     |
-| عدد الاختبارات       | 497    | ✅     |
-| نجاح الاختبارات      | 100%   | ✅     |
-| تغطية التوثيق        | 95%+   | ✅     |
-| المشاكل الحرجة       | 0      | ✅     |
-| وقت تشغيل الاختبارات | ~15s   | ✅     |
-| CI/CD Status         | Active | ✅     |
+| المقياس              | القيمة  | الحالة |
+| -------------------- | ------- | ------ |
+| تغطية الاختبارات     | ~70%    | ✅     |
+| عدد الاختبارات       | 518     | ✅     |
+| نجاح الاختبارات      | 100%    | ✅     |
+| تغطية التوثيق        | 95%+    | ✅     |
+| المشاكل الحرجة       | 0       | ✅     |
+| وقت تشغيل الاختبارات | ~40s    | ✅     |
+| CI/CD Status         | Active  | ✅     |
+| Flutter Analyze      | 0 مشاكل | ✅     |
 
 ### DORA Metrics
 
@@ -281,9 +286,9 @@ on: [push, pull_request]
 
 ---
 
-## 🎯 Kiro Strategic Blueprint
+## 🎯 Kiro Strategic Workspace
 
-هذا المشروع يطبق **Kiro Strategic Blueprint** - نموذج هندسي كامل يضمن:
+هذا المشروع يطبق **Kiro Strategic Workspace** - بيئة عمل هندسية ذكية وقابلة للتشغيل تضمن:
 
 ### المبادئ الأساسية
 
@@ -314,8 +319,15 @@ on: [push, pull_request]
 
 ---
 
-**الإصدار:** 1.0.0 (MVP)  
+**الإصدار:** 1.7.0 (MVP + تحسينات جودة الكود)  
 **الحالة:** ✅ جاهز للإنتاج  
 **التقييم:** ⭐⭐⭐⭐⭐ (95/100)
 
-_تم تطبيق Kiro Strategic Blueprint - نموذج هندسي كامل للتطوير الاحترافي_
+**آخر تحديث:** 3 ديسمبر 2025
+
+- ✅ إزالة get_it غير المستخدم
+- ✅ إضافة freezed لتحسين جودة الكود
+- ✅ 518 اختبار ناجح (100% نجاح)
+- ✅ 0 أخطاء، 0 تحذيرات في flutter analyze
+
+_تم تطبيق Kiro Strategic Workspace - بيئة عمل ذكية للتطوير الاحترافي_

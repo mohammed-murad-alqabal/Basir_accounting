@@ -1,0 +1,5 @@
+# decision Agent Configuration
+agent:
+  name: "Decision Agent"
+  version: "1.0.0"
+  enabled: true

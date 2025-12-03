@@ -366,6 +366,7 @@ void main() {
 
     test('should update when search query changes', () async {
       // Arrange
+      await container.read(customersProvider.future);
       container.read(customerSearchProvider.notifier).state = 'أحمد';
       final result1 = container.read(filteredCustomersProvider);
 
@@ -380,7 +381,7 @@ void main() {
         error: (_, __) => fail('Should not have error'),
       );
 
-      await result2.when(
+      result2.when(
         data: (customers) {
           expect(customers.length, 1);
           expect(customers.first.name, 'فاطمة علي');

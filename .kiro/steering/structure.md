@@ -17,7 +17,7 @@ Basser_MVP/
 ├── test/                   # الاختبارات
 ├── assets/                 # الموارد (صور، خطوط، إلخ)
 ├── Documentation/          # التوثيق الشامل
-├── .kiro/                 # إعدادات Kiro Strategic Blueprint
+├── .kiro/                 # إعدادات Kiro Strategic Workspace
 ├── android/               # كود Android الأصلي
 ├── ios/                   # كود iOS الأصلي
 ├── linux/                 # كود Linux الأصلي
@@ -124,7 +124,7 @@ test/
         └── dashboard/
 ```
 
-## 4. بنية مجلد .kiro/ (Kiro Strategic Blueprint)
+## 4. بنية مجلد .kiro/ (Kiro Strategic Workspace)
 
 ```
 .kiro/
@@ -162,16 +162,19 @@ test/
 ### أ. Clean Architecture (الطبقات الثلاث)
 
 #### 1. Presentation Layer (طبقة العرض)
+
 - **المسؤولية:** عرض البيانات والتفاعل مع المستخدم
 - **المكونات:** Screens, Widgets, Providers
 - **القاعدة:** لا تحتوي على منطق أعمال
 
 #### 2. Domain Layer (طبقة المجال)
+
 - **المسؤولية:** منطق الأعمال والقواعد
 - **المكونات:** Entities, Use Cases
 - **القاعدة:** مستقلة عن الإطار والمكتبات
 
 #### 3. Data Layer (طبقة البيانات)
+
 - **المسؤولية:** الوصول إلى البيانات
 - **المكونات:** Models, Repositories, Services
 - **القاعدة:** تطبيق Repository Pattern
@@ -181,6 +184,7 @@ test/
 **المبدأ:** تنظيم الكود حسب الميزات وليس حسب النوع
 
 **الفوائد:**
+
 - سهولة العثور على الكود المتعلق بميزة معينة
 - تقليل الاعتماديات بين الميزات
 - تسهيل العمل الجماعي
@@ -192,31 +196,34 @@ test/
 **المبدأ:** استخدام GetIt للـ Service Locator
 
 **القاعدة:**
+
 - تسجيل جميع الخدمات في `main.dart`
 - استخدام Riverpod للـ Providers
 - عدم إنشاء instances مباشرة في الكود
 
 ## 6. اتفاقيات التسمية
 
-| العنصر | الاتفاقية | مثال |
-|:---|:---|:---|
-| **الملفات** | snake_case | `customer_repository.dart` |
-| **المجلدات** | snake_case | `customer_repository/` |
-| **Classes** | PascalCase | `CustomerRepository` |
-| **Functions** | camelCase | `getAllCustomers()` |
-| **Variables** | camelCase | `customerList` |
-| **Constants** | lowerCamelCase | `maxRetries` |
-| **Private** | _prefix | `_privateMethod()` |
+| العنصر        | الاتفاقية      | مثال                       |
+| :------------ | :------------- | :------------------------- |
+| **الملفات**   | snake_case     | `customer_repository.dart` |
+| **المجلدات**  | snake_case     | `customer_repository/`     |
+| **Classes**   | PascalCase     | `CustomerRepository`       |
+| **Functions** | camelCase      | `getAllCustomers()`        |
+| **Variables** | camelCase      | `customerList`             |
+| **Constants** | lowerCamelCase | `maxRetries`               |
+| **Private**   | \_prefix       | `_privateMethod()`         |
 
 ## 7. قواعد الاستيراد (Import Rules)
 
 ### ترتيب الاستيراد:
+
 1. Dart SDK imports
 2. Flutter imports
 3. Package imports
 4. Relative imports
 
 ### مثال:
+
 ```dart
 // Dart SDK
 import 'dart:async';
@@ -251,13 +258,13 @@ import '../../core/widgets/app_button.dart';
 
 ## 9. أنماط التصميم المعتمدة
 
-| النمط | الاستخدام | المثال |
-|:---|:---|:---|
-| **Repository** | الوصول إلى البيانات | `CustomerRepository` |
-| **Provider** | إدارة الحالة | `customersProvider` |
-| **Factory** | إنشاء كائنات معقدة | `Customer.fromJson()` |
-| **Singleton** | خدمات مشتركة | `GetIt.instance` |
-| **Observer** | مراقبة التغييرات | Riverpod Providers |
+| النمط          | الاستخدام           | المثال                |
+| :------------- | :------------------ | :-------------------- |
+| **Repository** | الوصول إلى البيانات | `CustomerRepository`  |
+| **Provider**   | إدارة الحالة        | `customersProvider`   |
+| **Factory**    | إنشاء كائنات معقدة  | `Customer.fromJson()` |
+| **Singleton**  | خدمات مشتركة        | `GetIt.instance`      |
+| **Observer**   | مراقبة التغييرات    | Riverpod Providers    |
 
 ## 10. قواعد الأمان الهيكلية
 

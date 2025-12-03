@@ -1,0 +1,5 @@
+# development Agent Configuration
+agent:
+  name: "Development Agent"
+  version: "1.0.0"
+  enabled: true

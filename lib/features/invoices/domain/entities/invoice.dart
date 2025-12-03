@@ -4,7 +4,9 @@
 /// يحتوي على جميع المعلومات المتعلقة بالفاتورة وبنودها.
 library;
 
-import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'invoice.freezed.dart';
 
 /// بند الفاتورة (Invoice Item)
 ///
@@ -26,8 +28,8 @@ import 'package:flutter/foundation.dart';
 /// );
 /// print('الإجمالي: ${item.total}'); // 1000.0
 /// ```
-@immutable
-class InvoiceItem {
+@freezed
+class InvoiceItem with _$InvoiceItem {
   /// إنشاء بند فاتورة جديد
   ///
   /// **Parameters:**
@@ -35,32 +37,29 @@ class InvoiceItem {
   /// - [name]: اسم المنتج أو الخدمة
   /// - [quantity]: الكمية (يمكن أن تكون كسرية)
   /// - [price]: السعر للوحدة الواحدة
-  const InvoiceItem({
-    required this.id,
-    required this.name,
-    required this.quantity,
-    required this.price,
-  });
+  const factory InvoiceItem({
+    /// معرف البند الفريد
+    required String id,
 
-  /// معرف البند الفريد
-  final String id;
+    /// اسم المنتج أو الخدمة
+    ///
+    /// **مثال:** 'خدمة استشارية', 'تصميم موقع'
+    required String name,
 
-  /// اسم المنتج أو الخدمة
-  ///
-  /// **مثال:** 'خدمة استشارية', 'تصميم موقع'
-  final String name;
+    /// الكمية
+    ///
+    /// يمكن أن تكون عدداً صحيحاً أو كسرياً (مثل 1.5 ساعة).
+    ///
+    /// **مثال:** 2.0, 1.5, 10.0
+    required double quantity,
 
-  /// الكمية
-  ///
-  /// يمكن أن تكون عدداً صحيحاً أو كسرياً (مثل 1.5 ساعة).
-  ///
-  /// **مثال:** 2.0, 1.5, 10.0
-  final double quantity;
+    /// السعر للوحدة الواحدة
+    ///
+    /// **مثال:** 500.0 ريال
+    required double price,
+  }) = _InvoiceItem;
 
-  /// السعر للوحدة الواحدة
-  ///
-  /// **مثال:** 500.0 ريال
-  final double price;
+  const InvoiceItem._();
 
   /// حساب الإجمالي للبند
   ///
@@ -79,47 +78,6 @@ class InvoiceItem {
   /// print(item.total); // 1000.0
   /// ```
   double get total => quantity * price;
-
-  /// نسخ البند مع تحديث بعض الحقول
-  ///
-  /// يسمح بإنشاء نسخة جديدة من البند مع تغيير بعض القيم.
-  ///
-  /// **Parameters:**
-  /// - [id]: معرف جديد (اختياري)
-  /// - [name]: اسم جديد (اختياري)
-  /// - [quantity]: كمية جديدة (اختياري)
-  /// - [price]: سعر جديد (اختياري)
-  ///
-  /// **مثال:**
-  /// ```dart
-  /// final updatedItem = item.copyWith(quantity: 3.0);
-  /// ```
-  InvoiceItem copyWith({
-    String? id,
-    String? name,
-    double? quantity,
-    double? price,
-  }) =>
-      InvoiceItem(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        quantity: quantity ?? this.quantity,
-        price: price ?? this.price,
-      );
-
-  @override
-  String toString() => 'InvoiceItem(id: $id, name: $name, quantity: $quantity, '
-      'price: $price)';
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is InvoiceItem &&
-          runtimeType == other.runtimeType &&
-          id == other.id;
-
-  @override
-  int get hashCode => id.hashCode;
 }
 
 /// الفاتورة (Invoice)
@@ -162,8 +120,8 @@ class InvoiceItem {
 /// );
 /// print('الإجمالي: ${invoice.grandTotal}'); // 1150.0
 /// ```
-@immutable
-class Invoice {
+@freezed
+class Invoice with _$Invoice {
   /// إنشاء فاتورة جديدة
   ///
   /// **Parameters:**
@@ -178,67 +136,57 @@ class Invoice {
   /// - [createdAt]: تاريخ الإنشاء
   /// - [updatedAt]: تاريخ آخر تحديث
   /// - [notes]: ملاحظات إضافية (اختياري)
-  const Invoice({
-    required this.id,
-    required this.customerId,
-    required this.customerName,
-    required this.items,
-    required this.issuedDate,
-    required this.dueDate,
-    required this.taxRate,
-    required this.status,
-    required this.createdAt,
-    required this.updatedAt,
-    this.notes,
-  });
+  const factory Invoice({
+    /// معرف الفاتورة الفريد
+    required String id,
 
-  /// معرف الفاتورة الفريد
-  final String id;
+    /// معرف العميل
+    required String customerId,
 
-  /// معرف العميل
-  final String customerId;
+    /// اسم العميل
+    ///
+    /// يتم نسخه من بيانات العميل لسهولة الوصول.
+    required String customerName,
 
-  /// اسم العميل
-  ///
-  /// يتم نسخه من بيانات العميل لسهولة الوصول.
-  final String customerName;
+    /// قائمة بنود الفاتورة
+    ///
+    /// يجب أن تحتوي على بند واحد على الأقل.
+    required List<InvoiceItem> items,
 
-  /// قائمة بنود الفاتورة
-  ///
-  /// يجب أن تحتوي على بند واحد على الأقل.
-  final List<InvoiceItem> items;
+    /// تاريخ إصدار الفاتورة
+    required DateTime issuedDate,
 
-  /// تاريخ إصدار الفاتورة
-  final DateTime issuedDate;
+    /// تاريخ استحقاق الدفع
+    required DateTime dueDate,
 
-  /// تاريخ استحقاق الدفع
-  final DateTime dueDate;
+    /// نسبة الضريبة
+    ///
+    /// **مثال:** 0.15 = 15%
+    required double taxRate,
 
-  /// نسبة الضريبة
-  ///
-  /// **مثال:** 0.15 = 15%
-  final double taxRate;
+    /// حالة الفاتورة
+    ///
+    /// **القيم الممكنة:**
+    /// - `draft`: مسودة
+    /// - `issued`: صادرة
+    /// - `paid`: مدفوعة
+    /// - `overdue`: متأخرة
+    /// - `cancelled`: ملغاة
+    required String status,
 
-  /// حالة الفاتورة
-  ///
-  /// **القيم الممكنة:**
-  /// - `draft`: مسودة
-  /// - `issued`: صادرة
-  /// - `paid`: مدفوعة
-  /// - `overdue`: متأخرة
-  /// - `cancelled`: ملغاة
-  final String status;
+    /// تاريخ إنشاء الفاتورة
+    required DateTime createdAt,
 
-  /// ملاحظات إضافية
-  ///
-  /// **اختياري** - يمكن استخدامه لشروط الدفع أو ملاحظات خاصة.
-  final String? notes;
+    /// تاريخ آخر تحديث للفاتورة
+    required DateTime updatedAt,
 
-  /// تاريخ إنشاء الفاتورة
-  final DateTime createdAt;
+    /// ملاحظات إضافية
+    ///
+    /// **اختياري** - يمكن استخدامه لشروط الدفع أو ملاحظات خاصة.
+    String? notes,
+  }) = _Invoice;
 
-  /// تاريخ آخر تحديث للفاتورة
-  final DateTime updatedAt;
+  const Invoice._();
 
   /// حساب الإجمالي الفرعي (Subtotal)
   ///
@@ -284,55 +232,4 @@ class Invoice {
   /// print(invoice.grandTotal); // 1150.0
   /// ```
   double get grandTotal => subtotal + taxTotal;
-
-  /// نسخ الفاتورة مع تحديث بعض الحقول
-  ///
-  /// يسمح بإنشاء نسخة جديدة من الفاتورة مع تغيير بعض القيم.
-  ///
-  /// **مثال:**
-  /// ```dart
-  /// final updatedInvoice = invoice.copyWith(
-  ///   status: 'paid',
-  ///   updatedAt: DateTime.now(),
-  /// );
-  /// ```
-  Invoice copyWith({
-    String? id,
-    String? customerId,
-    String? customerName,
-    List<InvoiceItem>? items,
-    DateTime? issuedDate,
-    DateTime? dueDate,
-    double? taxRate,
-    String? status,
-    String? notes,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) =>
-      Invoice(
-        id: id ?? this.id,
-        customerId: customerId ?? this.customerId,
-        customerName: customerName ?? this.customerName,
-        items: items ?? this.items,
-        issuedDate: issuedDate ?? this.issuedDate,
-        dueDate: dueDate ?? this.dueDate,
-        taxRate: taxRate ?? this.taxRate,
-        status: status ?? this.status,
-        notes: notes ?? this.notes,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
-
-  @override
-  String toString() =>
-      'Invoice(id: $id, customerId: $customerId, status: $status, '
-      'grandTotal: $grandTotal)';
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Invoice && runtimeType == other.runtimeType && id == other.id;
-
-  @override
-  int get hashCode => id.hashCode;
 }

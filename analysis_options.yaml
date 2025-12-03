@@ -9,12 +9,14 @@ analyzer:
     - "**/*.freezed.dart"
     - "build/**"
     - ".dart_tool/**"
-  
+
   errors:
     # معاملة التحذيرات كأخطاء (Quality First)
     invalid_annotation_target: ignore
     todo: ignore
-    
+    # تجاهل cascade_invocations (تتعارض مع dart format)
+    cascade_invocations: ignore
+
   language:
     strict-casts: true
     strict-inference: true
@@ -27,7 +29,7 @@ linter:
     - avoid_web_libraries_in_flutter
     - no_logic_in_create_state
     - use_build_context_synchronously
-    
+
     # الجودة (Quality First)
     - always_declare_return_types
     - always_put_required_named_parameters_first
@@ -235,7 +237,6 @@ linter:
     - use_to_and_as_if_applicable
     - valid_regexps
     - void_checks
-
 # معايير الجودة المستهدفة:
 # - 0 errors
 # - 0 warnings

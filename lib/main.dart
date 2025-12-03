@@ -25,23 +25,10 @@ late AuthService authService;
 /// خدمة الإعدادات
 late SettingsService settingsService;
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // تهيئة Isar
-  final dir = await getApplicationDocumentsDirectory();
-  isar = await Isar.open(
-    [CustomerModelSchema, InvoiceModelSchema],
-    directory: dir.path,
-  );
-
-  // تهيئة Secure Storage
-  secureStorage = const FlutterSecureStorage();
-
-  // تهيئة الخدمات
-  authService = AuthService(secureStorage: secureStorage);
-  settingsService = SettingsService(secureStorage: secureStorage);
-
+  // بدء التطبيق فوراً بدون انتظار
   runApp(const ProviderScope(child: BasserApp()));
 }
 
@@ -72,15 +59,43 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
+  String _status = 'جاري التهيئة...';
+
   @override
   void initState() {
     super.initState();
-    unawaited(_checkAuthStatus());
+    unawaited(_initializeApp());
+  }
+
+  Future<void> _initializeApp() async {
+    try {
+      // 1. تهيئة Isar
+      setState(() => _status = 'جاري فتح قاعدة البيانات...');
+      final dir = await getApplicationDocumentsDirectory();
+      isar = await Isar.open(
+        [CustomerModelSchema, InvoiceModelSchema],
+        directory: dir.path,
+      );
+
+      // 2. تهيئة Secure Storage
+      setState(() => _status = 'جاري تهيئة التخزين الآمن...');
+      secureStorage = const FlutterSecureStorage();
+
+      // 3. تهيئة الخدمات
+      setState(() => _status = 'جاري تهيئة الخدمات...');
+      authService = AuthService(secureStorage: secureStorage);
+      settingsService = SettingsService(secureStorage: secureStorage);
+
+      // 4. التحقق من حالة المصادقة
+      setState(() => _status = 'جاري التحقق من الحساب...');
+      await _checkAuthStatus();
+    } on Exception catch (e) {
+      setState(() => _status = 'حدث خطأ: $e');
+      // يمكن إضافة معالجة الخطأ هنا
+    }
   }
 
   Future<void> _checkAuthStatus() async {
-    await Future<void>.delayed(const Duration(seconds: 2));
-
     if (!mounted) return;
 
     final hasAccount = await authService.hasAccount();
@@ -98,13 +113,19 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => const Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         backgroundColor: AppColors.primary,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Icon(
+                Icons.receipt_long,
+                size: 80,
+                color: Colors.white,
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              const Text(
                 AppConfig.appName,
                 style: TextStyle(
                   fontSize: AppTypography.headlineLarge,
@@ -112,9 +133,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: AppSpacing.lg),
-              CircularProgressIndicator(
+              const SizedBox(height: AppSpacing.xl),
+              const CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                _status,
+                style: const TextStyle(
+                  fontSize: AppTypography.bodySmall,
+                  color: Colors.white70,
+                ),
+                textAlign: TextAlign.center,
               ),
             ],
           ),

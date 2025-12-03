@@ -1,4 +1,4 @@
-# ✅ التحقق من إعداد Kiro Strategic Blueprint
+# ✅ التحقق من إعداد Kiro Strategic Workspace
 
 ## 📋 قائمة التحقق
 
@@ -213,7 +213,7 @@ cat .kiro/steering/flutter-best-practices.md
 ```
 ╔════════════════════════════════════════════╗
 ║                                            ║
-║   ✅ Kiro Strategic Blueprint              ║
+║   ✅ Kiro Strategic Workspace              ║
 ║   ✅ تم الإعداد بنجاح                     ║
 ║   ✅ جاهز للاستخدام                       ║
 ║                                            ║

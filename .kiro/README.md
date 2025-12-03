@@ -1,8 +1,8 @@
-# 🎯 Kiro Strategic Blueprint - دليل الإعداد
+# 🎯 Kiro Strategic Workspace - دليل الإعداد
 
 ## نظرة عامة
 
-هذا المجلد يحتوي على **Kiro Strategic Blueprint** - نموذج هندسي كامل يطبق منهجية **Spec-Driven Development (SDD)** ومبدأ **Security First**.
+هذا المجلد يحتوي على **Kiro Strategic Workspace** - بيئة عمل هندسية ذكية تطبق منهجية **Spec-Driven Development (SDD)** ومبدأ **Security First**.
 
 ## 📁 البنية
 

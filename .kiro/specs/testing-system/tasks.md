@@ -425,17 +425,18 @@
   - _Requirements: 5.3, 5.4_
 
 - [ ] 10.3 تحسين التغطية
-  - 🔄 **قيد التنفيذ** - تحليل الملفات ذات التغطية المنخفضة
+  - 🔄 **قيد التنفيذ** - تحسين التغطية من 62.8% إلى 70%+
   - إضافة اختبارات للملفات ذات التغطية المنخفضة:
     - ⏳ lib/core/providers.dart (0% → 70%+)
     - ⏳ lib/core/theme.dart (0% → 70%+)
-    - ⏳ lib/features/customers/presentation/providers/customer_provider.dart (3% → 70%+)
+    - ✅ lib/features/customers/presentation/providers/customer_provider.dart (3% → ~90%+) - 21 اختبار جديد
     - ⏳ lib/features/invoices/presentation/providers/invoice_provider.dart (4.3% → 70%+)
     - ⏳ lib/features/invoices/domain/entities/invoice.dart (61.9% → 70%+)
     - ⏳ lib/features/customers/domain/entities/customer.dart (69.2% → 70%+)
   - التركيز على الوصول إلى 70%+ تغطية
   - مراجعة وإصلاح الاختبارات الفاشلة
   - _Requirements: 5.3_
+  - **التقدم:** 1/6 ملفات مكتملة (17%)
 
 ### 11. اختبارات الخدمات الإضافية
 
