@@ -77,9 +77,11 @@ class AppAppBar extends StatelessWidget implements PreferredSizeWidget {
         foregroundColor: foregroundColor,
         elevation: 0,
         centerTitle: true,
+        iconTheme: const IconThemeData(size: 26),
         leading: showBackButton
             ? IconButton(
                 icon: const Icon(Icons.arrow_back),
+                tooltip: 'رجوع',
                 onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
               )
             : null,

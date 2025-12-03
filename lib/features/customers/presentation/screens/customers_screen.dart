@@ -2,49 +2,14 @@ import 'package:basser_app/core/theme.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basser_app/features/customers/presentation/screens/customer_details_screen.dart';
+import 'package:basser_app/features/customers/presentation/screens/customer_form_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// شاشة إدارة العملاء (Customers Screen)
-///
-/// شاشة رئيسية لعرض وإدارة قائمة العملاء في التطبيق.
-/// توفر واجهة شاملة لعرض، بحث، إضافة، تعديل، وحذف العملاء.
-///
-/// **الميزات:**
-/// - عرض قائمة جميع العملاء
-/// - بحث في العملاء (الاسم، البريد، الهاتف)
-/// - إضافة عميل جديد
-/// - عرض تفاصيل العميل
-/// - تحديث بيانات العميل
-/// - حذف عميل
-///
-/// **الاستخدام:**
-/// ```dart
-/// Navigator.push(
-///   context,
-///   MaterialPageRoute(
-///     builder: (context) => const CustomersScreen(),
-///   ),
-/// );
-/// ```
-///
-/// **State Management:**
-/// - يستخدم [customersProvider] لجلب قائمة العملاء
-/// - يستخدم [ConsumerStatefulWidget] للتفاعل مع Riverpod
-/// - يدير حالة البحث محليًا باستخدام [TextEditingController]
-///
-/// **UI Components:**
-/// - [AppAppBar]: شريط التطبيق مع زر الإضافة
-/// - [AppSearchField]: حقل البحث
-/// - [AppListCard]: بطاقة لكل عميل
-/// - حالات فارغة وتحميل وأخطاء
 class CustomersScreen extends ConsumerStatefulWidget {
   /// إنشاء شاشة العملاء
-  ///
-  /// **مثال:**
-  /// ```dart
-  /// const CustomersScreen()
-  /// ```
   const CustomersScreen({super.key});
 
   @override
@@ -52,9 +17,6 @@ class CustomersScreen extends ConsumerStatefulWidget {
 }
 
 class _CustomersScreenState extends ConsumerState<CustomersScreen> {
-  /// متحكم حقل البحث
-  ///
-  /// يدير نص البحث ويتم التخلص منه عند إغلاق الشاشة.
   final _searchController = TextEditingController();
 
   @override
@@ -65,7 +27,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final customersAsync = ref.watch(customersProvider);
+    final customersAsync = ref.watch(filteredCustomersProvider);
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -73,10 +35,9 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
         title: 'العملاء',
         actions: [
           IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              // TODO(dev): فتح شاشة إضافة عميل جديد
-            },
+            icon: const Icon(Icons.add, size: 26),
+            tooltip: 'إضافة عميل جديد',
+            onPressed: _addCustomer,
           ),
         ],
       ),
@@ -88,7 +49,13 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
             child: AppSearchField(
               controller: _searchController,
               hint: 'ابحث عن عميل...',
-              onClear: _searchController.clear,
+              onChanged: (value) {
+                ref.read(customerSearchProvider.notifier).state = value;
+              },
+              onClear: () {
+                _searchController.clear();
+                ref.read(customerSearchProvider.notifier).state = '';
+              },
             ),
           ),
 
@@ -109,23 +76,6 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
     );
   }
 
-  /// بناء قائمة العملاء
-  ///
-  /// يعرض قائمة العملاء أو رسالة فارغة إذا لم يكن هناك عملاء.
-  ///
-  /// **السلوك:**
-  /// - إذا كانت القائمة فارغة: يعرض رسالة "لا توجد عملاء"
-  /// - إذا كانت القائمة تحتوي على عملاء: يعرض [ListView] مع بطاقات العملاء
-  ///
-  /// **UI Components:**
-  /// - [AppListCard]: بطاقة لكل عميل
-  /// - [CircleAvatar]: صورة دائرية بالحرف الأول من الاسم
-  /// - حالة فارغة مع أيقونة ورسالة
-  ///
-  /// **Parameters:**
-  /// - [customers]: قائمة العملاء المراد عرضها
-  ///
-  /// **Returns:** Widget يعرض القائمة أو الحالة الفارغة
   Widget _buildCustomersList(List<Customer> customers) {
     if (customers.isEmpty) {
       return Center(
@@ -134,7 +84,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
           children: [
             Icon(
               Icons.people,
-              size: 64,
+              size: 80,
               color: AppColors.textSecondary.withValues(alpha: 0.3),
             ),
             const SizedBox(height: AppSpacing.lg),
@@ -142,7 +92,16 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
               'لا توجد عملاء',
               style: TextStyle(
                 fontSize: AppTypography.bodyLarge,
+                fontWeight: FontWeight.w500,
                 color: AppColors.textSecondary,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            const Text(
+              'اضغط على + لإضافة عميل جديد',
+              style: TextStyle(
+                fontSize: AppTypography.bodyMedium,
+                color: AppColors.textHint,
               ),
             ),
           ],
@@ -169,11 +128,35 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
               ),
             ),
           ),
-          onTap: () {
-            // TODO(dev): فتح تفاصيل العميل
-          },
+          onTap: () => _viewCustomerDetails(customer),
         );
       },
     );
+  }
+
+  Future<void> _addCustomer() async {
+    final result = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CustomerFormScreen(),
+      ),
+    );
+
+    if (result ?? false) {
+      ref.invalidate(customersProvider);
+    }
+  }
+
+  Future<void> _viewCustomerDetails(Customer customer) async {
+    final result = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CustomerDetailsScreen(customer: customer),
+      ),
+    );
+
+    if (result ?? false) {
+      ref.invalidate(customersProvider);
+    }
   }
 }

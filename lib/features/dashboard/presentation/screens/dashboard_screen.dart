@@ -42,11 +42,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               // الأنشطة الأخيرة
               _buildRecentActivity(),
+
+              // مسافة إضافية في الأسفل لتجنب overflow
+              const SizedBox(height: AppSpacing.xxl),
             ],
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: AppColors.surface,
+          selectedItemColor: AppColors.primary,
+          unselectedItemColor: AppColors.textSecondary,
+          selectedFontSize: 13,
+          unselectedFontSize: 13,
+          iconSize: 26,
+          elevation: 8,
           onTap: (index) {
             setState(() => _selectedIndex = index);
             switch (index) {
@@ -122,8 +133,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             physics: const NeverScrollableScrollPhysics(),
             crossAxisSpacing: AppSpacing.md,
             mainAxisSpacing: AppSpacing.md,
-            childAspectRatio: 2.2,
+            childAspectRatio: 1.4,
             children: const [
+              // الصف الأول: إجمالي الفواتير (يمين) - العملاء (يسار)
               AppStatCard(
                 label: 'إجمالي الفواتير',
                 value: '24',
@@ -135,6 +147,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 icon: Icons.people,
                 iconColor: AppColors.secondary,
               ),
+              // الصف الثاني: المبيعات (يمين) - المتأخرة (يسار)
               AppStatCard(
                 label: 'المبيعات',
                 value: '5,240 ر.س',

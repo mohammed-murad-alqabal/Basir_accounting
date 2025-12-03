@@ -248,36 +248,41 @@ class AppStatCard extends StatelessWidget {
   Widget build(BuildContext context) => Card(
         color: backgroundColor,
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(AppSpacing.md),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Icon(icon, color: iconColor, size: 24),
+                  const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Text(
                       label,
                       style: const TextStyle(
-                        fontSize: 11,
+                        fontSize: AppTypography.bodySmall,
                         color: AppColors.textSecondary,
+                        fontWeight: FontWeight.w500,
+                        height: 1.3,
                       ),
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+                      maxLines: 2,
+                      textAlign: TextAlign.right,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Icon(icon, color: iconColor, size: 20),
                 ],
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 value,
                 style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+                  fontSize: AppTypography.titleLarge,
+                  fontWeight: FontWeight.bold,
                   color: AppColors.textPrimary,
+                  height: 1.2,
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,

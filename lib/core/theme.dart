@@ -261,14 +261,14 @@ class AppBorderRadius {
 ///
 /// يحتوي على جميع أحجام الأيقونات المستخدمة في التطبيق
 class AppIconSize {
-  /// حجم صغير جداً (16px)
-  static const double xs = 16;
+  /// حجم صغير جداً (18px) - محسّن للوضوح
+  static const double xs = 18;
 
-  /// حجم صغير (20px)
-  static const double sm = 20;
+  /// حجم صغير (22px) - محسّن للوضوح
+  static const double sm = 22;
 
-  /// حجم متوسط (24px) - الحجم الافتراضي
-  static const double md = 24;
+  /// حجم متوسط (26px) - الحجم الافتراضي المحسّن
+  static const double md = 26;
 
   /// حجم كبير (32px)
   static const double lg = 32;

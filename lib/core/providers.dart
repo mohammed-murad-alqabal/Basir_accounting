@@ -32,6 +32,9 @@ final secureStorageProvider = Provider<FlutterSecureStorage>(
 /// يوفر وصولاً إلى قاعدة البيانات المحلية Isar
 /// يتم فتح قاعدة البيانات تلقائياً مع جميع الـ Schemas المطلوبة
 ///
+/// **ملاحظة مهمة:** يتم فتح Isar مرة واحدة فقط. إذا كانت قاعدة البيانات
+/// مفتوحة بالفعل، يتم إرجاع الـ instance الموجود.
+///
 /// Schemas المضمنة:
 /// - [CustomerModelSchema]: لتخزين بيانات العملاء
 /// - [InvoiceModelSchema]: لتخزين بيانات الفواتير
@@ -42,11 +45,24 @@ final secureStorageProvider = Provider<FlutterSecureStorage>(
 /// final customers = await isar.customerModels.where().findAll();
 /// ```
 final isarProvider = FutureProvider<Isar>((ref) async {
-  final dir = await getApplicationDocumentsDirectory();
-  return Isar.open(
-    [CustomerModelSchema, InvoiceModelSchema],
-    directory: dir.path,
-  );
+  try {
+    // التحقق من وجود instance مفتوح بالفعل
+    if (Isar.instanceNames.isNotEmpty) {
+      // إرجاع الـ instance الموجود
+      return Isar.getInstance()!;
+    }
+
+    // فتح قاعدة بيانات جديدة
+    final dir = await getApplicationDocumentsDirectory();
+    final isar = await Isar.open(
+      [CustomerModelSchema, InvoiceModelSchema],
+      directory: dir.path,
+      name: 'basser_db', // اسم محدد لقاعدة البيانات
+    );
+    return isar;
+  } on Exception catch (e) {
+    throw Exception('فشل فتح قاعدة البيانات: $e');
+  }
 });
 
 /// مزود خدمة المصادقة (Auth Service)

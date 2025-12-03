@@ -25,13 +25,13 @@ class AppPrimaryButton extends StatelessWidget {
   ///
   /// Parameters:
   /// - [label]: نص الزر (مطلوب)
-  /// - [onPressed]: دالة يتم استدعاؤها عند الضغط (مطلوب)
+  /// - [onPressed]: دالة يتم استدعاؤها عند الضغط (يمكن أن تكون null للتعطيل)
   /// - [isLoading]: حالة التحميل، يعرض مؤشر دائري (افتراضي: false)
   /// - [width]: عرض الزر (اختياري)
   /// - [height]: ارتفاع الزر (افتراضي: 48)
   const AppPrimaryButton({
     required this.label,
-    required this.onPressed,
+    this.onPressed,
     super.key,
     this.isLoading = false,
     this.width,
@@ -41,8 +41,8 @@ class AppPrimaryButton extends StatelessWidget {
   /// نص الزر المعروض
   final String label;
 
-  /// دالة يتم استدعاؤها عند الضغط على الزر
-  final VoidCallback onPressed;
+  /// دالة يتم استدعاؤها عند الضغط على الزر (null للتعطيل)
+  final VoidCallback? onPressed;
 
   /// حالة التحميل - يعرض مؤشر دائري عند true
   final bool isLoading;
@@ -59,6 +59,12 @@ class AppPrimaryButton extends StatelessWidget {
         height: height ?? 48,
         child: ElevatedButton(
           onPressed: isLoading ? null : onPressed,
+          style: ElevatedButton.styleFrom(
+            textStyle: const TextStyle(
+              fontSize: AppTypography.bodyLarge,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           child: isLoading
               ? const SizedBox(
                   height: 24,
@@ -96,13 +102,13 @@ class AppSecondaryButton extends StatelessWidget {
   ///
   /// Parameters:
   /// - [label]: نص الزر (مطلوب)
-  /// - [onPressed]: دالة يتم استدعاؤها عند الضغط (مطلوب)
+  /// - [onPressed]: دالة يتم استدعاؤها عند الضغط (يمكن أن تكون null للتعطيل)
   /// - [isLoading]: حالة التحميل، يعرض مؤشر دائري (افتراضي: false)
   /// - [width]: عرض الزر (اختياري)
   /// - [height]: ارتفاع الزر (افتراضي: 48)
   const AppSecondaryButton({
     required this.label,
-    required this.onPressed,
+    this.onPressed,
     super.key,
     this.isLoading = false,
     this.width,
@@ -112,8 +118,8 @@ class AppSecondaryButton extends StatelessWidget {
   /// نص الزر المعروض
   final String label;
 
-  /// دالة يتم استدعاؤها عند الضغط على الزر
-  final VoidCallback onPressed;
+  /// دالة يتم استدعاؤها عند الضغط على الزر (null للتعطيل)
+  final VoidCallback? onPressed;
 
   /// حالة التحميل - يعرض مؤشر دائري عند true
   final bool isLoading;
@@ -130,6 +136,12 @@ class AppSecondaryButton extends StatelessWidget {
         height: height ?? 48,
         child: OutlinedButton(
           onPressed: isLoading ? null : onPressed,
+          style: OutlinedButton.styleFrom(
+            textStyle: const TextStyle(
+              fontSize: AppTypography.bodyLarge,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           child: isLoading
               ? const SizedBox(
                   height: 24,
@@ -154,7 +166,7 @@ class AppSecondaryButton extends StatelessWidget {
 /// - نص فقط بدون خلفية أو حد
 /// - لون قابل للتخصيص
 /// - حجم خط قابل للتخصيص
-/// - وزن خط متوسط (500)
+/// - وزن خط نصف عريض (600) - محسّن للوضوح
 ///
 /// Example:
 /// ```dart
@@ -169,38 +181,44 @@ class AppTextButton extends StatelessWidget {
   ///
   /// Parameters:
   /// - [label]: نص الزر (مطلوب)
-  /// - [onPressed]: دالة يتم استدعاؤها عند الضغط (مطلوب)
+  /// - [onPressed]: دالة يتم استدعاؤها عند الضغط (يمكن أن تكون null للتعطيل)
   /// - [color]: لون النص (افتراضي: AppColors.primary)
-  /// - [fontSize]: حجم الخط (افتراضي: AppTypography.bodyMedium)
+  /// - [fontSize]: حجم الخط (افتراضي: AppTypography.bodyLarge - محسّن)
   const AppTextButton({
     required this.label,
-    required this.onPressed,
+    this.onPressed,
     super.key,
     this.color = AppColors.primary,
-    this.fontSize = AppTypography.bodyMedium,
+    this.fontSize = AppTypography.bodyLarge,
   });
 
   /// نص الزر المعروض
   final String label;
 
-  /// دالة يتم استدعاؤها عند الضغط على الزر
-  final VoidCallback onPressed;
+  /// دالة يتم استدعاؤها عند الضغط على الزر (null للتعطيل)
+  final VoidCallback? onPressed;
 
   /// لون النص (افتراضي: AppColors.primary)
   final Color? color;
 
-  /// حجم الخط (افتراضي: AppTypography.bodyMedium)
+  /// حجم الخط (افتراضي: AppTypography.bodyLarge - محسّن للوضوح)
   final double? fontSize;
 
   @override
   Widget build(BuildContext context) => TextButton(
         onPressed: onPressed,
+        style: TextButton.styleFrom(
+          textStyle: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         child: Text(
           label,
           style: TextStyle(
             color: color,
             fontSize: fontSize,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
         ),
       );

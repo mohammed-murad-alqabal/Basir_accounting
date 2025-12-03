@@ -71,5 +71,8 @@ class Customer with _$Customer {
 
     /// عنوان العميل (اختياري)
     String? address,
+
+    /// ملاحظات عن العميل (اختياري)
+    String? notes,
   }) = _Customer;
 }

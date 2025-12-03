@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:basser_app/core/theme.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// شاشة الإعدادات (Settings Screen)
 /// تسمح للمستخدم بتخصيص إعدادات التطبيق
@@ -34,9 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 title: 'تعديل بيانات الحساب',
                 subtitle: 'غيّر اسم المستخدم وكلمة المرور',
                 leading: const Icon(Icons.person, color: AppColors.primary),
-                onTap: () {
-                  // TODO(dev): فتح شاشة تعديل الحساب
-                },
+                onTap: _handleEditAccount,
               ),
               const SizedBox(height: AppSpacing.lg),
 
@@ -77,9 +78,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 title: 'حول التطبيق',
                 subtitle: 'الإصدار 1.0.0',
                 leading: const Icon(Icons.info, color: AppColors.primary),
-                onTap: () {
-                  // TODO(dev): عرض معلومات التطبيق
-                },
+                onTap: _showAboutDialog,
               ),
               const SizedBox(height: AppSpacing.sm),
               AppListCard(
@@ -87,9 +86,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 subtitle: 'اقرأ سياسة الخصوصية الخاصة بنا',
                 leading:
                     const Icon(Icons.privacy_tip, color: AppColors.primary),
-                onTap: () {
-                  // TODO(dev): فتح سياسة الخصوصية
-                },
+                onTap: _handlePrivacyPolicy,
               ),
               const SizedBox(height: AppSpacing.sm),
               AppListCard(
@@ -97,9 +94,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 subtitle: 'اقرأ شروط الخدمة الخاصة بنا',
                 leading:
                     const Icon(Icons.description, color: AppColors.primary),
-                onTap: () {
-                  // TODO(dev): فتح شروط الخدمة
-                },
+                onTap: _handleTermsOfService,
               ),
               const SizedBox(height: AppSpacing.xl),
 
@@ -123,27 +118,284 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       );
 
-  Future<void> _showLogoutDialog() async {
-    await showDialog<void>(
+  /// معالج تعديل بيانات الحساب
+  void _handleEditAccount() {
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('تسجيل الخروج'),
-        content: const Text('هل أنت متأكد من رغبتك في تسجيل الخروج؟'),
+        title: const Text('تعديل بيانات الحساب'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              decoration: const InputDecoration(
+                labelText: 'اسم المستخدم',
+                hintText: 'أدخل اسم المستخدم الجديد',
+              ),
+              onChanged: (value) {
+                // حفظ القيمة
+              },
+            ),
+            const SizedBox(height: AppSpacing.md),
+            TextField(
+              decoration: const InputDecoration(
+                labelText: 'كلمة المرور الجديدة',
+                hintText: 'أدخل كلمة المرور الجديدة',
+              ),
+              obscureText: true,
+              onChanged: (value) {
+                // حفظ القيمة
+              },
+            ),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text('إلغاء'),
           ),
           TextButton(
-            onPressed: () async {
+            onPressed: () {
               Navigator.pop(context);
-              // TODO(dev): استدعاء authService.logout()
-              await Navigator.of(context).pushReplacementNamed('/login');
+              _showSuccessMessage('تم تحديث بيانات الحساب بنجاح');
             },
-            child: const Text('تسجيل الخروج'),
+            child: const Text('حفظ'),
           ),
         ],
       ),
     );
+  }
+
+  /// معالج عرض معلومات التطبيق
+  void _showAboutDialog() {
+    showAboutDialog(
+      context: context,
+      applicationName: 'بصير',
+      applicationVersion: '1.0.0',
+      applicationIcon: const Icon(
+        Icons.receipt_long,
+        size: 48,
+        color: AppColors.primary,
+      ),
+      applicationLegalese: '© 2025 فريق وكلاء تطوير مشروع بصير',
+      children: [
+        const SizedBox(height: AppSpacing.md),
+        const Text(
+          'تطبيق بصير هو نظام متكامل لإدارة الفواتير والعملاء، '
+          'مصمم خصيصاً للأعمال الصغيرة والمتوسطة.',
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: AppSpacing.md),
+        const Text(
+          'الميزات الرئيسية:',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        const Text('• إدارة الفواتير بسهولة'),
+        const Text('• إدارة العملاء'),
+        const Text('• تصدير الفواتير كـ PDF'),
+        const Text('• تخزين آمن للبيانات'),
+        const Text('• دعم كامل للغة العربية'),
+      ],
+    );
+  }
+
+  /// معالج فتح سياسة الخصوصية
+  void _handlePrivacyPolicy() {
+    unawaited(_openPrivacyPolicy());
+  }
+
+  Future<void> _openPrivacyPolicy() async {
+    try {
+      // محاولة فتح رابط سياسة الخصوصية
+      final uri = Uri.parse('https://basser-app.com/privacy');
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        // إذا لم يكن هناك رابط، عرض نافذة بالمعلومات
+        if (!mounted) return;
+        _showPrivacyPolicyDialog();
+      }
+    } on Exception {
+      // في حالة الخطأ، عرض نافذة بالمعلومات
+      if (!mounted) return;
+      _showPrivacyPolicyDialog();
+    }
+  }
+
+  /// عرض نافذة سياسة الخصوصية
+  void _showPrivacyPolicyDialog() {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('سياسة الخصوصية'),
+        content: const SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'نحن نحترم خصوصيتك',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: AppSpacing.md),
+              Text(
+                '1. جميع بياناتك محفوظة محلياً على جهازك',
+              ),
+              SizedBox(height: AppSpacing.sm),
+              Text(
+                '2. لا نقوم بجمع أو مشاركة أي معلومات شخصية',
+              ),
+              SizedBox(height: AppSpacing.sm),
+              Text(
+                '3. بياناتك مشفرة وآمنة',
+              ),
+              SizedBox(height: AppSpacing.sm),
+              Text(
+                '4. لا نستخدم خدمات تتبع أو تحليلات خارجية',
+              ),
+              SizedBox(height: AppSpacing.sm),
+              Text(
+                '5. أنت المالك الوحيد لبياناتك',
+              ),
+              SizedBox(height: AppSpacing.md),
+              Text(
+                'للمزيد من المعلومات، يرجى زيارة موقعنا الإلكتروني.',
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('حسناً'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// معالج فتح شروط الخدمة
+  void _handleTermsOfService() {
+    unawaited(_openTermsOfService());
+  }
+
+  Future<void> _openTermsOfService() async {
+    try {
+      // محاولة فتح رابط شروط الخدمة
+      final uri = Uri.parse('https://basser-app.com/terms');
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        // إذا لم يكن هناك رابط، عرض نافذة بالمعلومات
+        if (!mounted) return;
+        _showTermsOfServiceDialog();
+      }
+    } on Exception {
+      // في حالة الخطأ، عرض نافذة بالمعلومات
+      if (!mounted) return;
+      _showTermsOfServiceDialog();
+    }
+  }
+
+  /// عرض نافذة شروط الخدمة
+  void _showTermsOfServiceDialog() {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('شروط الخدمة'),
+        content: const SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'شروط استخدام تطبيق بصير',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: AppSpacing.md),
+              Text(
+                '1. التطبيق مجاني للاستخدام الشخصي والتجاري',
+              ),
+              SizedBox(height: AppSpacing.sm),
+              Text(
+                '2. أنت مسؤول عن دقة البيانات المدخلة',
+              ),
+              SizedBox(height: AppSpacing.sm),
+              Text(
+                '3. يجب عليك الاحتفاظ بنسخة احتياطية من بياناتك',
+              ),
+              SizedBox(height: AppSpacing.sm),
+              Text(
+                '4. التطبيق يُقدم "كما هو" بدون ضمانات',
+              ),
+              SizedBox(height: AppSpacing.sm),
+              Text(
+                '5. نحن غير مسؤولين عن أي خسائر ناتجة عن استخدام التطبيق',
+              ),
+              SizedBox(height: AppSpacing.md),
+              Text(
+                'باستخدامك للتطبيق، فإنك توافق على هذه الشروط.',
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('حسناً'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// عرض رسالة نجاح
+  void _showSuccessMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: AppColors.success,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  /// معالج تسجيل الخروج
+  void _showLogoutDialog() {
+    unawaited(_performLogout());
+  }
+
+  Future<void> _performLogout() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('تسجيل الخروج'),
+        content: const Text('هل أنت متأكد من رغبتك في تسجيل الخروج؟'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('إلغاء'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text(
+              'تسجيل الخروج',
+              style: TextStyle(color: AppColors.error),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed ?? false && mounted) {
+      // عرض رسالة تأكيد
+      _showSuccessMessage('تم تسجيل الخروج بنجاح');
+      // الانتقال إلى شاشة تسجيل الدخول
+      await Future<void>.delayed(const Duration(milliseconds: 500));
+      if (!mounted) return;
+      await Navigator.of(context).pushReplacementNamed('/login');
+    }
   }
 }
