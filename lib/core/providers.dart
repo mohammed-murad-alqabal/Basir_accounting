@@ -9,7 +9,6 @@ import 'package:basser_app/services/settings_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 
 /// مزود خدمة التخزين الآمن (Secure Storage)
 ///
@@ -30,7 +29,7 @@ final secureStorageProvider = Provider<FlutterSecureStorage>(
 /// مزود قاعدة البيانات المحلية (Isar)
 ///
 /// يوفر وصولاً إلى قاعدة البيانات المحلية Isar
-/// يتم فتح قاعدة البيانات تلقائياً مع جميع الـ Schemas المطلوبة
+/// يستخدم الـ instance المفتوحة مسبقاً في main.dart
 ///
 /// Schemas المضمنة:
 /// - [CustomerModelSchema]: لتخزين بيانات العملاء
@@ -38,16 +37,14 @@ final secureStorageProvider = Provider<FlutterSecureStorage>(
 ///
 /// Example:
 /// ```dart
-/// final isar = await ref.watch(isarProvider.future);
+/// final isar = ref.watch(isarProvider);
 /// final customers = await isar.customerModels.where().findAll();
 /// ```
-final isarProvider = FutureProvider<Isar>((ref) async {
-  final dir = await getApplicationDocumentsDirectory();
-  return Isar.open(
-    [CustomerModelSchema, InvoiceModelSchema],
-    directory: dir.path,
-  );
-});
+final isarProvider = Provider<Isar>(
+  // استخدام الـ instance المفتوحة في main.dart
+  // تجنب فتح instance جديدة
+  (ref) => Isar.getInstance()!,
+);
 
 /// مزود خدمة المصادقة (Auth Service)
 ///
@@ -97,10 +94,7 @@ final settingsServiceProvider = Provider<SettingsService>((ref) {
 /// final customers = await repository.getAllCustomers();
 /// ```
 final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
-  final isar = ref.watch(isarProvider).value;
-  if (isar == null) {
-    throw Exception('قاعدة البيانات غير جاهزة');
-  }
+  final isar = ref.watch(isarProvider);
   return CustomerRepositoryImpl(isar: isar);
 });
 
@@ -119,9 +113,6 @@ final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
 /// final invoices = await repository.getAllInvoices();
 /// ```
 final invoiceRepositoryProvider = Provider<InvoiceRepository>((ref) {
-  final isar = ref.watch(isarProvider).value;
-  if (isar == null) {
-    throw Exception('قاعدة البيانات غير جاهزة');
-  }
+  final isar = ref.watch(isarProvider);
   return InvoiceRepositoryImpl(isar: isar);
 });

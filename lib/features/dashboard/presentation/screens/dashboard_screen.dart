@@ -47,6 +47,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          selectedItemColor: const Color(0xFF1976D2),
+          unselectedItemColor: const Color(0xFF424242),
+          selectedFontSize: 13,
+          selectedIconTheme: const IconThemeData(
+            size: 30,
+            color: Color(0xFF1976D2),
+          ),
+          unselectedIconTheme: const IconThemeData(
+            size: 26,
+            color: Color(0xFF424242),
+          ),
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          elevation: 8,
+          selectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1976D2),
+          ),
+          unselectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF424242),
+          ),
           onTap: (index) {
             setState(() => _selectedIndex = index);
             switch (index) {
@@ -125,7 +149,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             childAspectRatio: 2.2,
             children: const [
               AppStatCard(
-                label: 'إجمالي الفواتير',
+                label: 'الفواتير',
                 value: '24',
                 icon: Icons.receipt_long,
               ),
@@ -184,6 +208,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          // زر اختبار تحسينات واجهة المستخدم (للتطوير فقط)
+          AppTextButton(
+            label: '🧪 اختبار تحسينات واجهة المستخدم',
+            icon: Icons.science,
+            onPressed: () {
+              unawaited(Navigator.of(context).pushNamed('/test-ui'));
+            },
           ),
         ],
       );

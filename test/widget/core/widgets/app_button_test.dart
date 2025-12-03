@@ -1,88 +1,67 @@
-/// اختبارات AppButton Widgets
-///
-/// يختبر جميع أنواع الأزرار في التطبيق
-library;
-
-import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/theme/app_colors.dart';
+import 'package:basser_app/core/theme/app_dimensions.dart';
 import 'package:basser_app/core/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('AppPrimaryButton', () {
-    testWidgets('should display label text', (tester) async {
-      // Arrange
-      const label = 'حفظ';
-
-      // Act
+    testWidgets('should display label correctly', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: AppPrimaryButton(
-              label: label,
+              label: 'حفظ',
               onPressed: () {},
             ),
           ),
         ),
       );
 
-      // Assert
-      expect(find.text(label), findsOneWidget);
-      expect(find.byType(ElevatedButton), findsOneWidget);
+      expect(find.text('حفظ'), findsOneWidget);
     });
 
     testWidgets('should call onPressed when tapped', (tester) async {
-      // Arrange
       var pressed = false;
 
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: AppPrimaryButton(
-              label: 'اضغط هنا',
-              onPressed: () => pressed = true,
-            ),
-          ),
-        ),
-      );
-
-      await tester.tap(find.byType(AppPrimaryButton));
-      await tester.pump();
-
-      // Assert
-      expect(pressed, isTrue);
-    });
-
-    testWidgets('should be disabled when isLoading is true', (tester) async {
-      // Arrange
-      var pressed = false;
-
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: AppPrimaryButton(
               label: 'حفظ',
               onPressed: () => pressed = true,
-              isLoading: true,
             ),
           ),
         ),
       );
 
-      // Try to tap
       await tester.tap(find.byType(AppPrimaryButton));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
-      // Assert
-      expect(pressed, isFalse);
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(pressed, isTrue);
     });
 
-    testWidgets('should show CircularProgressIndicator when loading',
+    testWidgets('should be disabled when onPressed is null', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: AppPrimaryButton(
+              label: 'حفظ',
+              onPressed: null,
+            ),
+          ),
+        ),
+      );
+
+      final button = tester.widget<ElevatedButton>(
+        find.byType(ElevatedButton),
+      );
+
+      expect(button.onPressed, isNull);
+    });
+
+    testWidgets('should show loading indicator when isLoading is true',
         (tester) async {
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -95,16 +74,72 @@ void main() {
         ),
       );
 
-      // Assert
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       expect(find.text('حفظ'), findsNothing);
     });
 
-    testWidgets('should respect custom width', (tester) async {
-      // Arrange
+    testWidgets('should be disabled when isLoading is true', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: AppPrimaryButton(
+              label: 'حفظ',
+              onPressed: () {},
+              isLoading: true,
+            ),
+          ),
+        ),
+      );
+
+      final button = tester.widget<ElevatedButton>(
+        find.byType(ElevatedButton),
+      );
+
+      expect(button.onPressed, isNull);
+    });
+
+    testWidgets('should display icon when provided', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: AppPrimaryButton(
+              label: 'حفظ',
+              onPressed: () {},
+              icon: Icons.save,
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byIcon(Icons.save), findsOneWidget);
+      expect(find.text('حفظ'), findsOneWidget);
+    });
+
+    testWidgets('should have minimum touch target size', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: AppPrimaryButton(
+              label: 'حفظ',
+              onPressed: () {},
+            ),
+          ),
+        ),
+      );
+
+      final sizedBox = tester.widget<SizedBox>(
+        find.ancestor(
+          of: find.byType(ElevatedButton),
+          matching: find.byType(SizedBox),
+        ),
+      );
+
+      expect(sizedBox.height, equals(AppDimensions.buttonHeightLg));
+    });
+
+    testWidgets('should use custom width when provided', (tester) async {
       const customWidth = 200.0;
 
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -117,44 +152,19 @@ void main() {
         ),
       );
 
-      // Assert
       final sizedBox = tester.widget<SizedBox>(
         find.ancestor(
           of: find.byType(ElevatedButton),
           matching: find.byType(SizedBox),
         ),
       );
-      expect(sizedBox.width, customWidth);
+
+      expect(sizedBox.width, equals(customWidth));
     });
 
-    testWidgets('should use default height of 48', (tester) async {
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: AppPrimaryButton(
-              label: 'حفظ',
-              onPressed: () {},
-            ),
-          ),
-        ),
-      );
+    testWidgets('should use custom height when provided', (tester) async {
+      const customHeight = 56.0;
 
-      // Assert
-      final sizedBox = tester.widget<SizedBox>(
-        find.ancestor(
-          of: find.byType(ElevatedButton),
-          matching: find.byType(SizedBox),
-        ),
-      );
-      expect(sizedBox.height, 48.0);
-    });
-
-    testWidgets('should respect custom height', (tester) async {
-      // Arrange
-      const customHeight = 60.0;
-
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -167,44 +177,90 @@ void main() {
         ),
       );
 
-      // Assert
       final sizedBox = tester.widget<SizedBox>(
         find.ancestor(
           of: find.byType(ElevatedButton),
           matching: find.byType(SizedBox),
         ),
       );
-      expect(sizedBox.height, customHeight);
+
+      expect(sizedBox.height, equals(customHeight));
+    });
+
+    testWidgets('should have correct colors', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: AppPrimaryButton(
+              label: 'حفظ',
+              onPressed: () {},
+            ),
+          ),
+        ),
+      );
+
+      final button = tester.widget<ElevatedButton>(
+        find.byType(ElevatedButton),
+      );
+
+      final style = button.style!;
+      expect(
+        style.backgroundColor?.resolve({}),
+        equals(AppColors.primary),
+      );
+      expect(
+        style.foregroundColor?.resolve({}),
+        equals(AppColors.onPrimary),
+      );
+    });
+
+    testWidgets('should have correct disabled colors', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: AppPrimaryButton(
+              label: 'حفظ',
+              onPressed: null,
+            ),
+          ),
+        ),
+      );
+
+      final button = tester.widget<ElevatedButton>(
+        find.byType(ElevatedButton),
+      );
+
+      final style = button.style!;
+      expect(
+        style.backgroundColor?.resolve({WidgetState.disabled}),
+        equals(AppColors.surface),
+      );
+      expect(
+        style.foregroundColor?.resolve({WidgetState.disabled}),
+        equals(AppColors.textDisabled),
+      );
     });
   });
 
   group('AppSecondaryButton', () {
-    testWidgets('should display label text', (tester) async {
-      // Arrange
-      const label = 'إلغاء';
-
-      // Act
+    testWidgets('should display label correctly', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: AppSecondaryButton(
-              label: label,
+              label: 'إلغاء',
               onPressed: () {},
             ),
           ),
         ),
       );
 
-      // Assert
-      expect(find.text(label), findsOneWidget);
-      expect(find.byType(OutlinedButton), findsOneWidget);
+      expect(find.text('إلغاء'), findsOneWidget);
     });
 
     testWidgets('should call onPressed when tapped', (tester) async {
-      // Arrange
       var pressed = false;
 
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -217,41 +273,32 @@ void main() {
       );
 
       await tester.tap(find.byType(AppSecondaryButton));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
-      // Assert
       expect(pressed, isTrue);
     });
 
-    testWidgets('should be disabled when isLoading is true', (tester) async {
-      // Arrange
-      var pressed = false;
-
-      // Act
+    testWidgets('should be disabled when onPressed is null', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: AppSecondaryButton(
               label: 'إلغاء',
-              onPressed: () => pressed = true,
-              isLoading: true,
+              onPressed: null,
             ),
           ),
         ),
       );
 
-      // Try to tap
-      await tester.tap(find.byType(AppSecondaryButton));
-      await tester.pump();
+      final button = tester.widget<OutlinedButton>(
+        find.byType(OutlinedButton),
+      );
 
-      // Assert
-      expect(pressed, isFalse);
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(button.onPressed, isNull);
     });
 
-    testWidgets('should show CircularProgressIndicator when loading',
+    testWidgets('should show loading indicator when isLoading is true',
         (tester) async {
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -264,74 +311,97 @@ void main() {
         ),
       );
 
-      // Assert
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       expect(find.text('إلغاء'), findsNothing);
     });
 
-    testWidgets('should respect custom dimensions', (tester) async {
-      // Arrange
-      const customWidth = 150.0;
-      const customHeight = 50.0;
-
-      // Act
+    testWidgets('should display icon when provided', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: AppSecondaryButton(
               label: 'إلغاء',
               onPressed: () {},
-              width: customWidth,
-              height: customHeight,
+              icon: Icons.close,
             ),
           ),
         ),
       );
 
-      // Assert
-      final sizedBox = tester.widget<SizedBox>(
-        find.ancestor(
-          of: find.byType(OutlinedButton),
-          matching: find.byType(SizedBox),
-        ),
-      );
-      expect(sizedBox.width, customWidth);
-      expect(sizedBox.height, customHeight);
+      expect(find.byIcon(Icons.close), findsOneWidget);
+      expect(find.text('إلغاء'), findsOneWidget);
     });
-  });
 
-  group('AppTextButton', () {
-    testWidgets('should display label text', (tester) async {
-      // Arrange
-      const label = 'نسيت كلمة المرور؟';
-
-      // Act
+    testWidgets('should have correct border', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppTextButton(
-              label: label,
+            body: AppSecondaryButton(
+              label: 'إلغاء',
               onPressed: () {},
             ),
           ),
         ),
       );
 
-      // Assert
-      expect(find.text(label), findsOneWidget);
-      expect(find.byType(TextButton), findsOneWidget);
+      final button = tester.widget<OutlinedButton>(
+        find.byType(OutlinedButton),
+      );
+
+      final style = button.style!;
+      final side = style.side?.resolve({});
+
+      expect(side?.color, equals(AppColors.primary));
+      expect(side?.width, equals(1.5));
     });
 
-    testWidgets('should call onPressed when tapped', (tester) async {
-      // Arrange
-      var pressed = false;
+    testWidgets('should have correct disabled border', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: AppSecondaryButton(
+              label: 'إلغاء',
+              onPressed: null,
+            ),
+          ),
+        ),
+      );
 
-      // Act
+      final button = tester.widget<OutlinedButton>(
+        find.byType(OutlinedButton),
+      );
+
+      final style = button.style!;
+      final side = style.side?.resolve({WidgetState.disabled});
+
+      expect(side?.color, equals(AppColors.textDisabled));
+    });
+  });
+
+  group('AppTextButton', () {
+    testWidgets('should display label correctly', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: AppTextButton(
-              label: 'اضغط هنا',
+              label: 'نسيت كلمة المرور؟',
+              onPressed: () {},
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('نسيت كلمة المرور؟'), findsOneWidget);
+    });
+
+    testWidgets('should call onPressed when tapped', (tester) async {
+      var pressed = false;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: AppTextButton(
+              label: 'نسيت كلمة المرور؟',
               onPressed: () => pressed = true,
             ),
           ),
@@ -339,41 +409,55 @@ void main() {
       );
 
       await tester.tap(find.byType(AppTextButton));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
-      // Assert
       expect(pressed, isTrue);
     });
 
-    testWidgets('should use default primary color', (tester) async {
-      // Act
+    testWidgets('should be disabled when onPressed is null', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: AppTextButton(
-              label: 'نص',
-              onPressed: () {},
+              label: 'نسيت كلمة المرور؟',
+              onPressed: null,
             ),
           ),
         ),
       );
 
-      // Assert
-      final textButton = tester.widget<TextButton>(find.byType(TextButton));
-      final text = textButton.child! as Text;
-      expect(text.style?.color, AppColors.primary);
+      final button = tester.widget<TextButton>(
+        find.byType(TextButton),
+      );
+
+      expect(button.onPressed, isNull);
     });
 
-    testWidgets('should respect custom color', (tester) async {
-      // Arrange
-      const customColor = Colors.red;
-
-      // Act
+    testWidgets('should display icon when provided', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: AppTextButton(
-              label: 'نص',
+              label: 'نسيت كلمة المرور؟',
+              onPressed: () {},
+              icon: Icons.help,
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byIcon(Icons.help), findsOneWidget);
+      expect(find.text('نسيت كلمة المرور؟'), findsOneWidget);
+    });
+
+    testWidgets('should use custom color when provided', (tester) async {
+      const customColor = Colors.red;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: AppTextButton(
+              label: 'نسيت كلمة المرور؟',
               onPressed: () {},
               color: customColor,
             ),
@@ -381,145 +465,38 @@ void main() {
         ),
       );
 
-      // Assert
-      final textButton = tester.widget<TextButton>(find.byType(TextButton));
-      final text = textButton.child! as Text;
-      expect(text.style?.color, customColor);
+      final button = tester.widget<TextButton>(
+        find.byType(TextButton),
+      );
+
+      final style = button.style!;
+      expect(
+        style.foregroundColor?.resolve({}),
+        equals(customColor),
+      );
     });
 
-    testWidgets('should use default font size', (tester) async {
-      // Act
+    testWidgets('should use default color when not provided', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
             body: AppTextButton(
-              label: 'نص',
+              label: 'نسيت كلمة المرور؟',
               onPressed: () {},
             ),
           ),
         ),
       );
 
-      // Assert
-      final textButton = tester.widget<TextButton>(find.byType(TextButton));
-      final text = textButton.child! as Text;
-      expect(text.style?.fontSize, AppTypography.bodyMedium);
-    });
-
-    testWidgets('should respect custom font size', (tester) async {
-      // Arrange
-      const customFontSize = 20.0;
-
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: AppTextButton(
-              label: 'نص',
-              onPressed: () {},
-              fontSize: customFontSize,
-            ),
-          ),
-        ),
+      final button = tester.widget<TextButton>(
+        find.byType(TextButton),
       );
 
-      // Assert
-      final textButton = tester.widget<TextButton>(find.byType(TextButton));
-      final text = textButton.child! as Text;
-      expect(text.style?.fontSize, customFontSize);
-    });
-
-    testWidgets('should have medium font weight', (tester) async {
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: AppTextButton(
-              label: 'نص',
-              onPressed: () {},
-            ),
-          ),
-        ),
+      final style = button.style!;
+      expect(
+        style.foregroundColor?.resolve({}),
+        equals(AppColors.primary),
       );
-
-      // Assert
-      final textButton = tester.widget<TextButton>(find.byType(TextButton));
-      final text = textButton.child! as Text;
-      expect(text.style?.fontWeight, FontWeight.w500);
-    });
-  });
-
-  group('Button Interactions', () {
-    testWidgets('should handle multiple button types together', (tester) async {
-      // Arrange
-      var primaryPressed = false;
-      var secondaryPressed = false;
-      var textPressed = false;
-
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: Column(
-              children: [
-                AppPrimaryButton(
-                  label: 'حفظ',
-                  onPressed: () => primaryPressed = true,
-                ),
-                AppSecondaryButton(
-                  label: 'إلغاء',
-                  onPressed: () => secondaryPressed = true,
-                ),
-                AppTextButton(
-                  label: 'تخطي',
-                  onPressed: () => textPressed = true,
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-
-      // Tap each button
-      await tester.tap(find.byType(AppPrimaryButton));
-      await tester.pump();
-      await tester.tap(find.byType(AppSecondaryButton));
-      await tester.pump();
-      await tester.tap(find.byType(AppTextButton));
-      await tester.pump();
-
-      // Assert
-      expect(primaryPressed, isTrue);
-      expect(secondaryPressed, isTrue);
-      expect(textPressed, isTrue);
-    });
-
-    testWidgets('should handle rapid taps correctly', (tester) async {
-      // Arrange
-      var tapCount = 0;
-
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: AppPrimaryButton(
-              label: 'اضغط',
-              onPressed: () => tapCount++,
-            ),
-          ),
-        ),
-      );
-
-      // Tap multiple times
-      await tester.tap(find.byType(AppPrimaryButton));
-      await tester.pump();
-      await tester.tap(find.byType(AppPrimaryButton));
-      await tester.pump();
-      await tester.tap(find.byType(AppPrimaryButton));
-      await tester.pump();
-
-      // Assert
-      expect(tapCount, 3);
     });
   });
 }
