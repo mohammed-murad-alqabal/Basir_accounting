@@ -33,6 +33,20 @@ class AppColors {
   /// اللون الثانوي الداكن
   static const Color secondaryDark = Color(0xFF155724);
 
+  // ===== ألوان "على" (On Colors) =====
+
+  /// لون النص على اللون الأساسي
+  static const Color onPrimary = Color(0xFFFFFFFF);
+
+  /// لون النص على اللون الثانوي
+  static const Color onSecondary = Color(0xFFFFFFFF);
+
+  /// لون النص على لون الخطأ
+  static const Color onError = Color(0xFFFFFFFF);
+
+  /// لون النص على السطح
+  static const Color onSurface = Color(0xFF212529);
+
   // ===== ألوان الخلفية =====
 
   /// لون الخلفية الرئيسية (رمادي فاتح جداً)

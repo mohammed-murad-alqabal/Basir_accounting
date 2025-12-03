@@ -36,24 +36,24 @@
   - **Property 10: Commit Message Format Validation**
   - **Validates: Requirements 3.3**
 
-- [ ] 3. تطوير Git Hooks - Pre-push
+- [x] 3. تطوير Git Hooks - Pre-push
 
   - إنشاء سكريبت pre-push hook الأساسي
   - تنفيذ تشغيل الاختبارات
   - تنفيذ فحص الأسرار المكشوفة
   - _Requirements: 3.4, 3.5, 9.2_
 
-- [ ] 3.1 كتابة اختبار خاصية لفحص الأسرار
+- [x] 3.1 كتابة اختبار خاصية لفحص الأسرار
 
   - **Property 11: Secret Pattern Detection**
   - **Validates: Requirements 3.5, 9.2**
 
-- [ ] 3.2 كتابة اختبار خاصية لأداء pre-commit hook
+- [x] 3.2 كتابة اختبار خاصية لأداء pre-commit hook
 
   - **Property 20: Pre-commit Hook Performance**
   - **Validates: Requirements 10.1**
 
-- [ ] 3.3 كتابة اختبار خاصية لأداء pre-push hook
+- [x] 3.3 كتابة اختبار خاصية لأداء pre-push hook
 
   - **Property 21: Pre-push Hook Performance**
   - **Validates: Requirements 10.2**
