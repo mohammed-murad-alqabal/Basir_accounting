@@ -14,11 +14,11 @@ NC='\033[0m' # No Color
 echo -e "${GREEN}=== Pre-commit Hook ===${NC}"
 echo ""
 
-# 1. تشغيل Flutter Format
-echo -e "${YELLOW}[1/4]${NC} تشغيل Flutter Format..."
-if ! flutter format --set-exit-if-changed lib/ test/ > /dev/null 2>&1; then
-    echo -e "${RED}[ERROR]${NC} الكود غير منسق. تشغيل flutter format..."
-    flutter format lib/ test/
+# 1. تشغيل Dart Format
+echo -e "${YELLOW}[1/4]${NC} تشغيل Dart Format..."
+if ! dart format --set-exit-if-changed lib/ test/ > /dev/null 2>&1; then
+    echo -e "${RED}[ERROR]${NC} الكود غير منسق. تشغيل dart format..."
+    dart format lib/ test/
     echo -e "${YELLOW}[WARNING]${NC} تم تنسيق الكود. يرجى إضافة التغييرات والمحاولة مرة أخرى."
     exit 1
 fi

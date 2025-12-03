@@ -23,7 +23,7 @@
   - إعداد ملفات التكوين الأساسية
   - _Requirements: جميع المتطلبات_
 
-- [-] 2. تطوير Git Hooks - Pre-commit
+- [x] 2. تطوير Git Hooks - Pre-commit
 
   - إنشاء سكريبت pre-commit hook الأساسي
   - تنفيذ فحص التنسيق (Flutter Format)
@@ -31,7 +31,7 @@
   - تنفيذ التحقق من رسائل الـ commit
   - _Requirements: 3.1, 3.2, 3.3_
 
-- [ ] 2.1 كتابة اختبار خاصية للتحقق من رسائل الـ commit
+- [x] 2.1 كتابة اختبار خاصية للتحقق من رسائل الـ commit
 
   - **Property 10: Commit Message Format Validation**
   - **Validates: Requirements 3.3**
