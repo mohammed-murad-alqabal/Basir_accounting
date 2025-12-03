@@ -1,0 +1,194 @@
+# Labels Configuration for Basser MVP
+# هذا الملف يحدد جميع Labels المستخدمة في المشروع
+
+# ========================================
+# النوع (Type)
+# ========================================
+
+- name: bug
+  description: 🐛 خطأ أو مشكلة في التطبيق
+  color: d73a4a
+
+- name: enhancement
+  description: ✨ ميزة جديدة أو تحسين
+  color: a2eeef
+
+- name: code-quality
+  description: 🔧 تحسين جودة الكود
+  color: 0e8a16
+
+- name: documentation
+  description: 📚 تحسين أو إضافة توثيق
+  color: 0075ca
+
+- name: testing
+  description: 🧪 متعلق بالاختبارات
+  color: fbca04
+
+- name: security
+  description: 🔒 مشكلة أمنية
+  color: ee0701
+
+- name: performance
+  description: ⚡ تحسين الأداء
+  color: 1d76db
+
+# ========================================
+# الأولوية (Priority)
+# ========================================
+
+- name: priority-critical
+  description: 🔴 أولوية حرجة - يجب الإصلاح فوراً
+  color: b60205
+
+- name: priority-high
+  description: 🟠 أولوية عالية - مهم جداً
+  color: d93f0b
+
+- name: priority-medium
+  description: 🟡 أولوية متوسطة - مهم
+  color: fbca04
+
+- name: priority-low
+  description: 🟢 أولوية منخفضة - يمكن تأجيله
+  color: 0e8a16
+
+# ========================================
+# الحالة (Status)
+# ========================================
+
+- name: needs-triage
+  description: 🔍 يحتاج مراجعة وتصنيف
+  color: ededed
+
+- name: in-progress
+  description: 🔄 قيد العمل
+  color: c5def5
+
+- name: blocked
+  description: 🚫 محظور - ينتظر شيء آخر
+  color: d93f0b
+
+- name: ready
+  description: ✅ جاهز للعمل
+  color: 0e8a16
+
+- name: wontfix
+  description: ❌ لن يتم إصلاحه
+  color: ffffff
+
+- name: duplicate
+  description: 📋 مكرر - موجود مسبقاً
+  color: cfd3d7
+
+- name: invalid
+  description: ⚠️ غير صحيح
+  color: e4e669
+
+# ========================================
+# المصدر (Source)
+# ========================================
+
+- name: automated
+  description: 🤖 تم إنشاؤه تلقائياً بواسطة GitHub Actions
+  color: 7057ff
+
+- name: user-reported
+  description: 👤 تم الإبلاغ عنه من قبل مستخدم
+  color: 006b75
+
+# ========================================
+# المجال (Area)
+# ========================================
+
+- name: area-ui
+  description: 🎨 واجهة المستخدم
+  color: d4c5f9
+
+- name: area-backend
+  description: ⚙️ الواجهة الخلفية
+  color: c2e0c6
+
+- name: area-database
+  description: 💾 قاعدة البيانات
+  color: bfdadc
+
+- name: area-auth
+  description: 🔐 المصادقة والأمان
+  color: f9d0c4
+
+- name: area-testing
+  description: 🧪 الاختبارات
+  color: fef2c0
+
+- name: area-ci-cd
+  description: 🚀 CI/CD والأتمتة
+  color: c5def5
+
+- name: area-docs
+  description: 📚 التوثيق
+  color: 0075ca
+
+# ========================================
+# الحجم (Size)
+# ========================================
+
+- name: size-xs
+  description: 🔹 صغير جداً (< 1 ساعة)
+  color: c2e0c6
+
+- name: size-s
+  description: 🔸 صغير (1-4 ساعات)
+  color: bfdadc
+
+- name: size-m
+  description: 🔶 متوسط (4-8 ساعات)
+  color: fbca04
+
+- name: size-l
+  description: 🔷 كبير (1-3 أيام)
+  color: d93f0b
+
+- name: size-xl
+  description: 🔺 كبير جداً (> 3 أيام)
+  color: b60205
+
+# ========================================
+# النوع الخاص (Special)
+# ========================================
+
+- name: good-first-issue
+  description: 👋 مناسب للمساهمين الجدد
+  color: 7057ff
+
+- name: help-wanted
+  description: 🙋 نحتاج مساعدة
+  color: 008672
+
+- name: question
+  description: ❓ سؤال أو استفسار
+  color: d876e3
+
+- name: breaking-change
+  description: 💥 تغيير جذري - يكسر التوافق
+  color: ee0701
+
+- name: dependencies
+  description: 📦 تحديث التبعيات
+  color: 0366d6
+
+# ========================================
+# الإصدار (Version)
+# ========================================
+
+- name: v1.0
+  description: 🏷️ الإصدار 1.0
+  color: 0e8a16
+
+- name: v2.0
+  description: 🏷️ الإصدار 2.0
+  color: 1d76db
+
+- name: backlog
+  description: 📋 في قائمة الانتظار
+  color: ededed

@@ -1,0 +1,328 @@
+name: Error Tracking - PR Comment
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "lib/**"
+      - "test/**"
+      - "pubspec.yaml"
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  analyze-and-comment:
+    name: تحليل وإضافة تعليق على PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@44ac965b5c13134c103c47024888cd7b4e083b8f # v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Run Flutter Analyze
+        id: analyze
+        continue-on-error: true
+        run: |
+          echo "Running flutter analyze..."
+          flutter analyze --no-pub > analyze_output.txt 2>&1 || true
+
+          # تنظيف وعد الأخطاء والتحذيرات
+          ERROR_COUNT=$(grep -c "error •" analyze_output.txt || echo "0")
+          ERROR_COUNT=$(echo "$ERROR_COUNT" | tr -d '[:space:]' | grep -o '[0-9]*' | head -1)
+          ERROR_COUNT=${ERROR_COUNT:-0}
+
+          WARNING_COUNT=$(grep -c "warning •" analyze_output.txt || echo "0")
+          WARNING_COUNT=$(echo "$WARNING_COUNT" | tr -d '[:space:]' | grep -o '[0-9]*' | head -1)
+          WARNING_COUNT=${WARNING_COUNT:-0}
+
+          INFO_COUNT=$(grep -c "info •" analyze_output.txt || echo "0")
+          INFO_COUNT=$(echo "$INFO_COUNT" | tr -d '[:space:]' | grep -o '[0-9]*' | head -1)
+          INFO_COUNT=${INFO_COUNT:-0}
+
+          echo "error_count=$ERROR_COUNT" >> $GITHUB_OUTPUT
+          echo "warning_count=$WARNING_COUNT" >> $GITHUB_OUTPUT
+          echo "info_count=$INFO_COUNT" >> $GITHUB_OUTPUT
+
+          # استخراج أول 5 أخطاء
+          ERRORS=$(grep "error •" analyze_output.txt | head -5 || echo "")
+          echo "$ERRORS" > errors.txt
+
+          # استخراج أول 5 تحذيرات
+          WARNINGS=$(grep "warning •" analyze_output.txt | head -5 || echo "")
+          echo "$WARNINGS" > warnings.txt
+
+      - name: Run Tests
+        id: tests
+        continue-on-error: true
+        run: |
+          echo "Running tests..."
+          flutter test --no-pub --reporter expanded > test_output.txt 2>&1 || true
+
+          # استخراج نتائج الاختبارات
+          PASSED=$(grep -oP '\d+(?= tests? passed)' test_output.txt | head -1 || echo "0")
+          PASSED=$(echo "$PASSED" | tr -d '[:space:]' | grep -o '[0-9]*' | head -1)
+          PASSED=${PASSED:-0}
+
+          FAILED=$(grep -oP '\d+(?= tests? failed)' test_output.txt | head -1 || echo "0")
+          FAILED=$(echo "$FAILED" | tr -d '[:space:]' | grep -o '[0-9]*' | head -1)
+          FAILED=${FAILED:-0}
+
+          SKIPPED=$(grep -oP '\d+(?= tests? skipped)' test_output.txt | head -1 || echo "0")
+          SKIPPED=$(echo "$SKIPPED" | tr -d '[:space:]' | grep -o '[0-9]*' | head -1)
+          SKIPPED=${SKIPPED:-0}
+
+          echo "passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+          echo "skipped=$SKIPPED" >> $GITHUB_OUTPUT
+
+          # استخراج الاختبارات الفاشلة
+          FAILED_TESTS=$(grep "FAILED" test_output.txt | head -5 || echo "")
+          echo "$FAILED_TESTS" > failed_tests.txt
+
+      - name: Calculate Code Quality Score
+        id: quality
+        run: |
+          ERROR_COUNT=${{ steps.analyze.outputs.error_count }}
+          WARNING_COUNT=${{ steps.analyze.outputs.warning_count }}
+          FAILED_TESTS=${{ steps.tests.outputs.failed }}
+
+          # حساب النقاط (من 100)
+          SCORE=100
+
+          # خصم نقاط للأخطاء
+          SCORE=$((SCORE - ERROR_COUNT * 10))
+          
+          # خصم نقاط للتحذيرات
+          SCORE=$((SCORE - WARNING_COUNT * 2))
+          
+          # خصم نقاط للاختبارات الفاشلة
+          SCORE=$((SCORE - FAILED_TESTS * 5))
+
+          # التأكد من أن النقاط لا تقل عن 0
+          if [ $SCORE -lt 0 ]; then
+            SCORE=0
+          fi
+
+          echo "score=$SCORE" >> $GITHUB_OUTPUT
+
+          # تحديد التقييم
+          if [ $SCORE -ge 90 ]; then
+            GRADE="A+"
+            EMOJI="🌟"
+          elif [ $SCORE -ge 80 ]; then
+            GRADE="A"
+            EMOJI="✅"
+          elif [ $SCORE -ge 70 ]; then
+            GRADE="B"
+            EMOJI="👍"
+          elif [ $SCORE -ge 60 ]; then
+            GRADE="C"
+            EMOJI="⚠️"
+          else
+            GRADE="D"
+            EMOJI="❌"
+          fi
+
+          echo "grade=$GRADE" >> $GITHUB_OUTPUT
+          echo "emoji=$EMOJI" >> $GITHUB_OUTPUT
+
+      - name: Generate Recommendations
+        id: recommendations
+        run: |
+          ERROR_COUNT=${{ steps.analyze.outputs.error_count }}
+          WARNING_COUNT=${{ steps.analyze.outputs.warning_count }}
+          FAILED_TESTS=${{ steps.tests.outputs.failed }}
+
+          RECOMMENDATIONS=""
+
+          if [ "$ERROR_COUNT" -gt 0 ]; then
+            RECOMMENDATIONS="${RECOMMENDATIONS}\n- 🔴 **إصلاح الأخطاء الحرجة:** يوجد $ERROR_COUNT خطأ يجب إصلاحه قبل الدمج"
+          fi
+
+          if [ "$WARNING_COUNT" -gt 5 ]; then
+            RECOMMENDATIONS="${RECOMMENDATIONS}\n- ⚠️ **تقليل التحذيرات:** يوجد $WARNING_COUNT تحذير، يُنصح بتقليلها"
+          fi
+
+          if [ "$FAILED_TESTS" -gt 0 ]; then
+            RECOMMENDATIONS="${RECOMMENDATIONS}\n- 🧪 **إصلاح الاختبارات:** يوجد $FAILED_TESTS اختبار فاشل"
+          fi
+
+          if [ "$ERROR_COUNT" -eq 0 ] && [ "$WARNING_COUNT" -eq 0 ] && [ "$FAILED_TESTS" -eq 0 ]; then
+            RECOMMENDATIONS="✨ **ممتاز!** الكود بحالة ممتازة ولا يحتاج تحسينات"
+          fi
+
+          echo "recommendations<<EOF" >> $GITHUB_OUTPUT
+          echo -e "$RECOMMENDATIONS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Add PR Comment
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            const errorCount = '${{ steps.analyze.outputs.error_count }}';
+            const warningCount = '${{ steps.analyze.outputs.warning_count }}';
+            const infoCount = '${{ steps.analyze.outputs.info_count }}';
+            const passedTests = '${{ steps.tests.outputs.passed }}';
+            const failedTests = '${{ steps.tests.outputs.failed }}';
+            const skippedTests = '${{ steps.tests.outputs.skipped }}';
+            const score = '${{ steps.quality.outputs.score }}';
+            const grade = '${{ steps.quality.outputs.grade }}';
+            const emoji = '${{ steps.quality.outputs.emoji }}';
+            const recommendations = `${{ steps.recommendations.outputs.recommendations }}`;
+
+            // قراءة تفاصيل الأخطاء
+            let errorDetails = '';
+            try {
+              const errors = fs.readFileSync('errors.txt', 'utf8').trim();
+              if (errors) {
+                errorDetails = '\n\n### 🔴 الأخطاء الحرجة (أول 5)\n\n```\n' + errors + '\n```';
+              }
+            } catch (e) {}
+
+            // قراءة تفاصيل التحذيرات
+            let warningDetails = '';
+            try {
+              const warnings = fs.readFileSync('warnings.txt', 'utf8').trim();
+              if (warnings && warningCount > 0) {
+                warningDetails = '\n\n### ⚠️ التحذيرات (أول 5)\n\n```\n' + warnings + '\n```';
+              }
+            } catch (e) {}
+
+            // قراءة الاختبارات الفاشلة
+            let failedTestsDetails = '';
+            try {
+              const failed = fs.readFileSync('failed_tests.txt', 'utf8').trim();
+              if (failed && failedTests > 0) {
+                failedTestsDetails = '\n\n### 🧪 الاختبارات الفاشلة (أول 5)\n\n```\n' + failed + '\n```';
+              }
+            } catch (e) {}
+
+            // إنشاء التعليق
+            const body = `## ${emoji} تقرير جودة الكود - PR #${{ github.event.pull_request.number }}
+
+### 📊 النتيجة الإجمالية: ${score}/100 (${grade})
+
+---
+
+### 🔍 تحليل الكود (Flutter Analyze)
+
+| النوع | العدد | الحالة |
+|:---|:---:|:---:|
+| أخطاء (Errors) | ${errorCount} | ${errorCount === '0' ? '✅' : '❌'} |
+| تحذيرات (Warnings) | ${warningCount} | ${warningCount === '0' ? '✅' : warningCount <= '5' ? '⚠️' : '❌'} |
+| معلومات (Info) | ${infoCount} | ℹ️ |
+
+### 🧪 نتائج الاختبارات
+
+| المقياس | القيمة | الحالة |
+|:---|:---:|:---:|
+| نجح | ${passedTests} | ✅ |
+| فشل | ${failedTests} | ${failedTests === '0' ? '✅' : '❌'} |
+| تم تخطيه | ${skippedTests} | ${skippedTests === '0' ? '✅' : 'ℹ️'} |
+
+---
+
+### 💡 التوصيات
+
+${recommendations}
+
+${errorDetails}${warningDetails}${failedTestsDetails}
+
+---
+
+### 📋 الإجراءات التالية
+
+${errorCount !== '0' || failedTests !== '0' ? 
+  '⚠️ **يُنصح بإصلاح المشاكل قبل الدمج**\n\n- [ ] إصلاح جميع الأخطاء الحرجة\n- [ ] إصلاح الاختبارات الفاشلة\n- [ ] مراجعة التحذيرات وتقليلها' : 
+  '✅ **الكود جاهز للدمج!**\n\nجميع الفحوصات نجحت. يمكن المتابعة بالدمج بعد المراجعة.'}
+
+---
+
+<details>
+<summary>📚 روابط مفيدة</summary>
+
+- [نتائج التحليل الكاملة](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+- [دليل معايير الجودة](../Documentation/code-quality-standards.md)
+- [دليل إصلاح الأخطاء](../Documentation/ERROR_TRACKING_GUIDE.md)
+
+</details>
+
+---
+
+🤖 **تم إنشاء هذا التقرير تلقائياً** بواسطة Error Tracking System  
+📅 **التاريخ:** ${new Date().toISOString().split('T')[0]}  
+🔗 **Workflow Run:** [#${{ github.run_id }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+`;
+
+            // البحث عن تعليق سابق من البوت
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const botComment = comments.data.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('تقرير جودة الكود')
+            );
+
+            if (botComment) {
+              // تحديث التعليق الموجود
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: body
+              });
+            } else {
+              // إنشاء تعليق جديد
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
+
+      - name: Check Quality Gates
+        if: always()
+        run: |
+          ERROR_COUNT=${{ steps.analyze.outputs.error_count }}
+          FAILED_TESTS=${{ steps.tests.outputs.failed }}
+          SCORE=${{ steps.quality.outputs.score }}
+
+          echo "### 🎯 Quality Gates" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| المقياس | القيمة | الحد المطلوب | الحالة |" >> $GITHUB_STEP_SUMMARY
+          echo "|:---|:---:|:---:|:---:|" >> $GITHUB_STEP_SUMMARY
+          echo "| الأخطاء | $ERROR_COUNT | 0 | $([ "$ERROR_COUNT" -eq 0 ] && echo "✅" || echo "❌") |" >> $GITHUB_STEP_SUMMARY
+          echo "| الاختبارات الفاشلة | $FAILED_TESTS | 0 | $([ "$FAILED_TESTS" -eq 0 ] && echo "✅" || echo "❌") |" >> $GITHUB_STEP_SUMMARY
+          echo "| النقاط | $SCORE | 70+ | $([ "$SCORE" -ge 70 ] && echo "✅" || echo "❌") |" >> $GITHUB_STEP_SUMMARY
+
+          # فشل إذا كانت هناك أخطاء حرجة أو اختبارات فاشلة
+          if [ "$ERROR_COUNT" -gt 0 ] || [ "$FAILED_TESTS" -gt 0 ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "❌ **Quality Gates فشلت - يُنصح بإصلاح المشاكل قبل الدمج**" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          else
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "✅ **جميع Quality Gates نجحت!**" >> $GITHUB_STEP_SUMMARY
+          fi

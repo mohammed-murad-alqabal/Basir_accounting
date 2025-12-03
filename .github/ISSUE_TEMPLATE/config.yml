@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 التوثيق الشامل
+    url: https://github.com/YOUR_USERNAME/Basser_MVP/tree/main/Documentation
+    about: راجع التوثيق الشامل للمشروع قبل إنشاء Issue
+  - name: 💬 المناقشات
+    url: https://github.com/YOUR_USERNAME/Basser_MVP/discussions
+    about: للأسئلة العامة والمناقشات، استخدم قسم Discussions
+  - name: 🔍 دليل استكشاف الأخطاء
+    url: https://github.com/YOUR_USERNAME/Basser_MVP/blob/main/Documentation/ERROR_TRACKING_GUIDE.md
+    about: دليل شامل لاستكشاف وإصلاح الأخطاء الشائعة
