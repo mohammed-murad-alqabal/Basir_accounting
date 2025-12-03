@@ -1,0 +1,60 @@
+# Error Tracking System Configuration
+# المشروع: بصير MVP
+# التاريخ: 3 ديسمبر 2025
+
+# إعدادات Git Hooks
+hooks:
+  pre_commit:
+    enabled: true
+    auto_format: true
+    block_on_errors: true
+    max_execution_time: 30 # seconds
+
+  pre_push:
+    enabled: true
+    run_tests: true
+    scan_secrets: true
+    max_execution_time: 120 # seconds
+
+# إعدادات الأرشفة
+archive:
+  max_age_days: 7
+  max_size_mb: 10
+  compression_enabled: true
+  compression_format: "tar.gz"
+
+# إعدادات التقارير
+reports:
+  daily_reports: true
+  format: "markdown"
+  include_recommendations: true
+  sections:
+    - statistics
+    - errors
+    - tests
+    - recommendations
+
+# إعدادات الأمان
+security:
+  secret_scanning: true
+  log_sanitization: true
+  secret_patterns:
+    - "api[_-]?key"
+    - "password"
+    - "token"
+    - "secret"
+    - "bearer"
+    - "auth"
+  sensitive_keywords:
+    - "password"
+    - "token"
+    - "key"
+    - "secret"
+    - "api_key"
+    - "access_token"
+
+# إعدادات الأداء
+performance:
+  enable_caching: true
+  cache_duration: 3600 # seconds
+  parallel_execution: true
