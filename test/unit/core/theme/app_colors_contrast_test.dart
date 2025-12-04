@@ -166,7 +166,8 @@ void main() {
             ratio,
             greaterThanOrEqualTo(minContrastRatio),
             reason: 'النص على خلفية $name '
-                '(${_colorToHex(textColor)} على ${_colorToHex(backgroundColor)}) '
+                '(${_colorToHex(textColor)} على '
+                '${_colorToHex(backgroundColor)}) '
                 'يجب أن يحقق تباين 4.5:1 أو أعلى. '
                 'التباين الحالي: ${ratio.toStringAsFixed(2)}:1',
           );
@@ -263,5 +264,11 @@ void main() {
 }
 
 /// دالة مساعدة لتحويل Color إلى Hex string
-String _colorToHex(Color color) =>
-    '#${color.value.toRadixString(16).padLeft(8, '0').substring(2).toUpperCase()}';
+String _colorToHex(Color color) {
+  final value = (color.a.toInt() << 24) |
+      (color.r.toInt() << 16) |
+      (color.g.toInt() << 8) |
+      color.b.toInt();
+  final hex = value.toRadixString(16).padLeft(8, '0').substring(2);
+  return '#${hex.toUpperCase()}';
+}

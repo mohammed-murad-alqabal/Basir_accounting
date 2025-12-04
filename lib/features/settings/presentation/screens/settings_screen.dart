@@ -119,8 +119,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       );
 
   /// معالج تعديل بيانات الحساب
-  void _handleEditAccount() {
-    showDialog<void>(
+  Future<void> _handleEditAccount() async {
+    await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('تعديل بيانات الحساب'),
@@ -214,18 +214,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       } else {
         // إذا لم يكن هناك رابط، عرض نافذة بالمعلومات
         if (!mounted) return;
-        _showPrivacyPolicyDialog();
+        await _showPrivacyPolicyDialog();
       }
     } on Exception {
       // في حالة الخطأ، عرض نافذة بالمعلومات
       if (!mounted) return;
-      _showPrivacyPolicyDialog();
+      await _showPrivacyPolicyDialog();
     }
   }
 
   /// عرض نافذة سياسة الخصوصية
-  void _showPrivacyPolicyDialog() {
-    showDialog<void>(
+  Future<void> _showPrivacyPolicyDialog() async {
+    await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('سياسة الخصوصية'),
@@ -289,18 +289,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       } else {
         // إذا لم يكن هناك رابط، عرض نافذة بالمعلومات
         if (!mounted) return;
-        _showTermsOfServiceDialog();
+        await _showTermsOfServiceDialog();
       }
     } on Exception {
       // في حالة الخطأ، عرض نافذة بالمعلومات
       if (!mounted) return;
-      _showTermsOfServiceDialog();
+      await _showTermsOfServiceDialog();
     }
   }
 
   /// عرض نافذة شروط الخدمة
-  void _showTermsOfServiceDialog() {
-    showDialog<void>(
+  Future<void> _showTermsOfServiceDialog() async {
+    await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('شروط الخدمة'),

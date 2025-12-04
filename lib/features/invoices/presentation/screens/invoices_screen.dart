@@ -290,9 +290,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           ListTile(
             leading: const Icon(Icons.edit),
             title: const Text('تعديل الفاتورة'),
-            onTap: () {
+            onTap: () async {
               Navigator.pop(context);
-              _editInvoice(invoice);
+              await _editInvoice(invoice);
             },
           ),
           ListTile(
@@ -309,9 +309,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
               'حذف الفاتورة',
               style: TextStyle(color: AppColors.error),
             ),
-            onTap: () {
+            onTap: () async {
               Navigator.pop(context);
-              _deleteInvoice(invoice);
+              await _deleteInvoice(invoice);
             },
           ),
         ],

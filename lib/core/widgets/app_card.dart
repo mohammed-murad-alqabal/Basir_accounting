@@ -251,7 +251,6 @@ class AppStatCard extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.sm),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, color: iconColor, size: 26),
               const SizedBox(height: AppSpacing.xs),

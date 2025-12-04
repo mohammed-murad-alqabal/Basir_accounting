@@ -373,7 +373,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                     child: ListTile(
                       title: Text(item.name),
                       subtitle: Text(
-                        'الكمية: ${item.quantity} × ${item.price.toStringAsFixed(2)} ر.س',
+                        'الكمية: ${item.quantity} × '
+                        '${item.price.toStringAsFixed(2)} ر.س',
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -386,8 +387,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                             ),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.delete,
-                                color: AppColors.error,),
+                            icon: const Icon(
+                              Icons.delete,
+                              color: AppColors.error,
+                            ),
                             onPressed: () => _removeItem(index),
                           ),
                         ],
