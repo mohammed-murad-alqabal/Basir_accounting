@@ -387,7 +387,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete,
-                                color: AppColors.error),
+                                color: AppColors.error,),
                             onPressed: () => _removeItem(index),
                           ),
                         ],

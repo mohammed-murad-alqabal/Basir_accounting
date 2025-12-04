@@ -196,7 +196,8 @@ class CustomerDetailsScreen extends ConsumerWidget {
       ),
     );
 
-    if (result ?? false && context.mounted) {
+    if (!context.mounted) return;
+    if (result ?? false) {
       Navigator.pop(context, true);
     }
   }
@@ -246,7 +247,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
           ),
         );
       }
-    } catch (e) {
+    } on Exception catch (e) {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

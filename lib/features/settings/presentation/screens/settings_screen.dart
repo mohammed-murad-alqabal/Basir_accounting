@@ -389,7 +389,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
 
-    if (confirmed ?? false && mounted) {
+    if ((confirmed ?? false) && mounted) {
       // عرض رسالة تأكيد
       _showSuccessMessage('تم تسجيل الخروج بنجاح');
       // الانتقال إلى شاشة تسجيل الدخول

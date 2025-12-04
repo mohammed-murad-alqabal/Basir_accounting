@@ -226,7 +226,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
           ),
         );
       }
-    } catch (e) {
+    } on Exception catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
