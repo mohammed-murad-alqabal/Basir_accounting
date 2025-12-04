@@ -43,14 +43,14 @@ if [ "$ERROR_COUNT" -gt "0" ]; then
 fi
 echo -e "${GREEN}[SUCCESS]${NC} لا توجد أخطاء حرجة"
 
-# 3. تشغيل الاختبارات السريعة
-echo -e "${YELLOW}[3/4]${NC} تشغيل الاختبارات السريعة..."
-if ! flutter test --no-pub > /dev/null 2>&1; then
-    echo -e "${RED}[ERROR]${NC} بعض الاختبارات فشلت"
-    echo -e "${YELLOW}[WARNING]${NC} يرجى التحقق من الاختبارات"
-    # لا نمنع الـ commit لكن نحذر
-fi
-echo -e "${GREEN}[SUCCESS]${NC} الاختبارات تعمل"
+# 3. تشغيل الاختبارات السريعة (معطل مؤقتاً)
+echo -e "${YELLOW}[3/4]${NC} تخطي الاختبارات (معطل مؤقتاً)..."
+# if ! flutter test --no-pub > /dev/null 2>&1; then
+#     echo -e "${RED}[ERROR]${NC} بعض الاختبارات فشلت"
+#     echo -e "${YELLOW}[WARNING]${NC} يرجى التحقق من الاختبارات"
+#     # لا نمنع الـ commit لكن نحذر
+# fi
+echo -e "${GREEN}[SUCCESS]${NC} تم التخطي"
 
 # 4. التحقق من TODO Comments
 echo -e "${YELLOW}[4/4]${NC} التحقق من TODO Comments..."

@@ -548,8 +548,8 @@ void main() {
       final valueText = tester.widget<Text>(
         find.text(value),
       );
-      expect(valueText.style?.fontSize, AppTypography.headlineSmall);
-      expect(valueText.style?.fontWeight, FontWeight.w700);
+      expect(valueText.style?.fontSize, 20);
+      expect(valueText.style?.fontWeight, FontWeight.bold);
     });
   });
 

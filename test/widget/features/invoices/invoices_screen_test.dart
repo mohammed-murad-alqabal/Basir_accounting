@@ -108,9 +108,9 @@ void main() {
 
       // Assert
       expect(find.text('الكل'), findsOneWidget);
-      expect(find.text('paid'), findsOneWidget);
-      expect(find.text('issued'), findsOneWidget);
-      expect(find.text('overdue'), findsOneWidget);
+      expect(find.text('مدفوعة'), findsOneWidget);
+      expect(find.text('مرسلة'), findsOneWidget);
+      expect(find.text('متأخرة'), findsOneWidget);
     });
 
     testWidgets('should display loading indicator when loading',
@@ -463,14 +463,14 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Act - Tap on 'paid' filter chip
-      await tester.tap(find.text('paid'));
+      // Act - Tap on 'مدفوعة' filter chip
+      await tester.tap(find.text('مدفوعة'));
       await tester.pumpAndSettle();
 
       // Assert - Verify the filter chip is selected
       final filterChip = tester.widget<FilterChip>(
         find.ancestor(
-          of: find.text('paid'),
+          of: find.text('مدفوعة'),
           matching: find.byType(FilterChip),
         ),
       );
