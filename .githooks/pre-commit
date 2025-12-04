@@ -16,11 +16,16 @@ echo ""
 
 # 1. تشغيل Dart Format
 echo -e "${YELLOW}[1/4]${NC} تشغيل Dart Format..."
-if ! dart format --set-exit-if-changed lib/ test/ > /dev/null 2>&1; then
-    echo -e "${RED}[ERROR]${NC} الكود غير منسق. تشغيل dart format..."
-    dart format lib/ test/
-    echo -e "${YELLOW}[WARNING]${NC} تم تنسيق الكود. يرجى إضافة التغييرات والمحاولة مرة أخرى."
-    exit 1
+# تنسيق الملفات المعدلة فقط
+STAGED_DART_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep "\.dart$" || true)
+
+if [ ! -z "$STAGED_DART_FILES" ]; then
+    if ! dart format --set-exit-if-changed $STAGED_DART_FILES > /dev/null 2>&1; then
+        echo -e "${YELLOW}[INFO]${NC} تنسيق الملفات المعدلة..."
+        dart format $STAGED_DART_FILES
+        git add $STAGED_DART_FILES
+        echo -e "${GREEN}[SUCCESS]${NC} تم تنسيق الملفات وإضافتها"
+    fi
 fi
 echo -e "${GREEN}[SUCCESS]${NC} الكود منسق بشكل صحيح"
 

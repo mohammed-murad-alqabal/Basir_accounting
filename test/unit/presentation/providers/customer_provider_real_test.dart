@@ -277,12 +277,13 @@ void main() {
       final result = container.read(filteredCustomersProvider);
 
       // Assert
-      result.when(
-        data: (customers) {
-          expect(customers.length, 3);
-        },
-        loading: () => fail('Should not be loading'),
-        error: (_, __) => fail('Should not have error'),
+      await expectLater(
+        result.when(
+          data: (customers) => customers.length,
+          loading: () => throw StateError('Should not be loading'),
+          error: (_, __) => throw StateError('Should not have error'),
+        ),
+        equals(3),
       );
     });
 
@@ -295,16 +296,16 @@ void main() {
       final result = container.read(filteredCustomersProvider);
 
       // Assert
-      result.when(
-        data: (customers) {
-          expect(customers.length, 2); // أحمد محمد و محمد أحمد
-          expect(
-            customers.every((c) => c.name.contains('أحمد')),
-            true,
-          );
-        },
-        loading: () => fail('Should not be loading'),
-        error: (_, __) => fail('Should not have error'),
+      final customers = result.when(
+        data: (customers) => customers,
+        loading: () => throw StateError('Should not be loading'),
+        error: (_, __) => throw StateError('Should not have error'),
+      );
+
+      expect(customers.length, 2); // أحمد محمد و محمد أحمد
+      expect(
+        customers.every((c) => c.name.contains('أحمد')),
+        true,
       );
     });
 
@@ -317,14 +318,14 @@ void main() {
       final result = container.read(filteredCustomersProvider);
 
       // Assert
-      result.when(
-        data: (customers) {
-          expect(customers.length, 1);
-          expect(customers.first.email, contains('ahmed'));
-        },
-        loading: () => fail('Should not be loading'),
-        error: (_, __) => fail('Should not have error'),
+      final customers = result.when(
+        data: (customers) => customers,
+        loading: () => throw StateError('Should not be loading'),
+        error: (_, __) => throw StateError('Should not have error'),
       );
+
+      expect(customers.length, 1);
+      expect(customers.first.email, contains('ahmed'));
     });
 
     test('should filter customers by phone', () async {
@@ -336,14 +337,14 @@ void main() {
       final result = container.read(filteredCustomersProvider);
 
       // Assert
-      result.when(
-        data: (customers) {
-          expect(customers.length, 1);
-          expect(customers.first.phone, contains('050123'));
-        },
-        loading: () => fail('Should not be loading'),
-        error: (_, __) => fail('Should not have error'),
+      final customers = result.when(
+        data: (customers) => customers,
+        loading: () => throw StateError('Should not be loading'),
+        error: (_, __) => throw StateError('Should not have error'),
       );
+
+      expect(customers.length, 1);
+      expect(customers.first.phone, contains('050123'));
     });
 
     test('should return empty list when no matches found', () async {
@@ -355,13 +356,13 @@ void main() {
       final result = container.read(filteredCustomersProvider);
 
       // Assert
-      result.when(
-        data: (customers) {
-          expect(customers, isEmpty);
-        },
-        loading: () => fail('Should not be loading'),
-        error: (_, __) => fail('Should not have error'),
+      final customers = result.when(
+        data: (customers) => customers,
+        loading: () => throw StateError('Should not be loading'),
+        error: (_, __) => throw StateError('Should not have error'),
       );
+
+      expect(customers, isEmpty);
     });
 
     test('should update when search query changes', () async {
@@ -375,20 +376,20 @@ void main() {
       final result2 = container.read(filteredCustomersProvider);
 
       // Assert
-      result1.when(
-        data: (customers) => expect(customers.length, 2),
-        loading: () => fail('Should not be loading'),
-        error: (_, __) => fail('Should not have error'),
+      final customers1 = result1.when(
+        data: (customers) => customers,
+        loading: () => throw StateError('Should not be loading'),
+        error: (_, __) => throw StateError('Should not have error'),
       );
+      expect(customers1.length, 2);
 
-      result2.when(
-        data: (customers) {
-          expect(customers.length, 1);
-          expect(customers.first.name, 'فاطمة علي');
-        },
-        loading: () => fail('Should not be loading'),
-        error: (_, __) => fail('Should not have error'),
+      final customers2 = result2.when(
+        data: (customers) => customers,
+        loading: () => throw StateError('Should not be loading'),
+        error: (_, __) => throw StateError('Should not have error'),
       );
+      expect(customers2.length, 1);
+      expect(customers2.first.name, 'فاطمة علي');
     });
   });
 }
