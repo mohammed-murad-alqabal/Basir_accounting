@@ -80,6 +80,8 @@ firebase_options.dart
 # Test outputs
 test_output.txt
 /tmp/
+test_archive_*/
+test_results*.txt
 
 # Platform specific
 .fvm/
