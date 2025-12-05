@@ -1,0 +1,238 @@
+# قواعد الأتمتة الذكية
+# Repository Automation Rules
+# المشروع: بصير MVP
+
+version: "1.0"
+enabled: true
+auto_fix: true
+confidence_threshold: 0.7
+
+# ====================
+# قواعد تصنيف الملفات
+# ====================
+file_classification:
+  reports:
+    patterns:
+      - "*_REPORT.md"
+      - "*_SUMMARY.md"
+      - "*_FIX_*.md"
+    destination: "Documentation/reports/"
+    subcategories:
+      builds:
+        keywords: ["BUILD", "APK", "DEPLOY", "ANDROID", "IOS"]
+        destination: "Documentation/reports/builds/"
+      performance:
+        keywords: ["PERFORMANCE", "OPTIMIZATION", "SPEED"]
+        destination: "Documentation/reports/performance/"
+      testing:
+        keywords: ["TEST", "TESTING", "COVERAGE"]
+        destination: "Documentation/reports/testing/"
+      fixes:
+        keywords: ["FIX", "FIXES", "REPAIR", "ISSUE"]
+        destination: "Documentation/reports/fixes/"
+      features:
+        keywords: ["FEATURE", "IMPLEMENTATION", "NEW"]
+        destination: "Documentation/reports/features/"
+
+  sessions:
+    patterns:
+      - "SESSION_*.md"
+      - "*_COMPLETION_*.md"
+    destination: "Documentation/sessions/"
+
+  guides:
+    patterns:
+      - "*_GUIDE.md"
+      - "SETUP_*.md"
+      - "QUICK_*.md"
+    destination: "Documentation/guides/"
+    subcategories:
+      setup:
+        keywords: ["SETUP", "INSTALL", "CONFIGURATION"]
+        destination: "Documentation/guides/setup/"
+      development:
+        keywords: ["DEV", "DEVELOPMENT", "MCP"]
+        destination: "Documentation/guides/development/"
+      deployment:
+        keywords: ["DEPLOY", "RELEASE", "PUBLISH"]
+        destination: "Documentation/guides/deployment/"
+
+  status:
+    patterns:
+      - "*_STATUS.md"
+      - "CURRENT_*.md"
+    destination: "Documentation/status/"
+
+# ====================
+# قواعد التنظيف
+# ====================
+cleanup_rules:
+  temporary_files:
+    patterns:
+      - "test_*.txt"
+      - "test_*.json"
+      - "*.log"
+      - "*.tmp"
+      - ".DS_Store"
+    action: "delete"
+    backup: true
+
+  temporary_directories:
+    patterns:
+      - "test_archive*"
+      - "test_compression*"
+      - ".temp"
+    action: "delete"
+    backup: true
+
+  old_reports:
+    age_days: 90
+    action: "archive"
+    destination: "Documentation/Archive/"
+
+  large_files:
+    size_mb: 10
+    action: "warn"
+    suggest_lfs: true
+
+# ====================
+# قواعد الجودة
+# ====================
+quality_rules:
+  root_files:
+    max_count: 10
+    essential_files:
+      - "README.md"
+      - "CHANGELOG.md"
+      - "CONTRIBUTING.md"
+      - "LICENSE"
+      - "SECURITY.md"
+      - "ARCHITECTURE.md"
+      - "TESTING.md"
+      - "PROJECT_STATUS.md"
+    action: "warn"
+
+  file_size:
+    max_size_mb: 10
+    action: "warn"
+
+  repository_size:
+    max_size_mb: 500
+    action: "warn"
+
+  changelog:
+    max_days_without_update: 7
+    action: "warn"
+
+# ====================
+# قواعد الأمان
+# ====================
+security_rules:
+  sensitive_patterns:
+    - pattern: 'password.*=.*[''"].*[''"]'
+      severity: "critical"
+      action: "block"
+    - pattern: 'api[_-]?key.*=.*[''"].*[''"]'
+      severity: "critical"
+      action: "block"
+    - pattern: 'secret.*=.*[''"].*[''"]'
+      severity: "critical"
+      action: "block"
+    - pattern: 'token.*=.*[''"].*[''"]'
+      severity: "high"
+      action: "warn"
+    - pattern: "aws[_-]?access[_-]?key"
+      severity: "critical"
+      action: "block"
+
+  file_permissions:
+    scripts:
+      required: "755"
+    configs:
+      required: "644"
+
+# ====================
+# قواعد المراقبة
+# ====================
+monitoring_rules:
+  health_check:
+    frequency: "daily"
+    time: "03:00"
+    enabled: true
+
+  weekly_report:
+    frequency: "weekly"
+    day: "sunday"
+    time: "23:00"
+    enabled: true
+
+  monthly_report:
+    frequency: "monthly"
+    day: 1
+    time: "00:00"
+    enabled: true
+
+  metrics_collection:
+    enabled: true
+    retention_days: 90
+
+# ====================
+# قواعد التنبيهات
+# ====================
+alert_rules:
+  critical:
+    channels: ["email", "github_issue"]
+    immediate: true
+
+  high:
+    channels: ["github_issue"]
+    immediate: false
+
+  medium:
+    channels: ["log"]
+    immediate: false
+
+  low:
+    channels: ["log"]
+    immediate: false
+
+# ====================
+# قواعد التعلم
+# ====================
+learning_rules:
+  enabled: true
+  min_confidence: 0.7
+  learning_rate: 0.1
+  feedback_required: true
+
+  decision_logging:
+    enabled: true
+    retention_days: 365
+
+  pattern_recognition:
+    enabled: true
+    min_occurrences: 3
+
+# ====================
+# قواعد النسخ الاحتياطي
+# ====================
+backup_rules:
+  enabled: true
+  retention_days: 30
+  location: ".git/automation-backups/"
+
+  before_operations:
+    - "delete"
+    - "move"
+    - "modify"
+
+  compression: true
+  encryption: false
+
+---
+# ملاحظات
+
+- جميع القواعد قابلة للتعديل
+- يمكن تعطيل أي قاعدة بتغيير enabled إلى false
+- القواعد تُطبق بالترتيب
+- القرارات تُسجل للتعلم المستقبلي
