@@ -1,3 +1,4 @@
+import 'package:basser_app/core/assets/app_logo.dart';
 import 'package:basser_app/core/constants.dart';
 import 'package:basser_app/core/theme.dart';
 import 'package:basser_app/core/widgets/index.dart';
@@ -38,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _isLoading = false;
   bool _keepLoggedIn = true;
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
   @override
   void dispose() {
@@ -47,6 +49,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _handleLogin() async {
+    // تفعيل validation عند أول محاولة
+    if (_autovalidateMode == AutovalidateMode.disabled) {
+      setState(() => _autovalidateMode = AutovalidateMode.onUserInteraction);
+    }
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -135,6 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // نموذج تسجيل الدخول
                 Form(
                   key: _formKey,
+                  autovalidateMode: _autovalidateMode,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -239,28 +247,21 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildHeader() => Column(
         children: [
           Container(
-            width: 80,
-            height: 80,
+            width: 100,
+            height: 100,
             decoration: BoxDecoration(
               color: AppColors.primary,
-              borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+              borderRadius: BorderRadius.circular(AppBorderRadius.xl),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.2),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
+                  color: AppColors.primary.withValues(alpha: 0.3),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
                 ),
               ],
             ),
-            child: const Center(
-              child: Text(
-                'بصير',
-                style: TextStyle(
-                  fontSize: AppTypography.headlineLarge,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+            child: const BasserLogo(
+              size: 60,
             ),
           ),
           const SizedBox(height: AppSpacing.lg),

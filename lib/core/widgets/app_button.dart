@@ -1,4 +1,5 @@
 import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/widgets/responsive_text.dart';
 import 'package:flutter/material.dart';
 
 /// زر أساسي مملوء بالألوان الأساسية
@@ -54,29 +55,45 @@ class AppPrimaryButton extends StatelessWidget {
   final double? height;
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-        width: width,
-        height: height ?? 48,
-        child: ElevatedButton(
-          onPressed: isLoading ? null : onPressed,
-          style: ElevatedButton.styleFrom(
-            textStyle: const TextStyle(
-              fontSize: AppTypography.bodyLarge,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          child: isLoading
-              ? const SizedBox(
-                  height: 24,
-                  width: 24,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  ),
-                )
-              : Text(label),
+  Widget build(BuildContext context) {
+    // إزالة SizedBox الخارجي لإعطاء النص مساحة كافية
+    final button = ElevatedButton(
+      onPressed: isLoading ? null : onPressed,
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size(width ?? 88, height ?? 52), // زيادة الحد الأدنى
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.lg,
+          vertical: AppSpacing.md + 4, // زيادة padding العمودي
         ),
-      );
+        textStyle: const TextStyle(
+          fontSize: AppTypography.bodyLarge,
+          fontWeight: FontWeight.w600,
+          height: 1.5, // زيادة line-height
+        ),
+      ),
+      child: isLoading
+          ? const SizedBox(
+              height: 24,
+              width: 24,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            )
+          : ResponsiveText(
+              label,
+              maxLines: 2, // السماح بسطرين
+              overflow: TextOverflow.visible, // عدم قص النص
+              textAlign: TextAlign.center,
+            ),
+    );
+
+    // استخدام width فقط إذا تم تحديده
+    if (width != null) {
+      return SizedBox(width: width, child: button);
+    }
+    return button;
+  }
 }
 
 /// زر ثانوي بحد فقط
@@ -131,30 +148,45 @@ class AppSecondaryButton extends StatelessWidget {
   final double? height;
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-        width: width,
-        height: height ?? 48,
-        child: OutlinedButton(
-          onPressed: isLoading ? null : onPressed,
-          style: OutlinedButton.styleFrom(
-            textStyle: const TextStyle(
-              fontSize: AppTypography.bodyLarge,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          child: isLoading
-              ? const SizedBox(
-                  height: 24,
-                  width: 24,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(AppColors.primary),
-                  ),
-                )
-              : Text(label),
+  Widget build(BuildContext context) {
+    // إزالة SizedBox الخارجي لإعطاء النص مساحة كافية
+    final button = OutlinedButton(
+      onPressed: isLoading ? null : onPressed,
+      style: OutlinedButton.styleFrom(
+        minimumSize: Size(width ?? 88, height ?? 52), // زيادة الحد الأدنى
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.lg,
+          vertical: AppSpacing.md + 4, // زيادة padding العمودي
         ),
-      );
+        textStyle: const TextStyle(
+          fontSize: AppTypography.bodyLarge,
+          fontWeight: FontWeight.w600,
+          height: 1.5, // زيادة line-height
+        ),
+      ),
+      child: isLoading
+          ? const SizedBox(
+              height: 24,
+              width: 24,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+              ),
+            )
+          : ResponsiveText(
+              label,
+              maxLines: 2, // السماح بسطرين
+              overflow: TextOverflow.visible, // عدم قص النص
+              textAlign: TextAlign.center,
+            ),
+    );
+
+    // استخدام width فقط إذا تم تحديده
+    if (width != null) {
+      return SizedBox(width: width, child: button);
+    }
+    return button;
+  }
 }
 
 /// زر نصي بسيط
@@ -208,18 +240,27 @@ class AppTextButton extends StatelessWidget {
   Widget build(BuildContext context) => TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.sm + 2, // زيادة padding
+          ),
           textStyle: TextStyle(
             fontSize: fontSize,
             fontWeight: FontWeight.w600,
+            height: 1.5, // زيادة line-height
           ),
         ),
-        child: Text(
+        child: ResponsiveText(
           label,
           style: TextStyle(
             color: color,
             fontSize: fontSize,
             fontWeight: FontWeight.w600,
+            height: 1.5, // زيادة line-height
           ),
+          maxLines: 2, // السماح بسطرين
+          overflow: TextOverflow.visible, // عدم قص النص
+          textAlign: TextAlign.center,
         ),
       );
 }

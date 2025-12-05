@@ -1,54 +1,71 @@
 import 'dart:async';
 
+import 'package:basser_app/core/assets/app_logo.dart';
 import 'package:basser_app/core/constants.dart';
 import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/router.dart';
 import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/theme_dark.dart';
 import 'package:basser_app/features/auth/data/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+void main() async {
+  // تهيئة Flutter bindings
   WidgetsFlutterBinding.ensureInitialized();
 
-  // بدء التطبيق فوراً بدون انتظار
+  // تحسين الأداء: تعيين اتجاه النظام
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+  // بدء التطبيق
   runApp(const ProviderScope(child: BasserApp()));
 }
 
 /// تطبيق بصير الرئيسي
-class BasserApp extends StatelessWidget {
+class BasserApp extends ConsumerWidget {
   /// إنشاء تطبيق بصير
   const BasserApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        title: AppConfig.appName,
-        theme: createAppTheme(),
-        home: const SplashScreen(),
-        onGenerateRoute: AppRouter.generateRoute,
-        debugShowCheckedModeBanner: false,
-        // إعدادات اللغة العربية والاتجاه من اليمين لليسار
-        locale: const Locale('ar', 'SA'),
-        supportedLocales: const [
-          Locale('ar', 'SA'), // العربية
-          Locale('en', 'US'), // الإنجليزية
-        ],
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        // تحديد اتجاه النص بناءً على اللغة
-        localeResolutionCallback: (locale, supportedLocales) {
-          // إذا كانت اللغة عربية، استخدم RTL
-          if (locale?.languageCode == 'ar') {
-            return const Locale('ar', 'SA');
-          }
-          // وإلا استخدم الإنجليزية
-          return const Locale('en', 'US');
-        },
-      );
+  Widget build(BuildContext context, WidgetRef ref) {
+    // مراقبة حالة الثيم من provider
+    final themeMode = ref.watch(themeProvider);
+
+    return MaterialApp(
+      title: AppConfig.appName,
+      theme: createAppTheme(),
+      darkTheme: createDarkTheme(),
+      themeMode: themeMode,
+      home: const SplashScreen(),
+      onGenerateRoute: AppRouter.generateRoute,
+      debugShowCheckedModeBanner: false,
+      // إعدادات اللغة العربية والاتجاه من اليمين لليسار
+      locale: const Locale('ar', 'SA'),
+      supportedLocales: const [
+        Locale('ar', 'SA'), // العربية
+        Locale('en', 'US'), // الإنجليزية
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      // تحديد اتجاه النص بناءً على اللغة
+      localeResolutionCallback: (locale, supportedLocales) {
+        // إذا كانت اللغة عربية، استخدم RTL
+        if (locale?.languageCode == 'ar') {
+          return const Locale('ar', 'SA');
+        }
+        // وإلا استخدم الإنجليزية
+        return const Locale('en', 'US');
+      },
+    );
+  }
 }
 
 /// شاشة البداية (Splash Screen)
@@ -75,16 +92,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   Future<void> _initializeApp() async {
     try {
-      // 1. تهيئة Isar من خلال provider
-      setState(() => _status = 'جاري فتح قاعدة البيانات...');
-      await ref.read(isarProvider.future);
+      // ✅ تهيئة متوازية لتحسين الأداء (إزالة التأخير الاصطناعي)
+      setState(() => _status = 'جاري التهيئة...');
 
-      // 2. تهيئة الخدمات من خلال providers
-      setState(() => _status = 'جاري تهيئة الخدمات...');
-      final authService = ref.read(authServiceProvider);
+      // تهيئة جميع الخدمات بالتوازي لتحسين الأداء
+      await Future.wait([
+        ref.read(isarProvider.future),
+        // يمكن إضافة خدمات أخرى هنا للتهيئة المتوازية
+      ]);
 
-      // 3. التحقق من حالة المصادقة
+      // التحقق من حالة المصادقة
       setState(() => _status = 'جاري التحقق من الحساب...');
+      final authService = ref.read(authServiceProvider);
       await _checkAuthStatus(authService);
     } on Exception catch (e) {
       setState(() {
@@ -140,10 +159,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.receipt_long,
-                size: 80,
-                color: Colors.white,
+              // استخدام الشعار المخصص بدلاً من Material Icon
+              const BasserLogo(
+                size: 100,
               ),
               const SizedBox(height: AppSpacing.lg),
               const Text(
@@ -152,12 +170,27 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   fontSize: AppTypography.headlineLarge,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
+                  letterSpacing: 2,
                 ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              const Text(
+                AppConfig.appDescription,
+                style: TextStyle(
+                  fontSize: AppTypography.bodyMedium,
+                  color: Colors.white70,
+                ),
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: AppSpacing.xl),
               if (_error == null)
-                const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                const SizedBox(
+                  width: 32,
+                  height: 32,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    strokeWidth: 3,
+                  ),
                 )
               else
                 const Icon(

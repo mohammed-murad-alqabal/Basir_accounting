@@ -403,7 +403,7 @@ void main() {
       // Assert
       final textButton = tester.widget<TextButton>(find.byType(TextButton));
       final text = textButton.child! as Text;
-      expect(text.style?.fontSize, AppTypography.bodyMedium);
+      expect(text.style?.fontSize, AppTypography.bodyLarge);
     });
 
     testWidgets('should respect custom font size', (tester) async {
@@ -445,7 +445,7 @@ void main() {
       // Assert
       final textButton = tester.widget<TextButton>(find.byType(TextButton));
       final text = textButton.child! as Text;
-      expect(text.style?.fontWeight, FontWeight.w500);
+      expect(text.style?.fontWeight, FontWeight.w600);
     });
   });
 

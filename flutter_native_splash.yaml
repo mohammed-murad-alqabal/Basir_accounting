@@ -1,0 +1,38 @@
+# تكوين شاشة البداية (Splash Screen)
+# يستخدم مع flutter_native_splash package
+
+flutter_native_splash:
+  # اللون الأساسي للخلفية
+  color: "#0056B3"
+
+  # الصورة (الشعار)
+  image: assets/icons/splash_logo.png
+
+  # اللون الداكن (للوضع الداكن)
+  color_dark: "#003D82"
+  image_dark: assets/icons/splash_logo.png
+
+  # Android
+  android: true
+  android_12:
+    # Android 12+
+    image: assets/icons/splash_logo.png
+    icon_background_color: "#0056B3"
+    image_dark: assets/icons/splash_logo.png
+    icon_background_color_dark: "#003D82"
+
+  # iOS
+  ios: true
+
+  # Web
+  web: true
+  web_image_mode: center
+
+  # إعدادات إضافية
+  android_gravity: center
+  ios_content_mode: center
+  fullscreen: true
+
+  # معلومات إضافية
+  info_plist_files:
+    - "ios/Runner/Info.plist"

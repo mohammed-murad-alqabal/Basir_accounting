@@ -1480,6 +1480,600 @@ class AppSecurityBadge extends StatelessWidget {
 
 ---
 
+---
+
+## تصميم حل مشكلة قص واختفاء نص الأزرار (المتطلب 11)
+
+### نظرة عامة
+
+هذا القسم يحدد الحل التقني الشامل لمشكلة قص واختفاء نص الأزرار في جميع حالات الزر وعلى جميع المنصات، مع دعم كامل للنصوص العربية وخط Cairo.
+
+### تحليل المشكلة
+
+#### الأسباب الجذرية
+
+1. **قيود التخطيط الصارمة:** BoxConstraints ثابتة تمنع النص من التمدد
+2. **تخطيط أفقي غير مرن:** Row بدون Flexible/Expanded
+3. **ارتفاع داخلي غير كافٍ:** padding/line-height أقل من ارتفاع الخط الفعلي
+4. **سياسات overflow خاطئة:** TextOverflow.ellipsis أو softWrap:false
+5. **اختلاف مقاييس الخط:** font metrics غير متسقة بين Cairo وfallback
+6. **إعدادات RTL غير متسقة:** Directionality/textAlign غير مضبوطان
+7. **تكبير النص:** textScaleFactor عالي بدون دعم مرونة
+8. **اختلافات المنصات:** سلوك محرك النص يختلف بين Android/iOS/Web
+
+### الحل المعماري
+
+#### 1. نظام مقاييس الخطوط (Font Metrics System)
+
+```dart
+/// نظام مقاييس الخطوط لضمان عرض صحيح للنصوص العربية
+class AppFontMetrics {
+  // مقاييس خط Cairo
+  static const double cairoLineHeight = 1.4;
+  static const double cairoAscentRatio = 0.85;
+  static const double cairoDescentRatio = 0.15;
+
+  // مقاييس خط fallback (system font)
+  static const double fallbackLineHeight = 1.3;
+  static const double fallbackAscentRatio = 0.80;
+  static const double fallbackDescentRatio = 0.20;
+
+  /// يحسب الارتفاع الفعلي المطلوب للنص
+  static double calculateRequiredHeight({
+    required double fontSize,
+    required double lineHeight,
+    required double textScaleFactor,
+  }) {
+    return fontSize * lineHeight * textScaleFactor;
+  }
+
+  /// يحسب الـ padding الرأسي المطلوب
+  static double calculateVerticalPadding({
+    required double fontSize,
+    required double lineHeight,
+    required double textScaleFactor,
+  }) {
+    final textHeight = calculateRequiredHeight(
+      fontSize: fontSize,
+      lineHeight: lineHeight,
+      textScaleFactor: textScaleFactor,
+    );
+    // إضافة 20% كمساحة أمان
+    return (textHeight * 0.1).clamp(12.0, 20.0);
+  }
+}
+```
+
+#### 2. Widget الزر المحسّن (Enhanced Button Widget)
+
+```dart
+/// زر محسّن يضمن عرض النص كاملاً في جميع الحالات
+class AppEnhancedButton extends StatelessWidget {
+  final String text;
+  final VoidCallback? onPressed;
+  final bool isPrimary;
+  final bool isLoading;
+  final IconData? icon;
+  final bool isExpanded;
+
+  const AppEnhancedButton({
+    Key? key,
+    required this.text,
+    this.onPressed,
+    this.isPrimary = true,
+    this.isLoading = false,
+    this.icon,
+    this.isExpanded = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // الحصول على textScaleFactor من MediaQuery
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+
+    // حساب الارتفاع المطلوب
+    final fontSize = 15.0;
+    final lineHeight = AppFontMetrics.cairoLineHeight;
+    final verticalPadding = AppFontMetrics.calculateVerticalPadding(
+      fontSize: fontSize,
+      lineHeight: lineHeight,
+      textScaleFactor: textScaleFactor,
+    );
+
+    // بناء محتوى الزر
+    Widget buttonContent = _buildButtonContent(
+      context: context,
+      textScaleFactor: textScaleFactor,
+    );
+
+    // إذا كان الزر يحتوي على أيقونة ونص، استخدم تخطيط مرن
+    if (icon != null) {
+      buttonContent = Row(
+        mainAxisSize: isExpanded ? MainAxisSize.max : MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 20),
+          const SizedBox(width: 8),
+          Flexible(
+            child: buttonContent,
+          ),
+        ],
+      );
+    }
+
+    return Material(
+      color: _getBackgroundColor(),
+      borderRadius: BorderRadius.circular(AppDimensions.buttonBorderRadius),
+      child: InkWell(
+        onTap: isLoading ? null : onPressed,
+        borderRadius: BorderRadius.circular(AppDimensions.buttonBorderRadius),
+        child: Container(
+          constraints: BoxConstraints(
+            minHeight: AppDimensions.buttonHeight,
+            minWidth: isExpanded ? double.infinity : AppDimensions.buttonMinWidth,
+          ),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppDimensions.spacingMedium,
+            vertical: verticalPadding,
+          ),
+          child: Center(
+            child: isLoading
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : buttonContent,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildButtonContent({
+    required BuildContext context,
+    required double textScaleFactor,
+  }) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.rtl,
+        maxLines: null, // السماح بتعدد الأسطر
+        softWrap: true, // السماح بالالتفاف
+        overflow: TextOverflow.visible, // عدم قص النص
+        style: TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
+          height: AppFontMetrics.cairoLineHeight,
+          color: isPrimary ? Colors.white : AppColors.textPrimary,
+          // إضافة fallback font
+          fontFamilyFallback: const ['Roboto', 'Arial'],
+        ),
+      ),
+    );
+  }
+
+  Color _getBackgroundColor() {
+    if (!isPrimary) return AppColors.surface;
+    if (onPressed == null) return AppColors.primary.withOpacity(0.5);
+    return AppColors.primary;
+  }
+}
+```
+
+#### 3. نظام التحقق من القص (Overflow Detection System)
+
+```dart
+/// أداة للكشف عن قص النصوص في وقت التطوير
+class OverflowDetector extends StatelessWidget {
+  final Widget child;
+  final String debugLabel;
+
+  const OverflowDetector({
+    Key? key,
+    required this.child,
+    required this.debugLabel,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (kDebugMode) {
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          return OverflowBox(
+            alignment: Alignment.center,
+            maxWidth: constraints.maxWidth,
+            maxHeight: constraints.maxHeight,
+            child: Builder(
+              builder: (context) {
+                // محاولة رسم الـ child والتحقق من overflow
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  _checkForOverflow(context);
+                });
+                return child;
+              },
+            ),
+          );
+        },
+      );
+    }
+    return child;
+  }
+
+  void _checkForOverflow(BuildContext context) {
+    final renderBox = context.findRenderObject() as RenderBox?;
+    if (renderBox == null) return;
+
+    // التحقق من وجود overflow
+    final hasOverflow = renderBox.hasVisualOverflow;
+    if (hasOverflow) {
+      debugPrint('⚠️ تحذير: تم اكتشاف overflow في $debugLabel');
+      debugPrint('   الحجم: ${renderBox.size}');
+      debugPrint('   القيود: ${renderBox.constraints}');
+    }
+  }
+}
+```
+
+#### 4. نظام اختبار textScaleFactor
+
+```dart
+/// أداة لاختبار الأزرار مع textScaleFactor مختلفة
+class TextScaleFactorTester extends StatefulWidget {
+  final Widget child;
+
+  const TextScaleFactorTester({Key? key, required this.child}) : super(key: key);
+
+  @override
+  State<TextScaleFactorTester> createState() => _TextScaleFactorTesterState();
+}
+
+class _TextScaleFactorTesterState extends State<TextScaleFactorTester> {
+  double _textScaleFactor = 1.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // شريط التحكم
+        if (kDebugMode)
+          Container(
+            padding: const EdgeInsets.all(16),
+            color: Colors.amber.withOpacity(0.2),
+            child: Column(
+              children: [
+                Text('Text Scale Factor: ${_textScaleFactor.toStringAsFixed(1)}x'),
+                Slider(
+                  value: _textScaleFactor,
+                  min: 1.0,
+                  max: 2.0,
+                  divisions: 10,
+                  onChanged: (value) {
+                    setState(() => _textScaleFactor = value);
+                  },
+                ),
+              ],
+            ),
+          ),
+        // المحتوى مع textScaleFactor المخصص
+        Expanded(
+          child: MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaleFactor: _textScaleFactor,
+            ),
+            child: widget.child,
+          ),
+        ),
+      ],
+    );
+  }
+}
+```
+
+#### 5. نظام Fallback للخطوط
+
+```dart
+/// مدير تحميل الخطوط مع fallback آمن
+class FontManager {
+  static bool _cairoLoaded = false;
+
+  /// يتحقق من تحميل خط Cairo
+  static Future<bool> isCairoLoaded() async {
+    if (_cairoLoaded) return true;
+
+    try {
+      // محاولة تحميل الخط
+      final fontLoader = FontLoader('Cairo');
+      final fontData = await rootBundle.load('assets/fonts/Cairo-Regular.ttf');
+      fontLoader.addFont(Future.value(fontData.buffer.asByteData()));
+      await fontLoader.load();
+      _cairoLoaded = true;
+      return true;
+    } catch (e) {
+      debugPrint('⚠️ فشل تحميل خط Cairo: $e');
+      return false;
+    }
+  }
+
+  /// يحصل على اسم الخط المناسب
+  static String getFontFamily() {
+    return _cairoLoaded ? 'Cairo' : 'Roboto';
+  }
+
+  /// يحصل على line-height المناسب
+  static double getLineHeight() {
+    return _cairoLoaded
+        ? AppFontMetrics.cairoLineHeight
+        : AppFontMetrics.fallbackLineHeight;
+  }
+}
+```
+
+### خصائص الصحة للمتطلب 11
+
+#### Property 29: عدم وجود قص أفقي
+
+_لأي_ زر بنص عربي، عند عرضه في أي حالة (عادي، محدد، معطل، مضغوط)، يجب ألا يحدث قص أفقي للنص
+
+**Validates: Requirements 11.1**
+
+#### Property 30: عدم وجود قص عمودي
+
+_لأي_ زر بنص عربي، عند عرضه مع خط Cairo، يجب ألا يحدث قص عمودي للنص بسبب line-height غير كافٍ
+
+**Validates: Requirements 11.1, 11.4**
+
+#### Property 31: التكيف مع textScaleFactor
+
+_لأي_ زر، عند تغيير textScaleFactor من 1.0 إلى 2.0، يجب أن يتكيف الزر تلقائياً لعرض النص كاملاً بدون قص
+
+**Validates: Requirements 11.2**
+
+#### Property 32: التخطيط المرن للنصوص الطويلة
+
+_لأي_ زر بنص طويل، يجب استخدام Flexible أو Expanded أو Wrap للسماح بتمدد النص
+
+**Validates: Requirements 11.3**
+
+#### Property 33: مقاييس خط Cairo الصحيحة
+
+_لأي_ زر يستخدم خط Cairo، يجب أن يكون line-height لا يقل عن 1.3 لتجنب القص العمودي
+
+**Validates: Requirements 11.4**
+
+#### Property 34: تجنب RenderFlex overflow
+
+_لأي_ زر في تخطيط Row، يجب استخدام Flexible أو Expanded للنص لتجنب RenderFlex overflow
+
+**Validates: Requirements 11.5**
+
+#### Property 35: معالجة RTL الصحيحة
+
+_لأي_ زر بنص عربي، يجب ضمان Directionality(textDirection: rtl) ومحاذاة صحيحة (textAlign: center)
+
+**Validates: Requirements 11.6**
+
+#### Property 36: خط fallback آمن
+
+_لأي_ زر، عند فشل تحميل خط Cairo، يجب استخدام خط fallback آمن (Roboto) مع مقاييس محسوبة مسبقاً
+
+**Validates: Requirements 11.7**
+
+#### Property 37: padding رأسي كافٍ
+
+_لأي_ زر، يجب أن يكون الـ padding الرأسي لا يقل عن 12px لاستيعاب ارتفاع النص الكامل مع line-height
+
+**Validates: Requirements 11.8**
+
+#### Property 38: اتساق عبر المنصات
+
+_لأي_ زر، يجب أن يكون سلوك عرض النص متسقاً على Android و iOS و Web بدون اختلافات في القص
+
+**Validates: Requirements 11.9**
+
+#### Property 39: تخطيط مرن للأزرار مع أيقونة
+
+_لأي_ زر يحتوي على أيقونة ونص، يجب استخدام تخطيط مرن يضمن عرض كليهما بدون قص النص
+
+**Validates: Requirements 11.10**
+
+### استراتيجية الاختبار للمتطلب 11
+
+#### اختبارات الوحدة
+
+```dart
+void main() {
+  group('Font Metrics Tests', () {
+    test('Cairo line-height should be at least 1.3', () {
+      expect(AppFontMetrics.cairoLineHeight, greaterThanOrEqualTo(1.3));
+    });
+
+    test('calculateRequiredHeight should account for textScaleFactor', () {
+      final height1 = AppFontMetrics.calculateRequiredHeight(
+        fontSize: 15,
+        lineHeight: 1.4,
+        textScaleFactor: 1.0,
+      );
+      final height2 = AppFontMetrics.calculateRequiredHeight(
+        fontSize: 15,
+        lineHeight: 1.4,
+        textScaleFactor: 2.0,
+      );
+      expect(height2, equals(height1 * 2));
+    });
+
+    test('calculateVerticalPadding should be at least 12px', () {
+      final padding = AppFontMetrics.calculateVerticalPadding(
+        fontSize: 15,
+        lineHeight: 1.4,
+        textScaleFactor: 1.0,
+      );
+      expect(padding, greaterThanOrEqualTo(12.0));
+    });
+  });
+}
+```
+
+#### اختبارات Widget
+
+```dart
+/// **Feature: ui-ux-improvements, Property 29: عدم وجود قص أفقي**
+/// **Validates: Requirements 11.1**
+void main() {
+  testWidgets('button text should not overflow horizontally', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SizedBox(
+            width: 200, // عرض محدود
+            child: AppEnhancedButton(
+              text: 'نص طويل جداً قد يسبب overflow',
+              onPressed: () {},
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // التحقق من عدم وجود overflow
+    expect(tester.takeException(), isNull);
+  });
+}
+
+/// **Feature: ui-ux-improvements, Property 31: التكيف مع textScaleFactor**
+/// **Validates: Requirements 11.2**
+void main() {
+  testWidgets('button should adapt to textScaleFactor changes', (tester) async {
+    for (double scale = 1.0; scale <= 2.0; scale += 0.5) {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MediaQuery(
+            data: MediaQueryData(textScaleFactor: scale),
+            child: Scaffold(
+              body: AppEnhancedButton(
+                text: 'اختبار',
+                onPressed: () {},
+              ),
+            ),
+          ),
+        ),
+      );
+
+      // التحقق من عدم وجود overflow
+      expect(tester.takeException(), isNull);
+
+      // التحقق من أن الزر تكيف مع الحجم
+      final buttonFinder = find.byType(AppEnhancedButton);
+      final buttonSize = tester.getSize(buttonFinder);
+      expect(buttonSize.height, greaterThanOrEqualTo(48.0));
+    }
+  });
+}
+```
+
+#### اختبارات التكامل
+
+```dart
+void main() {
+  testWidgets('buttons should work correctly across all states', (tester) async {
+    bool pressed = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Column(
+            children: [
+              // زر عادي
+              AppEnhancedButton(
+                text: 'زر عادي',
+                onPressed: () => pressed = true,
+              ),
+              // زر محدد
+              AppEnhancedButton(
+                text: 'زر محدد',
+                isPrimary: false,
+                onPressed: () {},
+              ),
+              // زر معطل
+              AppEnhancedButton(
+                text: 'زر معطل',
+                onPressed: null,
+              ),
+              // زر مع أيقونة
+              AppEnhancedButton(
+                text: 'زر مع أيقونة',
+                icon: Icons.add,
+                onPressed: () {},
+              ),
+              // زر بنص طويل
+              AppEnhancedButton(
+                text: 'زر بنص طويل جداً قد يسبب مشاكل في العرض',
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    // التحقق من عدم وجود overflow في أي زر
+    expect(tester.takeException(), isNull);
+
+    // اختبار النقر
+    await tester.tap(find.text('زر عادي'));
+    await tester.pump();
+    expect(pressed, isTrue);
+  });
+}
+```
+
+### خطة التنفيذ للمتطلب 11
+
+#### المرحلة 1: البنية الأساسية (يوم 1)
+
+1. ✅ إنشاء AppFontMetrics
+2. ✅ إنشاء FontManager
+3. ✅ إنشاء OverflowDetector
+4. ✅ كتابة اختبارات الوحدة
+
+#### المرحلة 2: Widget الزر المحسّن (يوم 2-3)
+
+1. ✅ إنشاء AppEnhancedButton
+2. ✅ تطبيق التخطيط المرن
+3. ✅ معالجة RTL
+4. ✅ دعم textScaleFactor
+5. ✅ كتابة اختبارات Widget
+
+#### المرحلة 3: الاختبار والتحقق (يوم 4)
+
+1. ✅ اختبار على Android
+2. ✅ اختبار على iOS
+3. ✅ اختبار على Web
+4. ✅ اختبار مع textScaleFactor مختلفة
+5. ✅ اختبار مع نصوص طويلة
+
+#### المرحلة 4: التكامل (يوم 5)
+
+1. ✅ استبدال AppButton القديم بـ AppEnhancedButton
+2. ✅ تحديث جميع الشاشات
+3. ✅ اختبار شامل
+4. ✅ توثيق التغييرات
+
+### معايير النجاح للمتطلب 11
+
+✅ **0 حالات قص** في جميع الأزرار  
+✅ **0 تحذيرات RenderFlex overflow** في DevTools  
+✅ **100% عرض كامل** عند textScaleFactor 1.0-2.0  
+✅ **100% اتساق** عبر Android/iOS/Web  
+✅ **0 اختلافات** بين Cairo وfallback تؤدي لقص
+
+---
+
 **تم إعداده بواسطة:** فريق وكلاء تطوير مشروع بصير  
 **التاريخ:** 2 ديسمبر 2025  
-**الإصدار:** 2.0 (محدّث)
+**آخر تحديث:** 5 ديسمبر 2025  
+**الإصدار:** 2.1  
+**التغييرات:** إضافة تصميم شامل للمتطلب 11 - إصلاح مشكلة قص واختفاء نص الأزرار

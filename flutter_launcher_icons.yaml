@@ -1,0 +1,32 @@
+# تكوين أيقونة التطبيق
+# يستخدم مع flutter_launcher_icons package
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+
+  # Android
+  adaptive_icon_background: "#0056B3"
+  adaptive_icon_foreground: "assets/icons/app_icon_foreground.png"
+
+  # iOS
+  remove_alpha_ios: true
+
+  # Web
+  web:
+    generate: true
+    image_path: "assets/icons/app_icon.png"
+    background_color: "#0056B3"
+    theme_color: "#0056B3"
+
+  # Windows
+  windows:
+    generate: true
+    image_path: "assets/icons/app_icon.png"
+    icon_size: 48
+
+  # macOS
+  macos:
+    generate: true
+    image_path: "assets/icons/app_icon.png"

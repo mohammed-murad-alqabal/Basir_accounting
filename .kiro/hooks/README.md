@@ -1,308 +1,568 @@
-# 🪝 Kiro Hooks - دليل الاستخدام
+# Hooks للأتمتة الذكية
+
+**المشروع:** بصير MVP  
+**التاريخ:** 4 ديسمبر 2025  
+**المؤلف:** فريق وكلاء تطوير مشروع بصير  
+**الحالة:** ✅ نشط ومفعّل
+
+---
 
 ## نظرة عامة
 
-الـ Hooks هي آليات أتمتة وقائية تعمل تلقائياً عند أحداث معينة لضمان جودة الكود والأمان.
+هذا المجلد يحتوي على **Hooks للأتمتة الذكية** - مهام متكررة يتم تنفيذها تلقائياً لضمان جودة الكود، الأمان، والالتزام بالمعايير.
+
+**ملاحظة مهمة:** هذه الـ hooks هي أتمتة عملية لمهام محددة، وليست تطبيقاً حرفياً لإطار عمل الوكلاء النظري في `agents-framework.md`. الإطار النظري يصف كيف يجب أن يعمل فريق التطوير بشكل عام، بينما الـ hooks تنفذ مهام محددة ومتكررة.
 
 ---
 
-## 📁 أنواع الـ Hooks
+## 📊 إحصائيات الـ Hooks
 
-### 1. on-commit (عند الـ Commit)
+| النوع                          | العدد | النسبة |
+| :----------------------------- | :---: | :----: |
+| **Hooks تلقائية (runCommand)** |   2   |  11%   |
+| **Hooks ذكية (askAgent)**      |  16   |  89%   |
+| **المجموع**                    |  18   |  100%  |
 
-**الوظيفة:** تعمل قبل إتمام الـ commit
+### توزيع حسب الوظيفة
 
-#### 🔒 10_security_scan.sh
+| الوظيفة           | العدد | الـ Hooks                                                                                                                |
+| :---------------- | :---: | :----------------------------------------------------------------------------------------------------------------------- |
+| **جودة الكود**    |   6   | auto-analyze, auto-format, check-naming, check-error-handling, check-performance-patterns, pre-commit-quality            |
+| **الأمان**        |   3   | security-check, check-dependencies-security, spec-compliance-check                                                       |
+| **التوثيق**       |   3   | check-dartdoc, check-readme-sync, check-todo-age                                                                         |
+| **الاختبارات**    |   2   | check-tests-exist, run-related-tests                                                                                     |
+| **الأداء**        |   2   | check-performance-patterns, check-assets-optimization                                                                    |
+| **إدارة المشروع** |   2   | project-status, weekly-health-check                                                                                      |
+| **التطوير**       |   5   | check-code-generation, check-version-update, check-arabic-translation, check-state-management, check-database-operations |
+| **CHANGELOG**     |   1   | remind-changelog                                                                                                         |
 
-**الوصف:** فحص أمني شامل للكشف عن الأسرار
+---
 
-**ما يفحصه:**
+## الـ Hooks المفعّلة
 
-- API keys, passwords, tokens
-- ملفات Android/iOS الحساسة
-- google-services.json, GoogleService-Info.plist
-- key.properties, _.jks, _.keystore
-- أنماط .gitignore
+### 🔍 جودة الكود (Code Quality)
 
-**الاستخدام:**
+#### 1. التحليل التلقائي (auto-analyze)
 
-```bash
-# تلقائي عند git commit
-git commit -m "message"
+**الملف:** `auto-analyze.json`  
+**الحدث:** `onSave` - عند حفظ ملفات Dart في lib/  
+**النوع:** `runCommand`  
+**الوظيفة:** يشغل `flutter analyze --no-pub` تلقائياً
 
-# يدوي
-bash .kiro/hooks/on-commit/10_security_scan.sh
+**الفائدة:**
+
+- كشف الأخطاء فوراً
+- التحذير من المشاكل المحتملة
+- ضمان جودة الكود
+
+---
+
+#### 2. التنسيق التلقائي (auto-format)
+
+**الملف:** `auto-format.json`  
+**الحدث:** `onSave` - عند حفظ ملفات Dart  
+**النوع:** `runCommand`  
+**الوظيفة:** يشغل `dart format .` تلقائياً
+
+**الفائدة:**
+
+- كود منسق بشكل موحد
+- اتباع معايير Dart
+- توفير الوقت
+
+---
+
+#### 3. التحقق من معايير التسمية (check-naming)
+
+**الملف:** `check-naming.json`  
+**الحدث:** `onSave` - عند حفظ ملفات Dart  
+**النوع:** `askAgent`  
+**الوظيفة:** يتحقق من اتباع naming-conventions.md
+
+**يفحص:**
+
+- snake_case للملفات
+- PascalCase للـ classes
+- camelCase للـ functions/variables
+- المصطلحات العربية الموحدة
+
+---
+
+#### 4. التحقق من معالجة الأخطاء (check-error-handling)
+
+**الملف:** `check-error-handling.json`  
+**الحدث:** `onSave` - عند حفظ ملفات Dart  
+**النوع:** `askAgent`  
+**الوظيفة:** يتحقق من معالجة الأخطاء بشكل صحيح
+
+**يفحص:**
+
+- try-catch للـ async functions
+- custom exceptions
+- رسائل خطأ واضحة بالعربية
+- logging مناسب
+- recovery strategies
+
+---
+
+#### 5. فحص أنماط الأداء (check-performance-patterns)
+
+**الملف:** `check-performance-patterns.json`  
+**الحدث:** `onSave` - عند حفظ ملفات Dart  
+**النوع:** `askAgent`  
+**الوظيفة:** يحذر من anti-patterns
+
+**يفحص:**
+
+- عدم استخدام const
+- rebuilds غير ضرورية
+- قوائم غير محسّنة
+- عمليات ثقيلة في build()
+- memory leaks
+
+---
+
+#### 6. فحوصات ما قبل الـ Commit (pre-commit-quality)
+
+**الملف:** `pre-commit-quality.json`  
+**الحدث:** `onMessage` - عند ذكر commit/push/pr  
+**النوع:** `askAgent`  
+**الوظيفة:** يشغل جميع فحوصات الجودة
+
+**يشغل:**
+
+- flutter analyze
+- dart format
+- flutter test --coverage
+- security checks
+- documentation checks
+- naming conventions
+
+---
+
+### 🔒 الأمان (Security)
+
+#### 7. فحص الأمان (security-check)
+
+**الملف:** `security-check.json`  
+**الحدث:** `onSave` - عند حفظ ملفات Dart  
+**النوع:** `askAgent`  
+**الوظيفة:** يفحص البيانات الحساسة
+
+**يبحث عن:**
+
+- API keys
+- Passwords
+- Tokens
+- Secrets
+- Hardcoded credentials
+
+---
+
+#### 8. فحص أمان التبعيات (check-dependencies-security)
+
+**الملف:** `check-dependencies-security.json`  
+**الحدث:** `onSave` - عند تعديل pubspec.yaml  
+**النوع:** `askAgent`  
+**الوظيفة:** يفحص التبعيات للثغرات الأمنية
+
+**يفحص:**
+
+- الثغرات المعروفة
+- التبعيات القديمة
+- التبعيات غير الموثوقة
+- تعارضات الإصدارات
+- licenses
+
+---
+
+#### 9. التحقق من الالتزام بالمواصفات (spec-compliance-check)
+
+**الملف:** `spec-compliance-check.json`  
+**الحدث:** `onSave` - عند حفظ ملفات في features/  
+**النوع:** `askAgent`  
+**الوظيفة:** يتحقق من الالتزام بالـ specs والمعايير
+
+**يتحقق من:**
+
+- وجود spec معتمد
+- Clean Architecture
+- جميع المعايير في steering/
+- متطلبات الأمان
+- متطلبات الاختبار
+
+---
+
+### 📚 التوثيق (Documentation)
+
+#### 10. التحقق من DartDoc (check-dartdoc)
+
+**الملف:** `check-dartdoc.json`  
+**الحدث:** `onSave` - عند حفظ ملفات Dart  
+**النوع:** `askAgent`  
+**الوظيفة:** يتحقق من وجود DartDoc
+
+**يفحص:**
+
+- public classes موثقة
+- public methods موثقة
+- parameters موثقة
+- return values موثقة
+- أمثلة عملية
+
+---
+
+#### 11. تذكير بتحديث CHANGELOG (remind-changelog)
+
+**الملف:** `remind-changelog.json`  
+**الحدث:** `onSave` - عند إضافة ميزات  
+**النوع:** `askAgent`  
+**الوظيفة:** يذكّر بتحديث CHANGELOG.md
+
+**يذكّر بـ:**
+
+- إضافة entry جديد
+- تصنيف التغيير (Added/Changed/Fixed)
+- وصف واضح
+- رقم الإصدار
+
+---
+
+#### 12. تحديث README (check-readme-sync)
+
+**الملف:** `check-readme-sync.json`  
+**الحدث:** `onSave` - عند تعديل ملفات رئيسية  
+**النوع:** `askAgent`  
+**الوظيفة:** يذكّر بتحديث README.md
+
+**عند تعديل:**
+
+- pubspec.yaml
+- lib/main.dart
+- Router files
+
+---
+
+### 🧪 الاختبارات (Testing)
+
+#### 13. التحقق من وجود الاختبارات (check-tests-exist)
+
+**الملف:** `check-tests-exist.json`  
+**الحدث:** `onSave` - عند حفظ ملفات Dart في lib/  
+**النوع:** `askAgent`  
+**الوظيفة:** يتحقق من وجود ملف اختبار مقابل
+
+**يتحقق من:**
+
+- وجود test/path/to/file_test.dart
+- تغطية الاختبار
+- أنواع الاختبارات (unit/widget)
+
+---
+
+#### 14. تشغيل الاختبارات المرتبطة (run-related-tests)
+
+**الملف:** `run-related-tests.json`  
+**الحدث:** `onSave` - عند حفظ ملفات Dart  
+**النوع:** `askAgent`  
+**الوظيفة:** يشغل الاختبارات المرتبطة بالملف
+
+**يشغل:**
+
+- اختبارات الملف المحفوظ
+- اختبارات الملفات المعتمدة عليه
+- تقرير سريع بالنتائج
+
+---
+
+### 💻 التطوير (Development)
+
+#### 15. التحقق من توليد الكود (check-code-generation)
+
+**الملف:** `check-code-generation.json`  
+**الحدث:** `onSave` - عند حفظ ملفات Dart  
+**النوع:** `askAgent`  
+**الوظيفة:** يتحقق من الحاجة لتوليد الكود
+
+**يتحقق من:**
+
+- ملفات @freezed
+- ملفات @collection (Isar)
+- ملفات @riverpod
+- وجود ملفات .g.dart المقابلة
+
+---
+
+#### 16. تحديث رقم الإصدار (check-version-update)
+
+**الملف:** `check-version-update.json`  
+**الحدث:** `onSave` - عند حفظ ملفات في lib/  
+**النوع:** `askAgent`  
+**الوظيفة:** يذكّر بتحديث رقم الإصدار
+
+**حسب نوع التغيير:**
+
+- MAJOR: breaking changes
+- MINOR: new features
+- PATCH: bug fixes
+
+---
+
+#### 17. التحقق من الترجمة العربية (check-arabic-translation)
+
+**الملف:** `check-arabic-translation.json`  
+**الحدث:** `onSave` - عند حفظ ملفات presentation  
+**النوع:** `askAgent`  
+**الوظيفة:** يتحقق من النصوص العربية
+
+**يتحقق من:**
+
+- جميع النصوص بالعربية الفصحى
+- المصطلحات الموحدة
+- علامات الترقيم العربية
+- RTL direction
+- عدم وجود نصوص إنجليزية
+
+---
+
+#### 18. التحقق من Riverpod (check-state-management)
+
+**الملف:** `check-state-management.json`  
+**الحدث:** `onSave` - عند حفظ providers  
+**النوع:** `askAgent`  
+**الوظيفة:** يتحقق من استخدام Riverpod الصحيح
+
+**يتحقق من:**
+
+- @riverpod annotation
+- أنواع Providers المناسبة
+- AsyncValue handling
+- Dependencies management
+- Testing
+
+---
+
+#### 19. التحقق من عمليات قاعدة البيانات (check-database-operations)
+
+**الملف:** `check-database-operations.json`  
+**الحدث:** `onSave` - عند حفظ repositories  
+**النوع:** `askAgent`  
+**الوظيفة:** يتحقق من عمليات Isar
+
+**يتحقق من:**
+
+- استخدام transactions
+- error handling
+- performance (indexes, where vs filter)
+- data integrity
+- testing
+
+---
+
+### 🎯 إدارة المشروع (Project Management)
+
+#### 20. تقرير حالة المشروع (project-status)
+
+**الملف:** `project-status.json`  
+**الحدث:** `onSessionStart` - عند بداية كل جلسة  
+**النوع:** `askAgent`  
+**الوظيفة:** ينشئ تقرير حالة شامل
+
+**يتضمن:**
+
+- حالة المهام
+- جودة الكود
+- تغطية الاختبارات
+- المشاكل الحرجة
+- التوصيات
+
+---
+
+#### 21. فحص TODO القديمة (check-todo-age)
+
+**الملف:** `check-todo-age.json`  
+**الحدث:** `onSessionStart` - عند بداية الجلسة  
+**النوع:** `askAgent`  
+**الوظيفة:** يذكّر بحل TODO comments القديمة
+
+**يفحص:**
+
+- TODO comments > 30 يوم
+- TODO بدون Issue reference
+- أولويات الحل
+
+---
+
+#### 22. الفحص الصحي الأسبوعي (weekly-health-check)
+
+**الملف:** `weekly-health-check.json`  
+**الحدث:** `onSessionStart` - عند بداية الجلسة  
+**النوع:** `askAgent`  
+**الوظيفة:** فحص صحة شامل للمشروع
+
+**يفحص:**
+
+- Code quality
+- Test coverage
+- Documentation
+- Dependencies
+- Performance
+- Git health
+- Specs status
+
+---
+
+### ⚡ الأداء (Performance)
+
+#### 23. تحسين الأصول (check-assets-optimization)
+
+**الملف:** `check-assets-optimization.json`  
+**الحدث:** `onSave` - عند إضافة/تعديل ملفات في assets/  
+**النوع:** `askAgent`  
+**الوظيفة:** يتحقق من تحسين الصور والأصول
+
+**يتحقق من:**
+
+- حجم الصور (< 500KB)
+- الأبعاد المناسبة
+- استخدام WebP
+- نسخ @2x و @3x
+- ضغط الصور
+
+---
+
+## 🔗 العلاقة مع agents-framework.md
+
+الـ hooks تدعم عمل الوكلاء النظريين بالطرق التالية:
+
+| الوكيل النظري     | الـ Hooks الداعمة                                                                                   |
+| :---------------- | :-------------------------------------------------------------------------------------------------- |
+| **وكيل التطوير**  | auto-format, check-naming, check-code-generation, check-state-management, check-database-operations |
+| **وكيل الاختبار** | check-tests-exist, run-related-tests, pre-commit-quality                                            |
+| **وكيل التحليل**  | auto-analyze, check-performance-patterns, weekly-health-check                                       |
+| **وكيل الأمان**   | security-check, check-dependencies-security, spec-compliance-check                                  |
+| **وكيل التوثيق**  | check-dartdoc, remind-changelog, check-readme-sync, check-todo-age                                  |
+| **وكيل الإدارة**  | project-status, weekly-health-check, check-version-update                                           |
+| **وكيل المراجعة** | pre-commit-quality, spec-compliance-check, check-error-handling                                     |
+
+---
+
+## 🚀 كيفية الاستخدام
+
+### تفعيل/تعطيل Hook
+
+في ملف الـ hook JSON:
+
+```json
+{
+  "enabled": true // أو false لتعطيله
+}
 ```
 
-**النتيجة:**
+### تعديل Hook
 
-- ✅ يسمح بالـ commit إذا لم يجد أسرار
-- ❌ يوقف الـ commit إذا وجد أسرار
+1. افتح ملف الـ hook JSON
+2. عدّل الـ `prompt` أو `filePattern` أو `trigger`
+3. احفظ الملف
+4. سيتم تطبيق التغييرات تلقائياً
+
+### إضافة Hook جديد
+
+1. أنشئ ملف JSON جديد في `.kiro/hooks/`
+2. استخدم البنية المناسبة (runCommand أو askAgent)
+3. حدد الـ trigger والـ action
+4. فعّل الـ hook بـ `"enabled": true`
 
 ---
 
-### 2. on-push (عند الـ Push)
+## 📝 أمثلة عملية
 
-**الوظيفة:** تعمل قبل إتمام الـ push
+### مثال 1: Hook تلقائي (runCommand)
 
-#### 🔍 20_quality_gate.sh
-
-**الوصف:** فحص جودة الكود الشامل
-
-**ما يفحصه:**
-
-1. **التنسيق:** dart format
-2. **التحليل:** flutter analyze
-3. **الاختبارات:** flutter test
-4. **التبعيات:** flutter pub outdated
-5. **حجم التطبيق:** APK size check
-
-**الاستخدام:**
-
-```bash
-# تلقائي عند git push
-git push origin main
-
-# يدوي
-bash .kiro/hooks/on-push/20_quality_gate.sh
+```json
+{
+  "name": "auto-analyze",
+  "description": "يشغل flutter analyze تلقائياً",
+  "enabled": true,
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "lib/**/*.dart"
+  },
+  "action": {
+    "type": "runCommand",
+    "command": "flutter analyze --no-pub"
+  }
+}
 ```
 
-**النتيجة:**
+### مثال 2: Hook ذكي (askAgent)
 
-- ✅ يسمح بالـ push إذا نجحت جميع الفحوصات
-- ❌ يوقف الـ push إذا فشلت أي فحص
-
-**معايير النجاح:**
-
-- تنسيق صحيح (0 errors)
-- تحليل نظيف (0 errors, 0 warnings)
-- جميع الاختبارات ناجحة
-- حجم APK < 50 MB
-
----
-
-### 3. on-save (عند الحفظ)
-
-**الوظيفة:** تعمل عند حفظ ملف
-
-#### 📝 10_lint_and_format.kiro.hook
-
-**الوصف:** تنسيق وفحص تلقائي عند حفظ ملفات Dart
-
-**ما يفعله:**
-
-1. تشغيل dart format
-2. تشغيل flutter analyze
-3. إصلاح المشاكل التلقائية
-4. التحقق من DartDoc comments
-
-**الاستخدام:**
-
-- يعمل تلقائياً في Kiro IDE عند حفظ ملف .dart
-
-**الفوائد:**
-
-- ✅ كود منسق دائماً
-- ✅ اكتشاف المشاكل مبكراً
-- ✅ توثيق محدث
-
----
-
-#### 📖 30_update_docs.sh
-
-**الوصف:** تحديث التوثيق تلقائياً
-
-**ما يفعله:**
-
-1. التحقق من DartDoc comments في lib/
-2. تحديث SPECS_ANALYSIS_REPORT.md عند تعديل specs
-3. فحص الروابط في README.md
-
-**الاستخدام:**
-
-```bash
-# تلقائي في Kiro IDE
-# أو يدوي
-bash .kiro/hooks/on-save/30_update_docs.sh lib/some_file.dart
+```json
+{
+  "name": "security-check",
+  "description": "يفحص البيانات الحساسة",
+  "enabled": true,
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "**/*.dart"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "تم حفظ: {{filePath}}\n\nيرجى فحص..."
+  }
+}
 ```
-
----
-
-### 4. manual (يدوي)
-
-**الوظيفة:** تعمل عند الطلب (زر في Kiro IDE)
-
-#### 🔍 20_dependency_check.kiro.hook
-
-**الوصف:** فحص التبعيات القديمة
-
-**ما يفعله:**
-
-1. تشغيل flutter pub outdated
-2. تصنيف التحديثات (major, minor, patch)
-3. فحص الثغرات الأمنية
-4. اقتراح التحديثات الآمنة
-5. التحذير من breaking changes
-
-**الاستخدام:**
-
-- في Kiro IDE: اضغط زر "🔍 فحص التبعيات"
-- أو اطلب من Kiro: "افحص التبعيات"
-
-**الفوائد:**
-
-- ✅ تبعيات محدثة
-- ✅ أمان محسّن
-- ✅ أداء أفضل
-
----
-
-## 🔧 التفعيل والإعداد
-
-### تفعيل الـ Hooks
-
-```bash
-# جعل الـ shell scripts قابلة للتنفيذ
-chmod +x .kiro/hooks/on-commit/*.sh
-chmod +x .kiro/hooks/on-push/*.sh
-chmod +x .kiro/hooks/on-save/*.sh
-
-# التحقق من الأذونات
-ls -la .kiro/hooks/on-commit/
-ls -la .kiro/hooks/on-push/
-ls -la .kiro/hooks/on-save/
-```
-
-### ربط مع Git (اختياري)
-
-```bash
-# إنشاء Git hooks
-cat > .git/hooks/pre-commit << 'EOF'
-#!/bin/bash
-bash .kiro/hooks/on-commit/10_security_scan.sh
-EOF
-
-cat > .git/hooks/pre-push << 'EOF'
-#!/bin/bash
-bash .kiro/hooks/on-push/20_quality_gate.sh
-EOF
-
-chmod +x .git/hooks/pre-commit
-chmod +x .git/hooks/pre-push
-```
-
----
-
-## 📊 مصفوفة الـ Hooks
-
-| Hook             | النوع     | التلقائي | اليدوي | الوقت |  الأهمية   |
-| :--------------- | :-------- | :------: | :----: | :---- | :--------: |
-| security_scan    | on-commit |    ✅    |   ✅   | ~5s   | ⭐⭐⭐⭐⭐ |
-| quality_gate     | on-push   |    ✅    |   ✅   | ~30s  | ⭐⭐⭐⭐⭐ |
-| lint_and_format  | on-save   |    ✅    |   ❌   | ~2s   |  ⭐⭐⭐⭐  |
-| update_docs      | on-save   |    ✅    |   ✅   | ~1s   |   ⭐⭐⭐   |
-| dependency_check | manual    |    ❌    |   ✅   | ~10s  |  ⭐⭐⭐⭐  |
 
 ---
 
 ## 🎯 أفضل الممارسات
 
-### 1. الأمان
+### عند إنشاء Hook جديد
 
-- ✅ لا تتجاوز security_scan أبداً
-- ✅ أضف ملفات حساسة إلى .gitignore
-- ✅ استخدم flutter_secure_storage للأسرار
+1. **حدد الهدف بوضوح** - ما المشكلة التي يحلها؟
+2. **اختر الـ trigger المناسب** - متى يجب تشغيله؟
+3. **اكتب prompt واضح** - ماذا يجب أن يفعل الوكيل؟
+4. **اختبر الـ hook** - تأكد من أنه يعمل كما متوقع
+5. **وثّق الـ hook** - أضفه لهذا الملف
 
-### 2. الجودة
+### عند استخدام الـ Hooks
 
-- ✅ أصلح المشاكل قبل الـ push
-- ✅ حافظ على تغطية 70%+ اختبارات
-- ✅ اتبع معايير dart format
-
-### 3. الإنتاجية
-
-- ✅ استخدم lint_and_format لتوفير الوقت
-- ✅ افحص التبعيات أسبوعياً
-- ✅ حدّث التوثيق باستمرار
+1. **لا تعطّل hooks الأمان** - مهمة جداً
+2. **راجع تنبيهات الـ hooks** - لا تتجاهلها
+3. **حدّث الـ hooks** - عند تغيير المعايير
+4. **أضف hooks جديدة** - للمهام المتكررة
 
 ---
 
-## 🐛 استكشاف الأخطاء
+## 🔧 الصيانة
 
-### المشكلة: Hook لا يعمل
+### مراجعة دورية
 
-**الحل:**
+- **أسبوعياً:** مراجعة فعالية الـ hooks
+- **شهرياً:** تحديث الـ prompts حسب الحاجة
+- **ربع سنوياً:** إضافة hooks جديدة
 
-```bash
-# تحقق من الأذونات
-ls -la .kiro/hooks/on-commit/10_security_scan.sh
+### التحسين المستمر
 
-# إذا لم يكن executable
-chmod +x .kiro/hooks/on-commit/10_security_scan.sh
-
-# اختبر يدوياً
-bash .kiro/hooks/on-commit/10_security_scan.sh
-```
-
-### المشكلة: security_scan يعطي false positive
-
-**الحل:**
-
-```bash
-# راجع الملف المشكوك فيه
-# إذا كان TODO أو FIXME، أضف تعليق
-# مثال:
-# TODO: add api_key configuration (not actual key)
-```
-
-### المشكلة: quality_gate بطيء جداً
-
-**الحل:**
-
-```bash
-# تخطي الاختبارات مؤقتاً (غير موصى به)
-# عدّل .kiro/hooks/on-push/20_quality_gate.sh
-# وعلّق على قسم الاختبارات
-
-# أو حسّن الاختبارات لتكون أسرع
-```
+- جمع feedback من الفريق
+- تحليل الـ hooks الأكثر فائدة
+- حذف الـ hooks غير المستخدمة
+- تحسين الـ prompts
 
 ---
 
-## 📚 الموارد
+## 📞 الدعم
 
-### للمزيد من المعلومات
+إذا واجهت مشكلة مع أي hook:
 
-- `.kiro/steering/security.md` - معايير الأمان
-- `.kiro/steering/testing-best-practices.md` - أفضل ممارسات الاختبارات
-- `.kiro/steering/git-best-practices.md` - أفضل ممارسات Git
-
-### للدعم
-
-- راجع `.kiro/README.md`
-- اطلب من فريق وكلاء تطوير مشروع بصير
-- افتح issue
+1. تحقق من أن الـ hook مفعّل (`"enabled": true`)
+2. تحقق من الـ `filePattern` - هل يطابق الملف؟
+3. تحقق من الـ `trigger` - هل الحدث صحيح؟
+4. راجع الـ logs في `.kiro/logs/`
 
 ---
 
-## ✅ قائمة التحقق
-
-قبل الـ Commit:
-
-- [ ] الكود منسق (dart format)
-- [ ] لا توجد أخطاء (flutter analyze)
-- [ ] لا توجد أسرار في الكود
-- [ ] التوثيق محدث
-
-قبل الـ Push:
-
-- [ ] جميع الاختبارات ناجحة
-- [ ] التغطية ≥ 70%
-- [ ] لا توجد warnings
-- [ ] حجم APK مقبول
-
----
-
-**تم التحديث:** 27 نوفمبر 2025  
-**الإصدار:** 1.0  
-**الحالة:** ✅ جاهز للاستخدام
+**تم إعداده بواسطة:** فريق وكلاء تطوير مشروع بصير  
+**آخر تحديث:** 4 ديسمبر 2025  
+**الإصدار:** 2.0  
+**الحالة:** ✅ نشط ومحدّث

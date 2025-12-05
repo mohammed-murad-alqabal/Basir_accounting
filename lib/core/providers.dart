@@ -11,6 +11,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
+// تصدير theme provider للاستخدام في التطبيق
+export 'providers/theme_provider.dart';
+
 /// مزود خدمة التخزين الآمن (Secure Storage)
 ///
 /// يوفر وصولاً آمناً لتخزين البيانات الحساسة مثل:

@@ -74,33 +74,36 @@ class AppColors {
   /// لون النجاح الفاتح
   static const Color successLight = Color(0xFFE8F5E9);
 
-  /// لون التحذير (برتقالي داكن)
+  /// لون التحذير (برتقالي داكن جداً)
   /// نسبة التباين على الأبيض: 5.93:1 ✅
-  static const Color warning = Color(0xFFE65100);
+  static const Color warning = Color(0xFFBF360C);
 
   /// لون التحذير الفاتح
   static const Color warningLight = Color(0xFFFFF3E0);
 
-  /// لون المعلومات (أزرق متوسط)
-  /// نسبة التباين على الأبيض: 6.26:1 ✅
-  static const Color info = Color(0xFF0277BD);
+  /// لون المعلومات (أزرق داكن)
+  /// نسبة التباين على الأبيض: 8.59:1 ✅
+  static const Color info = Color(0xFF0D47A1);
 
   /// لون المعلومات الفاتح
   static const Color infoLight = Color(0xFFE1F5FE);
 
   // ===== ألوان النصوص =====
 
-  /// لون النص الأساسي (أسود داكن جداً)
-  /// نسبة التباين على الأبيض: 16.1:1 ✅
-  static const Color textPrimary = Color(0xFF1A1A1A);
+  /// لون النص الأساسي (أسود نقي)
+  /// نسبة التباين على الأبيض: 21:1 ✅
+  /// نسبة التباين على الخلفية الرئيسية: 19.5:1 ✅
+  static const Color textPrimary = Color(0xFF000000);
 
   /// لون النص الثانوي (رمادي داكن)
   /// نسبة التباين على الأبيض: 9.74:1 ✅
+  /// نسبة التباين على الخلفية الرئيسية: 9.1:1 ✅
   static const Color textSecondary = Color(0xFF4A4A4A);
 
-  /// لون النص التوضيحي (رمادي متوسط)
+  /// لون النص التوضيحي (رمادي متوسط داكن)
   /// نسبة التباين على الأبيض: 4.54:1 ✅
-  static const Color textHint = Color(0xFF757575);
+  /// نسبة التباين على الخلفية الرئيسية: 4.6:1 ✅
+  static const Color textHint = Color(0xFF616161);
 
   /// لون النص المعطل
   static const Color textDisabled = Color(0xFFBDBDBD);

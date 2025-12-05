@@ -1,23 +1,25 @@
 import 'dart:async';
 
+import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/theme.dart';
 import 'package:basser_app/core/widgets/index.dart';
+import 'package:basser_app/core/widgets/responsive_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// شاشة الإعدادات (Settings Screen)
 /// تسمح للمستخدم بتخصيص إعدادات التطبيق
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   /// إنشاء شاشة الإعدادات
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   bool _notificationsEnabled = true;
-  bool _darkModeEnabled = false;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -46,8 +48,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: AppSpacing.md),
               AppCard(
                 child: SwitchListTile(
-                  title: const Text('تفعيل الإشعارات'),
-                  subtitle: const Text('استقبل إشعارات الفواتير المتأخرة'),
+                  title: const ResponsiveText(
+                    'تفعيل الإشعارات',
+                    maxLines: 1,
+                  ),
+                  subtitle: const ResponsiveText(
+                    'استقبل إشعارات الفواتير المتأخرة',
+                    maxLines: 2,
+                  ),
                   value: _notificationsEnabled,
                   onChanged: (value) {
                     setState(() => _notificationsEnabled = value);
@@ -61,11 +69,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: AppSpacing.md),
               AppCard(
                 child: SwitchListTile(
-                  title: const Text('الوضع الليلي'),
-                  subtitle: const Text('استخدم الوضع الليلي للعيون'),
-                  value: _darkModeEnabled,
+                  title: const ResponsiveText(
+                    'الوضع الليلي',
+                    maxLines: 1,
+                  ),
+                  subtitle: const ResponsiveText(
+                    'استخدم الوضع الليلي للعيون',
+                    maxLines: 2,
+                  ),
+                  value: ref.watch(isDarkModeProvider),
                   onChanged: (value) {
-                    setState(() => _darkModeEnabled = value);
+                    unawaited(ref.read(themeProvider.notifier).toggleTheme());
                   },
                 ),
               ),
@@ -119,35 +133,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
       );
 
   /// معالج تعديل بيانات الحساب
-  Future<void> _handleEditAccount() async {
+  void _handleEditAccount() {
+    unawaited(_showEditAccountDialog());
+  }
+
+  Future<void> _showEditAccountDialog() async {
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('تعديل بيانات الحساب'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'اسم المستخدم',
-                hintText: 'أدخل اسم المستخدم الجديد',
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: 'اسم المستخدم',
+                  hintText: 'أدخل اسم المستخدم الجديد',
+                ),
+                onChanged: (value) {
+                  // حفظ القيمة
+                },
               ),
-              onChanged: (value) {
-                // حفظ القيمة
-              },
-            ),
-            const SizedBox(height: AppSpacing.md),
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'كلمة المرور الجديدة',
-                hintText: 'أدخل كلمة المرور الجديدة',
+              const SizedBox(height: AppSpacing.md),
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: 'كلمة المرور الجديدة',
+                  hintText: 'أدخل كلمة المرور الجديدة',
+                ),
+                obscureText: true,
+                onChanged: (value) {
+                  // حفظ القيمة
+                },
               ),
-              obscureText: true,
-              onChanged: (value) {
-                // حفظ القيمة
-              },
-            ),
-          ],
+            ],
+          ),
         ),
         actions: [
           TextButton(

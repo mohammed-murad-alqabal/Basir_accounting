@@ -47,4 +47,14 @@ dependencies {
     // إضافة androidx.window لحل مشكلة SidecarInterface
     implementation 'androidx.window:window:1.2.0'
     implementation 'androidx.window:window-java:1.2.0'
+    
+    // تثبيت إصدارات androidx.core لتجنب تعارض compileSdk
+    constraints {
+        implementation('androidx.core:core:1.13.1') {
+            because 'previous versions require compileSdk 36'
+        }
+        implementation('androidx.core:core-ktx:1.13.1') {
+            because 'previous versions require compileSdk 36'
+        }
+    }
 }

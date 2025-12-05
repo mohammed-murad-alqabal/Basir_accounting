@@ -442,8 +442,9 @@ void main() {
       await tester.tap(find.byIcon(Icons.add));
       await tester.pumpAndSettle();
 
-      // Assert - Since navigation is TODO, we just verify the tap doesn't crash
-      expect(find.byType(InvoicesScreen), findsOneWidget);
+      // Assert - Verify navigation occurred
+      // InvoicesScreen is no longer visible after navigating
+      expect(find.byType(InvoicesScreen), findsNothing);
     });
 
     testWidgets('should update filter when filter chip is tapped',
@@ -494,8 +495,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Act - Tap on 'paid' first, then 'الكل'
-      await tester.tap(find.text('paid'));
+      // Act - Tap on 'مدفوعة' first, then 'الكل'
+      await tester.tap(find.text('مدفوعة'));
       await tester.pumpAndSettle();
 
       await tester.tap(find.text('الكل'));
@@ -509,6 +510,9 @@ void main() {
         ),
       );
       expect(filterChip.selected, true);
+
+      // Verify all invoices are displayed (not just paid ones)
+      expect(find.textContaining('فاتورة'), findsAtLeastNWidgets(3));
     });
 
     testWidgets('should show bottom sheet when invoice is long pressed',
@@ -563,12 +567,21 @@ void main() {
       await tester.longPress(find.text('فاتورة ${invoice.id}'));
       await tester.pumpAndSettle();
 
+      // Verify all bottom sheet options are visible
+      expect(find.text('تعديل الفاتورة'), findsOneWidget);
+      expect(find.text('تصدير PDF'), findsOneWidget);
+      expect(find.text('حذف الفاتورة'), findsOneWidget);
+
       // Tap on edit option
       await tester.tap(find.text('تعديل الفاتورة'));
       await tester.pumpAndSettle();
 
-      // Assert - Bottom sheet should be closed
-      expect(find.text('تعديل الفاتورة'), findsNothing);
+      // Give extra time for navigation animation
+      await tester.pump(const Duration(milliseconds: 500));
+
+      // Assert - Bottom sheet should be closed and navigated away
+      // Check that we're no longer on InvoicesScreen
+      expect(find.byType(InvoicesScreen), findsNothing);
     });
 
     testWidgets('should close bottom sheet when export PDF option is tapped',
@@ -628,12 +641,23 @@ void main() {
       await tester.longPress(find.text('فاتورة ${invoice.id}'));
       await tester.pumpAndSettle();
 
+      // Verify all bottom sheet options are visible
+      expect(find.text('تعديل الفاتورة'), findsOneWidget);
+      expect(find.text('تصدير PDF'), findsOneWidget);
+      expect(find.text('حذف الفاتورة'), findsOneWidget);
+
       // Tap on delete option
       await tester.tap(find.text('حذف الفاتورة'));
       await tester.pumpAndSettle();
 
+      // Give extra time for dialog animation
+      await tester.pump(const Duration(milliseconds: 500));
+
       // Assert - Bottom sheet should be closed
-      expect(find.text('حذف الفاتورة'), findsNothing);
+      // The delete action may show a dialog or directly delete
+      // We just verify the bottom sheet is closed (options are gone)
+      expect(find.text('تصدير PDF'), findsNothing);
+      expect(find.text('تعديل الفاتورة'), findsNothing);
     });
 
     testWidgets('should display correct icons in bottom sheet menu',
@@ -785,12 +809,21 @@ void main() {
       await tester.drag(find.byType(ListView), const Offset(0, -1000));
       await tester.pumpAndSettle();
 
-      // Change filter
-      await tester.tap(find.text('paid'));
+      // Change filter to 'مدفوعة' (Arabic text)
+      await tester.tap(find.text('مدفوعة'));
       await tester.pumpAndSettle();
 
-      // Assert - Screen should still be scrollable
+      // Assert - Screen should still be scrollable and ListView exists
       expect(find.byType(ListView), findsOneWidget);
+
+      // Verify filter was applied
+      final filterChip = tester.widget<FilterChip>(
+        find.ancestor(
+          of: find.text('مدفوعة'),
+          matching: find.byType(FilterChip),
+        ),
+      );
+      expect(filterChip.selected, true);
     });
   });
 }

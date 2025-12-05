@@ -79,9 +79,33 @@ firebase_options.dart
 
 # Test outputs
 test_output.txt
+test_full_output.txt
+test_simple.txt
+test_json_output.json
+test_results_detailed.txt
+test_results_json.txt
 /tmp/
 test_archive_*/
 test_results*.txt
+test_compression_efficiency_*/
+
+# Temporary reports (keep in Documentation/ instead)
+*_REPORT.md
+*_SUMMARY.md
+*_STATUS.md
+*_GUIDE.md
+*_ANALYSIS.md
+*_ISSUES.md
+*_PLAN.md
+*_AUDIT.md
+*_FIXES.md
+*_DONE.md
+*_COMPLETE.md
+CHECKPOINT_*.md
+CONTINUATION_*.md
+IMMEDIATE_*.md
+QUICK_*.md
+CURRENT_*.md
 
 # Platform specific
 .fvm/

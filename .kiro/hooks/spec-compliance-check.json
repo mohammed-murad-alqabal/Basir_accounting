@@ -1,0 +1,13 @@
+{
+  "name": "spec-compliance-check",
+  "description": "يتحقق من التزام الكود بالمواصفات المعتمدة",
+  "enabled": true,
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "lib/features/**/*.dart"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "تم حفظ ملف في features: {{filePath}}\n\nيرجى التحقق من الالتزام بالمواصفات:\n\n**1. Spec-Driven Development:**\n- هل هذا الكود جزء من spec معتمد؟\n- تحقق من وجود spec في .kiro/specs/\n- تحقق من أن الكود يطابق design.md\n- تحقق من أن المهمة موجودة في tasks.md\n\n**2. Architecture Compliance:**\n- Feature-First Organization\n- Clean Architecture (Presentation/Domain/Data)\n- فصل المسؤوليات\n- عدم وجود circular dependencies\n\n**3. Standards Compliance:**\n- naming-conventions.md\n- code-quality-standards.md\n- flutter-best-practices.md\n- arabic-language-standards.md\n- text-standards.md\n\n**4. Security Compliance:**\n- security.md\n- عدم وجود hardcoded secrets\n- استخدام secure storage\n- input validation\n\n**5. Testing Requirements:**\n- وجود ملف اختبار مقابل\n- تغطية ≥ 70%\n- اختبار الحالات الطبيعية والاستثنائية\n\n**6. Documentation:**\n- DartDoc للـ public APIs\n- تعليقات واضحة بالعربية\n- أمثلة عملية\n\nإذا لم يكن هناك spec معتمد، اقترح إنشاء واحد."
+  }
+}

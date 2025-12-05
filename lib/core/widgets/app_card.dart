@@ -1,4 +1,5 @@
 import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/widgets/responsive_text.dart';
 import 'package:flutter/material.dart';
 
 /// بطاقة أساسية مخصصة
@@ -149,7 +150,7 @@ class AppListCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      ResponsiveText(
                         title,
                         style: const TextStyle(
                           fontSize: AppTypography.titleSmall,
@@ -157,18 +158,16 @@ class AppListCard extends StatelessWidget {
                           color: AppColors.textPrimary,
                         ),
                         maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
                       if (subtitle != null) ...[
                         const SizedBox(height: AppSpacing.xs),
-                        Text(
+                        ResponsiveText(
                           subtitle!,
                           style: const TextStyle(
                             fontSize: AppTypography.bodySmall,
                             color: AppColors.textSecondary,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                         ),
                       ],
                     ],
@@ -176,13 +175,14 @@ class AppListCard extends StatelessWidget {
                 ),
                 if (trailing != null) ...[
                   const SizedBox(width: AppSpacing.md),
-                  Text(
+                  ResponsiveText(
                     trailing!,
                     style: const TextStyle(
                       fontSize: AppTypography.bodyMedium,
                       fontWeight: FontWeight.w600,
                       color: AppColors.primary,
                     ),
+                    maxLines: 1,
                   ),
                 ],
               ],
