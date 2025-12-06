@@ -186,11 +186,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               setState(() => _keepLoggedIn = value ?? true);
                             },
                           ),
-                          const Text(
-                            'البقاء مسجلاً',
-                            style: TextStyle(
-                              fontSize: AppTypography.bodyMedium,
-                              color: AppColors.textPrimary,
+                          const Flexible(
+                            child: Text(
+                              'البقاء مسجلاً',
+                              style: TextStyle(
+                                fontSize: AppTypography.bodyMedium,
+                                color: AppColors.textPrimary,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
@@ -219,18 +222,24 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              'ليس لديك حساب؟ ',
-                              style: TextStyle(
-                                fontSize: AppTypography.bodyMedium,
-                                color: AppColors.textSecondary,
+                            const Flexible(
+                              child: Text(
+                                'ليس لديك حساب؟ ',
+                                style: TextStyle(
+                                  fontSize: AppTypography.bodyMedium,
+                                  color: AppColors.textSecondary,
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            AppTextButton(
-                              label: 'أنشئ حساباً الآن',
-                              onPressed: () async {
-                                await Navigator.of(context).pushNamed('/setup');
-                              },
+                            Flexible(
+                              child: AppTextButton(
+                                label: 'أنشئ حساباً الآن',
+                                onPressed: () async {
+                                  await Navigator.of(context)
+                                      .pushNamed('/setup');
+                                },
+                              ),
                             ),
                           ],
                         ),
