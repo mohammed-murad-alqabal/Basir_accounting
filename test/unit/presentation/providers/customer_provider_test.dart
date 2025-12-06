@@ -15,7 +15,8 @@ void main() {
   late ProviderContainer container;
 
   setUp(() {
-    mockRepository = MockCustomerRepository();
+    // إنشاء MockCustomerRepository بقائمة فارغة لتجنب البيانات الافتراضية
+    mockRepository = MockCustomerRepository(customers: []);
     container = ProviderContainer(
       overrides: [
         // Override customerRepositoryProvider with mock

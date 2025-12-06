@@ -2,6 +2,11 @@ import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Provider لـ CustomerRepository (مستورد من core/providers.dart)
+///
+/// **ملاحظة:** هذا Provider معاد تصديره من core/providers.dart
+/// للحفاظ على التوافق مع الكود القديم.
+
 /// Provider لقائمة جميع العملاء
 ///
 /// يسترجع جميع العملاء من المستودع ويوفرها كـ [AsyncValue].

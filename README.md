@@ -3,8 +3,8 @@
 [![Flutter](https://img.shields.io/badge/Flutter-3.35.5-blue.svg)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.9.2-blue.svg)](https://dart.dev)
 [![CI/CD](https://github.com/YOUR_USERNAME/Basser_MVP/workflows/Flutter%20CI/CD%20-%20بصير%20MVP/badge.svg)](https://github.com/YOUR_USERNAME/Basser_MVP/actions)
-[![Tests](https://img.shields.io/badge/Tests-518%20Passed-success.svg)](test/)
-[![Coverage](https://img.shields.io/badge/Coverage-70%25+-green.svg)](coverage/)
+[![Tests](https://img.shields.io/badge/Tests-924%20Passed-success.svg)](test/)
+[![Coverage](https://img.shields.io/badge/Coverage-67.9%25-green.svg)](coverage/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **بصير** هو تطبيق موبايل احترافي لإدارة الفواتير والعملاء، مصمم خصيصًا للعاملين بالقطاع الخاص والشركات الصغيرة والمتوسطة في الشرق الأوسط.
@@ -20,6 +20,8 @@
 - [التثبيت والإعداد](#-التثبيت-والإعداد)
 - [البنية المعمارية](#-البنية-المعمارية)
 - [حالة المشروع](#-حالة-المشروع)
+- [نظام تتبع الأخطاء والسجلات](#-نظام-تتبع-الأخطاء-والسجلات)
+- [CI/CD Pipeline](#-cicd-pipeline)
 - [المساهمة](#-المساهمة)
 - [الموارد](#-الموارد)
 
@@ -135,7 +137,7 @@ xdg-open coverage/html/index.html  # Linux
 - **Widget Tests** - اختبار الواجهات (Widgets, Screens)
 - **Integration Tests** - اختبار التدفقات الكاملة
 
-📊 **الحالة الحالية:** 518 اختبار ناجح + 2 skipped (معدل نجاح 100%)
+📊 **الحالة الحالية:** 924 اختبار (922 ناجح + 2 skipped) - معدل نجاح 99.8%
 
 ---
 
@@ -174,9 +176,9 @@ lib/
 
 | المقياس              | القيمة  | الحالة |
 | -------------------- | ------- | ------ |
-| تغطية الاختبارات     | ~70%    | ✅     |
-| عدد الاختبارات       | 518     | ✅     |
-| نجاح الاختبارات      | 100%    | ✅     |
+| تغطية الاختبارات     | 67.9%   | ✅     |
+| عدد الاختبارات       | 924     | ✅     |
+| نجاح الاختبارات      | 99.8%   | ✅     |
 | تغطية التوثيق        | 95%+    | ✅     |
 | المشاكل الحرجة       | 0       | ✅     |
 | وقت تشغيل الاختبارات | ~40s    | ✅     |
@@ -246,6 +248,148 @@ on: [push, pull_request]
 
 - [`.github/workflows/flutter_ci.yml`](.github/workflows/flutter_ci.yml) - Workflow الرئيسي
 - [`test/run_tests.sh`](test/run_tests.sh) - سكريبت تشغيل الاختبارات محلياً
+
+---
+
+## 🔍 نظام تتبع الأخطاء والسجلات
+
+يتضمن المشروع **نظام تتبع أخطاء وسجلات متقدم** يعمل تلقائياً لضمان جودة الكود وتتبع المشاكل.
+
+### ✨ الميزات الرئيسية
+
+- **🔄 Git Hooks تلقائية** - فحص الكود قبل كل commit و push
+- **📊 تقارير شاملة** - تقارير تلقائية بالأخطاء والتحذيرات
+- **🗄️ أرشفة ذكية** - أرشفة تلقائية للسجلات القديمة
+- **🔒 فحص الأمان** - كشف الأسرار والبيانات الحساسة
+- **⚡ أداء عالي** - تخزين مؤقت ذكي للنتائج
+
+### 🚀 التثبيت السريع
+
+```bash
+# تثبيت النظام بأمر واحد
+bash scripts/install.sh
+
+# إلغاء التثبيت
+bash scripts/uninstall.sh
+```
+
+### 📋 الأوامر الأساسية
+
+```bash
+# جمع السجلات
+bash scripts/collect_logs.sh
+
+# أرشفة السجلات القديمة
+bash scripts/archive_logs.sh
+
+# إنشاء تقرير شامل
+bash scripts/generate_report.sh
+
+# اختبار التكامل
+bash test/integration/run_integration_tests.sh
+
+# اختبار الأمان
+bash test/security/run_security_tests.sh
+```
+
+### 🎯 Git Hooks
+
+#### Pre-commit Hook
+
+يتم تشغيله تلقائياً قبل كل commit:
+
+- ✅ فحص التنسيق (Flutter Format)
+- ✅ التحليل الثابت (Flutter Analyze)
+- ✅ التحقق من رسائل الـ commit
+- ⏱️ الوقت: < 30 ثانية
+
+#### Pre-push Hook
+
+يتم تشغيله تلقائياً قبل كل push:
+
+- ✅ تشغيل الاختبارات
+- ✅ فحص الأسرار المكشوفة
+- ✅ التحقق من التغطية
+- ⏱️ الوقت: < 120 ثانية
+
+### 📊 التقارير
+
+يتم إنشاء تقارير شاملة تحتوي على:
+
+- 📈 إحصائيات المشروع
+- ⚠️ ملخص الأخطاء والتحذيرات
+- ✅ نتائج الاختبارات
+- 💡 توصيات للتحسين
+
+**مثال:**
+
+```bash
+bash scripts/generate_report.sh
+# التقرير: logs/reports/report_YYYYMMDD_HHMMSS.md
+```
+
+### 🗄️ الأرشفة التلقائية
+
+- السجلات الأقدم من 7 أيام يتم أرشفتها تلقائياً
+- ضغط تلقائي للأرشيف (tar.gz)
+- حفظ في `logs/archive/`
+
+### 🔒 الأمان
+
+- **كشف الأسرار:** فحص تلقائي لـ API keys، passwords، tokens
+- **تنظيف البيانات:** إزالة البيانات الحساسة من السجلات
+- **التشفير:** تشفير البيانات الحساسة
+- **120+ اختبار أمان** شامل
+
+### ⚙️ التكوين
+
+ملف التكوين: `.kiro/config/error_tracking.yml`
+
+```yaml
+# إعدادات Git Hooks
+hooks:
+  pre_commit:
+    enabled: true
+    timeout: 30
+  pre_push:
+    enabled: true
+    timeout: 120
+
+# إعدادات السجلات
+logs:
+  retention_days: 7
+  sanitize: true
+
+# إعدادات الأمان
+security:
+  secret_detection: true
+  sanitize_logs: true
+```
+
+### 📚 التوثيق الكامل
+
+- [دليل نظام تتبع الأخطاء](Documentation/ERROR_TRACKING_GUIDE.md)
+- [دليل Git و GitHub](Documentation/GIT_GITHUB_GUIDE.md)
+- [دليل معالجة الأخطاء](Documentation/ERROR_HANDLING_GUIDE.md)
+
+### 📊 الإحصائيات
+
+| المكون      | الحالة  | التغطية |
+| :---------- | :-----: | :-----: |
+| Git Hooks   | ✅ نشط  |  100%   |
+| جمع السجلات | ✅ نشط  |  100%   |
+| الأرشفة     | ✅ نشط  |  100%   |
+| التقارير    | ✅ نشط  |  100%   |
+| الأمان      | ✅ نشط  |  100%   |
+| الاختبارات  | ✅ 180+ |  100%   |
+
+### 🎯 الفوائد
+
+- ✅ **اكتشاف مبكر للمشاكل** - قبل الوصول للإنتاج
+- ✅ **جودة كود عالية** - فحص تلقائي مستمر
+- ✅ **أمان محسّن** - كشف الأسرار والثغرات
+- ✅ **تتبع شامل** - سجلات كاملة لكل شيء
+- ✅ **توفير الوقت** - أتمتة كاملة
 
 ---
 

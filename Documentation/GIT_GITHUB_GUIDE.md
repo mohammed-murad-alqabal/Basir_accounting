@@ -1,659 +1,953 @@
-# دليل Git/GitHub الشامل
+# دليل Git و GitHub الشامل
 
-## Complete Git/GitHub Guide
-
-دليل احترافي شامل لاستخدام Git و GitHub في مشروع بصير MVP.
-
----
-
-## 📋 جدول المحتويات
-
-1. [الإعداد الأولي](#الإعداد-الأولي)
-2. [سير العمل](#سير-العمل)
-3. [Conventional Commits](#conventional-commits)
-4. [إدارة الفروع](#إدارة-الفروع)
-5. [Pull Requests](#pull-requests)
-6. [الإصدارات](#الإصدارات)
-7. [Git Hooks](#git-hooks)
-8. [GitHub Actions](#github-actions)
-9. [أفضل الممارسات](#أفضل-الممارسات)
-10. [استكشاف الأخطاء](#استكشاف-الأخطاء)
+**المشروع:** بصير MVP  
+**التاريخ:** 5 ديسمبر 2025  
+**المؤلف:** فريق وكلاء تطوير مشروع بصير  
+**الإصدار:** 1.0  
+**الحالة:** ✅ نشط
 
 ---
 
-## الإعداد الأولي
+## نظرة عامة
 
-### 1. تشغيل سكريبت الإعداد
+هذا الدليل الشامل يغطي جميع عمليات Git و GitHub المستخدمة في مشروع بصير MVP، من الأساسيات إلى العمليات المتقدمة.
+
+---
+
+## 1. الإعداد الأولي (Initial Setup)
+
+### 1.1 تثبيت Git
+
+#### Linux (Ubuntu/Debian)
 
 ```bash
-./scripts/setup_git.sh
+sudo apt update
+sudo apt install git
 ```
 
-هذا السكريبت يقوم بـ:
-
-- ✅ تكوين معلومات المستخدم
-- ✅ تفعيل Git Hooks
-- ✅ تكوين الفروع والدمج
-- ✅ تكوين الألوان والأدوات
-- ✅ تكوين الأمان والأداء
-
-### 2. التحقق من الإعداد
+#### macOS
 
 ```bash
-# عرض التكوين
+# باستخدام Homebrew
+brew install git
+
+# أو تحميل من الموقع الرسمي
+# https://git-scm.com/download/mac
+```
+
+#### Windows
+
+```bash
+# تحميل من الموقع الرسمي
+# https://git-scm.com/download/win
+```
+
+#### التحقق من التثبيت
+
+```bash
+git --version
+# Output: git version 2.x.x
+```
+
+### 1.2 التكوين الأساسي
+
+```bash
+# تعيين الاسم
+git config --global user.name "اسمك الكامل"
+
+# تعيين البريد الإلكتروني
+git config --global user.email "your.email@example.com"
+
+# تعيين المحرر الافتراضي
+git config --global core.editor "code --wait"  # VS Code
+# أو
+git config --global core.editor "nano"  # Nano
+
+# عرض جميع الإعدادات
 git config --list
+```
 
-# التحقق من Git Hooks
-ls -la .githooks/
+### 1.3 إعداد SSH Key
 
-# التحقق من الفرع الحالي
+```bash
+# إنشاء SSH key جديد
+ssh-keygen -t ed25519 -C "your.email@example.com"
+
+# بدء ssh-agent
+eval "$(ssh-agent -s)"
+
+# إضافة المفتاح إلى ssh-agent
+ssh-add ~/.ssh/id_ed25519
+
+# نسخ المفتاح العام
+cat ~/.ssh/id_ed25519.pub
+# انسخ الإخراج وأضفه إلى GitHub
+# Settings → SSH and GPG keys → New SSH key
+```
+
+### 1.4 استنساخ المشروع
+
+```bash
+# استنساخ عبر HTTPS
+git clone https://github.com/username/Basser_MVP.git
+
+# استنساخ عبر SSH (موصى به)
+git clone git@github.com:username/Basser_MVP.git
+
+# الدخول إلى المجلد
+cd Basser_MVP
+```
+
+---
+
+## 2. العمليات اليومية (Daily Operations)
+
+### 2.1 التحقق من الحالة
+
+```bash
+# عرض حالة المشروع
+git status
+
+# عرض الفروع
+git branch
+
+# عرض الفرع الحالي
 git branch --show-current
 ```
 
----
-
-## سير العمل
-
-### سير العمل الأساسي
-
-```mermaid
-graph LR
-    A[إنشاء فرع] --> B[كتابة الكود]
-    B --> C[Commit]
-    C --> D[Push]
-    D --> E[Pull Request]
-    E --> F[Code Review]
-    F --> G[Merge]
-```
-
-### الخطوات التفصيلية
-
-#### 1. إنشاء فرع جديد
+### 2.2 إنشاء فرع جديد
 
 ```bash
-# للميزات الجديدة
-git checkout -b feature/feature-name
+# إنشاء فرع جديد
+git branch feature/customer-search
 
-# لإصلاح الأخطاء
-git checkout -b fix/bug-name
+# التبديل إلى الفرع الجديد
+git checkout feature/customer-search
 
-# للتوثيق
-git checkout -b docs/doc-name
+# إنشاء والتبديل في أمر واحد (موصى به)
+git checkout -b feature/customer-search
 
-# لإعادة الهيكلة
-git checkout -b refactor/refactor-name
+# إنشاء فرع من فرع محدد
+git checkout -b feature/new-feature develop
 ```
 
-#### 2. كتابة الكود
-
-```bash
-# تعديل الملفات
-# ...
-
-# التحقق من التغييرات
-git status
-
-# عرض التغييرات
-git diff
-```
-
-#### 3. Staging
+### 2.3 إضافة التغييرات
 
 ```bash
 # إضافة ملف محدد
-git add path/to/file.dart
+git add lib/features/customers/customer_repository.dart
 
-# إضافة جميع الملفات المعدلة
+# إضافة جميع الملفات في مجلد
+git add lib/features/customers/
+
+# إضافة جميع التغييرات
 git add .
 
-# إضافة تفاعلية
+# إضافة تفاعلية (اختيار أجزاء محددة)
 git add -p
+
+# عرض ما سيتم إضافته
+git diff --staged
 ```
 
-#### 4. Commit
+### 2.4 إنشاء Commit
 
 ```bash
-# Commit مع رسالة
-git commit -m "feat: إضافة ميزة جديدة"
+# commit بسيط
+git commit -m "feat(customers): add customer search feature"
 
-# Commit مع رسالة مفصلة
-git commit -m "feat: إضافة ميزة جديدة" -m "وصف تفصيلي للميزة"
+# commit مع وصف مفصل
+git commit -m "feat(customers): add customer search feature" \
+           -m "- Add search by name" \
+           -m "- Add search by phone" \
+           -m "- Add search filters"
 
 # تعديل آخر commit
 git commit --amend
+
+# تعديل رسالة آخر commit
+git commit --amend -m "feat(customers): add advanced customer search"
 ```
 
-#### 5. Push
+#### صيغة Conventional Commits
 
 ```bash
-# Push للفرع الحالي
+# الصيغة: type(scope): description
+
+# أنواع الـ commits
+feat(customers): add new feature          # ميزة جديدة
+fix(invoices): fix calculation bug        # إصلاح خطأ
+docs(readme): update installation guide   # توثيق
+style(ui): format code                    # تنسيق
+refactor(auth): restructure login logic   # إعادة هيكلة
+test(customers): add unit tests           # اختبارات
+chore(deps): update dependencies          # مهام صيانة
+perf(db): improve query performance       # تحسين أداء
+```
+
+### 2.5 دفع التغييرات
+
+```bash
+# دفع إلى الفرع الحالي
 git push
 
-# Push لأول مرة
-git push -u origin feature/feature-name
+# دفع فرع جديد لأول مرة
+git push -u origin feature/customer-search
 
-# Force push (استخدم بحذر!)
-git push --force-with-lease
+# دفع جميع الفروع
+git push --all
+
+# دفع مع force (حذر!)
+git push --force-with-lease  # أكثر أماناً
+git push -f                  # خطر!
+```
+
+### 2.6 سحب التحديثات
+
+```bash
+# سحب من الفرع الحالي
+git pull
+
+# سحب من فرع محدد
+git pull origin main
+
+# سحب مع rebase
+git pull --rebase
+
+# سحب جميع الفروع
+git fetch --all
 ```
 
 ---
 
-## Conventional Commits
+## 3. إدارة الفروع (Branch Management)
 
-### الصيغة
-
-```
-type(scope): description
-
-[optional body]
-
-[optional footer]
-```
-
-### الأنواع (Types)
-
-| النوع        | الوصف       | مثال                                   |
-| :----------- | :---------- | :------------------------------------- |
-| **feat**     | ميزة جديدة  | `feat(auth): إضافة تسجيل دخول بالبصمة` |
-| **fix**      | إصلاح خطأ   | `fix(invoice): إصلاح حساب الضريبة`     |
-| **docs**     | توثيق       | `docs: تحديث README`                   |
-| **style**    | تنسيق       | `style: تنسيق الكود`                   |
-| **refactor** | إعادة هيكلة | `refactor(auth): تحسين بنية الكود`     |
-| **perf**     | تحسين أداء  | `perf(dashboard): تحسين سرعة التحميل`  |
-| **test**     | اختبارات    | `test(customer): إضافة اختبارات`       |
-| **chore**    | مهام صيانة  | `chore: تحديث التبعيات`                |
-| **build**    | نظام البناء | `build: تحديث gradle`                  |
-| **ci**       | CI/CD       | `ci: إضافة workflow جديد`              |
-| **revert**   | تراجع       | `revert: التراجع عن commit abc123`     |
-
-### النطاق (Scope)
-
-النطاق اختياري ويحدد الجزء المتأثر:
-
-- `auth` - المصادقة
-- `customer` - إدارة العملاء
-- `invoice` - إدارة الفواتير
-- `dashboard` - لوحة التحكم
-- `settings` - الإعدادات
-- `pdf` - خدمة PDF
-- `ui` - الواجهة
-- `api` - API
-
-### Breaking Changes
-
-للتغييرات الكبيرة، أضف `!` بعد النوع:
-
-```bash
-git commit -m "feat!: تغيير واجهة API
-
-BREAKING CHANGE: تم تغيير بنية الاستجابة"
-```
-
-### أمثلة كاملة
-
-```bash
-# ميزة بسيطة
-git commit -m "feat(auth): إضافة تسجيل دخول بالبصمة"
-
-# إصلاح مع وصف
-git commit -m "fix(invoice): إصلاح حساب الضريبة
-
-كان الحساب يتجاهل الخصومات"
-
-# تغيير كبير
-git commit -m "feat(api)!: تغيير بنية API
-
-BREAKING CHANGE: تم تغيير جميع endpoints
-من /api/v1 إلى /api/v2"
-
-# إغلاق Issue
-git commit -m "fix(customer): إصلاح حذف العميل
-
-Closes #123"
-```
-
----
-
-## إدارة الفروع
-
-### استراتيجية الفروع
+### 3.1 استراتيجية الفروع
 
 ```
 main (الإنتاج)
-  ↑
+  ↓
 develop (التطوير)
-  ↑
+  ↓
 feature/* (الميزات)
-fix/* (الإصلاحات)
+  ↓
+hotfix/* (الإصلاحات العاجلة)
 ```
 
-### الفروع الرئيسية
-
-#### main/master
-
-- الكود الإنتاجي
-- دائماً مستقر
-- يتم الدمج فقط من develop
-- كل merge = إصدار جديد
-
-#### develop
-
-- الكود قيد التطوير
-- يحتوي على آخر التغييرات
-- يتم الدمج من feature/fix branches
-
-### فروع الميزات
+### 3.2 عمليات الفروع
 
 ```bash
-# إنشاء فرع ميزة
-git checkout -b feature/user-profile
+# عرض جميع الفروع
+git branch -a
 
-# العمل على الميزة
-# ...
+# عرض الفروع مع آخر commit
+git branch -v
 
-# دمج آخر تحديثات من develop
-git checkout develop
-git pull
-git checkout feature/user-profile
-git merge develop
-
-# Push
-git push -u origin feature/user-profile
-```
-
-### فروع الإصلاحات
-
-```bash
-# إنشاء فرع إصلاح
-git checkout -b fix/login-error
-
-# العمل على الإصلاح
-# ...
-
-# Push
-git push -u origin fix/login-error
-```
-
-### حذف الفروع
-
-```bash
 # حذف فرع محلي
-git branch -d feature/user-profile
+git branch -d feature/customer-search
+
+# حذف فرع بالقوة
+git branch -D feature/customer-search
 
 # حذف فرع بعيد
-git push origin --delete feature/user-profile
+git push origin --delete feature/customer-search
 
-# حذف جميع الفروع المدمجة
-git branch --merged | grep -v "\*" | xargs -n 1 git branch -d
+# إعادة تسمية فرع
+git branch -m old-name new-name
+```
+
+### 3.3 دمج الفروع (Merging)
+
+```bash
+# التبديل إلى الفرع المستهدف
+git checkout develop
+
+# دمج فرع آخر
+git merge feature/customer-search
+
+# دمج بدون fast-forward
+git merge --no-ff feature/customer-search
+
+# إلغاء الدمج
+git merge --abort
+```
+
+### 3.4 Rebase
+
+```bash
+# rebase على فرع آخر
+git checkout feature/customer-search
+git rebase develop
+
+# rebase تفاعلي (لتنظيف التاريخ)
+git rebase -i HEAD~5
+
+# متابعة بعد حل التعارضات
+git rebase --continue
+
+# إلغاء rebase
+git rebase --abort
 ```
 
 ---
 
-## Pull Requests
+## 4. حل التعارضات (Conflict Resolution)
 
-### إنشاء Pull Request
-
-1. **Push الفرع**
-
-   ```bash
-   git push -u origin feature/my-feature
-   ```
-
-2. **على GitHub**
-   - اذهب إلى Repository
-   - انقر "Pull requests"
-   - انقر "New pull request"
-   - اختر الفرع
-   - املأ القالب
-
-### قالب Pull Request
-
-يتم ملء القالب تلقائياً من `.github/pull_request_template.md`:
-
-- ✅ الوصف
-- ✅ نوع التغيير
-- ✅ المشاكل المرتبطة
-- ✅ لقطات الشاشة
-- ✅ قائمة التحقق
-- ✅ كيفية الاختبار
-
-### مراجعة الكود
-
-#### للمطور
+### 4.1 اكتشاف التعارضات
 
 ```bash
-# تحديث الفرع بناءً على التعليقات
-git add .
-git commit -m "fix: معالجة تعليقات المراجعة"
-git push
+# عند الدمج أو rebase
+git merge feature/customer-search
+# CONFLICT (content): Merge conflict in lib/features/customers/customer_repository.dart
+
+# عرض الملفات المتعارضة
+git status
 ```
 
-#### للمراجع
+### 4.2 حل التعارضات
 
-- ✅ مراجعة الكود
-- ✅ اختبار التغييرات
-- ✅ التعليق على الكود
-- ✅ الموافقة أو طلب تغييرات
+```dart
+// الملف المتعارض يحتوي على:
+<<<<<<< HEAD
+// الكود الحالي
+final customers = await getAllCustomers();
+=======
+// الكود الوارد
+final customers = await fetchAllCustomers();
+>>>>>>> feature/customer-search
 
-### الدمج
+// بعد الحل:
+final customers = await getAllCustomers();
+```
 
 ```bash
-# بعد الموافقة، على GitHub:
-# 1. Squash and merge (للميزات الصغيرة)
-# 2. Merge commit (للميزات الكبيرة)
-# 3. Rebase and merge (للحفاظ على تاريخ نظيف)
+# بعد حل التعارضات
+git add lib/features/customers/customer_repository.dart
+git commit -m "merge: resolve conflicts in customer_repository"
+```
+
+### 4.3 أدوات حل التعارضات
+
+```bash
+# استخدام mergetool
+git mergetool
+
+# استخدام VS Code
+code --wait --merge <file>
+
+# قبول النسخة الحالية
+git checkout --ours <file>
+
+# قبول النسخة الواردة
+git checkout --theirs <file>
 ```
 
 ---
 
-## الإصدارات
+## 5. التاريخ والسجلات (History & Logs)
 
-### Semantic Versioning
-
-```
-MAJOR.MINOR.PATCH
-
-مثال: 1.2.3
-```
-
-- **MAJOR**: تغييرات كبيرة (breaking changes)
-- **MINOR**: ميزات جديدة (backward compatible)
-- **PATCH**: إصلاحات (bug fixes)
-
-### إنشاء إصدار
-
-#### 1. تحديث CHANGELOG.md
-
-```markdown
-## [1.2.0] - 2025-01-XX
-
-### Added
-
-- ميزة جديدة
-
-### Fixed
-
-- إصلاح خطأ
-
-### Changed
-
-- تحسين
-```
-
-#### 2. إنشاء Tag
+### 5.1 عرض التاريخ
 
 ```bash
-# إنشاء tag
-git tag -a v1.2.0 -m "Release 1.2.0"
+# عرض التاريخ الأساسي
+git log
 
-# Push tag
-git push origin v1.2.0
+# عرض مختصر
+git log --oneline
 
-# Push جميع tags
-git push --tags
+# عرض مع الرسم البياني
+git log --graph --oneline --all
+
+# عرض آخر 10 commits
+git log -10
+
+# عرض commits لمطور محدد
+git log --author="اسم المطور"
+
+# عرض commits في فترة زمنية
+git log --since="2 weeks ago"
+git log --after="2025-11-01" --before="2025-12-01"
 ```
 
-#### 3. GitHub Release
-
-سيتم إنشاء Release تلقائياً عبر GitHub Actions عند push tag.
-
-### عرض الإصدارات
+### 5.2 عرض التغييرات
 
 ```bash
-# عرض جميع tags
-git tag
+# عرض التغييرات غير المضافة
+git diff
 
-# عرض آخر tag
-git describe --tags --abbrev=0
+# عرض التغييرات المضافة
+git diff --staged
 
-# عرض تفاصيل tag
-git show v1.2.0
+# عرض التغييرات بين فرعين
+git diff main..develop
+
+# عرض التغييرات في ملف محدد
+git diff lib/features/customers/customer_repository.dart
+
+# عرض إحصائيات التغييرات
+git diff --stat
+```
+
+### 5.3 البحث في التاريخ
+
+```bash
+# البحث عن كلمة في التاريخ
+git log -S "searchTerm"
+
+# البحث عن رسالة commit
+git log --grep="customer"
+
+# عرض من غيّر سطر محدد
+git blame lib/features/customers/customer_repository.dart
+
+# عرض تاريخ ملف
+git log --follow lib/features/customers/customer_repository.dart
 ```
 
 ---
 
-## Git Hooks
+## 6. التراجع والإصلاح (Undo & Fix)
 
-### الـ Hooks المتوفرة
-
-#### pre-commit
-
-يتم تشغيله قبل كل commit:
-
-- ✅ Flutter Format
-- ✅ Flutter Analyze
-- ✅ الاختبارات السريعة
-- ✅ TODO Comments validation
-
-#### commit-msg
-
-يتحقق من رسالة الـ commit:
-
-- ✅ Conventional Commits format
-- ✅ طول السطر الأول
-- ✅ السطر الفارغ
-
-#### pre-push
-
-يتم تشغيله قبل كل push:
-
-- ✅ Flutter Analyze (منع push عند errors)
-- ✅ جميع الاختبارات
-- ✅ التحقق من الأسرار
-- ✅ حجم الملفات
-
-### تفعيل/تعطيل Hooks
+### 6.1 التراجع عن التغييرات
 
 ```bash
-# تفعيل
-git config core.hooksPath .githooks
+# التراجع عن تغييرات غير مضافة
+git checkout -- <file>
+# أو
+git restore <file>
 
-# تعطيل مؤقت
-git commit --no-verify
+# التراجع عن جميع التغييرات غير المضافة
+git checkout -- .
+# أو
+git restore .
 
-# تعطيل دائم
-git config core.hooksPath ""
+# إزالة ملف من staging
+git reset HEAD <file>
+# أو
+git restore --staged <file>
 ```
 
----
-
-## GitHub Actions
-
-### الـ Workflows المتوفرة
-
-#### 1. Error Tracking
-
-- **المسار:** `.github/workflows/error_tracking.yml`
-- **التشغيل:** Push, PR, يومياً
-- **المهام:**
-  - Flutter Analyze
-  - Flutter Test
-  - إنشاء تقارير
-  - إنشاء Issues
-
-#### 2. Release Management
-
-- **المسار:** `.github/workflows/release.yml`
-- **التشغيل:** عند push tag
-- **المهام:**
-  - بناء APK/AAB
-  - إنشاء Release
-  - رفع الملفات
-
-#### 3. Semantic Versioning
-
-- **المسار:** `.github/workflows/semantic_versioning.yml`
-- **التشغيل:** Push, PR
-- **المهام:**
-  - التحقق من Conventional Commits
-  - حساب الإصدار التالي
-  - التعليق على PR
-
-### عرض النتائج
+### 6.2 التراجع عن Commits
 
 ```bash
-# على GitHub:
-# Repository → Actions → اختر Workflow → اختر Run
-```
-
----
-
-## أفضل الممارسات
-
-### 1. Commits
-
-✅ **جيد:**
-
-```bash
-git commit -m "feat(auth): إضافة تسجيل دخول بالبصمة"
-```
-
-❌ **سيء:**
-
-```bash
-git commit -m "update"
-```
-
-### 2. الفروع
-
-✅ **جيد:**
-
-```bash
-git checkout -b feature/biometric-auth
-```
-
-❌ **سيء:**
-
-```bash
-git checkout -b test
-```
-
-### 3. Pull Requests
-
-✅ **جيد:**
-
-- وصف واضح
-- لقطات شاشة
-- اختبارات
-- مراجعة الكود
-
-❌ **سيء:**
-
-- بدون وصف
-- تغييرات كثيرة
-- بدون اختبارات
-
-### 4. الدمج
-
-✅ **جيد:**
-
-```bash
-# دمج من develop قبل PR
-git merge develop
-```
-
-❌ **سيء:**
-
-```bash
-# دمج مباشرة بدون تحديث
-```
-
----
-
-## استكشاف الأخطاء
-
-### المشكلة: Commit مرفوض
-
-```bash
-# السبب: رسالة commit غير صحيحة
-# الحل: استخدم Conventional Commits
-git commit --amend -m "feat: رسالة صحيحة"
-```
-
-### المشكلة: Push مرفوض
-
-```bash
-# السبب: يوجد أخطاء في الكود
-# الحل: أصلح الأخطاء
-flutter analyze
-flutter test
-```
-
-### المشكلة: Merge Conflict
-
-```bash
-# 1. تحديث الفرع
-git fetch origin
-git merge origin/develop
-
-# 2. حل التعارضات يدوياً
-# 3. إضافة الملفات
-git add .
-
-# 4. إكمال الدمج
-git commit
-```
-
-### المشكلة: تراجع عن Commit
-
-```bash
-# تراجع عن آخر commit (يحتفظ بالتغييرات)
+# التراجع عن آخر commit (مع الاحتفاظ بالتغييرات)
 git reset --soft HEAD~1
 
-# تراجع عن آخر commit (يحذف التغييرات)
+# التراجع عن آخر commit (بدون الاحتفاظ بالتغييرات)
 git reset --hard HEAD~1
 
-# تراجع عن commit محدد
+# التراجع عن عدة commits
+git reset --soft HEAD~3
+
+# إنشاء commit عكسي
+git revert HEAD
+
+# التراجع عن commit محدد
 git revert <commit-hash>
 ```
 
----
-
-## الأوامر السريعة
+### 6.3 تنظيف المشروع
 
 ```bash
-# الإعداد
-./scripts/setup_git.sh
+# عرض الملفات التي سيتم حذفها
+git clean -n
 
-# سير العمل الأساسي
-git checkout -b feature/my-feature
-git add .
-git commit -m "feat: إضافة ميزة"
-git push -u origin feature/my-feature
+# حذف الملفات غير المتتبعة
+git clean -f
 
-# التحديث
-git fetch origin
-git merge origin/develop
+# حذف المجلدات أيضاً
+git clean -fd
 
-# التنظيف
-git branch -d feature/my-feature
-git push origin --delete feature/my-feature
-
-# الإصدارات
-git tag -a v1.0.0 -m "Release 1.0.0"
-git push --tags
-
-# المساعدة
-git help <command>
+# حذف الملفات المتجاهلة أيضاً
+git clean -fdx
 ```
 
 ---
 
-## الموارد
+## 7. GitHub Operations
 
-### التوثيق
+### 7.1 إنشاء Pull Request
 
-- [Git Documentation](https://git-scm.com/doc)
-- [GitHub Docs](https://docs.github.com)
-- [Conventional Commits](https://www.conventionalcommits.org)
-- [Semantic Versioning](https://semver.org)
+#### من سطر الأوامر
 
-### الأدوات
+```bash
+# دفع الفرع
+git push -u origin feature/customer-search
 
-- [GitHub CLI](https://cli.github.com)
-- [Git GUI Clients](https://git-scm.com/downloads/guis)
+# ثم افتح GitHub وأنشئ PR
+# أو استخدم GitHub CLI
+gh pr create --title "Add customer search feature" \
+             --body "Description of changes"
+```
+
+#### من واجهة GitHub
+
+1. اذهب إلى المستودع على GitHub
+2. اضغط "Pull requests"
+3. اضغط "New pull request"
+4. اختر الفروع (base ← compare)
+5. اضغط "Create pull request"
+6. املأ العنوان والوصف
+7. اضغط "Create pull request"
+
+### 7.2 مراجعة Pull Request
+
+```bash
+# سحب PR محلياً
+gh pr checkout 123
+
+# أو يدوياً
+git fetch origin pull/123/head:pr-123
+git checkout pr-123
+
+# اختبار التغييرات
+flutter test
+
+# إضافة تعليق
+gh pr comment 123 --body "Looks good!"
+
+# الموافقة
+gh pr review 123 --approve
+
+# طلب تعديلات
+gh pr review 123 --request-changes --body "Please fix..."
+```
+
+### 7.3 دمج Pull Request
+
+```bash
+# دمج عبر GitHub CLI
+gh pr merge 123
+
+# خيارات الدمج
+gh pr merge 123 --merge      # merge commit
+gh pr merge 123 --squash     # squash commits
+gh pr merge 123 --rebase     # rebase
+
+# حذف الفرع بعد الدمج
+gh pr merge 123 --delete-branch
+```
+
+### 7.4 Issues
+
+```bash
+# إنشاء issue
+gh issue create --title "Bug: Customer search not working" \
+                --body "Description of the bug"
+
+# عرض جميع issues
+gh issue list
+
+# عرض issue محدد
+gh issue view 456
+
+# إغلاق issue
+gh issue close 456
+
+# إعادة فتح issue
+gh issue reopen 456
+```
 
 ---
 
-**آخر تحديث:** 2025-01-XX  
-**الإصدار:** 1.0.0
+## 8. GitHub Actions
+
+### 8.1 عرض Workflows
+
+```bash
+# عرض جميع workflows
+gh workflow list
+
+# عرض runs لـ workflow محدد
+gh run list --workflow=analysis.yml
+
+# عرض تفاصيل run
+gh run view 789
+```
+
+### 8.2 تشغيل Workflows
+
+```bash
+# تشغيل workflow يدوياً
+gh workflow run analysis.yml
+
+# تشغيل مع inputs
+gh workflow run analysis.yml -f environment=production
+```
+
+### 8.3 عرض Logs
+
+```bash
+# عرض logs لـ run
+gh run view 789 --log
+
+# تحميل logs
+gh run download 789
+```
+
+---
+
+## 9. العمليات المتقدمة
+
+### 9.1 Stash (الحفظ المؤقت)
+
+```bash
+# حفظ التغييرات مؤقتاً
+git stash
+
+# حفظ مع رسالة
+git stash save "WIP: customer search feature"
+
+# عرض جميع stashes
+git stash list
+
+# تطبيق آخر stash
+git stash apply
+
+# تطبيق stash محدد
+git stash apply stash@{2}
+
+# تطبيق وحذف
+git stash pop
+
+# حذف stash
+git stash drop stash@{0}
+
+# حذف جميع stashes
+git stash clear
+```
+
+### 9.2 Cherry-pick
+
+```bash
+# تطبيق commit محدد على الفرع الحالي
+git cherry-pick <commit-hash>
+
+# تطبيق عدة commits
+git cherry-pick <commit1> <commit2>
+
+# تطبيق مع تعديل الرسالة
+git cherry-pick <commit-hash> --edit
+```
+
+### 9.3 Submodules
+
+```bash
+# إضافة submodule
+git submodule add https://github.com/user/repo.git path/to/submodule
+
+# تحديث submodules
+git submodule update --init --recursive
+
+# سحب تحديثات submodules
+git submodule update --remote
+
+# حذف submodule
+git submodule deinit path/to/submodule
+git rm path/to/submodule
+```
+
+### 9.4 Tags
+
+```bash
+# إنشاء tag
+git tag v1.0.0
+
+# إنشاء annotated tag
+git tag -a v1.0.0 -m "Release version 1.0.0"
+
+# عرض جميع tags
+git tag
+
+# دفع tag
+git push origin v1.0.0
+
+# دفع جميع tags
+git push --tags
+
+# حذف tag محلي
+git tag -d v1.0.0
+
+# حذف tag بعيد
+git push origin --delete v1.0.0
+```
+
+---
+
+## 10. استكشاف الأخطاء وإصلاحها
+
+### 10.1 مشاكل الاتصال
+
+#### المشكلة: Permission denied (publickey)
+
+```bash
+# الحل: التحقق من SSH key
+ssh -T git@github.com
+
+# إذا فشل، أضف SSH key
+ssh-add ~/.ssh/id_ed25519
+
+# أو أنشئ key جديد
+ssh-keygen -t ed25519 -C "your.email@example.com"
+```
+
+#### المشكلة: Could not resolve host
+
+```bash
+# الحل: التحقق من الاتصال بالإنترنت
+ping github.com
+
+# التحقق من DNS
+nslookup github.com
+
+# استخدام HTTPS بدلاً من SSH
+git remote set-url origin https://github.com/user/repo.git
+```
+
+### 10.2 مشاكل الدمج
+
+#### المشكلة: Merge conflict
+
+```bash
+# الحل: حل التعارضات يدوياً
+# راجع قسم "حل التعارضات" أعلاه
+
+# أو إلغاء الدمج
+git merge --abort
+```
+
+#### المشكلة: Diverged branches
+
+```bash
+# الحل: rebase أو merge
+git pull --rebase origin main
+
+# أو
+git pull origin main
+```
+
+### 10.3 مشاكل الأداء
+
+#### المشكلة: Git operations are slow
+
+```bash
+# الحل: تنظيف المستودع
+git gc --aggressive --prune=now
+
+# ضغط قاعدة البيانات
+git repack -a -d --depth=250 --window=250
+
+# تحديث index
+git update-index --refresh
+```
+
+#### المشكلة: Large repository
+
+```bash
+# الحل: استنساخ جزئي
+git clone --depth 1 https://github.com/user/repo.git
+
+# أو استنساخ فرع واحد
+git clone --single-branch --branch main https://github.com/user/repo.git
+```
+
+### 10.4 استعادة البيانات
+
+#### المشكلة: Deleted commit by mistake
+
+```bash
+# الحل: استخدام reflog
+git reflog
+
+# استعادة commit
+git reset --hard <commit-hash>
+```
+
+#### المشكلة: Deleted branch by mistake
+
+```bash
+# الحل: استخدام reflog
+git reflog
+
+# إنشاء الفرع مرة أخرى
+git branch recovered-branch <commit-hash>
+```
+
+---
+
+## 11. أفضل الممارسات
+
+### 11.1 Commit Messages
+
+#### ✅ جيد
+
+```bash
+feat(customers): add customer search with filters
+
+- Add search by name
+- Add search by phone
+- Add date range filter
+- Add status filter
+
+Closes #123
+```
+
+#### ❌ سيء
+
+```bash
+update code
+fix bug
+changes
+```
+
+### 11.2 Branch Naming
+
+#### ✅ جيد
+
+```bash
+feature/customer-search
+fix/invoice-calculation-bug
+hotfix/security-vulnerability
+refactor/auth-service
+```
+
+#### ❌ سيء
+
+```bash
+new-feature
+fix
+my-branch
+test
+```
+
+### 11.3 Pull Requests
+
+#### ✅ جيد
+
+- عنوان واضح ومحدد
+- وصف مفصل للتغييرات
+- ربط بـ issues ذات صلة
+- screenshots للتغييرات في UI
+- checklist للمراجعة
+
+#### ❌ سيء
+
+- عنوان غامض
+- بدون وصف
+- تغييرات كثيرة جداً
+- بدون اختبارات
+
+### 11.4 Code Review
+
+#### ✅ افعل
+
+- راجع الكود بعناية
+- اختبر التغييرات محلياً
+- قدم ملاحظات بناءة
+- اقترح تحسينات
+- وافق فقط إذا كنت متأكداً
+
+#### ❌ لا تفعل
+
+- لا توافق بدون مراجعة
+- لا تكن قاسياً في التعليقات
+- لا تتجاهل المعايير
+- لا تؤخر المراجعة
+
+---
+
+## 12. الأوامر السريعة
+
+### 12.1 الإعداد
+
+```bash
+# إعداد سريع
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+git config --global core.editor "code --wait"
+```
+
+### 12.2 العمليات اليومية
+
+```bash
+# سير عمل يومي
+git checkout -b feature/new-feature
+# ... عمل على الكود ...
+git add .
+git commit -m "feat: add new feature"
+git push -u origin feature/new-feature
+```
+
+### 12.3 التنظيف
+
+```bash
+# تنظيف شامل
+git fetch --prune
+git branch --merged | grep -v "\*" | xargs -n 1 git branch -d
+git gc --aggressive --prune=now
+```
+
+### 12.4 الطوارئ
+
+```bash
+# التراجع السريع
+git reset --hard HEAD~1
+git push --force-with-lease
+
+# استعادة سريعة
+git reflog
+git reset --hard <commit-hash>
+```
+
+---
+
+## 13. الموارد والمراجع
+
+### الوثائق الرسمية
+
+- [Git Documentation](https://git-scm.com/doc)
+- [GitHub Docs](https://docs.github.com/)
+- [GitHub CLI](https://cli.github.com/)
+- [Conventional Commits](https://www.conventionalcommits.org/)
+
+### الأدوات المفيدة
+
+- [GitKraken](https://www.gitkraken.com/) - Git GUI
+- [SourceTree](https://www.sourcetreeapp.com/) - Git GUI
+- [GitHub Desktop](https://desktop.github.com/) - GitHub GUI
+- [Git Extensions](https://gitextensions.github.io/) - Git GUI
+
+### الدورات والتعليم
+
+- [Git Handbook](https://guides.github.com/introduction/git-handbook/)
+- [GitHub Learning Lab](https://lab.github.com/)
+- [Pro Git Book](https://git-scm.com/book/en/v2)
+
+---
+
+## 14. سجل التحديثات
+
+### الإصدار 1.0 (5 ديسمبر 2025)
+
+- ✅ الدليل الشامل الأول
+- ✅ جميع العمليات الأساسية
+- ✅ العمليات المتقدمة
+- ✅ استكشاف الأخطاء وإصلاحها
+- ✅ أفضل الممارسات
+- ✅ أمثلة عملية
+
+### التحديثات المخططة
+
+- 📋 إضافة أمثلة فيديو
+- 📋 إضافة سيناريوهات متقدمة
+- 📋 إضافة تكامل مع أدوات CI/CD
+- 📋 إضافة أمثلة لـ Git workflows
+
+---
+
+**تم إعداد هذا الدليل بواسطة:** فريق وكلاء تطوير مشروع بصير  
+**آخر تحديث:** 5 ديسمبر 2025  
+**الإصدار:** 1.0  
+**الحالة:** ✅ نشط ومعتمد
+
+**للأسئلة والاستفسارات:** راجع قسم استكشاف الأخطاء وإصلاحها أو اسأل الفريق

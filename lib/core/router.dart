@@ -4,6 +4,7 @@ import 'package:basser_app/features/customers/presentation/screens/customers_scr
 import 'package:basser_app/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:basser_app/features/invoices/presentation/screens/invoices_screen.dart';
 import 'package:basser_app/features/settings/presentation/screens/settings_screen.dart';
+import 'package:basser_app/features/testing/button_test_screen.dart';
 import 'package:flutter/material.dart';
 
 /// نظام التوجيه للتطبيق
@@ -35,6 +36,7 @@ class AppRouter {
   /// - `/customers`: شاشة إدارة العملاء
   /// - `/invoices`: شاشة إدارة الفواتير
   /// - `/settings`: شاشة الإعدادات
+  /// - `/button-test`: شاشة اختبار الأزرار (debug only)
   ///
   /// Example:
   /// ```dart
@@ -54,6 +56,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const InvoicesScreen());
       case '/settings':
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
+      case '/button-test':
+        return MaterialPageRoute(builder: (_) => const ButtonTestScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

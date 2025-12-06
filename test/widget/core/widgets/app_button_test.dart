@@ -5,6 +5,7 @@ library;
 
 import 'package:basser_app/core/theme.dart';
 import 'package:basser_app/core/widgets/app_button.dart';
+import 'package:basser_app/core/widgets/responsive_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -127,7 +128,7 @@ void main() {
       expect(sizedBox.width, customWidth);
     });
 
-    testWidgets('should use default height of 48', (tester) async {
+    testWidgets('should use default height of 52', (tester) async {
       // Act
       await tester.pumpWidget(
         MaterialApp(
@@ -141,13 +142,9 @@ void main() {
       );
 
       // Assert
-      final sizedBox = tester.widget<SizedBox>(
-        find.ancestor(
-          of: find.byType(ElevatedButton),
-          matching: find.byType(SizedBox),
-        ),
-      );
-      expect(sizedBox.height, 48.0);
+      final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+      final minimumSize = button.style?.minimumSize?.resolve({});
+      expect(minimumSize?.height, 52.0);
     });
 
     testWidgets('should respect custom height', (tester) async {
@@ -168,13 +165,9 @@ void main() {
       );
 
       // Assert
-      final sizedBox = tester.widget<SizedBox>(
-        find.ancestor(
-          of: find.byType(ElevatedButton),
-          matching: find.byType(SizedBox),
-        ),
-      );
-      expect(sizedBox.height, customHeight);
+      final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+      final minimumSize = button.style?.minimumSize?.resolve({});
+      expect(minimumSize?.height, customHeight);
     });
   });
 
@@ -289,14 +282,10 @@ void main() {
       );
 
       // Assert
-      final sizedBox = tester.widget<SizedBox>(
-        find.ancestor(
-          of: find.byType(OutlinedButton),
-          matching: find.byType(SizedBox),
-        ),
-      );
-      expect(sizedBox.width, customWidth);
-      expect(sizedBox.height, customHeight);
+      final button = tester.widget<OutlinedButton>(find.byType(OutlinedButton));
+      final minimumSize = button.style?.minimumSize?.resolve({});
+      expect(minimumSize?.width, customWidth);
+      expect(minimumSize?.height, customHeight);
     });
   });
 
@@ -360,8 +349,8 @@ void main() {
 
       // Assert
       final textButton = tester.widget<TextButton>(find.byType(TextButton));
-      final text = textButton.child! as Text;
-      expect(text.style?.color, AppColors.primary);
+      final responsiveText = textButton.child! as ResponsiveText;
+      expect(responsiveText.style?.color, AppColors.primary);
     });
 
     testWidgets('should respect custom color', (tester) async {
@@ -383,8 +372,8 @@ void main() {
 
       // Assert
       final textButton = tester.widget<TextButton>(find.byType(TextButton));
-      final text = textButton.child! as Text;
-      expect(text.style?.color, customColor);
+      final responsiveText = textButton.child! as ResponsiveText;
+      expect(responsiveText.style?.color, customColor);
     });
 
     testWidgets('should use default font size', (tester) async {
@@ -402,8 +391,8 @@ void main() {
 
       // Assert
       final textButton = tester.widget<TextButton>(find.byType(TextButton));
-      final text = textButton.child! as Text;
-      expect(text.style?.fontSize, AppTypography.bodyLarge);
+      final responsiveText = textButton.child! as ResponsiveText;
+      expect(responsiveText.style?.fontSize, AppTypography.bodyLarge);
     });
 
     testWidgets('should respect custom font size', (tester) async {
@@ -425,8 +414,8 @@ void main() {
 
       // Assert
       final textButton = tester.widget<TextButton>(find.byType(TextButton));
-      final text = textButton.child! as Text;
-      expect(text.style?.fontSize, customFontSize);
+      final responsiveText = textButton.child! as ResponsiveText;
+      expect(responsiveText.style?.fontSize, customFontSize);
     });
 
     testWidgets('should have medium font weight', (tester) async {
@@ -444,8 +433,8 @@ void main() {
 
       // Assert
       final textButton = tester.widget<TextButton>(find.byType(TextButton));
-      final text = textButton.child! as Text;
-      expect(text.style?.fontWeight, FontWeight.w600);
+      final responsiveText = textButton.child! as ResponsiveText;
+      expect(responsiveText.style?.fontWeight, FontWeight.w600);
     });
   });
 

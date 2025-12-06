@@ -13,8 +13,23 @@ import 'package:basser_app/features/invoices/domain/repositories/invoice_reposit
 class MockInvoiceRepository implements InvoiceRepository {
   final List<Invoice> _invoices = [];
 
+  /// للوصول المباشر للفواتير في الاختبارات
+  List<Invoice> get invoices => List.from(_invoices);
+
+  /// تعيين قائمة الفواتير للاختبارات
+  void setInvoices(List<Invoice> invoices) {
+    _invoices.clear();
+    _invoices.addAll(invoices);
+  }
+
+  /// تفعيل/تعطيل رمي الأخطاء للاختبارات
+  bool shouldThrowError = false;
+
   @override
-  Future<List<Invoice>> getAllInvoices() async => List.from(_invoices);
+  Future<List<Invoice>> getAllInvoices() async {
+    if (shouldThrowError) throw Exception('Test error');
+    return List.from(_invoices);
+  }
 
   @override
   Future<Invoice?> getInvoiceById(String id) async {
@@ -36,6 +51,7 @@ class MockInvoiceRepository implements InvoiceRepository {
 
   @override
   Future<void> addInvoice(Invoice invoice) async {
+    if (shouldThrowError) throw Exception('Test error');
     // التحقق من عدم وجود فاتورة بنفس الـ ID
     if (_invoices.any((i) => i.id == invoice.id)) {
       throw Exception('Invoice with ID ${invoice.id} already exists');
@@ -45,6 +61,7 @@ class MockInvoiceRepository implements InvoiceRepository {
 
   @override
   Future<void> updateInvoice(Invoice invoice) async {
+    if (shouldThrowError) throw Exception('Test error');
     final index = _invoices.indexWhere((i) => i.id == invoice.id);
     if (index == -1) {
       throw Exception('Invoice with ID ${invoice.id} not found');
@@ -54,6 +71,7 @@ class MockInvoiceRepository implements InvoiceRepository {
 
   @override
   Future<void> deleteInvoice(String id) async {
+    if (shouldThrowError) throw Exception('Test error');
     _invoices.removeWhere((i) => i.id == id);
   }
 

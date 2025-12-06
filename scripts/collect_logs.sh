@@ -4,9 +4,9 @@
 # سكريبت جمع السجلات - نظام تتبع الأخطاء والسجلات
 #
 # المشروع: بصير MVP
-# التاريخ: 4 ديسمبر 2025
+# التاريخ: 6 ديسمبر 2025 (محدث)
 # المؤلف: فريق وكلاء تطوير مشروع بصير
-# الإصدار: 1.0
+# الإصدار: 2.0 (مع معالجة أخطاء شاملة)
 #
 # الوصف:
 #   يقوم هذا السكريبت بجمع السجلات من مصادر متعددة:
@@ -32,6 +32,9 @@
 
 # إعدادات عامة
 set -o pipefail  # فشل pipeline إذا فشل أي أمر
+set -o errexit   # الخروج عند أي خطأ
+set -o nounset   # الخروج عند استخدام متغير غير معرف
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 LOGS_DIR="$PROJECT_ROOT/logs"
@@ -39,12 +42,13 @@ ARCHIVE_DIR="$LOGS_DIR/archive"
 ERRORS_DIR="$LOGS_DIR/errors"
 REPORTS_DIR="$LOGS_DIR/reports"
 
-# الألوان للإخراج
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+# تحميل مكتبة معالجة الأخطاء
+if [ -f "$SCRIPT_DIR/utils/error_handler.sh" ]; then
+    source "$SCRIPT_DIR/utils/error_handler.sh"
+else
+    echo "خطأ: لم يتم العثور على مكتبة معالجة الأخطاء" >&2
+    exit 1
+fi
 
 # متغيرات عامة
 PUSH_TO_GIT=false

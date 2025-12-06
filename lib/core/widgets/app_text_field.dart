@@ -172,7 +172,7 @@ class _AppTextFieldState extends State<AppTextField> {
 ///   onClear: () => clearSearch(),
 /// )
 /// ```
-class AppSearchField extends StatelessWidget {
+class AppSearchField extends StatefulWidget {
   /// إنشاء حقل بحث
   ///
   /// Parameters:
@@ -201,15 +201,55 @@ class AppSearchField extends StatelessWidget {
   final VoidCallback? onClear;
 
   @override
+  State<AppSearchField> createState() => _AppSearchFieldState();
+}
+
+class _AppSearchFieldState extends State<AppSearchField> {
+  late TextEditingController _controller;
+  bool _hasText = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller ?? TextEditingController();
+    _hasText = _controller.text.isNotEmpty;
+    _controller.addListener(_onTextChanged);
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onTextChanged);
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
+    super.dispose();
+  }
+
+  void _onTextChanged() {
+    final hasText = _controller.text.isNotEmpty;
+    if (hasText != _hasText) {
+      setState(() {
+        _hasText = hasText;
+      });
+    }
+  }
+
+  void _handleClear() {
+    _controller.clear();
+    widget.onClear?.call();
+    widget.onChanged?.call('');
+  }
+
+  @override
   Widget build(BuildContext context) => TextField(
-        controller: controller,
-        onChanged: onChanged,
+        controller: _controller,
+        onChanged: widget.onChanged,
         decoration: InputDecoration(
-          hintText: hint,
+          hintText: widget.hint,
           prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
-          suffixIcon: controller?.text.isNotEmpty ?? false
+          suffixIcon: _hasText
               ? GestureDetector(
-                  onTap: onClear,
+                  onTap: _handleClear,
                   child:
                       const Icon(Icons.clear, color: AppColors.textSecondary),
                 )

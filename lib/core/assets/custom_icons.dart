@@ -426,10 +426,11 @@ class _AnimatedIconState extends State<AnimatedIcon>
       duration: widget.duration,
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
+    _scaleAnimation = Tween<double>(begin: 0.8, end: 1).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeOut),
     );
-    _controller.forward();
+    // تشغيل الأنيميشن (fire-and-forget pattern)
+    _controller.forward().ignore();
   }
 
   @override

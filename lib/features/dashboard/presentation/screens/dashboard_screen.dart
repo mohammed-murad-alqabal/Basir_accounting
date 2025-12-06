@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:basser_app/core/theme.dart';
 import 'package:basser_app/core/widgets/index.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// شاشة لوحة التحكم (Dashboard Screen)
@@ -20,8 +21,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: AppColors.background,
-        appBar: const AppSimpleAppBar(
+        appBar: AppSimpleAppBar(
           title: 'لوحة التحكم',
+          actions: [
+            // زر اختبار الأزرار (يظهر فقط في debug mode)
+            if (kDebugMode)
+              IconButton(
+                icon: const Icon(Icons.bug_report),
+                tooltip: 'اختبار الأزرار',
+                onPressed: () {
+                  unawaited(Navigator.of(context).pushNamed('/button-test'));
+                },
+              ),
+          ],
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(AppSpacing.lg),

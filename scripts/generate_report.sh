@@ -41,8 +41,8 @@ FORMAT="markdown"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 DATE_READABLE=$(date +"%Y-%m-%d %H:%M:%S")
 
-# إنشاء مجلد التقارير
-mkdir -p "$REPORTS_DIR"
+# إنشاء جميع المجلدات المطلوبة
+mkdir -p "$REPORTS_DIR" "$PROJECT_ROOT/logs/errors" "$PROJECT_ROOT/logs/archive"
 
 ###############################################################################
 # الدوال المساعدة

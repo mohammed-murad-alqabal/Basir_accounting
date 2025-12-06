@@ -4,7 +4,7 @@
 /// لتحسين التغطية من 3% إلى 70%+
 library;
 
-import 'package:basser_app/core/providers.dart';
+import 'package:basser_app/core/providers.dart' as core_providers;
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,9 +19,12 @@ void main() {
 
   setUp(() {
     mockRepository = MockCustomerRepository();
+    // تنظيف البيانات الافتراضية
+    mockRepository.setCustomers([]);
     container = ProviderContainer(
       overrides: [
-        customerRepositoryProvider.overrideWithValue(mockRepository),
+        core_providers.customerRepositoryProvider
+            .overrideWithValue(mockRepository),
       ],
     );
   });
@@ -34,9 +37,7 @@ void main() {
     test('should load all customers successfully', () async {
       // Arrange
       final testCustomers = MockData.createTestCustomers();
-      for (final customer in testCustomers) {
-        await mockRepository.addCustomer(customer);
-      }
+      mockRepository.setCustomers(testCustomers);
 
       // Act
       final result = await container.read(customersProvider.future);
@@ -48,6 +49,9 @@ void main() {
     });
 
     test('should return empty list when no customers exist', () async {
+      // Arrange
+      mockRepository.setCustomers([]);
+
       // Act
       final result = await container.read(customersProvider.future);
 
@@ -70,6 +74,7 @@ void main() {
   group('addCustomerProvider', () {
     test('should add customer successfully', () async {
       // Arrange
+      mockRepository.setCustomers([]);
       final customer = MockData.createTestCustomer();
 
       // Act
@@ -100,6 +105,7 @@ void main() {
 
     test('should invalidate customersProvider after add', () async {
       // Arrange
+      mockRepository.setCustomers([]);
       final customer = MockData.createTestCustomer();
 
       // Act

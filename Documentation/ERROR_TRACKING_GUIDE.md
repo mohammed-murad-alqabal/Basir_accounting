@@ -1,419 +1,697 @@
-# دليل نظام تتبع الأخطاء
+# دليل نظام تتبع الأخطاء والسجلات
 
-## Error Tracking System Guide
-
-هذا الدليل يشرح كيفية استخدام نظام تتبع الأخطاء المتكامل في المشروع.
-
----
-
-## 📋 جدول المحتويات
-
-1. [نظرة عامة](#نظرة-عامة)
-2. [المكونات](#المكونات)
-3. [الاستخدام المحلي](#الاستخدام-المحلي)
-4. [الأتمتة عبر GitHub](#الأتمتة-عبر-github)
-5. [إنشاء Issues](#إنشاء-issues)
-6. [التقارير](#التقارير)
-7. [أفضل الممارسات](#أفضل-الممارسات)
+**المشروع:** بصير MVP  
+**التاريخ:** 5 ديسمبر 2025  
+**المؤلف:** فريق وكلاء تطوير مشروع بصير  
+**الإصدار:** 1.0  
+**الحالة:** ✅ نشط
 
 ---
 
 ## نظرة عامة
 
-نظام تتبع الأخطاء يوفر:
+نظام تتبع الأخطاء والسجلات هو منظومة متكاملة لإدارة، تسجيل، تحليل، وتوثيق الأخطاء والمشكلات في مشروع بصير MVP. يهدف النظام إلى ضمان جودة عالية للكود، تتبع دقيق للمشكلات، وأتمتة كاملة لعملية الإبلاغ والمعالجة.
 
-- ✅ تسجيل تلقائي للأخطاء
-- ✅ تقارير يومية وشاملة
-- ✅ إنشاء Issues تلقائياً على GitHub
-- ✅ Git hooks للتحقق قبل الـ commit
-- ✅ GitHub Actions للتحليل المستمر
-- ✅ توثيق شامل للأخطاء المحلولة
+### المكونات الرئيسية
 
----
-
-## المكونات
-
-### 1. GitHub Issue Templates
-
-موجودة في `.github/ISSUE_TEMPLATE/`:
-
-#### bug_report.md
-
-قالب للإبلاغ عن الأخطاء:
-
-```markdown
-- وصف الخطأ
-- خطوات إعادة الإنتاج
-- السلوك المتوقع vs الفعلي
-- البيئة
-- سجلات الأخطاء
-```
-
-#### feature_request.md
-
-قالب لطلب ميزات جديدة:
-
-```markdown
-- وصف الميزة
-- المشكلة التي تحلها
-- الحل المقترح
-- الأولوية
-```
-
-#### code_quality.md
-
-قالب لمشاكل جودة الكود:
-
-```markdown
-- نوع المشكلة
-- الموقع
-- الحل المقترح
-- التأثير
-```
-
-### 2. نظام تسجيل الأخطاء المحلي
-
-**الملف:** `scripts/log_error.sh`
-
-**الوظائف:**
-
-- تحليل أخطاء Flutter
-- تحليل أخطاء الاختبارات
-- إنشاء تقارير يومية
-- إنشاء تقارير شاملة
-- تنظيف السجلات القديمة
-
-### 3. GitHub Actions
-
-**الملف:** `.github/workflows/error_tracking.yml`
-
-**المهام:**
-
-- تشغيل Flutter Analyze
-- تشغيل الاختبارات
-- إنشاء تقارير
-- إنشاء Issues للأخطاء الحرجة
-- التعليق على Pull Requests
-
-### 4. Git Hooks
-
-**الملف:** `.githooks/pre-commit`
-
-**الفحوصات:**
-
-- Flutter Format
-- Flutter Analyze
-- الاختبارات السريعة
-- TODO Comments
-
-### 5. سجل حل الأخطاء
-
-**الملف:** `Documentation/ERROR_RESOLUTION_LOG.md`
-
-**المحتوى:**
-
-- الأخطاء المحلولة
-- الحلول المطبقة
-- الدروس المستفادة
-- قوالب للمشاكل الشائعة
+1. **Git Hooks** - فحوصات تلقائية قبل commit وpush
+2. **Log Collection** - جمع وتنظيم السجلات
+3. **Archive Management** - أرشفة وضغط السجلات القديمة
+4. **Report Generation** - إنشاء تقارير شاملة
+5. **GitHub Actions** - تحليل مستمر وأتمتة CI/CD
 
 ---
 
-## الاستخدام المحلي
+## 1. Git Hooks
 
-### تشغيل نظام تسجيل الأخطاء
+### 1.1 Pre-commit Hook
+
+يُنفذ تلقائياً قبل كل commit للتحقق من جودة الكود.
+
+#### الفحوصات المنفذة
+
+- ✅ **Flutter Format** - التحقق من تنسيق الكود
+- ✅ **Flutter Analyze** - التحليل الثابت للكود
+- ✅ **Commit Message** - التحقق من صيغة رسالة الـ commit
+
+#### الاستخدام
 
 ```bash
-# تشغيل النظام الكامل
-./scripts/log_error.sh
-
-# النتائج:
-# - logs/errors/error_TIMESTAMP.log
-# - logs/reports/daily_report_DATE.md
-# - logs/reports/summary_DATE.md
+# يتم تشغيله تلقائياً عند:
+git commit -m "feat(customers): add customer search feature"
 ```
 
-### تفعيل Git Hooks
+#### مثال على الإخراج
 
-```bash
-# تفعيل الـ hooks
-git config core.hooksPath .githooks
+```
+🔍 Running pre-commit checks...
 
-# الآن سيتم تشغيل الفحوصات تلقائياً قبل كل commit
+✅ Flutter Format: PASSED
+✅ Flutter Analyze: PASSED (0 issues)
+✅ Commit Message: PASSED
+
+✨ All checks passed! Proceeding with commit...
 ```
 
-### تشغيل الفحوصات يدوياً
+#### في حالة الفشل
+
+```
+❌ Flutter Analyze: FAILED (3 errors)
+
+Errors found:
+  lib/features/customers/customer_repository.dart:45:12
+  - Missing return type for function 'getAllCustomers'
+
+Please fix the errors and try again.
+```
+
+#### تخطي الفحوصات (غير موصى به)
 
 ```bash
-# Flutter Format
-flutter format lib/ test/
+# في حالات الطوارئ فقط
+git commit --no-verify -m "emergency fix"
+```
 
-# Flutter Analyze
-flutter analyze
+### 1.2 Pre-push Hook
 
-# الاختبارات
-flutter test
+يُنفذ تلقائياً قبل كل push للتحقق من جاهزية الكود.
 
-# جميع الفحوصات
-flutter format lib/ test/ && flutter analyze && flutter test
+#### الفحوصات المنفذة
+
+- ✅ **All Tests** - تشغيل جميع الاختبارات
+- ✅ **Secret Scan** - فحص الأسرار المكشوفة
+
+#### الاستخدام
+
+```bash
+# يتم تشغيله تلقائياً عند:
+git push origin main
+```
+
+#### مثال على الإخراج
+
+```
+🧪 Running pre-push checks...
+
+✅ Tests: PASSED (45/45 tests)
+✅ Secret Scan: PASSED (no secrets found)
+
+🚀 All checks passed! Proceeding with push...
+```
+
+#### في حالة فشل الاختبارات
+
+```
+❌ Tests: FAILED (43/45 tests)
+
+Failed tests:
+  ✗ CustomerRepository should add customer successfully
+  ✗ InvoiceService should calculate tax correctly
+
+Please fix the failing tests and try again.
+```
+
+#### في حالة اكتشاف أسرار
+
+```
+❌ Secret Scan: FAILED
+
+Secrets found:
+  lib/services/api_service.dart:12
+  - API Key detected: sk_live_xxxxx
+
+Please remove the secrets and use secure storage instead.
 ```
 
 ---
 
-## الأتمتة عبر GitHub
+## 2. جمع السجلات (Log Collection)
 
-### التشغيل التلقائي
+### 2.1 السكريبت الأساسي
 
-يتم تشغيل GitHub Actions تلقائياً عند:
+```bash
+# جمع السجلات فقط
+./scripts/collect_logs.sh
+
+# جمع السجلات ودفعها إلى Git
+./scripts/collect_logs.sh --push
+```
+
+### 2.2 ما يتم جمعه
+
+#### سجلات Flutter Analyze
+
+```
+logs/flutter_analyze_2025-12-05_14-30-00.log
+```
+
+يحتوي على:
+
+- جميع الأخطاء والتحذيرات
+- موقع كل مشكلة (ملف + سطر)
+- نوع المشكلة (error/warning/info)
+
+#### سجلات الاختبارات
+
+```
+logs/flutter_test_2025-12-05_14-30-00.log
+```
+
+يحتوي على:
+
+- نتائج جميع الاختبارات
+- الاختبارات الناجحة والفاشلة
+- وقت التنفيذ
+- نسبة التغطية
+
+### 2.3 تنظيف البيانات الحساسة
+
+يقوم النظام تلقائياً بإزالة:
+
+- كلمات المرور
+- مفاتيح API
+- الرموز السرية (Tokens)
+- معلومات شخصية حساسة
+
+#### مثال
+
+```
+قبل التنظيف:
+API_KEY=redacted
+
+بعد التنظيف:
+API_KEY=[REDACTED]
+```
+
+### 2.4 إزالة التكرار
+
+يقوم النظام بتجميع الأخطاء المتشابهة:
+
+```
+قبل:
+Error: Null check operator used on a null value (x5)
+Error: Null check operator used on a null value (x5)
+Error: Null check operator used on a null value (x5)
+
+بعد:
+Error: Null check operator used on a null value (occurred 15 times)
+```
+
+---
+
+## 3. إدارة الأرشيف (Archive Management)
+
+### 3.1 الأرشفة التلقائية
+
+```bash
+# تشغيل الأرشفة يدوياً
+./scripts/archive_logs.sh
+```
+
+#### القواعد
+
+- السجلات الأقدم من **7 أيام** تُنقل إلى الأرشيف
+- عندما يتجاوز الأرشيف **10 ميجابايت**، يتم ضغطه
+- السجلات الحديثة تبقى في مكانها
+
+### 3.2 بنية المجلدات
+
+```
+logs/
+├── flutter_analyze_2025-12-05.log    # حديث
+├── flutter_test_2025-12-05.log       # حديث
+└── archive/
+    ├── flutter_analyze_2025-11-28.log    # قديم
+    ├── flutter_test_2025-11-28.log       # قديم
+    └── archive_2025-11-28.tar.gz         # مضغوط
+```
+
+### 3.3 استخراج من الأرشيف
+
+```bash
+# فك ضغط أرشيف معين
+tar -xzf logs/archive/archive_2025-11-28.tar.gz -C logs/archive/
+
+# البحث في الأرشيف
+zgrep "Error" logs/archive/archive_2025-11-28.tar.gz
+```
+
+---
+
+## 4. إنشاء التقارير (Report Generation)
+
+### 4.1 التقرير اليومي
+
+```bash
+# إنشاء تقرير شامل
+./scripts/generate_report.sh
+```
+
+#### محتويات التقرير
+
+1. **إحصائيات المشروع**
+
+   - عدد الملفات
+   - حجم المشروع
+   - عدد الـ commits
+
+2. **ملخص الأخطاء**
+
+   - عدد الأخطاء حسب النوع
+   - الأخطاء الأكثر تكراراً
+   - الملفات الأكثر مشاكل
+
+3. **نتائج الاختبارات**
+
+   - عدد الاختبارات الناجحة/الفاشلة
+   - نسبة التغطية
+   - وقت التنفيذ
+
+4. **التوصيات**
+   - إجراءات مقترحة للتحسين
+   - أولويات الإصلاح
+   - نصائح للأداء
+
+### 4.2 مثال على تقرير
+
+```markdown
+# تقرير يومي - 5 ديسمبر 2025
+
+## إحصائيات المشروع
+
+- عدد الملفات: 156
+- حجم المشروع: 2.4 MB
+- عدد الـ commits: 234
+
+## ملخص الأخطاء
+
+- أخطاء: 0
+- تحذيرات: 3
+- معلومات: 12
+
+### الأخطاء الأكثر تكراراً
+
+1. Unused import (5 مرات)
+2. Missing documentation (3 مرات)
+
+## نتائج الاختبارات
+
+- الاختبارات الناجحة: 45/45 (100%)
+- التغطية: 72%
+- وقت التنفيذ: 23 ثانية
+
+## التوصيات
+
+✅ جودة الكود ممتازة
+⚠️ يُنصح بزيادة التغطية إلى 75%+
+💡 إزالة الـ imports غير المستخدمة
+```
+
+---
+
+## 5. GitHub Actions
+
+### 5.1 Analysis Workflow
+
+يُنفذ تلقائياً عند:
 
 - Push إلى main أو develop
-- Pull Request إلى main أو develop
-- يومياً في الساعة 2 صباحاً
-- يدوياً عبر workflow_dispatch
+- إنشاء Pull Request
 
-### عرض النتائج
+#### الإجراءات
 
-1. اذهب إلى **Actions** في GitHub
-2. اختر **Error Tracking & Reporting**
-3. اختر Run محدد
-4. شاهد النتائج والتقارير
+1. تشغيل Flutter Analyze
+2. تشغيل جميع الاختبارات
+3. حساب التغطية
+4. حفظ التقارير كـ artifacts
 
-### تحميل التقارير
+### 5.2 Issue Creator Workflow
+
+يُنفذ تلقائياً عند:
+
+- فشل Analysis Workflow
+- اكتشاف أخطاء حرجة
+
+#### ما يحدث
+
+1. تحليل نتائج الفحوصات
+2. إنشاء Issue على GitHub
+3. إضافة labels تلقائية
+4. تعيين الأولوية
+
+### 5.3 PR Comment Workflow
+
+يُنفذ تلقائياً عند:
+
+- إنشاء Pull Request
+- تحديث Pull Request
+
+#### ما يحدث
+
+1. تشغيل جميع الفحوصات
+2. إنشاء ملخص للجودة
+3. إضافة تعليق على PR
+4. عرض نتائج الاختبارات
+
+---
+
+## 6. استكشاف الأخطاء وإصلاحها
+
+### 6.1 Pre-commit Hook لا يعمل
+
+#### المشكلة
+
+```
+Pre-commit hook not found
+```
+
+#### الحل
 
 ```bash
-# التقارير متوفرة في Artifacts
-# يمكن تحميلها من صفحة الـ workflow run
+# التأكد من وجود الملف
+ls -la .git/hooks/pre-commit
+
+# إذا لم يكن موجوداً، نسخه
+cp scripts/hooks/pre-commit .git/hooks/
+
+# إعطاء صلاحيات التنفيذ
+chmod +x .git/hooks/pre-commit
 ```
 
----
+### 6.2 Flutter Analyze يفشل
 
-## إنشاء Issues
+#### المشكلة
 
-### تلقائياً
+```
+flutter analyze command not found
+```
 
-يتم إنشاء Issues تلقائياً عند:
-
-- اكتشاف أخطاء حرجة (errors)
-- فشل الاختبارات
-- مشاكل في الأمان
-
-### يدوياً
-
-1. اذهب إلى **Issues** في GitHub
-2. انقر **New Issue**
-3. اختر القالب المناسب:
-   - Bug Report
-   - Feature Request
-   - Code Quality Issue
-4. املأ المعلومات المطلوبة
-5. انقر **Submit new issue**
-
----
-
-## التقارير
-
-### التقرير اليومي
-
-**الموقع:** `logs/reports/daily_report_DATE.md`
-
-**المحتوى:**
-
-- جميع الأخطاء المسجلة في اليوم
-- التفاصيل الكاملة لكل خطأ
-
-### التقرير الشامل
-
-**الموقع:** `logs/reports/summary_DATE.md`
-
-**المحتوى:**
-
-- إحصائيات الأخطاء
-- الملفات الأكثر تأثراً
-- الاتجاهات
-
-### تقرير GitHub Actions
-
-**الموقع:** Artifacts في GitHub
-
-**المحتوى:**
-
-- نتائج Flutter Analyze
-- نتائج الاختبارات
-- التفاصيل الكاملة
-
----
-
-## أفضل الممارسات
-
-### 1. التسجيل المحلي
+#### الحل
 
 ```bash
-# قبل كل commit
-./scripts/log_error.sh
+# التأكد من تثبيت Flutter
+flutter --version
 
-# مراجعة التقارير
-cat logs/reports/daily_report_$(date +%Y-%m-%d).md
+# إذا لم يكن مثبتاً، تثبيته
+# راجع: https://docs.flutter.dev/get-started/install
+
+# تحديث Flutter
+flutter upgrade
 ```
 
-### 2. معالجة الأخطاء
+### 6.3 الاختبارات تفشل
 
-```dart
-// ✅ جيد
-try {
-  // code
-} on SpecificException catch (e, stackTrace) {
-  debugPrint('Error: $e');
-  debugPrint('Stack trace: $stackTrace');
-  // handle
-} on Exception catch (e, stackTrace) {
-  debugPrint('Error: $e');
-  debugPrint('Stack trace: $stackTrace');
-  // handle
-}
+#### المشكلة
 
-// ❌ سيء
-try {
-  // code
-} catch (e) {
-  print('Error: $e');
-}
+```
+Tests failed: 43/45
 ```
 
-### 3. TODO Comments
+#### الحل
 
-```dart
-// ✅ جيد
-// TODO(team): Add biometric authentication - Issue #001
+```bash
+# تشغيل الاختبارات محلياً
+flutter test
 
-// ❌ سيء
-// TODO: Add feature
+# تشغيل اختبار محدد
+flutter test test/features/customers/customer_repository_test.dart
+
+# عرض تفاصيل الفشل
+flutter test --verbose
 ```
 
-### 4. التوثيق
+### 6.4 Secret Scan يكتشف أسرار خاطئة
 
-````dart
-// ✅ جيد
-/// وصف مفصل للدالة
-///
-/// Parameters:
-/// - [param]: وصف المعامل
-///
-/// Returns: وصف القيمة المرجعة
-///
-/// Example:
-/// ```dart
-/// final result = myFunction(param);
-/// ```
-void myFunction(String param) {
-  // code
-}
+#### المشكلة
 
-// ❌ سيء
-void myFunction(String param) {
-  // code
-}
-````
+```
+False positive: "password" in comment
+```
 
-### 5. الاختبارات
+#### الحل
 
-```dart
-// ✅ جيد
-test('should return correct value', () {
-  // arrange
-  final input = 'test';
+```bash
+# تحديث patterns في السكريبت
+# تحرير: scripts/hooks/pre-push
 
-  // act
-  final result = myFunction(input);
+# إضافة استثناءات للتعليقات
+# أو استخدام secure storage
+```
 
-  // assert
-  expect(result, equals('expected'));
-});
+### 6.5 مساحة القرص ممتلئة
 
-// ❌ سيء
-test('test', () {
-  expect(myFunction('test'), 'expected');
-});
+#### المشكلة
+
+```
+No space left on device
+```
+
+#### الحل
+
+```bash
+# أرشفة السجلات القديمة
+./scripts/archive_logs.sh
+
+# حذف الأرشيفات القديمة جداً (> 30 يوم)
+find logs/archive -name "*.tar.gz" -mtime +30 -delete
+
+# تنظيف build cache
+flutter clean
+```
+
+### 6.6 Git Push يفشل
+
+#### المشكلة
+
+```
+Push failed: remote rejected
+```
+
+#### الحل
+
+```bash
+# التحقق من الاتصال
+git remote -v
+
+# سحب آخر التحديثات
+git pull origin main
+
+# إعادة المحاولة
+git push origin main
+
+# إذا استمرت المشكلة، تخطي hook
+git push --no-verify origin main
 ```
 
 ---
 
-## الأوامر السريعة
+## 7. أفضل الممارسات
+
+### 7.1 للمطورين
+
+#### ✅ افعل
+
+- اكتب رسائل commit واضحة
+- شغّل الاختبارات قبل الـ push
+- راجع السجلات بانتظام
+- أصلح التحذيرات فوراً
+- استخدم secure storage للأسرار
+
+#### ❌ لا تفعل
+
+- لا تتخطى الـ hooks بدون سبب
+- لا تدفع كود به أخطاء
+- لا تتجاهل التحذيرات
+- لا تخزن أسرار في الكود
+- لا تحذف السجلات يدوياً
+
+### 7.2 للفريق
+
+#### الاجتماعات اليومية
+
+- مراجعة التقرير اليومي
+- مناقشة الأخطاء الحرجة
+- تحديد الأولويات
+- توزيع المهام
+
+#### المراجعة الأسبوعية
+
+- تحليل الاتجاهات
+- تقييم جودة الكود
+- تحديث المعايير
+- تحسين العمليات
+
+---
+
+## 8. الأوامر السريعة
+
+### 8.1 الفحوصات اليومية
 
 ```bash
-# تسجيل الأخطاء
-./scripts/log_error.sh
-
-# تفعيل Git Hooks
-git config core.hooksPath .githooks
-
-# فحص الكود
-flutter analyze
+# فحص سريع للكود
+flutter analyze --no-pub
 
 # تشغيل الاختبارات
 flutter test
 
-# تنسيق الكود
-flutter format lib/ test/
+# جمع السجلات
+./scripts/collect_logs.sh
 
-# عرض التقارير
-cat logs/reports/daily_report_$(date +%Y-%m-%d).md
-
-# تنظيف السجلات القديمة
-find logs -name "*.log" -mtime +30 -delete
+# إنشاء تقرير
+./scripts/generate_report.sh
 ```
 
----
-
-## استكشاف الأخطاء
-
-### المشكلة: Git Hooks لا تعمل
-
-**الحل:**
+### 8.2 الصيانة الأسبوعية
 
 ```bash
-# تأكد من التفعيل
-git config core.hooksPath .githooks
+# أرشفة السجلات القديمة
+./scripts/archive_logs.sh
 
-# تأكد من الصلاحيات
-chmod +x .githooks/pre-commit
+# تنظيف build cache
+flutter clean
+
+# تحديث التبعيات
+flutter pub upgrade
+
+# فحص الأمان
+./scripts/security_scan.sh
 ```
 
-### المشكلة: GitHub Actions تفشل
-
-**الحل:**
-
-1. تحقق من سجلات الـ workflow
-2. تأكد من صحة flutter version
-3. تأكد من وجود جميع التبعيات
-
-### المشكلة: التقارير لا تُنشأ
-
-**الحل:**
+### 8.3 الطوارئ
 
 ```bash
-# تأكد من وجود المجلدات
-mkdir -p logs/errors logs/reports
+# تخطي pre-commit (طوارئ فقط)
+git commit --no-verify -m "emergency fix"
 
-# تأكد من الصلاحيات
-chmod +x scripts/log_error.sh
+# تخطي pre-push (طوارئ فقط)
+git push --no-verify origin main
+
+# استعادة من الأرشيف
+tar -xzf logs/archive/archive_DATE.tar.gz
 ```
 
 ---
 
-## الدعم والمساعدة
+## 9. التكامل مع IDE
 
-### الموارد
+### 9.1 VS Code
 
-- [Flutter Error Handling](https://flutter.dev/docs/testing/errors)
-- [Dart Exception Handling](https://dart.dev/guides/language/language-tour#exceptions)
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
+#### إضافة مهام (Tasks)
 
-### الاتصال
+```json
+// .vscode/tasks.json
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Collect Logs",
+      "type": "shell",
+      "command": "./scripts/collect_logs.sh",
+      "group": "build"
+    },
+    {
+      "label": "Generate Report",
+      "type": "shell",
+      "command": "./scripts/generate_report.sh",
+      "group": "build"
+    }
+  ]
+}
+```
 
-- **Issues:** [GitHub Issues](https://github.com/your-repo/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/your-repo/discussions)
+#### اختصارات لوحة المفاتيح
+
+```json
+// .vscode/keybindings.json
+[
+  {
+    "key": "ctrl+shift+l",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Collect Logs"
+  }
+]
+```
+
+### 9.2 Android Studio
+
+#### External Tools
+
+1. Settings → Tools → External Tools
+2. Add New Tool:
+   - Name: Collect Logs
+   - Program: ./scripts/collect_logs.sh
+   - Working Directory: $ProjectFileDir$
 
 ---
 
-**آخر تحديث:** 2025-01-XX  
-**الإصدار:** 1.0.0
+## 10. الموارد والمراجع
+
+### الوثائق الداخلية
+
+- [Design Document](../.kiro/specs/error-tracking-system/design.md)
+- [Requirements](../.kiro/specs/error-tracking-system/requirements.md)
+- [Tasks](../.kiro/specs/error-tracking-system/tasks.md)
+
+### الأدوات المستخدمة
+
+- [Flutter](https://flutter.dev/)
+- [Dart](https://dart.dev/)
+- [GitHub Actions](https://github.com/features/actions)
+- [Git Hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks)
+
+### المعايير المتبعة
+
+- [Conventional Commits](https://www.conventionalcommits.org/)
+- [OWASP Security](https://owasp.org/)
+- [Flutter Best Practices](https://docs.flutter.dev/development/best-practices)
+
+---
+
+## 11. الدعم والمساعدة
+
+### الحصول على المساعدة
+
+1. **راجع هذا الدليل** - معظم الأسئلة مجاب عنها هنا
+2. **راجع قسم استكشاف الأخطاء** - حلول للمشاكل الشائعة
+3. **راجع السجلات** - تحتوي على تفاصيل الأخطاء
+4. **اسأل الفريق** - في حالة المشاكل المعقدة
+
+### الإبلاغ عن مشكلة
+
+عند الإبلاغ عن مشكلة، قدم:
+
+- وصف واضح للمشكلة
+- خطوات إعادة إنتاج المشكلة
+- رسائل الخطأ الكاملة
+- السجلات ذات الصلة
+- بيئة التشغيل (OS, Flutter version)
+
+---
+
+## 12. سجل التحديثات
+
+### الإصدار 1.0 (5 ديسمبر 2025)
+
+- ✅ إطلاق النظام الأساسي
+- ✅ Git Hooks (pre-commit, pre-push)
+- ✅ Log Collection
+- ✅ Archive Management
+- ✅ Report Generation
+- ✅ GitHub Actions Integration
+- ✅ التوثيق الشامل
+
+### التحديثات المخططة
+
+- 📋 دعم عملات متعددة في التقارير
+- 📋 تكامل مع Slack للإشعارات
+- 📋 لوحة تحكم ويب للتقارير
+- 📋 تحليل متقدم بالذكاء الاصطناعي
+
+---
+
+**تم إعداد هذا الدليل بواسطة:** فريق وكلاء تطوير مشروع بصير  
+**آخر تحديث:** 5 ديسمبر 2025  
+**الإصدار:** 1.0  
+**الحالة:** ✅ نشط ومعتمد
+
+**للأسئلة والاستفسارات:** راجع قسم الدعم والمساعدة أعلاه

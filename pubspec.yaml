@@ -78,6 +78,16 @@ flutter:
     - assets/fonts/
     - assets/icons/
     - assets/images/
+    - assets/store/
+
+# تكوين flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icons/app_icon.png"
+  remove_alpha_ios: true
 
   # خطوط Cairo المحلية للعمل بدون إنترنت
   fonts:

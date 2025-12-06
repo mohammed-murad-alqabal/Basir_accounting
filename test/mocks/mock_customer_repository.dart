@@ -11,14 +11,46 @@ import 'package:basser_app/features/customers/domain/repositories/customer_repos
 /// يخزن العملاء في List في الذاكرة بدلاً من قاعدة البيانات.
 /// مفيد لاختبار Providers والـ Services بدون الاعتماد على قاعدة البيانات.
 class MockCustomerRepository implements CustomerRepository {
-  final List<Customer> _customers = [];
+  /// Constructor مع بيانات اختبارية افتراضية
+  MockCustomerRepository({
+    List<Customer>? customers,
+    this.shouldThrow = false,
+  }) : _customers = customers ??
+            [
+              Customer(
+                id: 'test-1',
+                name: 'أحمد محمد',
+                phone: '0501234567',
+                email: 'ahmed@test.com',
+                createdAt: DateTime(2024),
+                updatedAt: DateTime(2024),
+              ),
+              Customer(
+                id: 'test-2',
+                name: 'سارة علي',
+                phone: '0509876543',
+                email: 'sara@test.com',
+                createdAt: DateTime(2024, 1, 2),
+                updatedAt: DateTime(2024, 1, 2),
+              ),
+            ];
+  final List<Customer> _customers;
 
   /// للتحكم في رمي الأخطاء في الاختبارات
+  final bool shouldThrow;
+
+  /// للتحكم في رمي الأخطاء (backward compatibility)
   bool shouldThrowError = false;
+
+  /// للتحكم في نتيجة addCustomer
+  bool addCustomerResult = true;
+
+  /// للتحكم في نتيجة updateCustomer
+  bool updateCustomerResult = true;
 
   @override
   Future<List<Customer>> getAllCustomers() async {
-    if (shouldThrowError) {
+    if (shouldThrow || shouldThrowError) {
       throw Exception('Mock error: Failed to get customers');
     }
     return List.from(_customers);
@@ -36,8 +68,11 @@ class MockCustomerRepository implements CustomerRepository {
 
   @override
   Future<void> addCustomer(Customer customer) async {
-    if (shouldThrowError) {
+    if (shouldThrow || shouldThrowError) {
       throw Exception('Mock error: Failed to add customer');
+    }
+    if (!addCustomerResult) {
+      throw Exception('Mock: Add customer failed');
     }
     // التحقق من عدم وجود عميل بنفس الـ ID
     if (_customers.any((c) => c.id == customer.id)) {
@@ -48,8 +83,11 @@ class MockCustomerRepository implements CustomerRepository {
 
   @override
   Future<void> updateCustomer(Customer customer) async {
-    if (shouldThrowError) {
+    if (shouldThrow || shouldThrowError) {
       throw Exception('Mock error: Failed to update customer');
+    }
+    if (!updateCustomerResult) {
+      throw Exception('Mock: Update customer failed');
     }
     final index = _customers.indexWhere((c) => c.id == customer.id);
     if (index == -1) {
@@ -60,7 +98,7 @@ class MockCustomerRepository implements CustomerRepository {
 
   @override
   Future<void> deleteCustomer(String id) async {
-    if (shouldThrowError) {
+    if (shouldThrow || shouldThrowError) {
       throw Exception('Mock error: Failed to delete customer');
     }
     _customers.removeWhere((c) => c.id == id);
@@ -89,6 +127,12 @@ class MockCustomerRepository implements CustomerRepository {
     for (final customer in customers) {
       await addCustomer(customer);
     }
+  }
+
+  /// دالة مساعدة لتعيين قائمة العملاء مباشرة (للاختبارات)
+  void setCustomers(List<Customer> customers) {
+    _customers.clear();
+    _customers.addAll(customers);
   }
 
   /// دالة مساعدة لمسح جميع العملاء (للاختبارات)

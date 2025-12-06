@@ -2,6 +2,7 @@
 ///
 /// يقوم بإنشاء أيقونة احترافية لتطبيق بصير
 /// باستخدام Flutter's CustomPainter
+library;
 
 import 'dart:io';
 import 'dart:ui' as ui;
@@ -11,7 +12,7 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  print('🎨 بدء توليد أيقونة التطبيق...');
+  stdout.writeln('🎨 بدء توليد أيقونة التطبيق...');
 
   // إنشاء المجلدات
   final iconsDir = Directory('assets/icons');
@@ -24,16 +25,17 @@ void main() async {
   await _generateIcon(512, 'app_icon_foreground.png');
   await _generateIcon(512, 'splash_logo.png');
 
-  print('✅ تم توليد جميع الأيقونات بنجاح!');
-  print('📁 الموقع: assets/icons/');
-  print('');
-  print('الخطوات التالية:');
-  print('1. flutter pub run flutter_launcher_icons');
-  print('2. dart run flutter_native_splash:create');
+  stdout
+    ..writeln('✅ تم توليد جميع الأيقونات بنجاح!')
+    ..writeln('📁 الموقع: assets/icons/')
+    ..writeln()
+    ..writeln('الخطوات التالية:')
+    ..writeln('1. flutter pub run flutter_launcher_icons')
+    ..writeln('2. dart run flutter_native_splash:create');
 }
 
 Future<void> _generateIcon(int size, String filename) async {
-  print('  📝 توليد $filename (${size}x$size)...');
+  stdout.writeln('  📝 توليد $filename (${size}x$size)...');
 
   // إنشاء canvas
   final recorder = ui.PictureRecorder();
@@ -60,7 +62,7 @@ Future<void> _generateIcon(int size, String filename) async {
   final file = File('assets/icons/$filename');
   await file.writeAsBytes(bytes);
 
-  print('  ✅ تم حفظ $filename');
+  stdout.writeln('  ✅ تم حفظ $filename');
 }
 
 void _drawLogo(Canvas canvas, double size) {

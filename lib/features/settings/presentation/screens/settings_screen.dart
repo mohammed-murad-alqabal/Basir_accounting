@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/theme.dart';
 import 'package:basser_app/core/widgets/index.dart';
-import 'package:basser_app/core/widgets/responsive_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
