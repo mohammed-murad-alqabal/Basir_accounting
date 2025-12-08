@@ -1,3 +1,34 @@
 {
-  "mcpServers": {}
+  "mcpServers": {
+    "flutter-docs": {
+      "command": "uvx",
+      "args": ["flutter-docs-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [],
+      "priority": 88
+    },
+    "dart-analyzer": {
+      "command": "uvx",
+      "args": ["dart-analyzer-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [],
+      "priority": 85
+    },
+    "git-helper": {
+      "command": "uvx",
+      "args": ["git-helper-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": ["git_status", "git_log"],
+      "priority": 80
+    }
+  }
 }

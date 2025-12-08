@@ -35,6 +35,27 @@
     ]
   },
 
+  "guides": {
+    "description": "الأدلة التفصيلية - تُحمّل عند الحاجة",
+    "autoLoad": false,
+    "files": [
+      "guides/flutter-guide.md",
+      "guides/git-guide.md",
+      "guides/security-guide.md",
+      "guides/testing-guide.md",
+      "guides/deployment-guide.md"
+    ],
+    "estimatedSize": "50KB",
+    "estimatedLines": 1500,
+    "loadWhen": [
+      "عند العمل على Flutter",
+      "عند العمل على Git",
+      "عند مراجعة الأمان",
+      "عند كتابة الاختبارات",
+      "عند التحضير للنشر"
+    ]
+  },
+
   "reference": {
     "description": "المراجع الكاملة - تُحمّل عند الطلب الصريح فقط",
     "autoLoad": false,
