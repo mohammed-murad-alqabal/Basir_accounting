@@ -1,0 +1,197 @@
+name: Error Tracking & Reporting
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # تشغيل يومياً في الساعة 2 صباحاً
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  analyze-and-report:
+    name: تحليل الأخطاء وإنشاء التقارير
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Run Flutter Analyze
+        id: analyze
+        continue-on-error: true
+        run: |
+          flutter analyze > analyze_output.txt 2>&1 || true
+          echo "analyze_exit_code=$?" >> $GITHUB_OUTPUT
+
+          # استخراج الإحصائيات
+          ISSUES_COUNT=$(grep -c "issue" analyze_output.txt || echo "0")
+          ERRORS_COUNT=$(grep -c "error •" analyze_output.txt || echo "0")
+          WARNINGS_COUNT=$(grep -c "warning •" analyze_output.txt || echo "0")
+          INFO_COUNT=$(grep -c "info •" analyze_output.txt || echo "0")
+
+          echo "issues_count=$ISSUES_COUNT" >> $GITHUB_OUTPUT
+          echo "errors_count=$ERRORS_COUNT" >> $GITHUB_OUTPUT
+          echo "warnings_count=$WARNINGS_COUNT" >> $GITHUB_OUTPUT
+          echo "info_count=$INFO_COUNT" >> $GITHUB_OUTPUT
+
+      - name: Run Tests
+        id: test
+        continue-on-error: true
+        run: |
+          flutter test > test_output.txt 2>&1 || true
+          echo "test_exit_code=$?" >> $GITHUB_OUTPUT
+
+          # استخراج نتائج الاختبارات
+          PASSED=$(grep -oP '\+\K[0-9]+' test_output.txt | tail -1 || echo "0")
+          FAILED=$(grep -oP '\-\K[0-9]+' test_output.txt | tail -1 || echo "0")
+          SKIPPED=$(grep -oP '~\K[0-9]+' test_output.txt | tail -1 || echo "0")
+
+          echo "tests_passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "tests_failed=$FAILED" >> $GITHUB_OUTPUT
+          echo "tests_skipped=$SKIPPED" >> $GITHUB_OUTPUT
+
+      - name: Create Error Report
+        run: |
+          mkdir -p logs/reports
+
+          cat > logs/reports/error_report_$(date +%Y-%m-%d).md << 'EOF'
+          # تقرير الأخطاء التلقائي
+
+          **التاريخ:** $(date '+%Y-%m-%d %H:%M:%S')  
+          **Commit:** ${{ github.sha }}  
+          **Branch:** ${{ github.ref_name }}
+
+          ## 📊 إحصائيات Flutter Analyze
+
+          | النوع | العدد |
+          |:---|:---:|
+          | **Errors** | ${{ steps.analyze.outputs.errors_count }} |
+          | **Warnings** | ${{ steps.analyze.outputs.warnings_count }} |
+          | **Info** | ${{ steps.analyze.outputs.info_count }} |
+          | **الإجمالي** | ${{ steps.analyze.outputs.issues_count }} |
+
+          ## 🧪 نتائج الاختبارات
+
+          | الحالة | العدد |
+          |:---|:---:|
+          | **نجح** ✅ | ${{ steps.test.outputs.tests_passed }} |
+          | **فشل** ❌ | ${{ steps.test.outputs.tests_failed }} |
+          | **تخطي** ⏭️ | ${{ steps.test.outputs.tests_skipped }} |
+
+          ## 📝 التفاصيل
+
+          ### Flutter Analyze Output
+          ```
+          $(cat analyze_output.txt | head -50)
+          ```
+
+          ### Test Output
+          ```
+          $(cat test_output.txt | tail -30)
+          ```
+          EOF
+
+      - name: Upload Error Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: error-report-${{ github.run_number }}
+          path: logs/reports/
+          retention-days: 30
+
+      - name: Create Issue on Critical Errors
+        if: steps.analyze.outputs.errors_count > 0
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const errorsCount = ${{ steps.analyze.outputs.errors_count }};
+            const warningsCount = ${{ steps.analyze.outputs.warnings_count }};
+            const testsFailedCount = ${{ steps.test.outputs.tests_failed }};
+
+            if (errorsCount > 0 || testsFailedCount > 0) {
+              const title = `🚨 أخطاء حرجة مكتشفة - ${new Date().toISOString().split('T')[0]}`;
+              const body = `
+              # تقرير الأخطاء التلقائي
+              
+              تم اكتشاف أخطاء حرجة في الكود.
+              
+              ## 📊 الإحصائيات
+              
+              - **Errors:** ${errorsCount}
+              - **Warnings:** ${warningsCount}
+              - **Tests Failed:** ${testsFailedCount}
+              
+              ## 🔗 الروابط
+              
+              - **Commit:** ${context.sha}
+              - **Branch:** ${context.ref}
+              - **Workflow Run:** ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}
+              
+              ## 📝 الإجراءات المطلوبة
+              
+              - [ ] مراجعة الأخطاء
+              - [ ] إصلاح المشاكل الحرجة
+              - [ ] تشغيل الاختبارات محلياً
+              - [ ] التحقق من الإصلاحات
+              
+              ---
+              *تم إنشاء هذا التقرير تلقائياً بواسطة GitHub Actions*
+              `;
+              
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['bug', 'automated', 'critical']
+              });
+            }
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const errorsCount = ${{ steps.analyze.outputs.errors_count }};
+            const warningsCount = ${{ steps.analyze.outputs.warnings_count }};
+            const testsPassedCount = ${{ steps.test.outputs.tests_passed }};
+            const testsFailedCount = ${{ steps.test.outputs.tests_failed }};
+
+            const comment = `
+            ## 📊 تقرير جودة الكود
+
+            ### Flutter Analyze
+            - ❌ Errors: ${errorsCount}
+            - ⚠️ Warnings: ${warningsCount}
+            - ℹ️ Info: ${{ steps.analyze.outputs.info_count }}
+
+            ### الاختبارات
+            - ✅ نجح: ${testsPassedCount}
+            - ❌ فشل: ${testsFailedCount}
+            - ⏭️ تخطي: ${{ steps.test.outputs.tests_skipped }}
+
+            ${errorsCount > 0 ? '⚠️ **تحذير:** يوجد أخطاء حرجة يجب إصلاحها قبل الدمج!' : ''}
+            ${testsFailedCount > 0 ? '⚠️ **تحذير:** يوجد اختبارات فاشلة!' : ''}
+            ${errorsCount === 0 && testsFailedCount === 0 ? '✅ **ممتاز!** لا توجد أخطاء حرجة.' : ''}
+            `;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: comment
+            });
