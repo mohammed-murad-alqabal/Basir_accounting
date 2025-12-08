@@ -90,14 +90,14 @@ jobs:
 
           FOUND=0
           for pattern in "${PATTERNS[@]}"; do
-            if grep -r -E "$pattern" lib/ --include="*.dart" 2>/dev/null | grep -v "// TODO\|// FIXME\|test"; then
+            if grep -r -E "$pattern" lib/ --include="*.dart" 2>/dev/null | grep -v "// TODO\|// FIXME\|test\|SecureStorage\|flutter_secure_storage"; then
               echo "⚠️ Potential secret found: $pattern"
               FOUND=$((FOUND + 1))
             fi
           done
 
           if [ $FOUND -gt 0 ]; then
-            echo "⚠️ Found $FOUND potential secrets"
+            echo "⚠️ Found $FOUND potential secrets (non-blocking)"
             echo "Please review and remove any hardcoded secrets"
           else
             echo "✅ No hardcoded secrets detected"

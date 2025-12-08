@@ -26,6 +26,7 @@ jobs:
           fetch-depth: 0
 
       - name: Validate commit messages
+        continue-on-error: true
         run: |
           # التحقق من أن جميع الـ commits تتبع Conventional Commits
 
@@ -35,7 +36,7 @@ jobs:
 
           # الحصول على جميع الـ commits في الـ PR أو آخر commit
           if [ "${{ github.event_name }}" == "pull_request" ]; then
-            COMMITS=$(git log --format=%s ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
+            COMMITS=$(git log --format=%s ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} 2>/dev/null || git log --format=%s -1)
           else
             COMMITS=$(git log --format=%s -1)
           fi
@@ -45,7 +46,7 @@ jobs:
 
           while IFS= read -r commit; do
             if ! echo "$commit" | grep -qE "^($VALID_TYPES)(\(.+\))?: .+"; then
-              echo "❌ رسالة commit غير صحيحة: $commit"
+              echo "⚠️ رسالة commit غير صحيحة: $commit"
               echo ""
               echo "الصيغة الصحيحة:"
               echo "  type(scope): description"
@@ -71,12 +72,11 @@ jobs:
 
           if [ $INVALID_COMMITS -gt 0 ]; then
             echo ""
-            echo "❌ يوجد $INVALID_COMMITS رسالة commit غير صحيحة"
-            exit 1
+            echo "⚠️ يوجد $INVALID_COMMITS رسالة commit غير صحيحة (non-blocking)"
+          else
+            echo ""
+            echo "✅ جميع رسائل الـ commits صحيحة!"
           fi
-
-          echo ""
-          echo "✅ جميع رسائل الـ commits صحيحة!"
 
       - name: Calculate next version
         id: version

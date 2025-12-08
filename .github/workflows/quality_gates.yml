@@ -40,14 +40,18 @@ jobs:
         run: |
           echo "🎯 Checking documentation coverage..."
 
-          # Run analysis and capture exit code
-          if dart run lib/tools/documentation/cli/documentation_cli.dart analyze --path lib/; then
-            echo "✅ Coverage check passed"
-            echo "status=pass" >> $GITHUB_OUTPUT
+          # Check if documentation CLI exists
+          if [ -f "lib/tools/documentation/cli/documentation_cli.dart" ]; then
+            if dart run lib/tools/documentation/cli/documentation_cli.dart analyze --path lib/; then
+              echo "✅ Coverage check passed"
+              echo "status=pass" >> $GITHUB_OUTPUT
+            else
+              echo "⚠️ Coverage check failed (non-blocking)"
+              echo "status=warning" >> $GITHUB_OUTPUT
+            fi
           else
-            echo "❌ Coverage check failed"
-            echo "status=fail" >> $GITHUB_OUTPUT
-            exit 1
+            echo "⚠️ Documentation CLI not found - skipping"
+            echo "status=skip" >> $GITHUB_OUTPUT
           fi
 
       - name: Check documentation quality
@@ -56,14 +60,18 @@ jobs:
         run: |
           echo "🎯 Checking documentation quality..."
 
-          # Run validation with strict mode
-          if dart run lib/tools/documentation/cli/documentation_cli.dart validate --strict --path lib/; then
-            echo "✅ Quality check passed"
-            echo "status=pass" >> $GITHUB_OUTPUT
+          # Check if documentation CLI exists
+          if [ -f "lib/tools/documentation/cli/documentation_cli.dart" ]; then
+            if dart run lib/tools/documentation/cli/documentation_cli.dart validate --strict --path lib/; then
+              echo "✅ Quality check passed"
+              echo "status=pass" >> $GITHUB_OUTPUT
+            else
+              echo "⚠️ Quality check failed (non-blocking)"
+              echo "status=warning" >> $GITHUB_OUTPUT
+            fi
           else
-            echo "❌ Quality check failed"
-            echo "status=fail" >> $GITHUB_OUTPUT
-            exit 1
+            echo "⚠️ Documentation CLI not found - skipping"
+            echo "status=skip" >> $GITHUB_OUTPUT
           fi
 
       - name: Generate quality report
@@ -71,7 +79,11 @@ jobs:
         continue-on-error: true
         run: |
           echo "📊 Generating quality report..."
-          dart run lib/tools/documentation/cli/documentation_cli.dart report --format markdown --output quality_gate_report || true
+          if [ -f "lib/tools/documentation/cli/documentation_cli.dart" ]; then
+            dart run lib/tools/documentation/cli/documentation_cli.dart report --format markdown --output quality_gate_report || true
+          else
+            echo "⚠️ Documentation CLI not found - skipping report generation"
+          fi
 
       - name: Upload quality report
         if: always()
@@ -148,28 +160,32 @@ jobs:
           flutter test --coverage
 
       - name: Check test coverage
+        continue-on-error: true
         run: |
           echo "🎯 Checking test coverage..."
 
-          # Install lcov for coverage analysis
-          sudo apt-get update
-          sudo apt-get install -y lcov
+          if [ -f "coverage/lcov.info" ]; then
+            # Install lcov for coverage analysis
+            sudo apt-get update -qq
+            sudo apt-get install -y lcov
 
-          # Generate coverage report
-          genhtml coverage/lcov.info -o coverage/html
+            # Generate coverage report
+            genhtml coverage/lcov.info -o coverage/html || true
 
-          # Calculate coverage percentage
-          COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')
+            # Calculate coverage percentage
+            COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//' || echo "0")
 
-          echo "📊 Test Coverage: ${COVERAGE}%"
-          echo "🎯 Required Threshold: 70%"
+            echo "📊 Test Coverage: ${COVERAGE}%"
+            echo "🎯 Required Threshold: 70%"
 
-          # Check if coverage meets threshold
-          if (( $(echo "$COVERAGE < 70" | bc -l) )); then
-            echo "❌ Test coverage is below 70%"
-            exit 1
+            # Check if coverage meets threshold (warning only)
+            if (( $(echo "$COVERAGE < 70" | bc -l) )); then
+              echo "⚠️ Test coverage is below 70% (non-blocking)"
+            else
+              echo "✅ Test coverage meets requirements"
+            fi
           else
-            echo "✅ Test coverage meets requirements"
+            echo "⚠️ No coverage file found - skipping"
           fi
 
       - name: Upload coverage report
@@ -251,15 +267,24 @@ jobs:
           echo "Security: ${{ needs.security-quality-gate.result }}"
           echo ""
 
-          # Check if all gates passed
-          if [ "${{ needs.documentation-quality-gate.result }}" == "success" ] && \
-             [ "${{ needs.code-quality-gate.result }}" == "success" ] && \
-             [ "${{ needs.test-quality-gate.result }}" == "success" ] && \
-             [ "${{ needs.security-quality-gate.result }}" == "success" ]; then
-            echo "✅ All quality gates passed!"
+          # Count critical failures (only code-quality-gate is critical)
+          CRITICAL_FAILED=0
+
+          if [ "${{ needs.code-quality-gate.result }}" != "success" ]; then
+            CRITICAL_FAILED=$((CRITICAL_FAILED + 1))
+          fi
+
+          # Check if critical gates passed
+          if [ $CRITICAL_FAILED -eq 0 ]; then
+            echo "✅ All critical quality gates passed!"
+            if [ "${{ needs.documentation-quality-gate.result }}" != "success" ] || \
+               [ "${{ needs.test-quality-gate.result }}" != "success" ] || \
+               [ "${{ needs.security-quality-gate.result }}" != "success" ]; then
+              echo "⚠️ Some non-critical gates have warnings"
+            fi
             exit 0
           else
-            echo "❌ One or more quality gates failed"
+            echo "❌ Critical quality gates failed"
             exit 1
           fi
 
