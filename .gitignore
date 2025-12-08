@@ -155,3 +155,13 @@ CURRENT_*.md
 .fvm/
 .flutter-plugins-dependencies
 libisar.so
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+sqlite_mcp_server.db
+
+# Git backup files
+backup_git_*.tar.gz
+git_fsck_report.txt

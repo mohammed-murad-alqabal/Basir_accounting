@@ -23,6 +23,7 @@
 ├── settings/          # Configuration
 │   └── mcp.json       # MCP servers (3 servers)
 ├── specs/             # Project specifications
+│   └── additional-enhancements/  # Additional enhancements spec
 ├── steering/          # Steering files
 │   ├── core/          # Core principles (3 files)
 │   ├── standards/     # Standards (6 files)
@@ -68,9 +69,24 @@
 - `templates/README.md` - Templates guide
 - `scripts/README.md` - Scripts guide
 
+### CI/CD (Enhanced v2.0)
+
+- `.github/workflows/enhanced_ci.yml` - Enhanced CI workflow
+- `scripts/testing/check-quality-enhanced.sh` - Enhanced quality check
+- `scripts/testing/generate-coverage.sh` - Enhanced coverage report
+- `scripts/deployment/build-android.sh` - Enhanced Android build
+
 ### Reports
 
-- `docs/reports/` - Status and completion reports
+- `docs/reports/` - Status and completion reports (17 reports)
+- `docs/reports/CI_CD_ENHANCEMENTS_COMPLETION_REPORT.md` - CI/CD enhancements report
+- `docs/reports/COMPLETE_INTEGRATION_SUMMARY.md` - Complete integration summary
+- `docs/reports/FINAL_STATUS.md` - Final status
+- `docs/reports/RECOMMENDED_ENHANCEMENTS_PLAN.md` - Recommended enhancements plan
+
+### Specs
+
+- `specs/additional-enhancements/requirements.md` - Additional enhancements requirements
 
 ---
 
@@ -81,22 +97,26 @@
 | **Prompts**        | 7     |
 | **Examples**       | 6     |
 | **Templates**      | 16    |
-| **Scripts**        | 16    |
+| **Scripts**        | 18    |
 | **Hooks**          | 23    |
 | **Steering Files** | 19    |
 | **MCP Servers**    | 3     |
 | **Guides**         | 5     |
+| **Workflows**      | 1     |
+| **Specs**          | 1     |
+| **Reports**        | 17    |
 
 ---
 
 ## Rating
 
-**Current:** 97/100 ⭐⭐⭐⭐⭐
+**Current:** 98/100 ⭐⭐⭐⭐⭐
 
 **Improvements:**
 
 - Phase 1: 92 → 95 (+3)
 - Phase 2: 95 → 97 (+2)
+- Phase 3: 97 → 98 (+1) - CI/CD Enhancements
 
 **Target:** 100/100
 

@@ -1,34 +1,44 @@
 {
   "mcpServers": {
-    "flutter-docs": {
+    "git": {
       "command": "uvx",
-      "args": ["flutter-docs-mcp-server@latest"],
+      "args": ["mcp-server-git@latest", "--repository", "."],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
-      "autoApprove": [],
-      "priority": 88
+      "autoApprove": ["git_status", "git_log", "git_diff"],
+      "priority": 90
     },
-    "dart-analyzer": {
+    "fetch": {
       "command": "uvx",
-      "args": ["dart-analyzer-mcp-server@latest"],
+      "args": ["mcp-server-fetch@latest"],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
-      "autoApprove": [],
+      "autoApprove": ["fetch"],
       "priority": 85
     },
-    "git-helper": {
+    "sqlite": {
       "command": "uvx",
-      "args": ["git-helper-mcp-server@latest"],
+      "args": ["mcp-server-sqlite@latest"],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
-      "autoApprove": ["git_status", "git_log"],
+      "autoApprove": ["query", "list_tables"],
       "priority": 80
+    },
+    "time": {
+      "command": "uvx",
+      "args": ["mcp-server-time@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": ["get_current_time", "convert_timezone"],
+      "priority": 75
     }
   }
 }
