@@ -54,7 +54,8 @@ coverage/
 
 # Secrets & Sensitive Files
 .env
-.env.*
+.env.local
+.env.*.local
 secrets.json
 *.key
 *.jks
@@ -65,6 +66,9 @@ google-services.json
 GoogleService-Info.plist
 key.properties
 firebase_options.dart
+
+# Keep .env.example for reference
+!.env.example
 
 # Error Tracking System - Sensitive Data Patterns
 **/api_key*
