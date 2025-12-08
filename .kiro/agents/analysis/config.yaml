@@ -1,5 +1,0 @@
-# analysis Agent Configuration
-agent:
-  name: "Analysis Agent"
-  version: "1.0.0"
-  enabled: true

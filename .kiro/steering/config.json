@@ -1,0 +1,99 @@
+{
+  "version": "1.0",
+  "description": "تكوين تحميل ملفات التوجيه",
+  "loadingStrategy": "selective",
+
+  "core": {
+    "description": "الملفات الأساسية - تُحمّل دائماً",
+    "autoLoad": true,
+    "files": [
+      "core/philosophy.md",
+      "core/quick-reference.md",
+      "core/team-identity.md"
+    ],
+    "estimatedSize": "5KB",
+    "estimatedLines": 160
+  },
+
+  "standards": {
+    "description": "ملفات المعايير - تُحمّل عند الحاجة",
+    "autoLoad": false,
+    "files": [
+      "standards/naming.md",
+      "standards/code-quality.md",
+      "standards/flutter.md",
+      "standards/arabic.md",
+      "standards/documentation.md",
+      "standards/testing.md"
+    ],
+    "estimatedSize": "30KB",
+    "estimatedLines": 900,
+    "loadWhen": [
+      "عند العمل على كود جديد",
+      "عند المراجعة",
+      "عند الحاجة لمعيار محدد"
+    ]
+  },
+
+  "reference": {
+    "description": "المراجع الكاملة - تُحمّل عند الطلب الصريح فقط",
+    "autoLoad": false,
+    "files": [
+      "reference/full-standards.md",
+      "reference/examples.md",
+      "reference/arabic-dictionary.md",
+      "reference/best-practices.md",
+      "reference/strategic-docs.md"
+    ],
+    "estimatedSize": "200KB",
+    "estimatedLines": 6000,
+    "loadWhen": [
+      "عند الطلب الصريح فقط",
+      "للمراجعة التفصيلية",
+      "للبحث عن معلومة محددة"
+    ]
+  },
+
+  "moved": {
+    "description": "الملفات المنقولة",
+    "contextMonitor": {
+      "file": "context-monitor.md",
+      "movedTo": ".kiro/docs/",
+      "reason": "ملف توثيقي - ليس ملف توجيه"
+    },
+    "reportTemplates": {
+      "file": "report-templates.md",
+      "movedTo": ".kiro/docs/",
+      "reason": "قوالب توثيقية - ليست ملفات توجيه"
+    }
+  },
+
+  "deleted": {
+    "description": "الملفات المحذوفة",
+    "archive": {
+      "folder": "archive/",
+      "filesCount": 23,
+      "reason": "ملفات قديمة غير مستخدمة - تم حذفها نهائياً"
+    },
+    "guides": {
+      "folder": "guides/",
+      "reason": "مجلد فارغ - تم حذفه"
+    }
+  },
+
+  "metrics": {
+    "before": {
+      "totalFiles": 20,
+      "totalLines": 6575,
+      "totalSize": "220KB",
+      "coreLoad": "100%"
+    },
+    "after": {
+      "coreFiles": 3,
+      "coreLines": 160,
+      "coreSize": "5KB",
+      "coreLoad": "2.4%",
+      "improvement": "97.6%"
+    }
+  }
+}

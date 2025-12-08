@@ -1,5 +1,0 @@
-# orchestrator Agent Configuration
-agent:
-  name: "Orchestrator Agent"
-  version: "1.0.0"
-  enabled: true

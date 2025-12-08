@@ -273,6 +273,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             ),
             IconButton(
               icon: const Icon(Icons.edit, size: 20),
+              tooltip: 'تعديل نسبة الضريبة',
               onPressed: _showTaxRateDialog,
             ),
           ],
@@ -343,6 +344,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.add_circle, color: AppColors.primary),
+                  tooltip: 'إضافة بند جديد',
                   onPressed: _addItem,
                 ),
               ],
@@ -391,6 +393,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                               Icons.delete,
                               color: AppColors.error,
                             ),
+                            tooltip: 'حذف البند',
                             onPressed: () => _removeItem(index),
                           ),
                         ],

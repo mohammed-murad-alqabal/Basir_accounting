@@ -417,10 +417,39 @@ security:
 
 ### معايير الحوكمة
 
-- [الفلسفة الهندسية](.kiro/steering/philosophy.md)
-- [المكدس التقني](.kiro/steering/tech-stack.md)
-- [البنية الهيكلية](.kiro/steering/structure.md)
-- [معايير الأمان](.kiro/steering/security.md)
+**📦 البنية الجديدة (7 ديسمبر 2025)** - تم تحسين نظام التوجيه بنسبة **97.6%**
+
+- [دليل البنية الجديدة](.kiro/steering/README.md) - نظرة عامة شاملة
+- [دليل التحميل](.kiro/steering/LOADING_GUIDE.md) - كيفية استخدام النظام الجديد
+
+**الملفات الأساسية (تُحمّل دائماً):**
+
+- [الفلسفة الهندسية](.kiro/steering/core/philosophy.md)
+- [المرجع السريع](.kiro/steering/core/quick-reference.md)
+- [الهوية الموحدة](.kiro/steering/core/team-identity.md)
+
+**المعايير (عند الحاجة):**
+
+- [معايير التسمية](.kiro/steering/standards/naming.md)
+- [معايير الجودة](.kiro/steering/standards/code-quality.md)
+- [معايير Flutter](.kiro/steering/standards/flutter.md)
+- [معايير العربية](.kiro/steering/standards/arabic.md)
+- [معايير التوثيق](.kiro/steering/standards/documentation.md)
+- [معايير الاختبارات](.kiro/steering/standards/testing.md)
+
+**الأدلة التفصيلية (عند الموضوع):**
+
+- [دليل Flutter](.kiro/steering/guides/flutter-guide.md)
+- [دليل Git](.kiro/steering/guides/git-guide.md)
+- [دليل الأمان](.kiro/steering/guides/security-guide.md)
+
+**المراجع الكاملة (عند الطلب):**
+
+- [جميع المعايير](.kiro/steering/reference/full-standards.md)
+- [أمثلة تفصيلية](.kiro/steering/reference/examples.md)
+- [القاموس العربي](.kiro/steering/reference/arabic-dictionary.md)
+- [أفضل الممارسات](.kiro/steering/reference/best-practices.md)
+- [الوثائق الاستراتيجية](.kiro/steering/reference/strategic-docs.md)
 
 ### المواصفات (Specs)
 

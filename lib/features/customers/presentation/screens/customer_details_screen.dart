@@ -27,10 +27,12 @@ class CustomerDetailsScreen extends ConsumerWidget {
           actions: [
             IconButton(
               icon: const Icon(Icons.edit),
+              tooltip: 'تعديل العميل',
               onPressed: () => _editCustomer(context),
             ),
             IconButton(
               icon: const Icon(Icons.delete, color: AppColors.error),
+              tooltip: 'حذف العميل',
               onPressed: () => _deleteCustomer(context, ref),
             ),
           ],

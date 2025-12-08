@@ -1,5 +1,0 @@
-# testing Agent Configuration
-agent:
-  name: "Testing Agent"
-  version: "1.0.0"
-  enabled: true

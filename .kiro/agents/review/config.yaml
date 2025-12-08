@@ -1,5 +1,0 @@
-# review Agent Configuration
-agent:
-  name: "Review Agent"
-  version: "1.0.0"
-  enabled: true

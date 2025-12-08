@@ -1,5 +1,0 @@
-# security Agent Configuration
-agent:
-  name: "Security Agent"
-  version: "1.0.0"
-  enabled: true

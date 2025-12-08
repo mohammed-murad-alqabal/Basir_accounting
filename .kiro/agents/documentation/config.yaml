@@ -1,5 +1,0 @@
-# documentation Agent Configuration
-agent:
-  name: "Documentation Agent"
-  version: "1.0.0"
-  enabled: true
