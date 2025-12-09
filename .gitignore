@@ -200,3 +200,9 @@ git_fsck_report.txt
 
 # DartDoc generated files
 docs/api/html/
+
+# Temporary files in root (prevent clutter)
+/*.log
+/*.tmp
+/*.temp
+/*.bak
