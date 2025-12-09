@@ -78,10 +78,7 @@ void main() {
         mockRepository.shouldThrowError = true;
 
         // Act & Assert
-        expect(
-          () => container.read(invoicesProvider.future),
-          throwsException,
-        );
+        expect(() => container.read(invoicesProvider.future), throwsException);
       });
     });
 

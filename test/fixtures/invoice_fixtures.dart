@@ -39,18 +39,8 @@ class InvoiceFixtures {
     dueDate: DateTime(2025, 12, 5),
     status: 'issued',
     items: const [
-      InvoiceItem(
-        id: 'item-2-1',
-        name: 'منتج أ',
-        quantity: 2,
-        price: 500,
-      ),
-      InvoiceItem(
-        id: 'item-2-2',
-        name: 'منتج ب',
-        quantity: 3,
-        price: 300,
-      ),
+      InvoiceItem(id: 'item-2-1', name: 'منتج أ', quantity: 2, price: 500),
+      InvoiceItem(id: 'item-2-2', name: 'منتج ب', quantity: 3, price: 300),
       InvoiceItem(
         id: 'item-2-3',
         name: 'خدمة التوصيل',
@@ -72,12 +62,7 @@ class InvoiceFixtures {
     dueDate: DateTime(2025, 11, 15),
     status: 'paid',
     items: const [
-      InvoiceItem(
-        id: 'item-3',
-        name: 'اشتراك شهري',
-        quantity: 1,
-        price: 2000,
-      ),
+      InvoiceItem(id: 'item-3', name: 'اشتراك شهري', quantity: 1, price: 2000),
     ],
     taxRate: 0.15,
     createdAt: DateTime(2025, 10, 15),
@@ -93,12 +78,7 @@ class InvoiceFixtures {
     dueDate: DateTime(2025, 10),
     status: 'overdue',
     items: const [
-      InvoiceItem(
-        id: 'item-4',
-        name: 'خدمة صيانة',
-        quantity: 1,
-        price: 1500,
-      ),
+      InvoiceItem(id: 'item-4', name: 'خدمة صيانة', quantity: 1, price: 1500),
     ],
     taxRate: 0.15,
     createdAt: DateTime(2025, 9),
@@ -114,12 +94,7 @@ class InvoiceFixtures {
     dueDate: DateTime(2025, 12, 10),
     status: 'cancelled',
     items: const [
-      InvoiceItem(
-        id: 'item-5',
-        name: 'طلب ملغي',
-        quantity: 1,
-        price: 800,
-      ),
+      InvoiceItem(id: 'item-5', name: 'طلب ملغي', quantity: 1, price: 800),
     ],
     taxRate: 0.15,
     createdAt: DateTime(2025, 11, 10),
@@ -186,52 +161,40 @@ class InvoiceFixtures {
   ];
 
   /// فواتير المسودة فقط
-  static final List<Invoice> draftInvoices = [
-    invoice1,
-    invoice6,
-    invoice7,
-  ];
+  static final List<Invoice> draftInvoices = [invoice1, invoice6, invoice7];
 
   /// فواتير المرسلة فقط
-  static final List<Invoice> issuedInvoices = [
-    invoice2,
-  ];
+  static final List<Invoice> issuedInvoices = [invoice2];
 
   /// فواتير المدفوعة فقط
-  static final List<Invoice> paidInvoices = [
-    invoice3,
-  ];
+  static final List<Invoice> paidInvoices = [invoice3];
 
   /// فواتير المتأخرة فقط
-  static final List<Invoice> overdueInvoices = [
-    invoice4,
-  ];
+  static final List<Invoice> overdueInvoices = [invoice4];
 
   /// فواتير الملغاة فقط
-  static final List<Invoice> cancelledInvoices = [
-    invoice5,
-  ];
+  static final List<Invoice> cancelledInvoices = [invoice5];
 
   /// إنشاء فاتورة ديناميكية للاختبار
   static Invoice createInvoice(int index, {String? status}) => Invoice(
-        id: 'invoice-$index',
-        customerId: 'customer-$index',
-        customerName: 'عميل رقم $index',
-        issuedDate: DateTime.now(),
-        dueDate: DateTime.now().add(const Duration(days: 30)),
-        status: status ?? 'draft',
-        items: [
-          InvoiceItem(
-            id: 'item-$index',
-            name: 'منتج رقم $index',
-            quantity: 1,
-            price: 100.0 * index,
-          ),
-        ],
-        taxRate: 0.15,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      );
+    id: 'invoice-$index',
+    customerId: 'customer-$index',
+    customerName: 'عميل رقم $index',
+    issuedDate: DateTime.now(),
+    dueDate: DateTime.now().add(const Duration(days: 30)),
+    status: status ?? 'draft',
+    items: [
+      InvoiceItem(
+        id: 'item-$index',
+        name: 'منتج رقم $index',
+        quantity: 1,
+        price: 100.0 * index,
+      ),
+    ],
+    taxRate: 0.15,
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+  );
 
   /// إنشاء عدة فواتير ديناميكية
   static List<Invoice> createInvoices(int count) =>

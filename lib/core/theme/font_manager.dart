@@ -40,10 +40,7 @@ class FontManager {
   /// Returns true إذا تم تحميل الخط الأساسي بنجاح.
   static Future<bool> initialize() async {
     try {
-      developer.log(
-        'Initializing FontManager...',
-        name: 'FontManager',
-      );
+      developer.log('Initializing FontManager...', name: 'FontManager');
 
       // محاولة تحميل خط Cairo
       _isPrimaryFontLoaded = await _loadFont(primaryFont);
@@ -142,15 +139,14 @@ class FontManager {
     FontWeight? fontWeight,
     Color? color,
     double? height,
-  }) =>
-      TextStyle(
-        fontFamily: getDefaultFontFamily(),
-        fontFamilyFallback: fallbackFonts,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        color: color,
-        height: height,
-      );
+  }) => TextStyle(
+    fontFamily: getDefaultFontFamily(),
+    fontFamilyFallback: fallbackFonts,
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    color: color,
+    height: height,
+  );
 
   /// ينشئ TextStyle آمن مع line-height مناسب لخط Cairo.
   ///
@@ -200,12 +196,12 @@ class FontManager {
   ///
   /// Returns Map يحتوي على معلومات الحالة.
   static Map<String, dynamic> getStatus() => {
-        'primaryFont': primaryFont,
-        'isPrimaryFontLoaded': _isPrimaryFontLoaded,
-        'fallbackFonts': fallbackFonts,
-        'defaultFont': getDefaultFontFamily(),
-        'errors': errors,
-      };
+    'primaryFont': primaryFont,
+    'isPrimaryFontLoaded': _isPrimaryFontLoaded,
+    'fallbackFonts': fallbackFonts,
+    'defaultFont': getDefaultFontFamily(),
+    'errors': errors,
+  };
 
   /// يطبع معلومات حالة الخطوط (للتطوير).
   static void printStatus() {
@@ -246,10 +242,7 @@ class FontDebugInfo extends StatelessWidget {
         children: [
           const Text(
             'Font Manager Status',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 4),
           Builder(

@@ -108,45 +108,45 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.label,
-            style: const TextStyle(
-              fontSize: AppTypography.labelLarge,
-              fontWeight: FontWeight.w500,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          TextFormField(
-            controller: widget.controller,
-            validator: widget.validator,
-            keyboardType: widget.keyboardType,
-            obscureText: _obscureText,
-            maxLines: _obscureText ? 1 : widget.maxLines,
-            minLines: widget.minLines,
-            onChanged: widget.onChanged,
-            textInputAction: widget.textInputAction,
-            textDirection: _getTextDirection(context),
-            decoration: InputDecoration(
-              hintText: widget.hint,
-              prefixIcon: widget.prefixIcon,
-              suffixIcon: widget.obscureText
-                  ? GestureDetector(
-                      onTap: () {
-                        setState(() => _obscureText = !_obscureText);
-                      },
-                      child: Icon(
-                        _obscureText ? Icons.visibility_off : Icons.visibility,
-                        color: AppColors.textSecondary,
-                      ),
-                    )
-                  : widget.suffixIcon,
-            ),
-          ),
-        ],
-      );
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        widget.label,
+        style: const TextStyle(
+          fontSize: AppTypography.labelLarge,
+          fontWeight: FontWeight.w500,
+          color: AppColors.textPrimary,
+        ),
+      ),
+      const SizedBox(height: AppSpacing.sm),
+      TextFormField(
+        controller: widget.controller,
+        validator: widget.validator,
+        keyboardType: widget.keyboardType,
+        obscureText: _obscureText,
+        maxLines: _obscureText ? 1 : widget.maxLines,
+        minLines: widget.minLines,
+        onChanged: widget.onChanged,
+        textInputAction: widget.textInputAction,
+        textDirection: _getTextDirection(context),
+        decoration: InputDecoration(
+          hintText: widget.hint,
+          prefixIcon: widget.prefixIcon,
+          suffixIcon: widget.obscureText
+              ? GestureDetector(
+                  onTap: () {
+                    setState(() => _obscureText = !_obscureText);
+                  },
+                  child: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                    color: AppColors.textSecondary,
+                  ),
+                )
+              : widget.suffixIcon,
+        ),
+      ),
+    ],
+  );
 
   TextDirection _getTextDirection(BuildContext context) {
     final isArabic = Directionality.of(context) == TextDirection.rtl;
@@ -242,30 +242,29 @@ class _AppSearchFieldState extends State<AppSearchField> {
 
   @override
   Widget build(BuildContext context) => TextField(
-        controller: _controller,
-        onChanged: widget.onChanged,
-        decoration: InputDecoration(
-          hintText: widget.hint,
-          prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
-          suffixIcon: _hasText
-              ? GestureDetector(
-                  onTap: _handleClear,
-                  child:
-                      const Icon(Icons.clear, color: AppColors.textSecondary),
-                )
-              : null,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(AppBorderRadius.lg),
-            borderSide: const BorderSide(color: AppColors.border),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(AppBorderRadius.lg),
-            borderSide: const BorderSide(color: AppColors.border),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(AppBorderRadius.lg),
-            borderSide: const BorderSide(color: AppColors.primary, width: 2),
-          ),
-        ),
-      );
+    controller: _controller,
+    onChanged: widget.onChanged,
+    decoration: InputDecoration(
+      hintText: widget.hint,
+      prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
+      suffixIcon: _hasText
+          ? GestureDetector(
+              onTap: _handleClear,
+              child: const Icon(Icons.clear, color: AppColors.textSecondary),
+            )
+          : null,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+        borderSide: const BorderSide(color: AppColors.border),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+        borderSide: const BorderSide(color: AppColors.border),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+        borderSide: const BorderSide(color: AppColors.primary, width: 2),
+      ),
+    ),
+  );
 }

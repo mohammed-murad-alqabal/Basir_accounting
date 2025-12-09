@@ -19,9 +19,7 @@ void main() {
               (ref) async => CustomerFixtures.allCustomers,
             ),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -39,9 +37,7 @@ void main() {
               (ref) async => CustomerFixtures.allCustomers,
             ),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -59,9 +55,7 @@ void main() {
               (ref) async => CustomerFixtures.allCustomers,
             ),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -70,25 +64,22 @@ void main() {
       expect(find.text('ابحث عن عميل...'), findsOneWidget);
     });
 
-    testWidgets('should display loading indicator when loading',
-        (tester) async {
+    testWidgets('should display loading indicator when loading', (
+      tester,
+    ) async {
       // Arrange
       var isLoading = true;
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            customersProvider.overrideWith(
-              (ref) async {
-                if (isLoading) {
-                  await Future<void>.delayed(const Duration(milliseconds: 100));
-                }
-                return CustomerFixtures.allCustomers;
-              },
-            ),
+            customersProvider.overrideWith((ref) async {
+              if (isLoading) {
+                await Future<void>.delayed(const Duration(milliseconds: 100));
+              }
+              return CustomerFixtures.allCustomers;
+            }),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pump(const Duration(milliseconds: 10));
@@ -106,13 +97,9 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            customersProvider.overrideWith(
-              (ref) async => <Customer>[],
-            ),
+            customersProvider.overrideWith((ref) async => <Customer>[]),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -122,8 +109,9 @@ void main() {
       expect(find.byIcon(Icons.people), findsOneWidget);
     });
 
-    testWidgets('should display error message when error occurs',
-        (tester) async {
+    testWidgets('should display error message when error occurs', (
+      tester,
+    ) async {
       // Arrange
       const errorMessage = 'فشل في تحميل العملاء';
 
@@ -134,9 +122,7 @@ void main() {
               (ref) async => throw Exception(errorMessage),
             ),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -145,21 +131,16 @@ void main() {
       expect(find.textContaining('خطأ في تحميل العملاء'), findsOneWidget);
     });
 
-    testWidgets('should display list of customers when data is available',
-        (tester) async {
+    testWidgets('should display list of customers when data is available', (
+      tester,
+    ) async {
       // Arrange
       final customers = CustomerFixtures.allCustomers;
 
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [
-            customersProvider.overrideWith(
-              (ref) async => customers,
-            ),
-          ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          overrides: [customersProvider.overrideWith((ref) async => customers)],
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -177,13 +158,9 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            customersProvider.overrideWith(
-              (ref) async => [customer],
-            ),
+            customersProvider.overrideWith((ref) async => [customer]),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -194,21 +171,18 @@ void main() {
       expect(find.text(customer.phone!), findsOneWidget);
     });
 
-    testWidgets('should display avatar with first letter of name',
-        (tester) async {
+    testWidgets('should display avatar with first letter of name', (
+      tester,
+    ) async {
       // Arrange
       final customer = CustomerFixtures.customer1;
 
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            customersProvider.overrideWith(
-              (ref) async => [customer],
-            ),
+            customersProvider.overrideWith((ref) async => [customer]),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -224,14 +198,8 @@ void main() {
 
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [
-            customersProvider.overrideWith(
-              (ref) async => customers,
-            ),
-          ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          overrides: [customersProvider.overrideWith((ref) async => customers)],
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -250,9 +218,7 @@ void main() {
               (ref) async => CustomerFixtures.allCustomers,
             ),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -278,14 +244,8 @@ void main() {
 
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [
-            customersProvider.overrideWith(
-              (ref) async => customers,
-            ),
-          ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          overrides: [customersProvider.overrideWith((ref) async => customers)],
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -315,9 +275,7 @@ void main() {
               (ref) async => CustomerFixtures.allCustomers,
             ),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -337,13 +295,9 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            customersProvider.overrideWith(
-              (ref) async => [customer],
-            ),
+            customersProvider.overrideWith((ref) async => [customer]),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -365,26 +319,22 @@ void main() {
               (ref) async => CustomerFixtures.allCustomers,
             ),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
 
       // Act
-      await tester.enterText(
-        find.byType(TextField),
-        'أحمد',
-      );
+      await tester.enterText(find.byType(TextField), 'أحمد');
       await tester.pump();
 
       // Assert
       expect(find.text('أحمد'), findsOneWidget);
     });
 
-    testWidgets('should clear search field when clear button is pressed',
-        (tester) async {
+    testWidgets('should clear search field when clear button is pressed', (
+      tester,
+    ) async {
       // Arrange
       await tester.pumpWidget(
         ProviderScope(
@@ -393,9 +343,7 @@ void main() {
               (ref) async => CustomerFixtures.allCustomers,
             ),
           ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -421,8 +369,9 @@ void main() {
       }
     });
 
-    testWidgets('should maintain scroll position when rebuilding',
-        (tester) async {
+    testWidgets('should maintain scroll position when rebuilding', (
+      tester,
+    ) async {
       // Arrange
       final customers = List.generate(
         20,
@@ -437,14 +386,8 @@ void main() {
 
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [
-            customersProvider.overrideWith(
-              (ref) async => customers,
-            ),
-          ],
-          child: const MaterialApp(
-            home: CustomersScreen(),
-          ),
+          overrides: [customersProvider.overrideWith((ref) async => customers)],
+          child: const MaterialApp(home: CustomersScreen()),
         ),
       );
       await tester.pumpAndSettle();

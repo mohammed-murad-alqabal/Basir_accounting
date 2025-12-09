@@ -220,10 +220,7 @@ enum IssueSeverity {
 /// تمثل درجة جودة التوثيق
 class QualityScore {
   /// إنشاء درجة جودة
-  const QualityScore({
-    required this.score,
-    required this.rating,
-  });
+  const QualityScore({required this.score, required this.rating});
 
   /// الدرجة (0-100)
   final int score;
@@ -244,22 +241,13 @@ class QualityScore {
   );
 
   /// درجة جيدة
-  static const QualityScore good = QualityScore(
-    score: 75,
-    rating: 'Good',
-  );
+  static const QualityScore good = QualityScore(score: 75, rating: 'Good');
 
   /// درجة مقبولة
-  static const QualityScore fair = QualityScore(
-    score: 60,
-    rating: 'Fair',
-  );
+  static const QualityScore fair = QualityScore(score: 60, rating: 'Fair');
 
   /// درجة ضعيفة
-  static const QualityScore poor = QualityScore(
-    score: 40,
-    rating: 'Poor',
-  );
+  static const QualityScore poor = QualityScore(score: 40, rating: 'Poor');
 
   /// الحصول على التقييم بناءً على الدرجة
   static QualityScore fromScore(int score) {

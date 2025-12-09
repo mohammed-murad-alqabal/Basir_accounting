@@ -153,8 +153,9 @@ void main() {
 
       test('should return null when invoice does not exist', () async {
         // Act
-        final foundInvoice =
-            await repository.getInvoiceById('non-existent-invoice');
+        final foundInvoice = await repository.getInvoiceById(
+          'non-existent-invoice',
+        );
 
         // Assert
         expect(foundInvoice, isNull);
@@ -210,8 +211,9 @@ void main() {
         await repository.addInvoice(invoice3);
 
         // Act
-        final customerInvoices =
-            await repository.getInvoicesByCustomerId('customer-1');
+        final customerInvoices = await repository.getInvoicesByCustomerId(
+          'customer-1',
+        );
 
         // Assert
         expect(customerInvoices.length, 2);
@@ -227,8 +229,9 @@ void main() {
         await repository.addInvoice(invoice);
 
         // Act
-        final customerInvoices =
-            await repository.getInvoicesByCustomerId('customer-2');
+        final customerInvoices = await repository.getInvoicesByCustomerId(
+          'customer-2',
+        );
 
         // Assert
         expect(customerInvoices, isEmpty);
@@ -307,12 +310,7 @@ void main() {
           dueDate: DateTime(2025, 12),
           status: 'draft',
           items: const [
-            InvoiceItem(
-              id: 'item-1',
-              name: 'خدمة',
-              quantity: 1,
-              price: 1000,
-            ),
+            InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 1, price: 1000),
           ],
           taxRate: 0.15,
           createdAt: DateTime(2025, 11),

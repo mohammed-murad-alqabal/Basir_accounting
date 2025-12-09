@@ -183,10 +183,7 @@ void main() {
       final customer = MockData.createTestCustomer(id: 'non-existent');
 
       // Act & Assert
-      expect(
-        () => mockRepository.updateCustomer(customer),
-        throwsException,
-      );
+      expect(() => mockRepository.updateCustomer(customer), throwsException);
     });
   });
 
@@ -262,8 +259,9 @@ void main() {
 
       // Act
       final allCustomers = await mockRepository.getAllCustomers();
-      final filtered =
-          allCustomers.where((c) => c.name.contains('محمد')).toList();
+      final filtered = allCustomers
+          .where((c) => c.name.contains('محمد'))
+          .toList();
 
       // Assert
       expect(filtered.length, 2);
@@ -343,8 +341,9 @@ void main() {
 
       // Act
       final allCustomers = await mockRepository.getAllCustomers();
-      final filtered =
-          allCustomers.where((c) => c.name.contains('غير موجود')).toList();
+      final filtered = allCustomers
+          .where((c) => c.name.contains('غير موجود'))
+          .toList();
 
       // Assert
       expect(filtered, isEmpty);

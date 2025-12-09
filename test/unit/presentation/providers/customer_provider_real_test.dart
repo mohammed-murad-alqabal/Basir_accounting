@@ -23,8 +23,9 @@ void main() {
     mockRepository.setCustomers([]);
     container = ProviderContainer(
       overrides: [
-        core_providers.customerRepositoryProvider
-            .overrideWithValue(mockRepository),
+        core_providers.customerRepositoryProvider.overrideWithValue(
+          mockRepository,
+        ),
       ],
     );
   });
@@ -64,10 +65,7 @@ void main() {
       mockRepository.shouldThrowError = true;
 
       // Act & Assert
-      expect(
-        () => container.read(customersProvider.future),
-        throwsException,
-      );
+      expect(() => container.read(customersProvider.future), throwsException);
     });
   });
 
@@ -78,9 +76,7 @@ void main() {
       final customer = MockData.createTestCustomer();
 
       // Act
-      final result = await container.read(
-        addCustomerProvider(customer).future,
-      );
+      final result = await container.read(addCustomerProvider(customer).future);
 
       // Assert
       expect(result, true);
@@ -95,9 +91,7 @@ void main() {
       mockRepository.shouldThrowError = true;
 
       // Act
-      final result = await container.read(
-        addCustomerProvider(customer).future,
-      );
+      final result = await container.read(addCustomerProvider(customer).future);
 
       // Assert
       expect(result, false);
@@ -123,9 +117,7 @@ void main() {
       final customer = MockData.createTestCustomer();
       await mockRepository.addCustomer(customer);
 
-      final updatedCustomer = customer.copyWith(
-        name: 'اسم محدث',
-      );
+      final updatedCustomer = customer.copyWith(name: 'اسم محدث');
 
       // Act
       final result = await container.read(
@@ -309,10 +301,7 @@ void main() {
       );
 
       expect(customers.length, 2); // أحمد محمد و محمد أحمد
-      expect(
-        customers.every((c) => c.name.contains('أحمد')),
-        true,
-      );
+      expect(customers.every((c) => c.name.contains('أحمد')), true);
     });
 
     test('should filter customers by email', () async {

@@ -11,11 +11,7 @@ void main() {
     testWidgets('should display child widget', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: AppCard(
-              child: Text('محتوى البطاقة'),
-            ),
-          ),
+          home: Scaffold(body: AppCard(child: Text('محتوى البطاقة'))),
         ),
       );
 
@@ -44,10 +40,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppCard(
-              padding: EdgeInsets.all(32),
-              child: Text('محتوى'),
-            ),
+            body: AppCard(padding: EdgeInsets.all(32), child: Text('محتوى')),
           ),
         ),
       );
@@ -60,10 +53,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppCard(
-              backgroundColor: Colors.red,
-              child: Text('محتوى'),
-            ),
+            body: AppCard(backgroundColor: Colors.red, child: Text('محتوى')),
           ),
         ),
       );
@@ -77,9 +67,7 @@ void main() {
     testWidgets('should display title', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: AppListCard(title: 'أحمد محمد'),
-          ),
+          home: Scaffold(body: AppListCard(title: 'أحمد محمد')),
         ),
       );
 
@@ -90,10 +78,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppListCard(
-              title: 'أحمد محمد',
-              subtitle: '0501234567',
-            ),
+            body: AppListCard(title: 'أحمد محمد', subtitle: '0501234567'),
           ),
         ),
       );
@@ -105,10 +90,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppListCard(
-              title: 'أحمد محمد',
-              trailing: '5 فواتير',
-            ),
+            body: AppListCard(title: 'أحمد محمد', trailing: '5 فواتير'),
           ),
         ),
       );
@@ -120,10 +102,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppListCard(
-              title: 'أحمد محمد',
-              leading: Icon(Icons.person),
-            ),
+            body: AppListCard(title: 'أحمد محمد', leading: Icon(Icons.person)),
           ),
         ),
       );
@@ -137,10 +116,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppListCard(
-              title: 'أحمد محمد',
-              onTap: () => tapped = true,
-            ),
+            body: AppListCard(title: 'أحمد محمد', onTap: () => tapped = true),
           ),
         ),
       );

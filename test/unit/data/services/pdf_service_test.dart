@@ -41,24 +41,22 @@ void main() {
   });
 
   // الاختبارات التالية معلقة حتى يتم توفير ملف خط صحيح
-  group(
-    'PdfService - Generate Invoice PDF (Skipped - Font Required)',
-    () {
-      test(
-        'SKIPPED: would generate PDF with valid invoice and customer',
-        () async {
-          // هذا الاختبار يحتاج لملف خط صحيح
-          // final invoice = MockData.createTestInvoice();
-          // final customer = MockData.createTestCustomer();
-          // final pdfBytes = await pdfService
-          //     .generateInvoicePdf(invoice, customer);
-          // expect(pdfBytes, isNotNull);
-        },
-        skip: 'يتطلب ملف خط عربي صحيح في '
-            'assets/fonts/Cairo-Regular.ttf',
-      );
-    },
-  );
+  group('PdfService - Generate Invoice PDF (Skipped - Font Required)', () {
+    test(
+      'SKIPPED: would generate PDF with valid invoice and customer',
+      () async {
+        // هذا الاختبار يحتاج لملف خط صحيح
+        // final invoice = MockData.createTestInvoice();
+        // final customer = MockData.createTestCustomer();
+        // final pdfBytes = await pdfService
+        //     .generateInvoicePdf(invoice, customer);
+        // expect(pdfBytes, isNotNull);
+      },
+      skip:
+          'يتطلب ملف خط عربي صحيح في '
+          'assets/fonts/Cairo-Regular.ttf',
+    );
+  });
 
   /* 
   // الاختبارات الأصلية - معلقة مؤقتاً

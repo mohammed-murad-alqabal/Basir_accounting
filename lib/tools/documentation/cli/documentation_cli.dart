@@ -13,10 +13,10 @@ import 'package:basser_app/tools/documentation/validation/validation_engine.dart
 class DocumentationCLI {
   /// إنشاء أداة CLI
   DocumentationCLI()
-      : _analysisEngine = AnalysisEngine(),
-        _generationEngine = GenerationEngine(),
-        _validationEngine = ValidationEngine(),
-        _repository = DocumentationRepository();
+    : _analysisEngine = AnalysisEngine(),
+      _generationEngine = GenerationEngine(),
+      _validationEngine = ValidationEngine(),
+      _repository = DocumentationRepository();
 
   /// محرك التحليل
   final AnalysisEngine _analysisEngine;

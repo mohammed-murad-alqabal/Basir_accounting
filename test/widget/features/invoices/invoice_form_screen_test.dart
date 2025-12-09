@@ -19,14 +19,12 @@ void main() {
   });
 
   Widget createTestWidget({Invoice? invoice}) => ProviderScope(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockCustomerRepository),
-          invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepository),
-        ],
-        child: MaterialApp(
-          home: InvoiceFormScreen(invoice: invoice),
-        ),
-      );
+    overrides: [
+      customerRepositoryProvider.overrideWithValue(mockCustomerRepository),
+      invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepository),
+    ],
+    child: MaterialApp(home: InvoiceFormScreen(invoice: invoice)),
+  );
 
   group('InvoiceFormScreen - Basic Display', () {
     testWidgets('should build without error', (tester) async {
@@ -60,8 +58,9 @@ void main() {
 
   group('InvoiceFormScreen - With Invoice', () {
     testWidgets('should build with invoice', (tester) async {
-      await tester
-          .pumpWidget(createTestWidget(invoice: InvoiceFixtures.invoice1));
+      await tester.pumpWidget(
+        createTestWidget(invoice: InvoiceFixtures.invoice1),
+      );
       await tester.pumpAndSettle();
 
       expect(find.byType(InvoiceFormScreen), findsOneWidget);

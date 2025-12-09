@@ -117,9 +117,7 @@ void main() {
       });
 
       test('should handle route with null arguments', () {
-        const settings = RouteSettings(
-          name: '/dashboard',
-        );
+        const settings = RouteSettings(name: '/dashboard');
         final route = AppRouter.generateRoute(settings);
         expect(route, isA<MaterialPageRoute<dynamic>>());
       });

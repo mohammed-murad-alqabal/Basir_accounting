@@ -94,8 +94,10 @@ final currentUsernameProvider = StateProvider<String?>((ref) => null);
 ///   // تسجيل الدخول نجح
 /// }
 /// ```
-final loginProvider =
-    FutureProvider.family<bool, (String, String)>((ref, credentials) async {
+final loginProvider = FutureProvider.family<bool, (String, String)>((
+  ref,
+  credentials,
+) async {
   final authService = ref.watch(authServiceProvider);
   final (username, password) = credentials;
 
@@ -133,8 +135,10 @@ final loginProvider =
 ///   // تم إنشاء الحساب بنجاح
 /// }
 /// ```
-final setupProvider =
-    FutureProvider.family<bool, (String, String)>((ref, credentials) async {
+final setupProvider = FutureProvider.family<bool, (String, String)>((
+  ref,
+  credentials,
+) async {
   final authService = ref.watch(authServiceProvider);
   final (username, password) = credentials;
 
@@ -197,8 +201,10 @@ final logoutProvider = FutureProvider<bool>((ref) async {
 ///   // تم تغيير كلمة المرور بنجاح
 /// }
 /// ```
-final changePasswordProvider =
-    FutureProvider.family<bool, (String, String)>((ref, passwords) async {
+final changePasswordProvider = FutureProvider.family<bool, (String, String)>((
+  ref,
+  passwords,
+) async {
   final authService = ref.watch(authServiceProvider);
   final (oldPassword, newPassword) = passwords;
 

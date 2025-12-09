@@ -209,28 +209,21 @@ void main() {
     });
 
     test('should support English-only documentation', () {
-      const options = GenerationOptions(
-        useArabic: false,
-        useEnglish: true,
-      );
+      const options = GenerationOptions(useArabic: false, useEnglish: true);
 
       expect(options.useArabic, isFalse);
       expect(options.useEnglish, isTrue);
     });
 
     test('should support bilingual documentation', () {
-      const options = GenerationOptions(
-        useEnglish: true,
-      );
+      const options = GenerationOptions(useEnglish: true);
 
       expect(options.useArabic, isTrue);
       expect(options.useEnglish, isTrue);
     });
 
     test('should support examples inclusion', () {
-      const options = GenerationOptions(
-        includeExamples: true,
-      );
+      const options = GenerationOptions(includeExamples: true);
 
       expect(options.includeExamples, isTrue);
     });
@@ -242,9 +235,7 @@ void main() {
     });
 
     test('should support minimal documentation', () {
-      const options = GenerationOptions(
-        includeDetails: false,
-      );
+      const options = GenerationOptions(includeDetails: false);
 
       expect(options.includeExamples, isFalse);
       expect(options.includeDetails, isFalse);

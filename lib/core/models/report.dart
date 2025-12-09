@@ -29,20 +29,21 @@ class Report {
 
   /// ينشئ تقرير من Map (JSON).
   factory Report.fromJson(Map<String, dynamic> json) => Report(
-        id: json['id'] as String,
-        generatedAt: DateTime.parse(json['generatedAt'] as String),
-        statistics: ProjectStatistics.fromJson(
-          json['statistics'] as Map<String, dynamic>,
-        ),
-        errors: (json['errors'] as List)
-            .map((e) => ErrorSummary.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        testResults:
-            TestResults.fromJson(json['testResults'] as Map<String, dynamic>),
-        recommendations: (json['recommendations'] as List)
-            .map((r) => Recommendation.fromJson(r as Map<String, dynamic>))
-            .toList(),
-      );
+    id: json['id'] as String,
+    generatedAt: DateTime.parse(json['generatedAt'] as String),
+    statistics: ProjectStatistics.fromJson(
+      json['statistics'] as Map<String, dynamic>,
+    ),
+    errors: (json['errors'] as List)
+        .map((e) => ErrorSummary.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    testResults: TestResults.fromJson(
+      json['testResults'] as Map<String, dynamic>,
+    ),
+    recommendations: (json['recommendations'] as List)
+        .map((r) => Recommendation.fromJson(r as Map<String, dynamic>))
+        .toList(),
+  );
 
   /// معرف فريد للتقرير.
   final String id;
@@ -140,13 +141,13 @@ class Report {
   ///
   /// Returns Map يحتوي على جميع بيانات التقرير بصيغة JSON.
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'generatedAt': generatedAt.toIso8601String(),
-        'statistics': statistics.toJson(),
-        'errors': errors.map((e) => e.toJson()).toList(),
-        'testResults': testResults.toJson(),
-        'recommendations': recommendations.map((r) => r.toJson()).toList(),
-      };
+    'id': id,
+    'generatedAt': generatedAt.toIso8601String(),
+    'statistics': statistics.toJson(),
+    'errors': errors.map((e) => e.toJson()).toList(),
+    'testResults': testResults.toJson(),
+    'recommendations': recommendations.map((r) => r.toJson()).toList(),
+  };
 
   String _formatDate(DateTime date) =>
       '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}';
@@ -193,12 +194,12 @@ class ProjectStatistics {
 
   /// يحول الإحصائيات إلى Map (JSON).
   Map<String, dynamic> toJson() => {
-        'fileCount': fileCount,
-        'projectSize': projectSize,
-        'commitCount': commitCount,
-        'totalLines': totalLines,
-        'filesByType': filesByType,
-      };
+    'fileCount': fileCount,
+    'projectSize': projectSize,
+    'commitCount': commitCount,
+    'totalLines': totalLines,
+    'filesByType': filesByType,
+  };
 }
 
 /// ملخص الأخطاء.
@@ -216,14 +217,14 @@ class ErrorSummary {
 
   /// ينشئ ملخص أخطاء من Map (JSON).
   factory ErrorSummary.fromJson(Map<String, dynamic> json) => ErrorSummary(
-        type: LogType.values.firstWhere(
-          (e) => e.name == json['type'],
-          orElse: () => LogType.error,
-        ),
-        count: json['count'] as int,
-        topErrors: List<String>.from(json['topErrors'] as List? ?? []),
-        errorsByFile: Map<String, int>.from(json['errorsByFile'] as Map? ?? {}),
-      );
+    type: LogType.values.firstWhere(
+      (e) => e.name == json['type'],
+      orElse: () => LogType.error,
+    ),
+    count: json['count'] as int,
+    topErrors: List<String>.from(json['topErrors'] as List? ?? []),
+    errorsByFile: Map<String, int>.from(json['errorsByFile'] as Map? ?? {}),
+  );
 
   /// نوع السجل.
   final LogType type;
@@ -239,11 +240,11 @@ class ErrorSummary {
 
   /// يحول ملخص الأخطاء إلى Map (JSON).
   Map<String, dynamic> toJson() => {
-        'type': type.name,
-        'count': count,
-        'topErrors': topErrors,
-        'errorsByFile': errorsByFile,
-      };
+    'type': type.name,
+    'count': count,
+    'topErrors': topErrors,
+    'errorsByFile': errorsByFile,
+  };
 }
 
 /// نتائج الاختبارات.
@@ -262,12 +263,12 @@ class TestResults {
 
   /// ينشئ نتائج اختبارات من Map (JSON).
   factory TestResults.fromJson(Map<String, dynamic> json) => TestResults(
-        totalTests: json['totalTests'] as int,
-        passedTests: json['passedTests'] as int,
-        failedTests: json['failedTests'] as int,
-        coveragePercentage: (json['coveragePercentage'] as num).toDouble(),
-        executionTime: Duration(seconds: json['executionTimeSeconds'] as int),
-      );
+    totalTests: json['totalTests'] as int,
+    passedTests: json['passedTests'] as int,
+    failedTests: json['failedTests'] as int,
+    coveragePercentage: (json['coveragePercentage'] as num).toDouble(),
+    executionTime: Duration(seconds: json['executionTimeSeconds'] as int),
+  );
 
   /// إجمالي عدد الاختبارات.
   final int totalTests;
@@ -286,12 +287,12 @@ class TestResults {
 
   /// يحول نتائج الاختبارات إلى Map (JSON).
   Map<String, dynamic> toJson() => {
-        'totalTests': totalTests,
-        'passedTests': passedTests,
-        'failedTests': failedTests,
-        'coveragePercentage': coveragePercentage,
-        'executionTimeSeconds': executionTime.inSeconds,
-      };
+    'totalTests': totalTests,
+    'passedTests': passedTests,
+    'failedTests': failedTests,
+    'coveragePercentage': coveragePercentage,
+    'executionTimeSeconds': executionTime.inSeconds,
+  };
 }
 
 /// توصية للتحسين.
@@ -309,14 +310,14 @@ class Recommendation {
 
   /// ينشئ توصية من Map (JSON).
   factory Recommendation.fromJson(Map<String, dynamic> json) => Recommendation(
-        title: json['title'] as String,
-        description: json['description'] as String,
-        priority: RecommendationPriority.values.firstWhere(
-          (e) => e.name == json['priority'],
-          orElse: () => RecommendationPriority.medium,
-        ),
-        actionItems: List<String>.from(json['actionItems'] as List? ?? []),
-      );
+    title: json['title'] as String,
+    description: json['description'] as String,
+    priority: RecommendationPriority.values.firstWhere(
+      (e) => e.name == json['priority'],
+      orElse: () => RecommendationPriority.medium,
+    ),
+    actionItems: List<String>.from(json['actionItems'] as List? ?? []),
+  );
 
   /// عنوان التوصية.
   final String title;
@@ -332,11 +333,11 @@ class Recommendation {
 
   /// يحول التوصية إلى Map (JSON).
   Map<String, dynamic> toJson() => {
-        'title': title,
-        'description': description,
-        'priority': priority.name,
-        'actionItems': actionItems,
-      };
+    'title': title,
+    'description': description,
+    'priority': priority.name,
+    'actionItems': actionItems,
+  };
 }
 
 /// أولويات التوصيات.

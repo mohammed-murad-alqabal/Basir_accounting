@@ -61,9 +61,7 @@ class AppRouter {
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
-            body: Center(
-              child: Text('الشاشة غير موجودة: ${settings.name}'),
-            ),
+            body: Center(child: Text('الشاشة غير موجودة: ${settings.name}')),
           ),
         );
     }

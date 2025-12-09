@@ -15,9 +15,7 @@ void main() {
       // Arrange
       final mockRepo = MockCustomerRepository();
       final container = ProviderContainer(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [customerRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       // Act
@@ -32,9 +30,7 @@ void main() {
       // Arrange
       final mockRepo = MockCustomerRepository(customers: []);
       final container = ProviderContainer(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [customerRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       // Act
@@ -50,9 +46,7 @@ void main() {
       // Arrange
       final mockRepo = MockCustomerRepository();
       final container = ProviderContainer(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [customerRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       final newCustomer = Customer(
@@ -64,8 +58,9 @@ void main() {
       );
 
       // Act
-      final result =
-          await container.read(addCustomerProvider(newCustomer).future);
+      final result = await container.read(
+        addCustomerProvider(newCustomer).future,
+      );
 
       // Assert
       expect(result, isTrue);
@@ -75,9 +70,7 @@ void main() {
       // Arrange
       final mockRepo = MockCustomerRepository(shouldThrow: true);
       final container = ProviderContainer(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [customerRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       final newCustomer = Customer(
@@ -89,8 +82,9 @@ void main() {
       );
 
       // Act
-      final result =
-          await container.read(addCustomerProvider(newCustomer).future);
+      final result = await container.read(
+        addCustomerProvider(newCustomer).future,
+      );
 
       // Assert
       expect(result, isFalse);
@@ -102,9 +96,7 @@ void main() {
       // Arrange
       final mockRepo = MockCustomerRepository();
       final container = ProviderContainer(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [customerRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       final updatedCustomer = Customer(
@@ -116,8 +108,9 @@ void main() {
       );
 
       // Act
-      final result =
-          await container.read(updateCustomerProvider(updatedCustomer).future);
+      final result = await container.read(
+        updateCustomerProvider(updatedCustomer).future,
+      );
 
       // Assert
       expect(result, isTrue);
@@ -127,9 +120,7 @@ void main() {
       // Arrange
       final mockRepo = MockCustomerRepository(shouldThrow: true);
       final container = ProviderContainer(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [customerRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       final updatedCustomer = Customer(
@@ -141,8 +132,9 @@ void main() {
       );
 
       // Act
-      final result =
-          await container.read(updateCustomerProvider(updatedCustomer).future);
+      final result = await container.read(
+        updateCustomerProvider(updatedCustomer).future,
+      );
 
       // Assert
       expect(result, isFalse);
@@ -154,14 +146,13 @@ void main() {
       // Arrange
       final mockRepo = MockCustomerRepository();
       final container = ProviderContainer(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [customerRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       // Act
-      final result =
-          await container.read(deleteCustomerProvider('test-1').future);
+      final result = await container.read(
+        deleteCustomerProvider('test-1').future,
+      );
 
       // Assert
       expect(result, isTrue);
@@ -171,14 +162,13 @@ void main() {
       // Arrange
       final mockRepo = MockCustomerRepository(shouldThrow: true);
       final container = ProviderContainer(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [customerRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       // Act
-      final result =
-          await container.read(deleteCustomerProvider('test-1').future);
+      final result = await container.read(
+        deleteCustomerProvider('test-1').future,
+      );
 
       // Assert
       expect(result, isFalse);
@@ -215,9 +205,7 @@ void main() {
       // Arrange
       final mockRepo = MockCustomerRepository();
       final container = ProviderContainer(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [customerRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       // Wait for customersProvider to load
@@ -240,9 +228,7 @@ void main() {
       // Arrange
       final mockRepo = MockCustomerRepository();
       final container = ProviderContainer(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [customerRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       // Wait for customersProvider to load
@@ -269,9 +255,7 @@ void main() {
       // Arrange
       final mockRepo = MockCustomerRepository();
       final container = ProviderContainer(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [customerRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       // Wait for customersProvider to load
@@ -297,9 +281,7 @@ void main() {
       // Arrange
       final mockRepo = MockCustomerRepository();
       final container = ProviderContainer(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [customerRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       // Wait for customersProvider to load

@@ -65,28 +65,28 @@ class AppAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) => AppBar(
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: AppTypography.titleLarge,
-            fontWeight: FontWeight.w600,
-            color: foregroundColor,
-          ),
-        ),
-        backgroundColor: backgroundColor,
-        foregroundColor: foregroundColor,
-        elevation: 0,
-        centerTitle: true,
-        iconTheme: const IconThemeData(size: 26),
-        leading: showBackButton
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back),
-                tooltip: 'رجوع',
-                onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
-              )
-            : null,
-        actions: actions,
-      );
+    title: Text(
+      title,
+      style: TextStyle(
+        fontSize: AppTypography.titleLarge,
+        fontWeight: FontWeight.w600,
+        color: foregroundColor,
+      ),
+    ),
+    backgroundColor: backgroundColor,
+    foregroundColor: foregroundColor,
+    elevation: 0,
+    centerTitle: true,
+    iconTheme: const IconThemeData(size: 26),
+    leading: showBackButton
+        ? IconButton(
+            icon: const Icon(Icons.arrow_back),
+            tooltip: 'رجوع',
+            onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
+          )
+        : null,
+    actions: actions,
+  );
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -145,21 +145,21 @@ class AppSimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) => AppBar(
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: AppTypography.titleLarge,
-            fontWeight: FontWeight.w600,
-            color: foregroundColor,
-          ),
-        ),
-        backgroundColor: backgroundColor,
-        foregroundColor: foregroundColor,
-        elevation: 0,
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        actions: actions,
-      );
+    title: Text(
+      title,
+      style: TextStyle(
+        fontSize: AppTypography.titleLarge,
+        fontWeight: FontWeight.w600,
+        color: foregroundColor,
+      ),
+    ),
+    backgroundColor: backgroundColor,
+    foregroundColor: foregroundColor,
+    elevation: 0,
+    centerTitle: true,
+    automaticallyImplyLeading: false,
+    actions: actions,
+  );
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);

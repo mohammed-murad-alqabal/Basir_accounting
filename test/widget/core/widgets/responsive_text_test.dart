@@ -6,11 +6,7 @@ void main() {
   group('ResponsiveText', () {
     testWidgets('should display text correctly', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveText('نص تجريبي'),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: ResponsiveText('نص تجريبي'))),
       );
 
       expect(find.text('نص تجريبي'), findsOneWidget);
@@ -21,12 +17,7 @@ void main() {
 
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-              style: testStyle,
-            ),
-          ),
+          home: Scaffold(body: ResponsiveText('نص تجريبي', style: testStyle)),
         ),
       );
 
@@ -38,12 +29,7 @@ void main() {
     testWidgets('should apply custom color', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-              color: Colors.red,
-            ),
-          ),
+          home: Scaffold(body: ResponsiveText('نص تجريبي', color: Colors.red)),
         ),
       );
 
@@ -55,10 +41,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-              fontWeight: FontWeight.w600,
-            ),
+            body: ResponsiveText('نص تجريبي', fontWeight: FontWeight.w600),
           ),
         ),
       );
@@ -71,10 +54,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي طويل جداً',
-              maxLines: 2,
-            ),
+            body: ResponsiveText('نص تجريبي طويل جداً', maxLines: 2),
           ),
         ),
       );
@@ -87,10 +67,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-              overflow: TextOverflow.fade,
-            ),
+            body: ResponsiveText('نص تجريبي', overflow: TextOverflow.fade),
           ),
         ),
       );
@@ -103,10 +80,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-              textAlign: TextAlign.left,
-            ),
+            body: ResponsiveText('نص تجريبي', textAlign: TextAlign.left),
           ),
         ),
       );
@@ -119,10 +93,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-              textDirection: TextDirection.ltr,
-            ),
+            body: ResponsiveText('نص تجريبي', textDirection: TextDirection.ltr),
           ),
         ),
       );
@@ -133,11 +104,7 @@ void main() {
 
     testWidgets('should apply default RTL direction', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveText('نص تجريبي'),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: ResponsiveText('نص تجريبي'))),
       );
 
       final textWidget = tester.widget<Text>(find.byType(Text));
@@ -146,11 +113,7 @@ void main() {
 
     testWidgets('should apply default center alignment', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveText('نص تجريبي'),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: ResponsiveText('نص تجريبي'))),
       );
 
       final textWidget = tester.widget<Text>(find.byType(Text));
@@ -160,12 +123,7 @@ void main() {
     testWidgets('should apply height (line height)', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-              height: 2,
-            ),
-          ),
+          home: Scaffold(body: ResponsiveText('نص تجريبي', height: 2)),
         ),
       );
 
@@ -175,11 +133,7 @@ void main() {
 
     testWidgets('should apply default height 1.5', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveText('نص تجريبي'),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: ResponsiveText('نص تجريبي'))),
       );
 
       final textWidget = tester.widget<Text>(find.byType(Text));
@@ -189,12 +143,7 @@ void main() {
     testWidgets('should apply letterSpacing', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-              letterSpacing: 1.5,
-            ),
-          ),
+          home: Scaffold(body: ResponsiveText('نص تجريبي', letterSpacing: 1.5)),
         ),
       );
 
@@ -205,12 +154,7 @@ void main() {
     testWidgets('should apply softWrap', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-              softWrap: false,
-            ),
-          ),
+          home: Scaffold(body: ResponsiveText('نص تجريبي', softWrap: false)),
         ),
       );
 
@@ -221,12 +165,7 @@ void main() {
     testWidgets('should use FittedBox when autoScale is true', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-              autoScale: true,
-            ),
-          ),
+          home: Scaffold(body: ResponsiveText('نص تجريبي', autoScale: true)),
         ),
       );
 
@@ -235,16 +174,11 @@ void main() {
       expect(fittedBox.fit, BoxFit.scaleDown);
     });
 
-    testWidgets('should not use FittedBox when autoScale is false',
-        (tester) async {
+    testWidgets('should not use FittedBox when autoScale is false', (
+      tester,
+    ) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-            ),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: ResponsiveText('نص تجريبي'))),
       );
 
       expect(find.byType(FittedBox), findsNothing);
@@ -276,9 +210,7 @@ void main() {
     testWidgets('should display headline text', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveHeadline('عنوان كبير'),
-          ),
+          home: Scaffold(body: ResponsiveHeadline('عنوان كبير')),
         ),
       );
 
@@ -289,35 +221,28 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: ThemeData(
-            textTheme: const TextTheme(
-              headlineLarge: TextStyle(fontSize: 32),
-            ),
+            textTheme: const TextTheme(headlineLarge: TextStyle(fontSize: 32)),
           ),
-          home: const Scaffold(
-            body: ResponsiveHeadline('عنوان كبير'),
-          ),
+          home: const Scaffold(body: ResponsiveHeadline('عنوان كبير')),
         ),
       );
 
-      final responsiveText =
-          tester.widget<ResponsiveText>(find.byType(ResponsiveText));
+      final responsiveText = tester.widget<ResponsiveText>(
+        find.byType(ResponsiveText),
+      );
       expect(responsiveText.style?.fontSize, 32);
     });
 
     testWidgets('should apply maxLines', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveHeadline(
-              'عنوان كبير',
-              maxLines: 3,
-            ),
-          ),
+          home: Scaffold(body: ResponsiveHeadline('عنوان كبير', maxLines: 3)),
         ),
       );
 
-      final responsiveText =
-          tester.widget<ResponsiveText>(find.byType(ResponsiveText));
+      final responsiveText = tester.widget<ResponsiveText>(
+        find.byType(ResponsiveText),
+      );
       expect(responsiveText.maxLines, 3);
     });
 
@@ -325,30 +250,27 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: ResponsiveHeadline(
-              'عنوان كبير',
-              color: Colors.blue,
-            ),
+            body: ResponsiveHeadline('عنوان كبير', color: Colors.blue),
           ),
         ),
       );
 
-      final responsiveText =
-          tester.widget<ResponsiveText>(find.byType(ResponsiveText));
+      final responsiveText = tester.widget<ResponsiveText>(
+        find.byType(ResponsiveText),
+      );
       expect(responsiveText.color, Colors.blue);
     });
 
     testWidgets('should enable autoScale by default', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveHeadline('عنوان كبير'),
-          ),
+          home: Scaffold(body: ResponsiveHeadline('عنوان كبير')),
         ),
       );
 
-      final responsiveText =
-          tester.widget<ResponsiveText>(find.byType(ResponsiveText));
+      final responsiveText = tester.widget<ResponsiveText>(
+        find.byType(ResponsiveText),
+      );
       expect(responsiveText.autoScale, true);
     });
   });
@@ -356,11 +278,7 @@ void main() {
   group('ResponsiveTitle', () {
     testWidgets('should display title text', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveTitle('عنوان فرعي'),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: ResponsiveTitle('عنوان فرعي'))),
       );
 
       expect(find.text('عنوان فرعي'), findsOneWidget);
@@ -370,35 +288,28 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: ThemeData(
-            textTheme: const TextTheme(
-              titleLarge: TextStyle(fontSize: 22),
-            ),
+            textTheme: const TextTheme(titleLarge: TextStyle(fontSize: 22)),
           ),
-          home: const Scaffold(
-            body: ResponsiveTitle('عنوان فرعي'),
-          ),
+          home: const Scaffold(body: ResponsiveTitle('عنوان فرعي')),
         ),
       );
 
-      final responsiveText =
-          tester.widget<ResponsiveText>(find.byType(ResponsiveText));
+      final responsiveText = tester.widget<ResponsiveText>(
+        find.byType(ResponsiveText),
+      );
       expect(responsiveText.style?.fontSize, 22);
     });
 
     testWidgets('should apply maxLines', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveTitle(
-              'عنوان فرعي',
-              maxLines: 3,
-            ),
-          ),
+          home: Scaffold(body: ResponsiveTitle('عنوان فرعي', maxLines: 3)),
         ),
       );
 
-      final responsiveText =
-          tester.widget<ResponsiveText>(find.byType(ResponsiveText));
+      final responsiveText = tester.widget<ResponsiveText>(
+        find.byType(ResponsiveText),
+      );
       expect(responsiveText.maxLines, 3);
     });
   });
@@ -406,11 +317,7 @@ void main() {
   group('ResponsiveBody', () {
     testWidgets('should display body text', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveBody('نص أساسي'),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: ResponsiveBody('نص أساسي'))),
       );
 
       expect(find.text('نص أساسي'), findsOneWidget);
@@ -420,32 +327,26 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: ThemeData(
-            textTheme: const TextTheme(
-              bodyMedium: TextStyle(fontSize: 16),
-            ),
+            textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 16)),
           ),
-          home: const Scaffold(
-            body: ResponsiveBody('نص أساسي'),
-          ),
+          home: const Scaffold(body: ResponsiveBody('نص أساسي')),
         ),
       );
 
-      final responsiveText =
-          tester.widget<ResponsiveText>(find.byType(ResponsiveText));
+      final responsiveText = tester.widget<ResponsiveText>(
+        find.byType(ResponsiveText),
+      );
       expect(responsiveText.style?.fontSize, 16);
     });
 
     testWidgets('should allow unlimited lines by default', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveBody('نص أساسي'),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: ResponsiveBody('نص أساسي'))),
       );
 
-      final responsiveText =
-          tester.widget<ResponsiveText>(find.byType(ResponsiveText));
+      final responsiveText = tester.widget<ResponsiveText>(
+        find.byType(ResponsiveText),
+      );
       expect(responsiveText.maxLines, null);
     });
   });
@@ -453,11 +354,7 @@ void main() {
   group('ResponsiveLabel', () {
     testWidgets('should display label text', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveLabel('تسمية'),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: ResponsiveLabel('تسمية'))),
       );
 
       expect(find.text('تسمية'), findsOneWidget);
@@ -467,32 +364,26 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: ThemeData(
-            textTheme: const TextTheme(
-              labelLarge: TextStyle(fontSize: 14),
-            ),
+            textTheme: const TextTheme(labelLarge: TextStyle(fontSize: 14)),
           ),
-          home: const Scaffold(
-            body: ResponsiveLabel('تسمية'),
-          ),
+          home: const Scaffold(body: ResponsiveLabel('تسمية')),
         ),
       );
 
-      final responsiveText =
-          tester.widget<ResponsiveText>(find.byType(ResponsiveText));
+      final responsiveText = tester.widget<ResponsiveText>(
+        find.byType(ResponsiveText),
+      );
       expect(responsiveText.style?.fontSize, 14);
     });
 
     testWidgets('should default to 1 line', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveLabel('تسمية'),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: ResponsiveLabel('تسمية'))),
       );
 
-      final responsiveText =
-          tester.widget<ResponsiveText>(find.byType(ResponsiveText));
+      final responsiveText = tester.widget<ResponsiveText>(
+        find.byType(ResponsiveText),
+      );
       expect(responsiveText.maxLines, 1);
     });
   });
@@ -500,11 +391,7 @@ void main() {
   group('ResponsiveCaption', () {
     testWidgets('should display caption text', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveCaption('نص صغير'),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: ResponsiveCaption('نص صغير'))),
       );
 
       expect(find.text('نص صغير'), findsOneWidget);
@@ -514,32 +401,26 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: ThemeData(
-            textTheme: const TextTheme(
-              bodySmall: TextStyle(fontSize: 12),
-            ),
+            textTheme: const TextTheme(bodySmall: TextStyle(fontSize: 12)),
           ),
-          home: const Scaffold(
-            body: ResponsiveCaption('نص صغير'),
-          ),
+          home: const Scaffold(body: ResponsiveCaption('نص صغير')),
         ),
       );
 
-      final responsiveText =
-          tester.widget<ResponsiveText>(find.byType(ResponsiveText));
+      final responsiveText = tester.widget<ResponsiveText>(
+        find.byType(ResponsiveText),
+      );
       expect(responsiveText.style?.fontSize, 12);
     });
 
     testWidgets('should default to 2 lines', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: ResponsiveCaption('نص صغير'),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: ResponsiveCaption('نص صغير'))),
       );
 
-      final responsiveText =
-          tester.widget<ResponsiveText>(find.byType(ResponsiveText));
+      final responsiveText = tester.widget<ResponsiveText>(
+        find.byType(ResponsiveText),
+      );
       expect(responsiveText.maxLines, 2);
     });
   });

@@ -16,10 +16,7 @@ import 'package:uuid/uuid.dart';
 /// تتضمن اختيار العميل، إضافة بنود، وحساب الإجماليات تلقائياً.
 class InvoiceFormScreen extends ConsumerStatefulWidget {
   /// إنشاء شاشة نموذج الفاتورة
-  const InvoiceFormScreen({
-    super.key,
-    this.invoice,
-  });
+  const InvoiceFormScreen({super.key, this.invoice});
 
   /// الفاتورة المراد تعديلها (null للإضافة)
   final Invoice? invoice;
@@ -79,9 +76,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               // اختيار العميل
               customersAsync.when(
                 data: _buildCustomerSelector,
-                loading: () => const Center(
-                  child: CircularProgressIndicator(),
-                ),
+                loading: () => const Center(child: CircularProgressIndicator()),
                 error: (error, stack) => Text(
                   'خطأ في تحميل العملاء: $error',
                   style: const TextStyle(color: AppColors.error),
@@ -145,266 +140,260 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   }
 
   Widget _buildCustomerSelector(List<Customer> customers) => Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(AppBorderRadius.md),
-          border: Border.all(color: AppColors.border),
+    padding: const EdgeInsets.all(AppSpacing.md),
+    decoration: BoxDecoration(
+      color: AppColors.surface,
+      borderRadius: BorderRadius.circular(AppBorderRadius.md),
+      border: Border.all(color: AppColors.border),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'العميل',
+          style: TextStyle(
+            fontSize: AppTypography.bodyLarge,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
+          ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'العميل',
-              style: TextStyle(
-                fontSize: AppTypography.bodyLarge,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            DropdownButtonFormField<Customer>(
-              initialValue: _selectedCustomer,
-              decoration: const InputDecoration(
-                hintText: 'اختر العميل',
-                border: OutlineInputBorder(),
-              ),
-              items: customers
-                  .map(
-                    (customer) => DropdownMenuItem(
-                      value: customer,
-                      child: Text(customer.name),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (customer) {
-                setState(() => _selectedCustomer = customer);
-              },
-              validator: (value) {
-                if (value == null) {
-                  return 'يرجى اختيار العميل';
-                }
-                return null;
-              },
-            ),
-          ],
+        const SizedBox(height: AppSpacing.sm),
+        DropdownButtonFormField<Customer>(
+          initialValue: _selectedCustomer,
+          decoration: const InputDecoration(
+            hintText: 'اختر العميل',
+            border: OutlineInputBorder(),
+          ),
+          items: customers
+              .map(
+                (customer) => DropdownMenuItem(
+                  value: customer,
+                  child: Text(customer.name),
+                ),
+              )
+              .toList(),
+          onChanged: (customer) {
+            setState(() => _selectedCustomer = customer);
+          },
+          validator: (value) {
+            if (value == null) {
+              return 'يرجى اختيار العميل';
+            }
+            return null;
+          },
         ),
-      );
+      ],
+    ),
+  );
 
   Widget _buildDateField({
     required String label,
     required DateTime date,
     required VoidCallback onTap,
-  }) =>
-      Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(AppBorderRadius.md),
-          border: Border.all(color: AppColors.border),
-        ),
-        child: InkWell(
-          onTap: onTap,
-          child: Row(
+  }) => Container(
+    padding: const EdgeInsets.all(AppSpacing.md),
+    decoration: BoxDecoration(
+      color: AppColors.surface,
+      borderRadius: BorderRadius.circular(AppBorderRadius.md),
+      border: Border.all(color: AppColors.border),
+    ),
+    child: InkWell(
+      onTap: onTap,
+      child: Row(
+        children: [
+          const Icon(Icons.calendar_today, color: AppColors.primary),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: AppTypography.bodyMedium,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${date.day}/${date.month}/${date.year}',
+                  style: const TextStyle(
+                    fontSize: AppTypography.bodyLarge,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+
+  Widget _buildTaxRateField() => Container(
+    padding: const EdgeInsets.all(AppSpacing.md),
+    decoration: BoxDecoration(
+      color: AppColors.surface,
+      borderRadius: BorderRadius.circular(AppBorderRadius.md),
+      border: Border.all(color: AppColors.border),
+    ),
+    child: Row(
+      children: [
+        const Icon(Icons.percent, color: AppColors.primary),
+        const SizedBox(width: AppSpacing.md),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.calendar_today, color: AppColors.primary),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      label,
-                      style: const TextStyle(
-                        fontSize: AppTypography.bodyMedium,
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${date.day}/${date.month}/${date.year}',
-                      style: const TextStyle(
-                        fontSize: AppTypography.bodyLarge,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                  ],
+              const Text(
+                'نسبة الضريبة',
+                style: TextStyle(
+                  fontSize: AppTypography.bodyMedium,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                '${(_taxRate * 100).toStringAsFixed(0)}%',
+                style: const TextStyle(
+                  fontSize: AppTypography.bodyLarge,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
           ),
         ),
-      );
-
-  Widget _buildTaxRateField() => Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(AppBorderRadius.md),
-          border: Border.all(color: AppColors.border),
+        IconButton(
+          icon: const Icon(Icons.edit, size: 20),
+          tooltip: 'تعديل نسبة الضريبة',
+          onPressed: _showTaxRateDialog,
         ),
-        child: Row(
-          children: [
-            const Icon(Icons.percent, color: AppColors.primary),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'نسبة الضريبة',
-                    style: TextStyle(
-                      fontSize: AppTypography.bodyMedium,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '${(_taxRate * 100).toStringAsFixed(0)}%',
-                    style: const TextStyle(
-                      fontSize: AppTypography.bodyLarge,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.edit, size: 20),
-              tooltip: 'تعديل نسبة الضريبة',
-              onPressed: _showTaxRateDialog,
-            ),
-          ],
-        ),
-      );
+      ],
+    ),
+  );
 
   Widget _buildStatusSelector() => Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(AppBorderRadius.md),
-          border: Border.all(color: AppColors.border),
+    padding: const EdgeInsets.all(AppSpacing.md),
+    decoration: BoxDecoration(
+      color: AppColors.surface,
+      borderRadius: BorderRadius.circular(AppBorderRadius.md),
+      border: Border.all(color: AppColors.border),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'حالة الفاتورة',
+          style: TextStyle(
+            fontSize: AppTypography.bodyLarge,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
+          ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        const SizedBox(height: AppSpacing.sm),
+        DropdownButtonFormField<String>(
+          initialValue: _status,
+          decoration: const InputDecoration(border: OutlineInputBorder()),
+          items: const [
+            DropdownMenuItem(value: 'draft', child: Text('مسودة')),
+            DropdownMenuItem(value: 'issued', child: Text('مرسلة')),
+            DropdownMenuItem(value: 'paid', child: Text('مدفوعة')),
+            DropdownMenuItem(value: 'overdue', child: Text('متأخرة')),
+            DropdownMenuItem(value: 'cancelled', child: Text('ملغاة')),
+          ],
+          onChanged: (value) {
+            if (value != null) {
+              setState(() => _status = value);
+            }
+          },
+        ),
+      ],
+    ),
+  );
+
+  Widget _buildItemsSection() => Container(
+    padding: const EdgeInsets.all(AppSpacing.md),
+    decoration: BoxDecoration(
+      color: AppColors.surface,
+      borderRadius: BorderRadius.circular(AppBorderRadius.md),
+      border: Border.all(color: AppColors.border),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              'حالة الفاتورة',
+              'بنود الفاتورة',
               style: TextStyle(
                 fontSize: AppTypography.bodyLarge,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
             ),
-            const SizedBox(height: AppSpacing.sm),
-            DropdownButtonFormField<String>(
-              initialValue: _status,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-              ),
-              items: const [
-                DropdownMenuItem(value: 'draft', child: Text('مسودة')),
-                DropdownMenuItem(value: 'issued', child: Text('مرسلة')),
-                DropdownMenuItem(value: 'paid', child: Text('مدفوعة')),
-                DropdownMenuItem(value: 'overdue', child: Text('متأخرة')),
-                DropdownMenuItem(value: 'cancelled', child: Text('ملغاة')),
-              ],
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() => _status = value);
-                }
-              },
+            IconButton(
+              icon: const Icon(Icons.add_circle, color: AppColors.primary),
+              tooltip: 'إضافة بند جديد',
+              onPressed: _addItem,
             ),
           ],
         ),
-      );
-
-  Widget _buildItemsSection() => Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(AppBorderRadius.md),
-          border: Border.all(color: AppColors.border),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'بنود الفاتورة',
-                  style: TextStyle(
-                    fontSize: AppTypography.bodyLarge,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
+        const SizedBox(height: AppSpacing.sm),
+        if (_items.isEmpty)
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.all(AppSpacing.lg),
+              child: Text(
+                'لا توجد بنود. اضغط + لإضافة بند',
+                style: TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: AppTypography.bodyMedium,
                 ),
-                IconButton(
-                  icon: const Icon(Icons.add_circle, color: AppColors.primary),
-                  tooltip: 'إضافة بند جديد',
-                  onPressed: _addItem,
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            if (_items.isEmpty)
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(AppSpacing.lg),
-                  child: Text(
-                    'لا توجد بنود. اضغط + لإضافة بند',
-                    style: TextStyle(
-                      color: AppColors.textSecondary,
-                      fontSize: AppTypography.bodyMedium,
-                    ),
-                  ),
-                ),
-              )
-            else
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _items.length,
-                itemBuilder: (context, index) {
-                  final item = _items[index];
-                  return Card(
-                    margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-                    child: ListTile(
-                      title: Text(item.name),
-                      subtitle: Text(
-                        'الكمية: ${item.quantity} × '
-                        '${item.price.toStringAsFixed(2)} ر.س',
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '${item.total.toStringAsFixed(2)} ر.س',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.delete,
-                              color: AppColors.error,
-                            ),
-                            tooltip: 'حذف البند',
-                            onPressed: () => _removeItem(index),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
               ),
-          ],
-        ),
-      );
+            ),
+          )
+        else
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: _items.length,
+            itemBuilder: (context, index) {
+              final item = _items[index];
+              return Card(
+                margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+                child: ListTile(
+                  title: Text(item.name),
+                  subtitle: Text(
+                    'الكمية: ${item.quantity} × '
+                    '${item.price.toStringAsFixed(2)} ر.س',
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '${item.total.toStringAsFixed(2)} ر.س',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete, color: AppColors.error),
+                        tooltip: 'حذف البند',
+                        onPressed: () => _removeItem(index),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+      ],
+    ),
+  );
 
   Widget _buildTotalsSection() {
     final subtotal = _items.fold<double>(0, (sum, item) => sum + item.total);
@@ -427,11 +416,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             taxTotal,
           ),
           const Divider(thickness: 2),
-          _buildTotalRow(
-            'الإجمالي الكلي:',
-            grandTotal,
-            isGrandTotal: true,
-          ),
+          _buildTotalRow('الإجمالي الكلي:', grandTotal, isGrandTotal: true),
         ],
       ),
     );
@@ -441,35 +426,34 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     String label,
     double amount, {
     bool isGrandTotal = false,
-  }) =>
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: isGrandTotal
-                    ? AppTypography.bodyLarge
-                    : AppTypography.bodyMedium,
-                fontWeight: isGrandTotal ? FontWeight.bold : FontWeight.w500,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            Text(
-              '${amount.toStringAsFixed(2)} ر.س',
-              style: TextStyle(
-                fontSize: isGrandTotal
-                    ? AppTypography.headlineSmall
-                    : AppTypography.bodyLarge,
-                fontWeight: FontWeight.bold,
-                color: isGrandTotal ? AppColors.primary : AppColors.textPrimary,
-              ),
-            ),
-          ],
+  }) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: isGrandTotal
+                ? AppTypography.bodyLarge
+                : AppTypography.bodyMedium,
+            fontWeight: isGrandTotal ? FontWeight.bold : FontWeight.w500,
+            color: AppColors.textPrimary,
+          ),
         ),
-      );
+        Text(
+          '${amount.toStringAsFixed(2)} ر.س',
+          style: TextStyle(
+            fontSize: isGrandTotal
+                ? AppTypography.headlineSmall
+                : AppTypography.bodyLarge,
+            fontWeight: FontWeight.bold,
+            color: isGrandTotal ? AppColors.primary : AppColors.textPrimary,
+          ),
+        ),
+      ],
+    ),
+  );
 
   Future<void> _selectDate(BuildContext context, bool isIssuedDate) async {
     final initialDate = isIssuedDate ? _issuedDate : _dueDate;
@@ -553,9 +537,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               TextField(
                 controller: quantityController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'الكمية',
-                ),
+                decoration: const InputDecoration(labelText: 'الكمية'),
               ),
               const SizedBox(height: AppSpacing.md),
               TextField(

@@ -38,9 +38,11 @@ void main() {
         final docJob = jobs['documentation-coverage'] as YamlMap;
         final steps = docJob['steps'] as YamlList;
 
-        final setupFlutterStep = steps.firstWhere(
-          (step) => (step as YamlMap)['name'] == 'Setup Flutter',
-        ) as YamlMap;
+        final setupFlutterStep =
+            steps.firstWhere(
+                  (step) => (step as YamlMap)['name'] == 'Setup Flutter',
+                )
+                as YamlMap;
 
         final with_ = setupFlutterStep['with'] as YamlMap;
         expect(with_['flutter-version'], equals('3.24.0'));
@@ -51,9 +53,12 @@ void main() {
         final docJob = jobs['documentation-coverage'] as YamlMap;
         final steps = docJob['steps'] as YamlList;
 
-        final analyzeStep = steps.firstWhere(
-          (step) => (step as YamlMap)['name'] == 'Run documentation analysis',
-        ) as YamlMap;
+        final analyzeStep =
+            steps.firstWhere(
+                  (step) =>
+                      (step as YamlMap)['name'] == 'Run documentation analysis',
+                )
+                as YamlMap;
 
         expect(analyzeStep['run'], contains('analyze'));
       });
@@ -63,10 +68,13 @@ void main() {
         final docJob = jobs['documentation-coverage'] as YamlMap;
         final steps = docJob['steps'] as YamlList;
 
-        final validateStep = steps.firstWhere(
-          (step) =>
-              (step as YamlMap)['name'] == 'Validate documentation quality',
-        ) as YamlMap;
+        final validateStep =
+            steps.firstWhere(
+                  (step) =>
+                      (step as YamlMap)['name'] ==
+                      'Validate documentation quality',
+                )
+                as YamlMap;
 
         expect(validateStep['run'], contains('validate'));
       });
@@ -76,10 +84,13 @@ void main() {
         final docJob = jobs['documentation-coverage'] as YamlMap;
         final steps = docJob['steps'] as YamlList;
 
-        final reportStep = steps.firstWhere(
-          (step) =>
-              (step as YamlMap)['name'] == 'Generate documentation report',
-        ) as YamlMap;
+        final reportStep =
+            steps.firstWhere(
+                  (step) =>
+                      (step as YamlMap)['name'] ==
+                      'Generate documentation report',
+                )
+                as YamlMap;
 
         expect(reportStep['run'], contains('report'));
       });
@@ -89,9 +100,12 @@ void main() {
         final docJob = jobs['documentation-coverage'] as YamlMap;
         final steps = docJob['steps'] as YamlList;
 
-        final uploadStep = steps.firstWhere(
-          (step) => (step as YamlMap)['name'] == 'Upload report artifacts',
-        ) as YamlMap;
+        final uploadStep =
+            steps.firstWhere(
+                  (step) =>
+                      (step as YamlMap)['name'] == 'Upload report artifacts',
+                )
+                as YamlMap;
 
         expect(uploadStep['uses'], contains('upload-artifact'));
       });
@@ -101,9 +115,11 @@ void main() {
         final docJob = jobs['documentation-coverage'] as YamlMap;
         final steps = docJob['steps'] as YamlList;
 
-        final commentStep = steps.firstWhere(
-          (step) => (step as YamlMap)['name'] == 'Comment on PR',
-        ) as YamlMap;
+        final commentStep =
+            steps.firstWhere(
+                  (step) => (step as YamlMap)['name'] == 'Comment on PR',
+                )
+                as YamlMap;
 
         expect(commentStep['uses'], contains('github-script'));
       });
@@ -145,9 +161,13 @@ void main() {
         final docGate = jobs['documentation-quality-gate'] as YamlMap;
         final steps = docGate['steps'] as YamlList;
 
-        final coverageStep = steps.firstWhere(
-          (step) => (step as YamlMap)['name'] == 'Check documentation coverage',
-        ) as YamlMap;
+        final coverageStep =
+            steps.firstWhere(
+                  (step) =>
+                      (step as YamlMap)['name'] ==
+                      'Check documentation coverage',
+                )
+                as YamlMap;
 
         expect(coverageStep['run'], contains('analyze'));
       });
@@ -157,9 +177,13 @@ void main() {
         final docGate = jobs['documentation-quality-gate'] as YamlMap;
         final steps = docGate['steps'] as YamlList;
 
-        final qualityStep = steps.firstWhere(
-          (step) => (step as YamlMap)['name'] == 'Check documentation quality',
-        ) as YamlMap;
+        final qualityStep =
+            steps.firstWhere(
+                  (step) =>
+                      (step as YamlMap)['name'] ==
+                      'Check documentation quality',
+                )
+                as YamlMap;
 
         expect(qualityStep['run'], contains('validate'));
       });
@@ -169,9 +193,11 @@ void main() {
         final codeGate = jobs['code-quality-gate'] as YamlMap;
         final steps = codeGate['steps'] as YamlList;
 
-        final analyzeStep = steps.firstWhere(
-          (step) => (step as YamlMap)['name'] == 'Run Flutter analyze',
-        ) as YamlMap;
+        final analyzeStep =
+            steps.firstWhere(
+                  (step) => (step as YamlMap)['name'] == 'Run Flutter analyze',
+                )
+                as YamlMap;
 
         expect(analyzeStep['run'], contains('flutter analyze'));
       });
@@ -181,9 +207,12 @@ void main() {
         final testGate = jobs['test-quality-gate'] as YamlMap;
         final steps = testGate['steps'] as YamlList;
 
-        final testStep = steps.firstWhere(
-          (step) => (step as YamlMap)['name'] == 'Run tests with coverage',
-        ) as YamlMap;
+        final testStep =
+            steps.firstWhere(
+                  (step) =>
+                      (step as YamlMap)['name'] == 'Run tests with coverage',
+                )
+                as YamlMap;
 
         expect(testStep['run'], contains('flutter test --coverage'));
       });
@@ -193,10 +222,13 @@ void main() {
         final securityGate = jobs['security-quality-gate'] as YamlMap;
         final steps = securityGate['steps'] as YamlList;
 
-        final vulnStep = steps.firstWhere(
-          (step) =>
-              (step as YamlMap)['name'] == 'Check for security vulnerabilities',
-        ) as YamlMap;
+        final vulnStep =
+            steps.firstWhere(
+                  (step) =>
+                      (step as YamlMap)['name'] ==
+                      'Check for security vulnerabilities',
+                )
+                as YamlMap;
 
         expect(vulnStep['run'], contains('pub outdated'));
       });

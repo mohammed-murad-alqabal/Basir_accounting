@@ -11,22 +11,14 @@ void main() {
   group('LoginScreen', () {
     group('Display Tests', () {
       testWidgets('should display login form', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         expect(find.byType(LoginScreen), findsOneWidget);
         expect(find.byType(Form), findsOneWidget);
       });
 
       testWidgets('should display logo and header', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         // "تسجيل الدخول" appears twice: header + button
         expect(find.text('تسجيل الدخول'), findsNWidgets(2));
@@ -37,11 +29,7 @@ void main() {
       });
 
       testWidgets('should display username field', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         expect(find.text('اسم المستخدم'), findsOneWidget);
         expect(find.text('أدخل اسم المستخدم'), findsOneWidget);
@@ -49,11 +37,7 @@ void main() {
       });
 
       testWidgets('should display password field', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         expect(find.text('كلمة المرور'), findsOneWidget);
         expect(find.text('أدخل كلمة المرور'), findsOneWidget);
@@ -61,44 +45,28 @@ void main() {
       });
 
       testWidgets('should display keep logged in checkbox', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         expect(find.text('البقاء مسجلاً'), findsOneWidget);
         expect(find.byType(Checkbox), findsOneWidget);
       });
 
       testWidgets('should display login button', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         expect(find.text('تسجيل الدخول'), findsNWidgets(2)); // Header + Button
         expect(find.byType(AppPrimaryButton), findsOneWidget);
       });
 
       testWidgets('should display guest login button', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         expect(find.text('الدخول كضيف'), findsOneWidget);
         expect(find.byType(AppSecondaryButton), findsOneWidget);
       });
 
       testWidgets('should display create account link', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         expect(find.text('ليس لديك حساب؟ '), findsOneWidget);
         expect(find.text('أنشئ حساباً الآن'), findsOneWidget);
@@ -108,11 +76,7 @@ void main() {
 
     group('Validation Tests', () {
       testWidgets('should show error when username is empty', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         // Tap login button without entering username
         await tester.tap(find.text('تسجيل الدخول').last);
@@ -122,17 +86,10 @@ void main() {
       });
 
       testWidgets('should show error when password is empty', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         // Enter username but not password
-        await tester.enterText(
-          find.byType(AppTextField).first,
-          'testuser',
-        );
+        await tester.enterText(find.byType(AppTextField).first, 'testuser');
 
         // Tap login button
         await tester.tap(find.text('تسجيل الدخول').last);
@@ -142,11 +99,7 @@ void main() {
       });
 
       testWidgets('should show errors for both empty fields', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         // Tap login button without entering anything
         await tester.tap(find.text('تسجيل الدخول').last);
@@ -157,11 +110,7 @@ void main() {
       });
 
       testWidgets('should not show errors initially', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         // No error messages should be visible initially
         expect(find.text(AppMessages.emptyField), findsNothing);
@@ -170,32 +119,18 @@ void main() {
 
     group('Interaction Tests', () {
       testWidgets('should allow entering username', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
-        await tester.enterText(
-          find.byType(AppTextField).first,
-          'testuser',
-        );
+        await tester.enterText(find.byType(AppTextField).first, 'testuser');
         await tester.pump();
 
         expect(find.text('testuser'), findsOneWidget);
       });
 
       testWidgets('should allow entering password', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
-        await tester.enterText(
-          find.byType(AppTextField).last,
-          'password123',
-        );
+        await tester.enterText(find.byType(AppTextField).last, 'password123');
         await tester.pump();
 
         // Password should be obscured, so we check the controller
@@ -206,11 +141,7 @@ void main() {
       });
 
       testWidgets('should toggle keep logged in checkbox', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         // Initially checked
         var checkbox = tester.widget<Checkbox>(find.byType(Checkbox));
@@ -232,11 +163,7 @@ void main() {
       });
 
       testWidgets('should have create account button', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         // Should have create account button
         expect(find.text('أنشئ حساباً الآن'), findsOneWidget);
@@ -248,22 +175,15 @@ void main() {
           MaterialApp(
             home: const LoginScreen(),
             routes: {
-              '/dashboard': (context) => const Scaffold(
-                    body: Text('Dashboard'),
-                  ),
+              '/dashboard': (context) =>
+                  const Scaffold(body: Text('Dashboard')),
             },
           ),
         );
 
         // Enter valid credentials
-        await tester.enterText(
-          find.byType(AppTextField).first,
-          'testuser',
-        );
-        await tester.enterText(
-          find.byType(AppTextField).last,
-          'password123',
-        );
+        await tester.enterText(find.byType(AppTextField).first, 'testuser');
+        await tester.enterText(find.byType(AppTextField).last, 'password123');
 
         // Tap login button
         await tester.tap(find.text('تسجيل الدخول').last);
@@ -273,28 +193,22 @@ void main() {
         expect(find.byType(CircularProgressIndicator), findsOneWidget);
       });
 
-      testWidgets('should navigate to dashboard after successful login',
-          (tester) async {
+      testWidgets('should navigate to dashboard after successful login', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           MaterialApp(
             home: const LoginScreen(),
             routes: {
-              '/dashboard': (context) => const Scaffold(
-                    body: Text('Dashboard'),
-                  ),
+              '/dashboard': (context) =>
+                  const Scaffold(body: Text('Dashboard')),
             },
           ),
         );
 
         // Enter valid credentials
-        await tester.enterText(
-          find.byType(AppTextField).first,
-          'testuser',
-        );
-        await tester.enterText(
-          find.byType(AppTextField).last,
-          'password123',
-        );
+        await tester.enterText(find.byType(AppTextField).first, 'testuser');
+        await tester.enterText(find.byType(AppTextField).last, 'password123');
 
         // Tap login button
         await tester.tap(find.text('تسجيل الدخول').last);
@@ -305,11 +219,7 @@ void main() {
       });
 
       testWidgets('should have guest login button', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         // Should have guest login button
         expect(find.text('الدخول كضيف'), findsOneWidget);
@@ -318,13 +228,10 @@ void main() {
     });
 
     group('Form Behavior', () {
-      testWidgets('should enable autovalidate after first submit',
-          (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+      testWidgets('should enable autovalidate after first submit', (
+        tester,
+      ) async {
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         // Initially no errors
         expect(find.text(AppMessages.emptyField), findsNothing);
@@ -337,10 +244,7 @@ void main() {
         expect(find.text(AppMessages.emptyField), findsNWidgets(2));
 
         // Enter username
-        await tester.enterText(
-          find.byType(AppTextField).first,
-          'testuser',
-        );
+        await tester.enterText(find.byType(AppTextField).first, 'testuser');
         await tester.pump();
 
         // Error for username should disappear (autovalidate enabled)
@@ -348,11 +252,7 @@ void main() {
       });
 
       testWidgets('should clear errors when fields are filled', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         // Tap login button to show errors
         await tester.tap(find.text('تسجيل الدخول').last);
@@ -361,20 +261,14 @@ void main() {
         expect(find.text(AppMessages.emptyField), findsNWidgets(2));
 
         // Fill username
-        await tester.enterText(
-          find.byType(AppTextField).first,
-          'testuser',
-        );
+        await tester.enterText(find.byType(AppTextField).first, 'testuser');
         await tester.pump();
 
         // One error should remain (password)
         expect(find.text(AppMessages.emptyField), findsOneWidget);
 
         // Fill password
-        await tester.enterText(
-          find.byType(AppTextField).last,
-          'password123',
-        );
+        await tester.enterText(find.byType(AppTextField).last, 'password123');
         await tester.pump();
 
         // All errors should be cleared
@@ -384,31 +278,19 @@ void main() {
 
     group('UI Elements', () {
       testWidgets('should have scrollable content', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         expect(find.byType(SingleChildScrollView), findsOneWidget);
       });
 
       testWidgets('should have safe area', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         expect(find.byType(SafeArea), findsOneWidget);
       });
 
       testWidgets('should have proper spacing', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            home: LoginScreen(),
-          ),
-        );
+        await tester.pumpWidget(const MaterialApp(home: LoginScreen()));
 
         // Check for SizedBox widgets (spacing)
         expect(find.byType(SizedBox), findsWidgets);

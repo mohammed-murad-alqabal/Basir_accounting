@@ -13,10 +13,7 @@ import 'package:uuid/uuid.dart';
 /// تسمح بإضافة عميل جديد أو تعديل عميل موجود.
 class CustomerFormScreen extends ConsumerStatefulWidget {
   /// إنشاء شاشة نموذج العميل
-  const CustomerFormScreen({
-    super.key,
-    this.customer,
-  });
+  const CustomerFormScreen({super.key, this.customer});
 
   /// العميل المراد تعديله (null للإضافة)
   final Customer? customer;
@@ -63,9 +60,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppAppBar(
-        title: isEditing ? 'تعديل العميل' : 'إضافة عميل جديد',
-      ),
+      appBar: AppAppBar(title: isEditing ? 'تعديل العميل' : 'إضافة عميل جديد'),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(

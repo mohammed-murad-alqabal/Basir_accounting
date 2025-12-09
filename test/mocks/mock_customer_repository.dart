@@ -12,28 +12,27 @@ import 'package:basser_app/features/customers/domain/repositories/customer_repos
 /// مفيد لاختبار Providers والـ Services بدون الاعتماد على قاعدة البيانات.
 class MockCustomerRepository implements CustomerRepository {
   /// Constructor مع بيانات اختبارية افتراضية
-  MockCustomerRepository({
-    List<Customer>? customers,
-    this.shouldThrow = false,
-  }) : _customers = customers ??
-            [
-              Customer(
-                id: 'test-1',
-                name: 'أحمد محمد',
-                phone: '0501234567',
-                email: 'ahmed@test.com',
-                createdAt: DateTime(2024),
-                updatedAt: DateTime(2024),
-              ),
-              Customer(
-                id: 'test-2',
-                name: 'سارة علي',
-                phone: '0509876543',
-                email: 'sara@test.com',
-                createdAt: DateTime(2024, 1, 2),
-                updatedAt: DateTime(2024, 1, 2),
-              ),
-            ];
+  MockCustomerRepository({List<Customer>? customers, this.shouldThrow = false})
+    : _customers =
+          customers ??
+          [
+            Customer(
+              id: 'test-1',
+              name: 'أحمد محمد',
+              phone: '0501234567',
+              email: 'ahmed@test.com',
+              createdAt: DateTime(2024),
+              updatedAt: DateTime(2024),
+            ),
+            Customer(
+              id: 'test-2',
+              name: 'سارة علي',
+              phone: '0509876543',
+              email: 'sara@test.com',
+              createdAt: DateTime(2024, 1, 2),
+              updatedAt: DateTime(2024, 1, 2),
+            ),
+          ];
   final List<Customer> _customers;
 
   /// للتحكم في رمي الأخطاء في الاختبارات

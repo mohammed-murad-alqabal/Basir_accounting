@@ -19,10 +19,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppPrimaryButton(
-              label: label,
-              onPressed: () {},
-            ),
+            body: AppPrimaryButton(label: label, onPressed: () {}),
           ),
         ),
       );
@@ -81,8 +78,9 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('should show CircularProgressIndicator when loading',
-        (tester) async {
+    testWidgets('should show CircularProgressIndicator when loading', (
+      tester,
+    ) async {
       // Act
       await tester.pumpWidget(
         MaterialApp(
@@ -133,10 +131,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppPrimaryButton(
-              label: 'حفظ',
-              onPressed: () {},
-            ),
+            body: AppPrimaryButton(label: 'حفظ', onPressed: () {}),
           ),
         ),
       );
@@ -180,10 +175,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppSecondaryButton(
-              label: label,
-              onPressed: () {},
-            ),
+            body: AppSecondaryButton(label: label, onPressed: () {}),
           ),
         ),
       );
@@ -242,8 +234,9 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('should show CircularProgressIndicator when loading',
-        (tester) async {
+    testWidgets('should show CircularProgressIndicator when loading', (
+      tester,
+    ) async {
       // Act
       await tester.pumpWidget(
         MaterialApp(
@@ -298,10 +291,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppTextButton(
-              label: label,
-              onPressed: () {},
-            ),
+            body: AppTextButton(label: label, onPressed: () {}),
           ),
         ),
       );
@@ -339,10 +329,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppTextButton(
-              label: 'نص',
-              onPressed: () {},
-            ),
+            body: AppTextButton(label: 'نص', onPressed: () {}),
           ),
         ),
       );
@@ -381,10 +368,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppTextButton(
-              label: 'نص',
-              onPressed: () {},
-            ),
+            body: AppTextButton(label: 'نص', onPressed: () {}),
           ),
         ),
       );
@@ -423,10 +407,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppTextButton(
-              label: 'نص',
-              onPressed: () {},
-            ),
+            body: AppTextButton(label: 'نص', onPressed: () {}),
           ),
         ),
       );
@@ -491,10 +472,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppPrimaryButton(
-              label: 'اضغط',
-              onPressed: () => tapCount++,
-            ),
+            body: AppPrimaryButton(label: 'اضغط', onPressed: () => tapCount++),
           ),
         ),
       );

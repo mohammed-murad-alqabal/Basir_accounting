@@ -239,10 +239,7 @@ void main() {
       // Assert
       expect(settings['companyName'], null);
       expect(settings['taxNumber'], null);
-      expect(
-        settings['taxRate'],
-        AppConfig.defaultTaxRate.toString(),
-      );
+      expect(settings['taxRate'], AppConfig.defaultTaxRate.toString());
     });
 
     test('should update all settings when called multiple times', () async {

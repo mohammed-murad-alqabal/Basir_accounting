@@ -44,10 +44,7 @@ Future<void> _generateIcon(int size, String filename) async {
 
   // رسم الخلفية
   paint.color = const Color(0xFF0056B3);
-  canvas.drawRect(
-    Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
-    paint,
-  );
+  canvas.drawRect(Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()), paint);
 
   // رسم الشعار
   _drawLogo(canvas, size.toDouble());
@@ -79,12 +76,7 @@ void _drawLogo(Canvas canvas, double size) {
 
   // رسم الفاتورة (مستطيل مع حواف مدورة)
   final invoiceRect = RRect.fromRectAndRadius(
-    Rect.fromLTWH(
-      size * 0.2,
-      size * 0.15,
-      size * 0.6,
-      size * 0.7,
-    ),
+    Rect.fromLTWH(size * 0.2, size * 0.15, size * 0.6, size * 0.7),
     Radius.circular(size * 0.05),
   );
   canvas.drawRRect(invoiceRect, paint);
@@ -97,11 +89,7 @@ void _drawLogo(Canvas canvas, double size) {
   final lineEndX = size * 0.7;
 
   canvas
-    ..drawLine(
-      Offset(lineStartX, lineY1),
-      Offset(lineEndX, lineY1),
-      paint,
-    )
+    ..drawLine(Offset(lineStartX, lineY1), Offset(lineEndX, lineY1), paint)
     ..drawLine(
       Offset(lineStartX, lineY2),
       Offset(lineEndX * 0.95, lineY2),
@@ -114,11 +102,7 @@ void _drawLogo(Canvas canvas, double size) {
     );
 
   // رسم دائرة خلف علامة الصح
-  canvas.drawCircle(
-    Offset(size * 0.7, size * 0.75),
-    size * 0.12,
-    fillPaint,
-  );
+  canvas.drawCircle(Offset(size * 0.7, size * 0.75), size * 0.12, fillPaint);
 
   // رسم علامة الصح (✓)
   final checkPaint = Paint()

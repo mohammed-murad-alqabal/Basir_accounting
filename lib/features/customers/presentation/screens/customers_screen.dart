@@ -63,12 +63,9 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
           Expanded(
             child: customersAsync.when(
               data: _buildCustomersList,
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-              error: (error, stack) => Center(
-                child: Text('خطأ في تحميل العملاء: $error'),
-              ),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stack) =>
+                  Center(child: Text('خطأ في تحميل العملاء: $error')),
             ),
           ),
         ],
@@ -137,9 +134,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
   Future<void> _addCustomer() async {
     final result = await Navigator.push<bool>(
       context,
-      MaterialPageRoute(
-        builder: (context) => const CustomerFormScreen(),
-      ),
+      MaterialPageRoute(builder: (context) => const CustomerFormScreen()),
     );
 
     if (result ?? false) {

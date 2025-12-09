@@ -154,9 +154,7 @@ void main() {
     group('isHeightSufficient', () {
       test('should return true for sufficient height', () {
         final metrics = AppFontMetrics.cairo(16);
-        final isSufficient = metrics.isHeightSufficient(
-          height: 60,
-        );
+        final isSufficient = metrics.isHeightSufficient(height: 60);
 
         expect(isSufficient, true);
       });
@@ -237,9 +235,7 @@ void main() {
 
     group('calculateCairoHeight', () {
       test('should calculate correct height', () {
-        final height = FontMetricsHelper.calculateCairoHeight(
-          fontSize: 16,
-        );
+        final height = FontMetricsHelper.calculateCairoHeight(fontSize: 16);
 
         expect(height, 22.4);
       });
@@ -247,9 +243,7 @@ void main() {
 
     group('calculateCairoPadding', () {
       test('should calculate correct padding', () {
-        final padding = FontMetricsHelper.calculateCairoPadding(
-          fontSize: 16,
-        );
+        final padding = FontMetricsHelper.calculateCairoPadding(fontSize: 16);
 
         expect(padding.top, greaterThanOrEqualTo(12.0));
         expect(padding.left, 16.0);

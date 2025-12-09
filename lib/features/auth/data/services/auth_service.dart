@@ -141,10 +141,12 @@ class AuthService {
   /// ```
   Future<bool> login(String username, String password) async {
     try {
-      final storedUsername =
-          await secureStorage.read(key: StorageKeys.username);
-      final storedPasswordHash =
-          await secureStorage.read(key: StorageKeys.passwordHash);
+      final storedUsername = await secureStorage.read(
+        key: StorageKeys.username,
+      );
+      final storedPasswordHash = await secureStorage.read(
+        key: StorageKeys.passwordHash,
+      );
 
       if (storedUsername == null || storedPasswordHash == null) {
         throw Exception('لا يوجد حساب مسجل');
@@ -247,8 +249,9 @@ class AuthService {
   /// ```
   Future<bool> shouldKeepLoggedIn() async {
     try {
-      final keepLoggedIn =
-          await secureStorage.read(key: StorageKeys.keepLoggedIn);
+      final keepLoggedIn = await secureStorage.read(
+        key: StorageKeys.keepLoggedIn,
+      );
       return keepLoggedIn == 'true';
     } on Exception {
       return false;
@@ -357,16 +360,18 @@ class AuthService {
   /// ```
   Future<void> changePassword(String oldPassword, String newPassword) async {
     try {
-      final storedPasswordHash =
-          await secureStorage.read(key: StorageKeys.passwordHash);
+      final storedPasswordHash = await secureStorage.read(
+        key: StorageKeys.passwordHash,
+      );
 
       if (storedPasswordHash == null) {
         throw Exception('لا يوجد حساب مسجل');
       }
 
       // التحقق من كلمة المرور القديمة
-      final oldPasswordHash =
-          sha256.convert(utf8.encode(oldPassword)).toString();
+      final oldPasswordHash = sha256
+          .convert(utf8.encode(oldPassword))
+          .toString();
       if (storedPasswordHash != oldPasswordHash) {
         throw Exception('كلمة المرور القديمة غير صحيحة');
       }
@@ -377,8 +382,9 @@ class AuthService {
       }
 
       // تشفير وحفظ كلمة المرور الجديدة
-      final newPasswordHash =
-          sha256.convert(utf8.encode(newPassword)).toString();
+      final newPasswordHash = sha256
+          .convert(utf8.encode(newPassword))
+          .toString();
       await secureStorage.write(
         key: StorageKeys.passwordHash,
         value: newPasswordHash,

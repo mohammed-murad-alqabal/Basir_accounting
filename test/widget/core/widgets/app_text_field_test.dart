@@ -10,9 +10,7 @@ void main() {
     testWidgets('should display label', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: AppTextField(label: 'اسم المستخدم'),
-          ),
+          home: Scaffold(body: AppTextField(label: 'اسم المستخدم')),
         ),
       );
 
@@ -38,10 +36,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppTextField(
-              label: 'كلمة المرور',
-              obscureText: true,
-            ),
+            body: AppTextField(label: 'كلمة المرور', obscureText: true),
           ),
         ),
       );
@@ -115,10 +110,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppTextField(
-              label: 'البحث',
-              suffixIcon: Icon(Icons.search),
-            ),
+            body: AppTextField(label: 'البحث', suffixIcon: Icon(Icons.search)),
           ),
         ),
       );
@@ -129,12 +121,7 @@ void main() {
     testWidgets('should support multiline', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: AppTextField(
-              label: 'الملاحظات',
-              maxLines: 3,
-            ),
-          ),
+          home: Scaffold(body: AppTextField(label: 'الملاحظات', maxLines: 3)),
         ),
       );
 
@@ -146,11 +133,7 @@ void main() {
   group('AppSearchField', () {
     testWidgets('should display search icon', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: AppSearchField(),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: AppSearchField())),
       );
 
       expect(find.byIcon(Icons.search), findsOneWidget);
@@ -159,9 +142,7 @@ void main() {
     testWidgets('should display hint', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: AppSearchField(hint: 'ابحث عن عميل...'),
-          ),
+          home: Scaffold(body: AppSearchField(hint: 'ابحث عن عميل...')),
         ),
       );
 
@@ -174,9 +155,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppSearchField(
-              onChanged: (value) => changedValue = value,
-            ),
+            body: AppSearchField(onChanged: (value) => changedValue = value),
           ),
         ),
       );
@@ -185,15 +164,14 @@ void main() {
       expect(changedValue, 'أحمد');
     });
 
-    testWidgets('should show clear button when text is not empty',
-        (tester) async {
+    testWidgets('should show clear button when text is not empty', (
+      tester,
+    ) async {
       final controller = TextEditingController();
 
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: AppSearchField(controller: controller),
-          ),
+          home: Scaffold(body: AppSearchField(controller: controller)),
         ),
       );
 

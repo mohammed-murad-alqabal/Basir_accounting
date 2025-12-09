@@ -86,9 +86,9 @@ class CustomerRepositoryImpl implements CustomerRepository {
     try {
       final models = await isar.customerModels.where().findAll();
       final model = models.cast<CustomerModel?>().firstWhere(
-            (m) => m?.customerId == id,
-            orElse: () => null,
-          );
+        (m) => m?.customerId == id,
+        orElse: () => null,
+      );
       return model?.toEntity();
     } catch (e) {
       throw Exception('خطأ في جلب العميل: $e');
@@ -187,9 +187,9 @@ class CustomerRepositoryImpl implements CustomerRepository {
       await isar.writeTxn(() async {
         final models = await isar.customerModels.where().findAll();
         final model = models.cast<CustomerModel?>().firstWhere(
-              (m) => m?.customerId == id,
-              orElse: () => null,
-            );
+          (m) => m?.customerId == id,
+          orElse: () => null,
+        );
         if (model != null) {
           await isar.customerModels.delete(model.id);
         }

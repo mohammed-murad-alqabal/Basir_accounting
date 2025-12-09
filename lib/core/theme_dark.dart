@@ -158,10 +158,7 @@ ThemeData createDarkTheme() {
         height: AppTypography.headlineLineHeight,
         letterSpacing: -0.5,
       ),
-      iconTheme: IconThemeData(
-        color: AppColorsDark.textPrimary,
-        size: 24,
-      ),
+      iconTheme: IconThemeData(color: AppColorsDark.textPrimary, size: 24),
     ),
 
     // ===== Card Theme =====
@@ -172,9 +169,7 @@ ThemeData createDarkTheme() {
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
-        side: const BorderSide(
-          color: AppColorsDark.border,
-        ),
+        side: const BorderSide(color: AppColorsDark.border),
       ),
       margin: const EdgeInsets.symmetric(
         horizontal: AppSpacing.md,
@@ -192,38 +187,23 @@ ThemeData createDarkTheme() {
       ),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
-        borderSide: const BorderSide(
-          color: AppColorsDark.border,
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: AppColorsDark.border, width: 1.5),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
-        borderSide: const BorderSide(
-          color: AppColorsDark.border,
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: AppColorsDark.border, width: 1.5),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
-        borderSide: const BorderSide(
-          color: AppColorsDark.primary,
-          width: 2,
-        ),
+        borderSide: const BorderSide(color: AppColorsDark.primary, width: 2),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
-        borderSide: const BorderSide(
-          color: AppColorsDark.error,
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: AppColorsDark.error, width: 1.5),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
-        borderSide: const BorderSide(
-          color: AppColorsDark.error,
-          width: 2,
-        ),
+        borderSide: const BorderSide(color: AppColorsDark.error, width: 2),
       ),
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
@@ -287,10 +267,7 @@ ThemeData createDarkTheme() {
       style: OutlinedButton.styleFrom(
         foregroundColor: AppColorsDark.primary,
         disabledForegroundColor: AppColorsDark.textDisabled,
-        side: const BorderSide(
-          color: AppColorsDark.primary,
-          width: 1.5,
-        ),
+        side: const BorderSide(color: AppColorsDark.primary, width: 1.5),
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.lg,
           vertical: AppSpacing.md + 2,
@@ -342,10 +319,7 @@ ThemeData createDarkTheme() {
     ),
 
     // ===== Icon Theme =====
-    iconTheme: const IconThemeData(
-      color: AppColorsDark.textPrimary,
-      size: 24,
-    ),
+    iconTheme: const IconThemeData(color: AppColorsDark.textPrimary, size: 24),
 
     // ===== Text Theme مع خط Cairo المحلي =====
     // استخدام خط Cairo من assets/fonts/ لضمان عمله بدون إنترنت
@@ -581,10 +555,7 @@ ThemeData createDarkTheme() {
         return Colors.transparent;
       }),
       checkColor: WidgetStateProperty.all(AppColorsDark.textOnLight),
-      side: const BorderSide(
-        color: AppColorsDark.border,
-        width: 2,
-      ),
+      side: const BorderSide(color: AppColorsDark.border, width: 2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.xs),
       ),

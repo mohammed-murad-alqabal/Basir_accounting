@@ -138,12 +138,7 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد محمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 2,
-            price: 500,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 2, price: 500),
         ],
         issuedDate: now,
         dueDate: dueDate,
@@ -169,12 +164,7 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 2,
-            price: 500,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 2, price: 500),
         ],
         issuedDate: now,
         dueDate: dueDate,
@@ -198,24 +188,9 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة 1',
-            quantity: 2,
-            price: 500,
-          ),
-          InvoiceItem(
-            id: 'item-2',
-            name: 'خدمة 2',
-            quantity: 1,
-            price: 300,
-          ),
-          InvoiceItem(
-            id: 'item-3',
-            name: 'خدمة 3',
-            quantity: 3,
-            price: 200,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة 1', quantity: 2, price: 500),
+          InvoiceItem(id: 'item-2', name: 'خدمة 2', quantity: 1, price: 300),
+          InvoiceItem(id: 'item-3', name: 'خدمة 3', quantity: 3, price: 200),
         ],
         issuedDate: now,
         dueDate: dueDate,
@@ -239,12 +214,7 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 2,
-            price: 500,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 2, price: 500),
         ],
         issuedDate: now,
         dueDate: dueDate,
@@ -268,12 +238,7 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 2,
-            price: 500,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 2, price: 500),
         ],
         issuedDate: now,
         dueDate: dueDate,
@@ -297,12 +262,7 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 2,
-            price: 500,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 2, price: 500),
         ],
         issuedDate: now,
         dueDate: dueDate,
@@ -354,12 +314,7 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 1,
-            price: 100,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 1, price: 100),
         ],
         issuedDate: now,
         dueDate: dueDate,
@@ -381,12 +336,7 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 1,
-            price: 100,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 1, price: 100),
         ],
         issuedDate: now,
         dueDate: dueDate,
@@ -407,12 +357,7 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 1,
-            price: 100,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 1, price: 100),
         ],
         issuedDate: now,
         dueDate: dueDate,
@@ -427,12 +372,7 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 1,
-            price: 100,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 1, price: 100),
         ],
         issuedDate: now,
         dueDate: dueDate,
@@ -453,12 +393,7 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 1,
-            price: 100,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 1, price: 100),
         ],
         issuedDate: now,
         dueDate: dueDate,
@@ -484,12 +419,7 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 1,
-            price: 100,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 1, price: 100),
         ],
         issuedDate: now,
         dueDate: dueDate,
@@ -502,18 +432,8 @@ void main() {
       // Act
       final updated = invoice.copyWith(
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 1,
-            price: 100,
-          ),
-          InvoiceItem(
-            id: 'item-2',
-            name: 'خدمة 2',
-            quantity: 2,
-            price: 200,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 1, price: 100),
+          InvoiceItem(id: 'item-2', name: 'خدمة 2', quantity: 2, price: 200),
         ],
       );
 
@@ -529,12 +449,7 @@ void main() {
         customerId: 'customer-1',
         customerName: 'أحمد',
         items: const [
-          InvoiceItem(
-            id: 'item-1',
-            name: 'خدمة',
-            quantity: 1,
-            price: 1000,
-          ),
+          InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 1, price: 1000),
         ],
         issuedDate: now,
         dueDate: dueDate,

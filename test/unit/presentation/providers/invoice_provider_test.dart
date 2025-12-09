@@ -143,10 +143,7 @@ void main() {
 
     test('should calculate totals correctly when adding invoice', () async {
       // Arrange
-      final invoice = MockData.createTestInvoice(
-        itemCount: 3,
-        itemPrice: 100,
-      );
+      final invoice = MockData.createTestInvoice(itemCount: 3, itemPrice: 100);
 
       // Act
       await mockRepository.addInvoice(invoice);
@@ -194,9 +191,7 @@ void main() {
       );
       await mockRepository.addInvoice(originalInvoice);
 
-      final updatedInvoice = originalInvoice.copyWith(
-        status: 'مدفوعة',
-      );
+      final updatedInvoice = originalInvoice.copyWith(status: 'مدفوعة');
 
       // Act
       await mockRepository.updateInvoice(updatedInvoice);
@@ -212,10 +207,7 @@ void main() {
       final invoice = MockData.createTestInvoice(id: 'non-existent');
 
       // Act & Assert
-      expect(
-        () => mockRepository.updateInvoice(invoice),
-        throwsException,
-      );
+      expect(() => mockRepository.updateInvoice(invoice), throwsException);
     });
 
     test('should recalculate totals when updating items', () async {
@@ -385,8 +377,9 @@ void main() {
 
       // Act
       final allInvoices = await mockRepository.getAllInvoices();
-      final filtered =
-          allInvoices.where((i) => i.customerName.contains('محمد')).toList();
+      final filtered = allInvoices
+          .where((i) => i.customerName.contains('محمد'))
+          .toList();
 
       // Assert
       expect(filtered.length, 2);
@@ -404,8 +397,9 @@ void main() {
 
       // Act
       final allInvoices = await mockRepository.getAllInvoices();
-      final filtered =
-          allInvoices.where((i) => i.id.contains('INV-001')).toList();
+      final filtered = allInvoices
+          .where((i) => i.id.contains('INV-001'))
+          .toList();
 
       // Assert
       expect(filtered.length, 1);

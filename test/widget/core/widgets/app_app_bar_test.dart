@@ -12,9 +12,7 @@ void main() {
       // Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            appBar: AppAppBar(title: title),
-          ),
+          home: Scaffold(appBar: AppAppBar(title: title)),
         ),
       );
 
@@ -26,9 +24,7 @@ void main() {
       // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            appBar: AppAppBar(title: 'Test'),
-          ),
+          home: Scaffold(appBar: AppAppBar(title: 'Test')),
         ),
       );
 
@@ -36,16 +32,14 @@ void main() {
       expect(find.byIcon(Icons.arrow_back), findsOneWidget);
     });
 
-    testWidgets('should hide back button when showBackButton is false',
-        (tester) async {
+    testWidgets('should hide back button when showBackButton is false', (
+      tester,
+    ) async {
       // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            appBar: AppAppBar(
-              title: 'Test',
-              showBackButton: false,
-            ),
+            appBar: AppAppBar(title: 'Test', showBackButton: false),
           ),
         ),
       );
@@ -54,8 +48,9 @@ void main() {
       expect(find.byIcon(Icons.arrow_back), findsNothing);
     });
 
-    testWidgets('should call Navigator.pop when back button is pressed',
-        (tester) async {
+    testWidgets('should call Navigator.pop when back button is pressed', (
+      tester,
+    ) async {
       // Arrange
       var navigatorPopped = false;
 
@@ -117,10 +112,7 @@ void main() {
                     actionPressed = true;
                   },
                 ),
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {},
-                ),
+                IconButton(icon: const Icon(Icons.search), onPressed: () {}),
               ],
             ),
           ),
@@ -165,9 +157,7 @@ void main() {
       // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            appBar: AppAppBar(title: 'Test'),
-          ),
+          home: Scaffold(appBar: AppAppBar(title: 'Test')),
         ),
       );
 
@@ -181,9 +171,7 @@ void main() {
       // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            appBar: AppAppBar(title: 'Test'),
-          ),
+          home: Scaffold(appBar: AppAppBar(title: 'Test')),
         ),
       );
 
@@ -196,9 +184,7 @@ void main() {
       // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            appBar: AppAppBar(title: 'Test'),
-          ),
+          home: Scaffold(appBar: AppAppBar(title: 'Test')),
         ),
       );
 
@@ -224,9 +210,7 @@ void main() {
       // Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            appBar: AppSimpleAppBar(title: title),
-          ),
+          home: Scaffold(appBar: AppSimpleAppBar(title: title)),
         ),
       );
 
@@ -238,9 +222,7 @@ void main() {
       // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            appBar: AppSimpleAppBar(title: 'Test'),
-          ),
+          home: Scaffold(appBar: AppSimpleAppBar(title: 'Test')),
         ),
       );
 
@@ -308,9 +290,7 @@ void main() {
       // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            appBar: AppSimpleAppBar(title: 'Test'),
-          ),
+          home: Scaffold(appBar: AppSimpleAppBar(title: 'Test')),
         ),
       );
 
@@ -324,9 +304,7 @@ void main() {
       // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            appBar: AppSimpleAppBar(title: 'Test'),
-          ),
+          home: Scaffold(appBar: AppSimpleAppBar(title: 'Test')),
         ),
       );
 
@@ -339,9 +317,7 @@ void main() {
       // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            appBar: AppSimpleAppBar(title: 'Test'),
-          ),
+          home: Scaffold(appBar: AppSimpleAppBar(title: 'Test')),
         ),
       );
 
@@ -354,9 +330,7 @@ void main() {
       // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            appBar: AppSimpleAppBar(title: 'Test'),
-          ),
+          home: Scaffold(appBar: AppSimpleAppBar(title: 'Test')),
         ),
       );
 

@@ -37,31 +37,35 @@ void main() {
       expect(isLoggedIn, 'true');
     });
 
-    test('should throw exception for username less than 3 characters',
-        () async {
-      // Arrange
-      const username = 'ab'; // أقل من 3 أحرف
-      const password = 'redacted';
+    test(
+      'should throw exception for username less than 3 characters',
+      () async {
+        // Arrange
+        const username = 'ab'; // أقل من 3 أحرف
+        const password = 'redacted';
 
-      // Act & Assert
-      expect(
-        () => authService.createAccount(username, password),
-        throwsException,
-      );
-    });
+        // Act & Assert
+        expect(
+          () => authService.createAccount(username, password),
+          throwsException,
+        );
+      },
+    );
 
-    test('should throw exception for password less than 6 characters',
-        () async {
-      // Arrange
-      const username = 'testuser';
-      const password = '12345'; // أقل من 6 أحرف
+    test(
+      'should throw exception for password less than 6 characters',
+      () async {
+        // Arrange
+        const username = 'testuser';
+        const password = '12345'; // أقل من 6 أحرف
 
-      // Act & Assert
-      expect(
-        () => authService.createAccount(username, password),
-        throwsException,
-      );
-    });
+        // Act & Assert
+        expect(
+          () => authService.createAccount(username, password),
+          throwsException,
+        );
+      },
+    );
 
     test('should throw exception for empty username', () async {
       // Arrange
@@ -145,10 +149,7 @@ void main() {
       const password = 'redacted';
 
       // Act & Assert
-      expect(
-        () => authService.login(username, password),
-        throwsException,
-      );
+      expect(() => authService.login(username, password), throwsException);
     });
 
     test('should throw exception for incorrect username', () async {
@@ -158,10 +159,7 @@ void main() {
       await authService.createAccount(username, password);
 
       // Act & Assert
-      expect(
-        () => authService.login('wronguser', password),
-        throwsException,
-      );
+      expect(() => authService.login('wronguser', password), throwsException);
     });
 
     test('should throw exception for incorrect password', () async {
@@ -250,14 +248,16 @@ void main() {
       expect(result, username);
     });
 
-    test('getCurrentUsername should return null when no account exists',
-        () async {
-      // Act
-      final result = await authService.getCurrentUsername();
+    test(
+      'getCurrentUsername should return null when no account exists',
+      () async {
+        // Act
+        final result = await authService.getCurrentUsername();
 
-      // Assert
-      expect(result, null);
-    });
+        // Assert
+        expect(result, null);
+      },
+    );
 
     test('changePassword should update password successfully', () async {
       // Arrange
@@ -275,43 +275,49 @@ void main() {
       expect(result, true);
     });
 
-    test('changePassword should throw exception for incorrect old password',
-        () async {
-      // Arrange
-      const username = 'testuser';
-      const password = 'redacted';
-      const newPassword = 'newpassword456';
-      await authService.createAccount(username, password);
+    test(
+      'changePassword should throw exception for incorrect old password',
+      () async {
+        // Arrange
+        const username = 'testuser';
+        const password = 'redacted';
+        const newPassword = 'newpassword456';
+        await authService.createAccount(username, password);
 
-      // Act & Assert
-      expect(
-        () => authService.changePassword('wrongpassword', newPassword),
-        throwsException,
-      );
-    });
+        // Act & Assert
+        expect(
+          () => authService.changePassword('wrongpassword', newPassword),
+          throwsException,
+        );
+      },
+    );
 
-    test('changePassword should throw exception for short new password',
-        () async {
-      // Arrange
-      const username = 'testuser';
-      const password = 'redacted';
-      const newPassword = '12345'; // أقل من 6 أحرف
-      await authService.createAccount(username, password);
+    test(
+      'changePassword should throw exception for short new password',
+      () async {
+        // Arrange
+        const username = 'testuser';
+        const password = 'redacted';
+        const newPassword = '12345'; // أقل من 6 أحرف
+        await authService.createAccount(username, password);
 
-      // Act & Assert
-      expect(
-        () => authService.changePassword(password, newPassword),
-        throwsException,
-      );
-    });
+        // Act & Assert
+        expect(
+          () => authService.changePassword(password, newPassword),
+          throwsException,
+        );
+      },
+    );
 
-    test('changePassword should throw exception when no account exists',
-        () async {
-      // Act & Assert
-      expect(
-        () => authService.changePassword('oldpass', 'newpass123'),
-        throwsException,
-      );
-    });
+    test(
+      'changePassword should throw exception when no account exists',
+      () async {
+        // Act & Assert
+        expect(
+          () => authService.changePassword('oldpass', 'newpass123'),
+          throwsException,
+        );
+      },
+    );
   });
 }

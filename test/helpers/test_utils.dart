@@ -20,8 +20,7 @@ class TestUtils {
     double a,
     double b, {
     double epsilon = 0.001,
-  }) =>
-      (a - b).abs() < epsilon;
+  }) => (a - b).abs() < epsilon;
 
   /// Matcher للتحقق من أن رقم عشري يساوي قيمة تقريباً
   ///
@@ -56,9 +55,9 @@ class TestUtils {
   /// expect(DateTime(2025, 12, 1, 10, 30), isSameDateAs(expected));
   /// ```
   static Matcher isSameDateAs(DateTime date) => predicate<DateTime>(
-        (actual) => isSameDate(actual, date),
-        'is same date as ${date.year}-${date.month}-${date.day}',
-      );
+    (actual) => isSameDate(actual, date),
+    'is same date as ${date.year}-${date.month}-${date.day}',
+  );
 
   /// انتظار حتى يتم تنفيذ جميع العمليات الغير متزامنة
   ///
@@ -112,14 +111,14 @@ class TestUtils {
   /// expect([3, 2, 1], TestUtils.isOrderedDescending);
   /// ```
   static Matcher get isOrderedAscending => predicate<List<num>>(
-        (list) => isOrdered<num>(list),
-        'is ordered ascending',
-      );
+    (list) => isOrdered<num>(list),
+    'is ordered ascending',
+  );
 
   static Matcher get isOrderedDescending => predicate<List<num>>(
-        (list) => isOrdered<num>(list, ascending: false),
-        'is ordered descending',
-      );
+    (list) => isOrdered<num>(list, ascending: false),
+    'is ordered descending',
+  );
 
   /// التحقق من أن نص يحتوي على جميع الكلمات المحددة
   ///
@@ -138,7 +137,7 @@ class TestUtils {
   /// expect('مرحباً بك في بصير', containsWords(['مرحباً', 'بصير']));
   /// ```
   static Matcher containsWords(List<String> words) => predicate<String>(
-        (text) => TestUtils.containsAllWords(text, words),
-        'contains all words: ${words.join(", ")}',
-      );
+    (text) => TestUtils.containsAllWords(text, words),
+    'contains all words: ${words.join(", ")}',
+  );
 }

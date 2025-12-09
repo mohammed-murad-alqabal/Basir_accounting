@@ -45,8 +45,7 @@ class MockSecureStorage extends FlutterSecureStorage {
     WebOptions? webOptions,
     MacOsOptions? mOptions,
     WindowsOptions? wOptions,
-  }) async =>
-      _storage[key];
+  }) async => _storage[key];
 
   /// حذف قيمة من التخزين
   @override
@@ -85,8 +84,7 @@ class MockSecureStorage extends FlutterSecureStorage {
     WebOptions? webOptions,
     MacOsOptions? mOptions,
     WindowsOptions? wOptions,
-  }) async =>
-      _storage.containsKey(key);
+  }) async => _storage.containsKey(key);
 
   /// قراءة جميع القيم من التخزين
   @override
@@ -97,8 +95,7 @@ class MockSecureStorage extends FlutterSecureStorage {
     WebOptions? webOptions,
     MacOsOptions? mOptions,
     WindowsOptions? wOptions,
-  }) async =>
-      Map.from(_storage);
+  }) async => Map.from(_storage);
 
   /// دالة مساعدة للحصول على جميع المفاتيح المخزنة
   Set<String> get keys => _storage.keys.toSet();

@@ -17,35 +17,34 @@ void main() {
   });
 
   Widget createTestWidget({Customer? customer}) => ProviderScope(
-        overrides: [
-          customerRepositoryProvider.overrideWithValue(mockRepository),
-        ],
-        child: MaterialApp(
-          home: CustomerFormScreen(customer: customer),
-        ),
-      );
+    overrides: [customerRepositoryProvider.overrideWithValue(mockRepository)],
+    child: MaterialApp(home: CustomerFormScreen(customer: customer)),
+  );
 
   group('CustomerFormScreen - Display', () {
-    testWidgets('should display add customer title when customer is null',
-        (tester) async {
+    testWidgets('should display add customer title when customer is null', (
+      tester,
+    ) async {
       await tester.pumpWidget(createTestWidget());
 
       expect(find.text('إضافة عميل جديد'), findsOneWidget);
     });
 
-    testWidgets('should display edit customer title when customer is provided',
-        (tester) async {
-      final customer = Customer(
-        id: 'test-1',
-        name: 'أحمد محمد',
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      );
+    testWidgets(
+      'should display edit customer title when customer is provided',
+      (tester) async {
+        final customer = Customer(
+          id: 'test-1',
+          name: 'أحمد محمد',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
 
-      await tester.pumpWidget(createTestWidget(customer: customer));
+        await tester.pumpWidget(createTestWidget(customer: customer));
 
-      expect(find.text('تعديل العميل'), findsOneWidget);
-    });
+        expect(find.text('تعديل العميل'), findsOneWidget);
+      },
+    );
 
     testWidgets('should display all form fields', (tester) async {
       await tester.pumpWidget(createTestWidget());
@@ -57,15 +56,17 @@ void main() {
       expect(find.text('ملاحظات (اختياري)'), findsOneWidget);
     });
 
-    testWidgets('should display add button when customer is null',
-        (tester) async {
+    testWidgets('should display add button when customer is null', (
+      tester,
+    ) async {
       await tester.pumpWidget(createTestWidget());
 
       expect(find.text('إضافة العميل'), findsOneWidget);
     });
 
-    testWidgets('should display save button when customer is provided',
-        (tester) async {
+    testWidgets('should display save button when customer is provided', (
+      tester,
+    ) async {
       final customer = Customer(
         id: 'test-1',
         name: 'أحمد محمد',
@@ -205,10 +206,7 @@ void main() {
       await tester.tap(button, warnIfMissed: false);
       await tester.pumpAndSettle();
 
-      expect(
-        find.text('رقم الهاتف يجب أن يتكون من 10 أرقام'),
-        findsOneWidget,
-      );
+      expect(find.text('رقم الهاتف يجب أن يتكون من 10 أرقام'), findsOneWidget);
     });
 
     testWidgets('should accept valid email', (tester) async {
@@ -264,10 +262,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('رقم الهاتف يجب أن يبدأ بـ 05'), findsNothing);
-      expect(
-        find.text('رقم الهاتف يجب أن يتكون من 10 أرقام'),
-        findsNothing,
-      );
+      expect(find.text('رقم الهاتف يجب أن يتكون من 10 أرقام'), findsNothing);
       // التحقق من رسالة النجاح
       expect(find.text('تم إضافة العميل بنجاح'), findsOneWidget);
     });
@@ -504,8 +499,9 @@ void main() {
                       MaterialPageRoute<void>(
                         builder: (_) => ProviderScope(
                           overrides: [
-                            customerRepositoryProvider
-                                .overrideWithValue(mockRepository),
+                            customerRepositoryProvider.overrideWithValue(
+                              mockRepository,
+                            ),
                           ],
                           child: const CustomerFormScreen(),
                         ),

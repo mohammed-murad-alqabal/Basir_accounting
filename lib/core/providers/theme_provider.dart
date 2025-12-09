@@ -63,9 +63,7 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
 
 /// مزود الثيم
 final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>(
-  (ref) => ThemeNotifier(
-    const FlutterSecureStorage(),
-  ),
+  (ref) => ThemeNotifier(const FlutterSecureStorage()),
 );
 
 /// مزود للتحقق من الوضع الداكن

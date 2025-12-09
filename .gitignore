@@ -153,22 +153,23 @@ logs/.processing_*
 *.log~
 
 # Temporary reports (keep in Documentation/ instead)
-*_REPORT.md
-*_SUMMARY.md
-*_STATUS.md
-*_GUIDE.md
-*_ANALYSIS.md
-*_ISSUES.md
-*_PLAN.md
-*_AUDIT.md
-*_FIXES.md
-*_DONE.md
-*_COMPLETE.md
-CHECKPOINT_*.md
-CONTINUATION_*.md
-IMMEDIATE_*.md
-QUICK_*.md
-CURRENT_*.md
+# Note: Root level temporary reports only, not in .kiro/docs/reports/
+/*_REPORT.md
+/*_SUMMARY.md
+/*_STATUS.md
+/*_GUIDE.md
+/*_ANALYSIS.md
+/*_ISSUES.md
+/*_PLAN.md
+/*_AUDIT.md
+/*_FIXES.md
+/*_DONE.md
+/*_COMPLETE.md
+/CHECKPOINT_*.md
+/CONTINUATION_*.md
+/IMMEDIATE_*.md
+/QUICK_*.md
+/CURRENT_*.md
 
 # Kiro temporary report files
 .kiro/docs/reports/*_TEMP.md
@@ -196,3 +197,6 @@ sqlite_mcp_server.db
 # Git backup files
 backup_git_*.tar.gz
 git_fsck_report.txt
+
+# DartDoc generated files
+docs/api/html/

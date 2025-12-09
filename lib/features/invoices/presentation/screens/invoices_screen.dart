@@ -89,9 +89,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           Expanded(
             child: invoicesAsync.when(
               data: _buildInvoicesList,
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
+              loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => Center(
                 child: Padding(
                   padding: const EdgeInsets.all(AppSpacing.xl),
@@ -245,8 +243,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
 
       if (invoices.isNotEmpty) {
         final invoiceToExport = invoices.first;
-        final customer =
-            await customerRepo.getCustomerById(invoiceToExport.customerId);
+        final customer = await customerRepo.getCustomerById(
+          invoiceToExport.customerId,
+        );
 
         if (!mounted) return;
 
@@ -259,9 +258,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             );
           } on Exception catch (e) {
             if (!mounted) return;
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('خطأ في التصدير: $e')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('خطأ في التصدير: $e')));
           }
         } else {
           if (!mounted) return;
@@ -348,9 +347,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
   Future<void> _addInvoice() async {
     final result = await Navigator.push<bool>(
       context,
-      MaterialPageRoute(
-        builder: (context) => const InvoiceFormScreen(),
-      ),
+      MaterialPageRoute(builder: (context) => const InvoiceFormScreen()),
     );
 
     if (result ?? false) {
@@ -384,9 +381,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.error,
-            ),
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
             child: const Text('حذف'),
           ),
         ],

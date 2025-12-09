@@ -23,10 +23,10 @@ class TestHelpers {
   /// await TestHelpers.cleanupTestIsar(isar);
   /// ```
   static Future<Isar> createTestIsar() async => Isar.open(
-        [CustomerModelSchema, InvoiceModelSchema],
-        directory: '',
-        name: 'test_${DateTime.now().millisecondsSinceEpoch}',
-      );
+    [CustomerModelSchema, InvoiceModelSchema],
+    directory: '',
+    name: 'test_${DateTime.now().millisecondsSinceEpoch}',
+  );
 
   /// تنظيف قاعدة البيانات بعد الاختبار
   ///
@@ -56,12 +56,8 @@ class TestHelpers {
   ///   ],
   /// );
   /// ```
-  static ProviderContainer createTestContainer({
-    List<Override>? overrides,
-  }) =>
-      ProviderContainer(
-        overrides: overrides ?? [],
-      );
+  static ProviderContainer createTestContainer({List<Override>? overrides}) =>
+      ProviderContainer(overrides: overrides ?? []);
 
   /// تنظيف ProviderContainer بعد الاختبار
   ///

@@ -176,11 +176,7 @@ class AppColors {
   /// );
   /// ```
   static bool hasMinimumContrast(Color color, {double minRatio = 4.5}) =>
-      AccessibilityChecker.checkContrast(
-        color,
-        surface,
-        minRatio: minRatio,
-      );
+      AccessibilityChecker.checkContrast(color, surface, minRatio: minRatio);
 
   /// يحسب نسبة التباين بين لونين
   ///
@@ -198,8 +194,5 @@ class AppColors {
   /// print('نسبة التباين: $ratio:1');
   /// ```
   static double contrastRatio(Color foreground, Color background) =>
-      AccessibilityChecker.calculateContrastRatio(
-        foreground,
-        background,
-      );
+      AccessibilityChecker.calculateContrastRatio(foreground, background);
 }

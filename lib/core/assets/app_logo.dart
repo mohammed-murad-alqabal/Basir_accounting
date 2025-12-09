@@ -15,11 +15,7 @@ class BasserLogo extends StatelessWidget {
   ///
   /// [size] حجم الشعار (افتراضي: 80)
   /// [color] لون الشعار (افتراضي: أبيض)
-  const BasserLogo({
-    super.key,
-    this.size = 80,
-    this.color = Colors.white,
-  });
+  const BasserLogo({super.key, this.size = 80, this.color = Colors.white});
 
   /// حجم الشعار
   final double size;
@@ -29,9 +25,9 @@ class BasserLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CustomPaint(
-        size: Size(size, size),
-        painter: _BasserLogoPainter(color: color),
-      );
+    size: Size(size, size),
+    painter: _BasserLogoPainter(color: color),
+  );
 }
 
 /// رسام شعار بصير المخصص
@@ -73,11 +69,7 @@ class _BasserLogoPainter extends CustomPainter {
     final lineEndX = size.width * 0.75;
 
     canvas
-      ..drawLine(
-        Offset(lineStartX, lineY1),
-        Offset(lineEndX, lineY1),
-        paint,
-      )
+      ..drawLine(Offset(lineStartX, lineY1), Offset(lineEndX, lineY1), paint)
       ..drawLine(
         Offset(lineStartX, lineY2),
         Offset(lineEndX * 0.9, lineY2),
@@ -127,11 +119,7 @@ class BasserIcon extends StatelessWidget {
   ///
   /// [size] حجم الأيقونة (افتراضي: 24)
   /// [color] لون الأيقونة (افتراضي: أبيض)
-  const BasserIcon({
-    super.key,
-    this.size = 24,
-    this.color = Colors.white,
-  });
+  const BasserIcon({super.key, this.size = 24, this.color = Colors.white});
 
   /// حجم الأيقونة
   final double size;
@@ -141,9 +129,9 @@ class BasserIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CustomPaint(
-        size: Size(size, size),
-        painter: _BasserIconPainter(color: color),
-      );
+    size: Size(size, size),
+    painter: _BasserIconPainter(color: color),
+  );
 }
 
 /// رسام أيقونة بصير المبسطة

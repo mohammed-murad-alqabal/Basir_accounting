@@ -13,8 +13,10 @@ final invoicesProvider = FutureProvider<List<Invoice>>((ref) async {
 });
 
 /// Provider لإضافة فاتورة جديدة
-final addInvoiceProvider =
-    FutureProvider.family<bool, Invoice>((ref, invoice) async {
+final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
+  ref,
+  invoice,
+) async {
   final repository = ref.watch(invoiceRepositoryProvider);
 
   try {
@@ -27,8 +29,10 @@ final addInvoiceProvider =
 });
 
 /// Provider لتحديث فاتورة
-final updateInvoiceProvider =
-    FutureProvider.family<bool, Invoice>((ref, invoice) async {
+final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
+  ref,
+  invoice,
+) async {
   final repository = ref.watch(invoiceRepositoryProvider);
 
   try {
@@ -41,8 +45,10 @@ final updateInvoiceProvider =
 });
 
 /// Provider لحذف فاتورة
-final deleteInvoiceProvider =
-    FutureProvider.family<bool, String>((ref, invoiceId) async {
+final deleteInvoiceProvider = FutureProvider.family<bool, String>((
+  ref,
+  invoiceId,
+) async {
   final repository = ref.watch(invoiceRepositoryProvider);
 
   try {
@@ -71,8 +77,9 @@ final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
 
     // تطبيق فلتر الحالة
     if (filterStatus != 'الكل') {
-      filtered =
-          filtered.where((invoice) => invoice.status == filterStatus).toList();
+      filtered = filtered
+          .where((invoice) => invoice.status == filterStatus)
+          .toList();
     }
 
     // تطبيق البحث
@@ -95,10 +102,8 @@ final totalSalesProvider = Provider<AsyncValue<double>>((ref) {
   final invoicesAsync = ref.watch(invoicesProvider);
 
   return invoicesAsync.whenData(
-    (invoices) => invoices.fold<double>(
-      0,
-      (sum, invoice) => sum + invoice.grandTotal,
-    ),
+    (invoices) =>
+        invoices.fold<double>(0, (sum, invoice) => sum + invoice.grandTotal),
   );
 });
 

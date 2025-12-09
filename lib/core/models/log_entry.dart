@@ -34,21 +34,21 @@ class LogEntry {
 
   /// ينشئ سجل من Map (JSON).
   factory LogEntry.fromJson(Map<String, dynamic> json) => LogEntry(
-        id: json['id'] as String,
-        timestamp: DateTime.parse(json['timestamp'] as String),
-        type: LogType.values.firstWhere(
-          (e) => e.name == json['type'],
-          orElse: () => LogType.info,
-        ),
-        level: LogLevel.values.firstWhere(
-          (e) => e.name == json['level'],
-          orElse: () => LogLevel.info,
-        ),
-        message: json['message'] as String,
-        filePath: json['filePath'] as String?,
-        lineNumber: json['lineNumber'] as int?,
-        metadata: Map<String, dynamic>.from(json['metadata'] as Map? ?? {}),
-      );
+    id: json['id'] as String,
+    timestamp: DateTime.parse(json['timestamp'] as String),
+    type: LogType.values.firstWhere(
+      (e) => e.name == json['type'],
+      orElse: () => LogType.info,
+    ),
+    level: LogLevel.values.firstWhere(
+      (e) => e.name == json['level'],
+      orElse: () => LogLevel.info,
+    ),
+    message: json['message'] as String,
+    filePath: json['filePath'] as String?,
+    lineNumber: json['lineNumber'] as int?,
+    metadata: Map<String, dynamic>.from(json['metadata'] as Map? ?? {}),
+  );
 
   /// معرف فريد للسجل.
   final String id;
@@ -84,29 +84,28 @@ class LogEntry {
     String? filePath,
     int? lineNumber,
     Map<String, dynamic>? metadata,
-  }) =>
-      LogEntry(
-        id: id ?? this.id,
-        timestamp: timestamp ?? this.timestamp,
-        type: type ?? this.type,
-        level: level ?? this.level,
-        message: message ?? this.message,
-        filePath: filePath ?? this.filePath,
-        lineNumber: lineNumber ?? this.lineNumber,
-        metadata: metadata ?? this.metadata,
-      );
+  }) => LogEntry(
+    id: id ?? this.id,
+    timestamp: timestamp ?? this.timestamp,
+    type: type ?? this.type,
+    level: level ?? this.level,
+    message: message ?? this.message,
+    filePath: filePath ?? this.filePath,
+    lineNumber: lineNumber ?? this.lineNumber,
+    metadata: metadata ?? this.metadata,
+  );
 
   /// يحول السجل إلى Map لحفظه في JSON.
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'timestamp': timestamp.toIso8601String(),
-        'type': type.name,
-        'level': level.name,
-        'message': message,
-        'filePath': filePath,
-        'lineNumber': lineNumber,
-        'metadata': metadata,
-      };
+    'id': id,
+    'timestamp': timestamp.toIso8601String(),
+    'type': type.name,
+    'level': level.name,
+    'message': message,
+    'filePath': filePath,
+    'lineNumber': lineNumber,
+    'metadata': metadata,
+  };
 
   @override
   String toString() =>
@@ -127,15 +126,8 @@ class LogEntry {
   }
 
   @override
-  int get hashCode => Object.hash(
-        id,
-        timestamp,
-        type,
-        level,
-        message,
-        filePath,
-        lineNumber,
-      );
+  int get hashCode =>
+      Object.hash(id, timestamp, type, level, message, filePath, lineNumber);
 }
 
 /// أنواع السجلات المختلفة.

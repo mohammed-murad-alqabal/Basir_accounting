@@ -59,8 +59,10 @@ final customersProvider = FutureProvider<List<Customer>>((ref) async {
 /// - customer: بيانات العميل الجديد
 ///
 /// **Returns:** bool true إذا نجحت العملية، false إذا فشلت
-final addCustomerProvider =
-    FutureProvider.family<bool, Customer>((ref, customer) async {
+final addCustomerProvider = FutureProvider.family<bool, Customer>((
+  ref,
+  customer,
+) async {
   final repository = ref.watch(customerRepositoryProvider);
 
   try {
@@ -99,8 +101,10 @@ final addCustomerProvider =
 /// - customer: بيانات العميل المحدثة (يجب أن يحتوي على نفس المعرف)
 ///
 /// **Returns:** bool true إذا نجحت العملية، false إذا فشلت
-final updateCustomerProvider =
-    FutureProvider.family<bool, Customer>((ref, customer) async {
+final updateCustomerProvider = FutureProvider.family<bool, Customer>((
+  ref,
+  customer,
+) async {
   final repository = ref.watch(customerRepositoryProvider);
 
   try {
@@ -133,8 +137,10 @@ final updateCustomerProvider =
 /// - customerId: معرف العميل المراد حذفه
 ///
 /// **Returns:** bool true إذا نجحت العملية، false إذا فشلت
-final deleteCustomerProvider =
-    FutureProvider.family<bool, String>((ref, customerId) async {
+final deleteCustomerProvider = FutureProvider.family<bool, String>((
+  ref,
+  customerId,
+) async {
   final repository = ref.watch(customerRepositoryProvider);
 
   try {

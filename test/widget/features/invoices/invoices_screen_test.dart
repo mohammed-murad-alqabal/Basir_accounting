@@ -19,9 +19,7 @@ void main() {
               (ref) => AsyncValue.data(InvoiceFixtures.allInvoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -39,9 +37,7 @@ void main() {
               (ref) => AsyncValue.data(InvoiceFixtures.allInvoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -59,9 +55,7 @@ void main() {
               (ref) => AsyncValue.data(InvoiceFixtures.allInvoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -79,9 +73,7 @@ void main() {
               (ref) => AsyncValue.data(InvoiceFixtures.allInvoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -99,9 +91,7 @@ void main() {
               (ref) => AsyncValue.data(InvoiceFixtures.allInvoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -113,8 +103,9 @@ void main() {
       expect(find.text('متأخرة'), findsOneWidget);
     });
 
-    testWidgets('should display loading indicator when loading',
-        (tester) async {
+    testWidgets('should display loading indicator when loading', (
+      tester,
+    ) async {
       // Arrange
       await tester.pumpWidget(
         ProviderScope(
@@ -123,9 +114,7 @@ void main() {
               (ref) => const AsyncValue.loading(),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pump();
@@ -143,9 +132,7 @@ void main() {
               (ref) => const AsyncValue.data(<Invoice>[]),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -155,8 +142,9 @@ void main() {
       expect(find.byIcon(Icons.receipt_long), findsOneWidget);
     });
 
-    testWidgets('should display error message when error occurs',
-        (tester) async {
+    testWidgets('should display error message when error occurs', (
+      tester,
+    ) async {
       // Arrange
       const errorMessage = 'فشل في تحميل الفواتير';
 
@@ -164,15 +152,11 @@ void main() {
         ProviderScope(
           overrides: [
             filteredInvoicesProvider.overrideWith(
-              (ref) => AsyncValue.error(
-                Exception(errorMessage),
-                StackTrace.current,
-              ),
+              (ref) =>
+                  AsyncValue.error(Exception(errorMessage), StackTrace.current),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -181,8 +165,9 @@ void main() {
       expect(find.textContaining('خطأ في تحميل الفواتير'), findsOneWidget);
     });
 
-    testWidgets('should display list of invoices when data is available',
-        (tester) async {
+    testWidgets('should display list of invoices when data is available', (
+      tester,
+    ) async {
       // Arrange
       final invoices = InvoiceFixtures.allInvoices;
 
@@ -193,9 +178,7 @@ void main() {
               (ref) => AsyncValue.data(invoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -226,9 +209,7 @@ void main() {
               (ref) => AsyncValue.data([invoice]),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -253,9 +234,7 @@ void main() {
               (ref) => AsyncValue.data([paidInvoice]),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -275,9 +254,7 @@ void main() {
               (ref) => AsyncValue.data(invoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -297,9 +274,7 @@ void main() {
               (ref) => AsyncValue.data(InvoiceFixtures.allInvoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -320,9 +295,7 @@ void main() {
               (ref) => AsyncValue.data(invoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -352,9 +325,7 @@ void main() {
               (ref) => AsyncValue.data([invoice]),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -379,9 +350,7 @@ void main() {
               (ref) => AsyncValue.data(invoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -394,8 +363,9 @@ void main() {
   });
 
   group('InvoicesScreen - Interactions', () {
-    testWidgets('should call onTap when invoice card is tapped',
-        (tester) async {
+    testWidgets('should call onTap when invoice card is tapped', (
+      tester,
+    ) async {
       // Arrange
       final invoice = InvoiceFixtures.invoice1;
 
@@ -406,9 +376,7 @@ void main() {
               (ref) => AsyncValue.data([invoice]),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -421,8 +389,9 @@ void main() {
       expect(find.byType(InvoicesScreen), findsOneWidget);
     });
 
-    testWidgets('should open add invoice screen when add button is tapped',
-        (tester) async {
+    testWidgets('should open add invoice screen when add button is tapped', (
+      tester,
+    ) async {
       // Arrange
       await tester.pumpWidget(
         ProviderScope(
@@ -431,9 +400,7 @@ void main() {
               (ref) => AsyncValue.data(InvoiceFixtures.allInvoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -447,8 +414,9 @@ void main() {
       expect(find.byType(InvoicesScreen), findsNothing);
     });
 
-    testWidgets('should update filter when filter chip is tapped',
-        (tester) async {
+    testWidgets('should update filter when filter chip is tapped', (
+      tester,
+    ) async {
       // Arrange
       await tester.pumpWidget(
         ProviderScope(
@@ -457,9 +425,7 @@ void main() {
               (ref) => AsyncValue.data(InvoiceFixtures.allInvoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -478,8 +444,9 @@ void main() {
       expect(filterChip.selected, true);
     });
 
-    testWidgets('should show all invoices when "الكل" filter is selected',
-        (tester) async {
+    testWidgets('should show all invoices when "الكل" filter is selected', (
+      tester,
+    ) async {
       // Arrange
       await tester.pumpWidget(
         ProviderScope(
@@ -488,9 +455,7 @@ void main() {
               (ref) => AsyncValue.data(InvoiceFixtures.allInvoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -504,10 +469,7 @@ void main() {
 
       // Assert - Verify 'الكل' filter chip is selected
       final filterChip = tester.widget<FilterChip>(
-        find.ancestor(
-          of: find.text('الكل'),
-          matching: find.byType(FilterChip),
-        ),
+        find.ancestor(of: find.text('الكل'), matching: find.byType(FilterChip)),
       );
       expect(filterChip.selected, true);
 
@@ -516,8 +478,9 @@ void main() {
       expect(find.byType(Card), findsAtLeastNWidgets(3));
     });
 
-    testWidgets('should show bottom sheet when invoice is long pressed',
-        (tester) async {
+    testWidgets('should show bottom sheet when invoice is long pressed', (
+      tester,
+    ) async {
       // Arrange
       final invoice = InvoiceFixtures.invoice1;
 
@@ -528,9 +491,7 @@ void main() {
               (ref) => AsyncValue.data([invoice]),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -545,8 +506,9 @@ void main() {
       expect(find.text('حذف الفاتورة'), findsOneWidget);
     });
 
-    testWidgets('should close bottom sheet when edit option is tapped',
-        (tester) async {
+    testWidgets('should close bottom sheet when edit option is tapped', (
+      tester,
+    ) async {
       // Arrange
       final invoice = InvoiceFixtures.invoice1;
 
@@ -557,9 +519,7 @@ void main() {
               (ref) => AsyncValue.data([invoice]),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -587,8 +547,9 @@ void main() {
       expect(find.text('تصدير PDF'), findsNothing);
     });
 
-    testWidgets('should close bottom sheet when export PDF option is tapped',
-        (tester) async {
+    testWidgets('should close bottom sheet when export PDF option is tapped', (
+      tester,
+    ) async {
       // Arrange
       final invoice = InvoiceFixtures.invoice1;
 
@@ -599,9 +560,7 @@ void main() {
               (ref) => AsyncValue.data([invoice]),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -621,8 +580,9 @@ void main() {
       expect(find.text('تصدير PDF'), findsNothing);
     });
 
-    testWidgets('should close bottom sheet when delete option is tapped',
-        (tester) async {
+    testWidgets('should close bottom sheet when delete option is tapped', (
+      tester,
+    ) async {
       // Arrange
       final invoice = InvoiceFixtures.invoice1;
 
@@ -633,9 +593,7 @@ void main() {
               (ref) => AsyncValue.data([invoice]),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -663,8 +621,9 @@ void main() {
       expect(find.text('تصدير PDF'), findsNothing);
     });
 
-    testWidgets('should display correct icons in bottom sheet menu',
-        (tester) async {
+    testWidgets('should display correct icons in bottom sheet menu', (
+      tester,
+    ) async {
       // Arrange
       final invoice = InvoiceFixtures.invoice1;
 
@@ -675,9 +634,7 @@ void main() {
               (ref) => AsyncValue.data([invoice]),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -693,8 +650,9 @@ void main() {
       expect(find.byIcon(Icons.delete), findsOneWidget);
     });
 
-    testWidgets('should filter invoices when search text is entered',
-        (tester) async {
+    testWidgets('should filter invoices when search text is entered', (
+      tester,
+    ) async {
       // Arrange
       await tester.pumpWidget(
         ProviderScope(
@@ -703,9 +661,7 @@ void main() {
               (ref) => AsyncValue.data(InvoiceFixtures.allInvoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -721,8 +677,9 @@ void main() {
       expect(find.text(InvoiceFixtures.invoice1.id), findsOneWidget);
     });
 
-    testWidgets('should clear search when clear button is tapped',
-        (tester) async {
+    testWidgets('should clear search when clear button is tapped', (
+      tester,
+    ) async {
       // Arrange
       await tester.pumpWidget(
         ProviderScope(
@@ -731,9 +688,7 @@ void main() {
               (ref) => AsyncValue.data(InvoiceFixtures.allInvoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -771,9 +726,7 @@ void main() {
               (ref) => AsyncValue.data(invoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();
@@ -789,8 +742,9 @@ void main() {
       expect(find.text('فاتورة invoice-20'), findsOneWidget);
     });
 
-    testWidgets('should maintain scroll position after filter change',
-        (tester) async {
+    testWidgets('should maintain scroll position after filter change', (
+      tester,
+    ) async {
       // Arrange
       final invoices = InvoiceFixtures.createInvoices(20);
 
@@ -801,9 +755,7 @@ void main() {
               (ref) => AsyncValue.data(invoices),
             ),
           ],
-          child: const MaterialApp(
-            home: InvoicesScreen(),
-          ),
+          child: const MaterialApp(home: InvoicesScreen()),
         ),
       );
       await tester.pumpAndSettle();

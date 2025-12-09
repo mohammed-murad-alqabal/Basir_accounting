@@ -84,10 +84,13 @@ class MockInvoiceRepository implements InvoiceRepository {
   Future<InvoiceStatistics> getInvoiceStatistics() async {
     final totalInvoices = _invoices.length;
     final paidInvoices = _invoices.where((i) => i.status == 'paid').length;
-    final overdueInvoices =
-        _invoices.where((i) => i.status == 'overdue').length;
-    final totalRevenue =
-        _invoices.fold<double>(0, (sum, invoice) => sum + invoice.grandTotal);
+    final overdueInvoices = _invoices
+        .where((i) => i.status == 'overdue')
+        .length;
+    final totalRevenue = _invoices.fold<double>(
+      0,
+      (sum, invoice) => sum + invoice.grandTotal,
+    );
     final paidRevenue = _invoices
         .where((i) => i.status == 'paid')
         .fold<double>(0, (sum, invoice) => sum + invoice.grandTotal);

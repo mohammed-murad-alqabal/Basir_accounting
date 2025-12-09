@@ -26,9 +26,9 @@ class EmptyStateIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CustomPaint(
-        size: Size(size, size),
-        painter: _EmptyStatePainter(color: color),
-      );
+    size: Size(size, size),
+    painter: _EmptyStatePainter(color: color),
+  );
 }
 
 /// رسام حالة فارغة
@@ -108,9 +108,9 @@ class SuccessIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CustomPaint(
-        size: Size(size, size),
-        painter: _SuccessPainter(color: color),
-      );
+    size: Size(size, size),
+    painter: _SuccessPainter(color: color),
+  );
 }
 
 /// رسام النجاح
@@ -172,9 +172,9 @@ class ErrorIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CustomPaint(
-        size: Size(size, size),
-        painter: _ErrorPainter(color: color),
-      );
+    size: Size(size, size),
+    painter: _ErrorPainter(color: color),
+  );
 }
 
 /// رسام الخطأ

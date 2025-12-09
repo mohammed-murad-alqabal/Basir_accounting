@@ -22,23 +22,22 @@ class ErrorTrackingConfig {
   });
 
   /// ينشئ تكوين من Map (JSON).
-  factory ErrorTrackingConfig.fromJson(Map<String, dynamic> json) =>
-      ErrorTrackingConfig(
-        hooks: HooksConfig.fromJson(json['hooks'] as Map<String, dynamic>),
-        archive:
-            ArchiveConfig.fromJson(json['archive'] as Map<String, dynamic>),
-        report: ReportConfig.fromJson(json['report'] as Map<String, dynamic>),
-        security:
-            SecurityConfig.fromJson(json['security'] as Map<String, dynamic>),
-      );
+  factory ErrorTrackingConfig.fromJson(
+    Map<String, dynamic> json,
+  ) => ErrorTrackingConfig(
+    hooks: HooksConfig.fromJson(json['hooks'] as Map<String, dynamic>),
+    archive: ArchiveConfig.fromJson(json['archive'] as Map<String, dynamic>),
+    report: ReportConfig.fromJson(json['report'] as Map<String, dynamic>),
+    security: SecurityConfig.fromJson(json['security'] as Map<String, dynamic>),
+  );
 
   /// ينشئ تكوين افتراضي.
   factory ErrorTrackingConfig.defaultConfig() => const ErrorTrackingConfig(
-        hooks: HooksConfig(),
-        archive: ArchiveConfig(),
-        report: ReportConfig(),
-        security: SecurityConfig(),
-      );
+    hooks: HooksConfig(),
+    archive: ArchiveConfig(),
+    report: ReportConfig(),
+    security: SecurityConfig(),
+  );
 
   /// إعدادات Git Hooks.
   final HooksConfig hooks;
@@ -56,11 +55,11 @@ class ErrorTrackingConfig {
   ///
   /// Returns Map يحتوي على جميع إعدادات التكوين.
   Map<String, dynamic> toJson() => {
-        'hooks': hooks.toJson(),
-        'archive': archive.toJson(),
-        'report': report.toJson(),
-        'security': security.toJson(),
-      };
+    'hooks': hooks.toJson(),
+    'archive': archive.toJson(),
+    'report': report.toJson(),
+    'security': security.toJson(),
+  };
 }
 
 /// إعدادات Git Hooks.
@@ -76,12 +75,12 @@ class HooksConfig {
 
   /// ينشئ إعدادات من Map (JSON).
   factory HooksConfig.fromJson(Map<String, dynamic> json) => HooksConfig(
-        enablePreCommit: json['enablePreCommit'] as bool? ?? true,
-        enablePrePush: json['enablePrePush'] as bool? ?? true,
-        autoFormat: json['autoFormat'] as bool? ?? true,
-        blockOnErrors: json['blockOnErrors'] as bool? ?? true,
-        maxExecutionTime: json['maxExecutionTime'] as int? ?? 120,
-      );
+    enablePreCommit: json['enablePreCommit'] as bool? ?? true,
+    enablePrePush: json['enablePrePush'] as bool? ?? true,
+    autoFormat: json['autoFormat'] as bool? ?? true,
+    blockOnErrors: json['blockOnErrors'] as bool? ?? true,
+    maxExecutionTime: json['maxExecutionTime'] as int? ?? 120,
+  );
 
   /// تفعيل pre-commit hook.
   final bool enablePreCommit;
@@ -100,12 +99,12 @@ class HooksConfig {
 
   /// يحول الإعدادات إلى Map لحفظها في JSON.
   Map<String, dynamic> toJson() => {
-        'enablePreCommit': enablePreCommit,
-        'enablePrePush': enablePrePush,
-        'autoFormat': autoFormat,
-        'blockOnErrors': blockOnErrors,
-        'maxExecutionTime': maxExecutionTime,
-      };
+    'enablePreCommit': enablePreCommit,
+    'enablePrePush': enablePrePush,
+    'autoFormat': autoFormat,
+    'blockOnErrors': blockOnErrors,
+    'maxExecutionTime': maxExecutionTime,
+  };
 }
 
 /// إعدادات الأرشفة.
@@ -120,11 +119,11 @@ class ArchiveConfig {
 
   /// ينشئ إعدادات من Map (JSON).
   factory ArchiveConfig.fromJson(Map<String, dynamic> json) => ArchiveConfig(
-        maxAgeInDays: json['maxAgeInDays'] as int? ?? 7,
-        maxSizeInMB: json['maxSizeInMB'] as int? ?? 10,
-        enableCompression: json['enableCompression'] as bool? ?? true,
-        compressionFormat: json['compressionFormat'] as String? ?? 'tar.gz',
-      );
+    maxAgeInDays: json['maxAgeInDays'] as int? ?? 7,
+    maxSizeInMB: json['maxSizeInMB'] as int? ?? 10,
+    enableCompression: json['enableCompression'] as bool? ?? true,
+    compressionFormat: json['compressionFormat'] as String? ?? 'tar.gz',
+  );
 
   /// الحد الأقصى لعمر السجلات (بالأيام).
   final int maxAgeInDays;
@@ -140,11 +139,11 @@ class ArchiveConfig {
 
   /// يحول الإعدادات إلى Map لحفظها في JSON.
   Map<String, dynamic> toJson() => {
-        'maxAgeInDays': maxAgeInDays,
-        'maxSizeInMB': maxSizeInMB,
-        'enableCompression': enableCompression,
-        'compressionFormat': compressionFormat,
-      };
+    'maxAgeInDays': maxAgeInDays,
+    'maxSizeInMB': maxSizeInMB,
+    'enableCompression': enableCompression,
+    'compressionFormat': compressionFormat,
+  };
 }
 
 /// إعدادات التقارير.
@@ -164,14 +163,14 @@ class ReportConfig {
 
   /// ينشئ إعدادات من Map (JSON).
   factory ReportConfig.fromJson(Map<String, dynamic> json) => ReportConfig(
-        enableDailyReports: json['enableDailyReports'] as bool? ?? true,
-        reportFormat: json['reportFormat'] as String? ?? 'markdown',
-        includeSections: List<String>.from(
-          json['includeSections'] as List? ??
-              ['statistics', 'errors', 'tests', 'recommendations'],
-        ),
-        includeRecommendations: json['includeRecommendations'] as bool? ?? true,
-      );
+    enableDailyReports: json['enableDailyReports'] as bool? ?? true,
+    reportFormat: json['reportFormat'] as String? ?? 'markdown',
+    includeSections: List<String>.from(
+      json['includeSections'] as List? ??
+          ['statistics', 'errors', 'tests', 'recommendations'],
+    ),
+    includeRecommendations: json['includeRecommendations'] as bool? ?? true,
+  );
 
   /// تفعيل التقارير اليومية.
   final bool enableDailyReports;
@@ -187,11 +186,11 @@ class ReportConfig {
 
   /// يحول الإعدادات إلى Map لحفظها في JSON.
   Map<String, dynamic> toJson() => {
-        'enableDailyReports': enableDailyReports,
-        'reportFormat': reportFormat,
-        'includeSections': includeSections,
-        'includeRecommendations': includeRecommendations,
-      };
+    'enableDailyReports': enableDailyReports,
+    'reportFormat': reportFormat,
+    'includeSections': includeSections,
+    'includeRecommendations': includeRecommendations,
+  };
 }
 
 /// إعدادات الأمان.
@@ -199,44 +198,24 @@ class SecurityConfig {
   /// ينشئ إعدادات أمان جديدة.
   const SecurityConfig({
     this.enableSecretScanning = true,
-    this.secretPatterns = const [
-      'api[_-]?key',
-      'password',
-      'token',
-      'secret',
-    ],
+    this.secretPatterns = const ['api[_-]?key', 'password', 'token', 'secret'],
     this.sanitizeLogs = true,
-    this.sensitiveKeywords = const [
-      'password',
-      'token',
-      'key',
-      'secret',
-    ],
+    this.sensitiveKeywords = const ['password', 'token', 'key', 'secret'],
   });
 
   /// ينشئ إعدادات من Map (JSON).
   factory SecurityConfig.fromJson(Map<String, dynamic> json) => SecurityConfig(
-        enableSecretScanning: json['enableSecretScanning'] as bool? ?? true,
-        secretPatterns: List<String>.from(
-          json['secretPatterns'] as List? ??
-              [
-                'api[_-]?key',
-                'password',
-                'token',
-                'secret',
-              ],
-        ),
-        sanitizeLogs: json['sanitizeLogs'] as bool? ?? true,
-        sensitiveKeywords: List<String>.from(
-          json['sensitiveKeywords'] as List? ??
-              [
-                'password',
-                'token',
-                'key',
-                'secret',
-              ],
-        ),
-      );
+    enableSecretScanning: json['enableSecretScanning'] as bool? ?? true,
+    secretPatterns: List<String>.from(
+      json['secretPatterns'] as List? ??
+          ['api[_-]?key', 'password', 'token', 'secret'],
+    ),
+    sanitizeLogs: json['sanitizeLogs'] as bool? ?? true,
+    sensitiveKeywords: List<String>.from(
+      json['sensitiveKeywords'] as List? ??
+          ['password', 'token', 'key', 'secret'],
+    ),
+  );
 
   /// تفعيل فحص الأسرار.
   final bool enableSecretScanning;
@@ -252,9 +231,9 @@ class SecurityConfig {
 
   /// يحول الإعدادات إلى Map لحفظها في JSON.
   Map<String, dynamic> toJson() => {
-        'enableSecretScanning': enableSecretScanning,
-        'secretPatterns': secretPatterns,
-        'sanitizeLogs': sanitizeLogs,
-        'sensitiveKeywords': sensitiveKeywords,
-      };
+    'enableSecretScanning': enableSecretScanning,
+    'secretPatterns': secretPatterns,
+    'sanitizeLogs': sanitizeLogs,
+    'sensitiveKeywords': sensitiveKeywords,
+  };
 }

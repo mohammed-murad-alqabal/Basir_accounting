@@ -31,8 +31,9 @@ void main() {
       expect(pressed, isTrue);
     });
 
-    testWidgets('should render secondary button with correct style',
-        (tester) async {
+    testWidgets('should render secondary button with correct style', (
+      tester,
+    ) async {
       // Arrange
       const buttonText = 'إلغاء';
 
@@ -52,9 +53,7 @@ void main() {
       // Assert
       expect(find.text(buttonText), findsOneWidget);
 
-      final button = tester.widget<ElevatedButton>(
-        find.byType(ElevatedButton),
-      );
+      final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
       expect(button.style?.backgroundColor?.resolve({}), AppColors.secondary);
     });
 
@@ -78,13 +77,8 @@ void main() {
       // Assert
       expect(find.text(buttonText), findsOneWidget);
 
-      final button = tester.widget<ElevatedButton>(
-        find.byType(ElevatedButton),
-      );
-      expect(
-        button.style?.backgroundColor?.resolve({}),
-        Colors.transparent,
-      );
+      final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+      expect(button.style?.backgroundColor?.resolve({}), Colors.transparent);
     });
 
     testWidgets('should render button with icon', (tester) async {
@@ -111,8 +105,9 @@ void main() {
       expect(find.byType(Row), findsOneWidget);
     });
 
-    testWidgets('should show loading indicator when isLoading is true',
-        (tester) async {
+    testWidgets('should show loading indicator when isLoading is true', (
+      tester,
+    ) async {
       // Arrange
       const buttonText = 'تحميل';
 
@@ -142,18 +137,13 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: AppEnhancedButton(
-              text: buttonText,
-              onPressed: null,
-            ),
+            body: AppEnhancedButton(text: buttonText, onPressed: null),
           ),
         ),
       );
 
       // Assert
-      final button = tester.widget<ElevatedButton>(
-        find.byType(ElevatedButton),
-      );
+      final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
       expect(button.onPressed, isNull);
     });
 
@@ -176,9 +166,7 @@ void main() {
       );
 
       // Assert
-      final button = tester.widget<ElevatedButton>(
-        find.byType(ElevatedButton),
-      );
+      final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
       expect(button.onPressed, isNull);
 
       // Try to tap (should not work)
@@ -196,10 +184,7 @@ void main() {
           home: Scaffold(
             body: SizedBox(
               width: 200, // عرض محدود
-              child: AppEnhancedButton(
-                text: longText,
-                onPressed: () {},
-              ),
+              child: AppEnhancedButton(text: longText, onPressed: () {}),
             ),
           ),
         ),
@@ -220,10 +205,7 @@ void main() {
           home: MediaQuery(
             data: const MediaQueryData(textScaler: TextScaler.noScaling),
             child: Scaffold(
-              body: AppEnhancedButton(
-                text: buttonText,
-                onPressed: () {},
-              ),
+              body: AppEnhancedButton(text: buttonText, onPressed: () {}),
             ),
           ),
         ),
@@ -237,10 +219,7 @@ void main() {
           home: MediaQuery(
             data: const MediaQueryData(textScaler: TextScaler.linear(2)),
             child: Scaffold(
-              body: AppEnhancedButton(
-                text: buttonText,
-                onPressed: () {},
-              ),
+              body: AppEnhancedButton(text: buttonText, onPressed: () {}),
             ),
           ),
         ),
@@ -306,10 +285,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppEnhancedButton(
-              text: buttonText,
-              onPressed: () {},
-            ),
+            body: AppEnhancedButton(text: buttonText, onPressed: () {}),
           ),
         ),
       );
@@ -328,10 +304,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppEnhancedButton(
-              text: buttonText,
-              onPressed: () {},
-            ),
+            body: AppEnhancedButton(text: buttonText, onPressed: () {}),
           ),
         ),
       );
@@ -353,10 +326,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppEnhancedButton(
-              text: buttonText,
-              onPressed: () {},
-            ),
+            body: AppEnhancedButton(text: buttonText, onPressed: () {}),
           ),
         ),
       );
@@ -376,10 +346,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppEnhancedButton(
-              text: buttonText,
-              onPressed: () {},
-            ),
+            body: AppEnhancedButton(text: buttonText, onPressed: () {}),
           ),
         ),
       );
@@ -389,8 +356,9 @@ void main() {
       expect(textWidget.style?.fontWeight, FontWeight.w600);
     });
 
-    testWidgets('should use Flexible for text when icon is present',
-        (tester) async {
+    testWidgets('should use Flexible for text when icon is present', (
+      tester,
+    ) async {
       // Arrange
       const buttonText = 'نص مع أيقونة';
       const iconData = Icons.check;

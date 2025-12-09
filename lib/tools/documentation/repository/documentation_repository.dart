@@ -5,9 +5,7 @@ import 'package:basser_app/tools/documentation/analysis/analysis_engine.dart';
 /// يدير حفظ واسترجاع تقارير التغطية والإحصائيات
 class DocumentationRepository {
   /// إنشاء مستودع التوثيق
-  DocumentationRepository({
-    this.reportsPath = '.documentation/reports',
-  });
+  DocumentationRepository({this.reportsPath = '.documentation/reports'});
 
   /// مسار مجلد التقارير
   final String reportsPath;
@@ -133,17 +131,17 @@ class CoverageReport {
 
   /// تحويل إلى JSON
   Map<String, dynamic> toJson() => {
-        'timestamp': timestamp.toIso8601String(),
-        'stats': {
-          'totalElements': stats.totalElements,
-          'documentedElements': stats.documentedElements,
-          'undocumentedElements': stats.undocumentedElements,
-          'coveragePercentage': stats.coveragePercentage,
-        },
-        'analyzedFiles': analyzedFiles,
-        'lowCoverageFiles': lowCoverageFiles,
-        'notes': notes,
-      };
+    'timestamp': timestamp.toIso8601String(),
+    'stats': {
+      'totalElements': stats.totalElements,
+      'documentedElements': stats.documentedElements,
+      'undocumentedElements': stats.undocumentedElements,
+      'coveragePercentage': stats.coveragePercentage,
+    },
+    'analyzedFiles': analyzedFiles,
+    'lowCoverageFiles': lowCoverageFiles,
+    'notes': notes,
+  };
 }
 
 /// صيغة التقرير

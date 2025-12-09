@@ -82,48 +82,46 @@ class CustomerFixtures {
 
   /// قائمة بجميع العملاء
   static List<Customer> get allCustomers => [
-        customer1,
-        customer2,
-        customer3,
-        customer4,
-        customer5,
-        customer6,
-        customer7,
-      ];
+    customer1,
+    customer2,
+    customer3,
+    customer4,
+    customer5,
+    customer6,
+    customer7,
+  ];
 
   /// قائمة بالعملاء الذين لديهم بريد إلكتروني
   static List<Customer> get customersWithEmail => [
-        customer1,
-        customer2,
-        customer5,
-        customer6,
-        customer7,
-      ];
+    customer1,
+    customer2,
+    customer5,
+    customer6,
+    customer7,
+  ];
 
   /// قائمة بالعملاء الذين لديهم عنوان
   static List<Customer> get customersWithAddress => [
-        customer1,
-        customer3,
-        customer5,
-        customer6,
-        customer7,
-      ];
+    customer1,
+    customer3,
+    customer5,
+    customer6,
+    customer7,
+  ];
 
   /// قائمة بالعملاء بالحد الأدنى من البيانات
-  static List<Customer> get minimalCustomers => [
-        customer4,
-      ];
+  static List<Customer> get minimalCustomers => [customer4];
 
   /// إنشاء عميل مخصص بناءً على index
   static Customer createCustomer(int index) => Customer(
-        id: 'customer-$index',
-        name: 'عميل رقم $index',
-        phone: '050${1000000 + index}',
-        email: 'customer$index@example.com',
-        address: 'عنوان العميل رقم $index',
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      );
+    id: 'customer-$index',
+    name: 'عميل رقم $index',
+    phone: '050${1000000 + index}',
+    email: 'customer$index@example.com',
+    address: 'عنوان العميل رقم $index',
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+  );
 
   /// إنشاء قائمة من العملاء المخصصين
   static List<Customer> createCustomers(int count) =>

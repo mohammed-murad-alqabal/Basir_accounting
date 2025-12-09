@@ -12,9 +12,7 @@ void main() {
     setUp(() async {
       // إنشاء مجلد مؤقت للاختبارات
       tempDir = await Directory.systemTemp.createTemp('doc_repo_test_');
-      repository = DocumentationRepository(
-        reportsPath: tempDir.path,
-      );
+      repository = DocumentationRepository(reportsPath: tempDir.path);
     });
 
     tearDown(() {
@@ -91,26 +89,17 @@ void main() {
     group('getCoverageHistory', () {
       test('should return empty list when no reports exist', () async {
         // Act & Assert
-        expect(
-          () => repository.getCoverageHistory(),
-          throwsUnimplementedError,
-        );
+        expect(() => repository.getCoverageHistory(), throwsUnimplementedError);
       });
 
       test('should retrieve all saved reports', () async {
         // Act & Assert
-        expect(
-          () => repository.getCoverageHistory(),
-          throwsUnimplementedError,
-        );
+        expect(() => repository.getCoverageHistory(), throwsUnimplementedError);
       });
 
       test('should return reports sorted by timestamp', () async {
         // Act & Assert
-        expect(
-          () => repository.getCoverageHistory(),
-          throwsUnimplementedError,
-        );
+        expect(() => repository.getCoverageHistory(), throwsUnimplementedError);
       });
     });
 
@@ -185,18 +174,12 @@ void main() {
     group('getLatestReport', () {
       test('should return null when no reports exist', () async {
         // Act & Assert
-        expect(
-          () => repository.getLatestReport(),
-          throwsUnimplementedError,
-        );
+        expect(() => repository.getLatestReport(), throwsUnimplementedError);
       });
 
       test('should return the most recent report', () async {
         // Act & Assert
-        expect(
-          () => repository.getLatestReport(),
-          throwsUnimplementedError,
-        );
+        expect(() => repository.getLatestReport(), throwsUnimplementedError);
       });
     });
 

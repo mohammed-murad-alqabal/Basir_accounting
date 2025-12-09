@@ -135,8 +135,9 @@ void main() {
         await repository.addCustomer(customer);
 
         // Act
-        final foundCustomer =
-            await repository.getCustomerById('test-customer-123');
+        final foundCustomer = await repository.getCustomerById(
+          'test-customer-123',
+        );
 
         // Assert
         expect(foundCustomer, isNotNull);
@@ -145,8 +146,9 @@ void main() {
 
       test('should return null when customer does not exist', () async {
         // Act
-        final foundCustomer =
-            await repository.getCustomerById('non-existent-id');
+        final foundCustomer = await repository.getCustomerById(
+          'non-existent-id',
+        );
 
         // Assert
         expect(foundCustomer, isNull);
@@ -161,8 +163,9 @@ void main() {
         final targetCustomer = customers[2];
 
         // Act
-        final foundCustomer =
-            await repository.getCustomerById(targetCustomer.id);
+        final foundCustomer = await repository.getCustomerById(
+          targetCustomer.id,
+        );
 
         // Assert
         expect(foundCustomer, isNotNull);
@@ -189,8 +192,9 @@ void main() {
         await repository.updateCustomer(updatedCustomer);
 
         // Assert
-        final foundCustomer =
-            await repository.getCustomerById('test-customer-update');
+        final foundCustomer = await repository.getCustomerById(
+          'test-customer-update',
+        );
         expect(foundCustomer?.name, 'اسم جديد');
         expect(foundCustomer?.phone, '0502222222');
       });
@@ -210,8 +214,9 @@ void main() {
         await repository.updateCustomer(updatedCustomer);
 
         // Assert
-        final foundCustomer =
-            await repository.getCustomerById('test-customer-partial');
+        final foundCustomer = await repository.getCustomerById(
+          'test-customer-partial',
+        );
         expect(foundCustomer?.name, 'اسم محدث');
         expect(foundCustomer?.phone, '0501111111'); // لم يتغير
         expect(foundCustomer?.email, 'original@example.com'); // لم يتغير
@@ -219,10 +224,14 @@ void main() {
 
       test('should not affect other customers', () async {
         // Arrange
-        final customer1 =
-            MockData.createTestCustomer(id: 'customer-1', name: 'عميل 1');
-        final customer2 =
-            MockData.createTestCustomer(id: 'customer-2', name: 'عميل 2');
+        final customer1 = MockData.createTestCustomer(
+          id: 'customer-1',
+          name: 'عميل 1',
+        );
+        final customer2 = MockData.createTestCustomer(
+          id: 'customer-2',
+          name: 'عميل 2',
+        );
         await repository.addCustomer(customer1);
         await repository.addCustomer(customer2);
 
@@ -241,16 +250,18 @@ void main() {
     group('deleteCustomer', () {
       test('should delete customer successfully', () async {
         // Arrange
-        final customer =
-            MockData.createTestCustomer(id: 'test-customer-delete');
+        final customer = MockData.createTestCustomer(
+          id: 'test-customer-delete',
+        );
         await repository.addCustomer(customer);
 
         // Act
         await repository.deleteCustomer('test-customer-delete');
 
         // Assert
-        final foundCustomer =
-            await repository.getCustomerById('test-customer-delete');
+        final foundCustomer = await repository.getCustomerById(
+          'test-customer-delete',
+        );
         expect(foundCustomer, isNull);
       });
 
@@ -304,12 +315,15 @@ void main() {
     group('searchCustomers', () {
       test('should find customers by name', () async {
         // Arrange
-        await repository
-            .addCustomer(MockData.createTestCustomer(name: 'أحمد محمد'));
-        await repository
-            .addCustomer(MockData.createTestCustomer(name: 'محمد علي'));
-        await repository
-            .addCustomer(MockData.createTestCustomer(name: 'فاطمة أحمد'));
+        await repository.addCustomer(
+          MockData.createTestCustomer(name: 'أحمد محمد'),
+        );
+        await repository.addCustomer(
+          MockData.createTestCustomer(name: 'محمد علي'),
+        );
+        await repository.addCustomer(
+          MockData.createTestCustomer(name: 'فاطمة أحمد'),
+        );
 
         // Act
         final results = await repository.searchCustomers('محمد');
@@ -333,8 +347,9 @@ void main() {
 
       test('should be case insensitive', () async {
         // Arrange
-        await repository
-            .addCustomer(MockData.createTestCustomer(name: 'أحمد محمد'));
+        await repository.addCustomer(
+          MockData.createTestCustomer(name: 'أحمد محمد'),
+        );
 
         // Act
         final results = await repository.searchCustomers('أحمد');

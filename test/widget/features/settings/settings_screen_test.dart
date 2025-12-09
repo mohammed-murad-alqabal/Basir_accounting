@@ -18,11 +18,9 @@ void main() {
     });
 
     Widget createTestWidget() => UncontrolledProviderScope(
-          container: container,
-          child: const MaterialApp(
-            home: SettingsScreen(),
-          ),
-        );
+      container: container,
+      child: const MaterialApp(home: SettingsScreen()),
+    );
 
     group('Basic Display', () {
       testWidgets('should display app bar with title', (tester) async {
@@ -45,10 +43,7 @@ void main() {
         await tester.pumpWidget(createTestWidget());
 
         expect(find.text('تعديل بيانات الحساب'), findsOneWidget);
-        expect(
-          find.text('غيّر اسم المستخدم وكلمة المرور'),
-          findsOneWidget,
-        );
+        expect(find.text('غيّر اسم المستخدم وكلمة المرور'), findsOneWidget);
         expect(find.byIcon(Icons.person), findsOneWidget);
       });
 
@@ -56,10 +51,7 @@ void main() {
         await tester.pumpWidget(createTestWidget());
 
         expect(find.text('تفعيل الإشعارات'), findsOneWidget);
-        expect(
-          find.text('استقبل إشعارات الفواتير المتأخرة'),
-          findsOneWidget,
-        );
+        expect(find.text('استقبل إشعارات الفواتير المتأخرة'), findsOneWidget);
         expect(
           find.widgetWithText(SwitchListTile, 'تفعيل الإشعارات'),
           findsOneWidget,
@@ -85,17 +77,11 @@ void main() {
         expect(find.byIcon(Icons.info), findsOneWidget);
 
         expect(find.text('سياسة الخصوصية'), findsOneWidget);
-        expect(
-          find.text('اقرأ سياسة الخصوصية الخاصة بنا'),
-          findsOneWidget,
-        );
+        expect(find.text('اقرأ سياسة الخصوصية الخاصة بنا'), findsOneWidget);
         expect(find.byIcon(Icons.privacy_tip), findsOneWidget);
 
         expect(find.text('شروط الخدمة'), findsOneWidget);
-        expect(
-          find.text('اقرأ شروط الخدمة الخاصة بنا'),
-          findsOneWidget,
-        );
+        expect(find.text('اقرأ شروط الخدمة الخاصة بنا'), findsOneWidget);
         expect(find.byIcon(Icons.description), findsOneWidget);
       });
 
@@ -188,10 +174,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // التحقق من رسالة النجاح
-        expect(
-          find.text('تم تحديث بيانات الحساب بنجاح'),
-          findsOneWidget,
-        );
+        expect(find.text('تم تحديث بيانات الحساب بنجاح'), findsOneWidget);
       });
     });
 

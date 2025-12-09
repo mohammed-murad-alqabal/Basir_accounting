@@ -199,11 +199,13 @@ optimize_build() {
     if command_exists gzip; then
         print_message "$BLUE" "🗜️  Gzip compressing main files..."
         
-        for file in "$BUILD_DIR"/*.{js,css,html} 2>/dev/null; do
-            if [ -f "$file" ]; then
-                gzip -9 -k "$file"
-                print_message "$GREEN" "✅ Compressed: $(basename "$file")"
-            fi
+        for ext in js css html; do
+            for file in "$BUILD_DIR"/*."$ext"; do
+                if [ -f "$file" ]; then
+                    gzip -9 -k "$file"
+                    print_message "$GREEN" "✅ Compressed: $(basename "$file")"
+                fi
+            done
         done
     else
         print_message "$YELLOW" "⚠️  gzip not found. Skipping compression..."

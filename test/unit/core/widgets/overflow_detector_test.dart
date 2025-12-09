@@ -7,11 +7,7 @@ void main() {
     testWidgets('should render child widget', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Scaffold(
-            body: OverflowDetector(
-              child: Text('Test Text'),
-            ),
-          ),
+          home: Scaffold(body: OverflowDetector(child: Text('Test Text'))),
         ),
       );
 
@@ -25,9 +21,7 @@ void main() {
             body: SizedBox(
               width: 200,
               height: 100,
-              child: OverflowDetector(
-                child: Text('Short text'),
-              ),
+              child: OverflowDetector(child: Text('Short text')),
             ),
           ),
         ),
@@ -42,10 +36,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: OverflowDetector(
-              name: 'TestWidget',
-              child: Text('Test'),
-            ),
+            body: OverflowDetector(name: 'TestWidget', child: Text('Test')),
           ),
         ),
       );

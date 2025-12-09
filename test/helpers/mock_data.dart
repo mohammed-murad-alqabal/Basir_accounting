@@ -49,14 +49,14 @@ class MockData {
   /// final customers = MockData.createTestCustomers(count: 5);
   /// ```
   static List<Customer> createTestCustomers({int count = 3}) => List.generate(
-        count,
-        (index) => createTestCustomer(
-          id: 'test-customer-$index',
-          name: 'عميل اختبار ${index + 1}',
-          phone: '050${1234567 + index}',
-          email: 'test$index@example.com',
-        ),
-      );
+    count,
+    (index) => createTestCustomer(
+      id: 'test-customer-$index',
+      name: 'عميل اختبار ${index + 1}',
+      phone: '050${1234567 + index}',
+      email: 'test$index@example.com',
+    ),
+  );
 
   /// إنشاء فاتورة اختبار افتراضية
   ///
@@ -141,12 +141,12 @@ class MockData {
   /// final invoices = MockData.createTestInvoices(count: 5);
   /// ```
   static List<Invoice> createTestInvoices({int count = 3}) => List.generate(
-        count,
-        (index) => createTestInvoice(
-          id: 'test-invoice-$index',
-          customerId: 'test-customer-$index',
-          customerName: 'عميل اختبار ${index + 1}',
-          status: index.isEven ? 'draft' : 'paid',
-        ),
-      );
+    count,
+    (index) => createTestInvoice(
+      id: 'test-invoice-$index',
+      customerId: 'test-customer-$index',
+      customerName: 'عميل اختبار ${index + 1}',
+      status: index.isEven ? 'draft' : 'paid',
+    ),
+  );
 }

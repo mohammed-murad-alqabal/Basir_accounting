@@ -59,12 +59,7 @@ void main() {
     });
 
     test('InvoiceItem total calculation', () {
-      const item = InvoiceItem(
-        id: '1',
-        name: 'خدمة',
-        quantity: 3,
-        price: 100,
-      );
+      const item = InvoiceItem(id: '1', name: 'خدمة', quantity: 3, price: 100);
 
       expect(item.total, equals(300.0));
     });

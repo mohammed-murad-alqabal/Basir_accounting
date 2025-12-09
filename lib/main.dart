@@ -154,80 +154,73 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: AppColors.primary,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // استخدام الشعار المخصص بدلاً من Material Icon
-              const BasserLogo(
-                size: 100,
+    backgroundColor: AppColors.primary,
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // استخدام الشعار المخصص بدلاً من Material Icon
+          const BasserLogo(size: 100),
+          const SizedBox(height: AppSpacing.lg),
+          const Text(
+            AppConfig.appName,
+            style: TextStyle(
+              fontSize: AppTypography.headlineLarge,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              letterSpacing: 2,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          const Text(
+            AppConfig.appDescription,
+            style: TextStyle(
+              fontSize: AppTypography.bodyMedium,
+              color: Colors.white70,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppSpacing.xl),
+          if (_error == null)
+            const SizedBox(
+              width: 32,
+              height: 32,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                strokeWidth: 3,
               ),
-              const SizedBox(height: AppSpacing.lg),
-              const Text(
-                AppConfig.appName,
-                style: TextStyle(
-                  fontSize: AppTypography.headlineLarge,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              const Text(
-                AppConfig.appDescription,
-                style: TextStyle(
-                  fontSize: AppTypography.bodyMedium,
-                  color: Colors.white70,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: AppSpacing.xl),
-              if (_error == null)
-                const SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    strokeWidth: 3,
-                  ),
-                )
-              else
-                const Icon(
-                  Icons.error_outline,
-                  size: 48,
-                  color: Colors.white70,
-                ),
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                _status,
+            )
+          else
+            const Icon(Icons.error_outline, size: 48, color: Colors.white70),
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            _status,
+            style: const TextStyle(
+              fontSize: AppTypography.bodySmall,
+              color: Colors.white70,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          if (_error != null) ...[
+            const SizedBox(height: AppSpacing.sm),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+              child: Text(
+                _error!,
                 style: const TextStyle(
                   fontSize: AppTypography.bodySmall,
-                  color: Colors.white70,
+                  color: Colors.white60,
                 ),
                 textAlign: TextAlign.center,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
               ),
-              if (_error != null) ...[
-                const SizedBox(height: AppSpacing.sm),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-                  child: Text(
-                    _error!,
-                    style: const TextStyle(
-                      fontSize: AppTypography.bodySmall,
-                      color: Colors.white60,
-                    ),
-                    textAlign: TextAlign.center,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ],
-          ),
-        ),
-      );
+            ),
+          ],
+        ],
+      ),
+    ),
+  );
 }
 
 /// شاشة تجريبية مؤقتة
@@ -243,9 +236,7 @@ class PlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text(title)),
-        body: Center(
-          child: Text('قريبًا: $title'),
-        ),
-      );
+    appBar: AppBar(title: Text(title)),
+    body: Center(child: Text('قريبًا: $title')),
+  );
 }

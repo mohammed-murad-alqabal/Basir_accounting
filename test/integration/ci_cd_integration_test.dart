@@ -9,14 +9,16 @@ void main() {
   group('CI/CD Integration Tests', () {
     group('Documentation CLI Integration', () {
       test('CLI tool file exists', () {
-        final cliFile =
-            File('lib/tools/documentation/cli/documentation_cli.dart');
+        final cliFile = File(
+          'lib/tools/documentation/cli/documentation_cli.dart',
+        );
         expect(cliFile.existsSync(), isTrue);
       });
 
       test('CLI tool has main function', () {
-        final cliFile =
-            File('lib/tools/documentation/cli/documentation_cli.dart');
+        final cliFile = File(
+          'lib/tools/documentation/cli/documentation_cli.dart',
+        );
         final content = cliFile.readAsStringSync();
 
         expect(content, contains('Future<void> main('));
@@ -24,8 +26,9 @@ void main() {
       });
 
       test('CLI tool has analyze command', () {
-        final cliFile =
-            File('lib/tools/documentation/cli/documentation_cli.dart');
+        final cliFile = File(
+          'lib/tools/documentation/cli/documentation_cli.dart',
+        );
         final content = cliFile.readAsStringSync();
 
         expect(content, contains('analyze'));
@@ -33,8 +36,9 @@ void main() {
       });
 
       test('CLI tool has validate command', () {
-        final cliFile =
-            File('lib/tools/documentation/cli/documentation_cli.dart');
+        final cliFile = File(
+          'lib/tools/documentation/cli/documentation_cli.dart',
+        );
         final content = cliFile.readAsStringSync();
 
         expect(content, contains('validate'));
@@ -42,8 +46,9 @@ void main() {
       });
 
       test('CLI tool has report command', () {
-        final cliFile =
-            File('lib/tools/documentation/cli/documentation_cli.dart');
+        final cliFile = File(
+          'lib/tools/documentation/cli/documentation_cli.dart',
+        );
         final content = cliFile.readAsStringSync();
 
         expect(content, contains('report'));
@@ -51,8 +56,9 @@ void main() {
       });
 
       test('CLI tool has help command', () {
-        final cliFile =
-            File('lib/tools/documentation/cli/documentation_cli.dart');
+        final cliFile = File(
+          'lib/tools/documentation/cli/documentation_cli.dart',
+        );
         final content = cliFile.readAsStringSync();
 
         expect(content, contains('help'));
@@ -63,10 +69,7 @@ void main() {
     group('Quality Gates Integration', () {
       test('should run flutter analyze successfully', () async {
         // Run flutter analyze
-        final result = await Process.run(
-          'flutter',
-          ['analyze', '--no-pub'],
-        );
+        final result = await Process.run('flutter', ['analyze', '--no-pub']);
 
         // Should complete (may have warnings but shouldn't crash)
         expect(result.exitCode, anyOf(0, 1, 2, 3));
@@ -76,13 +79,10 @@ void main() {
         'should run flutter test successfully',
         () async {
           // Run a simple test
-          final result = await Process.run(
-            'flutter',
-            [
-              'test',
-              'test/integration/ci_cd_integration_test.dart',
-            ],
-          );
+          final result = await Process.run('flutter', [
+            'test',
+            'test/integration/ci_cd_integration_test.dart',
+          ]);
 
           // Should complete
           expect(result.exitCode, anyOf(0, 1));
@@ -201,8 +201,9 @@ void main() {
 
     group('Report Generation', () {
       test('CLI supports markdown format', () {
-        final cliFile =
-            File('lib/tools/documentation/cli/documentation_cli.dart');
+        final cliFile = File(
+          'lib/tools/documentation/cli/documentation_cli.dart',
+        );
         final content = cliFile.readAsStringSync();
 
         expect(content, contains('markdown'));
@@ -210,8 +211,9 @@ void main() {
       });
 
       test('CLI supports JSON format', () {
-        final cliFile =
-            File('lib/tools/documentation/cli/documentation_cli.dart');
+        final cliFile = File(
+          'lib/tools/documentation/cli/documentation_cli.dart',
+        );
         final content = cliFile.readAsStringSync();
 
         expect(content, contains('json'));
@@ -219,8 +221,9 @@ void main() {
       });
 
       test('CLI supports HTML format', () {
-        final cliFile =
-            File('lib/tools/documentation/cli/documentation_cli.dart');
+        final cliFile = File(
+          'lib/tools/documentation/cli/documentation_cli.dart',
+        );
         final content = cliFile.readAsStringSync();
 
         expect(content, contains('html'));
@@ -228,8 +231,9 @@ void main() {
       });
 
       test('CLI has report format parser', () {
-        final cliFile =
-            File('lib/tools/documentation/cli/documentation_cli.dart');
+        final cliFile = File(
+          'lib/tools/documentation/cli/documentation_cli.dart',
+        );
         final content = cliFile.readAsStringSync();
 
         expect(content, contains('_parseReportFormat'));

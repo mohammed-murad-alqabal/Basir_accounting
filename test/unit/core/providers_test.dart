@@ -24,9 +24,7 @@ void main() {
       );
 
       container = ProviderContainer(
-        overrides: [
-          isarProvider.overrideWith((ref) => Future.value(isar)),
-        ],
+        overrides: [isarProvider.overrideWith((ref) => Future.value(isar))],
       );
     });
 

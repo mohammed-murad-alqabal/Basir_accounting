@@ -78,35 +78,31 @@ class _OverflowDetectorState extends State<OverflowDetector> {
 
   /// يبني تحذير بصري عند اكتشاف overflow.
   Widget _buildVisualWarning() => Positioned(
-        top: 0,
-        right: 0,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-          decoration: BoxDecoration(
-            color: Colors.red.withValues(alpha: 0.8),
-            borderRadius: BorderRadius.circular(4),
+    top: 0,
+    right: 0,
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+      decoration: BoxDecoration(
+        color: Colors.red.withValues(alpha: 0.8),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: const Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.warning, size: 12, color: Colors.white),
+          SizedBox(width: 2),
+          Text(
+            'OVERFLOW',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          child: const Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.warning,
-                size: 12,
-                color: Colors.white,
-              ),
-              SizedBox(width: 2),
-              Text(
-                'OVERFLOW',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
+        ],
+      ),
+    ),
+  );
 
   /// يسجل تحذير overflow في console.
   void _logOverflow(String details) {

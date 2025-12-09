@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the printSummary method from the AccessibilityChecker class, for the Dart programming language.">
+  <title>printSummary method - AccessibilityChecker class - accessibility_checker library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">basser_app</a></li>
+    <li><a href="../../core_theme_accessibility_accessibility_checker/">core&#47;theme&#47;accessibility&#47;accessibility_checker.dart</a></li>
+    <li><a href="../../core_theme_accessibility_accessibility_checker/AccessibilityChecker-class.html">AccessibilityChecker</a></li>
+    <li class="self-crumb">printSummary static method</li>
+  </ol>
+  <div class="self-name">printSummary</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="core_theme_accessibility_accessibility_checker&#47;AccessibilityChecker-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">printSummary</span> static method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype">void</span>
+<span class="name ">printSummary</span>(<wbr>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>يطبع ملخص لجميع فحوصات إمكانية الوصول</p>
+<p>يستخدم لعرض معلومات مفصلة عن حالة إمكانية الوصول في التطبيق</p>
+<p>Example:</p>
+<pre class="language-dart"><code class="language-dart">AccessibilityChecker.printSummary();
+</code></pre>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static void printSummary() {
+  if (kDebugMode) {
+    debugPrint(
+      &#39;\n&#39;
+      &#39;═══════════════════════════════════════════════════════════\n&#39;
+      &#39;  ملخص معايير إمكانية الوصول (WCAG 2.1 Level AA)\n&#39;
+      &#39;═══════════════════════════════════════════════════════════\n&#39;
+      &#39;\n&#39;
+      &#39;📊 معايير التباين:\n&#39;
+      &#39;   • نصوص عادية: 4.5:1 أو أعلى\n&#39;
+      &#39;   • نصوص كبيرة: 3:1 أو أعلى\n&#39;
+      &#39;   • عناصر تفاعلية: 3:1 أو أعلى\n&#39;
+      &#39;\n&#39;
+      &#39;📏 معايير الأحجام:\n&#39;
+      &#39;   • حجم الخط الأساسي: 15px أو أكبر\n&#39;
+      &#39;   • ارتفاع السطر: 1.5 أو أعلى\n&#39;
+      &#39;   • مساحة النقر: 48x48px أو أكبر\n&#39;
+      &#39;\n&#39;
+      &#39;✅ للتحقق من الامتثال:\n&#39;
+      &#39;   • استخدم AccessibilityChecker.checkContrast()\n&#39;
+      &#39;   • استخدم AccessibilityChecker.checkTouchTarget()\n&#39;
+      &#39;   • استخدم AccessibilityChecker.checkFontSize()\n&#39;
+      &#39;\n&#39;
+      &#39;═══════════════════════════════════════════════════════════\n&#39;,
+    );
+  }
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">basser_app</a></li>
+    <li><a href="../../core_theme_accessibility_accessibility_checker/">accessibility_checker</a></li>
+    <li><a href="../../core_theme_accessibility_accessibility_checker/AccessibilityChecker-class.html">AccessibilityChecker</a></li>
+    <li class="self-crumb">printSummary static method</li>
+</ol>
+
+    <h5>AccessibilityChecker class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    basser_app
+      1.0.0+1
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

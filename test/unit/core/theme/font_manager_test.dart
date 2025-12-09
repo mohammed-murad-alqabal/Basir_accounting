@@ -207,11 +207,7 @@ void main() {
       await FontManager.initialize();
 
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: FontDebugInfo(),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: FontDebugInfo())),
       );
 
       expect(find.text('Font Manager Status'), findsOneWidget);
@@ -223,17 +219,11 @@ void main() {
       await FontManager.initialize();
 
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: FontDebugInfo(),
-          ),
-        ),
+        const MaterialApp(home: Scaffold(body: FontDebugInfo())),
       );
 
       if (FontManager.isPrimaryFontLoaded) {
-        final textWidget = tester.widget<Text>(
-          find.textContaining('Loaded'),
-        );
+        final textWidget = tester.widget<Text>(find.textContaining('Loaded'));
         expect(textWidget.style?.color, Colors.green);
       }
     });

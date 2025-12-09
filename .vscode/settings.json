@@ -63,5 +63,5 @@
     "editor.tabCompletion": "onlySnippets",
     "editor.wordBasedSuggestions": "off"
   },
-  "kiroAgent.trustedCommands": ["*"]
+  "kiroAgent.trustedCommands": ["*", "git rm *"]
 }

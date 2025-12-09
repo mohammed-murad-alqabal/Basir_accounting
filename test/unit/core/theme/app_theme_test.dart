@@ -145,17 +145,11 @@ void main() {
 
     group('Helper Functions', () {
       test('hasMinimumContrast should return true for high contrast', () {
-        expect(
-          AppColors.hasMinimumContrast(AppColors.textPrimary),
-          isTrue,
-        );
+        expect(AppColors.hasMinimumContrast(AppColors.textPrimary), isTrue);
       });
 
       test('hasMinimumContrast should return true for sufficient contrast', () {
-        expect(
-          AppColors.hasMinimumContrast(AppColors.textSecondary),
-          isTrue,
-        );
+        expect(AppColors.hasMinimumContrast(AppColors.textSecondary), isTrue);
       });
 
       test('contrastRatio should calculate correct ratio', () {
