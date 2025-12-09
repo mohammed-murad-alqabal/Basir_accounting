@@ -16,7 +16,8 @@ void main() {
 
     /// يختبر أن جميع ألوان النصوص الأساسية تحقق التباين المطلوب
     /// مع الخلفية البيضاء (surface)
-    test('لأي نص عادي معروض على خلفية بيضاء، '
+    test(
+        'لأي نص عادي معروض على خلفية بيضاء، '
         'يجب أن تكون نسبة التباين لا تقل عن 4.5:1', () {
       // ألوان النصوص الأساسية التي يجب اختبارها
       final textColors = [
@@ -39,8 +40,7 @@ void main() {
         expect(
           ratio,
           greaterThanOrEqualTo(minContrastRatio),
-          reason:
-              'لون النص $name (${_colorToHex(textColor)}) '
+          reason: 'لون النص $name (${_colorToHex(textColor)}) '
               'على خلفية بيضاء يجب أن يحقق تباين 4.5:1 أو أعلى. '
               'التباين الحالي: ${ratio.toStringAsFixed(2)}:1',
         );
@@ -49,7 +49,8 @@ void main() {
 
     /// يختبر أن جميع ألوان النصوص تحقق التباين المطلوب
     /// مع الخلفية الرئيسية (background)
-    test('لأي نص عادي معروض على الخلفية الرئيسية، '
+    test(
+        'لأي نص عادي معروض على الخلفية الرئيسية، '
         'يجب أن تكون نسبة التباين لا تقل عن 4.5:1', () {
       final textColors = [
         ('textPrimary', AppColors.textPrimary),
@@ -68,8 +69,7 @@ void main() {
         expect(
           ratio,
           greaterThanOrEqualTo(minContrastRatio),
-          reason:
-              'لون النص $name (${_colorToHex(textColor)}) '
+          reason: 'لون النص $name (${_colorToHex(textColor)}) '
               'على الخلفية الرئيسية (${_colorToHex(backgroundColor)}) '
               'يجب أن يحقق تباين 4.5:1 أو أعلى. '
               'التباين الحالي: ${ratio.toStringAsFixed(2)}:1',
@@ -79,7 +79,8 @@ void main() {
 
     /// يختبر أن ألوان الحالة (error, success, warning, info)
     /// تحقق التباين المطلوب مع الخلفية البيضاء
-    test('لأي نص حالة (خطأ، نجاح، تحذير، معلومة) معروض على خلفية بيضاء، '
+    test(
+        'لأي نص حالة (خطأ، نجاح، تحذير، معلومة) معروض على خلفية بيضاء، '
         'يجب أن تكون نسبة التباين لا تقل عن 4.5:1', () {
       final stateColors = [
         ('error', AppColors.error),
@@ -99,8 +100,7 @@ void main() {
         expect(
           ratio,
           greaterThanOrEqualTo(minContrastRatio),
-          reason:
-              'لون الحالة $name (${_colorToHex(stateColor)}) '
+          reason: 'لون الحالة $name (${_colorToHex(stateColor)}) '
               'على خلفية بيضاء يجب أن يحقق تباين 4.5:1 أو أعلى. '
               'التباين الحالي: ${ratio.toStringAsFixed(2)}:1',
         );
@@ -109,7 +109,8 @@ void main() {
 
     /// يختبر أن الألوان الأساسية (primary, secondary)
     /// تحقق التباين المطلوب مع الخلفية البيضاء
-    test('لأي نص بلون أساسي أو ثانوي معروض على خلفية بيضاء، '
+    test(
+        'لأي نص بلون أساسي أو ثانوي معروض على خلفية بيضاء، '
         'يجب أن تكون نسبة التباين لا تقل عن 4.5:1', () {
       final brandColors = [
         ('primary', AppColors.primary),
@@ -129,8 +130,7 @@ void main() {
         expect(
           ratio,
           greaterThanOrEqualTo(minContrastRatio),
-          reason:
-              'اللون $name (${_colorToHex(brandColor)}) '
+          reason: 'اللون $name (${_colorToHex(brandColor)}) '
               'على خلفية بيضاء يجب أن يحقق تباين 4.5:1 أو أعلى. '
               'التباين الحالي: ${ratio.toStringAsFixed(2)}:1',
         );
@@ -138,7 +138,8 @@ void main() {
     });
 
     /// يختبر أن النصوص على الخلفيات الملونة تحقق التباين المطلوب
-    test('لأي نص أبيض معروض على خلفية ملونة، '
+    test(
+        'لأي نص أبيض معروض على خلفية ملونة، '
         'يجب أن تكون نسبة التباين لا تقل عن 4.5:1', () {
       final coloredBackgrounds = [
         ('primary', AppColors.primary, AppColors.onPrimary),
@@ -155,8 +156,7 @@ void main() {
         expect(
           ratio,
           greaterThanOrEqualTo(minContrastRatio),
-          reason:
-              'النص على خلفية $name '
+          reason: 'النص على خلفية $name '
               '(${_colorToHex(textColor)} على '
               '${_colorToHex(backgroundColor)}) '
               'يجب أن يحقق تباين 4.5:1 أو أعلى. '
@@ -166,7 +166,8 @@ void main() {
     });
 
     /// يختبر أن دالة hasMinimumContrast تعمل بشكل صحيح
-    test('دالة AppColors.hasMinimumContrast يجب أن تعيد true '
+    test(
+        'دالة AppColors.hasMinimumContrast يجب أن تعيد true '
         'لجميع ألوان النصوص الأساسية', () {
       final textColors = [
         AppColors.textPrimary,
@@ -180,8 +181,7 @@ void main() {
         expect(
           hasContrast,
           isTrue,
-          reason:
-              'لون النص ${_colorToHex(textColor)} '
+          reason: 'لون النص ${_colorToHex(textColor)} '
               'يجب أن يحقق التباين المطلوب',
         );
       }
@@ -213,7 +213,8 @@ void main() {
 
     /// يختبار أن جميع ألوان النصوص تحقق التباين المطلوب
     /// باستخدام دالة checkContrast
-    test('دالة AccessibilityChecker.checkContrast يجب أن تعيد true '
+    test(
+        'دالة AccessibilityChecker.checkContrast يجب أن تعيد true '
         'لجميع ألوان النصوص الأساسية', () {
       final textColors = [
         AppColors.textPrimary,
@@ -232,8 +233,7 @@ void main() {
         expect(
           hasContrast,
           isTrue,
-          reason:
-              'لون النص ${_colorToHex(textColor)} '
+          reason: 'لون النص ${_colorToHex(textColor)} '
               'يجب أن يحقق التباين المطلوب مع الخلفية',
         );
       }
@@ -243,8 +243,7 @@ void main() {
 
 /// دالة مساعدة لتحويل Color إلى Hex string
 String _colorToHex(Color color) {
-  final value =
-      (color.a.toInt() << 24) |
+  final value = (color.a.toInt() << 24) |
       (color.r.toInt() << 16) |
       (color.g.toInt() << 8) |
       color.b.toInt();

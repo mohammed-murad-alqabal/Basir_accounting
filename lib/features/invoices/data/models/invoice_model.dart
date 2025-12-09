@@ -154,16 +154,16 @@ class InvoiceModel {
   ///
   /// **Returns:** كيان الفاتورة الكامل
   Invoice toEntity() => Invoice(
-    id: invoiceId,
-    customerId: customerId,
-    customerName: customerName,
-    items: items.map((item) => item.toEntity()).toList(),
-    issuedDate: issuedDate,
-    dueDate: dueDate,
-    taxRate: taxRate,
-    status: status,
-    notes: notes,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
-  );
+        id: invoiceId,
+        customerId: customerId,
+        customerName: customerName,
+        items: items.map((item) => item.toEntity()).toList(),
+        issuedDate: issuedDate,
+        dueDate: dueDate,
+        taxRate: taxRate,
+        status: status,
+        notes: notes,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+      );
 }

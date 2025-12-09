@@ -52,8 +52,7 @@ void main() {
         //     .generateInvoicePdf(invoice, customer);
         // expect(pdfBytes, isNotNull);
       },
-      skip:
-          'يتطلب ملف خط عربي صحيح في '
+      skip: 'يتطلب ملف خط عربي صحيح في '
           'assets/fonts/Cairo-Regular.ttf',
     );
   });

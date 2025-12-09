@@ -91,138 +91,138 @@ class _SetupScreenState extends State<SetupScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.background,
-    body: SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Column(
-          children: [
-            // رأس الشاشة
-            _buildHeader(),
-            const SizedBox(height: AppSpacing.xl),
+        backgroundColor: AppColors.background,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              children: [
+                // رأس الشاشة
+                _buildHeader(),
+                const SizedBox(height: AppSpacing.xl),
 
-            // نموذج الإعداد
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // حقل اسم المستخدم
-                  AppTextField(
-                    label: 'اسم المستخدم',
-                    hint: 'أدخل اسم المستخدم',
-                    controller: _usernameController,
-                    prefixIcon: const Icon(Icons.person),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppMessages.emptyField;
-                      }
-                      if (value.length < 3) {
-                        return 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل';
-                      }
-                      return null;
-                    },
+                // نموذج الإعداد
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // حقل اسم المستخدم
+                      AppTextField(
+                        label: 'اسم المستخدم',
+                        hint: 'أدخل اسم المستخدم',
+                        controller: _usernameController,
+                        prefixIcon: const Icon(Icons.person),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppMessages.emptyField;
+                          }
+                          if (value.length < 3) {
+                            return 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+
+                      // حقل كلمة المرور
+                      AppTextField(
+                        label: 'كلمة المرور',
+                        hint: 'أدخل كلمة المرور',
+                        controller: _passwordController,
+                        obscureText: true,
+                        prefixIcon: const Icon(Icons.lock),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppMessages.emptyField;
+                          }
+                          if (value.length < 6) {
+                            return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+
+                      // حقل تأكيد كلمة المرور
+                      AppTextField(
+                        label: 'تأكيد كلمة المرور',
+                        hint: 'أعد إدخال كلمة المرور',
+                        controller: _confirmPasswordController,
+                        obscureText: true,
+                        prefixIcon: const Icon(Icons.lock),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppMessages.emptyField;
+                          }
+                          if (value != _passwordController.text) {
+                            return 'كلمات المرور غير متطابقة';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: AppSpacing.xl),
+
+                      // زر الإنشاء
+                      AppPrimaryButton(
+                        label: 'إنشاء الحساب',
+                        onPressed: _handleSetup,
+                        isLoading: _isLoading,
+                        width: double.infinity,
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: AppSpacing.lg),
-
-                  // حقل كلمة المرور
-                  AppTextField(
-                    label: 'كلمة المرور',
-                    hint: 'أدخل كلمة المرور',
-                    controller: _passwordController,
-                    obscureText: true,
-                    prefixIcon: const Icon(Icons.lock),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppMessages.emptyField;
-                      }
-                      if (value.length < 6) {
-                        return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-
-                  // حقل تأكيد كلمة المرور
-                  AppTextField(
-                    label: 'تأكيد كلمة المرور',
-                    hint: 'أعد إدخال كلمة المرور',
-                    controller: _confirmPasswordController,
-                    obscureText: true,
-                    prefixIcon: const Icon(Icons.lock),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppMessages.emptyField;
-                      }
-                      if (value != _passwordController.text) {
-                        return 'كلمات المرور غير متطابقة';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-
-                  // زر الإنشاء
-                  AppPrimaryButton(
-                    label: 'إنشاء الحساب',
-                    onPressed: _handleSetup,
-                    isLoading: _isLoading,
-                    width: double.infinity,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-
-  Widget _buildHeader() => Column(
-    children: [
-      Container(
-        width: 80,
-        height: 80,
-        decoration: BoxDecoration(
-          color: AppColors.primary,
-          borderRadius: BorderRadius.circular(AppBorderRadius.lg),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withValues(alpha: 0.2),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: const Center(
-          child: Text(
-            'بصير',
-            style: TextStyle(
-              fontSize: AppTypography.headlineLarge,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+                ),
+              ],
             ),
           ),
         ),
-      ),
-      const SizedBox(height: AppSpacing.lg),
-      const Text(
-        'إنشاء حساب جديد',
-        style: TextStyle(
-          fontSize: AppTypography.headlineSmall,
-          fontWeight: FontWeight.bold,
-          color: AppColors.textPrimary,
-        ),
-      ),
-      const SizedBox(height: AppSpacing.sm),
-      const Text(
-        'أنشئ حسابك للبدء في إدارة فواتيرك',
-        style: TextStyle(
-          fontSize: AppTypography.bodyMedium,
-          color: AppColors.textSecondary,
-        ),
-      ),
-    ],
-  );
+      );
+
+  Widget _buildHeader() => Column(
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primary.withValues(alpha: 0.2),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: const Center(
+              child: Text(
+                'بصير',
+                style: TextStyle(
+                  fontSize: AppTypography.headlineLarge,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          const Text(
+            'إنشاء حساب جديد',
+            style: TextStyle(
+              fontSize: AppTypography.headlineSmall,
+              fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          const Text(
+            'أنشئ حسابك للبدء في إدارة فواتيرك',
+            style: TextStyle(
+              fontSize: AppTypography.bodyMedium,
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ],
+      );
 }

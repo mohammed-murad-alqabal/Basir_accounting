@@ -200,7 +200,8 @@ class AppAnimations {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
     Widget child,
-  ) => FadeTransition(opacity: animation, child: child);
+  ) =>
+      FadeTransition(opacity: animation, child: child);
 
   /// انتقال التكبير (Scale)
   ///
@@ -210,13 +211,14 @@ class AppAnimations {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
     Widget child,
-  ) => ScaleTransition(
-    scale: Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(parent: animation, curve: curveEaseOut)),
-    child: child,
-  );
+  ) =>
+      ScaleTransition(
+        scale: Tween<double>(
+          begin: 0,
+          end: 1,
+        ).animate(CurvedAnimation(parent: animation, curve: curveEaseOut)),
+        child: child,
+      );
 
   /// انتقال مركب: تلاشي + انزلاق (Fade + Slide)
   ///
@@ -261,13 +263,15 @@ class AppAnimations {
     required Widget child,
     Duration? duration,
     Curve? curve,
-  }) => TweenAnimationBuilder<double>(
-    tween: Tween(begin: 0, end: 1),
-    duration: duration ?? durationNormal,
-    curve: curve ?? curveEaseIn,
-    builder: (context, value, child) => Opacity(opacity: value, child: child),
-    child: child,
-  );
+  }) =>
+      TweenAnimationBuilder<double>(
+        tween: Tween(begin: 0, end: 1),
+        duration: duration ?? durationNormal,
+        curve: curve ?? curveEaseIn,
+        builder: (context, value, child) =>
+            Opacity(opacity: value, child: child),
+        child: child,
+      );
 
   /// حركة الاختفاء التدريجي (Fade Out)
   ///
@@ -276,13 +280,15 @@ class AppAnimations {
     required Widget child,
     Duration? duration,
     Curve? curve,
-  }) => TweenAnimationBuilder<double>(
-    tween: Tween(begin: 1, end: 0),
-    duration: duration ?? durationNormal,
-    curve: curve ?? curveEaseOut,
-    builder: (context, value, child) => Opacity(opacity: value, child: child),
-    child: child,
-  );
+  }) =>
+      TweenAnimationBuilder<double>(
+        tween: Tween(begin: 1, end: 0),
+        duration: duration ?? durationNormal,
+        curve: curve ?? curveEaseOut,
+        builder: (context, value, child) =>
+            Opacity(opacity: value, child: child),
+        child: child,
+      );
 
   /// حركة الانزلاق للأعلى (Slide Up)
   ///
@@ -292,14 +298,15 @@ class AppAnimations {
     Duration? duration,
     Curve? curve,
     double offset = 50.0,
-  }) => TweenAnimationBuilder<double>(
-    tween: Tween(begin: offset, end: 0),
-    duration: duration ?? durationNormal,
-    curve: curve ?? curveEaseOut,
-    builder: (context, value, child) =>
-        Transform.translate(offset: Offset(0, value), child: child),
-    child: child,
-  );
+  }) =>
+      TweenAnimationBuilder<double>(
+        tween: Tween(begin: offset, end: 0),
+        duration: duration ?? durationNormal,
+        curve: curve ?? curveEaseOut,
+        builder: (context, value, child) =>
+            Transform.translate(offset: Offset(0, value), child: child),
+        child: child,
+      );
 
   /// حركة التكبير (Scale Up)
   ///
@@ -308,14 +315,15 @@ class AppAnimations {
     required Widget child,
     Duration? duration,
     Curve? curve,
-  }) => TweenAnimationBuilder<double>(
-    tween: Tween(begin: 0, end: 1),
-    duration: duration ?? durationNormal,
-    curve: curve ?? curveEaseOut,
-    builder: (context, value, child) =>
-        Transform.scale(scale: value, child: child),
-    child: child,
-  );
+  }) =>
+      TweenAnimationBuilder<double>(
+        tween: Tween(begin: 0, end: 1),
+        duration: duration ?? durationNormal,
+        curve: curve ?? curveEaseOut,
+        builder: (context, value, child) =>
+            Transform.scale(scale: value, child: child),
+        child: child,
+      );
 
   // ==========================================================
   // تأثيرات التفاعل (Interaction Effects)
@@ -416,11 +424,12 @@ class AppAnimations {
     required Widget page,
     required RouteTransitionsBuilder transition,
     Duration? duration,
-  }) => PageRouteBuilder<T>(
-    pageBuilder: (context, animation, secondaryAnimation) => page,
-    transitionsBuilder: transition,
-    transitionDuration: duration ?? durationMedium,
-  );
+  }) =>
+      PageRouteBuilder<T>(
+        pageBuilder: (context, animation, secondaryAnimation) => page,
+        transitionsBuilder: transition,
+        transitionDuration: duration ?? durationMedium,
+      );
 
   /// يحسب التأخير للعنصر في القائمة
   ///
@@ -445,5 +454,6 @@ class AppAnimations {
   static AnimationController createController({
     required TickerProvider vsync,
     Duration? duration,
-  }) => AnimationController(vsync: vsync, duration: duration ?? durationNormal);
+  }) =>
+      AnimationController(vsync: vsync, duration: duration ?? durationNormal);
 }

@@ -139,14 +139,15 @@ class FontManager {
     FontWeight? fontWeight,
     Color? color,
     double? height,
-  }) => TextStyle(
-    fontFamily: getDefaultFontFamily(),
-    fontFamilyFallback: fallbackFonts,
-    fontSize: fontSize,
-    fontWeight: fontWeight,
-    color: color,
-    height: height,
-  );
+  }) =>
+      TextStyle(
+        fontFamily: getDefaultFontFamily(),
+        fontFamilyFallback: fallbackFonts,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        color: color,
+        height: height,
+      );
 
   /// ينشئ TextStyle آمن مع line-height مناسب لخط Cairo.
   ///
@@ -196,12 +197,12 @@ class FontManager {
   ///
   /// Returns Map يحتوي على معلومات الحالة.
   static Map<String, dynamic> getStatus() => {
-    'primaryFont': primaryFont,
-    'isPrimaryFontLoaded': _isPrimaryFontLoaded,
-    'fallbackFonts': fallbackFonts,
-    'defaultFont': getDefaultFontFamily(),
-    'errors': errors,
-  };
+        'primaryFont': primaryFont,
+        'isPrimaryFontLoaded': _isPrimaryFontLoaded,
+        'fallbackFonts': fallbackFonts,
+        'defaultFont': getDefaultFontFamily(),
+        'errors': errors,
+      };
 
   /// يطبع معلومات حالة الخطوط (للتطوير).
   static void printStatus() {

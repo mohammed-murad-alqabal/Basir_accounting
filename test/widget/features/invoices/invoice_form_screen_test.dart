@@ -19,12 +19,12 @@ void main() {
   });
 
   Widget createTestWidget({Invoice? invoice}) => ProviderScope(
-    overrides: [
-      customerRepositoryProvider.overrideWithValue(mockCustomerRepository),
-      invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepository),
-    ],
-    child: MaterialApp(home: InvoiceFormScreen(invoice: invoice)),
-  );
+        overrides: [
+          customerRepositoryProvider.overrideWithValue(mockCustomerRepository),
+          invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepository),
+        ],
+        child: MaterialApp(home: InvoiceFormScreen(invoice: invoice)),
+      );
 
   group('InvoiceFormScreen - Basic Display', () {
     testWidgets('should build without error', (tester) async {

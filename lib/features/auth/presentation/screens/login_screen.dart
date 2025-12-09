@@ -127,164 +127,165 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.background,
-    body: SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Column(
-          children: [
-            // رأس الشاشة
-            _buildHeader(),
-            const SizedBox(height: AppSpacing.xl),
+        backgroundColor: AppColors.background,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              children: [
+                // رأس الشاشة
+                _buildHeader(),
+                const SizedBox(height: AppSpacing.xl),
 
-            // نموذج تسجيل الدخول
-            Form(
-              key: _formKey,
-              autovalidateMode: _autovalidateMode,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // حقل اسم المستخدم
-                  AppTextField(
-                    label: 'اسم المستخدم',
-                    hint: 'أدخل اسم المستخدم',
-                    controller: _usernameController,
-                    prefixIcon: const Icon(Icons.person),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppMessages.emptyField;
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-
-                  // حقل كلمة المرور
-                  AppTextField(
-                    label: 'كلمة المرور',
-                    hint: 'أدخل كلمة المرور',
-                    controller: _passwordController,
-                    obscureText: true,
-                    prefixIcon: const Icon(Icons.lock),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppMessages.emptyField;
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-
-                  // خيار البقاء مسجلاً
-                  Row(
+                // نموذج تسجيل الدخول
+                Form(
+                  key: _formKey,
+                  autovalidateMode: _autovalidateMode,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Checkbox(
-                        value: _keepLoggedIn,
-                        onChanged: (value) {
-                          setState(() => _keepLoggedIn = value ?? true);
+                      // حقل اسم المستخدم
+                      AppTextField(
+                        label: 'اسم المستخدم',
+                        hint: 'أدخل اسم المستخدم',
+                        controller: _usernameController,
+                        prefixIcon: const Icon(Icons.person),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppMessages.emptyField;
+                          }
+                          return null;
                         },
                       ),
-                      const Flexible(
-                        child: Text(
-                          'البقاء مسجلاً',
-                          style: TextStyle(
-                            fontSize: AppTypography.bodyMedium,
-                            color: AppColors.textPrimary,
+                      const SizedBox(height: AppSpacing.lg),
+
+                      // حقل كلمة المرور
+                      AppTextField(
+                        label: 'كلمة المرور',
+                        hint: 'أدخل كلمة المرور',
+                        controller: _passwordController,
+                        obscureText: true,
+                        prefixIcon: const Icon(Icons.lock),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppMessages.emptyField;
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+
+                      // خيار البقاء مسجلاً
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: _keepLoggedIn,
+                            onChanged: (value) {
+                              setState(() => _keepLoggedIn = value ?? true);
+                            },
                           ),
-                          overflow: TextOverflow.ellipsis,
+                          const Flexible(
+                            child: Text(
+                              'البقاء مسجلاً',
+                              style: TextStyle(
+                                fontSize: AppTypography.bodyMedium,
+                                color: AppColors.textPrimary,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+
+                      // زر تسجيل الدخول
+                      AppPrimaryButton(
+                        label: 'تسجيل الدخول',
+                        onPressed: _handleLogin,
+                        isLoading: _isLoading,
+                        width: double.infinity,
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+
+                      // زر الدخول كضيف
+                      AppSecondaryButton(
+                        label: 'الدخول كضيف',
+                        onPressed: _handleGuestLogin,
+                        width: double.infinity,
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+
+                      // خيار إنشاء حساب جديد
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Flexible(
+                              child: Text(
+                                'ليس لديك حساب؟ ',
+                                style: TextStyle(
+                                  fontSize: AppTypography.bodyMedium,
+                                  color: AppColors.textSecondary,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Flexible(
+                              child: AppTextButton(
+                                label: 'أنشئ حساباً الآن',
+                                onPressed: () async {
+                                  await Navigator.of(context)
+                                      .pushNamed('/setup');
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.md),
-
-                  // زر تسجيل الدخول
-                  AppPrimaryButton(
-                    label: 'تسجيل الدخول',
-                    onPressed: _handleLogin,
-                    isLoading: _isLoading,
-                    width: double.infinity,
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-
-                  // زر الدخول كضيف
-                  AppSecondaryButton(
-                    label: 'الدخول كضيف',
-                    onPressed: _handleGuestLogin,
-                    width: double.infinity,
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-
-                  // خيار إنشاء حساب جديد
-                  Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Flexible(
-                          child: Text(
-                            'ليس لديك حساب؟ ',
-                            style: TextStyle(
-                              fontSize: AppTypography.bodyMedium,
-                              color: AppColors.textSecondary,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Flexible(
-                          child: AppTextButton(
-                            label: 'أنشئ حساباً الآن',
-                            onPressed: () async {
-                              await Navigator.of(context).pushNamed('/setup');
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-    ),
-  );
+      );
 
   Widget _buildHeader() => Column(
-    children: [
-      Container(
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
-          color: AppColors.primary,
-          borderRadius: BorderRadius.circular(AppBorderRadius.xl),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withValues(alpha: 0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
+        children: [
+          Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(AppBorderRadius.xl),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primary.withValues(alpha: 0.3),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: const BasserLogo(size: 60),
-      ),
-      const SizedBox(height: AppSpacing.lg),
-      const Text(
-        'تسجيل الدخول',
-        style: TextStyle(
-          fontSize: AppTypography.headlineSmall,
-          fontWeight: FontWeight.bold,
-          color: AppColors.textPrimary,
-        ),
-      ),
-      const SizedBox(height: AppSpacing.sm),
-      const Text(
-        'رحباً بك مجدداً! سجل دخولك للمتابعة',
-        style: TextStyle(
-          fontSize: AppTypography.bodyMedium,
-          color: AppColors.textSecondary,
-        ),
-      ),
-    ],
-  );
+            child: const BasserLogo(size: 60),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          const Text(
+            'تسجيل الدخول',
+            style: TextStyle(
+              fontSize: AppTypography.headlineSmall,
+              fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          const Text(
+            'رحباً بك مجدداً! سجل دخولك للمتابعة',
+            style: TextStyle(
+              fontSize: AppTypography.bodyMedium,
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ],
+      );
 }

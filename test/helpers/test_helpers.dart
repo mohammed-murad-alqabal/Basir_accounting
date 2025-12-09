@@ -23,10 +23,10 @@ class TestHelpers {
   /// await TestHelpers.cleanupTestIsar(isar);
   /// ```
   static Future<Isar> createTestIsar() async => Isar.open(
-    [CustomerModelSchema, InvoiceModelSchema],
-    directory: '',
-    name: 'test_${DateTime.now().millisecondsSinceEpoch}',
-  );
+        [CustomerModelSchema, InvoiceModelSchema],
+        directory: '',
+        name: 'test_${DateTime.now().millisecondsSinceEpoch}',
+      );
 
   /// تنظيف قاعدة البيانات بعد الاختبار
   ///

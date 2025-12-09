@@ -377,9 +377,8 @@ void main() {
 
       // Act
       final allInvoices = await mockRepository.getAllInvoices();
-      final filtered = allInvoices
-          .where((i) => i.customerName.contains('محمد'))
-          .toList();
+      final filtered =
+          allInvoices.where((i) => i.customerName.contains('محمد')).toList();
 
       // Assert
       expect(filtered.length, 2);
@@ -397,9 +396,8 @@ void main() {
 
       // Act
       final allInvoices = await mockRepository.getAllInvoices();
-      final filtered = allInvoices
-          .where((i) => i.id.contains('INV-001'))
-          .toList();
+      final filtered =
+          allInvoices.where((i) => i.id.contains('INV-001')).toList();
 
       // Assert
       expect(filtered.length, 1);

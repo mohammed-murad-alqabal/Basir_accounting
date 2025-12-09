@@ -16,7 +16,7 @@
 | Constants     | lowerCamelCase | `maxRetries`               |
 | Private       | \_prefix       | `_privateMethod()`         |
 
-**التفاصيل:** `.kiro/steering/standards/naming.md`
+**التفاصيل:** `.kiro/standards/naming.md`
 
 ---
 
@@ -37,7 +37,7 @@
 - Interface Segregation
 - Dependency Inversion
 
-**التفاصيل:** `.kiro/steering/standards/code-quality.md`
+**التفاصيل:** `.kiro/standards/code-quality.md`
 
 ---
 
@@ -51,7 +51,7 @@
 - ✅ Hash passwords (SHA-256+)
 - ✅ Encrypt sensitive data
 
-**التفاصيل:** `.kiro/steering/guides/security-guide.md`
+**التفاصيل:** `.kiro/guides/security-guide.md`
 
 ---
 
@@ -69,7 +69,7 @@
 - استخدام mocks للـ dependencies
 - اختبارات مستقلة وسريعة
 
-**التفاصيل:** `.kiro/steering/standards/testing.md`
+**التفاصيل:** `.kiro/standards/testing.md`
 
 ---
 
@@ -86,7 +86,7 @@
 - **العربية**: للنصوص الموجهة للمستخدم
 - **الإنجليزية**: للمصطلحات التقنية
 
-**التفاصيل:** `.kiro/steering/standards/documentation.md`
+**التفاصيل:** `.kiro/standards/documentation.md`
 
 ---
 
@@ -100,7 +100,7 @@
 - Riverpod لإدارة الحالة
 - Isar للقاعدة المحلية
 
-**التفاصيل:** `.kiro/steering/guides/flutter-guide.md`
+**التفاصيل:** `.kiro/guides/flutter-guide.md`
 
 ---
 
@@ -120,7 +120,7 @@
 - استخدام علامة الاستفهام العربية (؟)
 - الأرقام الهندية (123) موصى بها
 
-**التفاصيل:** `.kiro/steering/standards/arabic.md`
+**التفاصيل:** `.kiro/standards/arabic.md`
 
 ---
 
@@ -142,8 +142,8 @@ docs: تحديث التوثيق
 - `feature/*`: للميزات الجديدة
 - `fix/*`: للإصلاحات
 
-**التفاصيل:** `.kiro/steering/guides/git-guide.md`
+**التفاصيل:** `.kiro/guides/git-guide.md`
 
 ---
 
-**للمراجع الكاملة:** `.kiro/steering/reference/`
+**للمراجع الكاملة:** `.kiro/reference/`

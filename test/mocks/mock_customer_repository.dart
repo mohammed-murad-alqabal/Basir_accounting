@@ -13,26 +13,25 @@ import 'package:basser_app/features/customers/domain/repositories/customer_repos
 class MockCustomerRepository implements CustomerRepository {
   /// Constructor مع بيانات اختبارية افتراضية
   MockCustomerRepository({List<Customer>? customers, this.shouldThrow = false})
-    : _customers =
-          customers ??
-          [
-            Customer(
-              id: 'test-1',
-              name: 'أحمد محمد',
-              phone: '0501234567',
-              email: 'ahmed@test.com',
-              createdAt: DateTime(2024),
-              updatedAt: DateTime(2024),
-            ),
-            Customer(
-              id: 'test-2',
-              name: 'سارة علي',
-              phone: '0509876543',
-              email: 'sara@test.com',
-              createdAt: DateTime(2024, 1, 2),
-              updatedAt: DateTime(2024, 1, 2),
-            ),
-          ];
+      : _customers = customers ??
+            [
+              Customer(
+                id: 'test-1',
+                name: 'أحمد محمد',
+                phone: '0501234567',
+                email: 'ahmed@test.com',
+                createdAt: DateTime(2024),
+                updatedAt: DateTime(2024),
+              ),
+              Customer(
+                id: 'test-2',
+                name: 'سارة علي',
+                phone: '0509876543',
+                email: 'sara@test.com',
+                createdAt: DateTime(2024, 1, 2),
+                updatedAt: DateTime(2024, 1, 2),
+              ),
+            ];
   final List<Customer> _customers;
 
   /// للتحكم في رمي الأخطاء في الاختبارات
@@ -47,8 +46,14 @@ class MockCustomerRepository implements CustomerRepository {
   /// للتحكم في نتيجة updateCustomer
   bool updateCustomerResult = true;
 
+  /// تأخير اختياري لمحاكاة عمليات async حقيقية (بالميلي ثانية)
+  int delayMilliseconds = 0;
+
   @override
   Future<List<Customer>> getAllCustomers() async {
+    if (delayMilliseconds > 0) {
+      await Future<void>.delayed(Duration(milliseconds: delayMilliseconds));
+    }
     if (shouldThrow || shouldThrowError) {
       throw Exception('Mock error: Failed to get customers');
     }
@@ -57,6 +62,9 @@ class MockCustomerRepository implements CustomerRepository {
 
   @override
   Future<Customer?> getCustomerById(String id) async {
+    if (delayMilliseconds > 0) {
+      await Future<void>.delayed(Duration(milliseconds: delayMilliseconds));
+    }
     try {
       return _customers.firstWhere((c) => c.id == id);
     } on Object {
@@ -67,6 +75,9 @@ class MockCustomerRepository implements CustomerRepository {
 
   @override
   Future<void> addCustomer(Customer customer) async {
+    if (delayMilliseconds > 0) {
+      await Future<void>.delayed(Duration(milliseconds: delayMilliseconds));
+    }
     if (shouldThrow || shouldThrowError) {
       throw Exception('Mock error: Failed to add customer');
     }
@@ -82,6 +93,9 @@ class MockCustomerRepository implements CustomerRepository {
 
   @override
   Future<void> updateCustomer(Customer customer) async {
+    if (delayMilliseconds > 0) {
+      await Future<void>.delayed(Duration(milliseconds: delayMilliseconds));
+    }
     if (shouldThrow || shouldThrowError) {
       throw Exception('Mock error: Failed to update customer');
     }
@@ -97,6 +111,9 @@ class MockCustomerRepository implements CustomerRepository {
 
   @override
   Future<void> deleteCustomer(String id) async {
+    if (delayMilliseconds > 0) {
+      await Future<void>.delayed(Duration(milliseconds: delayMilliseconds));
+    }
     if (shouldThrow || shouldThrowError) {
       throw Exception('Mock error: Failed to delete customer');
     }
@@ -105,11 +122,17 @@ class MockCustomerRepository implements CustomerRepository {
 
   @override
   Future<void> deleteAllCustomers() async {
+    if (delayMilliseconds > 0) {
+      await Future<void>.delayed(Duration(milliseconds: delayMilliseconds));
+    }
     _customers.clear();
   }
 
   @override
   Future<List<Customer>> searchCustomers(String query) async {
+    if (delayMilliseconds > 0) {
+      await Future<void>.delayed(Duration(milliseconds: delayMilliseconds));
+    }
     final lowerQuery = query.toLowerCase();
     return _customers
         .where(

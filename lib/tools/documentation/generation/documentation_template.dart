@@ -24,46 +24,47 @@ class DocumentationTemplate {
       case ElementType.enumType:
         return DocumentationTemplate.enumTemplate();
       case ElementType.typedef:
-        return DocumentationTemplate.classTemplate(); // استخدام قالب الكلاس للـ typedef
+        // استخدام قالب الكلاس للـ typedef
+        return DocumentationTemplate.classTemplate();
     }
   }
 
   /// قالب للـ enums
   factory DocumentationTemplate.enumTemplate() => const DocumentationTemplate(
-    type: ElementType.enumType,
-    arabicTemplate: '''
+        type: ElementType.enumType,
+        arabicTemplate: '''
 /// {description}
 ///
 /// {details}
 ''',
-    englishTemplate: '''
+        englishTemplate: '''
 /// {description}
 ///
 /// {details}
 ''',
-    requiredSections: ['description', 'details'],
-  );
+        requiredSections: ['description', 'details'],
+      );
 
   /// قالب للكلاسات
   factory DocumentationTemplate.classTemplate() => const DocumentationTemplate(
-    type: ElementType.classType,
-    arabicTemplate: '''
+        type: ElementType.classType,
+        arabicTemplate: '''
 /// {description}
 ///
 /// {details}
 ''',
-    englishTemplate: '''
+        englishTemplate: '''
 /// {description}
 ///
 /// {details}
 ''',
-    requiredSections: ['description', 'details'],
-  );
+        requiredSections: ['description', 'details'],
+      );
 
   /// قالب للدوال
   factory DocumentationTemplate.methodTemplate() => const DocumentationTemplate(
-    type: ElementType.method,
-    arabicTemplate: '''
+        type: ElementType.method,
+        arabicTemplate: '''
 /// {description}
 ///
 /// {details}
@@ -73,7 +74,7 @@ class DocumentationTemplate {
 ///
 /// Returns: {returns}
 ''',
-    englishTemplate: '''
+        englishTemplate: '''
 /// {description}
 ///
 /// {details}
@@ -83,8 +84,8 @@ class DocumentationTemplate {
 ///
 /// Returns: {returns}
 ''',
-    requiredSections: ['description', 'parameters', 'returns'],
-  );
+        requiredSections: ['description', 'parameters', 'returns'],
+      );
 
   /// قالب للخصائص
   factory DocumentationTemplate.propertyTemplate() =>

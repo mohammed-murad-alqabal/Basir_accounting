@@ -432,7 +432,7 @@ class _AnimatedIconState extends State<AnimatedIcon>
 
   @override
   Widget build(BuildContext context) => ScaleTransition(
-    scale: _scaleAnimation,
-    child: Icon(widget.icon, size: widget.size, color: widget.color),
-  );
+        scale: _scaleAnimation,
+        child: Icon(widget.icon, size: widget.size, color: widget.color),
+      );
 }

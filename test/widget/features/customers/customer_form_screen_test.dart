@@ -14,12 +14,16 @@ void main() {
 
   setUp(() {
     mockRepository = MockCustomerRepository();
+    // إعادة تعيين التأخير لكل اختبار (يمكن تخصيصه في الاختبارات الفردية)
+    mockRepository.delayMilliseconds = 0;
   });
 
   Widget createTestWidget({Customer? customer}) => ProviderScope(
-    overrides: [customerRepositoryProvider.overrideWithValue(mockRepository)],
-    child: MaterialApp(home: CustomerFormScreen(customer: customer)),
-  );
+        overrides: [
+          customerRepositoryProvider.overrideWithValue(mockRepository),
+        ],
+        child: MaterialApp(home: CustomerFormScreen(customer: customer)),
+      );
 
   group('CustomerFormScreen - Display', () {
     testWidgets('should display add customer title when customer is null', (
@@ -324,6 +328,8 @@ void main() {
 
     testWidgets('should show loading indicator while adding', (tester) async {
       mockRepository.addCustomerResult = true;
+      // إضافة تأخير لمحاكاة عملية async حقيقية
+      mockRepository.delayMilliseconds = 100;
 
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
@@ -343,6 +349,9 @@ void main() {
       // تحقق من وجود مؤشر التحميل
       // AppPrimaryButton يعرض CircularProgressIndicator عندما isLoading = true
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+      // انتظر حتى تكتمل العملية
+      await tester.pumpAndSettle();
     });
 
     testWidgets('should trim whitespace from inputs', (tester) async {
@@ -474,7 +483,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(button, warnIfMissed: false);
 
-      // انتظر SnackBar
+      // انتظر SnackBar - نفس النهج المستخدم في الاختبار الناجح
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
       await tester.pump(const Duration(milliseconds: 100));

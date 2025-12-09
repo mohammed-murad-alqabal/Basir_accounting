@@ -86,98 +86,99 @@ class PdfService {
   }
 
   pw.Widget _buildHeader(Invoice invoice, pw.Font font) => pw.Row(
-    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-    children: [
-      pw.Text(
-        'فاتورة ضريبية',
-        style: pw.TextStyle(
-          font: font,
-          fontSize: 24,
-          fontWeight: pw.FontWeight.bold,
-          color: PdfColors.blue800,
-        ),
-      ),
-      pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.end,
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text(
-            'رقم الفاتورة: ${invoice.id}',
-            style: pw.TextStyle(font: font, fontSize: 12),
+            'فاتورة ضريبية',
+            style: pw.TextStyle(
+              font: font,
+              fontSize: 24,
+              fontWeight: pw.FontWeight.bold,
+              color: PdfColors.blue800,
+            ),
           ),
-          pw.Text(
-            'تاريخ الإصدار: '
-            '${invoice.issuedDate.toLocal().toString().split(' ')[0]}',
-            style: pw.TextStyle(font: font, fontSize: 12),
-          ),
-          pw.Text(
-            'تاريخ الاستحقاق: '
-            '${invoice.dueDate.toLocal().toString().split(' ')[0]}',
-            style: pw.TextStyle(font: font, fontSize: 12),
+          pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.end,
+            children: [
+              pw.Text(
+                'رقم الفاتورة: ${invoice.id}',
+                style: pw.TextStyle(font: font, fontSize: 12),
+              ),
+              pw.Text(
+                'تاريخ الإصدار: '
+                '${invoice.issuedDate.toLocal().toString().split(' ')[0]}',
+                style: pw.TextStyle(font: font, fontSize: 12),
+              ),
+              pw.Text(
+                'تاريخ الاستحقاق: '
+                '${invoice.dueDate.toLocal().toString().split(' ')[0]}',
+                style: pw.TextStyle(font: font, fontSize: 12),
+              ),
+            ],
           ),
         ],
-      ),
-    ],
-  );
+      );
 
   pw.Widget _buildCustomerAndVendorDetails(
     Invoice invoice,
     Customer customer,
     pw.Font font,
-  ) => pw.Row(
-    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-    children: [
-      // تفاصيل البائع (افتراضية لـ MVP)
-      pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
+  ) =>
+      pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
-          pw.Text(
-            'من:',
-            style: pw.TextStyle(font: font, fontWeight: pw.FontWeight.bold),
+          // تفاصيل البائع (افتراضية لـ MVP)
+          pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              pw.Text(
+                'من:',
+                style: pw.TextStyle(font: font, fontWeight: pw.FontWeight.bold),
+              ),
+              pw.Text('بصير MVP', style: pw.TextStyle(font: font)),
+              pw.Text(
+                'العنوان: الرياض، المملكة العربية السعودية',
+                style: pw.TextStyle(font: font),
+              ),
+              pw.Text(
+                'البريد الإلكتروني: info@basser.com',
+                style: pw.TextStyle(font: font),
+              ),
+              pw.Text(
+                'الرقم الضريبي: 300000000000003',
+                style: pw.TextStyle(font: font),
+              ),
+            ],
           ),
-          pw.Text('بصير MVP', style: pw.TextStyle(font: font)),
-          pw.Text(
-            'العنوان: الرياض، المملكة العربية السعودية',
-            style: pw.TextStyle(font: font),
-          ),
-          pw.Text(
-            'البريد الإلكتروني: info@basser.com',
-            style: pw.TextStyle(font: font),
-          ),
-          pw.Text(
-            'الرقم الضريبي: 300000000000003',
-            style: pw.TextStyle(font: font),
-          ),
-        ],
-      ),
 
-      // تفاصيل العميل
-      pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          pw.Text(
-            'إلى:',
-            style: pw.TextStyle(font: font, fontWeight: pw.FontWeight.bold),
+          // تفاصيل العميل
+          pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              pw.Text(
+                'إلى:',
+                style: pw.TextStyle(font: font, fontWeight: pw.FontWeight.bold),
+              ),
+              pw.Text(customer.name, style: pw.TextStyle(font: font)),
+              if (customer.address != null)
+                pw.Text(
+                  'العنوان: ${customer.address}',
+                  style: pw.TextStyle(font: font),
+                ),
+              if (customer.email != null)
+                pw.Text(
+                  'البريد الإلكتروني: ${customer.email}',
+                  style: pw.TextStyle(font: font),
+                ),
+              if (customer.phone != null)
+                pw.Text(
+                  'الهاتف: ${customer.phone}',
+                  style: pw.TextStyle(font: font),
+                ),
+            ],
           ),
-          pw.Text(customer.name, style: pw.TextStyle(font: font)),
-          if (customer.address != null)
-            pw.Text(
-              'العنوان: ${customer.address}',
-              style: pw.TextStyle(font: font),
-            ),
-          if (customer.email != null)
-            pw.Text(
-              'البريد الإلكتروني: ${customer.email}',
-              style: pw.TextStyle(font: font),
-            ),
-          if (customer.phone != null)
-            pw.Text(
-              'الهاتف: ${customer.phone}',
-              style: pw.TextStyle(font: font),
-            ),
         ],
-      ),
-    ],
-  );
+      );
 
   pw.Widget _buildItemsTable(Invoice invoice, pw.Font font) {
     const tableHeaders = ['الإجمالي', 'الضريبة', 'السعر', 'الكمية', 'الوصف'];
@@ -226,90 +227,89 @@ class PdfService {
   }
 
   pw.Widget _buildTotals(Invoice invoice, pw.Font font) => pw.Row(
-    mainAxisAlignment: pw.MainAxisAlignment.end,
-    children: [
-      pw.Container(
-        width: 250,
-        child: pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.end,
-          children: [
-            _buildTotalRow('الإجمالي الفرعي:', invoice.subtotal, font),
-            _buildTotalRow(
-              'الضريبة (${(invoice.taxRate * 100).toStringAsFixed(0)}%):',
-              invoice.taxTotal,
-              font,
+        mainAxisAlignment: pw.MainAxisAlignment.end,
+        children: [
+          pw.Container(
+            width: 250,
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.end,
+              children: [
+                _buildTotalRow('الإجمالي الفرعي:', invoice.subtotal, font),
+                _buildTotalRow(
+                  'الضريبة (${(invoice.taxRate * 100).toStringAsFixed(0)}%):',
+                  invoice.taxTotal,
+                  font,
+                ),
+                pw.Divider(color: PdfColors.grey500),
+                _buildTotalRow(
+                  'الإجمالي الكلي:',
+                  invoice.grandTotal,
+                  font,
+                  isGrandTotal: true,
+                ),
+              ],
             ),
-            pw.Divider(color: PdfColors.grey500),
-            _buildTotalRow(
-              'الإجمالي الكلي:',
-              invoice.grandTotal,
-              font,
-              isGrandTotal: true,
-            ),
-          ],
-        ),
-      ),
-    ],
-  );
+          ),
+        ],
+      );
 
   pw.Widget _buildTotalRow(
     String label,
     double amount,
     pw.Font font, {
     bool isGrandTotal = false,
-  }) => pw.Padding(
-    padding: const pw.EdgeInsets.symmetric(vertical: 4),
-    child: pw.Row(
-      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-      children: [
-        pw.Text(
-          '${amount.toStringAsFixed(2)} ر.س',
-          style: pw.TextStyle(
-            font: font,
-            fontWeight: isGrandTotal
-                ? pw.FontWeight.bold
-                : pw.FontWeight.normal,
-            fontSize: isGrandTotal ? 14 : 12,
-          ),
+  }) =>
+      pw.Padding(
+        padding: const pw.EdgeInsets.symmetric(vertical: 4),
+        child: pw.Row(
+          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+          children: [
+            pw.Text(
+              '${amount.toStringAsFixed(2)} ر.س',
+              style: pw.TextStyle(
+                font: font,
+                fontWeight:
+                    isGrandTotal ? pw.FontWeight.bold : pw.FontWeight.normal,
+                fontSize: isGrandTotal ? 14 : 12,
+              ),
+            ),
+            pw.Text(
+              label,
+              style: pw.TextStyle(
+                font: font,
+                fontWeight:
+                    isGrandTotal ? pw.FontWeight.bold : pw.FontWeight.normal,
+                fontSize: isGrandTotal ? 14 : 12,
+              ),
+            ),
+          ],
         ),
-        pw.Text(
-          label,
-          style: pw.TextStyle(
-            font: font,
-            fontWeight: isGrandTotal
-                ? pw.FontWeight.bold
-                : pw.FontWeight.normal,
-            fontSize: isGrandTotal ? 14 : 12,
-          ),
-        ),
-      ],
-    ),
-  );
+      );
 
   pw.Widget _buildFooter(Invoice invoice, pw.Font font) => pw.Column(
-    crossAxisAlignment: pw.CrossAxisAlignment.start,
-    children: [
-      if (invoice.notes != null && invoice.notes!.isNotEmpty)
-        pw.Text(
-          'ملاحظات:',
-          style: pw.TextStyle(font: font, fontWeight: pw.FontWeight.bold),
-        ),
-      if (invoice.notes != null && invoice.notes!.isNotEmpty)
-        pw.Text(invoice.notes!, style: pw.TextStyle(font: font)),
-      pw.SizedBox(height: 20),
-      pw.Center(
-        child: pw.Text(
-          'شكرًا لتعاملك معنا. '
-          'هذه الفاتورة تم إنشاؤها بواسطة تطبيق بصير MVP.',
-          style: pw.TextStyle(
-            font: font,
-            fontSize: 10,
-            color: PdfColors.grey600,
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          if (invoice.notes != null && invoice.notes!.isNotEmpty)
+            pw.Text(
+              'ملاحظات:',
+              style: pw.TextStyle(font: font, fontWeight: pw.FontWeight.bold),
+            ),
+          if (invoice.notes != null && invoice.notes!.isNotEmpty)
+            pw.Text(invoice.notes!, style: pw.TextStyle(font: font)),
+          pw.SizedBox(height: 20),
+          pw.Center(
+            child: pw.Text(
+              'شكرًا لتعاملك معنا. '
+              'هذه الفاتورة تم إنشاؤها بواسطة تطبيق بصير MVP.',
+              style: pw.TextStyle(
+                font: font,
+                fontSize: 10,
+                color: PdfColors.grey600,
+              ),
+            ),
           ),
-        ),
-      ),
-    ],
-  );
+        ],
+      );
 
   /// وظيفة مساعدة لطباعة الفاتورة مباشرة
   Future<void> printInvoice(Invoice invoice, Customer customer) async {

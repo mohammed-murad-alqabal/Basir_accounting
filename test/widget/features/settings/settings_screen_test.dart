@@ -18,9 +18,9 @@ void main() {
     });
 
     Widget createTestWidget() => UncontrolledProviderScope(
-      container: container,
-      child: const MaterialApp(home: SettingsScreen()),
-    );
+          container: container,
+          child: const MaterialApp(home: SettingsScreen()),
+        );
 
     group('Basic Display', () {
       testWidgets('should display app bar with title', (tester) async {

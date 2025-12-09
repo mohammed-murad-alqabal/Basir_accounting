@@ -28,9 +28,9 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
     try {
       final models = await isar.invoiceModels.where().findAll();
       final model = models.cast<InvoiceModel?>().firstWhere(
-        (m) => m?.invoiceId == id,
-        orElse: () => null,
-      );
+            (m) => m?.invoiceId == id,
+            orElse: () => null,
+          );
       return model?.toEntity();
     } catch (e) {
       throw Exception('خطأ في جلب الفاتورة: $e');
@@ -78,9 +78,9 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
         // البحث عن الفاتورة الموجودة
         final models = await isar.invoiceModels.where().findAll();
         final existingModel = models.cast<InvoiceModel?>().firstWhere(
-          (m) => m?.invoiceId == invoice.id,
-          orElse: () => null,
-        );
+              (m) => m?.invoiceId == invoice.id,
+              orElse: () => null,
+            );
 
         if (existingModel == null) {
           throw Exception('الفاتورة غير موجودة');
@@ -102,9 +102,9 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
       await isar.writeTxn(() async {
         final models = await isar.invoiceModels.where().findAll();
         final model = models.cast<InvoiceModel?>().firstWhere(
-          (m) => m?.invoiceId == id,
-          orElse: () => null,
-        );
+              (m) => m?.invoiceId == id,
+              orElse: () => null,
+            );
         if (model != null) {
           await isar.invoiceModels.delete(model.id);
         }
@@ -130,13 +130,11 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
     try {
       final allInvoices = await getAllInvoices();
 
-      final paidInvoices = allInvoices
-          .where((invoice) => invoice.status == 'paid')
-          .toList();
+      final paidInvoices =
+          allInvoices.where((invoice) => invoice.status == 'paid').toList();
 
-      final overdueInvoices = allInvoices
-          .where((invoice) => invoice.status == 'overdue')
-          .toList();
+      final overdueInvoices =
+          allInvoices.where((invoice) => invoice.status == 'overdue').toList();
 
       final totalRevenue = allInvoices.fold<double>(
         0,

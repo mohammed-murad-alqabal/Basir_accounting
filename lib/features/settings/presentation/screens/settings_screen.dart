@@ -22,104 +22,106 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.background,
-    appBar: const AppSimpleAppBar(title: 'الإعدادات'),
-    body: SingleChildScrollView(
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // قسم الحساب
-          _buildSectionTitle('الحساب'),
-          const SizedBox(height: AppSpacing.md),
-          AppListCard(
-            title: 'تعديل بيانات الحساب',
-            subtitle: 'غيّر اسم المستخدم وكلمة المرور',
-            leading: const Icon(Icons.person, color: AppColors.primary),
-            onTap: _handleEditAccount,
-          ),
-          const SizedBox(height: AppSpacing.lg),
-
-          // قسم الإشعارات
-          _buildSectionTitle('الإشعارات'),
-          const SizedBox(height: AppSpacing.md),
-          AppCard(
-            child: SwitchListTile(
-              title: const ResponsiveText('تفعيل الإشعارات', maxLines: 1),
-              subtitle: const ResponsiveText(
-                'استقبل إشعارات الفواتير المتأخرة',
-                maxLines: 2,
+        backgroundColor: AppColors.background,
+        appBar: const AppSimpleAppBar(title: 'الإعدادات'),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // قسم الحساب
+              _buildSectionTitle('الحساب'),
+              const SizedBox(height: AppSpacing.md),
+              AppListCard(
+                title: 'تعديل بيانات الحساب',
+                subtitle: 'غيّر اسم المستخدم وكلمة المرور',
+                leading: const Icon(Icons.person, color: AppColors.primary),
+                onTap: _handleEditAccount,
               ),
-              value: _notificationsEnabled,
-              onChanged: (value) {
-                setState(() => _notificationsEnabled = value);
-              },
-            ),
-          ),
-          const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: AppSpacing.lg),
 
-          // قسم المظهر
-          _buildSectionTitle('المظهر'),
-          const SizedBox(height: AppSpacing.md),
-          AppCard(
-            child: SwitchListTile(
-              title: const ResponsiveText('الوضع الليلي', maxLines: 1),
-              subtitle: const ResponsiveText(
-                'استخدم الوضع الليلي للعيون',
-                maxLines: 2,
+              // قسم الإشعارات
+              _buildSectionTitle('الإشعارات'),
+              const SizedBox(height: AppSpacing.md),
+              AppCard(
+                child: SwitchListTile(
+                  title: const ResponsiveText('تفعيل الإشعارات', maxLines: 1),
+                  subtitle: const ResponsiveText(
+                    'استقبل إشعارات الفواتير المتأخرة',
+                    maxLines: 2,
+                  ),
+                  value: _notificationsEnabled,
+                  onChanged: (value) {
+                    setState(() => _notificationsEnabled = value);
+                  },
+                ),
               ),
-              value: ref.watch(isDarkModeProvider),
-              onChanged: (value) {
-                unawaited(ref.read(themeProvider.notifier).toggleTheme());
-              },
-            ),
-          ),
-          const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: AppSpacing.lg),
 
-          // قسم المساعدة
-          _buildSectionTitle('المساعدة والدعم'),
-          const SizedBox(height: AppSpacing.md),
-          AppListCard(
-            title: 'حول التطبيق',
-            subtitle: 'الإصدار 1.0.0',
-            leading: const Icon(Icons.info, color: AppColors.primary),
-            onTap: _showAboutDialog,
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          AppListCard(
-            title: 'سياسة الخصوصية',
-            subtitle: 'اقرأ سياسة الخصوصية الخاصة بنا',
-            leading: const Icon(Icons.privacy_tip, color: AppColors.primary),
-            onTap: _handlePrivacyPolicy,
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          AppListCard(
-            title: 'شروط الخدمة',
-            subtitle: 'اقرأ شروط الخدمة الخاصة بنا',
-            leading: const Icon(Icons.description, color: AppColors.primary),
-            onTap: _handleTermsOfService,
-          ),
-          const SizedBox(height: AppSpacing.xl),
+              // قسم المظهر
+              _buildSectionTitle('المظهر'),
+              const SizedBox(height: AppSpacing.md),
+              AppCard(
+                child: SwitchListTile(
+                  title: const ResponsiveText('الوضع الليلي', maxLines: 1),
+                  subtitle: const ResponsiveText(
+                    'استخدم الوضع الليلي للعيون',
+                    maxLines: 2,
+                  ),
+                  value: ref.watch(isDarkModeProvider),
+                  onChanged: (value) {
+                    unawaited(ref.read(themeProvider.notifier).toggleTheme());
+                  },
+                ),
+              ),
+              const SizedBox(height: AppSpacing.lg),
 
-          // زر تسجيل الخروج
-          AppPrimaryButton(
-            label: 'تسجيل الخروج',
-            onPressed: _showLogoutDialog,
-            width: double.infinity,
+              // قسم المساعدة
+              _buildSectionTitle('المساعدة والدعم'),
+              const SizedBox(height: AppSpacing.md),
+              AppListCard(
+                title: 'حول التطبيق',
+                subtitle: 'الإصدار 1.0.0',
+                leading: const Icon(Icons.info, color: AppColors.primary),
+                onTap: _showAboutDialog,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              AppListCard(
+                title: 'سياسة الخصوصية',
+                subtitle: 'اقرأ سياسة الخصوصية الخاصة بنا',
+                leading:
+                    const Icon(Icons.privacy_tip, color: AppColors.primary),
+                onTap: _handlePrivacyPolicy,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              AppListCard(
+                title: 'شروط الخدمة',
+                subtitle: 'اقرأ شروط الخدمة الخاصة بنا',
+                leading:
+                    const Icon(Icons.description, color: AppColors.primary),
+                onTap: _handleTermsOfService,
+              ),
+              const SizedBox(height: AppSpacing.xl),
+
+              // زر تسجيل الخروج
+              AppPrimaryButton(
+                label: 'تسجيل الخروج',
+                onPressed: _showLogoutDialog,
+                width: double.infinity,
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   Widget _buildSectionTitle(String title) => Text(
-    title,
-    style: const TextStyle(
-      fontSize: AppTypography.titleMedium,
-      fontWeight: FontWeight.w600,
-      color: AppColors.textPrimary,
-    ),
-  );
+        title,
+        style: const TextStyle(
+          fontSize: AppTypography.titleMedium,
+          fontWeight: FontWeight.w600,
+          color: AppColors.textPrimary,
+        ),
+      );
 
   /// معالج تعديل بيانات الحساب
   void _handleEditAccount() {

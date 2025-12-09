@@ -77,9 +77,8 @@ final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
 
     // تطبيق فلتر الحالة
     if (filterStatus != 'الكل') {
-      filtered = filtered
-          .where((invoice) => invoice.status == filterStatus)
-          .toList();
+      filtered =
+          filtered.where((invoice) => invoice.status == filterStatus).toList();
     }
 
     // تطبيق البحث

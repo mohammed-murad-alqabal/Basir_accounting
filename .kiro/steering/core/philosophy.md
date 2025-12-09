@@ -24,7 +24,7 @@
 ### 2. **الأمان أولاً (Security First)**
 
 - لا تنازل عن الأمان في أي مرحلة
-- راجع: `.kiro/steering/reference/full-standards.md#security`
+- راجع: `.kiro/reference/full-standards.md#security`
 
 ### 3. **Spec-Driven Development**
 
@@ -41,7 +41,7 @@
 ### 5. **الجودة قبل السرعة**
 
 - كود نظيف ومختبر (70%+ coverage)
-- اتباع المعايير في `.kiro/steering/standards/`
+- اتباع المعايير في `.kiro/standards/`
 
 ### 6. **الإنجليزية للكود (ENGLISH FOR CODE)** ⭐
 
@@ -114,4 +114,4 @@
 
 ---
 
-للتفاصيل الكاملة: `.kiro/steering/reference/full-standards.md`
+للتفاصيل الكاملة: `.kiro/reference/full-standards.md`

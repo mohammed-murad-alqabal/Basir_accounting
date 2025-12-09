@@ -238,29 +238,29 @@ class AppTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextButton(
-    onPressed: onPressed,
-    style: TextButton.styleFrom(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm + 2, // زيادة padding
-      ),
-      textStyle: TextStyle(
-        fontSize: fontSize,
-        fontWeight: FontWeight.w600,
-        height: 1.5, // زيادة line-height
-      ),
-    ),
-    child: ResponsiveText(
-      label,
-      style: TextStyle(
-        color: color,
-        fontSize: fontSize,
-        fontWeight: FontWeight.w600,
-        height: 1.5, // زيادة line-height
-      ),
-      maxLines: 2, // السماح بسطرين
-      overflow: TextOverflow.visible, // عدم قص النص
-      textAlign: TextAlign.center,
-    ),
-  );
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.sm + 2, // زيادة padding
+          ),
+          textStyle: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.w600,
+            height: 1.5, // زيادة line-height
+          ),
+        ),
+        child: ResponsiveText(
+          label,
+          style: TextStyle(
+            color: color,
+            fontSize: fontSize,
+            fontWeight: FontWeight.w600,
+            height: 1.5, // زيادة line-height
+          ),
+          maxLines: 2, // السماح بسطرين
+          overflow: TextOverflow.visible, // عدم قص النص
+          textAlign: TextAlign.center,
+        ),
+      );
 }

@@ -25,9 +25,9 @@ class BasserLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CustomPaint(
-    size: Size(size, size),
-    painter: _BasserLogoPainter(color: color),
-  );
+        size: Size(size, size),
+        painter: _BasserLogoPainter(color: color),
+      );
 }
 
 /// رسام شعار بصير المخصص
@@ -129,9 +129,9 @@ class BasserIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CustomPaint(
-    size: Size(size, size),
-    painter: _BasserIconPainter(color: color),
-  );
+        size: Size(size, size),
+        painter: _BasserIconPainter(color: color),
+      );
 }
 
 /// رسام أيقونة بصير المبسطة

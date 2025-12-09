@@ -369,9 +369,8 @@ class AuthService {
       }
 
       // التحقق من كلمة المرور القديمة
-      final oldPasswordHash = sha256
-          .convert(utf8.encode(oldPassword))
-          .toString();
+      final oldPasswordHash =
+          sha256.convert(utf8.encode(oldPassword)).toString();
       if (storedPasswordHash != oldPasswordHash) {
         throw Exception('كلمة المرور القديمة غير صحيحة');
       }
@@ -382,9 +381,8 @@ class AuthService {
       }
 
       // تشفير وحفظ كلمة المرور الجديدة
-      final newPasswordHash = sha256
-          .convert(utf8.encode(newPassword))
-          .toString();
+      final newPasswordHash =
+          sha256.convert(utf8.encode(newPassword)).toString();
       await secureStorage.write(
         key: StorageKeys.passwordHash,
         value: newPasswordHash,

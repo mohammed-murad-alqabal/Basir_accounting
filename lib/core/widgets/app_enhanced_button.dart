@@ -83,8 +83,7 @@ class AppEnhancedButton extends StatelessWidget {
     final fontMetrics = AppFontMetrics.cairo(_getFontSize());
 
     // حساب الارتفاع الأدنى المطلوب
-    final calculatedMinHeight =
-        minHeight ??
+    final calculatedMinHeight = minHeight ??
         fontMetrics.calculateMinButtonHeight(textScaleFactor: textScaleFactor);
 
     // حساب padding الرأسي
@@ -134,32 +133,32 @@ class AppEnhancedButton extends StatelessWidget {
 
   /// بناء widget النص
   Widget _buildText(BuildContext context, AppFontMetrics fontMetrics) => Text(
-    text,
-    textAlign: TextAlign.center,
-    textDirection: TextDirection.rtl,
-    style: fontMetrics.toTextStyle(
-      fontWeight: FontWeight.w600,
-      color: _getTextColor(context),
-    ),
-    // السماح بالتفاف النص على عدة أسطر
-    softWrap: true,
-    // عدم قص النص
-    overflow: TextOverflow.visible,
-  );
+        text,
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.rtl,
+        style: fontMetrics.toTextStyle(
+          fontWeight: FontWeight.w600,
+          color: _getTextColor(context),
+        ),
+        // السماح بالتفاف النص على عدة أسطر
+        softWrap: true,
+        // عدم قص النص
+        overflow: TextOverflow.visible,
+      );
 
   /// بناء مؤشر التحميل
   Widget _buildLoadingIndicator() => SizedBox(
-    width: 20,
-    height: 20,
-    child: CircularProgressIndicator(
-      strokeWidth: 2,
-      valueColor: AlwaysStoppedAnimation<Color>(
-        type == AppEnhancedButtonType.primary
-            ? Colors.white
-            : AppColors.primary,
-      ),
-    ),
-  );
+        width: 20,
+        height: 20,
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+          valueColor: AlwaysStoppedAnimation<Color>(
+            type == AppEnhancedButtonType.primary
+                ? Colors.white
+                : AppColors.primary,
+          ),
+        ),
+      );
 
   /// الحصول على ButtonStyle حسب نوع الزر
   ButtonStyle _getButtonStyle(
@@ -199,19 +198,20 @@ class AppEnhancedButton extends StatelessWidget {
     double minHeight,
     double verticalPadding,
     double horizontalPadding,
-  ) => ElevatedButton.styleFrom(
-    backgroundColor: AppColors.primary,
-    foregroundColor: AppColors.onPrimary,
-    disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.5),
-    disabledForegroundColor: AppColors.onPrimary.withValues(alpha: 0.5),
-    minimumSize: Size(88, minHeight),
-    padding: EdgeInsets.symmetric(
-      vertical: verticalPadding,
-      horizontal: horizontalPadding,
-    ),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-    elevation: 2,
-  );
+  ) =>
+      ElevatedButton.styleFrom(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.onPrimary,
+        disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.5),
+        disabledForegroundColor: AppColors.onPrimary.withValues(alpha: 0.5),
+        minimumSize: Size(88, minHeight),
+        padding: EdgeInsets.symmetric(
+          vertical: verticalPadding,
+          horizontal: horizontalPadding,
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        elevation: 2,
+      );
 
   /// Secondary button style
   ButtonStyle _getSecondaryButtonStyle(
@@ -219,19 +219,20 @@ class AppEnhancedButton extends StatelessWidget {
     double minHeight,
     double verticalPadding,
     double horizontalPadding,
-  ) => ElevatedButton.styleFrom(
-    backgroundColor: AppColors.secondary,
-    foregroundColor: AppColors.onSecondary,
-    disabledBackgroundColor: AppColors.secondary.withValues(alpha: 0.5),
-    disabledForegroundColor: AppColors.onSecondary.withValues(alpha: 0.5),
-    minimumSize: Size(88, minHeight),
-    padding: EdgeInsets.symmetric(
-      vertical: verticalPadding,
-      horizontal: horizontalPadding,
-    ),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-    elevation: 1,
-  );
+  ) =>
+      ElevatedButton.styleFrom(
+        backgroundColor: AppColors.secondary,
+        foregroundColor: AppColors.onSecondary,
+        disabledBackgroundColor: AppColors.secondary.withValues(alpha: 0.5),
+        disabledForegroundColor: AppColors.onSecondary.withValues(alpha: 0.5),
+        minimumSize: Size(88, minHeight),
+        padding: EdgeInsets.symmetric(
+          vertical: verticalPadding,
+          horizontal: horizontalPadding,
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        elevation: 1,
+      );
 
   /// Text button style
   ButtonStyle _getTextButtonStyle(
@@ -239,18 +240,19 @@ class AppEnhancedButton extends StatelessWidget {
     double minHeight,
     double verticalPadding,
     double horizontalPadding,
-  ) => ElevatedButton.styleFrom(
-    backgroundColor: Colors.transparent,
-    foregroundColor: AppColors.primary,
-    disabledForegroundColor: AppColors.primary.withValues(alpha: 0.5),
-    minimumSize: Size(88, minHeight),
-    padding: EdgeInsets.symmetric(
-      vertical: verticalPadding,
-      horizontal: horizontalPadding,
-    ),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-    elevation: 0,
-  );
+  ) =>
+      ElevatedButton.styleFrom(
+        backgroundColor: Colors.transparent,
+        foregroundColor: AppColors.primary,
+        disabledForegroundColor: AppColors.primary.withValues(alpha: 0.5),
+        minimumSize: Size(88, minHeight),
+        padding: EdgeInsets.symmetric(
+          vertical: verticalPadding,
+          horizontal: horizontalPadding,
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        elevation: 0,
+      );
 
   /// الحصول على حجم الخط حسب نوع الزر
   double _getFontSize() {

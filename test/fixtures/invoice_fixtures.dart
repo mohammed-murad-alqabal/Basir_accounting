@@ -177,24 +177,24 @@ class InvoiceFixtures {
 
   /// إنشاء فاتورة ديناميكية للاختبار
   static Invoice createInvoice(int index, {String? status}) => Invoice(
-    id: 'invoice-$index',
-    customerId: 'customer-$index',
-    customerName: 'عميل رقم $index',
-    issuedDate: DateTime.now(),
-    dueDate: DateTime.now().add(const Duration(days: 30)),
-    status: status ?? 'draft',
-    items: [
-      InvoiceItem(
-        id: 'item-$index',
-        name: 'منتج رقم $index',
-        quantity: 1,
-        price: 100.0 * index,
-      ),
-    ],
-    taxRate: 0.15,
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-  );
+        id: 'invoice-$index',
+        customerId: 'customer-$index',
+        customerName: 'عميل رقم $index',
+        issuedDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 30)),
+        status: status ?? 'draft',
+        items: [
+          InvoiceItem(
+            id: 'item-$index',
+            name: 'منتج رقم $index',
+            quantity: 1,
+            price: 100.0 * index,
+          ),
+        ],
+        taxRate: 0.15,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
 
   /// إنشاء عدة فواتير ديناميكية
   static List<Invoice> createInvoices(int count) =>

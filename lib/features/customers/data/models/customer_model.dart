@@ -129,12 +129,12 @@ class CustomerModel {
   ///
   /// **Returns:** كيان العميل (Customer Entity)
   Customer toEntity() => Customer(
-    id: customerId,
-    name: name,
-    phone: phone,
-    email: email,
-    address: address,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
-  );
+        id: customerId,
+        name: name,
+        phone: phone,
+        email: email,
+        address: address,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+      );
 }

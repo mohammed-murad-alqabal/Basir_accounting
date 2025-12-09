@@ -175,13 +175,13 @@ class ResponsiveHeadline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ResponsiveText(
-    text,
-    style: Theme.of(context).textTheme.headlineLarge,
-    maxLines: maxLines,
-    textAlign: textAlign,
-    color: color,
-    autoScale: true,
-  );
+        text,
+        style: Theme.of(context).textTheme.headlineLarge,
+        maxLines: maxLines,
+        textAlign: textAlign,
+        color: color,
+        autoScale: true,
+      );
 }
 
 /// Widget للعناوين الفرعية مع معالجة overflow تلقائية
@@ -211,12 +211,12 @@ class ResponsiveTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ResponsiveText(
-    text,
-    style: Theme.of(context).textTheme.titleLarge,
-    maxLines: maxLines,
-    textAlign: textAlign,
-    color: color,
-  );
+        text,
+        style: Theme.of(context).textTheme.titleLarge,
+        maxLines: maxLines,
+        textAlign: textAlign,
+        color: color,
+      );
 }
 
 /// Widget للنصوص الأساسية مع معالجة overflow تلقائية
@@ -246,12 +246,12 @@ class ResponsiveBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ResponsiveText(
-    text,
-    style: Theme.of(context).textTheme.bodyMedium,
-    maxLines: maxLines,
-    textAlign: textAlign,
-    color: color,
-  );
+        text,
+        style: Theme.of(context).textTheme.bodyMedium,
+        maxLines: maxLines,
+        textAlign: textAlign,
+        color: color,
+      );
 }
 
 /// Widget للتسميات مع معالجة overflow تلقائية
@@ -281,12 +281,12 @@ class ResponsiveLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ResponsiveText(
-    text,
-    style: Theme.of(context).textTheme.labelLarge,
-    maxLines: maxLines,
-    textAlign: textAlign,
-    color: color,
-  );
+        text,
+        style: Theme.of(context).textTheme.labelLarge,
+        maxLines: maxLines,
+        textAlign: textAlign,
+        color: color,
+      );
 }
 
 /// Widget للنصوص الصغيرة (Caption) مع معالجة overflow تلقائية
@@ -316,10 +316,10 @@ class ResponsiveCaption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ResponsiveText(
-    text,
-    style: Theme.of(context).textTheme.bodySmall,
-    maxLines: maxLines,
-    textAlign: textAlign,
-    color: color,
-  );
+        text,
+        style: Theme.of(context).textTheme.bodySmall,
+        maxLines: maxLines,
+        textAlign: textAlign,
+        color: color,
+      );
 }

@@ -55,13 +55,13 @@ class AppCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-    onTap: onTap,
-    child: Card(
-      color: backgroundColor,
-      elevation: elevation,
-      child: Padding(padding: padding ?? EdgeInsets.zero, child: child),
-    ),
-  );
+        onTap: onTap,
+        child: Card(
+          color: backgroundColor,
+          elevation: elevation,
+          child: Padding(padding: padding ?? EdgeInsets.zero, child: child),
+        ),
+      );
 }
 
 /// بطاقة قائمة للعملاء والفواتير
@@ -130,63 +130,63 @@ class AppListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-    onTap: onTap,
-    onLongPress: onLongPress,
-    child: Card(
-      color: backgroundColor,
-      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Row(
-          children: [
-            if (leading != null) ...[
-              leading!,
-              const SizedBox(width: AppSpacing.md),
-            ],
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+        onTap: onTap,
+        onLongPress: onLongPress,
+        child: Card(
+          color: backgroundColor,
+          margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Row(
+              children: [
+                if (leading != null) ...[
+                  leading!,
+                  const SizedBox(width: AppSpacing.md),
+                ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ResponsiveText(
+                        title,
+                        style: const TextStyle(
+                          fontSize: AppTypography.titleSmall,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textPrimary,
+                        ),
+                        maxLines: 1,
+                      ),
+                      if (subtitle != null) ...[
+                        const SizedBox(height: AppSpacing.xs),
+                        ResponsiveText(
+                          subtitle!,
+                          style: const TextStyle(
+                            fontSize: AppTypography.bodySmall,
+                            color: AppColors.textSecondary,
+                          ),
+                          maxLines: 2,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                if (trailing != null) ...[
+                  const SizedBox(width: AppSpacing.md),
                   ResponsiveText(
-                    title,
+                    trailing!,
                     style: const TextStyle(
-                      fontSize: AppTypography.titleSmall,
+                      fontSize: AppTypography.bodyMedium,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: AppColors.primary,
                     ),
                     maxLines: 1,
                   ),
-                  if (subtitle != null) ...[
-                    const SizedBox(height: AppSpacing.xs),
-                    ResponsiveText(
-                      subtitle!,
-                      style: const TextStyle(
-                        fontSize: AppTypography.bodySmall,
-                        color: AppColors.textSecondary,
-                      ),
-                      maxLines: 2,
-                    ),
-                  ],
                 ],
-              ),
+              ],
             ),
-            if (trailing != null) ...[
-              const SizedBox(width: AppSpacing.md),
-              ResponsiveText(
-                trailing!,
-                style: const TextStyle(
-                  fontSize: AppTypography.bodyMedium,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primary,
-                ),
-                maxLines: 1,
-              ),
-            ],
-          ],
+          ),
         ),
-      ),
-    ),
-  );
+      );
 }
 
 /// بطاقة إحصائية
@@ -243,47 +243,47 @@ class AppStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Card(
-    color: backgroundColor,
-    child: Padding(
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: iconColor, size: 26),
-          const SizedBox(height: AppSpacing.xs),
-          Flexible(
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontSize: 10,
-                color: AppColors.textSecondary,
-                fontWeight: FontWeight.w500,
-                height: 1.1,
-              ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Flexible(
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
-                  height: 1.1,
+        color: backgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.sm),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: iconColor, size: 26),
+              const SizedBox(height: AppSpacing.xs),
+              Flexible(
+                child: Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 10,
+                    color: AppColors.textSecondary,
+                    fontWeight: FontWeight.w500,
+                    height: 1.1,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
                 ),
-                maxLines: 1,
-                textAlign: TextAlign.center,
               ),
-            ),
+              const SizedBox(height: AppSpacing.xs),
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    value,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                      height: 1.1,
+                    ),
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 }

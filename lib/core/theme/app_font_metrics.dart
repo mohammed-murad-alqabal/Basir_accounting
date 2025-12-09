@@ -27,30 +27,30 @@ class AppFontMetrics {
   ///
   /// خط Cairo يحتاج line-height أكبر (1.4) لتجنب القص العمودي.
   factory AppFontMetrics.cairo(double fontSize) => AppFontMetrics(
-    fontFamily: 'Cairo',
-    fontSize: fontSize,
-    lineHeight: 1.4, // أعلى من الافتراضي لخط Cairo
-    ascent: 0.85,
-    descent: 0.25,
-  );
+        fontFamily: 'Cairo',
+        fontSize: fontSize,
+        lineHeight: 1.4, // أعلى من الافتراضي لخط Cairo
+        ascent: 0.85,
+        descent: 0.25,
+      );
 
   /// مقاييس خط Roboto الافتراضية.
   factory AppFontMetrics.roboto(double fontSize) => AppFontMetrics(
-    fontFamily: 'Roboto',
-    fontSize: fontSize,
-    lineHeight: 1.3,
-    ascent: 0.75,
-    descent: 0.25,
-  );
+        fontFamily: 'Roboto',
+        fontSize: fontSize,
+        lineHeight: 1.3,
+        ascent: 0.75,
+        descent: 0.25,
+      );
 
   /// مقاييس خط النظام الافتراضية.
   factory AppFontMetrics.system(double fontSize) => AppFontMetrics(
-    fontFamily: 'System',
-    fontSize: fontSize,
-    lineHeight: 1.3,
-    ascent: 0.75,
-    descent: 0.25,
-  );
+        fontFamily: 'System',
+        fontSize: fontSize,
+        lineHeight: 1.3,
+        ascent: 0.75,
+        descent: 0.25,
+      );
 
   /// اسم الخط
   final String fontFamily;
@@ -164,17 +164,16 @@ class AppFontMetrics {
   ///
   /// Returns TextStyle مع line-height صحيح.
   TextStyle toTextStyle({Color? color, FontWeight? fontWeight}) => TextStyle(
-    fontFamily: fontFamily,
-    fontSize: fontSize,
-    height: lineHeight,
-    color: color,
-    fontWeight: fontWeight,
-    fontFamilyFallback: const ['Roboto', 'Arial'],
-  );
+        fontFamily: fontFamily,
+        fontSize: fontSize,
+        height: lineHeight,
+        color: color,
+        fontWeight: fontWeight,
+        fontFamilyFallback: const ['Roboto', 'Arial'],
+      );
 
   @override
-  String toString() =>
-      'AppFontMetrics('
+  String toString() => 'AppFontMetrics('
       'fontFamily: $fontFamily, '
       'fontSize: $fontSize, '
       'lineHeight: $lineHeight, '
