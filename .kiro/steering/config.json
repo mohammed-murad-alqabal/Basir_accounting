@@ -4,6 +4,22 @@
   "description": "تكوين ملفات التوجيه المحسّن",
   "strategy": "hybrid-optimized",
 
+  "⚠️_CRITICAL_WARNING": {
+    "ALERT": "🚨 قبل إضافة أي ملف توجيه جديد، اقرأ هذا التنبيه!",
+    "RULE": "Kiro يحمل جميع ملفات .md في .kiro/steering/ تلقائياً",
+    "CONSEQUENCE": "إضافة ملفات كثيرة = سياق ضخم = بطء شديد",
+    "SOLUTION": "ضع الملفات في المكان الصحيح حسب نوعها",
+    "LOCATIONS": {
+      "core": ".kiro/steering/core/ - فقط للأساسيات المختصرة (<100 سطر)",
+      "standards": ".kiro/standards/ - للمعايير التفصيلية (<500 سطر)",
+      "guides": ".kiro/guides/ - للأدلة الشاملة (<2000 سطر)",
+      "reference": ".kiro/reference/ - للمراجع الكاملة (>2000 سطر)"
+    },
+    "FORBIDDEN": "❌ ممنوع: .kiro/steering/new-file.md",
+    "ALLOWED": "✅ مسموح: .kiro/steering/core/new-file.md (إذا كان مختصر جداً)",
+    "READ_MORE": "راجع .kiro/steering/README.md للتفاصيل الكاملة"
+  },
+
   "core": {
     "description": "الملفات الأساسية - تُحمّل تلقائياً من Kiro",
     "location": ".kiro/steering/core/",
