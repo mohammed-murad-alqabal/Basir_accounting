@@ -2,42 +2,68 @@
   "mcpServers": {
     "git": {
       "command": "uvx",
-      "args": ["mcp-server-git@latest", "--repository", "."],
+      "args": [
+        "mcp-server-git@latest",
+        "--repository",
+        "."
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
-      "autoApprove": ["git_status", "git_log", "git_diff"],
+      "autoApprove": [
+        "git_status",
+        "git_log",
+        "git_diff",
+        "git_diff_unstaged",
+        "git_diff_unstaged",
+        "git_diff_unstaged",
+        "git_diff_unstaged"
+      ],
       "priority": 90
     },
     "fetch": {
       "command": "uvx",
-      "args": ["mcp-server-fetch@latest"],
+      "args": [
+        "mcp-server-fetch@latest"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
-      "autoApprove": ["fetch"],
+      "autoApprove": [
+        "fetch"
+      ],
       "priority": 85
     },
     "sqlite": {
       "command": "uvx",
-      "args": ["mcp-server-sqlite@latest"],
+      "args": [
+        "mcp-server-sqlite@latest"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
-      "autoApprove": ["query", "list_tables"],
+      "autoApprove": [
+        "query",
+        "list_tables"
+      ],
       "priority": 80
     },
     "time": {
       "command": "uvx",
-      "args": ["mcp-server-time@latest"],
+      "args": [
+        "mcp-server-time@latest"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
-      "autoApprove": ["get_current_time", "convert_timezone"],
+      "autoApprove": [
+        "get_current_time",
+        "convert_timezone"
+      ],
       "priority": 75
     }
   }
