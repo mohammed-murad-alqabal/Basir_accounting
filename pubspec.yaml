@@ -35,10 +35,10 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_riverpod: ^2.4.0
+  flutter_riverpod: ^2.6.1
   flutter_secure_storage: ^9.0.0
   flutter_svg: ^2.2.3
-  freezed_annotation: ^2.4.1
+  freezed_annotation: ^2.4.4
   google_fonts: ^6.1.0
   intl: ^0.20.2
   isar: ^3.1.0+1
@@ -47,22 +47,22 @@ dependencies:
   path_provider: ^2.1.5
   pdf: ^3.10.4
   printing: ^5.11.1
-  riverpod_annotation: ^2.3.0
+  riverpod_annotation: ^2.6.1
   url_launcher: ^6.2.2
   uuid: ^4.0.0
 
 dev_dependencies:
   # Dev Dependencies (sorted alphabetically)
-  build_runner: ^2.4.0
-  flutter_launcher_icons: ^0.13.1
+  build_runner: ^2.4.13
+  flutter_launcher_icons: ^0.14.4
   flutter_lints: ^4.0.0
   flutter_native_splash: ^2.3.5
   flutter_test:
     sdk: flutter
-  freezed: ^2.4.5
+  freezed: ^2.5.2
   isar_generator: ^3.1.0+1
   mockito: ^5.4.4
-  riverpod_generator: ^2.3.0
+  riverpod_generator: ^2.4.0
   yaml: ^3.1.2
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
