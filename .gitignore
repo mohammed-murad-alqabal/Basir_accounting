@@ -50,13 +50,6 @@ android/build/
 **/android/.gradle/
 **/android/app/build/
 
-# Android Gradle files
-android/.gradle/
-android/app/build/
-android/build/
-**/android/.gradle/
-**/android/app/build/
-
 # Generated files
 *.g.dart
 *.config.dart
@@ -135,8 +128,6 @@ test_results*.txt
 test_compression_efficiency_*/
 test_results/
 **/test_results/
-test_results/
-**/test_results/
 
 # Error Tracking System - Temporary Log Files
 logs/*.log.tmp
@@ -177,16 +168,13 @@ logs/.processing_*
 .kiro/docs/reports/*_UPDATED.md
 .kiro/docs/reports/*_FINAL.md
 
-# Temporary report files in .kiro/docs/reports/
-.kiro/docs/reports/*_TEMP.md
-.kiro/docs/reports/*_OLD.md
-.kiro/docs/reports/*_UPDATED.md
-.kiro/docs/reports/*_FINAL.md
-
 # Platform specific
 .fvm/
 .flutter-plugins-dependencies
 libisar.so
+*.so
+*.dll
+*.dylib
 
 # Database files
 *.db
@@ -200,12 +188,6 @@ git_fsck_report.txt
 
 # DartDoc generated files
 docs/api/html/
-
-# Temporary files in root (prevent clutter)
-/*.log
-/*.tmp
-/*.temp
-/*.bak
 
 # Temporary files in root (prevent clutter)
 /*.log
