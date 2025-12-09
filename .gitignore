@@ -206,3 +206,9 @@ docs/api/html/
 /*.tmp
 /*.temp
 /*.bak
+
+# Temporary files in root (prevent clutter)
+/*.log
+/*.tmp
+/*.temp
+/*.bak
