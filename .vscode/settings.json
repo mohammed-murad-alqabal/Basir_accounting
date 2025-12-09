@@ -1,6 +1,5 @@
 {
   // Flutter & Dart
-  "dart.flutterSdkPath": "auto",
   "dart.lineLength": 80,
   "dart.enableSdkFormatter": true,
   "dart.previewLsp": true,

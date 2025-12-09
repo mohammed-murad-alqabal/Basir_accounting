@@ -471,6 +471,9 @@ void main() {
         updatedAt: DateTime.now(),
       );
 
+      // إضافة العميل إلى المستودع أولاً
+      await mockRepository.addCustomer(customer);
+
       await tester.pumpWidget(createTestWidget(customer: customer));
       await tester.pumpAndSettle();
 
@@ -483,12 +486,19 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(button, warnIfMissed: false);
 
-      // انتظر SnackBar - نفس النهج المستخدم في الاختبار الناجح
+      // انتظر SnackBar
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
       await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('تم تحديث بيانات العميل بنجاح'), findsOneWidget);
+
+      // تحقق من أن الـ ID لم يتغير
+      final updatedCustomer =
+          await mockRepository.getCustomerById('original-id');
+      expect(updatedCustomer, isNotNull);
+      expect(updatedCustomer!.id, 'original-id');
+      expect(updatedCustomer.name, 'أحمد محمد المحدث');
     });
   });
 

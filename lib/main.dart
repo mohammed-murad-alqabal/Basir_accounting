@@ -191,8 +191,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   ),
                 )
               else
-                const Icon(Icons.error_outline,
-                    size: 48, color: Colors.white70),
+                const Icon(
+                  Icons.error_outline,
+                  size: 48,
+                  color: Colors.white70,
+                ),
               const SizedBox(height: AppSpacing.md),
               Text(
                 _status,

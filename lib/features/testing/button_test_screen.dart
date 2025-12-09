@@ -175,7 +175,9 @@ class ButtonTestScreen extends StatelessWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: AppEnhancedButton(
-                              text: 'موافق', onPressed: () {}),
+                            text: 'موافق',
+                            onPressed: () {},
+                          ),
                         ),
                       ],
                     ),

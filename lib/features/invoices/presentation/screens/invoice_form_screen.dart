@@ -382,8 +382,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                             ),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.delete,
-                                color: AppColors.error),
+                            icon: const Icon(
+                              Icons.delete,
+                              color: AppColors.error,
+                            ),
                             tooltip: 'حذف البند',
                             onPressed: () => _removeItem(index),
                           ),

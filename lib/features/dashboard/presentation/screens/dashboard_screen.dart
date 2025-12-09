@@ -87,10 +87,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'الرئيسية'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.receipt), label: 'الفواتير'),
+              icon: Icon(Icons.receipt),
+              label: 'الفواتير',
+            ),
             BottomNavigationBarItem(icon: Icon(Icons.people), label: 'العملاء'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: 'الإعدادات'),
+              icon: Icon(Icons.settings),
+              label: 'الإعدادات',
+            ),
           ],
         ),
       );
