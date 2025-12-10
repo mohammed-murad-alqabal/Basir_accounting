@@ -1,0 +1,134 @@
+{
+  "version": "3.0",
+  "date": "2025-12-09",
+  "description": "تكوين ملفات التوجيه المحسّن",
+  "strategy": "hybrid-optimized",
+
+  "⚠️_CRITICAL_WARNING": {
+    "ALERT": "🚨 قبل إضافة أي ملف توجيه جديد، اقرأ هذا التنبيه!",
+    "RULE": "Kiro يحمل جميع ملفات .md في .kiro/steering/ تلقائياً",
+    "CONSEQUENCE": "إضافة ملفات كثيرة = سياق ضخم = بطء شديد",
+    "SOLUTION": "ضع الملفات في المكان الصحيح حسب نوعها",
+    "LOCATIONS": {
+      "core": ".kiro/steering/core/ - فقط للأساسيات المختصرة (<100 سطر)",
+      "standards": ".kiro/standards/ - للمعايير التفصيلية (<500 سطر)",
+      "guides": ".kiro/guides/ - للأدلة الشاملة (<2000 سطر)",
+      "reference": ".kiro/reference/ - للمراجع الكاملة (>2000 سطر)"
+    },
+    "FORBIDDEN": "❌ ممنوع: .kiro/steering/new-file.md",
+    "ALLOWED": "✅ مسموح: .kiro/steering/core/new-file.md (إذا كان مختصر جداً)",
+    "READ_MORE": "راجع .kiro/steering/README.md للتفاصيل الكاملة"
+  },
+
+  "core": {
+    "description": "الملفات الأساسية - تُحمّل تلقائياً من Kiro",
+    "location": ".kiro/steering/core/",
+    "autoLoad": true,
+    "files": ["philosophy.md", "quick-reference.md", "team-identity.md"],
+    "estimatedSize": "5KB",
+    "estimatedLines": 160,
+    "contextUsage": "2.5%"
+  },
+
+  "standards": {
+    "description": "المعايير التفصيلية - تُحمّل عند الطلب",
+    "location": ".kiro/standards/",
+    "autoLoad": false,
+    "files": [
+      "naming.md",
+      "code-quality.md",
+      "flutter.md",
+      "arabic.md",
+      "documentation.md",
+      "testing.md"
+    ],
+    "estimatedSize": "30KB",
+    "estimatedLines": 900,
+    "loadWhen": [
+      "عند العمل على كود جديد",
+      "عند المراجعة",
+      "عند الحاجة لمعيار محدد"
+    ]
+  },
+
+  "guides": {
+    "description": "الأدلة الشاملة - تُحمّل عند الطلب",
+    "location": ".kiro/guides/",
+    "autoLoad": false,
+    "files": [
+      "flutter-guide.md",
+      "git-guide.md",
+      "security-guide.md",
+      "testing-guide.md",
+      "deployment-guide.md"
+    ],
+    "estimatedSize": "50KB",
+    "estimatedLines": 1500,
+    "loadWhen": [
+      "عند العمل على Flutter",
+      "عند العمل على Git",
+      "عند مراجعة الأمان",
+      "عند كتابة الاختبارات",
+      "عند التحضير للنشر"
+    ]
+  },
+
+  "reference": {
+    "description": "المراجع الكاملة - تُحمّل عند الطلب الصريح",
+    "location": ".kiro/reference/",
+    "autoLoad": false,
+    "files": [
+      "full-standards.md",
+      "examples.md",
+      "arabic-dictionary.md",
+      "best-practices.md",
+      "strategic-docs.md"
+    ],
+    "estimatedSize": "200KB",
+    "estimatedLines": 6000,
+    "loadWhen": [
+      "عند الطلب الصريح فقط",
+      "للمراجعة التفصيلية",
+      "للبحث عن معلومة محددة"
+    ]
+  },
+
+  "migration": {
+    "date": "2025-12-09",
+    "from": ".kiro/steering/[standards|guides|reference]/",
+    "to": ".kiro/[standards|guides|reference]/",
+    "reason": "فصل التوجيه عن التوثيق لتقليل السياق",
+    "method": "git mv (للحفاظ على التاريخ)",
+    "pathUpdates": [
+      ".kiro/steering/core/philosophy.md",
+      ".kiro/steering/core/quick-reference.md"
+    ]
+  },
+
+  "metrics": {
+    "before": {
+      "totalFiles": 20,
+      "loadedFiles": 20,
+      "totalLines": 6575,
+      "totalSize": "220KB",
+      "contextUsage": "35%",
+      "tokensUsed": "~70K"
+    },
+    "after": {
+      "totalFiles": 20,
+      "loadedFiles": 4,
+      "coreLines": 160,
+      "coreSize": "5KB",
+      "contextUsage": "2.5%",
+      "tokensUsed": "~5K",
+      "improvement": "92%"
+    }
+  },
+
+  "notes": {
+    "kiroLoading": "Kiro يحمل جميع ملفات .md في .kiro/steering/ تلقائياً",
+    "solution": "نقل الملفات غير الأساسية خارج steering/",
+    "result": "تقليل 92% في السياق المحمل",
+    "maintainability": "بنية واضحة وسهلة الصيانة"
+  }
+}

@@ -1,0 +1,191 @@
+name: PR Comment
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  comment:
+    name: تعليق على PR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Run Analysis
+        id: analyze
+        run: |
+          flutter analyze --no-pub > analysis.txt 2>&1 || true
+
+          ERRORS=$(grep -c "error •" analysis.txt || echo "0")
+          WARNINGS=$(grep -c "warning •" analysis.txt || echo "0")
+          INFO=$(grep -c "info •" analysis.txt || echo "0")
+
+          echo "errors=$ERRORS" >> $GITHUB_OUTPUT
+          echo "warnings=$WARNINGS" >> $GITHUB_OUTPUT
+          echo "info=$INFO" >> $GITHUB_OUTPUT
+
+      - name: Run Tests
+        id: tests
+        run: |
+          flutter test --coverage > tests.txt 2>&1 || true
+
+          TOTAL=$(grep -oP '\d+(?= tests? passed)' tests.txt | head -1 || echo "0")
+          PASSED=$(grep -oP '\d+(?= passed)' tests.txt | head -1 || echo "0")
+          FAILED=$(grep -oP '\d+(?= failed)' tests.txt | head -1 || echo "0")
+
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+          echo "passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+
+          # حساب نسبة النجاح
+          if [ "$TOTAL" -gt 0 ]; then
+            SUCCESS_RATE=$(awk "BEGIN {printf \"%.1f\", ($PASSED/$TOTAL)*100}")
+          else
+            SUCCESS_RATE="0.0"
+          fi
+          echo "success_rate=$SUCCESS_RATE" >> $GITHUB_OUTPUT
+
+      - name: Calculate Coverage
+        id: coverage
+        run: |
+          if [ -f "coverage/lcov.info" ]; then
+            LINES_FOUND=$(grep -o "LF:[0-9]*" coverage/lcov.info | cut -d: -f2 | awk '{s+=$1} END {print s}')
+            LINES_HIT=$(grep -o "LH:[0-9]*" coverage/lcov.info | cut -d: -f2 | awk '{s+=$1} END {print s}')
+            
+            if [ "$LINES_FOUND" -gt 0 ]; then
+              COVERAGE=$(awk "BEGIN {printf \"%.1f\", ($LINES_HIT/$LINES_FOUND)*100}")
+            else
+              COVERAGE="0.0"
+            fi
+            
+            echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
+          else
+            echo "coverage=0.0" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Determine Status
+        id: status
+        run: |
+          ERRORS=${{ steps.analyze.outputs.errors }}
+          FAILED=${{ steps.tests.outputs.failed }}
+          COVERAGE=${{ steps.coverage.outputs.coverage }}
+          COVERAGE_INT=$(echo $COVERAGE | cut -d. -f1)
+
+          if [ "$ERRORS" -gt 0 ] || [ "$FAILED" -gt 0 ]; then
+            echo "status=❌ يحتاج إصلاح" >> $GITHUB_OUTPUT
+            echo "emoji=❌" >> $GITHUB_OUTPUT
+          elif [ "$COVERAGE_INT" -lt 70 ]; then
+            echo "status=⚠️ يحتاج تحسين" >> $GITHUB_OUTPUT
+            echo "emoji=⚠️" >> $GITHUB_OUTPUT
+          else
+            echo "status=✅ جاهز للدمج" >> $GITHUB_OUTPUT
+            echo "emoji=✅" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const errors = '${{ steps.analyze.outputs.errors }}';
+            const warnings = '${{ steps.analyze.outputs.warnings }}';
+            const info = '${{ steps.analyze.outputs.info }}';
+            const total = '${{ steps.tests.outputs.total }}';
+            const passed = '${{ steps.tests.outputs.passed }}';
+            const failed = '${{ steps.tests.outputs.failed }}';
+            const successRate = '${{ steps.tests.outputs.success_rate }}';
+            const coverage = '${{ steps.coverage.outputs.coverage }}';
+            const status = '${{ steps.status.outputs.status }}';
+            const emoji = '${{ steps.status.outputs.emoji }}';
+
+            const coverageNum = parseFloat(coverage);
+            let coverageEmoji = '❌';
+            if (coverageNum >= 70) coverageEmoji = '✅';
+            else if (coverageNum >= 50) coverageEmoji = '⚠️';
+
+            let testsEmoji = '✅';
+            if (failed > 0) testsEmoji = '❌';
+            else if (total == 0) testsEmoji = '⚠️';
+
+            const comment = `## ${emoji} تقرير جودة الكود
+
+            **الحالة:** ${status}
+
+            ### 📊 ملخص التحليل
+
+            | المقياس | القيمة | الحالة |
+            |:---|:---:|:---:|
+            | أخطاء | ${errors} | ${errors > 0 ? '❌' : '✅'} |
+            | تحذيرات | ${warnings} | ${warnings > 10 ? '⚠️' : '✅'} |
+            | معلومات | ${info} | ℹ️ |
+
+            ### 🧪 نتائج الاختبارات ${testsEmoji}
+
+            | المقياس | القيمة |
+            |:---|:---:|
+            | إجمالي | ${total} |
+            | نجح | ${passed} ✅ |
+            | فشل | ${failed} ${failed > 0 ? '❌' : ''} |
+            | نسبة النجاح | ${successRate}% |
+
+            ### 📈 التغطية ${coverageEmoji}
+
+            نسبة التغطية: ${coverage}%
+
+            ${coverageNum >= 70 ? '✅ ممتاز! التغطية أعلى من 70%' : ''}
+            ${coverageNum >= 50 && coverageNum < 70 ? '⚠️ جيد، لكن يُنصح بزيادة التغطية إلى 70%+' : ''}
+            ${coverageNum < 50 ? '❌ منخفض! يجب زيادة التغطية' : ''}
+
+            ### 📝 التوصيات
+
+            ${errors > 0 ? '- 🔴 حرج: إصلاح الأخطاء الحرجة قبل الدمج\n' : ''}
+            ${failed > 0 ? '- ❌ اختبارات: إصلاح الاختبارات الفاشلة\n' : ''}
+            ${warnings > 10 ? '- ⚠️ تحذيرات: تقليل عدد التحذيرات\n' : ''}
+            ${coverageNum < 70 ? '- 📊 تغطية: زيادة نسبة التغطية إلى 70%+\n' : ''}
+            ${errors == 0 && failed == 0 && coverageNum >= 70 ? '- ✅ ممتاز: الكود جاهز للدمج!\n' : ''}
+
+            ---
+
+            تم إنشاؤه تلقائياً بواسطة GitHub Actions
+            `;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('تقرير جودة الكود')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+            }

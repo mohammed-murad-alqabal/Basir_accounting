@@ -1,0 +1,9 @@
+{
+  "id": "run-related-tests",
+  "name": "تشغيل الاختبارات ذات الصلة",
+  "description": "يشغل الاختبارات المرتبطة بالملف المحفوظ للتأكد من عدم كسر أي شيء",
+  "eventType": "onSave",
+  "filePatterns": ["lib/**/*.dart"],
+  "hookAction": "askAgent",
+  "outputPrompt": "حدد ملف الاختبار المقابل للملف المحفوظ وشغّله.\n\nمثال:\nإذا كان الملف: lib/features/customers/data/repositories/customer_repository.dart\nالاختبار: test/unit/data/repositories/customer_repository_test.dart\n\nشغّل الأمر:\nflutter test test/unit/data/repositories/customer_repository_test.dart\n\nإذا فشل أي اختبار، أبلغ المستخدم بالتفاصيل."
+}

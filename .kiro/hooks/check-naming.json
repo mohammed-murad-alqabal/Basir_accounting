@@ -1,0 +1,9 @@
+{
+  "id": "check-naming",
+  "name": "التحقق من معايير التسمية",
+  "description": "يتحقق من اتباع معايير التسمية المعتمدة في المشروع",
+  "eventType": "onSave",
+  "filePatterns": ["lib/**/*.dart"],
+  "hookAction": "askAgent",
+  "outputPrompt": "تحقق من اتباع معايير التسمية في .kiro/steering/naming-conventions.md:\n\n1. الملفات والمجلدات: snake_case\n2. Classes و Enums: PascalCase\n3. Methods و Functions: camelCase\n4. Variables: camelCase\n5. Constants: lowerCamelCase\n6. Private: _prefix\n\nإذا وجدت أي انتهاك للمعايير، أبلغ المستخدم بالتصحيح المطلوب."
+}

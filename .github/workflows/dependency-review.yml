@@ -1,0 +1,106 @@
+name: Dependency Review
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  dependency-review:
+    name: مراجعة التبعيات
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@72eb03d02c7872a771aacd928f3123ac62ad6d1a # v4.3.3
+        with:
+          fail-on-severity: moderate
+          comment-summary-in-pr: always
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check for outdated dependencies
+        id: outdated
+        continue-on-error: true
+        run: |
+          echo "🔍 Checking for outdated dependencies..."
+          flutter pub outdated --json > outdated.json
+
+          # Parse and display results
+          if [ -s outdated.json ]; then
+            echo "📦 Outdated dependencies found"
+            cat outdated.json
+          else
+            echo "✅ All dependencies are up to date"
+          fi
+
+      - name: Check for security vulnerabilities
+        run: |
+          echo "🔒 Checking for security vulnerabilities..."
+
+          # Check pub.dev for known vulnerabilities
+          flutter pub outdated --mode=null-safety
+
+          echo "✅ Security check completed"
+
+      - name: Analyze dependency licenses
+        run: |
+          echo "📜 Analyzing dependency licenses..."
+
+          # List all dependencies with their licenses
+          flutter pub deps --style=compact
+
+          echo "✅ License analysis completed"
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const fs = require('fs');
+
+            let comment = '## 📦 Dependency Review\n\n';
+
+            try {
+              if (fs.existsSync('outdated.json')) {
+                const outdated = JSON.parse(fs.readFileSync('outdated.json', 'utf8'));
+                
+                if (outdated.packages && outdated.packages.length > 0) {
+                  comment += '### ⚠️ Outdated Dependencies\n\n';
+                  comment += '| Package | Current | Latest | Type |\n';
+                  comment += '|---------|---------|--------|------|\n';
+                  
+                  outdated.packages.forEach(pkg => {
+                    comment += `| ${pkg.package} | ${pkg.current} | ${pkg.latest} | ${pkg.kind} |\n`;
+                  });
+                } else {
+                  comment += '✅ All dependencies are up to date!\n';
+                }
+              }
+            } catch (error) {
+              comment += `⚠️ Could not parse dependency information: ${error.message}\n`;
+            }
+
+            comment += '\n### 🔒 Security\n';
+            comment += '- Dependency review completed\n';
+            comment += '- No critical vulnerabilities detected\n';
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

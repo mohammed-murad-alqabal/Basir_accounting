@@ -1,0 +1,136 @@
+name: Auto Assign
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  auto-assign:
+    name: تعيين تلقائي للمراجعين
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Auto assign PR reviewers
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const author = pr.user.login;
+
+            // قائمة المراجعين المحتملين (استبعاد المؤلف)
+            // ملاحظة: قم بتحديث هذه القائمة بأسماء أعضاء الفريق الفعليين
+            const allReviewers = ['team-member-1', 'team-member-2', 'team-member-3'];
+            const reviewers = allReviewers.filter(r => r !== author);
+
+            if (reviewers.length === 0) {
+              console.log('لا يوجد مراجعين متاحين');
+              return;
+            }
+
+            // اختيار مراجعين عشوائيين (حتى 2)
+            const selectedReviewers = reviewers
+              .sort(() => 0.5 - Math.random())
+              .slice(0, Math.min(2, reviewers.length));
+
+            try {
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                reviewers: selectedReviewers
+              });
+              
+              console.log(`✅ تم تعيين المراجعين: ${selectedReviewers.join(', ')}`);
+            } catch (error) {
+              console.log(`⚠️ فشل تعيين المراجعين: ${error.message}`);
+            }
+
+      - name: Auto assign issue
+        if: github.event_name == 'issues'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const labels = issue.labels.map(l => l.name);
+
+            // تعيين بناءً على التصنيف
+            // ملاحظة: قم بتحديث هذه الأسماء بأسماء أعضاء الفريق الفعليين
+            const assignmentMap = {
+              'bug': 'bug-team-lead',
+              'enhancement': 'feature-team-lead',
+              'documentation': 'doc-team-lead'
+            };
+
+            let assignee = null;
+            for (const [label, lead] of Object.entries(assignmentMap)) {
+              if (labels.includes(label)) {
+                assignee = lead;
+                break;
+              }
+            }
+
+            if (assignee) {
+              try {
+                await github.rest.issues.addAssignees({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  assignees: [assignee]
+                });
+                
+                console.log(`✅ تم تعيين Issue إلى: ${assignee}`);
+              } catch (error) {
+                console.log(`⚠️ فشل تعيين Issue: ${error.message}`);
+              }
+            }
+
+      - name: Add labels based on files
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            try {
+              // الحصول على الملفات المعدلة
+              const { data: files } = await github.rest.pulls.listFiles({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number
+              });
+
+              const labels = new Set();
+
+              // إضافة تصنيفات بناءً على الملفات
+              for (const file of files) {
+                const filename = file.filename.toLowerCase();
+                
+                if (filename.includes('auth')) labels.add('auth');
+                if (filename.includes('customer')) labels.add('customers');
+                if (filename.includes('invoice')) labels.add('invoices');
+                if (filename.includes('dashboard')) labels.add('dashboard');
+                if (filename.includes('test')) labels.add('tests');
+                if (filename.endsWith('.md')) labels.add('documentation');
+                if (filename.includes('.github')) labels.add('ci-cd');
+              }
+
+              if (labels.size > 0) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number,
+                  labels: Array.from(labels)
+                });
+                
+                console.log(`✅ تم إضافة التصنيفات: ${Array.from(labels).join(', ')}`);
+              }
+            } catch (error) {
+              console.log(`⚠️ فشل إضافة التصنيفات: ${error.message}`);
+            }

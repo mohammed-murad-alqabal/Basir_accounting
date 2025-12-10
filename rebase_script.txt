@@ -1,0 +1,37 @@
+# استراتيجية الدمج الذكية
+# Documentation commits - دمج الأول واستخدام squash للباقي
+pick 32efb5e docs: add comprehensive git push failure analysis and solutions
+squash 678c2b2 docs: إضافة ملخص الجلسة الكامل
+squash b434398 docs: إضافة التقرير النهائي الشامل لإعادة التنظيم
+squash c65f252 docs(steering): add critical rules and warnings for future steering files
+squash 2fb2db4 docs: add scripts testing reports and fixes
+squash 4f21746 docs(examples): add comprehensive prompt examples and success reports
+squash 252a9f2 docs(examples): add 6 complete prompt examples and update documentation
+squash 2373302 docs(kiro): add final improvement report
+squash 6847915 docs(kiro): complete Phase 3 - improve documentation and organization
+squash 2add6c5 docs(specs): تحديث شامل لمواصفات error-tracking-system
+squash b6a92d1 docs: إضافة تقرير نهائي شامل لإعداد GitHub Workflows
+
+# Chore commits - دمج الأول واستخدام squash للباقي
+pick 523e5a4 chore: save current state before optimization
+squash 62c38da chore: remove build artifacts to fix push size issue
+squash 8422238 chore: تنظيف .gitignore وإضافة تقرير الحالة النهائية
+squash d6e8dfe chore(build): regenerate build_runner files
+squash ec758f2 chore(deps): apply autofix formatting to pubspec.yaml
+squash 2de5aee chore(git): update .gitignore patterns
+squash b0f6aa5 chore(cleanup): reorganize project structure and remove obsolete files
+squash 59cedd6 chore(deps): update compatible dependencies to latest versions
+squash 2ceb733 chore: نسخة احتياطية قبل التنظيف الشامل للجذر
+squash e6d765d chore(repo): add enhanced CI workflow and comprehensive audit spec
+
+# Feature commits - الحفاظ عليها منفصلة
+pick 71a6e66 feat: إضافة أدوات صيانة ووقاية شاملة
+pick b026b47 feat(repo): complete all repository improvements and optimizations
+pick 1cf5bd1 feat(kiro): complete Phase 2 - add templates and scripts
+pick 348fb92 feat(kiro): complete Phase 1 - enhance .kiro/ structure with guides and MCP config
+
+# Fix commits - الحفاظ عليها منفصلة
+pick 740e0a9 fix(config): remove invalid Flutter SDK path and reorganize documentation
+pick 000227a fix(repo): comprehensive git repository cleanup and root cause analysis
+pick 7a48723 fix(ci): make workflows more resilient with continue-on-error
+pick ad96f7a fix(ci): جعل flutter_ci.yml أكثر تساهلاً لتجنب الفشل

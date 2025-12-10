@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 التوثيق (Documentation)
+    url: https://github.com/owner/repo/wiki
+    about: راجع التوثيق الشامل للمشروع
+  - name: 💬 المناقشات (Discussions)
+    url: https://github.com/owner/repo/discussions
+    about: اطرح أسئلة أو شارك أفكارك مع المجتمع
+  - name: 🔒 مشكلة أمنية (Security Issue)
+    url: https://github.com/owner/repo/security/advisories/new
+    about: أبلغ عن ثغرة أمنية بشكل خاص

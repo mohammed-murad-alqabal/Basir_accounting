@@ -1,0 +1,13 @@
+{
+  "name": "check-version-update",
+  "description": "يذكّر بتحديث رقم الإصدار عند إضافة ميزات أو إصلاحات",
+  "enabled": true,
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "lib/**/*.dart"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "تم حفظ ملف في lib/\n\nإذا كان هذا التغيير يمثل:\n- ميزة جديدة (feature)\n- إصلاح خطأ (bugfix)\n- تحسين (improvement)\n- تغيير كبير (breaking change)\n\nيرجى التحقق من:\n1. تحديث version في pubspec.yaml وفقاً لـ Semantic Versioning:\n   - MAJOR.MINOR.PATCH+BUILD\n   - MAJOR: تغييرات كبيرة غير متوافقة\n   - MINOR: ميزات جديدة متوافقة\n   - PATCH: إصلاحات متوافقة\n2. تحديث CHANGELOG.md بوصف التغيير\n3. إضافة entry في القسم المناسب (Added/Changed/Fixed/Removed)\n\nالإصدار الحالي في pubspec.yaml: تحقق من السطر 'version:'"
+  }
+}
