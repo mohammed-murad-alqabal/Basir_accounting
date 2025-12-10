@@ -1,0 +1,243 @@
+name: Performance Monitoring
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  build-size-analysis:
+    name: تحليل حجم البناء
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+          cache: true
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "zulu"
+          java-version: "21"
+          cache: "gradle"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release --analyze-size
+
+      - name: Analyze APK size
+        id: size
+        run: |
+          APK_PATH="build/app/outputs/flutter-apk/app-release.apk"
+
+          if [ ! -f "$APK_PATH" ]; then
+            echo "❌ APK file not found"
+            exit 1
+          fi
+
+          SIZE_MB=$(du -m "$APK_PATH" | cut -f1)
+          SIZE_KB=$(du -k "$APK_PATH" | cut -f1)
+
+          echo "📦 APK Size: ${SIZE_MB}MB (${SIZE_KB}KB)"
+          echo "size_mb=$SIZE_MB" >> $GITHUB_OUTPUT
+          echo "size_kb=$SIZE_KB" >> $GITHUB_OUTPUT
+
+          # Check against threshold (50MB)
+          if [ "$SIZE_MB" -gt 50 ]; then
+            echo "⚠️ APK size exceeds 50MB threshold"
+            echo "status=warning" >> $GITHUB_OUTPUT
+          else
+            echo "✅ APK size is within acceptable range"
+            echo "status=pass" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Compare with base branch
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: |
+          echo "📊 Comparing with base branch..."
+          echo "⚠️ Size comparison skipped for now"
+          echo "Will be implemented in future updates"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const sizeMB = '${{ steps.size.outputs.size_mb }}';
+            const sizeKB = '${{ steps.size.outputs.size_kb }}';
+            const status = '${{ steps.size.outputs.status }}';
+
+            const emoji = status === 'pass' ? '✅' : '⚠️';
+
+            const body = `## ${emoji} Build Size Analysis
+
+            | Metric | Value |
+            |--------|-------|
+            | **APK Size** | ${sizeMB}MB (${sizeKB}KB) |
+            | **Status** | ${status === 'pass' ? '✅ Within limits' : '⚠️ Exceeds 50MB'} |
+            | **Threshold** | 50MB |
+
+            ${status === 'warning' ? '⚠️ **Warning:** APK size exceeds recommended threshold. Consider optimizing assets and dependencies.' : ''}
+            `;
+
+            try {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+            } catch (error) {
+              console.log(`⚠️ Failed to post comment: ${error.message}`);
+            }
+
+  startup-performance:
+    name: أداء بدء التشغيل
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze startup time
+        continue-on-error: true
+        run: |
+          echo "⏱️ Analyzing startup performance..."
+
+          # Run flutter analyze to check for performance issues
+          flutter analyze --no-pub || echo "Analysis completed with warnings"
+
+          # Check for common performance anti-patterns
+          echo "🔍 Checking for performance anti-patterns..."
+
+          # Check for synchronous file I/O in main
+          if [ -f "lib/main.dart" ] && grep -r "File.*readAsStringSync\|File.*writeAsStringSync" lib/main.dart 2>/dev/null; then
+            echo "⚠️ Synchronous file I/O detected in main.dart"
+            echo "Consider using async methods for better startup performance"
+          fi
+
+          # Check for heavy computations in build methods
+          if grep -r "for.*in.*build\|while.*build" lib/ --include="*.dart" 2>/dev/null | grep -v "// Performance: OK"; then
+            echo "⚠️ Potential heavy computation in build method"
+            echo "Consider moving to initState or using compute()"
+          fi
+
+          echo "✅ Performance analysis completed"
+
+  memory-analysis:
+    name: تحليل الذاكرة
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check for memory leaks
+        run: |
+          echo "🧠 Checking for potential memory leaks..."
+
+          # Check for missing dispose calls
+          CONTROLLERS=$(grep -r "StreamController\|AnimationController\|TextEditingController" lib/ --include="*.dart" 2>/dev/null || true)
+
+          if [ -n "$CONTROLLERS" ]; then
+            echo "$CONTROLLERS" | while read -r line; do
+              FILE=$(echo "$line" | cut -d: -f1)
+              if ! grep -q "dispose()" "$FILE" && ! grep -q "// Disposed by" "$FILE"; then
+                echo "⚠️ Potential memory leak in $FILE: Controller without dispose"
+              fi
+            done
+          fi
+
+          # Check for listeners without removal
+          LISTENERS=$(grep -r "addListener" lib/ --include="*.dart" 2>/dev/null || true)
+
+          if [ -n "$LISTENERS" ]; then
+            echo "$LISTENERS" | while read -r line; do
+              FILE=$(echo "$line" | cut -d: -f1)
+              if ! grep -q "removeListener" "$FILE" && ! grep -q "// Listener removed" "$FILE"; then
+                echo "⚠️ Potential memory leak in $FILE: Listener without removal"
+              fi
+            done
+          fi
+
+          echo "✅ Memory analysis completed"
+
+  code-complexity:
+    name: تحليل تعقيد الكود
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze code complexity
+        run: |
+          echo "📊 Analyzing code complexity..."
+
+          # Count lines of code
+          echo "📝 Lines of Code:"
+          find lib -name "*.dart" -type f | xargs wc -l | tail -1
+
+          # Count number of files
+          echo "📁 Number of Dart files:"
+          find lib -name "*.dart" -type f | wc -l
+
+          # Check for large files (>500 lines)
+          echo "📏 Large files (>500 lines):"
+          find lib -name "*.dart" -type f -exec wc -l {} \; | awk '$1 > 500 {print $2 " (" $1 " lines)"}' || echo "None"
+
+          echo "✅ Complexity analysis completed"

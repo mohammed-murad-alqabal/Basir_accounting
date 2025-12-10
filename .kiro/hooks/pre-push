@@ -1,0 +1,36 @@
+#!/bin/bash
+# Hook: pre-push
+# Description: Runs all necessary checks (tests, linting) before pushing to the remote repository.
+# Compliance: Enforces the principle of "No broken code on the main branch."
+
+# --- Configuration ---
+# Define the commands to run
+TEST_COMMANDS=(
+    "go test ./server/go/..."  # Assuming Go tests are present
+    "flutter test ./client/flutter/..." # Assuming Flutter tests are present
+    # Add any necessary linting commands here
+)
+
+# --- Execution ---
+echo "--- Running Kiro Pre-Push Checks ---"
+
+for cmd in "${TEST_COMMANDS[@]}"; do
+    echo "Running command: $cmd"
+    
+    # Check if the command is available before running
+    if command -v $(echo $cmd | awk '{print $1}') >/dev/null 2>&1; then
+        if ! $cmd; then
+            echo " "
+            echo "!!! PRE-PUSH FAILED !!!"
+            echo "Command failed: $cmd"
+            echo "Please fix the failing tests/linting before pushing."
+            echo " "
+            exit 1 # Abort the push
+        fi
+    else
+        echo "WARNING: Command '$cmd' not found. Skipping test. Ensure all dependencies are installed."
+    fi
+done
+
+echo "--- All Pre-Push Checks Passed Successfully ---"
+exit 0

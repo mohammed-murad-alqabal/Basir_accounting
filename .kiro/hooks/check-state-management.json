@@ -1,0 +1,13 @@
+{
+  "name": "check-state-management",
+  "description": "يتحقق من استخدام Riverpod بشكل صحيح",
+  "enabled": true,
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "lib/features/**/presentation/providers/**/*.dart"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "تم حفظ provider: {{filePath}}\n\nيرجى التحقق من:\n\n**1. استخدام Riverpod الصحيح:**\n- استخدام @riverpod annotation\n- تشغيل build_runner لتوليد الكود\n- وجود ملف .g.dart المقابل\n\n**2. أنواع Providers المناسبة:**\n- Provider: للقيم الثابتة\n- StateProvider: للحالات البسيطة\n- FutureProvider: للعمليات async\n- StreamProvider: للبيانات المتدفقة\n- StateNotifierProvider: للحالات المعقدة\n\n**3. إدارة الحالة:**\n- استخدام AsyncValue للعمليات async\n- معالجة loading/data/error states\n- عدم استخدام setState في Providers\n\n**4. Dependencies:**\n- استخدام ref.watch للاعتماديات التفاعلية\n- استخدام ref.read للقراءة مرة واحدة\n- تجنب circular dependencies\n\n**5. Testing:**\n- وجود اختبارات للـ provider\n- استخدام ProviderContainer للاختبار\n- mock للـ dependencies\n\nتحقق من اتباع flutter-best-practices.md"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "check-code-generation",
+  "description": "يتحقق من الحاجة لتوليد الكود عند تعديل models أو providers",
+  "enabled": true,
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "**/*.dart"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "تم حفظ الملف: {{filePath}}\n\nيرجى التحقق من:\n1. هل هذا ملف model يستخدم @freezed أو @collection (Isar)?\n2. هل هذا ملف provider يستخدم @riverpod؟\n3. إذا كان كذلك، هل تم تشغيل build_runner لتوليد الكود؟\n\nإذا لم يتم توليد الكود، ذكّر المستخدم بتشغيل:\nflutter pub run build_runner build --delete-conflicting-outputs\n\nتحقق من وجود ملفات .g.dart أو .freezed.dart المقابلة."
+  }
+}

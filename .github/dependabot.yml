@@ -1,0 +1,82 @@
+# Dependabot Configuration
+# تكوين Dependabot لتحديثات الأمان والإصدارات التلقائية
+
+version: 2
+updates:
+  # Flutter/Dart dependencies
+  - package-ecosystem: "pub"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Riyadh"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "mohammed-murad-alqabal"
+    assignees:
+      - "mohammed-murad-alqabal"
+    labels:
+      - "dependencies"
+      - "automated"
+      - "security"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    # تجميع التحديثات المتعددة في PR واحد
+    groups:
+      flutter-dependencies:
+        patterns:
+          - "flutter*"
+          - "riverpod*"
+          - "isar*"
+      development-dependencies:
+        patterns:
+          - "mockito"
+          - "build_runner"
+          - "*_generator"
+        update-types:
+          - "minor"
+          - "patch"
+    # تجاهل بعض التحديثات إذا لزم الأمر
+    ignore:
+      # مثال: تجاهل تحديثات major لحزمة معينة
+      # - dependency-name: "package_name"
+      #   update-types: ["version-update:semver-major"]
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Riyadh"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "mohammed-murad-alqabal"
+    assignees:
+      - "mohammed-murad-alqabal"
+    labels:
+      - "dependencies"
+      - "ci/cd"
+      - "automated"
+      - "security"
+    commit-message:
+      prefix: "chore(ci)"
+      include: "scope"
+    # تجميع تحديثات Actions
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+# ملاحظات:
+# 1. يتم فحص التحديثات كل يوم اثنين الساعة 9 صباحاً (توقيت الرياض)
+# 2. الحد الأقصى لـ PRs المفتوحة: 5 لـ pub، 3 لـ GitHub Actions
+# 3. يتم تجميع التحديثات المتشابهة في PR واحد لتسهيل المراجعة
+# 4. جميع PRs تُعيّن تلقائياً للمراجعة
+# 5. Labels تلقائية لتسهيل التصنيف
+

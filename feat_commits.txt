@@ -1,0 +1,4 @@
+71a6e66 feat: إضافة أدوات صيانة ووقاية شاملة
+b026b47 feat(repo): complete all repository improvements and optimizations
+1cf5bd1 feat(kiro): complete Phase 2 - add templates and scripts
+348fb92 feat(kiro): complete Phase 1 - enhance .kiro/ structure with guides and MCP config

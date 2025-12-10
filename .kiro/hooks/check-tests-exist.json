@@ -1,0 +1,9 @@
+{
+  "id": "check-tests-exist",
+  "name": "التحقق من وجود اختبارات",
+  "description": "يتحقق من وجود ملف اختبار مقابل لكل ملف كود ويذكّر بكتابة الاختبارات إذا لم تكن موجودة",
+  "eventType": "onSave",
+  "filePatterns": ["lib/**/*.dart"],
+  "hookAction": "askAgent",
+  "outputPrompt": "تحقق من وجود ملف اختبار مقابل للملف المحفوظ.\n\nإذا كان الملف في lib/features/customers/data/repositories/customer_repository.dart\nيجب أن يكون هناك test/unit/data/repositories/customer_repository_test.dart\n\nإذا لم يكن موجوداً، ذكّر المستخدم بإنشائه وفقاً لمعايير الاختبار في .kiro/steering/flutter-best-practices.md"
+}

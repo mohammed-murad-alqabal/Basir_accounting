@@ -1,0 +1,40 @@
+# Code Owners
+# This file defines who is responsible for code in this repository
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for everything in the repo
+* @team
+
+# Core architecture and infrastructure
+/lib/core/ @team @architects
+/.github/ @team @devops
+/scripts/ @team @devops
+
+# Features
+/lib/features/auth/ @team @security-team
+/lib/features/customers/ @team @backend-team
+/lib/features/invoices/ @team @backend-team
+/lib/features/dashboard/ @team @frontend-team
+/lib/features/settings/ @team @frontend-team
+
+# Data layer
+/lib/data/ @team @database-team
+
+# Tests
+/test/ @team @qa-team
+
+# Documentation
+/Documentation/ @team @docs-team
+*.md @team @docs-team
+
+# Configuration files
+pubspec.yaml @team @architects
+analysis_options.yaml @team @architects
+.gitignore @team @devops
+
+# CI/CD
+/.github/workflows/ @team @devops @architects
+
+# Security-sensitive files
+/lib/data/services/auth_service.dart @team @security-team
+flutter_secure_storage @team @security-team

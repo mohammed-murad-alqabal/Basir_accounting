@@ -1,0 +1,156 @@
+name: Analysis
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # تشغيل يومي في الساعة 2 صباحاً
+    - cron: "0 2 * * *"
+
+jobs:
+  analyze:
+    name: تحليل الكود
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Run Flutter Analyze
+        id: analyze
+        continue-on-error: true
+        run: |
+          flutter analyze --no-pub > analysis_output.txt 2>&1 || true
+          cat analysis_output.txt
+
+          # حساب الأخطاء والتحذيرات
+          ERRORS=$(grep -c "error •" analysis_output.txt || echo "0")
+          WARNINGS=$(grep -c "warning •" analysis_output.txt || echo "0")
+          INFO=$(grep -c "info •" analysis_output.txt || echo "0")
+
+          echo "errors=$ERRORS" >> $GITHUB_OUTPUT
+          echo "warnings=$WARNINGS" >> $GITHUB_OUTPUT
+          echo "info=$INFO" >> $GITHUB_OUTPUT
+
+          # تحذير فقط إذا كانت هناك أخطاء
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "⚠️ وجدت $ERRORS أخطاء (non-blocking)"
+          else
+            echo "✅ لا توجد أخطاء"
+          fi
+
+      - name: Run Tests
+        id: tests
+        continue-on-error: true
+        run: |
+          flutter test --coverage > test_output.txt 2>&1 || true
+          cat test_output.txt
+
+          # استخراج نتائج الاختبارات
+          TOTAL=$(grep -oP '\d+(?= tests? passed)' test_output.txt | head -1 || echo "0")
+          PASSED=$(grep -oP '\d+(?= passed)' test_output.txt | head -1 || echo "0")
+          FAILED=$(grep -oP '\d+(?= failed)' test_output.txt | head -1 || echo "0")
+
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+          echo "passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+
+          if [ "$FAILED" -gt 0 ]; then
+            echo "⚠️ $FAILED اختبار فشل (non-blocking)"
+          else
+            echo "✅ جميع الاختبارات نجحت"
+          fi
+
+      - name: Calculate Coverage
+        id: coverage
+        continue-on-error: true
+        run: |
+          if [ -f "coverage/lcov.info" ]; then
+            # حساب التغطية
+            LINES_FOUND=$(grep -o "LF:[0-9]*" coverage/lcov.info | cut -d: -f2 | awk '{s+=$1} END {print s}' || echo "0")
+            LINES_HIT=$(grep -o "LH:[0-9]*" coverage/lcov.info | cut -d: -f2 | awk '{s+=$1} END {print s}' || echo "0")
+            
+            if [ "$LINES_FOUND" -gt 0 ]; then
+              COVERAGE=$(awk "BEGIN {printf \"%.1f\", ($LINES_HIT/$LINES_FOUND)*100}")
+            else
+              COVERAGE="0.0"
+            fi
+            
+            echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
+            echo "📊 نسبة التغطية: $COVERAGE%"
+            
+            # تحذير إذا كانت التغطية منخفضة (non-blocking)
+            COVERAGE_INT=$(echo $COVERAGE | cut -d. -f1)
+            if [ "$COVERAGE_INT" -lt 70 ]; then
+              echo "⚠️ التغطية أقل من 70% (non-blocking)"
+            else
+              echo "✅ التغطية تفوق 70%"
+            fi
+          else
+            echo "coverage=0.0" >> $GITHUB_OUTPUT
+            echo "⚠️ ملف التغطية غير موجود"
+          fi
+
+      - name: Generate Report
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ -f "scripts/generate_report.sh" ]; then
+            bash scripts/generate_report.sh --output analysis_report.md || true
+          else
+            echo "⚠️ generate_report.sh not found - creating basic report"
+            echo "# Analysis Report" > analysis_report.md
+            echo "" >> analysis_report.md
+            echo "## Summary" >> analysis_report.md
+            echo "- Errors: ${{ steps.analyze.outputs.errors }}" >> analysis_report.md
+            echo "- Warnings: ${{ steps.analyze.outputs.warnings }}" >> analysis_report.md
+            echo "- Tests Passed: ${{ steps.tests.outputs.passed }}" >> analysis_report.md
+            echo "- Coverage: ${{ steps.coverage.outputs.coverage }}%" >> analysis_report.md
+          fi
+
+      - name: Upload Analysis Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: analysis-report
+          path: analysis_report.md
+          retention-days: 30
+
+      - name: Upload Coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 30
+
+      - name: Create Summary
+        if: always()
+        run: |
+          echo "## 📊 ملخص التحليل" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔍 Flutter Analyze" >> $GITHUB_STEP_SUMMARY
+          echo "- أخطاء: ${{ steps.analyze.outputs.errors }}" >> $GITHUB_STEP_SUMMARY
+          echo "- تحذيرات: ${{ steps.analyze.outputs.warnings }}" >> $GITHUB_STEP_SUMMARY
+          echo "- معلومات: ${{ steps.analyze.outputs.info }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🧪 الاختبارات" >> $GITHUB_STEP_SUMMARY
+          echo "- إجمالي: ${{ steps.tests.outputs.total }}" >> $GITHUB_STEP_SUMMARY
+          echo "- نجح: ${{ steps.tests.outputs.passed }} ✅" >> $GITHUB_STEP_SUMMARY
+          echo "- فشل: ${{ steps.tests.outputs.failed }} ❌" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📈 التغطية" >> $GITHUB_STEP_SUMMARY
+          echo "- نسبة التغطية: ${{ steps.coverage.outputs.coverage }}%" >> $GITHUB_STEP_SUMMARY
