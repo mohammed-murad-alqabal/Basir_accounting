@@ -1,0 +1,171 @@
+name: Auto Merge
+
+on:
+  pull_request:
+    types:
+      [
+        labeled,
+        unlabeled,
+        synchronize,
+        opened,
+        edited,
+        ready_for_review,
+        reopened,
+        unlocked,
+      ]
+  pull_request_review:
+    types: [submitted]
+  check_suite:
+    types: [completed]
+  status: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    name: دمج تلقائي
+    runs-on: ubuntu-latest
+    if: |
+      github.event.pull_request.draft == false &&
+      (
+        contains(github.event.pull_request.labels.*.name, 'automerge') ||
+        contains(github.event.pull_request.labels.*.name, 'dependencies')
+      )
+
+    steps:
+      - name: Check PR status
+        id: check
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            // Get PR details
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number
+            });
+
+            // Check if PR is mergeable
+            if (!pullRequest.mergeable) {
+              core.setOutput('can_merge', 'false');
+              core.setOutput('reason', 'PR has conflicts');
+              return;
+            }
+
+            // Check if all checks passed
+            const { data: checks } = await github.rest.checks.listForRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: pr.head.sha
+            });
+
+            const failedChecks = checks.check_runs.filter(check => 
+              check.status === 'completed' && check.conclusion !== 'success'
+            );
+
+            if (failedChecks.length > 0) {
+              core.setOutput('can_merge', 'false');
+              core.setOutput('reason', `Failed checks: ${failedChecks.map(c => c.name).join(', ')}`);
+              return;
+            }
+
+            // Check if PR has required approvals
+            const { data: reviews } = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number
+            });
+
+            const approvals = reviews.filter(review => review.state === 'APPROVED');
+
+            if (approvals.length < 1) {
+              core.setOutput('can_merge', 'false');
+              core.setOutput('reason', 'No approvals yet');
+              return;
+            }
+
+            core.setOutput('can_merge', 'true');
+            core.setOutput('reason', 'All checks passed');
+
+      - name: Auto merge
+        if: steps.check.outputs.can_merge == 'true'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            try {
+              await github.rest.pulls.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                merge_method: 'squash',
+                commit_title: pr.title,
+                commit_message: pr.body || ''
+              });
+              
+              console.log('✅ تم دمج PR بنجاح');
+            } catch (error) {
+              console.log(`❌ فشل الدمج: ${error.message}`);
+              throw error;
+            }
+
+      - name: Comment on PR
+        if: steps.check.outputs.can_merge == 'false'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const reason = '${{ steps.check.outputs.reason }}';
+
+            const body = `## 🤖 Auto-Merge Status
+
+            ❌ **Cannot auto-merge:** ${reason}
+
+            ### Requirements for auto-merge:
+            - ✅ All checks must pass
+            - ✅ At least 1 approval required
+            - ✅ No merge conflicts
+            - ✅ Label \`automerge\` or \`dependencies\` must be present
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+  delete-branch:
+    name: حذف الفرع
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    needs: auto-merge
+
+    steps:
+      - name: Delete branch
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            // Don't delete protected branches
+            if (pr.head.ref === 'main' || pr.head.ref === 'develop') {
+              console.log('Skipping deletion of protected branch');
+              return;
+            }
+
+            try {
+              await github.rest.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `heads/${pr.head.ref}`
+              });
+              
+              console.log(`✅ Deleted branch: ${pr.head.ref}`);
+            } catch (error) {
+              console.log(`⚠️ Could not delete branch: ${error.message}`);
+            }

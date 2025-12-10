@@ -1,0 +1,13 @@
+{
+  "name": "pre-commit-quality",
+  "description": "يشغل فحوصات الجودة قبل كل commit",
+  "enabled": true,
+  "trigger": {
+    "type": "onMessage",
+    "pattern": "commit|push|pr"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "المستخدم يريد عمل commit/push\n\nيرجى تشغيل Quality Gates:\n\n**1. Code Analysis:**\n```bash\nflutter analyze --no-pub\n```\nيجب أن يكون: 0 errors, 0 warnings\n\n**2. Code Formatting:**\n```bash\ndart format --set-exit-if-changed .\n```\nيجب أن يكون الكود منسق\n\n**3. Tests:**\n```bash\nflutter test --coverage\n```\nيجب أن تنجح جميع الاختبارات\nالتغطية يجب أن تكون ≥ 70%\n\n**4. Security Check:**\n- فحص عدم وجود secrets في الكود\n- فحص استخدام secure storage\n- فحص التبعيات للثغرات\n\n**5. Documentation:**\n- التحقق من DartDoc للـ public APIs\n- التحقق من تحديث CHANGELOG.md\n- التحقق من تحديث README إذا لزم\n\n**6. Naming Conventions:**\n- التحقق من اتباع naming-conventions.md\n- التحقق من استخدام العربية للنصوص\n\nإذا فشل أي فحص، أخبر المستخدم بالمشكلة والحل.\n\nيمكن تشغيل جميع الفحوصات بـ:\n```bash\nbash scripts/run_quality_gates.sh\n```"
+  }
+}

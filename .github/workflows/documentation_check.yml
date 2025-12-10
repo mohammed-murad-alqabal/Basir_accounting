@@ -1,0 +1,253 @@
+name: Documentation Check
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  documentation-coverage:
+    name: فحص تغطية التوثيق
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run documentation analysis
+        id: analyze
+        continue-on-error: true
+        run: |
+          echo "🔍 Running documentation analysis..."
+
+          # Run the documentation CLI analyze command
+          if dart run lib/tools/documentation/cli/documentation_cli.dart analyze --verbose; then
+            echo "exit_code=0" >> $GITHUB_OUTPUT
+            echo "✅ Analysis passed"
+          else
+            EXIT_CODE=$?
+            echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+            echo "❌ Analysis failed with code $EXIT_CODE"
+          fi
+
+      - name: Validate documentation quality
+        id: validate
+        continue-on-error: true
+        run: |
+          echo "✅ Validating documentation quality..."
+
+          # Run the documentation CLI validate command
+          if dart run lib/tools/documentation/cli/documentation_cli.dart validate --strict; then
+            echo "exit_code=0" >> $GITHUB_OUTPUT
+            echo "✅ Validation passed"
+          else
+            EXIT_CODE=$?
+            echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+            echo "❌ Validation failed with code $EXIT_CODE"
+          fi
+
+      - name: Generate documentation report
+        if: always()
+        continue-on-error: true
+        run: |
+          echo "📋 Generating documentation report..."
+
+          # Generate report in multiple formats
+          dart run lib/tools/documentation/cli/documentation_cli.dart report --format markdown --output documentation_report || true
+          dart run lib/tools/documentation/cli/documentation_cli.dart report --format json --output documentation_report || true
+          dart run lib/tools/documentation/cli/documentation_cli.dart report --format html --output documentation_report || true
+
+      - name: Check coverage threshold
+        if: always()
+        run: |
+          THRESHOLD=95
+          ANALYZE_EXIT=${{ steps.analyze.outputs.exit_code }}
+          VALIDATE_EXIT=${{ steps.validate.outputs.exit_code }}
+
+          echo "📊 Analysis Exit Code: $ANALYZE_EXIT"
+          echo "📊 Validation Exit Code: $VALIDATE_EXIT"
+          echo "🎯 Required Threshold: ${THRESHOLD}%"
+
+          if [ "$ANALYZE_EXIT" != "0" ] || [ "$VALIDATE_EXIT" != "0" ]; then
+            echo "❌ Documentation coverage is below ${THRESHOLD}% or quality is insufficient"
+            echo "⚠️  Please add documentation to public APIs and improve quality"
+            echo ""
+            echo "📝 To fix this:"
+            echo "  1. Run: dart run lib/tools/documentation/cli/documentation_cli.dart analyze"
+            echo "  2. Run: dart run lib/tools/documentation/cli/documentation_cli.dart generate"
+            echo "  3. Run: dart run lib/tools/documentation/cli/documentation_cli.dart validate"
+            exit 1
+          else
+            echo "✅ Documentation coverage and quality meet requirements!"
+          fi
+
+      - name: Upload report artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation-report
+          path: |
+            .documentation/reports/
+            documentation_report.*
+          retention-days: 30
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const fs = require('fs');
+
+            // Read the markdown report if it exists
+            let reportContent = '## 📊 Documentation Coverage Report\n\n';
+
+            try {
+              if (fs.existsSync('documentation_report.md')) {
+                reportContent += fs.readFileSync('documentation_report.md', 'utf8');
+              } else {
+                reportContent += '⚠️ Report file not found. Check the workflow logs for details.';
+              }
+            } catch (error) {
+              reportContent += `❌ Error reading report: ${error.message}`;
+            }
+
+            // Add status badges
+            const analyzeExit = '${{ steps.analyze.outputs.exit_code }}';
+            const validateExit = '${{ steps.validate.outputs.exit_code }}';
+
+            reportContent += '\n\n### Status\n\n';
+            reportContent += `- Analysis: ${analyzeExit === '0' ? '✅ Pass' : '❌ Fail'}\n`;
+            reportContent += `- Validation: ${validateExit === '0' ? '✅ Pass' : '❌ Fail'}\n`;
+            reportContent += `- Overall: ${analyzeExit === '0' && validateExit === '0' ? '✅ Pass' : '❌ Fail'}\n`;
+
+            // Post comment
+            try {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: reportContent
+              });
+            } catch (error) {
+              console.log(`⚠️ Failed to post comment: ${error.message}`);
+            }
+
+  dartdoc-generation:
+    name: توليد DartDoc
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate DartDoc
+        run: |
+          echo "📚 Generating DartDoc..."
+          dart doc .
+
+          if [ -d "doc/api" ]; then
+            echo "✅ DartDoc generated successfully"
+            ls -lh doc/api/
+          else
+            echo "❌ DartDoc generation failed"
+            exit 1
+          fi
+
+      - name: Upload DartDoc
+        uses: actions/upload-artifact@v4
+        with:
+          name: dartdoc
+          path: doc/api/
+          retention-days: 30
+
+  auto-generate-docs:
+    name: توليد التوثيق التلقائي
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    needs: documentation-coverage
+    continue-on-error: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.head_ref }}
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate missing documentation
+        continue-on-error: true
+        run: |
+          echo "🔧 Generating missing documentation..."
+          dart run lib/tools/documentation/cli/documentation_cli.dart generate --path lib/ || true
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet; then
+            echo "No documentation was generated"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Documentation was generated"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "docs: auto-generate missing documentation [skip ci]"
+          git push
+
+      - name: Comment on PR
+        if: steps.check_changes.outputs.has_changes == 'true'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            try {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '🤖 **Auto-Documentation Bot**\n\nI\'ve automatically generated missing documentation for this PR. Please review the changes and run validation again.'
+              });
+            } catch (error) {
+              console.log(`⚠️ Failed to post comment: ${error.message}`);
+            }

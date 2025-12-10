@@ -1,0 +1,9 @@
+{
+  "id": "remind-changelog",
+  "name": "تذكير بتحديث CHANGELOG",
+  "description": "يذكّر بتحديث CHANGELOG.md عند إضافة ميزة جديدة أو إصلاح خطأ",
+  "eventType": "onSave",
+  "filePatterns": ["lib/features/**/*.dart"],
+  "hookAction": "askAgent",
+  "outputPrompt": "إذا كان الملف المحفوظ يحتوي على ميزة جديدة أو إصلاح خطأ مهم، ذكّر المستخدم بتحديث CHANGELOG.md.\n\nالصيغة المطلوبة:\n```markdown\n## [غير منشور] - التاريخ\n\n### إضافات\n- [وصف الميزة الجديدة]\n\n### إصلاحات\n- [وصف الإصلاح]\n```\n\nلا تذكّر بذلك إذا كانت التغييرات بسيطة جداً."
+}

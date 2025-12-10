@@ -1,0 +1,95 @@
+{
+  "mcpServers": {
+    "git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git@latest",
+        "--repository",
+        "."
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "git_status",
+        "git_log",
+        "git_diff",
+        "git_diff_unstaged",
+        "git_diff_unstaged",
+        "git_diff_unstaged",
+        "git_diff_unstaged",
+        "git_commit",
+        "git_commit",
+        "git_commit",
+        "git_commit",
+        "git_commit",
+        "git_commit",
+        "git_commit",
+        "git_commit",
+        "git_commit",
+        "git_add",
+        "git_create_branch",
+        "git_create_branch"
+      ],
+      "priority": 90
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "fetch"
+      ],
+      "priority": 85
+    },
+    "sqlite": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-sqlite@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "query",
+        "list_tables"
+      ],
+      "priority": 80
+    },
+    "time": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-time@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "get_current_time",
+        "convert_timezone"
+      ],
+      "priority": 75
+    },
+    "filesystem": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-filesystem@latest",
+        "/home/m/Projects/Basser_MVP"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": true,
+      "autoApprove": [],
+      "priority": 95
+    }
+  }
+}

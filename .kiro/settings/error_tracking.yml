@@ -1,0 +1,442 @@
+# Error Tracking System Configuration
+# نظام تتبع الأخطاء والسجلات - ملف التكوين
+
+# المشروع: بصير MVP
+# التاريخ: 6 ديسمبر 2025
+# المؤلف: فريق وكلاء تطوير مشروع بصير
+# الإصدار: 1.0
+
+# ==============================================================================
+# Git Hooks Configuration (إعدادات Git Hooks)
+# ==============================================================================
+hooks:
+  # Pre-commit Hook Settings
+  pre_commit:
+    enabled: true
+    auto_format: true
+    block_on_errors: true
+    max_execution_time: 30  # seconds
+    
+    # Format Check
+    format_check:
+      enabled: true
+      auto_fix: true
+      
+    # Static Analysis
+    analyze:
+      enabled: true
+      fail_on_errors: true
+      fail_on_warnings: false
+      
+    # Commit Message Validation
+    commit_message:
+      enabled: true
+      enforce_conventional_commits: true
+      allowed_types:
+        - feat
+        - fix
+        - docs
+        - style
+        - refactor
+        - test
+        - chore
+        - perf
+        - ci
+        - build
+        - revert
+      max_length: 100
+      require_scope: false
+      require_description: true
+  
+  # Pre-push Hook Settings
+  pre_push:
+    enabled: true
+    max_execution_time: 120  # seconds
+    
+    # Test Execution
+    tests:
+      enabled: true
+      run_all: true
+      fail_on_error: true
+      coverage_threshold: 70  # percentage
+      
+    # Secret Scanning
+    secret_scan:
+      enabled: true
+      fail_on_detection: true
+      patterns:
+        - 'api[_-]?key'
+        - 'password'
+        - 'token'
+        - 'secret'
+        - 'private[_-]?key'
+        - 'access[_-]?key'
+        - 'auth[_-]?token'
+        - 'bearer'
+        - 'credentials'
+      exclude_files:
+        - '*.md'
+        - '*.txt'
+        - 'test/**'
+        - '.gitignore'
+
+# ==============================================================================
+# Archive Configuration (إعدادات الأرشفة)
+# ==============================================================================
+archive:
+  # Age-based Archiving
+  max_age_days: 7
+  
+  # Size-based Compression
+  max_size_mb: 10
+  
+  # Compression Settings
+  compression:
+    enabled: true
+    format: 'tar.gz'  # tar.gz, tar.bz2, tar.xz, zip
+    level: 6  # 1-9 (1=fastest, 9=best compression)
+    
+  # Archive Location
+  paths:
+    archive_dir: 'logs/archive'
+    backup_dir: 'logs/backup'
+    
+  # Retention Policy
+  retention:
+    keep_compressed: true
+    keep_recent_days: 30
+    auto_cleanup: true
+    cleanup_older_than_days: 90
+
+# ==============================================================================
+# Reports Configuration (إعدادات التقارير)
+# ==============================================================================
+reports:
+  # Daily Reports
+  daily_reports:
+    enabled: true
+    auto_generate: true
+    schedule: '00:00'  # HH:MM format
+    
+  # Report Format
+  format:
+    markdown: true
+    json: true
+    html: false
+    
+  # Report Sections
+  sections:
+    - statistics
+    - errors
+    - warnings
+    - tests
+    - coverage
+    - recommendations
+    
+  # Statistics Collection
+  statistics:
+    include_file_count: true
+    include_project_size: true
+    include_commit_count: true
+    include_line_count: true
+    include_test_count: true
+    
+  # Error Analysis
+  errors:
+    group_by_type: true
+    group_by_file: true
+    show_top_errors: 10
+    include_stack_traces: false
+    
+  # Test Results
+  tests:
+    include_passed: true
+    include_failed: true
+    include_skipped: true
+    include_duration: true
+    include_coverage: true
+    
+  # Recommendations Engine
+  recommendations:
+    enabled: true
+    priority_levels:
+      - critical
+      - high
+      - medium
+      - low
+    max_recommendations: 10
+    
+  # Report Output
+  output:
+    directory: 'Documentation/reports'
+    filename_pattern: 'report_{date}.md'
+    keep_history: true
+    max_history_days: 30
+
+# ==============================================================================
+# Security Configuration (إعدادات الأمان)
+# ==============================================================================
+security:
+  # Secret Scanning
+  secret_scanning:
+    enabled: true
+    scan_on_commit: true
+    scan_on_push: true
+    
+    # Secret Patterns
+    patterns:
+      api_keys:
+        - 'api[_-]?key\s*[:=]\s*["\']?[\w-]{20,}["\']?'
+        - 'apikey\s*[:=]\s*["\']?[\w-]{20,}["\']?'
+      passwords:
+        - 'password\s*[:=]\s*["\'][^"\']{8,}["\']'
+        - 'passwd\s*[:=]\s*["\'][^"\']{8,}["\']'
+      tokens:
+        - 'token\s*[:=]\s*["\']?[\w-]{20,}["\']?'
+        - 'auth[_-]?token\s*[:=]\s*["\']?[\w-]{20,}["\']?'
+        - 'bearer\s+[\w-]{20,}'
+      private_keys:
+        - '-----BEGIN\s+(?:RSA\s+)?PRIVATE\s+KEY-----'
+        - 'private[_-]?key\s*[:=]\s*["\']?[\w-]{20,}["\']?'
+      aws_keys:
+        - 'AKIA[0-9A-Z]{16}'
+        - 'aws[_-]?access[_-]?key[_-]?id\s*[:=]'
+        - 'aws[_-]?secret[_-]?access[_-]?key\s*[:=]'
+    
+    # Exclusions
+    exclude_patterns:
+      - '*.md'
+      - '*.txt'
+      - 'test/**'
+      - 'docs/**'
+      - '.gitignore'
+      - 'README*'
+      
+  # Log Sanitization
+  log_sanitization:
+    enabled: true
+    sanitize_on_collection: true
+    
+    # Sensitive Keywords
+    sensitive_keywords:
+      - password
+      - token
+      - key
+      - secret
+      - credential
+      - auth
+      - bearer
+      - api_key
+      - private_key
+      - access_key
+      
+    # Replacement Strategy
+    replacement: '[REDACTED]'
+    preserve_length: false
+    
+  # Data Protection
+  data_protection:
+    encrypt_sensitive_logs: false
+    use_secure_storage: true
+    prevent_log_leakage: true
+
+# ==============================================================================
+# Logging Configuration (إعدادات السجلات)
+# ==============================================================================
+logging:
+  # Log Levels
+  level: 'info'  # debug, info, warning, error, critical
+  
+  # Log Paths
+  paths:
+    logs_dir: 'logs'
+    analyze_logs: 'logs/flutter_analyze'
+    test_logs: 'logs/flutter_test'
+    error_logs: 'logs/errors'
+    
+  # Log Format
+  format:
+    timestamp: true
+    level: true
+    source: true
+    message: true
+    metadata: true
+    
+  # Log Rotation
+  rotation:
+    enabled: true
+    max_size_mb: 10
+    max_files: 10
+    
+  # Duplicate Detection
+  deduplication:
+    enabled: true
+    window_minutes: 60
+    similarity_threshold: 0.9
+
+# ==============================================================================
+# Performance Configuration (إعدادات الأداء)
+# ==============================================================================
+performance:
+  # Execution Timeouts
+  timeouts:
+    pre_commit_max: 30  # seconds
+    pre_push_max: 120  # seconds
+    log_collection_max: 60  # seconds
+    archive_max: 300  # seconds
+    
+  # Caching
+  caching:
+    enabled: true
+    cache_dir: '.cache/error_tracking'
+    cache_analyze_results: true
+    cache_test_results: true
+    cache_ttl_minutes: 60
+    
+  # Optimization
+  optimization:
+    parallel_execution: true
+    max_workers: 4
+    incremental_analysis: true
+    skip_unchanged_files: true
+    
+  # Compression Efficiency
+  compression:
+    target_ratio: 0.7  # 70% reduction
+    verify_integrity: true
+
+# ==============================================================================
+# GitHub Actions Configuration (إعدادات GitHub Actions)
+# ==============================================================================
+github_actions:
+  # Analysis Workflow
+  analysis:
+    enabled: true
+    trigger_on:
+      - push
+      - pull_request
+    branches:
+      - main
+      - develop
+    run_analyze: true
+    run_tests: true
+    calculate_coverage: true
+    upload_artifacts: true
+    
+  # Issue Creation
+  auto_issues:
+    enabled: true
+    create_on_critical_errors: true
+    create_on_test_failures: false
+    labels:
+      - bug
+      - automated
+    assignees: []
+    
+  # PR Comments
+  pr_comments:
+    enabled: true
+    comment_on_analysis: true
+    comment_on_tests: true
+    comment_on_coverage: true
+    include_recommendations: true
+
+# ==============================================================================
+# Notifications Configuration (إعدادات الإشعارات)
+# ==============================================================================
+notifications:
+  # Notification Channels
+  channels:
+    console: true
+    file: true
+    email: false
+    slack: false
+    
+  # Notification Levels
+  levels:
+    critical: true
+    error: true
+    warning: true
+    info: false
+    debug: false
+    
+  # Notification Rules
+  rules:
+    notify_on_hook_failure: true
+    notify_on_test_failure: true
+    notify_on_secret_detection: true
+    notify_on_critical_error: true
+
+# ==============================================================================
+# Development Configuration (إعدادات التطوير)
+# ==============================================================================
+development:
+  # Debug Mode
+  debug:
+    enabled: false
+    verbose_logging: false
+    save_debug_logs: false
+    
+  # Testing
+  testing:
+    mock_external_services: false
+    use_test_data: false
+    skip_slow_tests: false
+    
+  # Development Helpers
+  helpers:
+    auto_fix_issues: true
+    suggest_improvements: true
+    show_performance_hints: true
+
+# ==============================================================================
+# Integration Configuration (إعدادات التكامل)
+# ==============================================================================
+integration:
+  # External Tools
+  tools:
+    flutter_analyze: true
+    flutter_test: true
+    dart_format: true
+    
+  # CI/CD Integration
+  ci_cd:
+    skip_ci_on_log_commits: true
+    use_conventional_commits: true
+    auto_tag_releases: false
+    
+  # Version Control
+  version_control:
+    auto_commit_logs: false
+    commit_message_template: 'chore(logs): update logs [skip ci]'
+    push_to_remote: false
+
+# ==============================================================================
+# Maintenance Configuration (إعدادات الصيانة)
+# ==============================================================================
+maintenance:
+  # Auto Cleanup
+  auto_cleanup:
+    enabled: true
+    schedule: 'weekly'  # daily, weekly, monthly
+    clean_old_logs: true
+    clean_old_archives: true
+    clean_cache: true
+    
+  # Health Checks
+  health_checks:
+    enabled: true
+    check_disk_space: true
+    check_log_integrity: true
+    check_archive_integrity: true
+    
+  # Backup
+  backup:
+    enabled: true
+    backup_before_cleanup: true
+    backup_location: 'logs/backup'
+    keep_backups: 3
+
+# ==============================================================================
+# End of Configuration
+# ==============================================================================

@@ -1,0 +1,76 @@
+{
+  "// تعليق": "إعدادات Kiro المحسّنة للأداء - مشروع بصير",
+  "// المؤلف": "فريق وكلاء تطوير مشروع بصير",
+  "// التاريخ": "5 ديسمبر 2025",
+
+  "files.watcherExclude": {
+    "**/build/**": true,
+    "**/.dart_tool/**": true,
+    "**/coverage/**": true,
+    "**/logs/**": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/.gradle/**": true,
+    "**/android/.gradle/**": true,
+    "**/android/build/**": true,
+    "**/ios/Pods/**": true,
+    "**/ios/.symlinks/**": true
+  },
+
+  "search.exclude": {
+    "**/build": true,
+    "**/.dart_tool": true,
+    "**/coverage": true,
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/.gradle": true,
+    "**/android/build": true,
+    "**/ios/Pods": true
+  },
+
+  "files.exclude": {
+    "**/.dart_tool": true,
+    "**/build": false
+  },
+
+  "dart.analysisServerFolding": false,
+  "dart.previewFlutterUiGuides": false,
+  "dart.previewFlutterUiGuidesCustomTracking": false,
+  "dart.lineLength": 80,
+  "dart.enableSdkFormatter": true,
+  "dart.debugExternalPackageLibraries": false,
+  "dart.debugSdkLibraries": false,
+  "dart.evaluateGettersInDebugViews": false,
+  "dart.evaluateToStringInDebugViews": false,
+
+  "editor.codeLens": false,
+  "editor.minimap.enabled": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.suggestSelection": "first",
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+
+  "extensions.autoUpdate": false,
+  "extensions.autoCheckUpdates": false,
+
+  "telemetry.telemetryLevel": "off",
+
+  "git.autofetch": false,
+  "git.autorefresh": false,
+
+  "workbench.enableExperiments": false,
+  "workbench.settings.enableNaturalLanguageSearch": false,
+
+  "terminal.integrated.gpuAcceleration": "off",
+
+  "// ملاحظات": [
+    "هذه الإعدادات تقلل استهلاك CPU والذاكرة",
+    "يمكن تفعيل بعض الميزات حسب الحاجة",
+    "للأجهزة القوية، يمكن تفعيل minimap و codeLens"
+  ]
+}

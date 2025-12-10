@@ -1,0 +1,9 @@
+{
+  "id": "auto-format",
+  "name": "تنسيق تلقائي للكود",
+  "description": "ينسق الكود تلقائياً عند حفظ ملفات Dart وفقاً لمعايير Dart",
+  "eventType": "onSave",
+  "filePatterns": ["lib/**/*.dart", "test/**/*.dart"],
+  "hookAction": "runCommand",
+  "command": "dart format ."
+}

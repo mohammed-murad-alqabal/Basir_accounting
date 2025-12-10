@@ -1,0 +1,12 @@
+{
+  "name": "check-todo-age",
+  "description": "يذكّر بحل TODO comments القديمة",
+  "enabled": true,
+  "trigger": {
+    "type": "onSessionStart"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "بداية جلسة جديدة - فحص TODO comments\n\nيرجى:\n1. البحث عن جميع TODO comments في المشروع\n2. التحقق من TODO comments التي لها Issue references (#xxx)\n3. تحديد TODO comments التي تم إضافتها منذ أكثر من 30 يوماً\n4. إنشاء قائمة بـ TODO comments التي يجب حلها\n\nاستخدم git blame لمعرفة تاريخ إضافة كل TODO\n\nصيغة TODO المتوقعة:\n// TODO(username): وصف - Issue #xxx\n\nأنشئ تقرير يحتوي على:\n- عدد TODO الإجمالي\n- عدد TODO القديمة (>30 يوم)\n- عدد TODO بدون Issue reference\n- أولويات الحل المقترحة\n\nركز على TODO في:\n- lib/features/\n- lib/core/\n- lib/data/"
+  }
+}

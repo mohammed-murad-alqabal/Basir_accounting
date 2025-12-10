@@ -1,0 +1,104 @@
+# Quality Gates Configuration
+# This file defines the thresholds and rules for quality gates
+
+# Documentation Quality Gate
+documentation:
+  # Minimum documentation coverage percentage
+  min_coverage: 95
+
+  # Minimum quality score (0-100)
+  min_quality_score: 90
+
+  # Strict mode (enforces all quality rules)
+  strict_mode: true
+
+  # Paths to check
+  paths:
+    - lib/
+
+  # Paths to exclude
+  exclude_paths:
+    - lib/**/*.g.dart
+    - lib/**/*.freezed.dart
+    - lib/generated/
+
+# Code Quality Gate
+code_quality:
+  # Maximum number of errors allowed
+  max_errors: 0
+
+  # Maximum number of warnings allowed
+  max_warnings: 10
+
+  # Maximum number of info messages allowed
+  max_info: 50
+
+  # Fail on specific lint rules
+  fail_on_rules:
+    - avoid_print
+    - prefer_const_constructors
+    - public_member_api_docs
+
+# Test Quality Gate
+test_coverage:
+  # Minimum test coverage percentage
+  min_coverage: 70
+
+  # Minimum coverage for critical paths
+  critical_paths:
+    - path: lib/core/
+      min_coverage: 80
+    - path: lib/features/auth/
+      min_coverage: 85
+    - path: lib/features/invoices/
+      min_coverage: 75
+
+  # Require tests for new code
+  require_tests_for_new_code: true
+
+# Security Quality Gate
+security:
+  # Check for known vulnerabilities
+  check_vulnerabilities: true
+
+  # Check for hardcoded secrets
+  check_secrets: true
+
+  # Patterns to search for (regex)
+  secret_patterns:
+    - "api[_-]?key"
+    - "apikey"
+    - "password"
+    - "secret"
+    - "token"
+    - "auth[_-]?token"
+
+  # Paths to exclude from secret scanning
+  exclude_paths:
+    - test/
+    - "**/*.md"
+
+# Performance Quality Gate
+performance:
+  # Maximum build time (seconds)
+  max_build_time: 300
+
+  # Maximum test execution time (seconds)
+  max_test_time: 120
+
+  # Maximum app size (MB)
+  max_app_size: 50
+
+# General Settings
+general:
+  # Fail fast (stop on first failure)
+  fail_fast: false
+
+  # Generate detailed reports
+  detailed_reports: true
+
+  # Upload artifacts
+  upload_artifacts: true
+
+  # Comment on PRs
+  comment_on_pr: true

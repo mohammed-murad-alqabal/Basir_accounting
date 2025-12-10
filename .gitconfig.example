@@ -1,0 +1,133 @@
+# Git Configuration Example
+# انسخ هذا الملف إلى ~/.gitconfig أو استخدم git config
+
+[user]
+    name = Your Name
+    email = your.email@example.com
+
+[core]
+    # المحرر الافتراضي
+    editor = nano
+    
+    # معالجة نهاية السطر
+    autocrlf = input
+    
+    # المسافات البيضاء
+    whitespace = trailing-space,space-before-tab
+    
+    # تحسين الأداء
+    preloadindex = true
+    fscache = true
+
+[init]
+    # الفرع الافتراضي
+    defaultBranch = main
+
+[pull]
+    # استراتيجية الـ pull
+    rebase = false
+
+[push]
+    # استراتيجية الـ push
+    default = current
+    
+    # push tags تلقائياً
+    followTags = true
+
+[merge]
+    # منع fast-forward
+    ff = false
+    
+    # نمط التعارضات
+    conflictstyle = diff3
+
+[color]
+    # تفعيل الألوان
+    ui = auto
+    branch = auto
+    diff = auto
+    status = auto
+
+[alias]
+    # اختصارات مفيدة
+    
+    # الحالة
+    st = status
+    s = status -s
+    
+    # الفروع
+    br = branch
+    co = checkout
+    cob = checkout -b
+    
+    # Commits
+    ci = commit
+    cm = commit -m
+    ca = commit --amend
+    
+    # السجل
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    last = log -1 HEAD
+    
+    # التغييرات
+    df = diff
+    dc = diff --cached
+    
+    # التحديث
+    up = pull --rebase
+    
+    # التنظيف
+    cleanup = !git branch --merged | grep -v '\\*\\|main\\|develop' | xargs -n 1 git branch -d
+    
+    # التراجع
+    undo = reset --soft HEAD~1
+    unstage = reset HEAD --
+    
+    # المساهمون
+    contributors = shortlog --summary --numbered
+
+[transfer]
+    # التحقق من الأمان
+    fsckObjects = true
+
+[fetch]
+    # التحقق من الأمان
+    fsckObjects = true
+
+[receive]
+    # التحقق من الأمان
+    fsckObjects = true
+
+[gc]
+    # تنظيف تلقائي
+    auto = 256
+
+[help]
+    # عرض المساعدة تلقائياً
+    autocorrect = 1
+
+[diff]
+    # خوارزمية diff أفضل
+    algorithm = patience
+    
+    # اكتشاف إعادة التسمية
+    renames = copies
+
+[log]
+    # عرض التواريخ بشكل نسبي
+    date = relative
+
+[rerere]
+    # تذكر حل التعارضات
+    enabled = true
+
+[credential]
+    # تخزين بيانات الاعتماد
+    helper = cache --timeout=3600
+
+# إعدادات خاصة بـ GitHub
+[url "https://github.com/"]
+    insteadOf = gh:
+
+[url "git@github.com:"]
+    insteadOf = ssh-gh:

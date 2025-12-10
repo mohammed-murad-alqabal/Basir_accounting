@@ -1,0 +1,13 @@
+{
+  "name": "activate-agents-framework",
+  "description": "تفعيل إطار عمل الوكلاء المطورين - تذكير بالمعايير والتوجيهات عند بداية الجلسة",
+  "enabled": true,
+  "version": "2.0",
+  "trigger": {
+    "type": "onSessionStart"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "🤖 **مرحباً! أنت جزء من فريق وكلاء تطوير مشروع بصير**\n\nهذا تذكير بإطار العمل والمعايير:\n\n## 📚 المعايير الأساسية\n\n1. **الفلسفة الهندسية** (`.kiro/steering/philosophy.md`)\n   - Spec-Driven Development (SDD)\n   - Security First\n   - Quality First\n\n2. **المكدس التقني** (`.kiro/steering/tech-stack.md`)\n   - Flutter 3.35.5+\n   - Dart 3.9.2+\n   - Riverpod للـ state management\n   - Isar للـ local database\n\n3. **معايير الجودة** (`.kiro/steering/code-quality-standards.md`)\n   - SOLID principles\n   - Clean Code\n   - Test Coverage ≥ 70%\n\n4. **الأمان** (`.kiro/steering/security.md`)\n   - OWASP compliance\n   - No hardcoded secrets\n   - Input validation\n\n## 🤖 إطار عمل الوكلاء\n\nراجع `.kiro/steering/agents-framework.md` للتفاصيل الكاملة عن:\n- الوكلاء الثمانية ومسؤولياتهم\n- سير العمل والتنسيق\n- أفضل الممارسات\n\n## 🎯 الهوية الموحدة\n\nاستخدم دائماً: **\"فريق وكلاء تطوير مشروع بصير\"**\n\n## ✅ جاهز للعمل!\n\nجميع المعايير والتوجيهات متاحة في `.kiro/steering/` - راجعها عند الحاجة."
+  }
+}

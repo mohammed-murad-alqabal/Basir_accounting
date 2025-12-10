@@ -1,0 +1,13 @@
+{
+  "name": "check-performance-patterns",
+  "description": "يحذر من استخدام patterns غير فعالة في Flutter",
+  "enabled": true,
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "lib/**/*.dart"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "تم حفظ: {{filePath}}\n\nيرجى فحص الكود للـ anti-patterns التالية:\n\n1. **عدم استخدام const**:\n   - Text() بدون const\n   - Icon() بدون const\n   - Padding/SizedBox بدون const\n\n2. **Rebuilds غير ضرورية**:\n   - setState() في build method\n   - استخدام Provider.of بدون listen: false\n   - عدم استخدام const constructors\n\n3. **قوائم غير محسّنة**:\n   - ListView بدون .builder\n   - GridView بدون .builder\n   - تحميل جميع العناصر مرة واحدة\n\n4. **عمليات ثقيلة في build**:\n   - حسابات معقدة في build()\n   - I/O operations في build()\n   - تحويلات بيانات كبيرة\n\n5. **Memory leaks**:\n   - Controllers غير محذوفة في dispose()\n   - Listeners غير ملغاة\n   - Streams غير مغلقة\n\nإذا وجدت أي من هذه، اقترح التحسين المناسب."
+  }
+}

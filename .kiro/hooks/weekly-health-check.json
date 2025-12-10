@@ -1,0 +1,12 @@
+{
+  "name": "weekly-health-check",
+  "description": "فحص صحة المشروع الأسبوعي",
+  "enabled": true,
+  "trigger": {
+    "type": "onSessionStart"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "بداية جلسة جديدة - فحص صحة المشروع\n\nيرجى إنشاء تقرير صحة شامل:\n\n**1. Code Quality:**\n- تشغيل flutter analyze\n- عدد الأخطاء والتحذيرات\n- الاتجاه (تحسن/تدهور)\n\n**2. Test Coverage:**\n- تشغيل flutter test --coverage\n- نسبة التغطية الحالية\n- مقارنة بالهدف (70%)\n- الملفات الأقل تغطية\n\n**3. Documentation:**\n- نسبة تغطية DartDoc\n- الملفات غير الموثقة\n- TODO comments القديمة\n\n**4. Dependencies:**\n- التبعيات القديمة (outdated)\n- الثغرات الأمنية المعروفة\n- التبعيات غير المستخدمة\n\n**5. Performance:**\n- حجم التطبيق\n- وقت البناء\n- عدد الملفات والأسطر\n\n**6. Git Health:**\n- عدد الـ branches النشطة\n- الـ branches القديمة\n- الـ commits الأخيرة\n\n**7. Specs Status:**\n- المواصفات النشطة\n- المهام المكتملة/المتبقية\n- الـ blockers\n\n**8. Recommendations:**\n- أولويات التحسين\n- المشاكل الحرجة\n- الخطوات التالية\n\nأنشئ تقرير markdown شامل مع:\n- ملخص تنفيذي\n- مقاييس مفصلة\n- رسوم بيانية (إن أمكن)\n- توصيات قابلة للتنفيذ"
+  }
+}

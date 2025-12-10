@@ -1,0 +1,476 @@
+name: Enhanced CI - بصير MVP v2.0
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+env:
+  FLUTTER_VERSION: "3.24.0"
+  MIN_COVERAGE: 70
+  MAX_COMPLEXITY: 10
+  MAX_LINE_LENGTH: 80
+
+jobs:
+  # Job 1: Standards Validation
+  validate-standards:
+    name: 📋 Validate Standards
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔍 Check commit messages (Conventional Commits)
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "📝 Commit Message Validation"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+
+          # Get commit messages
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            COMMITS=$(git log --format=%s ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
+          else
+            COMMITS=$(git log --format=%s -1)
+          fi
+
+          # Validate format: type(scope): description
+          VALID_TYPES="feat|fix|docs|style|refactor|test|chore|perf|ci|build"
+          PATTERN="^($VALID_TYPES)(\(.+\))?: .+"
+
+          INVALID_COUNT=0
+          while IFS= read -r commit; do
+            if [[ ! "$commit" =~ $PATTERN ]]; then
+              echo "❌ Invalid commit message: $commit"
+              echo "   Expected format: type(scope): description"
+              echo "   Valid types: $VALID_TYPES"
+              INVALID_COUNT=$((INVALID_COUNT + 1))
+            else
+              echo "✅ Valid: $commit"
+            fi
+          done <<< "$COMMITS"
+
+          echo ""
+          if [ $INVALID_COUNT -gt 0 ]; then
+            echo "❌ Found $INVALID_COUNT invalid commit message(s)"
+            echo "💡 Please follow Conventional Commits format"
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            exit 1
+          else
+            echo "✅ All commit messages are valid"
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          fi
+
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: 📦 Get dependencies
+        run: flutter pub get
+
+      - name: 🔍 Check English for Code (ENGLISH FOR CODE principle)
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "🌍 English for Code Validation"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+
+          # Check for Arabic in code (excluding comments and strings)
+          ARABIC_PATTERN="[\u0600-\u06FF]"
+
+          # Search in Dart files (excluding test files and comments)
+          if grep -r -P "$ARABIC_PATTERN" lib/ --include="*.dart" | grep -v "//\|/\*\|'\|\"" || true; then
+            echo ""
+            echo "⚠️  Found Arabic characters in code"
+            echo "💡 Principle: ENGLISH FOR CODE - All code must be in English"
+            echo "   Arabic is allowed only in:"
+            echo "   - Comments"
+            echo "   - String literals (user-facing text)"
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            # Warning only, not failing
+          else
+            echo "✅ All code is in English"
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          fi
+
+      - name: 🎯 Check KISS Principle (complexity)
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "🎯 KISS Principle Check (Keep It Simple, Stupid)"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+          echo "📊 Checking code complexity..."
+          echo "🎯 Max complexity: ${{ env.MAX_COMPLEXITY }}"
+          echo ""
+
+          # Check for overly complex functions (simple heuristic)
+          # Count lines in functions - if > 30 lines, flag as potentially complex
+          COMPLEX_FUNCTIONS=$(find lib/ -name "*.dart" -exec awk '
+            /^[[:space:]]*(Future<|void |[A-Z].*) [a-z].*\(/ {
+              start=NR; fname=$0
+            }
+            /^[[:space:]]*\}[[:space:]]*$/ {
+              if (start > 0 && NR - start > 30) {
+                print FILENAME ":" start ": " fname " (" NR-start " lines)"
+              }
+              start=0
+            }
+          ' {} \; 2>/dev/null || true)
+
+          if [ -n "$COMPLEX_FUNCTIONS" ]; then
+            echo "⚠️  Found potentially complex functions (>30 lines):"
+            echo "$COMPLEX_FUNCTIONS"
+            echo ""
+            echo "💡 KISS Principle: Keep functions small and simple"
+            echo "   Consider breaking down into smaller functions"
+          else
+            echo "✅ No overly complex functions detected"
+          fi
+
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+  # Job 2: Code Quality
+  code-quality:
+    name: 🔍 Code Quality
+    runs-on: ubuntu-latest
+    needs: validate-standards
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: 📦 Get dependencies
+        run: flutter pub get
+
+      - name: 🎨 Check formatting
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "🎨 Code Formatting Check"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+
+          if dart format --set-exit-if-changed lib/ test/; then
+            echo "✅ Code is properly formatted"
+          else
+            echo "❌ Code formatting issues found"
+            echo "💡 Run: dart format ."
+            exit 1
+          fi
+
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+      - name: 🔬 Analyze code
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "🔬 Static Analysis"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+
+          flutter analyze --fatal-infos
+
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+      - name: 📏 Check line length
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "📏 Line Length Check"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+          echo "🎯 Max line length: ${{ env.MAX_LINE_LENGTH }}"
+          echo ""
+
+          LONG_LINES=$(find lib/ test/ -name "*.dart" -exec awk -v max=${{ env.MAX_LINE_LENGTH }} '
+            length > max {
+              print FILENAME ":" NR ": " length " characters (max: " max ")"
+            }
+          ' {} \; 2>/dev/null || true)
+
+          if [ -n "$LONG_LINES" ]; then
+            echo "⚠️  Found lines exceeding ${{ env.MAX_LINE_LENGTH }} characters:"
+            echo "$LONG_LINES" | head -20
+            echo ""
+            echo "💡 Consider breaking long lines for better readability"
+          else
+            echo "✅ All lines are within ${{ env.MAX_LINE_LENGTH }} characters"
+          fi
+
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+  # Job 3: Testing
+  testing:
+    name: 🧪 Testing
+    runs-on: ubuntu-latest
+    needs: code-quality
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: 📦 Get dependencies
+        run: flutter pub get
+
+      - name: 🧪 Run all tests
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "🧪 Running Tests"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+
+          flutter test --coverage --reporter expanded
+
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+      - name: 📊 Check coverage
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "📊 Test Coverage Report"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+
+          if [ -f coverage/lcov.info ]; then
+            sudo apt-get update -qq
+            sudo apt-get install -y lcov
+            
+            COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep lines | awk '{print $2}' | sed 's/%//' || echo "0")
+            
+            echo "📈 Coverage: $COVERAGE%"
+            echo "🎯 Target: ${{ env.MIN_COVERAGE }}%"
+            echo ""
+            
+            if (( $(echo "$COVERAGE < ${{ env.MIN_COVERAGE }}" | bc -l) )); then
+              echo "❌ Coverage is below target: $COVERAGE% < ${{ env.MIN_COVERAGE }}%"
+              echo "💡 Quality First principle: Maintain 70%+ test coverage"
+              echo ""
+              echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+              exit 1
+            else
+              echo "✅ Coverage meets target: $COVERAGE% ≥ ${{ env.MIN_COVERAGE }}%"
+              echo ""
+              echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            fi
+          else
+            echo "❌ No coverage file found"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            exit 1
+          fi
+
+      - name: 📤 Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          file: coverage/lcov.info
+          fail_ci_if_error: false
+          flags: unittests
+          name: basser-coverage
+
+  # Job 4: Security
+  security:
+    name: 🔒 Security
+    runs-on: ubuntu-latest
+    needs: validate-standards
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔒 Security First - Check for secrets
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "🔒 Security First Principle Check"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+
+          # Check for hardcoded secrets
+          SECRETS_FOUND=0
+
+          echo "🔍 Checking for hardcoded secrets..."
+          if grep -r -i -E "(password|secret|api_key|token|private_key)" lib/ --include="*.dart" | grep -v "SecureStorage\|// TODO\|// FIXME\|test" | grep "="; then
+            echo ""
+            echo "❌ Found potential hardcoded secrets"
+            echo "💡 Security First: Never hardcode secrets"
+            echo "   Use flutter_secure_storage instead"
+            SECRETS_FOUND=1
+          else
+            echo "✅ No hardcoded secrets found"
+          fi
+
+          echo ""
+
+          # Check for proper password hashing
+          echo "🔍 Checking for password hashing..."
+          if grep -r "password" lib/ --include="*.dart" | grep -v "hash\|Hash\|SHA\|bcrypt\|SecureStorage"; then
+            echo ""
+            echo "⚠️  Found password handling without hashing"
+            echo "💡 Security First: Always hash passwords (SHA-256+)"
+          else
+            echo "✅ Password handling looks secure"
+          fi
+
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+          if [ $SECRETS_FOUND -eq 1 ]; then
+            exit 1
+          fi
+
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: 📦 Check dependencies
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "📦 Dependencies Security Check"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+
+          flutter pub get
+          flutter pub outdated || true
+
+          echo ""
+          echo "✅ Dependencies checked"
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+  # Job 5: Build
+  build:
+    name: 🏗️ Build
+    runs-on: ubuntu-latest
+    needs: [testing, security]
+    if: github.event_name == 'push'
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "zulu"
+          java-version: "21"
+          cache: "gradle"
+
+      - name: 📦 Get dependencies
+        run: flutter pub get
+
+      - name: 🏗️ Build APK
+        run: flutter build apk --release
+
+      - name: 📏 Check APK size
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "📦 APK Size Report"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+
+          SIZE_MB=$(du -m build/app/outputs/flutter-apk/app-release.apk | cut -f1)
+          echo "📊 APK Size: ${SIZE_MB}MB"
+          echo "🎯 Target: < 50 MB"
+          echo ""
+
+          if [ "$SIZE_MB" -gt 50 ]; then
+            echo "⚠️  APK size exceeds target"
+            echo "💡 KISS Principle: Keep the app simple and lightweight"
+          else
+            echo "✅ APK size is within target"
+          fi
+
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+      - name: 📤 Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
+
+  # Job 6: Final Report
+  report:
+    name: 📊 Final Report
+    runs-on: ubuntu-latest
+    needs: [validate-standards, code-quality, testing, security, build]
+    if: always()
+
+    steps:
+      - name: 📋 Generate report
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "📊 Enhanced CI Final Report - بصير MVP v2.0"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+          echo "🎯 Philosophy Principles Applied:"
+          echo "   ✅ COLLABORATION FIRST - Validated commit messages"
+          echo "   ✅ KISS - Checked code complexity"
+          echo "   ✅ ENGLISH FOR CODE - Validated code language"
+          echo "   ✅ Security First - Checked for secrets"
+          echo "   ✅ Quality First - Enforced 70%+ coverage"
+          echo ""
+          echo "📊 Job Results:"
+          echo "   📋 Standards Validation: ${{ needs.validate-standards.result }}"
+          echo "   🔍 Code Quality: ${{ needs.code-quality.result }}"
+          echo "   🧪 Testing: ${{ needs.testing.result }}"
+          echo "   🔒 Security: ${{ needs.security.result }}"
+          echo "   🏗️ Build: ${{ needs.build.result }}"
+          echo ""
+
+          if [ "${{ needs.validate-standards.result }}" == "success" ] && \
+             [ "${{ needs.code-quality.result }}" == "success" ] && \
+             [ "${{ needs.testing.result }}" == "success" ] && \
+             [ "${{ needs.security.result }}" == "success" ]; then
+            echo "✅ Overall Status: SUCCESS"
+            echo ""
+            echo "🎉 All checks passed! Code meets all standards."
+          else
+            echo "❌ Overall Status: FAILED"
+            echo ""
+            echo "⚠️  Some checks failed. Please review the logs."
+          fi
+
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "📅 Date: $(date '+%Y-%m-%d %H:%M:%S')"
+          echo "🔗 Workflow: ${{ github.workflow }}"
+          echo "📝 Commit: ${{ github.sha }}"
+          echo "👤 Author: ${{ github.actor }}"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
