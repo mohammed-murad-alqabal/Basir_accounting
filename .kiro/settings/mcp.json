@@ -28,7 +28,9 @@
         "git_commit",
         "git_commit",
         "git_commit",
-        "git_add"
+        "git_add",
+        "git_create_branch",
+        "git_create_branch"
       ],
       "priority": 90
     },

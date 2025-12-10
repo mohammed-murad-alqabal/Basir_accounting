@@ -13,24 +13,26 @@
 
 ```
 .kiro/specs/
-├── 🎯 الملفات التوجيهية (3 ملفات)
-├── 📊 التقارير الرئيسية (3 ملفات)
-├── 🔧 critical-fixes/ ✅ مكتمل
-├── 📚 documentation-system/ ✅ مكتمل
-├── 🚨 error-tracking-system/ ✅ مكتمل
-├── 💎 code-quality-improvements/ 🔄 قيد التنفيذ
-├── 🧪 testing-system/ ⏳ التالي
-└── 🎨 ui-ux-improvements/ ⏳ مخطط
+├── 🎯 الملفات التوجيهية (4 ملفات)
+├── 🔥 git-repository-optimization/ ⚡ الأولوية القصوى
+├── 🎨 ui-ux-improvements/ ⏳ مخطط
+├── 📊 strategic-vision/ ⏳ مخطط
+├── 🌐 i18n-localization-system/ ⏳ مخطط
+├── 📈 local-analytics/ ⏳ مخطط
+├── 🎓 onboarding-tutorial/ ⏳ مخطط
+├── 🚀 enhanced-onboarding/ ⏳ مخطط
+├── 🎨 brand-visual-identity/ ⏳ مخطط
+└── 🧪 beta-testing-program/ ⏳ مخطط
 ```
 
 ---
 
 ## 🎯 ابدأ من هنا!
 
-### الأولوية الحالية: code-quality-improvements
+### الأولوية الحالية: git-repository-optimization
 
-**الحالة:** 🔄 قيد التنفيذ (المهام 3-7 متبقية)  
-**الوقت المقدر:** 2-2.5 ساعة
+**الحالة:** 🔥 حرج - يجب حل مشكلة Git push فوراً  
+**الوقت المقدر:** 2-4 ساعات
 
 ```bash
 # ابدأ الآن!
