@@ -1,0 +1,64 @@
+#!/bin/bash
+# Commit Message Validator - Error Tracking System
+# المشروع: بصير MVP
+# المؤلف: فريق وكلاء تطوير مشروع بصير
+# التاريخ: 3 ديسمبر 2025
+
+set -e
+
+# الألوان
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+# قراءة رسالة الـ commit
+COMMIT_MSG_FILE=$1
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+echo -e "${GREEN}📋 التحقق من رسالة الـ commit...${NC}"
+
+# تجاهل رسائل merge و revert
+if echo "$COMMIT_MSG" | grep -qE "^(Merge|Revert)"; then
+    echo -e "${GREEN}✅ رسالة merge/revert - تم التجاوز${NC}"
+    exit 0
+fi
+
+# Conventional Commits Pattern
+# type(scope): description
+# أو
+# type: description
+PATTERN="^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .{1,}"
+
+if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
+    echo -e "${RED}❌ رسالة الـ commit غير صحيحة!${NC}"
+    echo ""
+    echo -e "${YELLOW}الصيغة المطلوبة (Conventional Commits):${NC}"
+    echo -e "${YELLOW}  type(scope): description${NC}"
+    echo ""
+    echo -e "${YELLOW}الأنواع المسموحة:${NC}"
+    echo -e "  ${GREEN}feat${NC}     - ميزة جديدة"
+    echo -e "  ${GREEN}fix${NC}      - إصلاح خطأ"
+    echo -e "  ${GREEN}docs${NC}     - تحديث التوثيق"
+    echo -e "  ${GREEN}style${NC}    - تنسيق الكود"
+    echo -e "  ${GREEN}refactor${NC} - إعادة هيكلة"
+    echo -e "  ${GREEN}test${NC}     - إضافة اختبارات"
+    echo -e "  ${GREEN}chore${NC}    - مهام صيانة"
+    echo -e "  ${GREEN}perf${NC}     - تحسين الأداء"
+    echo -e "  ${GREEN}ci${NC}       - تحديث CI/CD"
+    echo -e "  ${GREEN}build${NC}    - تحديث البناء"
+    echo ""
+    echo -e "${YELLOW}أمثلة صحيحة:${NC}"
+    echo -e "  ${GREEN}feat(auth): add login functionality${NC}"
+    echo -e "  ${GREEN}fix(invoice): correct tax calculation${NC}"
+    echo -e "  ${GREEN}docs: update README${NC}"
+    echo -e "  ${GREEN}chore(logs): update logs [skip ci]${NC}"
+    echo ""
+    echo -e "${RED}رسالتك الحالية:${NC}"
+    echo -e "  $COMMIT_MSG"
+    echo ""
+    exit 1
+fi
+
+echo -e "${GREEN}✅ رسالة الـ commit صحيحة${NC}"
+exit 0

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the AppFontMetrics class from the app_font_metrics library, for the Dart programming language.">
+  <title>AppFontMetrics class - app_font_metrics library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">basser_app</a></li>
+    <li><a href="../core_theme_app_font_metrics/">core&#47;theme&#47;app_font_metrics.dart</a></li>
+    <li class="self-crumb">AppFontMetrics class</li>
+  </ol>
+  <div class="self-name">AppFontMetrics</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="core_theme_app_font_metrics&#47;core_theme_app_font_metrics-library-sidebar.html"
+    data-below-sidebar="core_theme_app_font_metrics&#47;AppFontMetrics-class-sidebar.html">
+    <div>
+<h1><span class="kind-class">AppFontMetrics</span> class 
+ 
+</h1></div>
+
+    
+<section class="desc markdown">
+  <p>نظام مقاييس الخطوط لضمان عرض النصوص بشكل صحيح بدون قص.</p>
+<p>يوفر هذا النظام حسابات دقيقة لارتفاع الخطوط والـ padding المطلوب
+لضمان عدم قص النصوص في جميع الحالات، خاصة مع خط Cairo العربي.</p>
+<p>مثال:</p>
+<pre class="language-dart"><code class="language-dart">final metrics = AppFontMetrics.forFont('Cairo', 16.0);
+final requiredHeight = metrics.calculateRequiredHeight(
+  textScaleFactor: 1.5,
+);
+</code></pre>
+</section>
+
+
+    <section>
+      <dl class="dl-horizontal">
+        
+
+        
+        
+
+
+        
+        
+  <dt>Annotations</dt>
+  <dd>
+    <ul class="annotation-list clazz-relationships">
+        <li>@<a href="https://api.flutter.dev/flutter/material/immutable-constant.html">immutable</a></li>
+    </ul>
+  </dd>
+
+
+      </dl>
+    </section>
+
+    
+  <section class="summary offset-anchor" id="constructors">
+    <h2>Constructors</h2>
+    <dl class="constructor-summary-list">
+        <dt id="AppFontMetrics.new" class="callable">
+          <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/AppFontMetrics.html">AppFontMetrics.new</a></span><span class="signature">({<span class="parameter" id="-param-fontFamily"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">fontFamily</span>, </span><span class="parameter" id="-param-fontSize"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">fontSize</span>, </span><span class="parameter" id="-param-lineHeight"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">lineHeight</span>, </span><span class="parameter" id="-param-ascent"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">ascent</span>, </span><span class="parameter" id="-param-descent"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">descent</span></span>})</span>
+        </dt>
+        <dd>
+          ينشئ مقاييس خط جديدة.
+            <div class="constructor-modifier features">const</div>
+        </dd>
+        <dt id="AppFontMetrics.cairo" class="callable">
+          <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/AppFontMetrics.cairo.html">AppFontMetrics.cairo</a></span><span class="signature">(<span class="parameter" id="cairo-param-fontSize"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">fontSize</span></span>)</span>
+        </dt>
+        <dd>
+          مقاييس خط Cairo الافتراضية.
+            <div class="constructor-modifier features">factory</div>
+        </dd>
+        <dt id="AppFontMetrics.roboto" class="callable">
+          <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/AppFontMetrics.roboto.html">AppFontMetrics.roboto</a></span><span class="signature">(<span class="parameter" id="roboto-param-fontSize"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">fontSize</span></span>)</span>
+        </dt>
+        <dd>
+          مقاييس خط Roboto الافتراضية.
+            <div class="constructor-modifier features">factory</div>
+        </dd>
+        <dt id="AppFontMetrics.system" class="callable">
+          <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/AppFontMetrics.system.html">AppFontMetrics.system</a></span><span class="signature">(<span class="parameter" id="system-param-fontSize"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">fontSize</span></span>)</span>
+        </dt>
+        <dd>
+          مقاييس خط النظام الافتراضية.
+            <div class="constructor-modifier features">factory</div>
+        </dd>
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-properties">
+    <h2>Properties</h2>
+    <dl class="properties">
+        <dt id="ascent" class="property">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/ascent.html">ascent</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  
+
+</dt>
+<dd>
+  المسافة الإضافية فوق النص (ascent)
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="descent" class="property">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/descent.html">descent</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  
+
+</dt>
+<dd>
+  المسافة الإضافية تحت النص (descent)
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="fontFamily" class="property">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/fontFamily.html">fontFamily</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  اسم الخط
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="fontSize" class="property">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/fontSize.html">fontSize</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  
+
+</dt>
+<dd>
+  حجم الخط الأساسي
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="hashCode" class="property">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd>
+  The hash code for this object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="lineHeight" class="property">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/lineHeight.html">lineHeight</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  
+
+</dt>
+<dd>
+  ارتفاع السطر (line-height) كنسبة من حجم الخط
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="runtimeType" class="property inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Type-class.html">Type</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  A representation of the runtime type of the object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-methods">
+    <h2>Methods</h2>
+    <dl class="callables">
+        <dt id="calculateMinButtonHeight" class="callable">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/calculateMinButtonHeight.html">calculateMinButtonHeight</a></span><span class="signature">(<wbr>{<span class="parameter" id="calculateMinButtonHeight-param-textScaleFactor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">textScaleFactor</span> = <span class="default-value">1.0</span>, </span><span class="parameter" id="calculateMinButtonHeight-param-minHeight"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">minHeight</span> = <span class="default-value">48.0</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  يحسب الارتفاع الأدنى للزر.
+  
+
+</dd>
+
+        <dt id="calculatePadding" class="callable">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/calculatePadding.html">calculatePadding</a></span><span class="signature">(<wbr>{<span class="parameter" id="calculatePadding-param-textScaleFactor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">textScaleFactor</span> = <span class="default-value">1.0</span>, </span><span class="parameter" id="calculatePadding-param-minVerticalPadding"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">minVerticalPadding</span> = <span class="default-value">12.0</span>, </span><span class="parameter" id="calculatePadding-param-horizontalPadding"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">horizontalPadding</span> = <span class="default-value">16.0</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/painting/EdgeInsets-class.html">EdgeInsets</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  يحسب الـ padding الكامل (أفقي ورأسي).
+  
+
+</dd>
+
+        <dt id="calculateRequiredHeight" class="callable">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/calculateRequiredHeight.html">calculateRequiredHeight</a></span><span class="signature">(<wbr>{<span class="parameter" id="calculateRequiredHeight-param-textScaleFactor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">textScaleFactor</span> = <span class="default-value">1.0</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  يحسب الارتفاع الفعلي المطلوب للنص.
+  
+
+</dd>
+
+        <dt id="calculateVerticalPadding" class="callable">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/calculateVerticalPadding.html">calculateVerticalPadding</a></span><span class="signature">(<wbr>{<span class="parameter" id="calculateVerticalPadding-param-textScaleFactor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">textScaleFactor</span> = <span class="default-value">1.0</span>, </span><span class="parameter" id="calculateVerticalPadding-param-minPadding"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">minPadding</span> = <span class="default-value">12.0</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/painting/EdgeInsets-class.html">EdgeInsets</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  يحسب الـ padding الرأسي المطلوب.
+  
+
+</dd>
+
+        <dt id="isHeightSufficient" class="callable">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/isHeightSufficient.html">isHeightSufficient</a></span><span class="signature">(<wbr>{<span class="parameter" id="isHeightSufficient-param-height"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">height</span>, </span><span class="parameter" id="isHeightSufficient-param-textScaleFactor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">textScaleFactor</span> = <span class="default-value">1.0</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  يتحقق من أن الارتفاع المعطى كافٍ للنص.
+  
+
+</dd>
+
+        <dt id="noSuchMethod" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Invoked when a nonexistent method or property is accessed.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="toString" class="callable">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  A string representation of this object.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="toTextStyle" class="callable">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/toTextStyle.html">toTextStyle</a></span><span class="signature">(<wbr>{<span class="parameter" id="toTextStyle-param-color"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">color</span>, </span><span class="parameter" id="toTextStyle-param-fontWeight"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/FontWeight-class.html">FontWeight</a>?</span> <span class="parameter-name">fontWeight</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  ينشئ TextStyle مع المقاييس الصحيحة.
+  
+
+</dd>
+
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor"
+      id="operators">
+    <h2>Operators</h2>
+    <dl class="callables">
+        <dt id="operator ==" class="callable">
+  <span class="name"><a href="../core_theme_app_font_metrics/AppFontMetrics/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  The equality operator.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+    
+    
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">basser_app</a></li>
+    <li><a href="../core_theme_app_font_metrics/">app_font_metrics</a></li>
+    <li class="self-crumb">AppFontMetrics class</li>
+</ol>
+
+    <h5>app_font_metrics library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    basser_app
+      1.0.0+1
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

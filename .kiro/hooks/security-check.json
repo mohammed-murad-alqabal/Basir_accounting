@@ -1,0 +1,9 @@
+{
+  "id": "security-check",
+  "name": "فحص أمني للكود",
+  "description": "يفحص الكود للتأكد من عدم وجود بيانات حساسة أو API keys أو كلمات مرور",
+  "eventType": "onSave",
+  "filePatterns": ["lib/**/*.dart", "**/*.yaml", "**/*.json"],
+  "hookAction": "askAgent",
+  "outputPrompt": "افحص الملف المحفوظ للتأكد من:\n1. عدم وجود API keys أو tokens\n2. عدم وجود كلمات مرور بشكل نصي\n3. عدم وجود بيانات حساسة hardcoded\n4. استخدام flutter_secure_storage للبيانات الحساسة\n\nإذا وجدت أي مشكلة أمنية، أبلغ المستخدم فوراً مع الحل المقترح."
+}

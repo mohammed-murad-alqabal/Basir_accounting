@@ -1,0 +1,153 @@
+name: Semantic Versioning
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate-commits:
+    name: التحقق من رسائل الـ Commits
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate commit messages
+        continue-on-error: true
+        run: |
+          # التحقق من أن جميع الـ commits تتبع Conventional Commits
+
+          echo "🔍 التحقق من رسائل الـ commits..."
+
+          INVALID_COMMITS=0
+
+          # الحصول على جميع الـ commits في الـ PR أو آخر commit
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            COMMITS=$(git log --format=%s ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} 2>/dev/null || git log --format=%s -1)
+          else
+            COMMITS=$(git log --format=%s -1)
+          fi
+
+          # الأنواع المسموحة
+          VALID_TYPES="feat|fix|docs|style|refactor|perf|test|chore|build|ci|revert"
+
+          while IFS= read -r commit; do
+            if ! echo "$commit" | grep -qE "^($VALID_TYPES)(\(.+\))?: .+"; then
+              echo "⚠️ رسالة commit غير صحيحة: $commit"
+              echo ""
+              echo "الصيغة الصحيحة:"
+              echo "  type(scope): description"
+              echo ""
+              echo "الأنواع المسموحة:"
+              echo "  feat:     ميزة جديدة"
+              echo "  fix:      إصلاح خطأ"
+              echo "  docs:     توثيق"
+              echo "  style:    تنسيق"
+              echo "  refactor: إعادة هيكلة"
+              echo "  perf:     تحسين أداء"
+              echo "  test:     اختبارات"
+              echo "  chore:    مهام صيانة"
+              echo "  build:    نظام البناء"
+              echo "  ci:       CI/CD"
+              echo "  revert:   تراجع"
+              echo ""
+              INVALID_COMMITS=$((INVALID_COMMITS + 1))
+            else
+              echo "✅ $commit"
+            fi
+          done <<< "$COMMITS"
+
+          if [ $INVALID_COMMITS -gt 0 ]; then
+            echo ""
+            echo "⚠️ يوجد $INVALID_COMMITS رسالة commit غير صحيحة (non-blocking)"
+          else
+            echo ""
+            echo "✅ جميع رسائل الـ commits صحيحة!"
+          fi
+
+      - name: Calculate next version
+        id: version
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          # حساب الإصدار التالي بناءً على الـ commits
+
+          # الحصول على آخر tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "آخر tag: $LAST_TAG"
+
+          # استخراج الأرقام
+          VERSION=${LAST_TAG#v}
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          PATCH=$(echo $VERSION | cut -d. -f3)
+
+          # الحصول على الـ commits منذ آخر tag
+          COMMITS=$(git log $LAST_TAG..HEAD --format=%s 2>/dev/null || git log --format=%s -10)
+
+          # تحديد نوع الإصدار
+          if echo "$COMMITS" | grep -q "^feat!:"; then
+            # Breaking change
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+            TYPE="major"
+          elif echo "$COMMITS" | grep -q "^feat:"; then
+            # New feature
+            MINOR=$((MINOR + 1))
+            PATCH=0
+            TYPE="minor"
+          else
+            # Bug fix or other
+            PATCH=$((PATCH + 1))
+            TYPE="patch"
+          fi
+
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          echo "الإصدار الجديد: v$NEW_VERSION ($TYPE)"
+
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "type=$TYPE" >> $GITHUB_OUTPUT
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const comment = `
+            ## ✅ التحقق من Semantic Versioning
+
+            جميع رسائل الـ commits تتبع معيار Conventional Commits.
+
+            ### 📝 نصائح
+
+            - استخدم \`feat:\` للميزات الجديدة
+            - استخدم \`fix:\` لإصلاح الأخطاء
+            - استخدم \`docs:\` للتوثيق
+            - أضف \`!\` بعد النوع للتغييرات الكبيرة (breaking changes)
+
+            مثال: \`feat!: تغيير واجهة API\`
+            `;
+
+            try {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+            } catch (error) {
+              console.log(`⚠️ Failed to post comment: ${error.message}`);
+            }

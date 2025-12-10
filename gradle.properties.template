@@ -1,0 +1,106 @@
+# ملف إعدادات Gradle المحسّن لمشروع بصير
+# المؤلف: فريق وكلاء تطوير مشروع بصير
+# التاريخ: 5 ديسمبر 2025
+# 
+# التعليمات:
+# 1. انسخ هذا الملف إلى ~/.gradle/gradle.properties
+# 2. عدّل القيم حسب مواصفات جهازك
+# 3. أعد تشغيل Android Studio/Gradle
+
+# ========================================
+# إعدادات الذاكرة (Memory Settings)
+# ========================================
+
+# الحد الأقصى للذاكرة المخصصة لـ Gradle
+# القيمة الافتراضية: 4GB
+# الموصى به: 2GB (لتوفير الذاكرة)
+# للأجهزة القوية: 3GB-4GB
+org.gradle.jvmargs=-Xmx2048m -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+
+# ========================================
+# إعدادات الأداء (Performance Settings)
+# ========================================
+
+# تفعيل البناء المتوازي
+# يسرع البناء بنسبة 20-30%
+org.gradle.parallel=true
+
+# تفعيل التخزين المؤقت
+# يسرع البناء المتكرر بنسبة 40-50%
+org.gradle.caching=true
+
+# تفعيل Gradle Daemon
+# يحافظ على عملية Gradle في الذاكرة
+org.gradle.daemon=true
+
+# تفعيل Configure on Demand
+# يقلل وقت التكوين
+org.gradle.configureondemand=true
+
+# ========================================
+# إعدادات Android
+# ========================================
+
+# استخدام AndroidX
+android.useAndroidX=true
+
+# تفعيل Jetifier للمكتبات القديمة
+android.enableJetifier=true
+
+# تفعيل R8 Full Mode للتحسين
+android.enableR8.fullMode=true
+
+# تعطيل BuildConfig generation غير الضروري
+android.defaults.buildfeatures.buildconfig=false
+
+# تعطيل AIDL generation غير الضروري
+android.defaults.buildfeatures.aidl=false
+
+# تعطيل RenderScript generation غير الضروري
+android.defaults.buildfeatures.renderscript=false
+
+# تعطيل ResValues generation غير الضروري
+android.defaults.buildfeatures.resvalues=false
+
+# تعطيل Shaders generation غير الضروري
+android.defaults.buildfeatures.shaders=false
+
+# ========================================
+# إعدادات Kotlin
+# ========================================
+
+# تفعيل Kotlin Incremental Compilation
+kotlin.incremental=true
+
+# تفعيل Kotlin Caching
+kotlin.caching.enabled=true
+
+# تفعيل Kotlin Parallel Tasks
+kotlin.parallel.tasks.in.project=true
+
+# ========================================
+# إعدادات إضافية
+# ========================================
+
+# تعطيل التحذيرات غير الضرورية
+org.gradle.warning.mode=none
+
+# تفعيل File System Watching
+org.gradle.vfs.watch=true
+
+# ========================================
+# ملاحظات
+# ========================================
+# 
+# للأجهزة ذات الذاكرة المحدودة (<16GB):
+# - استخدم Xmx1536m بدلاً من Xmx2048m
+# 
+# للأجهزة القوية (>32GB):
+# - استخدم Xmx3072m أو Xmx4096m
+# 
+# لتعطيل Gradle Daemon:
+# - غير org.gradle.daemon=true إلى false
+# 
+# لمراقبة استخدام الذاكرة:
+# - راقب Android Studio Memory Indicator
+# - استخدم ./gradlew --status

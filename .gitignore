@@ -1,0 +1,196 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+**/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Android Gradle files
+android/.gradle/
+android/app/build/
+android/build/
+**/android/.gradle/
+**/android/app/build/
+
+# Generated files
+*.g.dart
+*.config.dart
+*.freezed.dart
+
+# Coverage
+coverage/
+.coverage
+.coverage.*
+
+# Secrets & Sensitive Files
+.env
+.env.local
+.env.*.local
+secrets.json
+*.key
+*.jks
+*.keystore
+*.p12
+*.pem
+google-services.json
+GoogleService-Info.plist
+key.properties
+firebase_options.dart
+
+# Keep .env.example for reference
+!.env.example
+
+# Error Tracking System - Sensitive Data Patterns
+**/api_key*
+**/api-key*
+**/*password*
+**/*token*
+**/*secret*
+**/*credentials*
+**/.aws/
+**/.ssh/
+**/private_key*
+**/private-key*
+
+# IDE
+.vscode/
+.fleet/
+
+# Misc
+*.zip
+*.tar.gz
+
+# Error Tracking System - Compressed Archive Files
+logs/archive/*.tar.gz
+logs/archive/*.tar.bz2
+logs/archive/*.tar.xz
+logs/archive/*.tgz
+logs/archive/*.zip
+logs/archive/*.7z
+logs/archive/*.rar
+logs/archive_*.tar.gz
+logs/archive_*.tar.bz2
+logs/archive_*.zip
+**/logs_archive_*.tar.gz
+**/logs_backup_*.tar.gz
+
+# Kiro (optional - keep local only)
+# .kiro/
+
+# Test outputs
+test_output.txt
+test_full_output.txt
+test_simple.txt
+test_json_output.json
+test_results_detailed.txt
+test_results_json.txt
+/tmp/
+test_archive_*/
+test_results*.txt
+test_compression_efficiency_*/
+test_results/
+**/test_results/
+
+# Error Tracking System - Temporary Log Files
+logs/*.log.tmp
+logs/*.log.bak
+logs/*.log.old
+logs/.temp_*
+logs/temp_*
+logs/*_temp.log
+logs/*_backup.log
+logs/processing_*
+logs/.processing_*
+*.log.lock
+*.log.swp
+*.log~
+
+# Temporary reports (keep in Documentation/ instead)
+# Note: Root level temporary reports only, not in .kiro/docs/reports/
+/*_REPORT.md
+/*_SUMMARY.md
+/*_STATUS.md
+/*_GUIDE.md
+/*_ANALYSIS.md
+/*_ISSUES.md
+/*_PLAN.md
+/*_AUDIT.md
+/*_FIXES.md
+/*_DONE.md
+/*_COMPLETE.md
+/CHECKPOINT_*.md
+/CONTINUATION_*.md
+/IMMEDIATE_*.md
+/QUICK_*.md
+/CURRENT_*.md
+
+# Kiro temporary report files
+.kiro/docs/reports/*_TEMP.md
+.kiro/docs/reports/*_OLD.md
+.kiro/docs/reports/*_UPDATED.md
+.kiro/docs/reports/*_FINAL.md
+
+# Platform specific
+.fvm/
+.flutter-plugins-dependencies
+libisar.so
+*.so
+*.dll
+*.dylib
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+sqlite_mcp_server.db
+
+# Git backup files
+backup_git_*.tar.gz
+git_fsck_report.txt
+
+# DartDoc generated files
+docs/api/html/
+
+# Temporary files in root (prevent clutter)
+/*.log
+/*.tmp
+/*.temp
+/*.bak

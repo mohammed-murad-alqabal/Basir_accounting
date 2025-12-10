@@ -1,0 +1,13 @@
+{
+  "name": "check-error-handling",
+  "description": "يتحقق من معالجة الأخطاء بشكل صحيح",
+  "enabled": true,
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "lib/**/*.dart"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "تم حفظ: {{filePath}}\n\nيرجى التحقق من معالجة الأخطاء:\n\n**1. Async Functions:**\n- كل Future يجب أن يكون في try-catch\n- معالجة جميع أنواع الأخطاء المحتملة\n- عدم ابتلاع الأخطاء (empty catch)\n- تسجيل الأخطاء للتتبع\n\n**2. Custom Exceptions:**\n- استخدام exceptions مخصصة وواضحة\n- ValidationException للتحقق\n- DatabaseException لقاعدة البيانات\n- NetworkException للشبكة\n\n**3. User Messages:**\n- رسائل خطأ واضحة بالعربية\n- شرح المشكلة والحل\n- عدم عرض stack traces للمستخدم\n\n**4. Logging:**\n- استخدام debugPrint للأخطاء\n- تضمين stack trace\n- معلومات كافية للتتبع\n\n**5. Recovery:**\n- محاولة التعافي من الأخطاء\n- توفير fallback values\n- عدم تعطل التطبيق\n\nابحث عن:\n- async functions بدون try-catch\n- catch blocks فارغة\n- throw Exception('error') العامة\n- عدم تسجيل الأخطاء"
+  }
+}

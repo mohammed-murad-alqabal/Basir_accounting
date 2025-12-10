@@ -1,0 +1,13 @@
+{
+  "name": "check-readme-sync",
+  "description": "يذكّر بتحديث README عند تغييرات كبيرة",
+  "enabled": true,
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "{pubspec.yaml,lib/main.dart,lib/core/router/**/*.dart}"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "تم تعديل ملف رئيسي: {{filePath}}\n\nهذا الملف قد يتطلب تحديث README.md\n\nيرجى التحقق من:\n\n**إذا تم تعديل pubspec.yaml:**\n- تحديث قائمة التبعيات في README\n- تحديث متطلبات النظام\n- تحديث خطوات التثبيت\n\n**إذا تم تعديل lib/main.dart:**\n- تحديث وصف التطبيق\n- تحديث نقطة الدخول\n- تحديث الإعدادات الأولية\n\n**إذا تم تعديل Router:**\n- تحديث قائمة الشاشات\n- تحديث مسارات التنقل\n- تحديث البنية المعمارية\n\n**أقسام README التي قد تحتاج تحديث:**\n- Features\n- Installation\n- Usage\n- Architecture\n- Dependencies\n- Screenshots (إذا تغيرت الواجهة)\n\nتحقق من تاريخ آخر تحديث لـ README.md"
+  }
+}
