@@ -28,7 +28,7 @@
 
 ### ✅ المواصفات المكتملة (1)
 
-#### 1. git-repository-optimization-completed
+#### 1. repository-optimization/git-repository-optimization-completed
 
 - **الحالة:** ✅ مكتمل 100%
 - **الإنجازات:**
