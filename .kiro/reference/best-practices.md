@@ -1,525 +1,394 @@
-# أفضل الممارسات - مرجع شامل
+# Best Practices Reference
 
-**المشروع:** بصير MVP  
-**التاريخ:** 7 ديسمبر 2025  
-**المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**الحالة:** ✅ نشط
-
----
-
-## نظرة عامة
-
-هذا الملف يحتوي على أفضل الممارسات التفصيلية لجميع جوانب المشروع.
+**Author:** [Your Development Team Name]  
+**Version:** 2.2.0  
+**Date:** December 11, 2025
 
 ---
 
-## الفهرس
+## Development Best Practices
 
-1. [Flutter Best Practices](#flutter-best-practices)
-2. [Git Best Practices](#git-best-practices)
-3. [Security Best Practices](#security-best-practices)
-4. [Testing Best Practices](#testing-best-practices)
-5. [Documentation Best Practices](#documentation-best-practices)
-6. [Performance Best Practices](#performance-best-practices)
+### Code Organization
 
----
-
-## Flutter Best Practices
-
-### 1. بنية المشروع
-
-#### Feature-First Organization
+#### Project Structure
 
 ```
-lib/
-├── core/          # المكونات المشتركة
-├── features/      # الميزات (Feature-First)
-└── data/          # طبقة البيانات
+src/
+├── components/     # Reusable UI components
+├── services/       # Business logic and API calls
+├── utils/          # Helper functions and utilities
+├── types/          # Type definitions
+├── constants/      # Application constants
+└── tests/          # Test files
 ```
 
-**الفوائد:**
+#### File Naming
 
-- سهولة العثور على الكود
-- تقليل الاعتماديات
-- تسهيل العمل الجماعي
+- Use descriptive, meaningful names
+- Follow language conventions (camelCase, snake_case, etc.)
+- Include file type in name when helpful
+- Keep names concise but clear
 
-#### Clean Architecture
+### Code Quality
 
-- **Presentation Layer**: UI فقط
-- **Domain Layer**: منطق الأعمال
-- **Data Layer**: الوصول للبيانات
+#### Clean Code Principles
 
-### 2. إدارة الحالة
+1. **Meaningful Names**: Use intention-revealing names
+2. **Small Functions**: One function, one responsibility
+3. **Comments**: Explain why, not what
+4. **Error Handling**: Don't ignore exceptions
+5. **Consistency**: Follow established patterns
 
-#### استخدام Riverpod
+#### SOLID Principles
 
-```dart
-// ✅ صحيح - Provider محدد وواضح
-@riverpod
-class CustomersNotifier extends _$CustomersNotifier {
-  @override
-  Future<List<Customer>> build() async {
-    final repository = ref.watch(customerRepositoryProvider);
-    return repository.getAllCustomers();
-  }
-}
-
-// استخدام Provider
-final customers = ref.watch(customersNotifierProvider);
-```
-
-### 3. قاعدة البيانات
-
-#### Isar Best Practices
-
-```dart
-// ✅ استخدام Transactions
-await isar.writeTxn(() async {
-  await isar.customerModels.put(customer);
-});
-
-// ✅ إغلاق الاتصالات
-await isar.close();
-
-// ✅ استخدام Indexes
-@Index()
-final String name;
-```
-
-### 4. الأداء
-
-#### Const Constructors
-
-```dart
-// ✅ استخدام const
-const Text('مرحباً')
-const Icon(Icons.add)
-const SizedBox(height: 16)
-```
-
-#### Lazy Loading
-
-```dart
-// ✅ ListView.builder للقوائم الطويلة
-ListView.builder(
-  itemCount: items.length,
-  itemBuilder: (context, index) {
-    return ItemCard(item: items[index]);
-  },
-)
-```
-
-### 5. معالجة الأخطاء
-
-#### Async Error Handling
-
-```dart
-// ✅ معالجة شاملة للأخطاء
-Future<void> loadData() async {
-  state = const AsyncValue.loading();
-
-  try {
-    final data = await repository.getData();
-    state = AsyncValue.data(data);
-  } on NetworkException catch (e) {
-    state = AsyncValue.error('خطأ في الاتصال', StackTrace.current);
-  } on Exception catch (e, stackTrace) {
-    debugPrint('Error: $e');
-    state = AsyncValue.error('حدث خطأ غير متوقع', stackTrace);
-  }
-}
-```
-
----
-
-## Git Best Practices
-
-### 1. Commit Messages
-
-#### Conventional Commits
-
-```bash
-# ✅ صحيح
-feat(customers): add customer search functionality
-fix(invoices): resolve PDF export issue
-docs(readme): update installation instructions
-
-# ❌ خطأ
-added stuff
-fix bug
-update
-```
-
-### 2. Branching Strategy
-
-#### Feature Branches
-
-```bash
-# ✅ إنشاء فرع للميزة
-git checkout -b feature/customer-search
-
-# ✅ العمل على الفرع
-git add .
-git commit -m "feat(customers): add search functionality"
-
-# ✅ الدمج في main
-git checkout main
-git merge feature/customer-search
-git branch -d feature/customer-search
-```
-
-### 3. Pull Requests
-
-#### قبل إنشاء PR
-
-- [ ] جميع الاختبارات تنجح
-- [ ] flutter analyze بدون أخطاء
-- [ ] التوثيق محدث
-- [ ] CHANGELOG محدث
+1. **Single Responsibility**: Each class has one reason to change
+2. **Open/Closed**: Open for extension, closed for modification
+3. **Liskov Substitution**: Subtypes must be substitutable
+4. **Interface Segregation**: Many specific interfaces are better
+5. **Dependency Inversion**: Depend on abstractions
 
 ---
 
 ## Security Best Practices
 
-### 1. التخزين الآمن
+### Zero-Trust Implementation
 
-#### استخدام Secure Storage
+#### Authentication
 
-```dart
-// ✅ صحيح - تخزين آمن
-final storage = FlutterSecureStorage();
-await storage.write(key: '<credential-fixture>', value: hashedPassword);
+- Implement multi-factor authentication (MFA)
+- Use strong password policies
+- Implement account lockout mechanisms
+- Regular password rotation policies
 
-// ❌ خطأ - تخزين غير آمن
-SharedPreferences prefs = await SharedPreferences.getInstance();
-await prefs.setString('password', password);
-```
+#### Authorization
 
-### 2. Input Validation
+- Principle of least privilege
+- Role-based access control (RBAC)
+- Regular access reviews
+- Just-in-time access provisioning
 
-#### التحقق من جميع المدخلات
+#### Data Protection
 
-```dart
-// ✅ صحيح - validation شامل
-String? validatePhone(String? value) {
-  if (value == null || value.isEmpty) {
-    return 'رقم الهاتف مطلوب';
+- Encrypt data at rest and in transit
+- Implement data classification
+- Use secure key management
+- Regular security audits
+
+### Secure Coding
+
+#### Input Validation
+
+```javascript
+// Good: Validate and sanitize input
+function processUserInput(input) {
+  if (!input || typeof input !== "string") {
+    throw new Error("Invalid input");
   }
-  if (!value.startsWith('05')) {
-    return 'رقم الهاتف يجب أن يبدأ بـ 05';
-  }
-  if (value.length != 10) {
-    return 'رقم الهاتف يجب أن يتكون من 10 أرقام';
-  }
-  if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-    return 'رقم الهاتف يجب أن يحتوي على أرقام فقط';
-  }
-  return null;
+
+  const sanitized = input.trim().slice(0, 100);
+  return sanitized;
+}
+
+// Bad: Trust user input
+function processUserInput(input) {
+  return input; // Dangerous!
 }
 ```
 
-### 3. Hashing
+#### SQL Injection Prevention
 
-#### استخدام Hashing للبيانات الحساسة
+```sql
+-- Good: Use parameterized queries
+SELECT * FROM users WHERE id = ?
 
-```dart
-// ✅ صحيح - hashing
-import 'package:crypto/crypto.dart';
-import 'dart:convert';
-
-String hashPassword(String password) {
-  return sha256.convert(utf8.encode(password)).toString();
-}
-```
-
----
-
-## Testing Best Practices
-
-### 1. Unit Tests
-
-#### بنية الاختبار
-
-```dart
-void main() {
-  group('CustomerRepository', () {
-    late Isar isar;
-    late CustomerRepository repository;
-
-    setUp(() async {
-      // إعداد قبل كل اختبار
-      isar = await Isar.open([CustomerModelSchema]);
-      repository = CustomerRepository(isar);
-    });
-
-    tearDown(() async {
-      // تنظيف بعد كل اختبار
-      await isar.close(deleteFromDisk: true);
-    });
-
-    test('should add customer successfully', () async {
-      // Arrange
-      final customer = Customer(id: '1', name: 'Test');
-
-      // Act
-      await repository.addCustomer(customer);
-      final customers = await repository.getAllCustomers();
-
-      // Assert
-      expect(customers.length, 1);
-      expect(customers.first.name, 'Test');
-    });
-  });
-}
-```
-
-### 2. Widget Tests
-
-#### اختبار Widgets
-
-```dart
-testWidgets('CustomerCard displays customer info', (tester) async {
-  // Arrange
-  final customer = Customer(id: '1', name: 'Test', phone: '0501234567');
-
-  // Act
-  await tester.pumpWidget(
-    MaterialApp(
-      home: Scaffold(
-        body: CustomerCard(customer: customer),
-      ),
-    ),
-  );
-
-  // Assert
-  expect(find.text('Test'), findsOneWidget);
-  expect(find.text('0501234567'), findsOneWidget);
-});
-```
-
-### 3. Mocking
-
-#### استخدام Mockito
-
-```dart
-@GenerateMocks([CustomerRepository])
-void main() {
-  test('should load customers', () async {
-    // Arrange
-    final mockRepository = MockCustomerRepository();
-    final customers = [Customer(id: '1', name: 'Test')];
-
-    when(mockRepository.getAllCustomers())
-        .thenAnswer((_) async => customers);
-
-    // Act
-    final result = await mockRepository.getAllCustomers();
-
-    // Assert
-    expect(result, customers);
-    verify(mockRepository.getAllCustomers()).called(1);
-  });
-}
-```
-
----
-
-## Documentation Best Practices
-
-### 1. DartDoc
-
-#### توثيق شامل
-
-````dart
-/// يمثل عميل في النظام.
-///
-/// يحتوي على جميع المعلومات الأساسية للعميل.
-///
-/// مثال:
-/// ```dart
-/// final customer = Customer(
-///   id: 'customer-1',
-///   name: 'أحمد محمد',
-///   phone: '0501234567',
-/// );
-/// ```
-class Customer {
-  /// معرف فريد للعميل.
-  final String id;
-
-  /// اسم العميل الكامل.
-  final String name;
-
-  /// رقم هاتف العميل.
-  final String phone;
-
-  /// ينشئ عميل جديد.
-  const Customer({
-    required this.id,
-    required this.name,
-    required this.phone,
-  });
-}
-````
-
-### 2. README
-
-#### بنية README
-
-```markdown
-# اسم المشروع
-
-## نظرة عامة
-
-وصف موجز للمشروع
-
-## المتطلبات
-
-- Flutter 3.24.0+
-- Dart 3.5.0+
-
-## التثبيت
-
-\`\`\`bash
-flutter pub get
-\`\`\`
-
-## الاستخدام
-
-\`\`\`dart
-// مثال
-\`\`\`
-
-## الاختبارات
-
-\`\`\`bash
-flutter test
-\`\`\`
-
-## المساهمة
-
-راجع CONTRIBUTING.md
+-- Bad: String concatenation
+SELECT * FROM users WHERE id = '" + userId + "'
 ```
 
 ---
 
 ## Performance Best Practices
 
-### 1. تحسين البناء
+### Frontend Performance
 
-#### تجنب Rebuilds غير الضرورية
+#### Loading Optimization
 
-```dart
-// ✅ صحيح - استخدام const
-class MyWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        Text('عنوان'),
-        Icon(Icons.home),
-      ],
-    );
-  }
+- Lazy load components and routes
+- Optimize images and assets
+- Use content delivery networks (CDN)
+- Implement caching strategies
+- Minimize bundle sizes
+
+#### Runtime Performance
+
+- Avoid unnecessary re-renders
+- Use virtual scrolling for large lists
+- Implement proper state management
+- Optimize database queries
+- Use performance monitoring tools
+
+### Backend Performance
+
+#### Database Optimization
+
+- Use appropriate indexes
+- Optimize query performance
+- Implement connection pooling
+- Use database caching
+- Monitor query execution plans
+
+#### API Design
+
+- Implement pagination
+- Use appropriate HTTP methods
+- Implement rate limiting
+- Use compression
+- Design efficient data structures
+
+---
+
+## Testing Best Practices
+
+### Test Strategy
+
+#### Test Pyramid
+
+1. **Unit Tests (70%)**: Fast, isolated, focused
+2. **Integration Tests (20%)**: Component interactions
+3. **End-to-End Tests (10%)**: Full user workflows
+
+#### Test Principles
+
+- Tests should be independent
+- Tests should be repeatable
+- Tests should be fast
+- Tests should be clear and readable
+- Tests should cover edge cases
+
+### Test Implementation
+
+#### Unit Testing
+
+```javascript
+// Good: Clear, focused test
+describe("calculateTotal", () => {
+  it("should calculate total with tax correctly", () => {
+    const items = [{ price: 100 }, { price: 200 }];
+    const taxRate = 0.1;
+
+    const result = calculateTotal(items, taxRate);
+
+    expect(result).toBe(330);
+  });
+});
+```
+
+#### Integration Testing
+
+```javascript
+// Good: Test component interactions
+describe("UserService integration", () => {
+  it("should create user and send welcome email", async () => {
+    const userData = { email: "test@example.com", name: "Test User" };
+
+    const user = await userService.createUser(userData);
+
+    expect(user.id).toBeDefined();
+    expect(emailService.sendWelcomeEmail).toHaveBeenCalledWith(user.email);
+  });
+});
+```
+
+---
+
+## Documentation Best Practices
+
+### Code Documentation
+
+#### Comments
+
+```javascript
+// Good: Explain why, not what
+// Calculate compound interest using the formula: A = P(1 + r/n)^(nt)
+function calculateCompoundInterest(principal, rate, frequency, time) {
+  return principal * Math.pow(1 + rate / frequency, frequency * time);
 }
 
-// ✅ استخدام keys للحفاظ على الحالة
-ListView.builder(
-  itemCount: items.length,
-  itemBuilder: (context, index) {
-    return ItemCard(
-      key: <credential-fixture>(items[index].id),
-      item: items[index],
-    );
-  },
-)
+// Bad: Explain what (obvious from code)
+// Add 1 to x
+x = x + 1;
 ```
 
-### 2. تحسين الصور
+#### API Documentation
 
-#### Lazy Loading للصور
+- Use OpenAPI/Swagger specifications
+- Include request/response examples
+- Document error responses
+- Provide authentication details
+- Include rate limiting information
 
-```dart
-// ✅ صحيح - تحميل كسول
-Image.network(
-  imageUrl,
-  loadingBuilder: (context, child, loadingProgress) {
-    if (loadingProgress == null) return child;
-    return CircularProgressIndicator();
-  },
-)
+### Project Documentation
 
-// ✅ استخدام cached_network_image
-CachedNetworkImage(
-  imageUrl: imageUrl,
-  placeholder: (context, url) => CircularProgressIndicator(),
-  errorWidget: (context, url, error) => Icon(Icons.error),
-)
+#### README Structure
+
+1. **Project Description**: What does it do?
+2. **Installation**: How to set it up?
+3. **Usage**: How to use it?
+4. **API Reference**: Available endpoints/functions
+5. **Contributing**: How to contribute?
+6. **License**: Legal information
+
+---
+
+## Git Best Practices
+
+### Commit Messages
+
+#### Conventional Commits
+
+```
+type(scope): description
+
+feat(auth): add multi-factor authentication
+fix(api): resolve user creation validation error
+docs(readme): update installation instructions
+style(css): fix button alignment issues
+refactor(utils): simplify date formatting function
+test(auth): add unit tests for login flow
+chore(deps): update dependencies to latest versions
 ```
 
-### 3. تحسين القوائم
+### Branching Strategy
 
-#### استخدام ListView.builder
+#### Git Flow
 
-```dart
-// ✅ صحيح - للقوائم الطويلة
-ListView.builder(
-  itemCount: items.length,
-  itemBuilder: (context, index) {
-    return ItemCard(item: items[index]);
-  },
-)
+- `main`: Production-ready code
+- `develop`: Integration branch
+- `feature/*`: New features
+- `release/*`: Release preparation
+- `hotfix/*`: Critical fixes
 
-// ❌ خطأ - للقوائم الطويلة
-ListView(
-  children: items.map((item) => ItemCard(item: item)).toList(),
-)
+#### Branch Naming
+
+```
+feature/user-authentication
+fix/login-validation-error
+hotfix/security-vulnerability
+release/v2.1.0
 ```
 
 ---
 
-## قائمة التحقق الشاملة
+## Deployment Best Practices
 
-### قبل Commit
+### CI/CD Pipeline
 
-- [ ] flutter analyze بدون أخطاء
-- [ ] flutter test نجح 100%
-- [ ] التوثيق محدث
-- [ ] CHANGELOG محدث
-- [ ] لا توجد warnings حرجة
-- [ ] الكود يتبع جميع المعايير
+#### Pipeline Stages
 
-### قبل PR
+1. **Build**: Compile and package
+2. **Test**: Run automated tests
+3. **Security**: Security scanning
+4. **Deploy**: Deploy to environment
+5. **Monitor**: Post-deployment monitoring
 
-- [ ] جميع الاختبارات تنجح
-- [ ] التغطية > 70%
-- [ ] المراجعة الذاتية مكتملة
-- [ ] الوصف واضح
-- [ ] Screenshots إذا لزم
+#### Deployment Strategies
 
-### قبل Release
+- **Blue-Green**: Zero-downtime deployments
+- **Canary**: Gradual rollout to subset of users
+- **Rolling**: Sequential update of instances
+- **Feature Flags**: Control feature visibility
 
-- [ ] جميع الميزات مختبرة
-- [ ] التوثيق كامل
-- [ ] CHANGELOG محدث
-- [ ] Version number محدث
-- [ ] Build نجح على جميع المنصات
+### Environment Management
 
----
+#### Environment Separation
 
-## المراجع
+- **Development**: Developer testing
+- **Staging**: Pre-production testing
+- **Production**: Live environment
 
-### للمزيد من التفاصيل
+#### Configuration Management
 
-- `guides/flutter-guide.md` - دليل Flutter الكامل
-- `guides/git-guide.md` - دليل Git الكامل
-- `guides/security-guide.md` - دليل الأمان الكامل
-- `reference/full-standards.md` - جميع المعايير
-- `reference/examples.md` - أمثلة تفصيلية
+- Use environment variables
+- Separate configuration from code
+- Implement configuration validation
+- Use secure secret management
 
 ---
 
-**تم إعداده بواسطة:** فريق وكلاء تطوير مشروع بصير  
-**التاريخ:** 7 ديسمبر 2025  
-**الإصدار:** 1.0  
-**الحالة:** ✅ نشط ومعتمد
+## Monitoring and Observability
+
+### Application Monitoring
+
+#### Key Metrics
+
+- **Performance**: Response time, throughput
+- **Availability**: Uptime, error rates
+- **User Experience**: Page load times, user flows
+- **Business**: Conversion rates, user engagement
+
+#### Logging Best Practices
+
+```javascript
+// Good: Structured logging
+logger.info("User login attempt", {
+  userId: user.id,
+  email: user.email,
+  timestamp: new Date().toISOString(),
+  ipAddress: req.ip,
+  userAgent: req.headers["user-agent"],
+});
+
+// Bad: Unstructured logging
+console.log("User " + user.email + " logged in");
+```
+
+### Error Handling
+
+#### Error Monitoring
+
+- Implement error tracking (Sentry, Rollbar)
+- Set up alerting for critical errors
+- Monitor error trends and patterns
+- Implement error recovery mechanisms
+
+---
+
+## Team Collaboration
+
+### Code Reviews
+
+#### Review Checklist
+
+- [ ] Code follows style guidelines
+- [ ] Tests are included and passing
+- [ ] Documentation is updated
+- [ ] Security considerations addressed
+- [ ] Performance impact considered
+
+#### Review Process
+
+1. **Author**: Submit pull request with description
+2. **Reviewers**: Review code and provide feedback
+3. **Discussion**: Address comments and questions
+4. **Approval**: Approve when ready
+5. **Merge**: Merge to target branch
+
+### Communication
+
+#### Documentation
+
+- Keep documentation up to date
+- Use clear, concise language
+- Include examples and use cases
+- Make documentation discoverable
+
+#### Knowledge Sharing
+
+- Regular team meetings
+- Code review sessions
+- Technical presentations
+- Pair programming sessions
+
+---
+
+**Remember: Best practices evolve. Regularly review and update these guidelines based on team experience and industry standards.**

@@ -144,6 +144,39 @@ docs: تحديث التوثيق
 
 **التفاصيل:** `.kiro/guides/git-guide.md`
 
+## DORA/SPACE Metrics
+
+### DORA Targets
+
+- **Deployment Frequency**: Daily
+- **Lead Time**: < 1 day
+- **Change Failure Rate**: < 15%
+- **Recovery Time**: < 1 hour
+
+### SPACE Dimensions
+
+- **Satisfaction**: Developer happiness (Target: 7.5+/10)
+- **Performance**: Code quality and reliability
+- **Activity**: Development work patterns
+- **Communication**: Information flow effectiveness
+- **Efficiency**: Minimal friction and interruptions
+
+**التفاصيل:** `.kiro/templates/dora-space-metrics.md`
+
+---
+
+## Zero-Trust Security
+
+### Core Principles
+
+- ❌ Never trust, always verify
+- ✅ Continuous authentication
+- ✅ Least privilege access
+- ✅ Supply chain security
+- ✅ Artifact signing
+
+**التفاصيل:** `.kiro/steering/technologies/security-best-practices.md`
+
 ---
 
 **للمراجع الكاملة:** `.kiro/reference/`

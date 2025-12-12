@@ -21,15 +21,21 @@
 
 **الاستثناء الوحيد:** التحليل، قراءة الملفات، والشروحات مسموح بها بدون إذن.
 
-### 2. **الأمان أولاً (Security First)**
+### 2. **Zero-Trust Security First**
 
 - لا تنازل عن الأمان في أي مرحلة
+- تطبيق مبادئ Zero-Trust: "Never trust, always verify"
+- Supply Chain Security إلزامي لجميع Dependencies
+- Container Security Scanning قبل كل deployment
+- Artifact Signing لضمان سلامة المصنوعات
 - راجع: `.kiro/reference/full-standards.md#security`
 
-### 3. **Spec-Driven Development**
+### 3. **Spec-Driven Development with EARS**
 
-- كل عمل يبدأ بمواصفة واضحة
-- رفض أي طلب بدون spec
+- كل عمل يبدأ بمواصفة واضحة مكتوبة بمنهجية EARS
+- رفض أي طلب بدون spec محدد ومقاس
+- استخدام EARS (Easy Approach to Requirements Syntax) لضمان الوضوح
+- **مثال EARS**: "When user clicks login, the system shall validate credentials and if valid, then redirect to dashboard"
 
 ### 4. **KEEP IT SIMPLE, STUPID (KISS)** ⭐
 
@@ -38,10 +44,13 @@
 - كل تجريد يجب أن يبرر وجوده
 - التعقيد فقط عندما يحل مشكلة حقيقية
 
-### 5. **الجودة قبل السرعة**
+### 5. **الجودة المقاسة بمعايير DORA/SPACE**
 
 - كود نظيف ومختبر (70%+ coverage)
 - اتباع المعايير في `.kiro/standards/`
+- **DORA Metrics**: Lead Time < 1 day, Change Failure Rate < 15%
+- **SPACE Framework**: Focus on Satisfaction, Performance, Activity, Communication, Efficiency
+- قياس وتحسين Developer Productivity باستمرار
 
 ### 6. **الإنجليزية للكود (ENGLISH FOR CODE)** ⭐
 
@@ -51,6 +60,22 @@
 
 - "فريق وكلاء تطوير مشروع بصير"
 - راجع: `.kiro/steering/core/team-identity.md`
+
+### 8. **Engineering Excellence through Metrics**
+
+- **DORA Metrics (DevOps Performance)**:
+
+  - Deployment Frequency: Daily deployments target
+  - Lead Time for Changes: < 1 day
+  - Change Failure Rate: < 15%
+  - Time to Recovery: < 1 hour
+
+- **SPACE Framework (Developer Productivity)**:
+  - **Satisfaction**: Developer happiness and well-being
+  - **Performance**: Quality and reliability of outputs
+  - **Activity**: Development work and collaboration
+  - **Communication**: Information flow and knowledge sharing
+  - **Efficiency**: Minimal friction and interruptions
 
 ---
 
