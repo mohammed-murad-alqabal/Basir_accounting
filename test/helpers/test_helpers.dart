@@ -22,11 +22,16 @@ class TestHelpers {
   /// // استخدام isar في الاختبار
   /// await TestHelpers.cleanupTestIsar(isar);
   /// ```
-  static Future<Isar> createTestIsar() async => Isar.open(
-        [CustomerModelSchema, InvoiceModelSchema],
-        directory: '',
-        name: 'test_${DateTime.now().millisecondsSinceEpoch}',
-      );
+  static Future<Isar> createTestIsar() async {
+    // تهيئة Isar Core للاختبارات
+    await Isar.initializeIsarCore(download: true);
+
+    return Isar.open(
+      [CustomerModelSchema, InvoiceModelSchema],
+      directory: '',
+      name: 'test_${DateTime.now().millisecondsSinceEpoch}',
+    );
+  }
 
   /// تنظيف قاعدة البيانات بعد الاختبار
   ///
