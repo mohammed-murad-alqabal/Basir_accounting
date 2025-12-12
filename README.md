@@ -2,6 +2,7 @@
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.35.5-blue.svg)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.9.2-blue.svg)](https://dart.dev)
+[![Figma](https://img.shields.io/badge/Figma-Design-F24E1E.svg?logo=figma&logoColor=white)](YOUR_FIGMA_LINK_HERE)
 [![CI/CD](https://github.com/YOUR_USERNAME/Basser_MVP/workflows/Flutter%20CI/CD%20-%20بصير%20MVP/badge.svg)](https://github.com/YOUR_USERNAME/Basser_MVP/actions)
 [![Tests](https://img.shields.io/badge/Tests-924%20Passed-success.svg)](test/)
 [![Coverage](https://img.shields.io/badge/Coverage-67.9%25-green.svg)](coverage/)
@@ -16,6 +17,7 @@
 ## 📋 المحتويات
 
 - [نظرة عامة](#نظرة-عامة)
+- [🎨 التصميم والواجهات](#-التصميم-والواجهات)
 - [الميزات الأساسية](#الميزات-الأساسية-mvp)
 - [التثبيت والإعداد](#-التثبيت-والإعداد)
 - [البنية المعمارية](#-البنية-المعمارية)
@@ -35,6 +37,53 @@
 - **واجهة سهلة الاستخدام** - تصميم عربي احترافي وبديهي
 - **الأداء العالي** - تطبيق سريع وخفيف الوزن
 - **الأمان** - تشفير البيانات الحساسة وحماية كاملة
+
+---
+
+## 🎨 التصميم والواجهات
+
+### تصميمات Figma
+
+يمكنك الاطلاع على جميع تصميمات التطبيق والواجهات من خلال:
+
+[![Figma Design](https://img.shields.io/badge/Figma-Design-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](YOUR_FIGMA_LINK_HERE)
+
+### تكامل Figma مع Kiro
+
+تم تكوين تكامل مباشر مع Figma للوصول السريع إلى ملفات التصميم:
+
+```bash
+# الحصول على معلومات المستخدم
+python3 scripts/figma_api.py me
+
+# استعراض الملفات والمشاريع
+python3 scripts/figma_api.py teams
+python3 scripts/figma_api.py team-projects TEAM_ID
+python3 scripts/figma_api.py project-files PROJECT_ID
+```
+
+📚 **دليل الاستخدام الكامل:** [Documentation/FIGMA_USAGE_GUIDE.md](Documentation/FIGMA_USAGE_GUIDE.md)
+
+**يتضمن التصميم:**
+
+- 🎨 واجهات المستخدم (UI Screens)
+- 🔄 تدفق المستخدم (User Flow)
+- 🎯 النماذج الأولية (Prototypes)
+- 🎨 نظام التصميم (Design System)
+- 📱 تصميمات متجاوبة (Responsive Design)
+
+**للمطورين:**
+
+- استخدم التصميمات كمرجع للتطوير
+- تحقق من المقاسات والألوان الدقيقة
+- اتبع إرشادات نظام التصميم
+
+**🔗 تكامل Figma مع Kiro:**
+
+- ✅ **جاهز للاستخدام** - راجع [دليل تكامل Figma](Documentation/FIGMA_INTEGRATION_GUIDE.md)
+- 🚀 **إعداد سريع:** `./scripts/setup_figma.sh` للإعداد الأولي
+- 🧪 **اختبار:** `./scripts/test_figma_integration.sh` للتحقق من التكامل
+- 📊 **API مباشر:** `python3 scripts/figma_api.py me` لمعلومات المستخدم
 
 ---
 
@@ -409,8 +458,13 @@ security:
 
 ## 📚 الموارد
 
+### التصميم والواجهات
+
+- [🎨 تصميم Figma](YOUR_FIGMA_LINK_HERE) - تصميمات الواجهات والـ UI/UX
+
 ### التوثيق الأساسي
 
+- [🎨 دليل التصميم](DESIGN.md) - تصميمات Figma ونظام التصميم
 - [دليل التطوير](DEVELOPMENT_GUIDE.md) - دليل شامل للمطورين
 - [معايير الكود](CODING_STANDARDS.md) - معايير الجودة والتسمية
 - [فهرس المشروع](PROJECT_INDEX.md) - فهرس كامل للوثائق
