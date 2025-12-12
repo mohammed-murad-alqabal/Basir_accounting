@@ -1,0 +1,318 @@
+{
+  "version": "2.1",
+  "meta": {
+    "maintainer": "فريق وكلاء تطوير مشروع بصير",
+    "created_at": "2025-12-11T00:00:00Z",
+    "description": "Enhanced MCP configuration with Zero-Trust security, DORA metrics integration, and enforcement policies"
+  },
+  "defaults": {
+    "timeout_ms": 300000,
+    "retries": 1,
+    "retry_backoff_ms": 1000,
+    "on_error": "warn",
+    "log_level": "info",
+    "audit_enabled": true
+  },
+  "policies": {
+    "security": {
+      "zero_trust_verification": true,
+      "require_authentication": true,
+      "audit_all_actions": true
+    },
+    "enforcement": {
+      "block_on": [
+        {
+          "rule": "security_scan_failed",
+          "stage": "pre-deploy"
+        },
+        {
+          "rule": "vulnerability_cvss_high",
+          "threshold": 7,
+          "stage": "pre-merge"
+        },
+        {
+          "rule": "artifact_not_signed",
+          "stage": "pre-deploy"
+        },
+        {
+          "rule": "license_non_compliant",
+          "stage": "pre-merge"
+        }
+      ],
+      "warn_on": [
+        {
+          "rule": "code_quality_threshold",
+          "threshold": "medium"
+        },
+        {
+          "rule": "test_coverage_low",
+          "threshold": 70
+        }
+      ]
+    },
+    "dora_metrics": {
+      "track_deployment_frequency": true,
+      "track_lead_time": true,
+      "track_change_failure_rate": true,
+      "track_recovery_time": true
+    }
+  },
+  "audit": {
+    "enabled": true,
+    "log_path": ".kiro/audit/mcp-audit.log",
+    "log_format": "jsonl",
+    "fields": [
+      "timestamp",
+      "agent",
+      "server",
+      "action",
+      "args",
+      "status",
+      "duration_ms",
+      "dora_impact"
+    ]
+  },
+  "mcpServers": {
+    "git": {
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "mcp-server-git@latest",
+        "--repository",
+        "."
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "git_status",
+        "git_log",
+        "git_diff",
+        "git_diff_unstaged",
+        "git_diff_staged",
+        "git_commit",
+        "git_add",
+        "git_create_branch",
+        "git_checkout",
+        "git_show",
+        "git_branch",
+        "git_reset"
+      ],
+      "priority": 90,
+      "disabledTools": []
+    },
+    "fetch": {
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "mcp-server-fetch@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "fetch"
+      ],
+      "priority": 85,
+      "disabledTools": []
+    },
+    "sqlite": {
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "mcp-server-sqlite@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "query",
+        "list_tables"
+      ],
+      "priority": 80
+    },
+    "time": {
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "mcp-server-time@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "get_current_time",
+        "convert_timezone"
+      ],
+      "priority": 75
+    },
+    "filesystem": {
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "mcp-server-filesystem@latest",
+        "/home/m/Projects/Basser_MVP"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "read_file",
+        "list_directory"
+      ],
+      "priority": 95,
+      "description": "File system operations for project directory"
+    },
+    "memory": {
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "mcp-server-memory@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": true,
+      "autoApprove": [
+        "create_entities",
+        "search_nodes",
+        "read_graph"
+      ],
+      "priority": 88,
+      "description": "Temporarily disabled - package not found in registry"
+    },
+    "brave-search": {
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "mcp-server-brave-search@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "BRAVE_API_KEY": ""
+      },
+      "disabled": true,
+      "autoApprove": [
+        "brave_web_search"
+      ],
+      "priority": 70,
+      "description": "Temporarily disabled - package not found in registry"
+    },
+    "google-maps": {
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "mcp-server-google-maps@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "GOOGLE_MAPS_API_KEY": ""
+      },
+      "disabled": true,
+      "autoApprove": [
+        "maps_search_places",
+        "maps_geocode"
+      ],
+      "priority": 65
+    },
+    "sequential-thinking": {
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "mcp-server-sequential-thinking@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "sequentialthinking"
+      ],
+      "priority": 92,
+      "description": "Temporarily disabled - package not found in registry"
+    },
+    "aws-knowledge": {
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-knowledge-mcp-server@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": true,
+      "autoApprove": [
+        "search_aws_documentation"
+      ],
+      "priority": 85,
+      "description": "Temporarily disabled - package was yanked from registry"
+    },
+    "aws-iac": {
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-iac-mcp-server@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "validate_template",
+        "get_resource_docs"
+      ],
+      "priority": 83
+    },
+    "context7": {
+      "command": "uvx",
+      "args": [
+        "context7-mcp-server@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": true,
+      "autoApprove": [
+        "check_compatibility"
+      ],
+      "priority": 78,
+      "description": "Temporarily disabled - package not found in registry"
+    },
+    "figma": {
+      "command": "/home/m/.pyenv/versions/3.12.5/bin/python3",
+      "args": [
+        "/home/m/Projects/Basser_MVP/scripts/figma_mcp_server.py"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "INFO",
+        "FIGMA_ACCESS_TOKEN": "${FIGMA_ACCESS_TOKEN}",
+        "PYTHONPATH": "/home/m/Projects/Basser_MVP/scripts:/home/m/.pyenv/versions/3.12.5/lib/python3.12/site-packages"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "get_me",
+        "get_teams",
+        "get_team_projects",
+        "get_project_files",
+        "get_file",
+        "get_file_nodes",
+        "get_comments"
+      ],
+      "priority": 82,
+      "disabledTools": [],
+      "description": "Figma design collaboration and file management integration"
+    }
+  }
+}
