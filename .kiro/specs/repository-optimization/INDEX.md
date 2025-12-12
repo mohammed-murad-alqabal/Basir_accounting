@@ -144,7 +144,23 @@
 
 **الأولوية:** 📊 متوسطة
 
-#### 9. [context-optimization-closure/](./context-optimization-closure/)
+#### 9. [structure-optimization/](./structure-optimization/)
+
+**الوصف:** تحسين وإعادة هيكلة ملف STRUCTURE.md لدعم تطوير بصير
+
+**الملفات:**
+
+- `requirements.md` - متطلبات تحسين البنية (8 متطلبات + 23 ضمان)
+- `design.md` - التصميم التقني والمعمارية الشاملة ✅
+- `tasks.md` - مهام التنفيذ المفصلة (6 مراحل، 18 مهمة) ✅
+- `analysis-report.md` - تقرير التحليل الهندسي العميق
+- `README.md` - دليل شامل ومتكامل
+
+**الأولوية:** 📊 متوسطة
+
+**التكامل:** 🔗 متكامل مع error-tracking، testing-integration، steering-cleanup
+
+#### 10. [context-optimization-closure/](./context-optimization-closure/)
 
 **الوصف:** إغلاق مشروع تحسين السياق (مرتبط بإدارة المستودع)
 
@@ -218,7 +234,7 @@
 ### التصنيف حسب الأولوية
 
 - **🔥 حرجة:** 4 مواصفات (repository-audit, error-tracking, release-management, testing-integration)
-- **📊 متوسطة:** 4 مواصفات (steering-cleanup, code-quality, critical-fixes, documentation)
+- **📊 متوسطة:** 5 مواصفات (steering-cleanup, code-quality, critical-fixes, documentation, structure-optimization)
 - **📋 منخفضة:** 1 مواصفة (context-optimization-closure)
 
 ### التصنيف حسب النوع
