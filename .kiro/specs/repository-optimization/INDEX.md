@@ -160,7 +160,29 @@
 
 **التكامل:** 🔗 متكامل مع error-tracking، testing-integration، steering-cleanup
 
-#### 10. [context-optimization-closure/](./context-optimization-closure/)
+#### 10. [flutter-standards-unification/](./flutter-standards-unification/)
+
+**الوصف:** توحيد وتحسين معايير Flutter/Dart لحل 15 مشكلة تقنية حرجة
+
+**الملفات:**
+
+- `requirements.md` - متطلبات توحيد المعايير (8 متطلبات + 23 ضمان) ✅
+
+**المشاكل المحلولة:**
+
+- تضارب معايير التسمية (Constants)
+- استخدام StateNotifier المهجور
+- كود معطل في flutter-guide.md
+- أنماط Isar غير صحيحة
+- معايير RTL غير مكتملة
+- معايير أمان غير شاملة
+- و9 مشاكل أخرى
+
+**الأولوية:** 🔥 عالية جداً
+
+**التكامل:** 🔗 متكامل مع error-tracking، testing-integration، code-quality
+
+#### 11. [context-optimization-closure/](./context-optimization-closure/)
 
 **الوصف:** إغلاق مشروع تحسين السياق (مرتبط بإدارة المستودع)
 
@@ -226,14 +248,14 @@
 
 ### الملفات والمجلدات
 
-- **إجمالي المجلدات:** 9 مجلدات
-- **إجمالي الملفات:** 57 ملف markdown
+- **إجمالي المجلدات:** 10 مجلدات
+- **إجمالي الملفات:** 58 ملف markdown
 - **الوثائق الأساسية:** 4 ملفات
 - **التقارير:** 3 ملفات
 
 ### التصنيف حسب الأولوية
 
-- **🔥 حرجة:** 4 مواصفات (repository-audit, error-tracking, release-management, testing-integration)
+- **🔥 حرجة:** 5 مواصفات (repository-audit, error-tracking, release-management, testing-integration, flutter-standards-unification)
 - **📊 متوسطة:** 5 مواصفات (steering-cleanup, code-quality, critical-fixes, documentation, structure-optimization)
 - **📋 منخفضة:** 1 مواصفة (context-optimization-closure)
 
