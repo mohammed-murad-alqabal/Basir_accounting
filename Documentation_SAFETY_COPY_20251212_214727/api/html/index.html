@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="basser_app API docs, for the Dart programming language.">
+  <title>basser_app - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+  
+<link rel="stylesheet" href="custom.css">
+</head>
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">basser_app package</li>
+  </ol>
+  <div class="self-name">basser_app</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="-------">تطبيق بصير - نظام إدارة الفواتير والعملاء</h1>
+<p><a href="https://flutter.dev"><img src="https://img.shields.io/badge/Flutter-3.35.5-blue.svg" alt="Flutter"></a>
+<a href="https://dart.dev"><img src="https://img.shields.io/badge/Dart-3.9.2-blue.svg" alt="Dart"></a>
+<a href="https://github.com/YOUR_USERNAME/Basser_MVP/actions"><img src="https://github.com/YOUR_USERNAME/Basser_MVP/workflows/Flutter%20CI/CD%20-%20%D8%A8%D8%B5%D9%8A%D8%B1%20MVP/badge.svg" alt="CI/CD"></a>
+<a href="test/"><img src="https://img.shields.io/badge/Tests-924%20Passed-success.svg" alt="Tests"></a>
+<a href="coverage/"><img src="https://img.shields.io/badge/Coverage-67.9%25-green.svg" alt="Coverage"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"></a></p>
+<p><strong>بصير</strong> هو تطبيق موبايل احترافي لإدارة الفواتير والعملاء، مصمم خصيصًا للعاملين بالقطاع الخاص والشركات الصغيرة والمتوسطة في الشرق الأوسط.</p>
+<blockquote>
+<p>🎯 <strong>Kiro Strategic Workspace</strong> - يتبع المشروع منهجية Spec-Driven Development (SDD) ومبدأ Security First</p>
+</blockquote>
+<hr>
+<h2 id="-">📋 المحتويات</h2>
+<ul>
+<li><a href="#%D9%86%D8%B8%D8%B1%D8%A9-%D8%B9%D8%A7%D9%85%D8%A9">نظرة عامة</a></li>
+<li><a href="#%D8%A7%D9%84%D9%85%D9%8A%D8%B2%D8%A7%D8%AA-%D8%A7%D9%84%D8%A3%D8%B3%D8%A7%D8%B3%D9%8A%D8%A9-mvp">الميزات الأساسية</a></li>
+<li><a href="#-%D8%A7%D9%84%D8%AA%D8%AB%D8%A8%D9%8A%D8%AA-%D9%88%D8%A7%D9%84%D8%A5%D8%B9%D8%AF%D8%A7%D8%AF">التثبيت والإعداد</a></li>
+<li><a href="#-%D8%A7%D9%84%D8%A8%D9%86%D9%8A%D8%A9-%D8%A7%D9%84%D9%85%D8%B9%D9%85%D8%A7%D8%B1%D9%8A%D8%A9">البنية المعمارية</a></li>
+<li><a href="#-%D8%AD%D8%A7%D9%84%D8%A9-%D8%A7%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9">حالة المشروع</a></li>
+<li><a href="#-%D9%86%D8%B8%D8%A7%D9%85-%D8%AA%D8%AA%D8%A8%D8%B9-%D8%A7%D9%84%D8%A3%D8%AE%D8%B7%D8%A7%D8%A1-%D9%88%D8%A7%D9%84%D8%B3%D8%AC%D9%84%D8%A7%D8%AA">نظام تتبع الأخطاء والسجلات</a></li>
+<li><a href="#-cicd-pipeline">CI/CD Pipeline</a></li>
+<li><a href="#-%D8%A7%D9%84%D9%85%D8%B3%D8%A7%D9%87%D9%85%D8%A9">المساهمة</a></li>
+<li><a href="#-%D8%A7%D9%84%D9%85%D9%88%D8%A7%D8%B1%D8%AF">الموارد</a></li>
+</ul>
+<hr>
+<h2 id="--2">نظرة عامة</h2>
+<p>تطبيق بصير يوفر حلاً متكاملاً لإدارة العملاء والفواتير بكفاءة عالية، مع التركيز على:</p>
+<ul>
+<li><strong>التخزين المحلي الآمن</strong> - جميع البيانات محفوظة محليًا على الجهاز</li>
+<li><strong>واجهة سهلة الاستخدام</strong> - تصميم عربي احترافي وبديهي</li>
+<li><strong>الأداء العالي</strong> - تطبيق سريع وخفيف الوزن</li>
+<li><strong>الأمان</strong> - تشفير البيانات الحساسة وحماية كاملة</li>
+</ul>
+<hr>
+<h2 id="--mvp">الميزات الأساسية (MVP)</h2>
+<h3 id="--">🔐 المصادقة والأمان</h3>
+<ul>
+<li>إنشاء حساب محلي آمن</li>
+<li>تسجيل دخول مع تشفير كلمات المرور</li>
+<li>تخزين آمن للبيانات الحساسة</li>
+</ul>
+<h3 id="---2">👥 إدارة العملاء</h3>
+<ul>
+<li>إضافة وتعديل وحذف العملاء</li>
+<li>عرض قائمة العملاء مع البحث</li>
+<li>تفاصيل كاملة لكل عميل</li>
+</ul>
+<h3 id="---3">📄 إدارة الفواتير</h3>
+<ul>
+<li>إنشاء فواتير احترافية</li>
+<li>إضافة بنود متعددة</li>
+<li>حساب الضرائب تلقائيًا (15%)</li>
+<li>تتبع حالة الفاتورة (مسودة، مرسلة، مدفوعة)</li>
+<li>تصدير PDF</li>
+</ul>
+<h3 id="---4">📊 لوحة التحكم</h3>
+<ul>
+<li>ملخص الإحصائيات</li>
+<li>إجراءات سريعة</li>
+</ul>
+<h3 id="--3">⚙️ الإعدادات</h3>
+<ul>
+<li>إعدادات الشركة</li>
+<li>تغيير كلمة المرور</li>
+<li>تسجيل الخروج</li>
+</ul>
+<hr>
+<h2 id="---5">🚀 التثبيت والإعداد</h2>
+<h3 id="">المتطلبات</h3>
+<ul>
+<li>Flutter 3.35.5 أو أحدث</li>
+<li>Dart 3.9.2 أو أحدث</li>
+<li>Java 21 (للـ Android)</li>
+<li>Android SDK 36.1.0 أو أحدث</li>
+</ul>
+<h3 id="--4">خطوات التثبيت</h3>
+<pre class="language-bash"><code class="language-bash"># استنساخ المشروع
+git clone &lt;repository-url&gt;
+cd Basser_MVP
+
+# تثبيت المكتبات
+flutter pub get
+
+# توليد الملفات المُنتجة
+flutter pub run build_runner build --delete-conflicting-outputs
+
+# تشغيل التطبيق
+flutter run
+</code></pre>
+<h3 id="--5">تشغيل الاختبارات</h3>
+<h4 id="---">الطريقة السريعة (باستخدام السكريبت)</h4>
+<pre class="language-bash"><code class="language-bash"># تشغيل جميع الاختبارات
+./test/run_tests.sh
+
+# تشغيل الاختبارات مع تقرير التغطية
+./test/run_tests.sh --coverage
+
+# تشغيل الاختبارات وفتح تقرير التغطية
+./test/run_tests.sh --coverage --open
+</code></pre>
+<h4 id="--6">الطريقة اليدوية</h4>
+<pre class="language-bash"><code class="language-bash"># تشغيل جميع الاختبارات
+flutter test
+
+# تشغيل الاختبارات مع تقرير التغطية
+flutter test --coverage
+
+# توليد HTML report
+genhtml coverage/lcov.info -o coverage/html
+
+# فتح التقرير في المتصفح
+open coverage/html/index.html  # macOS
+xdg-open coverage/html/index.html  # Linux
+</code></pre>
+<h4 id="--7">أنواع الاختبارات</h4>
+<ul>
+<li><strong>Unit Tests</strong> - اختبار الوحدات المعزولة (Models, Repositories, Services)</li>
+<li><strong>Widget Tests</strong> - اختبار الواجهات (Widgets, Screens)</li>
+<li><strong>Integration Tests</strong> - اختبار التدفقات الكاملة</li>
+</ul>
+<p>📊 <strong>الحالة الحالية:</strong> 924 اختبار (922 ناجح + 2 skipped) - معدل نجاح 99.8%</p>
+<hr>
+<h2 id="---6">🏗️ البنية المعمارية</h2>
+<h3 id="clean-architecture">Clean Architecture</h3>
+<p>يستخدم التطبيق <strong>Clean Architecture</strong> مع <strong>Feature-First Organization</strong>:</p>
+<pre class="language-dart"><code>lib/
+├── core/              # المكونات الأساسية المشتركة
+├── features/         # الميزات (auth, customers, invoices, dashboard)
+└── data/            # طبقة البيانات (models, repositories, services)
+</code></pre>
+<h3 id="--8">المكتبات الرئيسية</h3>
+<ul>
+<li><strong>flutter_riverpod</strong> ^2.4.0 - إدارة الحالة</li>
+<li><strong>isar</strong> ^3.1.0+1 - قاعدة بيانات محلية عالية الأداء</li>
+<li><strong>flutter_secure_storage</strong> ^9.0.0 - تخزين آمن للبيانات الحساسة</li>
+<li><strong>crypto</strong> ^3.0.7 - تشفير البيانات</li>
+<li><strong>freezed</strong> ^2.4.5 - توليد immutable classes ✨ (جديد في v1.7.0)</li>
+<li><strong>pdf</strong> ^3.10.4 - توليد فواتير PDF</li>
+<li><strong>printing</strong> ^5.11.1 - طباعة الفواتير</li>
+</ul>
+<p>📖 <strong>للتفاصيل الكاملة:</strong> راجع <a href="ARCHITECTURE.md">ARCHITECTURE.md</a></p>
+<hr>
+<h2 id="---7">📊 حالة المشروع</h2>
+<h3 id="---8">✅ جاهز للإنتاج</h3>
+<p><strong>آخر تحديث:</strong> 2 ديسمبر 2025</p>
+<table>
+<thead>
+<tr>
+<th>المقياس</th>
+<th>القيمة</th>
+<th>الحالة</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>تغطية الاختبارات</td>
+<td>67.9%</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>عدد الاختبارات</td>
+<td>924</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>نجاح الاختبارات</td>
+<td>99.8%</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>تغطية التوثيق</td>
+<td>95%+</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>المشاكل الحرجة</td>
+<td>0</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>وقت تشغيل الاختبارات</td>
+<td>~40s</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>CI/CD Status</td>
+<td>Active</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Flutter Analyze</td>
+<td>0 مشاكل</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dora-metrics">DORA Metrics</h3>
+<table>
+<thead>
+<tr>
+<th align="left">المقياس</th>
+<th align="center">القيمة</th>
+<th align="center">المستوى</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Deployment Frequency</td>
+<td align="center">يومي</td>
+<td align="center">🏆 Elite</td>
+</tr>
+<tr>
+<td align="left">Lead Time for Changes</td>
+<td align="center">&lt; 1 يوم</td>
+<td align="center">🏆 Elite</td>
+</tr>
+<tr>
+<td align="left">Time to Restore Service</td>
+<td align="center">&lt; 1 ساعة</td>
+<td align="center">🏆 Elite</td>
+</tr>
+<tr>
+<td align="left">Change Failure Rate</td>
+<td align="center">0%</td>
+<td align="center">🏆 Elite</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="-cicd-pipeline">🔄 CI/CD Pipeline</h2>
+<p>يستخدم المشروع <strong>GitHub Actions</strong> لأتمتة عملية الاختبار والبناء:</p>
+<h3 id="workflow-">Workflow الرئيسي</h3>
+<pre class="language-yaml"><code class="language-yaml">name: Flutter CI/CD - بصير MVP
+on: [push, pull_request]
+</code></pre>
+<h3 id="-2">المراحل</h3>
+<ol>
+<li>
+<p><strong>🔍 تحليل واختبار</strong></p>
+<ul>
+<li>تحليل الكود (flutter analyze)</li>
+<li>تشغيل جميع الاختبارات</li>
+<li>التحقق من التغطية (≥ 70%)</li>
+<li>رفع تقرير التغطية</li>
+</ul>
+</li>
+<li>
+<p><strong>🤖 بناء Android</strong></p>
+<ul>
+<li>بناء APK</li>
+<li>التحقق من حجم APK (&lt; 50 MB)</li>
+<li>رفع APK كـ artifact</li>
+</ul>
+</li>
+<li>
+<p><strong>🍎 بناء iOS</strong> (اختياري)</p>
+<ul>
+<li>بناء iOS build</li>
+<li>رفع build كـ artifact</li>
+</ul>
+</li>
+<li>
+<p><strong>🔒 فحص الأمان</strong></p>
+<ul>
+<li>فحص الأسرار المشفرة</li>
+<li>فحص الثغرات في التبعيات</li>
+</ul>
+</li>
+<li>
+<p><strong>📊 تقرير النتائج</strong></p>
+<ul>
+<li>تقرير شامل لجميع المراحل</li>
+<li>حالة النجاح/الفشل</li>
+</ul>
+</li>
+</ol>
+<h3 id="quality-gates">Quality Gates</h3>
+<ul>
+<li>✅ جميع الاختبارات يجب أن تنجح</li>
+<li>✅ التغطية يجب أن تكون ≥ 70%</li>
+<li>✅ لا أخطاء في flutter analyze</li>
+<li>✅ لا أسرار مشفرة في الكود</li>
+<li>✅ حجم APK &lt; 50 MB</li>
+</ul>
+<h3 id="---9">الملفات ذات الصلة</h3>
+<ul>
+<li><a href=".github/workflows/flutter_ci.yml"><code>.github/workflows/flutter_ci.yml</code></a> - Workflow الرئيسي</li>
+<li><a href="test/run_tests.sh"><code>test/run_tests.sh</code></a> - سكريبت تشغيل الاختبارات محلياً</li>
+</ul>
+<hr>
+<h2 id="----">🔍 نظام تتبع الأخطاء والسجلات</h2>
+<p>يتضمن المشروع <strong>نظام تتبع أخطاء وسجلات متقدم</strong> يعمل تلقائياً لضمان جودة الكود وتتبع المشاكل.</p>
+<h3 id="---10">✨ الميزات الرئيسية</h3>
+<ul>
+<li><strong>🔄 Git Hooks تلقائية</strong> - فحص الكود قبل كل commit و push</li>
+<li><strong>📊 تقارير شاملة</strong> - تقارير تلقائية بالأخطاء والتحذيرات</li>
+<li><strong>🗄️ أرشفة ذكية</strong> - أرشفة تلقائية للسجلات القديمة</li>
+<li><strong>🔒 فحص الأمان</strong> - كشف الأسرار والبيانات الحساسة</li>
+<li><strong>⚡ أداء عالي</strong> - تخزين مؤقت ذكي للنتائج</li>
+</ul>
+<h3 id="---11">🚀 التثبيت السريع</h3>
+<pre class="language-bash"><code class="language-bash"># تثبيت النظام بأمر واحد
+bash scripts/install.sh
+
+# إلغاء التثبيت
+bash scripts/uninstall.sh
+</code></pre>
+<h3 id="---12">📋 الأوامر الأساسية</h3>
+<pre class="language-bash"><code class="language-bash"># جمع السجلات
+bash scripts/collect_logs.sh
+
+# أرشفة السجلات القديمة
+bash scripts/archive_logs.sh
+
+# إنشاء تقرير شامل
+bash scripts/generate_report.sh
+
+# اختبار التكامل
+bash test/integration/run_integration_tests.sh
+
+# اختبار الأمان
+bash test/security/run_security_tests.sh
+</code></pre>
+<h3 id="-git-hooks">🎯 Git Hooks</h3>
+<h4 id="pre-commit-hook">Pre-commit Hook</h4>
+<p>يتم تشغيله تلقائياً قبل كل commit:</p>
+<ul>
+<li>✅ فحص التنسيق (Flutter Format)</li>
+<li>✅ التحليل الثابت (Flutter Analyze)</li>
+<li>✅ التحقق من رسائل الـ commit</li>
+<li>⏱️ الوقت: &lt; 30 ثانية</li>
+</ul>
+<h4 id="pre-push-hook">Pre-push Hook</h4>
+<p>يتم تشغيله تلقائياً قبل كل push:</p>
+<ul>
+<li>✅ تشغيل الاختبارات</li>
+<li>✅ فحص الأسرار المكشوفة</li>
+<li>✅ التحقق من التغطية</li>
+<li>⏱️ الوقت: &lt; 120 ثانية</li>
+</ul>
+<h3 id="--9">📊 التقارير</h3>
+<p>يتم إنشاء تقارير شاملة تحتوي على:</p>
+<ul>
+<li>📈 إحصائيات المشروع</li>
+<li>⚠️ ملخص الأخطاء والتحذيرات</li>
+<li>✅ نتائج الاختبارات</li>
+<li>💡 توصيات للتحسين</li>
+</ul>
+<p><strong>مثال:</strong></p>
+<pre class="language-bash"><code class="language-bash">bash scripts/generate_report.sh
+# التقرير: logs/reports/report_YYYYMMDD_HHMMSS.md
+</code></pre>
+<h3 id="---13">🗄️ الأرشفة التلقائية</h3>
+<ul>
+<li>السجلات الأقدم من 7 أيام يتم أرشفتها تلقائياً</li>
+<li>ضغط تلقائي للأرشيف (tar.gz)</li>
+<li>حفظ في <code>logs/archive/</code></li>
+</ul>
+<h3 id="--10">🔒 الأمان</h3>
+<ul>
+<li><strong>كشف الأسرار:</strong> فحص تلقائي لـ API keys، passwords، tokens</li>
+<li><strong>تنظيف البيانات:</strong> إزالة البيانات الحساسة من السجلات</li>
+<li><strong>التشفير:</strong> تشفير البيانات الحساسة</li>
+<li><strong>120+ اختبار أمان</strong> شامل</li>
+</ul>
+<h3 id="--11">⚙️ التكوين</h3>
+<p>ملف التكوين: <code>.kiro/config/error_tracking.yml</code></p>
+<pre class="language-yaml"><code class="language-yaml"># إعدادات Git Hooks
+hooks:
+  pre_commit:
+    enabled: true
+    timeout: 30
+  pre_push:
+    enabled: true
+    timeout: 120
+
+# إعدادات السجلات
+logs:
+  retention_days: 7
+  sanitize: true
+
+# إعدادات الأمان
+security:
+  secret_detection: true
+  sanitize_logs: true
+</code></pre>
+<h3 id="---14">📚 التوثيق الكامل</h3>
+<ul>
+<li><a href="Documentation/ERROR_TRACKING_GUIDE.md">دليل نظام تتبع الأخطاء</a></li>
+<li><a href="Documentation/GIT_GITHUB_GUIDE.md">دليل Git و GitHub</a></li>
+<li><a href="Documentation/ERROR_HANDLING_GUIDE.md">دليل معالجة الأخطاء</a></li>
+</ul>
+<h3 id="--12">📊 الإحصائيات</h3>
+<table>
+<thead>
+<tr>
+<th align="left">المكون</th>
+<th align="center">الحالة</th>
+<th align="center">التغطية</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Git Hooks</td>
+<td align="center">✅ نشط</td>
+<td align="center">100%</td>
+</tr>
+<tr>
+<td align="left">جمع السجلات</td>
+<td align="center">✅ نشط</td>
+<td align="center">100%</td>
+</tr>
+<tr>
+<td align="left">الأرشفة</td>
+<td align="center">✅ نشط</td>
+<td align="center">100%</td>
+</tr>
+<tr>
+<td align="left">التقارير</td>
+<td align="center">✅ نشط</td>
+<td align="center">100%</td>
+</tr>
+<tr>
+<td align="left">الأمان</td>
+<td align="center">✅ نشط</td>
+<td align="center">100%</td>
+</tr>
+<tr>
+<td align="left">الاختبارات</td>
+<td align="center">✅ 180+</td>
+<td align="center">100%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="--13">🎯 الفوائد</h3>
+<ul>
+<li>✅ <strong>اكتشاف مبكر للمشاكل</strong> - قبل الوصول للإنتاج</li>
+<li>✅ <strong>جودة كود عالية</strong> - فحص تلقائي مستمر</li>
+<li>✅ <strong>أمان محسّن</strong> - كشف الأسرار والثغرات</li>
+<li>✅ <strong>تتبع شامل</strong> - سجلات كاملة لكل شيء</li>
+<li>✅ <strong>توفير الوقت</strong> - أتمتة كاملة</li>
+</ul>
+<hr>
+<h2 id="--14">🤝 المساهمة</h2>
+<p>نرحب بالمساهمات! يرجى قراءة <a href="CONTRIBUTING.md">CONTRIBUTING.md</a> للحصول على التفاصيل.</p>
+<h3 id="--15">عملية المساهمة</h3>
+<ol>
+<li>Fork المشروع</li>
+<li>إنشاء branch للميزة (<code>git checkout -b feature/AmazingFeature</code>)</li>
+<li>Commit التغييرات (<code>git commit -m 'feat: add amazing feature'</code>)</li>
+<li>Push إلى Branch (<code>git push origin feature/AmazingFeature</code>)</li>
+<li>فتح Pull Request</li>
+</ol>
+<hr>
+<h2 id="--16">📚 الموارد</h2>
+<h3 id="--17">التوثيق الأساسي</h3>
+<ul>
+<li><a href="DEVELOPMENT_GUIDE.md">دليل التطوير</a> - دليل شامل للمطورين</li>
+<li><a href="CODING_STANDARDS.md">معايير الكود</a> - معايير الجودة والتسمية</li>
+<li><a href="PROJECT_INDEX.md">فهرس المشروع</a> - فهرس كامل للوثائق</li>
+</ul>
+<h3 id="--18">معايير الحوكمة</h3>
+<p><strong>📦 البنية الجديدة (7 ديسمبر 2025)</strong> - تم تحسين نظام التوجيه بنسبة <strong>97.6%</strong></p>
+<ul>
+<li><a href=".kiro/steering/README.md">دليل البنية الجديدة</a> - نظرة عامة شاملة</li>
+<li><a href=".kiro/steering/LOADING_GUIDE.md">دليل التحميل</a> - كيفية استخدام النظام الجديد</li>
+</ul>
+<p><strong>الملفات الأساسية (تُحمّل دائماً):</strong></p>
+<ul>
+<li><a href=".kiro/steering/core/philosophy.md">الفلسفة الهندسية</a></li>
+<li><a href=".kiro/steering/core/quick-reference.md">المرجع السريع</a></li>
+<li><a href=".kiro/steering/core/team-identity.md">الهوية الموحدة</a></li>
+</ul>
+<p><strong>المعايير (عند الحاجة):</strong></p>
+<ul>
+<li><a href=".kiro/steering/standards/naming.md">معايير التسمية</a></li>
+<li><a href=".kiro/steering/standards/code-quality.md">معايير الجودة</a></li>
+<li><a href=".kiro/steering/standards/flutter.md">معايير Flutter</a></li>
+<li><a href=".kiro/steering/standards/arabic.md">معايير العربية</a></li>
+<li><a href=".kiro/steering/standards/documentation.md">معايير التوثيق</a></li>
+<li><a href=".kiro/steering/standards/testing.md">معايير الاختبارات</a></li>
+</ul>
+<p><strong>الأدلة التفصيلية (عند الموضوع):</strong></p>
+<ul>
+<li><a href=".kiro/steering/guides/flutter-guide.md">دليل Flutter</a></li>
+<li><a href=".kiro/steering/guides/git-guide.md">دليل Git</a></li>
+<li><a href=".kiro/steering/guides/security-guide.md">دليل الأمان</a></li>
+</ul>
+<p><strong>المراجع الكاملة (عند الطلب):</strong></p>
+<ul>
+<li><a href=".kiro/steering/reference/full-standards.md">جميع المعايير</a></li>
+<li><a href=".kiro/steering/reference/examples.md">أمثلة تفصيلية</a></li>
+<li><a href=".kiro/steering/reference/arabic-dictionary.md">القاموس العربي</a></li>
+<li><a href=".kiro/steering/reference/best-practices.md">أفضل الممارسات</a></li>
+<li><a href=".kiro/steering/reference/strategic-docs.md">الوثائق الاستراتيجية</a></li>
+</ul>
+<h3 id="-specs">المواصفات (Specs)</h3>
+<ul>
+<li><a href=".kiro/specs/documentation-system/">نظام التوثيق</a></li>
+<li><a href=".kiro/specs/critical-fixes/">الإصلاحات الحرجة</a></li>
+<li><a href=".kiro/specs/testing-system/">نظام الاختبارات</a></li>
+</ul>
+<hr>
+<h2 id="-kiro-strategic-workspace">🎯 Kiro Strategic Workspace</h2>
+<p>هذا المشروع يطبق <strong>Kiro Strategic Workspace</strong> - بيئة عمل هندسية ذكية وقابلة للتشغيل تضمن:</p>
+<h3 id="--19">المبادئ الأساسية</h3>
+<ol>
+<li><strong>Security First</strong> - الأمان في كل مرحلة</li>
+<li><strong>Spec-Driven Development</strong> - كل ميزة تبدأ بمواصفة</li>
+<li><strong>Quality First</strong> - تغطية اختبارات 70%+</li>
+</ol>
+<h3 id="-3">الإنجازات</h3>
+<ul>
+<li>✅ <strong>267 اختبار</strong> بنسبة نجاح 100%</li>
+<li>✅ <strong>تغطية كاملة</strong> للكود (100%)</li>
+<li>✅ <strong>95%+ تغطية توثيق</strong> احترافي</li>
+<li>✅ <strong>3 مواصفات مكتملة</strong> (Requirements, Design, Tasks)</li>
+<li>✅ <strong>12 معيار حوكمة نشط</strong></li>
+<li>✅ <strong>Clean Architecture</strong> مع Feature-First</li>
+</ul>
+<hr>
+<h2 id="-enhanced-prompts-system-v20">🚀 Enhanced Prompts System (v2.0)</h2>
+<p><strong>جديد!</strong> يتضمن المشروع <strong>نظام prompts محسّن</strong> لـ Spec-Driven Development مع أفضل الممارسات من kiro-workflow-prompts.</p>
+<h3 id="---15">✨ الميزات الرئيسية</h3>
+<ul>
+<li>⭐ <strong>COLLABORATION FIRST</strong> - موافقة صريحة إلزامية قبل التنفيذ</li>
+<li>⭐ <strong>KISS Principle</strong> - البساطة أولاً، لا تعقيد غير ضروري</li>
+<li>⭐ <strong>ENGLISH FOR CODE</strong> - جميع الكود بالإنجليزية</li>
+<li>⭐ <strong>Mermaid.js Diagrams</strong> - رسوم بيانية إلزامية في التصميم</li>
+<li>⭐ <strong>GitHub CLI Integration</strong> - مراجعة PR متكاملة</li>
+<li>⭐ <strong>Smart Analysis</strong> - تحليل ذكي وتصفية تلقائية</li>
+</ul>
+<h3 id="---16">📊 التحسينات المقاسة</h3>
+<table>
+<thead>
+<tr>
+<th align="left">المقياس</th>
+<th align="left">قبل</th>
+<th align="left">بعد</th>
+<th align="left">التحسين</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">وضوح المبادئ</td>
+<td align="left">7/10</td>
+<td align="left">10/10</td>
+<td align="left">+43%</td>
+</tr>
+<tr>
+<td align="left">جمع السياق</td>
+<td align="left">يدوي</td>
+<td align="left">إلزامي</td>
+<td align="left">+100%</td>
+</tr>
+<tr>
+<td align="left">التحقق من الفهم</td>
+<td align="left">لا</td>
+<td align="left">إلزامي</td>
+<td align="left">جديد</td>
+</tr>
+<tr>
+<td align="left">رسوم Mermaid.js</td>
+<td align="left">اختياري</td>
+<td align="left">إلزامي</td>
+<td align="left">+100%</td>
+</tr>
+<tr>
+<td align="left">تحليل الـ commit</td>
+<td align="left">بسيط</td>
+<td align="left">ذكي</td>
+<td align="left">+200%</td>
+</tr>
+<tr>
+<td align="left">تصفية الـ artifacts</td>
+<td align="left">يدوي</td>
+<td align="left">تلقائي</td>
+<td align="left">+150%</td>
+</tr>
+<tr>
+<td align="left">GitHub CLI</td>
+<td align="left">لا</td>
+<td align="left">نعم</td>
+<td align="left">+100%</td>
+</tr>
+<tr>
+<td align="left">قائمة مراجعة PR</td>
+<td align="left">8</td>
+<td align="left">20+</td>
+<td align="left">+150%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>التقييم الإجمالي:</strong> 9.8/10 ⭐⭐⭐⭐⭐</p>
+<h3 id="----2">🎯 سير العمل الكامل</h3>
+<pre class="language-dart"><code>1. Requirements → createSpec.prompt.md  → requirements.md
+2. Design      → design.prompt.md      → design.md (with Mermaid.js)
+3. Tasks       → createTask.prompt.md  → tasks.md
+4. Execute     → executeTask.prompt.md → implementation + tests
+5. Commit      → commit.prompt.md      → professional commit message
+6. Review      → prReview.prompt.md    → comprehensive PR review
+</code></pre>
+<h3 id="--20">📚 الموارد</h3>
+<h4 id="--10-">البدء السريع (10 دقائق)</h4>
+<ul>
+<li><strong><a href=".kiro/prompts/QUICK_START.md">دليل البدء السريع</a></strong> - ابدأ في 10 دقائق</li>
+<li><strong><a href=".kiro/prompts/README.md">دليل شامل</a></strong> - توثيق كامل</li>
+<li><strong><a href=".kiro/prompts/examples/">أمثلة عملية</a></strong> - 6 أمثلة كاملة</li>
+</ul>
+<h4 id="-prompts--v20">الـ Prompts المحسّنة (v2.0)</h4>
+<ol>
+<li><strong><a href=".kiro/prompts/createSpec.prompt.md">createSpec.prompt.md</a></strong> - توليد المتطلبات مع EARS syntax</li>
+<li><strong><a href=".kiro/prompts/design.prompt.md">design.prompt.md</a></strong> - التصميم مع Mermaid.js إلزامي</li>
+<li><strong><a href=".kiro/prompts/createTask.prompt.md">createTask.prompt.md</a></strong> - تقسيم المهام بدون approval gate</li>
+<li><strong><a href=".kiro/prompts/executeTask.prompt.md">executeTask.prompt.md</a></strong> - تنفيذ مع جمع سياق إلزامي</li>
+<li><strong><a href=".kiro/prompts/commit.prompt.md">commit.prompt.md</a></strong> - رسائل commit احترافية</li>
+<li><strong><a href=".kiro/prompts/prReview.prompt.md">prReview.prompt.md</a></strong> - مراجعة PR شاملة</li>
+</ol>
+<h4 id="--21">أمثلة عملية</h4>
+<ul>
+<li><strong><a href=".kiro/prompts/examples/01-createSpec-example.md">01-createSpec-example.md</a></strong> - مثال كامل للمتطلبات</li>
+<li><strong><a href=".kiro/prompts/examples/02-design-example.md">02-design-example.md</a></strong> - مثال التصميم مع 3 رسوم Mermaid.js</li>
+<li><strong><a href=".kiro/prompts/examples/03-createTask-example.md">03-createTask-example.md</a></strong> - مثال تقسيم المهام</li>
+<li><strong><a href=".kiro/prompts/examples/04-executeTask-example.md">04-executeTask-example.md</a></strong> - مثال التنفيذ</li>
+<li><strong><a href=".kiro/prompts/examples/05-commit-example.md">05-commit-example.md</a></strong> - مثال رسائل commit</li>
+<li><strong><a href=".kiro/prompts/examples/06-prReview-example.md">06-prReview-example.md</a></strong> - مثال مراجعة PR</li>
+</ul>
+<p><strong>السيناريو:</strong> Product Review System كامل من المتطلبات إلى مراجعة PR</p>
+<h4 id="-4">التقارير</h4>
+<ul>
+<li><strong><a href=".kiro/docs/reports/INTEGRATION_FINAL_REPORT.md">تقرير التكامل النهائي</a></strong> - تقرير شامل</li>
+<li><strong><a href=".kiro/docs/reports/EXAMPLES_COMPLETION_REPORT.md">تقرير الأمثلة</a></strong> - تفاصيل الأمثلة</li>
+<li><strong><a href=".kiro/docs/reports/FINAL_SUMMARY.md">الملخص النهائي</a></strong> - ملخص سريع</li>
+</ul>
+<h3 id="--22">🎓 البدء</h3>
+<pre class="language-bash"><code class="language-bash"># 1. اقرأ دليل البدء السريع (10 دقائق)
+cat .kiro/prompts/QUICK_START.md
+
+# 2. اقرأ المبادئ الأساسية (3 دقائق)
+cat .kiro/steering/core/philosophy.md
+cat .kiro/steering/core/quick-reference.md
+
+# 3. جرّب مثال عملي (5 دقائق)
+cat .kiro/prompts/examples/01-createSpec-example.md
+</code></pre>
+<h3 id="--23">✅ الفوائد</h3>
+<ul>
+<li>✅ <strong>جودة تنفيذ أعلى</strong> - جمع سياق إلزامي وتحقق من الفهم</li>
+<li>✅ <strong>رسائل commit احترافية</strong> - تحليل ذكي وتصفية تلقائية</li>
+<li>✅ <strong>مراجعات PR شاملة</strong> - 20+ نقطة فحص مع GitHub CLI</li>
+<li>✅ <strong>تصميم واضح</strong> - رسوم Mermaid.js إلزامية</li>
+<li>✅ <strong>تعاون أفضل</strong> - موافقة صريحة قبل التنفيذ</li>
+<li>✅ <strong>كود أبسط</strong> - مبدأ KISS المطبق</li>
+<li>✅ <strong>صيانة أسهل</strong> - كود بالإنجليزية ومعايير موحدة</li>
+</ul>
+<hr>
+<h2 id="--24">📞 الدعم</h2>
+<p>للحصول على الدعم، يرجى فتح issue في المستودع.</p>
+<hr>
+<h2 id="--25">📄 الترخيص</h2>
+<p>هذا المشروع مرخص تحت رخصة MIT - راجع <a href="LICENSE">LICENSE</a> للتفاصيل.</p>
+<hr>
+<p><strong>الإصدار:</strong> 1.7.0 (MVP + تحسينات جودة الكود)<br>
+<strong>الحالة:</strong> ✅ جاهز للإنتاج<br>
+<strong>التقييم:</strong> ⭐⭐⭐⭐⭐ (95/100)</p>
+<p><strong>آخر تحديث:</strong> 3 ديسمبر 2025</p>
+<ul>
+<li>✅ إزالة get_it غير المستخدم</li>
+<li>✅ إضافة freezed لتحسين جودة الكود</li>
+<li>✅ 518 اختبار ناجح (100% نجاح)</li>
+<li>✅ 0 أخطاء، 0 تحذيرات في flutter analyze</li>
+</ul>
+<p><em>تم تطبيق Kiro Strategic Workspace - بيئة عمل ذكية للتطوير الاحترافي</em></p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="app_illustrations">
+  <span class="name"><a href="core_assets_app_illustrations/">core/assets/app_illustrations</a></span> 
+
+</dt>
+<dd>رسومات توضيحية مخصصة لتطبيق بصير
+</dd>
+
+          <dt id="app_logo">
+  <span class="name"><a href="core_assets_app_logo/">core/assets/app_logo</a></span> 
+
+</dt>
+<dd>شعار تطبيق بصير المخصص
+</dd>
+
+          <dt id="custom_icons">
+  <span class="name"><a href="core_assets_custom_icons/">core/assets/custom_icons</a></span> 
+
+</dt>
+<dd>أيقونات مخصصة لتطبيق بصير
+</dd>
+
+          <dt id="constants">
+  <span class="name"><a href="core_constants/">core/constants</a></span> 
+
+</dt>
+<dd>ملف الثوابت الأساسية للتطبيق
+يحتوي على جميع القيم الثابتة المستخدمة في جميع أنحاء التطبيق
+</dd>
+
+          <dt id="error_tracking_config">
+  <span class="name"><a href="core_models_error_tracking_config/">core/models/error_tracking_config</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="log_entry">
+  <span class="name"><a href="core_models_log_entry/">core/models/log_entry</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="report">
+  <span class="name"><a href="core_models_report/">core/models/report</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="providers">
+  <span class="name"><a href="core_providers/">core/providers</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_provider">
+  <span class="name"><a href="core_providers_theme_provider/">core/providers/theme_provider</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="router">
+  <span class="name"><a href="core_router/">core/router</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme">
+  <span class="name"><a href="core_theme/">core/theme</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="accessibility_checker">
+  <span class="name"><a href="core_theme_accessibility_accessibility_checker/">core/theme/accessibility/accessibility_checker</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="app_animations">
+  <span class="name"><a href="core_theme_app_animations/">core/theme/app_animations</a></span> 
+
+</dt>
+<dd>نظام الحركات والانتقالات الموحد لتطبيق بصير
+</dd>
+
+          <dt id="app_colors">
+  <span class="name"><a href="core_theme_app_colors/">core/theme/app_colors</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="app_dimensions">
+  <span class="name"><a href="core_theme_app_dimensions/">core/theme/app_dimensions</a></span> 
+
+</dt>
+<dd>نظام الأبعاد والمسافات الموحد للتطبيق
+</dd>
+
+          <dt id="app_font_metrics">
+  <span class="name"><a href="core_theme_app_font_metrics/">core/theme/app_font_metrics</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="app_text_styles">
+  <span class="name"><a href="core_theme_app_text_styles/">core/theme/app_text_styles</a></span> 
+
+</dt>
+<dd>نظام أنماط النصوص الموحد للتطبيق
+</dd>
+
+          <dt id="font_manager">
+  <span class="name"><a href="core_theme_font_manager/">core/theme/font_manager</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_dark">
+  <span class="name"><a href="core_theme_dark/">core/theme_dark</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="app_app_bar">
+  <span class="name"><a href="core_widgets_app_app_bar/">core/widgets/app_app_bar</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="app_button">
+  <span class="name"><a href="core_widgets_app_button/">core/widgets/app_button</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="app_card">
+  <span class="name"><a href="core_widgets_app_card/">core/widgets/app_card</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="app_enhanced_button">
+  <span class="name"><a href="core_widgets_app_enhanced_button/">core/widgets/app_enhanced_button</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="app_text_field">
+  <span class="name"><a href="core_widgets_app_text_field/">core/widgets/app_text_field</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="index">
+  <span class="name"><a href="core_widgets_index/">core/widgets/index</a></span> 
+
+</dt>
+<dd>ملف تصدير مركزي لجميع الـ Widgets المخصصة
+</dd>
+
+          <dt id="overflow_detector">
+  <span class="name"><a href="core_widgets_overflow_detector/">core/widgets/overflow_detector</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="responsive_text">
+  <span class="name"><a href="core_widgets_responsive_text/">core/widgets/responsive_text</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="text_scale_factor_tester">
+  <span class="name"><a href="core_widgets_text_scale_factor_tester/">core/widgets/text_scale_factor_tester</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="auth_service">
+  <span class="name"><a href="features_auth_data_services_auth_service/">features/auth/data/services/auth_service</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="auth_provider">
+  <span class="name"><a href="features_auth_presentation_providers_auth_provider/">features/auth/presentation/providers/auth_provider</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="login_screen">
+  <span class="name"><a href="features_auth_presentation_screens_login_screen/">features/auth/presentation/screens/login_screen</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="setup_screen">
+  <span class="name"><a href="features_auth_presentation_screens_setup_screen/">features/auth/presentation/screens/setup_screen</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="customer_model">
+  <span class="name"><a href="features_customers_data_models_customer_model/">features/customers/data/models/customer_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="customer_repository_impl">
+  <span class="name"><a href="features_customers_data_repositories_customer_repository_impl/">features/customers/data/repositories/customer_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="customer">
+  <span class="name"><a href="features_customers_domain_entities_customer/">features/customers/domain/entities/customer</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="customer_repository">
+  <span class="name"><a href="features_customers_domain_repositories_customer_repository/">features/customers/domain/repositories/customer_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="customer_provider">
+  <span class="name"><a href="features_customers_presentation_providers_customer_provider/">features/customers/presentation/providers/customer_provider</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="customer_details_screen">
+  <span class="name"><a href="features_customers_presentation_screens_customer_details_screen/">features/customers/presentation/screens/customer_details_screen</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="customer_form_screen">
+  <span class="name"><a href="features_customers_presentation_screens_customer_form_screen/">features/customers/presentation/screens/customer_form_screen</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="customers_screen">
+  <span class="name"><a href="features_customers_presentation_screens_customers_screen/">features/customers/presentation/screens/customers_screen</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="dashboard_screen">
+  <span class="name"><a href="features_dashboard_presentation_screens_dashboard_screen/">features/dashboard/presentation/screens/dashboard_screen</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="invoice_model">
+  <span class="name"><a href="features_invoices_data_models_invoice_model/">features/invoices/data/models/invoice_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="invoice_repository_impl">
+  <span class="name"><a href="features_invoices_data_repositories_invoice_repository_impl/">features/invoices/data/repositories/invoice_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="pdf_service">
+  <span class="name"><a href="features_invoices_data_services_pdf_service/">features/invoices/data/services/pdf_service</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="invoice">
+  <span class="name"><a href="features_invoices_domain_entities_invoice/">features/invoices/domain/entities/invoice</a></span> 
+
+</dt>
+<dd>كيان الفاتورة (Invoice Entity)
+</dd>
+
+          <dt id="invoice_repository">
+  <span class="name"><a href="features_invoices_domain_repositories_invoice_repository/">features/invoices/domain/repositories/invoice_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="invoice_provider">
+  <span class="name"><a href="features_invoices_presentation_providers_invoice_provider/">features/invoices/presentation/providers/invoice_provider</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="invoice_form_screen">
+  <span class="name"><a href="features_invoices_presentation_screens_invoice_form_screen/">features/invoices/presentation/screens/invoice_form_screen</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="invoices_screen">
+  <span class="name"><a href="features_invoices_presentation_screens_invoices_screen/">features/invoices/presentation/screens/invoices_screen</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="settings_screen">
+  <span class="name"><a href="features_settings_presentation_screens_settings_screen/">features/settings/presentation/screens/settings_screen</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="button_test_screen">
+  <span class="name"><a href="features_testing_button_test_screen/">features/testing/button_test_screen</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="main">
+  <span class="name"><a href="main/">main</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="settings_service">
+  <span class="name"><a href="services_settings_service/">services/settings_service</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="analysis_engine">
+  <span class="name"><a href="tools_documentation_analysis_analysis_engine/">tools/documentation/analysis/analysis_engine</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="documentation_cli">
+  <span class="name"><a href="tools_documentation_cli_documentation_cli/">tools/documentation/cli/documentation_cli</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="documentation_template">
+  <span class="name"><a href="tools_documentation_generation_documentation_template/">tools/documentation/generation/documentation_template</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="generation_engine">
+  <span class="name"><a href="tools_documentation_generation_generation_engine/">tools/documentation/generation/generation_engine</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="documentation_repository">
+  <span class="name"><a href="tools_documentation_repository_documentation_repository/">tools/documentation/repository/documentation_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="validation_engine">
+  <span class="name"><a href="tools_documentation_validation_validation_engine/">tools/documentation/validation/validation_engine</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li class="self-crumb">basser_app package</li>
+</ol>
+
+    <h5 class="hidden-xs"><span class="package-name">basser_app</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="core_assets_app_illustrations/">core/assets/app_illustrations</a></li>
+      <li><a href="core_assets_app_logo/">core/assets/app_logo</a></li>
+      <li><a href="core_assets_custom_icons/">core/assets/custom_icons</a></li>
+      <li><a href="core_constants/">core/constants</a></li>
+      <li><a href="core_models_error_tracking_config/">core/models/error_tracking_config</a></li>
+      <li><a href="core_models_log_entry/">core/models/log_entry</a></li>
+      <li><a href="core_models_report/">core/models/report</a></li>
+      <li><a href="core_providers/">core/providers</a></li>
+      <li><a href="core_providers_theme_provider/">core/providers/theme_provider</a></li>
+      <li><a href="core_router/">core/router</a></li>
+      <li><a href="core_theme/">core/theme</a></li>
+      <li><a href="core_theme_accessibility_accessibility_checker/">core/theme/accessibility/accessibility_checker</a></li>
+      <li><a href="core_theme_app_animations/">core/theme/app_animations</a></li>
+      <li><a href="core_theme_app_colors/">core/theme/app_colors</a></li>
+      <li><a href="core_theme_app_dimensions/">core/theme/app_dimensions</a></li>
+      <li><a href="core_theme_app_font_metrics/">core/theme/app_font_metrics</a></li>
+      <li><a href="core_theme_app_text_styles/">core/theme/app_text_styles</a></li>
+      <li><a href="core_theme_font_manager/">core/theme/font_manager</a></li>
+      <li><a href="core_theme_dark/">core/theme_dark</a></li>
+      <li><a href="core_widgets_app_app_bar/">core/widgets/app_app_bar</a></li>
+      <li><a href="core_widgets_app_button/">core/widgets/app_button</a></li>
+      <li><a href="core_widgets_app_card/">core/widgets/app_card</a></li>
+      <li><a href="core_widgets_app_enhanced_button/">core/widgets/app_enhanced_button</a></li>
+      <li><a href="core_widgets_app_text_field/">core/widgets/app_text_field</a></li>
+      <li><a href="core_widgets_index/">core/widgets/index</a></li>
+      <li><a href="core_widgets_overflow_detector/">core/widgets/overflow_detector</a></li>
+      <li><a href="core_widgets_responsive_text/">core/widgets/responsive_text</a></li>
+      <li><a href="core_widgets_text_scale_factor_tester/">core/widgets/text_scale_factor_tester</a></li>
+      <li><a href="features_auth_data_services_auth_service/">features/auth/data/services/auth_service</a></li>
+      <li><a href="features_auth_presentation_providers_auth_provider/">features/auth/presentation/providers/auth_provider</a></li>
+      <li><a href="features_auth_presentation_screens_login_screen/">features/auth/presentation/screens/login_screen</a></li>
+      <li><a href="features_auth_presentation_screens_setup_screen/">features/auth/presentation/screens/setup_screen</a></li>
+      <li><a href="features_customers_data_models_customer_model/">features/customers/data/models/customer_model</a></li>
+      <li><a href="features_customers_data_repositories_customer_repository_impl/">features/customers/data/repositories/customer_repository_impl</a></li>
+      <li><a href="features_customers_domain_entities_customer/">features/customers/domain/entities/customer</a></li>
+      <li><a href="features_customers_domain_repositories_customer_repository/">features/customers/domain/repositories/customer_repository</a></li>
+      <li><a href="features_customers_presentation_providers_customer_provider/">features/customers/presentation/providers/customer_provider</a></li>
+      <li><a href="features_customers_presentation_screens_customer_details_screen/">features/customers/presentation/screens/customer_details_screen</a></li>
+      <li><a href="features_customers_presentation_screens_customer_form_screen/">features/customers/presentation/screens/customer_form_screen</a></li>
+      <li><a href="features_customers_presentation_screens_customers_screen/">features/customers/presentation/screens/customers_screen</a></li>
+      <li><a href="features_dashboard_presentation_screens_dashboard_screen/">features/dashboard/presentation/screens/dashboard_screen</a></li>
+      <li><a href="features_invoices_data_models_invoice_model/">features/invoices/data/models/invoice_model</a></li>
+      <li><a href="features_invoices_data_repositories_invoice_repository_impl/">features/invoices/data/repositories/invoice_repository_impl</a></li>
+      <li><a href="features_invoices_data_services_pdf_service/">features/invoices/data/services/pdf_service</a></li>
+      <li><a href="features_invoices_domain_entities_invoice/">features/invoices/domain/entities/invoice</a></li>
+      <li><a href="features_invoices_domain_repositories_invoice_repository/">features/invoices/domain/repositories/invoice_repository</a></li>
+      <li><a href="features_invoices_presentation_providers_invoice_provider/">features/invoices/presentation/providers/invoice_provider</a></li>
+      <li><a href="features_invoices_presentation_screens_invoice_form_screen/">features/invoices/presentation/screens/invoice_form_screen</a></li>
+      <li><a href="features_invoices_presentation_screens_invoices_screen/">features/invoices/presentation/screens/invoices_screen</a></li>
+      <li><a href="features_settings_presentation_screens_settings_screen/">features/settings/presentation/screens/settings_screen</a></li>
+      <li><a href="features_testing_button_test_screen/">features/testing/button_test_screen</a></li>
+      <li><a href="main/">main</a></li>
+      <li><a href="services_settings_service/">services/settings_service</a></li>
+      <li><a href="tools_documentation_analysis_analysis_engine/">tools/documentation/analysis/analysis_engine</a></li>
+      <li><a href="tools_documentation_cli_documentation_cli/">tools/documentation/cli/documentation_cli</a></li>
+      <li><a href="tools_documentation_generation_documentation_template/">tools/documentation/generation/documentation_template</a></li>
+      <li><a href="tools_documentation_generation_generation_engine/">tools/documentation/generation/generation_engine</a></li>
+      <li><a href="tools_documentation_repository_documentation_repository/">tools/documentation/repository/documentation_repository</a></li>
+      <li><a href="tools_documentation_validation_validation_engine/">tools/documentation/validation/validation_engine</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+</main>
+<footer>
+  <span class="no-break">
+    basser_app
+      1.0.0+1
+  </span>
+  
+</footer>
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

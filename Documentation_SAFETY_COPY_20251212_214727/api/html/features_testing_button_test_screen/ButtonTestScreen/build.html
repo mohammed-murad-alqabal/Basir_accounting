@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the build method from the ButtonTestScreen class, for the Dart programming language.">
+  <title>build method - ButtonTestScreen class - button_test_screen library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">basser_app</a></li>
+    <li><a href="../../features_testing_button_test_screen/">features&#47;testing&#47;button_test_screen.dart</a></li>
+    <li><a href="../../features_testing_button_test_screen/ButtonTestScreen-class.html">ButtonTestScreen</a></li>
+    <li class="self-crumb">build method</li>
+  </ol>
+  <div class="self-name">build</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="features_testing_button_test_screen&#47;ButtonTestScreen-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">build</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span>
+<span class="name ">build</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="build-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span></span></li>
+</ol>)
+
+      <div class="features"><span class="feature">override</span></div>
+
+    </section>
+    
+<section class="desc markdown">
+  <p>يبني شاشة اختبار الأزرار مع جميع أنواع الأزرار.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">@override
+Widget build(BuildContext context) =&gt; Scaffold(
+      appBar: AppBar(
+        title: const Text(&#39;اختبار الأزرار&#39;),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+      ),
+      body: TextScaleFactorTester(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              &#47;&#47; مقدمة
+              _buildIntroCard(),
+
+              const SizedBox(height: 24),
+
+              &#47;&#47; قسم: أزرار Primary
+              _buildSection(
+                title: &#39;أزرار Primary&#39;,
+                icon: Icons.touch_app,
+                children: [
+                  AppEnhancedButton(
+                    text: &#39;نص قصير&#39;,
+                    onPressed: () {},
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;نص متوسط الطول للاختبار&#39;,
+                    onPressed: () {},
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;نص طويل جداً جداً جداً قد يسبب مشاكل في العرض&#39;,
+                    onPressed: () {},
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;مع أيقونة&#39;,
+                    icon: Icons.add,
+                    onPressed: () {},
+                  ),
+                  const SizedBox(height: 12),
+                  const AppEnhancedButton(
+                    text: &#39;معطل&#39;,
+                    onPressed: null,
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;تحميل&#39;,
+                    onPressed: () {},
+                    isLoading: true,
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              &#47;&#47; قسم: أزرار Secondary
+              _buildSection(
+                title: &#39;أزرار Secondary&#39;,
+                icon: Icons.radio_button_unchecked,
+                children: [
+                  AppEnhancedButton(
+                    text: &#39;نص قصير&#39;,
+                    onPressed: () {},
+                    type: AppEnhancedButtonType.secondary,
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;نص متوسط الطول للاختبار&#39;,
+                    onPressed: () {},
+                    type: AppEnhancedButtonType.secondary,
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;نص طويل جداً جداً جداً قد يسبب مشاكل في العرض&#39;,
+                    onPressed: () {},
+                    type: AppEnhancedButtonType.secondary,
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;مع أيقونة&#39;,
+                    icon: Icons.edit,
+                    onPressed: () {},
+                    type: AppEnhancedButtonType.secondary,
+                  ),
+                  const SizedBox(height: 12),
+                  const AppEnhancedButton(
+                    text: &#39;معطل&#39;,
+                    onPressed: null,
+                    type: AppEnhancedButtonType.secondary,
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;تحميل&#39;,
+                    onPressed: () {},
+                    isLoading: true,
+                    type: AppEnhancedButtonType.secondary,
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              &#47;&#47; قسم: أزرار Text
+              _buildSection(
+                title: &#39;أزرار Text&#39;,
+                icon: Icons.text_fields,
+                children: [
+                  AppEnhancedButton(
+                    text: &#39;نص قصير&#39;,
+                    onPressed: () {},
+                    type: AppEnhancedButtonType.text,
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;نص متوسط الطول للاختبار&#39;,
+                    onPressed: () {},
+                    type: AppEnhancedButtonType.text,
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;نص طويل جداً جداً جداً قد يسبب مشاكل في العرض&#39;,
+                    onPressed: () {},
+                    type: AppEnhancedButtonType.text,
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;مع أيقونة&#39;,
+                    icon: Icons.delete,
+                    onPressed: () {},
+                    type: AppEnhancedButtonType.text,
+                  ),
+                  const SizedBox(height: 12),
+                  const AppEnhancedButton(
+                    text: &#39;معطل&#39;,
+                    onPressed: null,
+                    type: AppEnhancedButtonType.text,
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              &#47;&#47; قسم: أزرار في Row
+              _buildSection(
+                title: &#39;أزرار في Row&#39;,
+                icon: Icons.view_column,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AppEnhancedButton(
+                          text: &#39;إلغاء&#39;,
+                          onPressed: () {},
+                          type: AppEnhancedButtonType.secondary,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: AppEnhancedButton(
+                          text: &#39;موافق&#39;,
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AppEnhancedButton(
+                          text: &#39;حذف&#39;,
+                          icon: Icons.delete,
+                          onPressed: () {},
+                          type: AppEnhancedButtonType.text,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: AppEnhancedButton(
+                          text: &#39;حفظ&#39;,
+                          icon: Icons.save,
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AppEnhancedButton(
+                          text: &#39;نص طويل جداً&#39;,
+                          onPressed: () {},
+                          type: AppEnhancedButtonType.secondary,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: AppEnhancedButton(
+                          text: &#39;نص طويل جداً أيضاً&#39;,
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              &#47;&#47; قسم: حالات خاصة
+              _buildSection(
+                title: &#39;حالات خاصة&#39;,
+                icon: Icons.warning,
+                children: [
+                  AppEnhancedButton(
+                    text: &#39;نص عربي طويل جداً جداً جداً مع أيقونة&#39;,
+                    icon: Icons.info,
+                    onPressed: () {},
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;نص قصير&#39;,
+                    icon: Icons.check_circle,
+                    onPressed: () {},
+                    width: 200,
+                  ),
+                  const SizedBox(height: 12),
+                  AppEnhancedButton(
+                    text: &#39;نص طويل جداً في زر بعرض محدد&#39;,
+                    onPressed: () {},
+                    type: AppEnhancedButtonType.secondary,
+                    width: 250,
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 32),
+
+              &#47;&#47; ملاحظة نهائية
+              _buildNoteCard(),
+            ],
+          ),
+        ),
+      ),
+    );</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">basser_app</a></li>
+    <li><a href="../../features_testing_button_test_screen/">button_test_screen</a></li>
+    <li><a href="../../features_testing_button_test_screen/ButtonTestScreen-class.html">ButtonTestScreen</a></li>
+    <li class="self-crumb">build method</li>
+</ol>
+
+    <h5>ButtonTestScreen class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    basser_app
+      1.0.0+1
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
