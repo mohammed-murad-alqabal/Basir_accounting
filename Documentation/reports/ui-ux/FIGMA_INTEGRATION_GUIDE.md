@@ -384,7 +384,7 @@ cat .kiro/audit/mcp-audit.log | grep figma | tail -10
 
 - [Figma API Documentation](https://www.figma.com/developers/api)
 - [MCP Protocol Documentation](https://modelcontextprotocol.io/)
-- [Kiro MCP Guide](.kiro/steering/mcp-best-practices.md)
+- [Kiro MCP Guide](../../../.kiro/steering/technologies/mcp-best-practices.md)
 
 ### الحصول على المساعدة
 

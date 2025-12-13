@@ -244,7 +244,7 @@ export $(cat .env | grep -v '^#' | xargs) && python3 scripts/figma_mcp_server.py
 ### للتطوير والتحسين
 
 - افتح issue في المستودع
-- راجع [CONTRIBUTING.md](../CONTRIBUTING.md)
+- راجع [CONTRIBUTING.md](../../../CONTRIBUTING.md)
 - اتبع معايير المشروع في `.kiro/steering/`
 
 ---
