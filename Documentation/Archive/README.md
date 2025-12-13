@@ -29,6 +29,36 @@
 
 **السبب:** ملفات مكررة تم تحديدها أثناء عملية إعادة التنظيم في المرحلة 4
 
+##### تقارير الإصلاحات القديمة
+
+**المسار:** [`2025/december/reports-fixes/`](2025/december/reports-fixes/)
+
+**الملفات المؤرشفة (10 ملفات):**
+
+- `GIT_PUSH_COMPREHENSIVE_SUCCESS.md` - تقرير نجاح Git push شامل
+- `GIT_PUSH_STRATEGY.md` - استراتيجية Git push
+- `GIT_PUSH_SUCCESS_REPORT_V2.md` - تقرير نجاح Git push الإصدار 2
+- `GIT_STATUS_ANALYSIS_REPORT.md` - تقرير تحليل حالة Git
+- `GITHUB_WORKFLOWS_COMPLETE.md` - تقرير إكمال GitHub workflows
+- `GITHUB_WORKFLOWS_FIX_REPORT.md` - تقرير إصلاح GitHub workflows
+- `GITHUB_WORKFLOWS_STATUS.md` - حالة GitHub workflows
+- `MOBILE_FIX_REPORT.md` - تقرير إصلاحات Mobile
+- `MOBILE_TEST_STATUS.md` - حالة اختبارات Mobile
+- `WORKFLOWS_FIX_FINAL_REPORT.md` - التقرير النهائي لإصلاحات Workflows
+
+**السبب:** تقارير قديمة ومكررة تم استبدالها بتقارير أحدث
+
+##### تقارير التحليل القديمة
+
+**المسار:** [`2025/december/reports-analysis/`](2025/december/reports-analysis/)
+
+**الملفات المؤرشفة (2 ملف):**
+
+- `FLUTTER_ANALYSIS_COMPLETE_2025-12-06.md` - تقرير إكمال تحليل Flutter
+- `FLUTTER_ANALYSIS_SUCCESS_2025-12-06.md` - تقرير نجاح تحليل Flutter
+
+**السبب:** تقارير قديمة تم استبدالها بتحليلات أحدث
+
 ##### الملفات المؤرشفة الأخرى
 
 - `COMPREHENSIVE_SESSION_REPORT.md` - تقرير جلسة شامل قديم
@@ -64,12 +94,14 @@ grep -r "كلمة البحث" Documentation/Archive/
 
 ### الملفات المؤرشفة حسب النوع:
 
-| النوع             | العدد | المسار                             |
-| ----------------- | ----- | ---------------------------------- |
-| **ملفات مكررة**   | 5     | `2025/december/duplicates/`        |
-| **تقارير قديمة**  | 1     | `2025/december/`                   |
-| **مجلدات اختبار** | 1     | `2025/december/TEST_action-items/` |
-| **الإجمالي**      | **7** | -                                  |
+| النوع                    | العدد  | المسار                             |
+| ------------------------ | ------ | ---------------------------------- |
+| **ملفات مكررة**          | 5      | `2025/december/duplicates/`        |
+| **تقارير إصلاحات قديمة** | 10     | `2025/december/reports-fixes/`     |
+| **تقارير تحليل قديمة**   | 2      | `2025/december/reports-analysis/`  |
+| **تقارير قديمة**         | 1      | `2025/december/`                   |
+| **مجلدات اختبار**        | 1      | `2025/december/TEST_action-items/` |
+| **الإجمالي**             | **19** | -                                  |
 
 ### الملفات المؤرشفة حسب التاريخ:
 
