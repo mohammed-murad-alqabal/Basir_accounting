@@ -280,7 +280,7 @@ ${errorDetails}
 ### 🔗 الموارد
 
 - [تقرير التحليل الكامل](https://github.com/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }})
-- [دليل الجودة](.kiro/steering/code-quality-standards.md)
+- [دليل الجودة](../../../.kiro/steering/technologies/project-standards.md)
 
 ---
 
