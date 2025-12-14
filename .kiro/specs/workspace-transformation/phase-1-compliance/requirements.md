@@ -1,118 +1,117 @@
-# Requirements Document - Kiro Standards Compliance Enhancement
+# Requirements Document - Flutter Development Environment Enhancement
 
-**المشروع:** بصير MVP - مشروع التحويل الشامل (المرحلة الأولى)  
-**التاريخ:** 11 ديسمبر 2025  
+**المشروع:** بصير MVP - تحسين بيئة تطوير Flutter  
+**التاريخ:** 13 ديسمبر 2025  
 **المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**الحالة:** 🎯 **متطلبات محددة لسد الفجوات الحرجة**
+**الحالة:** 🎯 **متطلبات محددة لتحسين بيئة Flutter المحلية**
 
 ---
 
 ## Introduction
 
-هذا المستند يحدد المتطلبات اللازمة لتحسين وتطوير الأنظمة الموجودة بناءً على التحليل الشامل للواقع الفعلي، بهدف الانتقال من التقييم الحالي 92/100 إلى 96/100 خلال 2-3 أيام.
+هذا المستند يحدد المتطلبات اللازمة لتحسين بيئة تطوير Flutter المحلية لمشروع بصير، مع التركيز على تحسين جودة الكود، الاختبارات، الأداء، والأمان المحلي.
 
-**ملاحظة مهمة:** بعد فحص الواقع الفعلي، تبين أن المشروع في حالة ممتازة تقنياً مع بنية متقدمة وكود نظيف. التركيز الآن على التحسين والتطوير بدلاً من "سد الفجوات".
+**التركيز الأساسي:** تطبيق بصير هو تطبيق Flutter محلي لإدارة الفواتير والعملاء، يعمل offline بالكامل مع قاعدة بيانات Isar محلية.
 
-هذه المرحلة الأولى تمهد الطريق للمرحلة الثانية من التحويل الذكي الشامل للـ workspace.
-
-**ملاحظة مهمة:** هذا المشروع يبني على الإنجازات الباهرة لمشروع **Context-Optimization** المكتمل، والذي حقق تحسيناً بنسبة 97.6% في استخدام السياق وأنشأ بنية محسنة تدعم التطوير المتقدم.
+**الهدف:** تحسين بيئة التطوير وجودة الكود لضمان تطبيق مستقر وآمن وسريع.
 
 ## Glossary
 
-- **MCP**: Model Context Protocol - بروتوكول لتكامل الأدوات الخارجية مع AI
-- **Multi-Provider AI**: دعم متعدد لمقدمي خدمات الذكاء الاصطناعي
-- **EARS**: Easy Approach to Requirements Syntax - منهجية لكتابة المتطلبات
-- **Steering Documents**: ملفات التوجيه لسلوك AI
-- **Agent Hooks**: خطافات الأتمتة للمهام المتكررة
+- **Flutter**: إطار عمل Google لتطوير التطبيقات متعددة المنصات
+- **Dart**: لغة البرمجة المستخدمة مع Flutter
+- **Isar**: قاعدة بيانات محلية عالية الأداء لـ Flutter
+- **Riverpod**: مكتبة إدارة الحالة لـ Flutter
+- **Clean Architecture**: نمط معماري لفصل طبقات التطبيق
+- **Widget Testing**: اختبار مكونات واجهة المستخدم في Flutter
+- **Golden Tests**: اختبارات بصرية للتحقق من شكل الواجهات
 
 ---
 
 ## Requirements
 
-### Requirement 1: MCP Integration Enhancement
+### Requirement 1: Flutter Code Quality Enhancement
 
-**User Story:** As a developer using Kiro, I want comprehensive MCP integration, so that I can seamlessly connect with external tools and services.
-
-#### Acceptance Criteria
-
-1. WHEN the system initializes THEN it SHALL configure multiple MCP servers for different tool categories
-2. WHEN MCP configuration changes THEN the system SHALL validate the configuration automatically
-3. WHEN MCP servers are accessed THEN the system SHALL provide comprehensive error handling and logging
-4. WHEN developers need MCP guidance THEN the system SHALL provide detailed best practices documentation
-5. WHERE MCP integration exists THEN the system SHALL include validation hooks for configuration integrity
-
-### Requirement 2: Multi-Provider AI Support Implementation
-
-**User Story:** As a developer working with different AI models, I want optimized prompts for each provider, so that I can get the best results from each AI model.
+**User Story:** As a Flutter developer, I want improved code quality tools and standards, so that I can write cleaner and more maintainable Dart code.
 
 #### Acceptance Criteria
 
-1. WHEN using OpenAI models THEN the system SHALL provide GPT-optimized prompts and formatting
-2. WHEN using Anthropic models THEN the system SHALL provide Claude-optimized prompts and formatting
-3. WHEN using AWS Bedrock THEN the system SHALL provide Bedrock-optimized prompts and formatting
-4. WHEN using local models (Ollama) THEN the system SHALL provide locally-optimized prompts and formatting
-5. WHEN switching between providers THEN the system SHALL automatically adapt context injection and formatting
-6. WHERE model-specific prompts exist THEN the system SHALL include at least 14 different model optimizations
+1. WHEN writing Dart code THEN the system SHALL enforce strict analysis options with zero warnings
+2. WHEN saving Flutter files THEN the system SHALL automatically format code using dart format
+3. WHEN creating new widgets THEN the system SHALL provide templates following Flutter best practices
+4. WHEN using state management THEN the system SHALL enforce Riverpod patterns and conventions
+5. WHERE code quality issues exist THEN the system SHALL provide specific improvement suggestions
 
-### Requirement 3: Technology Coverage Expansion
+### Requirement 2: Flutter Testing Framework Enhancement
 
-**User Story:** As a developer working with modern tech stacks, I want comprehensive steering documents for all major technologies, so that I can follow best practices consistently.
-
-#### Acceptance Criteria
-
-1. WHEN working with AWS services THEN the system SHALL provide comprehensive AWS best practices steering
-2. WHEN working with Docker THEN the system SHALL provide Docker security and optimization steering
-3. WHEN developing APIs THEN the system SHALL provide API development and security steering
-4. WHEN building microservices THEN the system SHALL provide microservices architecture steering
-5. WHERE technology-specific guidance exists THEN the system SHALL include security-focused recommendations
-
-### Requirement 4: EARS Methodology Implementation
-
-**User Story:** As a project manager creating specifications, I want structured requirements using EARS methodology, so that requirements are unambiguous and testable.
+**User Story:** As a Flutter developer, I want comprehensive testing capabilities, so that I can ensure my app works correctly across all scenarios.
 
 #### Acceptance Criteria
 
-1. WHEN creating new requirements THEN the system SHALL enforce EARS syntax patterns
-2. WHEN validating requirements THEN the system SHALL check for EARS compliance automatically
-3. WHEN generating requirements templates THEN the system SHALL include EARS pattern examples
-4. WHERE EARS patterns are used THEN the system SHALL provide clear pattern documentation
-5. WHILE creating specifications THEN the system SHALL guide users through EARS methodology
+1. WHEN writing unit tests THEN the system SHALL provide templates for repository and service testing
+2. WHEN creating widget tests THEN the system SHALL include golden file testing for UI consistency
+3. WHEN running tests THEN the system SHALL properly configure Isar database for test environment
+4. WHEN measuring coverage THEN the system SHALL achieve and maintain 70%+ test coverage
+5. WHERE test failures occur THEN the system SHALL provide clear error messages and debugging guidance
 
-### Requirement 5: Approval Gates and Collaboration Enhancement
+### Requirement 3: Flutter Performance Optimization
 
-**User Story:** As a team lead managing development workflows, I want explicit approval gates in the development process, so that quality and collaboration standards are maintained.
-
-#### Acceptance Criteria
-
-1. WHEN creating specifications THEN the system SHALL require explicit user approval before proceeding
-2. WHEN implementing features THEN the system SHALL enforce collaboration-first principles
-3. WHEN making significant changes THEN the system SHALL provide clear approval checkpoints
-4. WHERE approval gates exist THEN the system SHALL document the approval process clearly
-5. WHILE collaborating with AI THEN the system SHALL maintain user control over all decisions
-
-### Requirement 6: Enhanced Hooks System with Classification
-
-**User Story:** As a developer automating workflows, I want a well-organized hooks system with clear classifications, so that I can choose appropriate automation levels.
+**User Story:** As a Flutter developer, I want performance monitoring and optimization tools, so that my app runs smoothly on all devices.
 
 #### Acceptance Criteria
 
-1. WHEN organizing hooks THEN the system SHALL classify them as automatic, manual, or optional
-2. WHEN running automatic hooks THEN the system SHALL execute quality and security checks on file save
-3. WHEN accessing manual hooks THEN the system SHALL provide on-demand specialized tools
-4. WHEN enabling optional hooks THEN the system SHALL allow performance-sensitive automation
-5. WHERE hooks are classified THEN the system SHALL provide clear documentation for each category
+1. WHEN building the app THEN the system SHALL analyze and report app size and performance metrics
+2. WHEN using widgets THEN the system SHALL detect and suggest const constructor optimizations
+3. WHEN managing state THEN the system SHALL identify unnecessary rebuilds and suggest improvements
+4. WHEN using Isar database THEN the system SHALL optimize queries and indexing strategies
+5. WHERE performance issues exist THEN the system SHALL provide specific optimization recommendations
 
-### Requirement 7: Security-Focused Automation Enhancement
+### Requirement 4: Local Security Enhancement
 
-**User Story:** As a security-conscious developer, I want comprehensive security automation, so that security best practices are enforced automatically.
+**User Story:** As a security-conscious developer, I want robust local security measures, so that user data is protected on the device.
 
 #### Acceptance Criteria
 
-1. WHEN dependencies change THEN the system SHALL automatically scan for security vulnerabilities
-2. WHEN environment files are modified THEN the system SHALL validate for security issues
-3. WHEN Docker files are updated THEN the system SHALL check for security best practices
-4. WHERE security automation exists THEN the system SHALL provide detailed security reporting
-5. WHILE developing code THEN the system SHALL enforce security coding standards automatically
+1. WHEN storing sensitive data THEN the system SHALL use Flutter Secure Storage with proper encryption
+2. WHEN handling user passwords THEN the system SHALL implement secure hashing with salt
+3. WHEN validating user input THEN the system SHALL sanitize and validate all data entry points
+4. WHEN accessing local database THEN the system SHALL implement proper access controls
+5. WHERE security vulnerabilities exist THEN the system SHALL detect and report potential issues
+
+### Requirement 5: Flutter Development Workflow Enhancement
+
+**User Story:** As a Flutter developer, I want streamlined development workflows, so that I can be more productive and efficient.
+
+#### Acceptance Criteria
+
+1. WHEN starting development THEN the system SHALL provide automated Flutter environment setup
+2. WHEN creating new features THEN the system SHALL generate boilerplate code following Clean Architecture
+3. WHEN debugging THEN the system SHALL provide enhanced debugging tools and error analysis
+4. WHEN building releases THEN the system SHALL automate version management and release preparation
+5. WHERE development bottlenecks exist THEN the system SHALL identify and suggest workflow improvements
+
+### Requirement 6: Flutter-Specific Hooks and Automation
+
+**User Story:** As a Flutter developer, I want Flutter-specific automation hooks, so that routine tasks are handled automatically.
+
+#### Acceptance Criteria
+
+1. WHEN saving Dart files THEN the system SHALL run flutter analyze and report issues immediately
+2. WHEN modifying pubspec.yaml THEN the system SHALL validate dependencies and check for updates
+3. WHEN creating new screens THEN the system SHALL automatically generate corresponding test files
+4. WHEN updating translations THEN the system SHALL regenerate localization files automatically
+5. WHERE code generation is needed THEN the system SHALL run build_runner automatically
+
+### Requirement 7: Local Database Optimization
+
+**User Story:** As a Flutter developer using Isar, I want optimized database operations, so that my app performs well with local data storage.
+
+#### Acceptance Criteria
+
+1. WHEN designing data models THEN the system SHALL suggest optimal Isar schema configurations
+2. WHEN writing database queries THEN the system SHALL analyze and optimize query performance
+3. WHEN managing database migrations THEN the system SHALL provide safe migration strategies
+4. WHEN testing database operations THEN the system SHALL provide proper test database setup
+5. WHERE database performance issues exist THEN the system SHALL suggest indexing and optimization strategies
 
 ---
 
@@ -120,39 +119,42 @@
 
 ### Quantitative Metrics
 
-- **MCP Integration Score**: Increase from 65/100 to 90/100
-- **Multi-Provider AI Score**: Increase from 45/100 to 85/100
-- **Technology Coverage Score**: Increase from current gaps to 90/100
-- **Overall Compliance Score**: Increase from 89/100 to 95/100
+- **Flutter Code Quality Score**: Achieve 95/100+ with zero analysis warnings
+- **Test Coverage**: Maintain 70%+ coverage across all Flutter code
+- **Performance Score**: Achieve 90/100+ in Flutter performance metrics
+- **Security Score**: Achieve 95/100+ in local security implementation
+- **Development Efficiency**: Improve development speed by 30% through automation
 
 ### Qualitative Metrics
 
-- ✅ Complete MCP server configuration for major tool categories
-- ✅ Model-specific prompts for 14+ AI providers/models
-- ✅ Comprehensive steering documents for AWS, Docker, API development
-- ✅ EARS methodology fully implemented in templates and validation
-- ✅ Clear approval gates documented and enforced
-- ✅ Hooks system properly classified and organized
+- ✅ All Dart code follows strict analysis options with zero warnings
+- ✅ Comprehensive test suite including unit, widget, and golden tests
+- ✅ Optimized app performance with minimal memory usage and fast startup
+- ✅ Secure local data storage with proper encryption and validation
+- ✅ Streamlined development workflow with automated tasks
+- ✅ Flutter-specific hooks and automation working seamlessly
+- ✅ Optimized Isar database operations with proper indexing
 
 ### Acceptance Validation
 
-- All MCP servers configured and validated
-- All model-specific prompts created and tested
-- All technology steering documents created and reviewed
-- EARS methodology implemented and validated
-- Approval gates documented and functional
-- Hooks system reorganized and classified
+- Flutter analyze reports zero issues across all Dart files
+- All tests pass including proper Isar test configuration
+- App performance meets or exceeds Flutter best practice benchmarks
+- Security audit confirms proper implementation of local security measures
+- Development workflow automation reduces manual tasks by 50%+
+- Database operations perform optimally with proper query optimization
 
 ---
 
-## Integration with Phase 2
+## Integration with Future Enhancements
 
-هذه المرحلة تحضر الأساس للمرحلة الثانية من خلال:
+هذه المرحلة تحضر الأساس للتحسينات المستقبلية من خلال:
 
-- **تحسين البنية التحتية**: MCP وHooks محسنة تدعم الأنظمة الذكية
-- **معايير الجودة**: امتثال عالي يضمن جودة التطوير المستقبلي
-- **التوثيق الشامل**: steering documents تدعم التطوير الآلي
-- **الأمان المتقدم**: أسس أمنية قوية للأنظمة الآلية
+- **بنية كود محسنة**: كود Flutter نظيف وقابل للصيانة يدعم التوسعات المستقبلية
+- **اختبارات شاملة**: تغطية اختبارات عالية تضمن استقرار التطبيق
+- **أداء محسن**: تطبيق سريع ومحسن يوفر تجربة مستخدم ممتازة
+- **أمان محلي قوي**: حماية قوية للبيانات المحلية تدعم الثقة في التطبيق
+- **سير عمل محسن**: بيئة تطوير محسنة تدعم التطوير السريع والفعال
 
 ---
 

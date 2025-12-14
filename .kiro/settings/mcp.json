@@ -56,23 +56,20 @@
       "disabled": false,
       "autoApprove": ["get_current_time", "convert_time"]
     },
-    "aws-iac": {
+    "filesystem": {
       "command": "uvx",
-      "args": ["awslabs.aws-iac-mcp-server@latest"],
+      "args": ["mcp-server-filesystem@latest"],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
       "autoApprove": [
-        "validate_cloudformation_template",
-        "check_cloudformation_template_compliance",
-        "troubleshoot_cloudformation_deployment",
-        "get_cloudformation_pre_deploy_validation_instruction",
-        "search_cdk_documentation",
-        "read_iac_documentation_page",
-        "search_cloudformation_documentation",
-        "search_cdk_samples_and_constructs",
-        "cdk_best_practices"
+        "read_text_file",
+        "list_directory",
+        "read_multiple_files",
+        "create_directory",
+        "directory_tree",
+        "get_file_info"
       ]
     }
   }
