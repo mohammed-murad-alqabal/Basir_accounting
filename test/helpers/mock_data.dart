@@ -58,80 +58,6 @@ class MockData {
         ),
       );
 
-  /// إنشاء فاتورة اختبار افتراضية
-  ///
-  /// يُنشئ فاتورة بقيم افتراضية يمكن تخصيصها.
-  ///
-  /// مثال:
-  /// ```dart
-  /// final invoice = MockData.createTestInvoice();
-  /// final customInvoice = MockData.createTestInvoice(
-  ///   id: 'custom-id',
-  ///   customerId: 'customer-1',
-  ///   status: 'paid',
-  ///   itemCount: 5,
-  ///   itemName: 'خدمة مخصصة',
-  ///   itemPrice: 500.0,
-  /// );
-  /// ```
-  static Invoice createTestInvoice({
-    String? id,
-    String? customerId,
-    String? customerName,
-    DateTime? issuedDate,
-    DateTime? dueDate,
-    String? status,
-    List<InvoiceItem>? items,
-    double? taxRate,
-    String? notes,
-    int? itemCount,
-    String? itemName,
-    double? itemPrice,
-  }) {
-    final now = DateTime.now();
-
-    // إنشاء البنود بناءً على المعاملات
-    List<InvoiceItem> invoiceItems;
-    if (items != null) {
-      invoiceItems = items;
-    } else if (itemCount != null) {
-      // إنشاء عدد محدد من البنود
-      invoiceItems = List.generate(
-        itemCount,
-        (index) => InvoiceItem(
-          id: 'test-item-${index + 1}',
-          name: itemName ?? 'خدمة اختبار ${index + 1}',
-          quantity: 1,
-          price: itemPrice ?? 1000,
-        ),
-      );
-    } else {
-      // البند الافتراضي
-      invoiceItems = [
-        InvoiceItem(
-          id: 'test-item-1',
-          name: itemName ?? 'خدمة اختبار',
-          quantity: 1,
-          price: itemPrice ?? 1000,
-        ),
-      ];
-    }
-
-    return Invoice(
-      id: id ?? 'test-invoice-${now.millisecondsSinceEpoch}',
-      customerId: customerId ?? 'test-customer-1',
-      customerName: customerName ?? 'عميل اختبار',
-      issuedDate: issuedDate ?? now,
-      dueDate: dueDate ?? now.add(const Duration(days: 30)),
-      status: status ?? 'draft',
-      items: invoiceItems,
-      taxRate: taxRate ?? 0.15,
-      notes: notes,
-      createdAt: now,
-      updatedAt: now,
-    );
-  }
-
   /// إنشاء قائمة من الفواتير للاختبار
   ///
   /// يُنشئ عدد محدد من الفواتير بحالات مختلفة.
@@ -149,4 +75,102 @@ class MockData {
           status: index.isEven ? 'draft' : 'paid',
         ),
       );
+
+  /// إنشاء بند فاتورة اختبار
+  ///
+  /// يُنشئ بند فاتورة بقيم افتراضية يمكن تخصيصها.
+  ///
+  /// مثال:
+  /// ```dart
+  /// final item = MockData.createTestInvoiceItem();
+  /// final customItem = MockData.createTestInvoiceItem(
+  ///   name: 'خدمة مخصصة',
+  ///   price: 500.0,
+  ///   quantity: 2,
+  /// );
+  /// ```
+  static InvoiceItem createTestInvoiceItem({
+    String? id,
+    String? name,
+    double? price,
+    double? quantity,
+  }) =>
+      InvoiceItem(
+        id: id ?? 'test-item-${DateTime.now().millisecondsSinceEpoch}',
+        name: name ?? 'خدمة اختبار',
+        price: price ?? 1000.0,
+        quantity: quantity ?? 1.0,
+      );
+
+  /// إنشاء فاتورة اختبار مع معاملات محددة للاختبارات المتقدمة
+  ///
+  /// يدعم معاملات إضافية للاختبارات المعقدة.
+  ///
+  /// مثال:
+  /// ```dart
+  /// final invoice = MockData.createTestInvoice(
+  ///   itemCount: 3,
+  ///   itemPrice: 500.0,
+  ///   itemQuantity: 2.0,
+  ///   taxRate: 0.20,
+  /// );
+  /// ```
+  static Invoice createTestInvoice({
+    String? id,
+    String? customerId,
+    String? customerName,
+    DateTime? issuedDate,
+    DateTime? dueDate,
+    String? status,
+    List<InvoiceItem>? items,
+    double? taxRate,
+    String? notes,
+    int? itemCount,
+    String? itemName,
+    double? itemPrice,
+    double? itemQuantity,
+  }) {
+    final now = DateTime.now();
+
+    // إنشاء البنود بناءً على المعاملات
+    List<InvoiceItem> invoiceItems;
+    if (items != null) {
+      invoiceItems = items;
+    } else if (itemCount != null) {
+      // إنشاء عدد محدد من البنود
+      invoiceItems = List.generate(
+        itemCount,
+        (index) => InvoiceItem(
+          id: 'test-item-${index + 1}',
+          name: itemName ?? 'خدمة اختبار ${index + 1}',
+          quantity: itemQuantity ?? 1.0,
+          price: itemPrice ?? 1000.0,
+        ),
+      );
+    } else {
+      // البند الافتراضي
+      invoiceItems = [
+        InvoiceItem(
+          id: 'test-item-1',
+          name: itemName ?? 'خدمة اختبار',
+          quantity: itemQuantity ?? 1.0,
+          price: itemPrice ?? 1000.0,
+        ),
+      ];
+    }
+
+    return Invoice(
+      id: id ?? 'test-invoice-${now.millisecondsSinceEpoch}',
+      customerId: customerId ?? 'test-customer-1',
+      customerName: customerName ?? 'عميل اختبار',
+      items: invoiceItems,
+      issuedDate: issuedDate ?? now,
+      dueDate: dueDate ?? now.add(const Duration(days: 30)),
+      taxRate: taxRate ?? 0.15,
+      status: status ?? 'draft',
+      notes: notes,
+      createdAt: now,
+      updatedAt: now,
+    );
+  }
 }

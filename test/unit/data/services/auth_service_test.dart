@@ -15,6 +15,9 @@ void main() {
   setUp(() {
     mockStorage = MockSecureStorage();
     authService = AuthService(secureStorage: mockStorage);
+    // إعادة تعيين حالة الأخطاء
+    mockStorage.shouldThrowOnRead = false;
+    mockStorage.shouldThrowOnWrite = false;
   });
 
   group('AuthService - Registration', () {
@@ -319,5 +322,180 @@ void main() {
         );
       },
     );
+  });
+
+  group('AuthService - Keep Logged In Feature', () {
+    test('should set keep logged in preference', () async {
+      // Act
+      await authService.setKeepLoggedIn(keepLoggedIn: true);
+
+      // Assert
+      final result = await authService.shouldKeepLoggedIn();
+      expect(result, true);
+    });
+
+    test('should unset keep logged in preference', () async {
+      // Arrange
+      await authService.setKeepLoggedIn(keepLoggedIn: true);
+
+      // Act
+      await authService.setKeepLoggedIn(keepLoggedIn: false);
+
+      // Assert
+      final result = await authService.shouldKeepLoggedIn();
+      expect(result, false);
+    });
+
+    test('shouldKeepLoggedIn should return false by default', () async {
+      // Act
+      final result = await authService.shouldKeepLoggedIn();
+
+      // Assert
+      expect(result, false);
+    });
+
+    test('should handle storage errors gracefully for keep logged in',
+        () async {
+      // Arrange
+      mockStorage.shouldThrowOnRead = true;
+
+      // Act
+      final result = await authService.shouldKeepLoggedIn();
+
+      // Assert
+      expect(result, false);
+    });
+  });
+
+  group('AuthService - Guest Mode', () {
+    test('should login as guest successfully', () async {
+      // Act
+      await authService.loginAsGuest();
+
+      // Assert
+      final isGuest = await authService.isGuest();
+      final isLoggedIn = await authService.isLoggedIn();
+      expect(isGuest, true);
+      expect(isLoggedIn, true);
+    });
+
+    test('isGuest should return false by default', () async {
+      // Act
+      final result = await authService.isGuest();
+
+      // Assert
+      expect(result, false);
+    });
+
+    test('should convert guest to regular user', () async {
+      // Arrange
+      await authService.loginAsGuest();
+      const username = 'converteduser';
+      const password = 'redacted';
+
+      // Act
+      await authService.convertGuestToUser(username, password);
+
+      // Assert
+      final isGuest = await authService.isGuest();
+      final storedUsername = await authService.getCurrentUsername();
+      expect(isGuest, false);
+      expect(storedUsername, username);
+    });
+
+    test('should handle guest conversion with invalid credentials', () async {
+      // Arrange
+      await authService.loginAsGuest();
+      const username = 'ab'; // أقل من 3 أحرف
+      const password = 'redacted';
+
+      // Act & Assert
+      expect(
+        () => authService.convertGuestToUser(username, password),
+        throwsException,
+      );
+    });
+
+    test('should handle storage errors gracefully for guest mode', () async {
+      // Arrange
+      mockStorage.shouldThrowOnRead = true;
+
+      // Act
+      final result = await authService.isGuest();
+
+      // Assert
+      expect(result, false);
+    });
+  });
+
+  group('AuthService - Error Handling', () {
+    test('hasAccount should throw exception on storage error', () async {
+      // Arrange
+      mockStorage.shouldThrowOnRead = true;
+
+      // Act & Assert
+      expect(() => authService.hasAccount(), throwsException);
+    });
+
+    test('createAccount should handle storage write errors', () async {
+      // Arrange
+      mockStorage.shouldThrowOnWrite = true;
+      const username = 'testuser';
+      const password = 'redacted';
+
+      // Act & Assert
+      expect(
+        () => authService.createAccount(username, password),
+        throwsException,
+      );
+    });
+
+    test('login should handle storage read errors', () async {
+      // Arrange
+      mockStorage.shouldThrowOnRead = true;
+      const username = 'testuser';
+      const password = 'redacted';
+
+      // Act & Assert
+      expect(() => authService.login(username, password), throwsException);
+    });
+
+    test('logout should handle storage write errors', () async {
+      // Arrange
+      mockStorage.shouldThrowOnWrite = true;
+
+      // Act & Assert
+      expect(() => authService.logout(), throwsException);
+    });
+
+    test('setKeepLoggedIn should handle storage write errors', () async {
+      // Arrange
+      mockStorage.shouldThrowOnWrite = true;
+
+      // Act & Assert
+      expect(
+        () => authService.setKeepLoggedIn(keepLoggedIn: true),
+        throwsException,
+      );
+    });
+
+    test('loginAsGuest should handle storage write errors', () async {
+      // Arrange
+      mockStorage.shouldThrowOnWrite = true;
+
+      // Act & Assert
+      expect(() => authService.loginAsGuest(), throwsException);
+    });
+
+    test('changePassword should handle storage read errors', () async {
+      // Arrange
+      mockStorage.shouldThrowOnRead = true;
+
+      // Act & Assert
+      expect(
+        () => authService.changePassword('oldpass', 'newpass123'),
+        throwsException,
+      );
+    });
   });
 }
