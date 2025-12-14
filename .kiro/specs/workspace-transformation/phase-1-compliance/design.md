@@ -1,17 +1,17 @@
-# Design Document - Kiro Standards Compliance Enhancement
+# Design Document - Flutter Development Environment Enhancement
 
-**المشروع:** بصير MVP - مشروع التحويل الشامل (المرحلة الأولى)  
-**التاريخ:** 11 ديسمبر 2025  
+**المشروع:** بصير MVP - تحسين بيئة تطوير Flutter  
+**التاريخ:** 13 ديسمبر 2025  
 **المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**الحالة:** 🎯 **تصميم تفصيلي لسد الفجوات الحرجة**
+**الحالة:** 🎯 **تصميم تفصيلي لتحسين بيئة Flutter المحلية**
 
 ---
 
 ## Overview
 
-هذا التصميم يحدد الحلول التقنية المفصلة لسد الفجوات الحرجة المكتشفة في تحليل معايير Kiro، مع التركيز على تحقيق أقصى تأثير في أقل وقت ممكن.
+هذا التصميم يحدد الحلول التقنية المفصلة لتحسين بيئة تطوير Flutter المحلية لمشروع بصير، مع التركيز على جودة الكود، الاختبارات، الأداء، والأمان المحلي.
 
-هذه المرحلة الأولى تحضر الأساس التقني والمعياري للمرحلة الثانية من التحويل الذكي الشامل.
+**التركيز الأساسي:** تطبيق بصير هو تطبيق Flutter محلي يستخدم Isar كقاعدة بيانات محلية وRiverpod لإدارة الحالة، مع Clean Architecture.
 
 ## Architecture
 
@@ -19,26 +19,32 @@
 
 ```mermaid
 graph TB
-    A[Kiro Standards Enhancement] --> B[MCP Integration Layer]
-    A --> C[Multi-Provider AI Layer]
-    A --> D[Technology Coverage Layer]
-    A --> E[Process Enhancement Layer]
+    A[Flutter Development Enhancement] --> B[Code Quality Layer]
+    A --> C[Testing Framework Layer]
+    A --> D[Performance Optimization Layer]
+    A --> E[Security Enhancement Layer]
+    A --> F[Development Workflow Layer]
 
-    B --> B1[MCP Servers Config]
-    B --> B2[MCP Validation Hooks]
-    B --> B3[MCP Best Practices]
+    B --> B1[Dart Analysis Enhancement]
+    B --> B2[Code Formatting Automation]
+    B --> B3[Flutter Best Practices]
 
-    C --> C1[Model-Specific Prompts]
-    C --> C2[Provider Adapters]
-    C --> C3[Context Injection System]
+    C --> C1[Unit Testing Framework]
+    C --> C2[Widget Testing Setup]
+    C --> C3[Isar Test Configuration]
+    C --> C4[Golden File Testing]
 
-    D --> D1[AWS Steering]
-    D --> D2[Docker Steering]
-    D --> D3[API Development Steering]
+    D --> D1[Performance Monitoring]
+    D --> D2[Widget Optimization]
+    D --> D3[Database Query Optimization]
 
-    E --> E1[EARS Templates]
-    E --> E2[Approval Gates]
-    E --> E3[Enhanced Hooks Classification]
+    E --> E1[Local Data Encryption]
+    E --> E2[Input Validation]
+    E --> E3[Secure Storage Implementation]
+
+    F --> F1[Flutter Hooks Automation]
+    F --> F2[Development Templates]
+    F --> F3[Build Process Enhancement]
 ```
 
 ## Components and Interfaces

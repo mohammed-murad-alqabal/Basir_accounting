@@ -16,6 +16,10 @@ class MockSecureStorage extends FlutterSecureStorage {
 
   final Map<String, String> _storage = {};
 
+  /// للتحكم في محاكاة الأخطاء في الاختبارات
+  bool shouldThrowOnRead = false;
+  bool shouldThrowOnWrite = false;
+
   /// كتابة قيمة في التخزين
   @override
   Future<void> write({
@@ -28,6 +32,9 @@ class MockSecureStorage extends FlutterSecureStorage {
     MacOsOptions? mOptions,
     WindowsOptions? wOptions,
   }) async {
+    if (shouldThrowOnWrite) {
+      throw Exception('Mock storage write error');
+    }
     if (value != null) {
       _storage[key] = value;
     } else {
@@ -45,8 +52,12 @@ class MockSecureStorage extends FlutterSecureStorage {
     WebOptions? webOptions,
     MacOsOptions? mOptions,
     WindowsOptions? wOptions,
-  }) async =>
-      _storage[key];
+  }) async {
+    if (shouldThrowOnRead) {
+      throw Exception('Mock storage read error');
+    }
+    return _storage[key];
+  }
 
   /// حذف قيمة من التخزين
   @override
