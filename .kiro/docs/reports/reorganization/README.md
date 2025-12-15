@@ -142,7 +142,7 @@ cat .kiro/docs/reports/reorganization/DOCUMENTATION_REORGANIZATION_QUICK_SUMMARY
 
 - `.kiro/docs/README.md` - الدليل الرئيسي
 - `.kiro/docs/reports/` - جميع التقارير
-- `.kiro/docs/GIT_AND_DOCS_REORGANIZATION_FINAL_SUMMARY.md` - الملخص الشامل
+- `.kiro/docs/reports/GIT_AND_DOCS_REORGANIZATION_FINAL_SUMMARY.md` - الملخص الشامل
 
 ---
 
