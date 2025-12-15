@@ -17,9 +17,7 @@ void main() {
     pdfService = PdfService();
   });
 
-  setUpAll(() {
-    TestWidgetsFlutterBinding.ensureInitialized();
-  });
+  setUpAll(TestWidgetsFlutterBinding.ensureInitialized);
 
   group('PdfService - Instance Creation', () {
     test('should create PdfService instance', () {
@@ -304,8 +302,6 @@ void main() {
         id: 'test-customer',
         name: 'Test Customer',
         phone: '+966501234567',
-        email: null, // null email
-        address: null,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -326,7 +322,6 @@ void main() {
         name: 'Test Customer',
         phone: '+966501234567',
         email: 'test@example.com',
-        address: null, // null address
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -345,7 +340,6 @@ void main() {
       final customer = Customer(
         id: 'test-customer',
         name: 'Test Customer',
-        phone: null, // null phone
         email: 'test@example.com',
         address: 'Test Address',
         createdAt: DateTime.now(),
@@ -373,7 +367,8 @@ void main() {
       // Assert
       expect(pdfBytes, isNotNull);
       expect(pdfBytes.length, greaterThan(0));
-      // PDF should be generated successfully (content validation is complex for binary PDF)
+      // PDF should be generated successfully
+      // (content validation is complex for binary PDF)
       expect(pdfBytes.length, greaterThan(1000)); // Reasonable PDF size
     });
 
@@ -415,7 +410,6 @@ void main() {
         dueDate: now.add(const Duration(days: 30)),
         taxRate: 0.15,
         status: 'draft',
-        notes: null,
         createdAt: now,
         updatedAt: now,
       );
@@ -454,7 +448,7 @@ void main() {
       // في بيئة الاختبار، printInvoice قد يفشل بسبب عدم وجود UI
       // لكن يجب أن لا يرمي خطأ في generateInvoicePdf
       expect(
-        () async => await pdfService.generateInvoicePdf(invoice, customer),
+        () async => pdfService.generateInvoicePdf(invoice, customer),
         returnsNormally,
       );
     });
@@ -489,7 +483,7 @@ void main() {
 
     test('should handle customer with very long name', () async {
       // Arrange
-      final longName = 'شركة ' + 'طويلة جداً ' * 20;
+      final longName = 'شركة ${'طويلة جداً ' * 20}';
       final invoice = MockData.createTestInvoice();
       final customer = MockData.createTestCustomer(name: longName);
 
@@ -513,7 +507,6 @@ void main() {
         dueDate: futureDate.add(const Duration(days: 30)),
         taxRate: 0.15,
         status: 'draft',
-        notes: null,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -539,7 +532,6 @@ void main() {
         dueDate: pastDate.add(const Duration(days: 30)),
         taxRate: 0.15,
         status: 'draft',
-        notes: null,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
