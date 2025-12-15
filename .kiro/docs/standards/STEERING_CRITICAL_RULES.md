@@ -265,7 +265,7 @@ echo "أساسي" > .kiro/steering/core/new-core.md
 
 - **التفاصيل الكاملة:** `.kiro/steering/README.md`
 - **التكوين:** `.kiro/steering/config.json`
-- **تقرير التحسين:** `.kiro/docs/CONTEXT_OPTIMIZATION_SUCCESS.md`
+- **تقرير التحسين:** `.kiro/docs/reports/CONTEXT_OPTIMIZATION_SUCCESS.md`
 
 ---
 
