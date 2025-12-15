@@ -82,7 +82,7 @@ void main() {
         type: ElementType.method,
         signature:
             'Future<Map<String, List<int>>> complexFunction<T extends Object>('
-            'T input, {required String name, int? optional})',
+            ' T input, {required String name, int? optional})',
         lineNumber: 25,
       );
 
@@ -400,11 +400,11 @@ void main() {
           lineNumber: 0,
         ),
         const UndocumentedElement(
-          name:
-              'very_long_name_that_exceeds_normal_limits_and_contains_many_underscores_and_numbers_123456789',
+          name: 'very_long_name_that_exceeds_normal_limits_and_contains_'
+              'many_underscores_and_numbers_123456789',
           type: ElementType.classType,
-          signature: 'class VeryLongClassName extends SuperLongBaseClassName ' +
-              'implements MultipleInterfaces',
+          signature: 'class VeryLongClassName extends '
+              'SuperLongBaseClassName implements MultipleInterfaces',
           lineNumber: 999999,
         ),
       ];

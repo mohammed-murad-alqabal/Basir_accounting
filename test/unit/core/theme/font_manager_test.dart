@@ -205,7 +205,7 @@ void main() {
       test('should not throw when printing status', () async {
         await FontManager.initialize();
 
-        expect(() => FontManager.printStatus(), returnsNormally);
+        expect(FontManager.printStatus, returnsNormally);
       });
     });
 
@@ -348,8 +348,10 @@ void main() {
       });
 
       test('should not have primary font in fallback list', () {
-        expect(FontManager.fallbackFonts,
-            isNot(contains(FontManager.primaryFont)));
+        expect(
+          FontManager.fallbackFonts,
+          isNot(contains(FontManager.primaryFont)),
+        );
       });
     });
   });

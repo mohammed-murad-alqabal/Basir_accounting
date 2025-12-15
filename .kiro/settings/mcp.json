@@ -57,19 +57,18 @@
       "autoApprove": ["get_current_time", "convert_time"]
     },
     "filesystem": {
-      "command": "uvx",
-      "args": ["mcp-server-filesystem@latest"],
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
       "autoApprove": [
-        "read_text_file",
+        "read_file",
         "list_directory",
         "read_multiple_files",
         "create_directory",
-        "directory_tree",
-        "get_file_info"
+        "directory_tree"
       ]
     }
   }

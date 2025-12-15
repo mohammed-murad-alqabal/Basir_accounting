@@ -58,10 +58,12 @@ void main() {
 
       // Assert
       expect(container.read(themeProvider), ThemeMode.dark);
-      verify(mockStorage.write(
-        key: 'theme_mode',
-        value: 'ThemeMode.dark',
-      )).called(1);
+      verify(
+        mockStorage.write(
+          key: 'theme_mode',
+          value: 'ThemeMode.dark',
+        ),
+      ).called(1);
     });
 
     test('should toggle from dark to light theme', () async {
@@ -259,10 +261,12 @@ void main() {
       await notifier.setThemeMode(ThemeMode.dark);
 
       // Assert
-      verify(mockStorage.write(
-        key: 'theme_mode',
-        value: 'ThemeMode.dark',
-      )).called(1);
+      verify(
+        mockStorage.write(
+          key: 'theme_mode',
+          value: 'ThemeMode.dark',
+        ),
+      ).called(1);
     });
 
     test('should handle storage errors gracefully', () async {
@@ -309,7 +313,7 @@ void main() {
       final notifier = container.read(themeProvider.notifier);
 
       // Act - Multiple rapid toggles
-      for (int i = 0; i < 5; i++) {
+      for (var i = 0; i < 5; i++) {
         await notifier.toggleTheme();
       }
 
@@ -376,7 +380,7 @@ void main() {
       final stopwatch = Stopwatch()..start();
 
       // Act - Many theme changes
-      for (int i = 0; i < 10; i++) {
+      for (var i = 0; i < 10; i++) {
         await notifier.toggleTheme();
       }
 
@@ -384,8 +388,10 @@ void main() {
 
       // Assert - Should complete in reasonable time (less than 1 second)
       expect(stopwatch.elapsedMilliseconds, lessThan(1000));
-      expect(container.read(themeProvider),
-          ThemeMode.light); // 10 toggles = back to light
+      expect(
+        container.read(themeProvider),
+        ThemeMode.light,
+      ); // 10 toggles = back to light
     });
 
     test('should handle concurrent theme changes', () async {
