@@ -7,7 +7,8 @@ inclusion: always
 
 **المؤلف:** فريق وكلاء تطوير مشروع بصير  
 **المصدر:** مراجع Kiro.dev الرسمية  
-**التاريخ:** 12 ديسمبر 2025
+**التاريخ:** 15 ديسمبر 2025  
+**آخر تحديث:** 15 ديسمبر 2025 - تحديث شامل لمعايير 2025
 
 ---
 
@@ -201,5 +202,94 @@ inclusion: always
 
 ---
 
-**للمراجعة الدورية:** كل 3 أشهر  
-**المسؤول:** فريق وكلاء تطوير مشروع بصير
+## معايير 2025 المحدثة
+
+### **AI-Powered Development Integration**
+
+**كما هو محدد في kiro.dev 2025:**
+
+> "AI agents now provide intelligent code suggestions, automated testing, and continuous quality monitoring"
+
+**التطبيق في بصير:**
+
+- استخدام AI للمراجعة التلقائية للكود
+- تحليل ذكي للأداء والأمان
+- اقتراحات تحسين تلقائية
+- توليد اختبارات ذكية
+
+### **Advanced Metrics Integration**
+
+**معايير 2025 المحدثة:**
+
+- **Developer Experience Index (DXI)**: قياس تجربة المطور
+- **AI Assistance Effectiveness**: فعالية المساعدة الذكية
+- **Automated Quality Gates**: بوابات جودة تلقائية
+- **Predictive Analytics**: تحليلات تنبؤية للمشاكل
+
+### **Modern Flutter/Dart Standards (2025)**
+
+**Flutter 3.35.5+ Requirements:**
+
+- استخدام أحدث Dart 3.9.2+ features
+- تطبيق Material Design 3.0
+- استخدام Impeller rendering engine
+- تطبيق Web Assembly support
+
+### **Enhanced Security Framework**
+
+**Zero-Trust 2.0 (2025):**
+
+- **Quantum-Safe Cryptography**: تشفير مقاوم للحوسبة الكمية
+- **AI-Powered Threat Detection**: كشف التهديدات بالذكاء الاصطناعي
+- **Continuous Compliance Monitoring**: مراقبة الامتثال المستمرة
+- **Automated Incident Response**: استجابة تلقائية للحوادث
+
+---
+
+## Quality Gates 2025
+
+### **AI-Enhanced Quality Checks**
+
+- [ ] AI code review passed
+- [ ] Automated security scan completed
+- [ ] Performance benchmarks met
+- [ ] Accessibility compliance verified
+- [ ] Carbon footprint optimized
+
+### **Advanced Metrics Validation**
+
+- [ ] DXI score > 8.5/10
+- [ ] AI assistance utilization > 70%
+- [ ] Automated test coverage > 85%
+- [ ] Predictive quality score > 9.0/10
+
+---
+
+## Kiro.dev 2025 Integration Checklist
+
+### **Project Level**
+
+- [ ] AI-powered spec generation enabled
+- [ ] Intelligent hooks configured
+- [ ] Advanced powers integrated
+- [ ] Quantum-safe security implemented
+
+### **Development Level**
+
+- [ ] AI code assistance active
+- [ ] Automated quality monitoring
+- [ ] Predictive error prevention
+- [ ] Continuous learning enabled
+
+### **Process Level**
+
+- [ ] Intelligent workflow automation
+- [ ] AI-enhanced code reviews
+- [ ] Predictive maintenance active
+- [ ] Continuous optimization running
+
+---
+
+**للمراجعة الدورية:** كل شهر (محدث من 3 أشهر)  
+**المسؤول:** فريق وكلاء تطوير مشروع بصير  
+**معايير الامتثال:** Kiro.dev 2025 Standards
