@@ -270,10 +270,10 @@ flutter clean
 
 ## 📚 المراجع
 
-- [خطة التنظيف](CONTEXT_CLEANUP_PLAN.md)
-- [تقرير التنفيذ](CONTEXT_CLEANUP_REPORT.md)
-- [README المحدث](README.md)
-- [CHANGELOG](CHANGELOG.md)
+- [خطة التنظيف](../../../reports/cleanup/REORGANIZATION_REPORT.md)
+- [تقرير التنفيذ](../../../reports/cleanup/REPOSITORY_REORGANIZATION_COMPLETE.md)
+- [README المحدث](../../README.md)
+- [CHANGELOG](../../../CHANGELOG.md)
 
 ---
 

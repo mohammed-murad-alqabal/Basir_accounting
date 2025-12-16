@@ -1,20 +1,47 @@
+---
+title: "Flutter/Dart Standards for Baseer MVP"
+inclusion: fileMatch
+fileMatchPattern: "*.dart"
+version: "2.0"
+kiro_compliance: "100%"
+last_updated: "2025-12-15"
+author: "فريق وكلاء تطوير مشروع بصير"
+category: "flutter-dart-standards"
+priority: "high"
+dependencies: ["development-standards.md"]
+target_audience: ["flutter-developers", "dart-developers"]
+flutter_version: "3.35.5+"
+dart_version: "3.9.2+"
+---
+
 **المشروع:** بصير MVP
 **المؤلف:** فريق وكلاء تطوير مشروع بصير
 **المصدر:** مكيف من مصادر مجتمع Kiro المعتمدة
-**التاريخ:** 10 ديسمبر 2025
+**التاريخ:** 15 ديسمبر 2025  
+**آخر تحديث:** 15 ديسمبر 2025 - تحديث لـ Flutter 3.35.5+ و Dart 3.9.2+
 
 ---
 
 # معايير Flutter/Dart للمشروع
 
-## معايير Dart
+## معايير Dart 3.9.2+ (2025)
 
-### التنسيق والأسلوب
+### التنسيق والأسلوب المحدث
 
-- استخدم `dart format` للتنسيق التلقائي
-- اتبع `effective_dart` guidelines
+- استخدم `dart format` مع `--line-length=100` (محدث من 80)
+- اتبع `effective_dart` guidelines الإصدار 2025
 - استخدم `const` constructors حيثما أمكن
 - استخدم `final` للمتغيرات غير القابلة للتغيير
+- **جديد**: استخدم `sealed classes` للـ pattern matching
+- **جديد**: استخدم `extension types` للأداء المحسن
+- **جديد**: استخدم `class modifiers` (base, interface, final, sealed)
+
+### ميزات Dart 3.9.2+ الجديدة
+
+- **Pattern Matching**: استخدم `switch expressions` المحسنة
+- **Records**: استخدم `records` للبيانات المؤقتة
+- **Destructuring**: استخدم `destructuring assignments`
+- **Null Safety**: تطبيق كامل لـ sound null safety
 
 ### التسمية
 
@@ -23,13 +50,23 @@
 - Constants: lowerCamelCase (`maxRetries`)
 - Private members: underscore prefix (`_privateMethod`)
 
-## معايير Flutter
+## معايير Flutter 3.35.5+ (2025)
 
-### البنية والتنظيم
+### البنية والتنظيم المحدثة
 
-- اتبع Clean Architecture (3 layers)
-- استخدم feature-first organization
-- فصل UI عن Business Logic
+- اتبع Clean Architecture (3 layers) مع **Domain-Driven Design**
+- استخدم feature-first organization مع **modular architecture**
+- فصل UI عن Business Logic باستخدام **MVVM pattern**
+- **جديد**: استخدم **Impeller rendering engine** (افتراضي)
+- **جديد**: تطبيق **Material Design 3.0** كاملاً
+- **جديد**: استخدام **Web Assembly** للأداء المحسن
+
+### ميزات Flutter 3.35.5+ الجديدة
+
+- **Element Tree Optimization**: تحسينات أداء الـ widget tree
+- **Advanced Animations**: استخدم `AnimationController` المحسن
+- **Accessibility Enhancements**: تحسينات إمكانية الوصول
+- **Platform Integration**: تكامل أفضل مع المنصات المختلفة
 
 ### إدارة الحالة
 

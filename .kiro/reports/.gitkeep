@@ -1,0 +1,15 @@
+# Git Keep File for Reports Directory
+
+This file ensures that the reports directory structure is maintained in Git.
+
+## Directory Structure:
+- quality/     - Quality and performance reports
+- cleanup/     - Cleanup and maintenance reports  
+- transformation/ - System transformation reports
+- compliance/  - Compliance and standards reports
+- archive/     - Archived reports (older than 6 months)
+
+## Guidelines:
+- Keep this file to maintain directory structure
+- All reports should follow the naming conventions in README.md
+- Regular archival of old reports is recommended
