@@ -24,33 +24,29 @@ inclusion: always
 ## Common Test Commands
 
 ```bash
-# NPM/Yarn - Use silent mode
-npm test -- --silent
-yarn test --silent
-
-# Jest - Minimal output
-npm test -- --verbose=false --silent
-npx jest --silent --passWithNoTests
-
-# Flutter Test - Quiet mode
+# Flutter Test - Quiet mode (Primary for Baseer MVP)
 flutter test --reporter=compact
 dart test --reporter=compact
 
-# Mocha - Minimal reporter
-npx mocha --reporter min
+# Flutter Test - Specific test filtering
+flutter test test/unit/invoice_test.dart
+flutter test --name "specific test pattern"
 
-# Filtering specific tests
-npm test -- --grep "specific test"
-npx jest --testNamePattern="specific test"
-pytest -k "test_specific"
+# Flutter Test - Coverage reporting
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
+
+# Flutter Test - Performance mode
+flutter test --concurrency=4
+flutter test --plain-name "test pattern"
 ```
 
 ## Output Management
 
 - Use summary reporters instead of verbose output
 - Capture detailed logs only when tests fail
-- Use `--bail` or `--maxfail=1` to stop on first failure
-- Redirect verbose output to files when needed: `npm test > test-results.log 2>&1`
+- Use `--bail` to stop on first failure in Flutter tests
+- Redirect verbose output to files when needed: `flutter test > test-results.log 2>&1`
 
 ## Test Organization
 
@@ -61,10 +57,10 @@ pytest -k "test_specific"
 
 ## Performance
 
-- Run tests in parallel when possible (`--parallel`, `--maxWorkers`)
-- Use test caching mechanisms
-- Mock external dependencies to speed up tests
-- Skip slow tests in development with appropriate flags
+- Run tests in parallel when possible (`--concurrency=4` for Flutter)
+- Use Flutter test caching mechanisms
+- Mock external dependencies to speed up tests (using `mockito` package)
+- Skip slow integration tests in development with `--exclude-tags=slow`
 
 ## CI/CD Considerations
 
