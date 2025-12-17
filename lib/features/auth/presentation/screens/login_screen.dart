@@ -199,19 +199,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: AppSpacing.md),
 
                       // زر تسجيل الدخول
-                      AppPrimaryButton(
-                        label: 'تسجيل الدخول',
+                      AppEnhancedButton(
+                        text: 'تسجيل الدخول',
                         onPressed: _handleLogin,
                         isLoading: _isLoading,
-                        width: double.infinity,
+                        icon: Icons.login,
                       ),
                       const SizedBox(height: AppSpacing.md),
 
                       // زر الدخول كضيف
-                      AppSecondaryButton(
-                        label: 'الدخول كضيف',
+                      AppEnhancedButton(
+                        text: 'الدخول كضيف',
                         onPressed: _handleGuestLogin,
-                        width: double.infinity,
+                        style: AppEnhancedButtonStyle.secondary,
+                        icon: Icons.person_outline,
                       ),
                       const SizedBox(height: AppSpacing.md),
 
@@ -231,12 +232,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             Flexible(
-                              child: AppTextButton(
-                                label: 'أنشئ حساباً الآن',
+                              child: AppEnhancedButton(
+                                text: 'أنشئ حساباً الآن',
                                 onPressed: () async {
                                   await Navigator.of(context)
                                       .pushNamed('/setup');
                                 },
+                                style: AppEnhancedButtonStyle.text,
+                                size: AppEnhancedButtonSize.small,
                               ),
                             ),
                           ],

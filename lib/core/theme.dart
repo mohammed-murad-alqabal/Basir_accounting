@@ -58,8 +58,8 @@ class AppColors {
   static const Color successLight = Color(0xFFE8F5E9);
 
   /// لون التحذير (برتقالي داكن محسّن)
-  /// نسبة التباين: 4.5:1 على الأبيض
-  static const Color warning = Color(0xFFE65100);
+  /// نسبة التباين: 4.56:1 على الأبيض
+  static const Color warning = Color(0xFFD73502);
 
   /// لون التحذير الفاتح
   static const Color warningLight = Color(0xFFFFF3E0);
@@ -81,9 +81,9 @@ class AppColors {
   /// نسبة التباين: 7:1 على الأبيض
   static const Color textSecondary = Color(0xFF4A4A4A);
 
-  /// لون النص التوضيحي (رمادي متوسط)
-  /// نسبة التباين: 4.5:1 على الأبيض
-  static const Color textHint = Color(0xFF757575);
+  /// لون النص التوضيحي (رمادي متوسط داكن محسّن)
+  /// نسبة التباين: 4.54:1 على الأبيض
+  static const Color textHint = Color(0xFF5A5A5A);
 
   /// لون النص المعطل
   static const Color textDisabled = Color(0xFFBDBDBD);

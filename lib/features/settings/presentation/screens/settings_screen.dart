@@ -161,16 +161,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
         ),
         actions: [
-          TextButton(
+          AppEnhancedButton(
+            text: 'إلغاء',
             onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
           ),
-          TextButton(
+          AppEnhancedButton(
+            text: 'حفظ',
             onPressed: () {
               Navigator.pop(context);
               _showSuccessMessage('تم تحديث بيانات الحساب بنجاح');
             },
-            child: const Text('حفظ'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
           ),
         ],
       ),
@@ -265,9 +269,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
         ),
         actions: [
-          TextButton(
+          AppEnhancedButton(
+            text: 'حسناً',
             onPressed: () => Navigator.pop(context),
-            child: const Text('حسناً'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
           ),
         ],
       ),
@@ -328,9 +334,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
         ),
         actions: [
-          TextButton(
+          AppEnhancedButton(
+            text: 'حسناً',
             onPressed: () => Navigator.pop(context),
-            child: const Text('حسناً'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
           ),
         ],
       ),
@@ -361,16 +369,18 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         title: const Text('تسجيل الخروج'),
         content: const Text('هل أنت متأكد من رغبتك في تسجيل الخروج؟'),
         actions: [
-          TextButton(
+          AppEnhancedButton(
+            text: 'إلغاء',
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('إلغاء'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
           ),
-          TextButton(
+          AppEnhancedButton(
+            text: 'تسجيل الخروج',
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text(
-              'تسجيل الخروج',
-              style: TextStyle(color: AppColors.error),
-            ),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
+            // TODO: Add error color support to AppEnhancedButton
           ),
         ],
       ),

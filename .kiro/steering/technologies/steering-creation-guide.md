@@ -1,13 +1,19 @@
+---
+id: "steering-creation-guide"
+description: "دليل إنشاء واستخدام ملفات التوجيه"
+version: "1.0"
+last_updated: "2025-12-17"
+inclusion: manual
+metrics:
+  size: "6KB"
+  lines: 202
+  context_usage: "3%"
+---
+
 **المشروع:** بصير MVP
 **المؤلف:** فريق وكلاء تطوير مشروع بصير  
 **المصدر:** مكيف من مصادر مجتمع Kiro المعتمدة
 **التاريخ:** 10 December 2025
-
----
-
----
-
-## inclusion: manual
 
 # Steering Document Creation and Usage Guide
 

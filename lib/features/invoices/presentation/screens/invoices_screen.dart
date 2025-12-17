@@ -121,12 +121,13 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: AppSpacing.xl),
-                      AppPrimaryButton(
-                        label: 'إعادة المحاولة',
+                      AppEnhancedButton(
+                        text: 'إعادة المحاولة',
                         onPressed: () {
                           ref.invalidate(invoicesProvider);
                         },
-                        width: 200,
+                        icon: Icons.refresh,
+                        style: AppEnhancedButtonStyle.secondary,
                       ),
                     ],
                   ),
@@ -375,14 +376,18 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
         title: const Text('حذف الفاتورة'),
         content: Text('هل أنت متأكد من حذف الفاتورة "${invoice.id}"؟'),
         actions: [
-          TextButton(
+          AppEnhancedButton(
+            text: 'إلغاء',
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('إلغاء'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
           ),
-          TextButton(
+          AppEnhancedButton(
+            text: 'حذف',
             onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('حذف'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
+            // TODO: Add error color support to AppEnhancedButton
           ),
         ],
       ),

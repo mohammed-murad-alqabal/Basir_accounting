@@ -1,0 +1,445 @@
+{
+  "incompatible_technologies": [
+    {
+      "name": "Node.js",
+      "type": "runtime",
+      "reason": "غير متوافق مع تطوير Flutter المحلي",
+      "replacement": "Flutter SDK",
+      "patterns": [
+        "\\bNode\\.js\\b",
+        "\\bnodejs\\b",
+        "\\bnpm\\s+install\\b",
+        "\\bnpm\\s+run\\b",
+        "\\byarn\\s+install\\b",
+        "\\byarn\\s+start\\b",
+        "package\\.json",
+        "node_modules"
+      ]
+    },
+    {
+      "name": "TypeScript",
+      "type": "language",
+      "reason": "يجب استخدام Dart بدلاً من TypeScript",
+      "replacement": "Dart",
+      "patterns": [
+        "\\bTypeScript\\b",
+        "\\.ts\\b",
+        "\\.tsx\\b",
+        "\\btsc\\b",
+        "tsconfig\\.json"
+      ]
+    },
+    {
+      "name": "JavaScript",
+      "type": "language",
+      "reason": "يجب استخدام Dart بدلاً من JavaScript",
+      "replacement": "Dart",
+      "patterns": [
+        "\\bJavaScript\\b",
+        "\\.js\\b",
+        "\\.jsx\\b",
+        "\\bES6\\b",
+        "\\bES2015\\b"
+      ]
+    },
+    {
+      "name": "React",
+      "type": "web_framework",
+      "reason": "يجب استخدام Flutter بدلاً من React",
+      "replacement": "Flutter",
+      "patterns": [
+        "\\bReact\\b",
+        "\\bReactJS\\b",
+        "\\bReact\\.js\\b",
+        "create-react-app",
+        "react-dom"
+      ]
+    },
+    {
+      "name": "Vue",
+      "type": "web_framework",
+      "reason": "يجب استخدام Flutter بدلاً من Vue",
+      "replacement": "Flutter",
+      "patterns": ["\\bVue\\b", "\\bVue\\.js\\b", "\\bVuejs\\b", "vue-cli"]
+    },
+    {
+      "name": "Angular",
+      "type": "web_framework",
+      "reason": "يجب استخدام Flutter بدلاً من Angular",
+      "replacement": "Flutter",
+      "patterns": [
+        "\\bAngular\\b",
+        "\\bAngularJS\\b",
+        "@angular/",
+        "ng\\s+new",
+        "ng\\s+serve"
+      ]
+    },
+    {
+      "name": "Docker",
+      "type": "infrastructure",
+      "reason": "غير مطلوب للتطبيقات المحلية",
+      "replacement": "Local development",
+      "patterns": [
+        "\\bDocker\\b",
+        "Dockerfile",
+        "docker-compose",
+        "docker\\s+run",
+        "docker\\s+build"
+      ]
+    },
+    {
+      "name": "Kubernetes",
+      "type": "infrastructure",
+      "reason": "غير مطلوب للتطبيقات المحلية",
+      "replacement": "Local development",
+      "patterns": [
+        "\\bKubernetes\\b",
+        "\\bk8s\\b",
+        "kubectl",
+        "deployment\\.yaml",
+        "service\\.yaml"
+      ]
+    },
+    {
+      "name": "webpack",
+      "type": "build_tool",
+      "reason": "يجب استخدام flutter build",
+      "replacement": "flutter build",
+      "patterns": ["\\bwebpack\\b", "webpack\\.config", "webpack-dev-server"]
+    },
+    {
+      "name": "babel",
+      "type": "build_tool",
+      "reason": "غير مطلوب مع Dart",
+      "replacement": "dart compile",
+      "patterns": ["\\bbabel\\b", "\\.babelrc", "babel\\.config"]
+    },
+    {
+      "name": "eslint",
+      "type": "linting_tool",
+      "reason": "يجب استخدام dart analyze",
+      "replacement": "dart analyze",
+      "patterns": ["\\beslint\\b", "\\.eslintrc", "eslint\\.config"]
+    },
+    {
+      "name": "Express",
+      "type": "server_framework",
+      "reason": "غير مطلوب للتطبيقات المحلية",
+      "replacement": "Local API or Firebase",
+      "patterns": ["\\bExpress\\b", "\\bexpress\\(\\)", "express\\.Router"]
+    },
+    {
+      "name": "Django",
+      "type": "server_framework",
+      "reason": "غير مطلوب للتطبيقات المحلية",
+      "replacement": "Local API or Firebase",
+      "patterns": ["\\bDjango\\b", "django-admin", "manage\\.py"]
+    },
+    {
+      "name": "Flask",
+      "type": "server_framework",
+      "reason": "غير مطلوب للتطبيقات المحلية",
+      "replacement": "Local API or Firebase",
+      "patterns": ["\\bFlask\\b", "from flask import", "app = Flask"]
+    },
+    {
+      "name": "Python",
+      "type": "language",
+      "reason": "يجب استخدام Dart بدلاً من Python للتطبيقات المحلية",
+      "replacement": "Dart",
+      "patterns": [
+        "\\bPython\\b",
+        "\\.py\\b",
+        "\\bpip\\s+install\\b",
+        "requirements\\.txt",
+        "\\bvirtualenv\\b",
+        "\\bconda\\b",
+        "\\bpytest\\b"
+      ]
+    },
+    {
+      "name": "Java",
+      "type": "language",
+      "reason": "يجب استخدام Dart بدلاً من Java للتطبيقات المحلية",
+      "replacement": "Dart",
+      "patterns": [
+        "\\bJava\\b(?!Script)",
+        "\\.java\\b",
+        "\\bmaven\\b",
+        "\\bgradle\\b(?!.*flutter)",
+        "pom\\.xml",
+        "\\bjunit\\b"
+      ]
+    },
+    {
+      "name": "PHP",
+      "type": "language",
+      "reason": "يجب استخدام Dart بدلاً من PHP",
+      "replacement": "Dart",
+      "patterns": [
+        "\\bPHP\\b",
+        "\\.php\\b",
+        "\\bcomposer\\b",
+        "composer\\.json",
+        "\\blaravel\\b",
+        "\\bsymfony\\b"
+      ]
+    },
+    {
+      "name": "Ruby",
+      "type": "language",
+      "reason": "يجب استخدام Dart بدلاً من Ruby",
+      "replacement": "Dart",
+      "patterns": [
+        "\\bRuby\\b",
+        "\\.rb\\b",
+        "\\bgem\\s+install\\b",
+        "Gemfile",
+        "\\brails\\b",
+        "\\brspec\\b"
+      ]
+    },
+    {
+      "name": "Go",
+      "type": "language",
+      "reason": "يجب استخدام Dart بدلاً من Go للتطبيقات المحلية",
+      "replacement": "Dart",
+      "patterns": [
+        "\\bGolang\\b",
+        "\\bGo\\s+language\\b",
+        "\\.go\\b",
+        "go\\.mod",
+        "\\bgo\\s+run\\b",
+        "\\bgo\\s+build\\b"
+      ]
+    },
+    {
+      "name": "Rust",
+      "type": "language",
+      "reason": "يجب استخدام Dart بدلاً من Rust للتطبيقات المحلية",
+      "replacement": "Dart",
+      "patterns": [
+        "\\bRust\\b",
+        "\\.rs\\b",
+        "Cargo\\.toml",
+        "\\bcargo\\s+run\\b",
+        "\\bcargo\\s+build\\b"
+      ]
+    },
+    {
+      "name": "C#",
+      "type": "language",
+      "reason": "يجب استخدام Dart بدلاً من C# للتطبيقات المحلية",
+      "replacement": "Dart",
+      "patterns": [
+        "\\bC#\\b",
+        "\\bC-Sharp\\b",
+        "\\.cs\\b",
+        "\\.csproj\\b",
+        "\\bdotnet\\b",
+        "\\bNuGet\\b"
+      ]
+    },
+    {
+      "name": "Swift",
+      "type": "language",
+      "reason": "يجب استخدام Flutter/Dart للتطوير متعدد المنصات",
+      "replacement": "Flutter/Dart",
+      "patterns": [
+        "\\bSwift\\b(?!.*flutter)",
+        "\\.swift\\b",
+        "\\bXcode\\b(?!.*flutter)",
+        "\\bCocoaPods\\b(?!.*flutter)"
+      ]
+    },
+    {
+      "name": "Kotlin",
+      "type": "language",
+      "reason": "يجب استخدام Flutter/Dart للتطوير متعدد المنصات",
+      "replacement": "Flutter/Dart",
+      "patterns": ["\\bKotlin\\b(?!.*flutter)", "\\.kt\\b", "\\.kts\\b"]
+    },
+    {
+      "name": "MongoDB",
+      "type": "database",
+      "reason": "يجب استخدام Isar للقاعدة المحلية",
+      "replacement": "Isar",
+      "patterns": [
+        "\\bMongoDB\\b",
+        "\\bmongo\\b",
+        "\\bmongodb\\b",
+        "\\bmongoose\\b"
+      ]
+    },
+    {
+      "name": "MySQL",
+      "type": "database",
+      "reason": "يجب استخدام Isar للقاعدة المحلية",
+      "replacement": "Isar",
+      "patterns": ["\\bMySQL\\b", "\\bmysql\\b", "\\.sql\\b"]
+    },
+    {
+      "name": "PostgreSQL",
+      "type": "database",
+      "reason": "يجب استخدام Isar للقاعدة المحلية",
+      "replacement": "Isar",
+      "patterns": ["\\bPostgreSQL\\b", "\\bpostgres\\b", "\\bpsql\\b"]
+    },
+    {
+      "name": "Redis",
+      "type": "database",
+      "reason": "يجب استخدام Isar أو SharedPreferences للتخزين المحلي",
+      "replacement": "Isar or SharedPreferences",
+      "patterns": ["\\bRedis\\b", "\\bredis\\b"]
+    },
+    {
+      "name": "Nginx",
+      "type": "web_server",
+      "reason": "غير مطلوب للتطبيقات المحلية",
+      "replacement": "Local development server",
+      "patterns": ["\\bNginx\\b", "\\bnginx\\b", "nginx\\.conf"]
+    },
+    {
+      "name": "Apache",
+      "type": "web_server",
+      "reason": "غير مطلوب للتطبيقات المحلية",
+      "replacement": "Local development server",
+      "patterns": ["\\bApache\\b(?!.*license)", "\\bhttpd\\b", "apache2"]
+    },
+    {
+      "name": "Vite",
+      "type": "build_tool",
+      "reason": "يجب استخدام flutter build",
+      "replacement": "flutter build",
+      "patterns": ["\\bVite\\b", "vite\\.config"]
+    },
+    {
+      "name": "Rollup",
+      "type": "build_tool",
+      "reason": "يجب استخدام flutter build",
+      "replacement": "flutter build",
+      "patterns": ["\\bRollup\\b", "rollup\\.config"]
+    },
+    {
+      "name": "Parcel",
+      "type": "build_tool",
+      "reason": "يجب استخدام flutter build",
+      "replacement": "flutter build",
+      "patterns": ["\\bParcel\\b", "\\.parcelrc"]
+    },
+    {
+      "name": "Gulp",
+      "type": "build_tool",
+      "reason": "يجب استخدام flutter build",
+      "replacement": "flutter build",
+      "patterns": ["\\bGulp\\b", "gulpfile\\.js"]
+    },
+    {
+      "name": "Grunt",
+      "type": "build_tool",
+      "reason": "يجب استخدام flutter build",
+      "replacement": "flutter build",
+      "patterns": ["\\bGrunt\\b", "Gruntfile\\.js"]
+    },
+    {
+      "name": "Jest",
+      "type": "testing_tool",
+      "reason": "يجب استخدام flutter test",
+      "replacement": "flutter test",
+      "patterns": ["\\bJest\\b", "jest\\.config"]
+    },
+    {
+      "name": "Mocha",
+      "type": "testing_tool",
+      "reason": "يجب استخدام flutter test",
+      "replacement": "flutter test",
+      "patterns": ["\\bMocha\\b", "\\.mocharc"]
+    },
+    {
+      "name": "Cypress",
+      "type": "testing_tool",
+      "reason": "يجب استخدام flutter integration test",
+      "replacement": "flutter integration test",
+      "patterns": ["\\bCypress\\b", "cypress\\.config"]
+    },
+    {
+      "name": "Selenium",
+      "type": "testing_tool",
+      "reason": "يجب استخدام flutter integration test",
+      "replacement": "flutter integration test",
+      "patterns": ["\\bSelenium\\b", "\\bwebdriver\\b"]
+    },
+    {
+      "name": "Sass",
+      "type": "styling_tool",
+      "reason": "يجب استخدام Flutter theming",
+      "replacement": "Flutter ThemeData",
+      "patterns": ["\\bSass\\b", "\\bSCSS\\b", "\\.sass\\b", "\\.scss\\b"]
+    },
+    {
+      "name": "Less",
+      "type": "styling_tool",
+      "reason": "يجب استخدام Flutter theming",
+      "replacement": "Flutter ThemeData",
+      "patterns": ["\\bLess\\b(?!.*than)", "\\.less\\b"]
+    },
+    {
+      "name": "Tailwind",
+      "type": "styling_framework",
+      "reason": "يجب استخدام Flutter widgets",
+      "replacement": "Flutter Material/Cupertino widgets",
+      "patterns": ["\\bTailwind\\b", "tailwind\\.config"]
+    },
+    {
+      "name": "Bootstrap",
+      "type": "styling_framework",
+      "reason": "يجب استخدام Flutter widgets",
+      "replacement": "Flutter Material/Cupertino widgets",
+      "patterns": ["\\bBootstrap\\b", "bootstrap\\.css"]
+    },
+    {
+      "name": "jQuery",
+      "type": "library",
+      "reason": "يجب استخدام Flutter widgets",
+      "replacement": "Flutter widgets",
+      "patterns": ["\\bjQuery\\b", "\\b\\$\\(\\)"]
+    },
+    {
+      "name": "Lodash",
+      "type": "library",
+      "reason": "يجب استخدام Dart built-in functions",
+      "replacement": "Dart built-in functions",
+      "patterns": ["\\bLodash\\b", "\\b_\\."]
+    }
+  ],
+  "allowed_exceptions": [
+    "تجنب",
+    "لا تستخدم",
+    "بدلاً من",
+    "instead of",
+    "avoid",
+    "don't use",
+    "للإزالة",
+    "للاستبدال",
+    "غير متوافق",
+    "incompatible",
+    "not recommended",
+    "deprecated"
+  ],
+  "severity_mapping": {
+    "runtime": "high",
+    "language": "high",
+    "web_framework": "high",
+    "server_framework": "high",
+    "database": "high",
+    "web_server": "medium",
+    "build_tool": "medium",
+    "linting_tool": "medium",
+    "testing_tool": "medium",
+    "styling_tool": "low",
+    "styling_framework": "low",
+    "library": "low",
+    "infrastructure": "low"
+  }
+}

@@ -186,20 +186,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Row(
             children: [
               Expanded(
-                child: AppPrimaryButton(
-                  label: 'فاتورة جديدة',
+                child: AppEnhancedButton(
+                  text: 'فاتورة جديدة',
                   onPressed: () {
                     unawaited(Navigator.of(context).pushNamed('/invoices'));
                   },
+                  icon: Icons.receipt_long,
                 ),
               ),
               const SizedBox(width: AppSpacing.md),
               Expanded(
-                child: AppSecondaryButton(
-                  label: 'عميل جديد',
+                child: AppEnhancedButton(
+                  text: 'عميل جديد',
                   onPressed: () {
                     unawaited(Navigator.of(context).pushNamed('/customers'));
                   },
+                  style: AppEnhancedButtonStyle.secondary,
+                  icon: Icons.person_add,
                 ),
               ),
             ],

@@ -13,7 +13,7 @@
 
 **الوصف:** إصلاح شامل لخادم GitHub MCP  
 **المشكلة:** timeout وفشل الاتصال  
-**الحل:** استبدال حزمة PyPI بحزمة npm الرسمية  
+**الحل:** استبدال حزمة PyPI بحزمة GitHub MCP الرسمية  
 **الاستخدام:**
 
 ```bash
@@ -23,7 +23,7 @@ python3 scripts/fix_github_mcp.py
 **المتطلبات:**
 
 - Python 3.6+
-- Node.js و npm
+- uv package manager للـ MCP servers
 - GITHUB_TOKEN في متغيرات البيئة
 - صلاحيات كتابة على `~/.kiro/settings/mcp.json`
 

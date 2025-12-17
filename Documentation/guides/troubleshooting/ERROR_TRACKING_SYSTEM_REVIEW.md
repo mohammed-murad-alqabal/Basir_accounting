@@ -309,29 +309,23 @@ fi
 
 **المشكلة 1: عدم التحقق من Issues المكررة**
 
-```javascript
-// إضافة قبل إنشاء Issue
-const { data: existingIssues } = await github.rest.issues.listForRepo({
-  owner: context.repo.owner,
-  repo: context.repo.repo,
-  state: "open",
-  labels: "automated,critical",
-});
+```dart
+// إضافة فحص للـ Issues المكررة في Flutter/Dart
+class IssueManager {
+  Future<bool> checkDuplicateIssues(String title) async {
+    // استخدام GitHub API مع Dart
+    final response = await http.get(
+      Uri.parse('$apiUrl/repos/$owner/$repo/issues'),
+      headers: {'Authorization': 'token $githubToken'},
+    );
 
-// التحقق من وجود issue مشابه
-const similarIssue = existingIssues.find((issue) =>
-  issue.title.includes("أخطاء حرجة")
-);
-
-if (similarIssue) {
-  // تحديث Issue الموجود بدلاً من إنشاء جديد
-  await github.rest.issues.createComment({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    issue_number: similarIssue.number,
-    body: `تحديث: ${new Date().toLocaleString("ar-SA")}\n\n${issueBody}`,
-  });
-  return;
+    if (response.statusCode == 200) {
+      final issues = json.decode(response.body) as List;
+      return issues.any((issue) =>
+        issue['title'].toString().contains('أخطاء حرجة'));
+    }
+    return false;
+  }
 }
 ```
 

@@ -5,6 +5,7 @@ import 'package:basser_app/core/constants.dart';
 import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/router.dart';
 import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/theme/font_manager.dart';
 import 'package:basser_app/core/theme_dark.dart';
 import 'package:basser_app/features/auth/data/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 void main() async {
   // تهيئة Flutter bindings
   WidgetsFlutterBinding.ensureInitialized();
+
+  // تهيئة FontManager
+  await FontManager.initialize();
 
   // تحسين الأداء: تعيين اتجاه النظام
   await SystemChrome.setPreferredOrientations([

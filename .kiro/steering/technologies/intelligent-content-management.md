@@ -1,13 +1,21 @@
 ---
-title: Intelligent Content Management
+id: "intelligent-content-management"
+description: "إدارة المحتوى الذكية للوثائق"
+version: "1.0"
+last_updated: "2025-12-17"
 inclusion: always
+author: "فريق وكلاء تطوير مشروع بصير"
+metrics:
+  size: "5KB"
+  lines: 150
+  context_usage: "2.5%"
 ---
 
 # إدارة المحتوى الذكية
 
 **المشروع:** بصير MVP  
 **المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**التاريخ:** 13 ديسمبر 2025  
+**آخر تحديث:** 17 ديسمبر 2025  
 **الحالة:** ✅ نشط ومعتمد
 
 ---
