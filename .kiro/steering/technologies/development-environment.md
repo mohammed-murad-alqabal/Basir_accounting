@@ -1,15 +1,15 @@
-**المشروع:** بصير MVP
-**المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**المصدر:** مكيف من مصادر مجتمع Kiro المعتمدة
-**التاريخ:** 10 December 2025
-
 ---
-
----
-
+id: "development-environment"
+description: "إعداد بيئة التطوير Flutter"
+version: "1.0"
+last_updated: "2025-12-17"
 inclusion: fileMatch
-fileMatchPattern: 'pubspec.yaml|analysis_options.yaml|\*.dart'
-
+fileMatchPattern: "pubspec.yaml|analysis_options.yaml|*.dart"
+author: "فريق وكلاء تطوير مشروع بصير"
+metrics:
+  size: "2KB"
+  lines: 65
+  context_usage: "1%"
 ---
 
 # Flutter Development Environment Setup

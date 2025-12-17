@@ -99,17 +99,17 @@ An unexpected error occurred, please retry.
 
 ```bash
 # تحميل المتغيرات البيئية واختبار الاتصال
-export $(cat .env | grep -v '^#' | xargs) && python3 scripts/figma_api.py me
+export $(cat .env | grep -v '^#' | xargs) && dart run scripts/figma_api.dart me
 
 # الحصول على معلومات ملف (إذا كان لديك file key)
-export $(cat .env | grep -v '^#' | xargs) && python3 scripts/figma_api.py file YOUR_FILE_KEY
+export $(cat .env | grep -v '^#' | xargs) && dart run scripts/figma_api.dart file YOUR_FILE_KEY
 ```
 
 ### الطريقة البديلة (MCP Server محلي)
 
 ```bash
 # تحميل المتغيرات واستخدام MCP server
-export $(cat .env | grep -v '^#' | xargs) && python3 scripts/figma_mcp_server.py figma_get_me
+export $(cat .env | grep -v '^#' | xargs) && dart run scripts/figma_mcp_server.dart figma_get_me
 ```
 
 ### اختبار شامل
@@ -167,7 +167,7 @@ export $(cat .env | grep -v '^#' | xargs) && python3 scripts/figma_mcp_server.py
 2. **جرّب الأدوات**:
 
    ```bash
-   export $(cat .env | grep -v '^#' | xargs) && python3 scripts/figma_api.py file YOUR_FILE_KEY
+   export $(cat .env | grep -v '^#' | xargs) && dart run scripts/figma_api.dart file YOUR_FILE_KEY
    ```
 
 3. **استكشف الملفات**:

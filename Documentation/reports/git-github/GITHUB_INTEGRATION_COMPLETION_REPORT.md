@@ -121,7 +121,7 @@
 ### **2. سكريبت الإصلاح المتقدم:**
 
 ```bash
-python3 scripts/fix_github_mcp.py
+dart run scripts/fix_github_mcp.dart
 ```
 
 - إصلاح تلقائي للمشاكل الشائعة

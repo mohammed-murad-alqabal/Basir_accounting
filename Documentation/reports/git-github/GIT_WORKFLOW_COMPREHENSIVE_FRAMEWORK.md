@@ -970,13 +970,14 @@ chmod +x pre-push
 **التوصية:**
 
 ```bash
-# استخدام conventional-changelog
-npm install -g conventional-changelog-cli
+# استخدام أدوات Flutter/Dart لتوليد CHANGELOG
+# إنشاء سكريبت Dart لتوليد CHANGELOG
+dart run scripts/generate_changelog.dart
 
-# إضافة script
-# في package.json أو Makefile
-changelog:
-  conventional-changelog -p angular -i CHANGELOG.md -s
+# أو استخدام Git hooks مع Bash
+#!/bin/bash
+# في .git/hooks/post-commit
+git log --oneline --since="1 month ago" > CHANGELOG_temp.md
 ```
 
 **الفائدة:**
@@ -1022,10 +1023,10 @@ jobs:
 # استخدام Danger.js أو ReviewDog
 # في .github/workflows/review.yml
 
-- name: Run Danger
+- name: Run Flutter Analysis
   run: |
-    npm install -g danger
-    danger ci
+    flutter analyze
+    dart format --set-exit-if-changed .
 ```
 
 **الفائدة:**
