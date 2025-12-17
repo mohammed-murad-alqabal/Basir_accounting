@@ -1,35 +1,27 @@
-**المشروع:** بصير MVP
+# معايير Flutter Frontend - بصير MVP
+
+**المشروع:** بصير MVP  
 **المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**المصدر:** مكيف من مصادر مجتمع Kiro المعتمدة
-**التاريخ:** 15 ديسمبر 2025
+**التاريخ:** 16 ديسمبر 2025  
+**الحالة:** ✅ نشط ومكثف
 
 ---
 
----
+## 🏗️ معمارية Flutter Widgets
 
-inclusion: fileMatch
-fileMatchPattern: '\*.dart'
+### **اختيار نوع Widget**
 
----
+- **StatelessWidget**: للمحتوى الثابت
+- **StatefulWidget**: للحالة الداخلية (نماذج، رسوم متحركة)
+- **ConsumerWidget**: لـ Riverpod providers
+- **HookWidget**: للحالات المتقدمة
 
-# Flutter Frontend Development Standards
-
-## Flutter Widget Architecture
-
-### Widget Selection Guidelines
-
-- **StatelessWidget**: For widgets that don't change (static content, pure functions)
-- **StatefulWidget**: For widgets with internal state (forms, animations)
-- **ConsumerWidget**: For widgets that need Riverpod providers
-- **HookWidget**: For widgets using Flutter Hooks (advanced cases)
-
-### Widget Composition Patterns
+### **أنماط تركيب Widgets**
 
 ```dart
-// Good: Composition over inheritance
+// ✅ جيد: التركيب بدلاً من الوراثة
 class InvoiceCard extends StatelessWidget {
   final Invoice invoice;
-
   const InvoiceCard({super.key, required this.invoice});
 
   @override
@@ -46,30 +38,31 @@ class InvoiceCard extends StatelessWidget {
   }
 }
 
-// Bad: Monolithic widget
+// ❌ خطأ: widget واحد كبير
 class InvoiceCard extends StatelessWidget {
-  // 200+ lines of build method
+  // 200+ سطر في build method
 }
 ```
 
-### Performance-First Widget Design
+### **تصميم محسن للأداء**
 
-- Use `const` constructors wherever possible
-- Implement `RepaintBoundary` for expensive widgets
-- Use `ListView.builder` for large lists
-- Implement proper `dispose()` methods
+- استخدام `const` constructors دائماً
+- `RepaintBoundary` للـ widgets المعقدة
+- `ListView.builder` للقوائم الطويلة
+- تنفيذ `dispose()` بشكل صحيح
 
-## Material Design 3 Implementation
+---
 
-### Design System Standards
+## 🎨 Material Design 3
+
+### **نظام التصميم**
 
 ```dart
-// Good: Consistent design system usage
 class AppTheme {
   static ThemeData get lightTheme => ThemeData(
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: const Color(0xFF2196F3), // Baseer blue
+      seedColor: const Color(0xFF2196F3), // بصير الأزرق
       brightness: Brightness.light,
     ),
     typography: Typography.material2021(),
@@ -85,20 +78,21 @@ class AppTheme {
 }
 ```
 
-### Component Standards
+### **معايير المكونات**
 
-- **Cards**: Use `Card` widget for grouped content
-- **Lists**: Use `ListTile` for consistent list items
-- **Forms**: Use `TextFormField` with proper validation
-- **Navigation**: Use `NavigationBar` for bottom navigation
-- **Dialogs**: Use `AlertDialog` for confirmations
+- **Cards**: استخدام `Card` للمحتوى المجمع
+- **Lists**: استخدام `ListTile` لعناصر القائمة المتسقة
+- **Forms**: استخدام `TextFormField` مع التحقق المناسب
+- **Navigation**: استخدام `NavigationBar` للتنقل السفلي
+- **Dialogs**: استخدام `AlertDialog` للتأكيدات
 
-## Arabic/RTL Layout Standards
+---
 
-### RTL Layout Implementation
+## 🔤 دعم العربية و RTL
+
+### **تنفيذ RTL Layout**
 
 ```dart
-// Good: Proper RTL support
 class ArabicAwareWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -107,13 +101,12 @@ class ArabicAwareWidget extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('إدارة الفواتير'),
-          automaticallyImplyLeading: true, // Handles RTL back button
+          automaticallyImplyLeading: true, // يتعامل مع زر الرجوع RTL
         ),
         body: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Aligns to right in RTL
+          crossAxisAlignment: CrossAxisAlignment.start, // محاذاة لليمين في RTL
           children: [
             Text('مرحباً بك في بصير'),
-            // More widgets...
           ],
         ),
       ),
@@ -122,16 +115,15 @@ class ArabicAwareWidget extends StatelessWidget {
 }
 ```
 
-### Arabic Typography Standards
+### **معايير الطباعة العربية**
 
 ```dart
-// Arabic text styling
 class ArabicTextStyles {
   static const TextStyle heading = TextStyle(
-    fontFamily: 'Cairo', // Arabic-friendly font
+    fontFamily: 'Cairo', // خط مناسب للعربية
     fontSize: 24,
     fontWeight: FontWeight.bold,
-    height: 1.5, // Better line height for Arabic
+    height: 1.5, // ارتفاع سطر أفضل للعربية
   );
 
   static const TextStyle body = TextStyle(
@@ -142,13 +134,11 @@ class ArabicTextStyles {
 }
 ```
 
-### Bidirectional Text Handling
+### **معالجة النص ثنائي الاتجاه**
 
 ```dart
-// Handle mixed Arabic/English text
 class BidirectionalText extends StatelessWidget {
   final String text;
-
   const BidirectionalText(this.text, {super.key});
 
   @override
@@ -161,7 +151,6 @@ class BidirectionalText extends StatelessWidget {
   }
 
   TextDirection _detectTextDirection(String text) {
-    // Detect if text is primarily Arabic or English
     final arabicChars = RegExp(r'[\u0600-\u06FF]').allMatches(text).length;
     final totalChars = text.replaceAll(RegExp(r'\s'), '').length;
 
@@ -172,15 +161,15 @@ class BidirectionalText extends StatelessWidget {
 }
 ```
 
-## Mobile-First Design Standards
+---
 
-### Responsive Design for Mobile
+## 📱 التصميم المحمول أولاً
+
+### **التصميم المتجاوب**
 
 ```dart
-// Good: Responsive design patterns
 class ResponsiveLayout extends StatelessWidget {
   final Widget child;
-
   const ResponsiveLayout({super.key, required this.child});
 
   @override
@@ -198,19 +187,20 @@ class ResponsiveLayout extends StatelessWidget {
 }
 ```
 
-### Touch Interaction Standards
+### **معايير التفاعل باللمس**
 
-- **Minimum Touch Target**: 44x44 logical pixels
-- **Touch Feedback**: Visual feedback for all interactive elements
-- **Gesture Support**: Support common mobile gestures (swipe, pinch)
-- **Accessibility**: Support TalkBack and VoiceOver
+- **الحد الأدنى للهدف**: 44x44 بكسل منطقي
+- **ردود الفعل البصرية**: لجميع العناصر التفاعلية
+- **دعم الإيماءات**: الإيماءات الشائعة (السحب، القرص)
+- **إمكانية الوصول**: دعم TalkBack و VoiceOver
 
-## State Management with Riverpod
+---
 
-### Provider Organization
+## 🔄 إدارة الحالة مع Riverpod
+
+### **تنظيم Providers**
 
 ```dart
-// Good: Organized provider structure
 // Domain providers
 final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
   return CustomerRepositoryImpl(ref.watch(isarProvider));
@@ -225,16 +215,18 @@ final customersProvider = StateNotifierProvider<CustomersNotifier, AsyncValue<Li
 final selectedCustomerProvider = StateProvider<Customer?>((ref) => null);
 ```
 
-### State Management Patterns
+### **أنماط إدارة الحالة**
 
-- **Loading States**: Always handle loading, error, and success states
-- **Error Handling**: Provide meaningful error messages in Arabic
-- **Optimistic Updates**: Update UI immediately, sync in background
-- **State Persistence**: Persist important state across app restarts
+- **حالات التحميل**: التعامل دائماً مع حالات التحميل والخطأ والنجاح
+- **معالجة الأخطاء**: رسائل خطأ واضحة بالعربية
+- **التحديثات المتفائلة**: تحديث الواجهة فوراً، مزامنة في الخلفية
+- **استمرارية الحالة**: الحفاظ على الحالة المهمة عبر إعادة تشغيل التطبيق
 
-## Testing Strategy for Flutter
+---
 
-### Widget Testing Standards
+## 🧪 استراتيجية الاختبارات
+
+### **معايير اختبار Widgets**
 
 ```dart
 void main() {
@@ -243,9 +235,7 @@ void main() {
       final customer = Customer(name: 'أحمد محمد', phone: '0501234567');
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: CustomerCard(customer: customer),
-        ),
+        MaterialApp(home: CustomerCard(customer: customer)),
       );
 
       expect(find.text('أحمد محمد'), findsOneWidget);
@@ -260,7 +250,6 @@ void main() {
         ),
       );
 
-      // Verify RTL layout
       final cardWidget = tester.widget<Card>(find.byType(Card));
       expect(cardWidget.child, isA<Directionality>());
     });
@@ -268,15 +257,13 @@ void main() {
 }
 ```
 
-### Golden File Testing
+### **اختبار Golden Files**
 
 ```dart
 void main() {
   testWidgets('invoice card golden test', (tester) async {
     await tester.pumpWidget(
-      MaterialApp(
-        home: InvoiceCard(invoice: mockInvoice),
-      ),
+      MaterialApp(home: InvoiceCard(invoice: mockInvoice)),
     );
 
     await expectLater(
@@ -287,26 +274,27 @@ void main() {
 }
 ```
 
-## Performance Optimization
+---
 
-### Flutter-Specific Optimizations
+## ⚡ تحسين الأداء
 
-- **Build Method Optimization**: Keep build methods pure and fast
-- **Widget Caching**: Cache expensive widgets with `const`
-- **Image Optimization**: Use appropriate image formats and sizes
-- **Animation Performance**: Use `AnimationController` efficiently
-- **Memory Management**: Dispose resources properly
+### **تحسينات Flutter المحددة**
 
-### Database Performance for Mobile
+- **تحسين Build Method**: الحفاظ على build methods سريعة ونقية
+- **تخزين Widgets مؤقتاً**: تخزين widgets المكلفة مع `const`
+- **تحسين الصور**: استخدام تنسيقات وأحجام مناسبة
+- **أداء الرسوم المتحركة**: استخدام `AnimationController` بكفاءة
+- **إدارة الذاكرة**: التخلص من الموارد بشكل صحيح
+
+### **أداء قاعدة البيانات للمحمول**
 
 ```dart
-// Good: Efficient database operations
 class OptimizedRepository {
   Future<List<Invoice>> getRecentInvoices() async {
     return await isar.invoices
       .where()
       .sortByCreatedAtDesc()
-      .limit(50) // Limit results for mobile performance
+      .limit(50) // تحديد النتائج لأداء المحمول
       .findAll();
   }
 
@@ -314,7 +302,7 @@ class OptimizedRepository {
     return await isar.invoices
       .filter()
       .customerNameContains(query, caseSensitive: false)
-      .limit(20) // Limit search results
+      .limit(20) // تحديد نتائج البحث
       .findAll();
   }
 }
@@ -322,4 +310,20 @@ class OptimizedRepository {
 
 ---
 
-**للمراجع التفصيلية:** راجع ملفات التوجيه الأخرى في `.kiro/steering/`
+## 🔗 المراجع المتقدمة
+
+### **للتفاصيل الشاملة:**
+
+- [معايير Flutter المتقدمة](../../reference/advanced-frontend-standards.md)
+
+### **المعايير التقنية:**
+
+- [معايير المشروع](./project-standards.md)
+- [معايير التطوير](./development-standards.md)
+- [أفضل ممارسات الأداء](./performance-optimization.md)
+
+---
+
+**تم بواسطة:** فريق وكلاء تطوير مشروع بصير  
+**الحالة:** ✅ ملف توجيه مكثف ومحسن  
+**المراجعة القادمة:** 23 ديسمبر 2025

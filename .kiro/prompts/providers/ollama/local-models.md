@@ -1,540 +1,287 @@
 # Ollama Local Models Prompts
 
-**Provider:** Ollama (Local deployment)  
-**Models:** Llama 3.1, Code Llama, Mistral, Gemma, Qwen  
-**Context Limit:** Varies by model (8K-128K tokens)  
-**Strengths:** Privacy, cost-effectiveness, offline capability, customization
+**المؤلف:** فريق وكلاء تطوير مشروع بصير  
+**التاريخ:** 15 ديسمبر 2025  
+**الموفر:** Ollama (Local Models)
 
 ---
 
-## Code Llama Prompts
+## Optimized Prompts for Local Ollama Models
 
-### Local Development Assistant
+### Code Assistance with Local Models
 
-```
-You are Code Llama, a specialized coding assistant running locally for privacy and cost-effectiveness.
-
-Context:
-- Project: Baseer MVP (Flutter invoice management app)
-- Environment: Local development (offline-capable)
-- Privacy: All code stays on local machine
-- Target: Arabic small business users
-- Tech Stack: Flutter, Dart, Riverpod, Isar
-
-Task: [SPECIFIC_CODING_TASK]
-
-Requirements:
-- Generate clean, efficient Dart/Flutter code
-- Follow effective_dart guidelines
-- Include comprehensive comments
-- Consider mobile performance
-- Support Arabic RTL layout
-
-Provide practical, implementable code solutions.
-```
-
-### Code Review and Refactoring
-
-````
-Review and improve the following Dart code for a local-first Flutter application:
-
-```dart
-[CODE_BLOCK]
-````
-
-Focus on:
-
-1. Code quality and Dart best practices
-2. Performance optimization for mobile
-3. Memory efficiency
-4. Error handling improvements
-5. Readability and maintainability
-
-Provide specific refactoring suggestions with improved code examples.
+#### Flutter Development (CodeLlama, DeepSeek Coder)
 
 ```
-
-### Flutter Widget Generation
-```
-
-Generate a Flutter widget for the following requirements:
-
-Widget Purpose: [WIDGET_DESCRIPTION]
-Arabic Support: RTL layout required
-Material Design: Version 3
-State Management: Riverpod
-Local Database: Isar integration
-
-Requirements:
-
-- Responsive design for various screen sizes
-- Accessibility support (Arabic screen readers)
-- Proper error handling and loading states
-- Clean, testable code structure
-- Performance optimized for mid-range devices
-
-Generate complete widget implementation with documentation.
-
-```
-
-## Llama 3.1 General Purpose
-
-### Architecture and Design Decisions
-```
-
-You are an experienced software architect helping with Flutter app design decisions.
+You are a Flutter/Dart expert helping with the Baseer MVP project - a local-first invoice management app for Arabic users in Saudi Arabia.
 
 Project Context:
-
-- Baseer MVP: Invoice management for Saudi small businesses
-- Local-first architecture with optional cloud sync
-- Arabic language support (RTL)
-- Target: Non-technical small business owners
-
-Current Decision: [DECISION_CONTEXT]
-
-Options:
-
-1. [OPTION_1]
-2. [OPTION_2]
-3. [OPTION_3]
-
-Evaluation Criteria:
-
-- Implementation complexity
-- Performance impact
-- User experience (Arabic users)
-- Maintenance overhead
-- Future scalability
-
-Provide detailed analysis and recommendation with reasoning.
-
-```
-
-### Business Logic Implementation
-```
-
-Implement business logic for Saudi Arabian invoice management system.
-
-Requirements:
-
-- VAT calculation (15% standard rate)
-- Arabic invoice numbering
-- Payment terms handling
-- Multi-currency support (SAR primary)
-- Discount calculations
-- Due date management
-
-Technical Context:
-
-- Flutter/Dart implementation
-- Local Isar database
-- Offline-first approach
+- Flutter 3.35.5+ with Dart 3.9.2+
+- Local-first using Isar database
+- Arabic RTL interface required
 - Clean Architecture pattern
+- Riverpod state management
+- Material Design 3
 
-Generate robust, well-tested business logic with proper error handling.
+Coding Standards:
+- English for all code identifiers
+- Comprehensive error handling
+- DartDoc documentation
+- Security best practices
+- 70%+ test coverage
+
+Task: {coding_task}
+
+Provide:
+1. Clean, working code
+2. Proper error handling
+3. Basic tests
+4. Brief documentation
+```
+
+#### Code Review (Llama 3.1, Mistral)
+
+````
+Review this Flutter code from the Baseer MVP project:
+
+Review Criteria:
+- Code quality and readability
+- Flutter best practices
+- Security issues
+- Performance concerns
+- Arabic/RTL compatibility
+
+Code to review:
+```dart
+{code_content}
+````
+
+Provide:
+
+1. Issues found (if any)
+2. Improvement suggestions
+3. Security notes
+4. Performance tips
 
 ```
 
 ### Documentation Generation
+
+#### API Documentation (Llama 3.1)
 ```
 
-Generate comprehensive documentation for the following Flutter component:
-
-Component: [COMPONENT_NAME]
-Purpose: [COMPONENT_PURPOSE]
-Context: Arabic invoice management app
+Generate documentation for this Baseer MVP Flutter code:
 
 Documentation Requirements:
 
-1. Clear overview and purpose
-2. API reference with examples
-3. Usage patterns and best practices
-4. Arabic/RTL considerations
-5. Testing guidelines
-6. Common troubleshooting
+- DartDoc format
+- Clear parameter descriptions
+- Usage examples
+- Error handling notes
+- Arabic descriptions for user-facing elements
 
-Target Audience: Flutter developers (intermediate level)
-Format: Markdown with code examples
+Code to document:
+{code_to_document}
 
-Create thorough, practical documentation.
+Format as:
+
+1. Overview
+2. Parameters
+3. Returns
+4. Examples
+5. Notes
 
 ```
 
-## Mistral Models
+### Analysis and Problem Solving
 
-### Efficient Problem Solving
+#### Architecture Analysis (Llama 3.1, Mistral)
 ```
 
-Solve this Flutter development challenge efficiently:
+Analyze the architecture of this Flutter component from the Baseer MVP:
 
-Challenge: [PROBLEM_DESCRIPTION]
-Constraints:
+Analysis Focus:
 
-- Limited development time
-- Small team (2-3 developers)
-- Budget constraints
-- Arabic language requirements
+- Clean Architecture compliance
+- Separation of concerns
+- State management patterns
 - Local-first architecture
+- Performance implications
 
-Context:
-
-- Flutter 3.35.5+, Dart 3.9.2+
-- Riverpod for state management
-- Isar for local database
-- Material Design 3
+Component: {component_info}
 
 Provide:
 
-1. Quick analysis of the problem
-2. Efficient solution approach
-3. Implementation steps
-4. Potential pitfalls to avoid
-5. Testing strategy
-
-Focus on practical, time-efficient solutions.
+1. Architecture assessment
+2. Strengths and weaknesses
+3. Improvement suggestions
+4. Best practices alignment
 
 ```
 
-### Performance Optimization
+---
+
+## Local Model Optimizations
+
+### Model-Specific Approaches
+
+#### CodeLlama (7B, 13B, 34B)
+- **Best for**: Code generation, debugging, refactoring
+- **Prompt style**: Direct, code-focused requests
+- **Context**: Keep code examples concise but complete
+- **Output**: Expect good code quality, may need refinement
+
+#### Llama 3.1 (8B, 70B)
+- **Best for**: General development advice, analysis, documentation
+- **Prompt style**: Conversational, detailed context
+- **Context**: Can handle broader discussions
+- **Output**: Good reasoning, comprehensive responses
+
+#### Mistral (7B, 8x7B)
+- **Best for**: Code review, problem-solving, optimization
+- **Prompt style**: Structured, specific questions
+- **Context**: Efficient with focused tasks
+- **Output**: Concise, practical suggestions
+
+#### DeepSeek Coder
+- **Best for**: Complex code generation, algorithm implementation
+- **Prompt style**: Technical, detailed specifications
+- **Context**: Provide complete requirements
+- **Output**: High-quality code, good practices
+
+### Performance Considerations
+
+#### Context Management
 ```
 
-Optimize the following Flutter code for better performance:
+Keep prompts focused and concise for local models:
 
-```dart
-[CODE_TO_OPTIMIZE]
-```
+Good:
+"Generate a Flutter widget for displaying invoice items with Arabic RTL support."
 
-Performance Goals:
+Better:
+"Create a Flutter ListView widget that:
 
-- Smooth 60fps on mid-range Android devices
-- Minimal memory usage
-- Fast app startup time
-- Efficient battery usage
-- Responsive UI for Arabic text
-
-Optimization Areas:
-
-1. Widget rebuilds
-2. Memory management
-3. Database queries
-4. Image handling
-5. Animation performance
-
-Provide optimized code with performance improvements explained.
-
-```
-
-## Gemma Models
-
-### Educational and Learning
-```
-
-Explain the following Flutter/Dart concept for learning purposes:
-
-Concept: [TECHNICAL_CONCEPT]
-Context: Building Arabic invoice management app
-Audience: Intermediate Flutter developers
-
-Explanation Requirements:
-
-1. Clear conceptual overview
-2. Why it's important for our use case
-3. Practical implementation examples
-4. Common mistakes to avoid
-5. Best practices and tips
-6. Related concepts to explore
-
-Make the explanation practical and applicable to our project context.
+- Displays invoice items
+- Supports Arabic RTL layout
+- Uses Material Design 3
+- Handles empty states"
 
 ```
 
-### Code Examples and Tutorials
+#### Response Optimization
+- Request specific output formats
+- Limit response length when needed
+- Use structured prompts for better parsing
+- Implement response validation
+
+### Local Development Workflow
+
+#### Iterative Development
 ```
 
-Create a step-by-step tutorial for implementing:
+Step 1: Generate initial code
+"Create a basic Flutter repository class for invoice management using Isar."
 
-Feature: [FEATURE_NAME]
-Context: Arabic invoice management Flutter app
-Difficulty: [BEGINNER/INTERMEDIATE/ADVANCED]
+Step 2: Add features
+"Add search functionality to the invoice repository with Arabic text support."
 
-Tutorial Structure:
+Step 3: Optimize
+"Optimize the invoice repository for better performance with large datasets."
 
-1. Prerequisites and setup
-2. Step-by-step implementation
-3. Code explanations
-4. Testing the implementation
-5. Common issues and solutions
-6. Next steps and improvements
-
-Include complete, runnable code examples with detailed explanations.
-
-```
-
-## Qwen Models
-
-### Multilingual Development
-```
-
-Help with Arabic language integration in Flutter development:
-
-Task: [ARABIC_INTEGRATION_TASK]
-Context: Invoice management app for Saudi market
-
-Arabic Requirements:
-
-- RTL text layout
-- Arabic number formatting
-- Date formatting (Hijri calendar support)
-- Currency formatting (Saudi Riyal)
-- Arabic input validation
-- Proper font rendering
-
-Technical Considerations:
-
-- Flutter localization
-- Material Design RTL support
-- Text direction handling
-- Input method compatibility
-
-Provide comprehensive Arabic language integration solution.
+Step 4: Test
+"Generate unit tests for the invoice repository class."
 
 ```
 
-### Cultural and Regional Adaptation
+#### Code Review Process
 ```
 
-Adapt the following feature for Saudi Arabian business culture:
-
-Feature: [FEATURE_DESCRIPTION]
-Current Implementation: [CURRENT_APPROACH]
-
-Cultural Considerations:
-
-- Saudi business practices
-- Islamic calendar integration
-- Local payment methods
-- Government regulations
-- User expectations
-- Accessibility requirements
-
-Adaptation Requirements:
-
-1. Cultural appropriateness
-2. Legal compliance
-3. User experience optimization
-4. Technical implementation
-5. Testing considerations
-
-Provide culturally adapted solution with implementation details.
+1. Generate code with primary model
+2. Review with secondary model
+3. Validate against project standards
+4. Test and refine
 
 ````
 
 ---
 
-## Ollama-Specific Optimizations
+## Offline Development Support
 
-### Local Deployment Configuration
+### Local Model Benefits
+- **Privacy**: Code never leaves local environment
+- **Speed**: No network latency
+- **Availability**: Works without internet connection
+- **Cost**: No API costs after initial setup
+- **Customization**: Can fine-tune for project-specific needs
+
+### Setup Recommendations
+
+#### Hardware Requirements
+- **Minimum**: 8GB RAM, 4-core CPU
+- **Recommended**: 16GB+ RAM, 8-core CPU
+- **Storage**: 10GB+ for model files
+- **GPU**: Optional but recommended for larger models
+
+#### Model Selection for Baseer MVP
 ```yaml
-ollama_config:
-  models:
-    code_llama:
-      size: "13b"  # Balance between capability and resource usage
-      context_length: 16384
-      use_case: "Code generation and review"
+Primary Models:
+  - CodeLlama 13B: Main code generation
+  - Llama 3.1 8B: General assistance
+  - DeepSeek Coder 6.7B: Complex algorithms
 
-    llama3_1:
-      size: "8b"   # Efficient for general tasks
-      context_length: 8192
-      use_case: "General development assistance"
-
-    mistral:
-      size: "7b"   # Fast responses
-      context_length: 8192
-      use_case: "Quick problem solving"
-
-  performance:
-    gpu_acceleration: true
-    memory_limit: "8GB"
-    concurrent_requests: 2
+Secondary Models:
+  - Mistral 7B: Code review
+  - CodeLlama 7B: Quick tasks
+  - Llama 3.1 70B: Complex analysis (if hardware allows)
 ````
 
-### Privacy and Security Benefits
+### Integration with Development Environment
 
-```
-Local AI Development Advantages:
-
-Privacy Benefits:
-- Code never leaves local machine
-- No data transmission to external services
-- Complete control over sensitive business logic
-- Compliance with data protection regulations
-
-Cost Benefits:
-- No per-token charges
-- Unlimited usage once deployed
-- No internet dependency
-- Predictable infrastructure costs
-
-Development Benefits:
-- Offline development capability
-- Consistent response times
-- Customizable model behavior
-- Integration with local development tools
-```
-
-### Model Selection Guidelines
-
-```yaml
-task_to_model_mapping:
-  code_generation:
-    primary: "code_llama:13b"
-    fallback: "llama3.1:8b"
-
-  code_review:
-    primary: "code_llama:13b"
-    secondary: "mistral:7b"
-
-  documentation:
-    primary: "llama3.1:8b"
-    secondary: "gemma:7b"
-
-  problem_solving:
-    primary: "mistral:7b"
-    secondary: "llama3.1:8b"
-
-  arabic_integration:
-    primary: "qwen:14b"
-    secondary: "llama3.1:8b"
-```
-
-### Integration Patterns
-
-#### Local API Integration
-
-````python
-import requests
-import json
-
-class OllamaClient:
-    def __init__(self, base_url="http://localhost:11434"):
-        self.base_url = base_url
-
-    def generate_code(self, prompt, model="code_llama:13b"):
-        """Generate code using local Ollama instance"""
-        response = requests.post(
-            f"{self.base_url}/api/generate",
-            json={
-                "model": model,
-                "prompt": prompt,
-                "stream": False,
-                "options": {
-                    "temperature": 0.1,  # Low temperature for code generation
-                    "top_p": 0.9,
-                    "num_ctx": 8192
-                }
-            }
-        )
-        return response.json()["response"]
-
-    def review_code(self, code, model="code_llama:13b"):
-        """Review code using local AI"""
-        prompt = f"""
-        Review this Dart/Flutter code for quality, performance, and best practices:
-
-        ```dart
-        {code}
-        ```
-
-        Provide specific improvement suggestions.
-        """
-        return self.generate_code(prompt, model)
-````
-
-#### VS Code Extension Integration
+#### VS Code Integration
 
 ```json
 {
-  "ollama.models": [
-    {
-      "name": "code_llama:13b",
-      "description": "Code generation and review",
-      "temperature": 0.1
-    },
-    {
-      "name": "llama3.1:8b",
-      "description": "General development assistance",
-      "temperature": 0.3
-    }
-  ],
-  "ollama.autoComplete": {
-    "enabled": true,
-    "model": "code_llama:13b",
-    "maxTokens": 100
-  }
+  "ollama.models": ["codellama:13b", "llama3.1:8b", "deepseek-coder:6.7b"],
+  "ollama.defaultModel": "codellama:13b",
+  "ollama.temperature": 0.1
 }
 ```
 
----
+#### Command Line Usage
 
-## Performance Optimization
+```bash
+# Code generation
+ollama run codellama:13b "Generate Flutter widget for invoice display"
 
-### Resource Management
+# Code review
+ollama run llama3.1:8b "Review this Dart code for best practices: [code]"
 
-```yaml
-system_requirements:
-  minimum:
-    ram: "8GB"
-    gpu: "4GB VRAM (optional but recommended)"
-    cpu: "4 cores"
-    storage: "50GB for models"
-
-  recommended:
-    ram: "16GB"
-    gpu: "8GB VRAM"
-    cpu: "8 cores"
-    storage: "100GB SSD"
-
-optimization_tips:
-  - Use smaller models for simple tasks
-  - Enable GPU acceleration when available
-  - Limit concurrent requests based on system capacity
-  - Monitor memory usage and adjust accordingly
-  - Use model quantization for better performance
-```
-
-### Batch Processing
-
-```python
-def batch_process_code_reviews(code_files, ollama_client):
-    """Process multiple code reviews efficiently"""
-    results = []
-
-    for batch in chunk_files(code_files, batch_size=3):
-        batch_results = []
-
-        for file in batch:
-            review = ollama_client.review_code(file.content)
-            batch_results.append({
-                'file': file.name,
-                'review': review
-            })
-
-        results.extend(batch_results)
-
-        # Brief pause between batches to prevent overload
-        time.sleep(1)
-
-    return results
+# Documentation
+ollama run mistral:7b "Document this Flutter function: [function]"
 ```
 
 ---
 
-**Usage Notes:**
+## Quality Assurance for Local Models
 
-- Install and configure Ollama locally for privacy and cost benefits
-- Choose model size based on available system resources
-- Use GPU acceleration when available for better performance
-- Implement proper error handling for local service availability
-- Consider model quantization for resource-constrained environments
-- Monitor system resources and adjust concurrent usage accordingly
+### Response Validation
+
+- Syntax checking for generated code
+- Security vulnerability scanning
+- Performance impact assessment
+- Arabic RTL compatibility verification
+
+### Model Performance Monitoring
+
+- Response quality scoring
+- Generation time tracking
+- Resource usage monitoring
+- Accuracy measurement against standards
+
+### Continuous Improvement
+
+- Fine-tuning with project-specific data
+- Model comparison and selection
+- Prompt optimization based on results
+- Integration with CI/CD pipeline

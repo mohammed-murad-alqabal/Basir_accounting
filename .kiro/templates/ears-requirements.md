@@ -1,264 +1,213 @@
-# EARS Requirements Template - Enhanced with Zero-Trust & DORA/SPACE
+# EARS Requirements Template
 
+**المشروع:** {project_name}  
 **المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**التاريخ:** 11 ديسمبر 2025  
-**الحالة:** 📋 **Enhanced template integrating EARS + Zero-Trust + DORA/SPACE metrics**
-
----
-
-## Strategic Integration
-
-This enhanced EARS template integrates:
-
-- **Zero-Trust Security**: "Never trust, always verify" principles
-- **DORA Metrics**: Deployment frequency, lead time, change failure rate, recovery time
-- **SPACE Framework**: Satisfaction, Performance, Activity, Communication, Efficiency
-
----
-
-## EARS Pattern Reference
-
-### The Six EARS Patterns
-
-1. **Ubiquitous**: THE `<system>` SHALL `<response>`
-2. **Event-driven**: WHEN `<trigger>`, THE `<system>` SHALL `<response>`
-3. **State-driven**: WHILE `<condition>`, THE `<system>` SHALL `<response>`
-4. **Unwanted event**: IF `<condition>`, THEN THE `<system>` SHALL `<response>`
-5. **Optional feature**: WHERE `<option>`, THE `<system>` SHALL `<response>`
-6. **Complex**: [WHERE] [WHILE] [WHEN/IF] THE `<system>` SHALL `<response>`
-
----
-
-## Enhanced Template Structure
-
-```markdown
-# Requirements Document - [Feature Name]
-
-**المشروع:** [Project Name]  
-**التاريخ:** [Date]  
-**المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**الحالة:** [Status]
-
----
-
-## Strategic Alignment
-
-### DORA Impact Assessment
-
-- **Deployment Frequency**: [How this feature affects deployment cadence]
-- **Lead Time**: [Expected impact on change lead time]
-- **Change Failure Rate**: [Risk mitigation strategies]
-- **Recovery Time**: [Rollback and recovery considerations]
-
-### SPACE Framework Impact
-
-- **Satisfaction**: [Developer experience improvements]
-- **Performance**: [Quality and reliability enhancements]
-- **Activity**: [Development workflow changes]
-- **Communication**: [Information flow improvements]
-- **Efficiency**: [Friction reduction measures]
-
-### Security Classification
-
-- **Data Classification**: [Public/Internal/Confidential/Restricted]
-- **Zero-Trust Level**: [Verification requirements]
-- **Compliance Requirements**: [Regulatory/organizational standards]
+**التاريخ:** {current_date}  
+**الحالة:** 🚀 للمراجعة والموافقة
 
 ---
 
 ## Introduction
 
-[Brief description of the feature/system being specified]
+{feature_description}
 
 ## Glossary
 
-- **[System_Name]**: [Definition of the main system]
-- **[Technical_Term]**: [Definition]
-- **[Business_Term]**: [Definition]
-- **Zero-Trust Verification**: Continuous identity and device validation
-- **Supply Chain Security**: Verification of all dependencies and artifacts
+- **{System_Name}**: {system_definition}
+- **{Technical_Term}**: {term_definition}
+- **{Business_Term}**: {business_definition}
 
 ---
 
 ## Requirements
 
-### Requirement 1: [Requirement Name]
+### Requirement 1: {requirement_name}
 
-**User Story:** As a [role], I want [feature], so that [benefit]
-
-#### Acceptance Criteria
-
-1. WHEN [trigger event], THE [System_Name] SHALL [specific response]
-2. WHILE [ongoing condition], THE [System_Name] SHALL [continuous behavior]
-3. IF [error condition], THEN THE [System_Name] SHALL [error response]
-4. WHERE [optional feature enabled], THE [System_Name] SHALL [optional behavior]
-5. THE [System_Name] SHALL [ubiquitous requirement]
-
-### Requirement 2: [Next Requirement Name]
-
-**User Story:** As a [role], I want [feature], so that [benefit]
+**User Story:** As a {role}, I want {feature}, so that {benefit}.
 
 #### Acceptance Criteria
 
-1. [EARS pattern] [System_Name] SHALL [requirement]
-2. [EARS pattern] [System_Name] SHALL [requirement]
-3. [EARS pattern] [System_Name] SHALL [requirement]
+1. **Ubiquitous Pattern**: THE {System_Name} SHALL {response}
 
-[Continue for all requirements...]
+   - _Example: THE Invoice_System SHALL validate all invoice data before saving_
 
----
+2. **Event-driven Pattern**: WHEN {trigger}, THE {System_Name} SHALL {response}
 
-## Zero-Trust Security Requirements
+   - _Example: WHEN a user submits an invoice, THE Invoice_System SHALL generate a unique invoice number_
 
-### Authentication & Authorization
+3. **State-driven Pattern**: WHILE {condition}, THE {System_Name} SHALL {response}
 
-1. WHEN a user attempts system access, THE [System_Name] SHALL verify identity using multi-factor authentication
-2. WHILE user session is active, THE [System_Name] SHALL continuously validate permissions and device trust
-3. IF user device trust score falls below threshold, THEN THE [System_Name] SHALL require re-authentication
-4. WHERE privileged operations are requested, THE [System_Name] SHALL require additional verification
+   - _Example: WHILE an invoice is in draft status, THE Invoice_System SHALL allow modifications_
 
-### Data Protection
+4. **Unwanted event Pattern**: IF {condition}, THEN THE {System_Name} SHALL {response}
 
-1. THE [System_Name] SHALL encrypt all data at rest using AES-256 or stronger
-2. THE [System_Name] SHALL encrypt all data in transit using TLS 1.3 or stronger
-3. WHEN sensitive data is accessed, THE [System_Name] SHALL log access with user identity and timestamp
-4. IF data breach is detected, THEN THE [System_Name] SHALL immediately revoke access and alert security team
+   - _Example: IF invalid data is detected, THEN THE Invoice_System SHALL display validation errors_
 
-### Supply Chain Security
+5. **Optional feature Pattern**: WHERE {option}, THE {System_Name} SHALL {response}
 
-1. WHEN dependency is added, THE [System_Name] SHALL scan for known vulnerabilities
-2. IF vulnerability with CVSS > 7.0 is found, THEN THE [System_Name] SHALL block integration
-3. THE [System_Name] SHALL sign all build artifacts with organization's private key
-4. WHEN deploying artifacts, THE [System_Name] SHALL verify signatures before execution
+   - _Example: WHERE Arabic language is selected, THE Invoice_System SHALL display RTL layout_
 
----
+6. **Complex Pattern**: [WHERE {option}] [WHILE {condition}] [WHEN {trigger}/IF {condition}] THE {System_Name} SHALL {response}
+   - _Example: WHERE multi-currency is enabled WHILE invoice is editable WHEN currency is changed THE Invoice_System SHALL recalculate totals_
 
-## DORA Metrics Requirements
+### Requirement 2: {requirement_name}
 
-### Deployment Optimization
+**User Story:** As a {role}, I want {feature}, so that {benefit}.
 
-1. WHEN code is committed to main branch, THE [System_Name] SHALL trigger automated testing within 30 seconds
-2. IF all tests pass, THEN THE [System_Name] SHALL deploy to staging within 5 minutes
-3. WHILE deployment is in progress, THE [System_Name] SHALL provide real-time status updates
-4. THE [System_Name] SHALL support rollback to previous version within 2 minutes
+#### Acceptance Criteria
 
-### Quality Assurance
-
-1. IF deployment fails, THEN THE [System_Name] SHALL automatically rollback and notify on-call engineer
-2. THE [System_Name] SHALL maintain change failure rate below 15%
-3. WHEN critical issue is detected, THE [System_Name] SHALL alert within 1 minute
-4. THE [System_Name] SHALL track and report lead time for all changes
-
----
-
-## Success Criteria
-
-### Quantitative Metrics
-
-- [Measurable metric]: [Target value]
-- [Performance metric]: [Target value]
-- [Quality metric]: [Target value]
-
-### Qualitative Metrics
-
-- ✅ [Qualitative goal]
-- ✅ [User experience goal]
-- ✅ [Business goal]
-
----
-
-## Integration Requirements
-
-[How this feature integrates with existing systems]
-
----
-
-**تم إعداده بواسطة:** فريق وكلاء تطوير مشروع بصير  
-**التاريخ:** [Date]  
-**الحالة:** ✅ [Status]
-```
+1. WHEN {specific_trigger}, THE {System_Name} SHALL {specific_response}
+2. WHILE {specific_condition}, THE {System_Name} SHALL {specific_response}
+3. IF {error_condition}, THEN THE {System_Name} SHALL {error_response}
+4. WHERE {optional_feature}, THE {System_Name} SHALL {optional_response}
 
 ---
 
 ## EARS Compliance Checklist
 
-### ✅ Pattern Compliance
+### Structural Compliance
 
-- [ ] Each requirement follows exactly one EARS pattern
+- [ ] All requirements follow one of the six EARS patterns
 - [ ] Complex requirements follow correct clause order: WHERE → WHILE → WHEN/IF → THE → SHALL
-- [ ] No requirements mix multiple patterns incorrectly
+- [ ] System names are consistently defined and used
+- [ ] All technical terms are defined in the Glossary
 
-### ✅ INCOSE Quality Rules
+### Semantic Quality (INCOSE Rules)
 
-- [ ] Active voice used (who does what)
-- [ ] No vague terms ("quickly", "adequate", "user-friendly")
-- [ ] No escape clauses ("where possible", "as appropriate")
-- [ ] No negative statements ("SHALL not...")
-- [ ] One thought per requirement
-- [ ] Explicit and measurable conditions
-- [ ] Consistent terminology throughout
-- [ ] No pronouns ("it", "them", "they")
-- [ ] No absolutes ("never", "always", "100%")
-- [ ] Solution-free (focus on what, not how)
-- [ ] Realistic tolerances for timing and performance
+- [ ] **Active Voice**: Each requirement clearly states who does what
+- [ ] **No Vague Terms**: Avoided words like "quickly", "adequate", "user-friendly"
+- [ ] **No Escape Clauses**: No phrases like "where possible", "if feasible"
+- [ ] **No Negative Statements**: Used positive statements instead of "SHALL not"
+- [ ] **One Thought**: Each requirement expresses exactly one requirement
+- [ ] **Explicit Conditions**: All conditions and criteria are measurable
+- [ ] **Consistent Terminology**: Same terms used throughout the document
+- [ ] **No Pronouns**: Avoided "it", "them", "they" - used specific nouns
+- [ ] **No Absolutes**: Avoided "never", "always", "100%" unless truly absolute
+- [ ] **Solution-Free**: Focused on what, not how
+- [ ] **Realistic Tolerances**: Specified achievable timing and performance criteria
 
-### ✅ System Definition
+### Content Quality
 
-- [ ] System name clearly defined in Glossary
-- [ ] All technical terms defined
-- [ ] Consistent system naming throughout
-- [ ] Clear system boundaries established
-
----
-
-## Common EARS Examples
-
-### Event-Driven Examples
-
-```
-WHEN a user clicks the submit button, THE System SHALL validate all form fields
-WHEN a payment is processed successfully, THE System SHALL send a confirmation email
-WHEN system load exceeds 80%, THE System SHALL scale up additional instances
-```
-
-### State-Driven Examples
-
-```
-WHILE a user is logged in, THE System SHALL maintain session state
-WHILE processing a transaction, THE System SHALL prevent duplicate submissions
-WHILE in maintenance mode, THE System SHALL display maintenance message
-```
-
-### Error Handling Examples
-
-```
-IF a network connection fails, THEN THE System SHALL retry up to 3 times
-IF invalid data is submitted, THEN THE System SHALL display specific error messages
-IF authentication fails, THEN THE System SHALL log the attempt and block access
-```
-
-### Optional Feature Examples
-
-```
-WHERE premium features are enabled, THE System SHALL provide advanced analytics
-WHERE multi-language support is configured, THE System SHALL display localized content
-WHERE API access is granted, THE System SHALL provide rate-limited endpoints
-```
+- [ ] **Testable**: Each acceptance criterion can be verified through testing
+- [ ] **Complete**: All necessary functionality is covered
+- [ ] **Consistent**: No conflicting requirements
+- [ ] **Feasible**: All requirements are technically achievable
+- [ ] **Necessary**: Each requirement adds value to the system
 
 ---
 
-## Validation Tools
+## Validation Templates
 
-### Automated Checks
+### For Event-driven Requirements
 
-- Pattern recognition for EARS compliance
-- Terminology consistency validation
-- Requirement completeness verification
-- Cross-reference validation
+```
+Test Case: {test_name}
+Given: {initial_state}
+When: {trigger_event}
+Then: {expected_response}
+Verification: {how_to_verify}
+```
 
-### Manual Review
+### For State-driven Requirements
 
-- Business stakeholder review
-- Technical feasibility assessment
-- Testability evaluation
-- Completeness verification
+```
+Test Case: {test_name}
+Given: {system_state}
+While: {condition_maintained}
+Then: {continuous_behavior}
+Verification: {how_to_verify_continuous_behavior}
+```
+
+### For Complex Requirements
+
+```
+Test Case: {test_name}
+Given: {initial_setup}
+Where: {optional_feature_enabled}
+While: {state_condition}
+When: {trigger_event}
+Then: {expected_response}
+Verification: {comprehensive_verification_steps}
+```
+
+---
+
+## Common EARS Patterns for Flutter/Mobile Apps
+
+### User Interface Requirements
+
+```
+WHEN a user taps the {button_name} button, THE {System_Name} SHALL {ui_response}
+WHILE the application is loading data, THE {System_Name} SHALL display a progress indicator
+WHERE Arabic language is selected, THE {System_Name} SHALL display right-to-left layout
+```
+
+### Data Management Requirements
+
+```
+WHEN data is saved locally, THE {System_Name} SHALL encrypt sensitive information
+WHILE the device is offline, THE {System_Name} SHALL queue synchronization operations
+IF data validation fails, THEN THE {System_Name} SHALL display specific error messages
+```
+
+### Performance Requirements
+
+```
+THE {System_Name} SHALL respond to user interactions within 200 milliseconds
+WHEN loading large datasets, THE {System_Name} SHALL implement pagination with maximum 50 items per page
+WHILE performing background synchronization, THE {System_Name} SHALL maintain UI responsiveness
+```
+
+### Security Requirements
+
+```
+WHEN user credentials are entered, THE {System_Name} SHALL validate them against secure storage
+IF unauthorized access is detected, THEN THE {System_Name} SHALL lock the application
+THE {System_Name} SHALL encrypt all data transmissions using TLS 1.3 or higher
+```
+
+---
+
+## Quality Metrics
+
+### Requirement Quality Score
+
+Calculate based on:
+
+- EARS pattern compliance: {score}/100
+- INCOSE semantic quality: {score}/100
+- Testability assessment: {score}/100
+- Completeness evaluation: {score}/100
+
+**Overall Quality Score: {total_score}/100**
+
+### Improvement Recommendations
+
+1. {improvement_suggestion_1}
+2. {improvement_suggestion_2}
+3. {improvement_suggestion_3}
+
+---
+
+## Approval Section
+
+### Technical Review
+
+- [ ] **Requirements Analyst**: {name} - {date}
+- [ ] **System Architect**: {name} - {date}
+- [ ] **Development Lead**: {name} - {date}
+
+### Business Review
+
+- [ ] **Product Owner**: {name} - {date}
+- [ ] **Stakeholder Representative**: {name} - {date}
+
+### Final Approval
+
+- [ ] **Project Manager**: {name} - {date}
+
+**Status**: ⏳ Pending Approval / ✅ Approved / ❌ Requires Revision
+
+---
+
+**Next Steps:** Upon approval, proceed to design.md for technical design and architecture.
