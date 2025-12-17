@@ -127,10 +127,11 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               const SizedBox(height: AppSpacing.xl),
 
               // زر الحفظ
-              AppPrimaryButton(
-                label: isEditing ? 'حفظ التعديلات' : 'إضافة الفاتورة',
+              AppEnhancedButton(
+                text: isEditing ? 'حفظ التعديلات' : 'إضافة الفاتورة',
                 onPressed: _isLoading ? null : _saveInvoice,
                 isLoading: _isLoading,
+                icon: Icons.save,
               ),
             ],
           ),
@@ -498,11 +499,14 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           ),
         ),
         actions: [
-          TextButton(
+          AppEnhancedButton(
+            text: 'إلغاء',
             onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
           ),
-          TextButton(
+          AppEnhancedButton(
+            text: 'حفظ',
             onPressed: () {
               final value = double.tryParse(controller.text);
               if (value != null && value >= 0 && value <= 100) {
@@ -510,7 +514,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 Navigator.pop(context);
               }
             },
-            child: const Text('حفظ'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
           ),
         ],
       ),
@@ -557,11 +562,14 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           ),
         ),
         actions: [
-          TextButton(
+          AppEnhancedButton(
+            text: 'إلغاء',
             onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
           ),
-          TextButton(
+          AppEnhancedButton(
+            text: 'إضافة',
             onPressed: () {
               final name = nameController.text.trim();
               final quantity = double.tryParse(quantityController.text);
@@ -581,7 +589,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 Navigator.pop(context);
               }
             },
-            child: const Text('إضافة'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
           ),
         ],
       ),

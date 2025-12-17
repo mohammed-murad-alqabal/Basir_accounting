@@ -25,14 +25,14 @@ void main() {
     test('status colors should be defined', () {
       expect(AppColors.error, const Color(0xFFC62828));
       expect(AppColors.success, const Color(0xFF2E7D32));
-      expect(AppColors.warning, const Color(0xFFE65100));
+      expect(AppColors.warning, const Color(0xFFD73502));
       expect(AppColors.info, const Color(0xFF0277BD));
     });
 
     test('text colors should be defined', () {
       expect(AppColors.textPrimary, const Color(0xFF1A1A1A));
       expect(AppColors.textSecondary, const Color(0xFF4A4A4A));
-      expect(AppColors.textHint, const Color(0xFF757575));
+      expect(AppColors.textHint, const Color(0xFF5A5A5A));
       expect(AppColors.textDisabled, const Color(0xFFBDBDBD));
       expect(AppColors.textOnDark, const Color(0xFFFFFFFF));
     });

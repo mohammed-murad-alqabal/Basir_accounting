@@ -1,15 +1,14 @@
-**المشروع:** بصير MVP
-**المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**المصدر:** مكيف من مصادر مجتمع Kiro المعتمدة
-**التاريخ:** 10 December 2025
-
 ---
-
----
-
-title: MCP (Model Context Protocol) Best Practices
+id: "mcp-best-practices"
+description: "أفضل ممارسات Model Context Protocol"
+version: "1.0"
+last_updated: "2025-12-17"
 inclusion: always
-
+author: "فريق وكلاء تطوير مشروع بصير"
+metrics:
+  size: "4KB"
+  lines: 125
+  context_usage: "2%"
 ---
 
 # MCP (Model Context Protocol) Best Practices

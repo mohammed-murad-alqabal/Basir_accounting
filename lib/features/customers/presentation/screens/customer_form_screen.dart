@@ -149,10 +149,11 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
               const SizedBox(height: AppSpacing.xl),
 
               // زر الحفظ
-              AppPrimaryButton(
-                label: isEditing ? 'حفظ التعديلات' : 'إضافة العميل',
+              AppEnhancedButton(
+                text: isEditing ? 'حفظ التعديلات' : 'إضافة العميل',
                 onPressed: _isLoading ? null : _saveCustomer,
                 isLoading: _isLoading,
+                icon: Icons.save,
               ),
             ],
           ),

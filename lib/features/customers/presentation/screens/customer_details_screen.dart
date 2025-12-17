@@ -208,14 +208,18 @@ class CustomerDetailsScreen extends ConsumerWidget {
         title: const Text('حذف العميل'),
         content: Text('هل أنت متأكد من حذف العميل "${customer.name}"؟'),
         actions: [
-          TextButton(
+          AppEnhancedButton(
+            text: 'إلغاء',
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('إلغاء'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
           ),
-          TextButton(
+          AppEnhancedButton(
+            text: 'حذف',
             onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('حذف'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
+            // TODO: Add error color support to AppEnhancedButton
           ),
         ],
       ),

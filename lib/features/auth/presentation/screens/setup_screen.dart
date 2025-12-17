@@ -164,11 +164,11 @@ class _SetupScreenState extends State<SetupScreen> {
                       const SizedBox(height: AppSpacing.xl),
 
                       // زر الإنشاء
-                      AppPrimaryButton(
-                        label: 'إنشاء الحساب',
+                      AppEnhancedButton(
+                        text: 'إنشاء الحساب',
                         onPressed: _handleSetup,
                         isLoading: _isLoading,
-                        width: double.infinity,
+                        icon: Icons.person_add,
                       ),
                     ],
                   ),

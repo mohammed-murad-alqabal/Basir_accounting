@@ -17,22 +17,22 @@
 
 ```bash
 # الحصول على معلومات المستخدم
-python3 scripts/figma_api.py me
+dart run scripts/figma_api.dart me
 
 # الحصول على الفرق
-python3 scripts/figma_api.py teams
+dart run scripts/figma_api.dart teams
 
 # الحصول على مشاريع فريق معين
-python3 scripts/figma_api.py team-projects TEAM_ID
+dart run scripts/figma_api.dart team-projects TEAM_ID
 
 # الحصول على ملفات مشروع معين
-python3 scripts/figma_api.py project-files PROJECT_ID
+dart run scripts/figma_api.dart project-files PROJECT_ID
 
 # الحصول على معلومات ملف
-python3 scripts/figma_api.py file FILE_KEY
+dart run scripts/figma_api.dart file FILE_KEY
 
 # الحصول على تعليقات ملف
-python3 scripts/figma_api.py comments FILE_KEY
+dart run scripts/figma_api.dart comments FILE_KEY
 ```
 
 ## 📋 الحصول على المعرفات المطلوبة
@@ -41,7 +41,7 @@ python3 scripts/figma_api.py comments FILE_KEY
 
 ```bash
 # احصل على قائمة الفرق أولاً
-python3 scripts/figma_api.py teams
+dart run scripts/figma_api.dart teams
 
 # ستحصل على استجابة تحتوي على team_id لكل فريق
 ```
@@ -50,7 +50,7 @@ python3 scripts/figma_api.py teams
 
 ```bash
 # استخدم team_id للحصول على المشاريع
-python3 scripts/figma_api.py team-projects YOUR_TEAM_ID
+dart run scripts/figma_api.dart team-projects YOUR_TEAM_ID
 
 # ستحصل على قائمة المشاريع مع project_id لكل مشروع
 ```
@@ -59,7 +59,7 @@ python3 scripts/figma_api.py team-projects YOUR_TEAM_ID
 
 ```bash
 # استخدم project_id للحصول على الملفات
-python3 scripts/figma_api.py project-files YOUR_PROJECT_ID
+dart run scripts/figma_api.dart project-files YOUR_PROJECT_ID
 
 # أو احصل عليه من رابط Figma:
 # https://www.figma.com/file/FILE_KEY/file-name
@@ -71,13 +71,13 @@ python3 scripts/figma_api.py project-files YOUR_PROJECT_ID
 
 ```bash
 # 1. احصل على معلومات المستخدم
-python3 scripts/figma_api.py me
+dart run scripts/figma_api.dart me
 
 # 2. احصل على الفرق (إذا كنت عضواً في فرق)
-python3 scripts/figma_api.py teams
+dart run scripts/figma_api.dart teams
 
 # 3. إذا لم تكن في فرق، يمكنك استخدام file key مباشرة
-python3 scripts/figma_api.py file YOUR_FILE_KEY
+dart run scripts/figma_api.dart file YOUR_FILE_KEY
 ```
 
 ## ⚠️ استكشاف الأخطاء
@@ -99,7 +99,7 @@ python3 scripts/figma_api.py file YOUR_FILE_KEY
 
 ## 🚀 الخطوات التالية
 
-1. **اختبر الاتصال**: ابدأ بـ `python3 scripts/figma_api.py me`
+1. **اختبر الاتصال**: ابدأ بـ `dart run scripts/figma_api.dart me`
 2. **احصل على المعرفات**: استخدم الأوامر أعلاه للحصول على IDs
 3. **وثّق المعرفات**: احفظ المعرفات المهمة في `.env`
 4. **استخدم في التطوير**: ادمج الأدوات في سير العمل

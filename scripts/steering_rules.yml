@@ -1,0 +1,170 @@
+# قواعد فحص توافق ملفات التوجيه
+# Steering Files Compatibility Rules Configuration
+
+# إعدادات عامة
+general:
+  project_name: "بصير MVP"
+  target_stack: "Flutter/Dart"
+  flutter_version: "3.35.5+"
+  dart_version: "3.9.2+"
+
+# قواعد الفحص
+rules:
+  # قواعد التقنيات غير المتوافقة
+  incompatible_technologies:
+    enabled: true
+    severity_threshold: "medium"
+    fail_on_high_severity: true
+
+    # استثناءات - سياقات مسموحة
+    allowed_contexts:
+      - "تجنب استخدام"
+      - "لا تستخدم"
+      - "بدلاً من"
+      - "instead of"
+      - "avoid"
+      - "don't use"
+      - "للإزالة"
+      - "للاستبدال"
+      - "غير متوافق"
+      - "incompatible"
+      - "not recommended"
+      - "deprecated"
+      - "مثال على ما يجب تجنبه"
+      - "example of what to avoid"
+
+    # أنماط خاصة للتجاهل
+    ignore_patterns:
+      - "^\\s*#.*" # تعليقات
+      - "^\\s*//.*" # تعليقات JavaScript style
+      - "^\\s*<!--.*-->" # تعليقات HTML
+      - "```[^`]*```" # كتل الكود (للأمثلة)
+
+  # قواعد البنية والتنسيق
+  structure_rules:
+    enabled: true
+
+    # متطلبات front-matter
+    frontmatter_required: true
+    required_frontmatter_fields:
+      - "title"
+      - "inclusion"
+
+    # متطلبات العناوين
+    heading_structure:
+      max_depth: 4
+      require_h1: true
+      arabic_headings_preferred: true
+
+    # متطلبات الروابط
+    links:
+      check_internal_links: true
+      prefer_relative_paths: true
+      check_anchor_links: true
+
+  # قواعد المحتوى
+  content_rules:
+    enabled: true
+
+    # متطلبات اللغة
+    language_requirements:
+      code_examples_in_dart: true
+      technical_terms_in_english: true
+      user_facing_text_in_arabic: true
+
+    # متطلبات الأمثلة
+    code_examples:
+      require_flutter_examples: true
+      avoid_web_examples: true
+      include_imports: true
+      use_const_constructors: true
+
+    # متطلبات التوثيق
+    documentation:
+      require_examples: true
+      require_explanations: true
+      prefer_practical_examples: true
+
+# تكوين التقارير
+reporting:
+  formats:
+    - "markdown"
+    - "json"
+
+  output_directory: "reports/compatibility"
+
+  # تفاصيل التقرير
+  include_suggestions: true
+  include_line_numbers: true
+  include_context: true
+  group_by_severity: true
+
+  # إعدادات التنبيهات
+  notifications:
+    slack_webhook: null # يمكن إضافة webhook للتنبيهات
+    email_recipients: []
+    github_comments: true
+
+# تكوين CI/CD
+ci_cd:
+  # GitHub Actions
+  github_actions:
+    enabled: true
+    run_on_push: true
+    run_on_pr: true
+    run_on_schedule: true
+    schedule_cron: "0 2 * * *" # يومياً في الساعة 2 صباحاً
+
+  # Git Hooks
+  git_hooks:
+    pre_commit: true
+    post_commit: true
+    pre_push: false
+
+  # إعدادات الفشل
+  failure_conditions:
+    high_severity_issues: true
+    medium_severity_threshold: 5
+    total_issues_threshold: 20
+
+# تكوين الأداء
+performance:
+  # حدود المعالجة
+  max_file_size_mb: 10
+  max_files_per_run: 100
+  timeout_seconds: 300
+
+  # تحسينات
+  enable_caching: true
+  parallel_processing: true
+  max_workers: 4
+
+# تكوين التطوير والتصحيح
+development:
+  debug_mode: false
+  verbose_logging: false
+  save_intermediate_results: false
+
+  # إعدادات الاختبار
+  test_mode: false
+  test_files_directory: "test/fixtures/steering"
+
+# إعدادات الصيانة
+maintenance:
+  # تنظيف التقارير القديمة
+  cleanup_old_reports: true
+  reports_retention_days: 30
+
+  # تحديث القواعد
+  auto_update_rules: false
+  rules_update_source: "https://github.com/baseer-team/steering-rules"
+
+  # النسخ الاحتياطية
+  backup_before_changes: true
+  backup_directory: "backups/steering"
+
+# معلومات الإصدار
+version:
+  config_version: "1.0.0"
+  last_updated: "2025-12-16"
+  updated_by: "فريق وكلاء تطوير مشروع بصير"

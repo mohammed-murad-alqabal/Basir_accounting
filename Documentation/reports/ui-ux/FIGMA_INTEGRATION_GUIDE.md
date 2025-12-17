@@ -134,8 +134,8 @@
 # تثبيت uv package manager
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# أو باستخدام pip
-pip install uv
+# أو باستخدام package manager آخر حسب النظام
+# للمزيد من التفاصيل: https://docs.astral.sh/uv/
 
 # التحقق من التثبيت
 uvx --version
