@@ -45,7 +45,7 @@
 
 **المعايير المتقدمة:**
 
-- **11 steering documents** متخصصة (AWS, CDK, Python, React, TypeScript, Docker, Git, MCP, Security, Testing)
+- **11 steering documents** متخصصة (Flutter, Dart, Git, MCP, Security, Testing, Performance, Quality)
 - **16 automatic hooks** للجودة والأمان
 - **6 manual hooks** للمهام المتخصصة
 - **3 optional hooks** للأداء
@@ -140,7 +140,7 @@
 - **16+ automatic hooks** للجودة والأمان
 - **6+ manual hooks** للمهام المتخصصة
 - **3+ optional hooks** للأداء
-- **Multi-technology support** (AWS, Docker, Python, React, etc.)
+- **Flutter-focused technology support** (Dart, Isar, Material Design, etc.)
 - **Security-focused automation** متقدم
 
 #### **وضعنا الحالي:**

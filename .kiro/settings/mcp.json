@@ -111,12 +111,9 @@
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
-      "autoApprove": [
-        "search_documentation",
-        "get_service_info",
-        "get_api_reference",
-        "search_guides"
-      ]
+      "timeout": 30000,
+      "retries": 2,
+      "autoApprove": ["search_documentation", "read_documentation", "recommend"]
     },
 
     "memory": {
@@ -153,6 +150,21 @@
       },
       "disabled": false,
       "autoApprove": ["sequentialthinking"]
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "timeout": 30000,
+      "retries": 2,
+      "autoApprove": [
+        "puppeteer_screenshot",
+        "puppeteer_click",
+        "puppeteer_type"
+      ]
     }
   }
 }

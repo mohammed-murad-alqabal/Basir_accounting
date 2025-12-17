@@ -1,103 +1,70 @@
-**المشروع:** بصير MVP
+# معايير المشروع - بصير MVP
+
+**المشروع:** بصير MVP  
 **المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**المصدر:** مكيف من مصادر مجتمع Kiro المعتمدة
-**التاريخ:** 15 ديسمبر 2025
+**التاريخ:** 16 ديسمبر 2025  
+**الحالة:** ✅ نشط ومكثف
 
 ---
 
----
+## 🎯 المبادئ الأساسية
 
-title: Project Standards - Baseer MVP Specific
-inclusion: always
+### **Local-First Architecture**
 
----
+- **دائماً محلي أولاً**: جميع الوظائف الأساسية تعمل بدون إنترنت
+- **الشبكة اختيارية**: الاتصال تحسين وليس متطلب
+- **Isar Database**: قاعدة البيانات المحلية الوحيدة
+- **مزامنة خلفية**: عند توفر الاتصال
 
-# Project Standards - Baseer MVP Specific
-
-## Local-First Application Standards
-
-### Offline Functionality as Primary Requirement
-
-- **Always Local First**: All core functionality must work offline
-- **Network Optional**: Internet connectivity is enhancement, not requirement
-- **Data Persistence**: All user data must persist locally using Isar
-- **Sync When Available**: Background synchronization when network is available
-- **Graceful Degradation**: Features degrade gracefully when offline
-
-### Local Data Synchronization Patterns
+### **نمط البيانات المحلية**
 
 ```dart
-// Good: Local-first data pattern
 class DataService {
   Future<List<Invoice>> getInvoices() async {
-    // 1. Always return local data first
+    // 1. البيانات المحلية أولاً
     final localData = await _localRepository.getAll();
 
-    // 2. Sync in background if connected
+    // 2. مزامنة خلفية
     if (await _connectivity.isConnected()) {
       _backgroundSync();
     }
 
     return localData;
   }
-
-  Future<void> saveInvoice(Invoice invoice) async {
-    // 1. Save locally immediately
-    await _localRepository.save(invoice);
-
-    // 2. Queue for sync when online
-    await _syncQueue.add(invoice);
-  }
 }
 ```
 
-### Background Processing Guidelines
+---
 
-- Use `WorkManager` for reliable background tasks
-- Implement exponential backoff for failed sync attempts
-- Handle app lifecycle changes gracefully
-- Preserve battery life with efficient scheduling
+## 📋 معايير بصير المحددة
 
-## Baseer-Specific Standards
-
-### Invoice Management Patterns
+### **إدارة الفواتير**
 
 ```dart
-// Invoice lifecycle management
 class InvoiceService {
-  // Invoice states: draft -> sent -> paid -> archived
+  // دورة حياة الفاتورة: مسودة -> مرسلة -> مدفوعة -> مؤرشفة
   Future<void> updateInvoiceStatus(String id, InvoiceStatus status) async {
     final invoice = await _repository.getById(id);
 
-    // Validate state transitions
     if (!_isValidTransition(invoice.status, status)) {
       throw InvalidStateTransitionException();
     }
 
-    // Update with timestamp
-    final updatedInvoice = invoice.copyWith(
+    await _repository.update(invoice.copyWith(
       status: status,
       updatedAt: DateTime.now(),
-    );
-
-    await _repository.update(updatedInvoice);
+    ));
   }
 }
 ```
 
-### Customer Data Handling
+### **إدارة العملاء**
 
 ```dart
-// Customer data management with Arabic support
 class CustomerService {
   Future<void> addCustomer(Customer customer) async {
-    // Validate Arabic names
     _validateArabicName(customer.name);
-
-    // Validate Saudi phone numbers
     _validateSaudiPhone(customer.phone);
-
-    // Store with proper RTL support
     await _repository.save(customer);
   }
 
@@ -115,52 +82,51 @@ class CustomerService {
 }
 ```
 
-### Arabic Language Support Requirements
+### **دعم العربية الأساسي**
 
-- **RTL Layout**: All UI components must support right-to-left layout
-- **Arabic Fonts**: Use system fonts that support Arabic properly
-- **Number Formatting**: Support both Arabic-Indic (٠١٢٣) and Western (0123) numerals
-- **Date Formatting**: Support Hijri and Gregorian calendars
-- **Input Validation**: Validate Arabic text input correctly
+- **RTL Layout**: جميع المكونات تدعم التخطيط من اليمين لليسار
+- **الخطوط العربية**: استخدام خطوط النظام المناسبة
+- **تنسيق الأرقام**: دعم الأرقام العربية (٠١٢٣) والغربية (0123)
+- **التحقق من المدخلات**: التحقق الصحيح من النصوص العربية
 
-## Code Quality Standards for Baseer
+---
 
-### Flutter-Specific Quality Standards
+## 🏗️ معايير الجودة
 
-- Follow `effective_dart` guidelines strictly
-- Use `const` constructors for all static widgets
-- Implement proper `dispose()` methods for controllers
-- Use `late` keyword appropriately for non-nullable fields
-- Follow Clean Architecture with clear layer separation
+### **معايير Flutter الأساسية**
 
-### Naming Conventions for Arabic Context
+- اتباع `effective_dart` بدقة
+- استخدام `const` constructors للـ widgets الثابتة
+- تنفيذ `dispose()` للـ controllers
+- استخدام `late` بشكل صحيح
+- Clean Architecture (3 طبقات)
+
+### **تسمية المتغيرات**
 
 ```dart
-// Good: Clear English names for code, Arabic for UI
+// ✅ جيد: أسماء إنجليزية للكود، عربية للواجهة
 class CustomerRepository {
   Future<List<Customer>> getAllCustomers() async { }
 }
 
-// UI Text in Arabic
+// نصوص الواجهة بالعربية
 const String addCustomerTitle = 'إضافة عميل جديد';
 const String customerNameLabel = 'اسم العميل';
-const String phoneNumberLabel = 'رقم الهاتف';
 ```
 
-### Error Handling for Local Apps
+### **معالجة الأخطاء**
 
 ```dart
-// Comprehensive error handling
 class ErrorHandler {
   static void handleError(Object error, StackTrace stackTrace) {
-    // Log locally (no network required)
+    // تسجيل محلي
     _localLogger.error(error, stackTrace);
 
-    // Show user-friendly Arabic message
+    // رسالة عربية للمستخدم
     final message = _getArabicErrorMessage(error);
     _showErrorDialog(message);
 
-    // Queue for remote logging when online
+    // طابور للتسجيل عند الاتصال
     _errorQueue.add(ErrorReport(error, stackTrace));
   }
 
@@ -179,47 +145,41 @@ class ErrorHandler {
 }
 ```
 
-## Testing Requirements for Baseer
+---
 
-### Local App Testing Standards
+## 🧪 معايير الاختبارات
 
-- **Offline Testing**: Test all functionality without network
-- **Data Persistence Testing**: Verify data survives app restarts
-- **Arabic Input Testing**: Test Arabic text input and display
-- **RTL Layout Testing**: Test UI in right-to-left mode
-- **Performance Testing**: Test with large local datasets
+### **اختبارات التطبيقات المحلية**
 
-### Test Coverage Requirements
+- **اختبار بدون إنترنت**: جميع الوظائف تعمل offline
+- **اختبار استمرارية البيانات**: البيانات تبقى بعد إعادة التشغيل
+- **اختبار المدخلات العربية**: النصوص العربية والعرض
+- **اختبار RTL**: الواجهة من اليمين لليسار
+- **اختبار الأداء**: مع مجموعات بيانات كبيرة
 
-- **Unit Tests**: 70%+ coverage for business logic
-- **Widget Tests**: All custom widgets must have tests
-- **Integration Tests**: Critical user flows (create invoice, add customer)
-- **Golden Tests**: UI consistency across different screen sizes
+### **متطلبات التغطية**
 
-### Example Test Structure
+- **Unit Tests**: 70%+ للمنطق التجاري
+- **Widget Tests**: جميع الـ widgets المخصصة
+- **Integration Tests**: المسارات الحرجة (إنشاء فاتورة، إضافة عميل)
+- **Golden Tests**: اتساق الواجهة عبر أحجام الشاشات
+
+### **مثال على هيكل الاختبار**
 
 ```dart
 void main() {
   group('Invoice Management', () {
     testWidgets('should create invoice offline', (tester) async {
-      // Setup offline environment
       await tester.pumpWidget(MyApp(isOffline: true));
-
-      // Test invoice creation
       await tester.tap(find.byKey(Key('add_invoice_button')));
       await tester.pumpAndSettle();
-
-      // Verify invoice saved locally
       expect(find.text('تم حفظ الفاتورة'), findsOneWidget);
     });
 
     testWidgets('should display Arabic text correctly', (tester) async {
       await tester.pumpWidget(MyApp(locale: Locale('ar')));
-
-      // Test RTL layout
       expect(find.text('إضافة فاتورة جديدة'), findsOneWidget);
 
-      // Verify text direction
       final textWidget = tester.widget<Text>(find.text('إضافة فاتورة جديدة'));
       expect(textWidget.textDirection, TextDirection.rtl);
     });
@@ -227,22 +187,23 @@ void main() {
 }
 ```
 
-## Documentation Standards for Baseer
+---
 
-### Arabic Documentation Requirements
+## 📚 معايير التوثيق
 
-- **User-facing text**: All UI text must be in Arabic
-- **Error messages**: All error messages in Arabic
-- **Help documentation**: User guides in Arabic
-- **Code comments**: Technical comments in English, user stories in Arabic
+### **متطلبات التوثيق العربي**
 
-### API Documentation
+- **نصوص الواجهة**: جميع نصوص الواجهة بالعربية
+- **رسائل الخطأ**: جميع رسائل الخطأ بالعربية
+- **أدلة المساعدة**: أدلة المستخدم بالعربية
+- **تعليقات الكود**: التعليقات التقنية بالإنجليزية، قصص المستخدم بالعربية
+
+### **توثيق API**
 
 ```dart
 /// إدارة الفواتير في التطبيق
 ///
 /// يوفر هذا الكلاس جميع العمليات المطلوبة لإدارة الفواتير
-/// بما في ذلك الإنشاء والتعديل والحذف والبحث
 class InvoiceManager {
   /// ينشئ فاتورة جديدة
   ///
@@ -257,31 +218,31 @@ class InvoiceManager {
 }
 ```
 
-## Security Practices for Local Apps
+---
 
-### Local Data Security
+## 🔒 الأمان والخصوصية
 
-- **Encryption at Rest**: Encrypt sensitive data in local database
-- **Secure Storage**: Use `flutter_secure_storage` for credentials
-- **Input Sanitization**: Sanitize all user inputs before storage
-- **Access Control**: Implement app-level access controls
+### **أمان البيانات المحلية**
 
-### Privacy Considerations
+- **تشفير البيانات**: تشفير البيانات الحساسة في قاعدة البيانات المحلية
+- **التخزين الآمن**: استخدام `flutter_secure_storage` للبيانات الحساسة
+- **تنظيف المدخلات**: تنظيف جميع مدخلات المستخدم قبل التخزين
+- **التحكم في الوصول**: تطبيق ضوابط الوصول على مستوى التطبيق
+
+### **اعتبارات الخصوصية**
 
 ```dart
-// Privacy-first data handling
 class PrivacyManager {
-  // No personal data leaves the device without explicit consent
+  // لا تغادر البيانات الشخصية الجهاز بدون موافقة صريحة
   Future<void> exportData() async {
     final consent = await _getUserConsent();
     if (!consent) return;
 
-    // Anonymize data before export
     final anonymizedData = await _anonymizeData();
     await _exportToFile(anonymizedData);
   }
 
-  // Clear all data when requested
+  // مسح جميع البيانات عند الطلب
   Future<void> clearAllData() async {
     await _localDatabase.clear();
     await _secureStorage.deleteAll();
@@ -290,42 +251,41 @@ class PrivacyManager {
 }
 ```
 
-## Performance Guidelines for Mobile Apps
+---
 
-### Flutter Performance Optimization
+## 📱 النشر والإصدار
 
-- **Widget Rebuilds**: Minimize unnecessary widget rebuilds
-- **Memory Management**: Dispose controllers and streams properly
-- **Image Optimization**: Optimize images for mobile screens
-- **List Performance**: Use `ListView.builder` for large lists
-- **Database Queries**: Optimize Isar queries with proper indexing
+### **نشر التطبيق المحمول**
 
-### Battery Life Considerations
+- **تحسين متجر التطبيقات**: تحسين للمتاجر العربية
+- **الترجمة**: دعم العربية والإنجليزية
+- **الاختبار**: اختبار على أجهزة Android متنوعة
+- **الأداء**: ضمان أداء سلس على الأجهزة متوسطة المواصفات
 
-- **Background Tasks**: Minimize background processing
-- **Network Usage**: Batch network requests when online
-- **Screen Updates**: Reduce unnecessary screen updates
-- **Location Services**: Use location services sparingly
-
-## Deployment Standards
-
-### Mobile App Deployment
-
-- **App Store Optimization**: Optimize for Arabic app stores
-- **Localization**: Support Arabic and English languages
-- **Testing**: Test on various Android devices and screen sizes
-- **Performance**: Ensure smooth performance on mid-range devices
-
-### Version Management
+### **إدارة الإصدارات**
 
 ```yaml
 # pubspec.yaml version management
 version: 1.0.0+1
 # Format: major.minor.patch+build
-# Increment build number for each release
-# Increment version for feature releases
 ```
 
 ---
 
-**للمراجع التفصيلية:** راجع ملفات التوجيه الأخرى في `.kiro/steering/`
+## 🔗 المراجع المتقدمة
+
+### **للتفاصيل الشاملة:**
+
+- [معايير المشروع المتقدمة](../../reference/advanced-project-standards.md)
+
+### **المعايير التقنية:**
+
+- [معايير Flutter/Dart](./frontend-standards.md)
+- [معايير التطوير](./development-standards.md)
+- [أفضل ممارسات الأمان](./security-best-practices.md)
+
+---
+
+**تم بواسطة:** فريق وكلاء تطوير مشروع بصير  
+**الحالة:** ✅ ملف توجيه مكثف ومحسن  
+**المراجعة القادمة:** 23 ديسمبر 2025
