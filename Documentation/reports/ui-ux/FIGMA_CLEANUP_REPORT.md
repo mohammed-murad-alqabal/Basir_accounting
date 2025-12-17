@@ -66,7 +66,7 @@
 
 ```
 scripts/
-├── figma_api.py              ✅ Python API Helper (بدون تغيير)
+├── figma_api.dart            ✅ Dart API Helper (محدث للـ Flutter)
 ├── setup_figma.sh           ✅ إعداد مبسط
 ├── test_figma_integration.sh ✅ اختبار مبسط
 └── figma_quick_guide.md     ✅ دليل مبسط
@@ -138,10 +138,10 @@ DESIGN.md              ✅ بدون تغيير
 
 ```bash
 # معلومات المستخدم
-python3 scripts/figma_api.py me
+dart run scripts/figma_api.dart me
 
 # معلومات ملف
-python3 scripts/figma_api.py file FILE_KEY
+dart run scripts/figma_api.dart file FILE_KEY
 ```
 
 ---

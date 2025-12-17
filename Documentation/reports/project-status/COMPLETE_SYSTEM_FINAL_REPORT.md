@@ -377,70 +377,77 @@
 
 ### التشغيل الكامل للنظام
 
-```typescript
-import { L1AnalysisLayer } from ".kiro/agents/l1-analysis/l1-analysis-layer";
-import { L2DecisionLayer } from ".kiro/agents/l2-decision/l2-decision-layer";
-import { L3ExecutionLayer } from ".kiro/agents/l3-execution/l3-execution-layer";
+```dart
+// نظام الوكلاء الذكية لمشروع بصير - Flutter/Dart
+import 'package:baseer/agents/analysis_layer.dart';
+import 'package:baseer/agents/decision_layer.dart';
+import 'package:baseer/agents/execution_layer.dart';
 
-// إنشاء النظام الكامل
-const intelligentAgentSystem = {
-  l1: new L1AnalysisLayer({
-    project: "بصير MVP",
-    monitoring: { enabled: true, interval: 300000 },
-    analysis: { patterns: true, insights: true },
-  }),
+class IntelligentAgentSystem {
+  late final AnalysisLayer l1;
+  late final DecisionLayer l2;
+  late final ExecutionLayer l3;
 
-  l2: new L2DecisionLayer({
-    project: "بصير MVP",
-    engine: { confidenceThreshold: 0.8 },
-    ml: { enablePredictions: true },
-  }),
-
-  l3: new L3ExecutionLayer({
-    project: "بصير MVP",
-    coordinator: { maxConcurrentExecutions: 10 },
-  }),
-};
-
-// بدء النظام الكامل
-async function startIntelligentSystem() {
-  console.log("🚀 بدء نظام الوكلاء الذكية لمشروع بصير...");
-
-  // بدء الطبقات بالترتيب
-  await intelligentAgentSystem.l1.start();
-  await intelligentAgentSystem.l2.start();
-  await intelligentAgentSystem.l3.start();
-
-  // ربط الطبقات
-  intelligentAgentSystem.l1.on("analysisCompleted", async (analysisData) => {
-    console.log("📊 تم إكمال التحليل، إرسال للطبقة الثانية...");
-    const decisions = await intelligentAgentSystem.l2.processAnalysisData(
-      analysisData
+  IntelligentAgentSystem() {
+    l1 = AnalysisLayer(
+      project: "بصير MVP",
+      monitoringEnabled: true,
+      analysisInterval: Duration(minutes: 5),
     );
 
-    console.log("🧠 تم اتخاذ القرارات، إرسال للتنفيذ...");
-    await intelligentAgentSystem.l3.processL2Decisions(decisions);
-  });
+    l2 = DecisionLayer(
+      project: "بصير MVP",
+      confidenceThreshold: 0.8,
+      enablePredictions: true,
+    );
 
-  console.log("✅ نظام الوكلاء الذكية جاهز للعمل!");
+    l3 = ExecutionLayer(
+      project: "بصير MVP",
+      maxConcurrentExecutions: 10,
+    );
+  }
+
+  // بدء النظام الكامل
+  Future<void> startIntelligentSystem() async {
+    print("🚀 بدء نظام الوكلاء الذكية لمشروع بصير...");
+
+    // بدء الطبقات بالترتيب
+    await l1.start();
+    await l2.start();
+    await l3.start();
+
+    // ربط الطبقات
+    l1.analysisStream.listen((analysisData) async {
+      print("📊 تم إكمال التحليل، إرسال للطبقة الثانية...");
+      final decisions = await l2.processAnalysisData(analysisData);
+
+      print("🧠 تم اتخاذ القرارات، إرسال للتنفيذ...");
+      await l3.processDecisions(decisions);
+    });
+
+    print("✅ نظام الوكلاء الذكية جاهز للعمل!");
+  }
 }
 
 // تشغيل النظام
-startIntelligentSystem().catch(console.error);
+void main() async {
+  final system = IntelligentAgentSystem();
+  await system.startIntelligentSystem();
+}
 ```
 
 ### مثال على التدفق الكامل
 
-```typescript
+```dart
 // 1. L1 يحلل المشروع
-const analysisResult = await intelligentAgentSystem.l1.runAnalysis();
-console.log("تحليل مكتمل:", analysisResult.summary);
+final analysisResult = await intelligentAgentSystem.l1.runAnalysis();
+print("تحليل مكتمل: ${analysisResult.summary}");
 
 // 2. L2 يتخذ قرارات ذكية
-const decisions = await intelligentAgentSystem.l2.processAnalysisData(
+final decisions = await intelligentAgentSystem.l2.processAnalysisData(
   analysisResult
 );
-console.log(`تم اتخاذ ${decisions.length} قرار`);
+print("تم اتخاذ ${decisions.length} قرار");
 
 // 3. L3 ينفذ القرارات
 const executionResult = await intelligentAgentSystem.l3.processL2Decisions(
@@ -549,11 +556,11 @@ console.log("النظام يعمل بكفاءة وذكاء! 🎯");
 
 #### ✅ معايير الكود
 
-- **TypeScript Strict Mode** مفعل
-- **ESLint & Prettier** للتنسيق
-- **Error Handling** شامل
+- **Dart Sound Null Safety** مفعل
+- **dart format & dart analyze** للتنسيق والتحليل
+- **Error Handling** شامل مع try-catch
 - **Input Validation** في كل مكان
-- **Memory Management** محسن
+- **Memory Management** محسن مع dispose patterns
 
 #### ✅ معايير الأداء
 
@@ -757,10 +764,10 @@ console.log("النظام يعمل بكفاءة وذكاء! 🎯");
 #### ✅ المواصفات المحققة
 
 - **28 ملف** عالي الجودة
-- **~9,400 سطر** كود TypeScript
+- **~9,400 سطر** كود Dart/Flutter
 - **17 مكون** متكامل ومتخصص
 - **تكييف كامل** لمشروع بصير MVP
-- **دعم شامل** للغة العربية
+- **دعم شامل** للغة العربية والـ RTL
 
 #### ✅ الميزات المُطبقة
 

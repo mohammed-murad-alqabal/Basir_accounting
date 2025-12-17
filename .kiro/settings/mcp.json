@@ -28,7 +28,7 @@
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
-      "disabled": false,
+      "disabled": true,
       "autoApprove": ["fetch"]
     },
     "sqlite": {
@@ -110,7 +110,7 @@
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
-      "disabled": false,
+      "disabled": true,
       "timeout": 30000,
       "retries": 2,
       "autoApprove": ["search_documentation", "read_documentation", "recommend"]
@@ -157,7 +157,7 @@
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
-      "disabled": false,
+      "disabled": true,
       "timeout": 30000,
       "retries": 2,
       "autoApprove": [

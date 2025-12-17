@@ -1,15 +1,14 @@
-**المشروع:** بصير MVP
-**المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**المصدر:** مكيف من مصادر مجتمع Kiro المعتمدة
-**التاريخ:** 10 December 2025
-
 ---
-
----
-
-title: Testing Best Practices
+id: "testing-best-practices"
+description: "أفضل ممارسات الاختبارات في Flutter"
+version: "1.0"
+last_updated: "2025-12-17"
 inclusion: always
-
+author: "فريق وكلاء تطوير مشروع بصير"
+metrics:
+  size: "3KB"
+  lines: 95
+  context_usage: "1.5%"
 ---
 
 # Testing Best Practices

@@ -543,7 +543,7 @@ security:
 - ⭐ **COLLABORATION FIRST** - موافقة صريحة إلزامية قبل التنفيذ
 - ⭐ **KISS Principle** - البساطة أولاً، لا تعقيد غير ضروري
 - ⭐ **ENGLISH FOR CODE** - جميع الكود بالإنجليزية
-- ⭐ **Mermaid.js Diagrams** - رسوم بيانية إلزامية في التصميم
+- ⭐ **Mermaid Diagrams** - رسوم بيانية إلزامية في التصميم
 - ⭐ **GitHub CLI Integration** - مراجعة PR متكاملة
 - ⭐ **Smart Analysis** - تحليل ذكي وتصفية تلقائية
 
@@ -554,7 +554,7 @@ security:
 | وضوح المبادئ        | 7/10    | 10/10  | +43%    |
 | جمع السياق          | يدوي    | إلزامي | +100%   |
 | التحقق من الفهم     | لا      | إلزامي | جديد    |
-| رسوم Mermaid.js     | اختياري | إلزامي | +100%   |
+| رسوم Mermaid        | اختياري | إلزامي | +100%   |
 | تحليل الـ commit    | بسيط    | ذكي    | +200%   |
 | تصفية الـ artifacts | يدوي    | تلقائي | +150%   |
 | GitHub CLI          | لا      | نعم    | +100%   |
@@ -566,7 +566,7 @@ security:
 
 ```
 1. Requirements → createSpec.prompt.md  → requirements.md
-2. Design      → design.prompt.md      → design.md (with Mermaid.js)
+2. Design      → design.prompt.md      → design.md (with Mermaid)
 3. Tasks       → createTask.prompt.md  → tasks.md
 4. Execute     → executeTask.prompt.md → implementation + tests
 5. Commit      → commit.prompt.md      → professional commit message
@@ -584,7 +584,7 @@ security:
 #### الـ Prompts المحسّنة (v2.0)
 
 1. **[createSpec.prompt.md](.kiro/prompts/createSpec.prompt.md)** - توليد المتطلبات مع EARS syntax
-2. **[design.prompt.md](.kiro/prompts/design.prompt.md)** - التصميم مع Mermaid.js إلزامي
+2. **[design.prompt.md](.kiro/prompts/design.prompt.md)** - التصميم مع Mermaid إلزامي
 3. **[createTask.prompt.md](.kiro/prompts/createTask.prompt.md)** - تقسيم المهام بدون approval gate
 4. **[executeTask.prompt.md](.kiro/prompts/executeTask.prompt.md)** - تنفيذ مع جمع سياق إلزامي
 5. **[commit.prompt.md](.kiro/prompts/commit.prompt.md)** - رسائل commit احترافية
@@ -593,7 +593,7 @@ security:
 #### أمثلة عملية
 
 - **[01-createSpec-example.md](.kiro/prompts/examples/01-createSpec-example.md)** - مثال كامل للمتطلبات
-- **[02-design-example.md](.kiro/prompts/examples/02-design-example.md)** - مثال التصميم مع 3 رسوم Mermaid.js
+- **[02-design-example.md](.kiro/prompts/examples/02-design-example.md)** - مثال التصميم مع 3 رسوم Mermaid
 - **[03-createTask-example.md](.kiro/prompts/examples/03-createTask-example.md)** - مثال تقسيم المهام
 - **[04-executeTask-example.md](.kiro/prompts/examples/04-executeTask-example.md)** - مثال التنفيذ
 - **[05-commit-example.md](.kiro/prompts/examples/05-commit-example.md)** - مثال رسائل commit
@@ -626,7 +626,7 @@ cat .kiro/prompts/examples/01-createSpec-example.md
 - ✅ **جودة تنفيذ أعلى** - جمع سياق إلزامي وتحقق من الفهم
 - ✅ **رسائل commit احترافية** - تحليل ذكي وتصفية تلقائية
 - ✅ **مراجعات PR شاملة** - 20+ نقطة فحص مع GitHub CLI
-- ✅ **تصميم واضح** - رسوم Mermaid.js إلزامية
+- ✅ **تصميم واضح** - رسوم Mermaid إلزامية
 - ✅ **تعاون أفضل** - موافقة صريحة قبل التنفيذ
 - ✅ **كود أبسط** - مبدأ KISS المطبق
 - ✅ **صيانة أسهل** - كود بالإنجليزية ومعايير موحدة
