@@ -23,9 +23,9 @@ logs/
 
 ### 2. Logger Service Template
 
-```typescript
-// logger.service.ts
-export class LoggerService {
+```dart
+// logger_service.dart
+class LoggerService {
   private logDir: string;
   private errorLogPath: string;
   private metricsPath: string;

@@ -1,56 +1,51 @@
-**المشروع:** بصير MVP
+# معايير التطوير - بصير MVP
+
+**المشروع:** بصير MVP  
 **المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**المصدر:** مكيف من مصادر مجتمع Kiro المعتمدة
-**التاريخ:** 15 ديسمبر 2025
+**التاريخ:** 16 ديسمبر 2025  
+**الحالة:** ✅ نشط ومكثف
 
 ---
 
----
+## 🎯 معايير Flutter/Dart
 
-title: Development Standards - Enhanced for Baseer MVP
-inclusion: always
+### **معايير جودة الكود**
 
----
+- اتباع `effective_dart` وأفضل ممارسات Flutter
+- استخدام `dart format` للتنسيق المتسق
+- تنفيذ `const` constructors حيثما أمكن
+- استخدام `final` للمتغيرات غير القابلة للتغيير
+- اتباع Clean Architecture (3 طبقات: Presentation, Domain, Data)
 
-# Development Standards - Enhanced for Baseer MVP
-
-## Flutter/Dart Specific Standards
-
-### Code Quality Standards
-
-- Follow `effective_dart` guidelines and Flutter best practices
-- Use `dart format` for consistent code formatting
-- Implement `const` constructors wherever possible
-- Use `final` for immutable variables
-- Follow Clean Architecture (3 layers: Presentation, Domain, Data)
-
-### Project Structure Standards
+### **معايير هيكل المشروع**
 
 ```
 lib/
-├── core/                    # Core utilities and constants
-├── features/               # Feature-first organization
-│   ├── invoices/          # Invoice management feature
-│   │   ├── data/          # Data layer (repositories, models)
-│   │   ├── domain/        # Domain layer (entities, use cases)
-│   │   └── presentation/  # Presentation layer (pages, widgets)
-│   └── customers/         # Customer management feature
-└── shared/                # Shared widgets and utilities
+├── core/                    # الأدوات والثوابت الأساسية
+├── features/               # تنظيم حسب الميزة
+│   ├── invoices/          # ميزة إدارة الفواتير
+│   │   ├── data/          # طبقة البيانات (repositories, models)
+│   │   ├── domain/        # طبقة المجال (entities, use cases)
+│   │   └── presentation/  # طبقة العرض (pages, widgets)
+│   └── customers/         # ميزة إدارة العملاء
+└── shared/                # widgets والأدوات المشتركة
 ```
 
-## State Management Standards (Riverpod)
+---
 
-### Provider Patterns
+## 🔄 معايير إدارة الحالة (Riverpod)
 
-- Use `StateNotifier` for complex state management
-- Implement `AsyncValue` for handling loading/error states
-- Use `family` modifiers for parameterized providers
-- Follow dependency injection patterns with providers
+### **أنماط Provider**
 
-### Example Implementation
+- استخدام `StateNotifier` لإدارة الحالة المعقدة
+- تنفيذ `AsyncValue` للتعامل مع حالات التحميل/الخطأ
+- استخدام `family` modifiers للـ providers المعاملة
+- اتباع أنماط حقن التبعية مع providers
+
+### **مثال على التنفيذ**
 
 ```dart
-// Good: StateNotifier for complex state
+// ✅ جيد: StateNotifier للحالة المعقدة
 class InvoiceNotifier extends StateNotifier<AsyncValue<List<Invoice>>> {
   InvoiceNotifier(this._repository) : super(const AsyncValue.loading());
 
@@ -62,25 +57,27 @@ class InvoiceNotifier extends StateNotifier<AsyncValue<List<Invoice>>> {
   }
 }
 
-// Provider definition
+// تعريف Provider
 final invoiceProvider = StateNotifierProvider<InvoiceNotifier, AsyncValue<List<Invoice>>>(
   (ref) => InvoiceNotifier(ref.watch(invoiceRepositoryProvider)),
 );
 ```
 
-## Local Database Standards (Isar)
+---
 
-### Schema Design
+## 💾 معايير قاعدة البيانات المحلية (Isar)
 
-- Use proper indexing for frequently queried fields
-- Implement composite indexes for complex queries
-- Follow naming conventions: `@Collection()` for entities
-- Use `@Id()` for primary keys, prefer `int` over `String`
+### **تصميم المخطط**
 
-### Query Optimization
+- استخدام الفهرسة المناسبة للحقول المستعلمة بكثرة
+- تنفيذ فهارس مركبة للاستعلامات المعقدة
+- اتباع اتفاقيات التسمية: `@Collection()` للكيانات
+- استخدام `@Id()` للمفاتيح الأساسية، تفضيل `int` على `String`
+
+### **تحسين الاستعلامات**
 
 ```dart
-// Good: Efficient query with proper indexing
+// ✅ جيد: استعلام فعال مع فهرسة مناسبة
 @Collection()
 class Invoice {
   Id id = Isar.autoIncrement;
@@ -95,7 +92,7 @@ class Invoice {
   late String status;
 }
 
-// Efficient query usage
+// استخدام استعلام فعال
 Future<List<Invoice>> getCustomerInvoices(int customerId) async {
   return await isar.invoices
     .where()
@@ -105,14 +102,10 @@ Future<List<Invoice>> getCustomerInvoices(int customerId) async {
 }
 ```
 
-### Transaction Management
-
-- Use transactions for related operations
-- Implement proper error handling in transactions
-- Keep transactions as short as possible
+### **إدارة المعاملات**
 
 ```dart
-// Good: Transaction usage
+// ✅ جيد: استخدام المعاملات
 Future<void> createInvoiceWithItems(Invoice invoice, List<InvoiceItem> items) async {
   await isar.writeTxn(() async {
     await isar.invoices.put(invoice);
@@ -121,29 +114,31 @@ Future<void> createInvoiceWithItems(Invoice invoice, List<InvoiceItem> items) as
 }
 ```
 
-## Offline-First Application Standards
+---
 
-### Data Synchronization
+## 📱 معايير التطبيقات المحلية أولاً
 
-- Implement conflict resolution strategies
-- Use optimistic updates for better UX
-- Handle network connectivity changes gracefully
-- Implement background sync when connectivity returns
+### **مزامنة البيانات**
 
-### Local Storage Patterns
+- تنفيذ استراتيجيات حل التعارض
+- استخدام التحديثات المتفائلة لتجربة مستخدم أفضل
+- التعامل مع تغييرات اتصال الشبكة بسلاسة
+- تنفيذ المزامنة الخلفية عند عودة الاتصال
+
+### **أنماط التخزين المحلي**
 
 ```dart
-// Good: Offline-first repository pattern
+// ✅ جيد: نمط repository محلي أولاً
 class InvoiceRepository {
   final IsarDatabase _localDb;
   final ApiService _apiService;
   final ConnectivityService _connectivity;
 
   Future<List<Invoice>> getInvoices() async {
-    // Always return local data first
+    // إرجاع البيانات المحلية أولاً دائماً
     final localInvoices = await _localDb.getAllInvoices();
 
-    // Sync in background if connected
+    // مزامنة في الخلفية إذا كان متصلاً
     if (await _connectivity.isConnected()) {
       _syncInBackground();
     }
@@ -152,29 +147,31 @@ class InvoiceRepository {
   }
 
   Future<void> _syncInBackground() async {
-    // Background sync implementation
+    // تنفيذ المزامنة الخلفية
   }
 }
 ```
 
-## Arabic Language & RTL Support
+---
 
-### Localization Standards
+## 🔤 دعم اللغة العربية و RTL
 
-- Use `flutter_localizations` for proper RTL support
-- Implement `Directionality` widgets correctly
-- Test all UI components in both LTR and RTL modes
-- Use Arabic-specific date/number formatting
+### **معايير الترجمة**
 
-### Text Input Standards
+- استخدام `flutter_localizations` لدعم RTL المناسب
+- تنفيذ `Directionality` widgets بشكل صحيح
+- اختبار جميع مكونات الواجهة في أوضاع LTR و RTL
+- استخدام تنسيق التاريخ/الأرقام الخاص بالعربية
+
+### **معايير إدخال النص**
 
 ```dart
-// Good: Arabic text input handling
+// ✅ جيد: معالجة إدخال النص العربي
 TextField(
   textDirection: TextDirection.rtl,
   textAlign: TextAlign.right,
   inputFormatters: [
-    ArabicTextInputFormatter(), // Custom formatter for Arabic
+    ArabicTextInputFormatter(), // منسق مخصص للعربية
   ],
   decoration: InputDecoration(
     hintText: 'أدخل اسم العميل',
@@ -183,58 +180,64 @@ TextField(
 )
 ```
 
-## Testing Standards for Local Apps
+---
 
-### Unit Testing
+## 🧪 معايير الاختبارات للتطبيقات المحلية
 
-- Test all business logic in isolation
-- Mock external dependencies (API, database)
-- Test offline scenarios specifically
-- Achieve 70%+ test coverage
+### **اختبار الوحدة**
 
-### Widget Testing
+- اختبار جميع المنطق التجاري بمعزل
+- محاكاة التبعيات الخارجية (API، قاعدة البيانات)
+- اختبار السيناريوهات غير المتصلة تحديداً
+- تحقيق تغطية اختبار 70%+
 
-- Test UI components in both Arabic and English
-- Test RTL layout correctness
-- Test offline state handling in UI
-- Use golden tests for visual regression
+### **اختبار Widget**
 
-### Integration Testing
+- اختبار مكونات الواجهة بالعربية والإنجليزية
+- اختبار صحة تخطيط RTL
+- اختبار معالجة الحالة غير المتصلة في الواجهة
+- استخدام اختبارات golden للانحدار البصري
 
-- Test complete user journeys offline
-- Test data persistence across app restarts
-- Test background sync functionality
-- Test Arabic input and display
+### **اختبار التكامل**
 
-## Performance Standards
+- اختبار رحلات المستخدم الكاملة غير متصلة
+- اختبار استمرارية البيانات عبر إعادة تشغيل التطبيق
+- اختبار وظائف المزامنة الخلفية
+- اختبار إدخال وعرض العربية
 
-### Flutter Performance
+---
 
-- Use `const` constructors to reduce rebuilds
-- Implement proper `ListView.builder` for large lists
-- Use `RepaintBoundary` for expensive widgets
-- Monitor memory usage with DevTools
+## ⚡ معايير الأداء
 
-### Database Performance
+### **أداء Flutter**
 
-- Implement proper indexing strategies
-- Use lazy loading for large datasets
-- Implement pagination for list views
-- Monitor query performance
+- استخدام `const` constructors لتقليل إعادة البناء
+- تنفيذ `ListView.builder` المناسب للقوائم الكبيرة
+- استخدام `RepaintBoundary` للـ widgets المكلفة
+- مراقبة استخدام الذاكرة مع DevTools
 
-## Security Standards for Local Apps
+### **أداء قاعدة البيانات**
 
-### Local Data Protection
+- تنفيذ استراتيجيات الفهرسة المناسبة
+- استخدام التحميل الكسول لمجموعات البيانات الكبيرة
+- تنفيذ ترقيم الصفحات لعروض القائمة
+- مراقبة أداء الاستعلام
 
-- Use `flutter_secure_storage` for sensitive data
-- Implement proper encryption for local database
-- Validate all user inputs
-- Implement secure backup/restore mechanisms
+---
 
-### Example Implementation
+## 🔒 معايير الأمان للتطبيقات المحلية
+
+### **حماية البيانات المحلية**
+
+- استخدام `flutter_secure_storage` للبيانات الحساسة
+- تنفيذ التشفير المناسب لقاعدة البيانات المحلية
+- التحقق من جميع مدخلات المستخدم
+- تنفيذ آليات النسخ الاحتياطي/الاستعادة الآمنة
+
+### **مثال على التنفيذ**
 
 ```dart
-// Good: Secure local storage
+// ✅ جيد: التخزين المحلي الآمن
 class SecureStorageService {
   static const _storage = FlutterSecureStorage(
     aOptions: AndroidOptions(
@@ -252,65 +255,87 @@ class SecureStorageService {
 }
 ```
 
-## Dependency Management
+---
 
-### Flutter Dependencies
+## 📦 إدارة التبعيات
 
-- Use latest stable versions of Flutter packages
-- Prefer packages with active maintenance
-- Document version constraints in pubspec.yaml
-- Regular security audits of dependencies
+### **تبعيات Flutter**
 
-### Recommended Packages for Baseer MVP
+- استخدام أحدث الإصدارات المستقرة من حزم Flutter
+- تفضيل الحزم ذات الصيانة النشطة
+- توثيق قيود الإصدار في pubspec.yaml
+- عمليات تدقيق أمني منتظمة للتبعيات
+
+### **الحزم الموصى بها لبصير MVP**
 
 ```yaml
 dependencies:
   flutter:
     sdk: flutter
-  riverpod: ^2.4.9 # State management
-  isar: ^3.1.0 # Local database
+  riverpod: ^2.4.9 # إدارة الحالة
+  isar: ^3.1.0 # قاعدة البيانات المحلية
   isar_flutter_libs: ^3.1.0
-  flutter_secure_storage: ^9.0.0 # Secure storage
-  connectivity_plus: ^5.0.2 # Network connectivity
-  intl: ^0.18.1 # Internationalization
+  flutter_secure_storage: ^9.0.0 # التخزين الآمن
+  connectivity_plus: ^5.0.2 # اتصال الشبكة
+  intl: ^0.18.1 # التدويل
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   isar_generator: ^3.1.0
   build_runner: ^2.4.7
-  mockito: ^5.4.4 # Mocking for tests
+  mockito: ^5.4.4 # المحاكاة للاختبارات
 ```
-
-## Code Review Standards
-
-### Flutter-Specific Checklist
-
-- [ ] Proper use of `const` constructors
-- [ ] Correct state management patterns
-- [ ] Efficient database queries
-- [ ] Proper error handling for offline scenarios
-- [ ] Arabic/RTL layout correctness
-- [ ] Performance considerations (rebuilds, memory)
-- [ ] Security best practices applied
-- [ ] Tests written and passing
-
-## Documentation Standards
-
-### Code Documentation
-
-- Use DartDoc for all public APIs
-- Include usage examples in documentation
-- Document offline behavior specifically
-- Explain Arabic/RTL considerations
-
-### Project Documentation
-
-- Maintain comprehensive README with setup instructions
-- Document database schema and migrations
-- Include troubleshooting guide for common issues
-- Document Arabic language setup requirements
 
 ---
 
-**للمراجع التفصيلية:** راجع ملفات التوجيه الأخرى في `.kiro/steering/`
+## 📋 معايير مراجعة الكود
+
+### **قائمة التحقق الخاصة بـ Flutter**
+
+- [ ] الاستخدام الصحيح لـ `const` constructors
+- [ ] أنماط إدارة الحالة الصحيحة
+- [ ] استعلامات قاعدة البيانات الفعالة
+- [ ] معالجة الأخطاء المناسبة للسيناريوهات غير المتصلة
+- [ ] صحة تخطيط العربية/RTL
+- [ ] اعتبارات الأداء (إعادة البناء، الذاكرة)
+- [ ] تطبيق أفضل ممارسات الأمان
+- [ ] كتابة الاختبارات ونجاحها
+
+---
+
+## 📚 معايير التوثيق
+
+### **توثيق الكود**
+
+- استخدام DartDoc لجميع APIs العامة
+- تضمين أمثلة الاستخدام في التوثيق
+- توثيق السلوك غير المتصل تحديداً
+- شرح اعتبارات العربية/RTL
+
+### **توثيق المشروع**
+
+- الحفاظ على README شامل مع تعليمات الإعداد
+- توثيق مخطط قاعدة البيانات والهجرات
+- تضمين دليل استكشاف الأخطاء وإصلاحها للمشاكل الشائعة
+- توثيق متطلبات إعداد اللغة العربية
+
+---
+
+## 🔗 المراجع المتقدمة
+
+### **للتفاصيل الشاملة:**
+
+- [معايير التطوير المتقدمة](../../reference/advanced-development-standards.md)
+
+### **المعايير التقنية:**
+
+- [معايير المشروع](./project-standards.md)
+- [معايير Flutter Frontend](./frontend-standards.md)
+- [أفضل ممارسات الأمان](./security-best-practices.md)
+
+---
+
+**تم بواسطة:** فريق وكلاء تطوير مشروع بصير  
+**الحالة:** ✅ ملف توجيه مكثف ومحسن  
+**المراجعة القادمة:** 23 ديسمبر 2025
