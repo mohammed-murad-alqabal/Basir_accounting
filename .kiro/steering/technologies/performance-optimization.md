@@ -1,134 +1,292 @@
----
-title: Performance Optimization Guide
-inclusion: manual
----
+# تحسين الأداء - بصير MVP
 
-# Performance Optimization Guide - Advanced 2025
-
+**المشروع:** بصير MVP  
 **المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**التاريخ:** 15 ديسمبر 2025  
-**الحالة:** ✅ نشط ومتقدم
+**التاريخ:** 16 ديسمبر 2025  
+**الحالة:** ✅ نشط ومكثف
 
 ---
 
-## Overview
+## 🎯 مبادئ الأداء الأساسية
 
-Comprehensive performance optimization strategies for modern applications, with specific focus on Flutter mobile apps, backend services, and distributed systems.
+### **Flutter Performance Essentials**
 
-## Flutter Mobile Performance
+- **const Constructors**: استخدم `const` دائماً للـ widgets الثابتة
+- **ListView.builder**: للقوائم الطويلة فقط
+- **RepaintBoundary**: للـ widgets المعقدة
+- **Proper Disposal**: تنظيف الموارد في `dispose()`
 
-### Widget Performance Optimization
+---
 
-#### Efficient Widget Building
+## 🚀 تحسين الـ Widgets
+
+### **الأساسيات اليومية**
 
 ```dart
-// Good: Const constructors and widget separation
-class OptimizedInvoiceCard extends StatelessWidget {
-  const OptimizedInvoiceCard({
-    super.key,
-    required this.invoice,
-  });
-
-  final Invoice invoice;
+// ✅ جيد: استخدام const
+class OptimizedWidget extends StatelessWidget {
+  const OptimizedWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          InvoiceHeader(invoice: invoice),
-          const Divider(), // Const widget
-          InvoiceDetails(invoice: invoice),
-          InvoiceActions(invoice: invoice),
-        ],
-      ),
+    return const Column(
+      children: [
+        Text('نص ثابت'),
+        Icon(Icons.star),
+        SizedBox(height: 16),
+      ],
     );
   }
 }
 
-// Separate widgets to minimize rebuilds
-class InvoiceHeader extends StatelessWidget {
-  const InvoiceHeader({super.key, required this.invoice});
-  final Invoice invoice;
-
-  @override
-  Widget build(BuildContext context) {
-    return RepaintBoundary( // Isolate repaints
-      child: ListTile(
-        title: Text(invoice.number),
-        subtitle: Text(invoice.customerName),
-        trailing: Text(
-          invoice.total.toStringAsFixed(2),
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
-      ),
-    );
-  }
-}
-```
-
-#### List Performance Optimization
-
-```dart
-class OptimizedInvoiceList extends StatelessWidget {
-  const OptimizedInvoiceList({super.key, required this.invoices});
+// ✅ جيد: ListView.builder للقوائم الطويلة
+class InvoiceList extends StatelessWidget {
   final List<Invoice> invoices;
+
+  const InvoiceList({super.key, required this.invoices});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: invoices.length,
-      cacheExtent: 500, // Pre-cache items
       itemBuilder: (context, index) {
         final invoice = invoices[index];
-        return OptimizedInvoiceCard(
-          key: ValueKey(invoice.id), // Stable keys
-          invoice: invoice,
+        return ListTile(
+          key: ValueKey(invoice.id),
+          title: Text(invoice.customerName),
+          subtitle: Text('${invoice.totalAmount} ريال'),
         );
       },
     );
   }
 }
+```
 
-// For large datasets with complex items
-class VirtualizedInvoiceList extends StatelessWidget {
-  const VirtualizedInvoiceList({super.key, required this.invoices});
-  final List<Invoice> invoices;
+### **إدارة الموارد**
+
+```dart
+class ResourceManagedWidget extends StatefulWidget {
+  @override
+  State<ResourceManagedWidget> createState() => _ResourceManagedWidgetState();
+}
+
+class _ResourceManagedWidgetState extends State<ResourceManagedWidget> {
+  late AnimationController _controller;
+  late StreamSubscription _subscription;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+    _subscription = someStream.listen(_handleData);
+    _timer = Timer.periodic(Duration(seconds: 5), _periodicTask);
+  }
+
+  @override
+  void dispose() {
+    // ترتيب عكسي للتنظيف
+    _timer?.cancel();
+    _subscription.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverList.builder(
-          itemCount: invoices.length,
-          itemBuilder: (context, index) {
-            return AutomaticKeepAliveClientMixin(
-              child: OptimizedInvoiceCard(invoice: invoices[index]),
-            );
-          },
-        ),
-      ],
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) => Transform.rotate(
+        angle: _controller.value * 2 * pi,
+        child: const Icon(Icons.refresh),
+      ),
     );
   }
 }
 ```
 
-### Memory Management
+---
 
-#### Efficient Image Handling
+## 💾 تحسين قاعدة البيانات (Isar)
+
+### **الفهرسة الذكية**
 
 ```dart
-class OptimizedImageWidget extends StatelessWidget {
-  const OptimizedImageWidget({
+@Collection()
+class Invoice {
+  Id id = Isar.autoIncrement;
+
+  @Index() // فهرس للبحث السريع
+  late int customerId;
+
+  @Index() // فهرس للفلترة
+  late InvoiceStatus status;
+
+  @Index() // فهرس للترتيب
+  late DateTime createdAt;
+
+  // فهرس مركب للاستعلامات المعقدة
+  @Index(composite: [CompositeIndex('customerId')])
+  late DateTime dueDate;
+
+  late double totalAmount;
+  late String description;
+}
+```
+
+### **الاستعلامات المحسنة**
+
+```dart
+class OptimizedInvoiceRepository {
+  final Isar isar;
+
+  OptimizedInvoiceRepository(this.isar);
+
+  // استعلام بسيط مع فهرس
+  Future<List<Invoice>> getInvoicesByStatus(InvoiceStatus status) async {
+    return await isar.invoices
+        .where()
+        .statusEqualTo(status)
+        .findAll();
+  }
+
+  // ترقيم الصفحات للأداء
+  Future<List<Invoice>> getInvoicesPaginated({
+    required int page,
+    required int limit,
+  }) async {
+    return await isar.invoices
+        .where()
+        .sortByCreatedAtDesc()
+        .offset(page * limit)
+        .limit(limit)
+        .findAll();
+  }
+
+  // العمليات المجمعة
+  Future<void> createMultipleInvoices(List<Invoice> invoices) async {
+    await isar.writeTxn(() async {
+      await isar.invoices.putAll(invoices);
+    });
+  }
+}
+```
+
+---
+
+## 🔄 إدارة الحالة (Riverpod)
+
+### **التحديثات الذكية**
+
+```dart
+// ✅ جيد: تحديثات محددة
+final counterProvider = StateProvider<int>((ref) => 0);
+
+class OptimizedCounter extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // يعيد البناء فقط عند تغيير العداد
+    final count = ref.watch(counterProvider);
+
+    return Column(
+      children: [
+        Text('العدد: $count'),
+        ElevatedButton(
+          onPressed: () => ref.read(counterProvider.notifier).state++,
+          child: const Text('زيادة'),
+        ),
+      ],
+    );
+  }
+}
+
+// ✅ جيد: الاستماع الانتقائي
+class SelectiveListener extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // يعيد البناء فقط عند تغيير الاسم
+    final userName = ref.watch(
+      userProvider.select((user) => user?.name),
+    );
+
+    return Text('مرحباً، ${userName ?? 'ضيف'}');
+  }
+}
+```
+
+---
+
+## 📊 مراقبة الأداء
+
+### **أدوات القياس الأساسية**
+
+```bash
+# فحص الأداء
+flutter run --profile
+
+# قياس حجم التطبيق
+flutter build apk --analyze-size
+
+# فحص الذاكرة
+flutter run --profile --enable-software-rendering
+```
+
+### **مراقبة بسيطة**
+
+```dart
+class SimplePerformanceMonitor {
+  static Future<T> measure<T>(
+    String name,
+    Future<T> Function() operation,
+  ) async {
+    final stopwatch = Stopwatch()..start();
+    try {
+      final result = await operation();
+      stopwatch.stop();
+
+      if (stopwatch.elapsedMilliseconds > 1000) {
+        print('عملية بطيئة: $name استغرقت ${stopwatch.elapsedMilliseconds}ms');
+      }
+
+      return result;
+    } catch (error) {
+      stopwatch.stop();
+      print('خطأ في $name بعد ${stopwatch.elapsedMilliseconds}ms');
+      rethrow;
+    }
+  }
+}
+
+// الاستخدام
+Future<List<Invoice>> getInvoices() async {
+  return await SimplePerformanceMonitor.measure(
+    'get_invoices',
+    () => repository.getAllInvoices(),
+  );
+}
+```
+
+---
+
+## 🖼️ تحسين الصور
+
+### **تحميل ذكي للصور**
+
+```dart
+class OptimizedImage extends StatelessWidget {
+  final String imageUrl;
+  final double? width;
+  final double? height;
+
+  const OptimizedImage({
     super.key,
     required this.imageUrl,
     this.width,
     this.height,
   });
-
-  final String imageUrl;
-  final double? width;
-  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -136,16 +294,10 @@ class OptimizedImageWidget extends StatelessWidget {
       imageUrl,
       width: width,
       height: height,
+      // تحسين الذاكرة
       cacheWidth: width?.toInt(),
       cacheHeight: height?.toInt(),
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) return child;
-        return SizedBox(
-          width: width,
-          height: height,
-          child: const Center(child: CircularProgressIndicator()),
-        );
-      },
+      // معالجة الأخطاء
       errorBuilder: (context, error, stackTrace) {
         return Container(
           width: width,
@@ -157,549 +309,103 @@ class OptimizedImageWidget extends StatelessWidget {
     );
   }
 }
-
-// Memory-efficient image caching
-class ImageCacheManager {
-  static const int maxCacheSize = 100 * 1024 * 1024; // 100MB
-  static const int maxCacheObjects = 1000;
-
-  static void optimizeImageCache() {
-    PaintingBinding.instance.imageCache.maximumSize = maxCacheObjects;
-    PaintingBinding.instance.imageCache.maximumSizeBytes = maxCacheSize;
-  }
-
-  static void clearImageCache() {
-    PaintingBinding.instance.imageCache.clear();
-    PaintingBinding.instance.imageCache.clearLiveImages();
-  }
-}
-```
-
-### Database Performance (Isar)
-
-#### Query Optimization
-
-```dart
-class OptimizedInvoiceRepository {
-  final Isar isar;
-
-  OptimizedInvoiceRepository(this.isar);
-
-  // Efficient pagination
-  Future<List<Invoice>> getInvoicesPaginated({
-    required int page,
-    required int pageSize,
-    String? searchTerm,
-  }) async {
-    var query = isar.invoices.where();
-
-    if (searchTerm != null && searchTerm.isNotEmpty) {
-      query = query.filter().customerNameContains(
-        searchTerm,
-        caseSensitive: false,
-      );
-    }
-
-    return await query
-        .sortByCreatedAtDesc()
-        .offset(page * pageSize)
-        .limit(pageSize)
-        .findAll();
-  }
-
-  // Efficient aggregation
-  Future<InvoiceStats> getInvoiceStats() async {
-    final results = await Future.wait([
-      isar.invoices.count(),
-      isar.invoices.where().totalSum(),
-      isar.invoices.filter().statusEqualTo(InvoiceStatus.paid).count(),
-      isar.invoices.filter().statusEqualTo(InvoiceStatus.pending).count(),
-    ]);
-
-    return InvoiceStats(
-      totalCount: results[0] as int,
-      totalAmount: results[1] as double,
-      paidCount: results[2] as int,
-      pendingCount: results[3] as int,
-    );
-  }
-
-  // Batch operations for better performance
-  Future<void> batchUpdateInvoices(List<Invoice> invoices) async {
-    await isar.writeTxn(() async {
-      await isar.invoices.putAll(invoices);
-    });
-  }
-}
-```
-
-## Backend Performance Optimization
-
-### API Performance
-
-#### Response Optimization
-
-```typescript
-interface APIPerformanceConfig {
-  caching: {
-    enabled: boolean;
-    ttl: number;
-    strategy: "memory" | "redis" | "hybrid";
-  };
-  compression: {
-    enabled: boolean;
-    algorithm: "gzip" | "brotli";
-    threshold: number;
-  };
-  pagination: {
-    defaultLimit: number;
-    maxLimit: number;
-  };
-}
-
-class OptimizedAPIController {
-  private cache: CacheManager;
-  private config: APIPerformanceConfig;
-
-  async getInvoices(req: Request, res: Response): Promise<void> {
-    const { page = 1, limit = 20, search } = req.query;
-    const cacheKey = `invoices:${page}:${limit}:${search || "all"}`;
-
-    // Check cache first
-    const cached = await this.cache.get(cacheKey);
-    if (cached) {
-      res.json(cached);
-      return;
-    }
-
-    // Optimize database query
-    const invoices = await this.invoiceService.findMany({
-      skip: (page - 1) * limit,
-      take: Math.min(limit, this.config.pagination.maxLimit),
-      where: search
-        ? {
-            OR: [
-              { customerName: { contains: search, mode: "insensitive" } },
-              { invoiceNumber: { contains: search, mode: "insensitive" } },
-            ],
-          }
-        : undefined,
-      select: {
-        id: true,
-        invoiceNumber: true,
-        customerName: true,
-        total: true,
-        status: true,
-        createdAt: true,
-        // Exclude heavy fields like items for list view
-      },
-    });
-
-    const result = {
-      data: invoices,
-      pagination: {
-        page,
-        limit,
-        total: await this.invoiceService.count(),
-      },
-    };
-
-    // Cache the result
-    await this.cache.set(cacheKey, result, this.config.caching.ttl);
-
-    res.json(result);
-  }
-}
-```
-
-### Database Performance
-
-#### Connection Pool Optimization
-
-```typescript
-interface DatabaseConfig {
-  pool: {
-    min: number;
-    max: number;
-    acquireTimeoutMillis: number;
-    idleTimeoutMillis: number;
-  };
-  query: {
-    timeout: number;
-    retries: number;
-  };
-}
-
-class OptimizedDatabaseManager {
-  private config: DatabaseConfig = {
-    pool: {
-      min: 2,
-      max: 10,
-      acquireTimeoutMillis: 60000,
-      idleTimeoutMillis: 600000,
-    },
-    query: {
-      timeout: 30000,
-      retries: 3,
-    },
-  };
-
-  async executeOptimizedQuery<T>(
-    query: string,
-    params: any[] = []
-  ): Promise<T[]> {
-    const startTime = Date.now();
-
-    try {
-      // Use prepared statements for better performance
-      const result = await this.db.query(query, params);
-
-      // Log slow queries
-      const duration = Date.now() - startTime;
-      if (duration > 1000) {
-        console.warn(`Slow query detected: ${duration}ms`, { query, params });
-      }
-
-      return result;
-    } catch (error) {
-      console.error("Query execution failed:", { query, params, error });
-      throw error;
-    }
-  }
-
-  // Batch operations for better throughput
-  async batchInsert<T>(table: string, records: T[]): Promise<void> {
-    const batchSize = 1000;
-    const batches = this.chunkArray(records, batchSize);
-
-    for (const batch of batches) {
-      await this.db.transaction(async (trx) => {
-        await trx.batchInsert(table, batch);
-      });
-    }
-  }
-
-  private chunkArray<T>(array: T[], size: number): T[][] {
-    const chunks: T[][] = [];
-    for (let i = 0; i < array.length; i += size) {
-      chunks.push(array.slice(i, i + size));
-    }
-    return chunks;
-  }
-}
-```
-
-## Monitoring and Profiling
-
-### Performance Monitoring
-
-```typescript
-interface PerformanceMetrics {
-  responseTime: number;
-  throughput: number;
-  errorRate: number;
-  cpuUsage: number;
-  memoryUsage: number;
-  dbConnectionPool: number;
-}
-
-class PerformanceMonitor {
-  private metrics: Map<string, PerformanceMetrics> = new Map();
-
-  startRequest(requestId: string): void {
-    this.metrics.set(requestId, {
-      responseTime: Date.now(),
-      throughput: 0,
-      errorRate: 0,
-      cpuUsage: process.cpuUsage().user,
-      memoryUsage: process.memoryUsage().heapUsed,
-      dbConnectionPool: this.getDbPoolSize(),
-    });
-  }
-
-  endRequest(requestId: string, success: boolean): void {
-    const metrics = this.metrics.get(requestId);
-    if (!metrics) return;
-
-    metrics.responseTime = Date.now() - metrics.responseTime;
-
-    // Update global metrics
-    this.updateGlobalMetrics(metrics, success);
-
-    // Alert on performance issues
-    if (metrics.responseTime > 5000) {
-      this.alertSlowResponse(requestId, metrics);
-    }
-
-    this.metrics.delete(requestId);
-  }
-
-  private updateGlobalMetrics(
-    metrics: PerformanceMetrics,
-    success: boolean
-  ): void {
-    // Update throughput counter
-    this.incrementThroughput();
-
-    // Update error rate
-    if (!success) {
-      this.incrementErrorRate();
-    }
-
-    // Update resource usage
-    this.updateResourceMetrics(metrics);
-  }
-}
-```
-
-### Profiling Tools Integration
-
-```dart
-// Flutter performance profiling
-class FlutterPerformanceProfiler {
-  static void enableProfiling() {
-    if (kDebugMode) {
-      // Enable performance overlay
-      WidgetsApp.debugShowWidgetInspectorOverride = true;
-
-      // Enable repaint rainbow
-      debugRepaintRainbowEnabled = true;
-
-      // Enable performance logging
-      Timeline.startSync('app_startup');
-    }
-  }
-
-  static void profileWidgetBuild(String widgetName, VoidCallback buildFunction) {
-    if (kDebugMode) {
-      Timeline.startSync('widget_build_$widgetName');
-      buildFunction();
-      Timeline.finishSync();
-    } else {
-      buildFunction();
-    }
-  }
-
-  static void measureFrameTime() {
-    if (kDebugMode) {
-      SchedulerBinding.instance.addTimingsCallback((timings) {
-        for (final timing in timings) {
-          final frameTime = timing.totalSpan.inMilliseconds;
-          if (frameTime > 16) { // 60fps = 16.67ms per frame
-            print('Slow frame detected: ${frameTime}ms');
-          }
-        }
-      });
-    }
-  }
-}
-```
-
-## Caching Strategies
-
-### Multi-Level Caching
-
-```typescript
-interface CacheLevel {
-  name: string;
-  ttl: number;
-  maxSize: number;
-  evictionPolicy: "lru" | "lfu" | "ttl";
-}
-
-class MultiLevelCache {
-  private levels: Map<string, CacheLevel> = new Map([
-    [
-      "memory",
-      { name: "memory", ttl: 300, maxSize: 1000, evictionPolicy: "lru" },
-    ],
-    [
-      "redis",
-      { name: "redis", ttl: 3600, maxSize: 10000, evictionPolicy: "ttl" },
-    ],
-    [
-      "database",
-      { name: "database", ttl: 86400, maxSize: 100000, evictionPolicy: "lfu" },
-    ],
-  ]);
-
-  async get<T>(key: string): Promise<T | null> {
-    // Try each cache level in order
-    for (const [levelName, level] of this.levels) {
-      const value = await this.getFromLevel<T>(levelName, key);
-      if (value !== null) {
-        // Promote to higher cache levels
-        await this.promoteToHigherLevels(key, value, levelName);
-        return value;
-      }
-    }
-
-    return null;
-  }
-
-  async set<T>(key: string, value: T, customTtl?: number): Promise<void> {
-    // Set in all cache levels
-    const promises = Array.from(this.levels.entries()).map(
-      ([levelName, level]) =>
-        this.setInLevel(levelName, key, value, customTtl || level.ttl)
-    );
-
-    await Promise.all(promises);
-  }
-
-  private async promoteToHigherLevels<T>(
-    key: string,
-    value: T,
-    currentLevel: string
-  ): Promise<void> {
-    const levelNames = Array.from(this.levels.keys());
-    const currentIndex = levelNames.indexOf(currentLevel);
-
-    // Promote to all higher levels
-    for (let i = 0; i < currentIndex; i++) {
-      const levelName = levelNames[i];
-      const level = this.levels.get(levelName)!;
-      await this.setInLevel(levelName, key, value, level.ttl);
-    }
-  }
-}
-```
-
-## Load Testing and Benchmarking
-
-### Automated Performance Testing
-
-```typescript
-interface LoadTestConfig {
-  concurrent_users: number;
-  duration: string;
-  ramp_up_time: string;
-  endpoints: EndpointConfig[];
-}
-
-interface EndpointConfig {
-  path: string;
-  method: "GET" | "POST" | "PUT" | "DELETE";
-  weight: number; // Percentage of requests
-  expected_response_time: number; // milliseconds
-}
-
-class LoadTester {
-  async runLoadTest(config: LoadTestConfig): Promise<LoadTestResults> {
-    const results: LoadTestResults = {
-      total_requests: 0,
-      successful_requests: 0,
-      failed_requests: 0,
-      average_response_time: 0,
-      p95_response_time: 0,
-      p99_response_time: 0,
-      throughput: 0,
-      error_rate: 0,
-    };
-
-    const startTime = Date.now();
-    const endTime = startTime + this.parseDuration(config.duration);
-
-    // Simulate concurrent users
-    const userPromises = Array.from({ length: config.concurrent_users }, () =>
-      this.simulateUser(config, endTime)
-    );
-
-    const userResults = await Promise.all(userPromises);
-
-    // Aggregate results
-    return this.aggregateResults(userResults);
-  }
-
-  private async simulateUser(
-    config: LoadTestConfig,
-    endTime: number
-  ): Promise<UserTestResult> {
-    const requests: RequestResult[] = [];
-
-    while (Date.now() < endTime) {
-      const endpoint = this.selectEndpoint(config.endpoints);
-      const startTime = Date.now();
-
-      try {
-        const response = await this.makeRequest(endpoint);
-        const responseTime = Date.now() - startTime;
-
-        requests.push({
-          endpoint: endpoint.path,
-          response_time: responseTime,
-          success: response.status < 400,
-          status_code: response.status,
-        });
-
-        // Check if response time meets expectations
-        if (responseTime > endpoint.expected_response_time) {
-          console.warn(
-            `Slow response: ${endpoint.path} took ${responseTime}ms`
-          );
-        }
-      } catch (error) {
-        requests.push({
-          endpoint: endpoint.path,
-          response_time: Date.now() - startTime,
-          success: false,
-          error: error.message,
-        });
-      }
-
-      // Wait before next request (simulate user think time)
-      await this.sleep(Math.random() * 1000 + 500);
-    }
-
-    return { requests };
-  }
-}
 ```
 
 ---
 
-## Performance Optimization Checklist
+## 📋 قائمة التحقق اليومية
 
-### Flutter Mobile App
+### **للمطورين**
 
-- [ ] Use const constructors where possible
-- [ ] Implement RepaintBoundary for expensive widgets
-- [ ] Optimize ListView with builder pattern
-- [ ] Implement efficient image caching
-- [ ] Use proper key management for widgets
-- [ ] Profile widget rebuilds and eliminate unnecessary ones
-- [ ] Optimize database queries with proper indexing
-- [ ] Implement pagination for large datasets
+- [ ] استخدام `const` للـ widgets الثابتة
+- [ ] تنفيذ `dispose()` للموارد
+- [ ] استخدام `ListView.builder` للقوائم الطويلة
+- [ ] إضافة فهارس لقاعدة البيانات
+- [ ] مراقبة استهلاك الذاكرة
+- [ ] اختبار الأداء على أجهزة حقيقية
 
-### Backend Services
+### **قبل النشر**
 
-- [ ] Implement multi-level caching strategy
-- [ ] Optimize database connection pooling
-- [ ] Use prepared statements for database queries
-- [ ] Implement proper API pagination
-- [ ] Add response compression (gzip/brotli)
-- [ ] Set up database query monitoring
-- [ ] Implement batch operations for bulk data
-- [ ] Add performance monitoring and alerting
-
-### Infrastructure
-
-- [ ] Set up load balancing for high availability
-- [ ] Implement CDN for static assets
-- [ ] Configure auto-scaling based on metrics
-- [ ] Set up database read replicas
-- [ ] Implement circuit breakers for external services
-- [ ] Add comprehensive monitoring and logging
-- [ ] Set up automated performance testing
-- [ ] Configure resource limits and quotas
+- [ ] فحص الأداء مع `flutter run --profile`
+- [ ] قياس حجم التطبيق
+- [ ] اختبار على أجهزة متوسطة المواصفات
+- [ ] فحص تسريبات الذاكرة
+- [ ] تحسين الصور والموارد
 
 ---
 
-**Performance Targets:**
+## 🚫 الأخطاء الشائعة
 
-- Mobile app startup time: < 3 seconds
-- API response time (95th percentile): < 500ms
-- Database query time (95th percentile): < 100ms
-- Mobile app frame rate: 60fps consistently
-- Memory usage: < 100MB for mobile app
-- CPU usage: < 70% under normal load
+### **تجنب هذه الممارسات:**
+
+```dart
+// ❌ خطأ: بناء widgets في build()
+Widget build(BuildContext context) {
+  return Column(
+    children: [
+      Container(), // إنشاء جديد في كل مرة
+      Text('نص'), // إنشاء جديد في كل مرة
+    ],
+  );
+}
+
+// ❌ خطأ: عدم تنظيف الموارد
+class BadWidget extends StatefulWidget {
+  @override
+  State<BadWidget> createState() => _BadWidgetState();
+}
+
+class _BadWidgetState extends State<BadWidget> {
+  late Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 1), (t) {});
+    // لا يوجد dispose() - تسريب ذاكرة!
+  }
+}
+
+// ❌ خطأ: استخدام ListView للقوائم الطويلة
+ListView(
+  children: List.generate(1000, (index) => ListTile()), // بطيء جداً
+)
+```
+
+---
+
+## 🔗 المراجع المتقدمة
+
+### **للتفاصيل الشاملة:**
+
+- [دليل تحسين الأداء المتقدم](../../reference/advanced-performance-optimization.md)
+
+### **أدوات مفيدة:**
+
+- [Flutter DevTools](https://flutter.dev/docs/development/tools/devtools)
+- [Performance Profiling](https://flutter.dev/docs/perf/rendering/ui-performance)
+- [Memory Profiling](https://flutter.dev/docs/development/tools/devtools/memory)
+
+---
+
+## 🎯 التوصيات العملية
+
+### **للبدء:**
+
+1. استخدم `const` في كل مكان ممكن
+2. نفذ `dispose()` لجميع الموارد
+3. استخدم `ListView.builder` للقوائم
+4. أضف فهارس لقاعدة البيانات
+
+### **للتطوير المستمر:**
+
+1. راقب الأداء بانتظام
+2. اختبر على أجهزة متوسطة
+3. قس واحسن باستمرار
+4. تعلم من Flutter DevTools
+
+---
+
+**تم بواسطة:** فريق وكلاء تطوير مشروع بصير  
+**الحالة:** ✅ ملف توجيه مكثف ومحسن  
+**المراجعة القادمة:** 23 ديسمبر 2025**للمراجع التفصيلية:** راجع Flutter DevTools وأدوات الأداء المتقدمة

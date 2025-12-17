@@ -1,264 +1,135 @@
 # Anthropic Claude Prompts
 
-**Provider:** Anthropic (Claude 3.5 Sonnet, Claude 3 Opus, Claude 3 Haiku)  
-**Context Limit:** 200K tokens  
-**Strengths:** Analysis, reasoning, code review, complex problem solving
+**المؤلف:** فريق وكلاء تطوير مشروع بصير  
+**التاريخ:** 15 ديسمبر 2025  
+**الموفر:** Anthropic (Claude-3.5-Sonnet, Claude-3-Haiku)
 
 ---
 
-## Code Analysis and Review
+## Optimized Prompts for Claude Models
 
-### Comprehensive Code Analysis
+### Code Generation Prompts
 
-```
-I need you to analyze this Flutter/Dart code with your characteristic thoroughness and attention to detail.
-
-<code>
-[CODE_BLOCK]
-</code>
-
-<context>
-Project: Baseer MVP - Arabic invoice management app
-Architecture: Clean Architecture with Riverpod + Isar
-Target: Local-first mobile app for Saudi small businesses
-</context>
-
-Please provide a comprehensive analysis covering:
-
-1. **Code Quality Assessment**
-   - Adherence to effective_dart guidelines
-   - Design patterns usage
-   - SOLID principles compliance
-
-2. **Performance Analysis**
-   - Potential bottlenecks
-   - Memory usage considerations
-   - UI performance implications
-
-3. **Security Review**
-   - Input validation
-   - Data handling security
-   - Potential vulnerabilities
-
-4. **Maintainability Evaluation**
-   - Code readability and structure
-   - Documentation quality
-   - Testing considerations
-
-5. **Arabic/RTL Considerations**
-   - RTL layout compatibility
-   - Arabic text handling
-   - Localization readiness
-
-Provide specific recommendations with code examples where applicable.
-```
-
-### Architecture Decision Analysis
+#### Flutter Development with Claude
 
 ```
-I'm facing an architectural decision for our Flutter app and would value your analytical approach.
+I'm working on the Baseer MVP, a Flutter invoice management app for Arabic users in Saudi Arabia. I need your help with Flutter/Dart development.
 
-<situation>
-[PROBLEM_DESCRIPTION]
-</situation>
-
-<options>
-1. [OPTION_1_DESCRIPTION]
-2. [OPTION_2_DESCRIPTION]
-3. [OPTION_3_DESCRIPTION]
-</options>
-
-<constraints>
-- Local-first architecture (Isar database)
+Project Context:
+- Local-first architecture using Isar database
 - Arabic RTL support required
-- Small team (2-3 developers)
-- 6-month development timeline
-- Performance critical for mid-range Android devices
-</constraints>
-
-Please analyze each option considering:
-- Technical complexity and implementation effort
-- Long-term maintainability
-- Performance implications
-- Team learning curve
-- Risk assessment
-
-Provide a clear recommendation with detailed reasoning.
-```
-
-## Complex Problem Solving
-
-### System Design and Architecture
-
-```
-Help me design a robust system for the following requirements:
-
-<requirements>
-[DETAILED_REQUIREMENTS]
-</requirements>
-
-<technical_context>
-- Flutter mobile app (Android primary, iOS secondary)
-- Local-first with optional cloud sync
-- Arabic language support (RTL)
-- Offline-capable invoice management
-- Small business users (non-technical)
-</technical_context>
-
-Please provide:
-
-1. **High-Level Architecture**
-   - System components and their relationships
-   - Data flow diagrams
-   - Technology stack recommendations
-
-2. **Detailed Design**
-   - Database schema design (Isar)
-   - State management approach (Riverpod)
-   - UI/UX considerations for Arabic users
-
-3. **Implementation Strategy**
-   - Development phases and milestones
-   - Risk mitigation strategies
-   - Testing approach
-
-4. **Scalability Considerations**
-   - Future feature additions
-   - Performance optimization
-   - Maintenance and updates
-
-Use your analytical strengths to identify potential issues and provide comprehensive solutions.
-```
-
-### Debugging Complex Issues
-
-```
-I'm encountering a complex issue that requires systematic analysis.
-
-<problem>
-[DETAILED_PROBLEM_DESCRIPTION]
-</problem>
-
-<symptoms>
-- [SYMPTOM_1]
-- [SYMPTOM_2]
-- [SYMPTOM_3]
-</symptoms>
-
-<environment>
-- Flutter: [VERSION]
-- Dart: [VERSION]
-- Platform: [ANDROID/IOS]
-- Device: [DEVICE_INFO]
-</environment>
-
-<code_context>
-[RELEVANT_CODE_SNIPPETS]
-</code_context>
-
-<logs>
-[ERROR_LOGS_AND_STACK_TRACES]
-</logs>
-
-Please provide:
-
-1. **Root Cause Analysis**
-   - Systematic investigation approach
-   - Hypothesis formation and testing
-   - Identification of the underlying issue
-
-2. **Solution Strategy**
-   - Step-by-step fix implementation
-   - Alternative approaches if primary solution fails
-   - Verification methods
-
-3. **Prevention Measures**
-   - Code improvements to prevent recurrence
-   - Testing strategies
-   - Monitoring and early detection
-
-Use your methodical approach to break down this complex problem.
-```
-
-## Documentation and Knowledge Transfer
-
-### Technical Documentation Creation
-
-```
-Create comprehensive technical documentation for the following component:
-
-<component>
-[COMPONENT_DESCRIPTION_OR_CODE]
-</component>
-
-<audience>
-Target: Flutter developers (intermediate level)
-Purpose: Onboarding and maintenance
-</audience>
-
-<requirements>
-- Clear explanations of complex concepts
-- Code examples with Arabic context
-- Best practices and common pitfalls
-- Integration guidelines
-- Testing recommendations
-</requirements>
-
-Please structure the documentation with:
-1. Overview and purpose
-2. Architecture and design decisions
-3. Implementation details
-4. Usage examples
-5. Testing guidelines
-6. Troubleshooting guide
-7. Future considerations
-
-Use your ability to explain complex topics clearly and thoroughly.
-```
-
-### Code Review Guidelines
-
-```
-Create a comprehensive code review checklist specifically for our Flutter project.
-
-<project_context>
-- Baseer MVP: Invoice management app
-- Arabic language support (RTL)
-- Local-first architecture
 - Clean Architecture pattern
-- Riverpod + Isar tech stack
-</project_context>
+- Riverpod state management
+- Material Design 3
+- Target: 70%+ test coverage
 
-<team_context>
-- Mixed experience levels
-- Remote collaboration
-- Quality-focused development
-- Continuous learning culture
-</team_context>
+Development Standards:
+- English for all code identifiers
+- Comprehensive error handling
+- DartDoc documentation
+- Security-first approach
+- Performance optimization
 
-Please create:
+Please help me with: {specific_request}
 
-1. **General Code Quality Checklist**
-   - Dart/Flutter best practices
-   - Performance considerations
-   - Security guidelines
+When providing code:
+1. Include complete, runnable examples
+2. Add comprehensive comments
+3. Consider edge cases
+4. Include relevant tests
+5. Explain design decisions
+```
 
-2. **Project-Specific Checklist**
-   - Arabic/RTL compatibility
-   - Local-first patterns
-   - Architecture compliance
+#### Code Analysis with Claude
 
-3. **Review Process Guidelines**
-   - How to conduct effective reviews
-   - Feedback delivery best practices
-   - Conflict resolution
+````
+I need you to analyze this Flutter code from the Baseer MVP project. Please provide a thorough analysis focusing on:
 
-4. **Automated Checks Integration**
-   - Linting and formatting
-   - Testing requirements
-   - CI/CD integration
+Analysis Criteria:
+- Code quality and maintainability
+- Security vulnerabilities
+- Performance bottlenecks
+- Arabic/RTL compatibility
+- Clean Architecture adherence
+- Testing completeness
 
-Use your systematic approach to create a thorough and practical guide.
+Please structure your response as:
+1. **Summary**: Overall assessment
+2. **Issues**: Problems found with severity levels
+3. **Recommendations**: Specific improvements
+4. **Security**: Security considerations
+5. **Performance**: Optimization opportunities
+
+Code to analyze:
+```{language}
+{code_content}
+````
+
+```
+
+### Reasoning and Problem-Solving
+
+#### Architecture Decision Prompts
+```
+
+I'm making an architectural decision for the Baseer MVP Flutter project and need your analytical approach.
+
+Decision Context:
+
+- Local-first invoice management app
+- Arabic-speaking users in Saudi Arabia
+- Offline-first with optional sync
+- Performance and security critical
+
+Please help me evaluate: {decision_topic}
+
+Analysis Framework:
+
+1. **Options**: List all viable alternatives
+2. **Pros/Cons**: Detailed analysis of each option
+3. **Trade-offs**: What we gain vs. what we lose
+4. **Risks**: Potential issues and mitigation strategies
+5. **Recommendation**: Your suggested approach with reasoning
+6. **Implementation**: High-level implementation strategy
+
+Consider factors like:
+
+- Development complexity
+- Maintenance burden
+- Performance impact
+- Security implications
+- User experience
+- Future scalability
+
+```
+
+### Documentation and Explanation
+
+#### Technical Documentation
+```
+
+Please create comprehensive technical documentation for the Baseer MVP project.
+
+Documentation Requirements:
+
+- Clear, structured format
+- Code examples with explanations
+- Arabic translations for user-facing content
+- Implementation guidelines
+- Best practices
+- Common pitfalls and solutions
+
+Topic to document: {documentation_topic}
+
+Structure the documentation with:
+
+1. **Overview**: What it is and why it's important
+2. **Implementation**: Step-by-step guide
+3. **Examples**: Practical code examples
+4. **Best Practices**: Recommended approaches
+5. **Troubleshooting**: Common issues and solutions
+6. **References**: Related documentation and resources
+
 ```
 
 ---
@@ -267,88 +138,65 @@ Use your systematic approach to create a thorough and practical guide.
 
 ### Leveraging Claude's Strengths
 
-- **Analysis**: Use for complex code review and architecture decisions
-- **Reasoning**: Leverage for multi-step problem solving
-- **Thoroughness**: Request comprehensive analysis and documentation
-- **Nuanced Understanding**: Utilize for context-aware recommendations
+#### Analytical Thinking
+- Request step-by-step reasoning
+- Ask for multiple perspectives
+- Use structured analysis frameworks
+- Encourage consideration of edge cases
 
-### Prompt Structure for Claude
+#### Code Understanding
+- Provide full context when possible
+- Ask for explanation of complex logic
+- Request refactoring suggestions
+- Seek architectural insights
 
-```xml
-<task>
-[Clear task description]
-</task>
+#### Safety and Security
+- Emphasize security considerations
+- Request vulnerability assessments
+- Ask for secure coding practices
+- Seek privacy protection strategies
 
-<context>
-[Relevant background information]
-</context>
+### Response Optimization
 
-<requirements>
-[Specific requirements and constraints]
-</requirements>
-
-<output_format>
-[Desired output structure]
-</output_format>
+#### Structured Requests
 ```
 
-### Model Selection Guidelines
+Please analyze this in the following structure:
 
-- **Claude 3.5 Sonnet**: Best balance of capability and speed
-- **Claude 3 Opus**: Most capable for complex analysis and reasoning
-- **Claude 3 Haiku**: Fast responses for simpler tasks
+1. [First aspect]
+2. [Second aspect]
+3. [Third aspect]
+   ...
+
+```
+
+#### Context Preservation
+- Include relevant project context in each prompt
+- Reference previous decisions and constraints
+- Maintain consistency with established patterns
+
+#### Quality Assurance
+- Request validation of suggestions
+- Ask for alternative approaches
+- Seek confirmation of best practices
+- Request testing strategies
 
 ---
 
-## Integration Patterns
+## Model-Specific Usage Guidelines
 
-### Structured Analysis Requests
+### Claude-3.5-Sonnet
+- **Best for**: Complex analysis, architectural decisions, comprehensive code reviews
+- **Context**: Can handle large codebases and complex requirements
+- **Strengths**: Deep reasoning, security analysis, best practices
 
+### Claude-3-Haiku
+- **Best for**: Quick code generation, simple analysis, documentation
+- **Context**: Faster responses for straightforward tasks
+- **Strengths**: Speed, efficiency, clear explanations
+
+### Claude-3-Opus (when available)
+- **Best for**: Most complex architectural decisions, comprehensive system design
+- **Context**: Largest context window, most sophisticated reasoning
+- **Strengths**: Highest quality analysis, complex problem solving
 ```
-Analyze the following [COMPONENT_TYPE] with your characteristic attention to detail:
-
-<component>
-[COMPONENT_CODE_OR_DESCRIPTION]
-</component>
-
-<analysis_dimensions>
-1. Technical correctness
-2. Performance implications
-3. Security considerations
-4. Maintainability factors
-5. Arabic/RTL compatibility
-6. Testing adequacy
-</analysis_dimensions>
-
-Provide specific, actionable recommendations for each dimension.
-```
-
-### Decision Support Format
-
-```
-I need your analytical perspective on this technical decision:
-
-<decision_context>
-[CONTEXT_AND_BACKGROUND]
-</decision_context>
-
-<options>
-[DETAILED_OPTIONS_WITH_PROS_CONS]
-</options>
-
-<evaluation_criteria>
-[SPECIFIC_CRITERIA_FOR_EVALUATION]
-</evaluation_criteria>
-
-Please provide a systematic evaluation and clear recommendation.
-```
-
----
-
-**Usage Notes:**
-
-- Use XML tags for structured input when dealing with complex information
-- Leverage Claude's ability to maintain context across long conversations
-- Request step-by-step reasoning for complex problems
-- Use Claude's strength in identifying edge cases and potential issues
-- Take advantage of the large context window for comprehensive code analysis

@@ -1,192 +1,121 @@
 # OpenAI Chat Completion Prompts
 
-**Provider:** OpenAI (GPT-4, GPT-4 Turbo, GPT-3.5 Turbo)  
-**Context Limit:** 128K tokens (GPT-4 Turbo)  
-**Strengths:** Code generation, reasoning, analysis
+**المؤلف:** فريق وكلاء تطوير مشروع بصير  
+**التاريخ:** 15 ديسمبر 2025  
+**الموفر:** OpenAI (GPT-4, GPT-3.5-turbo)
 
 ---
 
-## Code Generation Prompts
+## Optimized Prompts for OpenAI Models
 
-### Flutter/Dart Development
+### Code Generation Prompts
 
-```
-You are an expert Flutter/Dart developer working on a local-first invoice management app called "Baseer MVP".
-
-Context:
-- Target: Arabic-speaking small business owners in Saudi Arabia
-- Architecture: Clean Architecture with Riverpod + Isar
-- UI: Material Design 3 with RTL support
-- Language: Arabic UI, English code
-
-Task: [SPECIFIC_TASK]
-
-Requirements:
-- Follow effective_dart guidelines
-- Use const constructors where possible
-- Implement proper error handling
-- Add comprehensive DartDoc comments
-- Support RTL layout for Arabic text
-
-Generate clean, production-ready code with proper testing.
-```
-
-### Code Review and Analysis
+#### Flutter/Dart Development
 
 ```
-You are conducting a code review for a Flutter application. Analyze the following code for:
+You are an expert Flutter/Dart developer working on the Baseer MVP project.
 
-1. **Code Quality**: Adherence to Dart/Flutter best practices
-2. **Performance**: Potential optimization opportunities
-3. **Security**: Vulnerability assessment
-4. **Maintainability**: Code structure and readability
-5. **Testing**: Test coverage and quality
+Context: This is a local-first invoice management app for Arabic-speaking users in Saudi Arabia.
+
+Key Requirements:
+- Use Flutter 3.35.5+ with Dart 3.9.2+
+- Follow Clean Architecture (Presentation, Domain, Data layers)
+- Use Riverpod for state management
+- Use Isar for local database
+- Support Arabic RTL layout
+- Write comprehensive tests (70%+ coverage)
+
+When generating code:
+1. Use English for all code elements (variables, functions, classes)
+2. Include proper error handling
+3. Add DartDoc comments
+4. Follow effective_dart guidelines
+5. Use const constructors where possible
+
+Task: {specific_task}
+```
+
+#### Code Review Prompts
+
+```
+You are conducting a code review for the Baseer MVP Flutter project.
+
+Review Criteria:
+- Code quality and maintainability
+- Security best practices
+- Performance considerations
+- Arabic/RTL support
+- Test coverage
+- Documentation completeness
+
+Please review the following code and provide:
+1. Issues found (if any)
+2. Suggestions for improvement
+3. Security considerations
+4. Performance optimizations
 
 Code to review:
-[CODE_BLOCK]
-
-Provide specific, actionable feedback with examples.
+{code_content}
 ```
 
-## Reasoning and Problem Solving
+### Analysis Prompts
 
-### Technical Decision Making
-
-```
-You are a senior technical architect making decisions for a Flutter mobile app project.
-
-Context: [PROJECT_CONTEXT]
-Problem: [PROBLEM_DESCRIPTION]
-Options: [AVAILABLE_OPTIONS]
-
-Analyze each option considering:
-- Technical feasibility and complexity
-- Performance implications
-- Maintenance overhead
-- Team expertise requirements
-- Long-term scalability
-
-Provide a clear recommendation with detailed reasoning.
-```
-
-### Debugging and Troubleshooting
+#### Architecture Analysis
 
 ```
-You are debugging a Flutter application issue.
+You are analyzing the architecture of a Flutter application for the Baseer MVP project.
 
-Problem Description: [ISSUE_DESCRIPTION]
-Error Messages: [ERROR_LOGS]
-Code Context: [RELEVANT_CODE]
-Environment: [FLUTTER_VERSION, DART_VERSION, PLATFORM]
+Focus Areas:
+- Clean Architecture compliance
+- Separation of concerns
+- Dependency injection patterns
+- State management implementation
+- Local-first architecture patterns
 
-Provide:
-1. Root cause analysis
-2. Step-by-step debugging approach
-3. Specific fix recommendations
-4. Prevention strategies for similar issues
+Analyze the following structure and provide:
+1. Architecture assessment
+2. Potential improvements
+3. Scalability considerations
+4. Best practices alignment
+
+Structure: {architecture_info}
 ```
 
-## Documentation and Explanation
+### Documentation Prompts
 
-### API Documentation Generation
-
-```
-Generate comprehensive API documentation for the following Dart code:
-
-[CODE_BLOCK]
-
-Include:
-- Clear method descriptions in English
-- Parameter explanations with types
-- Return value documentation
-- Usage examples
-- Error conditions and exceptions
-- Related methods and classes
-
-Format as DartDoc comments following effective_dart guidelines.
-```
-
-### Architecture Explanation
+#### API Documentation
 
 ```
-Explain the following architectural pattern/concept for a Flutter development team:
+Generate comprehensive API documentation for the Baseer MVP project.
 
-Topic: [ARCHITECTURE_TOPIC]
-Context: [PROJECT_CONTEXT]
-Audience: [TEAM_EXPERIENCE_LEVEL]
+Requirements:
+- Use DartDoc format
+- Include usage examples
+- Document parameters and return types
+- Add Arabic descriptions for user-facing elements
+- Include error handling information
 
-Provide:
-- Clear conceptual explanation
-- Benefits and trade-offs
-- Implementation examples in Flutter/Dart
-- Best practices and common pitfalls
-- When to use vs alternatives
+API to document: {api_info}
 ```
 
 ---
 
 ## OpenAI-Specific Optimizations
 
-### Token Efficiency
+### Token Management
 
-- Use clear, concise prompts
-- Leverage system messages for context
-- Break complex tasks into smaller chunks
-- Use structured output formats (JSON, YAML)
+- Keep prompts concise but comprehensive
+- Use structured formats for better parsing
+- Implement context window management for large codebases
+
+### Response Formatting
+
+- Request specific output formats (JSON, Markdown, Code blocks)
+- Use clear delimiters for different sections
+- Implement consistent response structures
 
 ### Model Selection Guidelines
 
-- **GPT-4 Turbo**: Complex reasoning, large codebases, architecture decisions
-- **GPT-4**: High-quality code generation, detailed analysis
-- **GPT-3.5 Turbo**: Quick tasks, simple code generation, documentation
-
-### Response Format Optimization
-
-```json
-{
-  "task_type": "code_generation|analysis|documentation|debugging",
-  "confidence": "high|medium|low",
-  "response": {
-    "code": "// Generated code here",
-    "explanation": "Clear explanation of the solution",
-    "alternatives": ["Alternative approach 1", "Alternative approach 2"],
-    "testing_notes": "How to test this implementation"
-  },
-  "follow_up": ["Suggested next steps", "Related improvements"]
-}
-```
-
----
-
-## Integration with Baseer MVP
-
-### Project-Specific Context
-
-```
-Project: Baseer MVP - Invoice Management App
-Target Users: Arabic-speaking small business owners in Saudi Arabia
-Tech Stack: Flutter 3.35.5+, Dart 3.9.2+, Riverpod, Isar, Material Design 3
-Architecture: Clean Architecture (3 layers)
-Features: Customer management, Invoice creation, Local-first data storage
-UI Language: Arabic (RTL support required)
-Code Language: English with Arabic comments for business logic
-```
-
-### Common Task Templates
-
-1. **Feature Implementation**: New invoice/customer features
-2. **UI Components**: Arabic-friendly Material Design 3 widgets
-3. **Data Layer**: Isar repository and model implementations
-4. **Business Logic**: Riverpod providers and use cases
-5. **Testing**: Unit, widget, and integration tests
-6. **Localization**: Arabic text and RTL layout support
-
----
-
-**Usage Notes:**
-
-- Always specify the model version for consistency
-- Use temperature 0.1-0.3 for code generation
-- Use temperature 0.7-0.9 for creative tasks
-- Enable JSON mode for structured outputs
-- Set max_tokens appropriately for task complexity
+- **GPT-4**: Complex analysis, architecture decisions, comprehensive reviews
+- **GPT-3.5-turbo**: Code generation, simple analysis, documentation
+- **GPT-4-turbo**: Large context requirements, full file analysis
