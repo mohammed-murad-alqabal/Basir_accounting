@@ -32,14 +32,17 @@ class AccessibilityChecker {
   ///   Colors.black,
   ///   Colors.white,
   ///   minRatio: 4.5,
-  /// );
+  ///,);
   /// ```
   static bool checkContrast(
     Color foreground,
     Color background, {
     double minRatio = 4.5,
   }) {
-    final ratio = calculateContrastRatio(foreground, background);
+    final ratio = calculateContrastRatio(
+      foreground,
+      background,
+    );
 
     if (ratio < minRatio) {
       if (kDebugMode) {
@@ -74,17 +77,27 @@ class AccessibilityChecker {
   /// final ratio = AccessibilityChecker.calculateContrastRatio(
   ///   Colors.black,
   ///   Colors.white,
-  /// );
-  /// print('نسبة التباين: $ratio:1'); // 21:1
+  ///,);
+  /// debugPrint('نسبة التباين: $ratio:1',); // 21:1
   /// ```
   static double calculateContrastRatio(Color color1, Color color2) {
-    final l1 = _relativeLuminance(color1);
-    final l2 = _relativeLuminance(color2);
+    final l1 = _relativeLuminance(
+      color1,
+    );
+    final l2 = _relativeLuminance(
+      color2,
+    );
 
-    final lighter = max(l1, l2);
-    final darker = min(l1, l2);
+    final lighter = max(
+      l1,
+      l2,
+    );
+    final darker = min(
+      l1,
+      l2,
+    );
 
-    return (lighter + 0.05) / (darker + 0.05);
+    return (lighter + 0.05) / (darker + 0.05,);
   }
 
   /// يحسب السطوع النسبي للون (Relative Luminance)
@@ -97,9 +110,15 @@ class AccessibilityChecker {
   /// L = 0.2126 * R + 0.7152 * G + 0.0722 * B
   /// حيث R, G, B هي قيم الألوان المُخطّطة (linearized)
   static double _relativeLuminance(Color color) {
-    final r = _linearize(((color.r * 255.0).round() & 0xff) / 255);
-    final g = _linearize(((color.g * 255.0).round() & 0xff) / 255);
-    final b = _linearize(((color.b * 255.0).round() & 0xff) / 255);
+    final r = _linearize(
+      ((color.r * 255.0).round() & 0xff) / 255,
+    );
+    final g = _linearize(
+      ((color.g * 255.0).round() & 0xff) / 255,
+    );
+    final b = _linearize(
+      ((color.b * 255.0).round() & 0xff) / 255,
+    );
 
     return 0.2126 * r + 0.7152 * g + 0.0722 * b;
   }
@@ -135,15 +154,21 @@ class AccessibilityChecker {
   /// final isValid = AccessibilityChecker.checkTouchTarget(
   ///   Size(44, 44),
   ///   minSize: 48.0,
-  /// );
+  ///,);
   /// ```
   static bool checkTouchTarget(Size size, {double minSize = 48.0}) {
     if (size.width < minSize || size.height < minSize) {
       if (kDebugMode) {
-        final width = size.width.toStringAsFixed(1);
-        final height = size.height.toStringAsFixed(1);
+        final width = size.width.toStringAsFixed(
+          1,
+        );
+        final height = size.height.toStringAsFixed(
+          1,
+        );
         final currentSize = '$width x $height';
-        final minSizeStr = minSize.toStringAsFixed(1);
+        final minSizeStr = minSize.toStringAsFixed(
+          1,
+        );
         debugPrint(
           '⚠️ تحذير إمكانية الوصول: مساحة النقر صغيرة\n'
           '   الحجم الحالي: ${currentSize}px\n'
@@ -172,7 +197,7 @@ class AccessibilityChecker {
   /// final isValid = AccessibilityChecker.checkFontSize(
   ///   14.0,
   ///   minSize: 15.0,
-  /// );
+  ///,);
   /// ```
   static bool checkFontSize(double fontSize, {double minSize = 15.0}) {
     if (fontSize < minSize) {
@@ -204,7 +229,7 @@ class AccessibilityChecker {
   /// final isValid = AccessibilityChecker.checkLineHeight(
   ///   1.3,
   ///   minHeight: 1.5,
-  /// );
+  ///,);
   /// ```
   static bool checkLineHeight(double lineHeight, {double minHeight = 1.5}) {
     if (lineHeight < minHeight) {
@@ -235,7 +260,7 @@ class AccessibilityChecker {
   ///   TextStyle(fontSize: 16, color: Colors.black),
   ///   Colors.white,
   ///   isLargeText: false,
-  /// );
+  ///,);
   /// ```
   static bool checkTextAccessibility(
     TextStyle textStyle,

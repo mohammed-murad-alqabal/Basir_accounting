@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:basser_app/features/auth/data/services/auth_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -8,10 +9,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 ///
 /// Example:
 /// ```dart
-/// final storage = ref.watch(secureStorageProvider);
-/// await storage.write(key: 'key', value: 'value');
+/// final storage = ref.watch(secureStorageProvider,);
+/// await storage.write(key: 'key', value: 'value',);
 /// ```
-final secureStorageProvider = Provider((ref) => const FlutterSecureStorage());
+final secureStorageProvider = Provider(
+  (ref) => const FlutterSecureStorage(),
+);
 
 /// مزود خدمة المصادقة
 ///
@@ -19,12 +22,17 @@ final secureStorageProvider = Provider((ref) => const FlutterSecureStorage());
 ///
 /// Example:
 /// ```dart
-/// final authService = <credential-fixture>(authServiceProvider);
-/// await authService.login('username', 'password');
+/// final authService = <credential-fixture>(authServiceProvider,);
+/// await authService.login('username', 'password',);
 /// ```
 final authServiceProvider = <credential-fixture>((ref) {
-  final secureStorage = ref.watch(secureStorageProvider);
-  return AuthService(secureStorage: secureStorage);
+  // استخدام select() لتحسين الأداء - مراقبة التخزين الآمن فقط
+  final secureStorage = ref.watch(
+    secureStorageProvider.select((storage) => storage),
+  );
+  return AuthService(
+    secureStorage: secureStorage,
+  );
 });
 
 /// مزود التحقق من وجود حساب
@@ -35,7 +43,7 @@ final authServiceProvider = <credential-fixture>((ref) {
 ///
 /// Example:
 /// ```dart
-/// final hasAccount = await ref.watch(hasAccountProvider.future);
+/// final hasAccount = await ref.watch(hasAccountProvider.future,);
 /// if (hasAccount) {
 ///   // انتقل إلى شاشة تسجيل الدخول
 /// } else {
@@ -43,7 +51,10 @@ final authServiceProvider = <credential-fixture>((ref) {
 /// }
 /// ```
 final hasAccountProvider = FutureProvider<bool>((ref) async {
-  final authService = <credential-fixture>(authServiceProvider);
+  // استخدام select() لتحسين الأداء - مراقبة الخدمة فقط
+  final authService = <credential-fixture>(
+    authServiceProvider.select((service) => service),
+  );
   return authService.hasAccount();
 });
 
@@ -53,11 +64,13 @@ final hasAccountProvider = FutureProvider<bool>((ref) async {
 ///
 /// Example:
 /// ```dart
-/// final isLoggedIn = ref.watch(isLoggedInProvider);
+/// final isLoggedIn = ref.watch(isLoggedInProvider,);
 /// // تحديث الحالة
 /// ref.read(isLoggedInProvider.notifier).state = true;
 /// ```
-final isLoggedInProvider = StateProvider<bool>((ref) => false);
+final isLoggedInProvider = StateProvider<bool>(
+  (ref) => false,
+);
 
 /// مزود اسم المستخدم الحالي
 ///
@@ -65,12 +78,14 @@ final isLoggedInProvider = StateProvider<bool>((ref) => false);
 ///
 /// Example:
 /// ```dart
-/// final username = ref.watch(currentUsernameProvider);
+/// final username = ref.watch(currentUsernameProvider,);
 /// if (username != null) {
-///   print('مرحباً $username');
+///   debugPrint('مرحباً $username',);
 /// }
 /// ```
-final currentUsernameProvider = StateProvider<String?>((ref) => null);
+final currentUsernameProvider = StateProvider<String?>(
+  (ref) => null,
+);
 
 /// مزود عملية تسجيل الدخول
 ///
@@ -89,7 +104,7 @@ final currentUsernameProvider = StateProvider<String?>((ref) => null);
 /// ```dart
 /// final result = await ref.watch(
 ///   loginProvider(('admin', 'password123')).future,
-/// );
+///,);
 /// if (result) {
 ///   // تسجيل الدخول نجح
 /// }
@@ -98,11 +113,17 @@ final loginProvider = FutureProvider.family<bool, (String, String)>((
   ref,
   credentials,
 ) async {
-  final authService = <credential-fixture>(authServiceProvider);
+  // استخدام select() لتحسين الأداء
+  final authService = <credential-fixture>(
+    authServiceProvider.select((service) => service),
+  );
   final (username, password) = credentials;
 
   try {
-    final result = await authService.login(username, password);
+    final result = await authService.login(
+      username,
+      password,
+    );
     if (result) {
       ref.read(isLoggedInProvider.notifier).state = true;
       ref.read(currentUsernameProvider.notifier).state = username;
@@ -130,7 +151,7 @@ final loginProvider = FutureProvider.family<bool, (String, String)>((
 /// ```dart
 /// final result = await ref.watch(
 ///   setupProvider(('admin', 'password123')).future,
-/// );
+///,);
 /// if (result) {
 ///   // تم إنشاء الحساب بنجاح
 /// }
@@ -139,11 +160,17 @@ final setupProvider = FutureProvider.family<bool, (String, String)>((
   ref,
   credentials,
 ) async {
-  final authService = <credential-fixture>(authServiceProvider);
+  // استخدام select() لتحسين الأداء - مراقبة الخدمة فقط
+  final authService = <credential-fixture>(
+    authServiceProvider.select((service) => service),
+  );
   final (username, password) = credentials;
 
   try {
-    await authService.createAccount(username, password);
+    await authService.createAccount(
+      username,
+      password,
+    );
     ref.read(isLoggedInProvider.notifier).state = true;
     ref.read(currentUsernameProvider.notifier).state = username;
     return true;
@@ -164,14 +191,17 @@ final setupProvider = FutureProvider.family<bool, (String, String)>((
 ///
 /// Example:
 /// ```dart
-/// final result = await ref.watch(logoutProvider.future);
+/// final result = await ref.watch(logoutProvider.future,);
 /// if (result) {
 ///   // تم تسجيل الخروج بنجاح
-///   Navigator.pushReplacementNamed(context, '/login');
+///   Navigator.pushReplacementNamed(context, '/login',);
 /// }
 /// ```
 final logoutProvider = FutureProvider<bool>((ref) async {
-  final authService = <credential-fixture>(authServiceProvider);
+  // استخدام select() لتحسين الأداء - مراقبة الخدمة فقط
+  final authService = <credential-fixture>(
+    authServiceProvider.select((service) => service),
+  );
 
   try {
     await authService.logout();
@@ -196,7 +226,7 @@ final logoutProvider = FutureProvider<bool>((ref) async {
 /// ```dart
 /// final result = await ref.watch(
 ///   changePasswordProvider(('oldPass', 'newPass')).future,
-/// );
+///,);
 /// if (result) {
 ///   // تم تغيير كلمة المرور بنجاح
 /// }
@@ -205,11 +235,17 @@ final changePasswordProvider = FutureProvider.family<bool, (String, String)>((
   ref,
   passwords,
 ) async {
-  final authService = <credential-fixture>(authServiceProvider);
+  // استخدام select() لتحسين الأداء - مراقبة الخدمة فقط
+  final authService = <credential-fixture>(
+    authServiceProvider.select((service) => service),
+  );
   final (oldPassword, newPassword) = passwords;
 
   try {
-    await authService.changePassword(oldPassword, newPassword);
+    await authService.changePassword(
+      oldPassword,
+      newPassword,
+    );
     return true;
   } on Exception {
     return false;

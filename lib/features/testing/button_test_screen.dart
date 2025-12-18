@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 /// Navigator.push(
 ///   context,
 ///   MaterialPageRoute(builder: (_) => const ButtonTestScreen()),
-/// );
+///,);
 /// ```
 class ButtonTestScreen extends StatelessWidget {
   /// ينشئ شاشة اختبار الأزرار.

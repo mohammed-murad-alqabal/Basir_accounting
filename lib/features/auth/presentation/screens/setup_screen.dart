@@ -28,7 +28,7 @@ import 'package:flutter/material.dart';
 ///
 /// Example:
 /// ```dart
-/// Navigator.pushNamed(context, '/setup');
+/// Navigator.pushNamed(context, '/setup',);
 /// ```
 class SetupScreen extends StatefulWidget {
   /// إنشاء شاشة الإعداد الأولي
@@ -58,14 +58,16 @@ class _SetupScreenState extends State<SetupScreen> {
       return;
     }
 
-    setState(() => _isLoading = true);
+    setState(
+      () => _isLoading = true,
+    );
 
     try {
       // TODO(dev): استدعاء authService.createAccount()
       // await authService.createAccount(
       //   _usernameController.text,
       //   _passwordController.text,
-      // );
+      //,);
 
       if (!mounted) return;
 
@@ -75,16 +77,22 @@ class _SetupScreenState extends State<SetupScreen> {
 
       // الانتقال إلى شاشة الإعدادات الإضافية أو لوحة التحكم
       if (!mounted) return;
-      await Navigator.of(context).pushReplacementNamed('/dashboard');
+      await Navigator.of(context).pushReplacementNamed(
+        '/dashboard',
+      );
     } on Exception catch (e) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('خطأ: $e')));
+      ).showSnackBar(
+        SnackBar(content: Text('خطأ: $e')),
+      );
     } finally {
       if (mounted) {
-        setState(() => _isLoading = false);
+        setState(
+          () => _isLoading = false,
+        );
       }
     }
   }

@@ -103,7 +103,8 @@ class _TextScaleFactorTesterState extends State<TextScaleFactorTester> {
               ),
             ),
             Text(
-              'النطاق: ${widget.minScaleFactor.toStringAsFixed(1)}x - ${widget.maxScaleFactor.toStringAsFixed(1)}x',
+              'النطاق: ${widget.minScaleFactor.toStringAsFixed(1)}x - '
+              '${widget.maxScaleFactor.toStringAsFixed(1)}x',
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.blue.shade600,

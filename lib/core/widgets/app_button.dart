@@ -90,7 +90,10 @@ class AppPrimaryButton extends StatelessWidget {
 
     // استخدام width فقط إذا تم تحديده
     if (width != null) {
-      return SizedBox(width: width, child: button);
+      return SizedBox(
+        width: width,
+        child: button,
+      );
     }
     return button;
   }
@@ -183,7 +186,10 @@ class AppSecondaryButton extends StatelessWidget {
 
     // استخدام width فقط إذا تم تحديده
     if (width != null) {
-      return SizedBox(width: width, child: button);
+      return SizedBox(
+        width: width,
+        child: button,
+      );
     }
     return button;
   }

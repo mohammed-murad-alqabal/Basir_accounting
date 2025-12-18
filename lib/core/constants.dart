@@ -1,6 +1,5 @@
 /// ملف الثوابت الأساسية للتطبيق
 /// يحتوي على جميع القيم الثابتة المستخدمة في جميع أنحاء التطبيق
-library;
 
 /// أحجام الخطوط المستخدمة في التطبيق
 ///
@@ -81,6 +80,12 @@ class StorageKeys {
 
   /// مفتاح الرقم الضريبي للشركة
   static const String companyTaxNumber = 'company_tax_number';
+
+  /// مفتاح عنوان الشركة
+  static const String companyAddress = 'company_address';
+
+  /// مفتاح هاتف الشركة
+  static const String companyPhone = 'company_phone';
 }
 
 /// رسائل التطبيق

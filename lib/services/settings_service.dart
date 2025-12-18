@@ -13,7 +13,9 @@ class SettingsService {
   /// الحصول على نسبة الضريبة
   Future<double> getTaxRate() async {
     try {
-      final taxRate = await secureStorage.read(key: <credential-fixture>);
+      final taxRate = await secureStorage.read(
+        key: <credential-fixture>,
+      );
       return double.tryParse(taxRate ?? '') ?? AppConfig.defaultTaxRate;
     } on Exception {
       return AppConfig.defaultTaxRate;
@@ -27,15 +29,19 @@ class SettingsService {
         key: <credential-fixture>,
         value: taxRate.toString(),
       );
-    } catch (e) {
-      throw Exception('خطأ في حفظ نسبة الضريبة: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في حفظ نسبة الضريبة: $e',
+      );
     }
   }
 
   /// الحصول على اسم الشركة
   Future<String?> getCompanyName() async {
     try {
-      return await secureStorage.read(key: <credential-fixture>);
+      return await secureStorage.read(
+        key: <credential-fixture>,
+      );
     } on Exception {
       return null;
     }
@@ -48,15 +54,19 @@ class SettingsService {
         key: <credential-fixture>,
         value: companyName,
       );
-    } catch (e) {
-      throw Exception('خطأ في حفظ اسم الشركة: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في حفظ اسم الشركة: $e',
+      );
     }
   }
 
   /// الحصول على الرقم الضريبي للشركة
   Future<String?> getCompanyTaxNumber() async {
     try {
-      return await secureStorage.read(key: <credential-fixture>);
+      return await secureStorage.read(
+        key: <credential-fixture>,
+      );
     } on Exception {
       return null;
     }
@@ -69,8 +79,10 @@ class SettingsService {
         key: <credential-fixture>,
         value: taxNumber,
       );
-    } catch (e) {
-      throw Exception('خطأ في حفظ الرقم الضريبي: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في حفظ الرقم الضريبي: $e',
+      );
     }
   }
 
@@ -82,8 +94,10 @@ class SettingsService {
         'taxNumber': await getCompanyTaxNumber(),
         'taxRate': (await getTaxRate()).toString(),
       };
-    } catch (e) {
-      throw Exception('خطأ في جلب إعدادات الشركة: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في جلب إعدادات الشركة: $e',
+      );
     }
   }
 
@@ -94,11 +108,19 @@ class SettingsService {
     required double taxRate,
   }) async {
     try {
-      await setCompanyName(companyName);
-      await setCompanyTaxNumber(taxNumber);
-      await setTaxRate(taxRate);
-    } catch (e) {
-      throw Exception('خطأ في حفظ إعدادات الشركة: $e');
+      await setCompanyName(
+        companyName,
+      );
+      await setCompanyTaxNumber(
+        taxNumber,
+      );
+      await setTaxRate(
+        taxRate,
+      );
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في حفظ إعدادات الشركة: $e',
+      );
     }
   }
 }

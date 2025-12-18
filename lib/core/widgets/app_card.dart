@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:basser_app/core/theme.dart';
 import 'package:basser_app/core/widgets/responsive_text.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ import 'package:flutter/material.dart';
 /// ```dart
 /// AppCard(
 ///   child: Text('محتوى البطاقة'),
-///   onTap: () => print('تم النقر'),
+///   onTap: () => debugPrint('تم النقر'),
 /// )
 /// ```
 class AppCard extends StatelessWidget {

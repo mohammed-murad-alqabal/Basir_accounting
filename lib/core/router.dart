@@ -40,24 +40,38 @@ class AppRouter {
   ///
   /// Example:
   /// ```dart
-  /// Navigator.pushNamed(context, '/dashboard');
+  /// Navigator.pushNamed(context, '/dashboard',);
   /// ```
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/setup':
-        return MaterialPageRoute(builder: (_) => const SetupScreen());
+        return MaterialPageRoute(
+          builder: (_) => const SetupScreen(),
+        );
       case '/login':
-        return MaterialPageRoute(builder: (_) => const LoginScreen());
+        return MaterialPageRoute(
+          builder: (_) => const LoginScreen(),
+        );
       case '/dashboard':
-        return MaterialPageRoute(builder: (_) => const DashboardScreen());
+        return MaterialPageRoute(
+          builder: (_) => const DashboardScreen(),
+        );
       case '/customers':
-        return MaterialPageRoute(builder: (_) => const CustomersScreen());
+        return MaterialPageRoute(
+          builder: (_) => const CustomersScreen(),
+        );
       case '/invoices':
-        return MaterialPageRoute(builder: (_) => const InvoicesScreen());
+        return MaterialPageRoute(
+          builder: (_) => const InvoicesScreen(),
+        );
       case '/settings':
-        return MaterialPageRoute(builder: (_) => const SettingsScreen());
+        return MaterialPageRoute(
+          builder: (_) => const SettingsScreen(),
+        );
       case '/button-test':
-        return MaterialPageRoute(builder: (_) => const ButtonTestScreen());
+        return MaterialPageRoute(
+          builder: (_) => const ButtonTestScreen(),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

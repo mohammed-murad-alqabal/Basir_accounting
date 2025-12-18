@@ -12,7 +12,9 @@ class ValidationEngine {
   /// Returns: نتيجة التحقق مع قائمة المشاكل إن وجدت
   ValidationResult validateElement(String documentation) {
     // TODO(dev): تنفيذ التحقق من العنصر
-    throw UnimplementedError('validateElement not implemented yet');
+    throw UnimplementedError(
+      'validateElement not implemented yet',
+    );
   }
 
   /// التحقق من ملف كامل
@@ -25,7 +27,9 @@ class ValidationEngine {
   /// Returns: نتيجة التحقق للملف
   FileValidationResult validateFile(String filePath) {
     // TODO(dev): تنفيذ التحقق من الملف
-    throw UnimplementedError('validateFile not implemented yet');
+    throw UnimplementedError(
+      'validateFile not implemented yet',
+    );
   }
 
   /// التحقق من المشروع بالكامل
@@ -35,7 +39,9 @@ class ValidationEngine {
   /// Returns: نتيجة التحقق للمشروع
   ProjectValidationResult validateProject() {
     // TODO(dev): تنفيذ التحقق من المشروع
-    throw UnimplementedError('validateProject not implemented yet');
+    throw UnimplementedError(
+      'validateProject not implemented yet',
+    );
   }
 
   /// التحقق من صيغة DartDoc
@@ -49,7 +55,9 @@ class ValidationEngine {
   // ignore: unused_element
   bool _validateDartDocFormat(String documentation) {
     // TODO(dev): تنفيذ التحقق من الصيغة
-    throw UnimplementedError('_validateDartDocFormat not implemented yet');
+    throw UnimplementedError(
+      '_validateDartDocFormat not implemented yet',
+    );
   }
 
   /// حساب درجة الجودة
@@ -63,7 +71,9 @@ class ValidationEngine {
   // ignore: unused_element
   QualityScore _calculateQualityScore(String documentation) {
     // TODO(dev): تنفيذ حساب الجودة
-    throw UnimplementedError('_calculateQualityScore not implemented yet');
+    throw UnimplementedError(
+      '_calculateQualityScore not implemented yet',
+    );
   }
 
   /// اكتشاف المشاكل
@@ -77,7 +87,9 @@ class ValidationEngine {
   // ignore: unused_element
   List<ValidationIssue> _detectIssues(String documentation) {
     // TODO(dev): تنفيذ اكتشاف المشاكل
-    throw UnimplementedError('_detectIssues not implemented yet');
+    throw UnimplementedError(
+      '_detectIssues not implemented yet',
+    );
   }
 }
 
@@ -241,13 +253,22 @@ class QualityScore {
   );
 
   /// درجة جيدة
-  static const QualityScore good = QualityScore(score: 75, rating: 'Good');
+  static const QualityScore good = QualityScore(
+    score: 75,
+    rating: 'Good',
+  );
 
   /// درجة مقبولة
-  static const QualityScore fair = QualityScore(score: 60, rating: 'Fair');
+  static const QualityScore fair = QualityScore(
+    score: 60,
+    rating: 'Fair',
+  );
 
   /// درجة ضعيفة
-  static const QualityScore poor = QualityScore(score: 40, rating: 'Poor');
+  static const QualityScore poor = QualityScore(
+    score: 40,
+    rating: 'Poor',
+  );
 
   /// الحصول على التقييم بناءً على الدرجة
   static QualityScore fromScore(int score) {

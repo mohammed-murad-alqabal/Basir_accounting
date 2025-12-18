@@ -16,7 +16,6 @@
 ///   child: MyWidget(),
 /// )
 /// ```
-library;
 
 import 'package:flutter/material.dart';
 
@@ -31,28 +30,38 @@ class AppAnimations {
   /// مدة الحركة السريعة جداً (100ms)
   ///
   /// **الاستخدام:** تغييرات بسيطة، hover effects
-  static const Duration durationFast = Duration(milliseconds: 100);
+  static const Duration durationFast = Duration(
+    milliseconds: 100,
+  );
 
   /// مدة الحركة العادية (200ms) - المدة الأساسية
   ///
   /// **الاستخدام:** معظم الحركات في التطبيق
   /// **المعيار:** مدة مريحة للعين وسريعة كافية
-  static const Duration durationNormal = Duration(milliseconds: 200);
+  static const Duration durationNormal = Duration(
+    milliseconds: 200,
+  );
 
   /// مدة الحركة المتوسطة (300ms)
   ///
   /// **الاستخدام:** انتقالات بين الشاشات، حركات معقدة
-  static const Duration durationMedium = Duration(milliseconds: 300);
+  static const Duration durationMedium = Duration(
+    milliseconds: 300,
+  );
 
   /// مدة الحركة البطيئة (400ms)
   ///
   /// **الاستخدام:** حركات كبيرة، انتقالات مهمة
-  static const Duration durationSlow = Duration(milliseconds: 400);
+  static const Duration durationSlow = Duration(
+    milliseconds: 400,
+  );
 
   /// مدة الحركة البطيئة جداً (500ms)
   ///
   /// **الاستخدام:** حركات خاصة، تأثيرات درامية
-  static const Duration durationVerySlow = Duration(milliseconds: 500);
+  static const Duration durationVerySlow = Duration(
+    milliseconds: 500,
+  );
 
   // ======================================================
   // منحنيات الحركة (Animation Curves)
@@ -117,7 +126,7 @@ class AppAnimations {
   ///     pageBuilder: (context, animation, secondaryAnimation) => NextScreen(),
   ///     transitionsBuilder: AppAnimations.slideFromRight,
   ///   ),
-  /// );
+  ///,);
   /// ```
   static Widget slideFromRight(
     BuildContext context,
@@ -125,14 +134,23 @@ class AppAnimations {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    const begin = Offset(1, 0);
+    const begin = Offset(
+      1,
+      0,
+    );
     const end = Offset.zero;
-    final tween = Tween(begin: begin, end: end);
+    final tween = Tween(
+      begin: begin,
+      end: end,
+    );
     final offsetAnimation = animation.drive(
       tween.chain(CurveTween(curve: curveEaseInOut)),
     );
 
-    return SlideTransition(position: offsetAnimation, child: child);
+    return SlideTransition(
+      position: offsetAnimation,
+      child: child,
+    );
   }
 
   /// انتقال الانزلاق من اليسار (Slide from Left)
@@ -144,14 +162,23 @@ class AppAnimations {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    const begin = Offset(-1, 0);
+    const begin = Offset(
+      -1,
+      0,
+    );
     const end = Offset.zero;
-    final tween = Tween(begin: begin, end: end);
+    final tween = Tween(
+      begin: begin,
+      end: end,
+    );
     final offsetAnimation = animation.drive(
       tween.chain(CurveTween(curve: curveEaseInOut)),
     );
 
-    return SlideTransition(position: offsetAnimation, child: child);
+    return SlideTransition(
+      position: offsetAnimation,
+      child: child,
+    );
   }
 
   /// انتقال الانزلاق من الأسفل (Slide from Bottom)
@@ -163,14 +190,23 @@ class AppAnimations {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    const begin = Offset(0, 1);
+    const begin = Offset(
+      0,
+      1,
+    );
     const end = Offset.zero;
-    final tween = Tween(begin: begin, end: end);
+    final tween = Tween(
+      begin: begin,
+      end: end,
+    );
     final offsetAnimation = animation.drive(
       tween.chain(CurveTween(curve: curveEaseOut)),
     );
 
-    return SlideTransition(position: offsetAnimation, child: child);
+    return SlideTransition(
+      position: offsetAnimation,
+      child: child,
+    );
   }
 
   /// انتقال الانزلاق من الأعلى (Slide from Top)
@@ -182,14 +218,23 @@ class AppAnimations {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    const begin = Offset(0, -1);
+    const begin = Offset(
+      0,
+      -1,
+    );
     const end = Offset.zero;
-    final tween = Tween(begin: begin, end: end);
+    final tween = Tween(
+      begin: begin,
+      end: end,
+    );
     final offsetAnimation = animation.drive(
       tween.chain(CurveTween(curve: curveEaseOut)),
     );
 
-    return SlideTransition(position: offsetAnimation, child: child);
+    return SlideTransition(
+      position: offsetAnimation,
+      child: child,
+    );
   }
 
   /// انتقال التلاشي (Fade)
@@ -201,7 +246,10 @@ class AppAnimations {
     Animation<double> secondaryAnimation,
     Widget child,
   ) =>
-      FadeTransition(opacity: animation, child: child);
+      FadeTransition(
+        opacity: animation,
+        child: child,
+      );
 
   /// انتقال التكبير (Scale)
   ///
@@ -229,9 +277,15 @@ class AppAnimations {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    const begin = Offset(0, 0.3);
+    const begin = Offset(
+      0,
+      0.3,
+    );
     const end = Offset.zero;
-    final tween = Tween(begin: begin, end: end);
+    final tween = Tween(
+      begin: begin,
+      end: end,
+    );
     final offsetAnimation = animation.drive(
       tween.chain(CurveTween(curve: curveEaseOut)),
     );
@@ -385,24 +439,32 @@ class AppAnimations {
   ///             AppAnimations.staggerDelay.inMilliseconds;
   ///         // تطبيق الحركة مع التأخير
   ///       },
-  ///     );
+  ///,);
   ///   },
   /// )
   /// ```
-  static const Duration staggerDelay = Duration(milliseconds: 50);
+  static const Duration staggerDelay = Duration(
+    milliseconds: 50,
+  );
 
   /// مدة حركة عنصر القائمة
-  static const Duration listItemDuration = Duration(milliseconds: 300);
+  static const Duration listItemDuration = Duration(
+    milliseconds: 300,
+  );
 
   // ==========================================================
   // حركات التحميل (Loading Animations)
   // ==========================================================
 
   /// مدة دوران مؤشر التحميل
-  static const Duration loadingRotationDuration = Duration(milliseconds: 1000);
+  static const Duration loadingRotationDuration = Duration(
+    milliseconds: 1000,
+  );
 
   /// مدة نبض مؤشر التحميل
-  static const Duration loadingPulseDuration = Duration(milliseconds: 1500);
+  static const Duration loadingPulseDuration = Duration(
+    milliseconds: 1500,
+  );
 
   // ==========================================================
   // دوال مساعدة (Helper Functions)
@@ -418,7 +480,7 @@ class AppAnimations {
   ///     page: NextScreen(),
   ///     transition: AppAnimations.slideFromRight,
   ///   ),
-  /// );
+  ///,);
   /// ```
   static PageRouteBuilder<T> createRoute<T>({
     required Widget page,
@@ -435,11 +497,13 @@ class AppAnimations {
   ///
   /// **الاستخدام:**
   /// ```dart
-  /// final delay = AppAnimations.calculateStaggerDelay(index);
+  /// final delay = AppAnimations.calculateStaggerDelay(index,);
   /// ```
   static Duration calculateStaggerDelay(int index, {int maxDelay = 500}) {
     final delayMs = index * staggerDelay.inMilliseconds;
-    return Duration(milliseconds: delayMs > maxDelay ? maxDelay : delayMs);
+    return Duration(
+      milliseconds: delayMs > maxDelay ? maxDelay : delayMs,
+    );
   }
 
   /// ينشئ AnimationController مع المدة المحددة
@@ -449,11 +513,14 @@ class AppAnimations {
   /// final controller = AppAnimations.createController(
   ///   vsync: this,
   ///   duration: AppAnimations.durationNormal,
-  /// );
+  ///,);
   /// ```
   static AnimationController createController({
     required TickerProvider vsync,
     Duration? duration,
   }) =>
-      AnimationController(vsync: vsync, duration: duration ?? durationNormal);
+      AnimationController(
+        vsync: vsync,
+        duration: duration ?? durationNormal,
+      );
 }

@@ -74,13 +74,21 @@ class AppEnhancedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final mediaQuery = MediaQuery.of(context);
-    final textScaleFactor = mediaQuery.textScaler.scale(1);
+    final theme = Theme.of(
+      context,
+    );
+    final mediaQuery = MediaQuery.of(
+      context,
+    );
+    final textScaleFactor = mediaQuery.textScaler.scale(
+      1,
+    );
 
     // حساب المقاييس المطلوبة
     final fontSize = _getFontSize();
-    final fontMetrics = FontMetricsHelper.getCairoMetrics(fontSize);
+    final fontMetrics = FontMetricsHelper.getCairoMetrics(
+      fontSize,
+    );
     final padding = fontMetrics.calculatePadding(
       textScaleFactor: textScaleFactor,
       minVerticalPadding: _getMinVerticalPadding(),
@@ -92,7 +100,10 @@ class AppEnhancedButton extends StatelessWidget {
     );
 
     // إنشاء TextStyle آمن
-    final textStyle = _createSafeTextStyle(theme, fontSize);
+    final textStyle = _createSafeTextStyle(
+      theme,
+      fontSize,
+    );
 
     // بناء محتوى الزر
     var buttonContent = _buildButtonContent(
@@ -138,16 +149,23 @@ class AppEnhancedButton extends StatelessWidget {
   }) {
     // إذا كان في حالة تحميل
     if (isLoading) {
-      return _buildLoadingContent(textStyle);
+      return _buildLoadingContent(
+        textStyle,
+      );
     }
 
     // إذا كان هناك أيقونة
     if (icon != null) {
-      return _buildIconTextContent(textStyle, textScaleFactor);
+      return _buildIconTextContent(
+        textStyle,
+        textScaleFactor,
+      );
     }
 
     // نص فقط
-    return _buildTextOnlyContent(textStyle);
+    return _buildTextOnlyContent(
+      textStyle,
+    );
   }
 
   /// يبني محتوى التحميل.
@@ -198,8 +216,10 @@ class AppEnhancedButton extends StatelessWidget {
   }
 
   /// يبني محتوى النص فقط.
-  Widget _buildTextOnlyContent(TextStyle textStyle) =>
-      _buildText(textStyle, text);
+  Widget _buildTextOnlyContent(TextStyle textStyle) => _buildText(
+        textStyle,
+        text,
+      );
 
   /// يبني widget النص مع المعالجة الصحيحة.
   Widget _buildText(TextStyle textStyle, String displayText) => Text(
@@ -219,7 +239,11 @@ class AppEnhancedButton extends StatelessWidget {
     required EdgeInsets padding,
     required double minHeight,
   }) {
-    final buttonStyle = _createButtonStyle(context, padding, minHeight);
+    final buttonStyle = _createButtonStyle(
+      context,
+      padding,
+      minHeight,
+    );
 
     return ElevatedButton(
       onPressed: _isButtonEnabled() ? onPressed : null,
@@ -234,7 +258,9 @@ class AppEnhancedButton extends StatelessWidget {
     EdgeInsets padding,
     double minHeight,
   ) {
-    final theme = Theme.of(context);
+    final theme = Theme.of(
+      context,
+    );
     final colorScheme = theme.colorScheme;
 
     // ألوان حسب النمط
@@ -387,7 +413,7 @@ enum AppEnhancedButtonSize {
 class AppEnhancedButtonHelper {
   AppEnhancedButtonHelper._();
 
-  /// ينشئ زر "إضافة" محسّن.
+  /// ينشئ زر 'إضافة' محسّن.
   static AppEnhancedButton add({
     required String text,
     required VoidCallback onPressed,
@@ -403,7 +429,7 @@ class AppEnhancedButtonHelper {
         tooltip: 'إضافة $text',
       );
 
-  /// ينشئ زر "حفظ" محسّن.
+  /// ينشئ زر 'حفظ' محسّن.
   static AppEnhancedButton save({
     required VoidCallback onPressed,
     AppEnhancedButtonSize size = AppEnhancedButtonSize.medium,
@@ -418,7 +444,7 @@ class AppEnhancedButtonHelper {
         tooltip: 'حفظ التغييرات',
       );
 
-  /// ينشئ زر "إلغاء" محسّن.
+  /// ينشئ زر 'إلغاء' محسّن.
   static AppEnhancedButton cancel({
     required VoidCallback onPressed,
     AppEnhancedButtonSize size = AppEnhancedButtonSize.medium,
@@ -431,7 +457,7 @@ class AppEnhancedButtonHelper {
         tooltip: 'إلغاء العملية',
       );
 
-  /// ينشئ زر "حذف" محسّن.
+  /// ينشئ زر 'حذف' محسّن.
   static AppEnhancedButton delete({
     required VoidCallback onPressed,
     AppEnhancedButtonSize size = AppEnhancedButtonSize.medium,
@@ -447,7 +473,7 @@ class AppEnhancedButtonHelper {
         tooltip: 'حذف العنصر',
       );
 
-  /// ينشئ زر "تعديل" محسّن.
+  /// ينشئ زر 'تعديل' محسّن.
   static AppEnhancedButton edit({
     required VoidCallback onPressed,
     AppEnhancedButtonSize size = AppEnhancedButtonSize.medium,
@@ -461,7 +487,7 @@ class AppEnhancedButtonHelper {
         tooltip: 'تعديل العنصر',
       );
 
-  /// ينشئ زر "بحث" محسّن.
+  /// ينشئ زر 'بحث' محسّن.
   static AppEnhancedButton search({
     required VoidCallback onPressed,
     AppEnhancedButtonSize size = AppEnhancedButtonSize.medium,

@@ -26,7 +26,7 @@ part 'customer.freezed.dart';
 ///   address: 'الرياض، السعودية',
 ///   createdAt: DateTime.now(),
 ///   updatedAt: DateTime.now(),
-/// );
+///,);
 /// ```
 @freezed
 class Customer with _$Customer {
@@ -48,7 +48,7 @@ class Customer with _$Customer {
   ///   name: 'أحمد محمد',
   ///   createdAt: DateTime.now(),
   ///   updatedAt: DateTime.now(),
-  /// );
+  ///,);
   /// ```
   const factory Customer({
     /// معرف فريد للعميل
