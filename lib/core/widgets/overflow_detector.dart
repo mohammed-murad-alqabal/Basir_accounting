@@ -62,7 +62,9 @@ class _OverflowDetectorState extends State<OverflowDetector> {
             });
 
             if (widget.logWarning) {
-              _logOverflow(details);
+              _logOverflow(
+                details,
+              );
             }
           }
         },
@@ -108,7 +110,7 @@ class _OverflowDetectorState extends State<OverflowDetector> {
   void _logOverflow(String details) {
     final name = widget.name ?? 'Unknown';
     developer.log(
-      '⚠️ OVERFLOW DETECTED in "$name":\n$details',
+      '⚠️ OVERFLOW DETECTED in $name:\n$details',
       name: 'OverflowDetector',
       level: 900, // warning
     );
@@ -123,7 +125,9 @@ class _OverflowDetectorRenderObjectWidget
     required this.onOverflowDetected,
     required Widget child,
     this.name,
-  }) : super(child: child);
+  }) : super(
+          child: child,
+        );
   final BoxConstraints constraints;
   final String? name;
   final void Function(String details) onOverflowDetected;
@@ -181,7 +185,9 @@ class _OverflowDetectorRenderBox extends RenderProxyBox {
           hasHorizontalOverflow: hasHorizontalOverflow,
           hasVerticalOverflow: hasVerticalOverflow,
         );
-        onOverflowDetected(details);
+        onOverflowDetected(
+          details,
+        );
       }
     }
   }
@@ -241,7 +247,9 @@ class OverflowDetectorHelper {
       textDirection: TextDirection.rtl, // للنصوص العربية
     );
 
-    textPainter.layout(maxWidth: maxWidth);
+    textPainter.layout(
+      maxWidth: maxWidth,
+    );
     final didExceedMaxLines = textPainter.didExceedMaxLines;
     textPainter.dispose();
 
@@ -289,7 +297,9 @@ class OverflowDetectorHelper {
       textDirection: TextDirection.rtl,
     );
 
-    textPainter.layout(maxWidth: maxWidth);
+    textPainter.layout(
+      maxWidth: maxWidth,
+    );
     final height = textPainter.height;
     textPainter.dispose();
 
@@ -317,7 +327,9 @@ class OverflowDetectorHelper {
       textDirection: TextDirection.rtl,
     );
 
-    textPainter.layout(maxWidth: availableWidth);
+    textPainter.layout(
+      maxWidth: availableWidth,
+    );
 
     final requiredWidth = textPainter.width;
     final requiredHeight = textPainter.height;

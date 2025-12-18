@@ -23,7 +23,7 @@ import 'package:flutter/material.dart';
 ///
 /// Example:
 /// ```dart
-/// Navigator.pushNamed(context, '/login');
+/// Navigator.pushNamed(context, '/login',);
 /// ```
 class LoginScreen extends StatefulWidget {
   /// إنشاء شاشة تسجيل الدخول
@@ -51,24 +51,28 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _handleLogin() async {
     // تفعيل validation عند أول محاولة
     if (_autovalidateMode == AutovalidateMode.disabled) {
-      setState(() => _autovalidateMode = AutovalidateMode.onUserInteraction);
+      setState(
+        () => _autovalidateMode = AutovalidateMode.onUserInteraction,
+      );
     }
 
     if (!_formKey.currentState!.validate()) {
       return;
     }
 
-    setState(() => _isLoading = true);
+    setState(
+      () => _isLoading = true,
+    );
 
     try {
       // TODO(dev): استدعاء authService.login()
       // final result = await authService.login(
       //   _usernameController.text,
       //   _passwordController.text,
-      // );
+      //,);
 
       // حفظ إعداد البقاء مسجلاً
-      // await authService.setKeepLoggedIn(_keepLoggedIn);
+      // await authService.setKeepLoggedIn(_keepLoggedIn,);
 
       if (!mounted) return;
 
@@ -78,22 +82,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // الانتقال إلى لوحة التحكم
       if (!mounted) return;
-      await Navigator.of(context).pushReplacementNamed('/dashboard');
+      await Navigator.of(context).pushReplacementNamed(
+        '/dashboard',
+      );
     } on Exception catch (e) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('خطأ: $e')));
+      ).showSnackBar(
+        SnackBar(content: Text('خطأ: $e')),
+      );
     } finally {
       if (mounted) {
-        setState(() => _isLoading = false);
+        setState(
+          () => _isLoading = false,
+        );
       }
     }
   }
 
   Future<void> _handleGuestLogin() async {
-    setState(() => _isLoading = true);
+    setState(
+      () => _isLoading = true,
+    );
 
     try {
       // TODO(dev): استدعاء authService.loginAsGuest()
@@ -111,16 +123,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // الانتقال إلى لوحة التحكم
       if (!mounted) return;
-      await Navigator.of(context).pushReplacementNamed('/dashboard');
+      await Navigator.of(context).pushReplacementNamed(
+        '/dashboard',
+      );
     } on Exception catch (e) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('خطأ: $e')));
+      ).showSnackBar(
+        SnackBar(content: Text('خطأ: $e')),
+      );
     } finally {
       if (mounted) {
-        setState(() => _isLoading = false);
+        setState(
+          () => _isLoading = false,
+        );
       }
     }
   }
@@ -181,7 +199,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           Checkbox(
                             value: _keepLoggedIn,
                             onChanged: (value) {
-                              setState(() => _keepLoggedIn = value ?? true);
+                              setState(
+                                () => _keepLoggedIn = value ?? true,
+                              );
                             },
                           ),
                           const Flexible(
@@ -199,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: AppSpacing.md),
 
                       // زر تسجيل الدخول
-                      AppEnhancedButton(
+                      AppPrimaryButton(
                         text: 'تسجيل الدخول',
                         onPressed: _handleLogin,
                         isLoading: _isLoading,
@@ -208,10 +228,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: AppSpacing.md),
 
                       // زر الدخول كضيف
-                      AppEnhancedButton(
+                      AppSecondaryButton(
                         text: 'الدخول كضيف',
                         onPressed: _handleGuestLogin,
-                        style: AppEnhancedButtonStyle.secondary,
                         icon: Icons.person_outline,
                       ),
                       const SizedBox(height: AppSpacing.md),
@@ -232,13 +251,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             Flexible(
-                              child: AppEnhancedButton(
+                              child: AppTextButton(
                                 text: 'أنشئ حساباً الآن',
                                 onPressed: () async {
-                                  await Navigator.of(context)
-                                      .pushNamed('/setup');
+                                  await Navigator.of(context).pushNamed(
+                                    '/setup',
+                                  );
                                 },
-                                style: AppEnhancedButtonStyle.text,
                                 size: AppEnhancedButtonSize.small,
                               ),
                             ),

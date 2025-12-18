@@ -1,5 +1,6 @@
 # تكوين محلل Dart لمشروع بصير MVP
 # يطبق معايير الجودة من .kiro/steering/flutter-best-practices.md
+# Enhanced for workspace-transformation project
 
 include: package:flutter_lints/flutter.yaml
 
@@ -7,8 +8,11 @@ analyzer:
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - "**/*.mocks.dart"
     - "build/**"
     - ".dart_tool/**"
+    - "coverage/**"
+    - "test/.test_coverage.dart"
 
   errors:
     # معاملة التحذيرات كأخطاء (Quality First)
@@ -16,11 +20,20 @@ analyzer:
     todo: ignore
     # تجاهل cascade_invocations (تتعارض مع dart format)
     cascade_invocations: ignore
+    # تحسينات workspace-transformation
+    missing_required_param: error
+    missing_return: error
+    dead_code: warning
+    unused_import: warning
+    unused_local_variable: warning
 
   language:
     strict-casts: true
     strict-inference: true
     strict-raw-types: true
+
+  plugins:
+    - dart_code_metrics
 
 linter:
   rules:
@@ -237,8 +250,49 @@ linter:
     - use_to_and_as_if_applicable
     - valid_regexps
     - void_checks
-# معايير الجودة المستهدفة:
+# معايير الجودة المستهدفة (workspace-transformation):
 # - 0 errors
 # - 0 warnings
-# - تغطية 70%+ اختبارات
+# - تغطية 75%+ اختبارات
 # - توثيق جميع public APIs
+# - Flutter-specific optimizations
+# - Enhanced security rules
+# - Performance-focused linting
+
+# تكوين dart_code_metrics للتحليل المتقدم
+dart_code_metrics:
+  metrics:
+    cyclomatic-complexity: 10
+    maximum-nesting-level: 5
+    number-of-parameters: 4
+    source-lines-of-code: 50
+
+  metrics-exclude:
+    - test/**
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+
+  rules:
+    - avoid-dynamic
+    - avoid-global-state
+    - avoid-missing-enum-constant-in-map
+    - avoid-nested-conditional-expressions
+    - avoid-non-null-assertion
+    - avoid-throw-in-catch-block
+    - avoid-unnecessary-type-assertions
+    - avoid-unnecessary-type-casts
+    - avoid-unrelated-type-assertions
+    - binary-expression-operand-order
+    - double-literal-format
+    - newline-before-return
+    - no-boolean-literal-compare
+    - no-empty-block
+    - no-equal-then-else
+    - no-object-declaration
+    - prefer-conditional-expressions
+    - prefer-correct-type-name
+    - prefer-first
+    - prefer-last
+    - prefer-match-file-name
+    - prefer-moving-to-variable
+    - prefer-trailing-comma

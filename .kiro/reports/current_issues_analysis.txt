@@ -1,0 +1,194 @@
+Analyzing Basser_MVP...                                         
+
+   info • Dangling library doc comment • lib/core/assets/app_illustrations.dart:1:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/core/assets/app_logo.dart:1:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/core/assets/custom_icons.dart:1:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/core/constants.dart:2:1 • dangling_library_doc_comments
+   info • The import of 'package:flutter/foundation.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' • lib/core/providers/theme_provider.dart:1:8 • unnecessary_import
+   info • Place 'dart:' imports before other imports • lib/core/providers/theme_provider.dart:2:1 • directives_ordering
+   info • Constructors for public widgets should have a named 'key' parameter • lib/core/screens/button_test_screen.dart:18:9 • use_key_in_widget_constructors
+   info • Empty constructor bodies should be written using a ';' rather than '{}' • lib/core/screens/button_test_screen.dart:18:27 • empty_constructor_bodies
+  error • A function body must be provided • lib/core/screens/button_test_screen.dart:18:27 • missing_function_body
+  error • Const constructors can't have a body • lib/core/screens/button_test_screen.dart:18:27 • const_constructor_with_body
+  error • Expected a class member • lib/core/screens/button_test_screen.dart:18:27 • expected_class_member
+  error • Expected a class member • lib/core/screens/button_test_screen.dart:18:28 • expected_class_member
+  error • The argument type '(double,)' can't be assigned to the parameter type 'num'.  • lib/core/theme/accessibility/accessibility_checker.dart:87:31 • argument_type_not_assignable
+   info • Dangling library doc comment • lib/core/theme/app_animations.dart:1:1 • dangling_library_doc_comments
+warning • Unused import: 'package:flutter/foundation.dart' • lib/core/theme/app_colors.dart:1:8 • unused_import
+   info • Sort directive sections alphabetically • lib/core/theme/app_colors.dart:2:1 • directives_ordering
+   info • Dangling library doc comment • lib/core/theme/app_dimensions.dart:3:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib/core/theme/app_text_styles.dart:1:1 • dangling_library_doc_comments
+  error • Expected to find ',' • lib/core/theme/font_manager.dart:50:26 • expected_token
+  error • Too many positional arguments: 1 expected, but 3 found • lib/core/theme/font_manager.dart:50:26 • extra_positional_arguments_could_be_named
+  error • Undefined name '$primaryFont' • lib/core/theme/font_manager.dart:50:26 • undefined_identifier
+  error • Expected to find ',' • lib/core/theme/font_manager.dart:50:38 • expected_token
+  error • Expected to find ';' • lib/core/theme/font_manager.dart:54:23 • expected_token
+   info • Unnecessary statement • lib/core/theme/font_manager.dart:54:53 • unnecessary_statements
+  error • Expected to find ';' • lib/core/theme/font_manager.dart:54:53 • expected_token
+  error • Undefined name '$primaryFont' • lib/core/theme/font_manager.dart:54:53 • undefined_identifier
+   info • Unnecessary statement • lib/core/theme/font_manager.dart:54:65 • unnecessary_statements
+  error • Expected to find ',' • lib/core/theme/font_manager.dart:95:34 • expected_token
+  error • Too many positional arguments: 1 expected, but 3 found • lib/core/theme/font_manager.dart:95:34 • extra_positional_arguments_could_be_named
+  error • Undefined name '$fontFamily' • lib/core/theme/font_manager.dart:95:34 • undefined_identifier
+  error • Expected to find ',' • lib/core/theme/font_manager.dart:95:45 • expected_token
+   info • Constructors for public widgets should have a named 'key' parameter • lib/core/theme/font_manager.dart:228:9 • use_key_in_widget_constructors
+   info • Empty constructor bodies should be written using a ';' rather than '{}' • lib/core/theme/font_manager.dart:228:24 • empty_constructor_bodies
+  error • A function body must be provided • lib/core/theme/font_manager.dart:228:24 • missing_function_body
+  error • Const constructors can't have a body • lib/core/theme/font_manager.dart:228:24 • const_constructor_with_body
+  error • Expected a class member • lib/core/theme/font_manager.dart:228:24 • expected_class_member
+  error • Expected a class member • lib/core/theme/font_manager.dart:228:25 • expected_class_member
+  error • Undefined class 'ValidationResult' • lib/core/utils/input_validator.dart:26:10 • undefined_class
+  error • Expected an identifier • lib/core/utils/input_validator.dart:37:41 • missing_identifier
+  error • The method 'ValidationResult' isn't defined for the type 'InputValidator' • lib/core/utils/input_validator.dart:47:12 • undefined_method
+  error • Undefined class 'PasswordValidationResult' • lib/core/utils/input_validator.dart:68:10 • undefined_class
+  error • Expected an identifier • lib/core/utils/input_validator.dart:108:40 • missing_identifier
+   info • Use a raw string to avoid using escapes • lib/core/utils/input_validator.dart:110:18 • use_raw_strings
+   info • Missing a required trailing comma • lib/core/utils/input_validator.dart:130:5 • require_trailing_commas
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:140:20 • unnecessary_string_escapes
+  error • The method 'PasswordValidationResult' isn't defined for the type 'InputValidator' • lib/core/utils/input_validator.dart:145:12 • undefined_method
+  error • Undefined class 'ValidationResult' • lib/core/utils/input_validator.dart:158:10 • undefined_class
+  error • The method 'ValidationResult' isn't defined for the type 'InputValidator' • lib/core/utils/input_validator.dart:175:12 • undefined_method
+  error • The body might complete normally, causing 'null' to be returned, but the return type, 'String', is a potentially non-nullable type • lib/core/utils/input_validator.dart:190:17 • body_might_complete_normally
+   info • Missing a newline at the beginning of a multiline string • lib/core/utils/input_validator.dart:203:23 • leading_newlines_in_multiline_strings
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:211:18 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:212:18 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:213:18 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:213:22 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:214:21 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:215:20 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:235:50 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:235:52 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:235:54 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:235:56 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:238:39 • unnecessary_string_escapes
+  error • Expected an identifier • lib/core/utils/input_validator.dart:238:62 • missing_identifier
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:263:19 • unnecessary_string_escapes
+  error • Expected an identifier • lib/core/utils/input_validator.dart:263:26 • missing_identifier
+  error • Expected to find ';' • lib/core/utils/input_validator.dart:263:26 • expected_token
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:304:11 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:304:14 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:323:29 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:323:34 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:323:42 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:323:48 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:323:56 • unnecessary_string_escapes
+   info • Unnecessary escape in string literal • lib/core/utils/input_validator.dart:323:61 • unnecessary_string_escapes
+  error • Unterminated string literal • lib/core/utils/input_validator.dart:409:2 • unterminated_string_literal
+  error • 2 positional arguments expected by 'replaceAll', but 1 found • lib/core/utils/input_validator.dart:410:1 • not_enough_positional_arguments
+  error • Expected to find ')' • lib/core/utils/input_validator.dart:410:1 • expected_token
+  error • Expected to find '}' • lib/core/utils/input_validator.dart:410:1 • expected_token
+   info • The import of 'package:flutter/foundation.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' • lib/core/widgets/app_card.dart:1:8 • unnecessary_import
+   info • Sort directive sections alphabetically • lib/core/widgets/app_card.dart:2:1 • directives_ordering
+   info • Dangling library doc comment • lib/core/widgets/index.dart:1:1 • dangling_library_doc_comments
+warning • The value of the local variable 'name' isn't used • lib/core/widgets/overflow_detector.dart:109:11 • unused_local_variable
+  error • Expected to find ',' • lib/core/widgets/overflow_detector.dart:111:33 • expected_token
+  error • Too many positional arguments: 1 expected, but 3 found • lib/core/widgets/overflow_detector.dart:111:33 • extra_positional_arguments_could_be_named
+  error • Undefined name '$name' • lib/core/widgets/overflow_detector.dart:111:33 • undefined_identifier
+  error • Expected to find ',' • lib/core/widgets/overflow_detector.dart:111:38 • expected_token
+   info • Constructors for public widgets should have a named 'key' parameter • lib/core/widgets/text_scale_factor_tester.dart:223:9 • use_key_in_widget_constructors
+   info • Empty constructor bodies should be written using a ';' rather than '{}' • lib/core/widgets/text_scale_factor_tester.dart:223:34 • empty_constructor_bodies
+  error • A function body must be provided • lib/core/widgets/text_scale_factor_tester.dart:223:34 • missing_function_body
+  error • Const constructors can't have a body • lib/core/widgets/text_scale_factor_tester.dart:223:34 • const_constructor_with_body
+  error • Expected a class member • lib/core/widgets/text_scale_factor_tester.dart:223:34 • expected_class_member
+  error • Expected a class member • lib/core/widgets/text_scale_factor_tester.dart:223:35 • expected_class_member
+warning • Unused import: 'package:flutter/foundation.dart' • lib/features/auth/data/services/auth_service.dart:1:8 • unused_import
+   info • Place 'dart:' imports before other imports • lib/features/auth/data/services/auth_service.dart:2:1 • directives_ordering
+   info • Place 'dart:' imports before other imports • lib/features/auth/data/services/auth_service.dart:3:1 • directives_ordering
+   info • Sort directive sections alphabetically • lib/features/auth/data/services/auth_service.dart:5:1 • directives_ordering
+  error • The argument type '(String,)' can't be assigned to the parameter type 'String'.  • lib/features/auth/data/services/auth_service.dart:60:37 • argument_type_not_assignable
+  error • Expected an identifier • lib/features/auth/data/services/auth_service.dart:500:41 • missing_identifier
+   info • Use a raw string to avoid using escapes • lib/features/auth/data/services/auth_service.dart:501:18 • use_raw_strings
+   info • Dangling library doc comment • lib/features/auth/domain/models/auth_models.dart:3:1 • dangling_library_doc_comments
+   info • Missing documentation for a public member • lib/features/auth/domain/models/auth_models.dart:7:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/auth/domain/models/auth_models.dart:34:9 • public_member_api_docs
+warning • Unused import: 'package:flutter/foundation.dart' • lib/features/auth/presentation/providers/auth_provider.dart:1:8 • unused_import
+   info • Sort directive sections alphabetically • lib/features/auth/presentation/providers/auth_provider.dart:2:1 • directives_ordering
+   info • Constructors for public widgets should have a named 'key' parameter • lib/features/auth/presentation/screens/login_screen.dart:30:9 • use_key_in_widget_constructors
+   info • Empty constructor bodies should be written using a ';' rather than '{}' • lib/features/auth/presentation/screens/login_screen.dart:30:22 • empty_constructor_bodies
+  error • A function body must be provided • lib/features/auth/presentation/screens/login_screen.dart:30:22 • missing_function_body
+  error • Const constructors can't have a body • lib/features/auth/presentation/screens/login_screen.dart:30:22 • const_constructor_with_body
+  error • Expected a class member • lib/features/auth/presentation/screens/login_screen.dart:30:22 • expected_class_member
+  error • Expected a class member • lib/features/auth/presentation/screens/login_screen.dart:30:23 • expected_class_member
+   info • Constructors for public widgets should have a named 'key' parameter • lib/features/auth/presentation/screens/setup_screen.dart:35:9 • use_key_in_widget_constructors
+   info • Empty constructor bodies should be written using a ';' rather than '{}' • lib/features/auth/presentation/screens/setup_screen.dart:35:22 • empty_constructor_bodies
+  error • A function body must be provided • lib/features/auth/presentation/screens/setup_screen.dart:35:22 • missing_function_body
+  error • Const constructors can't have a body • lib/features/auth/presentation/screens/setup_screen.dart:35:22 • const_constructor_with_body
+  error • Expected a class member • lib/features/auth/presentation/screens/setup_screen.dart:35:22 • expected_class_member
+  error • Expected a class member • lib/features/auth/presentation/screens/setup_screen.dart:35:23 • expected_class_member
+warning • Unused import: 'package:flutter/foundation.dart' • lib/features/customers/domain/repositories/customer_repository.dart:1:8 • unused_import
+   info • Sort directive sections alphabetically • lib/features/customers/domain/repositories/customer_repository.dart:2:1 • directives_ordering
+  error • Expected to find ',' • lib/features/customers/presentation/screens/customer_details_screen.dart:209:52 • expected_token
+  error • Too many positional arguments: 1 expected, but 4 found • lib/features/customers/presentation/screens/customer_details_screen.dart:209:52 • extra_positional_arguments_could_be_named
+  error • Undefined name '$' • lib/features/customers/presentation/screens/customer_details_screen.dart:209:52 • undefined_identifier
+  error • Expected to find ',' • lib/features/customers/presentation/screens/customer_details_screen.dart:209:53 • expected_token
+  error • Expected to find ',' • lib/features/customers/presentation/screens/customer_details_screen.dart:209:68 • expected_token
+   info • The line length exceeds the 80-character limit • lib/features/customers/presentation/screens/customer_details_screen.dart:231:81 • lines_longer_than_80_chars
+   info • Constructors for public widgets should have a named 'key' parameter • lib/features/customers/presentation/screens/customers_screen.dart:13:9 • use_key_in_widget_constructors
+   info • Empty constructor bodies should be written using a ';' rather than '{}' • lib/features/customers/presentation/screens/customers_screen.dart:13:26 • empty_constructor_bodies
+  error • A function body must be provided • lib/features/customers/presentation/screens/customers_screen.dart:13:26 • missing_function_body
+  error • Const constructors can't have a body • lib/features/customers/presentation/screens/customers_screen.dart:13:26 • const_constructor_with_body
+  error • Expected a class member • lib/features/customers/presentation/screens/customers_screen.dart:13:26 • expected_class_member
+  error • Expected a class member • lib/features/customers/presentation/screens/customers_screen.dart:13:27 • expected_class_member
+   info • Constructors for public widgets should have a named 'key' parameter • lib/features/dashboard/presentation/screens/dashboard_screen.dart:12:9 • use_key_in_widget_constructors
+   info • Empty constructor bodies should be written using a ';' rather than '{}' • lib/features/dashboard/presentation/screens/dashboard_screen.dart:12:26 • empty_constructor_bodies
+  error • A function body must be provided • lib/features/dashboard/presentation/screens/dashboard_screen.dart:12:26 • missing_function_body
+  error • Const constructors can't have a body • lib/features/dashboard/presentation/screens/dashboard_screen.dart:12:26 • const_constructor_with_body
+  error • Expected a class member • lib/features/dashboard/presentation/screens/dashboard_screen.dart:12:26 • expected_class_member
+  error • Expected a class member • lib/features/dashboard/presentation/screens/dashboard_screen.dart:12:27 • expected_class_member
+warning • Unused import: 'package:flutter/foundation.dart' • lib/features/invoices/domain/entities/invoice.dart:1:8 • unused_import
+warning • Unused import: 'package:flutter/foundation.dart' • lib/features/invoices/domain/repositories/invoice_repository.dart:1:8 • unused_import
+   info • Sort directive sections alphabetically • lib/features/invoices/domain/repositories/invoice_repository.dart:2:1 • directives_ordering
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/providers/invoice_provider.dart:81:81 • lines_longer_than_80_chars
+   info • Constructors for public widgets should have a named 'key' parameter • lib/features/invoices/presentation/screens/invoices_screen.dart:15:9 • use_key_in_widget_constructors
+   info • Empty constructor bodies should be written using a ';' rather than '{}' • lib/features/invoices/presentation/screens/invoices_screen.dart:15:25 • empty_constructor_bodies
+  error • A function body must be provided • lib/features/invoices/presentation/screens/invoices_screen.dart:15:25 • missing_function_body
+  error • Const constructors can't have a body • lib/features/invoices/presentation/screens/invoices_screen.dart:15:25 • const_constructor_with_body
+  error • Expected a class member • lib/features/invoices/presentation/screens/invoices_screen.dart:15:25 • expected_class_member
+  error • Expected a class member • lib/features/invoices/presentation/screens/invoices_screen.dart:15:26 • expected_class_member
+  error • Expected to find ',' • lib/features/invoices/presentation/screens/invoices_screen.dart:377:54 • expected_token
+  error • Too many positional arguments: 1 expected, but 4 found • lib/features/invoices/presentation/screens/invoices_screen.dart:377:54 • extra_positional_arguments_could_be_named
+  error • Undefined name '$' • lib/features/invoices/presentation/screens/invoices_screen.dart:377:54 • undefined_identifier
+  error • Expected to find ',' • lib/features/invoices/presentation/screens/invoices_screen.dart:377:55 • expected_token
+  error • Expected to find ',' • lib/features/invoices/presentation/screens/invoices_screen.dart:377:67 • expected_token
+   info • Constructors for public widgets should have a named 'key' parameter • lib/features/settings/presentation/screens/settings_screen.dart:14:9 • use_key_in_widget_constructors
+   info • Empty constructor bodies should be written using a ';' rather than '{}' • lib/features/settings/presentation/screens/settings_screen.dart:14:25 • empty_constructor_bodies
+  error • A function body must be provided • lib/features/settings/presentation/screens/settings_screen.dart:14:25 • missing_function_body
+  error • Const constructors can't have a body • lib/features/settings/presentation/screens/settings_screen.dart:14:25 • const_constructor_with_body
+  error • Expected a class member • lib/features/settings/presentation/screens/settings_screen.dart:14:25 • expected_class_member
+  error • Expected a class member • lib/features/settings/presentation/screens/settings_screen.dart:14:26 • expected_class_member
+  error • Arguments of a constant creation must be constant expressions • lib/features/settings/presentation/screens/settings_screen.dart:321:39 • const_with_non_constant_argument
+  error • Expected to find ',' • lib/features/settings/presentation/screens/settings_screen.dart:321:39 • expected_token
+  error • Illegal character '1603' • lib/features/settings/presentation/screens/settings_screen.dart:321:39 • illegal_character
+  error • Too many positional arguments: 1 expected, but 4 found • lib/features/settings/presentation/screens/settings_screen.dart:321:39 • extra_positional_arguments_could_be_named
+  error • Undefined name 'كما' • lib/features/settings/presentation/screens/settings_screen.dart:321:39 • undefined_identifier
+  error • Illegal character '1605' • lib/features/settings/presentation/screens/settings_screen.dart:321:40 • illegal_character
+  error • Illegal character '1575' • lib/features/settings/presentation/screens/settings_screen.dart:321:41 • illegal_character
+  error • Arguments of a constant creation must be constant expressions • lib/features/settings/presentation/screens/settings_screen.dart:321:43 • const_with_non_constant_argument
+  error • Expected to find ',' • lib/features/settings/presentation/screens/settings_screen.dart:321:43 • expected_token
+  error • Illegal character '1607' • lib/features/settings/presentation/screens/settings_screen.dart:321:43 • illegal_character
+  error • Undefined name 'هو' • lib/features/settings/presentation/screens/settings_screen.dart:321:43 • undefined_identifier
+  error • Illegal character '1608' • lib/features/settings/presentation/screens/settings_screen.dart:321:44 • illegal_character
+  error • Expected to find ',' • lib/features/settings/presentation/screens/settings_screen.dart:321:45 • expected_token
+   info • Constructors for public widgets should have a named 'key' parameter • lib/features/testing/button_test_screen.dart:18:9 • use_key_in_widget_constructors
+   info • Empty constructor bodies should be written using a ';' rather than '{}' • lib/features/testing/button_test_screen.dart:18:27 • empty_constructor_bodies
+  error • A function body must be provided • lib/features/testing/button_test_screen.dart:18:27 • missing_function_body
+  error • Const constructors can't have a body • lib/features/testing/button_test_screen.dart:18:27 • const_constructor_with_body
+  error • Expected a class member • lib/features/testing/button_test_screen.dart:18:27 • expected_class_member
+  error • Expected a class member • lib/features/testing/button_test_screen.dart:18:28 • expected_class_member
+   info • Constructors for public widgets should have a named 'key' parameter • lib/main.dart:36:9 • use_key_in_widget_constructors
+   info • Empty constructor bodies should be written using a ';' rather than '{}' • lib/main.dart:36:20 • empty_constructor_bodies
+  error • A function body must be provided • lib/main.dart:36:20 • missing_function_body
+  error • Const constructors can't have a body • lib/main.dart:36:20 • const_constructor_with_body
+  error • Expected a class member • lib/main.dart:36:20 • expected_class_member
+  error • Expected a class member • lib/main.dart:36:21 • expected_class_member
+   info • Constructors for public widgets should have a named 'key' parameter • lib/main.dart:80:9 • use_key_in_widget_constructors
+   info • Empty constructor bodies should be written using a ';' rather than '{}' • lib/main.dart:80:23 • empty_constructor_bodies
+  error • A function body must be provided • lib/main.dart:80:23 • missing_function_body
+  error • Const constructors can't have a body • lib/main.dart:80:23 • const_constructor_with_body
+  error • Expected a class member • lib/main.dart:80:23 • expected_class_member
+  error • Expected a class member • lib/main.dart:80:24 • expected_class_member
+   info • Catch clause should use 'on' to specify the type of exception being caught • test/helpers/test_helpers.dart:148:7 • avoid_catches_without_on_clauses
+   info • Don't invoke 'print' in production code • test/helpers/test_helpers.dart:164:7 • avoid_print
+   info • Don't invoke 'print' in production code • test/helpers/test_helpers.dart:168:7 • avoid_print
+
+190 issues found. (ran in 4.5s)

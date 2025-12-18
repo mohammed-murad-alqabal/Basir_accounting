@@ -22,10 +22,10 @@ part 'customer_model.g.dart';
 ///   name: 'أحمد محمد',
 ///   phone: '0501234567',
 ///   email: 'ahmed@example.com',
-/// );
+///,);
 ///
-/// final model = CustomerModel.fromEntity(customer);
-/// await isar.customerModels.put(model);
+/// final model = CustomerModel.fromEntity(customer,);
+/// await isar.customerModels.put(model,);
 /// ```
 @collection
 class CustomerModel {
@@ -43,10 +43,10 @@ class CustomerModel {
   ///   id: 'customer-1',
   ///   name: 'أحمد محمد',
   ///   phone: '0501234567',
-  /// );
+  ///,);
   ///
-  /// final model = CustomerModel.fromEntity(customer);
-  /// await isar.customerModels.put(model);
+  /// final model = CustomerModel.fromEntity(customer,);
+  /// await isar.customerModels.put(model,);
   /// ```
   ///
   /// **Parameters:**
@@ -72,6 +72,7 @@ class CustomerModel {
   ///
   /// معرف فريد للعميل يستخدم في طبقة المجال (Domain Layer).
   /// يتم توليده عند إنشاء عميل جديد.
+  @Index(unique: true)
   late String customerId;
 
   /// اسم العميل الكامل
@@ -79,6 +80,7 @@ class CustomerModel {
   /// **مطلوب** - لا يمكن أن يكون فارغًا.
   ///
   /// **مثال:** 'أحمد محمد علي'
+  @Index()
   late String name;
 
   /// رقم هاتف العميل
@@ -109,6 +111,7 @@ class CustomerModel {
   /// تاريخ إنشاء العميل
   ///
   /// يتم تعيينه تلقائيًا عند إنشاء عميل جديد.
+  @Index()
   late DateTime createdAt;
 
   /// تاريخ آخر تحديث للعميل
@@ -123,7 +126,7 @@ class CustomerModel {
   ///
   /// **الاستخدام:**
   /// ```dart
-  /// final model = await isar.customerModels.get(1);
+  /// final model = await isar.customerModels.get(1,);
   /// final customer = model?.toEntity();
   /// ```
   ///

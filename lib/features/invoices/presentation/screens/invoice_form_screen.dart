@@ -32,7 +32,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   bool _isLoading = false;
   Customer? _selectedCustomer;
   DateTime _issuedDate = DateTime.now();
-  DateTime _dueDate = DateTime.now().add(const Duration(days: 30));
+  DateTime _dueDate = DateTime.now().add(
+    const Duration(days: 30),
+  );
   double _taxRate = 0.15; // 15% ضريبة افتراضية
   String _status = 'draft'; // مسودة افتراضياً
   List<InvoiceItem> _items = [];
@@ -46,7 +48,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       _dueDate = widget.invoice!.dueDate;
       _taxRate = widget.invoice!.taxRate;
       _status = widget.invoice!.status;
-      _items = List.from(widget.invoice!.items);
+      _items = List.from(
+        widget.invoice!.items,
+      );
     }
   }
 
@@ -59,7 +63,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   @override
   Widget build(BuildContext context) {
     final isEditing = widget.invoice != null;
-    final customersAsync = ref.watch(customersProvider);
+    final customersAsync = ref.watch(
+      customersProvider,
+    );
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -174,7 +180,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   )
                   .toList(),
               onChanged: (customer) {
-                setState(() => _selectedCustomer = customer);
+                setState(
+                  () => _selectedCustomer = customer,
+                );
               },
               validator: (value) {
                 if (value == null) {
@@ -307,7 +315,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               ],
               onChanged: (value) {
                 if (value != null) {
-                  setState(() => _status = value);
+                  setState(
+                    () => _status = value,
+                  );
                 }
               },
             ),
@@ -401,7 +411,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       );
 
   Widget _buildTotalsSection() {
-    final subtotal = _items.fold<double>(0, (sum, item) => sum + item.total);
+    final subtotal = _items.fold<double>(
+      0,
+      (sum, item) => sum + item.total,
+    );
     final taxTotal = subtotal * _taxRate;
     final grandTotal = subtotal + taxTotal;
 
@@ -508,10 +521,16 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           AppEnhancedButton(
             text: 'حفظ',
             onPressed: () {
-              final value = double.tryParse(controller.text);
+              final value = double.tryParse(
+                controller.text,
+              );
               if (value != null && value >= 0 && value <= 100) {
-                setState(() => _taxRate = value / 100);
-                Navigator.pop(context);
+                setState(
+                  () => _taxRate = value / 100,
+                );
+                Navigator.pop(
+                  context,
+                );
               }
             },
             style: AppEnhancedButtonStyle.text,
@@ -526,7 +545,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
   Future<void> _addItem() async {
     final nameController = TextEditingController();
-    final quantityController = TextEditingController(text: '1');
+    final quantityController = TextEditingController(
+      text: '1',
+    );
     final priceController = TextEditingController();
 
     await showDialog<void>(
@@ -572,8 +593,12 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             text: 'إضافة',
             onPressed: () {
               final name = nameController.text.trim();
-              final quantity = double.tryParse(quantityController.text);
-              final price = double.tryParse(priceController.text);
+              final quantity = double.tryParse(
+                quantityController.text,
+              );
+              final price = double.tryParse(
+                priceController.text,
+              );
 
               if (name.isNotEmpty && quantity != null && price != null) {
                 setState(() {
@@ -586,7 +611,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                     ),
                   );
                 });
-                Navigator.pop(context);
+                Navigator.pop(
+                  context,
+                );
               }
             },
             style: AppEnhancedButtonStyle.text,
@@ -603,12 +630,16 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
   void _removeItem(int index) {
     setState(() {
-      _items.removeAt(index);
+      _items.removeAt(
+        index,
+      );
     });
   }
 
   void _saveInvoice() {
-    unawaited(_saveInvoiceAsync());
+    unawaited(
+      _saveInvoiceAsync(),
+    );
   }
 
   Future<void> _saveInvoiceAsync() async {
@@ -636,7 +667,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       return;
     }
 
-    setState(() => _isLoading = true);
+    setState(
+      () => _isLoading = true,
+    );
 
     try {
       final invoice = Invoice(
@@ -658,7 +691,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       final isEditing = widget.invoice != null;
       final result = isEditing
           ? await ref.read(updateInvoiceProvider(invoice).future)
-          : await ref.read(addInvoiceProvider(invoice).future);
+          : await ref.read(
+              addInvoiceProvider(invoice).future,
+            );
 
       if (!mounted) return;
 
@@ -671,7 +706,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             backgroundColor: AppColors.secondary,
           ),
         );
-        Navigator.pop(context, true);
+        Navigator.pop(
+          context,
+          true,
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -692,7 +730,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       );
     } finally {
       if (mounted) {
-        setState(() => _isLoading = false);
+        setState(
+          () => _isLoading = false,
+        );
       }
     }
   }

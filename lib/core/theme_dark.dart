@@ -9,101 +9,159 @@ class AppColorsDark {
   // ===== الألوان الأساسية =====
 
   /// اللون الأساسي للوضع الليلي (أزرق فاتح)
-  static const Color primary = Color(0xFF64B5F6);
+  static const Color primary = Color(
+    0xFF64B5F6,
+  );
 
   /// اللون الأساسي الفاتح
-  static const Color primaryLight = Color(0xFF1E3A5F);
+  static const Color primaryLight = Color(
+    0xFF1E3A5F,
+  );
 
   /// اللون الأساسي الداكن
-  static const Color primaryDark = Color(0xFF90CAF9);
+  static const Color primaryDark = Color(
+    0xFF90CAF9,
+  );
 
   /// اللون الثانوي (أخضر فاتح)
-  static const Color secondary = Color(0xFF81C784);
+  static const Color secondary = Color(
+    0xFF81C784,
+  );
 
   /// اللون الثانوي الفاتح
-  static const Color secondaryLight = Color(0xFF1B3A1F);
+  static const Color secondaryLight = Color(
+    0xFF1B3A1F,
+  );
 
   /// اللون الثانوي الداكن
-  static const Color secondaryDark = Color(0xFFA5D6A7);
+  static const Color secondaryDark = Color(
+    0xFFA5D6A7,
+  );
 
   // ===== ألوان الخلفية =====
 
   /// لون الخلفية الرئيسية (رمادي داكن جداً)
-  static const Color background = Color(0xFF121212);
+  static const Color background = Color(
+    0xFF121212,
+  );
 
   /// لون السطح (للبطاقات والعناصر)
-  static const Color surface = Color(0xFF1E1E1E);
+  static const Color surface = Color(
+    0xFF1E1E1E,
+  );
 
   /// لون السطح الثانوي
-  static const Color surfaceVariant = Color(0xFF2C2C2C);
+  static const Color surfaceVariant = Color(
+    0xFF2C2C2C,
+  );
 
   // ===== ألوان الحالة =====
 
   /// لون الخطأ (أحمر فاتح)
-  static const Color error = Color(0xFFEF5350);
+  static const Color error = Color(
+    0xFFEF5350,
+  );
 
   /// لون الخطأ الفاتح
-  static const Color errorLight = Color(0xFF3A1F1F);
+  static const Color errorLight = Color(
+    0xFF3A1F1F,
+  );
 
   /// لون النجاح (أخضر فاتح)
-  static const Color success = Color(0xFF66BB6A);
+  static const Color success = Color(
+    0xFF66BB6A,
+  );
 
   /// لون النجاح الفاتح
-  static const Color successLight = Color(0xFF1B3A1F);
+  static const Color successLight = Color(
+    0xFF1B3A1F,
+  );
 
   /// لون التحذير (برتقالي فاتح)
-  static const Color warning = Color(0xFFFF9800);
+  static const Color warning = Color(
+    0xFFFF9800,
+  );
 
   /// لون التحذير الفاتح
-  static const Color warningLight = Color(0xFF3A2A1F);
+  static const Color warningLight = Color(
+    0xFF3A2A1F,
+  );
 
   /// لون المعلومات (أزرق فاتح)
-  static const Color info = Color(0xFF42A5F5);
+  static const Color info = Color(
+    0xFF42A5F5,
+  );
 
   /// لون المعلومات الفاتح
-  static const Color infoLight = Color(0xFF1E2F3A);
+  static const Color infoLight = Color(
+    0xFF1E2F3A,
+  );
 
   // ===== ألوان النصوص =====
 
   /// لون النص الأساسي (أبيض)
-  static const Color textPrimary = Color(0xFFE0E0E0);
+  static const Color textPrimary = Color(
+    0xFFE0E0E0,
+  );
 
   /// لون النص الثانوي (رمادي فاتح)
-  static const Color textSecondary = Color(0xFFB0B0B0);
+  static const Color textSecondary = Color(
+    0xFFB0B0B0,
+  );
 
   /// لون النص التوضيحي (رمادي متوسط)
-  static const Color textHint = Color(0xFF808080);
+  static const Color textHint = Color(
+    0xFF808080,
+  );
 
   /// لون النص المعطل
-  static const Color textDisabled = Color(0xFF606060);
+  static const Color textDisabled = Color(
+    0xFF606060,
+  );
 
   /// لون النص على الخلفية الفاتحة
-  static const Color textOnLight = Color(0xFF1A1A1A);
+  static const Color textOnLight = Color(
+    0xFF1A1A1A,
+  );
 
   // ===== ألوان الحدود والفواصل =====
 
   /// لون الحدود (رمادي متوسط)
-  static const Color border = Color(0xFF404040);
+  static const Color border = Color(
+    0xFF404040,
+  );
 
   /// لون الحدود الفاتحة
-  static const Color borderLight = Color(0xFF303030);
+  static const Color borderLight = Color(
+    0xFF303030,
+  );
 
   /// لون الحدود الداكنة
-  static const Color borderDark = Color(0xFF505050);
+  static const Color borderDark = Color(
+    0xFF505050,
+  );
 
   /// لون الفواصل
-  static const Color divider = Color(0xFF303030);
+  static const Color divider = Color(
+    0xFF303030,
+  );
 
   // ===== ألوان إضافية =====
 
   /// لون الظل (شفاف)
-  static const Color shadow = Color(0x33000000);
+  static const Color shadow = Color(
+    0x33000000,
+  );
 
   /// لون التراكب (شفاف)
-  static const Color overlay = Color(0x99000000);
+  static const Color overlay = Color(
+    0x99000000,
+  );
 
   /// لون التركيز
-  static const Color focus = Color(0xFF64B5F6);
+  static const Color focus = Color(
+    0xFF64B5F6,
+  );
 }
 
 /// إنشاء ثيم الوضع الليلي

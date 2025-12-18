@@ -20,7 +20,9 @@ class DocumentationRepository {
   /// Returns: Future يكتمل عند انتهاء الحفظ
   Future<void> saveCoverageReport(CoverageReport report) async {
     // TODO(dev): تنفيذ حفظ التقرير
-    throw UnimplementedError('saveCoverageReport not implemented yet');
+    throw UnimplementedError(
+      'saveCoverageReport not implemented yet',
+    );
   }
 
   /// الحصول على تاريخ التغطية
@@ -30,7 +32,9 @@ class DocumentationRepository {
   /// Returns: قائمة تقارير التغطية مرتبة حسب التاريخ
   Future<List<CoverageReport>> getCoverageHistory() async {
     // TODO(dev): تنفيذ استرجاع التاريخ
-    throw UnimplementedError('getCoverageHistory not implemented yet');
+    throw UnimplementedError(
+      'getCoverageHistory not implemented yet',
+    );
   }
 
   /// تصدير تقرير
@@ -43,7 +47,9 @@ class DocumentationRepository {
   /// Returns: محتوى التقرير المصدر
   Future<String> exportReport(ReportFormat format) async {
     // TODO(dev): تنفيذ تصدير التقرير
-    throw UnimplementedError('exportReport not implemented yet');
+    throw UnimplementedError(
+      'exportReport not implemented yet',
+    );
   }
 
   /// حذف تقارير قديمة
@@ -56,7 +62,9 @@ class DocumentationRepository {
   /// Returns: عدد التقارير المحذوفة
   Future<int> deleteOldReports(Duration olderThan) async {
     // TODO(dev): تنفيذ حذف التقارير القديمة
-    throw UnimplementedError('deleteOldReports not implemented yet');
+    throw UnimplementedError(
+      'deleteOldReports not implemented yet',
+    );
   }
 
   /// الحصول على آخر تقرير
@@ -66,7 +74,9 @@ class DocumentationRepository {
   /// Returns: آخر تقرير أو null إذا لم يوجد
   Future<CoverageReport?> getLatestReport() async {
     // TODO(dev): تنفيذ استرجاع آخر تقرير
-    throw UnimplementedError('getLatestReport not implemented yet');
+    throw UnimplementedError(
+      'getLatestReport not implemented yet',
+    );
   }
 
   /// حساب الاتجاه
@@ -79,7 +89,9 @@ class DocumentationRepository {
   /// Returns: معلومات الاتجاه
   Future<CoverageTrend> calculateTrend(Duration period) async {
     // TODO(dev): تنفيذ حساب الاتجاه
-    throw UnimplementedError('calculateTrend not implemented yet');
+    throw UnimplementedError(
+      'calculateTrend not implemented yet',
+    );
   }
 }
 

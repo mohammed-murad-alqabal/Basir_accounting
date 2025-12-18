@@ -27,7 +27,9 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final customersAsync = ref.watch(filteredCustomersProvider);
+    final customersAsync = ref.watch(
+      filteredCustomersProvider,
+    );
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -138,7 +140,9 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
     );
 
     if (result ?? false) {
-      ref.invalidate(customersProvider);
+      ref.invalidate(
+        customersProvider,
+      );
     }
   }
 
@@ -151,7 +155,9 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
     );
 
     if (result ?? false) {
-      ref.invalidate(customersProvider);
+      ref.invalidate(
+        customersProvider,
+      );
     }
   }
 }

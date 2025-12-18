@@ -14,7 +14,9 @@ class GenerationEngine {
   /// Returns: نص التوثيق المولد
   String generateDocumentation(UndocumentedElement element) {
     // TODO(dev): تنفيذ توليد التوثيق
-    throw UnimplementedError('generateDocumentation not implemented yet');
+    throw UnimplementedError(
+      'generateDocumentation not implemented yet',
+    );
   }
 
   /// توليد documentation لملف كامل
@@ -27,7 +29,9 @@ class GenerationEngine {
   /// Returns: خريطة تربط اسم العنصر بالتوثيق المولد
   Map<String, String> generateFileDocumentation(AnalysisResult result) {
     // TODO(dev): تنفيذ توليد التوثيق للملف
-    throw UnimplementedError('generateFileDocumentation not implemented yet');
+    throw UnimplementedError(
+      'generateFileDocumentation not implemented yet',
+    );
   }
 
   /// تطبيق التوثيق على الملف
@@ -44,7 +48,9 @@ class GenerationEngine {
     Map<String, String> docs,
   ) async {
     // TODO(dev): تنفيذ تطبيق التوثيق
-    throw UnimplementedError('applyDocumentation not implemented yet');
+    throw UnimplementedError(
+      'applyDocumentation not implemented yet',
+    );
   }
 
   /// استخراج السياق من العنصر
@@ -58,7 +64,9 @@ class GenerationEngine {
   // ignore: unused_element
   Map<String, dynamic> _extractContext(UndocumentedElement element) {
     // TODO(dev): تنفيذ استخراج السياق
-    throw UnimplementedError('_extractContext not implemented yet');
+    throw UnimplementedError(
+      '_extractContext not implemented yet',
+    );
   }
 
   /// توليد وصف تلقائي
@@ -72,7 +80,9 @@ class GenerationEngine {
   // ignore: unused_element
   String _generateDescription(UndocumentedElement element) {
     // TODO(dev): تنفيذ توليد الوصف
-    throw UnimplementedError('_generateDescription not implemented yet');
+    throw UnimplementedError(
+      '_generateDescription not implemented yet',
+    );
   }
 
   /// توليد توثيق للمعاملات
@@ -86,7 +96,9 @@ class GenerationEngine {
   // ignore: unused_element
   String _generateParametersDoc(String signature) {
     // TODO(dev): تنفيذ توليد توثيق المعاملات
-    throw UnimplementedError('_generateParametersDoc not implemented yet');
+    throw UnimplementedError(
+      '_generateParametersDoc not implemented yet',
+    );
   }
 
   /// توليد توثيق للقيمة المرجعة
@@ -100,7 +112,9 @@ class GenerationEngine {
   // ignore: unused_element
   String _generateReturnsDoc(String signature) {
     // TODO(dev): تنفيذ توليد توثيق القيمة المرجعة
-    throw UnimplementedError('_generateReturnsDoc not implemented yet');
+    throw UnimplementedError(
+      '_generateReturnsDoc not implemented yet',
+    );
   }
 }
 

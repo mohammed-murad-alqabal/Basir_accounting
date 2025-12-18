@@ -18,8 +18,10 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
     try {
       final models = await isar.invoiceModels.where().findAll();
       return models.map((model) => model.toEntity()).toList();
-    } catch (e) {
-      throw Exception('خطأ في جلب الفواتير: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في جلب الفواتير: $e',
+      );
     }
   }
 
@@ -32,8 +34,10 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
             orElse: () => null,
           );
       return model?.toEntity();
-    } catch (e) {
-      throw Exception('خطأ في جلب الفاتورة: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في جلب الفاتورة: $e',
+      );
     }
   }
 
@@ -43,8 +47,10 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
       final models = await isar.invoiceModels.where().findAll();
       final filtered = models.where((m) => m.customerId == customerId).toList();
       return filtered.map((model) => model.toEntity()).toList();
-    } catch (e) {
-      throw Exception('خطأ في جلب فواتير العميل: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في جلب فواتير العميل: $e',
+      );
     }
   }
 
@@ -54,20 +60,28 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
       final models = await isar.invoiceModels.where().findAll();
       final filtered = models.where((m) => m.status == status).toList();
       return filtered.map((model) => model.toEntity()).toList();
-    } catch (e) {
-      throw Exception('خطأ في جلب الفواتير حسب الحالة: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في جلب الفواتير حسب الحالة: $e',
+      );
     }
   }
 
   @override
   Future<void> addInvoice(Invoice invoice) async {
     try {
-      final model = InvoiceModel.fromEntity(invoice);
+      final model = InvoiceModel.fromEntity(
+        invoice,
+      );
       await isar.writeTxn(() async {
-        await isar.invoiceModels.put(model);
+        await isar.invoiceModels.put(
+          model,
+        );
       });
-    } catch (e) {
-      throw Exception('خطأ في إضافة الفاتورة: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في إضافة الفاتورة: $e',
+      );
     }
   }
 
@@ -83,16 +97,22 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
             );
 
         if (existingModel == null) {
-          throw Exception('الفاتورة غير موجودة');
+          throw Exception(
+            'الفاتورة غير موجودة',
+          );
         }
 
         // تحديث الفاتورة مع الاحتفاظ بنفس id
         final updatedModel = InvoiceModel.fromEntity(invoice)
           ..id = existingModel.id;
-        await isar.invoiceModels.put(updatedModel);
+        await isar.invoiceModels.put(
+          updatedModel,
+        );
       });
-    } catch (e) {
-      throw Exception('خطأ في تحديث الفاتورة: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في تحديث الفاتورة: $e',
+      );
     }
   }
 
@@ -106,11 +126,15 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
               orElse: () => null,
             );
         if (model != null) {
-          await isar.invoiceModels.delete(model.id);
+          await isar.invoiceModels.delete(
+            model.id,
+          );
         }
       });
-    } catch (e) {
-      throw Exception('خطأ في حذف الفاتورة: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في حذف الفاتورة: $e',
+      );
     }
   }
 
@@ -120,8 +144,10 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
       await isar.writeTxn(() async {
         await isar.invoiceModels.clear();
       });
-    } catch (e) {
-      throw Exception('خطأ في حذف جميع الفواتير: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في حذف جميع الفواتير: $e',
+      );
     }
   }
 
@@ -152,8 +178,10 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
         totalRevenue: totalRevenue,
         paidRevenue: paidRevenue,
       );
-    } catch (e) {
-      throw Exception('خطأ في حساب إحصائيات الفواتير: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في حساب إحصائيات الفواتير: $e',
+      );
     }
   }
 }

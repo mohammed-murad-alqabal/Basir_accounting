@@ -135,7 +135,9 @@ class _AppTextFieldState extends State<AppTextField> {
               suffixIcon: widget.obscureText
                   ? GestureDetector(
                       onTap: () {
-                        setState(() => _obscureText = !_obscureText);
+                        setState(
+                          () => _obscureText = !_obscureText,
+                        );
                       },
                       child: Icon(
                         _obscureText ? Icons.visibility_off : Icons.visibility,
@@ -213,12 +215,16 @@ class _AppSearchFieldState extends State<AppSearchField> {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
     _hasText = _controller.text.isNotEmpty;
-    _controller.addListener(_onTextChanged);
+    _controller.addListener(
+      _onTextChanged,
+    );
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onTextChanged);
+    _controller.removeListener(
+      _onTextChanged,
+    );
     if (widget.controller == null) {
       _controller.dispose();
     }
@@ -237,7 +243,9 @@ class _AppSearchFieldState extends State<AppSearchField> {
   void _handleClear() {
     _controller.clear();
     widget.onClear?.call();
-    widget.onChanged?.call('');
+    widget.onChanged?.call(
+      '',
+    );
   }
 
   @override
