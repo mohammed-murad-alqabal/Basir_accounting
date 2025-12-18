@@ -97,7 +97,7 @@ class AccessibilityChecker {
       l2,
     );
 
-    return (lighter + 0.05) / (darker + 0.05,);
+    return (lighter + 0.05) / (darker + 0.05);
   }
 
   /// يحسب السطوع النسبي للون (Relative Luminance)

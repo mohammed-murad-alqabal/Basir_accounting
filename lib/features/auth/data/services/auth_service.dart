@@ -56,7 +56,7 @@ class AuthService {
   /// Returns: كلمة المرور المشفرة كـ hex string
   String _hashPassword(String password, [String? userSalt]) {
     // إنشاء salt مركب
-    final combinedSalt = _appSalt + (userSalt ?? '',);
+    final combinedSalt = _appSalt + (userSalt ?? '');
 
     // المرحلة الأولى: إضافة salt وتشفير
     var hash = sha256.convert(utf8.encode(password + combinedSalt)).toString();
