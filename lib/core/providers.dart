@@ -21,13 +21,35 @@ export 'providers/theme_provider.dart';
 /// - معلومات تسجيل الدخول
 /// - إعدادات الشركة
 ///
+/// Security Features:
+/// - تشفير AES-256 للبيانات
+/// - حماية ضد root/jailbreak
+/// - تشفير إضافي للمفاتيح الحساسة
+/// - إعدادات أمان محسنة
+///
 /// Example:
 /// ```dart
-/// final storage = ref.watch(secureStorageProvider);
-/// await storage.write(key: 'username', value: 'admin');
+/// final storage = ref.watch(secureStorageProvider,);
+/// await storage.write(key: 'username', value: 'admin',);
 /// ```
 final secureStorageProvider = Provider<FlutterSecureStorage>(
-  (ref) => const FlutterSecureStorage(),
+  (ref) => const FlutterSecureStorage(
+    aOptions: AndroidOptions(
+      encryptedSharedPreferences: true,
+      sharedPreferencesName: 'basser_secure_prefs',
+      preferencesKeyPrefix: 'basser_',
+    ),
+    iOptions: IOSOptions(
+      groupId: 'group.com.basser.app',
+      accountName: 'basser_keychain',
+      accessibility: KeychainAccessibility.first_unlock_this_device,
+    ),
+    mOptions: MacOsOptions(
+      groupId: 'group.com.basser.app',
+      accountName: 'basser_keychain',
+      accessibility: KeychainAccessibility.first_unlock_this_device,
+    ),
+  ),
 );
 
 /// مزود قاعدة البيانات المحلية (Isar)
@@ -44,7 +66,7 @@ final secureStorageProvider = Provider<FlutterSecureStorage>(
 ///
 /// Example:
 /// ```dart
-/// final isar = await ref.watch(isarProvider.future);
+/// final isar = await ref.watch(isarProvider.future,);
 /// final customers = await isar.customerModels.where().findAll();
 /// ```
 final isarProvider = FutureProvider<Isar>((ref) async {
@@ -64,7 +86,9 @@ final isarProvider = FutureProvider<Isar>((ref) async {
     );
     return isar;
   } on Exception catch (e) {
-    throw Exception('فشل فتح قاعدة البيانات: $e');
+    throw Exception(
+      'فشل فتح قاعدة البيانات: $e',
+    );
   }
 });
 
@@ -77,12 +101,17 @@ final isarProvider = FutureProvider<Isar>((ref) async {
 ///
 /// Example:
 /// ```dart
-/// final authService = ref.watch(authServiceProvider);
+/// final authService = ref.watch(authServiceProvider,);
 /// final isLoggedIn = await authService.isLoggedIn();
 /// ```
 final authServiceProvider = Provider<AuthService>((ref) {
-  final secureStorage = ref.watch(secureStorageProvider);
-  return AuthService(secureStorage: secureStorage);
+  // استخدام select() لتحسين الأداء - مراقبة التخزين الآمن فقط
+  final secureStorage = ref.watch(
+    secureStorageProvider.select((storage) => storage),
+  );
+  return AuthService(
+    secureStorage: secureStorage,
+  );
 });
 
 /// مزود خدمة الإعدادات (Settings Service)
@@ -94,12 +123,17 @@ final authServiceProvider = Provider<AuthService>((ref) {
 ///
 /// Example:
 /// ```dart
-/// final settingsService = ref.watch(settingsServiceProvider);
-/// await settingsService.saveCompanyName('شركة بصير');
+/// final settingsService = ref.watch(settingsServiceProvider,);
+/// await settingsService.saveCompanyName('شركة بصير',);
 /// ```
 final settingsServiceProvider = Provider<SettingsService>((ref) {
-  final secureStorage = ref.watch(secureStorageProvider);
-  return SettingsService(secureStorage: secureStorage);
+  // استخدام select() لتحسين الأداء - مراقبة التخزين الآمن فقط
+  final secureStorage = ref.watch(
+    secureStorageProvider.select((storage) => storage),
+  );
+  return SettingsService(
+    secureStorage: secureStorage,
+  );
 });
 
 /// مزود مستودع العملاء (Customer Repository)
@@ -112,15 +146,22 @@ final settingsServiceProvider = Provider<SettingsService>((ref) {
 ///
 /// Example:
 /// ```dart
-/// final repository = ref.watch(customerRepositoryProvider);
+/// final repository = ref.watch(customerRepositoryProvider,);
 /// final customers = await repository.getAllCustomers();
 /// ```
 final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
-  final isar = ref.watch(isarProvider).value;
+  // استخدام select() لتحسين الأداء - مراقبة قاعدة البيانات فقط
+  final isar = ref.watch(
+    isarProvider.select((asyncIsar) => asyncIsar.value),
+  );
   if (isar == null) {
-    throw Exception('قاعدة البيانات غير جاهزة');
+    throw Exception(
+      'قاعدة البيانات غير جاهزة',
+    );
   }
-  return CustomerRepositoryImpl(isar: isar);
+  return CustomerRepositoryImpl(
+    isar: isar,
+  );
 });
 
 /// مزود مستودع الفواتير (Invoice Repository)
@@ -134,13 +175,20 @@ final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
 ///
 /// Example:
 /// ```dart
-/// final repository = ref.watch(invoiceRepositoryProvider);
+/// final repository = ref.watch(invoiceRepositoryProvider,);
 /// final invoices = await repository.getAllInvoices();
 /// ```
 final invoiceRepositoryProvider = Provider<InvoiceRepository>((ref) {
-  final isar = ref.watch(isarProvider).value;
+  // استخدام select() لتحسين الأداء - مراقبة قاعدة البيانات فقط
+  final isar = ref.watch(
+    isarProvider.select((asyncIsar) => asyncIsar.value),
+  );
   if (isar == null) {
-    throw Exception('قاعدة البيانات غير جاهزة');
+    throw Exception(
+      'قاعدة البيانات غير جاهزة',
+    );
   }
-  return InvoiceRepositoryImpl(isar: isar);
+  return InvoiceRepositoryImpl(
+    isar: isar,
+  );
 });

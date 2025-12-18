@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:basser_app/core/constants.dart';
+import 'package:basser_app/features/auth/domain/models/auth_models.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -23,9 +25,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 ///
 /// Example:
 /// ```dart
-/// final authService = AuthService(secureStorage: secureStorage);
-/// await authService.createAccount('admin', 'password123');
-/// final isLoggedIn = await authService.login('admin', 'password123');
+/// final authService = AuthService(secureStorage: secureStorage,);
+/// await authService.createAccount('admin', 'password123',);
+/// final isLoggedIn = await authService.login('admin', 'password123',);
 /// ```
 class AuthService {
   /// إنشاء خدمة المصادقة
@@ -36,6 +38,50 @@ class AuthService {
 
   /// خدمة التخزين الآمن لحفظ بيانات الاعتماد
   final FlutterSecureStorage secureStorage;
+
+  /// Salt ثابت للتطبيق (في بيئة إنتاج حقيقية، يجب أن يكون فريد لكل مستخدم)
+  static const String _appSalt = 'basser_mvp_2025_secure_salt';
+
+  /// تشفير كلمة المرور باستخدام SHA-256 مع Salt
+  ///
+  /// يطبق تشفير متعدد المراحل لتحسين الأمان:
+  /// 1. إضافة salt للكلمة المرور
+  /// 2. تطبيق SHA-256 عدة مرات (key stretching)
+  /// 3. إضافة salt إضافي
+  ///
+  /// Parameters:
+  /// - [password]: كلمة المرور المراد تشفيرها
+  /// - [userSalt]: salt خاص بالمستخدم (اختياري)
+  ///
+  /// Returns: كلمة المرور المشفرة كـ hex string
+  String _hashPassword(String password, [String? userSalt]) {
+    // إنشاء salt مركب
+    final combinedSalt = _appSalt + (userSalt ?? '',);
+
+    // المرحلة الأولى: إضافة salt وتشفير
+    var hash = sha256.convert(utf8.encode(password + combinedSalt)).toString();
+
+    // Key stretching: تطبيق التشفير 1000 مرة لزيادة الأمان
+    for (var i = 0; i < 1000; i++) {
+      hash = sha256.convert(utf8.encode(hash + combinedSalt)).toString();
+    }
+
+    return hash;
+  }
+
+  /// إنشاء salt عشوائي للمستخدم
+  ///
+  /// Returns: salt عشوائي بطول 32 حرف
+  String _generateUserSalt() {
+    final random = Random.secure();
+    final bytes = List<int>.generate(
+      16,
+      (i) => random.nextInt(256),
+    );
+    return base64Encode(
+      bytes,
+    );
+  }
 
   /// التحقق من وجود حساب مسجل
   ///
@@ -56,10 +102,14 @@ class AuthService {
   /// ```
   Future<bool> hasAccount() async {
     try {
-      final username = await secureStorage.read(key: StorageKeys.username);
+      final username = await secureStorage.read(
+        key: StorageKeys.username,
+      );
       return username != null;
-    } catch (e) {
-      throw Exception('خطأ في التحقق من الحساب: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في التحقق من الحساب: $e',
+      );
     }
   }
 
@@ -82,30 +132,52 @@ class AuthService {
   ///
   /// Example:
   /// ```dart
-  /// await authService.createAccount('admin', 'password123');
+  /// await authService.createAccount('admin', 'password123',);
   /// ```
   Future<void> createAccount(String username, String password) async {
     try {
       // التحقق من صحة المدخلات
       if (username.isEmpty || username.length < 3) {
-        throw Exception('اسم المستخدم يجب أن يكون 3 أحرف على الأقل');
+        throw Exception(
+          'اسم المستخدم يجب أن يكون 3 أحرف على الأقل',
+        );
       }
       if (password.isEmpty || password.length < 6) {
-        throw Exception('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+        throw Exception(
+          'كلمة المرور يجب أن تكون 6 أحرف على الأقل',
+        );
       }
 
-      // تشفير كلمة المرور
-      final passwordHash = sha256.convert(utf8.encode(password)).toString();
+      // إنشاء salt فريد للمستخدم
+      final userSalt = _generateUserSalt();
+
+      // تشفير كلمة المرور باستخدام التشفير المحسن
+      final passwordHash = _hashPassword(
+        password,
+        userSalt,
+      );
 
       // حفظ البيانات بشكل آمن
-      await secureStorage.write(key: StorageKeys.username, value: username);
+      await secureStorage.write(
+        key: StorageKeys.username,
+        value: username,
+      );
       await secureStorage.write(
         key: StorageKeys.passwordHash,
         value: passwordHash,
       );
-      await secureStorage.write(key: StorageKeys.isLoggedIn, value: 'true');
-    } catch (e) {
-      throw Exception('خطأ في إنشاء الحساب: $e');
+      await secureStorage.write(
+        key: '${StorageKeys.username}_salt',
+        value: userSalt,
+      );
+      await secureStorage.write(
+        key: StorageKeys.isLoggedIn,
+        value: 'true',
+      );
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في إنشاء الحساب: $e',
+      );
     }
   }
 
@@ -131,11 +203,11 @@ class AuthService {
   /// Example:
   /// ```dart
   /// try {
-  ///   final success = await authService.login('admin', 'password123');
+  ///   final success = await authService.login('admin', 'password123',);
   ///   if (success) {
   ///     // انتقل إلى لوحة التحكم
   ///   }
-  /// } catch (e) {
+  /// } on Exception catch (e) {
   ///   // عرض رسالة خطأ
   /// }
   /// ```
@@ -147,26 +219,43 @@ class AuthService {
       final storedPasswordHash = await secureStorage.read(
         key: StorageKeys.passwordHash,
       );
+      final userSalt = await secureStorage.read(
+        key: '${StorageKeys.username}_salt',
+      );
 
       if (storedUsername == null || storedPasswordHash == null) {
-        throw Exception('لا يوجد حساب مسجل');
+        throw Exception(
+          'لا يوجد حساب مسجل',
+        );
       }
 
       if (storedUsername != username) {
-        throw Exception('اسم المستخدم غير صحيح');
+        throw Exception(
+          'اسم المستخدم غير صحيح',
+        );
       }
 
-      // التحقق من كلمة المرور
-      final passwordHash = sha256.convert(utf8.encode(password)).toString();
+      // التحقق من كلمة المرور باستخدام التشفير المحسن
+      final passwordHash = _hashPassword(
+        password,
+        userSalt,
+      );
       if (storedPasswordHash != passwordHash) {
-        throw Exception('كلمة المرور غير صحيحة');
+        throw Exception(
+          'كلمة المرور غير صحيحة',
+        );
       }
 
       // تحديث حالة تسجيل الدخول
-      await secureStorage.write(key: StorageKeys.isLoggedIn, value: 'true');
+      await secureStorage.write(
+        key: StorageKeys.isLoggedIn,
+        value: 'true',
+      );
       return true;
-    } catch (e) {
-      throw Exception('خطأ في تسجيل الدخول: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في تسجيل الدخول: $e',
+      );
     }
   }
 
@@ -185,9 +274,14 @@ class AuthService {
   /// ```
   Future<void> logout() async {
     try {
-      await secureStorage.write(key: StorageKeys.isLoggedIn, value: 'false');
-    } catch (e) {
-      throw Exception('خطأ في تسجيل الخروج: $e');
+      await secureStorage.write(
+        key: StorageKeys.isLoggedIn,
+        value: 'false',
+      );
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في تسجيل الخروج: $e',
+      );
     }
   }
 
@@ -210,7 +304,9 @@ class AuthService {
   /// ```
   Future<bool> isLoggedIn() async {
     try {
-      final isLoggedIn = await secureStorage.read(key: StorageKeys.isLoggedIn);
+      final isLoggedIn = await secureStorage.read(
+        key: StorageKeys.isLoggedIn,
+      );
       return isLoggedIn == 'true';
     } on Exception {
       return false;
@@ -226,7 +322,7 @@ class AuthService {
   ///
   /// Example:
   /// ```dart
-  /// await authService.setKeepLoggedIn(keepLoggedIn: true);
+  /// await authService.setKeepLoggedIn(keepLoggedIn: true,);
   /// ```
   Future<void> setKeepLoggedIn({required bool keepLoggedIn}) async {
     try {
@@ -234,8 +330,10 @@ class AuthService {
         key: StorageKeys.keepLoggedIn,
         value: keepLoggedIn.toString(),
       );
-    } catch (e) {
-      throw Exception('خطأ في حفظ إعداد البقاء مسجلاً: $e');
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في حفظ إعداد البقاء مسجلاً: $e',
+      );
     }
   }
 
@@ -268,10 +366,18 @@ class AuthService {
   /// ```
   Future<void> loginAsGuest() async {
     try {
-      await secureStorage.write(key: StorageKeys.isGuest, value: 'true');
-      await secureStorage.write(key: StorageKeys.isLoggedIn, value: 'true');
-    } catch (e) {
-      throw Exception('خطأ في تسجيل الدخول كضيف: $e');
+      await secureStorage.write(
+        key: StorageKeys.isGuest,
+        value: 'true',
+      );
+      await secureStorage.write(
+        key: StorageKeys.isLoggedIn,
+        value: 'true',
+      );
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في تسجيل الدخول كضيف: $e',
+      );
     }
   }
 
@@ -285,7 +391,9 @@ class AuthService {
   /// ```
   Future<bool> isGuest() async {
     try {
-      final isGuest = await secureStorage.read(key: StorageKeys.isGuest);
+      final isGuest = await secureStorage.read(
+        key: StorageKeys.isGuest,
+      );
       return isGuest == 'true';
     } on Exception {
       return false;
@@ -302,17 +410,24 @@ class AuthService {
   ///
   /// Example:
   /// ```dart
-  /// await authService.convertGuestToUser('admin', 'password123');
+  /// await authService.convertGuestToUser('admin', 'password123',);
   /// ```
   Future<void> convertGuestToUser(String username, String password) async {
     try {
       // إنشاء الحساب
-      await createAccount(username, password);
+      await createAccount(
+        username,
+        password,
+      );
 
       // إزالة وضع الضيف
-      await secureStorage.delete(key: StorageKeys.isGuest);
-    } catch (e) {
-      throw Exception('خطأ في تحويل الضيف إلى مستخدم: $e');
+      await secureStorage.delete(
+        key: StorageKeys.isGuest,
+      );
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في تحويل الضيف إلى مستخدم: $e',
+      );
     }
   }
 
@@ -326,12 +441,14 @@ class AuthService {
   /// ```dart
   /// final username = await authService.getCurrentUsername();
   /// if (username != null) {
-  ///   print('مرحباً $username');
+  ///   debugPrint('مرحباً $username',);
   /// }
   /// ```
   Future<String?> getCurrentUsername() async {
     try {
-      return await secureStorage.read(key: StorageKeys.username);
+      return await secureStorage.read(
+        key: StorageKeys.username,
+      );
     } on Exception {
       return null;
     }
@@ -356,39 +473,190 @@ class AuthService {
   ///
   /// Example:
   /// ```dart
-  /// await authService.changePassword('oldPass123', 'newPass456');
+  /// await authService.changePassword('oldPass123', 'newPass456',);
   /// ```
   Future<void> changePassword(String oldPassword, String newPassword) async {
     try {
       final storedPasswordHash = await secureStorage.read(
         key: StorageKeys.passwordHash,
       );
+      final userSalt = await secureStorage.read(
+        key: '${StorageKeys.username}_salt',
+      );
 
       if (storedPasswordHash == null) {
-        throw Exception('لا يوجد حساب مسجل');
+        throw Exception(
+          'لا يوجد حساب مسجل',
+        );
       }
 
-      // التحقق من كلمة المرور القديمة
-      final oldPasswordHash =
-          sha256.convert(utf8.encode(oldPassword)).toString();
+      // التحقق من كلمة المرور القديمة باستخدام التشفير المحسن
+      final oldPasswordHash = _hashPassword(
+        oldPassword,
+        userSalt,
+      );
       if (storedPasswordHash != oldPasswordHash) {
-        throw Exception('كلمة المرور القديمة غير صحيحة');
+        throw Exception(
+          'كلمة المرور القديمة غير صحيحة',
+        );
       }
 
       // التحقق من صحة كلمة المرور الجديدة
       if (newPassword.isEmpty || newPassword.length < 6) {
-        throw Exception('كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل');
+        throw Exception(
+          'كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل',
+        );
       }
 
+      // إنشاء salt جديد لكلمة المرور الجديدة (أمان إضافي)
+      final newUserSalt = _generateUserSalt();
+
       // تشفير وحفظ كلمة المرور الجديدة
-      final newPasswordHash =
-          sha256.convert(utf8.encode(newPassword)).toString();
+      final newPasswordHash = _hashPassword(
+        newPassword,
+        newUserSalt,
+      );
       await secureStorage.write(
         key: StorageKeys.passwordHash,
         value: newPasswordHash,
       );
-    } catch (e) {
-      throw Exception('خطأ في تغيير كلمة المرور: $e');
+      await secureStorage.write(
+        key: '${StorageKeys.username}_salt',
+        value: newUserSalt,
+      );
+    } on Exception catch (e) {
+      throw Exception(
+        'خطأ في تغيير كلمة المرور: $e',
+      );
+    }
+  }
+
+  /// التحقق من قوة كلمة المرور
+  ///
+  /// يتحقق من معايير الأمان لكلمة المرور:
+  /// - الطول الأدنى 8 أحرف
+  /// - وجود أحرف كبيرة وصغيرة
+  /// - وجود أرقام
+  /// - وجود رموز خاصة
+  ///
+  /// Parameters:
+  /// - [password]: كلمة المرور المراد فحصها
+  ///
+  /// Returns: نتيجة التحقق مع التفاصيل
+  PasswordStrengthResult checkPasswordStrength(String password) {
+    final issues = <String>[];
+    var score = 0;
+
+    // فحص الطول
+    if (password.length < 8) {
+      issues.add(
+        'كلمة المرور يجب أن تكون 8 أحرف على الأقل',
+      );
+    } else {
+      score += 25;
+    }
+
+    // فحص الأحرف الكبيرة
+    if (!password.contains(RegExp('[A-Z]'))) {
+      issues.add(
+        'يجب أن تحتوي على حرف كبير واحد على الأقل',
+      );
+    } else {
+      score += 25;
+    }
+
+    // فحص الأحرف الصغيرة
+    if (!password.contains(RegExp('[a-z]'))) {
+      issues.add(
+        'يجب أن تحتوي على حرف صغير واحد على الأقل',
+      );
+    } else {
+      score += 25;
+    }
+
+    // فحص الأرقام
+    if (!password.contains(RegExp('[0-9]'))) {
+      issues.add(
+        'يجب أن تحتوي على رقم واحد على الأقل',
+      );
+    } else {
+      score += 15;
+    }
+
+    // فحص الرموز الخاصة
+    if (!password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      issues.add(
+        'يجب أن تحتوي على رمز خاص واحد على الأقل (!@#\$%^&*)',
+      );
+    } else {
+      score += 10;
+    }
+
+    return PasswordStrengthResult(
+      score: score,
+      isStrong: score >= 80,
+      issues: issues,
+    );
+  }
+
+  /// فحص سلامة البيانات المحفوظة
+  ///
+  /// يتحقق من سلامة وتماسك البيانات في التخزين الآمن
+  ///
+  /// Returns: تقرير حالة البيانات
+  Future<SecurityAuditResult> performSecurityAudit() async {
+    final issues = <String>[];
+    var securityScore = 100;
+
+    try {
+      // فحص وجود البيانات الأساسية
+      final username = await secureStorage.read(
+        key: StorageKeys.username,
+      );
+      final passwordHash = await secureStorage.read(
+        key: StorageKeys.passwordHash,
+      );
+      final userSalt = await secureStorage.read(
+        key: '${StorageKeys.username}_salt',
+      );
+
+      if (username != null && passwordHash == null) {
+        issues.add(
+          'اسم المستخدم موجود لكن كلمة المرور مفقودة',
+        );
+        securityScore -= 50;
+      }
+
+      if (passwordHash != null && userSalt == null) {
+        issues.add(
+          'كلمة المرور موجودة لكن Salt مفقود (تشفير قديم)',
+        );
+        securityScore -= 30;
+      }
+
+      // فحص قوة التشفير
+      if (passwordHash != null && passwordHash.length != 64) {
+        issues.add(
+          'تنسيق تشفير كلمة المرور غير صحيح',
+        );
+        securityScore -= 40;
+      }
+
+      return SecurityAuditResult(
+        securityScore: securityScore,
+        isSecure: securityScore >= 80,
+        issues: issues,
+        hasAccount: username != null,
+        hasValidEncryption: passwordHash != null && userSalt != null,
+      );
+    } on Exception catch (e) {
+      return SecurityAuditResult(
+        securityScore: 0,
+        isSecure: false,
+        issues: ['خطأ في فحص البيانات: $e'],
+        hasAccount: false,
+        hasValidEncryption: false,
+      );
     }
   }
 }

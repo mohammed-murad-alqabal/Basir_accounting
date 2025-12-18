@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
 
 /// واجهة مستودع الفواتير (Invoice Repository Interface)
@@ -29,7 +30,7 @@ abstract class InvoiceRepository {
   /// **مثال:**
   /// ```dart
   /// final invoices = await repository.getAllInvoices();
-  /// print('عدد الفواتير: ${invoices.length}');
+  /// debugPrint('عدد الفواتير: ${invoices.length}',);
   /// ```
   Future<List<Invoice>> getAllInvoices();
 
@@ -44,12 +45,14 @@ abstract class InvoiceRepository {
   ///
   /// **مثال:**
   /// ```dart
-  /// final invoice = await repository.getInvoiceById('inv-001');
+  /// final invoice = await repository.getInvoiceById('inv-001',);
   /// if (invoice != null) {
-  ///   print('الفاتورة: ${invoice.id}');
+  ///   debugPrint('الفاتورة: ${invoice.id}',);
   /// }
   /// ```
-  Future<Invoice?> getInvoiceById(String id);
+  Future<Invoice?> getInvoiceById(
+    String id,
+  );
 
   /// الحصول على فواتير عميل معين
   ///
@@ -62,10 +65,12 @@ abstract class InvoiceRepository {
   ///
   /// **مثال:**
   /// ```dart
-  /// final invoices = await repository.getInvoicesByCustomerId('customer-1');
-  /// print('عدد فواتير العميل: ${invoices.length}');
+  /// final invoices = await repository.getInvoicesByCustomerId('customer-1',);
+  /// debugPrint('عدد فواتير العميل: ${invoices.length}',);
   /// ```
-  Future<List<Invoice>> getInvoicesByCustomerId(String customerId);
+  Future<List<Invoice>> getInvoicesByCustomerId(
+    String customerId,
+  );
 
   /// الحصول على فواتير حسب الحالة
   ///
@@ -78,10 +83,12 @@ abstract class InvoiceRepository {
   ///
   /// **مثال:**
   /// ```dart
-  /// final paidInvoices = await repository.getInvoicesByStatus('paid');
-  /// print('الفواتير المدفوعة: ${paidInvoices.length}');
+  /// final paidInvoices = await repository.getInvoicesByStatus('paid',);
+  /// debugPrint('الفواتير المدفوعة: ${paidInvoices.length}',);
   /// ```
-  Future<List<Invoice>> getInvoicesByStatus(String status);
+  Future<List<Invoice>> getInvoicesByStatus(
+    String status,
+  );
 
   /// إضافة فاتورة جديدة
   ///
@@ -94,10 +101,12 @@ abstract class InvoiceRepository {
   ///
   /// **مثال:**
   /// ```dart
-  /// final invoice = Invoice(...);
-  /// await repository.addInvoice(invoice);
+  /// final invoice = Invoice(...,);
+  /// await repository.addInvoice(invoice,);
   /// ```
-  Future<void> addInvoice(Invoice invoice);
+  Future<void> addInvoice(
+    Invoice invoice,
+  );
 
   /// تحديث بيانات فاتورة
   ///
@@ -110,10 +119,12 @@ abstract class InvoiceRepository {
   ///
   /// **مثال:**
   /// ```dart
-  /// final updatedInvoice = invoice.copyWith(status: 'paid');
-  /// await repository.updateInvoice(updatedInvoice);
+  /// final updatedInvoice = invoice.copyWith(status: 'paid',);
+  /// await repository.updateInvoice(updatedInvoice,);
   /// ```
-  Future<void> updateInvoice(Invoice invoice);
+  Future<void> updateInvoice(
+    Invoice invoice,
+  );
 
   /// حذف فاتورة
   ///
@@ -126,9 +137,11 @@ abstract class InvoiceRepository {
   ///
   /// **مثال:**
   /// ```dart
-  /// await repository.deleteInvoice('inv-001');
+  /// await repository.deleteInvoice('inv-001',);
   /// ```
-  Future<void> deleteInvoice(String id);
+  Future<void> deleteInvoice(
+    String id,
+  );
 
   /// حذف جميع الفواتير
   ///
@@ -153,7 +166,7 @@ abstract class InvoiceRepository {
   /// **مثال:**
   /// ```dart
   /// final stats = await repository.getInvoiceStatistics();
-  /// print('إجمالي الإيرادات: ${stats.totalRevenue}');
+  /// debugPrint('إجمالي الإيرادات: ${stats.totalRevenue}',);
   /// ```
   Future<InvoiceStatistics> getInvoiceStatistics();
 }
@@ -174,8 +187,8 @@ abstract class InvoiceRepository {
 ///   overdueInvoices: 10,
 ///   totalRevenue: 50000.0,
 ///   paidRevenue: 37500.0,
-/// );
-/// print('نسبة الدفع: ${(stats.paidInvoices / stats.totalInvoices) * 100}%');
+///,);
+/// debugPrint('نسبة الدفع: ${(stats.paidInvoices / stats.totalInvoices) * 100}%',);
 /// ```
 class InvoiceStatistics {
   /// إنشاء كائن إحصائيات الفواتير

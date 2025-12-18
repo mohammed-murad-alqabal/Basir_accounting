@@ -14,14 +14,17 @@ import 'package:flutter/material.dart';
 /// - حالات خاصة (loading, disabled)
 /// - مراقبة overflow warnings
 class ButtonTestScreen extends StatefulWidget {
+  /// ينشئ شاشة اختبار الأزرار
   const ButtonTestScreen({super.key});
 
   @override
   State<ButtonTestScreen> createState() => _ButtonTestScreenState();
 }
 
+/// حالة شاشة اختبار الأزرار
 class _ButtonTestScreenState extends State<ButtonTestScreen>
     with TickerProviderStateMixin {
+  /// متحكم التبويبات للتنقل بين أقسام الاختبار
   late TabController _tabController;
   final int _overflowCount = 0;
   final List<String> _testResults = [];
@@ -29,8 +32,13 @@ class _ButtonTestScreenState extends State<ButtonTestScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-    _logResult('بدء جلسة اختبار الأزرار المحسّنة');
+    _tabController = TabController(
+      length: 4,
+      vsync: this,
+    );
+    _logResult(
+      'بدء جلسة اختبار الأزرار المحسّنة',
+    );
   }
 
   @override
@@ -41,12 +49,11 @@ class _ButtonTestScreenState extends State<ButtonTestScreen>
 
   void _logResult(String result) {
     setState(() {
-      _testResults
-          .add('${DateTime.now().toString().substring(11, 19)}: $result');
+      _testResults.add(
+        '${DateTime.now().toString().substring(11, 19)}: $result',
+      );
     });
-    if (kDebugMode) {
-      print('ButtonTest: $result');
-    }
+    if (kDebugMode) {}
   }
 
   @override
@@ -166,15 +173,16 @@ class _ButtonTestScreenState extends State<ButtonTestScreen>
           children: [
             _buildTestSection('نصوص طويلة جداً', [
               AppEnhancedButton(
-                text:
-                    'هذا نص طويل جداً جداً جداً يهدف لاختبار قدرة الزر على التعامل مع النصوص الطويلة بدون حدوث قص أو مشاكل في التخطيط والعرض',
+                text: 'هذا نص طويل جداً جداً جداً يهدف لاختبار قدرة الزر '
+                    'على التعامل مع النصوص الطويلة بدون حدوث قص أو مشاكل '
+                    'في التخطيط والعرض',
                 onPressed: () => _logResult('نص طويل جداً - نجح'),
                 maxLines: 3,
               ),
               const SizedBox(height: 8),
               AppEnhancedButton(
-                text:
-                    'نص طويل مع أيقونة: إضافة عميل جديد إلى النظام مع جميع البيانات المطلوبة والتحقق من صحة المعلومات',
+                text: 'نص طويل مع أيقونة: إضافة عميل جديد إلى النظام '
+                    'مع جميع البيانات المطلوبة والتحقق من صحة المعلومات',
                 onPressed: () => _logResult('نص طويل مع أيقونة - نجح'),
                 icon: Icons.person_add,
                 maxLines: 2,
@@ -250,7 +258,9 @@ class _ButtonTestScreenState extends State<ButtonTestScreen>
                     Text('عدد تحذيرات Overflow: $_overflowCount'),
                     Text('عدد النتائج المسجلة: ${_testResults.length}'),
                     Text(
-                      'وقت الجلسة: ${DateTime.now().difference(DateTime.now().subtract(const Duration(minutes: 1))).inMinutes} دقيقة',
+                      'وقت الجلسة: ${DateTime.now().difference(
+                            DateTime.now().subtract(const Duration(minutes: 1)),
+                          ).inMinutes} دقيقة',
                     ),
                   ],
                 ),
@@ -372,7 +382,9 @@ class _ButtonTestScreenState extends State<ButtonTestScreen>
 
   /// يشغل اختبار كمية (50 زر).
   void _runBulkTest() {
-    _logResult('بدء اختبار الكمية (50 زر)');
+    _logResult(
+      'بدء اختبار الكمية (50 زر)',
+    );
 
     unawaited(
       showDialog<void>(
@@ -402,7 +414,9 @@ class _ButtonTestScreenState extends State<ButtonTestScreen>
               text: 'إغلاق',
               onPressed: () {
                 Navigator.of(context).pop();
-                _logResult('انتهاء اختبار الكمية - نجح');
+                _logResult(
+                  'انتهاء اختبار الكمية - نجح',
+                );
               },
               style: AppEnhancedButtonStyle.text,
               size: AppEnhancedButtonSize.small,
@@ -415,7 +429,9 @@ class _ButtonTestScreenState extends State<ButtonTestScreen>
 
   /// يشغل اختبار الضغط (100 زر).
   void _runStressTest() {
-    _logResult('بدء اختبار الضغط (100 زر)');
+    _logResult(
+      'بدء اختبار الضغط (100 زر)',
+    );
 
     unawaited(
       showDialog<void>(
@@ -452,7 +468,9 @@ class _ButtonTestScreenState extends State<ButtonTestScreen>
               text: 'إغلاق',
               onPressed: () {
                 Navigator.of(context).pop();
-                _logResult('انتهاء اختبار الضغط - نجح');
+                _logResult(
+                  'انتهاء اختبار الضغط - نجح',
+                );
               },
               style: AppEnhancedButtonStyle.text,
               size: AppEnhancedButtonSize.small,
@@ -465,8 +483,12 @@ class _ButtonTestScreenState extends State<ButtonTestScreen>
 
   /// يصدر النتائج.
   void _exportResults() {
-    final results = _testResults.join('\n');
-    _logResult('تم تصدير ${_testResults.length} نتيجة');
+    final results = _testResults.join(
+      '\n',
+    );
+    _logResult(
+      'تم تصدير ${_testResults.length} نتيجة',
+    );
 
     unawaited(
       showDialog<void>(

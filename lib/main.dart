@@ -21,13 +21,17 @@ void main() async {
   await FontManager.initialize();
 
   // تحسين الأداء: تعيين اتجاه النظام
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  await SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
+  );
 
   // بدء التطبيق
-  runApp(const ProviderScope(child: BasserApp()));
+  runApp(
+    const ProviderScope(child: BasserApp()),
+  );
 }
 
 /// تطبيق بصير الرئيسي
@@ -38,7 +42,9 @@ class BasserApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // مراقبة حالة الثيم من provider
-    final themeMode = ref.watch(themeProvider);
+    final themeMode = ref.watch(
+      themeProvider,
+    );
 
     return MaterialApp(
       title: AppConfig.appName,
@@ -63,10 +69,16 @@ class BasserApp extends ConsumerWidget {
       localeResolutionCallback: (locale, supportedLocales) {
         // إذا كانت اللغة عربية، استخدم RTL
         if (locale?.languageCode == 'ar') {
-          return const Locale('ar', 'SA');
+          return const Locale(
+            'ar',
+            'SA',
+          );
         }
         // وإلا استخدم الإنجليزية
-        return const Locale('en', 'US');
+        return const Locale(
+          'en',
+          'US',
+        );
       },
     );
   }
@@ -91,24 +103,36 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     super.initState();
     // تهيئة Isar من خلال provider
-    unawaited(_initializeApp());
+    unawaited(
+      _initializeApp(),
+    );
   }
 
   Future<void> _initializeApp() async {
     try {
       // ✅ تهيئة متوازية لتحسين الأداء (إزالة التأخير الاصطناعي)
-      setState(() => _status = 'جاري التهيئة...');
+      setState(
+        () => _status = 'جاري التهيئة...',
+      );
 
       // تهيئة جميع الخدمات بالتوازي لتحسين الأداء
-      await Future.wait([
-        ref.read(isarProvider.future),
-        // يمكن إضافة خدمات أخرى هنا للتهيئة المتوازية
-      ]);
+      await Future.wait(
+        [
+          ref.read(isarProvider.future),
+          // يمكن إضافة خدمات أخرى هنا للتهيئة المتوازية
+        ],
+      );
 
       // التحقق من حالة المصادقة
-      setState(() => _status = 'جاري التحقق من الحساب...');
-      final authService = ref.read(authServiceProvider);
-      await _checkAuthStatus(authService);
+      setState(
+        () => _status = 'جاري التحقق من الحساب...',
+      );
+      final authService = ref.read(
+        authServiceProvider,
+      );
+      await _checkAuthStatus(
+        authService,
+      );
     } on Exception catch (e) {
       setState(() {
         _status = 'حدث خطأ أثناء التهيئة';
@@ -143,16 +167,24 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
     // إذا كان ضيف أو مسجل دخول مع البقاء مسجلاً
     if (isGuest || (isLoggedIn && keepLoggedIn)) {
-      await Navigator.of(context).pushReplacementNamed('/dashboard');
+      await Navigator.of(context).pushReplacementNamed(
+        '/dashboard',
+      );
     } else if (!hasAccount) {
       // لا يوجد حساب - اذهب للإعداد أو تسجيل الدخول
-      await Navigator.of(context).pushReplacementNamed('/login');
+      await Navigator.of(context).pushReplacementNamed(
+        '/login',
+      );
     } else if (isLoggedIn) {
       // مسجل دخول لكن بدون البقاء مسجلاً
-      await Navigator.of(context).pushReplacementNamed('/dashboard');
+      await Navigator.of(context).pushReplacementNamed(
+        '/dashboard',
+      );
     } else {
       // يوجد حساب لكن غير مسجل دخول
-      await Navigator.of(context).pushReplacementNamed('/login');
+      await Navigator.of(context).pushReplacementNamed(
+        '/login',
+      );
     }
   }
 

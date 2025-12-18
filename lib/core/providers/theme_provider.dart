@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -19,13 +20,17 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
   /// تهيئة المزود وتحميل الثيم
   void _init() {
     // تحميل الثيم بدون انتظار (fire and forget)
-    unawaited(_loadThemeMode());
+    unawaited(
+      _loadThemeMode(),
+    );
   }
 
   /// تحميل وضع الثيم المحفوظ
   Future<void> _loadThemeMode() async {
     try {
-      final savedMode = await _storage.read(key: _themeModeKey);
+      final savedMode = await _storage.read(
+        key: _themeModeKey,
+      );
       if (savedMode != null) {
         state = ThemeMode.values.firstWhere(
           (mode) => mode.toString() == savedMode,
@@ -33,7 +38,9 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
         );
       }
     } on Exception catch (e) {
-      debugPrint('Error loading theme mode: $e');
+      debugPrint(
+        'Error loading theme mode: $e',
+      );
       state = ThemeMode.light;
     }
   }
@@ -41,16 +48,23 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
   /// تبديل بين الوضع الفاتح والداكن
   Future<void> toggleTheme() async {
     final newMode = state == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-    await setThemeMode(newMode);
+    await setThemeMode(
+      newMode,
+    );
   }
 
   /// تعيين وضع الثيم
   Future<void> setThemeMode(ThemeMode mode) async {
     state = mode;
     try {
-      await _storage.write(key: _themeModeKey, value: mode.toString());
+      await _storage.write(
+        key: _themeModeKey,
+        value: mode.toString(),
+      );
     } on Exception catch (e) {
-      debugPrint('Error saving theme mode: $e');
+      debugPrint(
+        'Error saving theme mode: $e',
+      );
     }
   }
 
@@ -68,6 +82,9 @@ final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>(
 
 /// مزود للتحقق من الوضع الداكن
 final isDarkModeProvider = Provider<bool>((ref) {
-  final themeMode = ref.watch(themeProvider);
-  return themeMode == ThemeMode.dark;
+  // استخدام select() لتحسين الأداء - مراقبة الوضع فقط
+  final themeMode = ref.watch(
+    themeProvider.select((mode) => mode == ThemeMode.dark),
+  );
+  return themeMode;
 });

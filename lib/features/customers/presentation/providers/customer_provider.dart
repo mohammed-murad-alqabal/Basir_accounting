@@ -13,12 +13,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 ///
 /// **الاستخدام:**
 /// ```dart
-/// final customersAsync = ref.watch(customersProvider);
+/// final customersAsync = ref.watch(customersProvider,);
 /// customersAsync.when(
 ///   data: (customers) => ListView.builder(...),
 ///   loading: () => CircularProgressIndicator(),
 ///   error: (error, stack) => Text('خطأ: $error'),
-/// );
+///,);
 /// ```
 ///
 /// **Side Effects:**
@@ -27,7 +27,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 ///
 /// **Returns:** [AsyncValue<List<Customer>>] قائمة العملاء
 final customersProvider = FutureProvider<List<Customer>>((ref) async {
-  final repository = ref.watch(customerRepositoryProvider);
+  final repository = ref.watch(
+    customerRepositoryProvider,
+  );
   return repository.getAllCustomers();
 });
 
@@ -43,9 +45,9 @@ final customersProvider = FutureProvider<List<Customer>>((ref) async {
 ///   phone: '0501234567',
 ///   createdAt: DateTime.now(),
 ///   updatedAt: DateTime.now(),
-/// );
+///,);
 ///
-/// final result = await ref.read(addCustomerProvider(customer).future);
+/// final result = await ref.read(addCustomerProvider(customer).future,);
 /// if (result) {
 ///   // تمت الإضافة بنجاح
 /// }
@@ -63,11 +65,17 @@ final addCustomerProvider = FutureProvider.family<bool, Customer>((
   ref,
   customer,
 ) async {
-  final repository = ref.watch(customerRepositoryProvider);
+  final repository = ref.watch(
+    customerRepositoryProvider,
+  );
 
   try {
-    await repository.addCustomer(customer);
-    ref.invalidate(customersProvider);
+    await repository.addCustomer(
+      customer,
+    );
+    ref.invalidate(
+      customersProvider,
+    );
     return true;
   } on Exception {
     return false;
@@ -83,11 +91,11 @@ final addCustomerProvider = FutureProvider.family<bool, Customer>((
 /// final updatedCustomer = customer.copyWith(
 ///   phone: '0509876543',
 ///   updatedAt: DateTime.now(),
-/// );
+///,);
 ///
 /// final result = await ref.read(
 ///   updateCustomerProvider(updatedCustomer).future,
-/// );
+///,);
 /// if (result) {
 ///   // تم التحديث بنجاح
 /// }
@@ -105,11 +113,17 @@ final updateCustomerProvider = FutureProvider.family<bool, Customer>((
   ref,
   customer,
 ) async {
-  final repository = ref.watch(customerRepositoryProvider);
+  final repository = ref.watch(
+    customerRepositoryProvider,
+  );
 
   try {
-    await repository.updateCustomer(customer);
-    ref.invalidate(customersProvider);
+    await repository.updateCustomer(
+      customer,
+    );
+    ref.invalidate(
+      customersProvider,
+    );
     return true;
   } on Exception {
     return false;
@@ -122,7 +136,7 @@ final updateCustomerProvider = FutureProvider.family<bool, Customer>((
 ///
 /// **الاستخدام:**
 /// ```dart
-/// final result = await ref.read(deleteCustomerProvider('customer-1').future);
+/// final result = await ref.read(deleteCustomerProvider('customer-1').future,);
 /// if (result) {
 ///   // تم الحذف بنجاح
 /// }
@@ -141,11 +155,17 @@ final deleteCustomerProvider = FutureProvider.family<bool, String>((
   ref,
   customerId,
 ) async {
-  final repository = ref.watch(customerRepositoryProvider);
+  final repository = ref.watch(
+    customerRepositoryProvider,
+  );
 
   try {
-    await repository.deleteCustomer(customerId);
-    ref.invalidate(customersProvider);
+    await repository.deleteCustomer(
+      customerId,
+    );
+    ref.invalidate(
+      customersProvider,
+    );
     return true;
   } on Exception {
     return false;
@@ -159,14 +179,16 @@ final deleteCustomerProvider = FutureProvider.family<bool, String>((
 /// **الاستخدام:**
 /// ```dart
 /// // قراءة نص البحث
-/// final searchQuery = ref.watch(customerSearchProvider);
+/// final searchQuery = ref.watch(customerSearchProvider,);
 ///
 /// // تحديث نص البحث
 /// ref.read(customerSearchProvider.notifier).state = 'أحمد';
 /// ```
 ///
 /// **القيمة الافتراضية:** سلسلة فارغة ('')
-final customerSearchProvider = StateProvider<String>((ref) => '');
+final customerSearchProvider = StateProvider<String>(
+  (ref) => '',
+);
 
 /// Provider لقائمة العملاء المفلترة حسب البحث
 ///
@@ -175,7 +197,7 @@ final customerSearchProvider = StateProvider<String>((ref) => '');
 ///
 /// **الاستخدام:**
 /// ```dart
-/// final filteredAsync = ref.watch(filteredCustomersProvider);
+/// final filteredAsync = ref.watch(filteredCustomersProvider,);
 /// filteredAsync.when(
 ///   data: (customers) => ListView.builder(
 ///     itemCount: customers.length,
@@ -183,7 +205,7 @@ final customerSearchProvider = StateProvider<String>((ref) => '');
 ///   ),
 ///   loading: () => CircularProgressIndicator(),
 ///   error: (error, stack) => Text('خطأ: $error'),
-/// );
+///,);
 /// ```
 ///
 /// **السلوك:**
@@ -198,8 +220,12 @@ final customerSearchProvider = StateProvider<String>((ref) => '');
 ///
 /// **Returns:** [AsyncValue<List<Customer>>] قائمة العملاء المفلترة
 final filteredCustomersProvider = Provider<AsyncValue<List<Customer>>>((ref) {
-  final searchQuery = ref.watch(customerSearchProvider);
-  final customersAsync = ref.watch(customersProvider);
+  final searchQuery = ref.watch(
+    customerSearchProvider,
+  );
+  final customersAsync = ref.watch(
+    customersProvider,
+  );
 
   return customersAsync.whenData((customers) {
     if (searchQuery.isEmpty) {
