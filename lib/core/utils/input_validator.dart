@@ -28,26 +28,26 @@ class InputValidator {
 
     // فحص الطول
     if (username.length < 3) {
-      issues.add('اسم المستخدم يجب أن يكون 3 أحرف على الأقل',);
+      issues.add('اسم المستخدم يجب أن يكون 3 أحرف على الأقل');
     } else if (username.length > 20) {
-      issues.add('اسم المستخدم يجب أن يكون 20 حرف على الأكثر',);
+      issues.add('اسم المستخدم يجب أن يكون 20 حرف على الأكثر');
     }
 
     // فحص الأحرف المسموحة
     if (!RegExp(r'^[a-zA-Z][a-zA-Z0-9_]*$').hasMatch(username)) {
-      issues.add('اسم المستخدم يجب أن يبدأ بحرف ويحتوي على أحرف وأرقام فقط',);
+      issues.add('اسم المستخدم يجب أن يبدأ بحرف ويحتوي على أحرف وأرقام فقط');
     }
 
     // فحص الكلمات المحظورة
     final forbiddenWords = ['admin', 'root', 'user', 'test', 'guest', 'null'];
     if (forbiddenWords.contains(username.toLowerCase())) {
-      issues.add('اسم المستخدم محظور، يرجى اختيار اسم آخر',);
+      issues.add('اسم المستخدم محظور، يرجى اختيار اسم آخر');
     }
 
     return ValidationResult(
       isValid: issues.isEmpty,
       issues: issues,
-);
+    );
   }
 
   /// التحقق من صحة كلمة المرور
@@ -75,7 +75,7 @@ class InputValidator {
 
     // فحص الطول
     if (password.length < 8) {
-      issues.add('كلمة المرور يجب أن تكون 8 أحرف على الأقل',);
+      issues.add('كلمة المرور يجب أن تكون 8 أحرف على الأقل');
     } else if (password.length >= 12) {
       score += 20; // نقاط إضافية للطول الجيد
     } else {
@@ -84,21 +84,21 @@ class InputValidator {
 
     // فحص الأحرف الكبيرة
     if (!password.contains(RegExp('[A-Z]'))) {
-      issues.add('يجب أن تحتوي على حرف كبير واحد على الأقل',);
+      issues.add('يجب أن تحتوي على حرف كبير واحد على الأقل');
     } else {
       score += 15;
     }
 
     // فحص الأحرف الصغيرة
     if (!password.contains(RegExp('[a-z]'))) {
-      issues.add('يجب أن تحتوي على حرف صغير واحد على الأقل',);
+      issues.add('يجب أن تحتوي على حرف صغير واحد على الأقل');
     } else {
       score += 15;
     }
 
     // فحص الأرقام
     if (!password.contains(RegExp('[0-9]'))) {
-      issues.add('يجب أن تحتوي على رقم واحد على الأقل',);
+      issues.add('يجب أن تحتوي على رقم واحد على الأقل');
     } else {
       score += 15;
     }
@@ -107,7 +107,7 @@ class InputValidator {
     final hasSpecialChars =
         password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
     if (strictMode && !hasSpecialChars) {
-      issues.add(r'يجب أن تحتوي على رمز خاص واحد على الأقل (!@#$%^&*)',);
+      issues.add(r'يجب أن تحتوي على رمز خاص واحد على الأقل (!@#$%^&*)');
     } else if (hasSpecialChars) {
       score += 20; // نقاط إضافية للرموز الخاصة
     }
@@ -115,7 +115,7 @@ class InputValidator {
     // فحص عدم التشابه مع اسم المستخدم
     if (username != null &&
         password.toLowerCase().contains(username.toLowerCase())) {
-      issues.add('كلمة المرور يجب ألا تحتوي على اسم المستخدم',);
+      issues.add('كلمة المرور يجب ألا تحتوي على اسم المستخدم');
       score -= 10;
     }
 
@@ -130,15 +130,15 @@ class InputValidator {
     ];
     for (final pattern in commonPatterns) {
       if (password.toLowerCase().contains(pattern)) {
-        issues.add('كلمة المرور تحتوي على نمط شائع وغير آمن',);
+        issues.add('كلمة المرور تحتوي على نمط شائع وغير آمن');
         score -= 15;
         break;
       }
     }
 
     // فحص التكرار
-    if (RegExp('(.)1{2,}').hasMatch(password)) {
-      issues.add('تجنب تكرار نفس الحرف أكثر من مرتين متتاليتين',);
+    if (RegExp(r'(.)\1{2,}').hasMatch(password)) {
+      issues.add('تجنب تكرار نفس الحرف أكثر من مرتين متتاليتين');
       score -= 5;
     }
 
@@ -146,7 +146,7 @@ class InputValidator {
       isValid: issues.isEmpty,
       issues: issues,
       score: score.clamp(0, 100),
-);
+    );
   }
 
   /// التحقق من صحة البريد الإلكتروني
@@ -161,21 +161,21 @@ class InputValidator {
     // فحص التنسيق الأساسي
     final emailRegex = RegExp(
       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-);
+    );
 
     if (!emailRegex.hasMatch(email)) {
-      issues.add('تنسيق البريد الإلكتروني غير صحيح',);
+      issues.add('تنسيق البريد الإلكتروني غير صحيح');
     }
 
     // فحص الطول
     if (email.length > 254) {
-      issues.add('البريد الإلكتروني طويل جداً',);
+      issues.add('البريد الإلكتروني طويل جداً');
     }
 
     return ValidationResult(
       isValid: issues.isEmpty,
       issues: issues,
-);
+    );
   }
 
   /// تنظيف النص من المحتوى الضار
@@ -192,7 +192,7 @@ class InputValidator {
 
     if (!allowHtml) {
       // إزالة HTML tags
-      cleaned = cleaned.replaceAll(RegExp('<[^>]*>'), '',);
+      cleaned = cleaned.replaceAll(RegExp('<[^>]*>'), '');
 
       // تحويل الأحرف الخاصة
       cleaned = cleaned
@@ -200,23 +200,23 @@ class InputValidator {
           .replaceAll('<', '&lt;')
           .replaceAll('>', '&gt;')
           .replaceAll('"', '&quot;')
-          .replaceAll(''', '&#x27;',);
+          .replaceAll("'", '&#x27;');
     }
 
     // إزالة null bytes
-    cleaned = cleaned.replaceAll('\x00', '',);
+    cleaned = cleaned.replaceAll('\x00', '');
 
     // إزالة SQL injection patterns
     final sqlPatterns = [
-      RegExp(r'';s*--', caseSensitive: false),
-      RegExp(r'';s*#', caseSensitive: false),
-      RegExp(r'';s*/*', caseSensitive: false),
-      RegExp(r'unions+select', caseSensitive: false),
-      RegExp(r'drops+table', caseSensitive: false),
+      RegExp(r';\s*--', caseSensitive: false),
+      RegExp(r';\s*#', caseSensitive: false),
+      RegExp(r';\s*/\*', caseSensitive: false),
+      RegExp(r'union\s+select', caseSensitive: false),
+      RegExp(r'drop\s+table', caseSensitive: false),
     ];
 
     for (final pattern in sqlPatterns) {
-      cleaned = cleaned.replaceAll(pattern, '',);
+      cleaned = cleaned.replaceAll(pattern, '');
     }
 
     return cleaned;
@@ -232,19 +232,19 @@ class InputValidator {
     final issues = <String>[];
 
     // إزالة المسافات والرموز
-    final cleanPhone = phone.replaceAll(RegExp(r'[s-()]'), '');
+    final cleanPhone = phone.replaceAll(RegExp(r'[\s\-()]'), '');
 
     // فحص التنسيق السعودي
-    final saudiPhoneRegex = RegExp(r'^(+966|966|0)?5[0-9]{8}$');
+    final saudiPhoneRegex = RegExp(r'^(\+966|966|0)?5[0-9]{8}$');
 
     if (!saudiPhoneRegex.hasMatch(cleanPhone)) {
-      issues.add('رقم الهاتف يجب أن يكون رقم سعودي صحيح (05xxxxxxxx)',);
+      issues.add('رقم الهاتف يجب أن يكون رقم سعودي صحيح (05xxxxxxxx)');
     }
 
     return ValidationResult(
       isValid: issues.isEmpty,
       issues: issues,
-);
+    );
   }
 
   /// التحقق من صحة الرقم الضريبي السعودي
@@ -257,17 +257,17 @@ class InputValidator {
     final issues = <String>[];
 
     // إزالة المسافات
-    final cleanTaxNumber = taxNumber.replaceAll(' ', '',);
+    final cleanTaxNumber = taxNumber.replaceAll(' ', '');
 
     // فحص التنسيق (15 رقم)
-    if (!RegExp(r'^d{15}$').hasMatch(cleanTaxNumber)) {
-      issues.add('الرقم الضريبي يجب أن يكون 15 رقم',);
+    if (!RegExp(r'^\d{15}$').hasMatch(cleanTaxNumber)) {
+      issues.add('الرقم الضريبي يجب أن يكون 15 رقم');
     }
 
     return ValidationResult(
       isValid: issues.isEmpty,
       issues: issues,
-);
+    );
   }
 
   /// فحص المدخلات للحماية من الهجمات
@@ -282,16 +282,16 @@ class InputValidator {
 
     // فحص SQL Injection
     final sqlPatterns = [
-      r''.*or.*'.*=.*'',
-      r''.*union.*select',
-      r''.*drop.*table',
-      r''.*insert.*into',
-      r''.*delete.*from',
+      "'.*or.*'.*=.*'",
+      "'.*union.*select",
+      "'.*drop.*table",
+      "'.*insert.*into",
+      "'.*delete.*from",
     ];
 
     for (final pattern in sqlPatterns) {
       if (RegExp(pattern, caseSensitive: false).hasMatch(input)) {
-        threats.add('محاولة SQL Injection محتملة',);
+        threats.add('محاولة SQL Injection محتملة');
         riskLevel += 30;
         break;
       }
@@ -299,31 +299,31 @@ class InputValidator {
 
     // فحص XSS
     final xssPatterns = [
-      r'<script.*?>',
-      r'javascript:',
-      r'onw+s*=',
-      r'<iframe.*?>',
+      '<script.*?>',
+      'javascript:',
+      r'on\w+\s*=',
+      '<iframe.*?>',
     ];
 
     for (final pattern in xssPatterns) {
       if (RegExp(pattern, caseSensitive: false).hasMatch(input)) {
-        threats.add('محاولة XSS محتملة',);
+        threats.add('محاولة XSS محتملة');
         riskLevel += 25;
         break;
       }
     }
 
     // فحص Path Traversal
-    if (input.contains('../') || input.contains('..\\')) {
-      threats.add('محاولة Path Traversal محتملة',);
+    if (input.contains('../') || input.contains(r'..\')) {
+      threats.add('محاولة Path Traversal محتملة');
       riskLevel += 20;
     }
 
     // فحص Command Injection
-    final cmdPatterns = [r';s*rms', r';s*cats', r';s*lss', r'`.*`'];
+    final cmdPatterns = [r';\s*rm\s', r';\s*cat\s', r';\s*ls\s', '`.*`'];
     for (final pattern in cmdPatterns) {
       if (RegExp(pattern).hasMatch(input)) {
-        threats.add('محاولة Command Injection محتملة',);
+        threats.add('محاولة Command Injection محتملة');
         riskLevel += 35;
         break;
       }
@@ -333,7 +333,7 @@ class InputValidator {
       isSafe: threats.isEmpty,
       riskLevel: riskLevel.clamp(0, 100),
       threats: threats,
-);
+    );
   }
 }
 
