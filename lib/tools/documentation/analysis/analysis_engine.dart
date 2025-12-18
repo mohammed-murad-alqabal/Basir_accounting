@@ -12,7 +12,9 @@ class AnalysisEngine {
   /// Returns: نتيجة التحليل تحتوي على العناصر غير الموثقة ونسبة التغطية
   Future<AnalysisResult> analyzeFile(String filePath) async {
     // TODO(dev): تنفيذ تحليل الملف
-    throw UnimplementedError('analyzeFile not implemented yet');
+    throw UnimplementedError(
+      'analyzeFile not implemented yet',
+    );
   }
 
   /// تحليل مجلد كامل
@@ -25,7 +27,9 @@ class AnalysisEngine {
   /// Returns: قائمة بنتائج التحليل لجميع الملفات
   Future<List<AnalysisResult>> analyzeDirectory(String dirPath) async {
     // TODO(dev): تنفيذ تحليل المجلد
-    throw UnimplementedError('analyzeDirectory not implemented yet');
+    throw UnimplementedError(
+      'analyzeDirectory not implemented yet',
+    );
   }
 
   /// الحصول على إحصائيات التغطية
@@ -35,7 +39,9 @@ class AnalysisEngine {
   /// Returns: إحصائيات التغطية الشاملة
   CoverageStats getCoverageStats() {
     // TODO(dev): تنفيذ حساب الإحصائيات
-    throw UnimplementedError('getCoverageStats not implemented yet');
+    throw UnimplementedError(
+      'getCoverageStats not implemented yet',
+    );
   }
 }
 

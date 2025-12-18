@@ -16,7 +16,7 @@ import 'package:flutter/foundation.dart';
 ///   filePath: 'lib/features/customers/customer_repository.dart',
 ///   lineNumber: 42,
 ///   metadata: {'userId': '123', 'action': 'load'},
-/// );
+///,);
 /// ```
 @immutable
 class LogEntry {
@@ -127,8 +127,15 @@ class LogEntry {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, timestamp, type, level, message, filePath, lineNumber);
+  int get hashCode => Object.hash(
+        id,
+        timestamp,
+        type,
+        level,
+        message,
+        filePath,
+        lineNumber,
+      );
 }
 
 /// أنواع السجلات المختلفة.

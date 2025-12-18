@@ -10,7 +10,7 @@
 ///   archive: ArchiveConfig(),
 ///   report: ReportConfig(),
 ///   security: SecurityConfig(),
-/// );
+///,);
 /// ```
 class ErrorTrackingConfig {
   /// ينشئ تكوين جديد لنظام تتبع الأخطاء.

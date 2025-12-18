@@ -4,11 +4,15 @@ import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Provider لخدمة PDF
-final pdfServiceProvider = Provider((ref) => PdfService());
+final pdfServiceProvider = Provider(
+  (ref) => PdfService(),
+);
 
 /// Provider لقائمة جميع الفواتير
 final invoicesProvider = FutureProvider<List<Invoice>>((ref) async {
-  final repository = ref.watch(invoiceRepositoryProvider);
+  final repository = ref.watch(
+    invoiceRepositoryProvider,
+  );
   return repository.getAllInvoices();
 });
 
@@ -17,11 +21,18 @@ final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
   ref,
   invoice,
 ) async {
-  final repository = ref.watch(invoiceRepositoryProvider);
+  // استخدام select() لتحسين الأداء - مراقبة المستودع فقط
+  final repository = ref.watch(
+    invoiceRepositoryProvider.select((repo) => repo),
+  );
 
   try {
-    await repository.addInvoice(invoice);
-    ref.invalidate(invoicesProvider);
+    await repository.addInvoice(
+      invoice,
+    );
+    ref.invalidate(
+      invoicesProvider,
+    );
     return true;
   } on Exception {
     return false;
@@ -33,11 +44,18 @@ final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
   ref,
   invoice,
 ) async {
-  final repository = ref.watch(invoiceRepositoryProvider);
+  // استخدام select() لتحسين الأداء - مراقبة المستودع فقط
+  final repository = ref.watch(
+    invoiceRepositoryProvider.select((repo) => repo),
+  );
 
   try {
-    await repository.updateInvoice(invoice);
-    ref.invalidate(invoicesProvider);
+    await repository.updateInvoice(
+      invoice,
+    );
+    ref.invalidate(
+      invoicesProvider,
+    );
     return true;
   } on Exception {
     return false;
@@ -49,11 +67,18 @@ final deleteInvoiceProvider = FutureProvider.family<bool, String>((
   ref,
   invoiceId,
 ) async {
-  final repository = ref.watch(invoiceRepositoryProvider);
+  // استخدام select() لتحسين الأداء - مراقبة المستودع فقط
+  final repository = ref.watch(
+    invoiceRepositoryProvider.select((repo) => repo),
+  );
 
   try {
-    await repository.deleteInvoice(invoiceId);
-    ref.invalidate(invoicesProvider);
+    await repository.deleteInvoice(
+      invoiceId,
+    );
+    ref.invalidate(
+      invoicesProvider,
+    );
     return true;
   } on Exception {
     return false;
@@ -61,16 +86,27 @@ final deleteInvoiceProvider = FutureProvider.family<bool, String>((
 });
 
 /// State Provider لحالة البحث
-final invoiceSearchProvider = StateProvider<String>((ref) => '');
+final invoiceSearchProvider = StateProvider<String>(
+  (ref) => '',
+);
 
 /// State Provider لحالة الفلتر
-final invoiceFilterProvider = StateProvider<String>((ref) => 'الكل');
+final invoiceFilterProvider = StateProvider<String>(
+  (ref) => 'الكل',
+);
 
 /// Provider لقائمة الفواتير المفلترة حسب البحث والحالة
 final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
-  final searchQuery = ref.watch(invoiceSearchProvider);
-  final filterStatus = ref.watch(invoiceFilterProvider);
-  final invoicesAsync = ref.watch(invoicesProvider);
+  // استخدام select() لتحسين الأداء - يعيد البناء فقط عند تغيير القيم
+  final searchQuery = ref.watch(
+    invoiceSearchProvider.select((value) => value),
+  );
+  final filterStatus = ref.watch(
+    invoiceFilterProvider.select((value) => value),
+  );
+  final invoicesAsync = ref.watch(
+    invoicesProvider,
+  );
 
   return invoicesAsync.whenData((invoices) {
     var filtered = invoices;
@@ -98,7 +134,9 @@ final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
 
 /// Provider لحساب إجمالي المبيعات
 final totalSalesProvider = Provider<AsyncValue<double>>((ref) {
-  final invoicesAsync = ref.watch(invoicesProvider);
+  final invoicesAsync = ref.watch(
+    invoicesProvider,
+  );
 
   return invoicesAsync.whenData(
     (invoices) =>
@@ -108,10 +146,41 @@ final totalSalesProvider = Provider<AsyncValue<double>>((ref) {
 
 /// Provider لحساب عدد الفواتير المتأخرة
 final overdueInvoicesCountProvider = Provider<AsyncValue<int>>((ref) {
-  final invoicesAsync = ref.watch(invoicesProvider);
+  final invoicesAsync = ref.watch(
+    invoicesProvider,
+  );
 
   return invoicesAsync.whenData(
     (invoices) =>
         invoices.where((invoice) => invoice.status == 'overdue').length,
   );
 });
+
+/// Provider محسن لحالة البحث (مع debouncing)
+final searchQueryProvider = Provider<String>(
+  (ref) => ref.watch(invoiceSearchProvider.select((query) => query.trim())),
+);
+
+/// Provider محسن لحالة الفلتر
+final filterStatusProvider = Provider<String>(
+  (ref) => ref.watch(invoiceFilterProvider.select((status) => status)),
+);
+
+/// Provider لعدد الفواتير الإجمالي
+final invoicesCountProvider = Provider<AsyncValue<int>>(
+  (ref) => ref.watch(
+    invoicesProvider.select(
+      (asyncInvoices) => asyncInvoices.whenData((invoices) => invoices.length),
+    ),
+  ),
+);
+
+/// Provider لحالة وجود فواتير
+final hasInvoicesProvider = Provider<AsyncValue<bool>>(
+  (ref) => ref.watch(
+    invoicesProvider.select(
+      (asyncInvoices) =>
+          asyncInvoices.whenData((invoices) => invoices.isNotEmpty),
+    ),
+  ),
+);

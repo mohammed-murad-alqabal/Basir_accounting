@@ -30,7 +30,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 icon: const Icon(Icons.bug_report),
                 tooltip: 'اختبار الأزرار',
                 onPressed: () {
-                  unawaited(Navigator.of(context).pushNamed('/button-test'));
+                  unawaited(
+                    Navigator.of(context).pushNamed('/button-test'),
+                  );
                 },
               ),
           ],
@@ -71,17 +73,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
           iconSize: 26,
           elevation: 8,
           onTap: (index) {
-            setState(() => _selectedIndex = index);
+            setState(
+              () => _selectedIndex = index,
+            );
             switch (index) {
               case 0:
                 // البقاء في لوحة التحكم
                 break;
               case 1:
-                unawaited(Navigator.of(context).pushNamed('/invoices'));
+                unawaited(
+                  Navigator.of(context).pushNamed('/invoices'),
+                );
               case 2:
-                unawaited(Navigator.of(context).pushNamed('/customers'));
+                unawaited(
+                  Navigator.of(context).pushNamed('/customers'),
+                );
               case 3:
-                unawaited(Navigator.of(context).pushNamed('/settings'));
+                unawaited(
+                  Navigator.of(context).pushNamed('/settings'),
+                );
             }
           },
           items: const [
@@ -186,22 +196,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Row(
             children: [
               Expanded(
-                child: AppEnhancedButton(
+                child: AppPrimaryButton(
                   text: 'فاتورة جديدة',
                   onPressed: () {
-                    unawaited(Navigator.of(context).pushNamed('/invoices'));
+                    unawaited(
+                      Navigator.of(context).pushNamed('/invoices'),
+                    );
                   },
                   icon: Icons.receipt_long,
                 ),
               ),
               const SizedBox(width: AppSpacing.md),
               Expanded(
-                child: AppEnhancedButton(
+                child: AppSecondaryButton(
                   text: 'عميل جديد',
                   onPressed: () {
-                    unawaited(Navigator.of(context).pushNamed('/customers'));
+                    unawaited(
+                      Navigator.of(context).pushNamed('/customers'),
+                    );
                   },
-                  style: AppEnhancedButtonStyle.secondary,
                   icon: Icons.person_add,
                 ),
               ),

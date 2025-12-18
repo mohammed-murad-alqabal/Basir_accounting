@@ -2,7 +2,6 @@
 ///
 /// يحتوي على widget مخصص لعرض شعار التطبيق
 /// بدلاً من استخدام Material Icons
-library;
 
 import 'package:flutter/material.dart';
 
@@ -59,7 +58,10 @@ class _BasserLogoPainter extends CustomPainter {
       ),
       Radius.circular(size.width * 0.05),
     );
-    canvas.drawRRect(invoiceRect, paint);
+    canvas.drawRRect(
+      invoiceRect,
+      paint,
+    );
 
     // رسم خطوط الفاتورة (3 خطوط أفقية)
     final lineY1 = size.height * 0.3;
@@ -85,9 +87,15 @@ class _BasserLogoPainter extends CustomPainter {
     final checkPath = Path()
       ..moveTo(size.width * 0.65, size.height * 0.75)
       ..lineTo(size.width * 0.7, size.height * 0.8)
-      ..lineTo(size.width * 0.8, size.height * 0.65);
+      ..lineTo(
+        size.width * 0.8,
+        size.height * 0.65,
+      );
 
-    canvas.drawPath(checkPath, paint);
+    canvas.drawPath(
+      checkPath,
+      paint,
+    );
 
     // رسم دائرة خلف علامة الصح
     canvas.drawCircle(
@@ -104,7 +112,10 @@ class _BasserLogoPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
-    canvas.drawPath(checkPath, checkPaintWhite);
+    canvas.drawPath(
+      checkPath,
+      checkPaintWhite,
+    );
   }
 
   @override
@@ -159,15 +170,24 @@ class _BasserIconPainter extends CustomPainter {
       ),
       Radius.circular(size.width * 0.1),
     );
-    canvas.drawRRect(rect, paint);
+    canvas.drawRRect(
+      rect,
+      paint,
+    );
 
     // رسم علامة الصح
     final checkPath = Path()
       ..moveTo(size.width * 0.3, size.height * 0.5)
       ..lineTo(size.width * 0.45, size.height * 0.65)
-      ..lineTo(size.width * 0.7, size.height * 0.35);
+      ..lineTo(
+        size.width * 0.7,
+        size.height * 0.35,
+      );
 
-    canvas.drawPath(checkPath, paint);
+    canvas.drawPath(
+      checkPath,
+      paint,
+    );
   }
 
   @override

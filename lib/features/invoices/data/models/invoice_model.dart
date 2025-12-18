@@ -52,8 +52,12 @@ class InvoiceItemModel {
   /// يحول نموذج Isar إلى كيان [InvoiceItem].
   ///
   /// **Returns:** كيان بند الفاتورة
-  InvoiceItem toEntity() =>
-      InvoiceItem(id: id, name: name, quantity: quantity, price: price);
+  InvoiceItem toEntity() => InvoiceItem(
+        id: id,
+        name: name,
+        quantity: quantity,
+        price: price,
+      );
 }
 
 /// نموذج الفاتورة (Invoice Model)
@@ -69,9 +73,9 @@ class InvoiceItemModel {
 ///
 /// **مثال:**
 /// ```dart
-/// final invoice = Invoice(...);
-/// final model = InvoiceModel.fromEntity(invoice);
-/// await isar.invoiceModels.put(model);
+/// final invoice = Invoice(...,);
+/// final model = InvoiceModel.fromEntity(invoice,);
+/// await isar.invoiceModels.put(model,);
 /// ```
 @collection
 class InvoiceModel {
@@ -84,9 +88,9 @@ class InvoiceModel {
   ///
   /// **الاستخدام:**
   /// ```dart
-  /// final invoice = Invoice(...);
-  /// final model = InvoiceModel.fromEntity(invoice);
-  /// await isar.invoiceModels.put(model);
+  /// final invoice = Invoice(...,);
+  /// final model = InvoiceModel.fromEntity(invoice,);
+  /// await isar.invoiceModels.put(model,);
   /// ```
   ///
   /// **Parameters:**
@@ -110,9 +114,11 @@ class InvoiceModel {
   Id id = Isar.autoIncrement;
 
   /// معرف الفاتورة الفريد (UUID)
+  @Index(unique: true)
   late String invoiceId;
 
   /// معرف العميل
+  @Index()
   late String customerId;
 
   /// اسم العميل
@@ -122,6 +128,7 @@ class InvoiceModel {
   late List<InvoiceItemModel> items;
 
   /// تاريخ إصدار الفاتورة
+  @Index()
   late DateTime issuedDate;
 
   /// تاريخ استحقاق الدفع
@@ -131,12 +138,14 @@ class InvoiceModel {
   late double taxRate;
 
   /// حالة الفاتورة (draft, issued, paid, overdue, cancelled)
+  @Index()
   late String status;
 
   /// ملاحظات إضافية (اختياري)
   String? notes;
 
   /// تاريخ إنشاء الفاتورة
+  @Index()
   late DateTime createdAt;
 
   /// تاريخ آخر تحديث
@@ -148,7 +157,7 @@ class InvoiceModel {
   ///
   /// **الاستخدام:**
   /// ```dart
-  /// final model = await isar.invoiceModels.get(1);
+  /// final model = await isar.invoiceModels.get(1,);
   /// final invoice = model?.toEntity();
   /// ```
   ///

@@ -2,11 +2,10 @@
 ///
 /// يحتوي على widgets مخصصة لعرض رسومات توضيحية
 /// في الشاشات الفارغة والحالات الخاصة
-library;
 
 import 'package:flutter/material.dart';
 
-/// رسم توضيحي لحالة "لا توجد بيانات"
+/// رسم توضيحي لحالة 'لا توجد بيانات'
 class EmptyStateIllustration extends StatelessWidget {
   /// إنشاء رسم توضيحي لحالة فارغة
   ///
@@ -60,7 +59,10 @@ class _EmptyStatePainter extends CustomPainter {
 
     canvas
       ..drawPath(folderPath, fillPaint)
-      ..drawPath(folderPath, paint);
+      ..drawPath(
+        folderPath,
+        paint,
+      );
 
     // رسم علامة استفهام في المنتصف
     final textPainter = TextPainter(
@@ -132,20 +134,33 @@ class _SuccessPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     // رسم دائرة
-    final center = Offset(size.width / 2, size.height / 2);
+    final center = Offset(
+      size.width / 2,
+      size.height / 2,
+    );
     final radius = size.width * 0.4;
 
     canvas
       ..drawCircle(center, radius, fillPaint)
-      ..drawCircle(center, radius, paint);
+      ..drawCircle(
+        center,
+        radius,
+        paint,
+      );
 
     // رسم علامة صح
     final checkPath = Path()
       ..moveTo(size.width * 0.3, size.height * 0.5)
       ..lineTo(size.width * 0.45, size.height * 0.65)
-      ..lineTo(size.width * 0.7, size.height * 0.35);
+      ..lineTo(
+        size.width * 0.7,
+        size.height * 0.35,
+      );
 
-    canvas.drawPath(checkPath, paint);
+    canvas.drawPath(
+      checkPath,
+      paint,
+    );
   }
 
   @override
@@ -196,12 +211,19 @@ class _ErrorPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     // رسم دائرة
-    final center = Offset(size.width / 2, size.height / 2);
+    final center = Offset(
+      size.width / 2,
+      size.height / 2,
+    );
     final radius = size.width * 0.4;
 
     canvas
       ..drawCircle(center, radius, fillPaint)
-      ..drawCircle(center, radius, paint);
+      ..drawCircle(
+        center,
+        radius,
+        paint,
+      );
 
     // رسم علامة X
     canvas

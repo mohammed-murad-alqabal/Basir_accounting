@@ -31,7 +31,9 @@ class FontManager {
   static bool get isPrimaryFontLoaded => _isPrimaryFontLoaded;
 
   /// يحصل على قائمة الأخطاء.
-  static List<String> get errors => List.unmodifiable(_errors);
+  static List<String> get errors => List.unmodifiable(
+        _errors,
+      );
 
   /// يهيئ مدير الخطوط ويتحقق من توفر الخطوط.
   ///
@@ -40,19 +42,26 @@ class FontManager {
   /// Returns true إذا تم تحميل الخط الأساسي بنجاح.
   static Future<bool> initialize() async {
     try {
-      developer.log('Initializing FontManager...', name: 'FontManager');
+      developer.log(
+        'Initializing FontManager...',
+        name: 'FontManager',
+      );
 
       // محاولة تحميل خط Cairo
-      _isPrimaryFontLoaded = await _loadFont(primaryFont);
+      _isPrimaryFontLoaded = await _loadFont(
+        primaryFont,
+      );
 
       if (_isPrimaryFontLoaded) {
         developer.log(
-          'Primary font "$primaryFont" loaded successfully',
+          'Primary font $primaryFont loaded successfully',
           name: 'FontManager',
         );
       } else {
-        const error = 'Failed to load primary font "$primaryFont"';
-        _errors.add(error);
+        const error = 'Failed to load primary font $primaryFont';
+        _errors.add(
+          error,
+        );
         developer.log(
           error,
           name: 'FontManager',
@@ -63,7 +72,9 @@ class FontManager {
       return _isPrimaryFontLoaded;
     } on Exception catch (e, stackTrace) {
       final error = 'Exception initializing FontManager: $e';
-      _errors.add(error);
+      _errors.add(
+        error,
+      );
       developer.log(
         error,
         name: 'FontManager',
@@ -92,7 +103,7 @@ class FontManager {
       return true; // افتراضياً نعتبر الخط متوفر
     } on Exception catch (e) {
       developer.log(
-        'Exception loading font "$fontFamily": $e',
+        'Exception loading font $fontFamily: $e',
         name: 'FontManager',
         level: 900,
       );
@@ -112,10 +123,14 @@ class FontManager {
     final fonts = <String>[];
 
     if (_isPrimaryFontLoaded) {
-      fonts.add(primaryFont);
+      fonts.add(
+        primaryFont,
+      );
     }
 
-    fonts.addAll(fallbackFonts);
+    fonts.addAll(
+      fallbackFonts,
+    );
 
     return fonts;
   }
@@ -183,7 +198,9 @@ class FontManager {
     }
 
     // خطوط fallback تعتبر متوفرة دائماً
-    return fallbackFonts.contains(fontFamily);
+    return fallbackFonts.contains(
+      fontFamily,
+    );
   }
 
   /// يعيد تعيين حالة المدير (للاختبارات).
