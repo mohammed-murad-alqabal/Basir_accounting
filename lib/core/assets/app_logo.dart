@@ -2,6 +2,7 @@
 ///
 /// يحتوي على widget مخصص لعرض شعار التطبيق
 /// بدلاً من استخدام Material Icons
+library;
 
 import 'package:flutter/material.dart';
 
