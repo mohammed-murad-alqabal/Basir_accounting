@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 
 /// واجهة مستودع العملاء
@@ -29,7 +30,7 @@ abstract class CustomerRepository {
   /// Example:
   /// ```dart
   /// final customers = await repository.getAllCustomers();
-  /// print('عدد العملاء: ${customers.length}');
+  /// debugPrint('عدد العملاء: ${customers.length}',);
   /// ```
   Future<List<Customer>> getAllCustomers();
 
@@ -44,12 +45,14 @@ abstract class CustomerRepository {
   ///
   /// Example:
   /// ```dart
-  /// final customer = await repository.getCustomerById('customer-1');
+  /// final customer = await repository.getCustomerById('customer-1',);
   /// if (customer != null) {
-  ///   print('العميل: ${customer.name}');
+  ///   debugPrint('العميل: ${customer.name}',);
   /// }
   /// ```
-  Future<Customer?> getCustomerById(String id);
+  Future<Customer?> getCustomerById(
+    String id,
+  );
 
   /// البحث عن عملاء حسب الاسم
   ///
@@ -62,10 +65,12 @@ abstract class CustomerRepository {
   ///
   /// Example:
   /// ```dart
-  /// final results = await repository.searchCustomers('أحمد');
-  /// print('النتائج: ${results.length}');
+  /// final results = await repository.searchCustomers('أحمد',);
+  /// debugPrint('النتائج: ${results.length}',);
   /// ```
-  Future<List<Customer>> searchCustomers(String query);
+  Future<List<Customer>> searchCustomers(
+    String query,
+  );
 
   /// إضافة عميل جديد
   ///
@@ -83,10 +88,12 @@ abstract class CustomerRepository {
   ///   name: 'أحمد محمد',
   ///   createdAt: DateTime.now(),
   ///   updatedAt: DateTime.now(),
-  /// );
-  /// await repository.addCustomer(customer);
+  ///,);
+  /// await repository.addCustomer(customer,);
   /// ```
-  Future<void> addCustomer(Customer customer);
+  Future<void> addCustomer(
+    Customer customer,
+  );
 
   /// تحديث بيانات عميل
   ///
@@ -102,10 +109,12 @@ abstract class CustomerRepository {
   /// final updatedCustomer = customer.copyWith(
   ///   phone: '0509876543',
   ///   updatedAt: DateTime.now(),
-  /// );
-  /// await repository.updateCustomer(updatedCustomer);
+  ///,);
+  /// await repository.updateCustomer(updatedCustomer,);
   /// ```
-  Future<void> updateCustomer(Customer customer);
+  Future<void> updateCustomer(
+    Customer customer,
+  );
 
   /// حذف عميل
   ///
@@ -118,9 +127,11 @@ abstract class CustomerRepository {
   ///
   /// Example:
   /// ```dart
-  /// await repository.deleteCustomer('customer-1');
+  /// await repository.deleteCustomer('customer-1',);
   /// ```
-  Future<void> deleteCustomer(String id);
+  Future<void> deleteCustomer(
+    String id,
+  );
 
   /// حذف جميع العملاء
   ///

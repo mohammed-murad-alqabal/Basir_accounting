@@ -51,7 +51,7 @@ void main() {
       });
 
       test('warning color should be defined', () {
-        expect(AppColors.warning, equals(const Color(0xFFBF360C)));
+        expect(AppColors.warning, equals(const Color(0xFFD73502)));
       });
 
       test('info color should be defined', () {
@@ -69,7 +69,7 @@ void main() {
       });
 
       test('textHint should be medium gray', () {
-        expect(AppColors.textHint, equals(const Color(0xFF616161)));
+        expect(AppColors.textHint, equals(const Color(0xFF5A5A5A)));
       });
 
       test('textOnDark should be white', () {

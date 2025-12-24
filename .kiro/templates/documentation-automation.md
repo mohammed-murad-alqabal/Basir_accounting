@@ -33,9 +33,9 @@ Documentation/
 
 ### 2. Documentation Generator Script
 
-```typescript
-// doc-generator.ts
-import * as fs from "fs";
+```dart
+// doc_generator.dart
+import 'dart:io';
 import * as path from "path";
 
 interface DocConfig {
@@ -166,8 +166,8 @@ npm start
 
 ### Basic Example
 
-\`\`\`typescript
-import { Service } from './service';
+\`\`\`dart
+import 'service.dart';
 
 const service = new Service();
 const result = await service.execute();
@@ -334,8 +334,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
           node-version: "18"
 

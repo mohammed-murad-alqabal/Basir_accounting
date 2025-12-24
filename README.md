@@ -2,6 +2,7 @@
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.35.5-blue.svg)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.9.2-blue.svg)](https://dart.dev)
+[![Figma](https://img.shields.io/badge/Figma-Design-F24E1E.svg?logo=figma&logoColor=white)](YOUR_FIGMA_LINK_HERE)
 [![CI/CD](https://github.com/YOUR_USERNAME/Basser_MVP/workflows/Flutter%20CI/CD%20-%20بصير%20MVP/badge.svg)](https://github.com/YOUR_USERNAME/Basser_MVP/actions)
 [![Tests](https://img.shields.io/badge/Tests-924%20Passed-success.svg)](test/)
 [![Coverage](https://img.shields.io/badge/Coverage-67.9%25-green.svg)](coverage/)
@@ -16,6 +17,7 @@
 ## 📋 المحتويات
 
 - [نظرة عامة](#نظرة-عامة)
+- [🎨 التصميم والواجهات](#-التصميم-والواجهات)
 - [الميزات الأساسية](#الميزات-الأساسية-mvp)
 - [التثبيت والإعداد](#-التثبيت-والإعداد)
 - [البنية المعمارية](#-البنية-المعمارية)
@@ -35,6 +37,53 @@
 - **واجهة سهلة الاستخدام** - تصميم عربي احترافي وبديهي
 - **الأداء العالي** - تطبيق سريع وخفيف الوزن
 - **الأمان** - تشفير البيانات الحساسة وحماية كاملة
+
+---
+
+## 🎨 التصميم والواجهات
+
+### تصميمات Figma
+
+يمكنك الاطلاع على جميع تصميمات التطبيق والواجهات من خلال:
+
+[![Figma Design](https://img.shields.io/badge/Figma-Design-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](YOUR_FIGMA_LINK_HERE)
+
+### تكامل Figma مع Kiro
+
+تم تكوين تكامل مباشر مع Figma للوصول السريع إلى ملفات التصميم:
+
+```bash
+# الحصول على معلومات المستخدم
+python3 scripts/figma_api.py me
+
+# استعراض الملفات والمشاريع
+python3 scripts/figma_api.py teams
+python3 scripts/figma_api.py team-projects TEAM_ID
+python3 scripts/figma_api.py project-files PROJECT_ID
+```
+
+📚 **دليل الاستخدام الكامل:** [Documentation/FIGMA_USAGE_GUIDE.md](Documentation/FIGMA_USAGE_GUIDE.md)
+
+**يتضمن التصميم:**
+
+- 🎨 واجهات المستخدم (UI Screens)
+- 🔄 تدفق المستخدم (User Flow)
+- 🎯 النماذج الأولية (Prototypes)
+- 🎨 نظام التصميم (Design System)
+- 📱 تصميمات متجاوبة (Responsive Design)
+
+**للمطورين:**
+
+- استخدم التصميمات كمرجع للتطوير
+- تحقق من المقاسات والألوان الدقيقة
+- اتبع إرشادات نظام التصميم
+
+**🔗 تكامل Figma مع Kiro:**
+
+- ✅ **جاهز للاستخدام** - راجع [دليل تكامل Figma](Documentation/FIGMA_INTEGRATION_GUIDE.md)
+- 🚀 **إعداد سريع:** `./scripts/setup_figma.sh` للإعداد الأولي
+- 🧪 **اختبار:** `./scripts/test_figma_integration.sh` للتحقق من التكامل
+- 📊 **API مباشر:** `python3 scripts/figma_api.py me` لمعلومات المستخدم
 
 ---
 
@@ -409,8 +458,13 @@ security:
 
 ## 📚 الموارد
 
+### التصميم والواجهات
+
+- [🎨 تصميم Figma](YOUR_FIGMA_LINK_HERE) - تصميمات الواجهات والـ UI/UX
+
 ### التوثيق الأساسي
 
+- [🎨 دليل التصميم](DESIGN.md) - تصميمات Figma ونظام التصميم
 - [دليل التطوير](DEVELOPMENT_GUIDE.md) - دليل شامل للمطورين
 - [معايير الكود](CODING_STANDARDS.md) - معايير الجودة والتسمية
 - [فهرس المشروع](PROJECT_INDEX.md) - فهرس كامل للوثائق
@@ -489,7 +543,7 @@ security:
 - ⭐ **COLLABORATION FIRST** - موافقة صريحة إلزامية قبل التنفيذ
 - ⭐ **KISS Principle** - البساطة أولاً، لا تعقيد غير ضروري
 - ⭐ **ENGLISH FOR CODE** - جميع الكود بالإنجليزية
-- ⭐ **Mermaid.js Diagrams** - رسوم بيانية إلزامية في التصميم
+- ⭐ **Mermaid Diagrams** - رسوم بيانية إلزامية في التصميم
 - ⭐ **GitHub CLI Integration** - مراجعة PR متكاملة
 - ⭐ **Smart Analysis** - تحليل ذكي وتصفية تلقائية
 
@@ -500,7 +554,7 @@ security:
 | وضوح المبادئ        | 7/10    | 10/10  | +43%    |
 | جمع السياق          | يدوي    | إلزامي | +100%   |
 | التحقق من الفهم     | لا      | إلزامي | جديد    |
-| رسوم Mermaid.js     | اختياري | إلزامي | +100%   |
+| رسوم Mermaid        | اختياري | إلزامي | +100%   |
 | تحليل الـ commit    | بسيط    | ذكي    | +200%   |
 | تصفية الـ artifacts | يدوي    | تلقائي | +150%   |
 | GitHub CLI          | لا      | نعم    | +100%   |
@@ -512,7 +566,7 @@ security:
 
 ```
 1. Requirements → createSpec.prompt.md  → requirements.md
-2. Design      → design.prompt.md      → design.md (with Mermaid.js)
+2. Design      → design.prompt.md      → design.md (with Mermaid)
 3. Tasks       → createTask.prompt.md  → tasks.md
 4. Execute     → executeTask.prompt.md → implementation + tests
 5. Commit      → commit.prompt.md      → professional commit message
@@ -530,7 +584,7 @@ security:
 #### الـ Prompts المحسّنة (v2.0)
 
 1. **[createSpec.prompt.md](.kiro/prompts/createSpec.prompt.md)** - توليد المتطلبات مع EARS syntax
-2. **[design.prompt.md](.kiro/prompts/design.prompt.md)** - التصميم مع Mermaid.js إلزامي
+2. **[design.prompt.md](.kiro/prompts/design.prompt.md)** - التصميم مع Mermaid إلزامي
 3. **[createTask.prompt.md](.kiro/prompts/createTask.prompt.md)** - تقسيم المهام بدون approval gate
 4. **[executeTask.prompt.md](.kiro/prompts/executeTask.prompt.md)** - تنفيذ مع جمع سياق إلزامي
 5. **[commit.prompt.md](.kiro/prompts/commit.prompt.md)** - رسائل commit احترافية
@@ -539,7 +593,7 @@ security:
 #### أمثلة عملية
 
 - **[01-createSpec-example.md](.kiro/prompts/examples/01-createSpec-example.md)** - مثال كامل للمتطلبات
-- **[02-design-example.md](.kiro/prompts/examples/02-design-example.md)** - مثال التصميم مع 3 رسوم Mermaid.js
+- **[02-design-example.md](.kiro/prompts/examples/02-design-example.md)** - مثال التصميم مع 3 رسوم Mermaid
 - **[03-createTask-example.md](.kiro/prompts/examples/03-createTask-example.md)** - مثال تقسيم المهام
 - **[04-executeTask-example.md](.kiro/prompts/examples/04-executeTask-example.md)** - مثال التنفيذ
 - **[05-commit-example.md](.kiro/prompts/examples/05-commit-example.md)** - مثال رسائل commit
@@ -572,7 +626,7 @@ cat .kiro/prompts/examples/01-createSpec-example.md
 - ✅ **جودة تنفيذ أعلى** - جمع سياق إلزامي وتحقق من الفهم
 - ✅ **رسائل commit احترافية** - تحليل ذكي وتصفية تلقائية
 - ✅ **مراجعات PR شاملة** - 20+ نقطة فحص مع GitHub CLI
-- ✅ **تصميم واضح** - رسوم Mermaid.js إلزامية
+- ✅ **تصميم واضح** - رسوم Mermaid إلزامية
 - ✅ **تعاون أفضل** - موافقة صريحة قبل التنفيذ
 - ✅ **كود أبسط** - مبدأ KISS المطبق
 - ✅ **صيانة أسهل** - كود بالإنجليزية ومعايير موحدة

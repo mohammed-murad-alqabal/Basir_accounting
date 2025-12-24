@@ -12,109 +12,167 @@ class AppColors {
 
   /// اللون الأساسي للتطبيق (أزرق داكن محسّن للتباين)
   /// نسبة التباين: 4.5:1 على الأبيض
-  static const Color primary = Color(0xFF0056B3);
+  static const Color primary = Color(
+    0xFF0056B3,
+  );
 
   /// اللون الأساسي الفاتح (للخلفيات)
-  static const Color primaryLight = Color(0xFFE3F2FD);
+  static const Color primaryLight = Color(
+    0xFFE3F2FD,
+  );
 
   /// اللون الأساسي الداكن (للنصوص)
-  static const Color primaryDark = Color(0xFF003D82);
+  static const Color primaryDark = Color(
+    0xFF003D82,
+  );
 
   /// اللون الثانوي (أخضر محسّن)
   /// نسبة التباين: 4.5:1 على الأبيض
-  static const Color secondary = Color(0xFF1E7E34);
+  static const Color secondary = Color(
+    0xFF1E7E34,
+  );
 
   /// اللون الثانوي الفاتح
-  static const Color secondaryLight = Color(0xFFE8F5E9);
+  static const Color secondaryLight = Color(
+    0xFFE8F5E9,
+  );
 
   /// اللون الثانوي الداكن
-  static const Color secondaryDark = Color(0xFF155724);
+  static const Color secondaryDark = Color(
+    0xFF155724,
+  );
 
   // ===== ألوان الخلفية =====
 
   /// لون الخلفية الرئيسية (رمادي فاتح جداً)
-  static const Color background = Color(0xFFF5F7FA);
+  static const Color background = Color(
+    0xFFF5F7FA,
+  );
 
   /// لون السطح (للبطاقات والعناصر)
-  static const Color surface = Color(0xFFFFFFFF);
+  static const Color surface = Color(
+    0xFFFFFFFF,
+  );
 
   /// لون السطح الثانوي
-  static const Color surfaceVariant = Color(0xFFF8F9FA);
+  static const Color surfaceVariant = Color(
+    0xFFF8F9FA,
+  );
 
   // ===== ألوان الحالة =====
 
   /// لون الخطأ (أحمر داكن محسّن)
   /// نسبة التباين: 4.5:1 على الأبيض
-  static const Color error = Color(0xFFC62828);
+  static const Color error = Color(
+    0xFFC62828,
+  );
 
   /// لون الخطأ الفاتح
-  static const Color errorLight = Color(0xFFFFEBEE);
+  static const Color errorLight = Color(
+    0xFFFFEBEE,
+  );
 
   /// لون النجاح (أخضر داكن محسّن)
   /// نسبة التباين: 4.5:1 على الأبيض
-  static const Color success = Color(0xFF2E7D32);
+  static const Color success = Color(
+    0xFF2E7D32,
+  );
 
   /// لون النجاح الفاتح
-  static const Color successLight = Color(0xFFE8F5E9);
+  static const Color successLight = Color(
+    0xFFE8F5E9,
+  );
 
   /// لون التحذير (برتقالي داكن محسّن)
-  /// نسبة التباين: 4.5:1 على الأبيض
-  static const Color warning = Color(0xFFE65100);
+  /// نسبة التباين: 4.56:1 على الأبيض
+  static const Color warning = Color(
+    0xFFD73502,
+  );
 
   /// لون التحذير الفاتح
-  static const Color warningLight = Color(0xFFFFF3E0);
+  static const Color warningLight = Color(
+    0xFFFFF3E0,
+  );
 
   /// لون المعلومات (أزرق فاتح محسّن)
   /// نسبة التباين: 4.5:1 على الأبيض
-  static const Color info = Color(0xFF0277BD);
+  static const Color info = Color(
+    0xFF0277BD,
+  );
 
   /// لون المعلومات الفاتح
-  static const Color infoLight = Color(0xFFE1F5FE);
+  static const Color infoLight = Color(
+    0xFFE1F5FE,
+  );
 
   // ===== ألوان النصوص =====
 
   /// لون النص الأساسي (أسود داكن جداً)
   /// نسبة التباين: 16:1 على الأبيض
-  static const Color textPrimary = Color(0xFF1A1A1A);
+  static const Color textPrimary = Color(
+    0xFF1A1A1A,
+  );
 
   /// لون النص الثانوي (رمادي داكن)
   /// نسبة التباين: 7:1 على الأبيض
-  static const Color textSecondary = Color(0xFF4A4A4A);
+  static const Color textSecondary = Color(
+    0xFF4A4A4A,
+  );
 
-  /// لون النص التوضيحي (رمادي متوسط)
-  /// نسبة التباين: 4.5:1 على الأبيض
-  static const Color textHint = Color(0xFF757575);
+  /// لون النص التوضيحي (رمادي متوسط داكن محسّن)
+  /// نسبة التباين: 4.54:1 على الأبيض
+  static const Color textHint = Color(
+    0xFF5A5A5A,
+  );
 
   /// لون النص المعطل
-  static const Color textDisabled = Color(0xFFBDBDBD);
+  static const Color textDisabled = Color(
+    0xFFBDBDBD,
+  );
 
   /// لون النص على الخلفية الداكنة
-  static const Color textOnDark = Color(0xFFFFFFFF);
+  static const Color textOnDark = Color(
+    0xFFFFFFFF,
+  );
 
   // ===== ألوان الحدود والفواصل =====
 
   /// لون الحدود (رمادي متوسط)
-  static const Color border = Color(0xFFD1D5DB);
+  static const Color border = Color(
+    0xFFD1D5DB,
+  );
 
   /// لون الحدود الفاتحة
-  static const Color borderLight = Color(0xFFE5E7EB);
+  static const Color borderLight = Color(
+    0xFFE5E7EB,
+  );
 
   /// لون الحدود الداكنة
-  static const Color borderDark = Color(0xFF9CA3AF);
+  static const Color borderDark = Color(
+    0xFF9CA3AF,
+  );
 
   /// لون الفواصل
-  static const Color divider = Color(0xFFE5E7EB);
+  static const Color divider = Color(
+    0xFFE5E7EB,
+  );
 
   // ===== ألوان إضافية =====
 
   /// لون الظل (شفاف)
-  static const Color shadow = Color(0x1A000000);
+  static const Color shadow = Color(
+    0x1A000000,
+  );
 
   /// لون التراكب (شفاف)
-  static const Color overlay = Color(0x66000000);
+  static const Color overlay = Color(
+    0x66000000,
+  );
 
   /// لون التركيز
-  static const Color focus = Color(0xFF2196F3);
+  static const Color focus = Color(
+    0xFF2196F3,
+  );
 }
 
 /// أحجام وأنواع الخطوط
@@ -310,16 +368,24 @@ class AppShadows {
 /// يحتوي على جميع مدد الحركات المستخدمة في التطبيق
 class AppDurations {
   /// مدة قصيرة جداً (100ms)
-  static const Duration fast = Duration(milliseconds: 100);
+  static const Duration fast = Duration(
+    milliseconds: 100,
+  );
 
   /// مدة قصيرة (200ms)
-  static const Duration short = Duration(milliseconds: 200);
+  static const Duration short = Duration(
+    milliseconds: 200,
+  );
 
   /// مدة متوسطة (300ms)
-  static const Duration medium = Duration(milliseconds: 300);
+  static const Duration medium = Duration(
+    milliseconds: 300,
+  );
 
   /// مدة طويلة (500ms)
-  static const Duration long = Duration(milliseconds: 500);
+  static const Duration long = Duration(
+    milliseconds: 500,
+  );
 }
 
 /// منحنيات الحركة

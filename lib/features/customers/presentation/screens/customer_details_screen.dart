@@ -197,7 +197,10 @@ class CustomerDetailsScreen extends ConsumerWidget {
 
     if (!context.mounted) return;
     if (result ?? false) {
-      Navigator.pop(context, true);
+      Navigator.pop(
+        context,
+        true,
+      );
     }
   }
 
@@ -206,16 +209,20 @@ class CustomerDetailsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('حذف العميل'),
-        content: Text('هل أنت متأكد من حذف العميل "${customer.name}"؟'),
+        content: Text('هل أنت متأكد من حذف العميل ${customer.name}؟'),
         actions: [
-          TextButton(
+          AppEnhancedButton(
+            text: 'إلغاء',
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('إلغاء'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
           ),
-          TextButton(
+          AppEnhancedButton(
+            text: 'حذف',
             onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('حذف'),
+            style: AppEnhancedButtonStyle.text,
+            size: AppEnhancedButtonSize.small,
+            // TODO(enhancement): Add error color support to AppEnhancedButton
           ),
         ],
       ),
@@ -224,7 +231,9 @@ class CustomerDetailsScreen extends ConsumerWidget {
     if (confirmed != true || !context.mounted) return;
 
     try {
-      final result = await ref.read(deleteCustomerProvider(customer.id).future);
+      final result = await ref.read(
+        deleteCustomerProvider(customer.id).future,
+      );
 
       if (!context.mounted) return;
 
@@ -235,7 +244,10 @@ class CustomerDetailsScreen extends ConsumerWidget {
             backgroundColor: AppColors.secondary,
           ),
         );
-        Navigator.pop(context, true);
+        Navigator.pop(
+          context,
+          true,
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

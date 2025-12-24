@@ -1,3 +1,15 @@
+---
+id: "team-identity"
+description: "هوية الفريق الموحدة لمشروع بصير"
+version: "1.0"
+last_updated: "2025-12-17"
+inclusion: always
+metrics:
+  size: "1KB"
+  lines: 35
+  context_usage: "0.5%"
+---
+
 # هوية الفريق الموحدة
 
 **المشروع:** بصير MVP  

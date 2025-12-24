@@ -13,8 +13,8 @@ import 'package:printing/printing.dart';
 /// Example:
 /// ```dart
 /// final pdfService = PdfService();
-/// final pdfBytes = await pdfService.generateInvoicePdf(invoice, customer);
-/// await pdfService.printInvoice(invoice, customer);
+/// final pdfBytes = await pdfService.generateInvoicePdf(invoice, customer,);
+/// await pdfService.printInvoice(invoice, customer,);
 /// ```
 class PdfService {
   /// توليد ملف PDF للفاتورة
@@ -35,7 +35,7 @@ class PdfService {
   /// final pdfBytes = await pdfService.generateInvoicePdf(
   ///   invoice,
   ///   customer,
-  /// );
+  ///,);
   /// ```
   Future<Uint8List> generateInvoicePdf(
     Invoice invoice,
@@ -47,8 +47,12 @@ class PdfService {
     );
 
     // تحميل خط يدعم اللغة العربية
-    final fontData = await rootBundle.load('assets/fonts/Cairo-Regular.ttf');
-    final ttf = pw.Font.ttf(fontData);
+    final fontData = await rootBundle.load(
+      'assets/fonts/Cairo-Regular.ttf',
+    );
+    final ttf = pw.Font.ttf(
+      fontData,
+    );
 
     pdf.addPage(
       pw.Page(
@@ -187,13 +191,15 @@ class PdfService {
 
     // إضافة بنود الفاتورة
     for (final item in invoice.items) {
-      tableData.add([
-        '${item.total.toStringAsFixed(2)} ر.س',
-        '${(item.total * invoice.taxRate).toStringAsFixed(2)} ر.س',
-        '${item.price.toStringAsFixed(2)} ر.س',
-        item.quantity.toString(),
-        item.name,
-      ]);
+      tableData.add(
+        [
+          '${item.total.toStringAsFixed(2)} ر.س',
+          '${(item.total * invoice.taxRate).toStringAsFixed(2)} ر.س',
+          '${item.price.toStringAsFixed(2)} ر.س',
+          item.quantity.toString(),
+          item.name,
+        ],
+      );
     }
 
     return pw.TableHelper.fromTextArray(
@@ -313,7 +319,10 @@ class PdfService {
 
   /// وظيفة مساعدة لطباعة الفاتورة مباشرة
   Future<void> printInvoice(Invoice invoice, Customer customer) async {
-    final pdfBytes = await generateInvoicePdf(invoice, customer);
+    final pdfBytes = await generateInvoicePdf(
+      invoice,
+      customer,
+    );
     await Printing.sharePdf(
       bytes: pdfBytes,
       filename: 'invoice_${invoice.id}.pdf',

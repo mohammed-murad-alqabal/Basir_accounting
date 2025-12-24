@@ -30,7 +30,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final invoicesAsync = ref.watch(filteredInvoicesProvider);
+    final invoicesAsync = ref.watch(
+      filteredInvoicesProvider,
+    );
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -121,12 +123,15 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: AppSpacing.xl),
-                      AppPrimaryButton(
-                        label: 'إعادة المحاولة',
+                      AppEnhancedButton(
+                        text: 'إعادة المحاولة',
                         onPressed: () {
-                          ref.invalidate(invoicesProvider);
+                          ref.invalidate(
+                            invoicesProvider,
+                          );
                         },
-                        width: 200,
+                        icon: Icons.refresh,
+                        style: AppEnhancedButtonStyle.secondary,
                       ),
                     ],
                   ),
@@ -147,7 +152,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
         label: Text(label),
         selected: isSelected,
         onSelected: (selected) {
-          setState(() => _selectedFilter = value);
+          setState(
+            () => _selectedFilter = value,
+          );
           ref.read(invoiceFilterProvider.notifier).state = value;
         },
         backgroundColor: AppColors.surface,
@@ -203,7 +210,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       itemCount: invoices.length,
       itemBuilder: (context, index) {
         final invoice = invoices[index];
-        final statusColor = _getStatusColor(invoice.status);
+        final statusColor = _getStatusColor(
+          invoice.status,
+        );
         final dateStr = invoice.issuedDate.toLocal().toString().split(' ')[0];
         return AppListCard(
           title: 'فاتورة ${invoice.id}',
@@ -234,9 +243,15 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
   Future<void> _exportInvoice() async {
     if (!mounted) return;
 
-    final invoicesAsync = ref.read(filteredInvoicesProvider);
-    final pdfService = ref.read(pdfServiceProvider);
-    final customerRepo = ref.read(customerRepositoryProvider);
+    final invoicesAsync = ref.read(
+      filteredInvoicesProvider,
+    );
+    final pdfService = ref.read(
+      pdfServiceProvider,
+    );
+    final customerRepo = ref.read(
+      customerRepositoryProvider,
+    );
 
     invoicesAsync.whenData((invoices) async {
       if (!mounted) return;
@@ -251,7 +266,10 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
 
         if (customer != null) {
           try {
-            await pdfService.printInvoice(invoiceToExport, customer);
+            await pdfService.printInvoice(
+              invoiceToExport,
+              customer,
+            );
             if (!mounted) return;
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('تم تصدير الفاتورة بنجاح.')),
@@ -260,7 +278,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             if (!mounted) return;
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text('خطأ في التصدير: $e')));
+            ).showSnackBar(
+              SnackBar(content: Text('خطأ في التصدير: $e')),
+            );
           }
         } else {
           if (!mounted) return;
@@ -290,15 +310,21 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             leading: const Icon(Icons.edit),
             title: const Text('تعديل الفاتورة'),
             onTap: () async {
-              Navigator.pop(context);
-              await _editInvoice(invoice);
+              Navigator.pop(
+                context,
+              );
+              await _editInvoice(
+                invoice,
+              );
             },
           ),
           ListTile(
             leading: const Icon(Icons.picture_as_pdf),
             title: const Text('تصدير PDF'),
             onTap: () async {
-              Navigator.pop(context);
+              Navigator.pop(
+                context,
+              );
               await _exportInvoice();
             },
           ),
@@ -309,8 +335,12 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
               style: TextStyle(color: AppColors.error),
             ),
             onTap: () async {
-              Navigator.pop(context);
-              await _deleteInvoice(invoice);
+              Navigator.pop(
+                context,
+              );
+              await _deleteInvoice(
+                invoice,
+              );
             },
           ),
         ],
@@ -351,7 +381,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     );
 
     if (result ?? false) {
-      ref.invalidate(invoicesProvider);
+      ref.invalidate(
+        invoicesProvider,
+      );
     }
   }
 
@@ -364,7 +396,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     );
 
     if (result ?? false) {
-      ref.invalidate(invoicesProvider);
+      ref.invalidate(
+        invoicesProvider,
+      );
     }
   }
 
@@ -373,7 +407,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('حذف الفاتورة'),
-        content: Text('هل أنت متأكد من حذف الفاتورة "${invoice.id}"؟'),
+        content: Text('هل أنت متأكد من حذف الفاتورة ${invoice.id}؟'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -381,7 +415,6 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
             child: const Text('حذف'),
           ),
         ],
@@ -391,7 +424,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     if (confirmed != true || !mounted) return;
 
     try {
-      final result = await ref.read(deleteInvoiceProvider(invoice.id).future);
+      final result = await ref.read(
+        deleteInvoiceProvider(invoice.id).future,
+      );
 
       if (!mounted) return;
 

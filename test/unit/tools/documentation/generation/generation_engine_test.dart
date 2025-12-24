@@ -1,179 +1,272 @@
+/// اختبارات GenerationEngine
+///
+/// يختبر محرك توليد التوثيق التلقائي
+library;
+
 import 'package:basser_app/tools/documentation/analysis/analysis_engine.dart';
 import 'package:basser_app/tools/documentation/generation/generation_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// Unit tests for GenerationEngine
-///
-/// Tests the documentation generation functionality
 void main() {
-  group('GenerationEngine', () {
-    late GenerationEngine engine;
+  late GenerationEngine engine;
 
-    setUp(() {
-      engine = GenerationEngine();
+  setUp(() {
+    engine = GenerationEngine();
+  });
+
+  group('GenerationEngine - Instance Creation', () {
+    test('should create GenerationEngine instance', () {
+      expect(engine, isNotNull);
+      expect(engine, isA<GenerationEngine>());
     });
 
-    group('generateDocumentation', () {
-      test('should throw UnimplementedError when not implemented', () {
-        const element = UndocumentedElement(
-          name: 'TestClass',
-          type: ElementType.classType,
-          lineNumber: 1,
-          signature: 'class TestClass',
-        );
-
-        expect(
-          () => engine.generateDocumentation(element),
-          throwsA(isA<UnimplementedError>()),
-        );
-      });
-
-      test('should accept class element', () {
-        const element = UndocumentedElement(
-          name: 'MyClass',
-          type: ElementType.classType,
-          lineNumber: 5,
-          signature: 'class MyClass',
-        );
-
-        expect(
-          () => engine.generateDocumentation(element),
-          throwsA(isA<UnimplementedError>()),
-        );
-      });
-
-      test('should accept method element', () {
-        const element = UndocumentedElement(
-          name: 'myMethod',
-          type: ElementType.method,
-          lineNumber: 10,
-          signature: 'void myMethod(String param)',
-        );
-
-        expect(
-          () => engine.generateDocumentation(element),
-          throwsA(isA<UnimplementedError>()),
-        );
-      });
-
-      test('should accept property element', () {
-        const element = UndocumentedElement(
-          name: 'myProperty',
-          type: ElementType.property,
-          lineNumber: 15,
-          signature: 'String myProperty',
-        );
-
-        expect(
-          () => engine.generateDocumentation(element),
-          throwsA(isA<UnimplementedError>()),
-        );
-      });
-    });
-
-    group('generateFileDocumentation', () {
-      test('should throw UnimplementedError when not implemented', () {
-        const result = AnalysisResult(
-          filePath: 'test.dart',
-          undocumentedElements: [],
-          coveragePercentage: 100,
-        );
-
-        expect(
-          () => engine.generateFileDocumentation(result),
-          throwsA(isA<UnimplementedError>()),
-        );
-      });
-
-      test('should accept analysis result with no elements', () {
-        const result = AnalysisResult(
-          filePath: 'empty.dart',
-          undocumentedElements: [],
-          coveragePercentage: 100,
-        );
-
-        expect(
-          () => engine.generateFileDocumentation(result),
-          throwsA(isA<UnimplementedError>()),
-        );
-      });
-
-      test('should accept analysis result with multiple elements', () {
-        final elements = [
-          const UndocumentedElement(
-            name: 'Class1',
-            type: ElementType.classType,
-            lineNumber: 1,
-            signature: 'class Class1',
-          ),
-          const UndocumentedElement(
-            name: 'method1',
-            type: ElementType.method,
-            lineNumber: 5,
-            signature: 'void method1()',
-          ),
-        ];
-
-        final result = AnalysisResult(
-          filePath: 'test.dart',
-          undocumentedElements: elements,
-          coveragePercentage: 0,
-        );
-
-        expect(
-          () => engine.generateFileDocumentation(result),
-          throwsA(isA<UnimplementedError>()),
-        );
-      });
-    });
-
-    group('applyDocumentation', () {
-      test('should throw UnimplementedError when not implemented', () {
-        expect(
-          () => engine.applyDocumentation('test.dart', {}),
-          throwsA(isA<UnimplementedError>()),
-        );
-      });
-
-      test('should accept empty documentation map', () {
-        expect(
-          () => engine.applyDocumentation('test.dart', {}),
-          throwsA(isA<UnimplementedError>()),
-        );
-      });
-
-      test('should accept documentation map with entries', () {
-        final docs = {
-          'MyClass': '/// A test class',
-          'myMethod': '/// A test method',
-        };
-
-        expect(
-          () => engine.applyDocumentation('test.dart', docs),
-          throwsA(isA<UnimplementedError>()),
-        );
-      });
-
-      test('should accept valid file path', () {
-        expect(
-          () => engine.applyDocumentation('lib/core/constants.dart', {}),
-          throwsA(isA<UnimplementedError>()),
-        );
-      });
+    test('should have all required methods', () {
+      expect(engine.generateDocumentation, isNotNull);
+      expect(engine.generateFileDocumentation, isNotNull);
+      expect(engine.applyDocumentation, isNotNull);
     });
   });
 
-  group('GenerationOptions', () {
-    test('should create default options', () {
+  group('GenerationEngine - Generate Documentation', () {
+    test('should throw UnimplementedError for generateDocumentation', () {
+      // Arrange
+      const element = UndocumentedElement(
+        name: 'testFunction',
+        type: ElementType.method,
+        signature: 'void testFunction()',
+        lineNumber: 10,
+      );
+
+      // Act & Assert
+      expect(
+        () => engine.generateDocumentation(element),
+        throwsA(isA<UnimplementedError>()),
+      );
+    });
+
+    test('should handle different element types', () {
+      final testElements = [
+        const UndocumentedElement(
+          name: 'TestClass',
+          type: ElementType.classType,
+          signature: 'class TestClass',
+          lineNumber: 5,
+        ),
+        const UndocumentedElement(
+          name: 'testMethod',
+          type: ElementType.method,
+          signature: 'String testMethod(int param)',
+          lineNumber: 15,
+        ),
+        const UndocumentedElement(
+          name: 'testVariable',
+          type: ElementType.property,
+          signature: 'final String testVariable',
+          lineNumber: 20,
+        ),
+      ];
+
+      for (final element in testElements) {
+        expect(
+          () => engine.generateDocumentation(element),
+          throwsA(isA<UnimplementedError>()),
+          reason: 'Should throw for ${element.type}',
+        );
+      }
+    });
+
+    test('should handle elements with complex signatures', () {
+      // Arrange
+      const element = UndocumentedElement(
+        name: 'complexFunction',
+        type: ElementType.method,
+        signature:
+            'Future<Map<String, List<int>>> complexFunction<T extends Object>('
+            ' T input, {required String name, int? optional})',
+        lineNumber: 25,
+      );
+
+      // Act & Assert
+      expect(
+        () => engine.generateDocumentation(element),
+        throwsA(isA<UnimplementedError>()),
+      );
+    });
+  });
+
+  group('GenerationEngine - Generate File Documentation', () {
+    test('should throw UnimplementedError for generateFileDocumentation', () {
+      // Arrange
+      const result = AnalysisResult(
+        filePath: 'test.dart',
+        undocumentedElements: [
+          UndocumentedElement(
+            name: 'testFunction',
+            type: ElementType.method,
+            signature: 'void testFunction()',
+            lineNumber: 10,
+          ),
+        ],
+        coveragePercentage: 50,
+      );
+
+      // Act & Assert
+      expect(
+        () => engine.generateFileDocumentation(result),
+        throwsA(isA<UnimplementedError>()),
+      );
+    });
+
+    test('should handle empty analysis result', () {
+      // Arrange
+      const result = AnalysisResult(
+        filePath: 'empty.dart',
+        undocumentedElements: [],
+        coveragePercentage: 100,
+      );
+
+      // Act & Assert
+      expect(
+        () => engine.generateFileDocumentation(result),
+        throwsA(isA<UnimplementedError>()),
+      );
+    });
+
+    test('should handle analysis result with multiple elements', () {
+      // Arrange
+      const result = AnalysisResult(
+        filePath: 'multiple.dart',
+        undocumentedElements: [
+          UndocumentedElement(
+            name: 'ClassA',
+            type: ElementType.classType,
+            signature: 'class ClassA',
+            lineNumber: 5,
+          ),
+          UndocumentedElement(
+            name: 'methodB',
+            type: ElementType.method,
+            signature: 'void methodB()',
+            lineNumber: 10,
+          ),
+          UndocumentedElement(
+            name: 'variableC',
+            type: ElementType.property,
+            signature: 'String variableC',
+            lineNumber: 15,
+          ),
+        ],
+        coveragePercentage: 25,
+      );
+
+      // Act & Assert
+      expect(
+        () => engine.generateFileDocumentation(result),
+        throwsA(isA<UnimplementedError>()),
+      );
+    });
+  });
+
+  group('GenerationEngine - Apply Documentation', () {
+    test('should throw UnimplementedError for applyDocumentation', () async {
+      // Arrange
+      const filePath = 'test.dart';
+      final docs = <String, String>{
+        'testFunction': '/// Test function documentation',
+        'TestClass': '/// Test class documentation',
+      };
+
+      // Act & Assert
+      await expectLater(
+        () => engine.applyDocumentation(filePath, docs),
+        throwsA(isA<UnimplementedError>()),
+      );
+    });
+
+    test('should handle empty documentation map', () async {
+      // Arrange
+      const filePath = 'empty.dart';
+      final docs = <String, String>{};
+
+      // Act & Assert
+      await expectLater(
+        () => engine.applyDocumentation(filePath, docs),
+        throwsA(isA<UnimplementedError>()),
+      );
+    });
+
+    test('should handle large documentation map', () async {
+      // Arrange
+      const filePath = 'large.dart';
+      final docs = <String, String>{};
+
+      // Generate many documentation entries
+      for (var i = 0; i < 100; i++) {
+        docs['element$i'] = '/// Documentation for element $i';
+      }
+
+      // Act & Assert
+      await expectLater(
+        () => engine.applyDocumentation(filePath, docs),
+        throwsA(isA<UnimplementedError>()),
+      );
+    });
+
+    test('should handle documentation with special characters', () async {
+      // Arrange
+      const filePath = 'special.dart';
+      final docs = <String, String>{
+        'arabicFunction': r'/// دالة عربية مع رموز خاصة: @#$%^&*()',
+        'unicodeMethod': '/// Method with unicode: 🚀 ✨ 🎯',
+        'htmlLikeDoc': '/// Documentation with <tags> & "quotes"',
+      };
+
+      // Act & Assert
+      await expectLater(
+        () => engine.applyDocumentation(filePath, docs),
+        throwsA(isA<UnimplementedError>()),
+      );
+    });
+  });
+
+  group('GenerationOptions - Default Options', () {
+    test('should create default options correctly', () {
+      // Act
       const options = GenerationOptions.defaults;
 
+      // Assert
       expect(options.useArabic, isTrue);
       expect(options.useEnglish, isFalse);
       expect(options.includeExamples, isFalse);
       expect(options.includeDetails, isTrue);
     });
 
-    test('should create custom options', () {
+    test('should have correct defaults constant', () {
+      // Act
+      const options = GenerationOptions.defaults;
+
+      // Assert
+      expect(options.useArabic, isTrue);
+      expect(options.useEnglish, isFalse);
+      expect(options.includeExamples, isFalse);
+      expect(options.includeDetails, isTrue);
+    });
+
+    test('should have correct comprehensive constant', () {
+      // Act
+      const options = GenerationOptions.comprehensive;
+
+      // Assert
+      expect(options.useArabic, isTrue);
+      expect(options.useEnglish, isTrue);
+      expect(options.includeExamples, isTrue);
+      expect(options.includeDetails, isTrue);
+    });
+  });
+
+  group('GenerationOptions - Custom Options', () {
+    test('should create custom options correctly', () {
+      // Act
       const options = GenerationOptions(
         useArabic: false,
         useEnglish: true,
@@ -181,180 +274,149 @@ void main() {
         includeDetails: false,
       );
 
+      // Assert
       expect(options.useArabic, isFalse);
       expect(options.useEnglish, isTrue);
       expect(options.includeExamples, isTrue);
       expect(options.includeDetails, isFalse);
     });
 
-    test('should have defaults constant', () {
-      expect(GenerationOptions.defaults.useArabic, isTrue);
-      expect(GenerationOptions.defaults.useEnglish, isFalse);
-      expect(GenerationOptions.defaults.includeExamples, isFalse);
-      expect(GenerationOptions.defaults.includeDetails, isTrue);
-    });
+    test('should handle all false options', () {
+      // Act
+      const options = GenerationOptions(
+        useArabic: false,
+        includeDetails: false,
+      );
 
-    test('should have comprehensive constant', () {
-      expect(GenerationOptions.comprehensive.useArabic, isTrue);
-      expect(GenerationOptions.comprehensive.useEnglish, isTrue);
-      expect(GenerationOptions.comprehensive.includeExamples, isTrue);
-      expect(GenerationOptions.comprehensive.includeDetails, isTrue);
-    });
-
-    test('should support Arabic-only documentation', () {
-      const options = GenerationOptions.defaults;
-
-      expect(options.useArabic, isTrue);
-      expect(options.useEnglish, isFalse);
-    });
-
-    test('should support English-only documentation', () {
-      const options = GenerationOptions(useArabic: false, useEnglish: true);
-
+      // Assert
       expect(options.useArabic, isFalse);
-      expect(options.useEnglish, isTrue);
-    });
-
-    test('should support bilingual documentation', () {
-      const options = GenerationOptions(useEnglish: true);
-
-      expect(options.useArabic, isTrue);
-      expect(options.useEnglish, isTrue);
-    });
-
-    test('should support examples inclusion', () {
-      const options = GenerationOptions(includeExamples: true);
-
-      expect(options.includeExamples, isTrue);
-    });
-
-    test('should support details inclusion', () {
-      const options = GenerationOptions.defaults;
-
-      expect(options.includeDetails, isTrue);
-    });
-
-    test('should support minimal documentation', () {
-      const options = GenerationOptions(includeDetails: false);
-
+      expect(options.useEnglish, isFalse);
       expect(options.includeExamples, isFalse);
       expect(options.includeDetails, isFalse);
     });
+
+    test('should handle all true options', () {
+      // Act
+      const options = GenerationOptions.comprehensive;
+
+      // Assert
+      expect(options.useArabic, isTrue);
+      expect(options.useEnglish, isTrue);
+      expect(options.includeExamples, isTrue);
+      expect(options.includeDetails, isTrue);
+    });
+
+    test('should handle partial options', () {
+      // Act
+      const options = GenerationOptions.comprehensive;
+
+      // Assert
+      expect(options.useArabic, isTrue); // Default
+      expect(options.useEnglish, isTrue); // Custom
+      expect(options.includeExamples, isTrue); // Custom
+      expect(options.includeDetails, isTrue); // Default
+    });
   });
 
-  group('Integration scenarios', () {
-    late GenerationEngine engine;
+  group('GenerationOptions - Equality and Comparison', () {
+    test('should be equal when all properties match', () {
+      // Arrange
+      const options1 = GenerationOptions(
+        includeExamples: true,
+        includeDetails: false,
+      );
+      const options2 = GenerationOptions(
+        includeExamples: true,
+        includeDetails: false,
+      );
 
-    setUp(() {
-      engine = GenerationEngine();
+      // Act & Assert
+      expect(options1.useArabic, equals(options2.useArabic));
+      expect(options1.useEnglish, equals(options2.useEnglish));
+      expect(options1.includeExamples, equals(options2.includeExamples));
+      expect(options1.includeDetails, equals(options2.includeDetails));
     });
 
-    test('should handle class documentation generation', () {
-      const element = UndocumentedElement(
-        name: 'UserRepository',
-        type: ElementType.classType,
-        lineNumber: 10,
-        signature: 'class UserRepository',
-      );
-
-      expect(
-        () => engine.generateDocumentation(element),
-        throwsA(isA<UnimplementedError>()),
-      );
-    });
-
-    test('should handle method documentation generation', () {
-      const element = UndocumentedElement(
-        name: 'fetchUser',
-        type: ElementType.method,
-        lineNumber: 20,
-        signature: 'Future<User> fetchUser(String id)',
-      );
-
-      expect(
-        () => engine.generateDocumentation(element),
-        throwsA(isA<UnimplementedError>()),
-      );
-    });
-
-    test('should handle property documentation generation', () {
-      const element = UndocumentedElement(
-        name: 'userName',
-        type: ElementType.property,
-        lineNumber: 30,
-        signature: 'String userName',
-      );
-
-      expect(
-        () => engine.generateDocumentation(element),
-        throwsA(isA<UnimplementedError>()),
-      );
-    });
-
-    test('should handle file with multiple elements', () {
-      final elements = [
-        const UndocumentedElement(
-          name: 'MyClass',
-          type: ElementType.classType,
-          lineNumber: 1,
-          signature: 'class MyClass',
-        ),
-        const UndocumentedElement(
-          name: 'myMethod',
-          type: ElementType.method,
-          lineNumber: 5,
-          signature: 'void myMethod()',
-        ),
-        const UndocumentedElement(
-          name: 'myProperty',
-          type: ElementType.property,
-          lineNumber: 10,
-          signature: 'String myProperty',
-        ),
+    test('should handle different combinations', () {
+      final testCases = [
+        GenerationOptions.defaults,
+        GenerationOptions.comprehensive,
+        const GenerationOptions(useEnglish: true),
+        const GenerationOptions(includeExamples: true),
+        const GenerationOptions(includeDetails: false),
+        const GenerationOptions(useArabic: false, useEnglish: true),
       ];
 
-      final result = AnalysisResult(
-        filePath: 'test.dart',
-        undocumentedElements: elements,
+      // Act & Assert - Should not crash for any combination
+      for (final options in testCases) {
+        expect(options.useArabic, isA<bool>());
+        expect(options.useEnglish, isA<bool>());
+        expect(options.includeExamples, isA<bool>());
+        expect(options.includeDetails, isA<bool>());
+      }
+    });
+  });
+
+  group('GenerationEngine - Integration Tests', () {
+    test('should handle workflow with all methods', () async {
+      // Arrange
+      const element = UndocumentedElement(
+        name: 'workflowTest',
+        type: ElementType.method,
+        signature: 'void workflowTest()',
+        lineNumber: 5,
+      );
+
+      const result = AnalysisResult(
+        filePath: 'workflow.dart',
+        undocumentedElements: [element],
         coveragePercentage: 0,
+      );
+
+      // Act & Assert - All should throw UnimplementedError
+      expect(
+        () => engine.generateDocumentation(element),
+        throwsA(isA<UnimplementedError>()),
       );
 
       expect(
         () => engine.generateFileDocumentation(result),
         throwsA(isA<UnimplementedError>()),
       );
-    });
 
-    test('should handle applying documentation to file', () {
-      final docs = {
-        'MyClass': '/// مستودع المستخدمين\n///\n/// يدير عمليات المستخدمين',
-        'fetchUser':
-            '/// جلب مستخدم\n///\n/// Parameters:\n/// - [id]: معرف المستخدم',
-      };
-
-      expect(
-        () => engine.applyDocumentation(
-          'lib/repositories/user_repository.dart',
-          docs,
-        ),
+      await expectLater(
+        () => engine.applyDocumentation('workflow.dart', {'test': 'doc'}),
         throwsA(isA<UnimplementedError>()),
       );
     });
 
-    test('should use default options when not specified', () {
-      const options = GenerationOptions.defaults;
+    test('should handle edge cases consistently', () {
+      // Arrange - Edge case elements
+      final edgeCases = [
+        const UndocumentedElement(
+          name: '',
+          type: ElementType.method,
+          signature: '',
+          lineNumber: 0,
+        ),
+        const UndocumentedElement(
+          name: 'very_long_name_that_exceeds_normal_limits_and_contains_'
+              'many_underscores_and_numbers_123456789',
+          type: ElementType.classType,
+          signature: 'class VeryLongClassName extends '
+              'SuperLongBaseClassName implements MultipleInterfaces',
+          lineNumber: 999999,
+        ),
+      ];
 
-      expect(options.useArabic, isTrue);
-      expect(options.includeDetails, isTrue);
-    });
-
-    test('should use comprehensive options for detailed docs', () {
-      const options = GenerationOptions.comprehensive;
-
-      expect(options.useArabic, isTrue);
-      expect(options.useEnglish, isTrue);
-      expect(options.includeExamples, isTrue);
-      expect(options.includeDetails, isTrue);
+      // Act & Assert
+      for (final element in edgeCases) {
+        expect(
+          () => engine.generateDocumentation(element),
+          throwsA(isA<UnimplementedError>()),
+          reason: 'Should handle edge case: ${element.name}',
+        );
+      }
     });
   });
 }

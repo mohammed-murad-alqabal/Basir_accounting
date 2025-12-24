@@ -2,11 +2,7 @@
   "mcpServers": {
     "git": {
       "command": "uvx",
-      "args": [
-        "mcp-server-git@latest",
-        "--repository",
-        "."
-      ],
+      "args": ["mcp-server-git@latest", "--repository", "."],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
@@ -16,80 +12,159 @@
         "git_log",
         "git_diff",
         "git_diff_unstaged",
-        "git_diff_unstaged",
-        "git_diff_unstaged",
-        "git_diff_unstaged",
-        "git_commit",
-        "git_commit",
-        "git_commit",
-        "git_commit",
-        "git_commit",
-        "git_commit",
-        "git_commit",
-        "git_commit",
+        "git_diff_staged",
         "git_commit",
         "git_add",
         "git_create_branch",
-        "git_create_branch"
-      ],
-      "priority": 90
+        "git_checkout",
+        "git_show",
+        "git_branch",
+        "git_reset"
+      ]
     },
     "fetch": {
       "command": "uvx",
-      "args": [
-        "mcp-server-fetch@latest"
-      ],
-      "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      },
-      "disabled": false,
-      "autoApprove": [
-        "fetch"
-      ],
-      "priority": 85
-    },
-    "sqlite": {
-      "command": "uvx",
-      "args": [
-        "mcp-server-sqlite@latest"
-      ],
-      "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      },
-      "disabled": false,
-      "autoApprove": [
-        "query",
-        "list_tables"
-      ],
-      "priority": 80
-    },
-    "time": {
-      "command": "uvx",
-      "args": [
-        "mcp-server-time@latest"
-      ],
-      "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      },
-      "disabled": false,
-      "autoApprove": [
-        "get_current_time",
-        "convert_timezone"
-      ],
-      "priority": 75
-    },
-    "filesystem": {
-      "command": "uvx",
-      "args": [
-        "mcp-server-filesystem@latest",
-        "/home/m/Projects/Basser_MVP"
-      ],
+      "args": ["mcp-server-fetch@latest"],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": true,
-      "autoApprove": [],
-      "priority": 95
+      "autoApprove": ["fetch"]
+    },
+    "sqlite": {
+      "command": "uvx",
+      "args": ["mcp-server-sqlite@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "read_query",
+        "write_query",
+        "create_table",
+        "list_tables",
+        "describe_table",
+        "append_insight"
+      ]
+    },
+    "time": {
+      "command": "uvx",
+      "args": ["mcp-server-time@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": ["get_current_time", "convert_time"]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "read_file",
+        "list_directory",
+        "read_multiple_files",
+        "create_directory",
+        "directory_tree"
+      ]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}",
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "NODE_ENV": "production"
+      },
+      "disabled": false,
+      "timeout": 30000,
+      "retries": 3,
+      "autoApprove": [
+        "search_repositories",
+        "get_file_contents",
+        "list_issues",
+        "get_issue",
+        "list_pull_requests",
+        "get_pull_request",
+        "get_pull_request_files",
+        "list_commits",
+        "search_code",
+        "search_issues",
+        "search_users",
+        "create_issue",
+        "update_issue",
+        "add_issue_comment",
+        "create_pull_request",
+        "create_or_update_file",
+        "push_files",
+        "create_branch",
+        "fork_repository"
+      ]
+    },
+    "aws-docs": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": true,
+      "timeout": 30000,
+      "retries": 2,
+      "autoApprove": ["search_documentation", "read_documentation", "recommend"]
+    },
+
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "create_entities",
+        "create_relations",
+        "add_observations",
+        "search_nodes",
+        "open_nodes",
+        "read_graph"
+      ]
+    },
+    "brave-search": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": ["brave_web_search", "brave_local_search"]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": ["sequentialthinking"]
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": true,
+      "timeout": 30000,
+      "retries": 2,
+      "autoApprove": [
+        "puppeteer_screenshot",
+        "puppeteer_click",
+        "puppeteer_type"
+      ]
     }
   }
 }

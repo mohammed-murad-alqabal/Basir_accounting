@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 /// Navigator.push(
 ///   context,
 ///   MaterialPageRoute(builder: (_) => const ButtonTestScreen()),
-/// );
+///,);
 /// ```
 class ButtonTestScreen extends StatelessWidget {
   /// ينشئ شاشة اختبار الأزرار.
@@ -79,39 +79,39 @@ class ButtonTestScreen extends StatelessWidget {
                     AppEnhancedButton(
                       text: 'نص قصير',
                       onPressed: () {},
-                      type: AppEnhancedButtonType.secondary,
+                      style: AppEnhancedButtonStyle.secondary,
                     ),
                     const SizedBox(height: 12),
                     AppEnhancedButton(
                       text: 'نص متوسط الطول للاختبار',
                       onPressed: () {},
-                      type: AppEnhancedButtonType.secondary,
+                      style: AppEnhancedButtonStyle.secondary,
                     ),
                     const SizedBox(height: 12),
                     AppEnhancedButton(
                       text: 'نص طويل جداً جداً جداً قد يسبب مشاكل في العرض',
                       onPressed: () {},
-                      type: AppEnhancedButtonType.secondary,
+                      style: AppEnhancedButtonStyle.secondary,
                     ),
                     const SizedBox(height: 12),
                     AppEnhancedButton(
                       text: 'مع أيقونة',
                       icon: Icons.edit,
                       onPressed: () {},
-                      type: AppEnhancedButtonType.secondary,
+                      style: AppEnhancedButtonStyle.secondary,
                     ),
                     const SizedBox(height: 12),
                     const AppEnhancedButton(
                       text: 'معطل',
                       onPressed: null,
-                      type: AppEnhancedButtonType.secondary,
+                      style: AppEnhancedButtonStyle.secondary,
                     ),
                     const SizedBox(height: 12),
                     AppEnhancedButton(
                       text: 'تحميل',
                       onPressed: () {},
                       isLoading: true,
-                      type: AppEnhancedButtonType.secondary,
+                      style: AppEnhancedButtonStyle.secondary,
                     ),
                   ],
                 ),
@@ -126,32 +126,32 @@ class ButtonTestScreen extends StatelessWidget {
                     AppEnhancedButton(
                       text: 'نص قصير',
                       onPressed: () {},
-                      type: AppEnhancedButtonType.text,
+                      style: AppEnhancedButtonStyle.text,
                     ),
                     const SizedBox(height: 12),
                     AppEnhancedButton(
                       text: 'نص متوسط الطول للاختبار',
                       onPressed: () {},
-                      type: AppEnhancedButtonType.text,
+                      style: AppEnhancedButtonStyle.text,
                     ),
                     const SizedBox(height: 12),
                     AppEnhancedButton(
                       text: 'نص طويل جداً جداً جداً قد يسبب مشاكل في العرض',
                       onPressed: () {},
-                      type: AppEnhancedButtonType.text,
+                      style: AppEnhancedButtonStyle.text,
                     ),
                     const SizedBox(height: 12),
                     AppEnhancedButton(
                       text: 'مع أيقونة',
                       icon: Icons.delete,
                       onPressed: () {},
-                      type: AppEnhancedButtonType.text,
+                      style: AppEnhancedButtonStyle.text,
                     ),
                     const SizedBox(height: 12),
                     const AppEnhancedButton(
                       text: 'معطل',
                       onPressed: null,
-                      type: AppEnhancedButtonType.text,
+                      style: AppEnhancedButtonStyle.text,
                     ),
                   ],
                 ),
@@ -169,7 +169,7 @@ class ButtonTestScreen extends StatelessWidget {
                           child: AppEnhancedButton(
                             text: 'إلغاء',
                             onPressed: () {},
-                            type: AppEnhancedButtonType.secondary,
+                            style: AppEnhancedButtonStyle.secondary,
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -189,7 +189,7 @@ class ButtonTestScreen extends StatelessWidget {
                             text: 'حذف',
                             icon: Icons.delete,
                             onPressed: () {},
-                            type: AppEnhancedButtonType.text,
+                            style: AppEnhancedButtonStyle.text,
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -209,7 +209,7 @@ class ButtonTestScreen extends StatelessWidget {
                           child: AppEnhancedButton(
                             text: 'نص طويل جداً',
                             onPressed: () {},
-                            type: AppEnhancedButtonType.secondary,
+                            style: AppEnhancedButtonStyle.secondary,
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -241,14 +241,12 @@ class ButtonTestScreen extends StatelessWidget {
                       text: 'نص قصير',
                       icon: Icons.check_circle,
                       onPressed: () {},
-                      width: 200,
                     ),
                     const SizedBox(height: 12),
                     AppEnhancedButton(
                       text: 'نص طويل جداً في زر بعرض محدد',
                       onPressed: () {},
-                      type: AppEnhancedButtonType.secondary,
-                      width: 250,
+                      style: AppEnhancedButtonStyle.secondary,
                     ),
                   ],
                 ),

@@ -52,7 +52,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   ),
                   value: _notificationsEnabled,
                   onChanged: (value) {
-                    setState(() => _notificationsEnabled = value);
+                    setState(
+                      () => _notificationsEnabled = value,
+                    );
                   },
                 ),
               ),
@@ -70,7 +72,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   ),
                   value: ref.watch(isDarkModeProvider),
                   onChanged: (value) {
-                    unawaited(ref.read(themeProvider.notifier).toggleTheme());
+                    unawaited(
+                      ref.read(themeProvider.notifier).toggleTheme(),
+                    );
                   },
                 ),
               ),
@@ -105,9 +109,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
               // زر تسجيل الخروج
               AppPrimaryButton(
-                label: 'تسجيل الخروج',
+                text: 'تسجيل الخروج',
                 onPressed: _showLogoutDialog,
-                width: double.infinity,
               ),
             ],
           ),
@@ -125,7 +128,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   /// معالج تعديل بيانات الحساب
   void _handleEditAccount() {
-    unawaited(_showEditAccountDialog());
+    unawaited(
+      _showEditAccountDialog(),
+    );
   }
 
   Future<void> _showEditAccountDialog() async {
@@ -167,8 +172,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
           TextButton(
             onPressed: () {
-              Navigator.pop(context);
-              _showSuccessMessage('تم تحديث بيانات الحساب بنجاح');
+              Navigator.pop(
+                context,
+              );
+              _showSuccessMessage(
+                'تم تحديث بيانات الحساب بنجاح',
+              );
             },
             child: const Text('حفظ'),
           ),
@@ -213,15 +222,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   /// معالج فتح سياسة الخصوصية
   void _handlePrivacyPolicy() {
-    unawaited(_openPrivacyPolicy());
+    unawaited(
+      _openPrivacyPolicy(),
+    );
   }
 
   Future<void> _openPrivacyPolicy() async {
     try {
       // محاولة فتح رابط سياسة الخصوصية
-      final uri = Uri.parse('https://basser-app.com/privacy');
+      final uri = Uri.parse(
+        'https://basser-app.com/privacy',
+      );
       if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
+        await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
       } else {
         // إذا لم يكن هناك رابط، عرض نافذة بالمعلومات
         if (!mounted) return;
@@ -276,15 +292,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   /// معالج فتح شروط الخدمة
   void _handleTermsOfService() {
-    unawaited(_openTermsOfService());
+    unawaited(
+      _openTermsOfService(),
+    );
   }
 
   Future<void> _openTermsOfService() async {
     try {
       // محاولة فتح رابط شروط الخدمة
-      final uri = Uri.parse('https://basser-app.com/terms');
+      final uri = Uri.parse(
+        'https://basser-app.com/terms',
+      );
       if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
+        await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
       } else {
         // إذا لم يكن هناك رابط، عرض نافذة بالمعلومات
         if (!mounted) return;
@@ -319,7 +342,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               SizedBox(height: AppSpacing.sm),
               Text('3. يجب عليك الاحتفاظ بنسخة احتياطية من بياناتك'),
               SizedBox(height: AppSpacing.sm),
-              Text('4. التطبيق يُقدم "كما هو" بدون ضمانات'),
+              Text('4. التطبيق يُقدم كما هو بدون ضمانات'),
               SizedBox(height: AppSpacing.sm),
               Text('5. نحن غير مسؤولين عن أي خسائر ناتجة عن استخدام التطبيق'),
               SizedBox(height: AppSpacing.md),
@@ -351,7 +374,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   /// معالج تسجيل الخروج
   void _showLogoutDialog() {
-    unawaited(_performLogout());
+    unawaited(
+      _performLogout(),
+    );
   }
 
   Future<void> _performLogout() async {
@@ -367,10 +392,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text(
-              'تسجيل الخروج',
-              style: TextStyle(color: AppColors.error),
-            ),
+            child: const Text('تسجيل الخروج'),
           ),
         ],
       ),
@@ -378,11 +400,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
     if ((confirmed ?? false) && mounted) {
       // عرض رسالة تأكيد
-      _showSuccessMessage('تم تسجيل الخروج بنجاح');
+      _showSuccessMessage(
+        'تم تسجيل الخروج بنجاح',
+      );
       // الانتقال إلى شاشة تسجيل الدخول
-      await Future<void>.delayed(const Duration(milliseconds: 500));
+      await Future<void>.delayed(
+        const Duration(milliseconds: 500),
+      );
       if (!mounted) return;
-      await Navigator.of(context).pushReplacementNamed('/login');
+      await Navigator.of(context).pushReplacementNamed(
+        '/login',
+      );
     }
   }
 }

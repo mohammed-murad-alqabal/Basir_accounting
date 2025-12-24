@@ -1,0 +1,112 @@
+#!/bin/bash
+
+# Pre-commit hook للتحقق من توافق ملفات التوجيه
+# يمنع commit الملفات التي تحتوي على مراجع غير متوافقة
+
+set -e
+
+# الألوان للمخرجات
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# دالة طباعة الرسائل الملونة
+print_error() {
+    echo -e "${RED}❌ $1${NC}"
+}
+
+print_success() {
+    echo -e "${GREEN}✅ $1${NC}"
+}
+
+print_warning() {
+    echo -e "${YELLOW}⚠️  $1${NC}"
+}
+
+# التحقق من وجود Python
+if ! command -v python3 &> /dev/null; then
+    print_error "Python 3 غير مثبت. مطلوب لتشغيل فحص التوافق."
+    exit 1
+fi
+
+# مسار السكريبت
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+CHECKER_SCRIPT="$SCRIPT_DIR/steering_compatibility_checker.py"
+
+# التحقق من وجود السكريبت
+if [[ ! -f "$CHECKER_SCRIPT" ]]; then
+    print_error "سكريبت فحص التوافق غير موجود: $CHECKER_SCRIPT"
+    exit 1
+fi
+
+# الحصول على قائمة الملفات المُعدلة في .kiro/steering/
+STAGED_STEERING_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep "^\.kiro/steering/.*\.md$" || true)
+
+if [[ -z "$STAGED_STEERING_FILES" ]]; then
+    # لا توجد ملفات توجيه معدلة
+    exit 0
+fi
+
+echo "🔍 فحص ملفات التوجيه المُعدلة للتأكد من التوافق..."
+
+# إنشاء مجلد مؤقت للفحص
+TEMP_DIR=$(mktemp -d)
+trap "rm -rf $TEMP_DIR" EXIT
+
+# نسخ الملفات المُعدلة للفحص
+HAS_ISSUES=false
+CHECKED_FILES=0
+
+for file in $STAGED_STEERING_FILES; do
+    if [[ -f "$file" ]]; then
+        echo "  فحص: $file"
+        
+        # فحص الملف
+        if python3 "$CHECKER_SCRIPT" --file "$file" --severity-threshold medium --fail-on-issues --output-format json > /dev/null 2>&1; then
+            echo "    ✅ متوافق"
+        else
+            echo "    ❌ يحتوي على مراجع غير متوافقة"
+            HAS_ISSUES=true
+            
+            # عرض تفاصيل المشاكل
+            python3 "$CHECKER_SCRIPT" --file "$file" --severity-threshold medium --output-format json 2>/dev/null | \
+            python3 -c "
+import json, sys
+try:
+    data = json.load(sys.stdin)
+    if 'issues' in data and data['issues']:
+        for file_path, issues in data['issues'].items():
+            for issue in issues:
+                print(f'      السطر {issue[\"line_number\"]}: {issue[\"technology\"]} ({issue[\"severity\"]})')
+                print(f'      الاقتراح: {issue[\"suggestion\"]}')
+except:
+    pass
+            "
+        fi
+        
+        CHECKED_FILES=$((CHECKED_FILES + 1))
+    fi
+done
+
+echo ""
+
+if [[ "$HAS_ISSUES" == true ]]; then
+    print_error "تم العثور على مراجع غير متوافقة في ملفات التوجيه!"
+    echo ""
+    echo "لإصلاح هذه المشاكل:"
+    echo "1. راجع الملفات المذكورة أعلاه"
+    echo "2. استبدل المراجع غير المتوافقة بالبدائل المقترحة"
+    echo "3. أو استخدم الأمر التالي لتشغيل فحص شامل:"
+    echo "   ./scripts/check_steering_compatibility.sh"
+    echo ""
+    echo "لتجاهل هذا الفحص (غير مستحسن):"
+    echo "   git commit --no-verify"
+    echo ""
+    exit 1
+else
+    if [[ $CHECKED_FILES -gt 0 ]]; then
+        print_success "جميع ملفات التوجيه المُعدلة ($CHECKED_FILES ملف) متوافقة مع مكدس Flutter/Dart"
+    fi
+    exit 0
+fi

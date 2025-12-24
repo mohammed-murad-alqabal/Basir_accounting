@@ -1,294 +1,503 @@
-import 'package:basser_app/core/theme/app_colors.dart';
 import 'package:basser_app/core/theme/app_font_metrics.dart';
+import 'package:basser_app/core/theme/font_manager.dart';
+import 'package:basser_app/core/widgets/overflow_detector.dart';
 import 'package:flutter/material.dart';
 
-/// زر محسّن يحل مشكلة قص واختفاء النصوص
+/// زر محسّن يحل مشكلة قص واختفاء النصوص.
 ///
-/// يستخدم تخطيط مرن (Flexible/Expanded) ويحسب padding ديناميكياً
-/// لضمان عرض النص بالكامل بدون قص في جميع الحالات.
-///
-/// **الميزات:**
-/// - تخطيط مرن يتكيف مع طول النص
+/// يطبق هذا الزر جميع الحلول المطلوبة لمنع قص النصوص:
+/// - تخطيط مرن (Flexible/Expanded)
 /// - حساب padding ديناميكي حسب textScaleFactor
-/// - معالجة RTL صحيحة
+/// - معالجة RTL الصحيحة
 /// - دعم الأيقونات مع النص
-/// - line-height مناسب لخط Cairo (≥ 1.3)
-/// - خط fallback آمن (Cairo → Roboto → Arial)
-/// - لا قص للنص (overflow: visible)
+/// - line-height ≥ 1.3 لخط Cairo
+/// - fontFamilyFallback آمن
+/// - كشف overflow في وضع التطوير
 ///
-/// **مثال:**
+/// مثال:
 /// ```dart
 /// AppEnhancedButton(
-///   text: 'تسجيل الدخول',
-///   onPressed: () {},
-///   type: AppEnhancedButtonType.primary,
+///   text: 'إضافة عميل جديد',
+///   onPressed: () => _addCustomer(),
+///   icon: Icons.add,
 /// )
 /// ```
 class AppEnhancedButton extends StatelessWidget {
   /// ينشئ زر محسّن جديد.
-  ///
-  /// [text] نص الزر المطلوب عرضه.
-  /// [onPressed] الدالة التي يتم استدعاؤها عند الضغط على الزر.
-  /// [type] نوع الزر (primary, secondary, text).
-  /// [icon] أيقونة اختيارية تظهر قبل النص.
-  /// [iconSize] حجم الأيقونة (افتراضي: 20).
-  /// [iconSpacing] المسافة بين الأيقونة والنص (افتراضي: 8).
   const AppEnhancedButton({
     required this.text,
     required this.onPressed,
     super.key,
-    this.type = AppEnhancedButtonType.primary,
     this.icon,
-    this.iconSize = 20,
-    this.iconSpacing = 8,
+    this.style = AppEnhancedButtonStyle.primary,
+    this.size = AppEnhancedButtonSize.medium,
     this.isLoading = false,
-    this.width,
-    this.minHeight,
+    this.isEnabled = true,
+    this.maxLines,
+    this.textAlign,
+    this.tooltip,
+    this.semanticLabel,
   });
 
   /// نص الزر
   final String text;
 
-  /// دالة يتم استدعاؤها عند الضغط على الزر
+  /// دالة الضغط
   final VoidCallback? onPressed;
 
-  /// نوع الزر (primary, secondary, text)
-  final AppEnhancedButtonType type;
-
-  /// أيقونة اختيارية تظهر قبل النص
+  /// أيقونة اختيارية
   final IconData? icon;
 
-  /// حجم الأيقونة (افتراضي: 20)
-  final double iconSize;
+  /// نمط الزر
+  final AppEnhancedButtonStyle style;
 
-  /// المسافة بين الأيقونة والنص (افتراضي: 8)
-  final double iconSpacing;
+  /// حجم الزر
+  final AppEnhancedButtonSize size;
 
-  /// هل الزر في حالة تحميل؟
+  /// هل الزر في حالة تحميل
   final bool isLoading;
 
-  /// عرض الزر (null = يتكيف مع المحتوى)
-  final double? width;
+  /// هل الزر مفعل
+  final bool isEnabled;
 
-  /// ارتفاع الزر الأدنى (افتراضي: يُحسب تلقائياً)
-  final double? minHeight;
+  /// عدد الأسطر الأقصى للنص
+  final int? maxLines;
+
+  /// محاذاة النص
+  final TextAlign? textAlign;
+
+  /// نص tooltip
+  final String? tooltip;
+
+  /// تسمية للوصول (accessibility)
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
-    // الحصول على textScaler من MediaQuery
-    final textScaler = MediaQuery.textScalerOf(context);
-    final textScaleFactor = textScaler.scale(1);
+    final theme = Theme.of(
+      context,
+    );
+    final mediaQuery = MediaQuery.of(
+      context,
+    );
+    final textScaleFactor = mediaQuery.textScaler.scale(
+      1,
+    );
 
-    // الحصول على مقاييس الخط لـ Cairo
-    final fontMetrics = AppFontMetrics.cairo(_getFontSize());
+    // حساب المقاييس المطلوبة
+    final fontSize = _getFontSize();
+    final fontMetrics = FontMetricsHelper.getCairoMetrics(
+      fontSize,
+    );
+    final padding = fontMetrics.calculatePadding(
+      textScaleFactor: textScaleFactor,
+      minVerticalPadding: _getMinVerticalPadding(),
+      horizontalPadding: _getHorizontalPadding(),
+    );
+    final minHeight = fontMetrics.calculateMinButtonHeight(
+      textScaleFactor: textScaleFactor,
+      minHeight: _getMinHeight(),
+    );
 
-    // حساب الارتفاع الأدنى المطلوب
-    final calculatedMinHeight = minHeight ??
-        fontMetrics.calculateMinButtonHeight(textScaleFactor: textScaleFactor);
+    // إنشاء TextStyle آمن
+    final textStyle = _createSafeTextStyle(
+      theme,
+      fontSize,
+    );
 
-    // حساب padding الرأسي
-    final verticalPaddingEdgeInsets = fontMetrics.calculateVerticalPadding(
+    // بناء محتوى الزر
+    var buttonContent = _buildButtonContent(
+      textStyle: textStyle,
       textScaleFactor: textScaleFactor,
     );
-    final verticalPadding = verticalPaddingEdgeInsets.top;
 
-    // حساب padding الأفقي (أكبر قليلاً)
-    final horizontalPadding = verticalPadding * 1.5;
+    // تطبيق OverflowDetector في وضع التطوير
+    buttonContent = OverflowDetector(
+      name: 'AppEnhancedButton($text)',
+      child: buttonContent,
+    );
 
-    return SizedBox(
-      width: width,
-      child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
-        style: _getButtonStyle(
-          context,
-          calculatedMinHeight,
-          verticalPadding,
-          horizontalPadding,
-        ),
-        child: isLoading
-            ? _buildLoadingIndicator()
-            : _buildContent(context, fontMetrics),
-      ),
+    // بناء الزر النهائي
+    var button = _buildButton(
+      context: context,
+      content: buttonContent,
+      padding: padding,
+      minHeight: minHeight,
+    );
+
+    // إضافة tooltip إذا كان متوفراً
+    if (tooltip != null) {
+      button = Tooltip(
+        message: tooltip,
+        child: button,
+      );
+    }
+
+    // إضافة Semantics للوصول
+    return Semantics(
+      label: semanticLabel ?? text,
+      button: true,
+      enabled: _isButtonEnabled(),
+      child: button,
     );
   }
 
-  /// بناء محتوى الزر (أيقونة + نص)
-  Widget _buildContent(BuildContext context, AppFontMetrics fontMetrics) {
-    // إذا لم يكن هناك أيقونة، نعرض النص فقط
-    if (icon == null) {
-      return _buildText(context, fontMetrics);
+  /// يبني محتوى الزر (نص + أيقونة).
+  Widget _buildButtonContent({
+    required TextStyle textStyle,
+    required double textScaleFactor,
+  }) {
+    // إذا كان في حالة تحميل
+    if (isLoading) {
+      return _buildLoadingContent(
+        textStyle,
+      );
     }
 
-    // إذا كان هناك أيقونة، نستخدم Row مع Flexible
+    // إذا كان هناك أيقونة
+    if (icon != null) {
+      return _buildIconTextContent(
+        textStyle,
+        textScaleFactor,
+      );
+    }
+
+    // نص فقط
+    return _buildTextOnlyContent(
+      textStyle,
+    );
+  }
+
+  /// يبني محتوى التحميل.
+  Widget _buildLoadingContent(TextStyle textStyle) {
+    final iconSize = _getIconSize();
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, size: iconSize, color: _getIconColor(context)),
-        SizedBox(width: iconSpacing),
-        Flexible(child: _buildText(context, fontMetrics)),
+        SizedBox(
+          width: iconSize,
+          height: iconSize,
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            valueColor: AlwaysStoppedAnimation<Color>(
+              textStyle.color ?? Colors.white,
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Flexible(
+          child: _buildText(textStyle, 'جاري التحميل...'),
+        ),
       ],
     );
   }
 
-  /// بناء widget النص
-  Widget _buildText(BuildContext context, AppFontMetrics fontMetrics) => Text(
+  /// يبني محتوى الأيقونة والنص.
+  Widget _buildIconTextContent(TextStyle textStyle, double textScaleFactor) {
+    final iconSize = _getIconSize() * textScaleFactor;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          icon,
+          size: iconSize,
+          color: textStyle.color,
+        ),
+        const SizedBox(width: 8),
+        Flexible(
+          child: _buildText(textStyle, text),
+        ),
+      ],
+    );
+  }
+
+  /// يبني محتوى النص فقط.
+  Widget _buildTextOnlyContent(TextStyle textStyle) => _buildText(
+        textStyle,
         text,
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.rtl,
-        style: fontMetrics.toTextStyle(
-          fontWeight: FontWeight.w600,
-          color: _getTextColor(context),
-        ),
-        // السماح بالتفاف النص على عدة أسطر
+      );
+
+  /// يبني widget النص مع المعالجة الصحيحة.
+  Widget _buildText(TextStyle textStyle, String displayText) => Text(
+        displayText,
+        style: textStyle,
+        maxLines: maxLines,
         softWrap: true,
-        // عدم قص النص
         overflow: TextOverflow.visible,
+        textAlign: textAlign ?? TextAlign.center,
+        textDirection: TextDirection.rtl,
       );
 
-  /// بناء مؤشر التحميل
-  Widget _buildLoadingIndicator() => SizedBox(
-        width: 20,
-        height: 20,
-        child: CircularProgressIndicator(
-          strokeWidth: 2,
-          valueColor: AlwaysStoppedAnimation<Color>(
-            type == AppEnhancedButtonType.primary
-                ? Colors.white
-                : AppColors.primary,
-          ),
-        ),
-      );
+  /// يبني الزر النهائي.
+  Widget _buildButton({
+    required BuildContext context,
+    required Widget content,
+    required EdgeInsets padding,
+    required double minHeight,
+  }) {
+    final buttonStyle = _createButtonStyle(
+      context,
+      padding,
+      minHeight,
+    );
 
-  /// الحصول على ButtonStyle حسب نوع الزر
-  ButtonStyle _getButtonStyle(
+    return ElevatedButton(
+      onPressed: _isButtonEnabled() ? onPressed : null,
+      style: buttonStyle,
+      child: content,
+    );
+  }
+
+  /// ينشئ ButtonStyle للزر.
+  ButtonStyle _createButtonStyle(
     BuildContext context,
+    EdgeInsets padding,
     double minHeight,
-    double verticalPadding,
-    double horizontalPadding,
   ) {
-    switch (type) {
-      case AppEnhancedButtonType.primary:
-        return _getPrimaryButtonStyle(
-          context,
-          minHeight,
-          verticalPadding,
-          horizontalPadding,
-        );
-      case AppEnhancedButtonType.secondary:
-        return _getSecondaryButtonStyle(
-          context,
-          minHeight,
-          verticalPadding,
-          horizontalPadding,
-        );
-      case AppEnhancedButtonType.text:
-        return _getTextButtonStyle(
-          context,
-          minHeight,
-          verticalPadding,
-          horizontalPadding,
-        );
+    final theme = Theme.of(
+      context,
+    );
+    final colorScheme = theme.colorScheme;
+
+    // ألوان حسب النمط
+    Color backgroundColor;
+    Color foregroundColor;
+    Color? borderColor;
+
+    switch (style) {
+      case AppEnhancedButtonStyle.primary:
+        backgroundColor = colorScheme.primary;
+        foregroundColor = colorScheme.onPrimary;
+        borderColor = null;
+      case AppEnhancedButtonStyle.secondary:
+        backgroundColor = colorScheme.surface;
+        foregroundColor = colorScheme.onSurface;
+        borderColor = colorScheme.outline;
+      case AppEnhancedButtonStyle.outlined:
+        backgroundColor = Colors.transparent;
+        foregroundColor = colorScheme.primary;
+        borderColor = colorScheme.primary;
+      case AppEnhancedButtonStyle.text:
+        backgroundColor = Colors.transparent;
+        foregroundColor = colorScheme.primary;
+        borderColor = null;
+    }
+
+    return ElevatedButton.styleFrom(
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      padding: padding,
+      minimumSize: Size(0, minHeight),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+        side: borderColor != null
+            ? BorderSide(color: borderColor)
+            : BorderSide.none,
+      ),
+      elevation: style == AppEnhancedButtonStyle.text ? 0 : null,
+      animationDuration: const Duration(milliseconds: 200),
+    );
+  }
+
+  /// ينشئ TextStyle آمن للنص.
+  TextStyle _createSafeTextStyle(ThemeData theme, double fontSize) =>
+      FontManager.createSafeTextStyle(
+        fontSize: fontSize,
+        fontWeight: _getFontWeight(),
+        color: _getTextColor(theme),
+      );
+
+  /// يحصل على حجم الخط حسب حجم الزر.
+  double _getFontSize() {
+    switch (size) {
+      case AppEnhancedButtonSize.small:
+        return 14;
+      case AppEnhancedButtonSize.medium:
+        return 16;
+      case AppEnhancedButtonSize.large:
+        return 18;
     }
   }
 
-  /// Primary button style
-  ButtonStyle _getPrimaryButtonStyle(
-    BuildContext context,
-    double minHeight,
-    double verticalPadding,
-    double horizontalPadding,
-  ) =>
-      ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.onPrimary,
-        disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.5),
-        disabledForegroundColor: AppColors.onPrimary.withValues(alpha: 0.5),
-        minimumSize: Size(88, minHeight),
-        padding: EdgeInsets.symmetric(
-          vertical: verticalPadding,
-          horizontal: horizontalPadding,
-        ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        elevation: 2,
-      );
+  /// يحصل على وزن الخط.
+  FontWeight _getFontWeight() => FontWeight.w600; // SemiBold weight للوضوح
 
-  /// Secondary button style
-  ButtonStyle _getSecondaryButtonStyle(
-    BuildContext context,
-    double minHeight,
-    double verticalPadding,
-    double horizontalPadding,
-  ) =>
-      ElevatedButton.styleFrom(
-        backgroundColor: AppColors.secondary,
-        foregroundColor: AppColors.onSecondary,
-        disabledBackgroundColor: AppColors.secondary.withValues(alpha: 0.5),
-        disabledForegroundColor: AppColors.onSecondary.withValues(alpha: 0.5),
-        minimumSize: Size(88, minHeight),
-        padding: EdgeInsets.symmetric(
-          vertical: verticalPadding,
-          horizontal: horizontalPadding,
-        ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        elevation: 1,
-      );
+  /// يحصل على لون النص.
+  Color? _getTextColor(ThemeData theme) =>
+      null; // سيتم تحديد اللون من ButtonStyle
 
-  /// Text button style
-  ButtonStyle _getTextButtonStyle(
-    BuildContext context,
-    double minHeight,
-    double verticalPadding,
-    double horizontalPadding,
-  ) =>
-      ElevatedButton.styleFrom(
-        backgroundColor: Colors.transparent,
-        foregroundColor: AppColors.primary,
-        disabledForegroundColor: AppColors.primary.withValues(alpha: 0.5),
-        minimumSize: Size(88, minHeight),
-        padding: EdgeInsets.symmetric(
-          vertical: verticalPadding,
-          horizontal: horizontalPadding,
-        ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        elevation: 0,
-      );
-
-  /// الحصول على حجم الخط حسب نوع الزر
-  double _getFontSize() {
-    switch (type) {
-      case AppEnhancedButtonType.primary:
-      case AppEnhancedButtonType.secondary:
-        return 17;
-      case AppEnhancedButtonType.text:
+  /// يحصل على الحد الأدنى للـ padding الرأسي.
+  double _getMinVerticalPadding() {
+    switch (size) {
+      case AppEnhancedButtonSize.small:
+        return 8;
+      case AppEnhancedButtonSize.medium:
+        return 12;
+      case AppEnhancedButtonSize.large:
         return 16;
     }
   }
 
-  /// الحصول على لون النص حسب نوع الزر
-  Color _getTextColor(BuildContext context) {
-    switch (type) {
-      case AppEnhancedButtonType.primary:
-        return AppColors.onPrimary;
-      case AppEnhancedButtonType.secondary:
-        return AppColors.onSecondary;
-      case AppEnhancedButtonType.text:
-        return AppColors.primary;
+  /// يحصل على الـ padding الأفقي.
+  double _getHorizontalPadding() {
+    switch (size) {
+      case AppEnhancedButtonSize.small:
+        return 12;
+      case AppEnhancedButtonSize.medium:
+        return 16;
+      case AppEnhancedButtonSize.large:
+        return 20;
     }
   }
 
-  /// الحصول على لون الأيقونة حسب نوع الزر
-  Color _getIconColor(BuildContext context) => _getTextColor(context);
+  /// يحصل على الحد الأدنى للارتفاع.
+  double _getMinHeight() {
+    switch (size) {
+      case AppEnhancedButtonSize.small:
+        return 36;
+      case AppEnhancedButtonSize.medium:
+        return 48;
+      case AppEnhancedButtonSize.large:
+        return 56;
+    }
+  }
+
+  /// يحصل على حجم الأيقونة.
+  double _getIconSize() {
+    switch (size) {
+      case AppEnhancedButtonSize.small:
+        return 18;
+      case AppEnhancedButtonSize.medium:
+        return 24;
+      case AppEnhancedButtonSize.large:
+        return 28;
+    }
+  }
+
+  /// يتحقق من أن الزر مفعل.
+  bool _isButtonEnabled() => isEnabled && !isLoading && onPressed != null;
 }
 
-/// أنواع الأزرار المحسّنة
-enum AppEnhancedButtonType {
+/// أنماط الزر المحسّن.
+enum AppEnhancedButtonStyle {
   /// زر أساسي (خلفية ملونة)
   primary,
 
-  /// زر ثانوي (خلفية فاتحة)
+  /// زر ثانوي (خلفية ملونة مختلفة)
   secondary,
 
-  /// زر نصي (بدون خلفية)
+  /// زر بحدود (خلفية شفافة مع حدود)
+  outlined,
+
+  /// زر نصي (بدون خلفية أو حدود)
   text,
+}
+
+/// أحجام الزر المحسّن.
+enum AppEnhancedButtonSize {
+  /// حجم صغير
+  small,
+
+  /// حجم متوسط (افتراضي)
+  medium,
+
+  /// حجم كبير
+  large,
+}
+
+/// مساعدات لإنشاء أزرار محسّنة شائعة.
+class AppEnhancedButtonHelper {
+  AppEnhancedButtonHelper._();
+
+  /// ينشئ زر 'إضافة' محسّن.
+  static AppEnhancedButton add({
+    required String text,
+    required VoidCallback onPressed,
+    AppEnhancedButtonSize size = AppEnhancedButtonSize.medium,
+    bool isLoading = false,
+  }) =>
+      AppEnhancedButton(
+        text: text,
+        onPressed: onPressed,
+        icon: Icons.add,
+        size: size,
+        isLoading: isLoading,
+        tooltip: 'إضافة $text',
+      );
+
+  /// ينشئ زر 'حفظ' محسّن.
+  static AppEnhancedButton save({
+    required VoidCallback onPressed,
+    AppEnhancedButtonSize size = AppEnhancedButtonSize.medium,
+    bool isLoading = false,
+  }) =>
+      AppEnhancedButton(
+        text: 'حفظ',
+        onPressed: onPressed,
+        icon: Icons.save,
+        size: size,
+        isLoading: isLoading,
+        tooltip: 'حفظ التغييرات',
+      );
+
+  /// ينشئ زر 'إلغاء' محسّن.
+  static AppEnhancedButton cancel({
+    required VoidCallback onPressed,
+    AppEnhancedButtonSize size = AppEnhancedButtonSize.medium,
+  }) =>
+      AppEnhancedButton(
+        text: 'إلغاء',
+        onPressed: onPressed,
+        style: AppEnhancedButtonStyle.outlined,
+        size: size,
+        tooltip: 'إلغاء العملية',
+      );
+
+  /// ينشئ زر 'حذف' محسّن.
+  static AppEnhancedButton delete({
+    required VoidCallback onPressed,
+    AppEnhancedButtonSize size = AppEnhancedButtonSize.medium,
+    bool isLoading = false,
+  }) =>
+      AppEnhancedButton(
+        text: 'حذف',
+        onPressed: onPressed,
+        icon: Icons.delete,
+        style: AppEnhancedButtonStyle.outlined,
+        size: size,
+        isLoading: isLoading,
+        tooltip: 'حذف العنصر',
+      );
+
+  /// ينشئ زر 'تعديل' محسّن.
+  static AppEnhancedButton edit({
+    required VoidCallback onPressed,
+    AppEnhancedButtonSize size = AppEnhancedButtonSize.medium,
+  }) =>
+      AppEnhancedButton(
+        text: 'تعديل',
+        onPressed: onPressed,
+        icon: Icons.edit,
+        style: AppEnhancedButtonStyle.secondary,
+        size: size,
+        tooltip: 'تعديل العنصر',
+      );
+
+  /// ينشئ زر 'بحث' محسّن.
+  static AppEnhancedButton search({
+    required VoidCallback onPressed,
+    AppEnhancedButtonSize size = AppEnhancedButtonSize.medium,
+  }) =>
+      AppEnhancedButton(
+        text: 'بحث',
+        onPressed: onPressed,
+        icon: Icons.search,
+        style: AppEnhancedButtonStyle.outlined,
+        size: size,
+        tooltip: 'البحث في القائمة',
+      );
 }

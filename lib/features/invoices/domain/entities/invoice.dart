@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
+
 /// كيان الفاتورة (Invoice Entity)
 ///
 /// يمثل بيانات الفاتورة الأساسية في طبقة المجال (Domain Layer).
 /// يحتوي على جميع المعلومات المتعلقة بالفاتورة وبنودها.
-library;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -25,8 +26,8 @@ part 'invoice.freezed.dart';
 ///   name: 'خدمة استشارية',
 ///   quantity: 2.0,
 ///   price: 500.0,
-/// );
-/// print('الإجمالي: ${item.total}'); // 1000.0
+///,);
+/// debugPrint('الإجمالي: ${item.total}',); // 1000.0
 /// ```
 @freezed
 class InvoiceItem with _$InvoiceItem {
@@ -74,8 +75,8 @@ class InvoiceItem with _$InvoiceItem {
   ///   name: 'خدمة',
   ///   quantity: 2.0,
   ///   price: 500.0,
-  /// );
-  /// print(item.total); // 1000.0
+  ///,);
+  /// debugPrint(item.total,); // 1000.0
   /// ```
   double get total => quantity * price;
 }
@@ -117,8 +118,8 @@ class InvoiceItem with _$InvoiceItem {
 ///   status: 'issued',
 ///   createdAt: DateTime.now(),
 ///   updatedAt: DateTime.now(),
-/// );
-/// print('الإجمالي: ${invoice.grandTotal}'); // 1150.0
+///,);
+/// debugPrint('الإجمالي: ${invoice.grandTotal}',); // 1150.0
 /// ```
 @freezed
 class Invoice with _$Invoice {
@@ -199,9 +200,12 @@ class Invoice with _$Invoice {
   /// // بند 1: 2 × 500 = 1000
   /// // بند 2: 1 × 300 = 300
   /// // الإجمالي الفرعي = 1300
-  /// print(invoice.subtotal); // 1300.0
+  /// debugPrint(invoice.subtotal,); // 1300.0
   /// ```
-  double get subtotal => items.fold(0, (sum, item) => sum + item.total);
+  double get subtotal => items.fold(
+        0,
+        (sum, item) => sum + item.total,
+      );
 
   /// حساب إجمالي الضريبة (Tax Total)
   ///
@@ -214,7 +218,7 @@ class Invoice with _$Invoice {
   /// // الإجمالي الفرعي: 1000
   /// // نسبة الضريبة: 15%
   /// // الضريبة = 1000 × 0.15 = 150
-  /// print(invoice.taxTotal); // 150.0
+  /// debugPrint(invoice.taxTotal,); // 150.0
   /// ```
   double get taxTotal => subtotal * taxRate;
 
@@ -229,7 +233,7 @@ class Invoice with _$Invoice {
   /// // الإجمالي الفرعي: 1000
   /// // الضريبة: 150
   /// // الإجمالي الكلي = 1150
-  /// print(invoice.grandTotal); // 1150.0
+  /// debugPrint(invoice.grandTotal,); // 1150.0
   /// ```
   double get grandTotal => subtotal + taxTotal;
 }
