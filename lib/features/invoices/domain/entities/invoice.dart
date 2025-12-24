@@ -1,9 +1,8 @@
-import 'package:flutter/foundation.dart';
-
 /// كيان الفاتورة (Invoice Entity)
 ///
 /// يمثل بيانات الفاتورة الأساسية في طبقة المجال (Domain Layer).
 /// يحتوي على جميع المعلومات المتعلقة بالفاتورة وبنودها.
+library;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
