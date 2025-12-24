@@ -1,79 +1,149 @@
-name: Create Issue
+name: Error Tracking - Create Issues
 
 on:
   workflow_run:
-    workflows: ["Analysis"]
+    workflows: ["Error Tracking - Continuous Analysis"]
     types:
       - completed
+  workflow_dispatch:
+    inputs:
+      error_type:
+        description: 'نوع الخطأ'
+        required: true
+        type: choice
+        options:
+          - critical
+          - error
+          - warning
+      error_message:
+        description: 'رسالة الخطأ'
+        required: true
+        type: string
 
 permissions:
-  issues: write
   contents: read
+  issues: write
 
 jobs:
   create-issue:
     name: إنشاء Issue للأخطاء الحرجة
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    
+    if: github.event.workflow_run.conclusion == 'failure' || github.event_name == 'workflow_dispatch'
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Download Analysis Report
-        uses: actions/download-artifact@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - name: Download Analysis Results
+        if: github.event_name == 'workflow_run'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         with:
-          name: analysis-report
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
-        continue-on-error: true
-      
-      - name: Parse Analysis Results
-        id: parse
+          script: |
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: ${{ github.event.workflow_run.id }}
+            });
+
+            const artifact = artifacts.data.artifacts.find(a => a.name.startsWith('analysis-results-'));
+            
+            if (artifact) {
+              const download = await github.rest.actions.downloadArtifact({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                artifact_id: artifact.id,
+                archive_format: 'zip'
+              });
+
+              const fs = require('fs');
+              fs.writeFileSync('artifact.zip', Buffer.from(download.data));
+            }
+
+      - name: Extract Artifact
+        if: github.event_name == 'workflow_run'
         run: |
-          if [ -f "analysis_report.md" ]; then
-            # استخراج عدد الأخطاء
-            ERRORS=$(grep -oP 'أخطاء.*\|\s*\K\d+' analysis_report.md | head -1 || echo "0")
-            WARNINGS=$(grep -oP 'تحذيرات.*\|\s*\K\d+' analysis_report.md | head -1 || echo "0")
-            
-            echo "errors=$ERRORS" >> $GITHUB_OUTPUT
-            echo "warnings=$WARNINGS" >> $GITHUB_OUTPUT
-            
-            # استخراج أهم الأخطاء
-            sed -n '/أهم الأخطاء/,/أهم التحذيرات/p' analysis_report.md | head -20 > errors.txt || true
-          else
-            echo "errors=0" >> $GITHUB_OUTPUT
-            echo "warnings=0" >> $GITHUB_OUTPUT
-            echo "لم يتم العثور على تقرير التحليل" > errors.txt
+          if [ -f artifact.zip ]; then
+            unzip -q artifact.zip -d analysis_results || true
+            ls -la analysis_results/ || true
           fi
-      
+
+      - name: Analyze Errors
+        id: analyze
+        run: |
+          # تحليل نتائج التحليل
+          CRITICAL_ERRORS=0
+          ERROR_COUNT=0
+          ERROR_DETAILS=""
+
+          if [ -f analysis_results/analyze_output.txt ]; then
+            # عد الأخطاء الحرجة
+            CRITICAL_ERRORS=$(grep -c "error •" analysis_results/analyze_output.txt || echo "0")
+            ERROR_COUNT=$CRITICAL_ERRORS
+
+            # استخراج تفاصيل الأخطاء (أول 10 أخطاء)
+            ERROR_DETAILS=$(grep "error •" analysis_results/analyze_output.txt | head -10 || echo "")
+          elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            # استخدام المدخلات اليدوية
+            ERROR_COUNT=1
+            ERROR_DETAILS="${{ github.event.inputs.error_message }}"
+          fi
+
+          echo "critical_errors=$CRITICAL_ERRORS" >> $GITHUB_OUTPUT
+          echo "error_count=$ERROR_COUNT" >> $GITHUB_OUTPUT
+          
+          # حفظ التفاصيل في ملف
+          echo "$ERROR_DETAILS" > error_details.txt
+
+      - name: Check if Issue Needed
+        id: check
+        run: |
+          ERROR_COUNT=${{ steps.analyze.outputs.error_count }}
+          
+          if [ "$ERROR_COUNT" -gt 0 ]; then
+            echo "create_issue=true" >> $GITHUB_OUTPUT
+          else
+            echo "create_issue=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Create Issue for Critical Errors
-        if: steps.parse.outputs.errors > 0
-        uses: actions/github-script@v7
+        if: steps.check.outputs.create_issue == 'true'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         with:
           script: |
             const fs = require('fs');
-            const errors = '${{ steps.parse.outputs.errors }}';
-            const warnings = '${{ steps.parse.outputs.warnings }}';
+            const errorCount = '${{ steps.analyze.outputs.error_count }}';
+            const criticalErrors = '${{ steps.analyze.outputs.critical_errors }}';
             
             let errorDetails = '';
             try {
-              errorDetails = fs.readFileSync('errors.txt', 'utf8');
+              errorDetails = fs.readFileSync('error_details.txt', 'utf8');
             } catch (e) {
               errorDetails = 'لم يتم العثور على تفاصيل الأخطاء';
             }
-            
-            const issueBody = `## 🔴 أخطاء حرجة في التحليل
-            
-**التاريخ:** ${new Date().toLocaleString('ar-SA')}  
-**Workflow Run:** [#${{ github.event.workflow_run.id }}](${{ github.event.workflow_run.html_url }})  
-**Branch:** ${{ github.event.workflow_run.head_branch }}  
-**Commit:** ${{ github.event.workflow_run.head_sha }}
+
+            // تحديد نوع الخطأ
+            let errorType = 'error';
+            let priority = 'متوسطة';
+            let labels = ['bug', 'automated'];
+
+            if (criticalErrors > 0) {
+              errorType = 'critical';
+              priority = 'عالية جداً';
+              labels.push('critical', 'priority-high');
+            }
+
+            // إنشاء عنوان Issue
+            const title = `🔴 أخطاء حرجة مكتشفة: ${errorCount} خطأ`;
+
+            // إنشاء محتوى Issue
+            const body = `## 🚨 تم اكتشاف أخطاء حرجة في التحليل التلقائي
 
 ### 📊 الملخص
-
-- **أخطاء:** ${errors}
-- **تحذيرات:** ${warnings}
+- **عدد الأخطاء:** ${errorCount}
+- **الأخطاء الحرجة:** ${criticalErrors}
+- **الأولوية:** ${priority}
+- **التاريخ:** ${new Date().toISOString().split('T')[0]}
+- **Workflow Run:** [#${{ github.event.workflow_run.id }}](${{ github.event.workflow_run.html_url }})
 
 ### 🔍 تفاصيل الأخطاء
 
@@ -81,69 +151,86 @@ jobs:
 ${errorDetails}
 \`\`\`
 
-### 📝 الإجراءات المطلوبة
+### 📋 الإجراءات المطلوبة
 
 - [ ] مراجعة الأخطاء المذكورة أعلاه
 - [ ] إصلاح الأخطاء الحرجة
-- [ ] تشغيل \`flutter analyze\` محلياً للتحقق
-- [ ] إنشاء PR مع الإصلاحات
+- [ ] تشغيل الاختبارات للتحقق من الإصلاح
+- [ ] تحديث التوثيق إذا لزم الأمر
 
-### 🔗 الموارد
+### 🔗 روابط مفيدة
 
-- [تقرير التحليل الكامل](https://github.com/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }})
-- [دليل الجودة](.kiro/steering/code-quality-standards.md)
+- [نتائج التحليل الكاملة](https://github.com/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }})
+- [دليل إصلاح الأخطاء](../Documentation/ERROR_TRACKING_GUIDE.md)
+
+### 🤖 تم إنشاء هذا Issue تلقائياً
+
+تم إنشاء هذا Issue بواسطة GitHub Actions عند اكتشاف أخطاء حرجة في التحليل التلقائي.
 
 ---
-
-**تم إنشاؤه تلقائياً بواسطة:** GitHub Actions  
-**Label:** \`automated\`, \`bug\`, \`critical\`
+**المشروع:** بصير MVP  
+**النظام:** Error Tracking System  
+**الإصدار:** 1.0
 `;
-            
-            await github.rest.issues.create({
+
+            // البحث عن Issue مشابه مفتوح
+            const existingIssues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `🔴 أخطاء حرجة: ${errors} خطأ في التحليل`,
-              body: issueBody,
-              labels: ['automated', 'bug', 'critical', 'code-quality']
+              state: 'open',
+              labels: 'automated,critical',
+              per_page: 10
             });
-      
-      - name: Create Issue for High Warnings
-        if: steps.parse.outputs.warnings > 20
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const warnings = '${{ steps.parse.outputs.warnings }}';
-            
-            const issueBody = `## ⚠️ عدد كبير من التحذيرات
-            
-**التاريخ:** ${new Date().toLocaleString('ar-SA')}  
+
+            // إذا كان هناك issue مفتوح مشابه، نضيف تعليق بدلاً من إنشاء جديد
+            if (existingIssues.data.length > 0) {
+              const latestIssue = existingIssues.data[0];
+              
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: latestIssue.number,
+                body: `## 🔄 تحديث: أخطاء جديدة مكتشفة
+
+**التاريخ:** ${new Date().toISOString().split('T')[0]}  
+**عدد الأخطاء:** ${errorCount}
+
+### تفاصيل الأخطاء الجديدة
+
+\`\`\`
+${errorDetails}
+\`\`\`
+
 **Workflow Run:** [#${{ github.event.workflow_run.id }}](${{ github.event.workflow_run.html_url }})
+`
+              });
 
-### 📊 الملخص
+              console.log(`تم إضافة تعليق على Issue #${latestIssue.number}`);
+            } else {
+              // إنشاء Issue جديد
+              const issue = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: labels,
+                assignees: []
+              });
 
-- **عدد التحذيرات:** ${warnings}
-- **الحد المقبول:** 20
+              console.log(`تم إنشاء Issue جديد: #${issue.data.number}`);
+            }
 
-### 📝 الإجراءات المطلوبة
-
-- [ ] مراجعة التحذيرات
-- [ ] تحديد أولويات الإصلاح
-- [ ] إنشاء خطة لتقليل التحذيرات
-
-### 🎯 الهدف
-
-تقليل عدد التحذيرات إلى أقل من 10.
-
----
-
-**تم إنشاؤه تلقائياً بواسطة:** GitHub Actions  
-**Label:** \`automated\`, \`enhancement\`, \`code-quality\`
-`;
-            
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `⚠️ عدد كبير من التحذيرات: ${warnings}`,
-              body: issueBody,
-              labels: ['automated', 'enhancement', 'code-quality']
-            });
+      - name: Summary
+        if: always()
+        run: |
+          echo "### 📊 ملخص إنشاء Issues" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.check.outputs.create_issue }}" == "true" ]; then
+            echo "✅ **تم إنشاء/تحديث Issue للأخطاء الحرجة**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- عدد الأخطاء: ${{ steps.analyze.outputs.error_count }}" >> $GITHUB_STEP_SUMMARY
+            echo "- الأخطاء الحرجة: ${{ steps.analyze.outputs.critical_errors }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ **لا توجد أخطاء حرجة - لم يتم إنشاء Issue**" >> $GITHUB_STEP_SUMMARY
+          fi

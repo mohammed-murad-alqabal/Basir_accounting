@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:basser_app/core/theme.dart';
 import 'package:basser_app/core/widgets/responsive_text.dart';
 import 'package:flutter/material.dart';

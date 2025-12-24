@@ -15,12 +15,13 @@
         "git_diff_staged",
         "git_commit",
         "git_add",
+        "git_branch",
         "git_create_branch",
         "git_checkout",
         "git_show",
-        "git_branch",
         "git_reset"
-      ]
+      ],
+      "priority": 90
     },
     "fetch": {
       "command": "uvx",
@@ -115,7 +116,6 @@
       "retries": 2,
       "autoApprove": ["search_documentation", "read_documentation", "recommend"]
     },
-
     "memory": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-memory"],

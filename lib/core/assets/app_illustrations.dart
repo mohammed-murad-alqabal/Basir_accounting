@@ -2,6 +2,7 @@
 ///
 /// يحتوي على widgets مخصصة لعرض رسومات توضيحية
 /// في الشاشات الفارغة والحالات الخاصة
+library;
 
 import 'package:flutter/material.dart';
 

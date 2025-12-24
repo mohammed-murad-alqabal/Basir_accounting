@@ -194,3 +194,9 @@ docs/api/html/
 /*.tmp
 /*.temp
 /*.bak
+
+*.bundle
+*.tar.gz
+*.zip
+backups/
+/backups
