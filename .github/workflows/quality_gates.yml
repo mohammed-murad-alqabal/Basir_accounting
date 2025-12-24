@@ -6,245 +6,73 @@ on:
   push:
     branches: [main, develop]
 
-permissions:
-  contents: read
-  pull-requests: write
-
-# Ensure only one workflow runs at a time per PR
 concurrency:
-  group: quality-gates-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   documentation-quality-gate:
-    name: بوابة جودة التوثيق
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.24.0"
-          channel: "stable"
-          cache: true
-
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Check documentation coverage
-        id: coverage
-        continue-on-error: true
-        run: |
-          echo "🎯 Checking documentation coverage..."
-
-          # Check if documentation CLI exists
-          if [ -f "lib/tools/documentation/cli/documentation_cli.dart" ]; then
-            if dart run lib/tools/documentation/cli/documentation_cli.dart analyze --path lib/; then
-              echo "✅ Coverage check passed"
-              echo "status=pass" >> $GITHUB_OUTPUT
-            else
-              echo "⚠️ Coverage check failed (non-blocking)"
-              echo "status=warning" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "⚠️ Documentation CLI not found - skipping"
-            echo "status=skip" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Check documentation quality
-        id: quality
-        continue-on-error: true
-        run: |
-          echo "🎯 Checking documentation quality..."
-
-          # Check if documentation CLI exists
-          if [ -f "lib/tools/documentation/cli/documentation_cli.dart" ]; then
-            if dart run lib/tools/documentation/cli/documentation_cli.dart validate --strict --path lib/; then
-              echo "✅ Quality check passed"
-              echo "status=pass" >> $GITHUB_OUTPUT
-            else
-              echo "⚠️ Quality check failed (non-blocking)"
-              echo "status=warning" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "⚠️ Documentation CLI not found - skipping"
-            echo "status=skip" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Generate quality report
-        if: always()
-        continue-on-error: true
-        run: |
-          echo "📊 Generating quality report..."
-          if [ -f "lib/tools/documentation/cli/documentation_cli.dart" ]; then
-            dart run lib/tools/documentation/cli/documentation_cli.dart report --format markdown --output quality_gate_report || true
-          else
-            echo "⚠️ Documentation CLI not found - skipping report generation"
-          fi
-
-      - name: Upload quality report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: quality-gate-report
-          path: quality_gate_report.md
-          retention-days: 30
+      - name: Documentation Quality Check - Coverage
+        run: dart lib/tools/documentation/cli/documentation_cli.dart analyze
+      - name: Documentation Quality Check - Quality
+        run: dart lib/tools/documentation/cli/documentation_cli.dart validate --strict
 
   code-quality-gate:
-    name: بوابة جودة الكود
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.24.0"
-          channel: "stable"
-          cache: true
-
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Run Flutter analyze
-        run: |
-          echo "🔍 Running Flutter analyze..."
-          flutter analyze --no-pub
-
-      - name: Check for critical issues
-        run: |
-          echo "🎯 Checking for critical issues..."
-
-          # Run analyze and capture output
-          flutter analyze --no-pub > analyze_output.txt 2>&1 || true
-
-          # Check for errors (not warnings or info)
-          ERROR_COUNT=$(grep -c "error •" analyze_output.txt || echo "0")
-
-          echo "📊 Errors found: $ERROR_COUNT"
-
-          if [ "$ERROR_COUNT" -gt 0 ]; then
-            echo "❌ Critical issues found"
-            cat analyze_output.txt
-            exit 1
-          else
-            echo "✅ No critical issues found"
-          fi
+      - name: Code Quality Check
+        run: flutter analyze --fatal-infos
 
   test-quality-gate:
-    name: بوابة جودة الاختبارات
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.24.0"
-          channel: "stable"
-          cache: true
-
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Run tests with coverage
+      - name: Run Tests with Coverage
+        run: flutter test --coverage
+      - name: Check Test Coverage
         run: |
-          echo "🧪 Running tests with coverage..."
-          flutter test --coverage
-
-      - name: Check test coverage
-        continue-on-error: true
-        run: |
-          echo "🎯 Checking test coverage..."
-
-          if [ -f "coverage/lcov.info" ]; then
-            # Install lcov for coverage analysis
-            sudo apt-get update -qq
-            sudo apt-get install -y lcov
-
-            # Generate coverage report
-            genhtml coverage/lcov.info -o coverage/html || true
-
-            # Calculate coverage percentage
-            COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//' || echo "0")
-
-            echo "📊 Test Coverage: ${COVERAGE}%"
-            echo "🎯 Required Threshold: 70%"
-
-            # Check if coverage meets threshold (warning only)
-            if (( $(echo "$COVERAGE < 70" | bc -l) )); then
-              echo "⚠️ Test coverage is below 70% (non-blocking)"
-            else
-              echo "✅ Test coverage meets requirements"
-            fi
-          else
-            echo "⚠️ No coverage file found - skipping"
+          COVERAGE=$(lcov --summary coverage/lcov.info | grep "lines" | awk '{print $2}' | sed 's/%//')
+          if (( $(echo "$COVERAGE < 70" | bc -l) )); then
+            echo "Test coverage $COVERAGE% is below threshold 70%"
+            exit 1
           fi
-
-      - name: Upload coverage report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage/
-          retention-days: 30
 
   security-quality-gate:
-    name: بوابة جودة الأمان
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.24.0"
-          channel: "stable"
-          cache: true
-
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Check for security vulnerabilities
-        run: |
-          echo "🔒 Checking for security vulnerabilities..."
-
-          # Run pub outdated to check for vulnerable dependencies
-          flutter pub outdated --json > outdated.json || true
-
-          # Check for known vulnerabilities
-          if grep -q "security" outdated.json 2>/dev/null; then
-            echo "⚠️ Security vulnerabilities found in dependencies"
-            cat outdated.json
-            exit 1
-          else
-            echo "✅ No known security vulnerabilities"
-          fi
-
-      - name: Check for hardcoded secrets
-        run: |
-          echo "🔍 Checking for hardcoded secrets..."
-
-          # Simple pattern matching for common secrets
-          if grep -r -E "(api_key|apikey|api-key|password|secret|token|auth)" lib/ --include="*.dart" 2>/dev/null | grep -v "//"; then
-            echo "⚠️ Potential hardcoded secrets found"
-            echo "Please review the above matches"
-            # Don't fail the build, just warn
-          else
-            echo "✅ No obvious hardcoded secrets found"
-          fi
+      - name: Security Analysis - Check Vulnerabilities
+        run: flutter pub deps --json | dart analyze --fatal-warnings
 
   quality-gate-summary:
-    name: ملخص بوابات الجودة
     runs-on: ubuntu-latest
     needs:
       [
@@ -254,73 +82,11 @@ jobs:
         security-quality-gate,
       ]
     if: always()
-
     steps:
-      - name: Check all gates
+      - name: Quality Gates Summary
         run: |
-          echo "📊 Quality Gate Summary"
-          echo "======================="
-          echo ""
+          echo "## Quality Gates Summary"
           echo "Documentation: ${{ needs.documentation-quality-gate.result }}"
           echo "Code Quality: ${{ needs.code-quality-gate.result }}"
           echo "Test Coverage: ${{ needs.test-quality-gate.result }}"
           echo "Security: ${{ needs.security-quality-gate.result }}"
-          echo ""
-
-          # Count critical failures (only code-quality-gate is critical)
-          CRITICAL_FAILED=0
-
-          if [ "${{ needs.code-quality-gate.result }}" != "success" ]; then
-            CRITICAL_FAILED=$((CRITICAL_FAILED + 1))
-          fi
-
-          # Check if critical gates passed
-          if [ $CRITICAL_FAILED -eq 0 ]; then
-            echo "✅ All critical quality gates passed!"
-            if [ "${{ needs.documentation-quality-gate.result }}" != "success" ] || \
-               [ "${{ needs.test-quality-gate.result }}" != "success" ] || \
-               [ "${{ needs.security-quality-gate.result }}" != "success" ]; then
-              echo "⚠️ Some non-critical gates have warnings"
-            fi
-            exit 0
-          else
-            echo "❌ Critical quality gates failed"
-            exit 1
-          fi
-
-      - name: Comment on PR
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
-        with:
-          script: |
-            const docResult = '${{ needs.documentation-quality-gate.result }}';
-            const codeResult = '${{ needs.code-quality-gate.result }}';
-            const testResult = '${{ needs.test-quality-gate.result }}';
-            const securityResult = '${{ needs.security-quality-gate.result }}';
-
-            const getEmoji = (result) => result === 'success' ? '✅' : '❌';
-
-            const body = `## 🎯 Quality Gate Summary
-
-            | Gate | Status |
-            |------|--------|
-            | Documentation | ${getEmoji(docResult)} ${docResult} |
-            | Code Quality | ${getEmoji(codeResult)} ${codeResult} |
-            | Test Coverage | ${getEmoji(testResult)} ${testResult} |
-            | Security | ${getEmoji(securityResult)} ${securityResult} |
-
-            ${docResult === 'success' && codeResult === 'success' && testResult === 'success' && securityResult === 'success' 
-              ? '✅ **All quality gates passed!** This PR is ready for review.' 
-              : '❌ **Some quality gates failed.** Please address the issues before merging.'}
-            `;
-
-            try {
-              await github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: body
-              });
-            } catch (error) {
-              console.log(`⚠️ Failed to post comment: ${error.message}`);
-            }

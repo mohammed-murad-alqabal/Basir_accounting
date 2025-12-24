@@ -16,6 +16,7 @@
 ///   child: MyWidget(),
 /// )
 /// ```
+library;
 
 import 'package:flutter/material.dart';
 

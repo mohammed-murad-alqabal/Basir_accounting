@@ -12,6 +12,7 @@
 /// AppTextField(...)
 /// AppAppBar(...)
 /// ```
+library;
 
 export 'app_app_bar.dart';
 // export 'app_button.dart'; // Legacy - تم تعطيله لتجنب التضارب مع المكونات الجديدة

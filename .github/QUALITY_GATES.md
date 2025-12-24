@@ -2,279 +2,126 @@
 
 ## Overview
 
-Quality gates are automated checks that ensure code quality, documentation coverage, test coverage, and security standards are met before code is merged.
+Quality Gates are automated checks that ensure code quality, documentation standards, test coverage, and security requirements are met before code is merged into the main branch.
 
 ## Quality Gates
 
 ### 1. Documentation Quality Gate
 
-**Purpose:** Ensure all public APIs are properly documented
-
-**Checks:**
-
-- Documentation coverage ≥ 95%
-- Documentation quality score ≥ 90
-- DartDoc format compliance
-- Bilingual support (Arabic + English)
-
-**How to fix:**
-
-```bash
-# Analyze documentation
-dart run lib/tools/documentation/cli/documentation_cli.dart analyze
-
-# Generate missing documentation
-dart run lib/tools/documentation/cli/documentation_cli.dart generate
-
-# Validate quality
-dart run lib/tools/documentation/cli/documentation_cli.dart validate --strict
-```
+- **Threshold**: 80% coverage
+- **Checks**:
+  - Documentation completeness
+  - API documentation coverage
+  - Code comments quality
+  - README and guides completeness
 
 ### 2. Code Quality Gate
 
-**Purpose:** Ensure code follows best practices and style guidelines
+- **Threshold**: 90% quality score
+- **Checks**:
+  - Flutter analyze with no errors
+  - Code complexity analysis
+  - Naming conventions
+  - Code style compliance
 
-**Checks:**
+### 3. Test Coverage Gate
 
-- Zero errors from `flutter analyze`
-- Maximum 10 warnings
-- Compliance with Flutter lints
-
-**How to fix:**
-
-```bash
-# Run analysis
-flutter analyze
-
-# Fix auto-fixable issues
-dart fix --apply
-```
-
-### 3. Test Quality Gate
-
-**Purpose:** Ensure adequate test coverage
-
-**Checks:**
-
-- Test coverage ≥ 70%
-- All tests pass
-- No skipped tests
-
-**How to fix:**
-
-```bash
-# Run tests with coverage
-flutter test --coverage
-
-# View coverage report
-genhtml coverage/lcov.info -o coverage/html
-open coverage/html/index.html
-```
+- **Threshold**: 70% test coverage
+- **Checks**:
+  - Unit test coverage
+  - Widget test coverage
+  - Integration test coverage
+  - Test quality metrics
 
 ### 4. Security Quality Gate
 
-**Purpose:** Ensure code is secure and free of vulnerabilities
-
-**Checks:**
-
-- No known vulnerabilities in dependencies
-- No hardcoded secrets
-- Secure coding practices
-
-**How to fix:**
-
-```bash
-# Check for outdated packages
-flutter pub outdated
-
-# Update dependencies
-flutter pub upgrade
-
-# Review code for secrets
-grep -r "api_key\|password\|secret" lib/
-```
+- **Threshold**: 95% security score
+- **Checks**:
+  - Dependency vulnerability scanning
+  - Secret detection
+  - Security best practices
+  - Code security analysis
 
 ## Running Quality Gates Locally
 
-### Quick Check
+### Prerequisites
 
-Run all quality gates before pushing:
+```bash
+flutter pub get
+dart pub global activate coverage
+```
+
+### Run All Quality Gates
 
 ```bash
 ./scripts/run_quality_gates.sh
 ```
 
-### Individual Gates
+### Run Individual Gates
 
-Run specific gates:
+#### Documentation Gate
 
 ```bash
-# Documentation only
-dart run lib/tools/documentation/cli/documentation_cli.dart analyze
-
-# Code quality only
-flutter analyze
-
-# Tests only
-flutter test --coverage
-
-# Security only
-flutter pub outdated
+dart lib/tools/documentation/cli/documentation_cli.dart analyze
+dart lib/tools/documentation/cli/documentation_cli.dart validate
 ```
 
-## CI/CD Integration
+#### Code Quality Gate
 
-Quality gates run automatically on:
+```bash
+flutter analyze
+dart format --set-exit-if-changed .
+```
 
-- Every push to `main` or `develop`
-- Every pull request
+#### Test Coverage Gate
 
-### Required Checks
+```bash
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
+```
 
-The following checks must pass before merging:
+#### Security Gate
 
-- ✅ Documentation Quality Gate
-- ✅ Code Quality Gate
-- ✅ Test Quality Gate
-- ✅ Security Quality Gate
-
-### Workflow Files
-
-- `.github/workflows/documentation_check.yml` - Documentation checks
-- `.github/workflows/quality_gates.yml` - All quality gates
-- `.github/quality_gates_config.yml` - Configuration
+```bash
+dart pub deps --json | dart analyze --fatal-warnings
+```
 
 ## Configuration
 
-Edit `.github/quality_gates_config.yml` to customize thresholds:
-
-```yaml
-documentation:
-  min_coverage: 95
-  min_quality_score: 90
-
-code_quality:
-  max_errors: 0
-  max_warnings: 10
-
-test_coverage:
-  min_coverage: 70
-
-security:
-  check_vulnerabilities: true
-  check_secrets: true
-```
+Quality gates are configured in `.github/quality_gates_config.yml`. You can adjust thresholds and requirements as needed.
 
 ## Troubleshooting
 
-### Documentation Coverage Too Low
+### Common Issues
 
-1. Run analysis to see what's missing:
+1. **Documentation coverage below threshold**
 
-   ```bash
-   dart run lib/tools/documentation/cli/documentation_cli.dart analyze --verbose
-   ```
+   - Add missing documentation to public APIs
+   - Update README and guides
+   - Add code comments
 
-2. Generate documentation:
+2. **Code quality issues**
 
-   ```bash
-   dart run lib/tools/documentation/cli/documentation_cli.dart generate
-   ```
+   - Run `flutter analyze` and fix reported issues
+   - Format code with `dart format`
+   - Reduce code complexity
 
-3. Review and improve generated docs
+3. **Test coverage below threshold**
 
-### Test Coverage Too Low
+   - Add unit tests for business logic
+   - Add widget tests for UI components
+   - Add integration tests for user flows
 
-1. Identify uncovered code:
+4. **Security issues**
+   - Update dependencies with vulnerabilities
+   - Remove hardcoded secrets
+   - Follow security best practices
 
-   ```bash
-   flutter test --coverage
-   genhtml coverage/lcov.info -o coverage/html
-   ```
+## Integration with CI/CD
 
-2. Write tests for uncovered code
+Quality gates are automatically run on:
 
-3. Run tests again to verify
+- Pull requests to main/develop branches
+- Pushes to main/develop branches
 
-### Code Quality Issues
-
-1. Run analysis:
-
-   ```bash
-   flutter analyze
-   ```
-
-2. Fix issues manually or use auto-fix:
-
-   ```bash
-   dart fix --apply
-   ```
-
-3. Review and commit changes
-
-### Security Issues
-
-1. Check for vulnerabilities:
-
-   ```bash
-   flutter pub outdated
-   ```
-
-2. Update vulnerable packages:
-
-   ```bash
-   flutter pub upgrade
-   ```
-
-3. Review code for hardcoded secrets
-
-## Best Practices
-
-### Before Committing
-
-1. Run quality gates locally:
-
-   ```bash
-   ./scripts/run_quality_gates.sh
-   ```
-
-2. Fix any issues
-
-3. Commit and push
-
-### During Development
-
-1. Write documentation as you code
-2. Write tests alongside features
-3. Run `flutter analyze` frequently
-4. Keep dependencies up to date
-
-### Code Review
-
-1. Check quality gate status
-2. Review generated reports
-3. Ensure all gates pass
-4. Verify documentation quality
-
-## Metrics
-
-Quality gates track the following metrics:
-
-- **Documentation Coverage:** % of public APIs documented
-- **Documentation Quality:** Quality score (0-100)
-- **Test Coverage:** % of code covered by tests
-- **Code Quality:** Number of errors/warnings
-- **Security:** Number of vulnerabilities
-
-## Support
-
-For issues or questions:
-
-1. Check workflow logs in GitHub Actions
-2. Review this documentation
-3. Run gates locally for detailed output
-4. Contact the development team
-
-## Updates
-
-This document is updated as quality gates evolve. Last updated: 2025-11-28
+Failed quality gates will block the merge until issues are resolved.

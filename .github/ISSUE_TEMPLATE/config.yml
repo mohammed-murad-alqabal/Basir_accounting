@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 📚 التوثيق (Documentation)
-    url: https://github.com/owner/repo/wiki
-    about: راجع التوثيق الشامل للمشروع
-  - name: 💬 المناقشات (Discussions)
-    url: https://github.com/owner/repo/discussions
-    about: اطرح أسئلة أو شارك أفكارك مع المجتمع
-  - name: 🔒 مشكلة أمنية (Security Issue)
-    url: https://github.com/owner/repo/security/advisories/new
-    about: أبلغ عن ثغرة أمنية بشكل خاص
+  - name: 📚 التوثيق الشامل
+    url: https://github.com/mohammed-murad-alqabal/Basser_MVP/tree/main/Documentation
+    about: راجع التوثيق الشامل للمشروع قبل إنشاء Issue
+  - name: 💬 المناقشات
+    url: https://github.com/mohammed-murad-alqabal/Basser_MVP/discussions
+    about: للأسئلة العامة والمناقشات، استخدم قسم Discussions
+  - name: 🔍 دليل استكشاف الأخطاء
+    url: https://github.com/mohammed-murad-alqabal/Basser_MVP/blob/main/Documentation/ERROR_TRACKING_GUIDE.md
+    about: دليل شامل لاستكشاف وإصلاح الأخطاء الشائعة

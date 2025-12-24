@@ -1,0 +1,170 @@
+name: Error Tracking - Continuous Analysis
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "lib/**"
+      - "test/**"
+      - "pubspec.yaml"
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # تشغيل يومياً في الساعة 2 صباحاً
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  analyze:
+    name: تحليل الكود والأخطاء
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@2783a3f08e1baf891508cf69c7c9ea9d546cafc6 # v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Run Flutter Analyze
+        id: analyze
+        continue-on-error: true
+        run: |
+          echo "Running flutter analyze..."
+          flutter analyze --no-pub > analyze_output.txt 2>&1 || true
+
+          # عد الأخطاء والتحذيرات
+          ERROR_COUNT=$(grep -c "error •" analyze_output.txt || echo "0")
+          WARNING_COUNT=$(grep -c "warning •" analyze_output.txt || echo "0")
+          INFO_COUNT=$(grep -c "info •" analyze_output.txt || echo "0")
+
+          echo "error_count=$ERROR_COUNT" >> $GITHUB_OUTPUT
+          echo "warning_count=$WARNING_COUNT" >> $GITHUB_OUTPUT
+          echo "info_count=$INFO_COUNT" >> $GITHUB_OUTPUT
+
+          # عرض النتائج
+          echo "### 🔍 نتائج التحليل" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| النوع | العدد |" >> $GITHUB_STEP_SUMMARY
+          echo "|:---|:---:|" >> $GITHUB_STEP_SUMMARY
+          echo "| أخطاء (Errors) | $ERROR_COUNT |" >> $GITHUB_STEP_SUMMARY
+          echo "| تحذيرات (Warnings) | $WARNING_COUNT |" >> $GITHUB_STEP_SUMMARY
+          echo "| معلومات (Info) | $INFO_COUNT |" >> $GITHUB_STEP_SUMMARY
+
+          cat analyze_output.txt
+
+      - name: Run Tests
+        id: tests
+        continue-on-error: true
+        run: |
+          echo "Running tests..."
+          flutter test --no-pub > test_output.txt 2>&1 || true
+
+          # استخراج نتائج الاختبارات
+          PASSED=$(grep -oP '\d+(?= tests? passed)' test_output.txt | head -1 || echo "0")
+          FAILED=$(grep -oP '\d+(?= tests? failed)' test_output.txt | head -1 || echo "0")
+
+          echo "passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+
+          # عرض النتائج
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🧪 نتائج الاختبارات" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| المقياس | القيمة |" >> $GITHUB_STEP_SUMMARY
+          echo "|:---|:---:|" >> $GITHUB_STEP_SUMMARY
+          echo "| نجح | $PASSED ✅ |" >> $GITHUB_STEP_SUMMARY
+          echo "| فشل | $FAILED |" >> $GITHUB_STEP_SUMMARY
+
+          cat test_output.txt
+
+      - name: Collect Logs
+        if: always()
+        run: |
+          # إنشاء مجلد السجلات إذا لم يكن موجوداً
+          mkdir -p logs/ci
+
+          # حفظ نتائج التحليل
+          if [ -f analyze_output.txt ]; then
+            cp analyze_output.txt logs/ci/analyze_$(date +%Y%m%d_%H%M%S).txt
+          fi
+
+          # حفظ نتائج الاختبارات
+          if [ -f test_output.txt ]; then
+            cp test_output.txt logs/ci/test_$(date +%Y%m%d_%H%M%S).txt
+          fi
+
+      - name: Upload Analysis Results
+        if: always()
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
+        with:
+          name: analysis-results-${{ github.run_number }}
+          path: |
+            analyze_output.txt
+            test_output.txt
+            logs/ci/
+          retention-days: 30
+
+      - name: Generate Report
+        if: always()
+        run: |
+          # إنشاء تقرير شامل
+          if [ -x ./scripts/generate_report.sh ]; then
+            ./scripts/generate_report.sh -o logs/ci/report_$(date +%Y%m%d_%H%M%S).md || true
+          fi
+
+      - name: Check for Critical Issues
+        if: always()
+        run: |
+          ERROR_COUNT=${{ steps.analyze.outputs.error_count }}
+          FAILED_TESTS=${{ steps.tests.outputs.failed }}
+
+          if [ "$ERROR_COUNT" -gt 0 ] || [ "$FAILED_TESTS" -gt 0 ]; then
+            echo "::error::تم اكتشاف مشاكل حرجة: $ERROR_COUNT أخطاء، $FAILED_TESTS اختبار فاشل"
+            exit 1
+          fi
+
+      - name: Add PR Comment
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        with:
+          script: |
+            const errorCount = '${{ steps.analyze.outputs.error_count }}';
+            const warningCount = '${{ steps.analyze.outputs.warning_count }}';
+            const passedTests = '${{ steps.tests.outputs.passed }}';
+            const failedTests = '${{ steps.tests.outputs.failed }}';
+
+            const body = `## 🔍 نتائج التحليل التلقائي
+
+            ### تحليل الكود
+            - أخطاء: ${errorCount} ${errorCount === '0' ? '✅' : '❌'}
+            - تحذيرات: ${warningCount} ${warningCount === '0' ? '✅' : '⚠️'}
+
+            ### الاختبارات
+            - نجح: ${passedTests} ✅
+            - فشل: ${failedTests} ${failedTests === '0' ? '✅' : '❌'}
+
+            ${errorCount !== '0' || failedTests !== '0' ? '⚠️ **يرجى إصلاح المشاكل قبل الدمج**' : '✅ **جميع الفحوصات نجحت!**'}
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
