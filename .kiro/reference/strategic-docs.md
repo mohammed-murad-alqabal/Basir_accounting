@@ -11,6 +11,14 @@
 
 هذا الملف يحتوي على روابط ومراجع للوثائق الاستراتيجية الكاملة للمشروع.
 
+> [!NOTE] > **ملاحظة:** الوثائق الاستراتيجية المذكورة أدناه (strategic-vision.md, roadmap.md, etc.) هي وثائق **مخططة للإنشاء** وليست متوفرة بعد.
+> المحتوى الحالي المتوفر في `.kiro/steering/` يشمل:
+>
+> - `README.md` - نظرة عامة
+> - `LOADING_GUIDE.md` - دليل التحميل
+> - `core/quick-reference.md` - مرجع سريع
+> - `technologies/flutter-dart-standards.md` - معايير Flutter/Dart
+
 ---
 
 ## الوثائق الاستراتيجية
