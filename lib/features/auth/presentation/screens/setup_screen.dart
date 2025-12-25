@@ -1,7 +1,11 @@
+import 'package:basser_app/core/assets/app_logo.dart';
 import 'package:basser_app/core/constants.dart';
-import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/theme/app_icons.dart';
+import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
+import 'package:basser_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// شاشة الإعداد الأولي
 ///
@@ -30,15 +34,15 @@ import 'package:flutter/material.dart';
 /// ```dart
 /// Navigator.pushNamed(context, '/setup',);
 /// ```
-class SetupScreen extends StatefulWidget {
+class SetupScreen extends ConsumerStatefulWidget {
   /// إنشاء شاشة الإعداد الأولي
   const SetupScreen({super.key});
 
   @override
-  State<SetupScreen> createState() => _SetupScreenState();
+  ConsumerState<SetupScreen> createState() => _SetupScreenState();
 }
 
-class _SetupScreenState extends State<SetupScreen> {
+class _SetupScreenState extends ConsumerState<SetupScreen> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -63,11 +67,11 @@ class _SetupScreenState extends State<SetupScreen> {
     );
 
     try {
-      // TODO(dev): استدعاء authService.createAccount()
-      // await authService.createAccount(
-      //   _usernameController.text,
-      //   _passwordController.text,
-      //,);
+      // إنشاء الحساب الفعلي باستخدام AuthService
+      await ref.read(authServiceProvider).createAccount(
+            _usernameController.text,
+            _passwordController.text,
+          );
 
       if (!mounted) return;
 
@@ -99,15 +103,15 @@ class _SetupScreenState extends State<SetupScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: SemanticColors.background,
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(Spacing.lg),
             child: Column(
               children: [
                 // رأس الشاشة
                 _buildHeader(),
-                const SizedBox(height: AppSpacing.xl),
+                const SizedBox(height: Spacing.xl),
 
                 // نموذج الإعداد
                 Form(
@@ -120,7 +124,8 @@ class _SetupScreenState extends State<SetupScreen> {
                         label: 'اسم المستخدم',
                         hint: 'أدخل اسم المستخدم',
                         controller: _usernameController,
-                        prefixIcon: const Icon(Icons.person),
+                        prefixIcon:
+                            const Icon(AppIcons.user, size: IconSizes.sm),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return AppMessages.emptyField;
@@ -131,7 +136,7 @@ class _SetupScreenState extends State<SetupScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: AppSpacing.lg),
+                      const SizedBox(height: Spacing.lg),
 
                       // حقل كلمة المرور
                       AppTextField(
@@ -139,7 +144,8 @@ class _SetupScreenState extends State<SetupScreen> {
                         hint: 'أدخل كلمة المرور',
                         controller: _passwordController,
                         obscureText: true,
-                        prefixIcon: const Icon(Icons.lock),
+                        prefixIcon:
+                            const Icon(AppIcons.lock, size: IconSizes.sm),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return AppMessages.emptyField;
@@ -150,7 +156,7 @@ class _SetupScreenState extends State<SetupScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: AppSpacing.lg),
+                      const SizedBox(height: Spacing.lg),
 
                       // حقل تأكيد كلمة المرور
                       AppTextField(
@@ -158,7 +164,8 @@ class _SetupScreenState extends State<SetupScreen> {
                         hint: 'أعد إدخال كلمة المرور',
                         controller: _confirmPasswordController,
                         obscureText: true,
-                        prefixIcon: const Icon(Icons.lock),
+                        prefixIcon:
+                            const Icon(AppIcons.lock, size: IconSizes.sm),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return AppMessages.emptyField;
@@ -169,14 +176,14 @@ class _SetupScreenState extends State<SetupScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: AppSpacing.xl),
+                      const SizedBox(height: Spacing.xl),
 
                       // زر الإنشاء
                       AppEnhancedButton(
                         text: 'إنشاء الحساب',
                         onPressed: _handleSetup,
                         isLoading: _isLoading,
-                        icon: Icons.person_add,
+                        icon: AppIcons.userAdd,
                       ),
                     ],
                   ),
@@ -193,42 +200,35 @@ class _SetupScreenState extends State<SetupScreen> {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+              color: SemanticColors.primary,
+              borderRadius: BorderRadius.circular(Radii.lg),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.2),
+                  color: SemanticColors.primary.withValues(alpha: 0.2),
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),
               ],
             ),
             child: const Center(
-              child: Text(
-                'بصير',
-                style: TextStyle(
-                  fontSize: AppTypography.headlineLarge,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+              child: BasserLogo(size: 60),
             ),
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: Spacing.lg),
           const Text(
             'إنشاء حساب جديد',
             style: TextStyle(
-              fontSize: AppTypography.headlineSmall,
+              fontSize: FontSizes.headlineSmall,
               fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
+              color: SemanticColors.textPrimary,
             ),
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: Spacing.sm),
           const Text(
             'أنشئ حسابك للبدء في إدارة فواتيرك',
             style: TextStyle(
-              fontSize: AppTypography.bodyMedium,
-              color: AppColors.textSecondary,
+              fontSize: FontSizes.bodyMedium,
+              color: SemanticColors.textSecondary,
             ),
           ),
         ],

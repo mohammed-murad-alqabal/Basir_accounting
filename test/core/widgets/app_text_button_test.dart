@@ -1,4 +1,4 @@
-import 'package:basser_app/core/widgets/app_text_button.dart';
+import 'package:basser_app/core/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -9,7 +9,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: AppTextButton(
-              text: 'Text Button',
+              label: 'Text Button',
               onPressed: () {},
             ),
           ),
@@ -25,17 +25,21 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppTextButton(
-              text: 'Text Button',
-              onPressed: () {
-                wasPressed = true;
-              },
+            body: Center(
+              child: AppTextButton(
+                label: 'Text Button',
+                onPressed: () {
+                  wasPressed = true;
+                },
+              ),
             ),
           ),
         ),
       );
 
-      await tester.tap(find.byType(AppTextButton));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byType(AppTextButton), warnIfMissed: false);
       await tester.pump();
 
       expect(wasPressed, isTrue);
@@ -46,7 +50,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: AppTextButton(
-              text: 'Text Button',
+              label: 'Text Button',
               onPressed: () {},
               icon: Icons.add,
             ),

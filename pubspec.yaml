@@ -60,6 +60,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^2.5.2
+  integration_test:
+    sdk: flutter
   isar_generator: ^3.1.0+1
   mockito: ^5.4.4
   path: ^1.8.3
@@ -79,17 +81,7 @@ flutter:
   assets:
     - assets/fonts/
     - assets/icons/
-    - assets/images/
     - assets/store/
-
-# تكوين flutter_launcher_icons
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: "assets/icons/app_icon.png"
-  adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/icons/app_icon.png"
-  remove_alpha_ios: true
 
   # خطوط Cairo المحلية للعمل بدون إنترنت
   fonts:
@@ -103,3 +95,20 @@ flutter_launcher_icons:
           weight: 600
         - asset: assets/fonts/Cairo-Bold.ttf
           weight: 700
+
+# تكوين flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+  adaptive_icon_background: "#003D82"
+  adaptive_icon_foreground: "assets/icons/app_icon_foreground.png"
+  remove_alpha_ios: true
+
+flutter_native_splash:
+  color: "#003D82"
+  image: "assets/icons/splash_logo.png"
+  android_12:
+    color: "#003D82"
+    image: "assets/icons/splash_logo.png"
+    icon_background_color: "#003D82"

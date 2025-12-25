@@ -4,10 +4,11 @@ import 'package:basser_app/core/assets/app_logo.dart';
 import 'package:basser_app/core/constants.dart';
 import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/router.dart';
-import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/theme/app_theme.dart';
 import 'package:basser_app/core/theme/font_manager.dart';
-import 'package:basser_app/core/theme_dark.dart';
-import 'package:basser_app/features/auth/data/services/auth_service.dart';
+import 'package:basser_app/core/theme/tokens/index.dart';
+import 'package:basser_app/core/utils/provider_observer.dart';
+import 'package:basser_app/core/widgets/error_widget.dart' as basser;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -28,9 +29,30 @@ void main() async {
     ],
   );
 
+  // إعداد شاشة الأخطاء العالمية
+  ErrorWidget.builder =
+      (details) => basser.GlobalErrorWidget(errorDetails: details);
+
+  // تهيئة الخدمات الأساسية قبل البدء
+  final container = ProviderContainer(
+    observers: [BasserProviderObserver()],
+  );
+
+  try {
+    // تهيئة AuthService (تنظيف البيانات القديمة عند إعادة التثبيت)
+    await container.read(authServiceProvider).initialize();
+    // ignore: avoid_catches_without_on_clauses
+  } catch (e, stackTrace) {
+    debugPrint('❌ Critical initialization error: $e');
+    debugPrint('Stack trace: $stackTrace');
+  }
+
   // بدء التطبيق
   runApp(
-    const ProviderScope(child: BasserApp()),
+    UncontrolledProviderScope(
+      container: container,
+      child: const BasserApp(),
+    ),
   );
 }
 
@@ -48,8 +70,8 @@ class BasserApp extends ConsumerWidget {
 
     return MaterialApp(
       title: AppConfig.appName,
-      theme: createAppTheme(),
-      darkTheme: createDarkTheme(),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       themeMode: themeMode,
       home: const SplashScreen(),
       onGenerateRoute: AppRouter.generateRoute,
@@ -102,163 +124,144 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // تهيئة Isar من خلال provider
-    unawaited(
-      _initializeApp(),
-    );
+    // تأخير التهيئة للسماح برسم الشاشة الأولى (Splash UI)
+    // هذا يمنع ظهور الشاشة البيضاء أثناء تحميل Isar
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(_initializeApp());
+    });
   }
 
   Future<void> _initializeApp() async {
     try {
-      // ✅ تهيئة متوازية لتحسين الأداء (إزالة التأخير الاصطناعي)
-      setState(
-        () => _status = 'جاري التهيئة...',
+      debugPrint('🚀 [SYSTEM] Institutional Initialization Started...');
+
+      // تهيئة الخدمات الأساسية بالتوازي لتحقيق أقصى أداء (Zero Latency Strategy)
+      // ننتظر Isar ونتأكد من جاهزية AuthService
+      final initStartTime = DateTime.now();
+
+      await Future.wait([
+        ref.read(isarProvider.future),
+        // نتأكد من أن AuthService جاهز للاستخدام
+        ref.read(authServiceProvider).initialize(),
+      ]);
+
+      final duration = DateTime.now().difference(initStartTime).inMilliseconds;
+      debugPrint('⚙️ [SYSTEM] Core Services Ready in ${duration}ms');
+
+      // التحقق من حالة المصادقة للانتقال السريع
+      final authService = ref.read(authServiceProvider);
+
+      // جلب جميع الحالات في طلب واحد متوازي (Optimization)
+      final results = await Future.wait([
+        authService.hasAccount(),
+        authService.isLoggedIn(),
+        authService.isGuest(),
+        authService.shouldKeepLoggedIn(),
+      ]);
+
+      final hasAccount = results[0];
+      final isLoggedIn = results[1];
+      final isGuest = results[2];
+      final keepLoggedIn = results[3];
+
+      if (!mounted) return;
+
+      debugPrint(
+        '🔑 [AUTH] Status - Account: $hasAccount, LoggedIn: $isLoggedIn, Guest: $isGuest',
       );
 
-      // تهيئة جميع الخدمات بالتوازي لتحسين الأداء
-      await Future.wait(
-        [
-          ref.read(isarProvider.future),
-          // يمكن إضافة خدمات أخرى هنا للتهيئة المتوازية
-        ],
-      );
-
-      // التحقق من حالة المصادقة
-      setState(
-        () => _status = 'جاري التحقق من الحساب...',
-      );
-      final authService = ref.read(
-        authServiceProvider,
-      );
-      await _checkAuthStatus(
-        authService,
-      );
-    } on Exception catch (e) {
-      setState(() {
-        _status = 'حدث خطأ أثناء التهيئة';
-        _error = e.toString();
-      });
-      // عرض رسالة خطأ للمستخدم
-      if (mounted) {
-        unawaited(
-          ScaffoldMessenger.of(context)
-              .showSnackBar(
-                SnackBar(
-                  content: Text('خطأ: $e'),
-                  backgroundColor: Colors.red,
-                  duration: const Duration(seconds: 5),
-                ),
-              )
-              .closed,
-        );
+      // اتخاذ قرار التوجيه الفوري
+      if (isGuest || (isLoggedIn && keepLoggedIn)) {
+        await Navigator.of(context).pushReplacementNamed('/dashboard');
+      } else if (!hasAccount) {
+        await Navigator.of(context).pushReplacementNamed('/login');
+      } else if (isLoggedIn) {
+        await Navigator.of(context).pushReplacementNamed('/dashboard');
+      } else {
+        await Navigator.of(context).pushReplacementNamed('/login');
       }
-    }
-  }
-
-  Future<void> _checkAuthStatus(AuthService authService) async {
-    if (!mounted) return;
-
-    final hasAccount = await authService.hasAccount();
-    final isLoggedIn = await authService.isLoggedIn();
-    final isGuest = await authService.isGuest();
-    final keepLoggedIn = await authService.shouldKeepLoggedIn();
-
-    if (!mounted) return;
-
-    // إذا كان ضيف أو مسجل دخول مع البقاء مسجلاً
-    if (isGuest || (isLoggedIn && keepLoggedIn)) {
-      await Navigator.of(context).pushReplacementNamed(
-        '/dashboard',
-      );
-    } else if (!hasAccount) {
-      // لا يوجد حساب - اذهب للإعداد أو تسجيل الدخول
-      await Navigator.of(context).pushReplacementNamed(
-        '/login',
-      );
-    } else if (isLoggedIn) {
-      // مسجل دخول لكن بدون البقاء مسجلاً
-      await Navigator.of(context).pushReplacementNamed(
-        '/dashboard',
-      );
-    } else {
-      // يوجد حساب لكن غير مسجل دخول
-      await Navigator.of(context).pushReplacementNamed(
-        '/login',
-      );
+    } on Exception catch (e) {
+      debugPrint('❌ [FATAL] Initialization Failed: $e');
+      if (mounted) {
+        setState(() {
+          _status = 'خطأ تقني في البداية';
+          _error = e.toString();
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: AppColors.primary,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // استخدام الشعار المخصص بدلاً من Material Icon
-              const BasserLogo(size: 100),
-              const SizedBox(height: AppSpacing.lg),
-              const Text(
-                AppConfig.appName,
-                style: TextStyle(
-                  fontSize: AppTypography.headlineLarge,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              const Text(
-                AppConfig.appDescription,
-                style: TextStyle(
-                  fontSize: AppTypography.bodyMedium,
-                  color: Colors.white70,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: AppSpacing.xl),
-              if (_error == null)
-                const SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    strokeWidth: 3,
-                  ),
-                )
-              else
-                const Icon(
-                  Icons.error_outline,
-                  size: 48,
-                  color: Colors.white70,
-                ),
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                _status,
-                style: const TextStyle(
-                  fontSize: AppTypography.bodySmall,
-                  color: Colors.white70,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              if (_error != null) ...[
-                const SizedBox(height: AppSpacing.sm),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-                  child: Text(
-                    _error!,
-                    style: const TextStyle(
-                      fontSize: AppTypography.bodySmall,
-                      color: Colors.white60,
-                    ),
-                    textAlign: TextAlign.center,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
+        body: DecoratedBox(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFF003D82),
+                Color(0xFF001A33),
               ],
-            ],
+            ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // الشعار المطور Mastery 2.0
+                const BasserLogo(size: 140),
+                const SizedBox(height: Spacing.xl),
+                const Text(
+                  'بصير',
+                  style: TextStyle(
+                    fontSize: 42,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontFamily: 'Cairo',
+                    letterSpacing: 4,
+                  ),
+                ),
+                Text(
+                  AppConfig.appDescription,
+                  style: TextStyle(
+                    fontSize: FontSizes.bodyMedium,
+                    color: Colors.white.withValues(alpha: 0.6),
+                    fontFamily: 'Cairo',
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 60),
+                if (_error == null)
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            const Color(0xFFFFD700).withValues(alpha: 0.8),
+                          ),
+                          strokeWidth: 2,
+                        ),
+                      ),
+                      const SizedBox(height: Spacing.md),
+                      Text(
+                        _status,
+                        style: TextStyle(
+                          fontSize: FontSizes.bodySmall,
+                          color: Colors.white.withValues(alpha: 0.5),
+                        ),
+                      ),
+                    ],
+                  )
+                else
+                  const Icon(
+                    Icons.error_outline,
+                    size: 48,
+                    color: SemanticColors.error,
+                  ),
+              ],
+            ),
           ),
         ),
       );

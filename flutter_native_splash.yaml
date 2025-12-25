@@ -2,24 +2,23 @@
 # يستخدم مع flutter_native_splash package
 
 flutter_native_splash:
-  # اللون الأساسي للخلفية
-  color: "#0056B3"
+  # اللون الأبيض النقي للخلفية ليتناسب مع الشعار بشكل انسيابي
+  color: "#FFFFFF"
 
-  # الصورة (الشعار)
+  # استخدام الشعار الجديد (Logo) المفرغ
   image: assets/icons/splash_logo.png
 
-  # اللون الداكن (للوضع الداكن)
-  color_dark: "#003D82"
+  # الإعدادات للوضع الداكن
+  color_dark: "#1A1A1A"
   image_dark: assets/icons/splash_logo.png
 
-  # Android
+  # Android 12+
   android: true
   android_12:
-    # Android 12+
     image: assets/icons/splash_logo.png
-    icon_background_color: "#0056B3"
+    icon_background_color: "#FFFFFF"
     image_dark: assets/icons/splash_logo.png
-    icon_background_color_dark: "#003D82"
+    icon_background_color_dark: "#1A1A1A"
 
   # iOS
   ios: true

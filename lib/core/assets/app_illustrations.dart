@@ -1,243 +1,346 @@
-/// رسومات توضيحية مخصصة لتطبيق بصير
-///
-/// يحتوي على widgets مخصصة لعرض رسومات توضيحية
-/// في الشاشات الفارغة والحالات الخاصة
-library;
-
+import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 
-/// رسم توضيحي لحالة 'لا توجد بيانات'
+/// رسم توضيحي للحالة الفارغة بنظام Mastery 2.0
 class EmptyStateIllustration extends StatelessWidget {
-  /// إنشاء رسم توضيحي لحالة فارغة
-  ///
-  /// [size] حجم الرسم (افتراضي: 200)
-  /// [color] لون الرسم (افتراضي: رمادي)
+  /// إنشاء رسم توضيحي للحالة الفارغة
   const EmptyStateIllustration({
     super.key,
-    this.size = 200,
-    this.color = const Color(0xFF9CA3AF),
+    this.size = 250,
+    this.isCustomers = false,
   });
 
-  /// حجم الرسم
+  /// حجم الرسم التوضيحي
   final double size;
 
-  /// لون الرسم
-  final Color color;
+  /// هل الرسم لمستخدمي قاعدة البيانات
+  final bool isCustomers;
 
   @override
-  Widget build(BuildContext context) => CustomPaint(
-        size: Size(size, size),
-        painter: _EmptyStatePainter(color: color),
+  Widget build(BuildContext context) => SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: size,
+              height: size,
+              child: CustomPaint(
+                painter: _Mastery2IllustrationPainter(
+                  isCustomers: isCustomers,
+                  themeColor: SemanticColors.primary,
+                ),
+              ),
+            ),
+            const SizedBox(height: Spacing.xl),
+            Text(
+              isCustomers
+                  ? 'قاعدة بيانات العملاء جاهزة'
+                  : 'سجل الفواتير الذكي منظم',
+              style: const TextStyle(
+                fontSize: FontSizes.titleMedium,
+                fontWeight: FontWeight.bold,
+                color: SemanticColors.primary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: Spacing.xs),
+            Text(
+              isCustomers
+                  ? 'ابدأ بإضافة أول شريك نجاح لك'
+                  : 'فاتورتك الأولى بانتظارك',
+              style: const TextStyle(
+                fontSize: FontSizes.bodyMedium,
+                color: SemanticColors.textSecondary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       );
 }
 
-/// رسام حالة فارغة
-class _EmptyStatePainter extends CustomPainter {
-  _EmptyStatePainter({required this.color});
+/// رسم توضيحي للأونبوردينج بنظام Mastery 2.0
+class OnboardingIllustration extends StatelessWidget {
+  /// إنشاء رسم توضيحي للأونبوردينج
+  const OnboardingIllustration({
+    required this.index,
+    super.key,
+    this.size = 300,
+  });
 
-  final Color color;
+  /// مؤشر شريحة العرض (Slide Index)
+  final int index;
+
+  /// حجم الرسم التوضيحي
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+        width: size,
+        height: size,
+        child: CustomPaint(
+          painter: _Mastery2IllustrationPainter(
+            index: index,
+            isOnboarding: true,
+            themeColor:
+                index == 0 ? SemanticColors.primary : SemanticColors.secondary,
+          ),
+        ),
+      );
+}
+
+/// رسم توضيحي لحالة الخطأ بنظام Mastery 2.0
+class ErrorIllustration extends StatelessWidget {
+  /// إنشاء رسم توضيحي لحالة الخطأ
+  const ErrorIllustration({super.key, this.size = 150});
+
+  /// حجم الرسم التوضيحي
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+        width: size,
+        height: size,
+        child: CustomPaint(
+          painter: _Mastery2IllustrationPainter(
+            isError: true,
+            themeColor: SemanticColors.error,
+          ),
+        ),
+      );
+}
+
+/// رسم توضيحي لحالة النجاح بنظام Mastery 2.0
+class SuccessIllustration extends StatelessWidget {
+  /// إنشاء رسم توضيحي لحالة النجاح
+  const SuccessIllustration({super.key, this.size = 150});
+
+  /// حجم الرسم التوضيحي
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+        width: size,
+        height: size,
+        child: CustomPaint(
+          painter: _Mastery2IllustrationPainter(
+            isSuccess: true,
+            themeColor: SemanticColors.success,
+          ),
+        ),
+      );
+}
+
+class _Mastery2IllustrationPainter extends CustomPainter {
+  _Mastery2IllustrationPainter({
+    required this.themeColor,
+    this.isCustomers = false,
+    this.index = 0,
+    this.isOnboarding = false,
+    this.isError = false,
+    this.isSuccess = false,
+  });
+
+  /// لون الثيم المطبق (Primary/Secondary)
+  final Color themeColor;
+
+  /// هل الرسم يمثل حالة خطأ
+  final bool isError;
+
+  /// هل الرسم يمثل حالة نجاح
+  final bool isSuccess;
+
+  /// هل الرسم لمستخدمي قاعدة البيانات
+  final bool isCustomers;
+
+  /// مؤشر شريحة العرض
+  final int index;
+
+  /// هل الرسم للاستخدام في الأونبوردينج
+  final bool isOnboarding;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color.withValues(alpha: 0.3)
+    final center = Offset(size.width / 2, size.height / 2);
+    final drawRadius = size.width * 0.4;
+
+    // 1. نظام الشبكة اللامتناهي (Infinite Data Lattice)
+    final gridPaint = Paint()
+      ..color = themeColor.withValues(alpha: 0.03)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.02
-      ..strokeCap = StrokeCap.round;
+      ..strokeWidth = 1;
 
-    final fillPaint = Paint()
-      ..color = color.withValues(alpha: 0.1)
-      ..style = PaintingStyle.fill;
-
-    // رسم مجلد فارغ
-    final folderPath = Path()
-      ..moveTo(size.width * 0.2, size.height * 0.4)
-      ..lineTo(size.width * 0.35, size.height * 0.3)
-      ..lineTo(size.width * 0.8, size.height * 0.3)
-      ..lineTo(size.width * 0.8, size.height * 0.7)
-      ..lineTo(size.width * 0.2, size.height * 0.7)
-      ..close();
-
-    canvas
-      ..drawPath(folderPath, fillPaint)
-      ..drawPath(
-        folderPath,
-        paint,
+    for (var i = 0; i <= 10; i++) {
+      canvas.drawLine(
+        Offset(0, size.height * (i / 10)),
+        Offset(size.width, size.height * (i / 10)),
+        gridPaint,
       );
+      canvas.drawLine(
+        Offset(size.width * (i / 10), 0),
+        Offset(size.width * (i / 10), size.height),
+        gridPaint,
+      );
+    }
 
-    // رسم علامة استفهام في المنتصف
+    // 2. الهالة المحيطة (Professional Aura)
+    final auraPaint = Paint()
+      ..shader = RadialGradient(
+        colors: [
+          themeColor.withValues(alpha: 0.1),
+          Colors.transparent,
+        ],
+      ).createShader(Rect.fromCircle(center: center, radius: size.width / 2));
+    canvas.drawCircle(center, size.width / 2, auraPaint);
+
+    if (isOnboarding) {
+      _paintOnboarding(canvas, size, center, drawRadius);
+    } else if (isError) {
+      _paintStatus(canvas, center, drawRadius, Icons.error_outline_rounded);
+    } else if (isSuccess) {
+      _paintStatus(
+        canvas,
+        center,
+        drawRadius,
+        Icons.check_circle_outline_rounded,
+      );
+    } else {
+      _paintEmptyState(canvas, size, center, drawRadius);
+    }
+  }
+
+  void _paintStatus(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    IconData icon,
+  ) {
     final textPainter = TextPainter(
       text: TextSpan(
-        text: '؟',
+        text: String.fromCharCode(icon.codePoint),
         style: TextStyle(
-          fontSize: size.width * 0.2,
-          color: color.withValues(alpha: 0.5),
-          fontWeight: FontWeight.bold,
+          fontSize: radius * 1.5,
+          fontFamily: icon.fontFamily,
+          package: icon.fontPackage,
+          color: themeColor,
         ),
       ),
-      textDirection: TextDirection.rtl,
+      textDirection: TextDirection.ltr,
     )..layout();
 
     textPainter.paint(
       canvas,
-      Offset(
-        size.width * 0.5 - textPainter.width / 2,
-        size.height * 0.45 - textPainter.height / 2,
-      ),
+      center - Offset(textPainter.width / 2, textPainter.height / 2),
     );
   }
 
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
+  void _paintEmptyState(
+    Canvas canvas,
+    Size size,
+    Offset center,
+    double radius,
+  ) {
+    final mainPaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [themeColor, themeColor.withValues(alpha: 0.6)],
+      ).createShader(Rect.fromCircle(center: center, radius: radius));
 
-/// رسم توضيحي للنجاح
-class SuccessIllustration extends StatelessWidget {
-  /// إنشاء رسم توضيحي للنجاح
-  ///
-  /// [size] حجم الرسم (افتراضي: 150)
-  /// [color] لون الرسم (افتراضي: أخضر)
-  const SuccessIllustration({
-    super.key,
-    this.size = 150,
-    this.color = const Color(0xFF2E7D32),
-  });
-
-  /// حجم الرسم
-  final double size;
-
-  /// لون الرسم
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) => CustomPaint(
-        size: Size(size, size),
-        painter: _SuccessPainter(color: color),
+    if (isCustomers) {
+      // تمثيل هندسي للعملاء (User Node)
+      canvas.drawCircle(
+        Offset(center.dx, center.dy - radius * 0.2),
+        radius * 0.3,
+        mainPaint,
       );
-}
-
-/// رسام النجاح
-class _SuccessPainter extends CustomPainter {
-  _SuccessPainter({required this.color});
-
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.05
-      ..strokeCap = StrokeCap.round;
-
-    final fillPaint = Paint()
-      ..color = color.withValues(alpha: 0.1)
-      ..style = PaintingStyle.fill;
-
-    // رسم دائرة
-    final center = Offset(
-      size.width / 2,
-      size.height / 2,
-    );
-    final radius = size.width * 0.4;
-
-    canvas
-      ..drawCircle(center, radius, fillPaint)
-      ..drawCircle(
-        center,
-        radius,
-        paint,
+      final path = Path()
+        ..moveTo(center.dx - radius * 0.6, center.dy + radius * 0.5)
+        ..quadraticBezierTo(
+          center.dx,
+          center.dy - radius * 0.1,
+          center.dx + radius * 0.6,
+          center.dy + radius * 0.5,
+        )
+        ..lineTo(center.dx + radius * 0.6, center.dy + radius * 0.7)
+        ..lineTo(center.dx - radius * 0.6, center.dy + radius * 0.7)
+        ..close();
+      canvas.drawPath(path, mainPaint);
+    } else {
+      // تمثيل هندسي للفاتورة (Ledger Document)
+      final rect = Rect.fromCenter(
+        center: center,
+        width: radius * 0.8,
+        height: radius * 1.1,
+      );
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(rect, const Radius.circular(Radii.md)),
+        mainPaint,
       );
 
-    // رسم علامة صح
-    final checkPath = Path()
-      ..moveTo(size.width * 0.3, size.height * 0.5)
-      ..lineTo(size.width * 0.45, size.height * 0.65)
-      ..lineTo(
-        size.width * 0.7,
-        size.height * 0.35,
-      );
+      final linePaint = Paint()
+        ..color = Colors.white.withValues(alpha: 0.5)
+        ..strokeWidth = 3
+        ..strokeCap = StrokeCap.round;
 
-    canvas.drawPath(
-      checkPath,
-      paint,
-    );
+      for (var i = 0; i < 3; i++) {
+        canvas.drawLine(
+          Offset(
+            center.dx - radius * 0.25,
+            center.dy - radius * 0.2 + (i * 15),
+          ),
+          Offset(
+            center.dx + radius * 0.25,
+            center.dy - radius * 0.2 + (i * 15),
+          ),
+          linePaint,
+        );
+      }
+    }
   }
 
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-/// رسم توضيحي للخطأ
-class ErrorIllustration extends StatelessWidget {
-  /// إنشاء رسم توضيحي للخطأ
-  ///
-  /// [size] حجم الرسم (افتراضي: 150)
-  /// [color] لون الرسم (افتراضي: أحمر)
-  const ErrorIllustration({
-    super.key,
-    this.size = 150,
-    this.color = const Color(0xFFC62828),
-  });
-
-  /// حجم الرسم
-  final double size;
-
-  /// لون الرسم
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) => CustomPaint(
-        size: Size(size, size),
-        painter: _ErrorPainter(color: color),
+  void _paintOnboarding(
+    Canvas canvas,
+    Size size,
+    Offset center,
+    double radius,
+  ) {
+    if (index == 0) {
+      // Slide 1: تنظيم (Structure) - استخدام مكعبات البيانات
+      for (var i = 0; i < 3; i++) {
+        final rect = Rect.fromLTWH(
+          center.dx - radius * 0.4 + (i * 20),
+          center.dy - radius * 0.4 + (i * 20),
+          radius * 0.6,
+          radius * 0.6,
+        );
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(rect, const Radius.circular(Radii.sm)),
+          Paint()..color = themeColor.withValues(alpha: 1.0 - (i * 0.3)),
+        );
+      }
+    } else {
+      // Slide 2: فوترة (Flow) - استخدام تمثيل تدفق الأموال
+      final path = Path()
+        ..moveTo(center.dx - radius, center.dy + radius * 0.3)
+        ..cubicTo(
+          center.dx - radius * 0.5,
+          center.dy - radius * 0.8,
+          center.dx + radius * 0.5,
+          center.dy + radius * 0.8,
+          center.dx + radius,
+          center.dy - radius * 0.3,
+        );
+      canvas.drawPath(
+        path,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 10
+          ..strokeCap = StrokeCap.round
+          ..shader = LinearGradient(colors: [themeColor, Colors.white])
+              .createShader(Rect.fromCircle(center: center, radius: radius)),
       );
-}
-
-/// رسام الخطأ
-class _ErrorPainter extends CustomPainter {
-  _ErrorPainter({required this.color});
-
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.05
-      ..strokeCap = StrokeCap.round;
-
-    final fillPaint = Paint()
-      ..color = color.withValues(alpha: 0.1)
-      ..style = PaintingStyle.fill;
-
-    // رسم دائرة
-    final center = Offset(
-      size.width / 2,
-      size.height / 2,
-    );
-    final radius = size.width * 0.4;
-
-    canvas
-      ..drawCircle(center, radius, fillPaint)
-      ..drawCircle(
-        center,
-        radius,
-        paint,
-      );
-
-    // رسم علامة X
-    canvas
-      ..drawLine(
-        Offset(size.width * 0.35, size.height * 0.35),
-        Offset(size.width * 0.65, size.height * 0.65),
-        paint,
-      )
-      ..drawLine(
-        Offset(size.width * 0.65, size.height * 0.35),
-        Offset(size.width * 0.35, size.height * 0.65),
-        paint,
-      );
+    }
   }
 
   @override

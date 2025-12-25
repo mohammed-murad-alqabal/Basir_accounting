@@ -1,6 +1,6 @@
 documentation:
-  min_coverage: 80
-  quality_threshold: 85
+  min_coverage: 95
+  min_quality_score: 90
   required_sections:
     - overview
     - installation
@@ -8,6 +8,7 @@ documentation:
     - api_reference
 
 code_quality:
+  max_errors: 0
   max_complexity: 10
   max_line_length: 80
   required_documentation: true
@@ -20,6 +21,7 @@ test_coverage:
   widget_tests: true
 
 security:
+  check_vulnerabilities: true
   dependency_check: true
   secret_scanning: true
   vulnerability_assessment: true
@@ -27,7 +29,7 @@ security:
 
 quality_gates:
   - name: documentation_gate
-    threshold: 80
+    threshold: 95
     blocking: true
   - name: code_quality_gate
     threshold: 90
