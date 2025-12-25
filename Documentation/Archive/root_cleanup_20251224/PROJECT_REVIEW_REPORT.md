@@ -268,9 +268,9 @@ lib/
 
 ### الوثائق الأساسية
 
-- ✅ [README.md](README.md) - وصف شامل للمشروع
-- ✅ [CHANGELOG.md](CHANGELOG.md) - سجل كامل للتغييرات (2756 سطر)
-- ✅ [PROJECT_STATUS.md](PROJECT_STATUS.md) - حالة المشروع الموحدة
+- ✅ [README.md(../../README.md) - وصف شامل للمشروع
+- ✅ [CHANGELOG.md(../../CHANGELOG.md) - سجل كامل للتغييرات (2756 سطر)
+- ✅ [PROJECT_STATUS.md(../../reports/project-status/PROJECT_STATUS.md) - حالة المشروع الموحدة
 - ✅ [ARCHITECTURE.md](ARCHITECTURE.md) - البنية المعمارية
 - ✅ [TESTING.md](TESTING.md) - دليل الاختبارات
 - ✅ [CONTRIBUTING.md](CONTRIBUTING.md) - دليل المساهمة

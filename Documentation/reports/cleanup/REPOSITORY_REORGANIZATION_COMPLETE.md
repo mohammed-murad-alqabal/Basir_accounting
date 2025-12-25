@@ -220,7 +220,7 @@ cd Documentation/guides/
 ## 📞 المراجع
 
 - [REORGANIZATION_REPORT.md](REORGANIZATION_REPORT.md) - التقرير الشامل
-- [CLEANUP_EXECUTION_REPORT.md](reports/fixes/CLEANUP_EXECUTION_REPORT.md) - تقرير التنظيف
+- [CLEANUP_EXECUTION_REPORT.md](../fixes/CLEANUP_EXECUTION_REPORT.md) - تقرير التنظيف
 - [PROJECT_STATUS.md](../PROJECT_STATUS.md) - حالة المشروع
 - [CHANGELOG.md](../CHANGELOG.md) - سجل التغييرات
 

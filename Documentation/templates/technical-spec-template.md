@@ -261,8 +261,8 @@ Future<Result<T>> functionName({
 
 ### الوثائق ذات الصلة
 
-- [وثيقة 1](./path/to/document1.md)
-- [وثيقة 2](./path/to/document2.md)
+- [وثيقة 1](#)
+- [وثيقة 2](#)
 
 ### التبعيات الخارجية
 
