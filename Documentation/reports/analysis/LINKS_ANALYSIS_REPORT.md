@@ -59,13 +59,13 @@ Documentation/action-items/README.md:57
 **الملف:** `Documentation/guides/troubleshooting/ERROR_TRACKING_GUIDE.md`
 
 ```
-❌ [Design Document](../.kiro/specs/error-tracking-system/design.md)
-❌ [Requirements](../.kiro/specs/error-tracking-system/requirements.md)
-❌ [Tasks](../.kiro/specs/error-tracking-system/tasks.md)
+❌ [Design Document](../../../.kiro/specs/completed/error-tracking-system/design.md)
+❌ [Requirements](../../../.kiro/specs/completed/error-tracking-system/requirements.md)
+❌ [Tasks](../../../.kiro/specs/completed/error-tracking-system/tasks.md)
 ```
 
 **المشكلة:** المسار `../.kiro/` غير صحيح من `Documentation/guides/troubleshooting/`  
-**المسار الصحيح:** `../../../.kiro/specs/error-tracking-system/`
+**المسار الصحيح:** `../../../.kiro/specs/completed/error-tracking-system/`
 
 #### **ب. روابط ملفات غير موجودة (3 روابط)**
 
@@ -124,8 +124,8 @@ Documentation/action-items/README.md:57
 1. **تحديث روابط .kiro في ERROR_TRACKING_GUIDE.md**
 
    ```
-   من: ../.kiro/specs/error-tracking-system/
-   إلى: ../../../.kiro/specs/error-tracking-system/
+   من: ../.kiro/specs/completed/error-tracking-system/
+   إلى: ../../../.kiro/specs/completed/error-tracking-system/
    ```
 
 2. **تحديث رابط MCP في FIGMA_INTEGRATION_GUIDE.md**

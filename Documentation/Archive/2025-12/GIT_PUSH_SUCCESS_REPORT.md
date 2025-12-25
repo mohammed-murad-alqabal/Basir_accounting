@@ -255,7 +255,7 @@ https://github.com/mohammed-murad-alqabal/Basser_MVP
 
 ### 🔗 الروابط
 
-- [تحليل المزامنة](GIT_SYNC_ANALYSIS.md)
+- [تحليل المزامنة(../../reports/git-github/GIT_SYNC_ANALYSIS.md)
 - [تقرير النجاح](GIT_PUSH_SUCCESS_REPORT.md)
 ```
 

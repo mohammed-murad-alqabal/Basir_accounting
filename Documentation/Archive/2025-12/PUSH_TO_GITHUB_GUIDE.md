@@ -24,9 +24,9 @@
 📁 .kiro/specs/ui-ux-improvements/
 📄 ACTION_PLAN.md
 📄 Documentation/Archive/Context_Reports_2025-12-02/DESIGN_IMPROVEMENTS.md
-📄 Documentation/WORKFLOWS_ANALYSIS_REPORT.md
-📄 Documentation/WORKFLOWS_FINAL_STATUS.md
-📄 Documentation/WORKFLOWS_FIX_SUMMARY.md
+📄 ../../reports/workflows/WORKFLOWS_ANALYSIS_REPORT.md
+📄 ../../Archive/2025/december/duplicates/WORKFLOWS_FINAL_STATUS.md
+📄 ../../Archive/2025/december/duplicates/WORKFLOWS_FIX_SUMMARY.md
 📄 Documentation/WORKFLOWS_LOCAL_STATUS.md
 📄 PROJECT_COMPREHENSIVE_ANALYSIS.md
 📁 test/widget/features/dashboard/
@@ -76,9 +76,9 @@ git add .github/workflows/
 #### ب. إضافة التوثيق الجديد
 
 ```bash
-git add Documentation/WORKFLOWS_ANALYSIS_REPORT.md
-git add Documentation/WORKFLOWS_FINAL_STATUS.md
-git add Documentation/WORKFLOWS_FIX_SUMMARY.md
+git add ../../reports/workflows/WORKFLOWS_ANALYSIS_REPORT.md
+git add ../../Archive/2025/december/duplicates/WORKFLOWS_FINAL_STATUS.md
+git add ../../Archive/2025/december/duplicates/WORKFLOWS_FIX_SUMMARY.md
 git add Documentation/WORKFLOWS_LOCAL_STATUS.md
 git add Documentation/Archive/Context_Reports_2025-12-02/
 ```
@@ -247,9 +247,9 @@ https://github.com/mohammed-murad-alqabal/Basser_MVP/actions
 
 ### 🔗 الروابط
 
-- [تقرير التحليل الشامل](Documentation/WORKFLOWS_ANALYSIS_REPORT.md)
-- [ملخص الإصلاحات](Documentation/WORKFLOWS_FIX_SUMMARY.md)
-- [الحالة النهائية](Documentation/WORKFLOWS_FINAL_STATUS.md)
+- [تقرير التحليل الشامل](../../reports/workflows/WORKFLOWS_ANALYSIS_REPORT.md)
+- [ملخص الإصلاحات](../../Archive/2025/december/duplicates/WORKFLOWS_FIX_SUMMARY.md)
+- [الحالة النهائية](../../Archive/2025/december/duplicates/WORKFLOWS_FINAL_STATUS.md)
 ```
 
 ---
