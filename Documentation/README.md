@@ -1,7 +1,7 @@
 # 📚 وثائق مشروع بصير (Baseer Documentation)
 
 **المشروع:** بصير MVP - تطبيق إدارة الفواتير الذكي  
-**آخر تحديث:** 13 ديسمبر 2025  
+**آخر تحديث:** 25 ديسمبر 2025  
 **المسؤول:** فريق وكلاء تطوير مشروع بصير  
 **الحالة:** ✅ منظم ومحدث
 
@@ -37,8 +37,8 @@
 
 الوثائق الاستراتيجية والتأسيسية للمشروع:
 
-| الملف                                                                             | الوصف                                          | الجمهور المستهدف       |
-| --------------------------------------------------------------------------------- | ---------------------------------------------- | ---------------------- |
+| الملف                                                                               | الوصف                                          | الجمهور المستهدف       |
+| ----------------------------------------------------------------------------------- | ---------------------------------------------- | ---------------------- |
 | [`00_Strategic_Master_Blueprint.md`](./Core/00_Strategic_Master_Blueprint.md)       | الرؤية الاستراتيجية الشاملة والخطة طويلة المدى | مديري المشروع، القيادة |
 | [`01_Product_Charter.md`](./Core/01_Product_Charter.md)                             | ميثاق المنتج ونطاق MVP                         | جميع أعضاء الفريق      |
 | [`02_Technical_Design_Document.md`](./Core/02_Technical_Design_Document.md)         | البنية التقنية والقرارات المعمارية             | المطورين، المهندسين    |
@@ -239,14 +239,14 @@
 
 ### 📋 فهرس المواضيع الرئيسية
 
-| الموضوع          | المسار الأساسي                                                                                     | المسارات الإضافية                                |
-| ---------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| **Flutter/Dart** | [`Core/02_Technical_Design_Document.md`](./Core/02_Technical_Design_Document.md)                     | [`reports/engineering/`](./reports/engineering/)   |
-| **UI/UX Design** | [`Core/04_Design_System.md`](./Core/04_Design_System.md)                                             | [`reports/ui-ux/`](./reports/ui-ux/)               |
+| الموضوع          | المسار الأساسي                                                                                       | المسارات الإضافية                                |
+| ---------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| **Flutter/Dart** | [`Core/02_Technical_Design_Document.md`](./Core/02_Technical_Design_Document.md)                     | [`reports/engineering/`](./reports/engineering/) |
+| **UI/UX Design** | [`Core/04_Design_System.md`](./Core/04_Design_System.md)                                             | [`reports/ui-ux/`](./reports/ui-ux/)             |
 | **المتطلبات**    | [`Core/03_Product_Requirements_Document.md`](./Core/03_Product_Requirements_Document.md)             | [`sessions/specialized/`](sessions/specialized/) |
-| **Git/GitHub**   | [`guides/troubleshooting/`](./guides/troubleshooting/)                                               | [`reports/git-github/`](./reports/git-github/)     |
-| **الأخطاء**      | [`guides/troubleshooting/ERROR_TRACKING_GUIDE.md`](./guides/troubleshooting/ERROR_TRACKING_GUIDE.md) | [`reports/fixes/`](./reports/fixes/)               |
-| **الأداء**       | [`reports/analysis/`](./reports/analysis/)                                                           | [`reports/workflows/`](./reports/workflows/)       |
+| **Git/GitHub**   | [`guides/troubleshooting/`](./guides/troubleshooting/)                                               | [`reports/git-github/`](./reports/git-github/)   |
+| **الأخطاء**      | [`guides/troubleshooting/ERROR_TRACKING_GUIDE.md`](./guides/troubleshooting/ERROR_TRACKING_GUIDE.md) | [`reports/fixes/`](./reports/fixes/)             |
+| **الأداء**       | [`reports/analysis/`](./reports/analysis/)                                                           | [`reports/workflows/`](./reports/workflows/)     |
 
 ---
 
@@ -298,8 +298,11 @@
 ### 🔗 فحص الروابط
 
 ```bash
-# تشغيل فحص الروابط التلقائي
+# تشغيل فحص الروابط التلقائي من داخل مجلد Documentation
 ./check_links.sh
+
+# أو من المجلد الرئيسي للمشروع
+./Documentation/check_links.sh
 ```
 
 ### 📊 إحصائيات التوثيق
@@ -360,6 +363,6 @@
 ---
 
 **تم إنشاء هذا الفهرس بواسطة:** فريق وكلاء تطوير مشروع بصير  
-**تاريخ آخر تحديث:** 13 ديسمبر 2025  
+**تاريخ آخر تحديث:** 25 ديسمبر 2025  
 **إصدار التوثيق:** 2.0 (بعد إعادة التنظيم الشاملة)  
 **الحالة:** ✅ نشط ومحدث باستمرار
