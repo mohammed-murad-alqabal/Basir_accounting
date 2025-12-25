@@ -26,12 +26,12 @@ lib/
 
 ## إدارة الحالة
 
-### Riverpod (الموصى به)
+### Riverpod 2.0+ (الموصى به)
 
 - `Provider`: قيم ثابتة
 - `StateProvider`: حالات بسيطة
 - `FutureProvider`: async operations
-- `StateNotifierProvider`: حالات معقدة
+- `AsyncNotifier`: حالات معقدة (Riverpod 2.0+)
 
 ---
 
