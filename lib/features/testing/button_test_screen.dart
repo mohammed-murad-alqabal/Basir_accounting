@@ -262,71 +262,90 @@ class ButtonTestScreen extends StatelessWidget {
       );
 
   /// بناء بطاقة المقدمة
-  Widget _buildIntroCard() => Card(
-        color: Colors.blue.shade50,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+  Widget _buildIntroCard() => Builder(
+        builder: (context) {
+          final colorScheme = Theme.of(context).colorScheme;
+          return Card(
+            color: colorScheme.primaryContainer,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.info, color: Colors.blue.shade700),
-                  const SizedBox(width: 8),
+                  Row(
+                    children: [
+                      Icon(Icons.info, color: colorScheme.primary),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'شاشة اختبار الأزرار',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: colorScheme.onPrimaryContainer,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
                   Text(
-                    'شاشة اختبار الأزرار',
+                    'استخدم شريط التحكم أعلاه لتغيير textScaleFactor '
+                    'واختبار جميع الأزرار للتأكد من عدم وجود قص للنصوص.',
                     style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue.shade700,
+                      fontSize: 14,
+                      color: colorScheme.onPrimaryContainer,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
-              const Text(
-                'استخدم شريط التحكم أعلاه لتغيير textScaleFactor '
-                'واختبار جميع الأزرار للتأكد من عدم وجود قص للنصوص.',
-                style: TextStyle(fontSize: 14),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       );
 
   /// بناء بطاقة الملاحظة
-  Widget _buildNoteCard() => Card(
-        color: Colors.amber.shade50,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+  Widget _buildNoteCard() => Builder(
+        builder: (context) {
+          final colorScheme = Theme.of(context).colorScheme;
+          return Card(
+            color: colorScheme.tertiaryContainer,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.lightbulb, color: Colors.amber.shade700),
-                  const SizedBox(width: 8),
+                  Row(
+                    children: [
+                      Icon(Icons.lightbulb, color: colorScheme.tertiary),
+                      const SizedBox(width: 8),
+                      Text(
+                        'ملاحظة',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onTertiaryContainer,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
                   Text(
-                    'ملاحظة',
+                    '• جرب جميع قيم textScaleFactor (1.0x - 2.0x)\n'
+                    '• تحقق من عدم وجود قص أفقي أو عمودي\n'
+                    '• تحقق من وضوح النصوص في جميع الحالات\n'
+                    '• اختبر الأزرار في Row للتأكد من التوزيع الصحيح',
                     style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber.shade700,
+                      fontSize: 14,
+                      color: colorScheme.onTertiaryContainer,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
-              const Text(
-                '• جرب جميع قيم textScaleFactor (1.0x - 2.0x)\n'
-                '• تحقق من عدم وجود قص أفقي أو عمودي\n'
-                '• تحقق من وضوح النصوص في جميع الحالات\n'
-                '• اختبر الأزرار في Row للتأكد من التوزيع الصحيح',
-                style: TextStyle(fontSize: 14),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       );
 
   /// بناء قسم من الأزرار
@@ -335,25 +354,33 @@ class ButtonTestScreen extends StatelessWidget {
     required IconData icon,
     required List<Widget> children,
   }) =>
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+      Builder(
+        builder: (context) {
+          final colorScheme = Theme.of(context).colorScheme;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, size: 24, color: Colors.blue.shade700),
-              const SizedBox(width: 8),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue.shade700,
-                ),
+              Row(
+                children: [
+                  Icon(icon, size: 24, color: colorScheme.primary),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.primary,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
               ),
+              const SizedBox(height: 16),
+              ...children,
             ],
-          ),
-          const SizedBox(height: 16),
-          ...children,
-        ],
+          );
+        },
       );
 }

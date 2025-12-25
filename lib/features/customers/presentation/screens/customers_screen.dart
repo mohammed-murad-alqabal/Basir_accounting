@@ -1,4 +1,5 @@
-import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/assets/app_illustrations.dart';
+import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
@@ -32,7 +33,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
     );
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: SemanticColors.background,
       appBar: AppAppBar(
         title: 'العملاء',
         actions: [
@@ -47,7 +48,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
         children: [
           // حقل البحث
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(Spacing.lg),
             child: AppSearchField(
               controller: _searchController,
               hint: 'ابحث عن عميل...',
@@ -77,39 +78,15 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
 
   Widget _buildCustomersList(List<Customer> customers) {
     if (customers.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.people,
-              size: 80,
-              color: AppColors.textSecondary.withValues(alpha: 0.3),
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            const Text(
-              'لا توجد عملاء',
-              style: TextStyle(
-                fontSize: AppTypography.bodyLarge,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textSecondary,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            const Text(
-              'اضغط على + لإضافة عميل جديد',
-              style: TextStyle(
-                fontSize: AppTypography.bodyMedium,
-                color: AppColors.textHint,
-              ),
-            ),
-          ],
+      return const Center(
+        child: EmptyStateIllustration(
+          isCustomers: true,
         ),
       );
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+      padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
       itemCount: customers.length,
       itemBuilder: (context, index) {
         final customer = customers[index];
@@ -118,12 +95,12 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
           subtitle: customer.email ?? '',
           trailing: customer.phone ?? '',
           leading: CircleAvatar(
-            backgroundColor: AppColors.primary.withValues(alpha: 0.2),
+            backgroundColor: SemanticColors.primary.withValues(alpha: 0.2),
             child: Text(
               customer.name.isNotEmpty ? customer.name[0] : '؟',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: AppColors.primary,
+                color: SemanticColors.primary,
               ),
             ),
           ),

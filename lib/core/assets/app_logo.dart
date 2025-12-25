@@ -1,121 +1,163 @@
-/// شعار تطبيق بصير المخصص
-///
-/// يحتوي على widget مخصص لعرض شعار التطبيق
-/// بدلاً من استخدام Material Icons
-library;
+import 'dart:async';
 
+import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 
-/// شعار تطبيق بصير
+/// شعار بصير المطور بنظام Mastery 2.0
 ///
-/// widget مخصص يعرض شعار التطبيق بتصميم احترافي
-/// يمثل فاتورة مع علامة صح (✓) للدلالة على الدقة والاحترافية
+/// يعتمد على الهندسة الرياضية والنسبة الذهبية (1.618) للتوازن المثالي.
+/// الشعار يمثل "عدسة البصيرة التقنية" والنمو المالي الرقمي.
 class BasserLogo extends StatelessWidget {
   /// إنشاء شعار بصير
-  ///
-  /// [size] حجم الشعار (افتراضي: 80)
-  /// [color] لون الشعار (افتراضي: أبيض)
-  const BasserLogo({super.key, this.size = 80, this.color = Colors.white});
+  const BasserLogo({
+    super.key,
+    this.size = 120,
+    this.useText = false,
+  });
 
   /// حجم الشعار
   final double size;
 
-  /// لون الشعار
-  final Color color;
+  /// هل يظهر اسم التطبيق بجانب الشعار (اختياري)
+  final bool useText;
 
   @override
-  Widget build(BuildContext context) => CustomPaint(
-        size: Size(size, size),
-        painter: _BasserLogoPainter(color: color),
+  Widget build(BuildContext context) {
+    if (useText) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildLogo(),
+          const SizedBox(width: Spacing.md),
+          Text(
+            'بصير',
+            style: TextStyle(
+              fontSize: size * 0.35,
+              fontWeight: FontWeight.bold,
+              color: SemanticColors.primaryDark,
+              fontFamily: 'Cairo',
+              letterSpacing: 1.2,
+            ),
+          ),
+        ],
+      );
+    }
+    return _buildLogo();
+  }
+
+  Widget _buildLogo() => SizedBox(
+        width: size,
+        height: size,
+        child: CustomPaint(
+          painter: _BasserMastery2Painter(),
+        ),
       );
 }
 
-/// رسام شعار بصير المخصص
-class _BasserLogoPainter extends CustomPainter {
-  _BasserLogoPainter({required this.color});
-
-  final Color color;
-
+class _BasserMastery2Painter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
+    final center = Offset(size.width / 2, size.height / 2);
+    final baseRadius = size.width * 0.45;
+
+    // استخدام النسبة الذهبية للفصل بين العناصر
+    const goldenRatio = 1.61803398875;
+    final lensRadius = baseRadius / goldenRatio;
+    final coreRadius = lensRadius / goldenRatio;
+
+    // 1. رسم التوهج الخلفي (Environmental Ambience)
+    final ambientPaint = Paint()
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 20)
+      ..color = SemanticColors.primary.withValues(alpha: 0.15);
+    canvas.drawCircle(center, baseRadius, ambientPaint);
+
+    // 2. الهيكل الخارجي (Institutional Foundation)
+    final ringPaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          SemanticColors.primaryDark,
+          SemanticColors.primary,
+          SemanticColors.primaryDark.withValues(alpha: 0.9),
+        ],
+      ).createShader(Rect.fromCircle(center: center, radius: baseRadius));
+
+    canvas.drawCircle(center, baseRadius, ringPaint);
+
+    // 3. حلقات البيانات الذهبية (Golden insight Rings)
+    final orbitPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.04
+      ..strokeWidth = 1.5
+      ..color = const Color(0xFFFFD700).withValues(alpha: 0.4); // Gold Accent
+
+    for (var i = 1; i <= 3; i++) {
+      final r = lensRadius + (i * (baseRadius - lensRadius) / 4);
+      canvas.drawCircle(center, r, orbitPaint);
+    }
+
+    // 4. عدسة البصيرة المركزية (Glassmorphic Core Lens)
+    // طبقة الزجاج
+    final glassPaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Colors.white.withValues(alpha: 0.4),
+          Colors.white.withValues(alpha: 0.1),
+        ],
+      ).createShader(Rect.fromCircle(center: center, radius: lensRadius));
+
+    canvas.drawCircle(center, lensRadius, glassPaint);
+
+    // حدود العدسة المتألقة
+    final edgePaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..shader = const LinearGradient(
+        colors: [Color(0xFFFFD700), Colors.white, Color(0xFFFFD700)],
+      ).createShader(Rect.fromCircle(center: center, radius: lensRadius));
+    canvas.drawCircle(center, lensRadius, edgePaint);
+
+    // 5. مسار النمو المالي (Growth Trajectory)
+    final growthPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = size.width * 0.06
       ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
+      ..shader = LinearGradient(
+        colors: [
+          Colors.white.withValues(alpha: 0.9),
+          const Color(0xFFFFD700).withValues(alpha: 0.8),
+        ],
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
-    final fillPaint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
+    final growthPath = Path()
+      ..moveTo(center.dx - coreRadius * 1.2, center.dy + coreRadius * 0.5)
+      ..lineTo(center.dx - coreRadius * 0.3, center.dy - coreRadius * 0.2)
+      ..lineTo(center.dx + coreRadius * 0.3, center.dy + coreRadius * 0.3)
+      ..lineTo(center.dx + coreRadius * 1.5, center.dy - coreRadius * 1.0);
 
-    // رسم الفاتورة (مستطيل مع حواف مدورة)
-    final invoiceRect = RRect.fromRectAndRadius(
-      Rect.fromLTWH(
-        size.width * 0.15,
-        size.height * 0.1,
-        size.width * 0.7,
-        size.height * 0.8,
-      ),
-      Radius.circular(size.width * 0.05),
-    );
-    canvas.drawRRect(
-      invoiceRect,
-      paint,
-    );
-
-    // رسم خطوط الفاتورة (3 خطوط أفقية)
-    final lineY1 = size.height * 0.3;
-    final lineY2 = size.height * 0.45;
-    final lineY3 = size.height * 0.6;
-    final lineStartX = size.width * 0.25;
-    final lineEndX = size.width * 0.75;
-
-    canvas
-      ..drawLine(Offset(lineStartX, lineY1), Offset(lineEndX, lineY1), paint)
-      ..drawLine(
-        Offset(lineStartX, lineY2),
-        Offset(lineEndX * 0.9, lineY2),
-        paint,
-      )
-      ..drawLine(
-        Offset(lineStartX, lineY3),
-        Offset(lineEndX * 0.8, lineY3),
-        paint,
-      );
-
-    // رسم علامة الصح (✓) في الزاوية السفلية اليمنى
-    final checkPath = Path()
-      ..moveTo(size.width * 0.65, size.height * 0.75)
-      ..lineTo(size.width * 0.7, size.height * 0.8)
-      ..lineTo(
-        size.width * 0.8,
-        size.height * 0.65,
-      );
-
+    // إضافة ظل للمسار
     canvas.drawPath(
-      checkPath,
-      paint,
+      growthPath,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = growthPaint.strokeWidth
+        ..strokeCap = StrokeCap.round
+        ..color = Colors.black.withValues(alpha: 0.2)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
     );
 
-    // رسم دائرة خلف علامة الصح
+    canvas.drawPath(growthPath, growthPaint);
+
+    // 6. مؤشر الارتفاع (The Pinnacle Spark)
+    final sparkPaint = Paint()
+      ..color = Colors.white
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
     canvas.drawCircle(
-      Offset(size.width * 0.725, size.height * 0.725),
-      size.width * 0.12,
-      fillPaint,
-    );
-
-    // إعادة رسم علامة الصح بلون معاكس
-    final checkPaintWhite = Paint()
-      ..color = color == Colors.white ? const Color(0xFF0056B3) : Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.05
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-
-    canvas.drawPath(
-      checkPath,
-      checkPaintWhite,
+      Offset(center.dx + coreRadius * 1.5, center.dy - coreRadius * 1.0),
+      4,
+      sparkPaint,
     );
   }
 
@@ -123,74 +165,83 @@ class _BasserLogoPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-/// أيقونة بصير المبسطة
-///
-/// نسخة مبسطة من الشعار للاستخدام في الأماكن الصغيرة
+/// أيقونة بصير المبسطة (Mastery 2.0 Icon)
 class BasserIcon extends StatelessWidget {
   /// إنشاء أيقونة بصير
-  ///
-  /// [size] حجم الأيقونة (افتراضي: 24)
-  /// [color] لون الأيقونة (افتراضي: أبيض)
-  const BasserIcon({super.key, this.size = 24, this.color = Colors.white});
+  const BasserIcon({super.key, this.size = 24});
 
   /// حجم الأيقونة
   final double size;
 
-  /// لون الأيقونة
-  final Color color;
-
   @override
-  Widget build(BuildContext context) => CustomPaint(
-        size: Size(size, size),
-        painter: _BasserIconPainter(color: color),
+  Widget build(BuildContext context) => SizedBox(
+        width: size,
+        height: size,
+        child: CustomPaint(
+          painter: _BasserMastery2Painter(),
+        ),
       );
 }
 
-/// رسام أيقونة بصير المبسطة
-class _BasserIconPainter extends CustomPainter {
-  _BasserIconPainter({required this.color});
+/// شعار بصير مع تأثير "اللمعان المؤسسي" (Institutional Shimmer)
+class BasserShimmerLogo extends StatefulWidget {
+  /// إنشاء شعار بصير اللامع
+  const BasserShimmerLogo({super.key, this.size = 100});
 
-  final Color color;
+  /// حجم الشعار
+  final double size;
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.08
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
+  State<BasserShimmerLogo> createState() => _BasserShimmerLogoState();
+}
 
-    // رسم مستطيل مبسط (الفاتورة)
-    final rect = RRect.fromRectAndRadius(
-      Rect.fromLTWH(
-        size.width * 0.1,
-        size.height * 0.1,
-        size.width * 0.8,
-        size.height * 0.8,
-      ),
-      Radius.circular(size.width * 0.1),
-    );
-    canvas.drawRRect(
-      rect,
-      paint,
-    );
+class _BasserShimmerLogoState extends State<BasserShimmerLogo>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
 
-    // رسم علامة الصح
-    final checkPath = Path()
-      ..moveTo(size.width * 0.3, size.height * 0.5)
-      ..lineTo(size.width * 0.45, size.height * 0.65)
-      ..lineTo(
-        size.width * 0.7,
-        size.height * 0.35,
-      );
-
-    canvas.drawPath(
-      checkPath,
-      paint,
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
     );
+    unawaited(_controller.repeat());
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) => ShaderMask(
+          shaderCallback: (bounds) => LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: const [0.0, 0.5, 1.0],
+            colors: [
+              Colors.transparent,
+              Colors.white.withValues(alpha: 0.3),
+              Colors.transparent,
+            ],
+            transform: _SlidingGradientTransform(offset: _controller.value),
+          ).createShader(bounds),
+          blendMode: BlendMode.srcATop,
+          child: BasserLogo(size: widget.size),
+        ),
+      );
+}
+
+class _SlidingGradientTransform extends GradientTransform {
+  const _SlidingGradientTransform({required this.offset});
+
+  final double offset;
+
+  @override
+  Matrix4? transform(Rect bounds, {TextDirection? textDirection}) =>
+      Matrix4.translationValues(bounds.width * (offset * 2 - 1), 0, 0);
 }

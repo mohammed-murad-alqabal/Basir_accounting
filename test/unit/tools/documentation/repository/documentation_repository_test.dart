@@ -34,8 +34,8 @@ void main() {
             coveragePercentage: 75,
             elementBreakdown: {},
           ),
-          analyzedFiles: ['lib/main.dart', 'lib/core/theme.dart'],
-          lowCoverageFiles: ['lib/core/theme.dart'],
+          analyzedFiles: ['lib/main.dart', 'lib/core/constants.dart'],
+          lowCoverageFiles: ['lib/core/constants.dart'],
           notes: 'Initial coverage report',
         );
 
@@ -230,8 +230,8 @@ void main() {
           coveragePercentage: 75,
           elementBreakdown: {},
         ),
-        analyzedFiles: ['lib/main.dart', 'lib/core/theme.dart'],
-        lowCoverageFiles: ['lib/core/theme.dart'],
+        analyzedFiles: ['lib/main.dart', 'lib/core/constants.dart'],
+        lowCoverageFiles: ['lib/core/constants.dart'],
         notes: 'Test report',
       );
 

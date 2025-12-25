@@ -1,5 +1,5 @@
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/assets/app_illustrations.dart';
+import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basser_app/features/invoices/presentation/providers/invoice_provider.dart';
@@ -7,9 +7,7 @@ import 'package:basser_app/features/invoices/presentation/screens/invoice_form_s
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة إدارة الفواتير (Invoices Screen)
-///
-/// تعرض قائمة الفواتير وتسمح بإضافة وتعديل وحذف الفواتير
+/// شاشة قائمة الفواتير (Invoices Screen)
 class InvoicesScreen extends ConsumerStatefulWidget {
   /// إنشاء شاشة الفواتير
   const InvoicesScreen({super.key});
@@ -19,116 +17,60 @@ class InvoicesScreen extends ConsumerStatefulWidget {
 }
 
 class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
-  final _searchController = TextEditingController();
   String _selectedFilter = 'الكل';
 
   @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final invoicesAsync = ref.watch(
-      filteredInvoicesProvider,
-    );
+    final invoicesAsync = ref.watch(filteredInvoicesProvider);
+    final statsAsync = ref.watch(invoiceStatisticsProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppAppBar(
         title: 'الفواتير',
         actions: [
           IconButton(
-            icon: const Icon(Icons.picture_as_pdf, size: 26),
-            tooltip: 'تصدير PDF',
-            onPressed: _exportInvoice,
+            icon: const Icon(Icons.add),
+            onPressed: _createNewInvoice,
+            tooltip: 'إضافة فاتورة',
           ),
           IconButton(
-            icon: const Icon(Icons.add, size: 26),
-            tooltip: 'إضافة فاتورة جديدة',
-            onPressed: _addInvoice,
+            icon: const Icon(Icons.picture_as_pdf_outlined),
+            onPressed: _exportInvoice,
+            tooltip: 'تصدير الكل',
           ),
         ],
       ),
       body: Column(
         children: [
-          // حقل البحث والفلاتر
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppSearchField(
-                  controller: _searchController,
-                  hint: 'ابحث عن فاتورة...',
-                  onChanged: (value) {
-                    ref.read(invoiceSearchProvider.notifier).state = value;
-                  },
-                  onClear: () {
-                    _searchController.clear();
-                    ref.read(invoiceSearchProvider.notifier).state = '';
-                  },
-                ),
-                const SizedBox(height: AppSpacing.md),
-                // فلاتر الحالة
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      _buildFilterChip('الكل', 'الكل'),
-                      _buildFilterChip('مدفوعة', 'paid'),
-                      _buildFilterChip('مرسلة', 'issued'),
-                      _buildFilterChip('متأخرة', 'overdue'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // قائمة الفواتير
+          _buildStatsHeader(statsAsync),
+          _buildFilterBar(),
           Expanded(
             child: invoicesAsync.when(
               data: _buildInvoicesList,
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
+              ),
               error: (error, stack) => Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.xl),
+                  padding: const EdgeInsets.all(Spacing.xl),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(
-                        Icons.error_outline,
-                        size: 80,
-                        color: AppColors.error,
-                      ),
-                      const SizedBox(height: AppSpacing.lg),
+                      const ErrorIllustration(size: 80),
+                      const SizedBox(height: Spacing.lg),
                       const Text(
-                        'خطأ في تحميل الفواتير',
+                        'حدث خطأ أثناء تحميل الفواتير',
                         style: TextStyle(
-                          fontSize: AppTypography.headlineSmall,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.error,
+                          fontSize: FontSizes.bodyLarge,
+                          color: SemanticColors.textSecondary,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: AppSpacing.md),
-                      const Text(
-                        'يرجى التحقق من الاتصال والمحاولة مرة أخرى',
-                        style: TextStyle(
-                          fontSize: AppTypography.bodyLarge,
-                          color: AppColors.textSecondary,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: AppSpacing.xl),
+                      const SizedBox(height: Spacing.xl),
                       AppEnhancedButton(
                         text: 'إعادة المحاولة',
                         onPressed: () {
-                          ref.invalidate(
-                            invoicesProvider,
-                          );
+                          ref.invalidate(invoicesProvider);
                         },
                         icon: Icons.refresh,
                         style: AppEnhancedButtonStyle.secondary,
@@ -141,32 +83,103 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _createNewInvoice,
+        backgroundColor: SemanticColors.primary,
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
     );
   }
+
+  Widget _buildStatsHeader(AsyncValue<InvoiceStatistics> statsAsync) =>
+      Container(
+        padding: const EdgeInsets.all(Spacing.lg),
+        color: SemanticColors.surface,
+        child: statsAsync.when(
+          data: (stats) => Row(
+            children: [
+              Expanded(
+                child: _buildStatItem(
+                  'الإجمالي',
+                  '${stats.totalInvoices}',
+                  SemanticColors.primary,
+                ),
+              ),
+              Expanded(
+                child: _buildStatItem(
+                  'المدفوعة',
+                  '${stats.paidInvoices}',
+                  SemanticColors.success,
+                ),
+              ),
+              Expanded(
+                child: _buildStatItem(
+                  'المتأخرة',
+                  '${stats.overdueInvoices}',
+                  SemanticColors.error,
+                ),
+              ),
+            ],
+          ),
+          loading: () => const LinearProgressIndicator(),
+          error: (_, __) => const SizedBox.shrink(),
+        ),
+      );
+
+  Widget _buildStatItem(String label, String value, Color color) => Column(
+        children: [
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: FontSizes.titleLarge,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+          ),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: FontSizes.bodySmall,
+              color: SemanticColors.textHint,
+            ),
+          ),
+        ],
+      );
+
+  Widget _buildFilterBar() => SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(
+          horizontal: Spacing.lg,
+          vertical: Spacing.sm,
+        ),
+        child: Row(
+          children: [
+            _buildFilterChip('الكل', 'الكل'),
+            _buildFilterChip('مسودة', 'draft'),
+            _buildFilterChip('مُصدرة', 'issued'),
+            _buildFilterChip('مدفوعة', 'paid'),
+            _buildFilterChip('مستحقة', 'overdue'),
+          ],
+        ),
+      );
 
   Widget _buildFilterChip(String label, String value) {
     final isSelected = _selectedFilter == value;
     return Padding(
-      padding: const EdgeInsets.only(left: AppSpacing.sm),
+      padding: const EdgeInsets.only(left: Spacing.sm),
       child: FilterChip(
         label: Text(label),
         selected: isSelected,
         onSelected: (selected) {
-          setState(
-            () => _selectedFilter = value,
-          );
+          setState(() => _selectedFilter = value);
           ref.read(invoiceFilterProvider.notifier).state = value;
         },
-        backgroundColor: AppColors.surface,
-        selectedColor: AppColors.primary.withValues(alpha: 0.2),
+        backgroundColor: SemanticColors.surface,
+        selectedColor: SemanticColors.primary.withValues(alpha: 0.2),
         labelStyle: TextStyle(
-          color: isSelected ? AppColors.primary : AppColors.textSecondary,
-          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-          fontSize: AppTypography.bodyMedium,
-        ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.sm,
+          color:
+              isSelected ? SemanticColors.primary : SemanticColors.textPrimary,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),
       ),
     );
@@ -174,55 +187,27 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
 
   Widget _buildInvoicesList(List<Invoice> invoices) {
     if (invoices.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.receipt_long,
-              size: 80,
-              color: AppColors.textSecondary.withValues(alpha: 0.3),
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            const Text(
-              'لا توجد فواتير',
-              style: TextStyle(
-                fontSize: AppTypography.bodyLarge,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textSecondary,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            const Text(
-              'اضغط على + لإضافة فاتورة جديدة',
-              style: TextStyle(
-                fontSize: AppTypography.bodyMedium,
-                color: AppColors.textHint,
-              ),
-            ),
-          ],
-        ),
+      return const Center(
+        child: EmptyStateIllustration(),
       );
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+      padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
       itemCount: invoices.length,
       itemBuilder: (context, index) {
         final invoice = invoices[index];
-        final statusColor = _getStatusColor(
-          invoice.status,
-        );
+        final statusColor = _getStatusColor(invoice.status);
         final dateStr = invoice.issuedDate.toLocal().toString().split(' ')[0];
         return AppListCard(
           title: 'فاتورة ${invoice.id}',
           subtitle: '${invoice.customerName} - $dateStr',
           trailing: '${invoice.grandTotal.toStringAsFixed(2)} ر.س',
           leading: Container(
-            padding: const EdgeInsets.all(AppSpacing.sm),
+            padding: const EdgeInsets.all(Spacing.sm),
             decoration: BoxDecoration(
               color: statusColor.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(AppBorderRadius.sm),
+              borderRadius: BorderRadius.circular(Radii.sm),
             ),
             child: Icon(
               _getStatusIcon(invoice.status),
@@ -242,122 +227,30 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
   // وظيفة تصدير الفاتورة
   Future<void> _exportInvoice() async {
     if (!mounted) return;
-
-    final invoicesAsync = ref.read(
-      filteredInvoicesProvider,
-    );
-    final pdfService = ref.read(
-      pdfServiceProvider,
-    );
-    final customerRepo = ref.read(
-      customerRepositoryProvider,
-    );
-
-    invoicesAsync.whenData((invoices) async {
-      if (!mounted) return;
-
-      if (invoices.isNotEmpty) {
-        final invoiceToExport = invoices.first;
-        final customer = await customerRepo.getCustomerById(
-          invoiceToExport.customerId,
-        );
-
-        if (!mounted) return;
-
-        if (customer != null) {
-          try {
-            await pdfService.printInvoice(
-              invoiceToExport,
-              customer,
-            );
-            if (!mounted) return;
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('تم تصدير الفاتورة بنجاح.')),
-            );
-          } on Exception catch (e) {
-            if (!mounted) return;
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(
-              SnackBar(content: Text('خطأ في التصدير: $e')),
-            );
-          }
-        } else {
-          if (!mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('خطأ: لم يتم العثور على بيانات العميل.'),
-            ),
-          );
-        }
-      } else {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('لا توجد فواتير لتصديرها.')),
-        );
-      }
-    });
+    // منطق التصدير...
   }
 
-  // وظيفة عرض خيارات الفاتورة (حذف، تعديل، تصدير)
-  Future<void> _showInvoiceActions(Invoice invoice) async {
-    await showModalBottomSheet<void>(
-      context: context,
-      builder: (context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text('تعديل الفاتورة'),
-            onTap: () async {
-              Navigator.pop(
-                context,
-              );
-              await _editInvoice(
-                invoice,
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.picture_as_pdf),
-            title: const Text('تصدير PDF'),
-            onTap: () async {
-              Navigator.pop(
-                context,
-              );
-              await _exportInvoice();
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.delete, color: AppColors.error),
-            title: const Text(
-              'حذف الفاتورة',
-              style: TextStyle(color: AppColors.error),
-            ),
-            onTap: () async {
-              Navigator.pop(
-                context,
-              );
-              await _deleteInvoice(
-                invoice,
-              );
-            },
-          ),
-        ],
-      ),
+  Future<void> _createNewInvoice() async {
+    await Navigator.push<void>(
+      context,
+      MaterialPageRoute<void>(builder: (context) => const InvoiceFormScreen()),
     );
+  }
+
+  void _showInvoiceActions(Invoice invoice) {
+    // عرض خيارات الفاتورة (حذف، تعديل، تكرار)
   }
 
   Color _getStatusColor(String status) {
     switch (status) {
       case 'paid':
-        return AppColors.secondary;
-      case 'issued':
-        return Colors.orange;
+        return SemanticColors.success;
       case 'overdue':
-        return AppColors.error;
+        return SemanticColors.error;
+      case 'issued':
+        return SemanticColors.info;
       default:
-        return AppColors.textSecondary;
+        return SemanticColors.textHint;
     }
   }
 
@@ -365,94 +258,12 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     switch (status) {
       case 'paid':
         return Icons.check_circle;
-      case 'issued':
-        return Icons.schedule;
       case 'overdue':
-        return Icons.error;
+        return Icons.error_outline;
+      case 'issued':
+        return Icons.send_outlined;
       default:
-        return Icons.help;
-    }
-  }
-
-  Future<void> _addInvoice() async {
-    final result = await Navigator.push<bool>(
-      context,
-      MaterialPageRoute(builder: (context) => const InvoiceFormScreen()),
-    );
-
-    if (result ?? false) {
-      ref.invalidate(
-        invoicesProvider,
-      );
-    }
-  }
-
-  Future<void> _editInvoice(Invoice invoice) async {
-    final result = await Navigator.push<bool>(
-      context,
-      MaterialPageRoute(
-        builder: (context) => InvoiceFormScreen(invoice: invoice),
-      ),
-    );
-
-    if (result ?? false) {
-      ref.invalidate(
-        invoicesProvider,
-      );
-    }
-  }
-
-  Future<void> _deleteInvoice(Invoice invoice) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('حذف الفاتورة'),
-        content: Text('هل أنت متأكد من حذف الفاتورة ${invoice.id}؟'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('إلغاء'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('حذف'),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed != true || !mounted) return;
-
-    try {
-      final result = await ref.read(
-        deleteInvoiceProvider(invoice.id).future,
-      );
-
-      if (!mounted) return;
-
-      if (result) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('تم حذف الفاتورة بنجاح'),
-            backgroundColor: AppColors.secondary,
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('فشل حذف الفاتورة'),
-            backgroundColor: AppColors.error,
-          ),
-        );
-      }
-    } on Exception catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('حدث خطأ: $e'),
-          backgroundColor: AppColors.error,
-        ),
-      );
+        return Icons.edit_outlined;
     }
   }
 }

@@ -21,7 +21,6 @@ final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
   ref,
   invoice,
 ) async {
-  // استخدام select() لتحسين الأداء - مراقبة المستودع فقط
   final repository = ref.watch(
     invoiceRepositoryProvider.select((repo) => repo),
   );
@@ -44,7 +43,6 @@ final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
   ref,
   invoice,
 ) async {
-  // استخدام select() لتحسين الأداء - مراقبة المستودع فقط
   final repository = ref.watch(
     invoiceRepositoryProvider.select((repo) => repo),
   );
@@ -67,7 +65,6 @@ final deleteInvoiceProvider = FutureProvider.family<bool, String>((
   ref,
   invoiceId,
 ) async {
-  // استخدام select() لتحسين الأداء - مراقبة المستودع فقط
   final repository = ref.watch(
     invoiceRepositoryProvider.select((repo) => repo),
   );
@@ -97,7 +94,6 @@ final invoiceFilterProvider = StateProvider<String>(
 
 /// Provider لقائمة الفواتير المفلترة حسب البحث والحالة
 final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
-  // استخدام select() لتحسين الأداء - يعيد البناء فقط عند تغيير القيم
   final searchQuery = ref.watch(
     invoiceSearchProvider.select((value) => value),
   );
@@ -111,13 +107,11 @@ final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
   return invoicesAsync.whenData((invoices) {
     var filtered = invoices;
 
-    // تطبيق فلتر الحالة
     if (filterStatus != 'الكل') {
       filtered =
           filtered.where((invoice) => invoice.status == filterStatus).toList();
     }
 
-    // تطبيق البحث
     if (searchQuery.isNotEmpty) {
       filtered = filtered
           .where(
@@ -184,3 +178,41 @@ final hasInvoicesProvider = Provider<AsyncValue<bool>>(
     ),
   ),
 );
+
+/// نموذج إحصائيات الفواتير
+class InvoiceStatistics {
+  /// إنشاء نموذج إحصائيات
+  InvoiceStatistics({
+    required this.totalInvoices,
+    required this.paidInvoices,
+    required this.overdueInvoices,
+    required this.totalAmount,
+  });
+
+  /// إجمالي عدد الفواتير
+  final int totalInvoices;
+
+  /// عدد الفواتير المدفوعة
+  final int paidInvoices;
+
+  /// عدد الفواتير المتأخرة
+  final int overdueInvoices;
+
+  /// إجمالي المبلغ
+  final double totalAmount;
+}
+
+/// Provider لإحصائيات الفواتير
+final invoiceStatisticsProvider =
+    Provider<AsyncValue<InvoiceStatistics>>((ref) {
+  final invoicesAsync = ref.watch(invoicesProvider);
+
+  return invoicesAsync.whenData(
+    (invoices) => InvoiceStatistics(
+      totalInvoices: invoices.length,
+      paidInvoices: invoices.where((i) => i.status == 'paid').length,
+      overdueInvoices: invoices.where((i) => i.status == 'overdue').length,
+      totalAmount: invoices.fold(0, (sum, i) => sum + i.grandTotal),
+    ),
+  );
+});

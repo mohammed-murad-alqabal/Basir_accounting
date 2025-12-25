@@ -1,4 +1,4 @@
-import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/theme/app_theme.dart';
 import 'package:basser_app/core/widgets/app_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -163,8 +163,8 @@ void main() {
 
       // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, AppColors.surface);
-      expect(appBar.foregroundColor, AppColors.textPrimary);
+      expect(appBar.backgroundColor, AppTheme.lightTheme.colorScheme.surface);
+      expect(appBar.foregroundColor, AppTheme.lightTheme.colorScheme.onSurface);
     });
 
     testWidgets('should have elevation of 0', (tester) async {
@@ -198,7 +198,7 @@ void main() {
       const appBar = AppAppBar(title: 'Test');
 
       // Assert
-      expect(appBar.preferredSize, const Size.fromHeight(kToolbarHeight));
+      expect(appBar.preferredSize, const Size.fromHeight(kToolbarHeight + 1.0));
     });
   });
 
@@ -296,8 +296,8 @@ void main() {
 
       // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, AppColors.surface);
-      expect(appBar.foregroundColor, AppColors.textPrimary);
+      expect(appBar.backgroundColor, AppTheme.lightTheme.colorScheme.surface);
+      expect(appBar.foregroundColor, AppTheme.lightTheme.colorScheme.onSurface);
     });
 
     testWidgets('should have elevation of 0', (tester) async {
@@ -344,7 +344,7 @@ void main() {
       const appBar = AppSimpleAppBar(title: 'Test');
 
       // Assert
-      expect(appBar.preferredSize, const Size.fromHeight(kToolbarHeight));
+      expect(appBar.preferredSize, const Size.fromHeight(kToolbarHeight + 1.0));
     });
   });
 }

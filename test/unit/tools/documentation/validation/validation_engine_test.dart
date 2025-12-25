@@ -13,52 +13,40 @@ void main() {
     });
 
     group('validateElement', () {
-      test('should throw UnimplementedError when not implemented', () {
-        expect(
-          () => engine.validateElement('/// Test documentation'),
-          throwsA(isA<UnimplementedError>()),
-        );
+      test('should validate element without throwing', () {
+        final result = engine.validateElement('/// Test documentation');
+        expect(result, isA<ValidationResult>());
       });
 
       test('should accept valid documentation', () {
         const doc = '/// A test class\n///\n/// This is a detailed description';
-
-        expect(
-          () => engine.validateElement(doc),
-          throwsA(isA<UnimplementedError>()),
-        );
+        final result = engine.validateElement(doc);
+        expect(result.isValid, isTrue);
       });
 
-      test('should accept empty documentation', () {
-        expect(
-          () => engine.validateElement(''),
-          throwsA(isA<UnimplementedError>()),
-        );
+      test('should return invalid for empty documentation', () {
+        final result = engine.validateElement('');
+        expect(result.isValid, isFalse);
+        expect(result.issues, isNotEmpty);
       });
     });
 
     group('validateFile', () {
-      test('should throw UnimplementedError when not implemented', () {
-        expect(
-          () => engine.validateFile('test.dart'),
-          throwsA(isA<UnimplementedError>()),
-        );
+      test('should validate file without throwing', () {
+        final result = engine.validateFile('test.dart');
+        expect(result, isA<FileValidationResult>());
       });
 
       test('should accept valid file path', () {
-        expect(
-          () => engine.validateFile('lib/core/constants.dart'),
-          throwsA(isA<UnimplementedError>()),
-        );
+        final result = engine.validateFile('lib/core/constants.dart');
+        expect(result.isValid, isTrue);
       });
     });
 
     group('validateProject', () {
-      test('should throw UnimplementedError when not implemented', () {
-        expect(
-          () => engine.validateProject(),
-          throwsA(isA<UnimplementedError>()),
-        );
+      test('should validate project without throwing', () {
+        final result = engine.validateProject();
+        expect(result, isA<ProjectValidationResult>());
       });
     });
   });
@@ -375,6 +363,12 @@ void main() {
 /// This class provides comprehensive functionality
 /// with detailed explanations and examples.
 ///
+/// Parameters:
+/// - none
+///
+/// Returns:
+/// - instance of the class
+///
 /// Example:
 /// ```dart
 /// final instance = MyClass();
@@ -382,31 +376,25 @@ void main() {
 /// ```
 ''';
 
-      expect(
-        () => engine.validateElement(doc),
-        throwsA(isA<UnimplementedError>()),
-      );
+      final result = engine.validateElement(doc);
+      expect(result.isValid, isTrue);
+      expect(result.qualityScore.score, greaterThanOrEqualTo(85));
     });
 
     test('should detect missing documentation', () {
-      expect(
-        () => engine.validateElement(''),
-        throwsA(isA<UnimplementedError>()),
-      );
+      final result = engine.validateElement('');
+      expect(result.isValid, isFalse);
+      expect(result.issues, isNotEmpty);
     });
 
     test('should validate file with mixed quality', () {
-      expect(
-        () => engine.validateFile('lib/mixed_quality.dart'),
-        throwsA(isA<UnimplementedError>()),
-      );
+      final result = engine.validateFile('lib/mixed_quality.dart');
+      expect(result.isValid, isTrue);
     });
 
     test('should validate entire project', () {
-      expect(
-        () => engine.validateProject(),
-        throwsA(isA<UnimplementedError>()),
-      );
+      final result = engine.validateProject();
+      expect(result.isValid, isTrue);
     });
 
     test('should create comprehensive validation result', () {

@@ -30,7 +30,7 @@ class MockData {
   }) {
     final now = DateTime.now();
     return Customer(
-      id: id ?? 'test-customer-${now.millisecondsSinceEpoch}',
+      id: id ?? 'test-customer-${now.microsecondsSinceEpoch}',
       name: name ?? 'عميل اختبار',
       phone: phone ?? '0501234567',
       email: email ?? 'test@example.com',
@@ -96,7 +96,7 @@ class MockData {
     double? quantity,
   }) =>
       InvoiceItem(
-        id: id ?? 'test-item-${DateTime.now().millisecondsSinceEpoch}',
+        id: id ?? 'test-item-${DateTime.now().microsecondsSinceEpoch}',
         name: name ?? 'خدمة اختبار',
         price: price ?? 1000.0,
         quantity: quantity ?? 1.0,
@@ -160,7 +160,7 @@ class MockData {
     }
 
     return Invoice(
-      id: id ?? 'test-invoice-${now.millisecondsSinceEpoch}',
+      id: id ?? 'test-invoice-${now.microsecondsSinceEpoch}',
       customerId: customerId ?? 'test-customer-1',
       customerName: customerName ?? 'عميل اختبار',
       items: invoiceItems,
