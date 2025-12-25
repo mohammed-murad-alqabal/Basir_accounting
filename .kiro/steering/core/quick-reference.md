@@ -12,6 +12,8 @@
 - **Files**: `snake_case.dart`
 - **Classes**: `PascalCase`
 - **Functions**: `camelCase()`
+- **Global Constants**: `SCREAMING_SNAKE_CASE`
+- **Local Constants**: `camelCase`
 - **Private**: `_prefix`
 
 ### الجودة

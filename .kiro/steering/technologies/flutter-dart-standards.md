@@ -47,7 +47,9 @@ dart_version: "3.9.2+"
 
 - Classes: PascalCase (`CustomerRepository`)
 - Functions/Variables: camelCase (`getAllCustomers`)
-- Constants: lowerCamelCase (`maxRetries`)
+- **Global Constants**: SCREAMING_SNAKE_CASE (`MAX_RETRY_ATTEMPTS`, `API_BASE_URL`)
+- **Local Constants**: lowerCamelCase (`cardPadding`, `itemsPerPage`)
+- Enum Values: camelCase (`customerStatus`, `active`)
 - Private members: underscore prefix (`_privateMethod`)
 
 ## معايير Flutter 3.35.5+ (2025)
@@ -70,9 +72,11 @@ dart_version: "3.9.2+"
 
 ### إدارة الحالة
 
-- استخدم Riverpod كمزود رئيسي للحالة
+- استخدم Riverpod 2.0+ كمزود رئيسي للحالة
 - تجنب setState في الويدجت المعقدة
-- استخدم StateNotifier للحالات المعقدة
+- استخدم **AsyncNotifier** للحالات المعقدة (بدلاً من StateNotifier)
+- استخدم `@riverpod` annotation لتوليد الكود
+- استخدم `AsyncValue.guard()` لمعالجة الأخطاء
 
 ### الأداء
 
