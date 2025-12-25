@@ -258,19 +258,19 @@ SPEC_FEATURE_VERSION.md
 ```markdown
 # من نفس المجلد
 
-[اسم الوثيقة](./document.md)
+[اسم الوثيقة](#)
 
 # من مجلد فرعي
 
-[اسم الوثيقة](./subfolder/document.md)
+[اسم الوثيقة](#)
 
 # من مجلد أعلى
 
-[اسم الوثيقة](../document.md)
+[اسم الوثيقة](.#)
 
 # من مجلد آخر
 
-[اسم الوثيقة](../other-folder/document.md)
+[اسم الوثيقة](#)
 ```
 
 **الروابط لأقسام داخلية:**
@@ -456,16 +456,16 @@ _النص المائل_ - للتوضيح
 
 1. **للأسئلة التقنية:**
 
-   - راجع [`guides/troubleshooting/ERROR_TRACKING_GUIDE.md`](./guides/troubleshooting/ERROR_TRACKING_GUIDE.md)
+   - راجع [`guides/troubleshooting/ERROR_TRACKING_GUIDE.md`](./troubleshooting/ERROR_TRACKING_GUIDE.md)
    - استخدم أدوات الفحص التلقائي
 
 2. **للأسئلة حول المحتوى:**
 
    - راجع [`README.md`](./README.md) للنظرة العامة
-   - راجع [`INDEX.md`](./INDEX.md) للبحث المفصل
+   - راجع [`INDEX.md`](../INDEX.md) للبحث المفصل
 
 3. **للأسئلة حول العمليات:**
-   - راجع [`MAINTENANCE_CHECKLIST.md`](./MAINTENANCE_CHECKLIST.md)
+   - راجع [`MAINTENANCE_CHECKLIST.md`](#)
    - اتصل بفريق وكلاء تطوير مشروع بصير
 
 ### نصائح للحصول على مساعدة فعالة
@@ -483,7 +483,7 @@ _النص المائل_ - للتوضيح
 
 ### الخطوات التالية
 
-1. **ابدأ بمراجعة** [`QUICK_START.md`](./QUICK_START.md) لفهم النظام
+1. **ابدأ بمراجعة** [`QUICK_START.md`](../QUICK_START.md) لفهم النظام
 2. **اختر مهمة صغيرة** للبدء (تحديث تاريخ، إصلاح رابط)
 3. **استخدم الأدوات** للتحقق من جودة عملك
 4. **شارك عملك** مع الفريق للمراجعة

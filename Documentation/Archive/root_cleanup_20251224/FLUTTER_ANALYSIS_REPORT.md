@@ -631,11 +631,11 @@ open coverage/html/index.html
 
 ### 15.2 الروابط المفيدة
 
-- [Flutter Best Practices](.kiro/steering/flutter-best-practices.md)
-- [Code Quality Standards](.kiro/steering/code-quality-standards.md)
-- [Testing Best Practices](.kiro/steering/testing-best-practices.md)
-- [Security Standards](.kiro/steering/security.md)
-- [Error Tracking Guide](Documentation/ERROR_TRACKING_GUIDE.md)
+- [Flutter Best Practices](../../../.kiro/steering/flutter-best-practices.md)
+- [Code Quality Standards](../../../.kiro/steering/code-quality-standards.md)
+- [Testing Best Practices](../../../.kiro/steering/testing-best-practices.md)
+- [Security Standards](../../../.kiro/steering/security.md)
+- [Error Tracking Guide](../../guides/troubleshooting/ERROR_TRACKING_GUIDE.md)
 
 ---
 

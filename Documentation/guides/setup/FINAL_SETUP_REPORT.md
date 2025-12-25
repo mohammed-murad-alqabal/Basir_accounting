@@ -176,8 +176,8 @@ gh repo clone owner/repo
 
 ### التقارير التحليلية
 
-1. ✅ **DEV_ENVIRONMENT_ANALYSIS.md** (15 صفحة)
-2. ✅ **POWERS_ANALYSIS_REPORT.md** (12 صفحة)
+1. ✅ **../development/DEV_ENVIRONMENT_ANALYSIS.md** (15 صفحة)
+2. ✅ **../../reports/fixes/POWERS_ANALYSIS_REPORT.md** (12 صفحة)
 3. ✅ **QUICK_SETUP_GUIDE.md** (3 صفحات)
 4. ✅ **ENVIRONMENT_SETUP_SUMMARY.md** (4 صفحات)
 5. ✅ **SETUP_COMPLETION_REPORT.md** (12 صفحة)
@@ -435,8 +435,8 @@ flutter run
 
 ### التقارير
 
-1. [DEV_ENVIRONMENT_ANALYSIS.md](DEV_ENVIRONMENT_ANALYSIS.md)
-2. [POWERS_ANALYSIS_REPORT.md](POWERS_ANALYSIS_REPORT.md)
+1. [../development/DEV_ENVIRONMENT_ANALYSIS.md](../development/DEV_ENVIRONMENT_ANALYSIS.md)
+2. [../../reports/fixes/POWERS_ANALYSIS_REPORT.md](../../reports/fixes/POWERS_ANALYSIS_REPORT.md)
 3. [QUICK_SETUP_GUIDE.md](QUICK_SETUP_GUIDE.md)
 4. [ENVIRONMENT_SETUP_SUMMARY.md](ENVIRONMENT_SETUP_SUMMARY.md)
 5. [SETUP_COMPLETION_REPORT.md](SETUP_COMPLETION_REPORT.md)
@@ -450,9 +450,9 @@ flutter run
 
 ### الوثائق
 
-1. [README.md](README.md)
-2. [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)
-3. [CONTRIBUTING.md](CONTRIBUTING.md)
+1. [README.md](../../../README.md)
+2. [DEVELOPMENT_GUIDE.md](../../reports/engineering/DEV_ENVIRONMENT_ANALYSIS.md)
+3. [CONTRIBUTING.md](../../../CONTRIBUTING.md)
 
 ---
 
