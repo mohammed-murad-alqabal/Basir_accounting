@@ -190,108 +190,87 @@ onPressed: () {
 
 ### Isar (المعتمد)
 
-#### التعريف
+#### 1. التعريف (Schema)
 
 ```dart
 @collection
 class CustomerModel {
   Id id = Isar.autoIncrement;
 
-  @Index()
+  @Index(type: IndexType.value) // فهرس للبحث السريع
   late String name;
 
+  @Index(unique: true, replace: true) // فريد ويستبدل القديم
   late String phone;
 
   String? email;
   String? address;
 
+  @Index() // فهرس للترتيب
   late DateTime createdAt;
+
   DateTime? updatedAt;
 }
 ```
 
-#### الاستخدام
-
-##### فتح الاتصال
+#### 2. فتح الاتصال (Setup)
 
 ```dart
+final dir = await getApplicationDocumentsDirectory();
 final isar = await Isar.open(
-  [CustomerModelSchema, InvoiceModelSchema],
-  directory: await getApplicationDocumentsDirectory(),
+  [CustomerModelSchema],
+  directory: dir.path,
+  inspector: kDebugMode, // تفعيل الفاحص في وضع التطوير
+  maxSizeMiB: 512, // الحد الأقصى للحجم
 );
 ```
 
-##### القراءة
+#### 3. العمليات (CRUD)
 
 ```dart
-// قراءة الكل
-final customers = await isar.customerModels.where().findAll();
+// كتابة متزامنة (أسرع للعمليات الصغيرة)
+await isar.writeTxn(() async {
+  await isar.customerModels.put(customer);
+});
 
-// قراءة بشرط
+// بحث سريع جداً باستخدام الفهرس
 final customer = await isar.customerModels
-    .filter()
-    .nameContains('أحمد')
+    .where()
+    .phoneEqualTo('0501234567') // يستخدم الفهرس تلقائياً
     .findFirst();
 
-// البحث بالـ Index
-final customers = await isar.customerModels
-    .where()
-    .nameStartsWith('أحمد')
-    .findAll();
+// مراقبة التغييرات (Reactive UI)
+Stream<List<CustomerModel>> watchCustomers() {
+  return isar.customerModels
+      .where()
+      .sortByName()
+      .watch(fireImmediately: true);
+}
 ```
 
-##### الكتابة
+#### 4. أفضل الممارسات
+
+- **Transactions**: دائماً جمع العمليات في `writeTxn` واحد.
+- **Indexes**: استخدم `@Index` للحقول التي تبحث بها أو ترتب بناءً عليها.
+- **Watchers**: استخدم `watch()` لتحديث الـ UI تلقائياً بدلاً من إعادة الجلب يدوياً.
+- **Background**: للعمليات الثقيلة، استخدم Isar في Isolate منفصل.
+
+#### 5. الاختبارات
 
 ```dart
-// إضافة
-await isar.writeTxn(() async {
-  await isar.customerModels.put(customer);
-});
-
-// تحديث
-await isar.writeTxn(() async {
-  customer.name = 'اسم جديد';
-  await isar.customerModels.put(customer);
-});
-
-// حذف
-await isar.writeTxn(() async {
-  await isar.customerModels.delete(customer.id);
-});
-```
-
-##### Transactions
-
-```dart
-// ✅ صحيح - استخدام transaction للعمليات المتعددة
-await isar.writeTxn(() async {
-  await isar.customerModels.put(customer);
-  await isar.invoiceModels.put(invoice);
-});
-
-// ❌ خطأ - عمليات منفصلة
-await isar.writeTxn(() async {
-  await isar.customerModels.put(customer);
-});
-await isar.writeTxn(() async {
-  await isar.invoiceModels.put(invoice);
-});
-```
-
-#### الاختبارات
-
-```dart
-// استخدام Isar في الذاكرة للاختبارات
 setUp(() async {
+  await Isar.initializeIsarCore(download: true); // تأكد من تحميل Core
   isar = await Isar.open(
     [CustomerModelSchema],
-    directory: '',
-    name: 'test_${DateTime.now().millisecondsSinceEpoch}',
+    directory: '', // ذاكرة مؤقتة
+    name: 'test_db',
   );
 });
 
 tearDown(() async {
-  await isar.close(deleteFromDisk: true);
+  if (isar.isOpen) {
+    await isar.close(deleteFromDisk: true);
+  }
 });
 ```
 
@@ -705,64 +684,91 @@ class AppTheme {
 
 ## 🧪 الاختبارات
 
-### Unit Tests
+### Unit Tests (Mocktail)
 
 ```dart
+import 'package:mocktail/mocktail.dart';
+
+class MockCustomerRepository extends Mock implements CustomerRepository {}
+class MockCustomer extends Mock implements Customer {}
+
 void main() {
-  group('CustomerRepository', () {
-    late Isar isar;
-    late CustomerRepository repository;
+  late MockCustomerRepository repository;
+  late CustomerNotifier notifier;
 
-    setUp(() async {
-      isar = await Isar.open(
-        [CustomerModelSchema],
-        directory: '',
-        name: 'test_${DateTime.now().millisecondsSinceEpoch}',
-      );
-      repository = CustomerRepositoryImpl(isar);
-    });
+  setUp(() {
+    repository = MockCustomerRepository();
+    notifier = CustomerNotifier(repository);
+  });
 
-    tearDown(() async {
-      await isar.close(deleteFromDisk: true);
-    });
+  test('should load customers successfully', () async {
+    // Arrange
+    const customers = [Customer(id: '1', name: 'Test')];
+    when(() => repository.getAllCustomers()).thenAnswer((_) async => customers);
 
-    test('should add customer successfully', () async {
-      final customer = Customer(
-        id: 'test-1',
-        name: 'أحمد محمد',
-        phone: '0501234567',
-      );
+    // Act
+    await notifier.loadCustomers();
 
-      await repository.addCustomer(customer);
-      final customers = await repository.getAllCustomers();
-
-      expect(customers.length, 1);
-      expect(customers.first.name, 'أحمد محمد');
-    });
+    // Assert
+    verify(() => repository.getAllCustomers()).called(1);
+    expect(notifier.state, isA<AsyncData>());
   });
 }
 ```
 
-### Widget Tests
+### Widget Tests (Robot Pattern)
+
+نستخدم **Robot Pattern** لفصل منطق الاختبار عن التفاعل مع الـ Widgets.
+
+**1. The Robot:**
 
 ```dart
-testWidgets('CustomerCard displays customer info', (tester) async {
-  final customer = Customer(
-    id: 'test-1',
-    name: 'أحمد محمد',
-    phone: '0501234567',
-  );
+class CustomerRobot {
+  final WidgetTester tester;
+  CustomerRobot(this.tester);
 
-  await tester.pumpWidget(
-    MaterialApp(
-      home: Scaffold(
-        body: CustomerCard(customer: customer),
-      ),
-    ),
-  );
+  Future<void> pumpCustomerScreen(Customer c) async {
+    await tester.pumpWidget(MaterialApp(home: CustomerCard(customer: c)));
+  }
 
-  expect(find.text('أحمد محمد'), findsOneWidget);
-  expect(find.text('0501234567'), findsOneWidget);
+  Future<void> tapShareButton() async {
+    await tester.tap(find.byIcon(Icons.share));
+    await tester.pumpAndSettle();
+  }
+
+  void expectCustomerName(String name) {
+    expect(find.text(name), findsOneWidget);
+  }
+}
+```
+
+**2. The Test:**
+
+```dart
+testWidgets('CustomerCard displays info and shares', (tester) async {
+  final robot = CustomerRobot(tester);
+  final customer = Customer(id: '1', name: 'أحمد', phone: '0500000000');
+
+  await robot.pumpCustomerScreen(customer);
+
+  robot.expectCustomerName('أحمد');
+  await robot.tapShareButton();
+  // ... مزيد من التحقق
+});
+```
+
+### Golden Tests
+
+نستخدم `golden_toolkit` لاختبارات الـ UI البصرية.
+
+```dart
+testGoldens('CustomerCard golden test', (tester) async {
+  final builder = GoldenBuilder.column()
+    ..addScenario('Default', CustomerCard(customer: customer1))
+    ..addScenario('Long Name', CustomerCard(customer: customer2));
+
+  await tester.pumpWidgetBuilder(builder.build());
+  await screenMatchesGolden(tester, 'customer_card_grid');
 });
 ```
 
