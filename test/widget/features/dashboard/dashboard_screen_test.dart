@@ -1,5 +1,6 @@
-import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/theme/app_theme.dart';
 import 'package:basser_app/core/widgets/index.dart';
+import 'package:basser_app/core/widgets/mastery_dashboard_widgets.dart';
 import 'package:basser_app/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,22 +17,22 @@ void main() {
     testWidgets('should display greeting message', (tester) async {
       await tester.pumpWidget(const MaterialApp(home: DashboardScreen()));
 
-      expect(find.text('أهلاً وسهلاً بك!'), findsOneWidget);
-      expect(find.text('إدارة فواتيرك وعملائك بسهولة'), findsOneWidget);
+      expect(find.text('أهلاً بك في فضاء الإتقان'), findsOneWidget);
+      expect(find.text('بصير يراقب نمو أعمالك بدقة (Φ)'), findsOneWidget);
     });
 
     group('Statistics Section', () {
       testWidgets('should display statistics title', (tester) async {
         await tester.pumpWidget(const MaterialApp(home: DashboardScreen()));
 
-        expect(find.text('الإحصائيات'), findsOneWidget);
+        expect(find.text('تحليلات الأداء المالي'), findsOneWidget);
       });
 
       testWidgets('should display 4 stat cards', (tester) async {
         await tester.pumpWidget(const MaterialApp(home: DashboardScreen()));
 
-        // التحقق من وجود 4 بطاقات إحصائيات
-        expect(find.byType(AppStatCard), findsNWidgets(4));
+        // التحقق من وجود 4 بطاقات إحصائيات زجاجية
+        expect(find.byType(GlassStatCard), findsNWidgets(4));
       });
 
       testWidgets('should display total invoices stat', (tester) async {
@@ -44,8 +45,8 @@ void main() {
       testWidgets('should display customers stat', (tester) async {
         await tester.pumpWidget(const MaterialApp(home: DashboardScreen()));
 
-        // البحث عن "العملاء" داخل AppStatCard فقط
-        final statCards = find.byType(AppStatCard);
+        // البحث عن "العملاء" داخل GlassStatCard فقط
+        final statCards = find.byType(GlassStatCard);
         expect(statCards, findsNWidgets(4));
 
         // التحقق من وجود النص في أي مكان
@@ -56,14 +57,14 @@ void main() {
       testWidgets('should display sales stat', (tester) async {
         await tester.pumpWidget(const MaterialApp(home: DashboardScreen()));
 
-        expect(find.text('المبيعات'), findsOneWidget);
+        expect(find.text('المبيعات الكلية'), findsOneWidget);
         expect(find.text('5,240 ر.س'), findsOneWidget);
       });
 
       testWidgets('should display overdue stat', (tester) async {
         await tester.pumpWidget(const MaterialApp(home: DashboardScreen()));
 
-        expect(find.text('المتأخرة'), findsOneWidget);
+        expect(find.text('فواتير متأخرة'), findsOneWidget);
         expect(find.text('3'), findsOneWidget);
       });
 
@@ -72,9 +73,12 @@ void main() {
 
         // التحقق من وجود الأيقونات (قد تظهر في أماكن متعددة)
         expect(find.byIcon(Icons.receipt_long), findsWidgets);
-        expect(find.byIcon(Icons.people), findsWidgets);
-        expect(find.byIcon(Icons.trending_up), findsWidgets);
-        expect(find.byIcon(Icons.warning), findsWidgets);
+        expect(find.byIcon(Icons.people_outline), findsWidgets);
+        expect(
+          find.byIcon(Icons.account_balance_wallet_outlined),
+          findsWidgets,
+        );
+        expect(find.byIcon(Icons.timelapse_rounded), findsWidgets);
       });
     });
 
@@ -82,7 +86,7 @@ void main() {
       testWidgets('should display quick actions title', (tester) async {
         await tester.pumpWidget(const MaterialApp(home: DashboardScreen()));
 
-        expect(find.text('الإجراءات السريعة'), findsOneWidget);
+        expect(find.text('الإجراءات المالية السريعة'), findsOneWidget);
       });
 
       testWidgets('should display new invoice button', (tester) async {
@@ -96,7 +100,7 @@ void main() {
           ),
         );
 
-        expect(find.text('فاتورة جديدة'), findsOneWidget);
+        expect(find.text('إضافة فاتورة'), findsOneWidget);
         expect(find.byType(AppPrimaryButton), findsOneWidget);
       });
 
@@ -111,7 +115,7 @@ void main() {
           ),
         );
 
-        expect(find.text('عميل جديد'), findsOneWidget);
+        expect(find.text('إضافة عميل'), findsOneWidget);
         expect(find.byType(AppSecondaryButton), findsOneWidget);
       });
 
@@ -122,23 +126,23 @@ void main() {
           MaterialApp(
             home: const DashboardScreen(),
             routes: {
-              '/invoices': (context) =>
-                  const Scaffold(body: Text('Invoices Screen')),
+              '/invoice-form': (context) =>
+                  const Scaffold(body: Text('Invoice Form Screen')),
             },
           ),
         );
 
         // التمرير للوصول للزر
         await tester.dragUntilVisible(
-          find.text('فاتورة جديدة'),
+          find.text('إضافة فاتورة'),
           find.byType(SingleChildScrollView),
           const Offset(0, -100),
         );
 
-        await tester.tap(find.text('فاتورة جديدة'));
+        await tester.tap(find.text('إضافة فاتورة'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Invoices Screen'), findsOneWidget);
+        expect(find.text('Invoice Form Screen'), findsOneWidget);
       });
 
       testWidgets('should navigate to customers on new customer button tap', (
@@ -148,23 +152,23 @@ void main() {
           MaterialApp(
             home: const DashboardScreen(),
             routes: {
-              '/customers': (context) =>
-                  const Scaffold(body: Text('Customers Screen')),
+              '/customer-form': (context) =>
+                  const Scaffold(body: Text('Customer Form Screen')),
             },
           ),
         );
 
         // التمرير للوصول للزر
         await tester.dragUntilVisible(
-          find.text('عميل جديد'),
+          find.text('إضافة عميل'),
           find.byType(SingleChildScrollView),
           const Offset(0, -100),
         );
 
-        await tester.tap(find.text('عميل جديد'));
+        await tester.tap(find.text('إضافة عميل'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Customers Screen'), findsOneWidget);
+        expect(find.text('Customer Form Screen'), findsOneWidget);
       });
     });
 
@@ -172,7 +176,7 @@ void main() {
       testWidgets('should display recent activity title', (tester) async {
         await tester.pumpWidget(const MaterialApp(home: DashboardScreen()));
 
-        expect(find.text('الأنشطة الأخيرة'), findsOneWidget);
+        expect(find.text('سجل العمليات الأحدث'), findsOneWidget);
       });
 
       testWidgets('should display 3 activity cards', (tester) async {
@@ -321,7 +325,10 @@ void main() {
         await tester.pumpWidget(const MaterialApp(home: DashboardScreen()));
 
         final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
-        expect(scaffold.backgroundColor, AppColors.background);
+        expect(
+          scaffold.backgroundColor,
+          AppTheme.lightTheme.scaffoldBackgroundColor,
+        );
       });
 
       testWidgets('should have proper spacing between sections', (
@@ -347,8 +354,8 @@ void main() {
         );
 
         // التحقق من وجود نصوص واضحة للأزرار
-        expect(find.text('فاتورة جديدة'), findsOneWidget);
-        expect(find.text('عميل جديد'), findsOneWidget);
+        expect(find.text('إضافة فاتورة'), findsOneWidget);
+        expect(find.text('إضافة عميل'), findsOneWidget);
       });
 
       testWidgets('should have semantic labels for navigation items', (

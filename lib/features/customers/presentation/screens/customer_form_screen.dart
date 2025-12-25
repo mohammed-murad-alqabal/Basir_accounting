@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
@@ -59,12 +59,12 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
     final isEditing = widget.customer != null;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: SemanticColors.background,
       appBar: AppAppBar(title: isEditing ? 'تعديل العميل' : 'إضافة عميل جديد'),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+          padding: const EdgeInsets.all(Spacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -84,7 +84,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: Spacing.md),
 
               // البريد الإلكتروني
               AppTextField(
@@ -105,7 +105,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: Spacing.md),
 
               // رقم الهاتف
               AppTextField(
@@ -126,7 +126,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: Spacing.md),
 
               // العنوان
               AppTextField(
@@ -136,7 +136,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                 prefixIcon: const Icon(Icons.location_on),
                 maxLines: 2,
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: Spacing.md),
 
               // ملاحظات
               AppTextField(
@@ -146,7 +146,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                 prefixIcon: const Icon(Icons.note),
                 maxLines: 3,
               ),
-              const SizedBox(height: AppSpacing.xl),
+              const SizedBox(height: Spacing.xl),
 
               // زر الحفظ
               AppEnhancedButton(
@@ -214,7 +214,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                   ? 'تم تحديث بيانات العميل بنجاح'
                   : 'تم إضافة العميل بنجاح',
             ),
-            backgroundColor: AppColors.secondary,
+            backgroundColor: SemanticColors.secondary,
           ),
         );
         Navigator.pop(
@@ -227,7 +227,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
             content: Text(
               isEditing ? 'فشل تحديث بيانات العميل' : 'فشل إضافة العميل',
             ),
-            backgroundColor: AppColors.error,
+            backgroundColor: SemanticColors.error,
           ),
         );
       }
@@ -236,7 +236,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('حدث خطأ: $e'),
-          backgroundColor: AppColors.error,
+          backgroundColor: SemanticColors.error,
         ),
       );
     } finally {

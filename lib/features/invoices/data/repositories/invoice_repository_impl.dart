@@ -184,4 +184,30 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
       );
     }
   }
+
+  @override
+  Future<Invoice> duplicateInvoice(String id) async {
+    try {
+      final original = await getInvoiceById(id);
+      if (original == null) {
+        throw Exception('الفاتورة الأصلية غير موجودة');
+      }
+
+      // إنشاء معرف فريد جديد (بسيط لغرض العرض، يفضل استخدام UUID)
+      final newId = 'inv-${DateTime.now().millisecondsSinceEpoch}';
+
+      final duplicated = original.copyWith(
+        id: newId,
+        issuedDate: DateTime.now(),
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        status: 'draft', // النسخة تبدأ دائماً كمسودة
+      );
+
+      await addInvoice(duplicated);
+      return duplicated;
+    } on Exception catch (e) {
+      throw Exception('فشل في مضاعفة الفاتورة: $e');
+    }
+  }
 }

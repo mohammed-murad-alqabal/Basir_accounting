@@ -2,59 +2,8 @@ import 'package:basser_app/core/constants.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('AppFontSizes', () {
-    test('heading sizes should be defined correctly', () {
-      expect(AppFontSizes.headingLarge, equals(32.0));
-      expect(AppFontSizes.headingMedium, equals(24.0));
-      expect(AppFontSizes.headingSmall, equals(20.0));
-    });
-
-    test('body sizes should be defined correctly', () {
-      expect(AppFontSizes.bodyLarge, equals(16.0));
-      expect(AppFontSizes.bodyMedium, equals(14.0));
-      expect(AppFontSizes.bodySmall, equals(12.0));
-    });
-
-    test('label sizes should be defined correctly', () {
-      expect(AppFontSizes.labelLarge, equals(14.0));
-      expect(AppFontSizes.labelSmall, equals(12.0));
-    });
-
-    test('heading sizes should be in descending order', () {
-      expect(
-        AppFontSizes.headingLarge,
-        greaterThan(AppFontSizes.headingMedium),
-      );
-      expect(
-        AppFontSizes.headingMedium,
-        greaterThan(AppFontSizes.headingSmall),
-      );
-    });
-
-    test('body sizes should be in descending order', () {
-      expect(AppFontSizes.bodyLarge, greaterThan(AppFontSizes.bodyMedium));
-      expect(AppFontSizes.bodyMedium, greaterThan(AppFontSizes.bodySmall));
-    });
-
-    test('label sizes should be in descending order', () {
-      expect(AppFontSizes.labelLarge, greaterThan(AppFontSizes.labelSmall));
-    });
-  });
-
-  group('AppFonts', () {
-    test('arabic font should be Tajawal', () {
-      expect(AppFonts.arabicFont, equals('Tajawal'));
-    });
-
-    test('english font should be Roboto', () {
-      expect(AppFonts.englishFont, equals('Roboto'));
-    });
-
-    test('fonts should be non-empty strings', () {
-      expect(AppFonts.arabicFont, isNotEmpty);
-      expect(AppFonts.englishFont, isNotEmpty);
-    });
-  });
+  // Note: AppFontSizes and AppFonts have been migrated to Design Tokens
+  // in core/theme/tokens/. Tests for those should be in typography_tokens_test.dart
 
   group('StorageKeys', () {
     test('authentication keys should be defined', () {

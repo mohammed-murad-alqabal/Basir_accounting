@@ -339,6 +339,7 @@ class InputValidator {
 
 /// نتيجة التحقق من صحة المدخلات
 class ValidationResult {
+  /// إنشاء نتيجة التحقق
   const ValidationResult({
     required this.isValid,
     required this.issues,
@@ -353,6 +354,7 @@ class ValidationResult {
 
 /// نتيجة التحقق من كلمة المرور
 class PasswordValidationResult extends ValidationResult {
+  /// إنشاء نتيجة التحقق من كلمة المرور
   const PasswordValidationResult({
     required super.isValid,
     required super.issues,
@@ -383,6 +385,7 @@ class PasswordValidationResult extends ValidationResult {
 
 /// نتيجة فحص الأمان
 class SecurityScanResult {
+  /// إنشاء نتيجة فحص الأمان
   const SecurityScanResult({
     required this.isSafe,
     required this.riskLevel,

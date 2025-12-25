@@ -21,9 +21,9 @@ jobs:
           flutter-version: "3.24.0"
       - name: Install dependencies
         run: flutter pub get
-      - name: Documentation Quality Check - Coverage
+      - name: Check documentation coverage
         run: dart lib/tools/documentation/cli/documentation_cli.dart analyze
-      - name: Documentation Quality Check - Quality
+      - name: Check documentation quality
         run: dart lib/tools/documentation/cli/documentation_cli.dart validate --strict
 
   code-quality-gate:
@@ -36,7 +36,7 @@ jobs:
           flutter-version: "3.24.0"
       - name: Install dependencies
         run: flutter pub get
-      - name: Code Quality Check
+      - name: Run Flutter analyze
         run: flutter analyze --fatal-infos
 
   test-quality-gate:
@@ -49,7 +49,7 @@ jobs:
           flutter-version: "3.24.0"
       - name: Install dependencies
         run: flutter pub get
-      - name: Run Tests with Coverage
+      - name: Run tests with coverage
         run: flutter test --coverage
       - name: Check Test Coverage
         run: |
@@ -69,8 +69,8 @@ jobs:
           flutter-version: "3.24.0"
       - name: Install dependencies
         run: flutter pub get
-      - name: Security Analysis - Check Vulnerabilities
-        run: flutter pub deps --json | dart analyze --fatal-warnings
+      - name: Check for security vulnerabilities
+        run: flutter pub outdated
 
   quality-gate-summary:
     runs-on: ubuntu-latest

@@ -1,101 +1,197 @@
-import 'package:basser_app/core/theme.dart';
-import 'package:basser_app/core/widgets/responsive_text.dart';
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-/// بطاقة أساسية مخصصة
+import 'package:basser_app/core/theme/tokens/index.dart';
+import 'package:basser_app/core/widgets/responsive_text.dart';
+import 'package:flutter/material.dart' hide Durations;
+import 'package:flutter/services.dart';
+
+/// بطاقة تطبيق موحدة (Unified App Card)
 ///
-/// بطاقة بسيطة قابلة للتخصيص مع دعم النقر
+/// مكون بطاقة محسّن يستخدم جميع Design Tokens
+/// مع دعم haptic feedback وحركات سلسة
 ///
-/// Features:
-/// - تصميم Material Design
-/// - قابلة للنقر (اختياري)
-/// - حشوة قابلة للتخصيص
-/// - لون خلفية قابل للتخصيص
-/// - ارتفاع (elevation) قابل للتخصيص
+/// الميزات:
+/// - استخدام CardColors و Spacing tokens
+/// - دعم haptic feedback
+/// - Scale animation عند الضغط
+/// - توافق كامل مع WCAG
 ///
 /// Example:
 /// ```dart
 /// AppCard(
 ///   child: Text('محتوى البطاقة'),
-///   onTap: () => debugPrint('تم النقر'),
+///   onTap: () => print('Tapped'),
 /// )
 /// ```
-class AppCard extends StatelessWidget {
-  /// إنشاء بطاقة أساسية
-  ///
-  /// Parameters:
-  /// - [child]: محتوى البطاقة (مطلوب)
-  /// - [padding]: الحشوة الداخلية (افتراضي: AppSpacing.md)
-  /// - [onTap]: دالة تُستدعى عند النقر (اختياري)
-  /// - [backgroundColor]: لون الخلفية (افتراضي: AppColors.surface)
-  /// - [elevation]: ارتفاع الظل (افتراضي: 0)
+class AppCard extends StatefulWidget {
+  /// إنشاء بطاقة مخصصة
   const AppCard({
     required this.child,
     super.key,
-    this.padding = const EdgeInsets.all(AppSpacing.md),
+    this.padding,
+    this.margin,
     this.onTap,
-    this.backgroundColor = AppColors.surface,
-    this.elevation = 0,
+    this.backgroundColor,
+    this.elevation,
+    this.borderRadius,
+    this.borderColor,
+    this.hapticFeedback = true,
+    this.isSelected = false,
   });
 
-  /// محتوى البطاقة
+  /// محتوي البطاقة
   final Widget child;
 
-  /// الحشوة الداخلية للبطاقة
-  final EdgeInsets? padding;
+  /// الحشوة الداخلية (افتراضي: Spacing.md)
+  final EdgeInsetsGeometry? padding;
 
-  /// دالة تُستدعى عند النقر على البطاقة
+  /// الهامش الخارجي (افتراضي: zero)
+  final EdgeInsetsGeometry? margin;
+
+  /// دالة عند الضغط
   final VoidCallback? onTap;
 
-  /// لون خلفية البطاقة
+  /// لون الخلفية (افتراضي: CardColors.background)
   final Color? backgroundColor;
 
-  /// ارتفاع ظل البطاقة
+  /// الارتفاع (افتراضي: Elevation.sm)
   final double? elevation;
 
+  /// ركن التدوير (افتراضي: Radii.borderRadiusMd)
+  final BorderRadius? borderRadius;
+
+  /// لون الحدود (اختياري)
+  final Color? borderColor;
+
+  /// تفعيل haptic feedback
+  final bool hapticFeedback;
+
+  /// حالة التحقق
+  final bool isSelected;
+
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTap: onTap,
-        child: Card(
-          color: backgroundColor,
-          elevation: elevation,
-          child: Padding(padding: padding ?? EdgeInsets.zero, child: child),
-        ),
-      );
+  State<AppCard> createState() => _AppCardState();
 }
 
-/// بطاقة قائمة للعملاء والفواتير
-///
-/// بطاقة مخصصة لعرض عناصر القوائم مثل العملاء والفواتير
-///
-/// Features:
-/// - عنوان رئيسي وعنوان فرعي
-/// - أيقونة في البداية (اختياري)
-/// - نص في النهاية (اختياري)
-/// - دعم النقر والنقر الطويل
-/// - تصميم متسق مع Material Design
-///
-/// Example:
-/// ```dart
-/// AppListCard(
-///   title: 'أحمد محمد',
-///   subtitle: '0501234567',
-///   trailing: '5 فواتير',
-///   leading: Icon(Icons.person),
-///   onTap: () => viewCustomer(),
-/// )
-/// ```
+class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
+  late AnimationController _scaleController;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _scaleController = AnimationController(
+      duration: Durations.fast,
+      vsync: this,
+    );
+    _scaleAnimation = Tween<double>(
+      begin: TransformScales.normal,
+      end: TransformScales.pressed,
+    ).animate(
+      CurvedAnimation(
+        parent: _scaleController,
+        curve: AnimationCurves.decelerate,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _scaleController.dispose();
+    super.dispose();
+  }
+
+  void _handleTapDown(TapDownDetails details) {
+    if (widget.onTap != null) {
+      unawaited(_scaleController.forward());
+    }
+  }
+
+  void _handleTapUp(TapUpDetails details) {
+    unawaited(_scaleController.reverse());
+  }
+
+  void _handleTapCancel() {
+    unawaited(_scaleController.reverse());
+  }
+
+  void _handleTap() {
+    if (widget.onTap != null) {
+      if (widget.hapticFeedback) {
+        unawaited(HapticFeedback.lightImpact());
+      }
+      widget.onTap!();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final effectiveBackgroundColor =
+        widget.backgroundColor ?? CardColors.background;
+    final effectiveBorderRadius = widget.borderRadius ?? Radii.borderRadiusMd;
+    final effectiveElevation = widget.elevation ?? Elevation.sm;
+    final effectivePadding = widget.padding ?? Spacing.paddingMd;
+
+    final Widget card = Container(
+      margin: widget.margin ?? EdgeInsets.zero,
+      decoration: BoxDecoration(
+        color: effectiveBackgroundColor,
+        borderRadius: effectiveBorderRadius,
+        border: Border.all(
+          color: widget.isSelected
+              ? CardColors.borderSelected
+              : (widget.borderColor ?? CardColors.border),
+          width: widget.isSelected ? BorderWidths.normal : BorderWidths.thin,
+        ),
+        boxShadow: effectiveElevation > 0
+            ? [
+                BoxShadow(
+                  color: SemanticColors.shadow,
+                  blurRadius: effectiveElevation * 2,
+                  offset: Offset(0, effectiveElevation),
+                ),
+              ]
+            : null,
+      ),
+      child: ClipRRect(
+        borderRadius: effectiveBorderRadius,
+        child: Padding(
+          padding: effectivePadding,
+          child: widget.child,
+        ),
+      ),
+    );
+
+    if (widget.onTap != null) {
+      return ScaleTransition(
+        scale: _scaleAnimation,
+        child: Semantics(
+          button: true,
+          enabled: true,
+          label: 'بطاقة تفاعلية',
+          selected: widget.isSelected,
+          child: GestureDetector(
+            onTapDown: _handleTapDown,
+            onTapUp: _handleTapUp,
+            onTapCancel: _handleTapCancel,
+            onTap: _handleTap,
+            behavior: HitTestBehavior.opaque,
+            child: card,
+          ),
+        ),
+      );
+    }
+
+    return Semantics(
+      container: true,
+      child: card,
+    );
+  }
+}
+
+/// بطاقة قائمة موحدة (Unified App List Card)
 class AppListCard extends StatelessWidget {
   /// إنشاء بطاقة قائمة
-  ///
-  /// Parameters:
-  /// - [title]: العنوان الرئيسي (مطلوب)
-  /// - [subtitle]: العنوان الفرعي (اختياري)
-  /// - [trailing]: نص في النهاية (اختياري)
-  /// - [onTap]: دالة تُستدعى عند النقر (اختياري)
-  /// - [onLongPress]: دالة تُستدعى عند النقر الطويل (اختياري)
-  /// - [leading]: widget في البداية (اختياري)
-  /// - [backgroundColor]: لون الخلفية (افتراضي: AppColors.surface)
   const AppListCard({
     required this.title,
     super.key,
@@ -104,186 +200,167 @@ class AppListCard extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.leading,
-    this.backgroundColor = AppColors.surface,
+    this.backgroundColor,
+    this.isSelected = false,
   });
 
-  /// العنوان الرئيسي للبطاقة
+  /// العنوان
   final String title;
 
-  /// العنوان الفرعي (يظهر أسفل العنوان الرئيسي)
+  /// العنوان الفرعي
   final String? subtitle;
 
-  /// نص يظهر في نهاية البطاقة
-  final String? trailing;
+  /// ودجت في النهاية (String أو Widget)
+  final dynamic trailing;
 
-  /// دالة تُستدعى عند النقر على البطاقة
+  /// دالة عند الضغط
   final VoidCallback? onTap;
 
-  /// دالة تُستدعى عند النقر الطويل على البطاقة
+  /// دالة عند الضغط المطول
   final VoidCallback? onLongPress;
 
-  /// widget يظهر في بداية البطاقة (عادة أيقونة)
+  /// ودجت في البداية
   final Widget? leading;
 
-  /// لون خلفية البطاقة
+  /// لون الخلفية
   final Color? backgroundColor;
 
+  /// حالة التحديد
+  final bool isSelected;
+
   @override
-  Widget build(BuildContext context) => GestureDetector(
+  Widget build(BuildContext context) {
+    Widget? trailingWidget;
+    if (trailing is String) {
+      trailingWidget = ResponsiveText(
+        trailing as String,
+        style: TextStyles.bodyMedium.copyWith(
+          fontWeight: FontWeights.semiBold,
+          color: SemanticColors.primary,
+        ),
+        maxLines: 1,
+        autoScale: true,
+      );
+    } else if (trailing is Widget) {
+      trailingWidget = trailing as Widget;
+    }
+
+    return GestureDetector(
+      onLongPress: onLongPress,
+      child: AppCard(
         onTap: onTap,
-        onLongPress: onLongPress,
-        child: Card(
-          color: backgroundColor,
-          margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: Row(
-              children: [
-                if (leading != null) ...[
-                  leading!,
-                  const SizedBox(width: AppSpacing.md),
-                ],
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ResponsiveText(
-                        title,
-                        style: const TextStyle(
-                          fontSize: AppTypography.titleSmall,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary,
-                        ),
-                        maxLines: 1,
-                      ),
-                      if (subtitle != null) ...[
-                        const SizedBox(height: AppSpacing.xs),
-                        ResponsiveText(
-                          subtitle!,
-                          style: const TextStyle(
-                            fontSize: AppTypography.bodySmall,
-                            color: AppColors.textSecondary,
-                          ),
-                          maxLines: 2,
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-                if (trailing != null) ...[
-                  const SizedBox(width: AppSpacing.md),
+        backgroundColor: backgroundColor,
+        isSelected: isSelected,
+        margin: const EdgeInsets.only(bottom: Spacing.sm),
+        child: Row(
+          children: [
+            if (leading != null) ...[
+              leading!,
+              const SizedBox(width: Spacing.md),
+            ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
                   ResponsiveText(
-                    trailing!,
-                    style: const TextStyle(
-                      fontSize: AppTypography.bodyMedium,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primary,
+                    title,
+                    style: TextStyles.titleSmall.copyWith(
+                      fontWeight: FontWeights.semiBold,
                     ),
                     maxLines: 1,
+                    autoScale: true,
                   ),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: Spacing.xs),
+                    ResponsiveText(
+                      subtitle!,
+                      style: TextStyles.bodySmall.copyWith(
+                        color: SemanticColors.textSecondary,
+                      ),
+                      maxLines: 2,
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
+            if (trailingWidget != null) ...[
+              const SizedBox(width: Spacing.md),
+              trailingWidget,
+            ],
+          ],
         ),
-      );
+      ),
+    );
+  }
 }
 
-/// بطاقة إحصائية
-///
-/// بطاقة مخصصة لعرض الإحصائيات والأرقام المهمة
-///
-/// Features:
-/// - تسمية واضحة
-/// - قيمة بخط كبير وبارز
-/// - أيقونة توضيحية
-/// - تصميم نظيف ومنظم
-///
-/// Example:
-/// ```dart
-/// AppStatCard(
-///   label: 'إجمالي الفواتير',
-///   value: '150',
-///   icon: Icons.receipt,
-///   iconColor: AppColors.primary,
-/// )
-/// ```
+/// بطاقة إحصائية موحدة (Unified App Stat Card)
 class AppStatCard extends StatelessWidget {
   /// إنشاء بطاقة إحصائية
-  ///
-  /// Parameters:
-  /// - [label]: تسمية الإحصائية (مطلوب)
-  /// - [value]: القيمة المعروضة (مطلوب)
-  /// - [icon]: الأيقونة التوضيحية (مطلوب)
-  /// - [iconColor]: لون الأيقونة (افتراضي: AppColors.primary)
-  /// - [backgroundColor]: لون الخلفية (افتراضي: AppColors.surface)
   const AppStatCard({
     required this.label,
     required this.value,
     required this.icon,
     super.key,
-    this.iconColor = AppColors.primary,
-    this.backgroundColor = AppColors.surface,
+    this.iconColor,
+    this.backgroundColor,
   });
 
-  /// تسمية الإحصائية
+  /// التسمية
   final String label;
 
-  /// القيمة المعروضة (رقم أو نص)
+  /// القيمة
   final String value;
 
-  /// الأيقونة التوضيحية
+  /// الأيقونة
   final IconData icon;
 
   /// لون الأيقونة
   final Color? iconColor;
 
-  /// لون خلفية البطاقة
+  /// لون الخلفية
   final Color? backgroundColor;
 
   @override
-  Widget build(BuildContext context) => Card(
-        color: backgroundColor,
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.sm),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, color: iconColor, size: 26),
-              const SizedBox(height: AppSpacing.xs),
-              Flexible(
-                child: Text(
-                  label,
-                  style: const TextStyle(
-                    fontSize: 10,
-                    color: AppColors.textSecondary,
-                    fontWeight: FontWeight.w500,
-                    height: 1.1,
+  Widget build(BuildContext context) => AppCard(
+        backgroundColor: backgroundColor,
+        padding: Spacing.paddingSm,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: iconColor ?? SemanticColors.primary,
+              size: IconSizes.md,
+            ),
+            const SizedBox(height: Spacing.xs),
+            Flexible(
+              child: ResponsiveText(
+                label,
+                style: TextStyles.labelSmall.copyWith(
+                  color: SemanticColors.textSecondary,
+                ),
+                maxLines: 1,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: Spacing.xs),
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: ResponsiveText(
+                  value,
+                  style: TextStyles.headlineSmall.copyWith(
+                    fontWeight: FontWeights.bold,
+                    color: SemanticColors.textPrimary,
                   ),
-                  overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(height: AppSpacing.xs),
-              Flexible(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    value,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
-                      height: 1.1,
-                    ),
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
 }

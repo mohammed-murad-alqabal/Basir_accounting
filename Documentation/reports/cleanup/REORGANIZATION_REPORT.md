@@ -431,9 +431,9 @@ cd deployment/
 
 ### الوثائق ذات الصلة
 
-- [CLEANUP_EXECUTION_REPORT.md](CLEANUP_EXECUTION_REPORT.md) - تقرير حذف الملفات المؤقتة
-- [REPOSITORY_ANALYSIS_AND_REORGANIZATION_PLAN.md](REPOSITORY_ANALYSIS_AND_REORGANIZATION_PLAN.md) - الخطة الأصلية
-- [PROJECT_STATUS.md](PROJECT_STATUS.md) - حالة المشروع الحالية
+- [CLEANUP_EXECUTION_REPORT.md](../fixes/CLEANUP_EXECUTION_REPORT.md) - تقرير حذف الملفات المؤقتة
+- [REPOSITORY_ANALYSIS_AND_REORGANIZATION_PLAN.md](../fixes/REPOSITORY_ANALYSIS_AND_REORGANIZATION_PLAN.md) - الخطة الأصلية
+- [PROJECT_STATUS.md](../project-status/PROJECT_STATUS.md) - حالة المشروع الحالية
 
 ### Git Commits
 

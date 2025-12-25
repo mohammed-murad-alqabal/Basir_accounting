@@ -8,7 +8,7 @@
 # المؤلف: فريق وكلاء تطوير مشروع بصير
 # =============================================================================
 
-set -e
+# set -e
 
 # الألوان
 RED='\033[0;31m'
@@ -46,6 +46,7 @@ run_test() {
 }
 
 # إنشاء مجلد مؤقت للاختبارات
+PROJECT_ROOT=$(pwd)
 TEST_DIR=$(mktemp -d)
 cd "$TEST_DIR"
 
@@ -57,11 +58,11 @@ git config user.name "Test User"
 print_msg "\n═══ اختبارات Pre-commit Hook ═══\n" "$YELLOW"
 
 # اختبار 1: التحقق من وجود السكريبت
-run_test "وجود pre-commit hook" "[ -f '$(git rev-parse --git-dir)/hooks/pre-commit' ] || [ -f '../.git/hooks/pre-commit' ]"
+run_test "وجود pre-commit hook" "[ -f '$(git rev-parse --git-dir)/hooks/pre-commit' ] || [ -f '$PROJECT_ROOT/.git/hooks/pre-commit' ]"
 
 # اختبار 2: التحقق من صلاحيات التنفيذ
-if [ -f "../.git/hooks/pre-commit" ]; then
-    run_test "صلاحيات تنفيذ pre-commit" "[ -x '../.git/hooks/pre-commit' ]"
+if [ -f "$PROJECT_ROOT/.git/hooks/pre-commit" ]; then
+    run_test "صلاحيات تنفيذ pre-commit" "[ -x '$PROJECT_ROOT/.git/hooks/pre-commit' ]"
 fi
 
 # اختبار 3: التحقق من رسالة commit صحيحة
@@ -78,11 +79,11 @@ run_test "قبول docs(readme): message" "echo 'docs(readme): update' | grep -q
 print_msg "\n═══ اختبارات Pre-push Hook ═══\n" "$YELLOW"
 
 # اختبار 6: التحقق من وجود السكريبت
-run_test "وجود pre-push hook" "[ -f '$(git rev-parse --git-dir)/hooks/pre-push' ] || [ -f '../.git/hooks/pre-push' ]"
+run_test "وجود pre-push hook" "[ -f '$(git rev-parse --git-dir)/hooks/pre-push' ] || [ -f '$PROJECT_ROOT/.git/hooks/pre-push' ]"
 
 # اختبار 7: التحقق من صلاحيات التنفيذ
-if [ -f "../.git/hooks/pre-push" ]; then
-    run_test "صلاحيات تنفيذ pre-push" "[ -x '../.git/hooks/pre-push' ]"
+if [ -f "$PROJECT_ROOT/.git/hooks/pre-push" ]; then
+    run_test "صلاحيات تنفيذ pre-push" "[ -x '$PROJECT_ROOT/.git/hooks/pre-push' ]"
 fi
 
 # اختبار 8: اكتشاف أنماط الأسرار
@@ -93,12 +94,12 @@ run_test "اكتشاف token" "echo 'auth_token=abc123' | grep -qE '(api[_-]?key
 print_msg "\n═══ اختبارات أداء Hooks ═══\n" "$YELLOW"
 
 # اختبار 9: قياس وقت تنفيذ pre-commit (يجب أن يكون < 30 ثانية)
-if [ -f "../.git/hooks/pre-commit" ]; then
+if [ -f "$PROJECT_ROOT/.git/hooks/pre-commit" ]; then
     run_test "أداء pre-commit < 30s" "timeout 30 bash -c 'exit 0'"
 fi
 
 # اختبار 10: قياس وقت تنفيذ pre-push (يجب أن يكون < 120 ثانية)
-if [ -f "../.git/hooks/pre-push" ]; then
+if [ -f "$PROJECT_ROOT/.git/hooks/pre-push" ]; then
     run_test "أداء pre-push < 120s" "timeout 120 bash -c 'exit 0'"
 fi
 

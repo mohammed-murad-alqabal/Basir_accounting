@@ -157,17 +157,17 @@ abstract class InvoiceRepository {
   Future<void> deleteAllInvoices();
 
   /// الحصول على إحصائيات الفواتير
-  ///
-  /// يحسب ويسترجع إحصائيات شاملة عن جميع الفواتير.
-  ///
-  /// **Returns:** كائن [InvoiceStatistics] يحتوي على الإحصائيات
-  ///
-  /// **مثال:**
-  /// ```dart
-  /// final stats = await repository.getInvoiceStatistics();
-  /// debugPrint('إجمالي الإيرادات: ${stats.totalRevenue}',);
-  /// ```
   Future<InvoiceStatistics> getInvoiceStatistics();
+
+  /// مضاعفة فاتورة موجودة
+  ///
+  /// ينشئ نسخة جديدة من فاتورة موجودة مع تحديث المعرف والتاريخ.
+  ///
+  /// **Parameters:**
+  /// - [id]: معرف الفاتورة الأصلية
+  ///
+  /// **Returns:** الفاتورة الجديدة المنسوخة
+  Future<Invoice> duplicateInvoice(String id);
 }
 
 /// إحصائيات الفواتير (Invoice Statistics)

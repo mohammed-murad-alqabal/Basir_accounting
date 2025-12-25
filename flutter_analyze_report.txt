@@ -1,0 +1,32 @@
+Analyzing Basser_MVP...                                         
+
+   info • Dangling library doc comment • lib/core/constants.dart:2:1 • dangling_library_doc_comments
+   info • Missing documentation for a public member • lib/core/services/mailer_service.dart:9:16 • public_member_api_docs
+   info • Unnecessary use of an abstract class • lib/core/services/mailer_service.dart:9:16 • one_member_abstracts
+   info • Missing documentation for a public member • lib/core/utils/provider_observer.dart:21:8 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/core/widgets/app_app_bar.dart:36:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/widgets/app_app_bar.dart:127:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/widgets/error_widget.dart:47:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/widgets/error_widget.dart:59:81 • lines_longer_than_80_chars
+   info • 'Future'-returning calls in a non-'async' function • lib/core/widgets/error_widget.dart:60:47 • discarded_futures
+   info • The line length exceeds the 80-character limit • lib/features/auth/data/services/auth_service.dart:55:81 • lines_longer_than_80_chars
+   info • Don't use 'BuildContext's across async gaps • lib/features/auth/presentation/screens/login_screen.dart:73:28 • use_build_context_synchronously
+   info • Missing a required trailing comma • lib/features/invoices/presentation/screens/invoice_form_screen.dart:351:52 • require_trailing_commas
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/main.dart:45:5 • avoid_catches_without_on_clauses
+   info • Unnecessary use of a block function body • lib/tools/documentation/validation/validation_engine.dart:26:54 • prefer_expression_function_bodies
+   info • Unnecessary use of a block function body • lib/tools/documentation/validation/validation_engine.dart:37:45 • prefer_expression_function_bodies
+   info • Statements in an if should be enclosed in a block • lib/tools/documentation/validation/validation_engine.dart:62:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block • lib/tools/documentation/validation/validation_engine.dart:63:31 • curly_braces_in_flow_control_structures
+   info • Missing a required trailing comma • lib/tools/documentation/validation/validation_engine.dart:83:8 • require_trailing_commas
+   info • Missing a required trailing comma • lib/tools/documentation/validation/validation_engine.dart:93:8 • require_trailing_commas
+   info • Missing a required trailing comma • lib/tools/documentation/validation/validation_engine.dart:102:8 • require_trailing_commas
+   info • Don't invoke 'print' in production code • scripts/migrate_theme.dart:6:5 • avoid_print
+   info • The line length exceeds the 80-character limit • scripts/migrate_theme.dart:39:81 • lines_longer_than_80_chars
+   info • Don't invoke 'print' in production code • scripts/migrate_theme.dart:58:9 • avoid_print
+   info • The line length exceeds the 80-character limit • test/widget/core/widgets/app_button_test.dart:357:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • test/widget/core/widgets/app_button_test.dart:358:81 • lines_longer_than_80_chars
+   info • Don't cast a nullable value to a non-nullable type • test/widget/core/widgets/app_card_test.dart:69:15 • cast_nullable_to_non_nullable
+   info • The line length exceeds the 80-character limit • test/widget/features/auth/login_screen_test.dart:267:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • test/widget/features/auth/login_screen_test.dart:270:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • test/widget/features/auth/login_screen_test.dart:272:81 • lines_longer_than_80_chars
+

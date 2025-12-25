@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
-import 'package:flutter/foundation.dart';
+import 'package:basser_app/core/widgets/mastery_dashboard_widgets.dart';
 import 'package:flutter/material.dart';
 
 /// شاشة لوحة التحكم (Dashboard Screen)
@@ -20,54 +20,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: AppColors.background,
-        appBar: AppSimpleAppBar(
+        backgroundColor: SemanticColors.background,
+        appBar: const AppSimpleAppBar(
           title: 'لوحة التحكم',
-          actions: [
-            // زر اختبار الأزرار (يظهر فقط في debug mode)
-            if (kDebugMode)
-              IconButton(
-                icon: const Icon(Icons.bug_report),
-                tooltip: 'اختبار الأزرار',
-                onPressed: () {
-                  unawaited(
-                    Navigator.of(context).pushNamed('/button-test'),
-                  );
-                },
-              ),
-          ],
+          actions: [],
         ),
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+          padding: const EdgeInsets.all(Spacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // رسالة الترحيب
-              _buildGreeting(),
-              const SizedBox(height: AppSpacing.xl),
+              // رأس لوحة التحكم المطور
+              const DashboardMasteryHeader(),
+              const SizedBox(height: Spacing.xl),
 
-              // الإحصائيات
-              _buildStatistics(),
-              const SizedBox(height: AppSpacing.xl),
+              // الإحصائيات المطورة
+              _buildMasteryStatistics(),
+              const SizedBox(height: Spacing.xl),
 
               // الإجراءات السريعة
               _buildQuickActions(context),
-              const SizedBox(height: AppSpacing.xl),
+              const SizedBox(height: Spacing.xl),
 
               // الأنشطة الأخيرة
               _buildRecentActivity(),
 
               // مسافة إضافية في الأسفل لتجنب overflow
-              const SizedBox(height: AppSpacing.xxl),
+              const SizedBox(height: Spacing.xxl),
             ],
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: AppColors.surface,
-          selectedItemColor: AppColors.primary,
-          unselectedItemColor: AppColors.textSecondary,
+          backgroundColor: SemanticColors.surface,
+          selectedItemColor: SemanticColors.primary,
+          unselectedItemColor: SemanticColors.textSecondary,
           selectedFontSize: 13,
           unselectedFontSize: 13,
           iconSize: 26,
@@ -109,72 +97,59 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       );
 
-  Widget _buildGreeting() => const Column(
+  Widget _buildMasteryStatistics() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'أهلاً وسهلاً بك!',
-            style: TextStyle(
-              fontSize: AppTypography.headlineSmall,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
-            ),
+          const Row(
+            children: [
+              Icon(
+                Icons.analytics_outlined,
+                size: 20,
+                color: SemanticColors.primary,
+              ),
+              SizedBox(width: Spacing.xs),
+              Text(
+                'تحليلات الأداء المالي',
+                style: TextStyle(
+                  fontSize: FontSizes.titleMedium,
+                  fontWeight: FontWeight.bold,
+                  color: SemanticColors.textPrimary,
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: AppSpacing.sm),
-          Text(
-            'إدارة فواتيرك وعملائك بسهولة',
-            style: TextStyle(
-              fontSize: AppTypography.bodyMedium,
-              color: AppColors.textSecondary,
-            ),
-          ),
-        ],
-      );
-
-  Widget _buildStatistics() => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'الإحصائيات',
-            style: TextStyle(
-              fontSize: AppTypography.titleMedium,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: Spacing.md),
           GridView.count(
             crossAxisCount: 2,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            crossAxisSpacing: AppSpacing.md,
-            mainAxisSpacing: AppSpacing.md,
-            childAspectRatio: 1.1,
+            crossAxisSpacing: Spacing.md,
+            mainAxisSpacing: Spacing.md,
+            childAspectRatio: 1.2,
             children: const [
-              // الصف الأول: إجمالي الفواتير (يمين) - العملاء (يسار)
-              AppStatCard(
+              GlassStatCard(
                 label: 'إجمالي الفواتير',
                 value: '24',
                 icon: Icons.receipt_long,
+                color: SemanticColors.primary,
               ),
-              AppStatCard(
-                label: 'العملاء',
+              GlassStatCard(
+                label: 'العملاء النشطون',
                 value: '12',
-                icon: Icons.people,
-                iconColor: AppColors.secondary,
+                icon: Icons.people_outline,
+                color: SemanticColors.secondary,
               ),
-              // الصف الثاني: المبيعات (يمين) - المتأخرة (يسار)
-              AppStatCard(
-                label: 'المبيعات',
+              GlassStatCard(
+                label: 'المبيعات الكلية',
                 value: '5,240 ر.س',
-                icon: Icons.trending_up,
-                iconColor: Colors.orange,
+                icon: Icons.account_balance_wallet_outlined,
+                color: Colors.orange,
               ),
-              AppStatCard(
-                label: 'المتأخرة',
+              GlassStatCard(
+                label: 'فواتير متأخرة',
                 value: '3',
-                icon: Icons.warning,
-                iconColor: AppColors.error,
+                icon: Icons.timelapse_rounded,
+                color: SemanticColors.error,
               ),
             ],
           ),
@@ -184,35 +159,45 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _buildQuickActions(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'الإجراءات السريعة',
-            style: TextStyle(
-              fontSize: AppTypography.titleMedium,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
+          const Row(
+            children: [
+              Icon(
+                Icons.bolt_outlined,
+                size: 20,
+                color: SemanticColors.primary,
+              ),
+              SizedBox(width: Spacing.xs),
+              Text(
+                'الإجراءات المالية السريعة',
+                style: TextStyle(
+                  fontSize: FontSizes.titleMedium,
+                  fontWeight: FontWeight.bold,
+                  color: SemanticColors.textPrimary,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: Spacing.md),
           Row(
             children: [
               Expanded(
                 child: AppPrimaryButton(
-                  text: 'فاتورة جديدة',
+                  label: 'إضافة فاتورة',
                   onPressed: () {
                     unawaited(
-                      Navigator.of(context).pushNamed('/invoices'),
+                      Navigator.of(context).pushNamed('/invoice-form'),
                     );
                   },
-                  icon: Icons.receipt_long,
+                  icon: Icons.add,
                 ),
               ),
-              const SizedBox(width: AppSpacing.md),
+              const SizedBox(width: Spacing.md),
               Expanded(
                 child: AppSecondaryButton(
-                  text: 'عميل جديد',
+                  label: 'إضافة عميل',
                   onPressed: () {
                     unawaited(
-                      Navigator.of(context).pushNamed('/customers'),
+                      Navigator.of(context).pushNamed('/customer-form'),
                     );
                   },
                   icon: Icons.person_add,
@@ -223,35 +208,51 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       );
 
-  Widget _buildRecentActivity() => const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildRecentActivity() => Column(
         children: [
-          Text(
-            'الأنشطة الأخيرة',
-            style: TextStyle(
-              fontSize: AppTypography.titleMedium,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
+          const Row(
+            children: [
+              Icon(
+                Icons.history_toggle_off_rounded,
+                size: 20,
+                color: SemanticColors.primary,
+              ),
+              SizedBox(width: Spacing.xs),
+              Text(
+                'سجل العمليات الأحدث',
+                style: TextStyle(
+                  fontSize: FontSizes.titleMedium,
+                  fontWeight: FontWeight.bold,
+                  color: SemanticColors.textPrimary,
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: AppSpacing.md),
+          const SizedBox(height: Spacing.md),
           AppListCard(
             title: 'فاتورة رقم #001',
             subtitle: 'أحمد محمد - 1,500 ر.س',
             trailing: 'مدفوعة',
-            leading: Icon(Icons.check_circle, color: AppColors.secondary),
+            leading:
+                const Icon(Icons.check_circle, color: SemanticColors.secondary),
+            onTap: () =>
+                unawaited(Navigator.of(context).pushNamed('/invoices')),
           ),
           AppListCard(
             title: 'فاتورة رقم #002',
             subtitle: 'سارة علي - 2,300 ر.س',
             trailing: 'قيد الانتظار',
-            leading: Icon(Icons.schedule, color: Colors.orange),
+            leading: const Icon(Icons.schedule, color: Colors.orange),
+            onTap: () =>
+                unawaited(Navigator.of(context).pushNamed('/invoices')),
           ),
           AppListCard(
             title: 'فاتورة رقم #003',
             subtitle: 'محمود حسن - 1,800 ر.س',
             trailing: 'متأخرة',
-            leading: Icon(Icons.error, color: AppColors.error),
+            leading: const Icon(Icons.error, color: SemanticColors.error),
+            onTap: () =>
+                unawaited(Navigator.of(context).pushNamed('/invoices')),
           ),
         ],
       );

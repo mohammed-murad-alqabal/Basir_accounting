@@ -103,6 +103,17 @@ class MockInvoiceRepository implements InvoiceRepository {
     );
   }
 
+  @override
+  Future<Invoice> duplicateInvoice(String id) async {
+    if (shouldThrowError) throw Exception('Test error');
+    final invoice = _invoices.firstWhere((i) => i.id == id);
+    final duplicated = invoice.copyWith(
+      id: 'copy_${DateTime.now().millisecondsSinceEpoch}',
+    );
+    _invoices.add(duplicated);
+    return duplicated;
+  }
+
   /// دالة مساعدة لإضافة عدة فواتير دفعة واحدة
   Future<void> addAll(List<Invoice> invoices) async {
     for (final invoice in invoices) {

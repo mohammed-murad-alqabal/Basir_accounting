@@ -1,4 +1,4 @@
-import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
@@ -18,7 +18,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: SemanticColors.background,
         appBar: AppAppBar(
           title: 'تفاصيل العميل',
           actions: [
@@ -28,14 +28,14 @@ class CustomerDetailsScreen extends ConsumerWidget {
               onPressed: () => _editCustomer(context),
             ),
             IconButton(
-              icon: const Icon(Icons.delete, color: AppColors.error),
+              icon: const Icon(Icons.delete, color: SemanticColors.error),
               tooltip: 'حذف العميل',
               onPressed: () => _deleteCustomer(context, ref),
             ),
           ],
         ),
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+          padding: const EdgeInsets.all(Spacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -43,42 +43,43 @@ class CustomerDetailsScreen extends ConsumerWidget {
               Center(
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundColor: AppColors.primary.withValues(alpha: 0.2),
+                  backgroundColor:
+                      SemanticColors.primary.withValues(alpha: 0.2),
                   child: Text(
                     customer.name.isNotEmpty ? customer.name[0] : '؟',
                     style: const TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
+                      color: SemanticColors.primary,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: Spacing.lg),
 
               // اسم العميل
               Center(
                 child: Text(
                   customer.name,
                   style: const TextStyle(
-                    fontSize: AppTypography.titleLarge,
+                    fontSize: FontSizes.titleLarge,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                    color: SemanticColors.textPrimary,
                   ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.xl),
+              const SizedBox(height: Spacing.xl),
 
               // معلومات الاتصال
               _buildSectionTitle('معلومات الاتصال'),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: Spacing.md),
               if (customer.email != null) ...[
                 _buildInfoCard(
                   icon: Icons.email,
                   label: 'البريد الإلكتروني',
                   value: customer.email!,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: Spacing.sm),
               ],
               if (customer.phone != null) ...[
                 _buildInfoCard(
@@ -86,7 +87,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
                   label: 'رقم الهاتف',
                   value: customer.phone!,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: Spacing.sm),
               ],
               if (customer.address != null) ...[
                 _buildInfoCard(
@@ -94,22 +95,22 @@ class CustomerDetailsScreen extends ConsumerWidget {
                   label: 'العنوان',
                   value: customer.address!,
                 ),
-                const SizedBox(height: AppSpacing.sm),
+                const SizedBox(height: Spacing.sm),
               ],
 
               // ملاحظات
               if (customer.notes != null) ...[
-                const SizedBox(height: AppSpacing.lg),
+                const SizedBox(height: Spacing.lg),
                 _buildSectionTitle('ملاحظات'),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: Spacing.md),
                 AppCard(
                   child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.md),
+                    padding: const EdgeInsets.all(Spacing.md),
                     child: Text(
                       customer.notes!,
                       style: const TextStyle(
-                        fontSize: AppTypography.bodyMedium,
-                        color: AppColors.textSecondary,
+                        fontSize: FontSizes.bodyMedium,
+                        color: SemanticColors.textSecondary,
                       ),
                     ),
                   ),
@@ -117,15 +118,15 @@ class CustomerDetailsScreen extends ConsumerWidget {
               ],
 
               // معلومات إضافية
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: Spacing.lg),
               _buildSectionTitle('معلومات إضافية'),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: Spacing.md),
               _buildInfoCard(
                 icon: Icons.calendar_today,
                 label: 'تاريخ الإضافة',
                 value: _formatDate(customer.createdAt),
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: Spacing.sm),
               _buildInfoCard(
                 icon: Icons.update,
                 label: 'آخر تحديث',
@@ -139,9 +140,9 @@ class CustomerDetailsScreen extends ConsumerWidget {
   Widget _buildSectionTitle(String title) => Text(
         title,
         style: const TextStyle(
-          fontSize: AppTypography.titleMedium,
+          fontSize: FontSizes.titleMedium,
           fontWeight: FontWeight.w600,
-          color: AppColors.textPrimary,
+          color: SemanticColors.textPrimary,
         ),
       );
 
@@ -152,11 +153,11 @@ class CustomerDetailsScreen extends ConsumerWidget {
   }) =>
       AppCard(
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.md),
+          padding: const EdgeInsets.all(Spacing.md),
           child: Row(
             children: [
-              Icon(icon, color: AppColors.primary, size: 24),
-              const SizedBox(width: AppSpacing.md),
+              Icon(icon, color: SemanticColors.primary, size: 24),
+              const SizedBox(width: Spacing.md),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,16 +165,16 @@ class CustomerDetailsScreen extends ConsumerWidget {
                     Text(
                       label,
                       style: const TextStyle(
-                        fontSize: AppTypography.bodySmall,
-                        color: AppColors.textSecondary,
+                        fontSize: FontSizes.bodySmall,
+                        color: SemanticColors.textSecondary,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       value,
                       style: const TextStyle(
-                        fontSize: AppTypography.bodyMedium,
-                        color: AppColors.textPrimary,
+                        fontSize: FontSizes.bodyMedium,
+                        color: SemanticColors.textPrimary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -241,7 +242,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('تم حذف العميل بنجاح'),
-            backgroundColor: AppColors.secondary,
+            backgroundColor: SemanticColors.secondary,
           ),
         );
         Navigator.pop(
@@ -252,7 +253,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('فشل حذف العميل'),
-            backgroundColor: AppColors.error,
+            backgroundColor: SemanticColors.error,
           ),
         );
       }
@@ -261,7 +262,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('حدث خطأ: $e'),
-          backgroundColor: AppColors.error,
+          backgroundColor: SemanticColors.error,
         ),
       );
     }
