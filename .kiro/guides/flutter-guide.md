@@ -299,48 +299,185 @@ tearDown(() async {
 
 ## 🔒 الأمان
 
-### التخزين الآمن
+### SecureStorageService (Zero-Trust)
 
 ```dart
-// ✅ صحيح - استخدام flutter_secure_storage
-final storage = FlutterSecureStorage();
-await storage.write(key: 'password', value: hashedPassword);
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-// ❌ خطأ - استخدام SharedPreferences للبيانات الحساسة
-final prefs = await SharedPreferences.getInstance();
-await prefs.setString('password', password); // غير آمن!
+/// خدمة تخزين آمنة مع مبادئ Zero-Trust
+class SecureStorageService {
+  static const _storage = FlutterSecureStorage(
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+  );
+
+  // مفاتيح التخزين
+  static const String _keyAuthToken = 'auth_token';
+  static const String _keyUserPin = 'user_pin';
+  static const String _keyDeviceId = 'device_id';
+
+  /// حفظ بيانات آمنة
+  static Future<void> saveSecure(String key, String value) async {
+    try {
+      await _storage.write(key: key, value: value);
+    } on Exception catch (e) {
+      throw SecurityException('فشل الحفظ الآمن: $e');
+    }
+  }
+
+  /// قراءة بيانات آمنة
+  static Future<String?> readSecure(String key) async {
+    try {
+      return await _storage.read(key: key);
+    } on Exception catch (e) {
+      throw SecurityException('فشل القراءة الآمنة: $e');
+    }
+  }
+
+  /// حذف بيانات آمنة
+  static Future<void> deleteSecure(String key) async {
+    await _storage.delete(key: key);
+  }
+
+  /// مسح جميع البيانات الآمنة (عند تسجيل الخروج)
+  static Future<void> clearAll() async {
+    await _storage.deleteAll();
+  }
+
+  /// حفظ Token المصادقة
+  static Future<void> saveAuthToken(String token) async {
+    await saveSecure(_keyAuthToken, token);
+  }
+
+  /// قراءة Token المصادقة
+  static Future<String?> getAuthToken() async {
+    return await readSecure(_keyAuthToken);
+  }
+}
+
+class SecurityException implements Exception {
+  final String message;
+  SecurityException(this.message);
+  @override
+  String toString() => 'SecurityException: $message';
+}
 ```
 
-### Hashing
+### InputSanitizer (حماية من الهجمات)
+
+```dart
+/// تنظيف المدخلات من الأكواد الضارة
+class InputSanitizer {
+  /// إزالة HTML/Script tags
+  static String sanitizeHtml(String input) {
+    return input
+        .replaceAll(RegExp(r'<[^>]*>'), '')
+        .replaceAll(RegExp(r'javascript:', caseSensitive: false), '')
+        .replaceAll(RegExp(r'on\w+\s*=', caseSensitive: false), '');
+  }
+
+  /// تنظيف SQL injection
+  static String sanitizeSql(String input) {
+    return input
+        .replaceAll(RegExp(r"['\";]"), '')
+        .replaceAll(RegExp(r'--'), '')
+        .replaceAll(RegExp(r'/\*|\*/'), '');
+  }
+
+  /// تنظيف للاستخدام العام
+  static String sanitize(String input) {
+    return sanitizeHtml(sanitizeSql(input.trim()));
+  }
+}
+```
+
+### ValidationUtils (التحقق الشامل)
+
+```dart
+/// أدوات التحقق من صحة المدخلات
+class ValidationUtils {
+  /// التحقق من رقم الهاتف السعودي
+  static String? validatePhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'رقم الهاتف مطلوب';
+    }
+    final clean = value.replaceAll(RegExp(r'[^0-9]'), '');
+    if (!clean.startsWith('05')) {
+      return 'رقم الهاتف يجب أن يبدأ بـ 05';
+    }
+    if (clean.length != 10) {
+      return 'رقم الهاتف يجب أن يتكون من 10 أرقام';
+    }
+    return null;
+  }
+
+  /// التحقق من البريد الإلكتروني
+  static String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) return null; // اختياري
+    final regex = RegExp(r'^[\w-.]+@[\w-]+\.[a-zA-Z]{2,}$');
+    if (!regex.hasMatch(value)) {
+      return 'البريد الإلكتروني غير صحيح';
+    }
+    return null;
+  }
+
+  /// التحقق من الاسم (عربي/إنجليزي)
+  static String? validateName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'الاسم مطلوب';
+    }
+    if (value.trim().length < 2) {
+      return 'الاسم يجب أن يتكون من حرفين على الأقل';
+    }
+    if (!RegExp(r'^[\u0600-\u06FFa-zA-Z\s]+$').hasMatch(value)) {
+      return 'الاسم يجب أن يحتوي على حروف فقط';
+    }
+    return null;
+  }
+
+  /// التحقق من المبلغ المالي
+  static String? validateAmount(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'المبلغ مطلوب';
+    }
+    final amount = double.tryParse(value);
+    if (amount == null || amount <= 0) {
+      return 'المبلغ يجب أن يكون رقم موجب';
+    }
+    if (amount > 999999.99) {
+      return 'المبلغ كبير جداً';
+    }
+    return null;
+  }
+
+  /// التحقق من قوة كلمة المرور
+  static String? validatePassword(String? value) {
+    if (value == null || value.length < 8) {
+      return 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+    }
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return 'يجب أن تحتوي على حرف كبير';
+    }
+    if (!RegExp(r'[0-9]').hasMatch(value)) {
+      return 'يجب أن تحتوي على رقم';
+    }
+    return null;
+  }
+}
+```
+
+### Hashing الآمن
 
 ```dart
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
-String hashPassword(String password) {
-  final bytes = utf8.encode(password);
+/// تشفير كلمات المرور بـ SHA-256
+String hashPassword(String password, {String? salt}) {
+  final salted = salt != null ? '$password$salt' : password;
+  final bytes = utf8.encode(salted);
   final hash = sha256.convert(bytes);
   return hash.toString();
-}
-```
-
-### Input Validation
-
-```dart
-String? validatePhone(String? value) {
-  if (value == null || value.isEmpty) {
-    return 'رقم الهاتف مطلوب';
-  }
-  if (!value.startsWith('05')) {
-    return 'رقم الهاتف يجب أن يبدأ بـ 05';
-  }
-  if (value.length != 10) {
-    return 'رقم الهاتف يجب أن يتكون من 10 أرقام';
-  }
-  if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-    return 'رقم الهاتف يجب أن يحتوي على أرقام فقط';
-  }
-  return null;
 }
 ```
 
