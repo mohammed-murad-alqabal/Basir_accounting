@@ -59,7 +59,7 @@
 
 #### Contributing Guide
 
-**الموقع:** `.github/CONTRIBUTING.md`
+**الموقع:** `../../../CONTRIBUTING.md`
 
 **المحتوى:**
 
@@ -162,7 +162,7 @@
 
 #### Git/GitHub Guide
 
-**الملف:** `Documentation/GIT_GITHUB_GUIDE.md`
+**الملف:** `../../reports/git-github/GIT_GITHUB_GUIDE.md`
 
 **المحتوى:**
 
@@ -459,9 +459,9 @@ git tag -l
 
 ### التوثيق
 
-- [Git/GitHub Guide](Documentation/GIT_GITHUB_GUIDE.md)
-- [Contributing Guide](.github/CONTRIBUTING.md)
-- [Error Tracking Guide](Documentation/ERROR_TRACKING_GUIDE.md)
+- [Git/GitHub Guide](../../reports/git-github/GIT_GITHUB_GUIDE.md)
+- [Contributing Guide](../../../CONTRIBUTING.md)
+- [Error Tracking Guide](../../guides/troubleshooting/ERROR_TRACKING_GUIDE.md)
 
 ### الأدوات
 

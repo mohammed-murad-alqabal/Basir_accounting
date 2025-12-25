@@ -78,8 +78,8 @@ flutter run
 ## 📚 التقارير الكاملة
 
 1. [SETUP_COMPLETION_REPORT.md](SETUP_COMPLETION_REPORT.md) - التقرير الكامل
-2. [DEV_ENVIRONMENT_ANALYSIS.md](DEV_ENVIRONMENT_ANALYSIS.md) - تحليل البيئة
-3. [POWERS_ANALYSIS_REPORT.md](POWERS_ANALYSIS_REPORT.md) - تحليل Powers
+2. [../development/DEV_ENVIRONMENT_ANALYSIS.md](../development/DEV_ENVIRONMENT_ANALYSIS.md) - تحليل البيئة
+3. [../../reports/fixes/POWERS_ANALYSIS_REPORT.md](../../reports/fixes/POWERS_ANALYSIS_REPORT.md) - تحليل Powers
 4. [QUICK_SETUP_GUIDE.md](QUICK_SETUP_GUIDE.md) - دليل سريع
 
 ---

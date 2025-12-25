@@ -288,11 +288,11 @@
 ```markdown
 <!-- في IMMEDIATE_ACTION_PLAN.md -->
 
-**للسياق الاستراتيجي:** راجع [GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md](../../GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md)
+**للسياق الاستراتيجي:** راجع [GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md](./GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md)
 
 <!-- في GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md -->
 
-**للمهام التنفيذية:** راجع [.kiro/specs/IMMEDIATE_ACTION_PLAN.md](../.kiro/specs/IMMEDIATE_ACTION_PLAN.md)
+**للمهام التنفيذية:** راجع [.kiro/specs/IMMEDIATE_ACTION_PLAN.md](#)
 ```
 
 #### 4. تحديث دوري ✅

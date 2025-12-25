@@ -527,9 +527,9 @@ flutter pub upgrade
 
 ### 15.3 ملفات المشروع
 
-- [README.md](README.md)
-- [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)
-- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [README.md](../../../README.md)
+- [Development Guide](./DEV_ENVIRONMENT_ANALYSIS.md)
+- [CONTRIBUTING.md](../../../CONTRIBUTING.md)
 
 ---
 

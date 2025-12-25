@@ -42,7 +42,7 @@
 
 ### 1. التقرير النهائي الشامل
 
-📄 **[FINAL_CHECKPOINT_REPORT.md](Documentation/reports/FINAL_CHECKPOINT_REPORT.md)**
+📄 **[FINAL_CHECKPOINT_REPORT.md](../../reports/FINAL_CHECKPOINT_REPORT.md)**
 
 تقرير شامل من جميع الوكلاء يتضمن:
 
@@ -56,7 +56,7 @@
 
 ### 2. ملخص إكمال المشروع
 
-📄 **[PROJECT_COMPLETION_SUMMARY.md](Documentation/reports/PROJECT_COMPLETION_SUMMARY.md)**
+📄 **[PROJECT_COMPLETION_SUMMARY.md](../../reports/PROJECT_COMPLETION_SUMMARY.md)**
 
 ملخص تنفيذي يتضمن:
 
@@ -68,13 +68,13 @@
 
 ### 3. سجل التغييرات
 
-📄 **[CHANGELOG.md](CHANGELOG.md)**
+📄 **[CHANGELOG.md](../../../CHANGELOG.md)**
 
 تم إضافة الإصدار 2.0.0 مع جميع التحديثات
 
 ### 4. ملف المهام
 
-📄 **[tasks.md](.kiro/specs/error-tracking-system/tasks.md)**
+📄 **[tasks.md](../../../.kiro/specs/completed/error-tracking-system/tasks.md)**
 
 تم تحديث الحالة إلى "مكتمل بنجاح"
 
@@ -163,10 +163,10 @@ bash test/security/run_security_tests.sh
 
 ## 📖 التوثيق الكامل
 
-1. **[ERROR_TRACKING_GUIDE.md](Documentation/ERROR_TRACKING_GUIDE.md)** - دليل النظام الكامل
-2. **[GIT_GITHUB_GUIDE.md](Documentation/GIT_GITHUB_GUIDE.md)** - دليل Git و GitHub
-3. **[ERROR_HANDLING_GUIDE.md](Documentation/ERROR_HANDLING_GUIDE.md)** - دليل معالجة الأخطاء
-4. **[README.md](README.md)** - قسم نظام تتبع الأخطاء
+1. **[ERROR_TRACKING_GUIDE.md](../../guides/troubleshooting/ERROR_TRACKING_GUIDE.md)** - دليل النظام الكامل
+2. **[GIT_GITHUB_GUIDE.md](../../reports/git-github/GIT_GITHUB_GUIDE.md)** - دليل Git و GitHub
+3. **[ERROR_HANDLING_GUIDE.md](#)** - دليل معالجة الأخطاء
+4. **[README.md](../../../README.md)** - قسم نظام تتبع الأخطاء
 
 ---
 

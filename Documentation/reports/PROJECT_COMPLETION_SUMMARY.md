@@ -275,21 +275,21 @@ bash scripts/uninstall.sh --force
 
 ### الأدلة الأساسية
 
-1. **[ERROR_TRACKING_GUIDE.md](../ERROR_TRACKING_GUIDE.md)**
+1. **[ERROR_TRACKING_GUIDE.md](../guides/troubleshooting/ERROR_TRACKING_GUIDE.md)**
 
    - نظرة عامة على النظام
    - كيفية الاستخدام
    - أمثلة عملية
    - استكشاف الأخطاء
 
-2. **[GIT_GITHUB_GUIDE.md](../GIT_GITHUB_GUIDE.md)**
+2. **[GIT_GITHUB_GUIDE.md](./git-github/GIT_GITHUB_GUIDE.md)**
 
    - Git Hooks
    - GitHub Actions
    - Issue Templates
    - أفضل الممارسات
 
-3. **[ERROR_HANDLING_GUIDE.md](../ERROR_HANDLING_GUIDE.md)**
+3. **[ERROR_HANDLING_GUIDE.md](#)**
 
    - معالجة الأخطاء
    - مكتبة error_handler.sh
