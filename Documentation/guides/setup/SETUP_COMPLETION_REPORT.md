@@ -172,8 +172,8 @@ Analyzing Basser_MVP...
 
 ### التقارير
 
-1. ✅ DEV_ENVIRONMENT_ANALYSIS.md (تحليل شامل)
-2. ✅ POWERS_ANALYSIS_REPORT.md (تحليل Powers)
+1. ✅ ../development/DEV_ENVIRONMENT_ANALYSIS.md (تحليل شامل)
+2. ✅ ../../reports/fixes/POWERS_ANALYSIS_REPORT.md (تحليل Powers)
 3. ✅ QUICK_SETUP_GUIDE.md (دليل سريع)
 4. ✅ ENVIRONMENT_SETUP_SUMMARY.md (ملخص)
 5. ✅ SETUP_COMPLETION_REPORT.md (هذا التقرير)
@@ -388,8 +388,8 @@ flutter format lib/ test/
 
 ### التقارير الكاملة
 
-- [DEV_ENVIRONMENT_ANALYSIS.md](DEV_ENVIRONMENT_ANALYSIS.md)
-- [POWERS_ANALYSIS_REPORT.md](POWERS_ANALYSIS_REPORT.md)
+- [../development/DEV_ENVIRONMENT_ANALYSIS.md](../development/DEV_ENVIRONMENT_ANALYSIS.md)
+- [../../reports/fixes/POWERS_ANALYSIS_REPORT.md](../../reports/fixes/POWERS_ANALYSIS_REPORT.md)
 - [QUICK_SETUP_GUIDE.md](QUICK_SETUP_GUIDE.md)
 - [ENVIRONMENT_SETUP_SUMMARY.md](ENVIRONMENT_SETUP_SUMMARY.md)
 
@@ -400,9 +400,9 @@ flutter format lib/ test/
 
 ### الوثائق
 
-- [README.md](README.md)
-- [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)
-- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [README.md](../../../README.md)
+- [DEVELOPMENT_GUIDE.md](../../reports/engineering/DEV_ENVIRONMENT_ANALYSIS.md)
+- [CONTRIBUTING.md](../../../CONTRIBUTING.md)
 
 ---
 

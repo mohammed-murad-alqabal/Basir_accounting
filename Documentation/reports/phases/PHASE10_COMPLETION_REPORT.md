@@ -75,7 +75,7 @@
 
 **1. نظام الدعم المتكامل:**
 
-- إرشادات استكشاف الأخطاء في [ERROR_TRACKING_GUIDE.md](../guides/troubleshooting/ERROR_TRACKING_GUIDE.md)
+- إرشادات استكشاف الأخطاء في [ERROR_TRACKING_GUIDE.md](../../guides/troubleshooting/ERROR_TRACKING_GUIDE.md)
 - قنوات دعم محددة لكل نوع من الاستفسارات
 - نظام تصعيد للمشاكل المعقدة
 

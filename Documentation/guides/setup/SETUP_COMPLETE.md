@@ -58,7 +58,7 @@ flutter run
 
 - [FINAL_SETUP_REPORT.md](FINAL_SETUP_REPORT.md) - التقرير الكامل
 - [SETUP_DONE.md](SETUP_DONE.md) - ملخص سريع
-- [DEV_ENVIRONMENT_ANALYSIS.md](DEV_ENVIRONMENT_ANALYSIS.md) - تحليل البيئة
+- [../development/DEV_ENVIRONMENT_ANALYSIS.md](../development/DEV_ENVIRONMENT_ANALYSIS.md) - تحليل البيئة
 
 ---
 

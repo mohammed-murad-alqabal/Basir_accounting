@@ -36,12 +36,12 @@ Documentation/
 ## الوصول السريع
 
 **الفهرس الرئيسي:**
-📄 [Documentation/reports/INDEX.md](Documentation/reports/INDEX.md)
+📄 [../INDEX.md](../INDEX.md)
 
 **التقارير الحديثة:**
 
-- [تقرير Checkpoint المهمة 7](Documentation/reports/tasks/task_7_checkpoint_report.md)
-- [تقرير التنظيم](Documentation/ORGANIZATION_REPORT.md)
+- [تقرير Checkpoint المهمة 7](../tasks/task_7_checkpoint_report.md)
+- [تقرير التنظيم](#)
 
 ---
 

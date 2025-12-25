@@ -271,24 +271,24 @@ lib/
 - ✅ [README.md(../../README.md) - وصف شامل للمشروع
 - ✅ [CHANGELOG.md(../../CHANGELOG.md) - سجل كامل للتغييرات (2756 سطر)
 - ✅ [PROJECT_STATUS.md(../../reports/project-status/PROJECT_STATUS.md) - حالة المشروع الموحدة
-- ✅ [ARCHITECTURE.md](ARCHITECTURE.md) - البنية المعمارية
-- ✅ [TESTING.md](TESTING.md) - دليل الاختبارات
-- ✅ [CONTRIBUTING.md](CONTRIBUTING.md) - دليل المساهمة
+- ✅ [ARCHITECTURE.md](../../../ARCHITECTURE.md) - البنية المعمارية
+- ✅ [TESTING.md](../../reports/testing/TESTING.md) - دليل الاختبارات
+- ✅ [CONTRIBUTING.md](../../../CONTRIBUTING.md) - دليل المساهمة
 
 ### التقارير الحديثة
 
-- ✅ [MOBILE_TEST_STATUS.md](MOBILE_TEST_STATUS.md) - اختبار الموبايل
+- ✅ [#](#) - اختبار الموبايل
 - ✅ [FLUTTER_ANALYSIS_REPORT.md](FLUTTER_ANALYSIS_REPORT.md) - تحليل Flutter
 - ✅ [ANALYSIS_SUMMARY.md](ANALYSIS_SUMMARY.md) - ملخص التحليل
-- ✅ [ACTION_ITEMS.md](ACTION_ITEMS.md) - قائمة الإجراءات
+- ✅ [#](#) - قائمة الإجراءات
 
 ### المعايير والحوكمة
 
-- ✅ [.kiro/steering/philosophy.md](.kiro/steering/philosophy.md) - الفلسفة الهندسية
-- ✅ [.kiro/steering/tech-stack.md](.kiro/steering/tech-stack.md) - المكدس التقني
-- ✅ [.kiro/steering/structure.md](.kiro/steering/structure.md) - البنية الهيكلية
-- ✅ [.kiro/steering/security.md](.kiro/steering/security.md) - معايير الأمان
-- ✅ [.kiro/steering/text-standards.md](.kiro/steering/text-standards.md) - معايير النصوص
+- ✅ [../../../.kiro/steering/philosophy.md](../../../.kiro/steering/philosophy.md) - الفلسفة الهندسية
+- ✅ [../../../.kiro/steering/tech-stack.md](../../../.kiro/steering/tech-stack.md) - المكدس التقني
+- ✅ [../../../.kiro/steering/structure.md](../../../.kiro/steering/structure.md) - البنية الهيكلية
+- ✅ [../../../.kiro/steering/security.md](../../../.kiro/steering/security.md) - معايير الأمان
+- ✅ [../../../.kiro/steering/text-standards.md](../../../.kiro/steering/text-standards.md) - معايير النصوص
 
 ---
 

@@ -171,7 +171,7 @@
 
 #### **🔄 تحديث إرشادات الصيانة:**
 
-تم إنشاء [`MAINTENANCE_CHECKLIST.md`](../MAINTENANCE_CHECKLIST.md) شامل يغطي:
+تم إنشاء [`MAINTENANCE_CHECKLIST.md`](#) شامل يغطي:
 
 - صيانة يومية (5 دقائق)
 - صيانة أسبوعية (30 دقيقة)

@@ -94,7 +94,7 @@ git config core.hooksPath .githooks
 
 #### سجل حل الأخطاء
 
-**الملف:** `Documentation/ERROR_RESOLUTION_LOG.md`
+**الملف:** `../../guides/troubleshooting/ERROR_RESOLUTION_LOG.md`
 
 **المحتوى:**
 
@@ -105,7 +105,7 @@ git config core.hooksPath .githooks
 
 #### دليل الاستخدام
 
-**الملف:** `Documentation/ERROR_TRACKING_GUIDE.md`
+**الملف:** `../../guides/troubleshooting/ERROR_TRACKING_GUIDE.md`
 
 **المحتوى:**
 
@@ -117,7 +117,7 @@ git config core.hooksPath .githooks
 
 #### README
 
-**الملف:** `.github/ERROR_TRACKING_README.md`
+**الملف:** `#`
 
 **المحتوى:**
 
@@ -253,9 +253,9 @@ git status --short
 
 ### التوثيق
 
-- [دليل الاستخدام الشامل](Documentation/ERROR_TRACKING_GUIDE.md)
-- [سجل الأخطاء المحلولة](Documentation/ERROR_RESOLUTION_LOG.md)
-- [README النظام](.github/ERROR_TRACKING_README.md)
+- [دليل الاستخدام الشامل](../../guides/troubleshooting/ERROR_TRACKING_GUIDE.md)
+- [سجل الأخطاء المحلولة](../../guides/troubleshooting/ERROR_RESOLUTION_LOG.md)
+- [README النظام](#)
 
 ### GitHub
 
@@ -265,8 +265,8 @@ git status --short
 
 ### التقارير
 
-- [تقرير الإصلاحات الحرجة](FINAL_CRITICAL_FIXES_REPORT.md)
-- [ملخص الإصلاحات](CRITICAL_FIXES_SUMMARY.md)
+- [تقرير الإصلاحات الحرجة](#)
+- [ملخص الإصلاحات](#)
 - [CHANGELOG](CHANGELOG.md)
 
 ---
@@ -384,8 +384,8 @@ git status --short
 
 ### الموارد
 
-- [دليل الاستخدام](Documentation/ERROR_TRACKING_GUIDE.md)
-- [سجل الحلول](Documentation/ERROR_RESOLUTION_LOG.md)
+- [دليل الاستخدام](../../guides/troubleshooting/ERROR_TRACKING_GUIDE.md)
+- [سجل الحلول](../../guides/troubleshooting/ERROR_RESOLUTION_LOG.md)
 - [GitHub Actions Docs](https://docs.github.com/en/actions)
 
 ### الاتصال

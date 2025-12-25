@@ -554,7 +554,7 @@ genhtml coverage/lcov.info -o coverage/html
 
 - [CODING_STANDARDS.md](../../Core/CODING_STANDARDS.md) - معايير الكود
 - [DEVELOPMENT_GUIDE.md](../../Core/CODING_STANDARDS.md) - دليل التطوير
-- [.kiro/steering/testing-best-practices.md](.kiro/steering/testing-best-practices.md) - أفضل الممارسات
+- [../../../.kiro/steering/testing-best-practices.md](../../../.kiro/steering/testing-best-practices.md) - أفضل الممارسات
 
 ### أمثلة في المشروع
 

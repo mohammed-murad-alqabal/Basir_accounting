@@ -44,10 +44,10 @@ Documentation/action-items/README.md:57
 **الروابط الحالية:**
 
 ```
-- [01_Product_Charter.md](./01_Product_Charter.md)
-- [02_Technical_Design_Document.md](./02_Technical_Design_Document.md)
-- [03_Product_Requirements_Document.md](./03_Product_Requirements_Document.md)
-- [04_Design_System.md](./04_Design_System.md)
+- [01_Product_Charter.md](../../Core/01_Product_Charter.md)
+- [02_Technical_Design_Document.md](../../Core/02_Technical_Design_Document.md)
+- [03_Product_Requirements_Document.md](../../Core/03_Product_Requirements_Document.md)
+- [04_Design_System.md](../../Core/04_Design_System.md)
 ```
 
 **الحالة:** ✅ صحيحة (نفس المجلد)
@@ -72,7 +72,7 @@ Documentation/action-items/README.md:57
 **الملف:** `Documentation/TEST_action-items/current/CRITICAL_IMPROVEMENTS.md`
 
 ```
-❌ [دليل الجودة](.kiro/steering/code-quality-standards.md)
+❌ [دليل الجودة](../../../.kiro/steering/code-quality-standards.md)
 ```
 
 **المشكلة:** المسار غير صحيح والملف غير موجود  
@@ -81,7 +81,7 @@ Documentation/action-items/README.md:57
 **الملف:** `Documentation/reports/ui-ux/FIGMA_INTEGRATION_GUIDE.md`
 
 ```
-❌ [Kiro MCP Guide](.kiro/steering/mcp-best-practices.md)
+❌ [Kiro MCP Guide](../../../.kiro/steering/technologies/mcp-best-practices.md)
 ```
 
 **المشكلة:** المسار غير صحيح  
@@ -90,11 +90,11 @@ Documentation/action-items/README.md:57
 **الملف:** `Documentation/reports/ui-ux/FIGMA_INTEGRATION_COMPLETION_REPORT.md`
 
 ```
-❌ [CONTRIBUTING.md](../CONTRIBUTING.md)
+❌ [CONTRIBUTING.md](../../../CONTRIBUTING.md)
 ```
 
 **المشكلة:** المسار غير صحيح  
-**المسار الصحيح:** `../../../CONTRIBUTING.md`
+**المسار الصحيح:** `../../../../../CONTRIBUTING.md`
 
 ---
 
@@ -131,15 +131,15 @@ Documentation/action-items/README.md:57
 2. **تحديث رابط MCP في FIGMA_INTEGRATION_GUIDE.md**
 
    ```
-   من: .kiro/steering/mcp-best-practices.md
+   من: ../../../.kiro/steering/technologies/mcp-best-practices.md
    إلى: ../../../.kiro/steering/technologies/mcp-best-practices.md
    ```
 
 3. **تحديث رابط CONTRIBUTING في FIGMA_INTEGRATION_COMPLETION_REPORT.md**
 
    ```
-   من: ../CONTRIBUTING.md
-   إلى: ../../../CONTRIBUTING.md
+   من: ../../../CONTRIBUTING.md
+   إلى: ../../../../../CONTRIBUTING.md
    ```
 
 4. **إزالة أو تحديث الروابط المكسورة في CRITICAL_IMPROVEMENTS.md**
