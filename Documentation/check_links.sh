@@ -89,18 +89,22 @@ echo "### ✅ الروابط العاملة" >> "$report_file"
 echo "" >> "$report_file"
 
 # فحص الروابط في جميع ملفات .md
-find Documentation -name "*.md" -type f | sort | while read -r file; do
+# فحص الروابط في جميع ملفات .md
+while read -r file; do
     # استخراج جميع الروابط
-    grep -oP '\[.*?\]\(\K[^)]*(?=\))' "$file" 2>/dev/null | while read -r link; do
+    while read -r link; do
         if [[ "$link" =~ ^https?:// ]]; then
             # رابط خارجي
             check_external_link "$file" "$link"
+        elif [[ "$link" =~ ^# ]]; then
+            # رابط داخلي (anchor) - تجاهل
+            :
         elif [[ "$link" =~ \.md$ ]]; then
             # رابط داخلي لملف markdown
             check_link "$file" "$link"
         fi
-    done
-done
+    done < <(grep -oP '\[.*?\]\(\K[^)]*(?=\))' "$file" 2>/dev/null)
+done < <(find Documentation -name "*.md" -type f | sort)
 
 # إضافة قسم الروابط المكسورة في التقرير
 echo "" >> "$report_file"
