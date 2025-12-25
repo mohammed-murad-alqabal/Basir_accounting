@@ -10,6 +10,7 @@ import 'dart:io';
 
 import 'package:basser_app/features/customers/data/models/customer_model.dart';
 import 'package:basser_app/features/invoices/data/models/invoice_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:path/path.dart' as path;
@@ -145,7 +146,7 @@ class TestHelpers {
       if (testDir.existsSync()) {
         await testDir.delete(recursive: true);
       }
-    } catch (e) {
+    } on FileSystemException catch (_) {
       // تجاهل الأخطاء في التنظيف
     }
   }
@@ -161,11 +162,13 @@ class TestHelpers {
     try {
       final result = await test();
       stopwatch.stop();
-      print('⏱️  $testName took ${stopwatch.elapsedMilliseconds}ms');
+      debugPrint('⏱️  $testName took ${stopwatch.elapsedMilliseconds}ms');
       return result;
     } catch (e) {
       stopwatch.stop();
-      print('❌ $testName failed after ${stopwatch.elapsedMilliseconds}ms: $e');
+      debugPrint(
+        '❌ $testName failed after ${stopwatch.elapsedMilliseconds}ms: $e',
+      );
       rethrow;
     }
   }

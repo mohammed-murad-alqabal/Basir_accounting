@@ -15,12 +15,9 @@
 library;
 
 export 'app_app_bar.dart';
-// export 'app_button.dart'; // Legacy - تم تعطيله لتجنب التضارب مع المكونات الجديدة
+export 'app_button.dart';
 export 'app_card.dart';
-export 'app_enhanced_button.dart'; // الزر المحسّن الجديد
-export 'app_primary_button.dart'; // الزر الأساسي
-export 'app_secondary_button.dart'; // الزر الثانوي
-export 'app_text_button.dart'; // الزر النصي
+export 'app_enhanced_button.dart';
 export 'app_text_field.dart';
 export 'overflow_detector.dart';
 export 'responsive_text.dart';

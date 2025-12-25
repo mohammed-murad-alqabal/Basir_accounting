@@ -5,6 +5,7 @@ library;
 
 /// نتيجة فحص قوة كلمة المرور
 class PasswordStrengthResult {
+  /// إنشاء نتيجة فحص القوة
   const PasswordStrengthResult({
     required this.score,
     required this.isStrong,
@@ -32,6 +33,7 @@ class PasswordStrengthResult {
 
 /// نتيجة فحص الأمان
 class SecurityAuditResult {
+  /// إنشاء نتيجة فحص الأمان
   const SecurityAuditResult({
     required this.securityScore,
     required this.isSecure,

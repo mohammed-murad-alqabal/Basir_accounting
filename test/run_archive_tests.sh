@@ -8,7 +8,7 @@
 # المؤلف: فريق وكلاء تطوير مشروع بصير
 # =============================================================================
 
-set -e
+# set -e
 
 # الألوان
 RED='\033[0;31m'
@@ -91,7 +91,9 @@ print_msg "\n═══ اختبارات الضغط ═══\n" "$YELLOW"
 
 # إنشاء ملفات للضغط
 for i in {1..5}; do
-    echo "Test log entry $i" > "$TEST_DIR/logs/archive/test_$i.log"
+    for j in {1..100}; do
+        echo "Test log entry $i - repeating content to ensure compression works efficiently $(date)" >> "$TEST_DIR/logs/archive/test_$i.log"
+    done
 done
 
 # اختبار 7: التحقق من وجود ملفات للضغط

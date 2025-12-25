@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,108 +21,110 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   bool _notificationsEnabled = true;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: AppColors.background,
-        appBar: const AppSimpleAppBar(title: 'الإعدادات'),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // قسم الحساب
-              _buildSectionTitle('الحساب'),
-              const SizedBox(height: AppSpacing.md),
-              AppListCard(
-                title: 'تعديل بيانات الحساب',
-                subtitle: 'غيّر اسم المستخدم وكلمة المرور',
-                leading: const Icon(Icons.person, color: AppColors.primary),
-                onTap: _handleEditAccount,
-              ),
-              const SizedBox(height: AppSpacing.lg),
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-              // قسم الإشعارات
-              _buildSectionTitle('الإشعارات'),
-              const SizedBox(height: AppSpacing.md),
-              AppCard(
-                child: SwitchListTile(
-                  title: const ResponsiveText('تفعيل الإشعارات', maxLines: 1),
-                  subtitle: const ResponsiveText(
-                    'استقبل إشعارات الفواتير المتأخرة',
-                    maxLines: 2,
-                  ),
-                  value: _notificationsEnabled,
-                  onChanged: (value) {
-                    setState(
-                      () => _notificationsEnabled = value,
-                    );
-                  },
+    return Scaffold(
+      appBar: const AppAppBar(title: 'الإعدادات'),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(Spacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // قسم الحساب
+            _buildSectionTitle('الحساب', colorScheme),
+            const SizedBox(height: Spacing.md),
+            AppListCard(
+              title: 'تعديل بيانات الحساب',
+              subtitle: 'غيّر اسم المستخدم وكلمة المرور',
+              leading: Icon(Icons.person, color: colorScheme.primary),
+              onTap: _handleEditAccount,
+            ),
+            const SizedBox(height: Spacing.xl),
+
+            // قسم الإشعارات
+            _buildSectionTitle('الإشعارات', colorScheme),
+            const SizedBox(height: Spacing.md),
+            AppCard(
+              child: SwitchListTile(
+                title: const ResponsiveText('تفعيل الإشعارات', maxLines: 1),
+                subtitle: const ResponsiveText(
+                  'استقبل إشعارات الفواتير المتأخرة',
+                  maxLines: 2,
                 ),
+                value: _notificationsEnabled,
+                onChanged: (value) {
+                  setState(
+                    () => _notificationsEnabled = value,
+                  );
+                },
               ),
-              const SizedBox(height: AppSpacing.lg),
+            ),
+            const SizedBox(height: Spacing.xl),
 
-              // قسم المظهر
-              _buildSectionTitle('المظهر'),
-              const SizedBox(height: AppSpacing.md),
-              AppCard(
-                child: SwitchListTile(
-                  title: const ResponsiveText('الوضع الليلي', maxLines: 1),
-                  subtitle: const ResponsiveText(
-                    'استخدم الوضع الليلي للعيون',
-                    maxLines: 2,
-                  ),
-                  value: ref.watch(isDarkModeProvider),
-                  onChanged: (value) {
-                    unawaited(
-                      ref.read(themeProvider.notifier).toggleTheme(),
-                    );
-                  },
+            // قسم المظهر
+            _buildSectionTitle('المظهر', colorScheme),
+            const SizedBox(height: Spacing.md),
+            AppCard(
+              child: SwitchListTile(
+                title: const ResponsiveText('الوضع الليلي', maxLines: 1),
+                subtitle: const ResponsiveText(
+                  'استخدم الوضع الليلي للعيون',
+                  maxLines: 2,
                 ),
+                value: ref.watch(isDarkModeProvider),
+                onChanged: (value) {
+                  unawaited(
+                    ref.read(themeProvider.notifier).toggleTheme(),
+                  );
+                },
               ),
-              const SizedBox(height: AppSpacing.lg),
+            ),
+            const SizedBox(height: Spacing.xl),
 
-              // قسم المساعدة
-              _buildSectionTitle('المساعدة والدعم'),
-              const SizedBox(height: AppSpacing.md),
-              AppListCard(
-                title: 'حول التطبيق',
-                subtitle: 'الإصدار 1.0.0',
-                leading: const Icon(Icons.info, color: AppColors.primary),
-                onTap: _showAboutDialog,
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              AppListCard(
-                title: 'سياسة الخصوصية',
-                subtitle: 'اقرأ سياسة الخصوصية الخاصة بنا',
-                leading:
-                    const Icon(Icons.privacy_tip, color: AppColors.primary),
-                onTap: _handlePrivacyPolicy,
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              AppListCard(
-                title: 'شروط الخدمة',
-                subtitle: 'اقرأ شروط الخدمة الخاصة بنا',
-                leading:
-                    const Icon(Icons.description, color: AppColors.primary),
-                onTap: _handleTermsOfService,
-              ),
-              const SizedBox(height: AppSpacing.xl),
+            // قسم المساعدة
+            _buildSectionTitle('المساعدة والدعم', colorScheme),
+            const SizedBox(height: Spacing.md),
+            AppListCard(
+              title: 'حول التطبيق',
+              subtitle: 'الإصدار 1.0.0',
+              leading: Icon(Icons.info, color: colorScheme.primary),
+              onTap: _showAboutDialog,
+            ),
+            const SizedBox(height: Spacing.sm),
+            AppListCard(
+              title: 'سياسة الخصوصية',
+              subtitle: 'اقرأ سياسة الخصوصية الخاصة بنا',
+              leading: Icon(Icons.privacy_tip, color: colorScheme.primary),
+              onTap: _handlePrivacyPolicy,
+            ),
+            const SizedBox(height: Spacing.md),
+            AppListCard(
+              title: 'شروط الخدمة',
+              subtitle: 'اقرأ شروط الخدمة الخاصة بنا',
+              leading: Icon(Icons.description, color: colorScheme.primary),
+              onTap: _handleTermsOfService,
+            ),
+            const SizedBox(height: Spacing.xl),
 
-              // زر تسجيل الخروج
-              AppPrimaryButton(
-                text: 'تسجيل الخروج',
-                onPressed: _showLogoutDialog,
-              ),
-            ],
-          ),
+            // زر تسجيل الخروج
+            AppPrimaryButton(
+              label: 'تسجيل الخروج',
+              onPressed: _showLogoutDialog,
+            ),
+          ],
         ),
-      );
+      ),
+    );
+  }
 
-  Widget _buildSectionTitle(String title) => Text(
+  Widget _buildSectionTitle(String title, ColorScheme colorScheme) => Text(
         title,
-        style: const TextStyle(
-          fontSize: AppTypography.titleMedium,
+        style: TextStyle(
+          fontSize: FontSizes.titleMedium,
           fontWeight: FontWeight.w600,
-          color: AppColors.textPrimary,
+          color: colorScheme.onSurface,
         ),
       );
 
@@ -151,7 +153,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   // حفظ القيمة
                 },
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: Spacing.md),
               TextField(
                 decoration: const InputDecoration(
                   labelText: 'كلمة المرور الجديدة',
@@ -195,22 +197,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       applicationIcon: const Icon(
         Icons.receipt_long,
         size: 48,
-        color: AppColors.primary,
+        color: SemanticColors.primary,
       ),
       applicationLegalese: '© 2025 فريق وكلاء تطوير مشروع بصير',
       children: [
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: Spacing.md),
         const Text(
           'تطبيق بصير هو نظام متكامل لإدارة الفواتير والعملاء، '
           'مصمم خصيصاً للأعمال الصغيرة والمتوسطة.',
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: Spacing.md),
         const Text(
           'الميزات الرئيسية:',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: Spacing.sm),
         const Text('• إدارة الفواتير بسهولة'),
         const Text('• إدارة العملاء'),
         const Text('• تصدير الفواتير كـ PDF'),
@@ -265,17 +267,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 'نحن نحترم خصوصيتك',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: AppSpacing.md),
+              SizedBox(height: Spacing.md),
               Text('1. جميع بياناتك محفوظة محلياً على جهازك'),
-              SizedBox(height: AppSpacing.sm),
+              SizedBox(height: Spacing.sm),
               Text('2. لا نقوم بجمع أو مشاركة أي معلومات شخصية'),
-              SizedBox(height: AppSpacing.sm),
+              SizedBox(height: Spacing.sm),
               Text('3. بياناتك مشفرة وآمنة'),
-              SizedBox(height: AppSpacing.sm),
+              SizedBox(height: Spacing.sm),
               Text('4. لا نستخدم خدمات تتبع أو تحليلات خارجية'),
-              SizedBox(height: AppSpacing.sm),
+              SizedBox(height: Spacing.sm),
               Text('5. أنت المالك الوحيد لبياناتك'),
-              SizedBox(height: AppSpacing.md),
+              SizedBox(height: Spacing.md),
               Text('للمزيد من المعلومات، يرجى زيارة موقعنا الإلكتروني.'),
             ],
           ),
@@ -335,17 +337,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 'شروط استخدام تطبيق بصير',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: AppSpacing.md),
+              SizedBox(height: Spacing.md),
               Text('1. التطبيق مجاني للاستخدام الشخصي والتجاري'),
-              SizedBox(height: AppSpacing.sm),
+              SizedBox(height: Spacing.sm),
               Text('2. أنت مسؤول عن دقة البيانات المدخلة'),
-              SizedBox(height: AppSpacing.sm),
+              SizedBox(height: Spacing.sm),
               Text('3. يجب عليك الاحتفاظ بنسخة احتياطية من بياناتك'),
-              SizedBox(height: AppSpacing.sm),
+              SizedBox(height: Spacing.sm),
               Text('4. التطبيق يُقدم كما هو بدون ضمانات'),
-              SizedBox(height: AppSpacing.sm),
+              SizedBox(height: Spacing.sm),
               Text('5. نحن غير مسؤولين عن أي خسائر ناتجة عن استخدام التطبيق'),
-              SizedBox(height: AppSpacing.md),
+              SizedBox(height: Spacing.md),
               Text('باستخدامك للتطبيق، فإنك توافق على هذه الشروط.'),
             ],
           ),
@@ -365,7 +367,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: AppColors.success,
+        backgroundColor: SemanticColors.success,
         behavior: SnackBarBehavior.floating,
         duration: const Duration(seconds: 2),
       ),

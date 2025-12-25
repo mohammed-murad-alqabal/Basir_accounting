@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:basser_app/core/constants.dart';
 import 'package:basser_app/features/auth/domain/models/auth_models.dart';
 import 'package:crypto/crypto.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// خدمة المصادقة المحلية
@@ -38,6 +39,32 @@ class AuthService {
 
   /// خدمة التخزين الآمن لحفظ بيانات الاعتماد
   final FlutterSecureStorage secureStorage;
+
+  /// تنظيف البيانات التالفة أو القديمة (Industrial-Grade Robustness)
+  ///
+  /// يتحقق مما إذا كان هذا هو التشغيل الأول بعد إعادة التثبيت.
+  /// إذا كان التخزين يحتوي على بيانات قديمة بدون علامة "التشغيل الأول"،
+  /// يتم مسحها لضمان بداية نظيفة ومنع التعليق أو الأخطاء الغامضة.
+  Future<void> initialize() async {
+    try {
+      const firstRunKey = 'basser_first_run_flag';
+      final firstRun = await secureStorage.read(key: firstRunKey);
+
+      if (firstRun == null) {
+        // هذا تشغيل أول بعد التثبيت
+        // نقوم بمسح أي مخلفات قديمة قد تكون بقيت من تثبيت سابق
+        // (تحدث في Android)
+        await secureStorage.deleteAll();
+        // حفظ علامة التشغيل الأول
+        await secureStorage.write(key: firstRunKey, value: 'done');
+        debugPrint(
+          '🛡️ [AUTH] First run detected. Secure storage initialized.',
+        );
+      }
+    } on Exception catch (e) {
+      debugPrint('⚠️ [AUTH] Error during initialization: $e');
+    }
+  }
 
   /// Salt ثابت للتطبيق (في بيئة إنتاج حقيقية، يجب أن يكون فريد لكل مستخدم)
   static const String _appSalt = 'basser_mvp_2025_secure_salt';

@@ -1,7 +1,7 @@
 /// اختبارات AppCard
 library;
 
-import 'package:basser_app/core/theme.dart';
+import 'package:basser_app/core/theme/app_theme.dart';
 import 'package:basser_app/core/widgets/app_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -58,8 +58,16 @@ void main() {
         ),
       );
 
-      final card = tester.widget<Card>(find.byType(Card));
-      expect(card.color, Colors.red);
+      final container = tester.widget<Container>(
+        find
+            .descendant(
+              of: find.byType(AppCard),
+              matching: find.byType(Container),
+            )
+            .first,
+      );
+      expect(container.decoration, isA<BoxDecoration>());
+      expect((container.decoration! as BoxDecoration).color, Colors.red);
     });
   });
 
@@ -225,7 +233,7 @@ void main() {
       );
 
       final icon = tester.widget<Icon>(find.byIcon(Icons.receipt));
-      expect(icon.color, AppColors.primary);
+      expect(icon.color, AppTheme.lightTheme.colorScheme.primary);
     });
   });
 }

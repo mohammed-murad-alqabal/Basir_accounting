@@ -1,7 +1,9 @@
 import 'package:basser_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:basser_app/features/auth/presentation/screens/setup_screen.dart';
+import 'package:basser_app/features/customers/presentation/screens/customer_form_screen.dart';
 import 'package:basser_app/features/customers/presentation/screens/customers_screen.dart';
 import 'package:basser_app/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:basser_app/features/invoices/presentation/screens/invoice_form_screen.dart';
 import 'package:basser_app/features/invoices/presentation/screens/invoices_screen.dart';
 import 'package:basser_app/features/settings/presentation/screens/settings_screen.dart';
 import 'package:basser_app/features/testing/button_test_screen.dart';
@@ -63,6 +65,14 @@ class AppRouter {
       case '/invoices':
         return MaterialPageRoute(
           builder: (_) => const InvoicesScreen(),
+        );
+      case '/invoice-form':
+        return MaterialPageRoute(
+          builder: (_) => const InvoiceFormScreen(),
+        );
+      case '/customer-form':
+        return MaterialPageRoute(
+          builder: (_) => const CustomerFormScreen(),
         );
       case '/settings':
         return MaterialPageRoute(

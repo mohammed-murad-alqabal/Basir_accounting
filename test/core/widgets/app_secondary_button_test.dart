@@ -1,4 +1,4 @@
-import 'package:basser_app/core/widgets/app_secondary_button.dart';
+import 'package:basser_app/core/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -9,7 +9,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: AppSecondaryButton(
-              text: 'Secondary Button',
+              label: 'Secondary Button',
               onPressed: () {},
             ),
           ),
@@ -26,7 +26,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: AppSecondaryButton(
-              text: 'Secondary Button',
+              label: 'Secondary Button',
               onPressed: () {
                 wasPressed = true;
               },
@@ -47,7 +47,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: AppSecondaryButton(
-              text: 'Secondary Button',
+              label: 'Secondary Button',
               onPressed: () {},
               isLoading: true,
             ),
