@@ -616,6 +616,91 @@ Text(
 )
 ```
 
+### تحويل الأرقام العربية
+
+```dart
+extension ArabicNumbers on String {
+  /// تحويل الأرقام الإنجليزية إلى عربية
+  String get toArabicDigits {
+    const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    String result = this;
+    for (int i = 0; i < english.length; i++) {
+      result = result.replaceAll(english[i], arabic[i]);
+    }
+    return result;
+  }
+
+  /// تحويل الأرقام العربية إلى إنجليزية
+  String get toEnglishDigits {
+    const arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    String result = this;
+    for (int i = 0; i < arabic.length; i++) {
+      result = result.replaceAll(arabic[i], english[i]);
+    }
+    return result;
+  }
+}
+```
+
+### تنسيق العملة السعودية
+
+```dart
+import 'package:intl/intl.dart';
+
+class CurrencyFormatter {
+  /// تنسيق الريال السعودي
+  static String formatSAR(double amount) {
+    final formatter = NumberFormat.currency(
+      locale: 'ar_SA',
+      symbol: 'ر.س ',
+      decimalDigits: 2,
+    );
+    return formatter.format(amount);
+  }
+
+  /// تنسيق مختصر للمبالغ الكبيرة
+  static String formatCompact(double amount) {
+    if (amount >= 1000000) {
+      return '${(amount / 1000000).toStringAsFixed(1)}م ر.س';
+    } else if (amount >= 1000) {
+      return '${(amount / 1000).toStringAsFixed(1)}ك ر.س';
+    }
+    return formatSAR(amount);
+  }
+}
+
+// استخدام
+Text(CurrencyFormatter.formatSAR(1500.50)) // 'ر.س ١٬٥٠٠٫٥٠'
+Text(CurrencyFormatter.formatCompact(2500000)) // '২.5م ر.س'
+```
+
+### AppTheme للعربية
+
+```dart
+class AppTheme {
+  static ThemeData get arabicTheme => ThemeData(
+    fontFamily: 'Cairo',
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.bold),
+      bodyLarge: TextStyle(fontFamily: 'Cairo', height: 1.6),
+    ),
+    appBarTheme: const AppBarTheme(
+      centerTitle: false, // محاذاة لليمين في RTL
+      titleTextStyle: TextStyle(
+        fontFamily: 'Cairo',
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      floatingLabelAlignment: FloatingLabelAlignment.start,
+    ),
+  );
+}
+```
+
 ---
 
 ## 🧪 الاختبارات
