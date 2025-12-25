@@ -4,7 +4,7 @@
 
 ### المخطط الاستراتيجي الرئيسي (Strategic Master Blueprint)
 
-**الموقع:** [`Documentation/00_Strategic_Master_Blueprint.md`](./Documentation/00_Strategic_Master_Blueprint.md)
+**الموقع:** [`Documentation/00_Strategic_Master_Blueprint.md`](../../Core/00_Strategic_Master_Blueprint.md)
 
 **الوصف:** الوثيقة الشاملة والمهندسة التي تدمج جميع جوانب المشروع الاستراتيجية والتقنية.
 
@@ -27,7 +27,7 @@
 
 للوصول إلى جميع الوثائق الأخرى، راجع:
 
-**[`Documentation/README.md`](./Documentation/README.md)**
+**[`Documentation/README.md`](../../README.md)**
 
 يحتوي على:
 

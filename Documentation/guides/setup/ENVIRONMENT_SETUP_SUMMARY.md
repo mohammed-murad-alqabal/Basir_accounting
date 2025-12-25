@@ -165,8 +165,8 @@ flutter doctor -v
 
 ### التقارير
 
-1. **DEV_ENVIRONMENT_ANALYSIS.md** - تحليل شامل (15 صفحة)
-2. **POWERS_ANALYSIS_REPORT.md** - تحليل Powers (12 صفحة)
+1. **../development/DEV_ENVIRONMENT_ANALYSIS.md** - تحليل شامل (15 صفحة)
+2. **../../reports/fixes/POWERS_ANALYSIS_REPORT.md** - تحليل Powers (12 صفحة)
 3. **QUICK_SETUP_GUIDE.md** - دليل سريع (3 صفحات)
 4. **ENVIRONMENT_SETUP_SUMMARY.md** - هذا الملف
 
@@ -236,8 +236,8 @@ flutter doctor -v
 
 ### التقارير الكاملة
 
-- [DEV_ENVIRONMENT_ANALYSIS.md](DEV_ENVIRONMENT_ANALYSIS.md)
-- [POWERS_ANALYSIS_REPORT.md](POWERS_ANALYSIS_REPORT.md)
+- [../development/DEV_ENVIRONMENT_ANALYSIS.md](../development/DEV_ENVIRONMENT_ANALYSIS.md)
+- [../../reports/fixes/POWERS_ANALYSIS_REPORT.md](../../reports/fixes/POWERS_ANALYSIS_REPORT.md)
 - [QUICK_SETUP_GUIDE.md](QUICK_SETUP_GUIDE.md)
 
 ### السكريبتات
@@ -247,9 +247,9 @@ flutter doctor -v
 
 ### الوثائق
 
-- [README.md](README.md)
-- [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)
-- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [README.md](../../../README.md)
+- [DEVELOPMENT_GUIDE.md](../../reports/engineering/DEV_ENVIRONMENT_ANALYSIS.md)
+- [CONTRIBUTING.md](../../../CONTRIBUTING.md)
 
 ---
 
@@ -306,7 +306,7 @@ flutter doctor -v
 
 إذا واجهت أي مشاكل:
 
-1. راجع [DEV_ENVIRONMENT_ANALYSIS.md](DEV_ENVIRONMENT_ANALYSIS.md)
+1. راجع [../development/DEV_ENVIRONMENT_ANALYSIS.md](../development/DEV_ENVIRONMENT_ANALYSIS.md)
 2. راجع [QUICK_SETUP_GUIDE.md](QUICK_SETUP_GUIDE.md)
 3. شغّل `flutter doctor -v` للتشخيص
 4. افتح issue في GitHub

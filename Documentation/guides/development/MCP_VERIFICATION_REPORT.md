@@ -290,9 +290,9 @@
 
 ### التقارير ذات الصلة
 
-1. [MCP_CONFIGURATION_FIX_REPORT.md](MCP_CONFIGURATION_FIX_REPORT.md) - تقرير الإصلاحات
-2. [CHANGELOG.md](CHANGELOG.md) - سجل التغييرات (v1.17.2)
-3. [FINAL_SETUP_REPORT.md](FINAL_SETUP_REPORT.md) - تقرير الإعداد الشامل
+1. [MCP_CONFIGURATION_FIX_REPORT.md](../../reports/fixes/MCP_CONFIGURATION_FIX_REPORT.md) - تقرير الإصلاحات
+2. [CHANGELOG.md](../../../CHANGELOG.md) - سجل التغييرات (v1.17.2)
+3. [FINAL_SETUP_REPORT.md](../setup/FINAL_SETUP_REPORT.md) - تقرير الإعداد الشامل
 
 ### الملفات المعدلة
 

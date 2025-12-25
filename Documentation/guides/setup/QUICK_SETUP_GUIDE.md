@@ -191,8 +191,8 @@ sudo snap install yq
 
 ### التقارير الكاملة
 
-- [DEV_ENVIRONMENT_ANALYSIS.md](DEV_ENVIRONMENT_ANALYSIS.md) - تحليل شامل
-- [POWERS_ANALYSIS_REPORT.md](POWERS_ANALYSIS_REPORT.md) - تحليل Powers
+- [../development/DEV_ENVIRONMENT_ANALYSIS.md](../development/DEV_ENVIRONMENT_ANALYSIS.md) - تحليل شامل
+- [../../reports/fixes/POWERS_ANALYSIS_REPORT.md](../../reports/fixes/POWERS_ANALYSIS_REPORT.md) - تحليل Powers
 
 ### السكريبتات
 
@@ -201,9 +201,9 @@ sudo snap install yq
 
 ### الوثائق
 
-- [README.md](README.md) - نظرة عامة
-- [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) - دليل التطوير
-- [CONTRIBUTING.md](CONTRIBUTING.md) - المساهمة
+- [README.md](../../../README.md) - نظرة عامة
+- [DEVELOPMENT_GUIDE.md](../../reports/engineering/DEV_ENVIRONMENT_ANALYSIS.md) - دليل التطوير
+- [CONTRIBUTING.md](../../../CONTRIBUTING.md) - المساهمة
 
 ---
 

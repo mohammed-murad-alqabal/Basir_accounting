@@ -184,7 +184,7 @@ TASK_9_SUCCESS.md               (هذا الملف)
 
 ### التوثيق
 
-- [تقرير الإكمال الكامل](Documentation/reports/tasks/task_9_completion_report.md)
+- [تقرير الإكمال الكامل](../../tasks/task_9_completion_report.md)
 - [ملف المهام](../../../../.kiro/specs/completed/error-tracking-system/tasks.md)
 - [المتطلبات]../../../../.kiro/specs/completed/error-tracking-system/requirements.md)
 
