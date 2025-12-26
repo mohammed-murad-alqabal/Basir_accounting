@@ -854,6 +854,52 @@ class _MyWidgetState extends State<MyWidget> {
 
 ---
 
+## 📝 توثيق الكود
+
+### 1. توثيق الـ APIs (DartDoc)
+
+استخدم `///` لتوثيق جميع الـ Classes و Methods العامة.
+
+````dart
+/// A repository that handles customer data operations.
+///
+/// Use this repository to fetch, add, or update customers
+/// in the local database.
+class CustomerRepository {
+  /// Fetches a customer by their [id].
+  ///
+  /// Returns `null` if the customer is not found.
+  ///
+  /// Example:
+  /// ```dart
+  /// final customer = await repository.getCustomer('123');
+  /// ```
+  Future<Customer?> getCustomer(String id) async {
+    // ...
+  }
+}
+````
+
+### 2. ملاحظات التنفيذ (Implementation Comments)
+
+استخدم `//` لشرح _سبب_ كتابة الكود بهذه الطريقة (وليس _ماذا_ يفعل).
+
+```dart
+// We use a Set here to avoid duplicate customer IDs automatically
+final uniqueIds = <String>{};
+```
+
+### 3. تتبع المهام (TODOs)
+
+استخدم تنسيقاً موحداً لتسهيل التتبع.
+
+```dart
+// TODO(auth): Implement refresh token logic
+// TODO(ui): Fix overflow on small screens
+```
+
+---
+
 ## 💡 نصائح وحيل
 
 ### 1. استخدام Extensions

@@ -1,0 +1,19 @@
+Analyzing Basser_MVP...                                         
+
+warning • The value of the local variable 'binding' isn't used • integration_test/live_app_tour_test.dart:29:9 • unused_local_variable
+   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:52:5 • avoid_print
+   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:57:7 • avoid_print
+   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:63:5 • avoid_print
+   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:73:5 • avoid_print
+   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:80:5 • avoid_print
+   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:87:5 • avoid_print
+   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:93:5 • avoid_print
+   info • Missing documentation for a public member • lib/core/utils/input_validator.dart:342:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/utils/input_validator.dart:356:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/utils/input_validator.dart:386:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/auth/domain/models/auth_models.dart:8:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/auth/domain/models/auth_models.dart:35:9 • public_member_api_docs
+   info • Catch clause should use 'on' to specify the type of exception being caught • test/helpers/test_helpers.dart:148:7 • avoid_catches_without_on_clauses
+   info • Don't invoke 'print' in production code • test/helpers/test_helpers.dart:164:7 • avoid_print
+   info • Don't invoke 'print' in production code • test/helpers/test_helpers.dart:168:7 • avoid_print
+

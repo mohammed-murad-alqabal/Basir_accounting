@@ -98,6 +98,37 @@ dart_version: "3.9.2+"
 - استخدم mocks للـ dependencies
 - حقق 70%+ test coverage
 
+## توثيق الكود (Documentation)
+
+### معايير DartDoc
+
+- **English Only**: يجب أن يكون التوثيق باللغة الإنجليزية لضمان التوافق العالمي.
+- **Doc Comments**: استخدم `///` لتوثيق جميع الـ public APIs (Classes, Methods, Fields).
+- **Summary**: السطر الأول يجب أن يكون ملخصاً موجزاً (One-sentence summary).
+- **Parameters**: أشر إلى المتغيرات باستخدام الأقواس المعقوفة `[variableName]`.
+- **Examples**: وفر أمثلة عملية باستخدام `/// ` `dart`.
+
+````dart
+/// Calculates the total price including tax.
+///
+/// Returns the total amount formatted as SAR.
+///
+/// Example:
+/// ```dart
+/// final total = calculateTotal(100, 0.15);
+/// print(total); // 115.0
+/// ```
+String calculateTotal(double amount, double taxRate) {
+  // ...
+}
+````
+
+### التعليقات (Comments)
+
+- استخدم `//` للتعليقات التوضيحية داخل الدوال (Implementation details).
+- تجنب التعليقات التي تشرح "ماذا" يفعل الكود (الوواضح من الكود نفسه)، ركز على "لماذا" (Why).
+- **TODOs**: استخدم تنسيق `// TODO(handler): description` لتتبع المهام المؤجلة.
+
 ### Widget Tests
 
 - اختبر المسارات الحرجة
