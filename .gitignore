@@ -91,7 +91,7 @@ firebase_options.dart
 **/private-key*
 
 # IDE
-.vscode/
+
 .fleet/
 
 # Misc
@@ -200,3 +200,6 @@ docs/api/html/
 *.zip
 backups/
 /backups
+
+# Dart API documentation (auto-generated)
+Documentation/api/html/
