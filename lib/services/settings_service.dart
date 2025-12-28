@@ -86,13 +86,106 @@ class SettingsService {
     }
   }
 
-  /// الحصول على جميع إعدادات الشركة
+  /// الحصول على رمز العملة
+  Future<String> getCurrencySymbol() async {
+    try {
+      final symbol = await secureStorage.read(key: <credential-fixture>);
+      return symbol ?? AppConfig.defaultCurrencySymbol;
+    } on Exception {
+      return AppConfig.defaultCurrencySymbol;
+    }
+  }
+
+  /// تعيين رمز العملة
+  Future<void> setCurrencySymbol(String symbol) async {
+    try {
+      await secureStorage.write(
+        key: <credential-fixture>,
+        value: symbol,
+      );
+    } on Exception catch (e) {
+      throw Exception('خطأ في حفظ رمز العملة: $e');
+    }
+  }
+
+  /// الحصول على كود العملة
+  Future<String> getCurrencyCode() async {
+    try {
+      final code = await secureStorage.read(key: <credential-fixture>);
+      return code ?? AppConfig.defaultCurrencyCode;
+    } on Exception {
+      return AppConfig.defaultCurrencyCode;
+    }
+  }
+
+  /// تعيين كود العملة
+  Future<void> setCurrencyCode(String code) async {
+    try {
+      await secureStorage.write(
+        key: <credential-fixture>,
+        value: code,
+      );
+    } on Exception catch (e) {
+      throw Exception('خطأ في حفظ كود العملة: $e');
+    }
+  }
+
+  /// الحصول على كود الدولة الافتراضي
+  Future<String> getDefaultCountryCode() async {
+    try {
+      final code =
+          await secureStorage.read(key: <credential-fixture>);
+      return code ?? AppConfig.defaultCountryCode;
+    } on Exception {
+      return AppConfig.defaultCountryCode;
+    }
+  }
+
+  /// تعيين كود الدولة الافتراضي
+  Future<void> setDefaultCountryCode(String code) async {
+    try {
+      await secureStorage.write(
+        key: <credential-fixture>,
+        value: code,
+      );
+    } on Exception catch (e) {
+      throw Exception('خطأ في حفظ كود الدولة: $e');
+    }
+  }
+
+  /// الحصول على شكل الفاتورة
+  Future<String> getInvoiceStyle() async {
+    try {
+      final style = await secureStorage.read(key: <credential-fixture>);
+      return style ?? AppConfig.defaultInvoiceStyle;
+    } on Exception {
+      return AppConfig.defaultInvoiceStyle;
+    }
+  }
+
+  /// تعيين شكل الفاتورة
+  Future<void> setInvoiceStyle(String style) async {
+    try {
+      await secureStorage.write(
+        key: <credential-fixture>,
+        value: style,
+      );
+    } on Exception catch (e) {
+      throw Exception('خطأ في حفظ شكل الفاتورة: $e');
+    }
+  }
+
+  /// الحصول على جميع إعدادات الشركة والتخصيص
   Future<Map<String, String?>> getCompanySettings() async {
     try {
       return {
         'companyName': await getCompanyName(),
         'taxNumber': await getCompanyTaxNumber(),
         'taxRate': (await getTaxRate()).toString(),
+        'currencySymbol': await getCurrencySymbol(),
+        'currencyCode': await getCurrencyCode(),
+        'defaultCountryCode': await getDefaultCountryCode(),
+        'invoiceStyle': await getInvoiceStyle(),
       };
     } on Exception catch (e) {
       throw Exception(
@@ -101,22 +194,24 @@ class SettingsService {
     }
   }
 
-  /// تعيين جميع إعدادات الشركة
+  /// تعيين جميع إعدادات الشركة والتخصيص
   Future<void> setCompanySettings({
     required String companyName,
     required String taxNumber,
     required double taxRate,
+    String? currencySymbol,
+    String? currencyCode,
+    String? countryCode,
+    String? invoiceStyle,
   }) async {
     try {
-      await setCompanyName(
-        companyName,
-      );
-      await setCompanyTaxNumber(
-        taxNumber,
-      );
-      await setTaxRate(
-        taxRate,
-      );
+      await setCompanyName(companyName);
+      await setCompanyTaxNumber(taxNumber);
+      await setTaxRate(taxRate);
+      if (currencySymbol != null) await setCurrencySymbol(currencySymbol);
+      if (currencyCode != null) await setCurrencyCode(currencyCode);
+      if (countryCode != null) await setDefaultCountryCode(countryCode);
+      if (invoiceStyle != null) await setInvoiceStyle(invoiceStyle);
     } on Exception catch (e) {
       throw Exception(
         'خطأ في حفظ إعدادات الشركة: $e',

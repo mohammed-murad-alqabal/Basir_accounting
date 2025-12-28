@@ -344,7 +344,7 @@ PDF Generation: pdf + printing
 - [README.md](../../../README.md)
 - [pubspec.yaml](pubspec.yaml)
 - [../../../.kiro/steering/product.md](../../../.kiro/steering/product.md)
-- [../../../.kiro/steering/tech-stack.md](../../../.kiro/steering/tech-stack.md)
+- [../../../.kiro/steering/tech.md](../../../.kiro/steering/tech.md)
 
 ### Powers المثبتة
 

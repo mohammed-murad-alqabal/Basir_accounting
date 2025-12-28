@@ -23,18 +23,19 @@ class BasserLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
     if (useText) {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildLogo(),
+          _buildLogo(primaryColor),
           const SizedBox(width: Spacing.md),
           Text(
             'بصير',
             style: TextStyle(
               fontSize: size * 0.35,
               fontWeight: FontWeight.bold,
-              color: SemanticColors.primaryDark,
+              color: primaryColor,
               fontFamily: 'Cairo',
               letterSpacing: 1.2,
             ),
@@ -42,19 +43,23 @@ class BasserLogo extends StatelessWidget {
         ],
       );
     }
-    return _buildLogo();
+    return _buildLogo(primaryColor);
   }
 
-  Widget _buildLogo() => SizedBox(
+  Widget _buildLogo(Color primaryColor) => SizedBox(
         width: size,
         height: size,
         child: CustomPaint(
-          painter: _BasserMastery2Painter(),
+          painter: _BasserMastery2Painter(primaryColor: primaryColor),
         ),
       );
 }
 
 class _BasserMastery2Painter extends CustomPainter {
+  _BasserMastery2Painter({required this.primaryColor});
+
+  final Color primaryColor;
+
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
@@ -68,7 +73,7 @@ class _BasserMastery2Painter extends CustomPainter {
     // 1. رسم التوهج الخلفي (Environmental Ambience)
     final ambientPaint = Paint()
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 20)
-      ..color = SemanticColors.primary.withValues(alpha: 0.15);
+      ..color = primaryColor.withValues(alpha: 0.15);
     canvas.drawCircle(center, baseRadius, ambientPaint);
 
     // 2. الهيكل الخارجي (Institutional Foundation)
@@ -77,9 +82,9 @@ class _BasserMastery2Painter extends CustomPainter {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          SemanticColors.primaryDark,
-          SemanticColors.primary,
-          SemanticColors.primaryDark.withValues(alpha: 0.9),
+          primaryColor.withValues(alpha: 0.9),
+          primaryColor,
+          primaryColor.withValues(alpha: 0.8),
         ],
       ).createShader(Rect.fromCircle(center: center, radius: baseRadius));
 
@@ -174,13 +179,16 @@ class BasserIcon extends StatelessWidget {
   final double size;
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-        width: size,
-        height: size,
-        child: CustomPaint(
-          painter: _BasserMastery2Painter(),
-        ),
-      );
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+    return SizedBox(
+      width: size,
+      height: size,
+      child: CustomPaint(
+        painter: _BasserMastery2Painter(primaryColor: primaryColor),
+      ),
+    );
+  }
 }
 
 /// شعار بصير مع تأثير "اللمعان المؤسسي" (Institutional Shimmer)

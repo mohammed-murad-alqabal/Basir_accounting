@@ -38,6 +38,18 @@ class StorageKeys {
 
   /// مفتاح هاتف الشركة
   static const String companyPhone = 'company_phone';
+
+  /// مفتاح رمز العملة
+  static const String currencySymbol = 'currency_symbol';
+
+  /// مفتاح كود العملة (مثل SAR)
+  static const String currencyCode = 'currency_code';
+
+  /// مفتاح كود الدولة الافتراضي (للواتساب)
+  static const String defaultCountryCode = 'default_country_code';
+
+  /// مفتاح شكل الفاتورة (قالب)
+  static const String invoiceStyle = 'invoice_style';
 }
 
 /// رسائل التطبيق
@@ -109,6 +121,18 @@ class AppConfig {
   /// الحد الأدنى لطول اسم المستخدم (3 أحرف)
   /// يُستخدم في التحقق من صحة اسم المستخدم
   static const int minUsernameLength = 3;
+
+  /// رمز العملة الافتراضي
+  static const String defaultCurrencySymbol = 'ر.س';
+
+  /// كود العملة الافتراضي
+  static const String defaultCurrencyCode = 'SAR';
+
+  /// كود الدولة الافتراضي (السعودية)
+  static const String defaultCountryCode = '966';
+
+  /// قالب الفاتورة الافتراضي
+  static const String defaultInvoiceStyle = 'classic';
 }
 
 /// حالات الفاتورة

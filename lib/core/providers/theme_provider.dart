@@ -1,89 +1,69 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-/// مزود حالة الثيم (Theme Provider)
+/// مزود حالة الثيم (Theme Controller)
 ///
-/// يدير حالة الثيم (فاتح/داكن) ويحفظها في التخزين الآمن
-class ThemeNotifier extends StateNotifier<ThemeMode> {
-  /// إنشاء مزود الثيم
-  ThemeNotifier(this._storage) : super(ThemeMode.light) {
-    _init();
-  }
-
-  final FlutterSecureStorage _storage;
+/// يدير حالة الثيم (فاتح/داكن) ويحفظها في SharedPreferences
+/// يستخدم AsyncNotifier لضمان تحميل التفضيلات قبل عرض التطبيق
+class ThemeController extends AsyncNotifier<ThemeMode> {
   static const String _themeModeKey = '<credential-fixture>';
 
-  /// تهيئة المزود وتحميل الثيم
-  void _init() {
-    // تحميل الثيم بدون انتظار (fire and forget)
-    unawaited(
-      _loadThemeMode(),
-    );
-  }
+  @override
+  Future<ThemeMode> build() async => _loadThemeMode();
 
   /// تحميل وضع الثيم المحفوظ
-  Future<void> _loadThemeMode() async {
+  Future<ThemeMode> _loadThemeMode() async {
     try {
-      final savedMode = await _storage.read(
-        key: <credential-fixture>,
-      );
+      final prefs = await SharedPreferences.getInstance();
+      final savedMode = prefs.getString(_themeModeKey);
+
       if (savedMode != null) {
-        state = ThemeMode.values.firstWhere(
+        return ThemeMode.values.firstWhere(
           (mode) => mode.toString() == savedMode,
-          orElse: () => ThemeMode.light,
+          orElse: () => ThemeMode.system,
         );
       }
-    } on Exception catch (e) {
-      debugPrint(
-        'Error loading theme mode: $e',
-      );
-      state = ThemeMode.light;
+    } on Object catch (e) {
+      debugPrint('Error loading theme mode: $e');
     }
+    // الوضع الافتراضي
+    return ThemeMode.system;
   }
 
   /// تبديل بين الوضع الفاتح والداكن
   Future<void> toggleTheme() async {
-    final newMode = state == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-    await setThemeMode(
-      newMode,
-    );
+    final currentMode = state.value ?? ThemeMode.light;
+    final newMode =
+        currentMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    await setThemeMode(newMode);
   }
 
   /// تعيين وضع الثيم
   Future<void> setThemeMode(ThemeMode mode) async {
-    state = mode;
+    state = AsyncValue.data(mode);
     try {
-      await _storage.write(
-        key: <credential-fixture>,
-        value: mode.toString(),
-      );
-    } on Exception catch (e) {
-      debugPrint(
-        'Error saving theme mode: $e',
-      );
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_themeModeKey, mode.toString());
+    } on Object catch (e) {
+      debugPrint('Error saving theme mode: $e');
     }
   }
 
   /// التحقق من الوضع الداكن
-  bool get isDarkMode => state == ThemeMode.dark;
-
-  /// التحقق من الوضع الفاتح
-  bool get isLightMode => state == ThemeMode.light;
+  bool get isDarkMode => state.value == ThemeMode.dark;
 }
 
 /// مزود الثيم
-final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>(
-  (ref) => ThemeNotifier(const FlutterSecureStorage()),
-);
+final themeProvider =
+    AsyncNotifierProvider<ThemeController, ThemeMode>(ThemeController.new);
 
-/// مزود للتحقق من الوضع الداكن
+/// مزود مساعد للتحقق من الوضع الداكن
 final isDarkModeProvider = Provider<bool>((ref) {
-  // استخدام select() لتحسين الأداء - مراقبة الوضع فقط
-  final themeMode = ref.watch(
-    themeProvider.select((mode) => mode == ThemeMode.dark),
-  );
-  return themeMode;
+  final themeMode = ref.watch(themeProvider).valueOrNull ?? ThemeMode.system;
+  if (themeMode == ThemeMode.system) {
+    return WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+        Brightness.dark;
+  }
+  return themeMode == ThemeMode.dark;
 });

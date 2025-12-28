@@ -1,4 +1,9 @@
+import 'dart:async';
+
 import 'package:basser_app/core/assets/app_illustrations.dart';
+import 'package:basser_app/core/providers.dart';
+import 'package:basser_app/core/theme/services/color_customization_service.dart';
+import 'package:basser_app/core/theme/services/icon_customization_service.dart'; // Added
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
@@ -23,18 +28,19 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
   Widget build(BuildContext context) {
     final invoicesAsync = ref.watch(filteredInvoicesProvider);
     final statsAsync = ref.watch(invoiceStatisticsProvider);
+    final appIcons = ref.watch(appIconsProvider);
 
     return Scaffold(
       appBar: AppAppBar(
         title: 'الفواتير',
         actions: [
           IconButton(
-            icon: const Icon(Icons.add),
+            icon: Icon(appIcons.add),
             onPressed: _createNewInvoice,
             tooltip: 'إضافة فاتورة',
           ),
           IconButton(
-            icon: const Icon(Icons.picture_as_pdf_outlined),
+            icon: Icon(appIcons.pdf),
             onPressed: _exportInvoice,
             tooltip: 'تصدير الكل',
           ),
@@ -46,7 +52,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           _buildFilterBar(),
           Expanded(
             child: invoicesAsync.when(
-              data: _buildInvoicesList,
+              data: (invoices) => _buildInvoicesList(invoices, appIcons),
               loading: () => const Center(
                 child: CircularProgressIndicator(),
               ),
@@ -72,7 +78,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                         onPressed: () {
                           ref.invalidate(invoicesProvider);
                         },
-                        icon: Icons.refresh,
+                        icon: appIcons.refresh,
                         style: AppEnhancedButtonStyle.secondary,
                       ),
                     ],
@@ -86,12 +92,14 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: _createNewInvoice,
         backgroundColor: SemanticColors.primary,
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Icon(appIcons.add, color: Colors.white),
       ),
     );
   }
 
-  Widget _buildStatsHeader(AsyncValue<InvoiceStatistics> statsAsync) =>
+  Widget _buildStatsHeader(
+    AsyncValue<InvoiceStatistics> statsAsync,
+  ) =>
       Container(
         padding: const EdgeInsets.all(Spacing.lg),
         color: SemanticColors.surface,
@@ -181,11 +189,17 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
               isSelected ? SemanticColors.primary : SemanticColors.textPrimary,
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Radii.full),
+          side: BorderSide(
+            color: isSelected ? SemanticColors.primary : SemanticColors.border,
+          ),
+        ),
       ),
     );
   }
 
-  Widget _buildInvoicesList(List<Invoice> invoices) {
+  Widget _buildInvoicesList(List<Invoice> invoices, AppIconsData appIcons) {
     if (invoices.isEmpty) {
       return const Center(
         child: EmptyStateIllustration(),
@@ -210,7 +224,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
               borderRadius: BorderRadius.circular(Radii.sm),
             ),
             child: Icon(
-              _getStatusIcon(invoice.status),
+              _getStatusIcon(invoice.status, appIcons),
               color: statusColor,
               size: 20,
             ),
@@ -218,7 +232,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           onTap: () {
             // TODO(dev): فتح تفاصيل الفاتورة
           },
-          onLongPress: () => _showInvoiceActions(invoice),
+          onLongPress: () => _showInvoiceActions(invoice, appIcons),
         );
       },
     );
@@ -237,8 +251,168 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     );
   }
 
-  void _showInvoiceActions(Invoice invoice) {
-    // عرض خيارات الفاتورة (حذف، تعديل، تكرار)
+  void _showInvoiceActions(Invoice invoice, AppIconsData appIcons) {
+    unawaited(
+      showModalBottomSheet<void>(
+        context: context,
+        builder: (context) => SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(appIcons.pdf),
+                title: const Text('مشاركة ملف PDF'),
+                onTap: () {
+                  Navigator.pop(context);
+                  unawaited(_shareInvoicePdf(invoice));
+                },
+              ),
+              ListTile(
+                leading: Icon(appIcons.message),
+                title: const Text('إرسال عبر الواتساب (نص)'),
+                onTap: () {
+                  Navigator.pop(context);
+                  unawaited(_shareInvoiceViaWhatsApp(invoice, asPdf: false));
+                },
+              ),
+              ListTile(
+                leading: Icon(appIcons.share),
+                title: const Text('إرسال عبر الواتساب (PDF)'),
+                onTap: () {
+                  Navigator.pop(context);
+                  unawaited(_shareInvoiceViaWhatsApp(invoice, asPdf: true));
+                },
+              ),
+              const Divider(),
+              ListTile(
+                leading: Icon(appIcons.delete, color: SemanticColors.error),
+                title: const Text(
+                  'حذف الفاتورة',
+                  style: TextStyle(color: SemanticColors.error),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  unawaited(_deleteInvoice(invoice));
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _shareInvoicePdf(Invoice invoice) async {
+    try {
+      final customerRepo = ref.read(customerRepositoryProvider);
+      final customer = await customerRepo.getCustomerById(invoice.customerId);
+
+      if (customer == null) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('تعذر العثور على بيانات العميل')),
+        );
+        return;
+      }
+
+      final pdfService = ref.read(pdfServiceProvider);
+      final primaryColor = ref.read(colorCustomizationProvider).value;
+      final pdfBytes = await pdfService.generateInvoicePdf(
+        invoice,
+        customer,
+        primaryColor: primaryColor,
+      );
+
+      final sharingService = ref.read(sharingServiceProvider);
+      await sharingService.sharePdfFile(
+        bytes: pdfBytes,
+        fileName: 'invoice_${invoice.id}.pdf',
+        subject: 'فاتورة ${invoice.id}',
+        text: 'إليك فاتورة ${invoice.customerName}',
+      );
+    } on Exception catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('خطأ في مشاركة PDF: $e')),
+      );
+    }
+  }
+
+  Future<void> _shareInvoiceViaWhatsApp(
+    Invoice invoice, {
+    required bool asPdf,
+  }) async {
+    try {
+      final customerRepo = ref.read(customerRepositoryProvider);
+      final customer = await customerRepo.getCustomerById(invoice.customerId);
+
+      if (customer == null ||
+          (customer.phone == null || customer.phone!.isEmpty)) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('رقم هاتف العميل غير متوفر')),
+        );
+        return;
+      }
+
+      final sharingService = ref.read(sharingServiceProvider);
+
+      if (asPdf) {
+        final pdfService = ref.read(pdfServiceProvider);
+        final primaryColor = ref.read(colorCustomizationProvider).value;
+        final pdfBytes = await pdfService.generateInvoicePdf(
+          invoice,
+          customer,
+          primaryColor: primaryColor,
+        );
+        await sharingService.sharePdfFile(
+          bytes: pdfBytes,
+          fileName: 'invoice_${invoice.id}.pdf',
+          text: 'فاتورة رقم ${invoice.id}',
+        );
+      } else {
+        final message =
+            'مرحباً ${customer.name}، إليك تفاصيل فاتورة رقم ${invoice.id}:\n'
+            'الإجمالي: ${invoice.grandTotal.toStringAsFixed(2)} ر.س\n'
+            'شكراً لتعاملك معنا.';
+        await sharingService.shareToWhatsApp(
+          phone: customer.phone!,
+          message: message,
+        );
+      }
+    } on Exception catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('خطأ في المشاركة عبر الواتساب: $e')),
+      );
+    }
+  }
+
+  Future<void> _deleteInvoice(Invoice invoice) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('حذف الفاتورة'),
+        content: const Text('هل أنت متأكد من حذف هذه الفاتورة؟'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('إلغاء'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text(
+              'حذف',
+              style: TextStyle(color: SemanticColors.error),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed ?? false) {
+      await ref.read(deleteInvoiceProvider(invoice.id).future);
+    }
   }
 
   Color _getStatusColor(String status) {
@@ -254,16 +428,16 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     }
   }
 
-  IconData _getStatusIcon(String status) {
+  IconData _getStatusIcon(String status, AppIconsData appIcons) {
     switch (status) {
       case 'paid':
-        return Icons.check_circle;
+        return appIcons.check;
       case 'overdue':
-        return Icons.error_outline;
+        return appIcons.error;
       case 'issued':
-        return Icons.send_outlined;
+        return appIcons.send;
       default:
-        return Icons.edit_outlined;
+        return appIcons.edit;
     }
   }
 }

@@ -1,9 +1,11 @@
 import 'package:basser_app/features/auth/data/services/auth_service.dart';
 import 'package:basser_app/features/customers/data/models/customer_model.dart';
 import 'package:basser_app/features/customers/data/repositories/customer_repository_impl.dart';
+import 'package:basser_app/features/customers/data/services/contact_service.dart';
 import 'package:basser_app/features/customers/domain/repositories/customer_repository.dart';
 import 'package:basser_app/features/invoices/data/models/invoice_model.dart';
 import 'package:basser_app/features/invoices/data/repositories/invoice_repository_impl.dart';
+import 'package:basser_app/features/invoices/data/services/sharing_service.dart';
 import 'package:basser_app/features/invoices/domain/repositories/invoice_repository.dart';
 import 'package:basser_app/services/settings_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +15,7 @@ import 'package:path_provider/path_provider.dart';
 
 // تصدير theme provider للاستخدام في التطبيق
 export 'providers/theme_provider.dart';
+export 'services/notification_service.dart';
 
 /// مزود خدمة التخزين الآمن (Secure Storage)
 ///
@@ -135,6 +138,20 @@ final settingsServiceProvider = Provider<SettingsService>((ref) {
     secureStorage: secureStorage,
   );
 });
+
+/// مزود إعدادات الشركة والتخصيص
+final companySettingsProvider = FutureProvider<Map<String, String?>>(
+  (ref) => ref.watch(settingsServiceProvider).getCompanySettings(),
+);
+
+/// مزود خدمة جهات الاتصال (Contact Service)
+final contactServiceProvider = Provider<ContactService>(
+  (ref) => ContactService(),
+);
+
+/// مزود خدمة المشاركة (Sharing Service)
+final sharingServiceProvider =
+    Provider<SharingService>((ref) => SharingService());
 
 /// مزود مستودع العملاء (Customer Repository)
 ///
