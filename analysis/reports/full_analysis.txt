@@ -1,0 +1,97 @@
+=== Basic Statistics ===
+Total .md files: 1156
+REPORT files: 275
+STATUS files: 42
+TASK files: 30
+LOG files: 106
+
+=== Directory Distribution ===
+    653 .kiro
+    465 Documentation
+     12 .github
+      9 test
+      4 scripts
+      3 logs
+      2 docs
+      1 SECURITY.md
+      1 README.md
+      1 lib
+      1 ios
+      1 .githooks
+      1 .dart_tool
+      1 CONTRIBUTING.md
+      1 CHANGELOG.md
+
+=== Top 20 Largest Files ===
+  385928 total
+    3153 ./CHANGELOG.md
+    2863 ./.kiro/specs/active/ui-ux-improvements/design.md
+    2606 ./.kiro/docs/plans/git/GIT_MANAGEMENT_PLAN.md
+    1936 ./Documentation/reports/git-github/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md
+    1880 ./.kiro/docs/plans/git/archive/GIT_MANAGEMENT_PLAN_V2.md
+    1845 ./Documentation/reports/COMPREHENSIVE_ENGINEERING_COGNITIVE_ANALYSIS.md
+    1737 ./.kiro/specs/completed/context-optimization-closure/CELEBRATION.md
+    1686 ./Documentation/Archive/2025-12/ONBOARDING_TUTORIAL_REVIEW_REPORT.md
+    1551 ./.kiro/specs/completed/repository-optimization/error-tracking/design.md
+    1541 ./.kiro/specs/active/enhanced-onboarding/design.md
+    1538 ./.kiro/specs/active/repository-cleanup-organization/tasks.md
+    1509 ./Documentation/reports/ui-ux/BRAND_VISUAL_IDENTITY_SYSTEM.md
+    1413 ./Documentation/guides/DEVELOPER_GUIDE_UPDATED.md
+    1316 ./.kiro/specs/active/i18n-localization-system/design.md
+    1289 ./.kiro/reference/advanced-tech-stack.md
+    1244 ./.kiro/specs/active/flutter-standards-unification/design.md
+    1243 ./.kiro/specs/completed/git-merge-strategy/tasks.md
+    1222 ./.kiro/specs/active/testing-integration/tasks.md
+    1221 ./.kiro/specs/active/flutter-standards-unification/tasks.md
+
+=== Detected Duplicates ===
+ACTION_PLAN.md
+ADDITIONAL_COMPONENTS.md
+ai-development-standards.md
+analysis-report.md
+ANALYSIS_REPORT.md
+api-design.md
+CHANGELOG.md
+CLEANUP_EXECUTION_REPORT.md
+CLEANUP_REPORT.md
+COMPLETE_SUMMARY.md
+COMPLETION_REPORT.md
+COMPLETION_SUMMARY.md
+COMPREHENSIVE_ANALYSIS_REPORT.md
+COMPREHENSIVE_REPOSITORY_AUDIT.md
+COMPREHENSIVE_REVIEW_REPORT.md
+COMPREHENSIVE_RISK_ANALYSIS.md
+CONTRIBUTING.md
+CURRENT_STATUS.md
+design.md
+development-environment.md
+development-standards.md
+DEV_ENVIRONMENT_ANALYSIS.md
+EXECUTIVE_REVIEW_SUMMARY.md
+EXECUTIVE_SUMMARY.md
+FINAL_REPORT.md
+FINAL_SESSION_REPORT.md
+FINAL_STATUS.md
+FINAL_SUMMARY.md
+FLUTTER_ANALYSIS_REPORT.md
+FLUTTER_ANALYZE_FIX.md
+frontend-standards.md
+getting-started.md
+GIT_AUTOMATION_SUMMARY.md
+GIT_PUSH_SUCCESS_REPORT.md
+GIT_SYNC_ANALYSIS.md
+HOTFIX_SUMMARY.md
+IMMEDIATE_ACTION_PLAN.md
+IMPLEMENTATION_REPORT.md
+INDEX.md
+intelligent-content-management.md
+ISSUES_REPORT.md
+kiro-compliance.md
+mcp-best-practices.md
+mcp-github-server-fix.md
+microservices-patterns.md
+performance-optimization.md
+PHASE_2_COMPLETION_REPORT.md
+PHASE_3_COMPLETION_REPORT.md
+philosophy.md
+POWER.md
