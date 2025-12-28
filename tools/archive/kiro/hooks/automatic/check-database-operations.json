@@ -1,0 +1,13 @@
+{
+  "name": "check-database-operations",
+  "description": "يتحقق من عمليات Isar بشكل صحيح وآمن",
+  "enabled": true,
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "lib/data/repositories/**/*.dart"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "تم حفظ repository: {{filePath}}\n\nيرجى التحقق من عمليات قاعدة البيانات:\n\n**1. Transactions:**\n- استخدام writeTxn() لعمليات الكتابة\n- استخدام txn() لعمليات القراءة المعقدة\n- عدم تداخل transactions\n\n**2. Error Handling:**\n- try-catch لجميع عمليات DB\n- معالجة IsarError بشكل خاص\n- رسائل خطأ واضحة\n- عدم ابتلاع الأخطاء\n\n**3. Performance:**\n- استخدام indexes للحقول المستخدمة في البحث\n- استخدام where() بدلاً من filter() حيثما أمكن\n- limit() للنتائج الكبيرة\n- تجنب تحميل جميع البيانات مرة واحدة\n\n**4. Data Integrity:**\n- التحقق من null قبل العمليات\n- validation للبيانات قبل الحفظ\n- cascade delete للعلاقات\n\n**5. Testing:**\n- استخدام Isar.open() في الذاكرة للاختبارات\n- إغلاق الاتصالات في tearDown()\n- اختبار جميع CRUD operations\n\n**6. Best Practices:**\n- Repository Pattern\n- فصل Models عن Entities\n- استخدام toModel() و toEntity()\n\nتحقق من flutter-best-practices.md"
+  }
+}
