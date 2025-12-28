@@ -1,0 +1,66 @@
+Analyzing Basser_MVP...                                         
+
+   info • The line length exceeds the 80-character limit • lib/core/assets/app_logo.dart:206:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/providers/theme_provider.dart:37:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/providers/theme_provider.dart:57:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/providers/theme_provider.dart:63:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_theme.dart:55:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_theme.dart:92:81 • lines_longer_than_80_chars
+   info • The value of the argument is redundant because it matches the default value • lib/core/theme/app_theme.dart:94:20 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • lib/core/theme/app_theme.dart:98:18 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • lib/core/theme/app_theme.dart:99:18 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • lib/core/theme/app_theme.dart:100:20 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • lib/core/theme/app_theme.dart:106:20 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • lib/core/theme/app_theme.dart:108:22 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • lib/core/theme/app_theme.dart:110:18 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • lib/core/theme/app_theme.dart:112:20 • avoid_redundant_argument_values
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_theme.dart:138:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/core/theme/services/appearance_service.dart:7:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/services/appearance_service.dart:12:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/services/appearance_service.dart:13:14 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/services/appearance_service.dart:15:19 • public_member_api_docs
+   info • 'bool' parameters should be named parameters • lib/core/theme/services/appearance_service.dart:50:32 • avoid_positional_boolean_parameters
+   info • 'bool' parameters should be named parameters • lib/core/theme/services/appearance_service.dart:64:32 • avoid_positional_boolean_parameters
+   info • The line length exceeds the 80-character limit • lib/core/theme/services/appearance_service.dart:79:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/services/color_customization_service.dart:7:81 • lines_longer_than_80_chars
+   info • Unnecessary use of a block function body • lib/core/theme/services/color_customization_service.dart:51:37 • prefer_expression_function_bodies
+   info • The line length exceeds the 80-character limit • lib/core/theme/services/color_customization_service.dart:65:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/core/theme/services/font_customization_service.dart:8:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/services/font_customization_service.dart:12:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/services/font_customization_service.dart:13:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/services/font_customization_service.dart:15:26 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/services/font_customization_service.dart:103:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/services/icon_customization_service.dart:8:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/services/icon_customization_service.dart:11:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/services/icon_customization_service.dart:13:20 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/services/icon_customization_service.dart:59:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:6:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:7:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:87:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:163:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:164:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:193:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:194:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/widgets/app_app_bar.dart:6:7 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/core/widgets/color_picker_dialog.dart:33:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/dashboard/presentation/screens/dashboard_screen.dart:236:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/data/services/pdf_service.dart:241:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/data/services/pdf_service.dart:267:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/data/services/pdf_service.dart:317:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/data/services/pdf_service.dart:325:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:186:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:346:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:370:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:57:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:73:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:84:81 • lines_longer_than_80_chars
+   info • 'Future'-returning calls in a non-'async' function • lib/features/settings/presentation/screens/appearance_settings_screen.dart:93:39 • discarded_futures
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:110:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:126:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:138:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/settings/presentation/widgets/font_settings_tile.dart:9:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/settings/presentation/widgets/font_settings_tile.dart:10:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/settings/presentation/widgets/icon_settings_tile.dart:9:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/settings/presentation/widgets/icon_settings_tile.dart:10:9 • public_member_api_docs
+
+62 issues found. (ran in 5.2s)
