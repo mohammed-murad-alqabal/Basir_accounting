@@ -1,10 +1,10 @@
 # Design Document - Strategic Vision & Execution
 
 **المشروع:** بصير MVP  
-**التاريخ:** 6 ديسمبر 2025  
+**التاريخ:** 26 ديسمبر 2025  
 **المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**الإصدار:** 1.0  
-**الحالة:** ✅ نشط
+**الإصدار:** 1.1  
+**الحالة:** ✅ نشط - يشمل مكونات التوسع الإقليمي
 
 ---
 
@@ -237,6 +237,26 @@
 
 **التحديث:** شهري
 
+#### Component 10: Regional Localization Engine (السنة الثانية+)
+
+**الغرض:** دعم التوسع الإقليمي والتوطين الثقافي للأسواق العربية
+
+**المكونات الفرعية:**
+
+- Tax System Adapter: محول للأنظمة الضريبية (ZATCA, UAE VAT, Egypt VAT, Jordan Sales Tax)
+- Currency Manager: إدارة العملات وأسعار الصرف
+- Cultural Localizer: التوطين الثقافي (مصطلحات، تقويم، تنسيقات)
+- Regional Template Engine: قوالب إقليمية للفواتير والتقارير
+
+**البيانات المطلوبة:**
+
+- تكوينات ضريبية لكل دولة
+- أسعار صرف حية
+- قاموس مصطلحات إقليمي
+- قوالب محلية
+
+**التحديث:** عند دخول سوق جديد
+
 ---
 
 ## Data Models
@@ -448,6 +468,31 @@ Risk:
       status: enum[planned, in_progress, completed]
   status: enum[identified, mitigated, realized]
   last_review: date
+```
+
+### 10. Regional Tax Configuration Model (السنة الثانية+)
+
+```yaml
+RegionalTaxConfig:
+  id: string
+  country_code: string # SA, AE, EG, JO, KW
+  country_name: string
+  tax_system:
+    name: string # ZATCA, UAE VAT, Egypt VAT, etc.
+    vat_rate: number
+    compliance_api: string
+    certificate_required: boolean
+  currency:
+    code: string # SAR, AED, EGP, JOD, KWD
+    symbol: string
+    decimal_places: number
+  localization:
+    calendar_system: enum[hijri, gregorian, coptic]
+    number_format: enum[arabic_western, arabic_eastern]
+    date_format: string
+    terminology_set: string
+  status: enum[planned, testing, active]
+  launch_date: date
 ```
 
 ---
