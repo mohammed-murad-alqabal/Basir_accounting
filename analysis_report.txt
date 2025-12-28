@@ -1,19 +1,76 @@
 Analyzing Basser_MVP...                                         
 
-warning • The value of the local variable 'binding' isn't used • integration_test/live_app_tour_test.dart:29:9 • unused_local_variable
-   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:52:5 • avoid_print
-   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:57:7 • avoid_print
-   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:63:5 • avoid_print
-   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:73:5 • avoid_print
-   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:80:5 • avoid_print
-   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:87:5 • avoid_print
-   info • Don't invoke 'print' in production code • integration_test/live_app_tour_test.dart:93:5 • avoid_print
-   info • Missing documentation for a public member • lib/core/utils/input_validator.dart:342:9 • public_member_api_docs
-   info • Missing documentation for a public member • lib/core/utils/input_validator.dart:356:9 • public_member_api_docs
-   info • Missing documentation for a public member • lib/core/utils/input_validator.dart:386:9 • public_member_api_docs
-   info • Missing documentation for a public member • lib/features/auth/domain/models/auth_models.dart:8:9 • public_member_api_docs
-   info • Missing documentation for a public member • lib/features/auth/domain/models/auth_models.dart:35:9 • public_member_api_docs
-   info • Catch clause should use 'on' to specify the type of exception being caught • test/helpers/test_helpers.dart:148:7 • avoid_catches_without_on_clauses
-   info • Don't invoke 'print' in production code • test/helpers/test_helpers.dart:164:7 • avoid_print
-   info • Don't invoke 'print' in production code • test/helpers/test_helpers.dart:168:7 • avoid_print
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:5:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:7:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:8:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:9:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:12:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:13:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:14:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:15:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:16:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:17:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:18:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:19:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:20:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:21:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:22:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:23:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:24:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:25:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:26:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:27:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:28:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:29:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:30:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:31:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:32:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:35:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:36:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:37:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:38:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:39:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:40:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:41:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:42:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:43:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:44:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:45:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:46:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:47:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:48:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:49:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:50:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:51:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:52:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:53:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:54:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:55:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:56:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:57:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:58:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:59:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:60:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:61:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:64:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:65:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:165:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/tokens/app_icons.dart:166:9 • public_member_api_docs
+   info • Unnecessary use of double quotes • lib/features/customers/presentation/screens/customer_details_screen.dart:1:8 • prefer_single_quotes
+   info • The line length exceeds the 80-character limit • lib/features/customers/presentation/screens/customers_screen.dart:72:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/dashboard/presentation/screens/dashboard_screen.dart:119:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/dashboard/presentation/screens/dashboard_screen.dart:164:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/dashboard/presentation/screens/dashboard_screen.dart:172:81 • lines_longer_than_80_chars
+  error • Invalid constant value • lib/features/dashboard/presentation/screens/dashboard_screen.dart:178:17 • invalid_constant
+   info • The line length exceeds the 80-character limit • lib/features/dashboard/presentation/screens/dashboard_screen.dart:216:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/dashboard/presentation/screens/dashboard_screen.dart:256:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/dashboard/presentation/screens/dashboard_screen.dart:263:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:434:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:464:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:472:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:474:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:688:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:188:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:348:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:372:81 • lines_longer_than_80_chars
 

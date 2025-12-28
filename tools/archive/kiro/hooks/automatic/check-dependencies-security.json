@@ -1,0 +1,13 @@
+{
+  "name": "check-dependencies-security",
+  "description": "يفحص pubspec.yaml للثغرات الأمنية في التبعيات",
+  "enabled": true,
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "pubspec.yaml"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "تم تحديث pubspec.yaml\n\nيرجى:\n1. فحص التبعيات الجديدة للثغرات الأمنية المعروفة\n2. التحقق من استخدام أحدث الإصدارات الآمنة\n3. البحث عن تبعيات غير موثوقة أو مهجورة\n4. التأكد من عدم وجود تعارضات في الإصدارات\n5. التحقق من licenses المتوافقة\n\nاستخدم pub.dev للتحقق من:\n- تاريخ آخر تحديث\n- عدد likes و pub points\n- وجود ثغرات أمنية معروفة\n- جودة الصيانة"
+  }
+}

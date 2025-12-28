@@ -1,0 +1,13 @@
+{
+  "name": "check-arabic-translation",
+  "description": "يتحقق من وجود ترجمات عربية لجميع النصوص في الواجهة",
+  "enabled": true,
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "lib/features/**/presentation/**/*.dart"
+  },
+  "action": {
+    "type": "askAgent",
+    "prompt": "تم حفظ ملف واجهة: {{filePath}}\n\nيرجى التحقق من:\n1. جميع النصوص المعروضة للمستخدم بالعربية الفصحى\n2. عدم وجود نصوص إنجليزية في الواجهة\n3. استخدام المصطلحات الموحدة من arabic-language-standards.md\n4. علامات الترقيم العربية (،؟) وليست الإنجليزية\n5. اتجاه النص RTL للعربية\n6. استخدام TextDirection.rtl و TextAlign.start\n\nابحث عن:\n- Text('...')\n- AppBar(title: ...)\n- Button labels\n- Dialog messages\n- Hint texts\n- Error messages\n\nتأكد من مطابقة المصطلحات لقاموس المصطلحات في arabic-language-standards.md"
+  }
+}

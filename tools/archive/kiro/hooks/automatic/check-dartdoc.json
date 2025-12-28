@@ -1,0 +1,9 @@
+{
+  "id": "check-dartdoc",
+  "name": "التحقق من التوثيق",
+  "description": "يتحقق من وجود DartDoc لجميع الـ public APIs ويذكّر بالتوثيق إذا كان ناقصاً",
+  "eventType": "onSave",
+  "filePatterns": ["lib/**/*.dart"],
+  "hookAction": "askAgent",
+  "outputPrompt": "تحقق من أن جميع الـ public classes, methods, properties موثقة بـ DartDoc (///).\n\nوفقاً لمعايير التوثيق في .kiro/steering/documentation-standards.md:\n- يجب أن يكون هناك /// قبل كل public API\n- شرح واضح بالعربية\n- توثيق المعاملات والقيم المرجعة\n- أمثلة عملية للاستخدام\n\nإذا وجدت APIs غير موثقة، ذكّر المستخدم بتوثيقها."
+}
