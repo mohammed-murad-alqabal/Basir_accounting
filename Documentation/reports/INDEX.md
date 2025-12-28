@@ -175,13 +175,13 @@ Documentation/reports/
 
 **تقارير الاختبار:**
 
-- 📄 [اختبار الموبايل المفصل](testing/MOBILE_TESTING_REPORT_DETAILED.md)
-- 📄 [ملخص الاختبارات](testing/TESTING_SUMMARY.md)
+- 📄 اختبار الموبايل المفصل
+- 📄 ملخص الاختبارات
 
 **تقارير شاملة:**
 
-- 📄 [الملخص الشامل](archive/COMPLETE_SUMMARY.md)
-- 📄 [التقرير النهائي](archive/FINAL_REPORT.md)
+- **تقارير الأرشيف**: تم دمجها في التقارير الحالية.
+- 📄 التقرير النهائي
 
 ---
 

@@ -74,5 +74,11 @@ class Customer with _$Customer {
 
     /// ملاحظات عن العميل (اختياري)
     String? notes,
+
+    /// سقف الرصيد (الائتمان) المسموح به
+    @Default(0.0) double creditLimit,
+
+    /// الرصيد الحالي للعميل
+    @Default(0.0) double balance,
   }) = _Customer;
 }

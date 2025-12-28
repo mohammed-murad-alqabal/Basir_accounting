@@ -60,7 +60,9 @@ class CustomerModel {
     ..email = customer.email
     ..address = customer.address
     ..createdAt = customer.createdAt
-    ..updatedAt = customer.updatedAt;
+    ..updatedAt = customer.updatedAt
+    ..creditLimit = customer.creditLimit
+    ..balance = customer.balance;
 
   /// معرف Isar التلقائي (Auto-increment)
   ///
@@ -119,6 +121,12 @@ class CustomerModel {
   /// يتم تحديثه تلقائيًا عند تعديل بيانات العميل.
   late DateTime updatedAt;
 
+  /// سقف الرصيد (الائتمان)
+  double creditLimit = 0;
+
+  /// الرصيد الحالي
+  double balance = 0;
+
   /// تحويل النموذج إلى كيان (Entity)
   ///
   /// يحول نموذج Isar إلى كيان العميل (Customer Entity)
@@ -139,5 +147,7 @@ class CustomerModel {
         address: address,
         createdAt: createdAt,
         updatedAt: updatedAt,
+        creditLimit: creditLimit,
+        balance: balance,
       );
 }

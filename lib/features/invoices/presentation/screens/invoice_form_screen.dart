@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basser_app/core/theme/services/icon_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
@@ -66,6 +67,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     final customersAsync = ref.watch(
       customersProvider,
     );
+    final appIcons = ref.watch(appIconsProvider); // Get icons
 
     return Scaffold(
       backgroundColor: SemanticColors.background,
@@ -95,6 +97,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 label: 'تاريخ الإصدار',
                 date: _issuedDate,
                 onTap: () => _selectDate(context, true),
+                icon: appIcons.calendar, // Dynamic
               ),
               const SizedBox(height: Spacing.md),
 
@@ -103,11 +106,12 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 label: 'تاريخ الاستحقاق',
                 date: _dueDate,
                 onTap: () => _selectDate(context, false),
+                icon: appIcons.calendar, // Dynamic
               ),
               const SizedBox(height: Spacing.md),
 
               // نسبة الضريبة
-              _buildTaxRateField(),
+              _buildTaxRateField(appIcons), // Pass icons
               const SizedBox(height: Spacing.md),
 
               // حالة الفاتورة
@@ -115,7 +119,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               const SizedBox(height: Spacing.md),
 
               // البنود
-              _buildItemsSection(),
+              _buildItemsSection(appIcons), // Pass icons
               const SizedBox(height: Spacing.md),
 
               // الإجماليات
@@ -127,7 +131,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 controller: _notesController,
                 label: 'ملاحظات (اختياري)',
                 hint: 'أضف ملاحظات عن الفاتورة',
-                prefixIcon: const Icon(Icons.note),
+                prefixIcon: Icon(appIcons.note), // Dynamic
                 maxLines: 3,
               ),
               const SizedBox(height: Spacing.xl),
@@ -137,7 +141,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 text: isEditing ? 'حفظ التعديلات' : 'إضافة الفاتورة',
                 onPressed: _isLoading ? null : _saveInvoice,
                 isLoading: _isLoading,
-                icon: Icons.save,
+                icon: appIcons.save, // Dynamic
               ),
             ],
           ),
@@ -199,6 +203,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     required String label,
     required DateTime date,
     required VoidCallback onTap,
+    required IconData icon, // Added parameter
   }) =>
       Container(
         padding: const EdgeInsets.all(Spacing.md),
@@ -211,7 +216,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           onTap: onTap,
           child: Row(
             children: [
-              const Icon(Icons.calendar_today, color: SemanticColors.primary),
+              Icon(icon, color: SemanticColors.primary), // Use dynamic icon
               const SizedBox(width: Spacing.md),
               Expanded(
                 child: Column(
@@ -241,7 +246,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ),
       );
 
-  Widget _buildTaxRateField() => Container(
+  Widget _buildTaxRateField(AppIconsData appIcons) => Container(
         padding: const EdgeInsets.all(Spacing.md),
         decoration: BoxDecoration(
           color: SemanticColors.surface,
@@ -250,7 +255,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ),
         child: Row(
           children: [
-            const Icon(Icons.percent, color: SemanticColors.primary),
+            Icon(appIcons.percent, color: SemanticColors.primary), // Dynamic
             const SizedBox(width: Spacing.md),
             Expanded(
               child: Column(
@@ -276,7 +281,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.edit, size: 20),
+              icon: Icon(appIcons.edit, size: 20), // Dynamic
               tooltip: 'تعديل نسبة الضريبة',
               onPressed: _showTaxRateDialog,
             ),
@@ -325,7 +330,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ),
       );
 
-  Widget _buildItemsSection() => Container(
+  Widget _buildItemsSection(AppIconsData appIcons) => Container(
         padding: const EdgeInsets.all(Spacing.md),
         decoration: BoxDecoration(
           color: SemanticColors.surface,
@@ -347,8 +352,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(
-                    Icons.add_circle,
+                  icon: Icon(
+                    appIcons.addCircle, // Dynamic
                     color: SemanticColors.primary,
                   ),
                   tooltip: 'إضافة بند جديد',
@@ -396,8 +401,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                             ),
                           ),
                           IconButton(
-                            icon: const Icon(
-                              Icons.delete,
+                            icon: Icon(
+                              appIcons.delete, // Dynamic
                               color: SemanticColors.error,
                             ),
                             tooltip: 'حذف البند',
@@ -426,8 +431,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       decoration: BoxDecoration(
         color: SemanticColors.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(Radii.md),
-        border:
-            Border.all(color: SemanticColors.primary.withValues(alpha: 0.3)),
+        border: Border.all(
+          color: SemanticColors.primary.withValues(alpha: 0.3),
+        ),
       ),
       child: Column(
         children: [
