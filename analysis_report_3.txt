@@ -1,0 +1,18 @@
+Analyzing Basser_MVP...                                         
+
+   info • The line length exceeds the 80-character limit • lib/core/theme/services/appearance_service.dart:84:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/services/color_customization_service.dart:55:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:57:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:73:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:84:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:110:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:126:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:138:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/widgets/font_settings_tile.dart:54:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/widgets/font_settings_tile.dart:87:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/widgets/font_settings_tile.dart:95:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/widgets/icon_settings_tile.dart:52:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/widgets/icon_settings_tile.dart:80:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/widgets/icon_settings_tile.dart:88:81 • lines_longer_than_80_chars
+
+14 issues found. (ran in 5.5s)
