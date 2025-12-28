@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "Dart-Code.flutter",
+    "Dart-Code.dart-code",
+    "robert-brunhage.flutter-riverpod-snippets",
+    "FelixAngelov.bloc",
+    "usernamehw.errorlens",
+    "eamodio.gitlens",
+    "ms-azuretools.vscode-docker"
+  ]
+}

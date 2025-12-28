@@ -505,6 +505,13 @@ security:
 - [أفضل الممارسات](.kiro/steering/reference/best-practices.md)
 - [الوثائق الاستراتيجية](.kiro/steering/reference/strategic-docs.md)
 
+**التقنيات المتقدمة (New):**
+
+- [Microservices Patterns](.kiro/steering/technologies/microservices-patterns.md)
+- [Advanced Security](.kiro/steering/security/advanced-security-patterns.md)
+- [Performance Guide](.kiro/steering/performance-optimization.md)
+- [EARS Template](.kiro/templates/ears-requirements.md)
+
 ### المواصفات (Specs)
 
 - [نظام التوثيق](.kiro/specs/documentation-system/)
