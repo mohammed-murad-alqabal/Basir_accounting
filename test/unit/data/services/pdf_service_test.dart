@@ -6,15 +6,30 @@ library;
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:basser_app/features/invoices/data/services/pdf_service.dart';
 import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basser_app/services/settings_service.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 
 import '../../../helpers/mock_data.dart';
 
+class MockSettingsService extends Mock implements SettingsService {
+  @override
+  Future<Map<String, String?>> getCompanySettings() async => {
+        'companyName': 'شركة اختبار',
+        'taxNumber': '123456789',
+        'taxRate': '0.15',
+        'currencySymbol': 'ر.س',
+        'currencyCode': 'SAR',
+      };
+}
+
 void main() {
   late PdfService pdfService;
+  late MockSettingsService mockSettingsService;
 
   setUp(() {
-    pdfService = PdfService();
+    mockSettingsService = MockSettingsService();
+    pdfService = PdfService(settingsService: mockSettingsService);
   });
 
   setUpAll(TestWidgetsFlutterBinding.ensureInitialized);

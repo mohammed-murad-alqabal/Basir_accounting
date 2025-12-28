@@ -628,8 +628,6 @@ tar -xzf logs/archive/archive_DATE.tar.gz
 
 ### الوثائق الداخلية
 
-- [Design Document](../../../.kiro/specs/completed/error-tracking-system/design.md)
-- [Requirements](../../../.kiro/specs/completed/error-tracking-system/requirements.md)
 - [Tasks](../../../.kiro/specs/completed/error-tracking-system/tasks.md)
 
 ### الأدوات المستخدمة

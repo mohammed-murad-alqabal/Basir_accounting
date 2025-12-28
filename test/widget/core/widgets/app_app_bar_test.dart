@@ -1,6 +1,7 @@
 import 'package:basser_app/core/theme/app_theme.dart';
 import 'package:basser_app/core/widgets/app_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -11,8 +12,10 @@ void main() {
 
       // Act
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(appBar: AppAppBar(title: title)),
+        const ProviderScope(
+          child: MaterialApp(
+            home: Scaffold(appBar: AppAppBar(title: title)),
+          ),
         ),
       );
 
@@ -23,8 +26,10 @@ void main() {
     testWidgets('should show back button by default', (tester) async {
       // Arrange & Act
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(appBar: AppAppBar(title: 'Test')),
+        const ProviderScope(
+          child: MaterialApp(
+            home: Scaffold(appBar: AppAppBar(title: 'Test')),
+          ),
         ),
       );
 
@@ -37,9 +42,11 @@ void main() {
     ) async {
       // Arrange & Act
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            appBar: AppAppBar(title: 'Test', showBackButton: false),
+        const ProviderScope(
+          child: MaterialApp(
+            home: Scaffold(
+              appBar: AppAppBar(title: 'Test', showBackButton: false),
+            ),
           ),
         ),
       );
@@ -55,27 +62,29 @@ void main() {
       var navigatorPopped = false;
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Builder(
-            builder: (context) => Scaffold(
-              appBar: const AppAppBar(title: 'Test'),
-              body: ElevatedButton(
-                onPressed: () async {
-                  await Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => Scaffold(
-                        appBar: AppAppBar(
-                          title: 'Second Screen',
-                          onBackPressed: () {
-                            navigatorPopped = true;
-                            Navigator.of(context).pop();
-                          },
+        ProviderScope(
+          child: MaterialApp(
+            home: Builder(
+              builder: (context) => Scaffold(
+                appBar: const AppAppBar(title: 'Test'),
+                body: ElevatedButton(
+                  onPressed: () async {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => Scaffold(
+                          appBar: AppAppBar(
+                            title: 'Second Screen',
+                            onBackPressed: () {
+                              navigatorPopped = true;
+                              Navigator.of(context).pop();
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-                child: const Text('Navigate'),
+                    );
+                  },
+                  child: const Text('Navigate'),
+                ),
               ),
             ),
           ),
@@ -101,19 +110,21 @@ void main() {
 
       // Act
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            appBar: AppAppBar(
-              title: 'Test',
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    actionPressed = true;
-                  },
-                ),
-                IconButton(icon: const Icon(Icons.search), onPressed: () {}),
-              ],
+        ProviderScope(
+          child: MaterialApp(
+            home: Scaffold(
+              appBar: AppAppBar(
+                title: 'Test',
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () {
+                      actionPressed = true;
+                    },
+                  ),
+                  IconButton(icon: const Icon(Icons.search), onPressed: () {}),
+                ],
+              ),
             ),
           ),
         ),
@@ -136,12 +147,14 @@ void main() {
 
       // Act
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            appBar: AppAppBar(
-              title: 'Test',
-              backgroundColor: customBgColor,
-              foregroundColor: customFgColor,
+        const ProviderScope(
+          child: MaterialApp(
+            home: Scaffold(
+              appBar: AppAppBar(
+                title: 'Test',
+                backgroundColor: customBgColor,
+                foregroundColor: customFgColor,
+              ),
             ),
           ),
         ),
@@ -156,8 +169,10 @@ void main() {
     testWidgets('should use default colors when not provided', (tester) async {
       // Arrange & Act
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(appBar: AppAppBar(title: 'Test')),
+        const ProviderScope(
+          child: MaterialApp(
+            home: Scaffold(appBar: AppAppBar(title: 'Test')),
+          ),
         ),
       );
 
@@ -170,8 +185,10 @@ void main() {
     testWidgets('should have elevation of 0', (tester) async {
       // Arrange & Act
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(appBar: AppAppBar(title: 'Test')),
+        const ProviderScope(
+          child: MaterialApp(
+            home: Scaffold(appBar: AppAppBar(title: 'Test')),
+          ),
         ),
       );
 
@@ -183,8 +200,10 @@ void main() {
     testWidgets('should center title', (tester) async {
       // Arrange & Act
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(appBar: AppAppBar(title: 'Test')),
+        const ProviderScope(
+          child: MaterialApp(
+            home: Scaffold(appBar: AppAppBar(title: 'Test')),
+          ),
         ),
       );
 

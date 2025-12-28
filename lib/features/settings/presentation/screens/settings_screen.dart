@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:basser_app/core/providers.dart';
+import 'package:basser_app/core/theme/services/icon_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
+import 'package:basser_app/features/settings/presentation/screens/appearance_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,6 +26,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final appIcons = ref.watch(appIconsProvider);
 
     return Scaffold(
       appBar: const AppAppBar(title: 'الإعدادات'),
@@ -32,13 +35,19 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // قسم إعدادات الشركة والفواتير
+            _buildSectionTitle('إعدادات الشركة والفواتير', colorScheme),
+            const SizedBox(height: Spacing.md),
+            _buildCompanySettingsCard(colorScheme, appIcons),
+            const SizedBox(height: Spacing.xl),
+
             // قسم الحساب
             _buildSectionTitle('الحساب', colorScheme),
             const SizedBox(height: Spacing.md),
             AppListCard(
               title: 'تعديل بيانات الحساب',
               subtitle: 'غيّر اسم المستخدم وكلمة المرور',
-              leading: Icon(Icons.person, color: colorScheme.primary),
+              leading: Icon(appIcons.person, color: colorScheme.primary),
               onTap: _handleEditAccount,
             ),
             const SizedBox(height: Spacing.xl),
@@ -64,22 +73,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             const SizedBox(height: Spacing.xl),
 
             // قسم المظهر
-            _buildSectionTitle('المظهر', colorScheme),
+            _buildSectionTitle('المظهر والتخصيص', colorScheme),
             const SizedBox(height: Spacing.md),
-            AppCard(
-              child: SwitchListTile(
-                title: const ResponsiveText('الوضع الليلي', maxLines: 1),
-                subtitle: const ResponsiveText(
-                  'استخدم الوضع الليلي للعيون',
-                  maxLines: 2,
-                ),
-                value: ref.watch(isDarkModeProvider),
-                onChanged: (value) {
-                  unawaited(
-                    ref.read(themeProvider.notifier).toggleTheme(),
-                  );
-                },
-              ),
+            AppListCard(
+              title: 'إعدادات المظهر',
+              subtitle: 'الوضع الليلي، الألوان، الخطوط، والأيقونات',
+              leading: Icon(Icons.palette, color: colorScheme.primary),
+              onTap: () {
+                unawaited(
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const AppearanceSettingsScreen(),
+                    ),
+                  ),
+                );
+              },
             ),
             const SizedBox(height: Spacing.xl),
 
@@ -89,14 +98,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             AppListCard(
               title: 'حول التطبيق',
               subtitle: 'الإصدار 1.0.0',
-              leading: Icon(Icons.info, color: colorScheme.primary),
-              onTap: _showAboutDialog,
+              leading: Icon(appIcons.invoices, color: colorScheme.primary),
+              onTap: () => _showAboutDialog(appIcons),
             ),
             const SizedBox(height: Spacing.sm),
             AppListCard(
               title: 'سياسة الخصوصية',
               subtitle: 'اقرأ سياسة الخصوصية الخاصة بنا',
-              leading: Icon(Icons.privacy_tip, color: colorScheme.primary),
+              leading: Icon(
+                Icons.privacy_tip,
+                color: colorScheme.primary,
+              ),
               onTap: _handlePrivacyPolicy,
             ),
             const SizedBox(height: Spacing.md),
@@ -106,6 +118,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               leading: Icon(Icons.description, color: colorScheme.primary),
               onTap: _handleTermsOfService,
             ),
+
             const SizedBox(height: Spacing.xl),
 
             // زر تسجيل الخروج
@@ -127,6 +140,159 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           color: colorScheme.onSurface,
         ),
       );
+
+  Widget _buildCompanySettingsCard(
+    ColorScheme colorScheme,
+    AppIconsData appIcons,
+  ) {
+    final settingsAsync = ref.watch(companySettingsProvider);
+
+    return settingsAsync.when(
+      data: (settings) => AppListCard(
+        title: settings['companyName'] ?? 'بيانات الشركة',
+        subtitle: 'تخصيص الفواتير، العملة، وعناوين التواصل',
+        leading: Icon(appIcons.invoices, color: colorScheme.primary),
+        onTap: () => _showEditCompanyDialog(settings),
+      ),
+      loading: () => const AppCard(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(Spacing.md),
+            child: LinearProgressIndicator(),
+          ),
+        ),
+      ),
+      error: (e, _) => AppListCard(
+        title: 'خطأ في تحميل الإعدادات',
+        subtitle: 'انقر لإعادة المحاولة',
+        leading: const Icon(Icons.error, color: SemanticColors.error),
+        onTap: () => ref.invalidate(companySettingsProvider),
+      ),
+    );
+  }
+
+  Future<void> _showEditCompanyDialog(Map<String, String?> settings) async {
+    final nameController = TextEditingController(text: settings['companyName']);
+    final taxNumberController = TextEditingController(
+      text: settings['taxNumber'],
+    );
+    final taxRateController = TextEditingController(text: settings['taxRate']);
+    final currencySymbolController = TextEditingController(
+      text: settings['currencySymbol'],
+    );
+    final countryCodeController = TextEditingController(
+      text: settings['defaultCountryCode'],
+    );
+
+    var selectedStyle = settings['invoiceStyle'] ?? 'standard';
+
+    await showDialog<void>(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: const Text('إعدادات الشركة والفواتير'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AppTextField(
+                  controller: nameController,
+                  label: 'اسم الشركة',
+                  hint: 'أدخل اسم شركتك',
+                ),
+                const SizedBox(height: Spacing.md),
+                AppTextField(
+                  controller: taxNumberController,
+                  label: 'الرقم الضريبي',
+                  hint: 'أدخل الرقم الضريبي (اختياري)',
+                ),
+                const SizedBox(height: Spacing.md),
+                AppTextField(
+                  controller: taxRateController,
+                  label: 'نسبة الضريبة (مثال: 0.15)',
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                ),
+                const SizedBox(height: Spacing.md),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppTextField(
+                        controller: currencySymbolController,
+                        label: 'رمز العملة',
+                        hint: 'ر.س',
+                      ),
+                    ),
+                    const SizedBox(width: Spacing.sm),
+                    Expanded(
+                      child: AppTextField(
+                        controller: countryCodeController,
+                        label: 'كود الدولة',
+                        hint: '966',
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: Spacing.md),
+                DropdownButtonFormField<String>(
+                  initialValue: selectedStyle,
+                  decoration: const InputDecoration(
+                    labelText: 'شكل الفاتورة',
+                    border: OutlineInputBorder(),
+                  ),
+                  items: const [
+                    DropdownMenuItem(value: 'standard', child: Text('قياسي')),
+                    DropdownMenuItem(value: 'modern', child: Text('عصري')),
+                    DropdownMenuItem(value: 'compact', child: Text('مختصر')),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) {
+                      setDialogState(() => selectedStyle = value);
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('إلغاء'),
+            ),
+            TextButton(
+              onPressed: () async {
+                final settingsService = ref.read(settingsServiceProvider);
+                try {
+                  await settingsService.setCompanySettings(
+                    companyName: nameController.text.trim(),
+                    taxNumber: taxNumberController.text.trim(),
+                    taxRate: double.tryParse(taxRateController.text) ?? 0.15,
+                    currencySymbol: currencySymbolController.text.trim(),
+                    countryCode: countryCodeController.text.trim(),
+                    invoiceStyle: selectedStyle,
+                  );
+                  ref.invalidate(companySettingsProvider);
+                  if (context.mounted) Navigator.pop(context);
+                  _showSuccessMessage('تم حفظ الإعدادات بنجاح');
+                } on Exception catch (e) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('خطأ في الحفظ: $e'),
+                        backgroundColor: SemanticColors.error,
+                      ),
+                    );
+                  }
+                }
+              },
+              child: const Text('حفظ'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   /// معالج تعديل بيانات الحساب
   void _handleEditAccount() {
@@ -189,13 +355,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   /// معالج عرض معلومات التطبيق
-  void _showAboutDialog() {
+  void _showAboutDialog(AppIconsData appIcons) {
     showAboutDialog(
       context: context,
       applicationName: 'بصير',
       applicationVersion: '1.0.0',
-      applicationIcon: const Icon(
-        Icons.receipt_long,
+      applicationIcon: Icon(
+        appIcons.invoices,
         size: 48,
         color: SemanticColors.primary,
       ),

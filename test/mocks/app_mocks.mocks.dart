@@ -104,6 +104,12 @@ class MockAuthService extends _i1.Mock implements _i6.AuthService {
       ) as _i2.FlutterSecureStorage);
 
   @override
+  _i7.Stream<String?> get onAuthStateChange => (super.noSuchMethod(
+        Invocation.getter(#onAuthStateChange),
+        returnValue: _i7.Stream<String?>.empty(),
+      ) as _i7.Stream<String?>);
+
+  @override
   _i7.Future<void> initialize() => (super.noSuchMethod(
         Invocation.method(
           #initialize,

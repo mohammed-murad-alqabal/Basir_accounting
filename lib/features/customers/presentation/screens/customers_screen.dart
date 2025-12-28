@@ -1,4 +1,5 @@
 import 'package:basser_app/core/assets/app_illustrations.dart';
+import 'package:basser_app/core/theme/services/icon_customization_service.dart'; // Added
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
@@ -31,6 +32,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
     final customersAsync = ref.watch(
       filteredCustomersProvider,
     );
+    final appIcons = ref.watch(appIconsProvider);
 
     return Scaffold(
       backgroundColor: SemanticColors.background,
@@ -38,7 +40,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
         title: 'العملاء',
         actions: [
           IconButton(
-            icon: const Icon(Icons.add, size: 26),
+            icon: Icon(appIcons.add, size: 26),
             tooltip: 'إضافة عميل جديد',
             onPressed: _addCustomer,
           ),
@@ -67,8 +69,9 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
             child: customersAsync.when(
               data: _buildCustomersList,
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stack) =>
-                  Center(child: Text('خطأ في تحميل العملاء: $error')),
+              error: (error, stack) => Center(
+                child: Text('خطأ في تحميل العملاء: $error'),
+              ),
             ),
           ),
         ],

@@ -67,7 +67,8 @@ void main() {
       await file.writeAsBytes(pngBytes);
 
       debugPrint(
-          '✅ Saved ${config['path']} (${pngBytes.length} bytes, PNG format)');
+        '✅ Saved ${config['path']} (${pngBytes.length} bytes, PNG format)',
+      );
     }
 
     debugPrint('✨ All Mastery 2.0 PNG assets generated successfully!');

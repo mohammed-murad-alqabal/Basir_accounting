@@ -6,6 +6,8 @@ import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/router.dart';
 import 'package:basser_app/core/theme/app_theme.dart';
 import 'package:basser_app/core/theme/font_manager.dart';
+import 'package:basser_app/core/theme/services/color_customization_service.dart';
+import 'package:basser_app/core/theme/services/font_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/utils/provider_observer.dart';
 import 'package:basser_app/core/widgets/error_widget.dart' as basser;
@@ -63,45 +65,85 @@ class BasserApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // مراقبة حالة الثيم من provider
-    final themeMode = ref.watch(
-      themeProvider,
-    );
+    // مراقبة حالة الثيم (AsyncValue)
+    final themeModeAsync = ref.watch(themeProvider);
+    final customColorAsync = ref.watch(colorCustomizationProvider);
+    final fontCustomizationAsync = ref.watch(fontCustomizationProvider);
 
-    return MaterialApp(
-      title: AppConfig.appName,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: themeMode,
-      home: const SplashScreen(),
-      onGenerateRoute: AppRouter.generateRoute,
-      debugShowCheckedModeBanner: false,
-      // إعدادات اللغة العربية والاتجاه من اليمين لليسار
-      locale: const Locale('ar', 'SA'),
-      supportedLocales: const [
-        Locale('ar', 'SA'), // العربية
-        Locale('en', 'US'), // الإنجليزية
-      ],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      // تحديد اتجاه النص بناءً على اللغة
-      localeResolutionCallback: (locale, supportedLocales) {
-        // إذا كانت اللغة عربية، استخدم RTL
-        if (locale?.languageCode == 'ar') {
-          return const Locale(
-            'ar',
-            'SA',
-          );
-        }
-        // وإلا استخدم الإنجليزية
-        return const Locale(
-          'en',
-          'US',
+    return themeModeAsync.when(
+      data: (themeMode) {
+        final seedColor = customColorAsync.value;
+        final fontState = fontCustomizationAsync.value;
+        final fontFamily = fontState?.fontFamily;
+        final textScale = fontState?.textScaleFactor ?? 1.0;
+
+        return MaterialApp(
+          title: AppConfig.appName,
+          theme: AppTheme.getTheme(
+            mode: ThemeMode.light,
+            seedColor: seedColor,
+            fontFamily: fontFamily,
+            textScaleFactor: textScale,
+          ),
+          darkTheme: AppTheme.getTheme(
+            mode: ThemeMode.dark,
+            seedColor: seedColor,
+            fontFamily: fontFamily,
+            textScaleFactor: textScale,
+          ),
+          themeMode: themeMode,
+          home: const SplashScreen(),
+          onGenerateRoute: AppRouter.generateRoute,
+          debugShowCheckedModeBanner: false,
+          // إعدادات اللغة العربية والاتجاه من اليمين لليسار
+          locale: const Locale('ar', 'SA'),
+          supportedLocales: const [
+            Locale('ar', 'SA'), // العربية
+            Locale('en', 'US'), // الإنجليزية
+          ],
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          // تحديد اتجاه النص بناءً على اللغة
+          localeResolutionCallback: (locale, supportedLocales) {
+            // إذا كانت اللغة عربية، استخدم RTL
+            if (locale?.languageCode == 'ar') {
+              return const Locale(
+                'ar',
+                'SA',
+              );
+            }
+            // وإلا استخدم الإنجليزية
+            return const Locale(
+              'en',
+              'US',
+            );
+          },
         );
       },
+      loading: () => const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          backgroundColor: Color(0xFF003D82), // لون البراند الأساسي
+          body: Center(
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+      error: (err, stack) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: basser.GlobalErrorWidget(
+          errorDetails: FlutterErrorDetails(
+            exception: err,
+            stack: stack,
+            library: 'Theme Initialization',
+          ),
+        ),
+      ),
     );
   }
 }
@@ -135,7 +177,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     try {
       debugPrint('🚀 [SYSTEM] Institutional Initialization Started...');
 
-      // تهيئة الخدمات الأساسية بالتوازي لتحقيق أقصى أداء (Zero Latency Strategy)
+      // تهيئة الخدمات الأساسية بالتوازي (Zero Latency Strategy)
       // ننتظر Isar ونتأكد من جاهزية AuthService
       final initStartTime = DateTime.now();
 
@@ -167,7 +209,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       if (!mounted) return;
 
       debugPrint(
-        '🔑 [AUTH] Status - Account: $hasAccount, LoggedIn: $isLoggedIn, Guest: $isGuest',
+        '🔑 [AUTH] Account: $hasAccount, '
+        'LoggedIn: $isLoggedIn, Guest: $isGuest',
       );
 
       // اتخاذ قرار التوجيه الفوري

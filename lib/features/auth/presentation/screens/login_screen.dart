@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:basser_app/core/assets/app_logo.dart';
 import 'package:basser_app/core/constants.dart';
-import 'package:basser_app/core/theme/app_icons.dart';
+import 'package:basser_app/core/theme/app_icons.dart' as legacy;
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/auth/presentation/providers/auth_provider.dart';
@@ -158,7 +158,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       label: 'اسم المستخدم',
                       hint: 'يرجى إدخال اسم المستخدم',
                       controller: _usernameController,
-                      prefixIcon: const Icon(AppIcons.user, size: IconSizes.sm),
+                      prefixIcon: const Icon(
+                        legacy.AppIcons.user,
+                        size: IconSizes.sm,
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return AppMessages.emptyField;
@@ -174,7 +177,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       hint: 'يرجى إدخال كلمة المرور',
                       controller: _passwordController,
                       obscureText: true,
-                      prefixIcon: const Icon(AppIcons.lock, size: IconSizes.sm),
+                      prefixIcon: const Icon(
+                        legacy.AppIcons.lock,
+                        size: IconSizes.sm,
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return AppMessages.emptyField;
