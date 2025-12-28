@@ -111,10 +111,19 @@
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
-      "disabled": true,
+      "disabled": false,
       "timeout": 30000,
       "retries": 2,
       "autoApprove": ["search_documentation", "read_documentation", "recommend"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": []
     },
     "memory": {
       "command": "npx",
