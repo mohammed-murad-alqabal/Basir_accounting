@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
@@ -13,6 +14,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 /// تستخدم التخزين الآمن لحفظ بيانات الاعتماد
 ///
 /// Features:
+/// - بث حالة المصادقة (Stream) للتحديث الفوري
 /// - إنشاء حساب جديد مع تشفير كلمة المرور
 /// - تسجيل الدخول والخروج
 /// - التحقق من حالة تسجيل الدخول
@@ -40,6 +42,12 @@ class AuthService {
   /// خدمة التخزين الآمن لحفظ بيانات الاعتماد
   final FlutterSecureStorage secureStorage;
 
+  /// وحدة تحكم في حالة المصادقة (Brodcast Stream)
+  final _authStateController = StreamController<String?>.broadcast();
+
+  /// دفق التغييرات في حالة المصادقة (يرجع اسم المستخدم أو null)
+  Stream<String?> get onAuthStateChange => _authStateController.stream;
+
   /// تنظيف البيانات التالفة أو القديمة (Industrial-Grade Robustness)
   ///
   /// يتحقق مما إذا كان هذا هو التشغيل الأول بعد إعادة التثبيت.
@@ -60,6 +68,14 @@ class AuthService {
         debugPrint(
           '🛡️ [AUTH] First run detected. Secure storage initialized.',
         );
+      }
+
+      // بث الحالة الحالية عند البدء
+      final currentUsername = await getCurrentUsername();
+      if (await isLoggedIn()) {
+        _authStateController.add(currentUsername);
+      } else {
+        _authStateController.add(null);
       }
     } on Exception catch (e) {
       debugPrint('⚠️ [AUTH] Error during initialization: $e');
@@ -201,6 +217,9 @@ class AuthService {
         key: StorageKeys.isLoggedIn,
         value: 'true',
       );
+
+      // بث حدث تسجيل الدخول
+      _authStateController.add(username);
     } on Exception catch (e) {
       throw Exception(
         'خطأ في إنشاء الحساب: $e',
@@ -278,6 +297,9 @@ class AuthService {
         key: StorageKeys.isLoggedIn,
         value: 'true',
       );
+
+      // بث حدث تسجيل الدخول
+      _authStateController.add(username);
       return true;
     } on Exception catch (e) {
       throw Exception(
@@ -305,6 +327,9 @@ class AuthService {
         key: StorageKeys.isLoggedIn,
         value: 'false',
       );
+
+      // بث حدث تسجيل الخروج
+      _authStateController.add(null);
     } on Exception catch (e) {
       throw Exception(
         'خطأ في تسجيل الخروج: $e',
@@ -401,6 +426,9 @@ class AuthService {
         key: StorageKeys.isLoggedIn,
         value: 'true',
       );
+
+      // بث حدث تسجيل الدخول كضيف (بدون اسم مستخدم)
+      _authStateController.add(null);
     } on Exception catch (e) {
       throw Exception(
         'خطأ في تسجيل الدخول كضيف: $e',
@@ -451,6 +479,9 @@ class AuthService {
       await secureStorage.delete(
         key: StorageKeys.isGuest,
       );
+
+      // بث حدث تسجيل الدخول بالمستخدم الجديد
+      _authStateController.add(username);
     } on Exception catch (e) {
       throw Exception(
         'خطأ في تحويل الضيف إلى مستخدم: $e',

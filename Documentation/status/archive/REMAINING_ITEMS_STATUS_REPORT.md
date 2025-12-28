@@ -319,9 +319,9 @@ flutter analyze
 
 ### التقارير ذات الصلة
 
-1. [FINAL_SETUP_REPORT.md](../guides/setup/FINAL_SETUP_REPORT.md) - التقرير الشامل السابق
-2. [MCP_CONFIGURATION_FIX_REPORT.md](../reports/fixes/MCP_CONFIGURATION_FIX_REPORT.md) - إصلاحات MCP
-3. [MCP_VERIFICATION_REPORT.md](../guides/development/MCP_VERIFICATION_REPORT.md) - التحقق من MCP
+1. [FINAL_SETUP_REPORT.md](../../guides/setup/FINAL_SETUP_REPORT.md) - التقرير الشامل السابق
+2. [MCP_CONFIGURATION_FIX_REPORT.md](../../reports/fixes/MCP_CONFIGURATION_FIX_REPORT.md) - إصلاحات MCP
+3. [MCP_VERIFICATION_REPORT.md](../../guides/development/MCP_VERIFICATION_REPORT.md) - التحقق من MCP
 
 ### الأوامر المفيدة
 

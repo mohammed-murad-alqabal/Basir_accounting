@@ -8,66 +8,69 @@ class DashboardMasteryHeader extends StatelessWidget {
   const DashboardMasteryHeader({super.key});
 
   @override
-  Widget build(BuildContext context) => Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(Spacing.xl),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF003D82),
-              Color(0xFF001A33),
-            ],
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(Spacing.xl),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            primaryColor,
+            primaryColor.withValues(alpha: 0.7),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(Radii.lg),
+        boxShadow: [
+          BoxShadow(
+            color: primaryColor.withValues(alpha: 0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
           ),
-          borderRadius: BorderRadius.circular(Radii.lg),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF003D82).withValues(alpha: 0.3),
-              blurRadius: 20,
-              offset: const Offset(0, 10),
+        ],
+      ),
+      child: const Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'نظام بصير المطور',
+                  style: TextStyle(
+                    color: Color(0xFFFFD700),
+                    fontSize: FontSizes.labelSmall,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                SizedBox(height: Spacing.xs),
+                Text(
+                  'أهلاً بك في فضاء الإتقان',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: FontSizes.headlineSmall,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: Spacing.xs),
+                Text(
+                  'بصير يراقب نمو أعمالك بدقة (Φ)',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: FontSizes.bodySmall,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: const Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'نظام بصير المطور',
-                    style: TextStyle(
-                      color: Color(0xFFFFD700),
-                      fontSize: FontSizes.labelSmall,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2,
-                    ),
-                  ),
-                  SizedBox(height: Spacing.xs),
-                  Text(
-                    'أهلاً بك في فضاء الإتقان',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: FontSizes.headlineSmall,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: Spacing.xs),
-                  Text(
-                    'بصير يراقب نمو أعمالك بدقة (Φ)',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: FontSizes.bodySmall,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            BasserShimmerLogo(size: 60),
-          ],
-        ),
-      );
+          ),
+          BasserShimmerLogo(size: 60),
+        ],
+      ),
+    );
+  }
 }
 
 /// بطاقة إحصائية زجاجية (Glassmorphic Stat Card)

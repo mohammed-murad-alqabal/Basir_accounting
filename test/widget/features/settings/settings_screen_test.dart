@@ -28,7 +28,7 @@ void main() {
     group('Basic Display', () {
       testWidgets('should display app bar with title', (tester) async {
         await tester.pumpWidget(createTestWidget());
-        expect(find.text('الإعدادات'), findsOneWidget);
+        expect(find.widgetWithText(AppBar, 'الإعدادات'), findsOneWidget);
         expect(find.byType(AppAppBar), findsOneWidget);
       });
 

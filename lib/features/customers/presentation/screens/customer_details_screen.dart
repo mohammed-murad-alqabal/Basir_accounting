@@ -1,3 +1,4 @@
+import 'package:basser_app/core/theme/services/icon_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
@@ -17,125 +18,128 @@ class CustomerDetailsScreen extends ConsumerWidget {
   final Customer customer;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-        backgroundColor: SemanticColors.background,
-        appBar: AppAppBar(
-          title: 'تفاصيل العميل',
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.edit),
-              tooltip: 'تعديل العميل',
-              onPressed: () => _editCustomer(context),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appIcons = ref.watch(appIconsProvider);
+
+    return Scaffold(
+      backgroundColor: SemanticColors.background,
+      appBar: AppAppBar(
+        title: 'تفاصيل العميل',
+        actions: [
+          IconButton(
+            icon: Icon(appIcons.edit),
+            tooltip: 'تعديل العميل',
+            onPressed: () => _editCustomer(context),
+          ),
+          IconButton(
+            icon: Icon(appIcons.delete, color: SemanticColors.error),
+            tooltip: 'حذف العميل',
+            onPressed: () => _deleteCustomer(context, ref),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(Spacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // صورة العميل
+            Center(
+              child: CircleAvatar(
+                radius: 50,
+                backgroundColor: SemanticColors.primary.withValues(alpha: 0.2),
+                child: Text(
+                  customer.name.isNotEmpty ? customer.name[0] : '؟',
+                  style: const TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: SemanticColors.primary,
+                  ),
+                ),
+              ),
             ),
-            IconButton(
-              icon: const Icon(Icons.delete, color: SemanticColors.error),
-              tooltip: 'حذف العميل',
-              onPressed: () => _deleteCustomer(context, ref),
+            const SizedBox(height: Spacing.lg),
+
+            // اسم العميل
+            Center(
+              child: Text(
+                customer.name,
+                style: const TextStyle(
+                  fontSize: FontSizes.titleLarge,
+                  fontWeight: FontWeight.bold,
+                  color: SemanticColors.textPrimary,
+                ),
+              ),
+            ),
+            const SizedBox(height: Spacing.xl),
+
+            // معلومات الاتصال
+            _buildSectionTitle('معلومات الاتصال'),
+            const SizedBox(height: Spacing.md),
+            if (customer.email != null) ...[
+              _buildInfoCard(
+                icon: appIcons.email,
+                label: 'البريد الإلكتروني',
+                value: customer.email!,
+              ),
+              const SizedBox(height: Spacing.sm),
+            ],
+            if (customer.phone != null) ...[
+              _buildInfoCard(
+                icon: appIcons.phone,
+                label: 'رقم الهاتف',
+                value: customer.phone!,
+              ),
+              const SizedBox(height: Spacing.sm),
+            ],
+            if (customer.address != null) ...[
+              _buildInfoCard(
+                icon: appIcons.location,
+                label: 'العنوان',
+                value: customer.address!,
+              ),
+              const SizedBox(height: Spacing.sm),
+            ],
+
+            // ملاحظات
+            if (customer.notes != null) ...[
+              const SizedBox(height: Spacing.lg),
+              _buildSectionTitle('ملاحظات'),
+              const SizedBox(height: Spacing.md),
+              AppCard(
+                child: Padding(
+                  padding: const EdgeInsets.all(Spacing.md),
+                  child: Text(
+                    customer.notes!,
+                    style: const TextStyle(
+                      fontSize: FontSizes.bodyMedium,
+                      color: SemanticColors.textSecondary,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+
+            // معلومات إضافية
+            const SizedBox(height: Spacing.lg),
+            _buildSectionTitle('معلومات إضافية'),
+            const SizedBox(height: Spacing.md),
+            _buildInfoCard(
+              icon: appIcons.calendar,
+              label: 'تاريخ الإضافة',
+              value: _formatDate(customer.createdAt),
+            ),
+            const SizedBox(height: Spacing.sm),
+            _buildInfoCard(
+              icon: appIcons.update,
+              label: 'آخر تحديث',
+              value: _formatDate(customer.updatedAt),
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(Spacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // صورة العميل
-              Center(
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundColor:
-                      SemanticColors.primary.withValues(alpha: 0.2),
-                  child: Text(
-                    customer.name.isNotEmpty ? customer.name[0] : '؟',
-                    style: const TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: SemanticColors.primary,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: Spacing.lg),
-
-              // اسم العميل
-              Center(
-                child: Text(
-                  customer.name,
-                  style: const TextStyle(
-                    fontSize: FontSizes.titleLarge,
-                    fontWeight: FontWeight.bold,
-                    color: SemanticColors.textPrimary,
-                  ),
-                ),
-              ),
-              const SizedBox(height: Spacing.xl),
-
-              // معلومات الاتصال
-              _buildSectionTitle('معلومات الاتصال'),
-              const SizedBox(height: Spacing.md),
-              if (customer.email != null) ...[
-                _buildInfoCard(
-                  icon: Icons.email,
-                  label: 'البريد الإلكتروني',
-                  value: customer.email!,
-                ),
-                const SizedBox(height: Spacing.sm),
-              ],
-              if (customer.phone != null) ...[
-                _buildInfoCard(
-                  icon: Icons.phone,
-                  label: 'رقم الهاتف',
-                  value: customer.phone!,
-                ),
-                const SizedBox(height: Spacing.sm),
-              ],
-              if (customer.address != null) ...[
-                _buildInfoCard(
-                  icon: Icons.location_on,
-                  label: 'العنوان',
-                  value: customer.address!,
-                ),
-                const SizedBox(height: Spacing.sm),
-              ],
-
-              // ملاحظات
-              if (customer.notes != null) ...[
-                const SizedBox(height: Spacing.lg),
-                _buildSectionTitle('ملاحظات'),
-                const SizedBox(height: Spacing.md),
-                AppCard(
-                  child: Padding(
-                    padding: const EdgeInsets.all(Spacing.md),
-                    child: Text(
-                      customer.notes!,
-                      style: const TextStyle(
-                        fontSize: FontSizes.bodyMedium,
-                        color: SemanticColors.textSecondary,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-
-              // معلومات إضافية
-              const SizedBox(height: Spacing.lg),
-              _buildSectionTitle('معلومات إضافية'),
-              const SizedBox(height: Spacing.md),
-              _buildInfoCard(
-                icon: Icons.calendar_today,
-                label: 'تاريخ الإضافة',
-                value: _formatDate(customer.createdAt),
-              ),
-              const SizedBox(height: Spacing.sm),
-              _buildInfoCard(
-                icon: Icons.update,
-                label: 'آخر تحديث',
-                value: _formatDate(customer.updatedAt),
-              ),
-            ],
-          ),
-        ),
-      );
+      ),
+    );
+  }
 
   Widget _buildSectionTitle(String title) => Text(
         title,

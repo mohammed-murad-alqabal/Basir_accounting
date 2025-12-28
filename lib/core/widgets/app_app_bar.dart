@@ -1,30 +1,10 @@
+import 'package:basser_app/core/theme/services/icon_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شريط التطبيق المخصص
-///
-/// شريط تطبيق (AppBar) مخصص مع تصميم موحد
-///
-/// Features:
-/// - عنوان في المنتصف
-/// - زر رجوع قابل للتخصيص
-/// - إجراءات في النهاية (اختياري)
-/// - ألوان قابلة للتخصيص
-/// - بدون ظل (elevation: 0)
-///
-/// Example:
-/// ```dart
-/// AppAppBar(
-///   title: 'العملاء',
-///   actions: [
-///     IconButton(
-///       icon: Icon(Icons.add),
-///       onPressed: () => addCustomer(),
-///     ),
-///   ],
-/// )
-/// ```
-class AppAppBar extends StatelessWidget implements PreferredSizeWidget {
+/// شريط التطبيق الموحد للمشروع
+class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
   /// إنشاء شريط تطبيق مخصص
   ///
   /// Parameters:
@@ -65,36 +45,40 @@ class AppAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color? foregroundColor;
 
   @override
-  Widget build(BuildContext context) => AppBar(
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: FontSizes.titleLarge,
-            fontWeight: FontWeight.w600,
-            color: foregroundColor,
-          ),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appIcons = ref.watch(appIconsProvider);
+
+    return AppBar(
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: FontSizes.titleLarge,
+          fontWeight: FontWeight.w600,
+          color: foregroundColor,
         ),
-        backgroundColor: backgroundColor,
-        foregroundColor: foregroundColor,
-        elevation: 0,
-        centerTitle: true,
-        iconTheme: const IconThemeData(size: 26),
-        leading: showBackButton
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back),
-                tooltip: 'رجوع',
-                onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
-              )
-            : null,
-        actions: actions,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(
-            color: SemanticColors.primary.withValues(alpha: 0.1),
-            height: 1,
-          ),
+      ),
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      elevation: 0,
+      centerTitle: true,
+      iconTheme: const IconThemeData(size: 26),
+      leading: showBackButton
+          ? IconButton(
+              icon: Icon(appIcons.back),
+              tooltip: 'رجوع',
+              onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
+            )
+          : null,
+      actions: actions,
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(1),
+        child: Container(
+          color: SemanticColors.primary.withValues(alpha: 0.1),
+          height: 1,
         ),
-      );
+      ),
+    );
+  }
 
   @override
   Size get preferredSize => const Size.fromHeight(

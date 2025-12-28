@@ -4,9 +4,10 @@ import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Provider لخدمة PDF
-final pdfServiceProvider = Provider(
-  (ref) => PdfService(),
-);
+final pdfServiceProvider = Provider((ref) {
+  final settingsService = ref.watch(settingsServiceProvider);
+  return PdfService(settingsService: settingsService);
+});
 
 /// Provider لقائمة جميع الفواتير
 final invoicesProvider = FutureProvider<List<Invoice>>((ref) async {

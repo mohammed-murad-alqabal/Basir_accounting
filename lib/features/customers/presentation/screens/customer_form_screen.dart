@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
@@ -29,6 +31,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
   final _phoneController = TextEditingController();
   final _addressController = TextEditingController();
   final _notesController = TextEditingController();
+  final _creditLimitController = TextEditingController(text: '0.0');
 
   bool _isLoading = false;
 
@@ -41,6 +44,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       _phoneController.text = widget.customer!.phone ?? '';
       _addressController.text = widget.customer!.address ?? '';
       _notesController.text = widget.customer!.notes ?? '';
+      _creditLimitController.text = widget.customer!.creditLimit.toString();
     }
   }
 
@@ -51,6 +55,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
     _phoneController.dispose();
     _addressController.dispose();
     _notesController.dispose();
+    _creditLimitController.dispose();
     super.dispose();
   }
 
@@ -68,6 +73,16 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // زر اختيار من جهات الاتصال
+              if (!isEditing)
+                AppEnhancedButton(
+                  text: 'اختيار من جهات الاتصال',
+                  onPressed: _selectFromContacts,
+                  icon: Icons.contact_page,
+                  style: AppEnhancedButtonStyle.secondary,
+                ),
+              if (!isEditing) const SizedBox(height: Spacing.md),
+
               // اسم العميل
               AppTextField(
                 controller: _nameController,
@@ -146,6 +161,25 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                 prefixIcon: const Icon(Icons.note),
                 maxLines: 3,
               ),
+              const SizedBox(height: Spacing.md),
+
+              // سقف الائتمان
+              AppTextField(
+                controller: _creditLimitController,
+                label: 'سقف الائتمان (اختياري)',
+                hint: '0.0',
+                prefixIcon: const Icon(Icons.account_balance_wallet),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                validator: (value) {
+                  if (value != null && value.isNotEmpty) {
+                    if (double.tryParse(value) == null) {
+                      return 'الرجاء إدخال رقم صحيح';
+                    }
+                  }
+                  return null;
+                },
+              ),
               const SizedBox(height: Spacing.xl),
 
               // زر الحفظ
@@ -160,6 +194,58 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _selectFromContacts() async {
+    final contactService = ref.read(contactServiceProvider);
+    try {
+      final contacts = await contactService.getContacts();
+      if (contacts.isEmpty) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('لا توجد جهات اتصال متاحة')),
+        );
+        return;
+      }
+
+      if (!mounted) return;
+      final dynamic result = await showModalBottomSheet<dynamic>(
+        context: context,
+        builder: (context) => ListView.builder(
+          itemCount: contacts.length,
+          itemBuilder: (context, index) {
+            final contact = contacts[index];
+            return ListTile(
+              leading: const Icon(Icons.person),
+              title: Text('${contact.name.first} ${contact.name.last}'),
+              subtitle: Text(
+                contact.phones.isNotEmpty ? contact.phones.first.number : '',
+              ),
+              onTap: () => Navigator.pop(context, contact),
+            );
+          },
+        ),
+      );
+
+      if (result != null && result is Contact) {
+        final selectedContact = result;
+        setState(() {
+          _nameController.text =
+              '${selectedContact.name.first} ${selectedContact.name.last}';
+          if (selectedContact.phones.isNotEmpty) {
+            _phoneController.text = selectedContact.phones.first.number;
+          }
+          if (selectedContact.emails.isNotEmpty) {
+            _emailController.text = selectedContact.emails.first.address;
+          }
+        });
+      }
+    } on Exception catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('خطأ في الوصول لجهات الاتصال: $e')),
+      );
+    }
   }
 
   void _saveCustomer() {
@@ -193,6 +279,8 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
         notes: _notesController.text.trim().isEmpty
             ? null
             : _notesController.text.trim(),
+        creditLimit: double.tryParse(_creditLimitController.text) ?? 0.0,
+        balance: widget.customer?.balance ?? 0.0,
         createdAt: widget.customer?.createdAt ?? DateTime.now(),
         updatedAt: DateTime.now(),
       );

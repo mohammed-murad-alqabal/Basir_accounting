@@ -1,5 +1,6 @@
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basser_app/services/settings_service.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -17,6 +18,12 @@ import 'package:printing/printing.dart';
 /// await pdfService.printInvoice(invoice, customer,);
 /// ```
 class PdfService {
+  /// إنشاء خدمة PDF مع خدمة الإعدادات
+  PdfService({required this.settingsService});
+
+  /// خدمة الإعدادات لجلب معلومات الشركة والعملة
+  final SettingsService settingsService;
+
   /// توليد ملف PDF للفاتورة
   ///
   /// ينشئ ملف PDF احترافي للفاتورة مع جميع التفاصيل
@@ -39,12 +46,18 @@ class PdfService {
   /// ```
   Future<Uint8List> generateInvoicePdf(
     Invoice invoice,
-    Customer customer,
-  ) async {
+    Customer customer, {
+    Color? primaryColor,
+  }) async {
     final pdf = pw.Document(
       title: 'فاتورة رقم ${invoice.id}',
       author: 'Basser MVP',
     );
+
+    // تحويل لون التطبيق إلى لون PDF
+    final themeColor = primaryColor != null
+        ? PdfColor.fromInt(primaryColor.toARGB32())
+        : const PdfColor.fromInt(0xFF1565C0); // Default Blue800
 
     // تحميل خط يدعم اللغة العربية
     final fontData = await rootBundle.load(
@@ -53,6 +66,10 @@ class PdfService {
     final ttf = pw.Font.ttf(
       fontData,
     );
+
+    // جلب إعدادات الشركة والعملة
+    final settings = await settingsService.getCompanySettings();
+    final currencySymbol = settings['currencySymbol'] ?? 'ر.س';
 
     pdf.addPage(
       pw.Page(
@@ -63,19 +80,19 @@ class PdfService {
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
               // 1. العنوان الرئيسي
-              _buildHeader(invoice, ttf),
+              _buildHeader(invoice, ttf, themeColor),
               pw.SizedBox(height: 20),
 
               // 2. تفاصيل العميل والبائع
-              _buildCustomerAndVendorDetails(invoice, customer, ttf),
+              _buildCustomerAndVendorDetails(invoice, customer, ttf, settings),
               pw.SizedBox(height: 30),
 
               // 3. جدول البنود
-              _buildItemsTable(invoice, ttf),
+              _buildItemsTable(invoice, ttf, currencySymbol, themeColor),
               pw.SizedBox(height: 30),
 
               // 4. الإجماليات
-              _buildTotals(invoice, ttf),
+              _buildTotals(invoice, ttf, currencySymbol),
               pw.SizedBox(height: 50),
 
               // 5. الملاحظات والتذييل
@@ -89,7 +106,12 @@ class PdfService {
     return pdf.save();
   }
 
-  pw.Widget _buildHeader(Invoice invoice, pw.Font font) => pw.Row(
+  pw.Widget _buildHeader(
+    Invoice invoice,
+    pw.Font font,
+    PdfColor themeColor,
+  ) =>
+      pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text(
@@ -98,7 +120,7 @@ class PdfService {
               font: font,
               fontSize: 24,
               fontWeight: pw.FontWeight.bold,
-              color: PdfColors.blue800,
+              color: themeColor,
             ),
           ),
           pw.Column(
@@ -127,11 +149,12 @@ class PdfService {
     Invoice invoice,
     Customer customer,
     pw.Font font,
+    Map<String, String?> settings,
   ) =>
       pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
-          // تفاصيل البائع (افتراضية لـ MVP)
+          // تفاصيل البائع
           pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
@@ -139,19 +162,25 @@ class PdfService {
                 'من:',
                 style: pw.TextStyle(font: font, fontWeight: pw.FontWeight.bold),
               ),
-              pw.Text('بصير MVP', style: pw.TextStyle(font: font)),
               pw.Text(
-                'العنوان: الرياض، المملكة العربية السعودية',
+                settings['companyName'] ?? 'بصير MVP',
                 style: pw.TextStyle(font: font),
               ),
-              pw.Text(
-                'البريد الإلكتروني: info@basser.com',
-                style: pw.TextStyle(font: font),
-              ),
-              pw.Text(
-                'الرقم الضريبي: 300000000000003',
-                style: pw.TextStyle(font: font),
-              ),
+              if (settings['companyAddress'] != null)
+                pw.Text(
+                  'العنوان: ${settings['companyAddress']}',
+                  style: pw.TextStyle(font: font),
+                ),
+              if (settings['companyPhone'] != null)
+                pw.Text(
+                  'الهاتف: ${settings['companyPhone']}',
+                  style: pw.TextStyle(font: font),
+                ),
+              if (settings['taxNumber'] != null)
+                pw.Text(
+                  'الرقم الضريبي: ${settings['taxNumber']}',
+                  style: pw.TextStyle(font: font),
+                ),
             ],
           ),
 
@@ -184,7 +213,12 @@ class PdfService {
         ],
       );
 
-  pw.Widget _buildItemsTable(Invoice invoice, pw.Font font) {
+  pw.Widget _buildItemsTable(
+    Invoice invoice,
+    pw.Font font,
+    String currency,
+    PdfColor themeColor,
+  ) {
     const tableHeaders = ['الإجمالي', 'الضريبة', 'السعر', 'الكمية', 'الوصف'];
 
     final tableData = <List<String>>[];
@@ -193,9 +227,9 @@ class PdfService {
     for (final item in invoice.items) {
       tableData.add(
         [
-          '${item.total.toStringAsFixed(2)} ر.س',
-          '${(item.total * invoice.taxRate).toStringAsFixed(2)} ر.س',
-          '${item.price.toStringAsFixed(2)} ر.س',
+          '${item.total.toStringAsFixed(2)} $currency',
+          '${(item.total * invoice.taxRate).toStringAsFixed(2)} $currency',
+          '${item.price.toStringAsFixed(2)} $currency',
           item.quantity.toString(),
           item.name,
         ],
@@ -213,7 +247,7 @@ class PdfService {
         fontWeight: pw.FontWeight.bold,
         color: PdfColors.white,
       ),
-      headerDecoration: const pw.BoxDecoration(color: PdfColors.blue800),
+      headerDecoration: pw.BoxDecoration(color: themeColor),
       cellStyle: pw.TextStyle(font: font, fontSize: 10),
       columnWidths: {
         0: const pw.FlexColumnWidth(2), // الوصف
@@ -232,7 +266,8 @@ class PdfService {
     );
   }
 
-  pw.Widget _buildTotals(Invoice invoice, pw.Font font) => pw.Row(
+  pw.Widget _buildTotals(Invoice invoice, pw.Font font, String currency) =>
+      pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.end,
         children: [
           pw.Container(
@@ -240,17 +275,24 @@ class PdfService {
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.end,
               children: [
-                _buildTotalRow('الإجمالي الفرعي:', invoice.subtotal, font),
+                _buildTotalRow(
+                  'الإجمالي الفرعي:',
+                  invoice.subtotal,
+                  font,
+                  currency,
+                ),
                 _buildTotalRow(
                   'الضريبة (${(invoice.taxRate * 100).toStringAsFixed(0)}%):',
                   invoice.taxTotal,
                   font,
+                  currency,
                 ),
                 pw.Divider(color: PdfColors.grey500),
                 _buildTotalRow(
                   'الإجمالي الكلي:',
                   invoice.grandTotal,
                   font,
+                  currency,
                   isGrandTotal: true,
                 ),
               ],
@@ -262,7 +304,8 @@ class PdfService {
   pw.Widget _buildTotalRow(
     String label,
     double amount,
-    pw.Font font, {
+    pw.Font font,
+    String currency, {
     bool isGrandTotal = false,
   }) =>
       pw.Padding(
@@ -271,7 +314,7 @@ class PdfService {
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: [
             pw.Text(
-              '${amount.toStringAsFixed(2)} ر.س',
+              '${amount.toStringAsFixed(2)} $currency',
               style: pw.TextStyle(
                 font: font,
                 fontWeight:
@@ -318,10 +361,15 @@ class PdfService {
       );
 
   /// وظيفة مساعدة لطباعة الفاتورة مباشرة
-  Future<void> printInvoice(Invoice invoice, Customer customer) async {
+  Future<void> printInvoice(
+    Invoice invoice,
+    Customer customer, [
+    Color? primaryColor,
+  ]) async {
     final pdfBytes = await generateInvoicePdf(
       invoice,
       customer,
+      primaryColor: primaryColor,
     );
     await Printing.sharePdf(
       bytes: pdfBytes,

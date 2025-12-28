@@ -59,20 +59,18 @@ Documentation/action-items/README.md:57
 **الملف:** `Documentation/guides/troubleshooting/ERROR_TRACKING_GUIDE.md`
 
 ```
-❌ [Design Document](../../../.kiro/specs/completed/error-tracking-system/design.md)
-❌ [Requirements](../../../.kiro/specs/completed/error-tracking-system/requirements.md)
-❌ [Tasks](../../../.kiro/specs/completed/error-tracking-system/tasks.md)
+✅ [Tasks](../../../.kiro/specs/completed/error-tracking-system/tasks.md)
 ```
 
-**المشكلة:** المسار `../.kiro/` غير صحيح من `Documentation/guides/troubleshooting/`  
-**المسار الصحيح:** `../../../.kiro/specs/completed/error-tracking-system/`
+**المشكلة:** ملفات design.md و requirements.md غير موجودة  
+**الحل:** تم الاحتفاظ بالرابط الصحيح فقط (tasks.md)
 
 #### **ب. روابط ملفات غير موجودة (3 روابط)**
 
 **الملف:** `Documentation/TEST_action-items/current/CRITICAL_IMPROVEMENTS.md`
 
 ```
-❌ [دليل الجودة](../../../.kiro/steering/code-quality-standards.md)
+✅ [دليل الجودة](../../../.kiro/standards/code-quality.md)
 ```
 
 **المشكلة:** المسار غير صحيح والملف غير موجود  
@@ -80,12 +78,8 @@ Documentation/action-items/README.md:57
 
 **الملف:** `Documentation/reports/ui-ux/FIGMA_INTEGRATION_GUIDE.md`
 
-```
-❌ [Kiro MCP Guide](../../../.kiro/steering/technologies/mcp-best-practices.md)
-```
-
-**المشكلة:** المسار غير صحيح  
-**المسار الصحيح:** `../../../.kiro/steering/technologies/mcp-best-practices.md`
+**المشكلة:** الملف غير موجود (تم نقله للأرشيف)  
+**الحل:** تم حذف الرابط المكسور
 
 **الملف:** `Documentation/reports/ui-ux/FIGMA_INTEGRATION_COMPLETION_REPORT.md`
 
