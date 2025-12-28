@@ -1,0 +1,9 @@
+{
+  "id": "auto-analyze",
+  "name": "تحليل تلقائي للكود",
+  "description": "يشغل flutter analyze تلقائياً عند حفظ ملفات Dart للكشف عن الأخطاء والتحذيرات",
+  "eventType": "onSave",
+  "filePatterns": ["lib/**/*.dart"],
+  "hookAction": "runCommand",
+  "command": "flutter analyze --no-pub"
+}
