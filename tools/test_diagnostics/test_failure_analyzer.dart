@@ -8,6 +8,7 @@
 library test_failure_analyzer;
 
 import 'dart:convert';
+// ignore_for_file: avoid_print, avoid_dynamic_calls, lines_longer_than_80_chars, no_default_cases, avoid_slow_async_io
 import 'dart:io';
 
 /// Represents different types of test failures
