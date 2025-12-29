@@ -27,12 +27,12 @@ void main() {
       container.dispose();
     });
 
-    test('should initialize with light theme by default', () async {
+    test('should initialize with system theme by default', () async {
       // Act
       final themeMode = await container.read(themeProvider.future);
 
       // Assert
-      expect(themeMode, ThemeMode.light);
+      expect(themeMode, ThemeMode.system);
     });
 
     test('should load persisted theme from storage', () async {
