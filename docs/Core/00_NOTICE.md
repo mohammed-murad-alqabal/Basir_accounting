@@ -28,7 +28,7 @@ The project has since adopted an expanded strategic vision:
 
 For authoritative strategic documentation, refer to:
 
-**[Documentation/Strategic/](../Strategic/README.md)**
+**[docs/Strategic/](../Strategic/README.md)**
 
 This includes:
 

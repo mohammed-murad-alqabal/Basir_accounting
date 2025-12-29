@@ -37,8 +37,8 @@
 
 **الوثائق المنشأة:**
 
-- ✅ `Documentation/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md` - الإطار الشامل (1935 سطر، 5634 كلمة)
-- ✅ `Documentation/GIT_WORKFLOW_EXECUTIVE_SUMMARY.md` - الملخص التنفيذي
+- ✅ `docs/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md` - الإطار الشامل (1935 سطر، 5634 كلمة)
+- ✅ `docs/GIT_WORKFLOW_EXECUTIVE_SUMMARY.md` - الملخص التنفيذي
 
 **المحتوى:**
 
@@ -69,12 +69,12 @@
 
 **التقارير المنشأة:**
 
-- ✅ `Documentation/COMPREHENSIVE_ENGINEERING_REVIEW.md` - المراجعة الكاملة
-- ✅ `Documentation/ENGINEERING_REVIEW_SUMMARY.md` - ملخص المراجعة
-- ✅ `Documentation/ACTION_PLAN.md` - خطة العمل التنفيذية
-- ✅ `Documentation/EXECUTIVE_SUMMARY.md` - الملخص التنفيذي
+- ✅ `docs/COMPREHENSIVE_ENGINEERING_REVIEW.md` - المراجعة الكاملة
+- ✅ `docs/ENGINEERING_REVIEW_SUMMARY.md` - ملخص المراجعة
+- ✅ `docs/ACTION_PLAN.md` - خطة العمل التنفيذية
+- ✅ `docs/EXECUTIVE_SUMMARY.md` - الملخص التنفيذي
 - ✅ `.kiro/specs/IMMEDIATE_ACTION_PLAN.md` - الخطة الفورية
-- ✅ `Documentation/reports/TEST_COVERAGE_PROGRESS.md` - تقرير التغطية
+- ✅ `docs/reports/TEST_COVERAGE_PROGRESS.md` - تقرير التغطية
 
 **النتائج:**
 

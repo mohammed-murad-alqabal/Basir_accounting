@@ -100,9 +100,9 @@ assignees: ""
 
 <!-- روابط لمعايير الجودة أو best practices -->
 
-- [Flutter Best Practices](../Documentation/flutter-best-practices.md)
-- [Code Quality Standards](../Documentation/code-quality-standards.md)
-- [Naming Conventions](../Documentation/naming-conventions.md)
+- [Flutter Best Practices](../docs/flutter-best-practices.md)
+- [Code Quality Standards](../docs/code-quality-standards.md)
+- [Naming Conventions](../docs/naming-conventions.md)
 
 ## 🧪 الاختبارات
 

@@ -21,7 +21,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # ملف تقرير مفصل
-report_file="Documentation/links_report_$(date +%Y%m%d_%H%M%S).md"
+report_file="docs/links_report_$(date +%Y%m%d_%H%M%S).md"
 
 # بداية التقرير
 cat > "$report_file" << EOF

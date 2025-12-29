@@ -29,7 +29,7 @@
   - `logs/git/`
   - `scripts/maintenance/`
   - `.kiro/data/`
-  - `Documentation/api/`
+  - `docs/api/`
 
 ### المرحلة 3: نقل ملفات MD ✅
 
@@ -37,10 +37,10 @@
 - **الملفات المنقولة:** 30 ملف
 - **التوزيع:**
   - `.kiro/docs/reports/kiro/` ← 7 ملفات
-  - `Documentation/reports/fixes/` ← 10 ملفات
+  - `docs/reports/fixes/` ← 10 ملفات
   - `.kiro/docs/reports/components/` ← 8 ملفات
   - `.kiro/docs/reports/phases/` ← 3 ملفات
-  - `Documentation/` ← 2 ملف
+  - `docs/` ← 2 ملف
 
 ### المرحلة 4: حذف ملفات LOG ✅
 
@@ -54,10 +54,10 @@
 - **الملفات المنقولة:** 3 ملفات
 - **الوجهة:** `scripts/maintenance/`
 
-### المرحلة 6: دمج Documentation/docs ✅
+### المرحلة 6: دمج docs/docs ✅
 
 - **الحالة:** مكتملة
-- **الإجراء:** نقل `docs/api/` إلى `Documentation/api/`
+- **الإجراء:** نقل `docs/api/` إلى `docs/api/`
 - **النتيجة:** مجلد `docs/` محذوف
 
 ### المرحلة 7: تنظيف ملفات متنوعة ✅
@@ -156,10 +156,10 @@ basser_mobile/
 └── reorganization/        # 4 ملفات (تقارير التنظيف)
 ```
 
-#### Documentation/
+#### docs/
 
 ```
-Documentation/
+docs/
 ├── api/                   # من docs/
 ├── reports/
 │   └── fixes/            # 13 ملف (10 جديد + 3 قديم)
@@ -218,7 +218,7 @@ TESTING.md
 $ ls -1 .kiro/docs/reports/kiro/*.md | wc -l
 16  ✅
 
-$ ls -1 Documentation/reports/fixes/*.md | wc -l
+$ ls -1 docs/reports/fixes/*.md | wc -l
 13  ✅
 
 $ ls -1 .kiro/docs/reports/components/MCP*.md | wc -l

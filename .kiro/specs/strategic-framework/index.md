@@ -29,8 +29,8 @@
 | الوثيقة                      | الحالة   | الموقع                                                   | الملاحظات       |
 | ---------------------------- | -------- | -------------------------------------------------------- | --------------- |
 | 0.1 Concept Note             | ❌ مفقود | -                                                        | **مطلوب إنشاء** |
-| 0.2 Vision Statement         | ✅ موجود | `Documentation/Core/00_Strategic_Master_Blueprint.md`    | مكتمل وقوي      |
-| 0.3 Mission Statement        | ✅ موجود | `Documentation/Core/00_Strategic_Master_Blueprint.md`    | مكتمل وقوي      |
+| 0.2 Vision Statement         | ✅ موجود | `docs/Core/00_Strategic_Master_Blueprint.md`    | مكتمل وقوي      |
+| 0.3 Mission Statement        | ✅ موجود | `docs/Core/00_Strategic_Master_Blueprint.md`    | مكتمل وقوي      |
 | 0.4 Problem Statement        | ❌ مفقود | -                                                        | **مطلوب إنشاء** |
 | 0.5 Value Proposition        | ✅ موجود | `.kiro/specs/completed/strategic-vision/requirements.md` | مكتمل           |
 | 0.6 Business Model Canvas    | ❌ مفقود | -                                                        | **مطلوب إنشاء** |
@@ -66,7 +66,7 @@
 
 | الوثيقة                             | الحالة   | الموقع                                                | الملاحظات       |
 | ----------------------------------- | -------- | ----------------------------------------------------- | --------------- |
-| 2.1 Project Charter                 | ✅ موجود | `Documentation/Core/00_Strategic_Master_Blueprint.md` | مكتمل           |
+| 2.1 Project Charter                 | ✅ موجود | `docs/Core/00_Strategic_Master_Blueprint.md` | مكتمل           |
 | 2.2 Governance Model                | ❌ مفقود | -                                                     | **مطلوب إنشاء** |
 | 2.3 RACI Matrix                     | ❌ مفقود | -                                                     | **مطلوب إنشاء** |
 | 2.4 Strategic Roadmap               | ✅ موجود | `.kiro/specs/completed/strategic-vision/design.md`    | مكتمل           |
@@ -105,7 +105,7 @@
 
 | الوثيقة                             | الحالة   | الموقع                                                | الملاحظات       |
 | ----------------------------------- | -------- | ----------------------------------------------------- | --------------- |
-| 4.1 Technical Design Document (TDD) | 🟡 جزئي  | `Documentation/Core/02_Technical_Design_Document.md`  | يحتاج تحديث     |
+| 4.1 Technical Design Document (TDD) | 🟡 جزئي  | `docs/Core/02_Technical_Design_Document.md`  | يحتاج تحديث     |
 | 4.2 System Architecture Diagram     | ❌ مفقود | -                                                     | **مطلوب إنشاء** |
 | 4.3 Application Architecture        | ✅ موجود | `.kiro/steering/tech.md`                              | مكتمل           |
 | 4.4 Database Design & ERD           | ❌ مفقود | -                                                     | **مطلوب إنشاء** |
@@ -113,7 +113,7 @@
 | 4.6 API Design & Documentation      | ❌ مفقود | -                                                     | **مطلوب إنشاء** |
 | 4.7 Integration Specifications      | ❌ مفقود | -                                                     | **مطلوب إنشاء** |
 | 4.8 AI/ML Design Docs               | ❌ مفقود | -                                                     | **مطلوب إنشاء** |
-| 4.9 Security Architecture           | 🟡 جزئي  | `Documentation/Core/00_Strategic_Master_Blueprint.md` | يحتاج تطوير     |
+| 4.9 Security Architecture           | 🟡 جزئي  | `docs/Core/00_Strategic_Master_Blueprint.md` | يحتاج تطوير     |
 | 4.10 Compliance & Regulatory Specs  | ❌ مفقود | -                                                     | **مطلوب إنشاء** |
 | 4.11 Performance & Scalability Plan | ❌ مفقود | -                                                     | **مطلوب إنشاء** |
 | 4.12 Technology Stack Decision Log  | ✅ موجود | `.kiro/steering/tech.md`                              | مكتمل           |
@@ -147,7 +147,7 @@
 | الوثيقة                                  | الحالة   | الموقع                                               | الملاحظات       |
 | ---------------------------------------- | -------- | ---------------------------------------------------- | --------------- |
 | 6.1 Deployment Guide                     | ❌ مفقود | -                                                    | **مطلوب إنشاء** |
-| 6.2 CI/CD Pipeline Documentation         | 🟡 جزئي  | `Documentation/Core/02_Technical_Design_Document.md` | يحتاج تطوير     |
+| 6.2 CI/CD Pipeline Documentation         | 🟡 جزئي  | `docs/Core/02_Technical_Design_Document.md` | يحتاج تطوير     |
 | 6.3 Infrastructure as Code (IaC) Docs    | ❌ مفقود | -                                                    | **مطلوب إنشاء** |
 | 6.4 Cloud Architecture & Cost Management | ❌ مفقود | -                                                    | **مطلوب إنشاء** |
 | 6.5 Monitoring & Logging Strategy        | ❌ مفقود | -                                                    | **مطلوب إنشاء** |
@@ -254,7 +254,7 @@
 
 - [Strategic Vision Requirements](.kiro/specs/completed/strategic-vision/requirements.md)
 - [Strategic Vision Design](.kiro/specs/completed/strategic-vision/design.md)
-- [Strategic Master Blueprint](Documentation/Core/00_Strategic_Master_Blueprint.md)
+- [Strategic Master Blueprint](docs/Core/00_Strategic_Master_Blueprint.md)
 - [Strategic Decision](.kiro/specs/planning/strategic-decisions/STRATEGIC_DECISION.md)
 - [Immediate Action Plan](.kiro/specs/planning/strategic-decisions/IMMEDIATE_ACTION_PLAN.md)
 

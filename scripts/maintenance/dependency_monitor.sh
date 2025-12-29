@@ -16,7 +16,7 @@ NC='\033[0m' # No Color
 # المتغيرات
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 BACKUP_DIR=".dependency_backups"
-REPORT_DIR="Documentation/reports/maintenance"
+REPORT_DIR="docs/reports/maintenance"
 LOG_FILE="logs/dependency_monitor_${TIMESTAMP}.log"
 
 # إنشاء المجلدات إذا لم تكن موجودة

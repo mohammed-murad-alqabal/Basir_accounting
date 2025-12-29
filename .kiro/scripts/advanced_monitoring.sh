@@ -7,8 +7,8 @@ echo "🔍 Starting advanced documentation monitoring..."
 echo "=================================================="
 
 # Initialize monitoring report
-REPORT_FILE="Documentation/reports/monitoring/monitoring_report_$(date +%Y%m%d_%H%M%S).md"
-mkdir -p "Documentation/reports/monitoring"
+REPORT_FILE="docs/reports/monitoring/monitoring_report_$(date +%Y%m%d_%H%M%S).md"
+mkdir -p "docs/reports/monitoring"
 
 cat > "$REPORT_FILE" << EOF
 # تقرير المراقبة المتقدمة - $(date '+%d %B %Y')
@@ -35,7 +35,7 @@ root_files=$(find . -maxdepth 1 -name "*.md" | wc -l)
 
 cat >> "$REPORT_FILE" << EOF
 - **إجمالي ملفات .md:** $total_md_files
-- **ملفات Documentation/:** $doc_files  
+- **ملفات docs/:** $doc_files  
 - **ملفات .kiro/:** $kiro_files
 - **ملفات الجذر:** $root_files
 
@@ -49,7 +49,7 @@ doc_dirs=$(find Documentation -type d | wc -l)
 kiro_dirs=$(find .kiro -type d | wc -l)
 
 cat >> "$REPORT_FILE" << EOF
-- **مجلدات Documentation/:** $doc_dirs
+- **مجلدات docs/:** $doc_dirs
 - **مجلدات .kiro/:** $kiro_dirs
 
 ## 🔗 فحص الروابط
@@ -60,7 +60,7 @@ EOF
 echo "🔗 Performing link validation..."
 
 broken_links=0
-if grep -r "\.md)" --include="*.md" Documentation/ | grep -v "http" | head -5 > /tmp/sample_links.txt; then
+if grep -r "\.md)" --include="*.md" docs/ | grep -v "http" | head -5 > /tmp/sample_links.txt; then
     sample_links=$(cat /tmp/sample_links.txt | wc -l)
     cat >> "$REPORT_FILE" << EOF
 - **عينة من الروابط المفحوصة:** $sample_links
@@ -81,7 +81,7 @@ cat >> "$REPORT_FILE" << EOF
 
 ### التنظيم:
 - **نظافة الجذر:** $(if [ $root_files -le 5 ]; then echo "✅ ممتاز"; else echo "⚠️ يحتاج تحسين"; fi)
-- **بنية Documentation/:** ✅ منظمة ومكتملة
+- **بنية docs/:** ✅ منظمة ومكتملة
 - **بنية .kiro/:** ✅ احترافية ومنظمة
 
 ### الأداء:
@@ -145,7 +145,7 @@ cat > ".kiro/scripts/monitoring_schedule.md" << EOF
 .kiro/scripts/advanced_monitoring.sh
 
 # فحص الروابط
-Documentation/check_links.sh
+docs/check_links.sh
 \`\`\`
 
 **المراجعة القادمة:** $(date -d '+1 week' '+%d %B %Y')

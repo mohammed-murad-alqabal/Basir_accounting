@@ -190,8 +190,8 @@ flutter test             # التأكد من عدم كسر شيء
 
 ### ملفات التوثيق
 
-1. `Documentation/reports/FLUTTER_ANALYZE_FIX_REPORT.md` (تقرير شامل)
-2. `Documentation/reports/FLUTTER_ANALYZE_SUCCESS_SUMMARY.md` (هذا الملف)
+1. `docs/reports/FLUTTER_ANALYZE_FIX_REPORT.md` (تقرير شامل)
+2. `docs/reports/FLUTTER_ANALYZE_SUCCESS_SUMMARY.md` (هذا الملف)
 3. `CHANGELOG.md` (تحديث سجل التغييرات)
 
 ---
@@ -407,7 +407,7 @@ jobs:
 
 ## للمزيد من التفاصيل
 
-راجع التقرير الشامل: `Documentation/reports/FLUTTER_ANALYZE_FIX_REPORT.md`
+راجع التقرير الشامل: `docs/reports/FLUTTER_ANALYZE_FIX_REPORT.md`
 
 ---
 

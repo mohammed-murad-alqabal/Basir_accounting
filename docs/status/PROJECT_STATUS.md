@@ -227,7 +227,7 @@ lib/
 ### التوثيق
 
 ```
-Documentation/
+docs/
 ├── ARCHITECTURE.md                     # البنية المعمارية
 ├── DEVELOPMENT_GUIDE.md                # دليل التطوير
 ├── PROJECT_COMPREHENSIVE_ANALYSIS.md   # التحليل الشامل

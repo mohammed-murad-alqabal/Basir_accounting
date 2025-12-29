@@ -225,7 +225,7 @@
 ### التوثيق
 
 - `CHANGELOG.md` - تم تحديثه بالإصدار 1.33.0
-- `Documentation/reports/` - جميع التقارير
+- `docs/reports/` - جميع التقارير
 
 ---
 

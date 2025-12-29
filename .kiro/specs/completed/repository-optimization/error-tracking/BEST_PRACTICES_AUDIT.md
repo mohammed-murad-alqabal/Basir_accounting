@@ -277,9 +277,9 @@ release/* (release preparation)
 
 #### B. Technical Documentation ✅
 
-- ✅ `Documentation/ERROR_TRACKING_GUIDE.md`
-- ✅ `Documentation/GIT_GITHUB_GUIDE.md`
-- ✅ `Documentation/ERROR_RESOLUTION_LOG.md`
+- ✅ `docs/ERROR_TRACKING_GUIDE.md`
+- ✅ `docs/GIT_GITHUB_GUIDE.md`
+- ✅ `docs/ERROR_RESOLUTION_LOG.md`
 
 #### C. Code Documentation ✅
 

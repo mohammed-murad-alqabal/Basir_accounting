@@ -16,7 +16,7 @@
 | ملفات MD في الجذر        | 37 ملف   | ~500KB | 🔴 عالية جداً |
 | ملفات LOG في الجذر       | 16 ملف   | ~104KB | 🔴 عالية      |
 | ملفات SH في الجذر        | 3 ملفات  | ~50KB  | 🟡 متوسطة     |
-| تكرار Documentation/docs | 2 مجلد   | N/A    | 🟡 متوسطة     |
+| تكرار docs/docs | 2 مجلد   | N/A    | 🟡 متوسطة     |
 | ملفات متنوعة             | 5+ ملفات | ~20KB  | 🟢 منخفضة     |
 
 ### التأثير الإجمالي
@@ -103,7 +103,7 @@ ERROR_TRACKING_SPECS_SUMMARY.md
 REPOSITORY_IMPROVEMENTS_COMPLETE.md
 ```
 
-**2. تقارير Git (5 ملفات) → `Documentation/reports/fixes/`**
+**2. تقارير Git (5 ملفات) → `docs/reports/fixes/`**
 
 ```
 GIT_PUSH_COMPREHENSIVE_SUCCESS.md
@@ -112,7 +112,7 @@ GIT_PUSH_SUCCESS_REPORT_V2.md
 GIT_STATUS_ANALYSIS_REPORT.md
 ```
 
-**3. تقارير GitHub Workflows (5 ملفات) → `Documentation/reports/fixes/`**
+**3. تقارير GitHub Workflows (5 ملفات) → `docs/reports/fixes/`**
 
 ```
 GITHUB_WORKFLOWS_COMPLETE.md
@@ -134,7 +134,7 @@ MCP_STATUS.md
 MCP_USAGE_EXAMPLES.md
 ```
 
-**5. تقارير Mobile (2 ملف) → `Documentation/reports/fixes/`**
+**5. تقارير Mobile (2 ملف) → `docs/reports/fixes/`**
 
 ```
 MOBILE_FIX_REPORT.md
@@ -152,8 +152,8 @@ PHASE_3_COMPLETION_REPORT.md
 **7. ملفات متنوعة (3 ملفات)**
 
 ```
-ACTION_ITEMS.md → Documentation/
-RECOMMENDED_ACTIONS.md → Documentation/
+ACTION_ITEMS.md → docs/
+RECOMMENDED_ACTIONS.md → docs/
 TASK_COMPLETION_SUMMARY.md → .kiro/docs/reports/sessions/
 ```
 
@@ -258,14 +258,14 @@ optimize_environment.sh
 
 ---
 
-## 🟡 المشكلة الرابعة: تكرار Documentation/docs
+## 🟡 المشكلة الرابعة: تكرار docs/docs
 
 ### التحليل
 
 **المجلدات المكتشفة:**
 
 ```
-Documentation/  (42 ملف + 5 مجلدات)
+docs/  (42 ملف + 5 مجلدات)
 docs/           (1 مجلد فقط: api/)
 ```
 
@@ -277,10 +277,10 @@ docs/           (1 مجلد فقط: api/)
 
 ### الحل
 
-**الخيار 1 (موصى به):** دمج `docs/api/` في `Documentation/`
+**الخيار 1 (موصى به):** دمج `docs/api/` في `docs/`
 
 ```
-Documentation/
+docs/
 ├── api/           # من docs/
 ├── Archive/
 ├── Core/
@@ -354,10 +354,10 @@ fix_int_literals.py
 **الخطوات:**
 
 1. نقل 7 ملفات Kiro إلى `.kiro/docs/reports/kiro/`
-2. نقل 5 ملفات Git إلى `Documentation/reports/fixes/`
-3. نقل 5 ملفات Workflows إلى `Documentation/reports/fixes/`
+2. نقل 5 ملفات Git إلى `docs/reports/fixes/`
+3. نقل 5 ملفات Workflows إلى `docs/reports/fixes/`
 4. نقل 7 ملفات MCP إلى `.kiro/docs/reports/components/`
-5. نقل 2 ملف Mobile إلى `Documentation/reports/fixes/`
+5. نقل 2 ملف Mobile إلى `docs/reports/fixes/`
 6. نقل 3 ملفات Phases إلى `.kiro/docs/reports/phases/`
 7. نقل 3 ملفات متنوعة إلى أماكنها المناسبة
 
@@ -381,11 +381,11 @@ fix_int_literals.py
 
 **النتيجة:** 0 ملفات sh في الجذر
 
-### المرحلة 4: دمج Documentation/docs (أولوية متوسطة)
+### المرحلة 4: دمج docs/docs (أولوية متوسطة)
 
 **الخطوات:**
 
-1. نقل `docs/api/` إلى `Documentation/api/`
+1. نقل `docs/api/` إلى `docs/api/`
 2. حذف مجلد `docs/` الفارغ
 3. تحديث المراجع
 
@@ -454,7 +454,7 @@ basser_mobile/
 ├── .kiro/
 ├── android/
 ├── assets/
-├── Documentation/
+├── docs/
 ├── ios/
 ├── lib/
 ├── linux/
@@ -478,10 +478,10 @@ basser_mobile/
 └── TESTING.md             ✅ مقبول
 ```
 
-### Documentation/ (موحد)
+### docs/ (موحد)
 
 ```
-Documentation/
+docs/
 ├── api/                   # من docs/
 ├── Archive/
 ├── Core/
@@ -585,7 +585,7 @@ logs/
 1. ✅ **37 ملف MD في الجذر** - يجب نقل 30 ملف
 2. ✅ **16 ملف LOG في الجذر** - يجب حذفها
 3. ✅ **3 ملفات SH في الجذر** - يجب نقلها
-4. ✅ **تكرار Documentation/docs** - يجب دمجها
+4. ✅ **تكرار docs/docs** - يجب دمجها
 5. ✅ **5+ ملفات متنوعة** - يجب تنظيمها
 
 ### التحسين المتوقع

@@ -14,7 +14,7 @@
 | .kiro/specs/README.md                        |   ✅   | 3 ديسمبر  |
 | .kiro/specs/CURRENT_STATUS.md                |   ✅   | 3 ديسمبر  |
 | .kiro/specs/PROGRESS_TRACKER.md              |   ✅   | 3 ديسمبر  |
-| Documentation/DOCUMENTATION_UPDATE_REPORT.md |   ✅   | 3 ديسمبر  |
+| docs/DOCUMENTATION_UPDATE_REPORT.md |   ✅   | 3 ديسمبر  |
 
 ---
 
@@ -50,7 +50,7 @@ cat .kiro/specs/CURRENT_STATUS.md
 **للمراجع:**
 
 ```bash
-cat Documentation/DOCUMENTATION_UPDATE_REPORT.md
+cat docs/DOCUMENTATION_UPDATE_REPORT.md
 ```
 
 ---

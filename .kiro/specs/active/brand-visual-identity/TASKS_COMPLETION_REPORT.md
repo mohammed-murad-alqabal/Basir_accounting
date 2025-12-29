@@ -189,7 +189,7 @@
 
 ### التوثيق الداعم
 
-- ✅ `Documentation/BRAND_VISUAL_IDENTITY_SYSTEM.md` (مرجع)
+- ✅ `docs/BRAND_VISUAL_IDENTITY_SYSTEM.md` (مرجع)
 - ✅ `.kiro/steering/agents-framework.md` (إطار العمل)
 - ✅ `.kiro/steering/documentation-standards.md` (المعايير)
 

@@ -118,8 +118,8 @@ git add scripts/cleanup.sh
 git add scripts/monitor_performance.sh
 git add gradle.properties.template
 git add .kiro/settings/performance.json
-git add Documentation/reports/SYSTEM_PERFORMANCE_ANALYSIS.md
-git add Documentation/reports/IMMEDIATE_ACTION_PLAN.md
+git add docs/reports/SYSTEM_PERFORMANCE_ANALYSIS.md
+git add docs/reports/IMMEDIATE_ACTION_PLAN.md
 
 # حفظ التغييرات
 git commit -m "perf: add performance optimization tools and configurations
@@ -332,7 +332,7 @@ echo ""
 
 # 5. حفظ في Git
 echo "💾 حفظ التغييرات..."
-git add scripts/ gradle.properties.template .kiro/settings/performance.json Documentation/reports/
+git add scripts/ gradle.properties.template .kiro/settings/performance.json docs/reports/
 git commit -m "perf: add performance optimization tools and configurations"
 echo "✅ تم"
 echo ""

@@ -3,84 +3,84 @@
   ./SECURITY.md
   ./CHANGELOG.md
   ./README.md
-  ./Documentation/QUICK_START.md
-  ./Documentation/MAINTENANCE_CHECKLIST.md
-  ./Documentation/INDEX.md
-  ./Documentation/README.md
-  ./Documentation/Core/GUEST_MODE_IMPLEMENTATION.md
-  ./Documentation/Archive/README.md
-  ./Documentation/Archive/Context_Reports_2025-12-02/CONTEXT_ORGANIZATION_PLAN.md
-  ./Documentation/Archive/Context_Reports_2025-12-02/CONTEXT_CLEANUP_PLAN.md
-  ./Documentation/Archive/Context_Reports_2025-12-02/CONTEXT_SYNC_FINAL_REPORT.md
-  ./Documentation/Archive/Context_Reports_2025-12-02/CONTEXT_CLEANUP_REPORT.md
-  ./Documentation/Archive/Context_Reports_2025-12-02/CONTEXT_CLEANUP_SUCCESS.md
-  ./Documentation/Archive/Context_Reports_2025-12-02/ENVIRONMENT_FIXES_REPORT.md
-  ./Documentation/Archive/Context_Reports_2025-12-02/PROJECT_FINAL_ASSESSMENT.md
-  ./Documentation/Archive/Context_Reports_2025-12-02/ANDROID_FIXES_REPORT.md
-  ./Documentation/Archive/Context_Reports_2025-12-02/TESTING_SYSTEM_SUCCESS_REPORT.md
-  ./Documentation/Archive/Context_Reports_2025-12-02/FINAL_STATUS.md
-  ./Documentation/Archive/Context_Reports_2025-12-02/DOCUMENTATION_UPDATE_SUMMARY.md
+  ./docs/QUICK_START.md
+  ./docs/MAINTENANCE_CHECKLIST.md
+  ./docs/INDEX.md
+  ./docs/README.md
+  ./docs/Core/GUEST_MODE_IMPLEMENTATION.md
+  ./docs/Archive/README.md
+  ./docs/Archive/Context_Reports_2025-12-02/CONTEXT_ORGANIZATION_PLAN.md
+  ./docs/Archive/Context_Reports_2025-12-02/CONTEXT_CLEANUP_PLAN.md
+  ./docs/Archive/Context_Reports_2025-12-02/CONTEXT_SYNC_FINAL_REPORT.md
+  ./docs/Archive/Context_Reports_2025-12-02/CONTEXT_CLEANUP_REPORT.md
+  ./docs/Archive/Context_Reports_2025-12-02/CONTEXT_CLEANUP_SUCCESS.md
+  ./docs/Archive/Context_Reports_2025-12-02/ENVIRONMENT_FIXES_REPORT.md
+  ./docs/Archive/Context_Reports_2025-12-02/PROJECT_FINAL_ASSESSMENT.md
+  ./docs/Archive/Context_Reports_2025-12-02/ANDROID_FIXES_REPORT.md
+  ./docs/Archive/Context_Reports_2025-12-02/TESTING_SYSTEM_SUCCESS_REPORT.md
+  ./docs/Archive/Context_Reports_2025-12-02/FINAL_STATUS.md
+  ./docs/Archive/Context_Reports_2025-12-02/DOCUMENTATION_UPDATE_SUMMARY.md
   ... and 768 more files
 
 === OTHER (78 files) ===
   ./STRUCTURE.md
-  ./Documentation/Archive/Misc/README_QUICK_FIX.md
-  ./Documentation/Archive/Misc/FIX_DEFAULT_BRANCH_GUIDE.md
-  ./Documentation/Archive/Misc/CORRECT_GITHUB_PATH.md
-  ./Documentation/Archive/2025-12/FLUTTER_FIXES_REPORT.md
-  ./Documentation/Archive/2025-12/SESSION_SUMMARY_SPEC_REVIEW.md
-  ./Documentation/Archive/2025-12/COMPREHENSIVE_GIT_PUSH_FINAL_REPORT.md
-  ./Documentation/Archive/2025-12/ISAR_DATABASE_FIX_REPORT.md
-  ./Documentation/Archive/2025-12/RELEASE_MANAGEMENT_IMPLEMENTATION_REPORT.md
-  ./Documentation/Archive/2025-12/MOBILE_TESTING_PLAN.md
-  ./Documentation/Archive/2025/december/COMPREHENSIVE_SESSION_REPORT.md
-  ./Documentation/Archive/root_cleanup_20251224/NEXT_STEPS_USER_TESTING.md
-  ./Documentation/reports/features/AGENTS_ACTIVATION_REPORT.md
-  ./Documentation/reports/phases/PHASE7_FINAL_COMPLETION_REPORT.md
-  ./Documentation/reports/fixes/DARK_MODE_ISSUES.md
-  ./Documentation/reports/project-status/FINAL_PROJECT_COMPLETION_REPORT.md
-  ./Documentation/reports/project-status/REVIEW_COMPLETION_REPORT.md
-  ./Documentation/reports/git-github/GIT_WORKFLOW_COMPREHENSIVE_ANALYSIS.md
-  ./Documentation/reports/ui-ux/BRAND_VISUAL_IDENTITY_COMPREHENSIVE_REPORT.md
-  ./Documentation/sessions/COMPLETION_SUMMARY.md
+  ./docs/Archive/Misc/README_QUICK_FIX.md
+  ./docs/Archive/Misc/FIX_DEFAULT_BRANCH_GUIDE.md
+  ./docs/Archive/Misc/CORRECT_GITHUB_PATH.md
+  ./docs/Archive/2025-12/FLUTTER_FIXES_REPORT.md
+  ./docs/Archive/2025-12/SESSION_SUMMARY_SPEC_REVIEW.md
+  ./docs/Archive/2025-12/COMPREHENSIVE_GIT_PUSH_FINAL_REPORT.md
+  ./docs/Archive/2025-12/ISAR_DATABASE_FIX_REPORT.md
+  ./docs/Archive/2025-12/RELEASE_MANAGEMENT_IMPLEMENTATION_REPORT.md
+  ./docs/Archive/2025-12/MOBILE_TESTING_PLAN.md
+  ./docs/Archive/2025/december/COMPREHENSIVE_SESSION_REPORT.md
+  ./docs/Archive/root_cleanup_20251224/NEXT_STEPS_USER_TESTING.md
+  ./docs/reports/features/AGENTS_ACTIVATION_REPORT.md
+  ./docs/reports/phases/PHASE7_FINAL_COMPLETION_REPORT.md
+  ./docs/reports/fixes/DARK_MODE_ISSUES.md
+  ./docs/reports/project-status/FINAL_PROJECT_COMPLETION_REPORT.md
+  ./docs/reports/project-status/REVIEW_COMPLETION_REPORT.md
+  ./docs/reports/git-github/GIT_WORKFLOW_COMPREHENSIVE_ANALYSIS.md
+  ./docs/reports/ui-ux/BRAND_VISUAL_IDENTITY_COMPREHENSIVE_REPORT.md
+  ./docs/sessions/COMPLETION_SUMMARY.md
   ... and 58 more files
 
 === STATUS (224 files) ===
   ./CONTRIBUTING.md
-  ./Documentation/Core/00_Strategic_Master_Blueprint.md
-  ./Documentation/Core/03_Product_Requirements_Document.md
-  ./Documentation/Core/04_Design_System.md
-  ./Documentation/Core/05_UI_Wireframes_Description.md
-  ./Documentation/Core/ARCHITECTURE.md
-  ./Documentation/Core/02_Technical_Design_Document.md
-  ./Documentation/Core/01_Product_Charter.md
-  ./Documentation/Core/CODING_STANDARDS.md
-  ./Documentation/Archive/Context_Reports_2025-12-02/DESIGN_IMPROVEMENTS.md
-  ./Documentation/Archive/Misc/MERGE_DECISION_FINAL.md
-  ./Documentation/Archive/Misc/GIT_INDEX.md
-  ./Documentation/Archive/Misc/GIT_FIX_QUICK_GUIDE.md
-  ./Documentation/Archive/Misc/FIX_GITHUB_DEFAULT_BRANCH.md
-  ./Documentation/Archive/Misc/GIT_DOCS_README.md
-  ./Documentation/Archive/Misc/MANUAL_STEPS_REQUIRED.md
-  ./Documentation/Archive/Misc/KIRO_SETUP_COMPLETE.md
-  ./Documentation/Archive/Misc/ALTERNATIVE_SAFE_APPROACH.md
-  ./Documentation/Archive/2025-12/ONBOARDING_TUTORIAL_SPEC_SUMMARY.md
-  ./Documentation/Archive/2025-12/SETTINGS_FIX_SUMMARY.md
+  ./docs/Core/00_Strategic_Master_Blueprint.md
+  ./docs/Core/03_Product_Requirements_Document.md
+  ./docs/Core/04_Design_System.md
+  ./docs/Core/05_UI_Wireframes_Description.md
+  ./docs/Core/ARCHITECTURE.md
+  ./docs/Core/02_Technical_Design_Document.md
+  ./docs/Core/01_Product_Charter.md
+  ./docs/Core/CODING_STANDARDS.md
+  ./docs/Archive/Context_Reports_2025-12-02/DESIGN_IMPROVEMENTS.md
+  ./docs/Archive/Misc/MERGE_DECISION_FINAL.md
+  ./docs/Archive/Misc/GIT_INDEX.md
+  ./docs/Archive/Misc/GIT_FIX_QUICK_GUIDE.md
+  ./docs/Archive/Misc/FIX_GITHUB_DEFAULT_BRANCH.md
+  ./docs/Archive/Misc/GIT_DOCS_README.md
+  ./docs/Archive/Misc/MANUAL_STEPS_REQUIRED.md
+  ./docs/Archive/Misc/KIRO_SETUP_COMPLETE.md
+  ./docs/Archive/Misc/ALTERNATIVE_SAFE_APPROACH.md
+  ./docs/Archive/2025-12/ONBOARDING_TUTORIAL_SPEC_SUMMARY.md
+  ./docs/Archive/2025-12/SETTINGS_FIX_SUMMARY.md
   ... and 204 more files
 
 === INDEX (7 files) ===
-  ./Documentation/Archive/2025/december/TEST_action-items/README.md
-  ./Documentation/sessions/README.md
-  ./Documentation/guides/README.md
+  ./docs/Archive/2025/december/TEST_action-items/README.md
+  ./docs/sessions/README.md
+  ./docs/guides/README.md
   ./.kiro/reference/advanced-ai-development-standards.md
   ./.kiro/archive/powers/aurora-dsql/steering/strategic-mandate.md
   ./.kiro/steering/technologies/tech-stack-index.md
   ./.kiro/prompts/models/read-multiple-files.md
 
 === GUIDE (20 files) ===
-  ./Documentation/Archive/Old_Guides/CI_CD_SETUP_GUIDE.md
-  ./Documentation/Archive/Old_Guides/PROVIDERS_INTEGRATION_GUIDE.md
-  ./Documentation/guides/design/DESIGN.md
+  ./docs/Archive/Old_Guides/CI_CD_SETUP_GUIDE.md
+  ./docs/Archive/Old_Guides/PROVIDERS_INTEGRATION_GUIDE.md
+  ./docs/guides/design/DESIGN.md
   ./.kiro/reference/best-practices.md
   ./.kiro/reports/emergency/README.md
   ./.kiro/archive/powers/aws-infrastructure-as-code/POWER.md
@@ -100,8 +100,8 @@
   ./scripts/figma_quick_guide.md
 
 === TASK (27 files) ===
-  ./Documentation/reports/ui-ux/FIGMA_USAGE_GUIDE.md
-  ./Documentation/guides/troubleshooting/ERROR_RESOLUTION_LOG.md
+  ./docs/reports/ui-ux/FIGMA_USAGE_GUIDE.md
+  ./docs/guides/troubleshooting/ERROR_RESOLUTION_LOG.md
   ./.kiro/archive/powers/README.md
   ./.kiro/archive/powers/power-builder/steering/interactive.md
   ./.kiro/archive/powers/strands/POWER.md

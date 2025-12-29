@@ -336,16 +336,16 @@ test_workflow_step "اختبار جديد" \
 
 للمساعدة أو الإبلاغ عن مشاكل:
 
-1. راجع التوثيق في `Documentation/ERROR_TRACKING_GUIDE.md`
-2. راجع تقرير المهمة في `Documentation/reports/TASK_21_COMPLETION_REPORT.md`
+1. راجع التوثيق في `docs/ERROR_TRACKING_GUIDE.md`
+2. راجع تقرير المهمة في `docs/reports/TASK_21_COMPLETION_REPORT.md`
 3. افتح issue في GitHub
 
 ---
 
 ## المراجع
 
-- [تقرير إكمال المهمة 21](../../Documentation/reports/TASK_21_COMPLETION_REPORT.md)
-- [دليل نظام تتبع الأخطاء](../../Documentation/ERROR_TRACKING_GUIDE.md)
+- [تقرير إكمال المهمة 21](../../docs/reports/TASK_21_COMPLETION_REPORT.md)
+- [دليل نظام تتبع الأخطاء](../../docs/ERROR_TRACKING_GUIDE.md)
 - [معايير الاختبار](../../.kiro/steering/testing-best-practices.md)
 
 ---

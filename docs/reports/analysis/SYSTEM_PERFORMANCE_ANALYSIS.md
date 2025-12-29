@@ -149,7 +149,7 @@ Process 2953: 7.6% CPU, 343 MB RAM
 ```
 build/          1.8 GB  ❌ كبير جداً
 android/        26 MB   ✅ طبيعي
-Documentation/  3.1 MB  ✅ طبيعي
+docs/  3.1 MB  ✅ طبيعي
 assets/         2.4 MB  ✅ طبيعي
 coverage/       2.1 MB  ✅ طبيعي
 logs/           1.6 MB  ⚠️ يمكن تنظيفه
@@ -229,7 +229,7 @@ Android Studio: 2025.1.3  ✅
 **الملفات المعدلة الرئيسية:**
 
 - specs/ (4 ملفات)
-- Documentation/ (5 ملفات)
+- docs/ (5 ملفات)
 - lib/ (6 ملفات)
 - CHANGELOG.md
 

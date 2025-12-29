@@ -14,7 +14,7 @@
 ## البنية الجديدة
 
 ```
-Documentation/
+docs/
 └── reports/
     ├── INDEX.md          # فهرس شامل
     ├── tasks/            # 6 تقارير مهام

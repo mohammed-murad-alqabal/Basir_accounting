@@ -42,7 +42,7 @@
    mkdir -p logs/git
    mkdir -p scripts/maintenance
    mkdir -p .kiro/data
-   mkdir -p Documentation/api
+   mkdir -p docs/api
    ```
 
 #### معايير النجاح
@@ -79,33 +79,33 @@ ls -1 .kiro/docs/reports/kiro/*.md | wc -l
 
 #### 2.2: تقارير Git (4 ملفات)
 
-**الوجهة:** `Documentation/reports/fixes/`
+**الوجهة:** `docs/reports/fixes/`
 
 ```bash
 # نقل الملفات
-mv GIT_PUSH_COMPREHENSIVE_SUCCESS.md Documentation/reports/fixes/
-mv GIT_PUSH_STRATEGY.md Documentation/reports/fixes/
-mv GIT_PUSH_SUCCESS_REPORT_V2.md Documentation/reports/fixes/
-mv GIT_STATUS_ANALYSIS_REPORT.md Documentation/reports/fixes/
+mv GIT_PUSH_COMPREHENSIVE_SUCCESS.md docs/reports/fixes/
+mv GIT_PUSH_STRATEGY.md docs/reports/fixes/
+mv GIT_PUSH_SUCCESS_REPORT_V2.md docs/reports/fixes/
+mv GIT_STATUS_ANALYSIS_REPORT.md docs/reports/fixes/
 
 # التحقق
-ls -1 Documentation/reports/fixes/GIT*.md | wc -l
+ls -1 docs/reports/fixes/GIT*.md | wc -l
 # المتوقع: 4
 ```
 
 #### 2.3: تقارير GitHub Workflows (4 ملفات)
 
-**الوجهة:** `Documentation/reports/fixes/`
+**الوجهة:** `docs/reports/fixes/`
 
 ```bash
 # نقل الملفات
-mv GITHUB_WORKFLOWS_COMPLETE.md Documentation/reports/fixes/
-mv GITHUB_WORKFLOWS_FIX_REPORT.md Documentation/reports/fixes/
-mv GITHUB_WORKFLOWS_STATUS.md Documentation/reports/fixes/
-mv WORKFLOWS_FIX_FINAL_REPORT.md Documentation/reports/fixes/
+mv GITHUB_WORKFLOWS_COMPLETE.md docs/reports/fixes/
+mv GITHUB_WORKFLOWS_FIX_REPORT.md docs/reports/fixes/
+mv GITHUB_WORKFLOWS_STATUS.md docs/reports/fixes/
+mv WORKFLOWS_FIX_FINAL_REPORT.md docs/reports/fixes/
 
 # التحقق
-ls -1 Documentation/reports/fixes/*WORKFLOW*.md | wc -l
+ls -1 docs/reports/fixes/*WORKFLOW*.md | wc -l
 # المتوقع: 4
 ```
 
@@ -131,15 +131,15 @@ ls -1 .kiro/docs/reports/components/MCP*.md | wc -l
 
 #### 2.5: تقارير Mobile (2 ملف)
 
-**الوجهة:** `Documentation/reports/fixes/`
+**الوجهة:** `docs/reports/fixes/`
 
 ```bash
 # نقل الملفات
-mv MOBILE_FIX_REPORT.md Documentation/reports/fixes/
-mv MOBILE_TEST_STATUS.md Documentation/reports/fixes/
+mv MOBILE_FIX_REPORT.md docs/reports/fixes/
+mv MOBILE_TEST_STATUS.md docs/reports/fixes/
 
 # التحقق
-ls -1 Documentation/reports/fixes/MOBILE*.md | wc -l
+ls -1 docs/reports/fixes/MOBILE*.md | wc -l
 # المتوقع: 2
 ```
 
@@ -162,16 +162,16 @@ ls -1 .kiro/docs/reports/phases/PHASE*.md | wc -l
 
 ```bash
 # نقل ACTION_ITEMS.md
-mv ACTION_ITEMS.md Documentation/
+mv ACTION_ITEMS.md docs/
 
 # نقل RECOMMENDED_ACTIONS.md
-mv RECOMMENDED_ACTIONS.md Documentation/
+mv RECOMMENDED_ACTIONS.md docs/
 
 # نقل TASK_COMPLETION_SUMMARY.md
 mv TASK_COMPLETION_SUMMARY.md .kiro/docs/reports/sessions/
 
 # التحقق
-ls -1 Documentation/ACTION*.md | wc -l
+ls -1 docs/ACTION*.md | wc -l
 # المتوقع: 1
 ```
 
@@ -231,7 +231,7 @@ ls -1 scripts/maintenance/*.sh | wc -l
 
 ---
 
-### المرحلة 5: دمج Documentation/docs
+### المرحلة 5: دمج docs/docs
 
 **الأولوية:** 🟡 متوسطة  
 **الوقت المقدر:** 2 دقيقة
@@ -239,9 +239,9 @@ ls -1 scripts/maintenance/*.sh | wc -l
 #### الخطوات
 
 ```bash
-# نقل docs/api/ إلى Documentation/
+# نقل docs/api/ إلى docs/
 if [ -d "docs/api" ]; then
-  mv docs/api Documentation/
+  mv docs/api docs/
 fi
 
 # حذف مجلد docs/ إذا كان فارغاً
@@ -250,13 +250,13 @@ if [ -z "$(ls -A docs)" ]; then
 fi
 
 # التحقق
-ls -d Documentation/api
-# المتوقع: Documentation/api
+ls -d docs/api
+# المتوقع: docs/api
 ```
 
 #### معايير النجاح
 
-- ✅ `docs/api/` منقول إلى `Documentation/api/`
+- ✅ `docs/api/` منقول إلى `docs/api/`
 - ✅ مجلد `docs/` محذوف
 - ✅ لا تكرار
 
@@ -376,7 +376,7 @@ ls -1 *.sh | wc -l
 
 # 2. التحقق من البنية
 tree -L 2 .kiro/docs/reports/
-tree -L 2 Documentation/reports/
+tree -L 2 docs/reports/
 tree -L 2 scripts/
 
 # 3. Git status
@@ -391,7 +391,7 @@ git commit -m "refactor: تنظيف شامل لجذر المشروع
 - نقل 30 ملف MD إلى أماكنها المناسبة
 - حذف 16 ملف log قديم
 - نقل 3 ملفات sh إلى scripts/maintenance/
-- دمج Documentation/docs
+- دمج docs/docs
 - تنظيف 5+ ملفات متنوعة
 - تحديث .gitignore
 - تحسين التنظيم بنسبة 88.5%

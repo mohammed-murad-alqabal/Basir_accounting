@@ -441,7 +441,7 @@ show_post_install_info() {
      git commit -m "test: اختبار النظام"
 
   4. راجع التوثيق:
-     cat Documentation/ERROR_TRACKING_GUIDE.md
+     cat docs/ERROR_TRACKING_GUIDE.md
 
 📖 الأوامر المفيدة:
 
@@ -470,7 +470,7 @@ show_post_install_info() {
   التقارير: logs/reports/
 
 📞 الدعم:
-  التوثيق: Documentation/ERROR_TRACKING_GUIDE.md
+  التوثيق: docs/ERROR_TRACKING_GUIDE.md
   المشاكل: افتح issue في GitHub
 
 ═══════════════════════════════════════════════════════════

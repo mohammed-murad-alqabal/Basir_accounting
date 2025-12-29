@@ -51,10 +51,10 @@ basser_mobile/
 └── TESTING.md              ✅ مقبول
 ```
 
-### Documentation/ (20MB، 201 ملف)
+### docs/ (20MB، 201 ملف)
 
 ```
-Documentation/
+docs/
 ├── api/                    ✅ من docs/
 ├── Archive/                ⚠️ كبير
 ├── Core/
@@ -134,7 +134,7 @@ logs/
 
 | المجلد         | الحجم | الملفات | الحالة   |
 | -------------- | ----- | ------- | -------- |
-| Documentation/ | 20MB  | 201     | ⚠️ كبير  |
+| docs/ | 20MB  | 201     | ⚠️ كبير  |
 | .kiro/docs/    | 1.3MB | 114     | ✅ جيد   |
 | scripts/       | 360KB | 40+     | ✅ جيد   |
 | logs/          | 28KB  | 3       | ✅ ممتاز |
@@ -143,30 +143,30 @@ logs/
 
 ## 🎯 التوصيات للمتابعة
 
-### 1. أرشفة Documentation/Archive/ (أولوية متوسطة)
+### 1. أرشفة docs/Archive/ (أولوية متوسطة)
 
 **المشكلة:**
 
 - مجلد Archive/ قد يحتوي على ملفات قديمة جداً
-- يساهم في حجم Documentation/ الكبير (20MB)
+- يساهم في حجم docs/ الكبير (20MB)
 
 **الحل المقترح:**
 
 ```bash
 # فحص محتوى Archive/
-find Documentation/Archive -type f -mtime +90
+find docs/Archive -type f -mtime +90
 
 # أرشفة الملفات القديمة (أكثر من 90 يوم)
-tar -czf Documentation/archive_$(date +%Y%m%d).tar.gz \
-  Documentation/Archive/
+tar -czf docs/archive_$(date +%Y%m%d).tar.gz \
+  docs/Archive/
 
 # نقل الأرشيف
-mv Documentation/archive_*.tar.gz .kiro/archives/
+mv docs/archive_*.tar.gz .kiro/archives/
 ```
 
 **الفوائد:**
 
-- تقليل حجم Documentation/
+- تقليل حجم docs/
 - الحفاظ على الملفات القديمة
 - تحسين الأداء
 
@@ -232,7 +232,7 @@ fi
 - فقط الملفات الضرورية (README, LICENSE, etc.)
 - لا ملفات log أو tmp أو bak
 
-## Documentation/
+## docs/
 
 - التوثيق الرسمي للمشروع
 - التقارير الهامة طويلة المدى
@@ -269,10 +269,10 @@ fi
 echo "=== حجم المجلدات الرئيسية ==="
 du -sh Documentation .kiro/docs scripts logs
 
-# تحذير إذا تجاوز Documentation/ 25MB
+# تحذير إذا تجاوز docs/ 25MB
 SIZE=$(du -sm Documentation | cut -f1)
 if [ $SIZE -gt 25 ]; then
-  echo "⚠️ تحذير: Documentation/ تجاوز 25MB ($SIZE MB)"
+  echo "⚠️ تحذير: docs/ تجاوز 25MB ($SIZE MB)"
   echo "الرجاء مراجعة وأرشفة الملفات القديمة"
 fi
 ```
@@ -289,7 +289,7 @@ fi
 
 ### المرحلة 2: الأرشفة (أسبوع 2)
 
-- [ ] مراجعة Documentation/Archive/
+- [ ] مراجعة docs/Archive/
 - [ ] أرشفة الملفات القديمة (> 90 يوم)
 - [ ] إنشاء سكريبت أرشفة تلقائي
 

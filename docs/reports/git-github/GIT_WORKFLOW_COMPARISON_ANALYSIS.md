@@ -12,7 +12,7 @@
 مقارنة شاملة بين:
 
 1. **الخطط والتوصيات الموجودة مسبقاً** في `.kiro/specs/`
-2. **الإطار الشامل الجديد** في `Documentation/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md`
+2. **الإطار الشامل الجديد** في `docs/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md`
 
 ---
 

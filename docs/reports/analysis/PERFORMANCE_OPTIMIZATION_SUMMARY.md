@@ -54,7 +54,7 @@
 
 #### أ. تقرير التحليل الشامل
 
-📄 `Documentation/reports/SYSTEM_PERFORMANCE_ANALYSIS.md`
+📄 `docs/reports/SYSTEM_PERFORMANCE_ANALYSIS.md`
 
 **المحتوى:**
 
@@ -70,7 +70,7 @@
 
 #### ب. خطة العمل الفورية
 
-📄 `Documentation/reports/IMMEDIATE_ACTION_PLAN.md`
+📄 `docs/reports/IMMEDIATE_ACTION_PLAN.md`
 
 **المحتوى:**
 
@@ -298,9 +298,9 @@ flutter test
 
 ### التقارير
 
-1. ✅ `Documentation/reports/SYSTEM_PERFORMANCE_ANALYSIS.md`
-2. ✅ `Documentation/reports/IMMEDIATE_ACTION_PLAN.md`
-3. ✅ `Documentation/reports/PERFORMANCE_OPTIMIZATION_SUMMARY.md`
+1. ✅ `docs/reports/SYSTEM_PERFORMANCE_ANALYSIS.md`
+2. ✅ `docs/reports/IMMEDIATE_ACTION_PLAN.md`
+3. ✅ `docs/reports/PERFORMANCE_OPTIMIZATION_SUMMARY.md`
 
 ### السكريبتات
 

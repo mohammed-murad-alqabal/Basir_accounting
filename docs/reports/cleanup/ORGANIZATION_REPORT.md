@@ -21,7 +21,7 @@
 
 - 19 ملف تقرير في الجذر الرئيسي
 - 6 ملفات في `logs/reports/`
-- 37+ ملف في `Documentation/`
+- 37+ ملف في `docs/`
 
 **المشاكل المكتشفة:**
 
@@ -35,7 +35,7 @@
 **البنية المنشأة:**
 
 ```
-Documentation/
+docs/
 ├── README.md                   # دليل التوثيق
 ├── ORGANIZATION_REPORT.md      # هذا التقرير
 └── reports/
@@ -50,7 +50,7 @@ Documentation/
 
 **الملفات المنقولة:**
 
-**1. تقارير المهام → `Documentation/reports/tasks/`**
+**1. تقارير المهام → `docs/reports/tasks/`**
 
 - ✅ TASK_5_SUMMARY.md
 - ✅ TASK_6_SUMMARY.md
@@ -59,7 +59,7 @@ Documentation/
 - ✅ task_6_completion_report.md
 - ✅ task_7_checkpoint_report.md
 
-**2. ملخصات الجلسات → `Documentation/reports/sessions/`**
+**2. ملخصات الجلسات → `docs/reports/sessions/`**
 
 - ✅ SESSION_SUMMARY_TASK_7.md
 - ✅ SESSION_SUMMARY_TASKS_5_6.md
@@ -69,14 +69,14 @@ Documentation/
 - ✅ SESSION_SUMMARY_FINAL_TESTING.md
 - ✅ SESSION_SUMMARY.md
 
-**3. تقارير الاختبار → `Documentation/reports/testing/`**
+**3. تقارير الاختبار → `docs/reports/testing/`**
 
 - ✅ MOBILE_TESTING_REPORT_DETAILED.md
 - ✅ MOBILE_TESTING_REPORT.md
 - ✅ UI_TESTING_REPORT.md
 - ✅ TESTING_SUMMARY.md
 
-**4. تقارير قديمة → `Documentation/reports/archive/`**
+**4. تقارير قديمة → `docs/reports/archive/`**
 
 - ✅ COMPLETE_SUMMARY.md
 - ✅ FINAL_REPORT.md
@@ -88,9 +88,9 @@ Documentation/
 
 **الملفات المنشأة:**
 
-1. ✅ `Documentation/README.md` - دليل التوثيق الرئيسي
-2. ✅ `Documentation/reports/INDEX.md` - فهرس شامل للتقارير
-3. ✅ `Documentation/ORGANIZATION_REPORT.md` - هذا التقرير
+1. ✅ `docs/README.md` - دليل التوثيق الرئيسي
+2. ✅ `docs/reports/INDEX.md` - فهرس شامل للتقارير
+3. ✅ `docs/ORGANIZATION_REPORT.md` - هذا التقرير
 
 ---
 
@@ -99,7 +99,7 @@ Documentation/
 ### الهيكل الكامل
 
 ```
-Documentation/
+docs/
 ├── README.md                           # دليل رئيسي
 ├── ORGANIZATION_REPORT.md              # تقرير التنظيم
 ├── reports/
@@ -209,7 +209,7 @@ Documentation/
 
 **الوصول للتقارير:**
 
-1. افتح `Documentation/reports/INDEX.md`
+1. افتح `docs/reports/INDEX.md`
 2. اختر الفئة المناسبة
 3. انقر على الرابط المطلوب
 
@@ -223,7 +223,7 @@ Documentation/
 
 **مراجعة التقدم:**
 
-1. راجع `Documentation/reports/INDEX.md`
+1. راجع `docs/reports/INDEX.md`
 2. تحقق من الإحصائيات
 3. راجع آخر التقارير
 

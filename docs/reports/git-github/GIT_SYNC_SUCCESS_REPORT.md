@@ -95,7 +95,7 @@ Changes not staged for commit:
   modified:   .kiro/QUALITY_ASSESSMENT.md
   modified:   .kiro/specs/error-tracking-system/tasks.md
 Untracked files:
-  Documentation/PROJECT_STATUS_COMPREHENSIVE_REVIEW.md
+  docs/PROJECT_STATUS_COMPREHENSIVE_REVIEW.md
   SESSION_SUMMARY_GUEST_MODE.md
 ```
 
@@ -151,9 +151,9 @@ Status: ✅ متزامن تماماً
 ### 4.3 الملفات الجديدة (بعد المزامنة)
 
 ```
-Documentation/ALIGNMENT_ANALYSIS_REPORT.md
-Documentation/SESSION_SUMMARY_UI_UX_PHASE1.md
-Documentation/UI_UX_IMPROVEMENTS_PROGRESS.md
+docs/ALIGNMENT_ANALYSIS_REPORT.md
+docs/SESSION_SUMMARY_UI_UX_PHASE1.md
+docs/UI_UX_IMPROVEMENTS_PROGRESS.md
 scripts/hooks/pre-push
 test/security/test_secret_detection.sh
 ```
@@ -231,7 +231,7 @@ flutter test --exclude-tags=integration
 **الإجراء:**
 
 ```bash
-git add Documentation/*.md scripts/hooks/pre-push test/security/
+git add docs/*.md scripts/hooks/pre-push test/security/
 git commit -m "docs: إضافة تقارير UI/UX وتحسينات الأمان"
 git push origin main
 ```
@@ -359,7 +359,7 @@ git push origin main
 **commit الملفات الجديدة ومتابعة التطوير:**
 
 ```bash
-git add Documentation/*.md scripts/hooks/pre-push test/security/
+git add docs/*.md scripts/hooks/pre-push test/security/
 git commit -m "docs: إضافة تقارير UI/UX وتحسينات الأمان"
 git push origin main
 ```

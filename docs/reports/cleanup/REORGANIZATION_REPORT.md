@@ -41,7 +41,7 @@
 **ما تم إنشاؤه:**
 
 ```
-Documentation/
+docs/
 ├── reports/              # جديد - 70+ تقرير منظم
 │   ├── builds/          # 5 تقارير بناء ونشر
 │   ├── performance/     # 5 تقارير أداء
@@ -73,7 +73,7 @@ Root/
 ├── 83 ملف .md (فوضى كبيرة)
 ├── 12 مجلد test_archive (غير ضروري)
 ├── 6 ملفات test_*.txt (مؤقتة)
-└── Documentation/ (منظم جزئياً)
+└── docs/ (منظم جزئياً)
 ```
 
 **المشاكل:**
@@ -99,7 +99,7 @@ Root/
 │   └── PROJECT_STATUS.md
 ├── 0 مجلدات test_archive ✅
 ├── 0 ملفات مؤقتة ✅
-└── Documentation/ (منظم بالكامل) ✅
+└── docs/ (منظم بالكامل) ✅
     ├── reports/ (70+ تقرير)
     ├── sessions/ (10+ ملخص)
     ├── guides/ (10+ دليل)
@@ -118,7 +118,7 @@ Root/
 
 ## 📁 التفاصيل: ما تم نقله
 
-### 1. تقارير البناء → Documentation/reports/builds/
+### 1. تقارير البناء → docs/reports/builds/
 
 **العدد:** 5 تقارير
 
@@ -130,7 +130,7 @@ Root/
 - GIT_PUSH_SUCCESS_REPORT.md
 - ANDROID_STUDIO_PLUGINS_GUIDE.md
 
-### 2. تقارير الأداء → Documentation/reports/performance/
+### 2. تقارير الأداء → docs/reports/performance/
 
 **العدد:** 5 تقارير
 
@@ -142,7 +142,7 @@ Root/
 - PERFORMANCE_OPTIMIZATION_FINAL_REPORT.md
 - PERFORMANCE_AND_ASSETS_ANALYSIS.md
 
-### 3. تقارير الاختبارات → Documentation/reports/testing/
+### 3. تقارير الاختبارات → docs/reports/testing/
 
 **العدد:** 10 تقارير
 
@@ -157,7 +157,7 @@ Root/
 - MOBILE_TESTING_REPORT.md
 - MOBILE_TEST_SUMMARY.md
 
-### 4. تقارير الإصلاحات → Documentation/reports/fixes/
+### 4. تقارير الإصلاحات → docs/reports/fixes/
 
 **العدد:** 40+ تقرير
 
@@ -181,7 +181,7 @@ Root/
 - FINAL_FIX_SUMMARY.md
 - IMMEDIATE_ACTION_REQUIRED.md
 
-### 5. تقارير الميزات → Documentation/reports/features/
+### 5. تقارير الميزات → docs/reports/features/
 
 **العدد:** 5 تقارير
 
@@ -193,7 +193,7 @@ Root/
 - MOBILE_FONT_FIX_FINAL_TEST_REPORT.md
 - TEXT_IMPROVEMENTS_REPORT.md
 
-### 6. ملخصات الجلسات → Documentation/sessions/
+### 6. ملخصات الجلسات → docs/sessions/
 
 **العدد:** 10+ ملخص
 
@@ -210,7 +210,7 @@ Root/
 - SESSION_CONTINUATION_SUMMARY.md
 - COMPLETION_SUMMARY.md
 
-### 7. الأدلة → Documentation/guides/
+### 7. الأدلة → docs/guides/
 
 **العدد:** 10+ دليل
 
@@ -231,7 +231,7 @@ Root/
 - DEV_ENVIRONMENT_ANALYSIS.md
 - CONTINUATION_PLAN.md
 
-### 8. تقارير الحالة → Documentation/status/
+### 8. تقارير الحالة → docs/status/
 
 **العدد:** 4 تقارير
 
@@ -282,9 +282,9 @@ Root/
 ### قائمة التحقق
 
 - [x] الجذر يحتوي على 7 ملفات أساسية فقط
-- [x] جميع التقارير في Documentation/reports/
-- [x] جميع الجلسات في Documentation/sessions/
-- [x] جميع الأدلة في Documentation/guides/
+- [x] جميع التقارير في docs/reports/
+- [x] جميع الجلسات في docs/sessions/
+- [x] جميع الأدلة في docs/guides/
 - [x] 0 مجلدات test_archive
 - [x] 0 ملفات اختبار مؤقتة
 - [x] README.md في كل مجلد جديد
@@ -300,7 +300,7 @@ ls -1 *.md | wc -l
 # النتيجة: 7 ✅
 
 # التحقق من عدد الملفات المنقولة
-find Documentation/reports Documentation/sessions Documentation/guides Documentation/status -type f -name "*.md" | wc -l
+find docs/reports docs/sessions docs/guides docs/status -type f -name "*.md" | wc -l
 # النتيجة: 82 ✅
 
 # التحقق من Git status
@@ -350,11 +350,11 @@ git log --oneline -2
 
 1. حدد نوع التقرير:
 
-   - بناء → `Documentation/reports/builds/`
-   - أداء → `Documentation/reports/performance/`
-   - اختبار → `Documentation/reports/testing/`
-   - إصلاح → `Documentation/reports/fixes/`
-   - ميزة → `Documentation/reports/features/`
+   - بناء → `docs/reports/builds/`
+   - أداء → `docs/reports/performance/`
+   - اختبار → `docs/reports/testing/`
+   - إصلاح → `docs/reports/fixes/`
+   - ميزة → `docs/reports/features/`
 
 2. افتح المجلد المناسب
 3. ابحث عن التقرير بالاسم
@@ -362,14 +362,14 @@ git log --oneline -2
 ### للعثور على ملخص جلسة
 
 ```bash
-cd Documentation/sessions/
+cd docs/sessions/
 ls -1 SESSION_*.md
 ```
 
 ### للعثور على دليل
 
 ```bash
-cd Documentation/guides/
+cd docs/guides/
 # للإعداد
 cd setup/
 # للتطوير
@@ -386,7 +386,7 @@ cd deployment/
 
 1. **إنشاء فهرس شامل** (30 دقيقة)
 
-   - ملف INDEX.md في Documentation/
+   - ملف INDEX.md في docs/
    - روابط لجميع الملفات المهمة
 
 2. **تحديث README.md الرئيسي** (15 دقيقة)

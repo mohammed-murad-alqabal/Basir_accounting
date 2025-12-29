@@ -98,7 +98,7 @@ retry_command 3 2 "curl -f https://example.com"
 
 ### 2. دليل معالجة الأخطاء ✅
 
-**الملف:** `Documentation/ERROR_HANDLING_GUIDE.md`
+**الملف:** `docs/ERROR_HANDLING_GUIDE.md`
 
 **المحتوى:**
 

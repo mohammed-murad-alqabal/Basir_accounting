@@ -203,7 +203,7 @@ scripts/
 ### التوثيق
 
 ```
-Documentation/
+docs/
 ├── ERROR_TRACKING_GUIDE.md  # دليل النظام
 ├── GIT_GITHUB_GUIDE.md      # دليل Git
 ├── ERROR_HANDLING_GUIDE.md  # دليل معالجة الأخطاء

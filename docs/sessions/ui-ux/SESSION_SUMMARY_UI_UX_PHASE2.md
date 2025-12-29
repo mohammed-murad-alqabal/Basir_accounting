@@ -85,18 +85,18 @@
 
 **الملفات المنشأة:**
 
-1. ✅ `Documentation/PHASE2_ENHANCED_BUTTON_REPORT.md`
+1. ✅ `docs/PHASE2_ENHANCED_BUTTON_REPORT.md`
 
    - تقرير مفصل عن المرحلة 2
    - ~600 سطر من التوثيق
 
-2. ✅ `Documentation/UI_UX_IMPROVEMENTS_PROGRESS.md`
+2. ✅ `docs/UI_UX_IMPROVEMENTS_PROGRESS.md`
 
    - تقرير تقدم شامل
    - حالة جميع المراحل
    - إحصائيات مفصلة
 
-3. ✅ `Documentation/PHASE3_TESTING_PLAN.md`
+3. ✅ `docs/PHASE3_TESTING_PLAN.md`
 
    - خطة مفصلة للمرحلة 3
    - 6 مهام رئيسية
@@ -222,8 +222,8 @@
 
 **الملفات المرجعية:**
 
-- `Documentation/PHASE3_TESTING_PLAN.md` - خطة مفصلة
-- `Documentation/UI_UX_IMPROVEMENTS_PROGRESS.md` - حالة التقدم
+- `docs/PHASE3_TESTING_PLAN.md` - خطة مفصلة
+- `docs/UI_UX_IMPROVEMENTS_PROGRESS.md` - حالة التقدم
 
 ---
 
@@ -283,10 +283,10 @@
 
 **التوثيق:**
 
-- `Documentation/PHASE2_ENHANCED_BUTTON_REPORT.md`
-- `Documentation/PHASE1_BUTTON_TEXT_FIX_REPORT.md`
-- `Documentation/UI_UX_IMPROVEMENTS_PROGRESS.md`
-- `Documentation/PHASE3_TESTING_PLAN.md`
+- `docs/PHASE2_ENHANCED_BUTTON_REPORT.md`
+- `docs/PHASE1_BUTTON_TEXT_FIX_REPORT.md`
+- `docs/UI_UX_IMPROVEMENTS_PROGRESS.md`
+- `docs/PHASE3_TESTING_PLAN.md`
 
 **المواصفات:**
 
@@ -348,7 +348,7 @@
 
 **الإجراء الموصى به:**
 
-1. قراءة `Documentation/PHASE3_TESTING_PLAN.md`
+1. قراءة `docs/PHASE3_TESTING_PLAN.md`
 2. إنشاء TextScaleFactorTester widget
 3. البدء بالاختبار على Android
 

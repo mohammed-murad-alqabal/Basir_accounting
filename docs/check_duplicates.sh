@@ -15,7 +15,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # ملف تقرير
-report_file="Documentation/duplicates_report_$(date +%Y%m%d_%H%M%S).md"
+report_file="docs/duplicates_report_$(date +%Y%m%d_%H%M%S).md"
 
 # متغيرات العد
 total_files=0
