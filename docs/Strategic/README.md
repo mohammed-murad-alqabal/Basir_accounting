@@ -74,7 +74,7 @@
 
 > **Source of Truth**: This Strategic/ directory contains the **authoritative** strategic documentation.
 >
-> Documents in `Documentation/Core/` represent earlier MVP-focused planning and may contain different targets/scope. When conflicts exist, this Strategic/ documentation takes precedence.
+> Documents in `docs/Core/` represent earlier MVP-focused planning and may contain different targets/scope. When conflicts exist, this Strategic/ documentation takes precedence.
 
 ---
 

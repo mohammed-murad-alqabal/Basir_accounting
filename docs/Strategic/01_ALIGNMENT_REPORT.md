@@ -10,7 +10,7 @@
 
 ## 1. Executive Summary
 
-This document provides an alignment analysis between the Strategic Documentation (in `Documentation/Strategic/`) and the actual implementation state of the Baseer project as documented in `.kiro/specs/`.
+This document provides an alignment analysis between the Strategic Documentation (in `docs/Strategic/`) and the actual implementation state of the Baseer project as documented in `.kiro/specs/`.
 
 ### Key Finding
 
@@ -142,7 +142,7 @@ Lint Errors: 0
 
 ### For Target State
 
-1. **Primary:** `Documentation/Strategic/`
+1. **Primary:** `docs/Strategic/`
 2. **Secondary:** `.kiro/specs/completed/strategic-vision/`
 
 ### Reconciliation Rule

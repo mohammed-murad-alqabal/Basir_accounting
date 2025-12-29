@@ -65,4 +65,4 @@ python3 scripts/figma_api.py comments ABC123 | jq '.comments[]'
 
 ---
 
-**للمزيد:** [دليل التكامل الكامل](../Documentation/FIGMA_INTEGRATION_GUIDE.md)
+**للمزيد:** [دليل التكامل الكامل](../docs/FIGMA_INTEGRATION_GUIDE.md)

@@ -377,8 +377,8 @@ git push origin test/workflows
 
 ### ملفات التوثيق المرتبطة
 
-- `Documentation/ERROR_TRACKING_GUIDE.md` - دليل شامل لنظام تتبع الأخطاء
-- `Documentation/GIT_GITHUB_GUIDE.md` - دليل Git و GitHub
+- `docs/ERROR_TRACKING_GUIDE.md` - دليل شامل لنظام تتبع الأخطاء
+- `docs/GIT_GITHUB_GUIDE.md` - دليل Git و GitHub
 - `.kiro/specs/error-tracking-system/requirements.md` - المتطلبات الكاملة
 - `.kiro/specs/error-tracking-system/design.md` - التصميم المعماري
 
@@ -386,8 +386,8 @@ git push origin test/workflows
 
 - ✅ تحديث `.kiro/specs/error-tracking-system/tasks.md`
 - ✅ تحديث `CHANGELOG.md`
-- ⏳ تحديث `Documentation/ERROR_TRACKING_GUIDE.md` (المهمة 12)
-- ⏳ تحديث `Documentation/GIT_GITHUB_GUIDE.md` (المهمة 12)
+- ⏳ تحديث `docs/ERROR_TRACKING_GUIDE.md` (المهمة 12)
+- ⏳ تحديث `docs/GIT_GITHUB_GUIDE.md` (المهمة 12)
 
 ---
 
@@ -469,7 +469,7 @@ permissions:
 ```
 
 3. **مراجعة التوثيق:**
-   - `Documentation/ERROR_TRACKING_GUIDE.md`
+   - `docs/ERROR_TRACKING_GUIDE.md`
    - `.github/workflows/` - تعليقات في الملفات
 
 ---

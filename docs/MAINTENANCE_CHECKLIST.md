@@ -25,7 +25,7 @@
 
 - [ ] **مراجعة التحديثات الأخيرة**
   ```bash
-  git log --oneline --since="1 day ago" -- Documentation/
+  git log --oneline --since="1 day ago" -- docs/
   ```
 
 ---
@@ -219,7 +219,7 @@ echo "# تقرير صيانة أسبوعي - $(date)" > weekly_report.md
 echo "## الروابط المكسورة:" >> weekly_report.md
 ./check_links.sh | grep "❌" >> weekly_report.md
 echo "## الملفات الجديدة:" >> weekly_report.md
-git log --oneline --since="1 week ago" --name-only -- Documentation/ >> weekly_report.md
+git log --oneline --since="1 week ago" --name-only -- docs/ >> weekly_report.md
 ```
 
 #### تقرير شهري
@@ -239,7 +239,7 @@ git log --oneline --since="1 week ago" --name-only -- Documentation/ >> weekly_r
 
 ```bash
 # موجود بالفعل
-./Documentation/check_links.sh
+./docs/check_links.sh
 ```
 
 #### فحص الملفات المكررة

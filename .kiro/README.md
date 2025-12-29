@@ -404,7 +404,7 @@ touch .kiro/specs/[feature-name]/tasks.md
 
 للحصول على المساعدة:
 
-1. راجع التوثيق في `Documentation/`
+1. راجع التوثيق في `docs/`
 2. اقرأ `KIRO_STRATEGIC_ANALYSIS.md`
 3. افتح issue في المستودع
 

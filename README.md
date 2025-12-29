@@ -62,7 +62,7 @@ python3 scripts/figma_api.py team-projects TEAM_ID
 python3 scripts/figma_api.py project-files PROJECT_ID
 ```
 
-📚 **دليل الاستخدام الكامل:** [Documentation/FIGMA_USAGE_GUIDE.md](Documentation/FIGMA_USAGE_GUIDE.md)
+📚 **دليل الاستخدام الكامل:** [docs/FIGMA_USAGE_GUIDE.md](docs/FIGMA_USAGE_GUIDE.md)
 
 **يتضمن التصميم:**
 
@@ -80,7 +80,7 @@ python3 scripts/figma_api.py project-files PROJECT_ID
 
 **🔗 تكامل Figma مع Kiro:**
 
-- ✅ **جاهز للاستخدام** - راجع [دليل تكامل Figma](Documentation/FIGMA_INTEGRATION_GUIDE.md)
+- ✅ **جاهز للاستخدام** - راجع [دليل تكامل Figma](docs/FIGMA_INTEGRATION_GUIDE.md)
 - 🚀 **إعداد سريع:** `./scripts/setup_figma.sh` للإعداد الأولي
 - 🧪 **اختبار:** `./scripts/test_figma_integration.sh` للتحقق من التكامل
 - 📊 **API مباشر:** `python3 scripts/figma_api.py me` لمعلومات المستخدم
@@ -417,9 +417,9 @@ security:
 
 ### 📚 التوثيق الكامل
 
-- [دليل نظام تتبع الأخطاء](Documentation/ERROR_TRACKING_GUIDE.md)
-- [دليل Git و GitHub](Documentation/GIT_GITHUB_GUIDE.md)
-- [دليل معالجة الأخطاء](Documentation/ERROR_HANDLING_GUIDE.md)
+- [دليل نظام تتبع الأخطاء](docs/ERROR_TRACKING_GUIDE.md)
+- [دليل Git و GitHub](docs/GIT_GITHUB_GUIDE.md)
+- [دليل معالجة الأخطاء](docs/ERROR_HANDLING_GUIDE.md)
 
 ### 📊 الإحصائيات
 

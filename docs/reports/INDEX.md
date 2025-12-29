@@ -9,7 +9,7 @@
 ## البنية التنظيمية
 
 ```
-Documentation/reports/
+docs/reports/
 ├── INDEX.md                    # هذا الملف
 ├── tasks/                      # تقارير المهام
 ├── sessions/                   # ملخصات الجلسات
@@ -246,8 +246,8 @@ Documentation/reports/
 
 **الوصول:**
 
-- جميع التقارير متاحة في `Documentation/reports/`
-- الفهرس الرئيسي: `Documentation/reports/INDEX.md`
+- جميع التقارير متاحة في `docs/reports/`
+- الفهرس الرئيسي: `docs/reports/INDEX.md`
 - التقارير الحديثة في المجلدات الفرعية
 
 ---

@@ -27,11 +27,11 @@
 **الملفات المتأثرة:**
 
 ```
-Documentation/guides/README.md:53
-Documentation/TEST_action-items/README.md:15
-Documentation/sessions/README.md:56
-Documentation/reports/README.md:58
-Documentation/action-items/README.md:57
+docs/guides/README.md:53
+docs/TEST_action-items/README.md:15
+docs/sessions/README.md:56
+docs/reports/README.md:58
+docs/action-items/README.md:57
 ```
 
 **الرابط الحالي:** `[العودة للفهرس الرئيسي](../README.md)`  
@@ -39,7 +39,7 @@ Documentation/action-items/README.md:57
 
 ### **2. روابط الوثائق الأساسية (4 روابط)**
 
-#### **الملف:** `Documentation/Core/00_Strategic_Master_Blueprint.md`
+#### **الملف:** `docs/Core/00_Strategic_Master_Blueprint.md`
 
 **الروابط الحالية:**
 
@@ -56,7 +56,7 @@ Documentation/action-items/README.md:57
 
 #### **أ. روابط .kiro (3 روابط)**
 
-**الملف:** `Documentation/guides/troubleshooting/ERROR_TRACKING_GUIDE.md`
+**الملف:** `docs/guides/troubleshooting/ERROR_TRACKING_GUIDE.md`
 
 ```
 ✅ [Tasks](../../../.kiro/specs/completed/error-tracking-system/tasks.md)
@@ -67,7 +67,7 @@ Documentation/action-items/README.md:57
 
 #### **ب. روابط ملفات غير موجودة (3 روابط)**
 
-**الملف:** `Documentation/TEST_action-items/current/CRITICAL_IMPROVEMENTS.md`
+**الملف:** `docs/TEST_action-items/current/CRITICAL_IMPROVEMENTS.md`
 
 ```
 ✅ [دليل الجودة](../../../.kiro/standards/code-quality.md)
@@ -76,12 +76,12 @@ Documentation/action-items/README.md:57
 **المشكلة:** المسار غير صحيح والملف غير موجود  
 **الحل:** تحديث إلى المسار الصحيح أو إزالة الرابط
 
-**الملف:** `Documentation/reports/ui-ux/FIGMA_INTEGRATION_GUIDE.md`
+**الملف:** `docs/reports/ui-ux/FIGMA_INTEGRATION_GUIDE.md`
 
 **المشكلة:** الملف غير موجود (تم نقله للأرشيف)  
 **الحل:** تم حذف الرابط المكسور
 
-**الملف:** `Documentation/reports/ui-ux/FIGMA_INTEGRATION_COMPLETION_REPORT.md`
+**الملف:** `docs/reports/ui-ux/FIGMA_INTEGRATION_COMPLETION_REPORT.md`
 
 ```
 ❌ [CONTRIBUTING.md](../../../CONTRIBUTING.md)
@@ -96,8 +96,8 @@ Documentation/action-items/README.md:57
 
 ### **1. روابط داخل نفس المجلد**
 
-- `Documentation/reports/ui-ux/FIGMA_INTEGRATION_COMPLETION_REPORT.md` - روابط محلية ✅
-- `Documentation/reports/ui-ux/FIGMA_USAGE_GUIDE.md` - روابط محلية ✅
+- `docs/reports/ui-ux/FIGMA_INTEGRATION_COMPLETION_REPORT.md` - روابط محلية ✅
+- `docs/reports/ui-ux/FIGMA_USAGE_GUIDE.md` - روابط محلية ✅
 
 ### **2. روابط العودة للفهرس الرئيسي**
 

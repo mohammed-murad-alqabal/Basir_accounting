@@ -529,14 +529,14 @@
 
 ```bash
 # البحث في جميع الوثائق
-grep -r "كلمة البحث" Documentation/
+grep -r "كلمة البحث" docs/
 
 # البحث في نوع معين من الوثائق
-grep -r "Flutter" Documentation/Core/
-grep -r "تقرير" Documentation/reports/
+grep -r "Flutter" docs/Core/
+grep -r "تقرير" docs/reports/
 
 # البحث بالعلامات
-grep -r "#تقني" Documentation/
+grep -r "#تقني" docs/
 ```
 
 ### 📋 قوائم سريعة

@@ -17,7 +17,7 @@
 ### 1. البنية التنظيمية
 
 ```
-Documentation/reports/
+docs/reports/
 ├── analysis/          ✅ 3 تقارير
 ├── fixes/            ✅ 1 تقرير
 ├── performance/      ✅ 3 تقارير
@@ -57,11 +57,11 @@ Documentation/reports/
 ### التقارير (منظمة)
 
 ```
-✅ Documentation/reports/analysis/
-✅ Documentation/reports/fixes/
-✅ Documentation/reports/performance/
-✅ Documentation/reports/testing/
-✅ Documentation/Archive/2025-12/
+✅ docs/reports/analysis/
+✅ docs/reports/fixes/
+✅ docs/reports/performance/
+✅ docs/reports/testing/
+✅ docs/Archive/2025-12/
 ```
 
 ---
@@ -82,8 +82,8 @@ Documentation/reports/
 
 ## التقارير المنشأة
 
-1. ✅ `Documentation/reports/analysis/README.md`
-2. ✅ `Documentation/reports/DOCUMENTATION_ORGANIZATION_REPORT.md`
+1. ✅ `docs/reports/analysis/README.md`
+2. ✅ `docs/reports/DOCUMENTATION_ORGANIZATION_REPORT.md`
 3. ✅ `DOCUMENTATION_ORGANIZATION_SUCCESS.md` (هذا الملف)
 
 ---

@@ -59,19 +59,19 @@ for file in $STAGED_FILES; do
     fi
     
     # فحص موقع التقارير
-    if [[ "$file" =~ ^[A-Z_]+_REPORT\.md$ ]] && [[ ! "$file" =~ ^Documentation/ ]]; then
+    if [[ "$file" =~ ^[A-Z_]+_REPORT\.md$ ]] && [[ ! "$file" =~ ^docs/ ]]; then
         echo -e "${YELLOW}⚠${NC} تقرير في مكان خاطئ: $file"
         if [ "$AUTO_FIX" = true ]; then
             # تحديد المجلد المناسب
-            TARGET_DIR="Documentation/reports/fixes"
+            TARGET_DIR="docs/reports/fixes"
             if [[ "$file" =~ PERFORMANCE ]]; then
-                TARGET_DIR="Documentation/reports/performance"
+                TARGET_DIR="docs/reports/performance"
             elif [[ "$file" =~ TEST ]]; then
-                TARGET_DIR="Documentation/reports/testing"
+                TARGET_DIR="docs/reports/testing"
             elif [[ "$file" =~ BUILD ]]; then
-                TARGET_DIR="Documentation/reports/builds"
+                TARGET_DIR="docs/reports/builds"
             elif [[ "$file" =~ SESSION ]]; then
-                TARGET_DIR="Documentation/sessions"
+                TARGET_DIR="docs/sessions"
             fi
             
             # نقل الملف

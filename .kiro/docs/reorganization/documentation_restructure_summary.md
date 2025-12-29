@@ -25,7 +25,7 @@
 
 #### 1. الوثيقة الاستراتيجية الرئيسية
 
-**الملف:** `Documentation/00_Strategic_Master_Blueprint.md`
+**الملف:** `docs/00_Strategic_Master_Blueprint.md`
 
 **الحجم:** 42 KB
 
@@ -54,7 +54,7 @@
 
 #### 2. دليل الوثائق
 
-**الملف:** `Documentation/README.md`
+**الملف:** `docs/README.md`
 
 **المحتويات:**
 
@@ -121,7 +121,7 @@
 
 - 📄 3 ملفات منظمة
   - `00_Strategic_Master_Blueprint.md` (42 KB)
-  - `Documentation/README.md`
+  - `docs/README.md`
   - `DOCUMENTATION_INDEX.md`
 - 📏 محتوى محسّن ومنظم
 - ✅ سهولة المراجعة والصيانة
@@ -133,8 +133,8 @@
 
 ### الملفات المضافة
 
-1. ✅ `Documentation/00_Strategic_Master_Blueprint.md`
-2. ✅ `Documentation/README.md`
+1. ✅ `docs/00_Strategic_Master_Blueprint.md`
+2. ✅ `docs/README.md`
 3. ✅ `DOCUMENTATION_INDEX.md`
 4. ✅ `.kiro/docs/documentation_restructure_summary.md` (هذا الملف)
 
@@ -198,7 +198,7 @@
 ### للتحديثات والتعديلات
 
 - افتح PR على GitHub
-- اتبع إرشادات `Documentation/README.md`
+- اتبع إرشادات `docs/README.md`
 - اطلب مراجعة من الفريق
 
 ---

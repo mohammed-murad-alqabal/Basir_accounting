@@ -31,7 +31,7 @@
 | --------------------------- | ------- | -------------- |
 | **حجم .kiro/**              | 4.4 MB  | 🚨 كبير جداً   |
 | **عدد ملفات .kiro/**        | 366 ملف | 🚨 مفرط        |
-| **حجم Documentation/**      | 20 MB   | 🚨 ضخم         |
+| **حجم docs/**      | 20 MB   | 🚨 ضخم         |
 | **إجمالي الوثائق**          | 24.4 MB | 🚨 غير مقبول   |
 | **نسبة الوثائق من المشروع** | ~40%    | 🚨 مشكلة كبيرة |
 
@@ -43,7 +43,7 @@
 ❌ الوضع الحالي:
 project/
 ├── .kiro/           # أدوات التطوير (4.4MB)
-├── Documentation/   # وثائق داخلية (20MB)
+├── docs/   # وثائق داخلية (20MB)
 ├── lib/            # كود المشروع
 └── ...
 
@@ -209,7 +209,7 @@ chmod +x setup-dev-env.sh
 # نقل الوثائق الكبيرة
 mkdir -p ../basser-internal-docs
 mv .kiro/docs/reports ../basser-internal-docs/
-mv Documentation/Archive ../basser-internal-docs/
+mv docs/Archive ../basser-internal-docs/
 
 # ضغط الملفات المتبقية
 find .kiro/ -name "*.md" -exec gzip {} \;
@@ -227,8 +227,8 @@ cat >> .gitignore << 'EOF'
 .kiro/specs/archive/
 
 # Documentation archives
-Documentation/Archive/
-Documentation/sessions/
+docs/Archive/
+docs/sessions/
 
 # Development logs
 logs/
@@ -241,7 +241,7 @@ EOF
 ```bash
 # إزالة الملفات الكبيرة من التاريخ
 git filter-branch --tree-filter 'rm -rf .kiro/docs/reports' HEAD
-git filter-branch --tree-filter 'rm -rf Documentation/Archive' HEAD
+git filter-branch --tree-filter 'rm -rf docs/Archive' HEAD
 ```
 
 ---
@@ -254,7 +254,7 @@ git filter-branch --tree-filter 'rm -rf Documentation/Archive' HEAD
 
 ```bash
 # 1. حساب الحجم الدقيق
-du -sh .kiro/ Documentation/ > size_analysis.txt
+du -sh .kiro/ docs/ > size_analysis.txt
 
 # 2. تحديد الملفات الحساسة
 find .kiro/ -name "*secret*" -o -name "*key*" -o -name "*token*"
@@ -288,7 +288,7 @@ git commit -m "Initial commit: dev tools repository"
 #### اليوم 2-3: النقل التدريجي
 
 - نقل `.kiro/docs/reports/` (الأكبر حجماً)
-- نقل `Documentation/Archive/`
+- نقل `docs/Archive/`
 - اختبار النظام الجديد
 
 #### اليوم 4-5: التحسين

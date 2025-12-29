@@ -395,8 +395,8 @@ doc/api/
 .dartdoc/
 
 # Documentation Generator outputs
-Documentation/generated/
-Documentation/api/
+docs/generated/
+docs/api/
 
 # ============================================
 # 2. BUILD ARTIFACTS

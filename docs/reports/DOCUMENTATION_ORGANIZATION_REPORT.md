@@ -21,7 +21,7 @@
 تم إنشاء المجلدات التالية:
 
 ```
-Documentation/reports/
+docs/reports/
 ├── analysis/          # تقارير التحليل الفني
 ├── builds/           # تقارير البناء
 ├── features/         # تقارير الميزات
@@ -34,7 +34,7 @@ Documentation/reports/
 
 #### أ. تقارير التحليل (Analysis Reports)
 
-**من الجذر إلى `Documentation/reports/analysis/`:**
+**من الجذر إلى `docs/reports/analysis/`:**
 
 | الملف الأصلي                          | الملف الجديد                              | الحالة |
 | :------------------------------------ | :---------------------------------------- | :----: |
@@ -44,7 +44,7 @@ Documentation/reports/
 
 #### ب. تقارير الإصلاحات (Fixes Reports)
 
-**من الجذر إلى `Documentation/reports/fixes/`:**
+**من الجذر إلى `docs/reports/fixes/`:**
 
 | الملف الأصلي              | الملف الجديد                  | الحالة |
 | :------------------------ | :---------------------------- | :----: |
@@ -52,7 +52,7 @@ Documentation/reports/
 
 #### ج. تقارير الأرشيف (Archive Reports)
 
-**من الجذر إلى `Documentation/Archive/2025-12/`:**
+**من الجذر إلى `docs/Archive/2025-12/`:**
 
 | الملف الأصلي                             | الحالة |
 | :--------------------------------------- | :----: |
@@ -84,7 +84,7 @@ Basser_MVP/
 ### 2.2 مجلد Documentation
 
 ```
-Documentation/
+docs/
 ├── reports/                 # جميع التقارير
 │   ├── analysis/           # تقارير التحليل
 │   ├── builds/             # تقارير البناء
@@ -141,7 +141,7 @@ Documentation/
 
 ### 4.1 README في analysis/
 
-تم إنشاء `Documentation/reports/analysis/README.md` يحتوي على:
+تم إنشاء `docs/reports/analysis/README.md` يحتوي على:
 
 - نظرة عامة على التقارير
 - وصف كل تقرير
@@ -151,7 +151,7 @@ Documentation/
 
 ### 4.2 README الرئيسي
 
-سيتم تحديث `Documentation/reports/README.md` ليشمل:
+سيتم تحديث `docs/reports/README.md` ليشمل:
 
 - البنية الجديدة
 - روابط للمجلدات الفرعية
@@ -202,7 +202,7 @@ Documentation/
 
 | المجلد                            | الحالة |
 | :-------------------------------- | :----: |
-| `Documentation/reports/analysis/` |   ✅   |
+| `docs/reports/analysis/` |   ✅   |
 | README files                      |   ✅   |
 
 ---
@@ -229,7 +229,7 @@ Documentation/
 3. **ضعه في المجلد الصحيح:**
 
    ```
-   Documentation/reports/[type]/
+   docs/reports/[type]/
    ```
 
 4. **حدّث README:**
@@ -277,29 +277,29 @@ Documentation/
 
 ```
 ✅ COMPLETE_FLUTTER_ANALYSIS_REPORT.md
-   → Documentation/reports/analysis/FLUTTER_ANALYSIS_COMPLETE_2025-12-06.md
+   → docs/reports/analysis/FLUTTER_ANALYSIS_COMPLETE_2025-12-06.md
 
 ✅ FLUTTER_ANALYSIS_SUCCESS.md
-   → Documentation/reports/analysis/FLUTTER_ANALYSIS_SUCCESS_2025-12-06.md
+   → docs/reports/analysis/FLUTTER_ANALYSIS_SUCCESS_2025-12-06.md
 
 ✅ FINAL_ANALYSIS_REPORT.md
-   → Documentation/reports/analysis/FINAL_ANALYSIS_2025-12-06.md
+   → docs/reports/analysis/FINAL_ANALYSIS_2025-12-06.md
 
 ✅ FLUTTER_FIXES_REPORT.md
-   → Documentation/reports/fixes/FLUTTER_FIXES_2025-12-06.md
+   → docs/reports/fixes/FLUTTER_FIXES_2025-12-06.md
 
 ✅ FINAL_COMPLETE_ICON_REPORT.md
-   → Documentation/Archive/2025-12/
+   → docs/Archive/2025-12/
 
 ✅ COMPREHENSIVE_GIT_PUSH_FINAL_REPORT.md
-   → Documentation/Archive/2025-12/
+   → docs/Archive/2025-12/
 ```
 
 ### 9.2 الملفات المنشأة
 
 ```
-✅ Documentation/reports/analysis/README.md
-✅ Documentation/reports/DOCUMENTATION_ORGANIZATION_REPORT.md
+✅ docs/reports/analysis/README.md
+✅ docs/reports/DOCUMENTATION_ORGANIZATION_REPORT.md
 ```
 
 ### 9.3 الملفات المحدثة

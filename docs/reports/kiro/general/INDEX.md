@@ -271,8 +271,8 @@ cat .kiro/metrics/space-metrics.csv
 ### Internal Documentation
 
 - [Engineering Philosophy](../../../../.kiro/steering/AGENTS.md)
-- [Security Guide](../../../../Documentation/guides/kiro_reference/development-standards.md)
-- [Best Practices Reference](../../../../Documentation/guides/kiro_reference/INDEX.md)
+- [Security Guide](../../../../docs/guides/kiro_reference/development-standards.md)
+- [Best Practices Reference](../../../../docs/guides/kiro_reference/INDEX.md)
 - [EARS Requirements Template](../../../../.kiro/templates/ears-requirements.md)
 - [DORA/SPACE Metrics Framework](../../../../.kiro/templates/dora-space-metrics.md)
 

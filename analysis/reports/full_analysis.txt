@@ -27,16 +27,16 @@ LOG files: 106
     3153 ./CHANGELOG.md
     2863 ./.kiro/specs/active/ui-ux-improvements/design.md
     2606 ./.kiro/docs/plans/git/GIT_MANAGEMENT_PLAN.md
-    1936 ./Documentation/reports/git-github/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md
+    1936 ./docs/reports/git-github/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md
     1880 ./.kiro/docs/plans/git/archive/GIT_MANAGEMENT_PLAN_V2.md
-    1845 ./Documentation/reports/COMPREHENSIVE_ENGINEERING_COGNITIVE_ANALYSIS.md
+    1845 ./docs/reports/COMPREHENSIVE_ENGINEERING_COGNITIVE_ANALYSIS.md
     1737 ./.kiro/specs/completed/context-optimization-closure/CELEBRATION.md
-    1686 ./Documentation/Archive/2025-12/ONBOARDING_TUTORIAL_REVIEW_REPORT.md
+    1686 ./docs/Archive/2025-12/ONBOARDING_TUTORIAL_REVIEW_REPORT.md
     1551 ./.kiro/specs/completed/repository-optimization/error-tracking/design.md
     1541 ./.kiro/specs/active/enhanced-onboarding/design.md
     1538 ./.kiro/specs/active/repository-cleanup-organization/tasks.md
-    1509 ./Documentation/reports/ui-ux/BRAND_VISUAL_IDENTITY_SYSTEM.md
-    1413 ./Documentation/guides/DEVELOPER_GUIDE_UPDATED.md
+    1509 ./docs/reports/ui-ux/BRAND_VISUAL_IDENTITY_SYSTEM.md
+    1413 ./docs/guides/DEVELOPER_GUIDE_UPDATED.md
     1316 ./.kiro/specs/active/i18n-localization-system/design.md
     1289 ./.kiro/reference/advanced-tech-stack.md
     1244 ./.kiro/specs/active/flutter-standards-unification/design.md

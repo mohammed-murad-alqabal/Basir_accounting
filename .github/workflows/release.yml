@@ -114,7 +114,7 @@ jobs:
             ## 🔗 الروابط
 
             - [CHANGELOG](CHANGELOG.md)
-            - [Documentation](Documentation/)
+            - [Documentation](docs/)
             - [Issues](../../issues)
           files: |
             build/app/outputs/flutter-apk/app-release.apk

@@ -20,7 +20,7 @@
 .kiro/scripts/advanced_monitoring.sh
 
 # فحص الروابط
-Documentation/check_links.sh
+docs/check_links.sh
 ```
 
 **المراجعة القادمة:** 23 December 2025

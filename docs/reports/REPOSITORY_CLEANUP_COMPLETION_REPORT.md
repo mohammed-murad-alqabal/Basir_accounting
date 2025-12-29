@@ -14,10 +14,10 @@
 
 ### إعادة الهيكلة (Kiro Perfection):
 - ✅ تنظيف الجذر (19→5 ملفات)
-- ✅ توحيد التوثيق في Documentation/
+- ✅ توحيد التوثيق في docs/
 - ✅ تنظيم الأدوات في tools/
 - ✅ هيكلة logs منطقية
-- ✅ **تحسين .kiro العميق:** نقل Guides إلى Documentation/guides/kiro_reference وتنقية Hooks.
+- ✅ **تحسين .kiro العميق:** نقل Guides إلى docs/guides/kiro_reference وتنقية Hooks.
 
 ### التحسينات:
 - ✅ فهرسة شاملة

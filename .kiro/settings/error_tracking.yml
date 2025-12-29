@@ -168,7 +168,7 @@ reports:
     
   # Report Output
   output:
-    directory: 'Documentation/reports'
+    directory: 'docs/reports'
     filename_pattern: 'report_{date}.md'
     keep_history: true
     max_history_days: 30

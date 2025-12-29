@@ -27,7 +27,7 @@
 
 ### 1. الوثيقة الرئيسية
 
-**الملف:** `Documentation/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md`
+**الملف:** `docs/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md`
 
 **الإحصائيات:**
 
@@ -98,7 +98,7 @@
 
 ### 2. الملخص التنفيذي
 
-**الملف:** `Documentation/GIT_WORKFLOW_EXECUTIVE_SUMMARY.md`
+**الملف:** `docs/GIT_WORKFLOW_EXECUTIVE_SUMMARY.md`
 
 **المحتوى:**
 
@@ -190,7 +190,7 @@
 ### الوثائق الرئيسية
 
 ```
-Documentation/
+docs/
 ├── GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md  (1935 سطر)
 ├── GIT_WORKFLOW_EXECUTIVE_SUMMARY.md
 └── GIT_WORKFLOW_COMPLETION_REPORT.md (هذا الملف)

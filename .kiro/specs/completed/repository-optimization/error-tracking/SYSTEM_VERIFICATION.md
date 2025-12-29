@@ -53,9 +53,9 @@
 
 | دليل                  | الملف                                   | الحالة | المحتوى       |
 | :-------------------- | :-------------------------------------- | :----: | :------------ |
-| **دليل تتبع الأخطاء** | `Documentation/ERROR_TRACKING_GUIDE.md` |   ✅   | شامل ومفصل    |
-| **دليل Git/GitHub**   | `Documentation/GIT_GITHUB_GUIDE.md`     |   ✅   | احترافي وكامل |
-| **سجل حل الأخطاء**    | `Documentation/ERROR_RESOLUTION_LOG.md` |   ✅   | موثق          |
+| **دليل تتبع الأخطاء** | `docs/ERROR_TRACKING_GUIDE.md` |   ✅   | شامل ومفصل    |
+| **دليل Git/GitHub**   | `docs/GIT_GITHUB_GUIDE.md`     |   ✅   | احترافي وكامل |
+| **سجل حل الأخطاء**    | `docs/ERROR_RESOLUTION_LOG.md` |   ✅   | موثق          |
 
 ### 6. التكوينات
 
@@ -88,7 +88,7 @@
    ✅ workflows/ (5 workflows)
    ✅ ISSUE_TEMPLATE/ (3 templates)
 
-✅ Documentation/
+✅ docs/
    ✅ ERROR_TRACKING_GUIDE.md
    ✅ GIT_GITHUB_GUIDE.md
    ✅ ERROR_RESOLUTION_LOG.md

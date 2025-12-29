@@ -249,7 +249,7 @@ A RenderFlex overflowed by 35 pixels on the bottom.
 - ✅ `CONTRIBUTING.md` - المساهمة
 - ✅ `CHANGELOG.md` - سجل التغييرات
 - ✅ `GUEST_MODE_IMPLEMENTATION.md` - وضع الضيف
-- ✅ `Documentation/FINAL_PROJECT_STATUS.md` - التقرير النهائي
+- ✅ `docs/FINAL_PROJECT_STATUS.md` - التقرير النهائي
 
 ### التوثيق المطلوب
 

@@ -65,7 +65,7 @@
 ### **الإحصائيات النهائية:**
 
 - **إجمالي الملفات المنظمة:** 983 ملف
-- **ملفات في Documentation/:** 249 ملف
+- **ملفات في docs/:** 249 ملف
 - **ملفات في .kiro/:** 493 ملف
 - **الملفات في الجذر:** 1 ملف فقط (تحسن 97.7%)
 - **البنية الهرمية:** 7 مجلدات رئيسية منظمة
@@ -127,22 +127,22 @@
 📋 Check 3: .kiro/docs/ structure
 ✅ .kiro/docs/ is properly organized
 
-📋 Check 4: Documentation/ structure verification
-✅ Documentation/ directory exists
-✅ Found Documentation/README.md
-✅ Found Documentation/INDEX.md
-✅ Found Documentation/QUICK_START.md
-✅ Found Documentation/Core/
-✅ Found Documentation/guides/
-✅ Found Documentation/reports/
-✅ Found Documentation/sessions/
+📋 Check 4: docs/ structure verification
+✅ docs/ directory exists
+✅ Found docs/README.md
+✅ Found docs/INDEX.md
+✅ Found docs/QUICK_START.md
+✅ Found docs/Core/
+✅ Found docs/guides/
+✅ Found docs/reports/
+✅ Found docs/sessions/
 
 📋 Check 5: Basic link validation
 [WARNING] Found potential broken links to moved files
 
 📋 Check 6: File count verification
 📊 Total .md files in project: 983
-📊 Files in Documentation/: 249
+📊 Files in docs/: 249
 📊 Files in .kiro/: 493
 
 ==================================================
@@ -225,9 +225,9 @@
 
 ### **للمساعدة:**
 
-- راجع `Documentation/MAINTENANCE_CHECKLIST.md`
-- استخدم الأدوات في `Documentation/`
-- راجع `Documentation/QUICK_START.md` للبداية السريعة
+- راجع `docs/MAINTENANCE_CHECKLIST.md`
+- استخدم الأدوات في `docs/`
+- راجع `docs/QUICK_START.md` للبداية السريعة
 
 ---
 

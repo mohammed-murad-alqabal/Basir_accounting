@@ -52,16 +52,16 @@
 
 ## 📋 الملفات المُحدثة
 
-1. `Documentation/action-items/completed/CRITICAL_IMPROVEMENTS.md`
-2. `Documentation/guides/troubleshooting/ERROR_TRACKING_GUIDE.md`
-3. `Documentation/reports/analysis/LINKS_ANALYSIS_REPORT.md`
-4. `Documentation/reports/kiro/general/WORKSPACE_ACTIVATION.md`
-5. `Documentation/reports/ui-ux/FIGMA_INTEGRATION_GUIDE.md`
-6. `Documentation/reports/testing/TESTING.md`
-7. `Documentation/reports/fixes/POWERS_ANALYSIS_REPORT.md`
-8. `Documentation/reports/kiro/general/DOCUMENTATION_REORGANIZATION_FINAL_STATUS.md`
-9. `Documentation/reports/kiro/general/INDEX.md`
-10. `Documentation/status/archive/REMAINING_ITEMS_STATUS_REPORT.md`
+1. `docs/action-items/completed/CRITICAL_IMPROVEMENTS.md`
+2. `docs/guides/troubleshooting/ERROR_TRACKING_GUIDE.md`
+3. `docs/reports/analysis/LINKS_ANALYSIS_REPORT.md`
+4. `docs/reports/kiro/general/WORKSPACE_ACTIVATION.md`
+5. `docs/reports/ui-ux/FIGMA_INTEGRATION_GUIDE.md`
+6. `docs/reports/testing/TESTING.md`
+7. `docs/reports/fixes/POWERS_ANALYSIS_REPORT.md`
+8. `docs/reports/kiro/general/DOCUMENTATION_REORGANIZATION_FINAL_STATUS.md`
+9. `docs/reports/kiro/general/INDEX.md`
+10. `docs/status/archive/REMAINING_ITEMS_STATUS_REPORT.md`
 
 ---
 

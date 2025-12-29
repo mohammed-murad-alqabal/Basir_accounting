@@ -9,7 +9,7 @@
 ### 1. بنية نظام التوثيق
 
 ```
-Documentation/
+docs/
 ├── API/                    # توثيق API
 │   ├── endpoints.md
 │   ├── authentication.md
@@ -291,16 +291,16 @@ echo "📚 Generating documentation..."
 
 # 1. Generate API documentation
 echo "📝 Generating API docs..."
-npx typedoc --out Documentation/generated/api-reference src/
+npx typedoc --out docs/generated/api-reference src/
 
 # 2. Generate code coverage report
 echo "📊 Generating coverage report..."
 npm run test:coverage
-cp -r coverage/lcov-report Documentation/generated/code-coverage/
+cp -r coverage/lcov-report docs/generated/code-coverage/
 
 # 3. Generate architecture diagrams
 echo "🏗️ Generating architecture diagrams..."
-npx madge --image Documentation/Architecture/diagrams/dependencies.svg src/
+npx madge --image docs/Architecture/diagrams/dependencies.svg src/
 
 # 4. Generate custom documentation
 echo "📖 Generating custom docs..."
@@ -308,7 +308,7 @@ npx ts-node scripts/doc-generator.ts
 
 # 5. Build documentation site
 echo "🌐 Building documentation site..."
-npx vitepress build Documentation/
+npx vitepress build docs/
 
 echo "✅ Documentation generated successfully"
 ```
@@ -352,13 +352,13 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./Documentation/.vitepress/dist
+          publish_dir: ./docs/.vitepress/dist
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: documentation
-          path: Documentation/
+          path: docs/
 
   validate:
     runs-on: ubuntu-latest
@@ -370,12 +370,12 @@ jobs:
         uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
           use-quiet-mode: "yes"
-          folder-path: "Documentation/"
+          folder-path: "docs/"
 
       - name: Validate Markdown
         run: |
           npm install -g markdownlint-cli
-          markdownlint 'Documentation/**/*.md'
+          markdownlint 'docs/**/*.md'
 ```
 
 ### 5. Documentation Templates

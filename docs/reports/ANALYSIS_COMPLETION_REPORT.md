@@ -180,20 +180,20 @@
 
 1. **التحليل الشامل** (40+ صفحة)
 
-   - `Documentation/reports/COMPREHENSIVE_ENGINEERING_COGNITIVE_ANALYSIS.md`
+   - `docs/reports/COMPREHENSIVE_ENGINEERING_COGNITIVE_ANALYSIS.md`
    - تحليل متعمق لـ 8 طبقات
    - 6 أبعاد تحليلية
    - 100+ ملف محلل
 
 2. **الملخص التنفيذي** (10+ صفحات)
 
-   - `Documentation/reports/EXECUTIVE_SUMMARY.md`
+   - `docs/reports/EXECUTIVE_SUMMARY.md`
    - موجه للإدارة العليا
    - يركز على القيمة الاقتصادية
    - توصيات استراتيجية
 
 3. **تقرير الإكمال** (هذا التقرير)
-   - `Documentation/reports/ANALYSIS_COMPLETION_REPORT.md`
+   - `docs/reports/ANALYSIS_COMPLETION_REPORT.md`
    - ملخص الإنجاز
    - الإحصائيات
    - الخطوات التالية
@@ -384,9 +384,9 @@
 
 ### التقارير
 
-1. `Documentation/reports/COMPREHENSIVE_ENGINEERING_COGNITIVE_ANALYSIS.md`
-2. `Documentation/reports/EXECUTIVE_SUMMARY.md`
-3. `Documentation/reports/ANALYSIS_COMPLETION_REPORT.md` (هذا التقرير)
+1. `docs/reports/COMPREHENSIVE_ENGINEERING_COGNITIVE_ANALYSIS.md`
+2. `docs/reports/EXECUTIVE_SUMMARY.md`
+3. `docs/reports/ANALYSIS_COMPLETION_REPORT.md` (هذا التقرير)
 
 ### الوثائق المرجعية
 

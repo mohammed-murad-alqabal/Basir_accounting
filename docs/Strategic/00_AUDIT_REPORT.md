@@ -27,10 +27,10 @@ This audit evaluates all project documentation for:
 
 | Location                     | Count     | Language | Focus           |
 | ---------------------------- | --------- | -------- | --------------- |
-| **Documentation/Core/**      | 9 files   | Arabic   | MVP-focused     |
-| **Documentation/Strategic/** | 29 files  | English  | Pan-Arab vision |
-| **Documentation/guides/**    | 41 files  | Mixed    | Technical       |
-| **Documentation/reports/**   | 248 files | Mixed    | Status/logs     |
+| **docs/Core/**      | 9 files   | Arabic   | MVP-focused     |
+| **docs/Strategic/** | 29 files  | English  | Pan-Arab vision |
+| **docs/guides/**    | 41 files  | Mixed    | Technical       |
+| **docs/reports/**   | 248 files | Mixed    | Status/logs     |
 | **.kiro/specs/**             | 3 files   | Arabic   | Strategic specs |
 
 ---

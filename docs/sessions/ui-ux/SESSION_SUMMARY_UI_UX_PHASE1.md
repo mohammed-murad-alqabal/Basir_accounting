@@ -214,8 +214,8 @@
 
 **الملفات المنشأة:**
 
-- ✅ `Documentation/UI_UX_IMPROVEMENTS_PROGRESS.md` - تقرير تقدم شامل
-- ✅ `Documentation/SESSION_SUMMARY_UI_UX_PHASE1.md` - هذا الملف
+- ✅ `docs/UI_UX_IMPROVEMENTS_PROGRESS.md` - تقرير تقدم شامل
+- ✅ `docs/SESSION_SUMMARY_UI_UX_PHASE1.md` - هذا الملف
 
 ---
 
