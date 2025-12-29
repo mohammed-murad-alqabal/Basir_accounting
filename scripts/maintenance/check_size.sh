@@ -50,7 +50,7 @@ check_size() {
 WARNINGS=0
 ERRORS=0
 
-check_size "Documentation" $DOCUMENTATION_THRESHOLD "Documentation/"
+check_size "Documentation" $DOCUMENTATION_THRESHOLD "docs/"
 result=$?
 [ $result -eq 1 ] && ((ERRORS++))
 [ $result -eq 2 ] && ((WARNINGS++))

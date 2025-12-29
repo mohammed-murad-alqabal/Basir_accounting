@@ -1276,7 +1276,7 @@ test_sanitization_property() {
 **Documentation:**
 
 - **Format**: Markdown
-- **Location**: `Documentation/` directory
+- **Location**: `docs/` directory
 
 ### File Structure
 
@@ -1319,7 +1319,7 @@ test_sanitization_property() {
 │   ├── security/
 │   └── performance/
 │
-└── Documentation/
+└── docs/
     ├── ERROR_TRACKING_GUIDE.md
     └── GIT_GITHUB_GUIDE.md
 ```

@@ -34,7 +34,7 @@
 ### 1. البنية الهرمية الجديدة
 
 ```
-Documentation/
+docs/
 ├── README.md                          # الفهرس الرئيسي المحدث
 ├── QUICK_START.md                     # دليل البداية السريعة
 ├── INDEX.md                           # فهرس شامل قابل للبحث
@@ -463,10 +463,10 @@ def classify_document(filename, content_preview):
 find Documentation -name "*.md" -exec grep -l "\[.*\](.*\.md)" {} \;
 
 # اختبار التنسيق
-markdownlint Documentation/**/*.md
+markdownlint docs/**/*.md
 
 # اختبار البنية
-tree Documentation/ > structure_test.txt
+tree docs/ > structure_test.txt
 ```
 
 ---

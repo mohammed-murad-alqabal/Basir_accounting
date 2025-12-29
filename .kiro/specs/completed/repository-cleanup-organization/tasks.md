@@ -432,7 +432,7 @@ EOF
 echo "- إجمالي ملفات .md: $(find . -name "*.md" | wc -l)" >> analysis/COMPREHENSIVE_ANALYSIS_REPORT.md
 echo "- ملفات REPORT: $(find . -name "*REPORT*.md" | wc -l)" >> analysis/COMPREHENSIVE_ANALYSIS_REPORT.md
 echo "- ملفات في الجذر: $(ls -la | grep "\.md$" | wc -l)" >> analysis/COMPREHENSIVE_ANALYSIS_REPORT.md
-echo "- ملفات في Documentation: $(find Documentation/ -name "*.md" 2>/dev/null | wc -l || echo 0)" >> analysis/COMPREHENSIVE_ANALYSIS_REPORT.md
+echo "- ملفات في Documentation: $(find docs/ -name "*.md" 2>/dev/null | wc -l || echo 0)" >> analysis/COMPREHENSIVE_ANALYSIS_REPORT.md
 ```
 
 **معايير الإنجاز:**
@@ -475,8 +475,8 @@ chmod +x tools/*.sh
 
 **معايير الإنجاز:**
 
-- [x] سكريبت كشف التكرارات جاهز ✅ (موجود في Documentation/)
-- [x] سكريبت فحص الروابط جاهز ✅ (موجود في Documentation/)
+- [x] سكريبت كشف التكرارات جاهز ✅ (موجود في docs/)
+- [x] سكريبت فحص الروابط جاهز ✅ (موجود في docs/)
 - [x] أذونات التنفيذ مضبوطة ✅
 - [x] اختبار السكريبتات مكتمل ✅
 
@@ -588,10 +588,10 @@ ls -la *GIT_MERGE_AUTOMATION* 2>/dev/null || echo "لا توجد ملفات في
 find . -name "*GIT_MERGE_AUTOMATION*" -exec ls -la {} \;
 
 # إنشاء مجلد التوثيق إذا لم يكن موجوداً
-mkdir -p Documentation/reports/git
+mkdir -p docs/reports/git
 
 # دمج المحتوى المفيد من جميع الملفات
-cat > Documentation/reports/git/GIT_MERGE_AUTOMATION_PLAN.md << 'EOF'
+cat > docs/reports/git/GIT_MERGE_AUTOMATION_PLAN.md << 'EOF'
 # خطة أتمتة دمج Git - موحدة
 
 **التاريخ:** $(date)
@@ -602,18 +602,18 @@ EOF
 
 # إضافة محتوى من كل ملف موجود
 for file in $(find . -name "*GIT_MERGE_AUTOMATION*" -type f); do
-    echo -e "\n## من الملف: $file\n" >> Documentation/reports/git/GIT_MERGE_AUTOMATION_PLAN.md
-    cat "$file" >> Documentation/reports/git/GIT_MERGE_AUTOMATION_PLAN.md
-    echo -e "\n---\n" >> Documentation/reports/git/GIT_MERGE_AUTOMATION_PLAN.md
+    echo -e "\n## من الملف: $file\n" >> docs/reports/git/GIT_MERGE_AUTOMATION_PLAN.md
+    cat "$file" >> docs/reports/git/GIT_MERGE_AUTOMATION_PLAN.md
+    echo -e "\n---\n" >> docs/reports/git/GIT_MERGE_AUTOMATION_PLAN.md
 done
 
 # حذف الملفات المكررة بعد التأكد من الدمج
 echo "حذف الملفات المكررة..."
-find . -name "*GIT_MERGE_AUTOMATION*" -not -path "./Documentation/reports/git/*" -delete
+find . -name "*GIT_MERGE_AUTOMATION*" -not -path "./docs/reports/git/*" -delete
 
 # تحديث الروابط في جميع الملفات
 echo "تحديث الروابط..."
-find . -name "*.md" -exec sed -i 's|GIT_MERGE_AUTOMATION_PLAN[^)]*\.md|Documentation/reports/git/GIT_MERGE_AUTOMATION_PLAN.md|g' {} \;
+find . -name "*.md" -exec sed -i 's|GIT_MERGE_AUTOMATION_PLAN[^)]*\.md|docs/reports/git/GIT_MERGE_AUTOMATION_PLAN.md|g' {} \;
 ```
 
 **معايير الإنجاز:**
@@ -647,10 +647,10 @@ cat cleanup/all_status_files.txt | sort | uniq
 echo "إجمالي ملفات STATUS: $(cat cleanup/all_status_files.txt | sort | uniq | wc -l)" > cleanup/status_stats.txt
 
 # إنشاء مجلد الحالة الموحد
-mkdir -p Documentation/status/archive
+mkdir -p docs/status/archive
 
 # إنشاء الملف الموحد الجديد
-cat > Documentation/status/PROJECT_STATUS.md << 'EOF'
+cat > docs/status/PROJECT_STATUS.md << 'EOF'
 # حالة مشروع بصير MVP - الملف الموحد الشامل
 
 **آخر تحديث:** $(date)
@@ -670,17 +670,17 @@ EOF
 counter=1
 while IFS= read -r file; do
     if [ -f "$file" ]; then
-        echo -e "\n## من الملف $counter: $file\n" >> Documentation/status/PROJECT_STATUS.md
-        echo "**تاريخ الملف:** $(stat -c %y "$file" 2>/dev/null || echo "غير معروف")" >> Documentation/status/PROJECT_STATUS.md
-        echo -e "\n### المحتوى:\n" >> Documentation/status/PROJECT_STATUS.md
-        cat "$file" >> Documentation/status/PROJECT_STATUS.md
-        echo -e "\n---\n" >> Documentation/status/PROJECT_STATUS.md
+        echo -e "\n## من الملف $counter: $file\n" >> docs/status/PROJECT_STATUS.md
+        echo "**تاريخ الملف:** $(stat -c %y "$file" 2>/dev/null || echo "غير معروف")" >> docs/status/PROJECT_STATUS.md
+        echo -e "\n### المحتوى:\n" >> docs/status/PROJECT_STATUS.md
+        cat "$file" >> docs/status/PROJECT_STATUS.md
+        echo -e "\n---\n" >> docs/status/PROJECT_STATUS.md
         counter=$((counter + 1))
     fi
 done < <(cat cleanup/all_status_files.txt | sort | uniq)
 
 # إضافة معلومات النطاق الجديد
-cat >> Documentation/status/PROJECT_STATUS.md << 'EOF'
+cat >> docs/status/PROJECT_STATUS.md << 'EOF'
 
 ## تحديث النطاق الجديد (25 ديسمبر 2025)
 
@@ -705,15 +705,15 @@ EOF
 # نسخ الملفات القديمة إلى الأرشيف قبل الحذف
 echo "نسخ الملفات إلى الأرشيف..."
 while IFS= read -r file; do
-    if [ -f "$file" ] && [ "$file" != "./Documentation/status/PROJECT_STATUS.md" ]; then
-        cp "$file" "Documentation/status/archive/$(basename "$file")"
+    if [ -f "$file" ] && [ "$file" != "./docs/status/PROJECT_STATUS.md" ]; then
+        cp "$file" "docs/status/archive/$(basename "$file")"
     fi
 done < <(cat cleanup/all_status_files.txt | sort | uniq)
 
 # حذف الملفات المكررة (عدا الملف الموحد الجديد)
 echo "حذف الملفات المكررة..."
 while IFS= read -r file; do
-    if [ -f "$file" ] && [ "$file" != "./Documentation/status/PROJECT_STATUS.md" ]; then
+    if [ -f "$file" ] && [ "$file" != "./docs/status/PROJECT_STATUS.md" ]; then
         rm "$file"
         echo "تم حذف: $file"
     fi
@@ -721,13 +721,13 @@ done < <(cat cleanup/all_status_files.txt | sort | uniq)
 
 # تحديث جميع الروابط
 echo "تحديث الروابط في جميع الملفات..."
-find . -name "*.md" -exec sed -i 's|PROJECT_STATUS[^)]*\.md|Documentation/status/PROJECT_STATUS.md|g' {} \;
-find . -name "*.md" -exec sed -i 's|CURRENT_STATUS[^)]*\.md|Documentation/status/PROJECT_STATUS.md|g' {} \;
+find . -name "*.md" -exec sed -i 's|PROJECT_STATUS[^)]*\.md|docs/status/PROJECT_STATUS.md|g' {} \;
+find . -name "*.md" -exec sed -i 's|CURRENT_STATUS[^)]*\.md|docs/status/PROJECT_STATUS.md|g' {} \;
 ```
 
 **معايير الإنجاز:**
 
-- [x] جميع ملفات STATUS مدمجة في ملف واحد شامل ✅ (Documentation/status/PROJECT_STATUS.md)
+- [x] جميع ملفات STATUS مدمجة في ملف واحد شامل ✅ (docs/status/PROJECT_STATUS.md)
 - [x] المعلومات من جميع الملفات محفوظة ومؤرخة ✅
 - [x] الملفات القديمة مؤرشفة قبل الحذف ✅ (archive/)
 - [x] جميع الروابط محدثة ومصححة ✅
@@ -745,9 +745,9 @@ find . -name "*.md" -exec sed -i 's|CURRENT_STATUS[^)]*\.md|Documentation/status
 
 ```bash
 # إنشاء تقرير موحد
-mkdir -p Documentation/reports/tasks/
+mkdir -p docs/reports/tasks/
 
-cat > Documentation/reports/tasks/TASKS_SUCCESS_SUMMARY.md << 'EOF'
+cat > docs/reports/tasks/TASKS_SUCCESS_SUMMARY.md << 'EOF'
 # ملخص إنجاز المهام - بصير MVP
 
 **التاريخ:** $(date)
@@ -756,14 +756,14 @@ cat > Documentation/reports/tasks/TASKS_SUCCESS_SUMMARY.md << 'EOF'
 EOF
 
 # دمج محتوى المهام
-echo "## المهمة 8:" >> Documentation/reports/tasks/TASKS_SUCCESS_SUMMARY.md
-cat TASK_8_SUCCESS.md >> Documentation/reports/tasks/TASKS_SUCCESS_SUMMARY.md
+echo "## المهمة 8:" >> docs/reports/tasks/TASKS_SUCCESS_SUMMARY.md
+cat TASK_8_SUCCESS.md >> docs/reports/tasks/TASKS_SUCCESS_SUMMARY.md
 
-echo "## المهمة 9:" >> Documentation/reports/tasks/TASKS_SUCCESS_SUMMARY.md
-cat TASK_9_SUCCESS.md >> Documentation/reports/tasks/TASKS_SUCCESS_SUMMARY.md
+echo "## المهمة 9:" >> docs/reports/tasks/TASKS_SUCCESS_SUMMARY.md
+cat TASK_9_SUCCESS.md >> docs/reports/tasks/TASKS_SUCCESS_SUMMARY.md
 
-echo "## المهمة 10:" >> Documentation/reports/tasks/TASKS_SUCCESS_SUMMARY.md
-cat TASK_10_SUCCESS.md >> Documentation/reports/tasks/TASKS_SUCCESS_SUMMARY.md
+echo "## المهمة 10:" >> docs/reports/tasks/TASKS_SUCCESS_SUMMARY.md
+cat TASK_10_SUCCESS.md >> docs/reports/tasks/TASKS_SUCCESS_SUMMARY.md
 
 # حذف الملفات الأصلية
 rm TASK_8_SUCCESS.md TASK_9_SUCCESS.md TASK_10_SUCCESS.md
@@ -904,14 +904,14 @@ mv *.so tools/libs/ 2>/dev/null || true
 mv libisar.so tools/libs/ 2>/dev/null || true
 
 # نقل ملفات التوثيق إلى Documentation
-mv COMPLETE_PROJECT_HISTORY.md Documentation/Archive/
-mv DOCUMENTATION_ORGANIZED.md Documentation/Archive/
-mv FLUTTER_ANALYZE_SUCCESS.md Documentation/reports/analysis/
-mv FLUTTER_TEST_RANGERROR_SOLUTION.md Documentation/guides/troubleshooting/
-mv NEXT_STEPS_USER.md Documentation/guides/development/
-mv PRIORITY_EXECUTION_PLAN.md Documentation/Archive/
-mv PROJECT_TIMELINE_COMPLETE.md Documentation/Archive/
-mv PROJECT_TIMELINE_COMPREHENSIVE.txt Documentation/Archive/
+mv COMPLETE_PROJECT_HISTORY.md docs/Archive/
+mv DOCUMENTATION_ORGANIZED.md docs/Archive/
+mv FLUTTER_ANALYZE_SUCCESS.md docs/reports/analysis/
+mv FLUTTER_TEST_RANGERROR_SOLUTION.md docs/guides/troubleshooting/
+mv NEXT_STEPS_USER.md docs/guides/development/
+mv PRIORITY_EXECUTION_PLAN.md docs/Archive/
+mv PROJECT_TIMELINE_COMPLETE.md docs/Archive/
+mv PROJECT_TIMELINE_COMPREHENSIVE.txt docs/Archive/
 
 # الاحتفاظ بالملفات الأساسية فقط في الجذر
 ls -la | grep "^-" | wc -l  # يجب أن يكون ≤ 10
@@ -922,7 +922,7 @@ ls -la | grep "^-" | wc -l  # يجب أن يكون ≤ 10
 - [ ] جميع السكريبتات في tools/scripts/
 - [ ] جميع قواعد البيانات في tools/data/
 - [ ] جميع المكتبات في tools/libs/
-- [ ] ملفات التوثيق في Documentation/
+- [ ] ملفات التوثيق في docs/
 - [ ] ≤ 10 ملفات في الجذر
 
 ---
@@ -937,30 +937,30 @@ ls -la | grep "^-" | wc -l  # يجب أن يكون ≤ 10
 
 ```bash
 # إنشاء الهيكل الجديد
-mkdir -p Documentation/{status,reports/{tasks,testing,analysis,git},guides/{setup,development,troubleshooting},Archive/{2025,legacy}}
+mkdir -p docs/{status,reports/{tasks,testing,analysis,git},guides/{setup,development,troubleshooting},Archive/{2025,legacy}}
 
 # تنظيم التقارير حسب النوع
-find Documentation/ -name "*REPORT*.md" -exec bash -c '
+find docs/ -name "*REPORT*.md" -exec bash -c '
     file="$1"
     basename=$(basename "$file")
     if [[ $basename == *"TEST"* ]]; then
-        mv "$file" Documentation/reports/testing/
+        mv "$file" docs/reports/testing/
     elif [[ $basename == *"ANALYSIS"* ]]; then
-        mv "$file" Documentation/reports/analysis/
+        mv "$file" docs/reports/analysis/
     elif [[ $basename == *"GIT"* ]]; then
-        mv "$file" Documentation/reports/git/
+        mv "$file" docs/reports/git/
     else
-        mv "$file" Documentation/reports/
+        mv "$file" docs/reports/
     fi
 ' _ {} \;
 
 # تنظيم الأدلة
-find Documentation/ -name "*GUIDE*.md" -exec mv {} Documentation/guides/ \;
-find Documentation/ -name "*SETUP*.md" -exec mv {} Documentation/guides/setup/ \;
+find docs/ -name "*GUIDE*.md" -exec mv {} docs/guides/ \;
+find docs/ -name "*SETUP*.md" -exec mv {} docs/guides/setup/ \;
 
 # أرشفة الملفات القديمة
-find Documentation/ -name "*2025*.md" -exec mv {} Documentation/Archive/2025/ \;
-find Documentation/ -name "*legacy*.md" -exec mv {} Documentation/Archive/legacy/ \;
+find docs/ -name "*2025*.md" -exec mv {} docs/Archive/2025/ \;
+find docs/ -name "*legacy*.md" -exec mv {} docs/Archive/legacy/ \;
 ```
 
 **معايير الإنجاز:**
@@ -983,7 +983,7 @@ find Documentation/ -name "*legacy*.md" -exec mv {} Documentation/Archive/legacy
 
 ```bash
 # إنشاء فهرس Documentation الرئيسي
-cat > Documentation/INDEX.md << 'EOF'
+cat > docs/INDEX.md << 'EOF'
 # فهرس التوثيق الشامل - بصير MVP
 
 **آخر تحديث:** $(date)
@@ -996,17 +996,17 @@ cat > Documentation/INDEX.md << 'EOF'
 EOF
 
 # إضافة روابط التقارير تلقائياً
-find Documentation/reports/tasks/ -name "*.md" -exec basename {} \; | sort | while read file; do
-    echo "- [${file%.*}](./reports/tasks/$file)" >> Documentation/INDEX.md
+find docs/reports/tasks/ -name "*.md" -exec basename {} \; | sort | while read file; do
+    echo "- [${file%.*}](./reports/tasks/$file)" >> docs/INDEX.md
 done
 
-echo "### تقارير الاختبار" >> Documentation/INDEX.md
-find Documentation/reports/testing/ -name "*.md" -exec basename {} \; | sort | while read file; do
-    echo "- [${file%.*}](./reports/testing/$file)" >> Documentation/INDEX.md
+echo "### تقارير الاختبار" >> docs/INDEX.md
+find docs/reports/testing/ -name "*.md" -exec basename {} \; | sort | while read file; do
+    echo "- [${file%.*}](./reports/testing/$file)" >> docs/INDEX.md
 done
 
 # إنشاء فهرس لكل مجلد فرعي
-for dir in Documentation/*/; do
+for dir in docs/*/; do
     if [ -d "$dir" ] && [ "$(basename "$dir")" != "Archive" ]; then
         echo "# فهرس $(basename "$dir")" > "$dir/README.md"
         echo "**المجلد:** $(basename "$dir")" >> "$dir/README.md"
@@ -1164,12 +1164,12 @@ cat > tools/maintenance/health_report_$(date +%Y%m%d).md << 'HEALTH_EOF'
 ## الإحصائيات الحالية
 - إجمالي ملفات .md: $(find . -name "*.md" | wc -l)
 - ملفات في الجذر: $(ls -la | grep "\.md$" | wc -l)
-- ملفات في Documentation: $(find Documentation/ -name "*.md" 2>/dev/null | wc -l || echo 0)
+- ملفات في Documentation: $(find docs/ -name "*.md" 2>/dev/null | wc -l || echo 0)
 - ملفات logs: $(find . -name "*.log" | wc -l)
 
 ## فحص الجودة
 - هيكل منظم: $([ -d "Documentation" ] && [ -d "tools" ] && echo "✅" || echo "❌")
-- فهارس محدثة: $([ -f "Documentation/INDEX.md" ] && echo "✅" || echo "❌")
+- فهارس محدثة: $([ -f "docs/INDEX.md" ] && echo "✅" || echo "❌")
 - نظام logs منظم: $([ -d "logs/current" ] && echo "✅" || echo "❌")
 
 ## التوصيات
@@ -1228,7 +1228,7 @@ EOF
 
 ```bash
 # إنشاء تقرير الإنجاز النهائي الشامل
-cat > Documentation/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md << 'EOF'
+cat > docs/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md << 'EOF'
 # تقرير الإنجاز النهائي - تنظيف المستودع الضخم
 
 **المشروع:** بصير MVP
@@ -1265,12 +1265,12 @@ original_root=20
 current_root=$(ls -la | grep "\.md$" | wc -l)
 improvement_root=$(( (original_root - current_root) * 100 / original_root ))
 
-echo "- **تقليل ملفات .md:** ${improvement_md}% (من 1,161 إلى $current_md)" >> Documentation/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md
-echo "- **تقليل ملفات REPORT:** ${improvement_reports}% (من 274 إلى $current_reports)" >> Documentation/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md
-echo "- **تنظيم ملفات logs:** ${improvement_logs}% (من 108 إلى $current_logs)" >> Documentation/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md
-echo "- **تنظيف الجذر:** ${improvement_root}% (من 20 إلى $current_root ملف)" >> Documentation/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md
+echo "- **تقليل ملفات .md:** ${improvement_md}% (من 1,161 إلى $current_md)" >> docs/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md
+echo "- **تقليل ملفات REPORT:** ${improvement_reports}% (من 274 إلى $current_reports)" >> docs/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md
+echo "- **تنظيم ملفات logs:** ${improvement_logs}% (من 108 إلى $current_logs)" >> docs/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md
+echo "- **تنظيف الجذر:** ${improvement_root}% (من 20 إلى $current_root ملف)" >> docs/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md
 
-cat >> Documentation/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md << 'EOF'
+cat >> docs/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md << 'EOF'
 
 ### الأدوات المتقدمة المطورة:
 - ✅ نظام تحليل تلقائي للـ 1,161 ملف
@@ -1317,7 +1317,7 @@ EOF
 # تحديث README الرئيسي بالإنجاز
 echo -e "\n## 🎉 إنجاز حديث: تنظيف المستودع الضخم\n" >> README.md
 echo "تم تنظيف وإعادة هيكلة 1,161 ملف .md بنجاح مع تحقيق تحسن ${improvement_md}% في التنظيم." >> README.md
-echo "📋 [تقرير الإنجاز الكامل](Documentation/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md)" >> README.md
+echo "📋 [تقرير الإنجاز الكامل](docs/reports/MASSIVE_CLEANUP_ACHIEVEMENT_REPORT.md)" >> README.md
 ```
 
 **معايير الإنجاز:**
@@ -1354,8 +1354,8 @@ done > broken_links_report.txt
 if [ -s broken_links_report.txt ]; then
     echo "🔧 إصلاح الروابط المكسورة..."
     # سكريبت إصلاح تلقائي للروابط الشائعة
-    sed -i 's|](PROJECT_STATUS\.md)|](Documentation/status/PROJECT_STATUS.md)|g' **/*.md
-    sed -i 's|](TASK_.*_SUCCESS\.md)|](Documentation/reports/tasks/TASKS_SUCCESS_SUMMARY.md)|g' **/*.md
+    sed -i 's|](PROJECT_STATUS\.md)|](docs/status/PROJECT_STATUS.md)|g' **/*.md
+    sed -i 's|](TASK_.*_SUCCESS\.md)|](docs/reports/tasks/TASKS_SUCCESS_SUMMARY.md)|g' **/*.md
 fi
 ```
 
@@ -1381,21 +1381,21 @@ fi
 echo "🧪 اختبار سير العمل..."
 
 # اختبار 1: العثور على حالة المشروع
-test -f "Documentation/status/PROJECT_STATUS.md" && echo "✅ حالة المشروع موجودة" || echo "❌ حالة المشروع مفقودة"
+test -f "docs/status/PROJECT_STATUS.md" && echo "✅ حالة المشروع موجودة" || echo "❌ حالة المشروع مفقودة"
 
 # اختبار 2: العثور على تقارير المهام
-test -f "Documentation/reports/tasks/TASKS_SUCCESS_SUMMARY.md" && echo "✅ تقارير المهام موجودة" || echo "❌ تقارير المهام مفقودة"
+test -f "docs/reports/tasks/TASKS_SUCCESS_SUMMARY.md" && echo "✅ تقارير المهام موجودة" || echo "❌ تقارير المهام مفقودة"
 
 # اختبار 3: الوصول للأدوات
 test -d "tools/scripts" && echo "✅ مجلد الأدوات منظم" || echo "❌ مجلد الأدوات مفقود"
 
 # اختبار 4: فحص الفهرس
-test -f "Documentation/INDEX.md" && echo "✅ الفهرس الرئيسي موجود" || echo "❌ الفهرس الرئيسي مفقود"
+test -f "docs/INDEX.md" && echo "✅ الفهرس الرئيسي موجود" || echo "❌ الفهرس الرئيسي مفقود"
 
 # قياس التحسن
 echo "📊 إحصائيات التحسن:"
 echo "ملفات الجذر: $(ls -1 | wc -l)"
-echo "ملفات Documentation: $(find Documentation/ -name "*.md" | wc -l)"
+echo "ملفات Documentation: $(find docs/ -name "*.md" | wc -l)"
 echo "حجم logs: $(du -sh logs/ | cut -f1)"
 ```
 
@@ -1418,7 +1418,7 @@ echo "حجم logs: $(du -sh logs/ | cut -f1)"
 
 ```bash
 # إنشاء تقرير التنظيف النهائي
-cat > Documentation/reports/REPOSITORY_CLEANUP_COMPLETION_REPORT.md << 'EOF'
+cat > docs/reports/REPOSITORY_CLEANUP_COMPLETION_REPORT.md << 'EOF'
 # تقرير إكمال تنظيف المستودع
 
 **التاريخ:** $(date)
@@ -1435,7 +1435,7 @@ cat > Documentation/reports/REPOSITORY_CLEANUP_COMPLETION_REPORT.md << 'EOF'
 
 ### إعادة الهيكلة:
 - ✅ تنظيف الجذر (19→5 ملفات)
-- ✅ توحيد التوثيق في Documentation/
+- ✅ توحيد التوثيق في docs/
 - ✅ تنظيم الأدوات في tools/
 - ✅ هيكلة logs منطقية
 
@@ -1449,9 +1449,9 @@ cat > Documentation/reports/REPOSITORY_CLEANUP_COMPLETION_REPORT.md << 'EOF'
 EOF
 
 # إضافة الإحصائيات الفعلية
-echo "- ملفات الجذر: $(ls -1 | wc -l)" >> Documentation/reports/REPOSITORY_CLEANUP_COMPLETION_REPORT.md
-echo "- ملفات التوثيق: $(find Documentation/ -name "*.md" | wc -l)" >> Documentation/reports/REPOSITORY_CLEANUP_COMPLETION_REPORT.md
-echo "- حجم logs: $(du -sh logs/ | cut -f1)" >> Documentation/reports/REPOSITORY_CLEANUP_COMPLETION_REPORT.md
+echo "- ملفات الجذر: $(ls -1 | wc -l)" >> docs/reports/REPOSITORY_CLEANUP_COMPLETION_REPORT.md
+echo "- ملفات التوثيق: $(find docs/ -name "*.md" | wc -l)" >> docs/reports/REPOSITORY_CLEANUP_COMPLETION_REPORT.md
+echo "- حجم logs: $(du -sh logs/ | cut -f1)" >> docs/reports/REPOSITORY_CLEANUP_COMPLETION_REPORT.md
 
 # تحديث CHANGELOG
 echo "## [$(date +%Y-%m-%d)] - Repository Cleanup" >> CHANGELOG.md

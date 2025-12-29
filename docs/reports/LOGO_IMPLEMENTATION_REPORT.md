@@ -348,7 +348,7 @@ flutter build ios --debug
 
 **الإجراء:**
 
-- إنشاء `Documentation/BRAND_GUIDELINES.md`
+- إنشاء `docs/BRAND_GUIDELINES.md`
 - توثيق الألوان والأحجام والاستخدامات
 
 ---
@@ -422,7 +422,7 @@ rm -rf logo_basseer/
 
 1. `logo_basseer/LOGO_ANALYSIS_REPORT.md` - تقرير التحليل الأولي (محذوف)
 2. `logo_basseer/ACTION_PLAN.md` - خطة العمل (محذوف)
-3. `Documentation/reports/LOGO_IMPLEMENTATION_REPORT.md` - هذا التقرير ✅
+3. `docs/reports/LOGO_IMPLEMENTATION_REPORT.md` - هذا التقرير ✅
 
 ### التكوينات المحدثة
 

@@ -72,8 +72,8 @@ archive_directory() {
 
 # Archive directories
 archive_directory ".kiro/docs/reports" "kiro_docs_reports"
-archive_directory "Documentation/reports" "documentation_reports"
-archive_directory "Documentation/Archive" "documentation_archive"
+archive_directory "docs/reports" "documentation_reports"
+archive_directory "docs/Archive" "documentation_archive"
 
 echo "========================================"
 echo -e "${GREEN}✅ اكتملت عملية الأرشفة${NC}"

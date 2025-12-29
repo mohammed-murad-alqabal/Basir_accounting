@@ -132,7 +132,7 @@ test_simple.txt
 **الحالة الحالية:** ✅ منظم نسبياً
 
 ```
-Documentation/
+docs/
 ├── Archive/              # أرشيف
 ├── Core/                 # ملفات أساسية
 ├── 00-05_*.md           # وثائق استراتيجية
@@ -160,7 +160,7 @@ Documentation/
 #### 2.1 إنشاء مجلدات Documentation الجديدة
 
 ```bash
-Documentation/
+docs/
 ├── Archive/                    # موجود
 ├── Core/                       # موجود
 ├── reports/                    # جديد - للتقارير
@@ -190,24 +190,24 @@ Documentation/
 
 #### 3.1 نقل التقارير
 
-**تقارير البناء → Documentation/reports/builds/**
+**تقارير البناء → docs/reports/builds/**
 
 - ANDROID_BUILD_FIX_REPORT.md
 - APK_SIZE_OPTIMIZATION_SUCCESS_REPORT.md
 - MOBILE_DEPLOYMENT_SUCCESS_REPORT.md
 
-**تقارير الأداء → Documentation/reports/performance/**
+**تقارير الأداء → docs/reports/performance/**
 
 - PERFORMANCE*IMPROVEMENTS*\*.md
 - PERFORMANCE_OPTIMIZATION_FINAL_REPORT.md
 
-**تقارير الاختبارات → Documentation/reports/testing/**
+**تقارير الاختبارات → docs/reports/testing/**
 
 - TEST*FIXES*\*.md
 - TESTING_STATUS_REPORT.md
 - TASK\_\*\_TEST_FIXES_REPORT.md
 
-**تقارير الإصلاحات → Documentation/reports/fixes/**
+**تقارير الإصلاحات → docs/reports/fixes/**
 
 - ANALYSIS_FIXES_REPORT.md
 - BUTTON*TEXT*\*.md
@@ -218,7 +218,7 @@ Documentation/
 - LOGIN_AND_SETTINGS_FIXES_REPORT.md
 - MCP_CONFIGURATION_FIX_REPORT.md
 
-**تقارير الميزات → Documentation/reports/features/**
+**تقارير الميزات → docs/reports/features/**
 
 - AGENTS_ACTIVATION_REPORT.md
 - DARK_MODE_IMPLEMENTATION_REPORT.md
@@ -226,7 +226,7 @@ Documentation/
 
 #### 3.2 نقل ملخصات الجلسات
 
-**Documentation/sessions/**
+**docs/sessions/**
 
 - SESSION_SUMMARY\*.md
 - SESSION_COMPLETION\*.md
@@ -235,14 +235,14 @@ Documentation/
 
 #### 3.3 نقل الأدلة
 
-**Documentation/guides/setup/**
+**docs/guides/setup/**
 
 - SETUP\_\*.md
 - ENVIRONMENT_SETUP_SUMMARY.md
 - QUICK_SETUP_GUIDE.md
 - MCP_QUICK_SETUP.md
 
-**Documentation/guides/development/**
+**docs/guides/development/**
 
 - DEV_ENVIRONMENT_ANALYSIS.md
 - CONTINUATION_PLAN.md
@@ -256,7 +256,7 @@ Documentation/
 - QUICK_STATUS_SUMMARY.md
 - REMAINING_ITEMS_STATUS_REPORT.md
 
-**نقل التفاصيل إلى Documentation/status/**
+**نقل التفاصيل إلى docs/status/**
 
 ### المرحلة 4: التنظيف
 
@@ -290,7 +290,7 @@ test_compression_*/
 
 #### 5.1 إنشاء README.md في كل مجلد
 
-**Documentation/reports/README.md:**
+**docs/reports/README.md:**
 
 ```markdown
 # التقارير
@@ -328,10 +328,10 @@ test_compression_*/
 
 ### المرحلة 2: إنشاء البنية (30 دقيقة)
 
-- [ ] إنشاء Documentation/reports/ والمجلدات الفرعية
-- [ ] إنشاء Documentation/sessions/
-- [ ] إنشاء Documentation/guides/ والمجلدات الفرعية
-- [ ] إنشاء Documentation/status/
+- [ ] إنشاء docs/reports/ والمجلدات الفرعية
+- [ ] إنشاء docs/sessions/
+- [ ] إنشاء docs/guides/ والمجلدات الفرعية
+- [ ] إنشاء docs/status/
 - [ ] إنشاء README.md في كل مجلد جديد
 
 ### المرحلة 3: النقل (2-3 ساعات)
@@ -435,7 +435,7 @@ Root/
 ├── 78 ملف .md (فوضى)
 ├── 12 مجلد test_archive (غير ضروري)
 ├── 6 ملفات test_*.txt (مؤقتة)
-└── Documentation/ (منظم نسبياً)
+└── docs/ (منظم نسبياً)
 ```
 
 **المشاكل:**
@@ -452,7 +452,7 @@ Root/
 ├── PROJECT_STATUS.md (موحد) ✅
 ├── 0 مجلدات test_archive ✅
 ├── 0 ملفات مؤقتة ✅
-└── Documentation/ (منظم بالكامل) ✅
+└── docs/ (منظم بالكامل) ✅
     ├── reports/ (70 تقرير منظم)
     ├── sessions/ (15 ملخص)
     ├── guides/ (15 دليل)
@@ -487,7 +487,7 @@ Root/
 
 3. **نقل التقارير**
 
-   - نقل ~70 تقرير إلى Documentation/reports/
+   - نقل ~70 تقرير إلى docs/reports/
    - تنظيم حسب النوع
    - الوقت: 2-3 ساعات
 
@@ -510,9 +510,9 @@ Root/
 
 - [ ] الجذر يحتوي على 7-10 ملفات أساسية فقط
 - [ ] PROJECT_STATUS.md موحد وشامل
-- [ ] جميع التقارير في Documentation/reports/
-- [ ] جميع الجلسات في Documentation/sessions/
-- [ ] جميع الأدلة في Documentation/guides/
+- [ ] جميع التقارير في docs/reports/
+- [ ] جميع الجلسات في docs/sessions/
+- [ ] جميع الأدلة في docs/guides/
 - [ ] 0 مجلدات test_archive
 - [ ] 0 ملفات اختبار مؤقتة
 - [ ] .gitignore محدث

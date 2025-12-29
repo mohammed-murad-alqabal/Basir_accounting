@@ -476,7 +476,7 @@ grep -r "keyword" .kiro/docs/reports/
 
 ### الوثائق الخارجية
 
-- `Documentation/` - التوثيق العام
+- `docs/` - التوثيق العام
 - `README.md` - دليل المشروع
 - `CONTRIBUTING.md` - دليل المساهمة
 

@@ -16,7 +16,7 @@
 
 ### 1. **حذف الملفات المكررة**
 
-- ❌ `Documentation/FIGMA_INTEGRATION_COMPLETION_REPORT.md` - تقرير مكرر
+- ❌ `docs/FIGMA_INTEGRATION_COMPLETION_REPORT.md` - تقرير مكرر
 - ❌ `scripts/figma_usage_examples.sh` - دُمج مع سكريبتات أخرى
 
 ### 2. **تبسيط السكريبتات**
@@ -75,7 +75,7 @@ scripts/
 ### Documentation المُنظمة
 
 ```
-Documentation/
+docs/
 ├── FIGMA_INTEGRATION_GUIDE.md ✅ دليل شامل (بدون تغيير)
 └── FIGMA_CLEANUP_REPORT.md   ✅ تقرير التنظيف
 ```

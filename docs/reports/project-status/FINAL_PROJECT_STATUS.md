@@ -265,7 +265,7 @@
 - `CHANGELOG.md` - سجل التغييرات
 - `GUEST_MODE_IMPLEMENTATION.md` - وضع الضيف
 - `SESSION_SUMMARY_GUEST_MODE.md` - ملخص الجلسة
-- `Documentation/FINAL_PROJECT_STATUS.md` - هذا الملف
+- `docs/FINAL_PROJECT_STATUS.md` - هذا الملف
 
 #### ج. المواصفات (Specs)
 

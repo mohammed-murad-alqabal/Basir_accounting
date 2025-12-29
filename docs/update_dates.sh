@@ -25,7 +25,7 @@ updated_files=0
 files_with_dates=0
 
 # ملف تقرير
-report_file="Documentation/date_update_report_$(date +%Y%m%d_%H%M%S).md"
+report_file="docs/date_update_report_$(date +%Y%m%d_%H%M%S).md"
 
 # بداية التقرير
 cat > "$report_file" << EOF

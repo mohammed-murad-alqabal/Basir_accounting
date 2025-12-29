@@ -74,17 +74,17 @@
 
 1. **المراجعة الشاملة**
 
-   - `Documentation/ERROR_TRACKING_SYSTEM_REVIEW.md`
+   - `docs/ERROR_TRACKING_SYSTEM_REVIEW.md`
    - تحليل تفصيلي لجميع المكونات
 
 2. **التحسينات الحرجة**
 
-   - `Documentation/CRITICAL_IMPROVEMENTS.md`
+   - `docs/CRITICAL_IMPROVEMENTS.md`
    - كود جاهز للتطبيق الفوري
 
 3. **الأدلة الشاملة**
-   - `Documentation/ERROR_TRACKING_GUIDE.md`
-   - `Documentation/GIT_GITHUB_GUIDE.md`
+   - `docs/ERROR_TRACKING_GUIDE.md`
+   - `docs/GIT_GITHUB_GUIDE.md`
 
 ---
 

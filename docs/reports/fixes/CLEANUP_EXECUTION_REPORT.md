@@ -224,11 +224,11 @@ git log -1 --oneline
 
 ### المرحلة 2: نقل التقارير (الأولوية المتوسطة)
 
-**الهدف:** نقل ~70 تقرير إلى Documentation/reports/
+**الهدف:** نقل ~70 تقرير إلى docs/reports/
 
 **الخطوات:**
 
-1. إنشاء البنية: Documentation/reports/{builds,performance,testing,fixes,features}
+1. إنشاء البنية: docs/reports/{builds,performance,testing,fixes,features}
 2. نقل التقارير حسب النوع
 3. تحديث الروابط إذا لزم الأمر
 4. Commit التغييرات
@@ -241,7 +241,7 @@ git log -1 --oneline
 
 **الخطوات:**
 
-1. إنشاء Documentation/sessions/ و Documentation/guides/
+1. إنشاء docs/sessions/ و docs/guides/
 2. نقل ملخصات الجلسات
 3. نقل الأدلة
 4. Commit التغييرات

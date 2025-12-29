@@ -90,7 +90,7 @@ Repository Settings:
   Features:
     Issues: ✅ Enabled
     Projects: ✅ Enabled
-    Wiki: ❌ Disabled (استخدام Documentation/ بدلاً منه)
+    Wiki: ❌ Disabled (استخدام docs/ بدلاً منه)
     Discussions: ⚠️ Optional (حسب الحاجة)
 ```
 

@@ -260,8 +260,8 @@ ${errorCount !== '0' || failedTests !== '0' ?
 <summary>📚 روابط مفيدة</summary>
 
 - [نتائج التحليل الكاملة](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-- [دليل معايير الجودة](../Documentation/code-quality-standards.md)
-- [دليل إصلاح الأخطاء](../Documentation/ERROR_TRACKING_GUIDE.md)
+- [دليل معايير الجودة](../docs/code-quality-standards.md)
+- [دليل إصلاح الأخطاء](../docs/ERROR_TRACKING_GUIDE.md)
 
 </details>
 

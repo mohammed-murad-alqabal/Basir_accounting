@@ -61,7 +61,7 @@ logs/
 ├── errors/                    # سجلات الأخطاء
 └── reports/                   # التقارير
 
-Documentation/
+docs/
 ├── ERROR_RESOLUTION_LOG.md    # سجل الأخطاء المحلولة
 └── ERROR_TRACKING_GUIDE.md    # دليل الاستخدام الشامل
 ```
@@ -134,8 +134,8 @@ flutter format lib/ test/
 
 ## 📚 التوثيق
 
-- **دليل الاستخدام:** `Documentation/ERROR_TRACKING_GUIDE.md`
-- **سجل الحلول:** `Documentation/ERROR_RESOLUTION_LOG.md`
+- **دليل الاستخدام:** `docs/ERROR_TRACKING_GUIDE.md`
+- **سجل الحلول:** `docs/ERROR_RESOLUTION_LOG.md`
 - **أمثلة:** انظر الملفات المحلولة
 
 ---
@@ -173,8 +173,8 @@ try {
 
 ## 🔗 الروابط
 
-- [دليل الاستخدام الشامل](../Documentation/ERROR_TRACKING_GUIDE.md)
-- [سجل الأخطاء المحلولة](../Documentation/ERROR_RESOLUTION_LOG.md)
+- [دليل الاستخدام الشامل](../docs/ERROR_TRACKING_GUIDE.md)
+- [سجل الأخطاء المحلولة](../docs/ERROR_RESOLUTION_LOG.md)
 - [GitHub Actions](../../actions)
 - [Issues](../../issues)
 
@@ -184,7 +184,7 @@ try {
 
 - **Issues:** [GitHub Issues](../../issues)
 - **Discussions:** [GitHub Discussions](../../discussions)
-- **Documentation:** [Docs](../Documentation/)
+- **Documentation:** [Docs](../docs/)
 
 ---
 

@@ -34,10 +34,10 @@
 
 ### 2. إنشاء البنية الجديدة
 
-- ✅ Documentation/reports/ (5 مجلدات فرعية)
-- ✅ Documentation/sessions/
-- ✅ Documentation/guides/ (3 مجلدات فرعية)
-- ✅ Documentation/status/
+- ✅ docs/reports/ (5 مجلدات فرعية)
+- ✅ docs/sessions/
+- ✅ docs/guides/ (3 مجلدات فرعية)
+- ✅ docs/status/
 - ✅ 4 ملفات README.md للتوجيه
 
 ### 3. نقل الملفات
@@ -68,7 +68,7 @@ Basser_MVP/
 │   ├── TESTING.md
 │   └── PROJECT_STATUS.md
 │
-└── Documentation/ ✅
+└── docs/ ✅
     ├── reports/
     │   ├── builds/ (5 تقارير)
     │   ├── performance/ (5 تقارير)
@@ -121,32 +121,32 @@ Basser_MVP/
 
 ```bash
 # تقارير البناء
-cd Documentation/reports/builds/
+cd docs/reports/builds/
 
 # تقارير الأداء
-cd Documentation/reports/performance/
+cd docs/reports/performance/
 
 # تقارير الاختبارات
-cd Documentation/reports/testing/
+cd docs/reports/testing/
 
 # تقارير الإصلاحات
-cd Documentation/reports/fixes/
+cd docs/reports/fixes/
 
 # تقارير الميزات
-cd Documentation/reports/features/
+cd docs/reports/features/
 ```
 
 ### للعثور على ملخص جلسة
 
 ```bash
-cd Documentation/sessions/
+cd docs/sessions/
 ls -1 SESSION_*.md
 ```
 
 ### للعثور على دليل
 
 ```bash
-cd Documentation/guides/
+cd docs/guides/
 # للإعداد: cd setup/
 # للتطوير: cd development/
 # للنشر: cd deployment/

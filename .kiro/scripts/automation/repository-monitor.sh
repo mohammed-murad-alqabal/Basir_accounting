@@ -16,7 +16,7 @@ NC='\033[0m'
 
 # المتغيرات
 ROOT_DIR=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
-REPORT_DIR="$ROOT_DIR/Documentation/reports/automated"
+REPORT_DIR="$ROOT_DIR/docs/reports/automated"
 LOG_FILE="$ROOT_DIR/.kiro/automation/monitor.log"
 METRICS_FILE="$ROOT_DIR/.kiro/automation/metrics.json"
 MAX_ROOT_FILES=10
@@ -114,11 +114,11 @@ check_repository_health() {
     
     # فحص تنظيم Documentation
     echo -e "${BLUE}[5/8]${NC} فحص تنظيم Documentation..."
-    if [ -d "$ROOT_DIR/Documentation/reports" ]; then
-        local reports_count=$(find "$ROOT_DIR/Documentation/reports" -type f -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
+    if [ -d "$ROOT_DIR/docs/reports" ]; then
+        local reports_count=$(find "$ROOT_DIR/docs/reports" -type f -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
         echo -e "${GREEN}✓${NC} Documentation منظم ($reports_count تقرير)"
     else
-        echo -e "${YELLOW}⚠${NC} مجلد Documentation/reports غير موجود"
+        echo -e "${YELLOW}⚠${NC} مجلد docs/reports غير موجود"
         warnings=$((warnings + 1))
     fi
     
@@ -234,7 +234,7 @@ $([ -f "$METRICS_FILE" ] && {
     local warnings=$(jq -r '.warnings' "$METRICS_FILE")
     
     if [ "$root_files" -gt 10 ]; then
-        echo "- ⚠️ عدد ملفات الجذر كبير - يُنصح بنقل بعض الملفات إلى Documentation/"
+        echo "- ⚠️ عدد ملفات الجذر كبير - يُنصح بنقل بعض الملفات إلى docs/"
     fi
     
     if [ "$warnings" -gt 0 ]; then

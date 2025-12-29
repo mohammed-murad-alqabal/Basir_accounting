@@ -219,9 +219,9 @@
 
 ---
 
-### 6. Documentation/DOCUMENTATION_UPDATE_REPORT.md (جديد)
+### 6. docs/DOCUMENTATION_UPDATE_REPORT.md (جديد)
 
-**الموقع:** `Documentation/DOCUMENTATION_UPDATE_REPORT.md`  
+**الموقع:** `docs/DOCUMENTATION_UPDATE_REPORT.md`  
 **الحالة:** ✅ جديد
 
 #### المحتوى:
@@ -245,7 +245,7 @@
 | .kiro/specs/CURRENT_STATUS.md                |     2     |   ✅    |
 | .kiro/specs/PROGRESS_TRACKER.md              |     1     |   ✅    |
 | CHANGELOG.md                                 |     1     |   ✅    |
-| Documentation/DOCUMENTATION_UPDATE_REPORT.md |     -     | ✅ جديد |
+| docs/DOCUMENTATION_UPDATE_REPORT.md |     -     | ✅ جديد |
 
 **الإجمالي:** 5 وثائق محدثة + 1 وثيقة جديدة
 

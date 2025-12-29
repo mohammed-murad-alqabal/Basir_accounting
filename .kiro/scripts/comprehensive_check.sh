@@ -54,30 +54,30 @@ else
     echo "✅ .kiro/docs/ is properly organized"
 fi
 
-# Check 4: Documentation/ structure
-echo "📋 Check 4: Documentation/ structure verification"
+# Check 4: docs/ structure
+echo "📋 Check 4: docs/ structure verification"
 if [ ! -d "Documentation" ]; then
-    report_issue "CRITICAL" "Documentation/ directory missing"
+    report_issue "CRITICAL" "docs/ directory missing"
 else
-    echo "✅ Documentation/ directory exists"
+    echo "✅ docs/ directory exists"
     
     # Check for required files
     required_files=("README.md" "INDEX.md" "QUICK_START.md")
     for file in "${required_files[@]}"; do
-        if [ ! -f "Documentation/$file" ]; then
-            report_issue "CRITICAL" "Missing required file: Documentation/$file"
+        if [ ! -f "docs/$file" ]; then
+            report_issue "CRITICAL" "Missing required file: docs/$file"
         else
-            echo "✅ Found Documentation/$file"
+            echo "✅ Found docs/$file"
         fi
     done
     
     # Check for required directories
     required_dirs=("Core" "guides" "reports" "sessions")
     for dir in "${required_dirs[@]}"; do
-        if [ ! -d "Documentation/$dir" ]; then
-            report_issue "CRITICAL" "Missing required directory: Documentation/$dir"
+        if [ ! -d "docs/$dir" ]; then
+            report_issue "CRITICAL" "Missing required directory: docs/$dir"
         else
-            echo "✅ Found Documentation/$dir/"
+            echo "✅ Found docs/$dir/"
         fi
     done
 fi
@@ -102,7 +102,7 @@ total_md_files=$(find . -name "*.md" | wc -l)
 echo "📊 Total .md files in project: $total_md_files"
 
 documentation_files=$(find Documentation -name "*.md" | wc -l)
-echo "📊 Files in Documentation/: $documentation_files"
+echo "📊 Files in docs/: $documentation_files"
 
 kiro_files=$(find .kiro -name "*.md" | wc -l)
 echo "📊 Files in .kiro/: $kiro_files"

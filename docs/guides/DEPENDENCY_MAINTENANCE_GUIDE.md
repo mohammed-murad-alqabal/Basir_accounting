@@ -318,7 +318,7 @@ flutter build apk --release
 ### للمساعدة الفورية:
 
 - **الفريق التقني**: فريق وكلاء تطوير مشروع بصير
-- **التوثيق**: `Documentation/reports/maintenance/`
+- **التوثيق**: `docs/reports/maintenance/`
 - **السجلات**: `logs/dependency_monitor_*.log`
 
 ### للمراجعة الدورية:

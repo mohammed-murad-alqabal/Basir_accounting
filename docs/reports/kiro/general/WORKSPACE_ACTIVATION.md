@@ -336,18 +336,18 @@ POST /api/tasks            # إنشاء مهمة
 ### الأدلة المتاحة
 
 - [Agents Guide](../../../../.kiro/steering/AGENTS.md)
-- [MLOps Guide](../../../../Documentation/guides/kiro_reference/comprehensive-agent-guide.md)
-- [Analytics Guide](../../../../Documentation/guides/kiro_reference/performance-optimization.md)
+- [MLOps Guide](../../../../docs/guides/kiro_reference/comprehensive-agent-guide.md)
+- [Analytics Guide](../../../../docs/guides/kiro_reference/performance-optimization.md)
 - [Automation Guide](../../../../.kiro/hooks/README.md)
-- **Security Rules**: `../../../../Documentation/guides/kiro_reference/security-best-practices.md`
+- **Security Rules**: `../../../../docs/guides/kiro_reference/security-best-practices.md`
 - **Framework**: `../../../../.kiro/steering/AGENTS.md`
 
 ### المعايير والتوجيهات
 
 - [الفلسفة الهندسية](../../../../.kiro/steering/AGENTS.md)
 - **Active Agents**: `../../../../.kiro/steering/AGENTS.md`
-- **Code Standards**: `../../../../Documentation/guides/kiro_reference/development-standards.md`
-- [معايير الأمان](../../../../Documentation/guides/kiro_reference/security-best-practices.md)
+- **Code Standards**: `../../../../docs/guides/kiro_reference/development-standards.md`
+- [معايير الأمان](../../../../docs/guides/kiro_reference/security-best-practices.md)
 
 ---
 

@@ -448,13 +448,13 @@ Actions → Sync Labels → Run workflow
 - `.github/ISSUE_TEMPLATE/` - جميع القوالب
 - `.github/labels.yml` - تكوين Labels
 - `.github/workflows/sync-labels.yml` - workflow المزامنة
-- `Documentation/ERROR_TRACKING_GUIDE.md` - دليل شامل (سيتم تحديثه في المهمة 12)
+- `docs/ERROR_TRACKING_GUIDE.md` - دليل شامل (سيتم تحديثه في المهمة 12)
 
 ### التحديثات المطلوبة
 
 - ✅ تحديث `.kiro/specs/error-tracking-system/tasks.md`
 - ✅ تحديث `CHANGELOG.md`
-- ⏳ تحديث `Documentation/ERROR_TRACKING_GUIDE.md` (المهمة 12)
+- ⏳ تحديث `docs/ERROR_TRACKING_GUIDE.md` (المهمة 12)
 - ⏳ إضافة قسم في README.md (المهمة 24)
 
 ---

@@ -182,9 +182,9 @@ await expectLater(future, expectedValue);
 
 ### ملفات التوثيق
 
-4. `Documentation/reports/TEST_EXECUTION_REPORT.md` (جديد)
-5. `Documentation/reports/TEST_FIX_PROGRESS_REPORT.md` (جديد)
-6. `Documentation/reports/SESSION_SUMMARY_2025-12-05.md` (هذا الملف)
+4. `docs/reports/TEST_EXECUTION_REPORT.md` (جديد)
+5. `docs/reports/TEST_FIX_PROGRESS_REPORT.md` (جديد)
+6. `docs/reports/SESSION_SUMMARY_2025-12-05.md` (هذا الملف)
 7. `CHANGELOG.md` (محدث)
 
 ---

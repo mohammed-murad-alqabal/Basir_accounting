@@ -120,7 +120,7 @@
 ### **فحص الملفات المنقولة:**
 
 ```
-Documentation/TEST_action-items/
+docs/TEST_action-items/
 ├── README.md                    ✅ منشأ ومحدث
 └── current/
     ├── ACTION_ITEMS.md          ✅ منقول بأمان

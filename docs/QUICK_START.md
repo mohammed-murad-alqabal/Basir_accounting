@@ -172,7 +172,7 @@
 ### 📁 المجلدات الرئيسية
 
 ```
-Documentation/
+docs/
 ├── 🏛️ Core/              ← الوثائق الأساسية (ابدأ هنا)
 ├── 📊 reports/           ← التقارير والتحليلات
 ├── 📖 guides/            ← الأدلة والإرشادات
@@ -218,10 +218,10 @@ Documentation/
 
 ```bash
 # البحث في جميع الوثائق
-grep -r "كلمة البحث" Documentation/
+grep -r "كلمة البحث" docs/
 
 # البحث في نوع معين
-grep -r "Flutter" Documentation/Core/
+grep -r "Flutter" docs/Core/
 ```
 
 ---

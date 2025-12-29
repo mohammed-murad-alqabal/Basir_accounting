@@ -155,11 +155,11 @@ lib/core/theme/app_theme.dart (محذوف)
 ### 5.2 ملفات جديدة (9)
 
 ```
-Documentation/ALIGNMENT_ANALYSIS_REPORT.md
-Documentation/SESSION_FINAL_SUMMARY.md
-Documentation/SESSION_SUMMARY_UI_UX_PHASE1.md
-Documentation/SPECS_ALIGNMENT_SUMMARY.md
-Documentation/UI_UX_IMPROVEMENTS_PROGRESS.md
+docs/ALIGNMENT_ANALYSIS_REPORT.md
+docs/SESSION_FINAL_SUMMARY.md
+docs/SESSION_SUMMARY_UI_UX_PHASE1.md
+docs/SPECS_ALIGNMENT_SUMMARY.md
+docs/UI_UX_IMPROVEMENTS_PROGRESS.md
 scripts/hooks/pre-push
 test/performance/test_precommit_performance.sh
 test/performance/test_prepush_performance.sh

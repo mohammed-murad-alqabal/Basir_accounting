@@ -365,7 +365,7 @@ cd .kiro/automation
 
 - `.kiro/automation/README.md` - دليل الاستخدام الشامل
 - `.kiro/automation/AGENTS_AUTOMATION_SYSTEM.md` - التصميم المعماري
-- `Documentation/reports/AUTOMATION_SYSTEM_COMPLETE.md` - تقرير الإنجاز
+- `docs/reports/AUTOMATION_SYSTEM_COMPLETE.md` - تقرير الإنجاز
 
 ### للتشغيل
 
