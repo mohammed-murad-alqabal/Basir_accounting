@@ -5,22 +5,32 @@
 ///
 /// **Feature: test-failures-resolution, Property 13: Preventive Maintenance Alerting**
 /// **Validates: Requirements 6.5**
+
 library test_monitor;
 
+// ignore_for_file: avoid_print, avoid_dynamic_calls, lines_longer_than_80_chars, avoid_slow_async_io, no_default_cases, discarded_futures, avoid_catches_without_on_clauses
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:basser_app/core/testing/test_failure_analyzer.dart';
-import 'package:flutter/foundation.dart';
+import 'test_failure_analyzer.dart';
 
 /// Test health status levels
 enum TestHealthStatus {
-  excellent, // 95%+ success rate
-  good, // 85-94% success rate
-  fair, // 70-84% success rate
-  poor, // 55-69% success rate
-  critical // <55% success rate
+  /// Excellent status: 95%+ success rate
+  excellent,
+
+  /// Good status: 85-94% success rate
+  good,
+
+  /// Fair status: 70-84% success rate
+  fair,
+
+  /// Poor status: 55-69% success rate
+  poor,
+
+  /// Critical status: <55% success rate
+  critical
 }
 
 /// Alert severity levels
@@ -118,8 +128,9 @@ class TestPerformanceHistory {
                 )
               : <TestFailureType, int>{},
         ),
-        healthStatus: TestHealthStatus.values
-            .byName(json['healthStatus']?.toString() ?? 'unknown'),
+        healthStatus: TestHealthStatus.values.byName(
+          json['healthStatus']?.toString() ?? 'unknown',
+        ),
         criticalFailures: json['criticalFailures'] is List
             ? (json['criticalFailures'] as List)
                 .whereType<Map<String, dynamic>>()
@@ -162,10 +173,10 @@ class TestMonitor {
     if (_isMonitoring) return;
 
     _isMonitoring = true;
-    debugPrint('🔍 بدء مراقبة الاختبارات المستمرة...');
+    print('🔍 بدء مراقبة الاختبارات المستمرة...');
 
-    _monitoringTimer = Timer.periodic(_monitoringInterval, (_) async {
-      await _performHealthCheck();
+    _monitoringTimer = Timer.periodic(_monitoringInterval, (_) {
+      _performHealthCheck();
     });
 
     // Perform initial check
@@ -177,7 +188,7 @@ class TestMonitor {
     _isMonitoring = false;
     _monitoringTimer?.cancel();
     _monitoringTimer = null;
-    debugPrint('⏹️ تم إيقاف مراقبة الاختبارات');
+    print('⏹️ تم إيقاف مراقبة الاختبارات');
   }
 
   /// Performs a comprehensive health check
@@ -186,7 +197,7 @@ class TestMonitor {
   /// **Validates: Requirements 6.5**
   Future<void> _performHealthCheck() async {
     try {
-      debugPrint('🔍 إجراء فحص صحة الاختبارات...');
+      print('🔍 إجراء فحص صحة الاختبارات...');
 
       // Run quick test analysis
       final testResult = await Process.run(
@@ -215,11 +226,11 @@ class TestMonitor {
       // Check for alerts
       await _checkForAlerts(historyEntry);
 
-      debugPrint(
+      print(
         '✅ فحص الصحة مكتمل - الحالة: ${_getHealthStatusName(healthStatus)}',
       );
     } catch (e) {
-      debugPrint('❌ خطأ في فحص الصحة: $e');
+      print('❌ خطأ في فحص الصحة: $e');
       await _createAlert(
         AlertSeverity.error,
         'فشل فحص صحة الاختبارات',
@@ -416,15 +427,15 @@ class TestMonitor {
 
     // Print alert to console
     final severityIcon = _getSeverityIcon(severity);
-    debugPrint('\n$severityIcon تنبيه: $title');
-    debugPrint('   📝 $message');
+    print('\n$severityIcon تنبيه: $title');
+    print('   📝 $message');
     if (actionItems.isNotEmpty) {
-      debugPrint('   🔧 الإجراءات المطلوبة:');
+      print('   🔧 الإجراءات المطلوبة:');
       for (var i = 0; i < actionItems.length; i++) {
-        debugPrint('      ${i + 1}. ${actionItems[i]}');
+        print('      ${i + 1}. ${actionItems[i]}');
       }
     }
-    debugPrint('');
+    print('');
 
     // Save alert to file
     await _saveAlert(alert);
@@ -482,8 +493,8 @@ class TestMonitor {
         '${alertsDir.path}/alert_${alert.id}_${alert.timestamp.millisecondsSinceEpoch}.json',
       );
       await alertFile.writeAsString(jsonEncode(alert.toJson()));
-    } catch (e) {
-      debugPrint('❌ فشل في حفظ التنبيه: $e');
+    } on Exception catch (e) {
+      print('❌ فشل في حفظ التنبيه: $e');
     }
   }
 
@@ -500,6 +511,7 @@ class TestMonitor {
     }
   }
 
+  /// Gets the display name for a health status
   String _getHealthStatusName(TestHealthStatus status) {
     switch (status) {
       case TestHealthStatus.excellent:
@@ -515,8 +527,10 @@ class TestMonitor {
     }
   }
 
-  /// Public getters
+  /// The history of test performance
   List<TestPerformanceHistory> get history => List.unmodifiable(_history);
+
+  /// The list of active alerts
   List<TestAlert> get activeAlerts => List.unmodifiable(_activeAlerts);
   bool get isMonitoring => _isMonitoring;
 
@@ -544,15 +558,19 @@ class TestMonitor {
     _activeAlerts.clear();
 
     for (final historyData in data['history'] as List) {
-      _history.add(TestPerformanceHistory.fromJson(
-        historyData as Map<String, dynamic>,
-      ));
+      _history.add(
+        TestPerformanceHistory.fromJson(
+          historyData as Map<String, dynamic>,
+        ),
+      );
     }
 
     for (final alertData in data['activeAlerts'] as List) {
-      _activeAlerts.add(TestAlert.fromJson(
-        alertData as Map<String, dynamic>,
-      ));
+      _activeAlerts.add(
+        TestAlert.fromJson(
+          alertData as Map<String, dynamic>,
+        ),
+      );
     }
   }
 }
