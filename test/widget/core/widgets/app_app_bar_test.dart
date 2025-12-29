@@ -1,4 +1,4 @@
-import 'package:basser_app/core/theme/app_theme.dart';
+import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/app_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,7 +34,7 @@ void main() {
       );
 
       // Assert
-      expect(find.byIcon(Icons.arrow_back), findsOneWidget);
+      expect(find.byIcon(Icons.arrow_back_rounded), findsOneWidget);
     });
 
     testWidgets('should hide back button when showBackButton is false', (
@@ -96,7 +96,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Act - Tap back button
-      await tester.tap(find.byIcon(Icons.arrow_back));
+      await tester.tap(find.byIcon(Icons.arrow_back_rounded));
       await tester.pumpAndSettle();
 
       // Assert
@@ -178,8 +178,8 @@ void main() {
 
       // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, AppTheme.lightTheme.colorScheme.surface);
-      expect(appBar.foregroundColor, AppTheme.lightTheme.colorScheme.onSurface);
+      expect(appBar.backgroundColor, SemanticColors.surface);
+      expect(appBar.foregroundColor, SemanticColors.textPrimary);
     });
 
     testWidgets('should have elevation of 0', (tester) async {
@@ -315,8 +315,8 @@ void main() {
 
       // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, AppTheme.lightTheme.colorScheme.surface);
-      expect(appBar.foregroundColor, AppTheme.lightTheme.colorScheme.onSurface);
+      expect(appBar.backgroundColor, SemanticColors.surface);
+      expect(appBar.foregroundColor, SemanticColors.textPrimary);
     });
 
     testWidgets('should have elevation of 0', (tester) async {

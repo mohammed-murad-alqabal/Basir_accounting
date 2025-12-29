@@ -87,9 +87,9 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(Icons.add));
+      await tester.tap(find.byIcon(Icons.add_rounded));
       await tester.pump();
-      expect(find.byIcon(Icons.add), findsOneWidget);
+      expect(find.byIcon(Icons.add_rounded), findsOneWidget);
     });
   });
 }
