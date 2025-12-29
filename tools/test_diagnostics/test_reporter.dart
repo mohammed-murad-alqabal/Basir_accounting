@@ -3,15 +3,17 @@
 /// Generates comprehensive reports for test failures, analysis,
 /// and actionable insights for development teams.
 ///
-/// **Feature: test-failures-resolution, Property 12: Automated Diagnostics Quality**
+/// **Feature: test-failures-resolution, Property 12: Automated Diagnostics
+/// Quality**
 /// **Validates: Requirements 6.3, 6.4**
 library test_reporter;
 
+// ignore_for_file: avoid_print, avoid_dynamic_calls, lines_longer_than_80_chars
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:basser_app/core/testing/test_failure_analyzer.dart';
-import 'package:basser_app/core/testing/test_monitor.dart';
+import 'test_failure_analyzer.dart';
+import 'test_monitor.dart';
 
 /// Report format types
 enum ReportFormat {
@@ -64,7 +66,8 @@ class TestReporter {
 
   /// Generates a comprehensive test report
   ///
-  /// **Feature: test-failures-resolution, Property 12: Automated Diagnostics Quality**
+  /// **Feature: test-failures-resolution, Property 12: Automated Diagnostics
+  /// Quality**
   /// **Validates: Requirements 6.3, 6.4**
   Future<String> generateReport({
     required ReportType type,
@@ -139,8 +142,10 @@ class TestReporter {
     // Header
     buffer.writeln('# تقرير حالة الاختبارات - ${_getReportTypeName(type)}');
     buffer.writeln();
+    final timestamp =
+        data['timestamp']?.toString() ?? DateTime.now().toIso8601String();
     buffer.writeln(
-      '**التاريخ:** ${DateTime.parse(data['timestamp']?.toString() ?? DateTime.now().toIso8601String()).toLocal()}',
+      '**التاريخ:** ${DateTime.parse(timestamp).toLocal()}',
     );
     buffer.writeln('**المشروع:** بصير MVP');
     buffer.writeln('**المؤلف:** فريق وكلاء تطوير مشروع بصير');
@@ -151,16 +156,22 @@ class TestReporter {
     buffer.writeln();
     buffer.writeln('| المؤشر | القيمة | الحالة |');
     buffer.writeln('|---------|--------|---------|');
-    buffer.writeln('| إجمالي الاختبارات | ${metrics['totalTests']} | - |');
-    buffer.writeln('| الاختبارات الناجحة | ${metrics['passedTests']} | ✅ |');
+    buffer.writeln('| إجمالي الاختبارات | ${metrics['totalTests'] ?? 0} | - |');
+    buffer
+        .writeln('| الاختبارات الناجحة | ${metrics['passedTests'] ?? 0} | ✅ |');
+    final failedTests = metrics['failedTests'] as int? ?? 0;
     buffer.writeln(
-      '| الاختبارات الفاشلة | ${metrics['failedTests'] as int? ?? 0} | ${(metrics['failedTests'] as int? ?? 0) > 0 ? '❌' : '✅'} |',
+      '| الاختبارات الفاشلة | $failedTests | '
+      '${failedTests > 0 ? '❌' : '✅'} |',
     );
     final successRate = metrics['successRate'] as double? ?? 0.0;
     buffer.writeln(
-      '| معدل النجاح | ${successRate.toStringAsFixed(1)}% | ${_getSuccessRateStatus(successRate)} |',
+      '| معدل النجاح | ${successRate.toStringAsFixed(1)}% | '
+      '${_getSuccessRateStatus(successRate)} |',
     );
-    buffer.writeln('| وقت التنفيذ | ${metrics['totalExecutionTime']} ms | - |');
+    buffer.writeln(
+      '| وقت التنفيذ | ${metrics['totalExecutionTime'] ?? 0} ms | - |',
+    );
     buffer.writeln();
 
     // Failure Breakdown
@@ -174,7 +185,8 @@ class TestReporter {
       for (final entry in failuresByType.entries) {
         final icon = _getFailureTypeIcon(entry.key);
         buffer.writeln(
-          '- $icon **${_getFailureTypeName(entry.key)}**: ${entry.value} اختبار',
+          '- $icon **${_getFailureTypeName(entry.key)}**: '
+          '${entry.value} اختبار',
         );
       }
       buffer.writeln();
@@ -184,8 +196,8 @@ class TestReporter {
       buffer.writeln();
 
       for (var i = 0; i < failures.length && i < 5; i++) {
-        final failure = failures[i];
-        final analysis = analyses[i];
+        final failure = failures[i] as Map<String, dynamic>? ?? {};
+        final analysis = analyses[i] as Map<String, dynamic>? ?? {};
 
         buffer.writeln(
           '### ${i + 1}. ${failure['testName'] as String? ?? 'Unknown'}',
@@ -195,16 +207,19 @@ class TestReporter {
           '- **الملف:** `${failure['filePath'] as String? ?? 'Unknown'}`',
         );
         buffer.writeln(
-          '- **النوع:** ${_getFailureTypeName(failure['type'] as String? ?? 'unknown')}',
+          '- **النوع:** '
+          '${_getFailureTypeName(failure['type'] as String? ?? 'unknown')}',
         );
         buffer.writeln(
-          '- **الأولوية:** ${_getPriorityName(failure['priority'] as String? ?? 'low')}',
+          '- **الأولوية:** '
+          '${_getPriorityName(failure['priority'] as String? ?? 'low')}',
         );
         buffer.writeln(
           '- **السبب:** ${analysis['rootCause'] as String? ?? 'غير محدد'}',
         );
         buffer.writeln(
-          '- **وقت الإصلاح المقدر:** ${analysis['estimatedFixTime'] as String? ?? '0'} دقيقة',
+          '- **وقت الإصلاح المقدر:** '
+          '${analysis['estimatedFixTime'] as String? ?? '0'} دقيقة',
         );
         buffer.writeln();
 
@@ -253,7 +268,8 @@ class TestReporter {
     buffer.writeln('---');
     buffer.writeln('**تم إنشاؤه بواسطة:** نظام مراقبة الاختبارات المتقدم');
     buffer.writeln(
-      '**الحالة:** ${failures.isEmpty ? '✅ جميع الاختبارات تعمل' : '⚠️ يتطلب إصلاحات'}',
+      '**الحالة:** '
+      '${failures.isEmpty ? '✅ جميع الاختبارات تعمل' : '⚠️ يتطلب إصلاحات'}',
     );
 
     return buffer.toString();
@@ -273,7 +289,8 @@ class TestReporter {
     buffer.writeln('<head>');
     buffer.writeln('    <meta charset="UTF-8">');
     buffer.writeln(
-      '    <meta name="viewport" content="width=device-width, initial-scale=1.0">',
+      '    <meta name="viewport" '
+      'content="width=device-width, initial-scale=1.0">',
     );
     buffer.writeln(
       '    <title>تقرير حالة الاختبارات - ${_getReportTypeName(type)}</title>',
@@ -287,8 +304,11 @@ class TestReporter {
     // Header
     buffer.writeln('    <header>');
     buffer.writeln('        <h1>تقرير حالة الاختبارات</h1>');
+    final timestamp =
+        data['timestamp'] as String? ?? DateTime.now().toIso8601String();
     buffer.writeln(
-      '        <p>المشروع: بصير MVP | التاريخ: ${DateTime.parse(data['timestamp'] as String? ?? DateTime.now().toIso8601String()).toLocal()}</p>',
+      '        <p>المشروع: بصير MVP | '
+      'التاريخ: ${DateTime.parse(timestamp).toLocal()}</p>',
     );
     buffer.writeln('    </header>');
 
@@ -297,27 +317,33 @@ class TestReporter {
     buffer.writeln('        <div class="metric-card">');
     buffer.writeln('            <h3>إجمالي الاختبارات</h3>');
     buffer.writeln(
-      '            <div class="metric-value">${metrics['totalTests']}</div>',
+      '            <div class="metric-value">'
+      '${metrics['totalTests'] ?? 0}</div>',
     );
     buffer.writeln('        </div>');
     buffer.writeln('        <div class="metric-card success">');
     buffer.writeln('            <h3>الناجحة</h3>');
     buffer.writeln(
-      '            <div class="metric-value">${metrics['passedTests']}</div>',
+      '            <div class="metric-value">'
+      '${metrics['passedTests'] ?? 0}</div>',
     );
     buffer.writeln('        </div>');
     buffer.writeln(
-      '        <div class="metric-card ${failures.isNotEmpty ? 'error' : 'success'}">',
+      '        <div class="metric-card '
+      '${failures.isNotEmpty ? 'error' : 'success'}">',
     );
     buffer.writeln('            <h3>الفاشلة</h3>');
     buffer.writeln(
-      '            <div class="metric-value">${metrics['failedTests']}</div>',
+      '            <div class="metric-value">'
+      '${metrics['failedTests'] ?? 0}</div>',
     );
     buffer.writeln('        </div>');
     buffer.writeln('        <div class="metric-card">');
     buffer.writeln('            <h3>معدل النجاح</h3>');
+    final successRate = metrics['successRate'] as double? ?? 0.0;
     buffer.writeln(
-      '            <div class="metric-value">${metrics['successRate'].toStringAsFixed(1)}%</div>',
+      '            <div class="metric-value">'
+      '${successRate.toStringAsFixed(1)}%</div>',
     );
     buffer.writeln('        </div>');
     buffer.writeln('    </section>');
@@ -327,17 +353,23 @@ class TestReporter {
       buffer.writeln('    <section class="failures">');
       buffer.writeln('        <h2>الأخطاء المكتشفة</h2>');
 
-      for (final failure in failures.take(10)) {
+      for (final rawFailure in failures.take(10)) {
+        final failure = rawFailure as Map<String, dynamic>? ?? {};
         buffer.writeln('        <div class="failure-card">');
         buffer.writeln('            <h3>${failure['testName']}</h3>');
         buffer.writeln(
-          '            <p><strong>الملف:</strong> ${failure['filePath'] as String? ?? 'Unknown'}</p>',
+          '            <p><strong>الملف:</strong> '
+          '${failure['filePath'] as String? ?? 'Unknown'}</p>',
         );
         buffer.writeln(
-          '            <p><strong>النوع:</strong> ${_getFailureTypeName(failure['type'] as String? ?? 'unknown')}</p>',
+          '            <p><strong>النوع:</strong> '
+          '${_getFailureTypeName(failure['type'] as String? ?? 'unknown')}'
+          '</p>',
         );
         buffer.writeln(
-          '            <p><strong>الأولوية:</strong> ${_getPriorityName(failure['priority'] as String? ?? 'low')}</p>',
+          '            <p><strong>الأولوية:</strong> '
+          '${_getPriorityName(failure['priority'] as String? ?? 'low')}'
+          '</p>',
         );
         buffer.writeln('        </div>');
       }
@@ -366,7 +398,8 @@ class TestReporter {
     buffer.writeln('Test Name,File Path,Type,Priority,Error Message,Timestamp');
 
     // Data rows
-    for (final failure in failures) {
+    for (final rawFailure in failures) {
+      final failure = rawFailure as Map<String, dynamic>? ?? {};
       buffer.writeln(
         [
           _escapeCsv(failure['testName'] as String? ?? ''),
@@ -393,19 +426,23 @@ class TestReporter {
 
     buffer.writeln('تقرير حالة الاختبارات - ${_getReportTypeName(type)}');
     buffer.writeln('=' * 60);
+    final timestamp =
+        data['timestamp'] as String? ?? DateTime.now().toIso8601String();
     buffer.writeln(
-      'التاريخ: ${DateTime.parse(data['timestamp'] as String? ?? DateTime.now().toIso8601String()).toLocal()}',
+      'التاريخ: ${DateTime.parse(timestamp).toLocal()}',
     );
     buffer.writeln('المشروع: بصير MVP');
     buffer.writeln();
 
     buffer.writeln('الملخص:');
     buffer.writeln('-' * 30);
-    buffer.writeln('إجمالي الاختبارات: ${metrics['totalTests']}');
-    buffer.writeln('الناجحة: ${metrics['passedTests']}');
-    buffer.writeln('الفاشلة: ${metrics['failedTests']}');
-    buffer
-        .writeln('معدل النجاح: ${metrics['successRate'].toStringAsFixed(1)}%');
+    buffer.writeln('إجمالي الاختبارات: ${metrics['totalTests'] ?? 0}');
+    buffer.writeln('الناجحة: ${metrics['passedTests'] ?? 0}');
+    buffer.writeln('الفاشلة: ${metrics['failedTests'] ?? 0}');
+    final successRate = metrics['successRate'] as double? ?? 0.0;
+    buffer.writeln(
+      'معدل النجاح: ${successRate.toStringAsFixed(1)}%',
+    );
     buffer.writeln();
 
     if (failures.isNotEmpty) {
@@ -413,7 +450,7 @@ class TestReporter {
       buffer.writeln('-' * 30);
 
       for (var i = 0; i < failures.length && i < 10; i++) {
-        final failure = failures[i];
+        final failure = failures[i] as Map<String, dynamic>? ?? {};
         buffer.writeln(
           '${i + 1}. ${failure['testName'] as String? ?? 'Unknown'}',
         );
@@ -421,10 +458,12 @@ class TestReporter {
           '   الملف: ${failure['filePath'] as String? ?? 'Unknown'}',
         );
         buffer.writeln(
-          '   النوع: ${_getFailureTypeName(failure['type'] as String? ?? 'unknown')}',
+          '   النوع: '
+          '${_getFailureTypeName(failure['type'] as String? ?? 'unknown')}',
         );
         buffer.writeln(
-          '   الأولوية: ${_getPriorityName(failure['priority'] as String? ?? 'low')}',
+          '   الأولوية: '
+          '${_getPriorityName(failure['priority'] as String? ?? 'low')}',
         );
         buffer.writeln();
       }
@@ -445,8 +484,9 @@ class TestReporter {
 
     if (failuresByType.containsKey('golden') &&
         (failuresByType['golden'] as int? ?? 0) > 0) {
-      recommendations
-          .add('🎨 تحديث Golden Tests باستخدام: flutter test --update-goldens');
+      recommendations.add(
+        '🎨 تحديث Golden Tests باستخدام: flutter test --update-goldens',
+      );
     }
 
     if (failuresByType.containsKey('integration') &&
@@ -474,8 +514,13 @@ class TestReporter {
 
     // Sort failures by priority
     failures.sort(
-      (a, b) => _getPriorityWeight(a['priority'] as String? ?? 'low')
-          .compareTo(_getPriorityWeight(b['priority'] as String? ?? 'low')),
+      (a, b) => _getPriorityWeight(
+        (a as Map<String, dynamic>?)?['priority'] as String? ?? 'low',
+      ).compareTo(
+        _getPriorityWeight(
+          (b as Map<String, dynamic>?)?['priority'] as String? ?? 'low',
+        ),
+      ),
     );
 
     actionPlan.add('إصلاح الأخطاء ذات الأولوية العالية أولاً');
