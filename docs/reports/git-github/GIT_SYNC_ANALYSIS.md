@@ -90,7 +90,7 @@ git remote prune origin
 
 - `.kiro/QUALITY_ASSESSMENT.md` (معدل)
 - `.kiro/specs/error-tracking-system/tasks.md` (معدل)
-- `Documentation/PROJECT_STATUS_COMPREHENSIVE_REVIEW.md` (جديد)
+- `docs/PROJECT_STATUS_COMPREHENSIVE_REVIEW.md` (جديد)
 - `SESSION_SUMMARY_GUEST_MODE.md` (جديد)
 
 **الحل المطبق:**

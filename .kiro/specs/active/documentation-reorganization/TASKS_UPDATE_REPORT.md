@@ -185,7 +185,7 @@
 ## 🏗️ البنية النهائية المحققة
 
 ```
-Documentation/
+docs/
 ├── README.md                    📋 الفهرس الرئيسي الوحيد
 ├── Core/                        📁 الوثائق الأساسية (6 ملفات)
 │   ├── 00_Strategic_Master_Blueprint.md

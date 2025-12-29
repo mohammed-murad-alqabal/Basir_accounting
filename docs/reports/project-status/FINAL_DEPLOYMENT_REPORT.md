@@ -75,11 +75,11 @@ https://github.com/mohammed-murad-alqabal/Basser_MVP/commit/fce7d03
 ### التوثيق الجديد (6)
 
 ```
-📄 Documentation/WORKFLOWS_ANALYSIS_REPORT.md (2000+ سطر)
-📄 Documentation/WORKFLOWS_FINAL_STATUS.md
-📄 Documentation/WORKFLOWS_FIX_SUMMARY.md
-📄 Documentation/WORKFLOWS_HOTFIX_REPORT.md
-📄 Documentation/WORKFLOWS_LOCAL_STATUS.md
+📄 docs/WORKFLOWS_ANALYSIS_REPORT.md (2000+ سطر)
+📄 docs/WORKFLOWS_FINAL_STATUS.md
+📄 docs/WORKFLOWS_FIX_SUMMARY.md
+📄 docs/WORKFLOWS_HOTFIX_REPORT.md
+📄 docs/WORKFLOWS_LOCAL_STATUS.md
 📄 PUSH_TO_GITHUB_GUIDE.md
 ```
 
@@ -97,7 +97,7 @@ https://github.com/mohammed-murad-alqabal/Basser_MVP/commit/fce7d03
 📄 HOTFIX_SUMMARY.md
 📁 .kiro/specs/ui-ux-improvements/ (6 ملفات)
 📁 test/widget/features/dashboard/
-📁 Documentation/Archive/Context_Reports_2025-12-02/
+📁 docs/Archive/Context_Reports_2025-12-02/
 ⚙️ android/gradle/wrapper/gradle-wrapper.properties
 🧪 test/widget/features/invoices/invoices_screen_test.dart
 📋 .kiro/specs/testing-system/tasks.md
@@ -347,11 +347,11 @@ curl -s "https://api.github.com/repos/OWNER/REPO/commits/HASH" | jq .sha
 
 ### التقارير المحلية
 
-- **التحليل الشامل:** Documentation/WORKFLOWS_ANALYSIS_REPORT.md
-- **ملخص الإصلاحات:** Documentation/WORKFLOWS_FIX_SUMMARY.md
-- **الحالة النهائية:** Documentation/WORKFLOWS_FINAL_STATUS.md
-- **إصلاح Hotfix:** Documentation/WORKFLOWS_HOTFIX_REPORT.md
-- **الحالة المحلية:** Documentation/WORKFLOWS_LOCAL_STATUS.md
+- **التحليل الشامل:** docs/WORKFLOWS_ANALYSIS_REPORT.md
+- **ملخص الإصلاحات:** docs/WORKFLOWS_FIX_SUMMARY.md
+- **الحالة النهائية:** docs/WORKFLOWS_FINAL_STATUS.md
+- **إصلاح Hotfix:** docs/WORKFLOWS_HOTFIX_REPORT.md
+- **الحالة المحلية:** docs/WORKFLOWS_LOCAL_STATUS.md
 - **دليل الدفع:** PUSH_TO_GITHUB_GUIDE.md
 
 ---

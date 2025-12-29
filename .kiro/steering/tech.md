@@ -22,7 +22,7 @@
 
 ## 📝 Coding Standards (Summary)
 
-> **Detailed Reference:** `Documentation/guides/kiro_reference/flutter-dart-standards.md`
+> **Detailed Reference:** `docs/guides/kiro_reference/flutter-dart-standards.md`
 
 - **Line Length:** 100 characters.
 - **Linter:** `effective_dart` + project rules.
@@ -48,5 +48,5 @@
 
 **Core Guides:**
 
-- [Flutter Standards](../../Documentation/guides/kiro_reference/flutter-dart-standards.md)
-- [Git Standards](../../Documentation/guides/kiro_reference/git-standards.md)
+- [Flutter Standards](../../docs/guides/kiro_reference/flutter-dart-standards.md)
+- [Git Standards](../../docs/guides/kiro_reference/git-standards.md)

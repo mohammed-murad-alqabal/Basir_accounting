@@ -63,8 +63,8 @@
 echo "🔒 إنشاء النسخة الاحتياطية..."
 DATE=$(date +%Y%m%d_%H%M%S)
 git tag "SAFE_BACKUP_pre_documentation_reorganization_$DATE"
-tar -czf "Documentation_COMPLETE_BACKUP_$DATE.tar.gz" Documentation/
-cp -r Documentation/ "Documentation_SAFETY_COPY_$DATE/"
+tar -czf "Documentation_COMPLETE_BACKUP_$DATE.tar.gz" docs/
+cp -r docs/ "Documentation_SAFETY_COPY_$DATE/"
 
 # 2. التحقق من سلامة النسخة الاحتياطية
 echo "✅ التحقق من النسخة الاحتياطية..."
@@ -99,26 +99,26 @@ echo "✅ تم إنشاء branch آمن للاختبار"
 ```bash
 # اختبار على 3 ملفات فقط
 TEST_FILES=(
-    "Documentation/ACTION_ITEMS.md"
-    "Documentation/RECOMMENDED_ACTIONS.md"
-    "Documentation/CRITICAL_IMPROVEMENTS.md"
+    "docs/ACTION_ITEMS.md"
+    "docs/RECOMMENDED_ACTIONS.md"
+    "docs/CRITICAL_IMPROVEMENTS.md"
 )
 
 echo "🧪 بدء الاختبار المحدود على ${#TEST_FILES[@]} ملفات..."
 
 # إنشاء مجلد اختبار
-mkdir -p Documentation/TEST_action-items/current/
+mkdir -p docs/TEST_action-items/current/
 
 # نقل آمن مع git
 for file in "${TEST_FILES[@]}"; do
     if [ -f "$file" ]; then
-        git mv "$file" "Documentation/TEST_action-items/current/"
+        git mv "$file" "docs/TEST_action-items/current/"
         echo "✅ تم نقل $file بأمان"
     fi
 done
 
 # إنشاء README للمجلد الجديد
-cat > Documentation/TEST_action-items/README.md << 'EOF'
+cat > docs/TEST_action-items/README.md << 'EOF'
 # عناصر العمل والتوصيات
 
 ## نظرة عامة
@@ -135,7 +135,7 @@ EOF
 
 # اختبار الروابط
 echo "🔍 اختبار الروابط..."
-find Documentation/TEST_action-items -name "*.md" -exec grep -l "\[.*\](.*\.md)" {} \;
+find docs/TEST_action-items -name "*.md" -exec grep -l "\[.*\](.*\.md)" {} \;
 
 # commit الاختبار
 git add .
@@ -190,7 +190,7 @@ echo -e "\n## التصنيف المقترح" >> Documentation_Analysis_Report.md
 for category in "${!CATEGORIES[@]}"; do
     echo -e "\n### $category" >> Documentation_Analysis_Report.md
     count=0
-    for file in Documentation/*.md; do
+    for file in docs/*.md; do
         filename=$(basename "$file")
         for pattern in ${CATEGORIES[$category]}; do
             if [[ "$filename" == *"$pattern"* ]]; then
@@ -223,30 +223,30 @@ echo "✅ تم إنشاء تقرير التحليل: Documentation_Analysis_Repo
 echo "🏗️ المرحلة 3أ: تنظيم Core Documents"
 
 # التحقق من وجود المجلد
-if [ ! -d "Documentation/Core" ]; then
-    mkdir -p Documentation/Core
+if [ ! -d "docs/Core" ]; then
+    mkdir -p docs/Core
     echo "✅ تم إنشاء مجلد Core"
 fi
 
 # نقل الوثائق الأساسية (إذا لم تكن موجودة)
 CORE_FILES=(
-    "Documentation/00_Strategic_Master_Blueprint.md"
-    "Documentation/01_Product_Charter.md"
-    "Documentation/02_Technical_Design_Document.md"
-    "Documentation/03_Product_Requirements_Document.md"
-    "Documentation/04_Design_System.md"
-    "Documentation/05_UI_Wireframes_Description.md"
+    "docs/00_Strategic_Master_Blueprint.md"
+    "docs/01_Product_Charter.md"
+    "docs/02_Technical_Design_Document.md"
+    "docs/03_Product_Requirements_Document.md"
+    "docs/04_Design_System.md"
+    "docs/05_UI_Wireframes_Description.md"
 )
 
 for file in "${CORE_FILES[@]}"; do
-    if [ -f "$file" ] && [ ! -f "Documentation/Core/$(basename "$file")" ]; then
-        git mv "$file" "Documentation/Core/"
+    if [ -f "$file" ] && [ ! -f "docs/Core/$(basename "$file")" ]; then
+        git mv "$file" "docs/Core/"
         echo "✅ تم نقل $(basename "$file") إلى Core"
     fi
 done
 
 # إنشاء README للـ Core
-cat > Documentation/Core/README.md << 'EOF'
+cat > docs/Core/README.md << 'EOF'
 # الوثائق الأساسية
 
 ## نظرة عامة
@@ -275,7 +275,7 @@ echo "✅ اكتمل تنظيم Core Documents"
 echo "🏗️ المرحلة 3ب: تنظيم Reports"
 
 # إنشاء بنية Reports
-mkdir -p Documentation/reports/{engineering,project-status,workflows,git-github,ui-ux,cleanup}
+mkdir -p docs/reports/{engineering,project-status,workflows,git-github,ui-ux,cleanup}
 
 # تنظيم تقارير الهندسة
 ENGINEERING_REPORTS=(
@@ -286,8 +286,8 @@ ENGINEERING_REPORTS=(
 )
 
 for report in "${ENGINEERING_REPORTS[@]}"; do
-    if [ -f "Documentation/$report" ]; then
-        git mv "Documentation/$report" "Documentation/reports/engineering/"
+    if [ -f "docs/$report" ]; then
+        git mv "docs/$report" "docs/reports/engineering/"
         echo "✅ تم نقل $report إلى engineering"
     fi
 done
@@ -300,15 +300,15 @@ PROJECT_STATUS_REPORTS=(
 )
 
 for report in "${PROJECT_STATUS_REPORTS[@]}"; do
-    if [ -f "Documentation/$report" ]; then
-        git mv "Documentation/$report" "Documentation/reports/project-status/"
+    if [ -f "docs/$report" ]; then
+        git mv "docs/$report" "docs/reports/project-status/"
         echo "✅ تم نقل $report إلى project-status"
     fi
 done
 
 # إنشاء README لكل مجلد فرعي
 for subdir in engineering project-status workflows git-github ui-ux cleanup; do
-    cat > "Documentation/reports/$subdir/README.md" << EOF
+    cat > "docs/reports/$subdir/README.md" << EOF
 # تقارير $subdir
 
 ## نظرة عامة
@@ -330,13 +330,13 @@ echo "✅ اكتمل تنظيم Reports"
 echo "🏗️ المرحلة 3ج: تنظيم الملفات المتبقية"
 
 # تنظيم الأدلة
-mkdir -p Documentation/guides/{development,design,troubleshooting}
+mkdir -p docs/guides/{development,design,troubleshooting}
 
 # تنظيم ملخصات الجلسات
-mkdir -p Documentation/sessions/{comprehensive,ui-ux,specialized}
+mkdir -p docs/sessions/{comprehensive,ui-ux,specialized}
 
 # تنظيم عناصر العمل
-mkdir -p Documentation/action-items/{current,completed}
+mkdir -p docs/action-items/{current,completed}
 
 # نقل الملفات المتبقية بأمان
 # (تفاصيل مشابهة للأيام السابقة)
@@ -375,7 +375,7 @@ echo "✅ تم العثور على $(wc -l < links_to_check.txt) ملف يحتو
 
 # 3. اختبار البنية
 echo "🏗️ اختبار البنية..."
-tree Documentation/ > current_structure.txt
+tree docs/ > current_structure.txt
 echo "✅ تم حفظ البنية الحالية في current_structure.txt"
 
 # 4. إنشاء تقرير التحقق النهائي

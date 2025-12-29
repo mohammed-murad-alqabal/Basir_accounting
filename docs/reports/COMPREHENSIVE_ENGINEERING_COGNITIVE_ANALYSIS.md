@@ -89,7 +89,7 @@ Basser_MVP/
 │   ├── prompts/             # توجيهات الوكلاء
 │   ├── hooks/               # الأتمتة الوقائية
 │   └── settings/            # الإعدادات
-├── Documentation/           # ✅ توثيق شامل (50+ ملف)
+├── docs/           # ✅ توثيق شامل (50+ ملف)
 │   ├── 00_Strategic_Master_Blueprint.md
 │   ├── 02_Technical_Design_Document.md
 │   ├── reports/             # تقارير متعددة
@@ -894,14 +894,14 @@ linter:
 
 ## 📖 الطبقة 7: التوثيق والمعرفة
 
-### 7.1 التوثيق الاستراتيجي (Documentation/)
+### 7.1 التوثيق الاستراتيجي (docs/)
 
 #### التقييم: **A+ (99/100)** - توثيق شامل ومنظم
 
 **البنية:**
 
 ```
-Documentation/
+docs/
 ├── 00_Strategic_Master_Blueprint.md    # ✅ المخطط الاستراتيجي (5000+ سطر)
 ├── 01_Product_Charter.md               # ✅ ميثاق المنتج
 ├── 02_Technical_Design_Document.md     # ✅ التصميم التقني
@@ -1234,7 +1234,7 @@ final hashedPassword = sha256.convert(utf8.encode(password)).toString();
 **الدليل:**
 
 ```
-Documentation/
+docs/
 ├── 00_Strategic_Master_Blueprint.md (5000+ سطر)
 ├── 02_Technical_Design_Document.md
 ├── reports/ (30+ تقرير)
@@ -1767,12 +1767,12 @@ Automation:
 
 1. **الاستراتيجية**
 
-   - `Documentation/00_Strategic_Master_Blueprint.md`
-   - `Documentation/01_Product_Charter.md`
+   - `docs/00_Strategic_Master_Blueprint.md`
+   - `docs/01_Product_Charter.md`
 
 2. **التقنية**
 
-   - `Documentation/02_Technical_Design_Document.md`
+   - `docs/02_Technical_Design_Document.md`
    - `ARCHITECTURE.md`
 
 3. **الحوكمة**

@@ -37,20 +37,20 @@ TESTING.md             # دليل الاختبارات
 *.tmp                  # الملفات المؤقتة → /tmp/
 *.bak                  # النسخ الاحتياطية → backups/
 *.db                   # قواعد البيانات → .kiro/data/
-*_REPORT.md            # التقارير → Documentation/ أو .kiro/docs/
+*_REPORT.md            # التقارير → docs/ أو .kiro/docs/
 *_STATUS.md            # الحالة → .kiro/docs/reports/
 ```
 
 ---
 
-### 2. Documentation/ - التوثيق الرسمي
+### 2. docs/ - التوثيق الرسمي
 
 **الغرض:** التوثيق الرسمي للمشروع والتقارير الهامة طويلة المدى
 
 #### البنية
 
 ```
-Documentation/
+docs/
 ├── api/               # توثيق API
 ├── Archive/           # أرشيف الوثائق القديمة
 ├── Core/              # الوثائق الأساسية
@@ -210,7 +210,7 @@ logs/log1.log                 # اسم غير واضح
 ❌ *.bak                # → backups/
 ❌ *.db                 # → .kiro/data/
 ❌ *.so, *.dll          # مُولدة تلقائياً
-❌ *_REPORT.md          # → Documentation/ أو .kiro/docs/
+❌ *_REPORT.md          # → docs/ أو .kiro/docs/
 ❌ *_STATUS.md          # → .kiro/docs/reports/
 ❌ *_SUMMARY.md         # → .kiro/docs/reports/
 ❌ CHECKPOINT_*.md      # → .kiro/docs/reports/
@@ -236,7 +236,7 @@ logs/log1.log                 # اسم غير واضح
 echo "تقرير" > NEW_REPORT.md
 
 # ✅ صحيح - تقرير رسمي
-echo "تقرير" > Documentation/reports/analysis/feature_analysis.md
+echo "تقرير" > docs/reports/analysis/feature_analysis.md
 
 # ✅ صحيح - تقرير داخلي
 echo "تقرير" > .kiro/docs/reports/sessions/session_report.md
@@ -283,7 +283,7 @@ ls -1 *.log *.tmp *.bak *_REPORT.md 2>/dev/null
 du -sh Documentation .kiro/docs scripts logs
 
 # أرشفة الملفات القديمة
-find Documentation/Archive -mtime +90 -type f
+find docs/Archive -mtime +90 -type f
 ```
 
 ---

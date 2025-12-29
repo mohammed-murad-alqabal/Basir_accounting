@@ -20,7 +20,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # ملف تقرير
-report_file="Documentation/markdown_report_$(date +%Y%m%d_%H%M%S).md"
+report_file="docs/markdown_report_$(date +%Y%m%d_%H%M%S).md"
 
 # بداية التقرير
 cat > "$report_file" << EOF

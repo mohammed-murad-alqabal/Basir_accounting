@@ -205,7 +205,7 @@
 #### التوثيق الشامل
 
 - ✅ **دليل الصيانة الكامل:**
-  - `Documentation/guides/DEPENDENCY_MAINTENANCE_GUIDE.md`
+  - `docs/guides/DEPENDENCY_MAINTENANCE_GUIDE.md`
   - إجراءات الطوارئ والصيانة الدورية
   - استراتيجيات التحديث الآمنة
   - مراقبة الأداء والجودة
@@ -592,11 +592,11 @@
 
 **التوثيق:**
 
-- `Documentation/ERROR_TRACKING_GUIDE.md`
-- `Documentation/GIT_GITHUB_GUIDE.md`
-- `Documentation/ERROR_HANDLING_GUIDE.md`
-- `Documentation/reports/FINAL_CHECKPOINT_REPORT.md`
-- `Documentation/reports/PROJECT_COMPLETION_SUMMARY.md`
+- `docs/ERROR_TRACKING_GUIDE.md`
+- `docs/GIT_GITHUB_GUIDE.md`
+- `docs/ERROR_HANDLING_GUIDE.md`
+- `docs/reports/FINAL_CHECKPOINT_REPORT.md`
+- `docs/reports/PROJECT_COMPLETION_SUMMARY.md`
 - 24 تقرير إكمال مهمة
 
 **الاختبارات:**
@@ -807,7 +807,7 @@ No issues found! (ran in 3.9s)
 
 #### التقارير
 
-- ✅ تقرير الجلسة: `Documentation/reports/TEST_FIX_SESSION_2025-12-05.md`
+- ✅ تقرير الجلسة: `docs/reports/TEST_FIX_SESSION_2025-12-05.md`
 
 ---
 
@@ -854,8 +854,8 @@ No issues found! (ran in 3.9s)
 
 #### التقارير
 
-- ✅ تقرير التنفيذ: `Documentation/reports/TEST_EXECUTION_REPORT.md`
-- ✅ تقرير التقدم: `Documentation/reports/TEST_FIX_PROGRESS_REPORT.md`
+- ✅ تقرير التنفيذ: `docs/reports/TEST_EXECUTION_REPORT.md`
+- ✅ تقرير التقدم: `docs/reports/TEST_FIX_PROGRESS_REPORT.md`
 
 #### الدروس المستفادة
 
@@ -900,7 +900,7 @@ No issues found! (ran in 3.9s)
 
 #### التقارير
 
-- ✅ تقرير شامل: `Documentation/reports/ANDROID_DEVICE_TEST_REPORT.md`
+- ✅ تقرير شامل: `docs/reports/ANDROID_DEVICE_TEST_REPORT.md`
 - ✅ تحليل مفصل لكل مشكلة
 - ✅ حلول مقترحة لكل مشكلة
 
@@ -983,7 +983,7 @@ No issues found! (ran in 3.9s)
 
 #### التوثيق
 
-- ✅ تقرير شامل: `Documentation/reports/FLUTTER_ANALYZE_FIX_REPORT.md`
+- ✅ تقرير شامل: `docs/reports/FLUTTER_ANALYZE_FIX_REPORT.md`
 - ✅ توثيق كل إصلاح مع الأمثلة
 - ✅ توصيات للوقاية المستقبلية
 
@@ -1030,7 +1030,7 @@ No issues found! (ran in 3.9s)
 
 #### 2. إنشاء دليل الاختبار الشامل ✅
 
-- ✅ إنشاء `Documentation/PHASE3_ANDROID_TESTING_GUIDE.md` (~600 سطر)
+- ✅ إنشاء `docs/PHASE3_ANDROID_TESTING_GUIDE.md` (~600 سطر)
 - ✅ 13 اختبار مفصل مع قوائم تحقق
 - ✅ تعليمات خطوة بخطوة
 - ✅ معايير النجاح واضحة
@@ -1085,7 +1085,7 @@ No issues found! (ran in 3.9s)
 #### 3. التكامل ✅
 
 - ✅ تحديث `lib/core/widgets/index.dart` - export AppEnhancedButton
-- ✅ إنشاء `Documentation/PHASE2_ENHANCED_BUTTON_REPORT.md` - تقرير شامل
+- ✅ إنشاء `docs/PHASE2_ENHANCED_BUTTON_REPORT.md` - تقرير شامل
 
 **الإحصائيات:**
 
@@ -1156,7 +1156,7 @@ No issues found! (ran in 3.9s)
 - `test/unit/core/theme/app_font_metrics_test.dart` (280 سطر)
 - `test/unit/core/theme/font_manager_test.dart` (200 سطر)
 - `test/unit/core/widgets/overflow_detector_test.dart` (320 سطر)
-- `Documentation/PHASE1_BUTTON_TEXT_FIX_REPORT.md` (تقرير شامل)
+- `docs/PHASE1_BUTTON_TEXT_FIX_REPORT.md` (تقرير شامل)
 
 #### الإصلاحات
 
@@ -1215,7 +1215,7 @@ No issues found! (ran in 3.9s)
 
 **الوثائق:**
 
-- 📄 `Documentation/PHASE1_BUTTON_TEXT_FIX_REPORT.md` - تقرير شامل للمرحلة 1
+- 📄 `docs/PHASE1_BUTTON_TEXT_FIX_REPORT.md` - تقرير شامل للمرحلة 1
 
 **الخطوات التالية:**
 
@@ -1240,18 +1240,18 @@ No issues found! (ran in 3.9s)
 
 #### المرحلة 2: إعادة هيكلة الوثائق ✅
 
-- ✅ إنشاء `Documentation/reports/` مع 5 مجلدات فرعية
+- ✅ إنشاء `docs/reports/` مع 5 مجلدات فرعية
   - builds/ - تقارير البناء والنشر (5 تقارير)
   - performance/ - تقارير الأداء (5 تقارير)
   - testing/ - تقارير الاختبارات (10 تقارير)
   - fixes/ - تقارير الإصلاحات (40+ تقرير)
   - features/ - تقارير الميزات (5 تقارير)
-- ✅ إنشاء `Documentation/sessions/` - ملخصات الجلسات (10+ ملخص)
-- ✅ إنشاء `Documentation/guides/` مع 3 مجلدات فرعية
+- ✅ إنشاء `docs/sessions/` - ملخصات الجلسات (10+ ملخص)
+- ✅ إنشاء `docs/guides/` مع 3 مجلدات فرعية
   - setup/ - أدلة الإعداد (6 أدلة)
   - development/ - أدلة التطوير (5 أدلة)
   - deployment/ - أدلة النشر
-- ✅ إنشاء `Documentation/status/` - تقارير الحالة (4 تقارير)
+- ✅ إنشاء `docs/status/` - تقارير الحالة (4 تقارير)
 - ✅ نقل 82 ملف وثائقي إلى البنية الجديدة
 - ✅ إنشاء 4 ملفات README.md للتوجيه
 - ✅ Commit: 4b78745
@@ -1412,13 +1412,13 @@ No issues found! (ran in 3.9s)
 
 **الأولوية المتوسطة:**
 
-- 🔄 نقل ~70 تقرير إلى Documentation/reports/
+- 🔄 نقل ~70 تقرير إلى docs/reports/
 - 🔄 نقل ~30 ملف إلى المجلدات المناسبة
 
 **البنية المقترحة:**
 
 ```
-Documentation/
+docs/
 ├── reports/          # التقارير (builds, performance, testing, fixes, features)
 ├── sessions/         # ملخصات الجلسات
 ├── guides/           # الأدلة (setup, development, deployment)
@@ -2407,7 +2407,7 @@ Documentation/
 
 #### التقارير الجديدة
 
-- ✅ `Documentation/PROJECT_STATUS_COMPREHENSIVE_REVIEW.md` - مراجعة شاملة
+- ✅ `docs/PROJECT_STATUS_COMPREHENSIVE_REVIEW.md` - مراجعة شاملة
 - ✅ تحديث `.kiro/specs/CURRENT_STATUS.md`
 - ✅ تحديث جميع ملفات الحالة
 
@@ -2505,7 +2505,7 @@ Documentation/
 
 - ✅ تعطيل قاعدة `cascade_invocations` في `analysis_options.yaml`
 - ✅ إضافة تعليق توضيحي للسبب
-- ✅ توثيق الإصلاح في `Documentation/FLUTTER_ANALYZE_FIX.md`
+- ✅ توثيق الإصلاح في `docs/FLUTTER_ANALYZE_FIX.md`
 
 #### النتائج
 
@@ -2517,7 +2517,7 @@ Documentation/
 #### الملفات المعدلة
 
 - `analysis_options.yaml` - تعطيل القاعدة المتعارضة
-- `Documentation/FLUTTER_ANALYZE_FIX.md` - توثيق شامل
+- `docs/FLUTTER_ANALYZE_FIX.md` - توثيق شامل
 
 ---
 
@@ -2880,7 +2880,7 @@ Documentation/
 
 - ✅ **تنظيف شامل**
 
-  - تنظيف Documentation/Archive/Reports/
+  - تنظيف docs/Archive/Reports/
   - تنظيف .kiro/specs/ من التقارير القديمة
   - تنظيف ملفات Build
   - بنية نظيفة ومنظمة

@@ -593,7 +593,7 @@ Basser_MVP/
 │   ├── commit-msg
 │   └── pre-push
 │
-├── Documentation/        # التوثيق الشامل
+├── docs/        # التوثيق الشامل
 │   ├── GIT_GITHUB_GUIDE.md
 │   ├── ARCHITECTURE.md
 │   └── ...
@@ -1235,7 +1235,7 @@ updates:
 #### الوثائق التشغيلية
 
 ```
-Documentation/
+docs/
 ├── GIT_GITHUB_GUIDE.md             # دليل Git/GitHub
 ├── ARCHITECTURE.md                 # المعمارية
 ├── TESTING.md                      # دليل الاختبار

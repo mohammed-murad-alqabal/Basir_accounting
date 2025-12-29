@@ -7,5 +7,5 @@ contact_links:
     url: https://github.com/mohammed-murad-alqabal/Basser_MVP/discussions
     about: للأسئلة العامة والمناقشات، استخدم قسم Discussions
   - name: 🔍 دليل استكشاف الأخطاء
-    url: https://github.com/mohammed-murad-alqabal/Basser_MVP/blob/main/Documentation/ERROR_TRACKING_GUIDE.md
+    url: https://github.com/mohammed-murad-alqabal/Basser_MVP/blob/main/docs/ERROR_TRACKING_GUIDE.md
     about: دليل شامل لاستكشاف وإصلاح الأخطاء الشائعة

@@ -26,7 +26,7 @@
 
 ## مسرد المصطلحات
 
-- **Documentation Folder**: مجلد `Documentation/` في جذر المشروع (465+ ملف .md حالياً)
+- **Documentation Folder**: مجلد `docs/` في جذر المشروع (465+ ملف .md حالياً)
 - **Core Documents**: الوثائق الأساسية المرقمة (00-05)
 - **Legacy Files**: الملفات القديمة التي تحتاج أرشفة
 - **Duplicate Content**: المحتوى المكرر في ملفات متعددة

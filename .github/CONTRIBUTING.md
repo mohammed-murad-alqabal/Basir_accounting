@@ -74,7 +74,7 @@
    - احصل على موافقة قبل البدء
 
 3. **اقرأ التوثيق**
-   - [Git/GitHub Guide](../Documentation/GIT_GITHUB_GUIDE.md)
+   - [Git/GitHub Guide](../docs/GIT_GITHUB_GUIDE.md)
    - [Flutter Best Practices](.kiro/steering/flutter-best-practices.md)
    - [Tech Stack](.kiro/steering/tech-stack.md)
 
@@ -366,7 +366,7 @@ open coverage/html/index.html
 #### 4. Technical Documentation
 
 ```markdown
-# إضافة توثيق تقني في Documentation/
+# إضافة توثيق تقني في docs/
 ```
 
 ---
@@ -460,10 +460,10 @@ open coverage/html/index.html
 
 ### الموارد
 
-- 📚 [Documentation](../Documentation/)
+- 📚 [Documentation](../docs/)
 - 🐛 [Issues](../../issues)
 - 💬 [Discussions](../../discussions)
-- 📖 [Git/GitHub Guide](../Documentation/GIT_GITHUB_GUIDE.md)
+- 📖 [Git/GitHub Guide](../docs/GIT_GITHUB_GUIDE.md)
 
 ### الاتصال
 

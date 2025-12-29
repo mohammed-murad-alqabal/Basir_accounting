@@ -47,10 +47,10 @@ echo ""
 
 # المرحلة 1: إنشاء مجلدات الأرشيف
 print_info "📁 المرحلة 1: إنشاء مجلدات الأرشيف..."
-mkdir -p Documentation/Archive/Reports
-mkdir -p Documentation/Archive/Old_Guides
-mkdir -p Documentation/Archive/Analysis
-mkdir -p Documentation/Archive/Misc
+mkdir -p docs/Archive/Reports
+mkdir -p docs/Archive/Old_Guides
+mkdir -p docs/Archive/Analysis
+mkdir -p docs/Archive/Misc
 print_success "تم إنشاء مجلدات الأرشيف"
 echo ""
 
@@ -82,7 +82,7 @@ for file in *_REPORT.md; do
     if [ -f "$file" ]; then
         # التحقق من أنه ليس في قائمة الاحتفاظ
         if [[ ! " ${KEEP_FILES[@]} " =~ " ${file} " ]]; then
-            mv "$file" Documentation/Archive/Reports/
+            mv "$file" docs/Archive/Reports/
             print_success "نقل: $file"
             ((MOVED_COUNT++))
         fi
@@ -92,7 +92,7 @@ done
 # نقل ملفات SUMMARY
 for file in *_SUMMARY.md; do
     if [ -f "$file" ]; then
-        mv "$file" Documentation/Archive/Reports/
+        mv "$file" docs/Archive/Reports/
         print_success "نقل: $file"
         ((MOVED_COUNT++))
     fi
@@ -102,7 +102,7 @@ done
 for file in *_ANALYSIS*.md *Analysis*.md; do
     if [ -f "$file" ]; then
         if [[ ! " ${KEEP_FILES[@]} " =~ " ${file} " ]]; then
-            mv "$file" Documentation/Archive/Analysis/
+            mv "$file" docs/Archive/Analysis/
             print_success "نقل: $file"
             ((MOVED_COUNT++))
         fi
@@ -112,7 +112,7 @@ done
 # نقل ملفات COMPLETION
 for file in *_COMPLETION*.md *COMPLETE*.md; do
     if [ -f "$file" ]; then
-        mv "$file" Documentation/Archive/Reports/
+        mv "$file" docs/Archive/Reports/
         print_success "نقل: $file"
         ((MOVED_COUNT++))
     fi
@@ -122,7 +122,7 @@ done
 for file in *_STATUS*.md; do
     if [ -f "$file" ]; then
         if [[ ! " ${KEEP_FILES[@]} " =~ " ${file} " ]]; then
-            mv "$file" Documentation/Archive/Reports/
+            mv "$file" docs/Archive/Reports/
             print_success "نقل: $file"
             ((MOVED_COUNT++))
         fi
@@ -133,7 +133,7 @@ done
 for file in *_GUIDE.md; do
     if [ -f "$file" ]; then
         if [[ ! " ${KEEP_FILES[@]} " =~ " ${file} " ]]; then
-            mv "$file" Documentation/Archive/Old_Guides/
+            mv "$file" docs/Archive/Old_Guides/
             print_success "نقل: $file"
             ((MOVED_COUNT++))
         fi
@@ -143,7 +143,7 @@ done
 # نقل ملفات PLAN
 for file in *_PLAN.md; do
     if [ -f "$file" ]; then
-        mv "$file" Documentation/Archive/Reports/
+        mv "$file" docs/Archive/Reports/
         print_success "نقل: $file"
         ((MOVED_COUNT++))
     fi
@@ -183,7 +183,7 @@ for pattern in "${MISC_FILES[@]}"; do
     for file in $pattern; do
         if [ -f "$file" ]; then
             if [[ ! " ${KEEP_FILES[@]} " =~ " ${file} " ]]; then
-                mv "$file" Documentation/Archive/Misc/
+                mv "$file" docs/Archive/Misc/
                 print_success "نقل: $file"
                 ((MOVED_COUNT++))
             fi
@@ -200,27 +200,27 @@ print_info "🗑️  المرحلة 3: تنظيف ملفات النصوص الق
 
 # نقل ملفات txt القديمة
 if [ -f "analysis_before_fixes.txt" ]; then
-    mv analysis_before_fixes.txt Documentation/Archive/Analysis/
+    mv analysis_before_fixes.txt docs/Archive/Analysis/
     print_success "نقل: analysis_before_fixes.txt"
 fi
 
 if [ -f "analysis_final.txt" ]; then
-    mv analysis_final.txt Documentation/Archive/Analysis/
+    mv analysis_final.txt docs/Archive/Analysis/
     print_success "نقل: analysis_final.txt"
 fi
 
 if [ -f "analysis_output.txt" ]; then
-    mv analysis_output.txt Documentation/Archive/Analysis/
+    mv analysis_output.txt docs/Archive/Analysis/
     print_success "نقل: analysis_output.txt"
 fi
 
 if [ -f "test_results_final.txt" ]; then
-    mv test_results_final.txt Documentation/Archive/Reports/
+    mv test_results_final.txt docs/Archive/Reports/
     print_success "نقل: test_results_final.txt"
 fi
 
 if [ -f "tests_before_fixes.txt" ]; then
-    mv tests_before_fixes.txt Documentation/Archive/Reports/
+    mv tests_before_fixes.txt docs/Archive/Reports/
     print_success "نقل: tests_before_fixes.txt"
 fi
 
@@ -244,7 +244,7 @@ echo ""
 # المرحلة 5: إنشاء README للأرشيف
 print_info "📝 المرحلة 5: إنشاء README للأرشيف..."
 
-cat > Documentation/Archive/README.md << 'EOF'
+cat > docs/Archive/README.md << 'EOF'
 # أرشيف الوثائق
 
 هذا المجلد يحتوي على الوثائق والتقارير القديمة التي تم أرشفتها للحفاظ على نظافة المشروع.
@@ -272,10 +272,10 @@ echo ""
 # المرحلة 6: تحديث .gitignore
 print_info "⚙️  المرحلة 6: تحديث .gitignore..."
 
-if ! grep -q "Documentation/Archive/" .gitignore 2>/dev/null; then
+if ! grep -q "docs/Archive/" .gitignore 2>/dev/null; then
     echo "" >> .gitignore
     echo "# Archived documentation" >> .gitignore
-    echo "# Documentation/Archive/" >> .gitignore
+    echo "# docs/Archive/" >> .gitignore
     print_success "تم تحديث .gitignore"
 else
     print_info ".gitignore محدث مسبقاً"
@@ -323,7 +323,7 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     git commit -m "docs: تنظيف وأرشفة الوثائق القديمة
 
-- نقل $MOVED_COUNT ملف إلى Documentation/Archive/
+- نقل $MOVED_COUNT ملف إلى docs/Archive/
 - تقليل ملفات MD في الجذر من $BEFORE_COUNT إلى $AFTER_COUNT
 - تحسين التنظيم والأداء
 - إنشاء بنية أرشيف منظمة
@@ -364,7 +364,7 @@ echo ""
 print_info "💡 الخطوات التالية:"
 print_info "  1. أعد تشغيل VS Code/Kiro لتطبيق التحسينات"
 print_info "  2. اختبر الأداء باستخدام: time git status"
-print_info "  3. راجع Documentation/Archive/ عند الحاجة"
+print_info "  3. راجع docs/Archive/ عند الحاجة"
 echo ""
 
 print_success "استمتع ببيئة تطوير نظيفة ومنظمة! 🚀"

@@ -537,8 +537,8 @@ style: fontMetrics.toTextStyle(
 
 **للاستفسارات أو المساعدة:**
 
-- راجع `Documentation/PHASE1_BUTTON_TEXT_FIX_REPORT.md`
-- راجع `Documentation/PHASE2_ENHANCED_BUTTON_REPORT.md`
+- راجع `docs/PHASE1_BUTTON_TEXT_FIX_REPORT.md`
+- راجع `docs/PHASE2_ENHANCED_BUTTON_REPORT.md`
 - راجع `.kiro/specs/ui-ux-improvements/`
 
 ---

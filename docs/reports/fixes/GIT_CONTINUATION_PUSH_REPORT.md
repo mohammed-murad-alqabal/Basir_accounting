@@ -152,9 +152,9 @@ Working tree: نظيف ✅
 ### 5.2 الملفات غير المتتبعة
 
 ```
-Documentation/guides/
-Documentation/reports/
-Documentation/sessions/
+docs/guides/
+docs/reports/
+docs/sessions/
 ```
 
 **ملاحظة:** هذه مجلدات توثيق جديدة، يمكن إضافتها في commit لاحق.
@@ -336,7 +336,7 @@ Documentation/sessions/
 
 - [ ] تحديث pre-commit hook
 - [ ] اختبار الـ hook المحدث
-- [ ] إضافة مجلدات Documentation/ إلى Git (اختياري)
+- [ ] إضافة مجلدات docs/ إلى Git (اختياري)
 
 ### 10.2 قصير المدى
 

@@ -67,15 +67,15 @@
 3. `lib/core/theme/app_text_styles.dart`
 4. `lib/core/theme/app_dimensions.dart`
 5. `lib/core/theme/app_animations.dart`
-6. `Documentation/ALIGNMENT_ANALYSIS_REPORT.md`
-7. `Documentation/SPECS_ALIGNMENT_SUMMARY.md`
+6. `docs/ALIGNMENT_ANALYSIS_REPORT.md`
+7. `docs/SPECS_ALIGNMENT_SUMMARY.md`
 
 ### ملفات محدثة (4)
 
 1. `.kiro/specs/ui-ux-improvements/tasks.md`
 2. `CHANGELOG.md`
-3. `Documentation/UI_UX_IMPROVEMENTS_PROGRESS.md`
-4. `Documentation/SESSION_SUMMARY_UI_UX_PHASE1.md`
+3. `docs/UI_UX_IMPROVEMENTS_PROGRESS.md`
+4. `docs/SESSION_SUMMARY_UI_UX_PHASE1.md`
 
 ---
 

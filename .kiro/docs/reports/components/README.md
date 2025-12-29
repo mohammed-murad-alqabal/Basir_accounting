@@ -105,7 +105,7 @@ cat .kiro/docs/reports/components/CUSTOM_EXTENSIONS.md
 
 - `lib/core/` - المكونات الأساسية
 - `.kiro/steering/standards/` - المعايير
-- `Documentation/` - التوثيق العام
+- `docs/` - التوثيق العام
 
 ---
 

@@ -499,7 +499,7 @@
 │ ├─ test/performance/ (8 ملفات اختبار)                                      │
 │ ├─ .kiro/steering/ (23 ملف محسن)                                           │
 │ ├─ scripts/automation/ (12 سكريبت)                                         │
-│ └─ Documentation/reports/ (25 تقرير)                                       │
+│ └─ docs/reports/ (25 تقرير)                                       │
 │                                                                             │
 │ إجمالي الملفات المستعادة: 93 ملف                                           │
 │ حجم البيانات المستعادة: ~15MB                                              │
@@ -640,7 +640,7 @@
 │ ├─ build/ artifacts (~500MB) - محذوفة في 2025-12-09                       │
 │ ├─ .dart_tool/build/ (~200MB) - محذوفة في 2025-12-09                      │
 │ ├─ node_modules/ (~150MB) - لم تكن مطلوبة                                  │
-│ ├─ logs/*.log (~50MB) - أرشفت في Documentation/Archive/                   │
+│ ├─ logs/*.log (~50MB) - أرشفت في docs/Archive/                   │
 │ └─ test_results/ (~30MB) - نظفت ونقلت إلى test_results/                   │
 │                                                                             │
 │ إجمالي المساحة المحررة: ~930MB                                             │

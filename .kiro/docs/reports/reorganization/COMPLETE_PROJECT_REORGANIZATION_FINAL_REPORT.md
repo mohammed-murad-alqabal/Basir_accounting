@@ -37,10 +37,10 @@
 2. **نقل 30 ملف MD**
 
    - `.kiro/docs/reports/kiro/` ← 7 ملفات
-   - `Documentation/reports/fixes/` ← 10 ملفات
+   - `docs/reports/fixes/` ← 10 ملفات
    - `.kiro/docs/reports/components/` ← 8 ملفات
    - `.kiro/docs/reports/phases/` ← 3 ملفات
-   - `Documentation/` ← 2 ملف
+   - `docs/` ← 2 ملف
 
 3. **حذف 16 ملف LOG**
 
@@ -51,9 +51,9 @@
 
    - `scripts/maintenance/` ← جميع السكريبتات
 
-5. **دمج Documentation/docs**
+5. **دمج docs/docs**
 
-   - `docs/api/` → `Documentation/api/`
+   - `docs/api/` → `docs/api/`
    - حذف مجلد `docs/`
 
 6. **تنظيف ملفات متنوعة**
@@ -240,10 +240,10 @@ basser_mobile/
 └── [مجلدات أخرى]
 ```
 
-### Documentation/ (منظم جيداً)
+### docs/ (منظم جيداً)
 
 ```
-Documentation/
+docs/
 ├── api/                    ✅ من docs/
 ├── reports/
 │   └── fixes/             (13 ملف)
@@ -303,7 +303,7 @@ logs/
 | المجلد         | قبل     | بعد     | التغيير |
 | -------------- | ------- | ------- | ------- |
 | الجذر          | 61+ ملف | 6 ملفات | -90.2%  |
-| Documentation/ | 20MB    | 20MB    | 0%      |
+| docs/ | 20MB    | 20MB    | 0%      |
 | .kiro/docs/    | 1.3MB   | 1.4MB   | +7.7%   |
 | scripts/       | 360KB   | 368KB   | +2.2%   |
 | logs/          | 132KB   | 28KB    | -78.8%  |
@@ -383,7 +383,7 @@ CHECKPOINT_*.md, CONTINUATION_*.md
 
 ```bash
 # حدود محددة
-Documentation/: 25MB
+docs/: 25MB
 .kiro/docs/: 2MB
 scripts/: 1MB
 logs/: 10MB
@@ -435,7 +435,7 @@ cat .kiro/docs/reports/reorganization/PROJECT_FINAL_STATUS_AND_RECOMMENDATIONS.m
 
 1. **التكرار في .gitignore:** تم حله بالتنظيف
 2. **اختبار الـ hooks:** .gitignore يحمي بالفعل
-3. **حجم Documentation/:** تحت المراقبة
+3. **حجم docs/:** تحت المراقبة
 
 ### التحسينات المستقبلية
 

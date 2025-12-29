@@ -61,7 +61,7 @@
 ```bash
 # 1. نسخة احتياطية كاملة قبل البدء
 git tag "pre-documentation-reorganization-$(date +%Y%m%d)"
-tar -czf "Documentation_backup_$(date +%Y%m%d_%H%M%S).tar.gz" Documentation/
+tar -czf "Documentation_backup_$(date +%Y%m%d_%H%M%S).tar.gz" docs/
 
 # 2. استخدام git mv للحفاظ على التاريخ
 git mv "old/path/file.md" "new/path/file.md"
@@ -96,7 +96,7 @@ git checkout -b documentation-reorganization-test
 
 ```bash
 # 1. مسح شامل للروابط قبل النقل
-grep -r "\[.*\](.*\.md)" Documentation/ > links_inventory.txt
+grep -r "\[.*\](.*\.md)" docs/ > links_inventory.txt
 
 # 2. أداة تحديث الروابط التلقائي
 #!/bin/bash
@@ -228,7 +228,7 @@ git reset --hard pre-documentation-reorganization-$(date +%Y%m%d)
 
 # 2. استرداد من النسخة الاحتياطية إذا لزم الأمر
 if [ -f "Documentation_backup_*.tar.gz" ]; then
-    rm -rf Documentation/
+    rm -rf docs/
     tar -xzf Documentation_backup_*.tar.gz
 fi
 

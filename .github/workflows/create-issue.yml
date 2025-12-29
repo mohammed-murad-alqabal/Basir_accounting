@@ -161,7 +161,7 @@ ${errorDetails}
 ### 🔗 روابط مفيدة
 
 - [نتائج التحليل الكاملة](https://github.com/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }})
-- [دليل إصلاح الأخطاء](../Documentation/ERROR_TRACKING_GUIDE.md)
+- [دليل إصلاح الأخطاء](../docs/ERROR_TRACKING_GUIDE.md)
 
 ### 🤖 تم إنشاء هذا Issue تلقائياً
 

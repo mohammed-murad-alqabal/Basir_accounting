@@ -271,11 +271,11 @@
 
 ### قصير المدى (Medium Priority)
 
-3. **إضافة مجلدات Documentation/**
+3. **إضافة مجلدات docs/**
 
-   - نقل التقارير إلى Documentation/reports/
-   - نقل الملخصات إلى Documentation/sessions/
-   - نقل الأدلة إلى Documentation/guides/
+   - نقل التقارير إلى docs/reports/
+   - نقل الملخصات إلى docs/sessions/
+   - نقل الأدلة إلى docs/guides/
 
 4. **تنظيف الملفات المحذوفة**
    - commit الملفات المحذوفة
@@ -350,7 +350,7 @@
    - تحسين الرسائل
 
 3. **إدارة التقارير**
-   - نقل إلى Documentation/
+   - نقل إلى docs/
    - تنظيم أفضل
    - أرشفة منتظمة
 
@@ -413,9 +413,9 @@ Commits: 9 (جميعها مدفوعة)
 
 **غير المتتبعة:**
 
-- `Documentation/guides/`
-- `Documentation/reports/`
-- `Documentation/sessions/`
+- `docs/guides/`
+- `docs/reports/`
+- `docs/sessions/`
 
 ---
 

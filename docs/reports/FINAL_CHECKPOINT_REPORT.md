@@ -156,9 +156,9 @@ flutter analyze
 **الملفات:**
 
 - ✅ `README.md` - محدث بقسم شامل
-- ✅ `Documentation/ERROR_TRACKING_GUIDE.md` - دليل كامل
-- ✅ `Documentation/GIT_GITHUB_GUIDE.md` - دليل Git
-- ✅ `Documentation/ERROR_HANDLING_GUIDE.md` - دليل معالجة الأخطاء
+- ✅ `docs/ERROR_TRACKING_GUIDE.md` - دليل كامل
+- ✅ `docs/GIT_GITHUB_GUIDE.md` - دليل Git
+- ✅ `docs/ERROR_HANDLING_GUIDE.md` - دليل معالجة الأخطاء
 
 ### 4.2 التقارير
 

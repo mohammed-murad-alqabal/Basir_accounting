@@ -213,9 +213,9 @@ Deletions: -42
 
 ```
 ✅ .kiro/settings/performance.json
-✅ Documentation/reports/IMMEDIATE_ACTION_PLAN.md
-✅ Documentation/reports/PERFORMANCE_OPTIMIZATION_SUMMARY.md
-✅ Documentation/reports/SYSTEM_PERFORMANCE_ANALYSIS.md
+✅ docs/reports/IMMEDIATE_ACTION_PLAN.md
+✅ docs/reports/PERFORMANCE_OPTIMIZATION_SUMMARY.md
+✅ docs/reports/SYSTEM_PERFORMANCE_ANALYSIS.md
 ✅ gradle.properties.template
 ✅ scripts/apply_optimizations.sh
 ✅ scripts/cleanup.sh

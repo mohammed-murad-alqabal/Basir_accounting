@@ -69,7 +69,7 @@ CHECKPOINT_*.md, CONTINUATION_*.md
 
 **الحدود المحددة:**
 
-- Documentation/: 25MB
+- docs/: 25MB
 - .kiro/docs/: 2MB
 - scripts/: 1MB
 - logs/: 10MB
@@ -93,8 +93,8 @@ CHECKPOINT_*.md, CONTINUATION_*.md
 **المجلدات المستهدفة:**
 
 - .kiro/docs/reports/
-- Documentation/reports/
-- Documentation/Archive/
+- docs/reports/
+- docs/Archive/
 
 **الفوائد:**
 
@@ -151,7 +151,7 @@ $ bash scripts/maintenance/check_size.sh
 📊 فحص أحجام المجلدات الرئيسية
 ========================================
 
-✅ Documentation/: 20M
+✅ docs/: 20M
 ⚠️  .kiro/docs/: 1.4M (قريب من الحد: 2MB)
 ⚠️  scripts/: 368K (قريب من الحد: 1MB)
 ✅ logs/: 28K

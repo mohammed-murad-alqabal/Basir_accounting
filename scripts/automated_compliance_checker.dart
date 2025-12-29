@@ -97,8 +97,8 @@ class AutomatedComplianceChecker {
     ],
     'file_patterns': {
       'steering_files': r'\.kiro/steering/.*\.md$',
-      'documentation': r'Documentation/.*\.md$',
-      'guides': r'Documentation/guides/.*\.md$',
+      'documentation': r'docs/.*\.md$',
+      'guides': r'docs/guides/.*\.md$',
     },
     'exclusions': [
       r'\.git/',
@@ -221,9 +221,9 @@ class AutomatedComplianceChecker {
   ) async {
     Logger.info('📖 فحص ملفات الأدلة...');
 
-    final guidesDir = Directory('Documentation/guides');
+    final guidesDir = Directory('docs/guides');
     if (!guidesDir.existsSync()) {
-      report.addWarning('مجلد الأدلة غير موجود: Documentation/guides');
+      report.addWarning('مجلد الأدلة غير موجود: docs/guides');
       return;
     }
 

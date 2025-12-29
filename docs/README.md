@@ -302,7 +302,7 @@
 ./check_links.sh
 
 # أو من المجلد الرئيسي للمشروع
-./Documentation/check_links.sh
+./docs/check_links.sh
 ```
 
 ### 📊 إحصائيات التوثيق

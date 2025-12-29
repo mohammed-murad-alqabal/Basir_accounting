@@ -375,7 +375,7 @@ find . -name "*.md" | xargs grep -l "agents/\|powers/" 2>/dev/null
 
 #### **6. فحص المراجع في الكود:**
 
-- مراجع قليلة في Documentation/Archive/ و CHANGELOG.md فقط
+- مراجع قليلة في docs/Archive/ و CHANGELOG.md فقط
 - **مراجع تاريخية وليست وظيفية**
 
 #### **7. فحص مجلدات security/ و rules/:**

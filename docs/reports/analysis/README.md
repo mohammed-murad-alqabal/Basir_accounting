@@ -56,7 +56,7 @@
 ## البنية التنظيمية
 
 ```
-Documentation/reports/analysis/
+docs/reports/analysis/
 ├── README.md (هذا الملف)
 ├── FLUTTER_ANALYSIS_COMPLETE_2025-12-06.md
 ├── FLUTTER_ANALYSIS_SUCCESS_2025-12-06.md

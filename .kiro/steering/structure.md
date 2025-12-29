@@ -4,7 +4,7 @@
 
 - `lib/`: Application source code (Feature-first).
 - `test/`: Unit, Widget, and Integration tests.
-- `Documentation/`: Public and developer documentation (includes `guides/kiro_reference`).
+- `docs/`: Public and developer documentation (includes `guides/kiro_reference`).
 - `scripts/`: Automation and utility scripts.
 - `tools/`: External tools, data, libraries, and `kiro_optimizers`.
 - `logs/`: Application and system logs (Archived in `logs/archive`).

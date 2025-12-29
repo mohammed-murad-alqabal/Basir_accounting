@@ -24,7 +24,7 @@
 /test/ @team @qa-team
 
 # Documentation
-/Documentation/ @team @docs-team
+/docs/ @team @docs-team
 *.md @team @docs-team
 
 # Configuration files

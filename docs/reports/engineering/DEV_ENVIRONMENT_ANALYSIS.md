@@ -251,7 +251,7 @@ Basser_MVP/
 ├── .github/                # GitHub Actions
 │   └── workflows/         # سير العمل
 ├── scripts/                # السكريبتات
-├── Documentation/          # التوثيق
+├── docs/          # التوثيق
 └── logs/                   # السجلات
 ```
 

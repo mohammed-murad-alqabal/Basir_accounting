@@ -71,7 +71,7 @@ if [ ${#VIOLATIONS[@]} -gt 0 ]; then
   echo -e "  ${GREEN}*.bak${NC}     → backups/"
   echo -e "  ${GREEN}*.db${NC}      → .kiro/data/"
   echo -e "  ${GREEN}*.so/dll${NC}  → (مُولدة تلقائياً، أضفها لـ .gitignore)"
-  echo -e "  ${GREEN}*_REPORT.md${NC} → Documentation/reports/ أو .kiro/docs/reports/"
+  echo -e "  ${GREEN}*_REPORT.md${NC} → docs/reports/ أو .kiro/docs/reports/"
   echo ""
   echo -e "${YELLOW}للمزيد من المعلومات:${NC}"
   echo -e "  cat .kiro/standards/file-organization.md"
