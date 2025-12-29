@@ -34,9 +34,10 @@ void main() {
 
       testWidgets('should display all section titles', (tester) async {
         await tester.pumpWidget(createTestWidget());
+        expect(find.text('إعدادات الشركة والفواتير'), findsOneWidget);
         expect(find.text('الحساب'), findsOneWidget);
         expect(find.text('الإشعارات'), findsOneWidget);
-        expect(find.text('المظهر'), findsOneWidget);
+        expect(find.text('المظهر والتخصيص'), findsOneWidget);
         expect(find.text('المساعدة والدعم'), findsOneWidget);
       });
     });
