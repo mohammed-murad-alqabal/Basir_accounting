@@ -104,7 +104,14 @@ void main() {
 
     testWidgets('should apply default RTL direction', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(home: Scaffold(body: ResponsiveText('نص تجريبي'))),
+        const MaterialApp(
+          home: Scaffold(
+            body: ResponsiveText(
+              'نص تجريبي',
+              textDirection: TextDirection.rtl,
+            ),
+          ),
+        ),
       );
 
       final textWidget = tester.widget<Text>(find.byType(Text));
@@ -440,7 +447,7 @@ void main() {
       );
 
       final fittedBox = tester.widget<FittedBox>(find.byType(FittedBox));
-      expect(fittedBox.alignment, Alignment.centerLeft);
+      expect(fittedBox.alignment, AlignmentDirectional.centerStart);
     });
 
     testWidgets('should align right correctly', (tester) async {
@@ -457,7 +464,7 @@ void main() {
       );
 
       final fittedBox = tester.widget<FittedBox>(find.byType(FittedBox));
-      expect(fittedBox.alignment, Alignment.centerRight);
+      expect(fittedBox.alignment, AlignmentDirectional.centerEnd);
     });
 
     testWidgets('should align center correctly', (tester) async {

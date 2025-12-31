@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/theme/services/icon_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
@@ -31,19 +32,19 @@ class IconSettingsTile extends ConsumerWidget {
 
           // اختيار حزمة الأيقونات
           ListTile(
-            title: const Text('نمط الأيقونات'),
+            title: Text(context.l10n.iconSettingsTitle),
             subtitle: Text(_getPackName(currentPack)),
             trailing: DropdownButton<IconPack>(
               value: currentPack,
               underline: const SizedBox(),
-              items: const [
+              items: [
                 DropdownMenuItem(
                   value: IconPack.material,
-                  child: Text('Material Design'),
+                  child: Text(context.l10n.iconMaterial),
                 ),
                 DropdownMenuItem(
                   value: IconPack.cupertino,
-                  child: Text('Cupertino (iOS)'),
+                  child: Text(context.l10n.iconCupertino),
                 ),
               ],
               onChanged: (value) {
@@ -76,21 +77,21 @@ class IconSettingsTile extends ConsumerWidget {
                   children: [
                     _IconPreview(
                       icon: customizationState?.icons.home ?? Icons.home,
-                      label: 'الرئيسية',
+                      label: context.l10n.labelHome,
                     ),
                     _IconPreview(
                       icon:
                           customizationState?.icons.settings ?? Icons.settings,
-                      label: 'الإعدادات',
+                      label: context.l10n.labelSettings,
                     ),
                     _IconPreview(
                       icon: customizationState?.icons.person ?? Icons.person,
-                      label: 'الملف',
+                      label: context.l10n.labelProfile,
                     ),
                     _IconPreview(
                       icon: customizationState?.icons.notifications ??
                           Icons.notifications,
-                      label: 'تنبيهات',
+                      label: context.l10n.labelNotifications,
                     ),
                   ],
                 ),

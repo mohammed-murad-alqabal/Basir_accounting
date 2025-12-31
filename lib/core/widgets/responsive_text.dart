@@ -109,7 +109,7 @@ class ResponsiveText extends StatelessWidget {
           maxLines: maxLines,
           overflow: overflow,
           textAlign: textAlign ?? TextAlign.center, // محاذاة مركزية افتراضية
-          textDirection: textDirection ?? TextDirection.rtl, // RTL افتراضي
+          textDirection: textDirection,
           softWrap: softWrap,
         ),
       );
@@ -122,26 +122,26 @@ class ResponsiveText extends StatelessWidget {
       maxLines: maxLines,
       overflow: overflow,
       textAlign: textAlign ?? TextAlign.center, // محاذاة مركزية افتراضية
-      textDirection: textDirection ?? TextDirection.rtl, // RTL افتراضي
+      textDirection: textDirection,
       softWrap: softWrap,
     );
   }
 
   /// يحدد المحاذاة بناءً على textAlign
-  Alignment _getAlignment() {
+  AlignmentGeometry _getAlignment() {
     if (textAlign == null) return Alignment.center;
 
     switch (textAlign!) {
       case TextAlign.left:
-        return Alignment.centerLeft;
+        return AlignmentDirectional.centerStart;
       case TextAlign.right:
-        return Alignment.centerRight;
+        return AlignmentDirectional.centerEnd;
       case TextAlign.center:
         return Alignment.center;
       case TextAlign.start:
-        return Alignment.centerLeft;
+        return AlignmentDirectional.centerStart;
       case TextAlign.end:
-        return Alignment.centerRight;
+        return AlignmentDirectional.centerEnd;
       case TextAlign.justify:
         return Alignment.center;
     }

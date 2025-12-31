@@ -1,3 +1,4 @@
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class ButtonTestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('اختبار الأزرار'),
+          title: Text(context.l10n.testButtonsTitle),
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white,
         ),
@@ -38,7 +39,7 @@ class ButtonTestScreen extends StatelessWidget {
 
                 // قسم: أزرار Primary
                 _buildSection(
-                  title: 'أزرار Primary',
+                  title: context.l10n.sectionPrimaryButtons,
                   icon: Icons.touch_app,
                   children: [
                     AppEnhancedButton(text: 'نص قصير', onPressed: () {}),
@@ -73,7 +74,7 @@ class ButtonTestScreen extends StatelessWidget {
 
                 // قسم: أزرار Secondary
                 _buildSection(
-                  title: 'أزرار Secondary',
+                  title: context.l10n.sectionSecondaryButtons,
                   icon: Icons.radio_button_unchecked,
                   children: [
                     AppEnhancedButton(
@@ -120,7 +121,7 @@ class ButtonTestScreen extends StatelessWidget {
 
                 // قسم: أزرار Text
                 _buildSection(
-                  title: 'أزرار Text',
+                  title: context.l10n.sectionTextButtons,
                   icon: Icons.text_fields,
                   children: [
                     AppEnhancedButton(
@@ -160,7 +161,7 @@ class ButtonTestScreen extends StatelessWidget {
 
                 // قسم: أزرار في Row
                 _buildSection(
-                  title: 'أزرار في Row',
+                  title: context.l10n.sectionRowButtons,
                   icon: Icons.view_column,
                   children: [
                     Row(
@@ -228,7 +229,7 @@ class ButtonTestScreen extends StatelessWidget {
 
                 // قسم: حالات خاصة
                 _buildSection(
-                  title: 'حالات خاصة',
+                  title: context.l10n.sectionSpecialCases,
                   icon: Icons.warning,
                   children: [
                     AppEnhancedButton(

@@ -1,19 +1,6 @@
+import 'package:basser_app/core/providers/secure_storage_provider.dart';
 import 'package:basser_app/features/auth/data/services/auth_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-/// مزود خدمة التخزين الآمن
-///
-/// يوفر instance من FlutterSecureStorage للاستخدام في التطبيق
-///
-/// Example:
-/// ```dart
-/// final storage = ref.watch(secureStorageProvider,);
-/// await storage.write(key: 'key', value: 'value',);
-/// ```
-final secureStorageProvider = Provider(
-  (ref) => const FlutterSecureStorage(),
-);
 
 /// مزود خدمة المصادقة
 ///

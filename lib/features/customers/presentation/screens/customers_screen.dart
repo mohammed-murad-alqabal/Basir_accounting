@@ -1,4 +1,5 @@
 import 'package:basser_app/core/assets/app_illustrations.dart';
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/theme/services/icon_customization_service.dart'; // Added
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
@@ -37,11 +38,11 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
     return Scaffold(
       backgroundColor: SemanticColors.background,
       appBar: AppAppBar(
-        title: 'العملاء',
+        title: context.l10n.customersScreenTitle,
         actions: [
           IconButton(
             icon: Icon(appIcons.add, size: 26),
-            tooltip: 'إضافة عميل جديد',
+            tooltip: context.l10n.customersAddTooltip,
             onPressed: _addCustomer,
           ),
         ],
@@ -53,7 +54,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
             padding: const EdgeInsets.all(Spacing.lg),
             child: AppSearchField(
               controller: _searchController,
-              hint: 'ابحث عن عميل...',
+              hint: context.l10n.customersSearchHint,
               onChanged: (value) {
                 ref.read(customerSearchProvider.notifier).state = value;
               },
@@ -70,7 +71,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
               data: _buildCustomersList,
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) => Center(
-                child: Text('خطأ في تحميل العملاء: $error'),
+                child: Text(context.l10n.errLoadCustomers(error.toString())),
               ),
             ),
           ),

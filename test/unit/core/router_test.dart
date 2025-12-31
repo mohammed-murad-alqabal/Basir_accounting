@@ -4,7 +4,10 @@ library;
 import 'package:basser_app/core/router.dart';
 import 'package:basser_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:basser_app/features/auth/presentation/screens/setup_screen.dart';
+import 'package:basser_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -20,14 +23,42 @@ void main() {
       expect(route, isA<MaterialPageRoute<dynamic>>());
 
       // Build a simple MaterialApp first
-      await tester.pumpWidget(const MaterialApp(home: Scaffold()));
+      await tester.pumpWidget(
+        const ProviderScope(
+          child: MaterialApp(
+            home: Scaffold(),
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+          ),
+        ),
+      );
 
       // Now we can safely get the context and build the route
       final context = tester.element(find.byType(Scaffold));
       final widget = (route as MaterialPageRoute<dynamic>).builder(context);
 
       // Pump the actual widget
-      await tester.pumpWidget(MaterialApp(home: widget));
+      await tester.pumpWidget(
+        ProviderScope(
+          child: MaterialApp(
+            home: widget,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: const Locale('ar'),
+          ),
+        ),
+      );
       await tester.pumpAndSettle();
 
       expect(find.byType(SetupScreen), findsOneWidget);
@@ -44,14 +75,42 @@ void main() {
       expect(route, isA<MaterialPageRoute<dynamic>>());
 
       // Build a simple MaterialApp first
-      await tester.pumpWidget(const MaterialApp(home: Scaffold()));
+      await tester.pumpWidget(
+        const ProviderScope(
+          child: MaterialApp(
+            home: Scaffold(),
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+          ),
+        ),
+      );
 
       // Now we can safely get the context and build the route
       final context = tester.element(find.byType(Scaffold));
       final widget = (route as MaterialPageRoute<dynamic>).builder(context);
 
       // Pump the actual widget
-      await tester.pumpWidget(MaterialApp(home: widget));
+      await tester.pumpWidget(
+        ProviderScope(
+          child: MaterialApp(
+            home: widget,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: const Locale('ar'),
+          ),
+        ),
+      );
       await tester.pumpAndSettle();
 
       expect(find.byType(LoginScreen), findsOneWidget);
@@ -165,17 +224,26 @@ void main() {
     });
 
     group('Error Handling', () {
-      test('should show error message for unknown route', () {
+      testWidgets('should show error message for unknown route',
+          (tester) async {
         const settings = RouteSettings(name: '/unknown-route');
         final route = AppRouter.generateRoute(settings) as MaterialPageRoute;
 
-        // Build the error widget
-        final widget = route.builder(
-          // Create a minimal BuildContext
-          Builder(builder: (context) => Container()).createElement(),
+        await tester.pumpWidget(
+          ProviderScope(
+            child: MaterialApp(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              home: Builder(
+                builder: route.builder,
+              ),
+            ),
+          ),
         );
+        await tester.pumpAndSettle();
 
-        expect(widget, isA<Scaffold>());
+        expect(find.byType(Scaffold), findsOneWidget);
+        // Also verify the error message is shown/localized if possible, but type check is enough for now
       });
 
       test('should handle special characters in route name', () {
