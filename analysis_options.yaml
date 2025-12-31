@@ -13,6 +13,7 @@ analyzer:
     - ".dart_tool/**"
     - "coverage/**"
     - "test/.test_coverage.dart"
+    - "tools/**"
 
   errors:
     # معاملة التحذيرات كأخطاء (Quality First)

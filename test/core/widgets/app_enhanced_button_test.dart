@@ -387,6 +387,7 @@ void main() {
     testWidgets('creates add button correctly', (tester) async {
       final addButton = AppEnhancedButtonHelper.add(
         text: 'عميل جديد',
+        tooltip: 'إضافة عميل جديد',
         onPressed: () {},
       );
 
@@ -402,6 +403,8 @@ void main() {
 
     testWidgets('creates save button correctly', (tester) async {
       final saveButton = AppEnhancedButtonHelper.save(
+        text: 'حفظ',
+        tooltip: 'حفظ التغييرات',
         onPressed: () {},
       );
 
@@ -417,6 +420,8 @@ void main() {
 
     testWidgets('creates cancel button correctly', (tester) async {
       final cancelButton = AppEnhancedButtonHelper.cancel(
+        text: 'إلغاء',
+        tooltip: 'إلغاء العملية',
         onPressed: () {},
       );
 
@@ -431,6 +436,8 @@ void main() {
 
     testWidgets('creates delete button correctly', (tester) async {
       final deleteButton = AppEnhancedButtonHelper.delete(
+        text: 'حذف',
+        tooltip: 'حذف العنصر',
         onPressed: () {},
       );
 
@@ -446,6 +453,8 @@ void main() {
 
     testWidgets('creates edit button correctly', (tester) async {
       final editButton = AppEnhancedButtonHelper.edit(
+        text: 'تعديل',
+        tooltip: 'تعديل العنصر',
         onPressed: () {},
       );
 
@@ -461,6 +470,8 @@ void main() {
 
     testWidgets('creates search button correctly', (tester) async {
       final searchButton = AppEnhancedButtonHelper.search(
+        text: 'بحث',
+        tooltip: 'البحث في القائمة',
         onPressed: () {},
       );
 

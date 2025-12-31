@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:basser_app/core/extensions/context_extensions.dart';
+import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/theme/services/icon_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
@@ -26,9 +28,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
     return Scaffold(
       backgroundColor: SemanticColors.background,
-      appBar: const AppSimpleAppBar(
-        title: 'لوحة التحكم',
-        actions: [],
+      appBar: AppSimpleAppBar(
+        title: context.l10n.dashboardTitle,
+        actions: const [],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(Spacing.lg),
@@ -42,6 +44,27 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             // الإحصائيات المطورة
             _buildMasteryStatistics(appIcons),
             const SizedBox(height: Spacing.xl),
+
+            // زر ترقية الحساب للضيوف
+            FutureBuilder<bool>(
+              future: ref.read(authServiceProvider).isGuest(),
+              builder: (context, snapshot) {
+                if (snapshot.data ?? false) {
+                  return Column(
+                    children: [
+                      AppPrimaryButton(
+                        label: context.l10n.actionUpgradeAccount,
+                        icon: Icons.upgrade,
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed('/guest-upgrade'),
+                      ),
+                      const SizedBox(height: Spacing.xl),
+                    ],
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
 
             // الإجراءات السريعة
             _buildQuickActions(context, appIcons),
@@ -90,19 +113,19 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(appIcons.home),
-            label: 'الرئيسية',
+            label: context.l10n.navHome,
           ),
           BottomNavigationBarItem(
             icon: Icon(appIcons.invoices),
-            label: 'الفواتير',
+            label: context.l10n.navInvoices,
           ),
           BottomNavigationBarItem(
             icon: Icon(appIcons.customers),
-            label: 'العملاء',
+            label: context.l10n.navCustomers,
           ),
           BottomNavigationBarItem(
             icon: Icon(appIcons.settings),
-            label: 'الإعدادات',
+            label: context.l10n.navSettings,
           ),
         ],
       ),
@@ -120,9 +143,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 color: SemanticColors.primary,
               ),
               const SizedBox(width: Spacing.xs),
-              const Text(
-                'تحليلات الأداء المالي',
-                style: TextStyle(
+              Text(
+                context.l10n.dashboardStatsTitle,
+                style: const TextStyle(
                   fontSize: FontSizes.titleMedium,
                   fontWeight: FontWeight.bold,
                   color: SemanticColors.textPrimary,
@@ -140,25 +163,25 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             childAspectRatio: 1.2,
             children: [
               GlassStatCard(
-                label: 'إجمالي الفواتير',
+                label: context.l10n.statTotalInvoices,
                 value: '24',
                 icon: appIcons.invoices,
                 color: SemanticColors.primary,
               ),
               GlassStatCard(
-                label: 'العملاء النشطون',
+                label: context.l10n.statActiveCustomers,
                 value: '12',
                 icon: appIcons.customers, // Proxy for people_outline
                 color: SemanticColors.secondary,
               ),
               GlassStatCard(
-                label: 'المبيعات الكلية',
-                value: '5,240 ر.س',
+                label: context.l10n.statTotalSales,
+                value: '5,240 ${context.l10n.hintCurrencySymbol}',
                 icon: appIcons.invoices, // Proxy for wallet
                 color: SemanticColors.warning,
               ),
               GlassStatCard(
-                label: 'فواتير متأخرة',
+                label: context.l10n.statOverdueInvoices,
                 value: '3',
                 icon: appIcons.error,
                 color: SemanticColors.error,
@@ -183,9 +206,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 color: SemanticColors.primary,
               ),
               const SizedBox(width: Spacing.xs),
-              const Text(
-                'الإجراءات المالية السريعة',
-                style: TextStyle(
+              Text(
+                context.l10n.dashboardQuickActionsTitle,
+                style: const TextStyle(
                   fontSize: FontSizes.titleMedium,
                   fontWeight: FontWeight.bold,
                   color: SemanticColors.textPrimary,
@@ -198,7 +221,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             children: [
               Expanded(
                 child: AppPrimaryButton(
-                  label: 'إضافة فاتورة',
+                  label: context.l10n.actionAddInvoice,
                   onPressed: () {
                     unawaited(
                       Navigator.of(context).pushNamed('/invoice-form'),
@@ -210,7 +233,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               const SizedBox(width: Spacing.md),
               Expanded(
                 child: AppSecondaryButton(
-                  label: 'إضافة عميل',
+                  label: context.l10n.actionAddCustomer,
                   onPressed: () {
                     unawaited(
                       Navigator.of(context).pushNamed('/customer-form'),
@@ -234,9 +257,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 color: SemanticColors.primary,
               ),
               const SizedBox(width: Spacing.xs),
-              const Text(
-                'سجل العمليات الأحدث',
-                style: TextStyle(
+              Text(
+                context.l10n.dashboardRecentActivityTitle,
+                style: const TextStyle(
                   fontSize: FontSizes.titleMedium,
                   fontWeight: FontWeight.bold,
                   color: SemanticColors.textPrimary,
@@ -246,25 +269,25 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           ),
           const SizedBox(height: Spacing.md),
           AppListCard(
-            title: 'فاتورة رقم #001',
-            subtitle: 'أحمد محمد - 1,500 ر.س',
-            trailing: 'مدفوعة',
+            title: context.l10n.invoiceTitle('#001'),
+            subtitle: 'أحمد محمد - 1,500 ${context.l10n.hintCurrencySymbol}',
+            trailing: context.l10n.statusPaid,
             leading: Icon(appIcons.check, color: SemanticColors.secondary),
             onTap: () =>
                 unawaited(Navigator.of(context).pushNamed('/invoices')),
           ),
           AppListCard(
-            title: 'فاتورة رقم #002',
-            subtitle: 'سارة علي - 2,300 ر.س',
-            trailing: 'قيد الانتظار',
+            title: context.l10n.invoiceTitle('#002'),
+            subtitle: 'سارة علي - 2,300 ${context.l10n.hintCurrencySymbol}',
+            trailing: context.l10n.statusPending,
             leading: Icon(appIcons.invoices, color: SemanticColors.warning),
             onTap: () =>
                 unawaited(Navigator.of(context).pushNamed('/invoices')),
           ),
           AppListCard(
-            title: 'فاتورة رقم #003',
-            subtitle: 'محمود حسن - 1,800 ر.س',
-            trailing: 'متأخرة',
+            title: context.l10n.invoiceTitle('#003'),
+            subtitle: 'محمود حسن - 1,800 ${context.l10n.hintCurrencySymbol}',
+            trailing: context.l10n.statusOverdue,
             leading: Icon(appIcons.close, color: SemanticColors.error),
             onTap: () =>
                 unawaited(Navigator.of(context).pushNamed('/invoices')),

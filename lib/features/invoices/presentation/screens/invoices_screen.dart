@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:basser_app/core/assets/app_illustrations.dart';
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/theme/services/color_customization_service.dart';
 import 'package:basser_app/core/theme/services/icon_customization_service.dart'; // Added
 import 'package:basser_app/core/theme/tokens/index.dart';
+import 'package:basser_app/core/utils/format_helpers.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basser_app/features/invoices/presentation/providers/invoice_provider.dart';
@@ -29,20 +31,22 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     final invoicesAsync = ref.watch(filteredInvoicesProvider);
     final statsAsync = ref.watch(invoiceStatisticsProvider);
     final appIcons = ref.watch(appIconsProvider);
+    final calendarType =
+        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
 
     return Scaffold(
       appBar: AppAppBar(
-        title: 'الفواتير',
+        title: context.l10n.invoicesTitle,
         actions: [
           IconButton(
             icon: Icon(appIcons.add),
             onPressed: _createNewInvoice,
-            tooltip: 'إضافة فاتورة',
+            tooltip: context.l10n.tooltipAddInvoice,
           ),
           IconButton(
             icon: Icon(appIcons.pdf),
             onPressed: _exportInvoice,
-            tooltip: 'تصدير الكل',
+            tooltip: context.l10n.tooltipExportAll,
           ),
         ],
       ),
@@ -52,7 +56,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           _buildFilterBar(),
           Expanded(
             child: invoicesAsync.when(
-              data: (invoices) => _buildInvoicesList(invoices, appIcons),
+              data: (invoices) =>
+                  _buildInvoicesList(invoices, appIcons, calendarType),
               loading: () => const Center(
                 child: CircularProgressIndicator(),
               ),
@@ -64,9 +69,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                     children: [
                       const ErrorIllustration(size: 80),
                       const SizedBox(height: Spacing.lg),
-                      const Text(
-                        'حدث خطأ أثناء تحميل الفواتير',
-                        style: TextStyle(
+                      Text(
+                        context.l10n.errorLoadingInvoices,
+                        style: const TextStyle(
                           fontSize: FontSizes.bodyLarge,
                           color: SemanticColors.textSecondary,
                         ),
@@ -74,7 +79,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                       ),
                       const SizedBox(height: Spacing.xl),
                       AppEnhancedButton(
-                        text: 'إعادة المحاولة',
+                        text: context.l10n.retryLabel,
                         onPressed: () {
                           ref.invalidate(invoicesProvider);
                         },
@@ -108,22 +113,31 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             children: [
               Expanded(
                 child: _buildStatItem(
-                  'الإجمالي',
-                  '${stats.totalInvoices}',
+                  context.l10n.statTotal,
+                  FormatHelpers.formatNumber(
+                    stats.totalInvoices,
+                    locale: context.l10n.localeName,
+                  ),
                   SemanticColors.primary,
                 ),
               ),
               Expanded(
                 child: _buildStatItem(
-                  'المدفوعة',
-                  '${stats.paidInvoices}',
+                  context.l10n.statPaid,
+                  FormatHelpers.formatNumber(
+                    stats.paidInvoices,
+                    locale: context.l10n.localeName,
+                  ),
                   SemanticColors.success,
                 ),
               ),
               Expanded(
                 child: _buildStatItem(
-                  'المتأخرة',
-                  '${stats.overdueInvoices}',
+                  context.l10n.statOverdue,
+                  FormatHelpers.formatNumber(
+                    stats.overdueInvoices,
+                    locale: context.l10n.localeName,
+                  ),
                   SemanticColors.error,
                 ),
               ),
@@ -162,11 +176,11 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
         ),
         child: Row(
           children: [
-            _buildFilterChip('الكل', 'الكل'),
-            _buildFilterChip('مسودة', 'draft'),
-            _buildFilterChip('مُصدرة', 'issued'),
-            _buildFilterChip('مدفوعة', 'paid'),
-            _buildFilterChip('مستحقة', 'overdue'),
+            _buildFilterChip(context.l10n.filterAll, 'الكل'),
+            _buildFilterChip(context.l10n.filterDraft, 'draft'),
+            _buildFilterChip(context.l10n.filterIssued, 'issued'),
+            _buildFilterChip(context.l10n.filterPaid, 'paid'),
+            _buildFilterChip(context.l10n.filterOverdue, 'overdue'),
           ],
         ),
       );
@@ -174,7 +188,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
   Widget _buildFilterChip(String label, String value) {
     final isSelected = _selectedFilter == value;
     return Padding(
-      padding: const EdgeInsets.only(left: Spacing.sm),
+      padding: const EdgeInsetsDirectional.only(start: Spacing.sm),
       child: FilterChip(
         label: Text(label),
         selected: isSelected,
@@ -185,11 +199,13 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
         backgroundColor: SemanticColors.surface,
         selectedColor: SemanticColors.primary.withValues(alpha: 0.2),
         labelStyle: TextStyle(
+          // ignore: lines_longer_than_80_chars
           color:
               isSelected ? SemanticColors.primary : SemanticColors.textPrimary,
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),
         shape: RoundedRectangleBorder(
+          // ignore: lines_longer_than_80_chars
           borderRadius: BorderRadius.circular(Radii.full),
           side: BorderSide(
             color: isSelected ? SemanticColors.primary : SemanticColors.border,
@@ -199,7 +215,11 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     );
   }
 
-  Widget _buildInvoicesList(List<Invoice> invoices, AppIconsData appIcons) {
+  Widget _buildInvoicesList(
+    List<Invoice> invoices,
+    AppIconsData appIcons,
+    CalendarType calendarType,
+  ) {
     if (invoices.isEmpty) {
       return const Center(
         child: EmptyStateIllustration(),
@@ -212,11 +232,18 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       itemBuilder: (context, index) {
         final invoice = invoices[index];
         final statusColor = _getStatusColor(invoice.status);
-        final dateStr = invoice.issuedDate.toLocal().toString().split(' ')[0];
+        final dateStr = FormatHelpers.formatDate(
+          invoice.issuedDate,
+          locale: context.l10n.localeName,
+          calendarType: calendarType,
+        );
         return AppListCard(
-          title: 'فاتورة ${invoice.id}',
+          title: context.l10n.invoiceTitle(invoice.id),
           subtitle: '${invoice.customerName} - $dateStr',
-          trailing: '${invoice.grandTotal.toStringAsFixed(2)} ر.س',
+          trailing: FormatHelpers.formatCurrency(
+            invoice.grandTotal,
+            locale: context.l10n.localeName,
+          ),
           leading: Container(
             padding: const EdgeInsets.all(Spacing.sm),
             decoration: BoxDecoration(
@@ -232,7 +259,11 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           onTap: () {
             // TODO(dev): فتح تفاصيل الفاتورة
           },
-          onLongPress: () => _showInvoiceActions(invoice, appIcons),
+          onLongPress: () => _showInvoiceActions(
+            invoice,
+            appIcons,
+            calendarType,
+          ),
         );
       },
     );
@@ -251,7 +282,11 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     );
   }
 
-  void _showInvoiceActions(Invoice invoice, AppIconsData appIcons) {
+  void _showInvoiceActions(
+    Invoice invoice,
+    AppIconsData appIcons,
+    CalendarType calendarType,
+  ) {
     unawaited(
       showModalBottomSheet<void>(
         context: context,
@@ -261,7 +296,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             children: [
               ListTile(
                 leading: Icon(appIcons.pdf),
-                title: const Text('مشاركة ملف PDF'),
+                title: Text(context.l10n.actionSharePdf),
                 onTap: () {
                   Navigator.pop(context);
                   unawaited(_shareInvoicePdf(invoice));
@@ -269,26 +304,38 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
               ),
               ListTile(
                 leading: Icon(appIcons.message),
-                title: const Text('إرسال عبر الواتساب (نص)'),
+                title: Text(context.l10n.actionShareWhatsappText),
                 onTap: () {
                   Navigator.pop(context);
-                  unawaited(_shareInvoiceViaWhatsApp(invoice, asPdf: false));
+                  unawaited(
+                    _shareInvoiceViaWhatsApp(
+                      invoice,
+                      asPdf: false,
+                      calendarType: calendarType,
+                    ),
+                  );
                 },
               ),
               ListTile(
                 leading: Icon(appIcons.share),
-                title: const Text('إرسال عبر الواتساب (PDF)'),
+                title: Text(context.l10n.actionShareWhatsappPdf),
                 onTap: () {
                   Navigator.pop(context);
-                  unawaited(_shareInvoiceViaWhatsApp(invoice, asPdf: true));
+                  unawaited(
+                    _shareInvoiceViaWhatsApp(
+                      invoice,
+                      asPdf: true,
+                      calendarType: calendarType,
+                    ),
+                  );
                 },
               ),
               const Divider(),
               ListTile(
                 leading: Icon(appIcons.delete, color: SemanticColors.error),
-                title: const Text(
-                  'حذف الفاتورة',
-                  style: TextStyle(color: SemanticColors.error),
+                title: Text(
+                  context.l10n.actionDeleteInvoice,
+                  style: const TextStyle(color: SemanticColors.error),
                 ),
                 onTap: () {
                   Navigator.pop(context);
@@ -310,7 +357,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       if (customer == null) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('تعذر العثور على بيانات العميل')),
+          SnackBar(content: Text(context.l10n.errorCustomerNotFound)),
         );
         return;
       }
@@ -323,17 +370,18 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
         primaryColor: primaryColor,
       );
 
+      if (!mounted) return;
       final sharingService = ref.read(sharingServiceProvider);
       await sharingService.sharePdfFile(
         bytes: pdfBytes,
         fileName: 'invoice_${invoice.id}.pdf',
-        subject: 'فاتورة ${invoice.id}',
-        text: 'إليك فاتورة ${invoice.customerName}',
+        subject: context.l10n.pdfShareSubject(invoice.id),
+        text: context.l10n.pdfShareText(invoice.customerName),
       );
     } on Exception catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('خطأ في مشاركة PDF: $e')),
+        SnackBar(content: Text(context.l10n.errorSharePdf(e.toString()))),
       );
     }
   }
@@ -341,16 +389,18 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
   Future<void> _shareInvoiceViaWhatsApp(
     Invoice invoice, {
     required bool asPdf,
+    required CalendarType calendarType,
   }) async {
     try {
       final customerRepo = ref.read(customerRepositoryProvider);
       final customer = await customerRepo.getCustomerById(invoice.customerId);
 
+      // ignore: lines_longer_than_80_chars
       if (customer == null ||
           (customer.phone == null || customer.phone!.isEmpty)) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('رقم هاتف العميل غير متوفر')),
+          SnackBar(content: Text(context.l10n.errorCustomerPhone)),
         );
         return;
       }
@@ -365,16 +415,23 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           customer,
           primaryColor: primaryColor,
         );
+        if (!mounted) return;
         await sharingService.sharePdfFile(
           bytes: pdfBytes,
           fileName: 'invoice_${invoice.id}.pdf',
-          text: 'فاتورة رقم ${invoice.id}',
+          text: context.l10n.pdfShareSubject(invoice.id),
         );
       } else {
-        final message =
-            'مرحباً ${customer.name}، إليك تفاصيل فاتورة رقم ${invoice.id}:\n'
-            'الإجمالي: ${invoice.grandTotal.toStringAsFixed(2)} ر.س\n'
-            'شكراً لتعاملك معنا.';
+        if (!mounted) return; // Fix async gap
+        final message = context.l10n.msgInvoiceShare(
+          customer.name,
+          invoice.id,
+          FormatHelpers.formatNumber(
+            invoice.grandTotal,
+            locale: context.l10n.localeName,
+          ),
+          'SAR', // TODO(dev): Use dynamic currency
+        );
         await sharingService.shareToWhatsApp(
           phone: customer.phone!,
           message: message,
@@ -383,7 +440,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     } on Exception catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('خطأ في المشاركة عبر الواتساب: $e')),
+        SnackBar(content: Text(context.l10n.errorShareWhatsapp(e.toString()))),
       );
     }
   }
@@ -392,18 +449,18 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('حذف الفاتورة'),
-        content: const Text('هل أنت متأكد من حذف هذه الفاتورة؟'),
+        title: Text(context.l10n.actionDeleteInvoice),
+        content: Text(context.l10n.msgConfirmDeleteInvoice),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('إلغاء'),
+            child: Text(context.l10n.dialogCancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text(
-              'حذف',
-              style: TextStyle(color: SemanticColors.error),
+            child: Text(
+              context.l10n.btnDelete,
+              style: const TextStyle(color: SemanticColors.error),
             ),
           ),
         ],

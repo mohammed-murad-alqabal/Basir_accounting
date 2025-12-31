@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
@@ -65,7 +66,12 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
 
     return Scaffold(
       backgroundColor: SemanticColors.background,
-      appBar: AppAppBar(title: isEditing ? 'تعديل العميل' : 'إضافة عميل جديد'),
+      appBar: AppAppBar(
+        // ignore: lines_longer_than_80_chars
+        title: isEditing
+            ? context.l10n.customerFormTitleEdit
+            : context.l10n.customerFormTitleAdd,
+      ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -76,7 +82,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
               // زر اختيار من جهات الاتصال
               if (!isEditing)
                 AppEnhancedButton(
-                  text: 'اختيار من جهات الاتصال',
+                  text: context.l10n.btnSelectFromContacts,
                   onPressed: _selectFromContacts,
                   icon: Icons.contact_page,
                   style: AppEnhancedButtonStyle.secondary,
@@ -86,15 +92,15 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
               // اسم العميل
               AppTextField(
                 controller: _nameController,
-                label: 'اسم العميل',
-                hint: 'أدخل اسم العميل',
+                label: context.l10n.labelCustomerName,
+                hint: context.l10n.hintCustomerName,
                 prefixIcon: const Icon(Icons.person),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'اسم العميل مطلوب';
+                    return context.l10n.errCustomerNameRequired;
                   }
                   if (value.length < 2) {
-                    return 'الاسم يجب أن يحتوي على حرفين على الأقل';
+                    return context.l10n.errCustomerNameLength;
                   }
                   return null;
                 },
@@ -104,7 +110,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
               // البريد الإلكتروني
               AppTextField(
                 controller: _emailController,
-                label: 'البريد الإلكتروني (اختياري)',
+                label: context.l10n.labelEmailOptional,
                 hint: 'example@email.com',
                 prefixIcon: const Icon(Icons.email),
                 keyboardType: TextInputType.emailAddress,
@@ -114,7 +120,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                     );
                     if (!emailRegex.hasMatch(value)) {
-                      return 'البريد الإلكتروني غير صحيح';
+                      return context.l10n.errInvalidEmail;
                     }
                   }
                   return null;
@@ -125,17 +131,17 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
               // رقم الهاتف
               AppTextField(
                 controller: _phoneController,
-                label: 'رقم الهاتف (اختياري)',
+                label: context.l10n.labelPhoneOptional,
                 hint: '05xxxxxxxx',
                 prefixIcon: const Icon(Icons.phone),
                 keyboardType: TextInputType.phone,
                 validator: (value) {
                   if (value != null && value.isNotEmpty) {
                     if (!value.startsWith('05')) {
-                      return 'رقم الهاتف يجب أن يبدأ بـ 05';
+                      return context.l10n.errPhoneStart05;
                     }
                     if (value.length != 10) {
-                      return 'رقم الهاتف يجب أن يتكون من 10 أرقام';
+                      return context.l10n.errPhoneLength;
                     }
                   }
                   return null;
@@ -146,8 +152,8 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
               // العنوان
               AppTextField(
                 controller: _addressController,
-                label: 'العنوان (اختياري)',
-                hint: 'أدخل عنوان العميل',
+                label: context.l10n.labelAddressOptional,
+                hint: context.l10n.hintAddress,
                 prefixIcon: const Icon(Icons.location_on),
                 maxLines: 2,
               ),
@@ -156,8 +162,8 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
               // ملاحظات
               AppTextField(
                 controller: _notesController,
-                label: 'ملاحظات (اختياري)',
-                hint: 'أضف ملاحظات عن العميل',
+                label: context.l10n.labelNotesOptional,
+                hint: context.l10n.hintCustomerNotes,
                 prefixIcon: const Icon(Icons.note),
                 maxLines: 3,
               ),
@@ -166,15 +172,16 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
               // سقف الائتمان
               AppTextField(
                 controller: _creditLimitController,
-                label: 'سقف الائتمان (اختياري)',
+                label: context.l10n.labelCreditLimit,
                 hint: '0.0',
                 prefixIcon: const Icon(Icons.account_balance_wallet),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 validator: (value) {
                   if (value != null && value.isNotEmpty) {
                     if (double.tryParse(value) == null) {
-                      return 'الرجاء إدخال رقم صحيح';
+                      return context.l10n.errInvalidNumber;
                     }
                   }
                   return null;
@@ -184,7 +191,10 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
 
               // زر الحفظ
               AppEnhancedButton(
-                text: isEditing ? 'حفظ التعديلات' : 'إضافة العميل',
+                // ignore: lines_longer_than_80_chars
+                text: isEditing
+                    ? context.l10n.btnSaveChanges
+                    : context.l10n.btnAddCustomer,
                 onPressed: _isLoading ? null : _saveCustomer,
                 isLoading: _isLoading,
                 icon: Icons.save,
@@ -203,7 +213,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       if (contacts.isEmpty) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('لا توجد جهات اتصال متاحة')),
+          SnackBar(content: Text(context.l10n.msgNoContactsFound)),
         );
         return;
       }
@@ -230,6 +240,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       if (result != null && result is Contact) {
         final selectedContact = result;
         setState(() {
+          // ignore: lines_longer_than_80_chars
           _nameController.text =
               '${selectedContact.name.first} ${selectedContact.name.last}';
           if (selectedContact.phones.isNotEmpty) {
@@ -243,7 +254,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
     } on Exception catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('خطأ في الوصول لجهات الاتصال: $e')),
+        SnackBar(content: Text(context.l10n.errContactAccess(e.toString()))),
       );
     }
   }
@@ -267,15 +278,19 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       final customer = Customer(
         id: widget.customer?.id ?? const Uuid().v4(),
         name: _nameController.text.trim(),
+        // ignore: lines_longer_than_80_chars
         email: _emailController.text.trim().isEmpty
             ? null
             : _emailController.text.trim(),
+        // ignore: lines_longer_than_80_chars
         phone: _phoneController.text.trim().isEmpty
             ? null
             : _phoneController.text.trim(),
+        // ignore: lines_longer_than_80_chars
         address: _addressController.text.trim().isEmpty
             ? null
             : _addressController.text.trim(),
+        // ignore: lines_longer_than_80_chars
         notes: _notesController.text.trim().isEmpty
             ? null
             : _notesController.text.trim(),
@@ -298,9 +313,10 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
+              // ignore: lines_longer_than_80_chars
               isEditing
-                  ? 'تم تحديث بيانات العميل بنجاح'
-                  : 'تم إضافة العميل بنجاح',
+                  ? context.l10n.msgCustomerUpdated
+                  : context.l10n.msgCustomerAdded,
             ),
             backgroundColor: SemanticColors.secondary,
           ),
@@ -313,7 +329,10 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              isEditing ? 'فشل تحديث بيانات العميل' : 'فشل إضافة العميل',
+              // ignore: lines_longer_than_80_chars
+              isEditing
+                  ? context.l10n.errCustomerUpdate
+                  : context.l10n.errCustomerAdd,
             ),
             backgroundColor: SemanticColors.error,
           ),
@@ -323,7 +342,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('حدث خطأ: $e'),
+          content: Text(context.l10n.errGeneric(e.toString())),
           backgroundColor: SemanticColors.error,
         ),
       );
