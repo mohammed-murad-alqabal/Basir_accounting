@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/app_button.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class GlobalErrorWidget extends StatelessWidget {
                     ),
                     const SizedBox(height: Spacing.xl),
                     AppPrimaryButton(
-                      label: 'إعادة المحاولة',
+                      label: context.l10n.btnRetry,
                       onPressed: () {
                         // إعادة تشغيل التطبيق
                         // (من الناحية الفنية، نعود للشاشة الرئيسية)

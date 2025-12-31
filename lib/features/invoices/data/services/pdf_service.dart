@@ -1,3 +1,4 @@
+import 'package:basser_app/core/utils/format_helpers.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basser_app/services/settings_service.dart';
@@ -132,12 +133,12 @@ class PdfService {
               ),
               pw.Text(
                 'تاريخ الإصدار: '
-                '${invoice.issuedDate.toLocal().toString().split(' ')[0]}',
+                '${FormatHelpers.formatDate(invoice.issuedDate.toLocal())}',
                 style: pw.TextStyle(font: font, fontSize: 12),
               ),
               pw.Text(
                 'تاريخ الاستحقاق: '
-                '${invoice.dueDate.toLocal().toString().split(' ')[0]}',
+                '${FormatHelpers.formatDate(invoice.dueDate.toLocal())}',
                 style: pw.TextStyle(font: font, fontSize: 12),
               ),
             ],
@@ -227,20 +228,25 @@ class PdfService {
     for (final item in invoice.items) {
       tableData.add(
         [
-          '${item.total.toStringAsFixed(2)} $currency',
-          '${(item.total * invoice.taxRate).toStringAsFixed(2)} $currency',
-          '${item.price.toStringAsFixed(2)} $currency',
-          item.quantity.toString(),
+          // Hack to keep number format but add currency manually if needed:
+          '${FormatHelpers.formatCurrency(
+            item.total,
+            currencyCode: '',
+            locale: 'en',
+          ).replaceAll('en', '')} $currency',
+          '${FormatHelpers.formatNumber(
+            item.total * invoice.taxRate,
+          )} $currency',
+          '${FormatHelpers.formatNumber(item.price)} $currency',
+          FormatHelpers.formatNumber(item.quantity),
           item.name,
         ],
       );
     }
 
     return pw.TableHelper.fromTextArray(
-      headers: tableHeaders.reversed.toList(), // عكس الترتيب ليتوافق مع RTL
-      data: tableData
-          .map((row) => row.reversed.toList())
-          .toList(), // عكس البيانات
+      headers: tableHeaders.reversed.toList(), // عكس الترتيب
+      data: tableData.map((row) => row.reversed.toList()).toList(),
       border: pw.TableBorder.all(color: PdfColors.grey400),
       headerStyle: pw.TextStyle(
         font: font,
@@ -266,7 +272,11 @@ class PdfService {
     );
   }
 
-  pw.Widget _buildTotals(Invoice invoice, pw.Font font, String currency) =>
+  pw.Widget _buildTotals(
+    Invoice invoice,
+    pw.Font font,
+    String currency,
+  ) =>
       pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.end,
         children: [
@@ -282,7 +292,9 @@ class PdfService {
                   currency,
                 ),
                 _buildTotalRow(
-                  'الضريبة (${(invoice.taxRate * 100).toStringAsFixed(0)}%):',
+                  'الضريبة (${FormatHelpers.formatNumber(
+                    invoice.taxRate * 100,
+                  )}%):',
                   invoice.taxTotal,
                   font,
                   currency,
@@ -314,7 +326,7 @@ class PdfService {
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: [
             pw.Text(
-              '${amount.toStringAsFixed(2)} $currency',
+              '${FormatHelpers.formatNumber(amount)} $currency',
               style: pw.TextStyle(
                 font: font,
                 fontWeight:

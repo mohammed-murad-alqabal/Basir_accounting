@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:basser_app/core/assets/app_logo.dart';
 import 'package:basser_app/core/constants.dart';
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/router.dart';
 import 'package:basser_app/core/theme/app_theme.dart';
@@ -11,6 +12,7 @@ import 'package:basser_app/core/theme/services/font_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/utils/provider_observer.dart';
 import 'package:basser_app/core/widgets/error_widget.dart' as basser;
+import 'package:basser_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -32,6 +34,7 @@ void main() async {
   );
 
   // إعداد شاشة الأخطاء العالمية
+  // ignore: lines_longer_than_80_chars
   ErrorWidget.builder =
       (details) => basser.GlobalErrorWidget(errorDetails: details);
 
@@ -69,6 +72,7 @@ class BasserApp extends ConsumerWidget {
     final themeModeAsync = ref.watch(themeProvider);
     final customColorAsync = ref.watch(colorCustomizationProvider);
     final fontCustomizationAsync = ref.watch(fontCustomizationProvider);
+    final localeAsync = ref.watch(localeProvider);
 
     return themeModeAsync.when(
       data: (themeMode) {
@@ -76,9 +80,11 @@ class BasserApp extends ConsumerWidget {
         final fontState = fontCustomizationAsync.value;
         final fontFamily = fontState?.fontFamily;
         final textScale = fontState?.textScaleFactor ?? 1.0;
+        final locale = localeAsync.value ?? const Locale('ar');
 
         return MaterialApp(
           title: AppConfig.appName,
+          // ... (theme config) ...
           theme: AppTheme.getTheme(
             mode: ThemeMode.light,
             seedColor: seedColor,
@@ -95,13 +101,11 @@ class BasserApp extends ConsumerWidget {
           home: const SplashScreen(),
           onGenerateRoute: AppRouter.generateRoute,
           debugShowCheckedModeBanner: false,
-          // إعدادات اللغة العربية والاتجاه من اليمين لليسار
-          locale: const Locale('ar', 'SA'),
-          supportedLocales: const [
-            Locale('ar', 'SA'), // العربية
-            Locale('en', 'US'), // الإنجليزية
-          ],
+          // إعدادات اللغة (ديناميكية)
+          locale: locale,
+          supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: const [
+            AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
@@ -160,8 +164,14 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-  String _status = 'جاري التهيئة...';
   String? _error;
+  late String _status;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _status = context.l10n.splashInitializing;
+  }
 
   @override
   void initState() {
@@ -227,7 +237,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       debugPrint('❌ [FATAL] Initialization Failed: $e');
       if (mounted) {
         setState(() {
-          _status = 'خطأ تقني في البداية';
+          _status = context.l10n.splashCriticalError;
           _error = e.toString();
         });
       }
@@ -254,9 +264,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 // الشعار المطور Mastery 2.0
                 const BasserLogo(size: 140),
                 const SizedBox(height: Spacing.xl),
-                const Text(
-                  'بصير',
-                  style: TextStyle(
+                Text(
+                  context.l10n.appTitle,
+                  style: const TextStyle(
                     fontSize: 42,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -324,6 +334,6 @@ class PlaceholderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: Text(title)),
-        body: Center(child: Text('قريبًا: $title')),
+        body: Center(child: Text(context.l10n.placeholderComingSoon(title))),
       );
 }

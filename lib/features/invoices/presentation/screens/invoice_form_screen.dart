@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:basser_app/core/extensions/context_extensions.dart'; // Added
+import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/theme/services/icon_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
+import 'package:basser_app/core/utils/format_helpers.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
@@ -68,11 +71,15 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       customersProvider,
     );
     final appIcons = ref.watch(appIconsProvider); // Get icons
+    final calendarType =
+        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
 
     return Scaffold(
       backgroundColor: SemanticColors.background,
       appBar: AppAppBar(
-        title: isEditing ? 'تعديل الفاتورة' : 'إضافة فاتورة جديدة',
+        title: isEditing
+            ? context.l10n.invoiceFormTitleEdit
+            : context.l10n.invoiceFormTitleAdd,
       ),
       body: Form(
         key: <credential-fixture>,
@@ -86,7 +93,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 data: _buildCustomerSelector,
                 loading: () => const Center(child: CircularProgressIndicator()),
                 error: (error, stack) => Text(
-                  'خطأ في تحميل العملاء: $error',
+                  context.l10n.errLoadCustomers(error.toString()),
                   style: const TextStyle(color: SemanticColors.error),
                 ),
               ),
@@ -94,19 +101,21 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
               // تاريخ الإصدار
               _buildDateField(
-                label: 'تاريخ الإصدار',
+                label: context.l10n.labelIssuedDate,
                 date: _issuedDate,
                 onTap: () => _selectDate(context, true),
                 icon: appIcons.calendar, // Dynamic
+                calendarType: calendarType,
               ),
               const SizedBox(height: Spacing.md),
 
               // تاريخ الاستحقاق
               _buildDateField(
-                label: 'تاريخ الاستحقاق',
+                label: context.l10n.labelDueDate,
                 date: _dueDate,
                 onTap: () => _selectDate(context, false),
                 icon: appIcons.calendar, // Dynamic
+                calendarType: calendarType,
               ),
               const SizedBox(height: Spacing.md),
 
@@ -129,8 +138,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               // ملاحظات
               AppTextField(
                 controller: _notesController,
-                label: 'ملاحظات (اختياري)',
-                hint: 'أضف ملاحظات عن الفاتورة',
+                label: context.l10n.labelNotes,
+                hint: context.l10n.hintNotes,
                 prefixIcon: Icon(appIcons.note), // Dynamic
                 maxLines: 3,
               ),
@@ -138,7 +147,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
               // زر الحفظ
               AppEnhancedButton(
-                text: isEditing ? 'حفظ التعديلات' : 'إضافة الفاتورة',
+                // ignore: lines_longer_than_80_chars
+                text: isEditing
+                    ? context.l10n.btnUpdateInvoice
+                    : context.l10n.btnSaveInvoice,
                 onPressed: _isLoading ? null : _saveInvoice,
                 isLoading: _isLoading,
                 icon: appIcons.save, // Dynamic
@@ -160,9 +172,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'العميل',
-              style: TextStyle(
+            Text(
+              context.l10n.labelCustomer,
+              style: const TextStyle(
                 fontSize: FontSizes.bodyLarge,
                 fontWeight: FontWeight.w600,
                 color: SemanticColors.textPrimary,
@@ -171,15 +183,18 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             const SizedBox(height: Spacing.sm),
             DropdownButtonFormField<Customer>(
               initialValue: _selectedCustomer,
-              decoration: const InputDecoration(
-                hintText: 'اختر العميل',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                hintText: context.l10n.hintSelectCustomer,
+                border: const OutlineInputBorder(),
               ),
               items: customers
                   .map(
                     (customer) => DropdownMenuItem(
                       value: customer,
-                      child: Text(customer.name),
+                      child: Text(
+                        customer.name,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   )
                   .toList(),
@@ -190,7 +205,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               },
               validator: (value) {
                 if (value == null) {
-                  return 'يرجى اختيار العميل';
+                  return context.l10n.errSelectCustomer;
                 }
                 return null;
               },
@@ -204,6 +219,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     required DateTime date,
     required VoidCallback onTap,
     required IconData icon, // Added parameter
+    required CalendarType calendarType,
   }) =>
       Container(
         padding: const EdgeInsets.all(Spacing.md),
@@ -231,7 +247,11 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${date.day}/${date.month}/${date.year}',
+                      FormatHelpers.formatDate(
+                        date,
+                        locale: context.l10n.localeName,
+                        calendarType: calendarType,
+                      ),
                       style: const TextStyle(
                         fontSize: FontSizes.bodyLarge,
                         fontWeight: FontWeight.w600,
@@ -261,9 +281,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'نسبة الضريبة',
-                    style: TextStyle(
+                  Text(
+                    context.l10n.labelTaxRate,
+                    style: const TextStyle(
                       fontSize: FontSizes.bodyMedium,
                       color: SemanticColors.textSecondary,
                     ),
@@ -282,7 +302,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             ),
             IconButton(
               icon: Icon(appIcons.edit, size: 20), // Dynamic
-              tooltip: 'تعديل نسبة الضريبة',
+              tooltip: context.l10n.tooltipEditTaxRate,
               onPressed: _showTaxRateDialog,
             ),
           ],
@@ -299,9 +319,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'حالة الفاتورة',
-              style: TextStyle(
+            Text(
+              context.l10n.labelInvoiceStatus,
+              style: const TextStyle(
                 fontSize: FontSizes.bodyLarge,
                 fontWeight: FontWeight.w600,
                 color: SemanticColors.textPrimary,
@@ -311,12 +331,27 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             DropdownButtonFormField<String>(
               initialValue: _status,
               decoration: const InputDecoration(border: OutlineInputBorder()),
-              items: const [
-                DropdownMenuItem(value: 'draft', child: Text('مسودة')),
-                DropdownMenuItem(value: 'issued', child: Text('مرسلة')),
-                DropdownMenuItem(value: 'paid', child: Text('مدفوعة')),
-                DropdownMenuItem(value: 'overdue', child: Text('متأخرة')),
-                DropdownMenuItem(value: 'cancelled', child: Text('ملغاة')),
+              items: [
+                DropdownMenuItem(
+                  value: 'draft',
+                  child: Text(context.l10n.filterDraft),
+                ),
+                DropdownMenuItem(
+                  value: 'issued',
+                  child: Text(context.l10n.filterIssued),
+                ),
+                DropdownMenuItem(
+                  value: 'paid',
+                  child: Text(context.l10n.filterPaid),
+                ),
+                DropdownMenuItem(
+                  value: 'overdue',
+                  child: Text(context.l10n.filterOverdue),
+                ),
+                DropdownMenuItem(
+                  value: 'cancelled',
+                  child: Text(context.l10n.statusCancelled),
+                ),
               ],
               onChanged: (value) {
                 if (value != null) {
@@ -343,9 +378,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'بنود الفاتورة',
-                  style: TextStyle(
+                Text(
+                  context.l10n.labelInvoiceItems,
+                  style: const TextStyle(
                     fontSize: FontSizes.bodyLarge,
                     fontWeight: FontWeight.w600,
                     color: SemanticColors.textPrimary,
@@ -356,19 +391,19 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                     appIcons.addCircle, // Dynamic
                     color: SemanticColors.primary,
                   ),
-                  tooltip: 'إضافة بند جديد',
+                  tooltip: context.l10n.tooltipAddItem,
                   onPressed: _addItem,
                 ),
               ],
             ),
             const SizedBox(height: Spacing.sm),
             if (_items.isEmpty)
-              const Center(
+              Center(
                 child: Padding(
-                  padding: EdgeInsets.all(Spacing.lg),
+                  padding: const EdgeInsets.all(Spacing.lg),
                   child: Text(
-                    'لا توجد بنود. اضغط + لإضافة بند',
-                    style: TextStyle(
+                    context.l10n.msgNoItems,
+                    style: const TextStyle(
                       color: SemanticColors.textSecondary,
                       fontSize: FontSizes.bodyMedium,
                     ),
@@ -385,9 +420,12 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   return Card(
                     margin: const EdgeInsets.only(bottom: Spacing.sm),
                     child: ListTile(
-                      title: Text(item.name),
+                      title: Text(
+                        item.name,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       subtitle: Text(
-                        'الكمية: ${item.quantity} × '
+                        '${context.l10n.labelQuantity}: ${item.quantity} × '
                         '${item.price.toStringAsFixed(2)} ر.س',
                       ),
                       trailing: Row(
@@ -405,7 +443,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                               appIcons.delete, // Dynamic
                               color: SemanticColors.error,
                             ),
-                            tooltip: 'حذف البند',
+                            tooltip: context.l10n.tooltipDeleteItem,
                             onPressed: () => _removeItem(index),
                           ),
                         ],
@@ -437,14 +475,18 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       ),
       child: Column(
         children: [
-          _buildTotalRow('المجموع الفرعي:', subtotal),
+          _buildTotalRow(context.l10n.labelSubtotal, subtotal),
           const Divider(),
           _buildTotalRow(
-            'الضريبة (${(_taxRate * 100).toStringAsFixed(0)}%):',
+            context.l10n.labelTax('${(_taxRate * 100).toStringAsFixed(0)}%'),
             taxTotal,
           ),
           const Divider(thickness: 2),
-          _buildTotalRow('الإجمالي الكلي:', grandTotal, isGrandTotal: true),
+          _buildTotalRow(
+            context.l10n.labelGrandTotal,
+            grandTotal,
+            isGrandTotal: true,
+          ),
         ],
       ),
     );
@@ -463,6 +505,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             Text(
               label,
               style: TextStyle(
+                // ignore: lines_longer_than_80_chars
                 fontSize:
                     isGrandTotal ? FontSizes.bodyLarge : FontSizes.bodyMedium,
                 fontWeight: isGrandTotal ? FontWeight.bold : FontWeight.w500,
@@ -472,10 +515,12 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             Text(
               '${amount.toStringAsFixed(2)} ر.س',
               style: TextStyle(
+                // ignore: lines_longer_than_80_chars
                 fontSize: isGrandTotal
                     ? FontSizes.headlineSmall
                     : FontSizes.bodyLarge,
                 fontWeight: FontWeight.bold,
+                // ignore: lines_longer_than_80_chars
                 color: isGrandTotal
                     ? SemanticColors.primary
                     : SemanticColors.textPrimary,
@@ -513,24 +558,24 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('نسبة الضريبة'),
+        title: Text(context.l10n.dialogTaxTitle),
         content: TextField(
           controller: controller,
           keyboardType: <credential-fixture>,
-          decoration: const InputDecoration(
-            labelText: 'النسبة المئوية',
+          decoration: InputDecoration(
+            labelText: context.l10n.labelPercentage,
             suffixText: '%',
           ),
         ),
         actions: [
           AppEnhancedButton(
-            text: 'إلغاء',
+            text: context.l10n.dialogCancel,
             onPressed: () => Navigator.pop(context),
             style: AppEnhancedButtonStyle.text,
             size: AppEnhancedButtonSize.small,
           ),
           AppEnhancedButton(
-            text: 'حفظ',
+            text: context.l10n.btnSave,
             onPressed: () {
               final value = double.tryParse(
                 controller.text,
@@ -564,29 +609,31 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('إضافة بند'),
+        title: Text(context.l10n.dialogAddItemTitle),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nameController,
-                decoration: const InputDecoration(
-                  labelText: 'اسم المنتج/الخدمة',
+                decoration: InputDecoration(
+                  labelText: context.l10n.labelItemName,
                 ),
               ),
               const SizedBox(height: Spacing.md),
               TextField(
                 controller: quantityController,
                 keyboardType: <credential-fixture>,
-                decoration: const InputDecoration(labelText: 'الكمية'),
+                decoration: InputDecoration(
+                  labelText: context.l10n.labelQuantity,
+                ),
               ),
               const SizedBox(height: Spacing.md),
               TextField(
                 controller: priceController,
                 keyboardType: <credential-fixture>,
-                decoration: const InputDecoration(
-                  labelText: 'السعر',
+                decoration: InputDecoration(
+                  labelText: context.l10n.labelPrice,
                   suffixText: 'ر.س',
                 ),
               ),
@@ -595,13 +642,13 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ),
         actions: [
           AppEnhancedButton(
-            text: 'إلغاء',
+            text: context.l10n.dialogCancel,
             onPressed: () => Navigator.pop(context),
             style: AppEnhancedButtonStyle.text,
             size: AppEnhancedButtonSize.small,
           ),
           AppEnhancedButton(
-            text: 'إضافة',
+            text: context.l10n.btnAdd,
             onPressed: () {
               final name = nameController.text.trim();
               final quantity = double.tryParse(
@@ -660,8 +707,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
     if (_selectedCustomer == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('يرجى اختيار العميل'),
+        SnackBar(
+          content: Text(context.l10n.errSelectCustomer),
           backgroundColor: SemanticColors.error,
         ),
       );
@@ -670,8 +717,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
     if (_items.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('يرجى إضافة بند واحد على الأقل'),
+        SnackBar(
+          content: Text(context.l10n.errNoItems),
           backgroundColor: SemanticColors.error,
         ),
       );
@@ -692,6 +739,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         dueDate: _dueDate,
         taxRate: _taxRate,
         status: _status,
+        // ignore: lines_longer_than_80_chars
         notes: _notesController.text.trim().isEmpty
             ? null
             : _notesController.text.trim(),
@@ -712,7 +760,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              isEditing ? 'تم تحديث الفاتورة بنجاح' : 'تم إضافة الفاتورة بنجاح',
+              // ignore: lines_longer_than_80_chars
+              isEditing
+                  ? context.l10n.msgInvoiceUpdated
+                  : context.l10n.msgInvoiceAdded,
             ),
             backgroundColor: SemanticColors.secondary,
           ),
@@ -725,7 +776,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              isEditing ? 'فشل تحديث الفاتورة' : 'فشل إضافة الفاتورة',
+              // ignore: lines_longer_than_80_chars
+              isEditing
+                  ? context.l10n.errInvoiceUpdate
+                  : context.l10n.errInvoiceAdd,
             ),
             backgroundColor: SemanticColors.error,
           ),
@@ -735,7 +789,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('حدث خطأ: $e'),
+          content: Text(context.l10n.errGeneric(e.toString())),
           backgroundColor: SemanticColors.error,
         ),
       );

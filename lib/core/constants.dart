@@ -52,51 +52,6 @@ class StorageKeys {
   static const String invoiceStyle = 'invoice_style';
 }
 
-/// رسائل التطبيق
-///
-/// يحتوي على جميع الرسائل المعروضة للمستخدم
-/// مقسمة إلى رسائل نجاح ورسائل خطأ
-class AppMessages {
-  /// رسالة نجاح تسجيل الدخول
-  static const String loginSuccess = 'تم تسجيل الدخول بنجاح';
-
-  /// رسالة نجاح إعداد التطبيق
-  static const String setupSuccess = 'تم إعداد التطبيق بنجاح';
-
-  /// رسالة نجاح إنشاء الفاتورة
-  static const String invoiceCreatedSuccess = 'تم إنشاء الفاتورة بنجاح';
-
-  /// رسالة نجاح إضافة العميل
-  static const String customerAddedSuccess = 'تم إضافة العميل بنجاح';
-
-  /// رسالة نجاح حفظ البيانات
-  static const String dataSavedSuccess = 'تم حفظ البيانات بنجاح';
-
-  /// رسالة خطأ بيانات اعتماد غير صحيحة
-  static const String invalidCredentials = 'بيانات الاعتماد غير صحيحة';
-
-  /// رسالة خطأ حقل فارغ
-  static const String emptyField = 'هذا الحقل مطلوب';
-
-  /// رسالة خطأ بريد إلكتروني غير صحيح
-  static const String invalidEmail = 'البريد الإلكتروني غير صحيح';
-
-  /// رسالة خطأ كلمة مرور قصيرة
-  static const String passwordTooShort = 'كلمة المرور قصيرة جدًا';
-
-  /// رسالة خطأ اسم مستخدم مستخدم
-  static const String usernameTaken = 'اسم المستخدم مستخدم بالفعل';
-
-  /// رسالة خطأ عام
-  static const String errorOccurred = 'حدث خطأ ما. يرجى المحاولة لاحقًا';
-
-  /// رسالة خطأ عدم وجود اتصال بالإنترنت
-  static const String noInternetConnection = 'لا توجد اتصالية إنترنت';
-
-  /// رسالة خطأ في قاعدة البيانات
-  static const String databaseError = 'خطأ في قاعدة البيانات';
-}
-
 /// إعدادات التطبيق الأساسية
 ///
 /// يحتوي على جميع الإعدادات والقيم الافتراضية للتطبيق
@@ -154,19 +109,4 @@ class InvoiceStatus {
 
   /// حالة ملغاة - الفاتورة تم إلغاؤها
   static const String cancelled = 'cancelled';
-}
-
-/// تسميات حالات الفاتورة للعرض
-///
-/// يحتوي على الترجمة العربية لحالات الفاتورة
-/// تُستخدم لعرض الحالة للمستخدم بشكل مفهوم
-class InvoiceStatusLabels {
-  /// خريطة تربط حالة الفاتورة بالتسمية العربية
-  static const Map<String, String> labels = {
-    'draft': 'مسودة',
-    'issued': 'مُصدرة',
-    'paid': 'مدفوعة',
-    'overdue': 'مستحقة',
-    'cancelled': 'ملغاة',
-  };
 }

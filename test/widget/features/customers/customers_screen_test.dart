@@ -2,7 +2,9 @@ import 'package:basser_app/core/assets/app_illustrations.dart';
 import 'package:basser_app/features/customers/domain/entities/customer.dart';
 import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
 import 'package:basser_app/features/customers/presentation/screens/customers_screen.dart';
+import 'package:basser_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -18,7 +20,17 @@ void main() {
               (ref) async => CustomerFixtures.allCustomers,
             ),
           ],
-          child: const MaterialApp(home: CustomersScreen()),
+          child: const MaterialApp(
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+            home: CustomersScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -31,7 +43,17 @@ void main() {
           overrides: [
             customersProvider.overrideWith((ref) async => <Customer>[]),
           ],
-          child: const MaterialApp(home: CustomersScreen()),
+          child: const MaterialApp(
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+            home: CustomersScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -52,7 +74,17 @@ void main() {
               return CustomerFixtures.allCustomers;
             }),
           ],
-          child: const MaterialApp(home: CustomersScreen()),
+          child: const MaterialApp(
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+            home: CustomersScreen(),
+          ),
         ),
       );
       await tester.pump(const Duration(milliseconds: 10));
@@ -66,7 +98,17 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [customersProvider.overrideWith((ref) async => customers)],
-          child: const MaterialApp(home: CustomersScreen()),
+          child: const MaterialApp(
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+            home: CustomersScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -83,7 +125,17 @@ void main() {
               (ref) async => CustomerFixtures.allCustomers,
             ),
           ],
-          child: const MaterialApp(home: CustomersScreen()),
+          child: const MaterialApp(
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+            home: CustomersScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();

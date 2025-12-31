@@ -47,65 +47,6 @@ void main() {
     });
   });
 
-  group('AppMessages', () {
-    group('Success Messages', () {
-      test('success messages should be defined', () {
-        expect(AppMessages.loginSuccess, equals('تم تسجيل الدخول بنجاح'));
-        expect(AppMessages.setupSuccess, equals('تم إعداد التطبيق بنجاح'));
-        expect(
-          AppMessages.invoiceCreatedSuccess,
-          equals('تم إنشاء الفاتورة بنجاح'),
-        );
-        expect(
-          AppMessages.customerAddedSuccess,
-          equals('تم إضافة العميل بنجاح'),
-        );
-        expect(AppMessages.dataSavedSuccess, equals('تم حفظ البيانات بنجاح'));
-      });
-
-      test('all success messages should be non-empty', () {
-        expect(AppMessages.loginSuccess, isNotEmpty);
-        expect(AppMessages.setupSuccess, isNotEmpty);
-        expect(AppMessages.invoiceCreatedSuccess, isNotEmpty);
-        expect(AppMessages.customerAddedSuccess, isNotEmpty);
-        expect(AppMessages.dataSavedSuccess, isNotEmpty);
-      });
-    });
-
-    group('Error Messages', () {
-      test('error messages should be defined', () {
-        expect(
-          AppMessages.invalidCredentials,
-          equals('بيانات الاعتماد غير صحيحة'),
-        );
-        expect(AppMessages.emptyField, equals('هذا الحقل مطلوب'));
-        expect(AppMessages.invalidEmail, equals('البريد الإلكتروني غير صحيح'));
-        expect(AppMessages.passwordTooShort, equals('كلمة المرور قصيرة جدًا'));
-        expect(AppMessages.usernameTaken, equals('اسم المستخدم مستخدم بالفعل'));
-        expect(
-          AppMessages.errorOccurred,
-          equals('حدث خطأ ما. يرجى المحاولة لاحقًا'),
-        );
-        expect(
-          AppMessages.noInternetConnection,
-          equals('لا توجد اتصالية إنترنت'),
-        );
-        expect(AppMessages.databaseError, equals('خطأ في قاعدة البيانات'));
-      });
-
-      test('all error messages should be non-empty', () {
-        expect(AppMessages.invalidCredentials, isNotEmpty);
-        expect(AppMessages.emptyField, isNotEmpty);
-        expect(AppMessages.invalidEmail, isNotEmpty);
-        expect(AppMessages.passwordTooShort, isNotEmpty);
-        expect(AppMessages.usernameTaken, isNotEmpty);
-        expect(AppMessages.errorOccurred, isNotEmpty);
-        expect(AppMessages.noInternetConnection, isNotEmpty);
-        expect(AppMessages.databaseError, isNotEmpty);
-      });
-    });
-  });
-
   group('AppConfig', () {
     test('app info should be defined', () {
       expect(AppConfig.appName, equals('بصير'));
@@ -188,55 +129,6 @@ void main() {
       expect(
         InvoiceStatus.cancelled,
         equals(InvoiceStatus.cancelled.toLowerCase()),
-      );
-    });
-  });
-
-  group('InvoiceStatusLabels', () {
-    test('labels map should contain all statuses', () {
-      expect(InvoiceStatusLabels.labels, containsPair('draft', 'مسودة'));
-      expect(InvoiceStatusLabels.labels, containsPair('issued', 'مُصدرة'));
-      expect(InvoiceStatusLabels.labels, containsPair('paid', 'مدفوعة'));
-      expect(InvoiceStatusLabels.labels, containsPair('overdue', 'مستحقة'));
-      expect(InvoiceStatusLabels.labels, containsPair('cancelled', 'ملغاة'));
-    });
-
-    test('labels map should have 5 entries', () {
-      expect(InvoiceStatusLabels.labels.length, equals(5));
-    });
-
-    test('all labels should be non-empty', () {
-      InvoiceStatusLabels.labels.forEach((key, value) {
-        expect(key, isNotEmpty);
-        expect(value, isNotEmpty);
-      });
-    });
-
-    test('labels should match InvoiceStatus constants', () {
-      expect(InvoiceStatusLabels.labels.keys, contains(InvoiceStatus.draft));
-      expect(InvoiceStatusLabels.labels.keys, contains(InvoiceStatus.issued));
-      expect(InvoiceStatusLabels.labels.keys, contains(InvoiceStatus.paid));
-      expect(InvoiceStatusLabels.labels.keys, contains(InvoiceStatus.overdue));
-      expect(
-        InvoiceStatusLabels.labels.keys,
-        contains(InvoiceStatus.cancelled),
-      );
-    });
-
-    test('should be able to get label for each status', () {
-      expect(InvoiceStatusLabels.labels[InvoiceStatus.draft], equals('مسودة'));
-      expect(
-        InvoiceStatusLabels.labels[InvoiceStatus.issued],
-        equals('مُصدرة'),
-      );
-      expect(InvoiceStatusLabels.labels[InvoiceStatus.paid], equals('مدفوعة'));
-      expect(
-        InvoiceStatusLabels.labels[InvoiceStatus.overdue],
-        equals('مستحقة'),
-      );
-      expect(
-        InvoiceStatusLabels.labels[InvoiceStatus.cancelled],
-        equals('ملغاة'),
       );
     });
   });

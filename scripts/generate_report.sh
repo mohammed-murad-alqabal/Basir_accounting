@@ -83,15 +83,15 @@ EOF
 }
 
 log_info() {
-    echo -e "${BLUE}ℹ${NC} $1"
+    echo -e "${BLUE}ℹ${NC} $1" >&2
 }
 
 log_success() {
-    echo -e "${GREEN}✓${NC} $1"
+    echo -e "${GREEN}✓${NC} $1" >&2
 }
 
 log_warning() {
-    echo -e "${YELLOW}⚠${NC} $1"
+    echo -e "${YELLOW}⚠${NC} $1" >&2
 }
 
 log_error() {
@@ -130,13 +130,13 @@ collect_project_stats() {
     
     # حفظ الإحصائيات
     cat > "$stats_file" << EOF
-DART_FILES=$dart_files
-TEST_FILES=$test_files
-TOTAL_LINES=$total_lines
-PROJECT_SIZE=$project_size
-COMMIT_COUNT=$commit_count
-LAST_COMMIT=$last_commit
-CONTRIBUTORS=$contributors
+DART_FILES="$dart_files"
+TEST_FILES="$test_files"
+TOTAL_LINES="$total_lines"
+PROJECT_SIZE="$project_size"
+COMMIT_COUNT="$commit_count"
+LAST_COMMIT="$last_commit"
+CONTRIBUTORS="$contributors"
 EOF
     
     echo "$stats_file"
@@ -168,15 +168,11 @@ analyze_errors() {
     
     # حفظ التحليل
     cat > "$analysis_file" << EOF
-ERROR_COUNT=$error_count
-WARNING_COUNT=$warning_count
-INFO_COUNT=$info_count
-TOP_ERRORS<<ERRORS_END
-$top_errors
-ERRORS_END
-TOP_WARNINGS<<WARNINGS_END
-$top_warnings
-WARNINGS_END
+ERROR_COUNT="$error_count"
+WARNING_COUNT="$warning_count"
+INFO_COUNT="$info_count"
+TOP_ERRORS="$top_errors"
+TOP_WARNINGS="$top_warnings"
 EOF
     
     echo "$analysis_file"
@@ -221,11 +217,11 @@ collect_test_results() {
     
     # حفظ النتائج
     cat > "$test_file" << EOF
-TOTAL_TESTS=$total_tests
-PASSED_TESTS=$passed_tests
-FAILED_TESTS=$failed_tests
-SUCCESS_RATE=$success_rate
-COVERAGE=$coverage
+TOTAL_TESTS="$total_tests"
+PASSED_TESTS="$passed_tests"
+FAILED_TESTS="$failed_tests"
+SUCCESS_RATE="$success_rate"
+COVERAGE="$coverage"
 EOF
     
     echo "$test_file"

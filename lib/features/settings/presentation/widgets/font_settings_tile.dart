@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/theme/services/font_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
@@ -32,19 +33,19 @@ class FontSettingsTile extends ConsumerWidget {
 
           // اختيار نوع الخط
           ListTile(
-            title: const Text('نوع الخط'),
+            title: Text(context.l10n.fontSettingsTitle),
             subtitle: Text(_getFontName(currentFont)),
             trailing: DropdownButton<String>(
               value: currentFont,
               underline: const SizedBox(),
-              items: const [
+              items: [
                 DropdownMenuItem(
                   value: FontFamilies.arabic,
-                  child: Text('Cairo (الافتراضي)'),
+                  child: Text(context.l10n.fontCairo),
                 ),
                 DropdownMenuItem(
                   value: 'Roboto',
-                  child: Text('Roboto'),
+                  child: Text(context.l10n.fontRoboto),
                 ),
                 // يمكن إضافة المزيد من الخطوط هنا
               ],
@@ -74,7 +75,7 @@ class FontSettingsTile extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('حجم النص'),
+                    Text(context.l10n.fontSizeLabel),
                     Text('${(currentScale * 100).toInt()}%'),
                   ],
                 ),

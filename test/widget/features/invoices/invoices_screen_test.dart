@@ -1,6 +1,8 @@
 import 'package:basser_app/core/assets/app_illustrations.dart';
+import 'package:basser_app/core/providers/calendar_provider.dart';
 import 'package:basser_app/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:basser_app/features/invoices/presentation/screens/invoices_screen.dart';
+import 'package:basser_app/l10n/app_localizations.dart'; // Fixed import
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,8 +15,9 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            filteredInvoicesProvider
-                .overrideWithValue(const AsyncValue.data([])),
+            filteredInvoicesProvider.overrideWithValue(
+              const AsyncValue.data([]),
+            ),
             invoiceStatisticsProvider.overrideWithValue(
               AsyncValue.data(
                 InvoiceStatistics(
@@ -26,7 +29,12 @@ void main() {
               ),
             ),
           ],
-          child: const MaterialApp(home: InvoicesScreen()),
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+            home: InvoicesScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -37,8 +45,9 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            filteredInvoicesProvider
-                .overrideWithValue(const AsyncValue.data([])),
+            filteredInvoicesProvider.overrideWithValue(
+              const AsyncValue.data([]),
+            ),
             invoiceStatisticsProvider.overrideWithValue(
               AsyncValue.data(
                 InvoiceStatistics(
@@ -50,7 +59,12 @@ void main() {
               ),
             ),
           ],
-          child: const MaterialApp(home: InvoicesScreen()),
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+            home: InvoicesScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -61,14 +75,16 @@ void main() {
       expect(find.byType(EmptyStateIllustration), findsOneWidget);
     });
 
+    // ignore: lines_longer_than_80_chars
     testWidgets('should display invoice list when data is available',
         (tester) async {
       final invoice = MockData.createTestInvoice(id: 'inv-1');
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            filteredInvoicesProvider
-                .overrideWithValue(AsyncValue.data([invoice])),
+            filteredInvoicesProvider.overrideWithValue(
+              AsyncValue.data([invoice]),
+            ),
             invoiceStatisticsProvider.overrideWithValue(
               AsyncValue.data(
                 InvoiceStatistics(
@@ -80,11 +96,66 @@ void main() {
               ),
             ),
           ],
-          child: const MaterialApp(home: InvoicesScreen()),
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+            home: InvoicesScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.textContaining('فاتورة inv-1'), findsOneWidget);
+      expect(find.textContaining('فاتورة رقم inv-1'), findsOneWidget);
+    });
+
+    testWidgets(
+        'should display dates in Hijri when calendar preference is Hijri',
+        (tester) async {
+      // 2023-10-27 is 1445-04-12 in Hijri
+      final date = DateTime(2023, 10, 27);
+      final invoice = MockData.createTestInvoice(id: 'inv-1').copyWith(
+        issuedDate: date,
+      );
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            calendarProvider
+                .overrideWith(() => _MockCalendarNotifier(CalendarType.hijri)),
+            filteredInvoicesProvider.overrideWithValue(
+              AsyncValue.data([invoice]),
+            ),
+            invoiceStatisticsProvider.overrideWithValue(
+              AsyncValue.data(
+                InvoiceStatistics(
+                  totalInvoices: 1,
+                  paidInvoices: 0,
+                  overdueInvoices: 0,
+                  totalAmount: 1000,
+                ),
+              ),
+            ),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+            home: InvoicesScreen(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Check for Hijri year "١٤٤٥" and month "ربيع"
+      expect(find.textContaining('١٤٤٥'), findsOneWidget);
     });
   });
+}
+
+class _MockCalendarNotifier extends CalendarNotifier {
+  _MockCalendarNotifier(this.initial);
+  final CalendarType initial;
+
+  @override
+  Future<CalendarType> build() async => initial;
 }

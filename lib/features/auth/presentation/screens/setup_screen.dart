@@ -1,5 +1,5 @@
 import 'package:basser_app/core/assets/app_logo.dart';
-import 'package:basser_app/core/constants.dart';
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/theme/app_icons.dart' as legacy;
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
@@ -76,7 +76,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
       if (!mounted) return;
 
       await ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text(AppMessages.setupSuccess)))
+          .showSnackBar(SnackBar(content: Text(context.l10n.msgAccountCreated)))
           .closed;
 
       // الانتقال إلى شاشة الإعدادات الإضافية أو لوحة التحكم
@@ -90,7 +90,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(
-        SnackBar(content: Text('خطأ: $e')),
+        SnackBar(content: Text(context.l10n.errGeneric(e.toString()))),
       );
     } finally {
       if (mounted) {
@@ -121,8 +121,8 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                     children: [
                       // حقل اسم المستخدم
                       AppTextField(
-                        label: 'اسم المستخدم',
-                        hint: 'أدخل اسم المستخدم',
+                        label: context.l10n.labelUsername,
+                        hint: context.l10n.hintEnterUsername,
                         controller: _usernameController,
                         prefixIcon: const Icon(
                           legacy.AppIcons.user,
@@ -130,10 +130,10 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppMessages.emptyField;
+                            return context.l10n.errEmptyField;
                           }
                           if (value.length < 3) {
-                            return 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل';
+                            return context.l10n.errUsernameShort;
                           }
                           return null;
                         },
@@ -142,8 +142,8 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
 
                       // حقل كلمة المرور
                       AppTextField(
-                        label: 'كلمة المرور',
-                        hint: 'أدخل كلمة المرور',
+                        label: context.l10n.labelPassword,
+                        hint: context.l10n.hintEnterPassword,
                         controller: _passwordController,
                         obscureText: true,
                         prefixIcon: const Icon(
@@ -152,10 +152,10 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppMessages.emptyField;
+                            return context.l10n.errEmptyField;
                           }
                           if (value.length < 6) {
-                            return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+                            return context.l10n.errPasswordShort;
                           }
                           return null;
                         },
@@ -164,8 +164,8 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
 
                       // حقل تأكيد كلمة المرور
                       AppTextField(
-                        label: 'تأكيد كلمة المرور',
-                        hint: 'أعد إدخال كلمة المرور',
+                        label: context.l10n.labelConfirmPassword,
+                        hint: context.l10n.hintConfirmPassword,
                         controller: _confirmPasswordController,
                         obscureText: true,
                         prefixIcon: const Icon(
@@ -174,10 +174,10 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppMessages.emptyField;
+                            return context.l10n.errEmptyField;
                           }
                           if (value != _passwordController.text) {
-                            return 'كلمات المرور غير متطابقة';
+                            return context.l10n.errPasswordsDoNotMatch;
                           }
                           return null;
                         },
@@ -186,7 +186,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
 
                       // زر الإنشاء
                       AppEnhancedButton(
-                        text: 'إنشاء الحساب',
+                        text: context.l10n.btnCreateAccount,
                         onPressed: _handleSetup,
                         isLoading: _isLoading,
                         icon: legacy.AppIcons.userAdd,
@@ -221,18 +221,18 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
             ),
           ),
           const SizedBox(height: Spacing.lg),
-          const Text(
-            'إنشاء حساب جديد',
-            style: TextStyle(
+          Text(
+            context.l10n.setupTitle,
+            style: const TextStyle(
               fontSize: FontSizes.headlineSmall,
               fontWeight: FontWeight.bold,
               color: SemanticColors.textPrimary,
             ),
           ),
           const SizedBox(height: Spacing.sm),
-          const Text(
-            'أنشئ حسابك للبدء في إدارة فواتيرك',
-            style: TextStyle(
+          Text(
+            context.l10n.setupSubtitle,
+            style: const TextStyle(
               fontSize: FontSizes.bodyMedium,
               color: SemanticColors.textSecondary,
             ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/theme/services/color_customization_service.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class ColorPickerDialog extends ConsumerWidget {
     final currentColor = ref.watch(colorCustomizationProvider).value;
 
     return AlertDialog(
-      title: const Text('اختر لون التطبيق'),
+      title: Text(context.l10n.themeColorPickerTitle),
       content: SingleChildScrollView(
         child: ColorPicker(
           color: currentColor ?? const Color(0xFF2196F3), // Default fallback
@@ -73,13 +74,13 @@ class ColorPickerDialog extends ConsumerWidget {
             );
             Navigator.of(context).pop();
           },
-          child: const Text('استعادة الافتراضي'),
+          child: Text(context.l10n.btnRestoreDefault),
         ),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('تم'),
+          child: Text(context.l10n.btnDone),
         ),
       ],
     );

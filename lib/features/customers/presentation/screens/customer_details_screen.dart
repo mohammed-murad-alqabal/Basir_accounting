@@ -1,3 +1,4 @@
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/theme/services/icon_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
@@ -24,16 +25,16 @@ class CustomerDetailsScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: SemanticColors.background,
       appBar: AppAppBar(
-        title: 'تفاصيل العميل',
+        title: context.l10n.customerDetailsTitle,
         actions: [
           IconButton(
             icon: Icon(appIcons.edit),
-            tooltip: 'تعديل العميل',
+            tooltip: context.l10n.tooltipEditCustomer,
             onPressed: () => _editCustomer(context),
           ),
           IconButton(
             icon: Icon(appIcons.delete, color: SemanticColors.error),
-            tooltip: 'حذف العميل',
+            tooltip: context.l10n.actionDeleteCustomer,
             onPressed: () => _deleteCustomer(context, ref),
           ),
         ],
@@ -74,12 +75,12 @@ class CustomerDetailsScreen extends ConsumerWidget {
             const SizedBox(height: Spacing.xl),
 
             // معلومات الاتصال
-            _buildSectionTitle('معلومات الاتصال'),
+            _buildSectionTitle(context.l10n.sectionContactInfo),
             const SizedBox(height: Spacing.md),
             if (customer.email != null) ...[
               _buildInfoCard(
                 icon: appIcons.email,
-                label: 'البريد الإلكتروني',
+                label: context.l10n.labelEmail,
                 value: customer.email!,
               ),
               const SizedBox(height: Spacing.sm),
@@ -87,7 +88,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
             if (customer.phone != null) ...[
               _buildInfoCard(
                 icon: appIcons.phone,
-                label: 'رقم الهاتف',
+                label: context.l10n.labelPhone,
                 value: customer.phone!,
               ),
               const SizedBox(height: Spacing.sm),
@@ -95,7 +96,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
             if (customer.address != null) ...[
               _buildInfoCard(
                 icon: appIcons.location,
-                label: 'العنوان',
+                label: context.l10n.labelAddress,
                 value: customer.address!,
               ),
               const SizedBox(height: Spacing.sm),
@@ -104,7 +105,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
             // ملاحظات
             if (customer.notes != null) ...[
               const SizedBox(height: Spacing.lg),
-              _buildSectionTitle('ملاحظات'),
+              _buildSectionTitle(context.l10n.labelNotes),
               const SizedBox(height: Spacing.md),
               AppCard(
                 child: Padding(
@@ -122,17 +123,17 @@ class CustomerDetailsScreen extends ConsumerWidget {
 
             // معلومات إضافية
             const SizedBox(height: Spacing.lg),
-            _buildSectionTitle('معلومات إضافية'),
+            _buildSectionTitle(context.l10n.sectionAdditionalInfo),
             const SizedBox(height: Spacing.md),
             _buildInfoCard(
               icon: appIcons.calendar,
-              label: 'تاريخ الإضافة',
+              label: context.l10n.labelCreatedDate,
               value: _formatDate(customer.createdAt),
             ),
             const SizedBox(height: Spacing.sm),
             _buildInfoCard(
               icon: appIcons.update,
-              label: 'آخر تحديث',
+              label: context.l10n.labelLastUpdated,
               value: _formatDate(customer.updatedAt),
             ),
           ],
@@ -213,17 +214,17 @@ class CustomerDetailsScreen extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('حذف العميل'),
-        content: Text('هل أنت متأكد من حذف العميل ${customer.name}؟'),
+        title: Text(context.l10n.actionDeleteCustomer),
+        content: Text(context.l10n.msgConfirmDeleteCustomer(customer.name)),
         actions: [
           AppEnhancedButton(
-            text: 'إلغاء',
+            text: context.l10n.dialogCancel,
             onPressed: () => Navigator.pop(context, false),
             style: AppEnhancedButtonStyle.text,
             size: AppEnhancedButtonSize.small,
           ),
           AppEnhancedButton(
-            text: 'حذف',
+            text: context.l10n.btnDelete,
             onPressed: () => Navigator.pop(context, true),
             style: AppEnhancedButtonStyle.text,
             size: AppEnhancedButtonSize.small,
@@ -244,8 +245,8 @@ class CustomerDetailsScreen extends ConsumerWidget {
 
       if (result) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('تم حذف العميل بنجاح'),
+          SnackBar(
+            content: Text(context.l10n.msgCustomerDeleted),
             backgroundColor: SemanticColors.secondary,
           ),
         );
@@ -255,8 +256,8 @@ class CustomerDetailsScreen extends ConsumerWidget {
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('فشل حذف العميل'),
+          SnackBar(
+            content: Text(context.l10n.errCustomerDelete),
             backgroundColor: SemanticColors.error,
           ),
         );
@@ -265,7 +266,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('حدث خطأ: $e'),
+          content: Text(context.l10n.errGeneric(e.toString())),
           backgroundColor: SemanticColors.error,
         ),
       );

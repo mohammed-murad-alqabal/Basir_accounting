@@ -1,3 +1,4 @@
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/theme/services/icon_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +66,7 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
       leading: showBackButton
           ? IconButton(
               icon: Icon(appIcons.back),
-              tooltip: 'رجوع',
+              tooltip: context.l10n.tooltipBack,
               onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
             )
           : null,

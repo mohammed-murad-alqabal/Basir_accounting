@@ -1,3 +1,4 @@
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
 import 'package:flutter/material.dart';
@@ -46,14 +47,14 @@ class ThemePreviewCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: AppPrimaryButton(
-                    label: 'أساسي',
+                    label: context.l10n.labelPrimary,
                     onPressed: () {},
                   ),
                 ),
                 const SizedBox(width: Spacing.sm),
                 Expanded(
                   child: AppSecondaryButton(
-                    label: 'ثانوي',
+                    label: context.l10n.labelSecondary,
                     onPressed: () {},
                   ),
                 ),
@@ -62,10 +63,10 @@ class ThemePreviewCard extends StatelessWidget {
             const SizedBox(height: Spacing.md),
 
             // حقل إدخال
-            const AppTextField(
-              label: 'تجربة النص',
+            AppTextField(
+              label: context.l10n.labelTestText,
               hint: 'اكتب هنا...',
-              prefixIcon: Icon(Icons.text_fields),
+              prefixIcon: const Icon(Icons.text_fields),
             ),
             const SizedBox(height: Spacing.md),
 
