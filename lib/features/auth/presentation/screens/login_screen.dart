@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:basser_app/core/assets/app_logo.dart';
-import 'package:basser_app/core/constants.dart';
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/theme/app_icons.dart' as legacy;
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:basser_app/core/widgets/index.dart';
@@ -37,6 +37,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Future<void> _handleLogin() async {
+    if (_isLoading) return;
     // تفعيل validation عند أول محاولة
     if (_autovalidateMode == AutovalidateMode.disabled) {
       setState(
@@ -60,7 +61,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           );
 
       if (!success) {
-        throw Exception('فشل تسجيل الدخول. يرجى التحقق من البيانات.');
+        if (!mounted) return;
+        throw Exception(context.l10n.errLoginFailed);
       }
 
       if (!mounted) return;
@@ -75,7 +77,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text(AppMessages.loginSuccess)),
+        SnackBar(content: Text(context.l10n.msgLoginSuccess)),
       );
 
       // الانتقال إلى لوحة التحكم
@@ -85,7 +87,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('خطأ: $e')),
+        SnackBar(content: Text(context.l10n.errGeneric(e.toString()))),
       );
     } finally {
       if (mounted) {
@@ -97,6 +99,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Future<void> _handleGuestLogin() async {
+    if (_isLoading) return;
     setState(
       () => _isLoading = true,
     );
@@ -108,8 +111,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('مرحباً بك كضيف! يمكنك إنشاء حساب لاحقاً'),
+        SnackBar(
+          content: Text(context.l10n.msgGuestWelcome),
         ),
       );
 
@@ -120,7 +123,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('خطأ: $e')),
+        SnackBar(content: Text(context.l10n.errGeneric(e.toString()))),
       );
     } finally {
       if (mounted) {
@@ -155,8 +158,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   children: [
                     // حقل اسم المستخدم
                     AppTextField(
-                      label: 'اسم المستخدم',
-                      hint: 'يرجى إدخال اسم المستخدم',
+                      label: context.l10n.labelUsername,
+                      hint: context.l10n.hintEnterUsername,
                       controller: _usernameController,
                       prefixIcon: const Icon(
                         legacy.AppIcons.user,
@@ -164,7 +167,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppMessages.emptyField;
+                          return context.l10n.errEmptyField;
                         }
                         return null;
                       },
@@ -173,8 +176,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                     // حقل كلمة المرور
                     AppTextField(
-                      label: 'كلمة المرور',
-                      hint: 'يرجى إدخال كلمة المرور',
+                      label: context.l10n.labelPassword,
+                      hint: context.l10n.hintEnterPassword,
                       controller: _passwordController,
                       obscureText: true,
                       prefixIcon: const Icon(
@@ -183,7 +186,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppMessages.emptyField;
+                          return context.l10n.errEmptyField;
                         }
                         return null;
                       },
@@ -203,7 +206,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           },
                         ),
                         Text(
-                          'تذكرني',
+                          context.l10n.labelRememberMe,
                           style: TextStyles.bodyMedium.copyWith(
                             color: colorScheme.onSurface,
                           ),
@@ -214,15 +217,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                     // أزرار الإجراءات
                     AppPrimaryButton(
-                      label: 'تسجيل الدخول',
+                      label: context.l10n.loginTitle,
                       onPressed: _handleLogin,
                       isLoading: _isLoading,
                     ),
                     const SizedBox(height: Spacing.md),
 
                     AppSecondaryButton(
-                      label: 'الدخول كضيف',
-                      onPressed: _handleGuestLogin,
+                      label: context.l10n.loginGuest,
+                      onPressed: _isLoading ? null : _handleGuestLogin,
+                      isLoading: _isLoading,
                     ),
                     const SizedBox(height: Spacing.xl),
 
@@ -231,13 +235,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       child: Column(
                         children: [
                           Text(
-                            'لا تملك حساباً؟',
+                            context.l10n.msgNoAccount,
                             style: TextStyles.bodyMedium.copyWith(
                               color: colorScheme.onSurfaceVariant,
                             ),
                           ),
                           AppTextButton(
-                            label: 'إنشاء حساب جديد',
+                            label: context.l10n.btnCreateAccount,
                             onPressed: () {
                               unawaited(
                                 Navigator.of(context).pushNamed('/setup'),
@@ -280,7 +284,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
           const SizedBox(height: Spacing.lg),
           Text(
-            'تسجيل الدخول',
+            context.l10n.loginTitle,
             style: TextStyles.headlineSmall.copyWith(
               fontWeight: FontWeights.bold,
               color: colorScheme.onSurface,
@@ -288,7 +292,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
           const SizedBox(height: Spacing.xs),
           Text(
-            'مرحباً بك مجدداً! سجل دخولك للمتابعة',
+            context.l10n.loginSubtitle,
             textAlign: TextAlign.center,
             style: TextStyles.bodyMedium.copyWith(
               color: colorScheme.onSurfaceVariant,

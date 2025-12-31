@@ -1,3 +1,4 @@
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/widgets/app_enhanced_button.dart';
 import 'package:flutter/material.dart';
 
@@ -225,7 +226,7 @@ class EnhancedButtonTestSuite extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('اختبار الأزرار المحسّنة'),
+          title: Text(context.l10n.testEnhancedButtonsTitle),
           backgroundColor: Colors.blue.shade600,
           foregroundColor: Colors.white,
         ),

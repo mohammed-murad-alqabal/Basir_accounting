@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/providers.dart';
 import 'package:basser_app/core/theme/services/icon_customization_service.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
@@ -29,37 +30,40 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final appIcons = ref.watch(appIconsProvider);
 
     return Scaffold(
-      appBar: const AppAppBar(title: 'الإعدادات'),
+      appBar: AppAppBar(title: context.l10n.settingsTitle),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(Spacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // قسم إعدادات الشركة والفواتير
-            _buildSectionTitle('إعدادات الشركة والفواتير', colorScheme),
+            _buildSectionTitle(context.l10n.companySettingsTitle, colorScheme),
             const SizedBox(height: Spacing.md),
             _buildCompanySettingsCard(colorScheme, appIcons),
             const SizedBox(height: Spacing.xl),
 
             // قسم الحساب
-            _buildSectionTitle('الحساب', colorScheme),
+            _buildSectionTitle(context.l10n.accountTitle, colorScheme),
             const SizedBox(height: Spacing.md),
             AppListCard(
-              title: 'تعديل بيانات الحساب',
-              subtitle: 'غيّر اسم المستخدم وكلمة المرور',
+              title: context.l10n.editAccountTitle,
+              subtitle: context.l10n.editAccountSubtitle,
               leading: Icon(appIcons.person, color: colorScheme.primary),
               onTap: _handleEditAccount,
             ),
             const SizedBox(height: Spacing.xl),
 
             // قسم الإشعارات
-            _buildSectionTitle('الإشعارات', colorScheme),
+            _buildSectionTitle(context.l10n.notificationsTitle, colorScheme),
             const SizedBox(height: Spacing.md),
             AppCard(
               child: SwitchListTile(
-                title: const ResponsiveText('تفعيل الإشعارات', maxLines: 1),
-                subtitle: const ResponsiveText(
-                  'استقبل إشعارات الفواتير المتأخرة',
+                title: ResponsiveText(
+                  context.l10n.notificationsEnable,
+                  maxLines: 1,
+                ),
+                subtitle: ResponsiveText(
+                  context.l10n.notificationsSubtitle,
                   maxLines: 2,
                 ),
                 value: _notificationsEnabled,
@@ -73,11 +77,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             const SizedBox(height: Spacing.xl),
 
             // قسم المظهر
-            _buildSectionTitle('المظهر والتخصيص', colorScheme),
+            _buildSectionTitle(context.l10n.appearanceTitle, colorScheme),
             const SizedBox(height: Spacing.md),
             AppListCard(
-              title: 'إعدادات المظهر',
-              subtitle: 'الوضع الليلي، الألوان، الخطوط، والأيقونات',
+              title: context.l10n.appearanceSettingsTitle,
+              subtitle: context.l10n.appearanceSettingsSubtitle,
               leading: Icon(Icons.palette, color: colorScheme.primary),
               onTap: () {
                 unawaited(
@@ -93,18 +97,18 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             const SizedBox(height: Spacing.xl),
 
             // قسم المساعدة
-            _buildSectionTitle('المساعدة والدعم', colorScheme),
+            _buildSectionTitle(context.l10n.helpTitle, colorScheme),
             const SizedBox(height: Spacing.md),
             AppListCard(
-              title: 'حول التطبيق',
-              subtitle: 'الإصدار 1.0.0',
+              title: context.l10n.aboutAppTitle,
+              subtitle: context.l10n.aboutAppSubtitle,
               leading: Icon(appIcons.invoices, color: colorScheme.primary),
               onTap: () => _showAboutDialog(appIcons),
             ),
             const SizedBox(height: Spacing.sm),
             AppListCard(
-              title: 'سياسة الخصوصية',
-              subtitle: 'اقرأ سياسة الخصوصية الخاصة بنا',
+              title: context.l10n.privacyPolicyTitle,
+              subtitle: context.l10n.privacyPolicySubtitle,
               leading: Icon(
                 Icons.privacy_tip,
                 color: colorScheme.primary,
@@ -113,8 +117,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
             const SizedBox(height: Spacing.md),
             AppListCard(
-              title: 'شروط الخدمة',
-              subtitle: 'اقرأ شروط الخدمة الخاصة بنا',
+              title: context.l10n.termsOfServiceTitle,
+              subtitle: context.l10n.termsOfServiceSubtitle,
               leading: Icon(Icons.description, color: colorScheme.primary),
               onTap: _handleTermsOfService,
             ),
@@ -123,7 +127,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
             // زر تسجيل الخروج
             AppPrimaryButton(
-              label: 'تسجيل الخروج',
+              label: context.l10n.logoutLabel,
               onPressed: _showLogoutDialog,
             ),
           ],
@@ -149,8 +153,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
     return settingsAsync.when(
       data: (settings) => AppListCard(
-        title: settings['companyName'] ?? 'بيانات الشركة',
-        subtitle: 'تخصيص الفواتير، العملة، وعناوين التواصل',
+        title: settings['companyName'] ?? context.l10n.labelCompanyName,
+        subtitle: context.l10n.companySettingsDialogTitle,
         leading: Icon(appIcons.invoices, color: colorScheme.primary),
         onTap: () => _showEditCompanyDialog(settings),
       ),
@@ -163,8 +167,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         ),
       ),
       error: (e, _) => AppListCard(
-        title: 'خطأ في تحميل الإعدادات',
-        subtitle: 'انقر لإعادة المحاولة',
+        title: context.l10n.errorLoadingSettings,
+        subtitle: context.l10n.retryLabel,
         leading: const Icon(Icons.error, color: SemanticColors.error),
         onTap: () => ref.invalidate(companySettingsProvider),
       ),
@@ -190,26 +194,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('إعدادات الشركة والفواتير'),
+          title: Text(context.l10n.companySettingsDialogTitle),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 AppTextField(
                   controller: nameController,
-                  label: 'اسم الشركة',
-                  hint: 'أدخل اسم شركتك',
+                  label: context.l10n.labelCompanyName,
+                  hint: context.l10n.hintCompanyName,
                 ),
                 const SizedBox(height: Spacing.md),
                 AppTextField(
                   controller: taxNumberController,
-                  label: 'الرقم الضريبي',
-                  hint: 'أدخل الرقم الضريبي (اختياري)',
+                  label: context.l10n.labelTaxNumber,
+                  hint: context.l10n.hintTaxNumber,
                 ),
                 const SizedBox(height: Spacing.md),
                 AppTextField(
                   controller: taxRateController,
-                  label: 'نسبة الضريبة (مثال: 0.15)',
+                  label: context.l10n.labelTaxRate,
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
@@ -220,15 +224,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     Expanded(
                       child: AppTextField(
                         controller: currencySymbolController,
-                        label: 'رمز العملة',
-                        hint: 'ر.س',
+                        label: context.l10n.labelCurrencySymbol,
+                        hint: context.l10n.hintCurrencySymbol,
                       ),
                     ),
                     const SizedBox(width: Spacing.sm),
                     Expanded(
                       child: AppTextField(
                         controller: countryCodeController,
-                        label: 'كود الدولة',
+                        label: context.l10n.labelCountryCode,
                         hint: '966',
                       ),
                     ),
@@ -237,14 +241,23 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 const SizedBox(height: Spacing.md),
                 DropdownButtonFormField<String>(
                   initialValue: selectedStyle,
-                  decoration: const InputDecoration(
-                    labelText: 'شكل الفاتورة',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: context.l10n.labelInvoiceStyle,
+                    border: const OutlineInputBorder(),
                   ),
-                  items: const [
-                    DropdownMenuItem(value: 'standard', child: Text('قياسي')),
-                    DropdownMenuItem(value: 'modern', child: Text('عصري')),
-                    DropdownMenuItem(value: 'compact', child: Text('مختصر')),
+                  items: [
+                    DropdownMenuItem(
+                      value: 'standard',
+                      child: Text(context.l10n.styleStandard),
+                    ),
+                    DropdownMenuItem(
+                      value: 'modern',
+                      child: Text(context.l10n.styleModern),
+                    ),
+                    DropdownMenuItem(
+                      value: 'compact',
+                      child: Text(context.l10n.styleCompact),
+                    ),
                   ],
                   onChanged: (value) {
                     if (value != null) {
@@ -258,7 +271,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('إلغاء'),
+              child: Text(context.l10n.dialogCancel),
             ),
             TextButton(
               onPressed: () async {
@@ -273,20 +286,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     invoiceStyle: selectedStyle,
                   );
                   ref.invalidate(companySettingsProvider);
-                  if (context.mounted) Navigator.pop(context);
-                  _showSuccessMessage('تم حفظ الإعدادات بنجاح');
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    _showSuccessMessage(context.l10n.msgSettingsSaved);
+                  }
                 } on Exception catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('خطأ في الحفظ: $e'),
+                        content: Text(context.l10n.msgSaveError(e.toString())),
                         backgroundColor: SemanticColors.error,
                       ),
                     );
                   }
                 }
               },
-              child: const Text('حفظ'),
+              child: Text(context.l10n.dialogSave),
             ),
           ],
         ),
@@ -305,15 +320,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('تعديل بيانات الحساب'),
+        title: Text(context.l10n.editAccountTitle),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                decoration: const InputDecoration(
-                  labelText: 'اسم المستخدم',
-                  hintText: 'أدخل اسم المستخدم الجديد',
+                decoration: InputDecoration(
+                  labelText: context.l10n.labelUsername,
+                  hintText: context.l10n.hintEnterNewUsername,
                 ),
                 onChanged: (value) {
                   // حفظ القيمة
@@ -321,9 +336,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
               const SizedBox(height: Spacing.md),
               TextField(
-                decoration: const InputDecoration(
-                  labelText: 'كلمة المرور الجديدة',
-                  hintText: 'أدخل كلمة المرور الجديدة',
+                decoration: InputDecoration(
+                  labelText: context.l10n.labelNewPassword,
+                  hintText: context.l10n.hintEnterNewPassword,
                 ),
                 obscureText: true,
                 onChanged: (value) {
@@ -336,7 +351,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
+            child: Text(context.l10n.dialogCancel),
           ),
           TextButton(
             onPressed: () {
@@ -344,10 +359,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 context,
               );
               _showSuccessMessage(
-                'تم تحديث بيانات الحساب بنجاح',
+                context.l10n.msgAccountUpdated,
               );
             },
-            child: const Text('حفظ'),
+            child: Text(context.l10n.dialogSave),
           ),
         ],
       ),
@@ -358,32 +373,31 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   void _showAboutDialog(AppIconsData appIcons) {
     showAboutDialog(
       context: context,
-      applicationName: 'بصير',
-      applicationVersion: '1.0.0',
+      applicationName: context.l10n.appName,
+      applicationVersion: context.l10n.appVersion,
       applicationIcon: Icon(
         appIcons.invoices,
         size: 48,
         color: SemanticColors.primary,
       ),
-      applicationLegalese: '© 2025 فريق وكلاء تطوير مشروع بصير',
+      applicationLegalese: context.l10n.appCopyright,
       children: [
         const SizedBox(height: Spacing.md),
-        const Text(
-          'تطبيق بصير هو نظام متكامل لإدارة الفواتير والعملاء، '
-          'مصمم خصيصاً للأعمال الصغيرة والمتوسطة.',
+        Text(
+          context.l10n.aboutDescription,
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: Spacing.md),
-        const Text(
-          'الميزات الرئيسية:',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        Text(
+          context.l10n.aboutFeaturesTitle,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: Spacing.sm),
-        const Text('• إدارة الفواتير بسهولة'),
-        const Text('• إدارة العملاء'),
-        const Text('• تصدير الفواتير كـ PDF'),
-        const Text('• تخزين آمن للبيانات'),
-        const Text('• دعم كامل للغة العربية'),
+        Text(context.l10n.aboutFeature1),
+        Text(context.l10n.aboutFeature2),
+        Text(context.l10n.aboutFeature3),
+        Text(context.l10n.aboutFeature4),
+        Text(context.l10n.aboutFeature5),
       ],
     );
   }
@@ -423,35 +437,35 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('سياسة الخصوصية'),
-        content: const SingleChildScrollView(
+        title: Text(context.l10n.privacyPolicyTitle),
+        content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'نحن نحترم خصوصيتك',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                context.l10n.privacyHeader,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: Spacing.md),
-              Text('1. جميع بياناتك محفوظة محلياً على جهازك'),
-              SizedBox(height: Spacing.sm),
-              Text('2. لا نقوم بجمع أو مشاركة أي معلومات شخصية'),
-              SizedBox(height: Spacing.sm),
-              Text('3. بياناتك مشفرة وآمنة'),
-              SizedBox(height: Spacing.sm),
-              Text('4. لا نستخدم خدمات تتبع أو تحليلات خارجية'),
-              SizedBox(height: Spacing.sm),
-              Text('5. أنت المالك الوحيد لبياناتك'),
-              SizedBox(height: Spacing.md),
-              Text('للمزيد من المعلومات، يرجى زيارة موقعنا الإلكتروني.'),
+              const SizedBox(height: Spacing.md),
+              Text(context.l10n.privacyPoint1),
+              const SizedBox(height: Spacing.sm),
+              Text(context.l10n.privacyPoint2),
+              const SizedBox(height: Spacing.sm),
+              Text(context.l10n.privacyPoint3),
+              const SizedBox(height: Spacing.sm),
+              Text(context.l10n.privacyPoint4),
+              const SizedBox(height: Spacing.sm),
+              Text(context.l10n.privacyPoint5),
+              const SizedBox(height: Spacing.md),
+              Text(context.l10n.privacyFooter),
             ],
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('حسناً'),
+            child: Text(context.l10n.dialogOk),
           ),
         ],
       ),
@@ -493,35 +507,35 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('شروط الخدمة'),
-        content: const SingleChildScrollView(
+        title: Text(context.l10n.termsOfServiceTitle),
+        content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'شروط استخدام تطبيق بصير',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                context.l10n.termsHeader,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: Spacing.md),
-              Text('1. التطبيق مجاني للاستخدام الشخصي والتجاري'),
-              SizedBox(height: Spacing.sm),
-              Text('2. أنت مسؤول عن دقة البيانات المدخلة'),
-              SizedBox(height: Spacing.sm),
-              Text('3. يجب عليك الاحتفاظ بنسخة احتياطية من بياناتك'),
-              SizedBox(height: Spacing.sm),
-              Text('4. التطبيق يُقدم كما هو بدون ضمانات'),
-              SizedBox(height: Spacing.sm),
-              Text('5. نحن غير مسؤولين عن أي خسائر ناتجة عن استخدام التطبيق'),
-              SizedBox(height: Spacing.md),
-              Text('باستخدامك للتطبيق، فإنك توافق على هذه الشروط.'),
+              const SizedBox(height: Spacing.md),
+              Text(context.l10n.termsPoint1),
+              const SizedBox(height: Spacing.sm),
+              Text(context.l10n.termsPoint2),
+              const SizedBox(height: Spacing.sm),
+              Text(context.l10n.termsPoint3),
+              const SizedBox(height: Spacing.sm),
+              Text(context.l10n.termsPoint4),
+              const SizedBox(height: Spacing.sm),
+              Text(context.l10n.termsPoint5),
+              const SizedBox(height: Spacing.md),
+              Text(context.l10n.termsFooter),
             ],
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('حسناً'),
+            child: Text(context.l10n.dialogOk),
           ),
         ],
       ),
@@ -551,16 +565,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('تسجيل الخروج'),
-        content: const Text('هل أنت متأكد من رغبتك في تسجيل الخروج؟'),
+        title: Text(context.l10n.logoutLabel),
+        content: Text(context.l10n.msgConfirmLogout),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('إلغاء'),
+            child: Text(context.l10n.dialogCancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('تسجيل الخروج'),
+            child: Text(context.l10n.logoutLabel),
           ),
         ],
       ),
@@ -569,7 +583,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     if ((confirmed ?? false) && mounted) {
       // عرض رسالة تأكيد
       _showSuccessMessage(
-        'تم تسجيل الخروج بنجاح',
+        context.l10n.msgLogoutSuccess,
       );
       // الانتقال إلى شاشة تسجيل الدخول
       await Future<void>.delayed(

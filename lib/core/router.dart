@@ -1,3 +1,5 @@
+import 'package:basser_app/core/extensions/context_extensions.dart';
+import 'package:basser_app/features/auth/presentation/screens/guest_upgrade_screen.dart';
 import 'package:basser_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:basser_app/features/auth/presentation/screens/setup_screen.dart';
 import 'package:basser_app/features/customers/presentation/screens/customer_form_screen.dart';
@@ -82,10 +84,18 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const ButtonTestScreen(),
         );
+      case '/guest-upgrade':
+        return MaterialPageRoute(
+          builder: (_) => const GuestUpgradeScreen(),
+        );
       default:
         return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(child: Text('الشاشة غير موجودة: ${settings.name}')),
+          builder: (context) => Scaffold(
+            body: Center(
+              child: Text(
+                context.l10n.errorScreenNotFound(settings.name ?? ''),
+              ),
+            ),
           ),
         );
     }

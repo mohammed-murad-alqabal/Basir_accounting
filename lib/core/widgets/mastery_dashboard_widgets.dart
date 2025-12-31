@@ -1,4 +1,5 @@
 import 'package:basser_app/core/assets/app_logo.dart';
+import 'package:basser_app/core/extensions/context_extensions.dart';
 import 'package:basser_app/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 
@@ -31,34 +32,34 @@ class DashboardMasteryHeader extends StatelessWidget {
           ),
         ],
       ),
-      child: const Row(
+      child: Row(
         children: [
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'نظام بصير المطور',
-                  style: TextStyle(
+                  context.l10n.dashboardMasterySystemTitle,
+                  style: const TextStyle(
                     color: Color(0xFFFFD700),
                     fontSize: FontSizes.labelSmall,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.2,
                   ),
                 ),
-                SizedBox(height: Spacing.xs),
+                const SizedBox(height: Spacing.xs),
                 Text(
-                  'أهلاً بك في فضاء الإتقان',
-                  style: TextStyle(
+                  context.l10n.dashboardWelcomeMessage,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: FontSizes.headlineSmall,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: Spacing.xs),
+                const SizedBox(height: Spacing.xs),
                 Text(
-                  'بصير يراقب نمو أعمالك بدقة (Φ)',
-                  style: TextStyle(
+                  context.l10n.dashboardMotto,
+                  style: const TextStyle(
                     color: Colors.white70,
                     fontSize: FontSizes.bodySmall,
                   ),
@@ -66,7 +67,7 @@ class DashboardMasteryHeader extends StatelessWidget {
               ],
             ),
           ),
-          BasserShimmerLogo(size: 60),
+          const BasserShimmerLogo(size: 60),
         ],
       ),
     );
