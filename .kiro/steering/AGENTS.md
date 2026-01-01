@@ -1,4 +1,4 @@
-# Kiro Agents Directives - Baseer MVP
+# Kiro Agents Directives - Basir App
 
 ## 🤖 Agent Persona
 

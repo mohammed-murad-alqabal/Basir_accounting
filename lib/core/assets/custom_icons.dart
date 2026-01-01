@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 /// أيقونات بصير المخصصة
 ///
 /// مجموعة من الأيقونات المصممة خصيصاً لميزات التطبيق
-class BasserIcons {
-  BasserIcons._();
+class BasirIcons {
+  BasirIcons._();
 
   /// أيقونة العملاء
   static const IconData customers = Icons.people_outline;

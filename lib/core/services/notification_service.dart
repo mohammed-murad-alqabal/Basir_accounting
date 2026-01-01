@@ -51,8 +51,8 @@ class NotificationService {
     String? payload,
   }) async {
     final androidDetails = AndroidNotificationDetails(
-      'basser_default_channel',
-      'Basser Notifications',
+      'basir_default_channel',
+      'Basir Notifications',
       channelDescription: 'قناة الإشعارات الأساسية لتطبيق بصير',
       importance: Importance.max,
       priority: Priority.high,
