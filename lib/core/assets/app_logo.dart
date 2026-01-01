@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 ///
 /// يعتمد على الهندسة الرياضية والنسبة الذهبية (1.618) للتوازن المثالي.
 /// الشعار يمثل "عدسة البصيرة التقنية" والنمو المالي الرقمي.
-class BasserLogo extends StatelessWidget {
+class BasirLogo extends StatelessWidget {
   /// إنشاء شعار بصير
-  const BasserLogo({
+  const BasirLogo({
     super.key,
     this.size = 120,
     this.useText = false,
@@ -29,7 +29,8 @@ class BasserLogo extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildLogo(primaryColor),
-          const SizedBox(width: Spacing.md),
+          const SizedBox(
+              width: 16), // Using fixed spacing instead of Spacing.md
           Text(
             'بصير',
             style: TextStyle(
@@ -50,13 +51,13 @@ class BasserLogo extends StatelessWidget {
         width: size,
         height: size,
         child: CustomPaint(
-          painter: _BasserMastery2Painter(primaryColor: primaryColor),
+          painter: _BasirMastery2Painter(primaryColor: primaryColor),
         ),
       );
 }
 
-class _BasserMastery2Painter extends CustomPainter {
-  _BasserMastery2Painter({required this.primaryColor});
+class _BasirMastery2Painter extends CustomPainter {
+  _BasirMastery2Painter({required this.primaryColor});
 
   final Color primaryColor;
 
@@ -171,9 +172,9 @@ class _BasserMastery2Painter extends CustomPainter {
 }
 
 /// أيقونة بصير المبسطة (Mastery 2.0 Icon)
-class BasserIcon extends StatelessWidget {
+class BasirIcon extends StatelessWidget {
   /// إنشاء أيقونة بصير
-  const BasserIcon({super.key, this.size = 24});
+  const BasirIcon({super.key, this.size = 24});
 
   /// حجم الأيقونة
   final double size;
@@ -185,25 +186,25 @@ class BasserIcon extends StatelessWidget {
       width: size,
       height: size,
       child: CustomPaint(
-        painter: _BasserMastery2Painter(primaryColor: primaryColor),
+        painter: _BasirMastery2Painter(primaryColor: primaryColor),
       ),
     );
   }
 }
 
 /// شعار بصير مع تأثير "اللمعان المؤسسي" (Institutional Shimmer)
-class BasserShimmerLogo extends StatefulWidget {
+class BasirShimmerLogo extends StatefulWidget {
   /// إنشاء شعار بصير اللامع
-  const BasserShimmerLogo({super.key, this.size = 100});
+  const BasirShimmerLogo({super.key, this.size = 100});
 
   /// حجم الشعار
   final double size;
 
   @override
-  State<BasserShimmerLogo> createState() => _BasserShimmerLogoState();
+  State<BasirShimmerLogo> createState() => _BasirShimmerLogoState();
 }
 
-class _BasserShimmerLogoState extends State<BasserShimmerLogo>
+class _BasirShimmerLogoState extends State<BasirShimmerLogo>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -239,7 +240,7 @@ class _BasserShimmerLogoState extends State<BasserShimmerLogo>
             transform: _SlidingGradientTransform(offset: _controller.value),
           ).createShader(bounds),
           blendMode: BlendMode.srcATop,
-          child: BasserLogo(size: widget.size),
+          child: BasirLogo(size: widget.size),
         ),
       );
 }
