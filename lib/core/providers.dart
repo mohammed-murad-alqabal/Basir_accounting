@@ -60,7 +60,7 @@ final isarProvider = FutureProvider<Isar>((ref) async {
     final isar = await Isar.open(
       [CustomerModelSchema, InvoiceModelSchema],
       directory: dir.path,
-      name: 'basser_db',
+      name: 'basir_db',
     );
     return isar;
   } on Exception catch (e) {
