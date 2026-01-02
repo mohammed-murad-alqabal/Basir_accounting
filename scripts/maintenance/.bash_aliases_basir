@@ -261,7 +261,7 @@ function btest-all() {
 # Welcome Message - رسالة الترحيب
 # ═══════════════════════════════════════════════════════════
 
-echo "✅ تم تحميل Basir App aliases بنجاح!"
+echo "✅ تم تحميل Basir MVP aliases بنجاح!"
 echo "💡 استخدم 'bstatus' لعرض حالة المشروع"
 echo "💡 استخدم 'btest' لتشغيل الاختبارات"
 echo "💡 استخدم 'banalyze' لتحليل الكود"
