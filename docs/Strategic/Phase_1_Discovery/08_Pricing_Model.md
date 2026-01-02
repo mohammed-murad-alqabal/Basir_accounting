@@ -1,6 +1,6 @@
-# Cost Structure & Pricing Model: Baseer Intelligent Financial System
+# Cost Structure & Pricing Model: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P1-009  
+**Document ID:** basir-P1-009  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -10,7 +10,7 @@
 
 ## Pricing Philosophy
 
-Baseer adopts a **value-based freemium pricing model** that:
+Basir adopts a **value-based freemium pricing model** that:
 
 1. Removes friction with a generous free tier
 2. Captures value through premium features
@@ -68,7 +68,7 @@ Baseer adopts a **value-based freemium pricing model** that:
 | Qoyod      | $20        | $40      | $60      |
 | QuickBooks | $15        | $30      | $55      |
 | Xero       | $13        | $37      | $70      |
-| **Baseer** | **$15**    | **$30**  | **$80**  |
+| **Basir** | **$15**    | **$30**  | **$80**  |
 
 ### Value-Based Positioning
 
@@ -171,5 +171,5 @@ _Note: Egypt pricing adjusted for purchasing power parity_
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

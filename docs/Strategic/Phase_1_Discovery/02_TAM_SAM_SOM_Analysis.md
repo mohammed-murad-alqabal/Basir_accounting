@@ -1,6 +1,6 @@
-# TAM/SAM/SOM Analysis: Baseer Intelligent Financial System
+# TAM/SAM/SOM Analysis: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P1-003  
+**Document ID:** basir-P1-003  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -10,7 +10,7 @@
 
 ## Market Sizing Framework
 
-This analysis uses a bottom-up approach to calculate the Total Addressable Market (TAM), Serviceable Addressable Market (SAM), and Serviceable Obtainable Market (SOM) for Baseer.
+This analysis uses a bottom-up approach to calculate the Total Addressable Market (TAM), Serviceable Addressable Market (SAM), and Serviceable Obtainable Market (SOM) for Basir.
 
 ---
 
@@ -76,7 +76,7 @@ The total market demand for financial management software across all segments in
 
 ### Definition
 
-The portion of TAM that Baseer can realistically serve with its current product scope and geographic focus.
+The portion of TAM that Basir can realistically serve with its current product scope and geographic focus.
 
 ### SAM Filters Applied
 
@@ -116,7 +116,7 @@ The portion of TAM that Baseer can realistically serve with its current product 
 
 ### Definition
 
-The realistic market share Baseer can capture within 5 years.
+The realistic market share Basir can capture within 5 years.
 
 ### SOM Assumptions
 
@@ -180,7 +180,7 @@ The realistic market share Baseer can capture within 5 years.
 | FreshBooks | NA Freelancers | $200M | $2B       | 10x      |
 | Wave       | NA SME         | $100M | $500M     | 5x       |
 
-### Baseer Valuation Potential
+### Basir Valuation Potential
 
 | Scenario     | ARR (Year 5) | Multiple | Valuation |
 | ------------ | ------------ | -------- | --------- |
@@ -210,5 +210,5 @@ The realistic market share Baseer can capture within 5 years.
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

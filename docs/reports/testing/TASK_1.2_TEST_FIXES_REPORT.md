@@ -35,7 +35,7 @@
 
 ```dart
 // الاختبار يتوقع
-expect(valueText.style?.fontSize, AppTypography.headlineSmall); // 24.0
+expect(valueText.style?.fontSize, AppAppTypography.headlineSmall); // 24.0
 expect(valueText.style?.fontWeight, FontWeight.w700);
 
 // لكن التنفيذ الفعلي

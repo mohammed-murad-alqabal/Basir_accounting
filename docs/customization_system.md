@@ -206,8 +206,8 @@ MaterialApp(
 
 | File                                                                                                                            | Description     |
 | ------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| [color_customization_service.dart](file:///home/m/Projects/Basser_MVP/lib/core/theme/services/color_customization_service.dart) | خدمة الألوان    |
-| [font_customization_service.dart](file:///home/m/Projects/Basser_MVP/lib/core/theme/services/font_customization_service.dart)   | خدمة الخطوط     |
-| [icon_customization_service.dart](file:///home/m/Projects/Basser_MVP/lib/core/theme/services/icon_customization_service.dart)   | خدمة الأيقونات  |
-| [theme_storage_utils.dart](file:///home/m/Projects/Basser_MVP/lib/core/theme/services/theme_storage_utils.dart)                 | أدوات التخزين   |
-| [app_icons.dart](file:///home/m/Projects/Basser_MVP/lib/core/theme/tokens/app_icons.dart)                                       | تعريف الأيقونات |
+| [color_customization_service.dart](file:///home/m/Projects/Basir_MVP/lib/core/theme/services/color_customization_service.dart) | خدمة الألوان    |
+| [font_customization_service.dart](file:///home/m/Projects/Basir_MVP/lib/core/theme/services/font_customization_service.dart)   | خدمة الخطوط     |
+| [icon_customization_service.dart](file:///home/m/Projects/Basir_MVP/lib/core/theme/services/icon_customization_service.dart)   | خدمة الأيقونات  |
+| [theme_storage_utils.dart](file:///home/m/Projects/Basir_MVP/lib/core/theme/services/theme_storage_utils.dart)                 | أدوات التخزين   |
+| [app_icons.dart](file:///home/m/Projects/Basir_MVP/lib/core/theme/tokens/app_icons.dart)                                       | تعريف الأيقونات |

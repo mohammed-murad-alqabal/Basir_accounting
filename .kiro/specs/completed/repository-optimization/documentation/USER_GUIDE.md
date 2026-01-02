@@ -69,7 +69,7 @@
 ```bash
 # استنساخ المشروع
 git clone <repository-url>
-cd Basser_MVP
+cd Basir_MVP
 
 # تثبيت التبعيات
 flutter pub get

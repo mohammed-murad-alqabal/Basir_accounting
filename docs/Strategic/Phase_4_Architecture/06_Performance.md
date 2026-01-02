@@ -1,6 +1,6 @@
-# Performance & Optimization: Baseer Intelligent Financial System
+# Performance & Optimization: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P4-007  
+**Document ID:** basir-P4-007  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -261,7 +261,7 @@ export const options = {
 };
 
 export default function () {
-  const res = http.get("https://api.baseer.app/v1/invoices", {
+  const res = http.get("https://api.basir.app/v1/invoices", {
     headers: { Authorization: `Bearer ${__ENV.TOKEN}` },
   });
 
@@ -320,5 +320,5 @@ export default function () {
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

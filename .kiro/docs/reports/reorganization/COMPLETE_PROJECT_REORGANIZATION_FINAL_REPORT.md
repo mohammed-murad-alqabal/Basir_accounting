@@ -58,7 +58,7 @@
 
 6. **تنظيف ملفات متنوعة**
 
-   - `.bash_aliases_basser` → `scripts/maintenance/`
+   - `.bash_aliases_basir` → `scripts/maintenance/`
    - `git_fsck_report.txt` → `logs/git/`
    - `sqlite_mcp_server.db` → `.kiro/data/`
    - `fix_int_literals.py` → `scripts/maintenance/`
@@ -206,7 +206,7 @@
 ### الجذر (نظيف 100%)
 
 ```
-basser_mobile/
+basir_mobile/
 ├── .gitignore              ✅ محدث ونظيف
 ├── .metadata
 ├── analysis_options.yaml
@@ -256,7 +256,7 @@ docs/
 ```
 scripts/
 ├── maintenance/            ✅ محدث
-│   ├── .bash_aliases_basser
+│   ├── .bash_aliases_basir
 │   ├── cleanup_project.sh
 │   ├── fix_all_issues.sh
 │   ├── fix_int_literals.py

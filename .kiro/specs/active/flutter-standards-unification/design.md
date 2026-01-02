@@ -134,7 +134,7 @@ Constants: lowerCamelCase (maxRetries)
 class AppConstants {
   static const int MAX_RETRY_ATTEMPTS = 3;
   static const Duration DEFAULT_TIMEOUT = Duration(seconds: 30);
-  static const String API_BASE_URL = 'https://api.baseer.com';
+  static const String API_BASE_URL = 'https://api.basir.com';
 }
 
 // Local Constants (lowerCamelCase)
@@ -792,7 +792,7 @@ class DatabaseService {
     _instance = await Isar.open(
       [CustomerModelSchema, InvoiceModelSchema],
       directory: dir.path,
-      name: 'baseer_db',
+      name: 'basir_db',
       maxSizeMiB: 256, // Limit database size
     );
 

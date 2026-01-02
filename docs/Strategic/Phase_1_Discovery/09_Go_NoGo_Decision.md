@@ -1,6 +1,6 @@
-# Go/No-Go Decision Document: Baseer Intelligent Financial System
+# Go/No-Go Decision Document: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P1-010  
+**Document ID:** basir-P1-010  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ DECISION: GO  
@@ -168,5 +168,5 @@ The following must be maintained for the GO decision to remain valid:
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

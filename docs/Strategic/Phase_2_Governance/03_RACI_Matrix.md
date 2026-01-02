@@ -1,6 +1,6 @@
-# RACI Matrix: Baseer Intelligent Financial System
+# RACI Matrix: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P2-004  
+**Document ID:** basir-P2-004  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -105,5 +105,5 @@
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

@@ -82,11 +82,11 @@ Widget build(BuildContext context) {
     style: ElevatedButton.styleFrom(
       minimumSize: Size(width ?? 88, height ?? 52), // ✅ زيادة الحد الأدنى
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.lg,
-        vertical: AppSpacing.md + 4, // ✅ زيادة padding العمودي
+        horizontal: Spacing.lg,
+        vertical: Spacing.md + 4, // ✅ زيادة padding العمودي
       ),
       textStyle: const TextStyle(
-        fontSize: AppTypography.bodyLarge,
+        fontSize: AppAppTypography.bodyLarge,
         fontWeight: FontWeight.w600,
         height: 1.5, // ✅ زيادة line-height
       ),
@@ -151,16 +151,16 @@ elevatedButtonTheme: ElevatedButtonThemeData(
     elevation: 0,
     shadowColor: AppColors.shadow,
     padding: const EdgeInsets.symmetric(
-      horizontal: AppSpacing.lg,
-      vertical: AppSpacing.md + 4, // ✅ زيادة من 18px إلى 20px
+      horizontal: Spacing.lg,
+      vertical: Spacing.md + 4, // ✅ زيادة من 18px إلى 20px
     ),
     minimumSize: const Size(88, 52), // ✅ زيادة من 48px إلى 52px
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(AppBorderRadius.md),
     ),
     textStyle: const TextStyle(
-      fontSize: AppTypography.labelLarge,
-      fontWeight: AppTypography.semiBold,
+      fontSize: AppAppTypography.labelLarge,
+      fontWeight: AppAppTypography.semiBold,
       height: 1.5, // ✅ زيادة من 1.3 إلى 1.5
       letterSpacing: 0.5,
     ),

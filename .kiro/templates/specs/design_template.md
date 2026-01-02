@@ -1,8 +1,8 @@
 # [Feature Name] Design Document
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Date:** [Date]  
-**Author:** Basser Project Development Agents Team  
+**Author:** Basir Project Development Agents Team  
 **Status:** 🔄 Draft
 
 ---
@@ -139,7 +139,7 @@ stateDiagram-v2
 
 1. **ValidationError** - Invalid input
 2. **NetworkError** - Connection failed
-3. **DatabaseError** - Storage failed
+3. **Databasirror** - Storage failed
 
 ### Error Messages
 
@@ -182,4 +182,4 @@ Additional design notes or decisions.
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team
+**Prepared by:** Basir Project Development Agents Team

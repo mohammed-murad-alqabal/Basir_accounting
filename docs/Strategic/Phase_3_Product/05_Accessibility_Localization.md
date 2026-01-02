@@ -1,6 +1,6 @@
-# Accessibility & Localization Specs: Baseer Intelligent Financial System
+# Accessibility & Localization Specs: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P3-006  
+**Document ID:** basir-P3-006  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -206,5 +206,5 @@
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

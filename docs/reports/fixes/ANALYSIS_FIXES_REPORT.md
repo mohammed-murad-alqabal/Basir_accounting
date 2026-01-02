@@ -29,7 +29,7 @@
 
 #### ب. في `lib/main.dart`:
 
-4. **السطر 183:** `color: Colors.white` في BasserLogo
+4. **السطر 183:** `color: Colors.white` في BasirLogo
 
 **السبب:** هذه القيم هي القيم الافتراضية في الـ widgets، لذا لا حاجة لتحديدها صراحة.
 
@@ -87,7 +87,7 @@ ResponsiveText(
 **قبل ❌:**
 
 ```dart
-const BasserLogo(
+const BasirLogo(
   size: 100,
   color: Colors.white,  // زائد
 ),
@@ -96,7 +96,7 @@ const BasserLogo(
 **بعد ✅:**
 
 ```dart
-const BasserLogo(
+const BasirLogo(
   size: 100,  // white هو الافتراضي
 ),
 ```
@@ -195,7 +195,7 @@ final textTheme = const TextTheme(
   // استخدام Cairo المحلي
   bodyLarge: TextStyle(
     fontFamily: 'Cairo',
-    fontSize: AppTypography.bodyLarge,
+    fontSize: AppAppTypography.bodyLarge,
   ),
   // ... باقي الأنماط
 );

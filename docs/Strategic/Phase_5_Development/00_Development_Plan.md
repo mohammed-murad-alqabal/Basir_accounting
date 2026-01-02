@@ -1,6 +1,6 @@
-# Development Plan & Testing Strategy: Baseer Intelligent Financial System
+# Development Plan & Testing Strategy: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P5-001  
+**Document ID:** basir-P5-001  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -155,5 +155,5 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

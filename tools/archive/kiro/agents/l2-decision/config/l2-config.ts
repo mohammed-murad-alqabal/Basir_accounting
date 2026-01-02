@@ -303,7 +303,7 @@ export function createEnvironmentConfig(environment: 'development' | 'testing' |
 /**
  * الحصول على تكوين مخصص لمشروع بصير MVP
  */
-export function getBasserMVPConfig(): L2DecisionConfig {
+export function getBasirMVPConfig(): L2DecisionConfig {
   const config = JSON.parse(JSON.stringify(DEFAULT_L2_CONFIG));
   
   // تخصيصات خاصة بمشروع بصير
@@ -314,8 +314,8 @@ export function getBasserMVPConfig(): L2DecisionConfig {
   config.engine.confidenceThreshold = 0.75;
   
   // تكوين خاص بـ Flutter/Riverpod/Isar
-  config.rules.rulesPath = '.kiro/config/basser-rules.yml';
-  config.ml.modelsPath = '.kiro/data/basser-models';
+  config.rules.rulesPath = '.kiro/config/basir-rules.yml';
+  config.ml.modelsPath = '.kiro/data/basir-models';
   
   // مراقبة محسنة لتطبيقات Flutter
   config.integration.monitoring.metricsInterval = 45000;
@@ -323,7 +323,7 @@ export function getBasserMVPConfig(): L2DecisionConfig {
   
   // إعدادات الأمان للمشروع
   config.security.enableAuditLog = true;
-  config.security.auditLogPath = '.kiro/logs/basser-l2-audit.log';
+  config.security.auditLogPath = '.kiro/logs/basir-l2-audit.log';
   
   return config;
 }

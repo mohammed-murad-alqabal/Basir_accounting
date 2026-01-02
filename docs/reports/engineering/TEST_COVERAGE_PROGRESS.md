@@ -125,8 +125,8 @@
 **الاختبارات:**
 
 - AppColors (جميع الألوان)
-- AppTypography (الأحجام والأوزان)
-- AppSpacing
+- AppAppTypography.(الأحجام والأوزان)
+- Spacing
 - AppBorderRadius
 - AppIconSize
 - AppShadows

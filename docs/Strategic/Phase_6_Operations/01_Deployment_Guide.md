@@ -1,6 +1,6 @@
-# Deployment Guide: Baseer Intelligent Financial System
+# Deployment Guide: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P6-002  
+**Document ID:** basir-P6-002  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -130,22 +130,22 @@ CMD ["/server"]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: baseer-api
+  name: basir-api
   labels:
-    app: baseer-api
+    app: basir-api
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: baseer-api
+      app: basir-api
   template:
     metadata:
       labels:
-        app: baseer-api
+        app: basir-api
     spec:
       containers:
         - name: api
-          image: gcr.io/baseer/api:latest
+          image: gcr.io/basir/api:latest
           ports:
             - containerPort: 8080
           resources:
@@ -159,7 +159,7 @@ spec:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: baseer-secrets
+                  name: basir-secrets
                   key: database-url
           livenessProbe:
             httpGet:
@@ -189,16 +189,16 @@ IMAGE_TAG=$2
 echo "Deploying to $ENV with tag $IMAGE_TAG"
 
 # Build and push image
-docker build -t gcr.io/baseer/api:$IMAGE_TAG .
-docker push gcr.io/baseer/api:$IMAGE_TAG
+docker build -t gcr.io/basir/api:$IMAGE_TAG .
+docker push gcr.io/basir/api:$IMAGE_TAG
 
 # Update Kubernetes
-kubectl set image deployment/baseer-api \
-  api=gcr.io/baseer/api:$IMAGE_TAG \
-  -n baseer-$ENV
+kubectl set image deployment/basir-api \
+  api=gcr.io/basir/api:$IMAGE_TAG \
+  -n basir-$ENV
 
 # Wait for rollout
-kubectl rollout status deployment/baseer-api -n baseer-$ENV
+kubectl rollout status deployment/basir-api -n basir-$ENV
 
 echo "Deployment complete!"
 ```
@@ -252,7 +252,7 @@ migrate -path migrations -database "$DATABASE_URL" version
 apiVersion: v1
 kind: Secret
 metadata:
-  name: baseer-secrets
+  name: basir-secrets
 type: Opaque
 data:
   database-url: <base64>
@@ -275,10 +275,10 @@ data:
 
 ```bash
 # Rollback to previous deployment
-kubectl rollout undo deployment/baseer-api -n baseer-prod
+kubectl rollout undo deployment/basir-api -n basir-prod
 
 # Rollback to specific revision
-kubectl rollout undo deployment/baseer-api --to-revision=5 -n baseer-prod
+kubectl rollout undo deployment/basir-api --to-revision=5 -n basir-prod
 ```
 
 ### Database Rollback
@@ -288,7 +288,7 @@ kubectl rollout undo deployment/baseer-api --to-revision=5 -n baseer-prod
 migrate -path migrations -database "$DATABASE_URL" down 1
 
 # Restore from backup (last resort)
-pg_restore -d baseer_prod backup_20251227.dump
+pg_restore -d basir_prod backup_20251227.dump
 ```
 
 ---
@@ -314,5 +314,5 @@ pg_restore -d baseer_prod backup_20251227.dump
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

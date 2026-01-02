@@ -197,7 +197,7 @@ void main() {
 
 ```bash
 # على Android
-adb shell dumpsys meminfo com.example.basser_mvp
+adb shell dumpsys meminfo com.example.basir_mvp
 
 # أو استخدام Flutter DevTools
 flutter pub global activate devtools

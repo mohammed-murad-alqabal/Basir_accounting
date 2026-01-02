@@ -379,9 +379,9 @@
 
 ```dart
 // نظام الوكلاء الذكية لمشروع بصير - Flutter/Dart
-import 'package:baseer/agents/analysis_layer.dart';
-import 'package:baseer/agents/decision_layer.dart';
-import 'package:baseer/agents/execution_layer.dart';
+import 'package:basir/agents/analysis_layer.dart';
+import 'package:basir/agents/decision_layer.dart';
+import 'package:basir/agents/execution_layer.dart';
 
 class IntelligentAgentSystem {
   late final AnalysisLayer l1;

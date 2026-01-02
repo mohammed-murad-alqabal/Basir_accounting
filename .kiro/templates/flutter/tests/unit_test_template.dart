@@ -16,10 +16,10 @@ import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 
 // Import the class under test
-// import 'package:basser_app/path/to/${CLASS_UNDER_TEST}.dart';
+// import 'package:basir_app/path/to/${CLASS_UNDER_TEST}.dart';
 
 // Import dependencies to mock
-// import 'package:basser_app/path/to/${DEPENDENCY_CLASS}.dart';
+// import 'package:basir_app/path/to/${DEPENDENCY_CLASS}.dart';
 
 // Import test helpers
 import '../../helpers/test_helpers.dart';

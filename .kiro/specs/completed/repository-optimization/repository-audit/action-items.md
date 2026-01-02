@@ -61,8 +61,8 @@
   tar -tzf backup_git_*.tar.gz | head -20
 
   # نقل إلى مكان آمن
-  mkdir -p ~/backups/basser_mvp/
-  mv backup_git_*.tar.gz ~/backups/basser_mvp/
+  mkdir -p ~/backups/basir_mvp/
+  mv backup_git_*.tar.gz ~/backups/basir_mvp/
   ```
 
 - **معايير القبول:**
@@ -70,7 +70,7 @@
   - [ ] النسخة محفوظة في مكان آمن
   - [ ] تم التحقق من سلامة النسخة
 - **الحجم المتوقع:** ~50-100 MB
-- **الموقع:** `~/backups/basser_mvp/`
+- **الموقع:** `~/backups/basir_mvp/`
 
 #### 3. حفظ الملفات المعدلة (Commit + Push)
 
@@ -143,7 +143,7 @@ git push origin main
 - [ ] جميع jobs تنجح
 - [ ] وقت التنفيذ < 15 دقيقة
 - [ ] لا توجد أخطاء في الفحوصات
-- **الرابط:** `https://github.com/mohammed-murad-alqabal/Basser_MVP/actions`
+- **الرابط:** `https://github.com/mohammed-murad-alqabal/Basir_MVP/actions`
 - **المراقبة:** يومياً لمدة أسبوع
 
 #### 5. رفع تغطية الاختبارات من 67.9% إلى 70%+

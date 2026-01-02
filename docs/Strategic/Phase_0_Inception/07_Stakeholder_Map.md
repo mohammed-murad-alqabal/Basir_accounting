@@ -1,6 +1,6 @@
-# Stakeholder Map: Baseer Intelligent Financial System
+# Stakeholder Map: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P0-008  
+**Document ID:** basir-P0-008  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -10,7 +10,7 @@
 
 ## Stakeholder Overview
 
-This document identifies and analyzes all stakeholders involved in or affected by the Baseer platform, categorizing them by influence and interest levels.
+This document identifies and analyzes all stakeholders involved in or affected by the Basir platform, categorizing them by influence and interest levels.
 
 ---
 
@@ -248,5 +248,5 @@ INTEREST │ • General      │ • Partners     │    INTEREST
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

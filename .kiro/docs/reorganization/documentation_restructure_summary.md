@@ -12,7 +12,7 @@
 
 ### المشكلة الأصلية
 
-كان الملف `Project Blueprint: Baseer App.md` يحتوي على:
+كان الملف `Project Blueprint: Basir App.md` يحتوي على:
 
 - ❌ ثلاث نسخ مختلفة من المخطط
 - ❌ تكرار كبير في المحتوى
@@ -140,7 +140,7 @@
 
 ### الملفات المحذوفة
 
-1. ✅ `Project Blueprint: Baseer App.md` (الملف القديم)
+1. ✅ `Project Blueprint: Basir App.md` (الملف القديم)
 
 ### الملفات المحدثة
 

@@ -1379,8 +1379,8 @@ class AppSecurityBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
+        horizontal: Spacing.sm,
+        vertical: Spacing.xs,
       ),
       decoration: BoxDecoration(
         color: AppColors.success.withOpacity(0.1),
@@ -1397,11 +1397,11 @@ class AppSecurityBadge extends StatelessWidget {
             size: 14,
             color: AppColors.success,
           ),
-          const SizedBox(width: AppSpacing.xs),
+          const SizedBox(width: Spacing.xs),
           Text(
             text,
             style: TextStyle(
-              fontSize: AppTypography.labelSmall,
+              fontSize: AppAppTypography.labelSmall,
               color: AppColors.success,
               fontWeight: FontWeight.w600,
             ),

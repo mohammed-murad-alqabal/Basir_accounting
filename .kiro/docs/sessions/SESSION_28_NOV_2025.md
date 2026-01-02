@@ -108,10 +108,10 @@
 
 ```bash
 # نسخ احتياطي + استنساخ جديد + نسخ الملفات المعدلة
-cp -r ~/Projects/Basser_MVP ~/Projects/Basser_MVP_backup
-git clone <repository-url> Basser_MVP_new
-cp -r ~/Projects/Basser_MVP_backup/lib/features/customers/* \
-      ~/Projects/Basser_MVP_new/lib/features/customers/
+cp -r ~/Projects/Basir_MVP ~/Projects/Basir_MVP_backup
+git clone <repository-url> Basir_MVP_new
+cp -r ~/Projects/Basir_MVP_backup/lib/features/customers/* \
+      ~/Projects/Basir_MVP_new/lib/features/customers/
 ```
 
 **الملفات المعدلة (جاهزة للنسخ):**
@@ -144,17 +144,17 @@ cp -r ~/Projects/Basser_MVP_backup/lib/features/customers/* \
 
 ```bash
 # 1. نسخ احتياطي
-cp -r ~/Projects/Basser_MVP ~/Projects/Basser_MVP_backup
+cp -r ~/Projects/Basir_MVP ~/Projects/Basir_MVP_backup
 
 # 2. استنساخ جديد
-git clone <repository-url> Basser_MVP_new
+git clone <repository-url> Basir_MVP_new
 
 # 3. نسخ الملفات المعدلة
-cp -r ~/Projects/Basser_MVP_backup/lib/features/customers/* \
-      ~/Projects/Basser_MVP_new/lib/features/customers/
+cp -r ~/Projects/Basir_MVP_backup/lib/features/customers/* \
+      ~/Projects/Basir_MVP_new/lib/features/customers/
 
 # 4. حفظ التغييرات
-cd ~/Projects/Basser_MVP_new
+cd ~/Projects/Basir_MVP_new
 git add lib/features/customers/
 git commit -m "docs(customers): أكمل توثيق جميع ملفات features/customers"
 git push

@@ -96,7 +96,7 @@ Status: ✅ جاهز
 
 ```bash
 $ flutter analyze --no-pub
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 No issues found! (ran in 2.4s)
 ```
 
@@ -233,7 +233,7 @@ Status: ✅ متوفر
 #### هيكل المشروع
 
 ```
-Basser_MVP/
+Basir_MVP/
 ├── lib/                    # الكود الرئيسي
 │   ├── core/              # المكونات الأساسية
 │   ├── features/          # الميزات (Feature-First)

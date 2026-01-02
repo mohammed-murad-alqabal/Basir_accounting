@@ -13,7 +13,7 @@
 #### Flutter Development with Claude
 
 ```
-I'm working on the Baseer MVP, a Flutter invoice management app for Arabic users in Saudi Arabia. I need your help with Flutter/Dart development.
+I'm working on the Basir App, a Flutter invoice management app for Arabic users in Saudi Arabia. I need your help with Flutter/Dart development.
 
 Project Context:
 - Local-first architecture using Isar database
@@ -43,7 +43,7 @@ When providing code:
 #### Code Analysis with Claude
 
 ````
-I need you to analyze this Flutter code from the Baseer MVP project. Please provide a thorough analysis focusing on:
+I need you to analyze this Flutter code from the Basir App project. Please provide a thorough analysis focusing on:
 
 Analysis Criteria:
 - Code quality and maintainability
@@ -72,7 +72,7 @@ Code to analyze:
 #### Architecture Decision Prompts
 ```
 
-I'm making an architectural decision for the Baseer MVP Flutter project and need your analytical approach.
+I'm making an architectural decision for the Basir App Flutter project and need your analytical approach.
 
 Decision Context:
 
@@ -108,7 +108,7 @@ Consider factors like:
 #### Technical Documentation
 ```
 
-Please create comprehensive technical documentation for the Baseer MVP project.
+Please create comprehensive technical documentation for the Basir App project.
 
 Documentation Requirements:
 

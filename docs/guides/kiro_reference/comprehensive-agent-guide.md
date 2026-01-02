@@ -459,7 +459,7 @@ Incident Detection → Assessment → Response → Recovery → Review
 - **Technical Skills**: المهارات التقنية
 - **Soft Skills**: المهارات الناعمة
 - **Domain Knowledge**: معرفة المجال
-- **Tools Mastery**: إتقان الأدوات
+- **Tools Basir**: إتقان الأدوات
 
 #### خطة التعلم:
 
@@ -485,7 +485,7 @@ snap install flutter --classic
 
 # Development Tools
 git config --global user.name "فريق وكلاء تطوير مشروع بصير"
-git config --global user.email "team@baseer.dev"
+git config --global user.email "team@basir.dev"
 
 # Environment Setup
 export FLUTTER_ROOT=/snap/flutter/current

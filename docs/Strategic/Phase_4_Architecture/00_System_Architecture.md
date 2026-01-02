@@ -1,6 +1,6 @@
-# System Architecture: Baseer Intelligent Financial System
+# System Architecture: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P4-001  
+**Document ID:** basir-P4-001  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -246,7 +246,7 @@ Client ← Response ← Handler ← Service ← Cache/DB Result
 ┌─────────────────────────────────────────────────────────────┐
 │                    Kubernetes Cluster                        │
 │  ┌─────────────────────────────────────────────────────┐    │
-│  │  Namespace: baseer-prod                              │    │
+│  │  Namespace: basir-prod                              │    │
 │  │  ┌──────────┐ ┌──────────┐ ┌──────────┐             │    │
 │  │  │API Pod x3│ │Worker x2 │ │ Redis    │             │    │
 │  │  └──────────┘ └──────────┘ └──────────┘             │    │
@@ -265,5 +265,5 @@ Client ← Response ← Handler ← Service ← Cache/DB Result
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

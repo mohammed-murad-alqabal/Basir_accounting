@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Syntax Error Fix Script for Baseer MVP
+# Syntax Error Fix Script for Basir MVP
 # المؤلف: فريق وكلاء تطوير مشروع بصير
 # التاريخ: 18 ديسمبر 2025
 
@@ -29,7 +29,7 @@ print_info() {
     echo -e "${BLUE}ℹ️${NC} $1"
 }
 
-echo "🔧 Syntax Error Fix for Baseer MVP"
+echo "🔧 Syntax Error Fix for Basir MVP"
 echo "════════════════════════════════════════════════════════════════"
 
 # 1. إصلاح الفواصل الخاطئة في نهاية الأقواس

@@ -86,7 +86,7 @@ Form(
 
 ```dart
 // إضافة استيراد
-import 'package:basser_app/core/assets/app_logo.dart';
+import 'package:basir_app/core/assets/app_logo.dart';
 
 // استبدال الشعار
 Container(
@@ -103,7 +103,7 @@ Container(
       ),
     ],
   ),
-  child: const BasserLogo(
+  child: const BasirLogo(
     size: 60,
     color: Colors.white,
   ),
@@ -127,24 +127,24 @@ ThemeData createAppTheme() {
   final textTheme = GoogleFonts.cairoTextTheme().copyWith(
     // تحديد صريح لخط Cairo
     bodyLarge: GoogleFonts.cairo(
-      fontSize: AppTypography.bodyLarge,
-      fontWeight: AppTypography.regular,
+      fontSize: AppAppTypography.bodyLarge,
+      fontWeight: AppAppTypography.regular,
       color: AppColors.textPrimary,
-      height: AppTypography.bodyLineHeight,
+      height: AppAppTypography.bodyLineHeight,
       letterSpacing: 0.5,
     ),
     bodyMedium: GoogleFonts.cairo(
-      fontSize: AppTypography.bodyMedium,
-      fontWeight: AppTypography.regular,
+      fontSize: AppAppTypography.bodyMedium,
+      fontWeight: AppAppTypography.regular,
       color: AppColors.textPrimary,
-      height: AppTypography.bodyLineHeight,
+      height: AppAppTypography.bodyLineHeight,
       letterSpacing: 0.25,
     ),
     labelLarge: GoogleFonts.cairo(
-      fontSize: AppTypography.labelLarge,
-      fontWeight: AppTypography.medium,
+      fontSize: AppAppTypography.labelLarge,
+      fontWeight: AppAppTypography.medium,
       color: AppColors.textPrimary,
-      height: AppTypography.labelLineHeight,
+      height: AppAppTypography.labelLineHeight,
       letterSpacing: 0.1,
     ),
   );
@@ -264,7 +264,7 @@ flutter analyze --no-pub
 
 1. **التحليل الدقيق للصور** - ساعد في تحديد المشاكل بدقة
 2. **AutovalidateMode** - حل بسيط وفعال لمشكلة UX
-3. **BasserLogo المخصص** - مظهر احترافي بدون صور
+3. **BasirLogo المخصص** - مظهر احترافي بدون صور
 4. **تحسين تحميل الخطوط** - ضمان ظهور النص
 
 ### ما يحتاج تحسين ⚠️

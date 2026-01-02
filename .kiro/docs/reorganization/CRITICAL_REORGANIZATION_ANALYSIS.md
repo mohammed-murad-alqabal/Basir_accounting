@@ -141,13 +141,13 @@ react-devtools/            # أدوات منفصلة
 
 ```bash
 # 1. إنشاء مستودع منفصل للأدوات
-mkdir ../basser-dev-tools
-cd ../basser-dev-tools
+mkdir ../basir-dev-tools
+cd ../basir-dev-tools
 git init
 
 # 2. نقل .kiro إلى المستودع الجديد
-mv ../basser-mvp/.kiro ./
-mv ../basser-mvp/Documentation ./internal-docs
+mv ../basir-mvp/.kiro ./
+mv ../basir-mvp/Documentation ./internal-docs
 
 # 3. إنشاء بنية احترافية
 mkdir -p {tools,configs,scripts,docs}
@@ -156,7 +156,7 @@ mkdir -p {tools,configs,scripts,docs}
 #### المرحلة 2: تنظيم المحتوى
 
 ```
-basser-dev-tools/              # المستودع الجديد
+basir-dev-tools/              # المستودع الجديد
 ├── .kiro/                     # أدوات Kiro (4.4MB)
 ├── internal-docs/             # وثائق داخلية (20MB)
 ├── dev-scripts/               # سكريبتات التطوير
@@ -165,7 +165,7 @@ basser-dev-tools/              # المستودع الجديد
 ├── README.md                  # دليل الأدوات
 └── .gitignore                 # تجاهل الملفات الحساسة
 
-basser-mvp/                    # المستودع الرئيسي (محسن)
+basir-mvp/                    # المستودع الرئيسي (محسن)
 ├── lib/                       # كود المشروع فقط
 ├── test/                      # اختبارات فقط
 ├── docs/                      # وثائق المستخدم النهائي فقط
@@ -179,20 +179,20 @@ basser-mvp/                    # المستودع الرئيسي (محسن)
 
 ```bash
 # في المستودع الرئيسي
-echo "basser-dev-tools/" >> .gitignore
+echo "basir-dev-tools/" >> .gitignore
 
 # إنشاء سكريبت ربط
 cat > setup-dev-env.sh << 'EOF'
 #!/bin/bash
 # سكريبت إعداد بيئة التطوير
 
-if [ ! -d "../basser-dev-tools" ]; then
+if [ ! -d "../basir-dev-tools" ]; then
     echo "Cloning dev tools..."
-    git clone https://github.com/your-org/basser-dev-tools.git ../basser-dev-tools
+    git clone https://github.com/your-org/basir-dev-tools.git ../basir-dev-tools
 fi
 
 # ربط الأدوات
-ln -sf ../basser-dev-tools/.kiro ./.kiro-dev
+ln -sf ../basir-dev-tools/.kiro ./.kiro-dev
 echo "Dev environment ready!"
 EOF
 
@@ -207,9 +207,9 @@ chmod +x setup-dev-env.sh
 
 ```bash
 # نقل الوثائق الكبيرة
-mkdir -p ../basser-internal-docs
-mv .kiro/docs/reports ../basser-internal-docs/
-mv docs/Archive ../basser-internal-docs/
+mkdir -p ../basir-internal-docs
+mv .kiro/docs/reports ../basir-internal-docs/
+mv docs/Archive ../basir-internal-docs/
 
 # ضغط الملفات المتبقية
 find .kiro/ -name "*.md" -exec gzip {} \;
@@ -275,10 +275,10 @@ cp -r Documentation ../docs-backup-$(date +%Y%m%d)
 
 ```bash
 # إنشاء مستودع الأدوات
-mkdir ../basser-dev-tools
-cd ../basser-dev-tools
+mkdir ../basir-dev-tools
+cd ../basir-dev-tools
 git init
-echo "# Basser Development Tools" > README.md
+echo "# Basir Development Tools" > README.md
 git add README.md
 git commit -m "Initial commit: dev tools repository"
 ```

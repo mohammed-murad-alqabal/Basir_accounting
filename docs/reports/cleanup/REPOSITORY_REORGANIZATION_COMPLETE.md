@@ -57,7 +57,7 @@
 ## 📁 البنية النهائية
 
 ```
-Basser_MVP/
+Basir_MVP/
 ├── 7 ملفات أساسية فقط ✅
 │   ├── README.md
 │   ├── CHANGELOG.md

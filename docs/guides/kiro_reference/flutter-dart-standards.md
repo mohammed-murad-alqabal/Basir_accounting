@@ -1,5 +1,5 @@
 ---
-title: "Flutter/Dart Standards for Baseer MVP"
+title: "Flutter/Dart Standards for Basir MVP"
 inclusion: fileMatch
 fileMatchPattern: "*.dart"
 version: "2.0"

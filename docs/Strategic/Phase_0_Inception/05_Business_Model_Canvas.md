@@ -1,6 +1,6 @@
-# Business Model Canvas: Baseer Intelligent Financial System
+# Business Model Canvas: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P0-006  
+**Document ID:** basir-P0-006  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -25,7 +25,7 @@
 │         KEY RESOURCES           │                   CHANNELS                        │
 │                                 │                                                   │
 │ • Engineering Team              │ • App Store / Play Store                          │
-│ • Baseera AI Engine             │ • Web Application                                 │
+│ • Basira AI Engine             │ • Web Application                                 │
 │ • Regional Tax DB               │ • Digital Marketing (Social, SEO)                 │
 │ • Arabic Design System          │ • Partner Referrals                               │
 │ • Compliance Certs              │ • Content Marketing                               │
@@ -97,7 +97,7 @@
 | Type             | Segment     | Description                                 |
 | ---------------- | ----------- | ------------------------------------------- |
 | **Self-Service** | All         | In-app guidance, knowledge base             |
-| **Automated**    | All         | AI assistant "Baseera", smart notifications |
+| **Automated**    | All         | AI assistant "Basira", smart notifications |
 | **Community**    | All         | User forums, social groups                  |
 | **Personal**     | Premium     | Dedicated support, account managers         |
 | **Co-Creation**  | Power Users | Beta programs, feedback loops               |
@@ -132,7 +132,7 @@
 | Resource                 | Type         | Criticality |
 | ------------------------ | ------------ | ----------- |
 | **Engineering Team**     | Human        | Critical    |
-| **Baseera AI Engine**    | Intellectual | Critical    |
+| **Basira AI Engine**    | Intellectual | Critical    |
 | **Tax Configuration DB** | Intellectual | Critical    |
 | **Arabic Design System** | Intellectual | High        |
 | **Cloud Infrastructure** | Physical     | High        |
@@ -211,5 +211,5 @@
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

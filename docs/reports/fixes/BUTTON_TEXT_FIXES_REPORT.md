@@ -70,7 +70,7 @@
 #### 1. إضافة الاستيراد
 
 ```dart
-import 'package:basser_app/core/widgets/responsive_text.dart';
+import 'package:basir_app/core/widgets/responsive_text.dart';
 ```
 
 #### 2. تعديل AppPrimaryButton

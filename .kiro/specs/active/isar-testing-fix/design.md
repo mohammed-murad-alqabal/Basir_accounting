@@ -488,7 +488,7 @@ library test_helper;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
-import 'package:baseer_mvp/data/models/models.dart';
+import 'package:basir_mvp/data/models/models.dart';
 
 /// إعداد أساسي لجميع الاختبارات
 Future<void> setupTestEnvironment() async {

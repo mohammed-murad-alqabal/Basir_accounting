@@ -10,25 +10,25 @@ void main() {
   }
 
   final replacements = {
-    "import 'package:basser_app/core/theme.dart';":
-        "import 'package:basser_app/core/theme/tokens/index.dart';",
-    'import "package:basser_app/core/theme.dart";':
-        'import "package:basser_app/core/theme/tokens/index.dart";',
-    "import 'package:basser_app/core/theme_dark.dart';": '',
-    'import "package:basser_app/core/theme_dark.dart";': '',
-    'AppColors.': 'SemanticColors.',
-    'AppSpacing.': 'Spacing.',
+    "import 'package:basir_app/core/theme.dart';":
+        "import 'package:basir_app/core/theme/tokens/index.dart';",
+    'import "package:basir_app/core/theme.dart";':
+        'import "package:basir_app/core/theme/tokens/index.dart";',
+    "import 'package:basir_app/core/theme_dark.dart';": '',
+    'import "package:basir_app/core/theme_dark.dart";': '',
+    'AppColors.': 'AppColors.',
+    'Spacing.': 'Spacing.',
     'AppBorderRadius.': 'Radii.',
     'AppIconSize.': 'IconSizes.',
-    'AppTypography.': 'FontSizes.',
-    'FontSizes.arabicFont': 'FontFamilies.arabic',
-    'FontSizes.englishFont': 'FontFamilies.english',
-    'FontSizes.numberFont': 'FontFamilies.numbers',
-    'FontSizes.light': 'FontWeights.light',
-    'FontSizes.regular': 'FontWeights.regular',
-    'FontSizes.medium': 'FontWeights.medium',
-    'FontSizes.semiBold': 'FontWeights.semiBold',
-    'FontSizes.bold': 'FontWeights.bold',
+    'AppAppTypography.': 'AppTypography.',
+    'AppTypography.arabicFont': 'FontFamilies.arabic',
+    'AppTypography.englishFont': 'FontFamilies.english',
+    'AppTypography.numberFont': 'FontFamilies.numbers',
+    'AppTypography.light': 'FontWeights.light',
+    'AppTypography.regular': 'FontWeights.regular',
+    'AppTypography.medium': 'FontWeights.medium',
+    'AppTypography.semiBold': 'FontWeights.semiBold',
+    'AppTypography.bold': 'FontWeights.bold',
     'Radii.xs': 'Radii.radiusXs',
     'Radii.sm': 'Radii.radiusSm',
     'Radii.md': 'Radii.radiusMd',

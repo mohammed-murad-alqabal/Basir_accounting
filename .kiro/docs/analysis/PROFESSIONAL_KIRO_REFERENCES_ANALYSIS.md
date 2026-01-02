@@ -446,7 +446,7 @@ echo "جاري تخصيص الملفات للمشروع..."
 find .kiro/steering/technologies -name "*.md" -exec sed -i '1i**المشروع:** بصير MVP\n**المؤلف:** فريق وكلاء تطوير مشروع بصير\n**المصدر:** مكيف من مصادر مجتمع Kiro المعتمدة\n\n---\n' {} \;
 
 # تحديث مسارات المراجع
-find .kiro -name "*.md" -exec sed -i 's/github\.com\/original-repo/github.com\/mohammed-murad-alqabal\/Basser_MVP/g' {} \;
+find .kiro -name "*.md" -exec sed -i 's/github\.com\/original-repo/github.com\/mohammed-murad-alqabal\/Basir_MVP/g' {} \;
 
 # إضافة التوافق مع Flutter/Dart
 echo "

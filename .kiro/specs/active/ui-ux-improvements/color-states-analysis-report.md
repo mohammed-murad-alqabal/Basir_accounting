@@ -456,7 +456,7 @@ fonts:
 
 ```dart
 // في theme.dart
-height: 1.5  // AppTypography.bodyLineHeight
+height: 1.5  // AppAppTypography.bodyLineHeight
 ```
 
 - ⚠️ قد يُفسر بشكل مختلف على منصات مختلفة

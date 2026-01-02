@@ -129,8 +129,8 @@ echo "✨ Done! Check report_$FEATURE.html for details."
 
 ```dart
 // example_custom_generation.dart
-import 'package:basser_mvp/tools/documentation/generation/generation_engine.dart';
-import 'package:basser_mvp/tools/documentation/analysis/analysis_engine.dart';
+import 'package:basir_mvp/tools/documentation/generation/generation_engine.dart';
+import 'package:basir_mvp/tools/documentation/analysis/analysis_engine.dart';
 
 Future<void> main() async {
   // 1. تحليل الملف
@@ -172,8 +172,8 @@ Future<void> main() async {
 
 ```dart
 // example_advanced_analysis.dart
-import 'package:basser_mvp/tools/documentation/analysis/analysis_engine.dart';
-import 'package:basser_mvp/tools/documentation/repository/documentation_repository.dart';
+import 'package:basir_mvp/tools/documentation/analysis/analysis_engine.dart';
+import 'package:basir_mvp/tools/documentation/repository/documentation_repository.dart';
 
 Future<void> main() async {
   final engine = AnalysisEngine();
@@ -521,7 +521,7 @@ check_threshold:
 
 ```dart
 // example_analysis_api.dart
-import 'package:basser_mvp/tools/documentation/analysis/analysis_engine.dart';
+import 'package:basir_mvp/tools/documentation/analysis/analysis_engine.dart';
 
 Future<void> analyzeProject() async {
   final engine = AnalysisEngine();
@@ -556,8 +556,8 @@ Future<void> analyzeProject() async {
 
 ```dart
 // example_generation_api.dart
-import 'package:basser_mvp/tools/documentation/generation/generation_engine.dart';
-import 'package:basser_mvp/tools/documentation/analysis/analysis_engine.dart';
+import 'package:basir_mvp/tools/documentation/generation/generation_engine.dart';
+import 'package:basir_mvp/tools/documentation/analysis/analysis_engine.dart';
 
 Future<void> generateDocumentation() async {
   final analyzer = AnalysisEngine();
@@ -595,7 +595,7 @@ Future<void> generateDocumentation() async {
 
 ```dart
 // example_validation_api.dart
-import 'package:basser_mvp/tools/documentation/validation/validation_engine.dart';
+import 'package:basir_mvp/tools/documentation/validation/validation_engine.dart';
 
 Future<void> validateDocumentation() async {
   final engine = ValidationEngine();
@@ -637,8 +637,8 @@ Future<void> validateDocumentation() async {
 
 ```dart
 // example_repository_api.dart
-import 'package:basser_mvp/tools/documentation/repository/documentation_repository.dart';
-import 'package:basser_mvp/tools/documentation/analysis/analysis_engine.dart';
+import 'package:basir_mvp/tools/documentation/repository/documentation_repository.dart';
+import 'package:basir_mvp/tools/documentation/analysis/analysis_engine.dart';
 
 Future<void> manageReports() async {
   final repository = DocumentationRepository();

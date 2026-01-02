@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Enhanced Debugging Tools for Baseer MVP
+# Enhanced Debugging Tools for Basir MVP
 # المؤلف: فريق وكلاء تطوير مشروع بصير
 # التاريخ: 18 ديسمبر 2025
 
@@ -43,7 +43,7 @@ print_debug() {
 # دالة عرض القائمة الرئيسية
 show_main_menu() {
     clear
-    echo -e "${PURPLE}🔧 Baseer MVP Debug Tools${NC}"
+    echo -e "${PURPLE}🔧 Basir MVP Debug Tools${NC}"
     echo "════════════════════════════════════════════════════════════════"
     echo ""
     echo "1. 📊 Performance Analysis"

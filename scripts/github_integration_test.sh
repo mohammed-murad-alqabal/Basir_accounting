@@ -52,11 +52,11 @@ run_test "GitHub API User Info" "curl -s -H 'Authorization: token $GITHUB_TOKEN'
 
 # Test 3: Repository Access
 echo -e "${YELLOW}3. اختبار الوصول للمستودع${NC}"
-run_test "Basser_MVP Repository Access" "curl -s -H 'Authorization: token $GITHUB_TOKEN' https://api.github.com/repos/mohammed-murad-alqabal/Basser_MVP"
+run_test "Basir_MVP Repository Access" "curl -s -H 'Authorization: token $GITHUB_TOKEN' https://api.github.com/repos/mohammed-murad-alqabal/Basir_MVP"
 
 # Test 4: Repository Contents
 echo -e "${YELLOW}4. اختبار قراءة محتويات المستودع${NC}"
-run_test "Repository Contents" "curl -s -H 'Authorization: token $GITHUB_TOKEN' https://api.github.com/repos/mohammed-murad-alqabal/Basser_MVP/contents"
+run_test "Repository Contents" "curl -s -H 'Authorization: token $GITHUB_TOKEN' https://api.github.com/repos/mohammed-murad-alqabal/Basir_MVP/contents"
 
 # Test 5: Rate Limit Check
 echo -e "${YELLOW}5. فحص حدود الاستخدام${NC}"

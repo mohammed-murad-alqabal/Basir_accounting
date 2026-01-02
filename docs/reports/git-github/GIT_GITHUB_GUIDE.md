@@ -89,13 +89,13 @@ cat ~/.ssh/id_ed25519.pub
 
 ```bash
 # استنساخ عبر HTTPS
-git clone https://github.com/username/Basser_MVP.git
+git clone https://github.com/username/Basir_MVP.git
 
 # استنساخ عبر SSH (موصى به)
-git clone git@github.com:username/Basser_MVP.git
+git clone git@github.com:username/Basir_MVP.git
 
 # الدخول إلى المجلد
-cd Basser_MVP
+cd Basir_MVP
 ```
 
 ---

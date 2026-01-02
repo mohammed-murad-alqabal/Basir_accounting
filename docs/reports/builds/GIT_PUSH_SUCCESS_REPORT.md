@@ -225,7 +225,7 @@ nothing to commit, working tree clean
 جميع الـ 7 commits موجودة على:
 
 ```
-https://github.com/mohammed-murad-alqabal/Basser_MVP
+https://github.com/mohammed-murad-alqabal/Basir_MVP
 ```
 
 ---
@@ -379,7 +379,7 @@ git push origin main --no-verify
 **GitHub Repository:**
 
 ```
-https://github.com/mohammed-murad-alqabal/Basser_MVP
+https://github.com/mohammed-murad-alqabal/Basir_MVP
 ```
 
 **آخر Commit:**

@@ -95,7 +95,7 @@
 
 1. **نظام Type Scale:**
 
-   - WHEN يقوم المطور بإضافة نص THEN النظام SHALL يوفر أحجام خط محددة من خلال `AppTypography` class
+   - WHEN يقوم المطور بإضافة نص THEN النظام SHALL يوفر أحجام خط محددة من خلال `AppAppTypography. class
    - WHEN يتم تطبيق حجم خط THEN النظام SHALL يطبق تلقائياً: الوزن المناسب، lineHeight، letterSpacing
 
 2. **خط Cairo:**
@@ -121,7 +121,7 @@
 
 1. **نظام 8-Point Grid:**
 
-   - WHEN يقوم المطور بإضافة مسافة THEN النظام SHALL يوفر قيم من `AppSpacing` class
+   - WHEN يقوم المطور بإضافة مسافة THEN النظام SHALL يوفر قيم من `Spacing` class
    - WHEN يتم تطبيق مسافة THEN النظام SHALL يستخدم مضاعفات 4px: xs (4px)، sm (8px)، md (16px)، lg (24px)
 
 2. **Border Radius الموحد:**
@@ -177,7 +177,7 @@
 2. **اختبارات الخطوط والمسافات:**
 
    - WHEN يتم تشغيل الاختبارات THEN النظام SHALL يتحقق من استخدام خط Cairo فقط
-   - WHEN يتم تشغيل الاختبارات THEN النظام SHALL يتحقق من استخدام مسافات من `AppSpacing`
+   - WHEN يتم تشغيل الاختبارات THEN النظام SHALL يتحقق من استخدام مسافات من `Spacing`
 
 3. **اختبارات الأداء:**
    - WHEN يتم تشغيل الاختبارات THEN النظام SHALL يتحقق من تحقيق ≥ 60 FPS

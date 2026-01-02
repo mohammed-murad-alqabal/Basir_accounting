@@ -1,6 +1,6 @@
-# AI/ML Design: Baseer Intelligent Financial System
+# AI/ML Design: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P4-005  
+**Document ID:** basir-P4-005  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -12,9 +12,9 @@
 
 ### Vision
 
-Transform Baseer from a passive tool to an intelligent financial assistant through AI-powered automation, insights, and predictions.
+Transform Basir from a passive tool to an intelligent financial assistant through AI-powered automation, insights, and predictions.
 
-### AI Engine Name: **Baseera** (بصيرة)
+### AI Engine Name: **Basira** (بصيرة)
 
 ---
 
@@ -196,7 +196,7 @@ Hybrid model combining rule-based matching and ML classification.
 | **Data Minimization**      | Only necessary data processed |
 | **User Control**           | AI features can be disabled   |
 | **Transparency**           | "Why this?" explanations      |
-| **No Third-Party Sharing** | AI data never leaves Baseer   |
+| **No Third-Party Sharing** | AI data never leaves Basir   |
 
 ### Server-Side AI
 
@@ -239,5 +239,5 @@ When server processing is needed:
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

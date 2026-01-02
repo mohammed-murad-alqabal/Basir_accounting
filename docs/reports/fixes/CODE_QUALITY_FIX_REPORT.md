@@ -22,7 +22,7 @@
 ### 1.1 قبل الإصلاح
 
 ```
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 
 6 issues found:
 - 3x deprecated_member_use (textScaleFactor)
@@ -35,7 +35,7 @@ Analyzing Basser_MVP...
 ### 1.2 بعد الإصلاح
 
 ```
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 
 No issues found! ✅
 ```
@@ -193,7 +193,7 @@ class ResponsiveHeadline extends StatelessWidget {
 ```bash
 $ flutter analyze --no-pub
 
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 No issues found! (ran in 5.1s)
 ```
 

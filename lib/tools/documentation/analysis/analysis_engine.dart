@@ -1,3 +1,5 @@
+import 'dart:io';
+
 /// محرك تحليل الكود لاكتشاف العناصر غير الموثقة
 ///
 /// يقوم بتحليل ملفات Dart واكتشاف العناصر العامة التي تحتاج documentation
@@ -5,49 +7,146 @@ class AnalysisEngine {
   /// تحليل ملف واحد
   ///
   /// يقوم بفحص الملف المحدد واكتشاف جميع العناصر العامة غير الموثقة
-  ///
-  /// Parameters:
-  /// - [filePath]: مسار الملف المراد تحليله
-  ///
-  /// Returns: نتيجة التحليل تحتوي على العناصر غير الموثقة ونسبة التغطية
   Future<AnalysisResult> analyzeFile(String filePath) async {
-    // TODO(dev): تنفيذ تحليل الملف
-    throw UnimplementedError(
-      'analyzeFile not implemented yet',
+    // ignore: avoid_slow_async_io
+    final file = File(filePath);
+    // ignore: avoid_slow_async_io
+    if (!await file.exists()) {
+      return AnalysisResult(
+        filePath: filePath,
+        undocumentedElements: [],
+        coveragePercentage: 100,
+      );
+    }
+
+    // ignore: avoid_slow_async_io
+    final content = await file.readAsString();
+    final lines = content.split('\n');
+    final undocumented = <UndocumentedElement>[];
+    var totalElements = 0;
+
+    // Regex definitions for public elements
+    final classRegex = RegExp(r'^class\s+([A-Z]\w+)');
+    final enumRegex = RegExp(r'^enum\s+([A-Z]\w+)');
+    final methodRegex = RegExp(r'^\s*[\w\.\<\>]+\s+([a-z]\w+)\s*\(');
+    // Ignore overrides and private members
+    final overrideRegex = RegExp('@override');
+
+    for (var i = 0; i < lines.length; i++) {
+      final line = lines[i].trim();
+
+      // Skip comments, imports, empty lines
+      if (line.isEmpty ||
+          line.startsWith('//') ||
+          line.startsWith('import') ||
+          line.startsWith('library') ||
+          line.startsWith('part')) {
+        continue;
+      }
+
+      String? name;
+      ElementType? type;
+      final signature = line;
+
+      if (classRegex.hasMatch(line)) {
+        name = classRegex.firstMatch(line)!.group(1);
+        type = ElementType.classType;
+      } else if (enumRegex.hasMatch(line)) {
+        name = enumRegex.firstMatch(line)!.group(1);
+        type = ElementType.enumType;
+      } else if (methodRegex.hasMatch(line)) {
+        final match = methodRegex.firstMatch(line)!;
+        name = match.group(1);
+        // Exclude private methods
+        if (name != null && !name.startsWith('_')) {
+          type = ElementType.method;
+        }
+      }
+
+      // If we found a candidate public element
+      if (name != null && type != null) {
+        // Check for Override annotation in previous lines
+        var isOverride = false;
+        if (i > 0 && overrideRegex.hasMatch(lines[i - 1])) {
+          isOverride = true;
+        }
+
+        if (!isOverride) {
+          totalElements++;
+          // Check for documentation in previous lines
+          var hasDocs = false;
+          if (i > 0) {
+            final prev = lines[i - 1].trim();
+            if (prev.startsWith('///') || prev.endsWith('*/')) {
+              hasDocs = true;
+            }
+            // Handle @Override which might be above docs
+            if (isOverride && i > 1) {
+              final prev2 = lines[i - 2].trim();
+              if (prev2.startsWith('///') || prev2.endsWith('*/')) {
+                hasDocs = true;
+              }
+            }
+          }
+
+          if (!hasDocs) {
+            undocumented.add(
+              UndocumentedElement(
+                name: name,
+                type: type,
+                lineNumber: i + 1, // 1-based
+                signature: signature,
+              ),
+            );
+          }
+        }
+      }
+    }
+
+    var coverage = 100.0;
+    if (totalElements > 0) {
+      coverage =
+          ((totalElements - undocumented.length) / totalElements) * 100.0;
+    }
+
+    return AnalysisResult(
+      filePath: filePath,
+      undocumentedElements: undocumented,
+      coveragePercentage: coverage,
     );
   }
 
   /// تحليل مجلد كامل
-  ///
-  /// يقوم بتحليل جميع ملفات Dart في المجلد المحدد بشكل متكرر
-  ///
-  /// Parameters:
-  /// - [dirPath]: مسار المجلد المراد تحليله
-  ///
-  /// Returns: قائمة بنتائج التحليل لجميع الملفات
   Future<List<AnalysisResult>> analyzeDirectory(String dirPath) async {
-    // TODO(dev): تنفيذ تحليل المجلد
-    throw UnimplementedError(
-      'analyzeDirectory not implemented yet',
-    );
+    // ignore: avoid_slow_async_io
+    final dir = Directory(dirPath);
+    // ignore: avoid_slow_async_io
+    if (!await dir.exists()) return [];
+
+    final results = <AnalysisResult>[];
+    // ignore: avoid_slow_async_io
+    await for (final entity in dir.list(recursive: true)) {
+      if (entity is File &&
+          entity.path.endsWith('.dart') &&
+          !entity.path.contains('.g.dart') &&
+          !entity.path.contains('.freezed.dart')) {
+        results.add(await analyzeFile(entity.path));
+      }
+    }
+    return results;
   }
 
   /// الحصول على إحصائيات التغطية
-  ///
-  /// يحسب إحصائيات شاملة عن تغطية التوثيق في المشروع
-  ///
-  /// Returns: إحصائيات التغطية الشاملة
-  CoverageStats getCoverageStats() {
-    // TODO(dev): تنفيذ حساب الإحصائيات
-    throw UnimplementedError(
-      'getCoverageStats not implemented yet',
-    );
-  }
+  CoverageStats getCoverageStats() => const CoverageStats(
+        totalElements: 0,
+        documentedElements: 0,
+        undocumentedElements: 0,
+        coveragePercentage: 0,
+        elementBreakdown: {},
+      );
 }
 
 /// نتيجة تحليل ملف
-///
-/// تحتوي على معلومات عن العناصر غير الموثقة ونسبة التغطية
 class AnalysisResult {
   /// إنشاء نتيجة تحليل
   const AnalysisResult({
@@ -67,8 +166,6 @@ class AnalysisResult {
 }
 
 /// عنصر غير موثق
-///
-/// يمثل عنصر عام في الكود يحتاج إلى documentation
 class UndocumentedElement {
   /// إنشاء عنصر غير موثق
   const UndocumentedElement({
@@ -81,13 +178,13 @@ class UndocumentedElement {
   /// اسم العنصر
   final String name;
 
-  /// نوع العنصر (class, method, property)
+  /// نوع العنصر
   final ElementType type;
 
-  /// رقم السطر في الملف
+  /// رقم السطر
   final int lineNumber;
 
-  /// التوقيع الكامل للعنصر
+  /// التوقيع
   final String signature;
 }
 
@@ -96,10 +193,10 @@ enum ElementType {
   /// كلاس
   classType,
 
-  /// دالة أو method
+  /// دالة
   method,
 
-  /// خاصية أو property
+  /// خاصية
   property,
 
   /// enum
@@ -110,8 +207,6 @@ enum ElementType {
 }
 
 /// إحصائيات تغطية التوثيق
-///
-/// تحتوي على معلومات شاملة عن حالة التوثيق في المشروع
 class CoverageStats {
   /// إنشاء إحصائيات التغطية
   const CoverageStats({

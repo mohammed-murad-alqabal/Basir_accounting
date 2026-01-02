@@ -166,7 +166,7 @@ expect(find.text('تصدير PDF'), findsNothing);
 
 ```dart
 // الاختبار يتوقع
-expect(text.style?.fontSize, AppTypography.bodyMedium);
+expect(text.style?.fontSize, AppAppTypography.bodyMedium);
 expect(text.style?.fontWeight, FontWeight.w500);
 
 // لكن القيمة الفعلية قد تكون مختلفة

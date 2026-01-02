@@ -123,7 +123,7 @@ Release:
     breaking_changes: []
 
   assets:
-    - name: "basser-v1.0.0-beta.apk"
+    - name: "basir-v1.0.0-beta.apk"
       size: "45 MB"
       downloads: 0
 
@@ -132,7 +132,7 @@ Release:
 
   metadata:
     created_at: "2025-12-04T13:00:00Z"
-    author: "Basser Development Team"
+    author: "Basir Development Team"
     commit: "b70a807"
     build_number: 1
 ```
@@ -203,7 +203,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./build/app/outputs/flutter-apk/app-release.apk
-          asset_name: basser-${{ github.ref }}.apk
+          asset_name: basir-${{ github.ref }}.apk
           asset_content_type: application/vnd.android.package-archive
 ```
 
@@ -248,7 +248,7 @@ $(git log --pretty=format:"- %s" --grep="^feat:" $(git describe --tags --abbrev=
 Fixes:
 $(git log --pretty=format:"- %s" --grep="^fix:" $(git describe --tags --abbrev=0)..HEAD)
 
-Full Changelog: https://github.com/mohammed-murad-alqabal/Basser_MVP/compare/$(git describe --tags --abbrev=0)...${TAG}
+Full Changelog: https://github.com/mohammed-murad-alqabal/Basir_MVP/compare/$(git describe --tags --abbrev=0)...${TAG}
 "
 
 # Push tag
@@ -329,8 +329,8 @@ $(git log --pretty=format:"- %s (%h)" --grep="BREAKING CHANGE" ${PREVIOUS_TAG}..
 
 ## 🔗 الروابط
 
-- [Full Changelog](https://github.com/mohammed-murad-alqabal/Basser_MVP/compare/${PREVIOUS_TAG}...${CURRENT_TAG})
-- [Download APK](https://github.com/mohammed-murad-alqabal/Basser_MVP/releases/download/${CURRENT_TAG}/basser-${CURRENT_TAG}.apk)
+- [Full Changelog](https://github.com/mohammed-murad-alqabal/Basir_MVP/compare/${PREVIOUS_TAG}...${CURRENT_TAG})
+- [Download APK](https://github.com/mohammed-murad-alqabal/Basir_MVP/releases/download/${CURRENT_TAG}/basir-${CURRENT_TAG}.apk)
 
 ---
 
@@ -407,8 +407,8 @@ if [ ! -f "android/app/keystore.jks" ]; then
         -keyalg RSA \
         -keysize 2048 \
         -validity 10000 \
-        -alias basser \
-        -dname "CN=Basser, OU=Development, O=Basser Team, L=Riyadh, ST=Riyadh, C=SA" \
+        -alias basir \
+        -dname "CN=Basir, OU=Development, O=Basir Team, L=Riyadh, ST=Riyadh, C=SA" \
         -storepass "${KEYSTORE_PASSWORD}" \
         -keypass "${KEY_PASSWORD}"
 
@@ -421,7 +421,7 @@ fi
 cat > android/key.properties << EOF
 storeFile=keystore.jks
 storePassword=${KEYSTORE_PASSWORD}
-keyAlias=basser
+keyAlias=basir
 keyPassword=${KEY_PASSWORD}
 EOF
 
@@ -445,7 +445,7 @@ echo "key.properties created successfully!"
 │ بصير MVP - الإصدار التجريبي الأول                  │
 │                                                     │
 │ 📅 Released on Dec 4, 2025                         │
-│ 👤 By Basser Development Team                      │
+│ 👤 By Basir Development Team                      │
 │                                                     │
 │ 🎉 الميزات الجديدة                                 │
 │ • إدارة العملاء الكاملة                            │
@@ -457,7 +457,7 @@ echo "key.properties created successfully!"
 │ • تحسين الأداء العام                               │
 │                                                     │
 │ 📦 Assets                                           │
-│ ├─ basser-v1.0.0-beta.apk (45 MB) ⬇️ 0 downloads  │
+│ ├─ basir-v1.0.0-beta.apk (45 MB) ⬇️ 0 downloads  │
 │ ├─ CHANGELOG.md (10 KB)                            │
 │ └─ Source code (zip)                               │
 │                                                     │
@@ -478,7 +478,7 @@ echo "key.properties created successfully!"
 
 #!/bin/bash
 
-# Basser Release Management CLI
+# Basir Release Management CLI
 # Usage: ./scripts/release.sh [command] [options]
 
 set -e
@@ -575,7 +575,7 @@ cmd_delete() {
 
 cmd_help() {
     cat << EOF
-Basser Release Management CLI
+Basir Release Management CLI
 
 Usage:
   ./scripts/release.sh [command] [options]
@@ -629,7 +629,7 @@ esac
 
 KEYSTORE_FILE: <base64 encoded keystore>
 KEYSTORE_PASSWORD: <keystore password>
-KEY_ALIAS: basser
+KEY_ALIAS: basir
 KEY_PASSWORD: <key password>
 ```
 
@@ -639,7 +639,7 @@ KEY_PASSWORD: <key password>
 # android/key.properties (gitignored)
 storeFile=keystore.jks
 storePassword=<password>
-keyAlias=basser
+keyAlias=basir
 keyPassword=<password>
 ```
 
@@ -793,7 +793,7 @@ Metrics:
 
 ---
 
-**للدعم:** [Issues](https://github.com/mohammed-murad-alqabal/Basser_MVP/issues)  
+**للدعم:** [Issues](https://github.com/mohammed-murad-alqabal/Basir_MVP/issues)  
 **للمساهمة:** [Contributing](CONTRIBUTING.md)
 ```
 

@@ -1,6 +1,6 @@
-# Brand & Identity Guidelines: Baseer Intelligent Financial System
+# Brand & Identity Guidelines: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P2-007  
+**Document ID:** basir-P2-007  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -12,7 +12,7 @@
 
 ### Brand Name
 
-**Baseer** (بصير) - "The Insightful One" in Arabic
+**Basir** (بصير) - "The Insightful One" in Arabic
 
 ### Brand Tagline
 
@@ -120,5 +120,5 @@ Use Arabic financial terms where natural, with English in technical contexts.
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

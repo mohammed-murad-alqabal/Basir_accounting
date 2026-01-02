@@ -235,7 +235,7 @@ lib/
 ### 7. نظام الأيقونات ✅
 
 - 🎨 100+ أيقونة مخصصة
-- ✅ BasserIcons class
+- ✅ BasirIcons class
 - ✅ CustomIcon widget
 - ✅ AnimatedIcon widget
 
@@ -415,7 +415,7 @@ flutter build apk --release --split-per-abi
 adb install -r build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
 
 # 3. اختبار البدء
-adb shell am start -W com.basser.basser_app/.MainActivity
+adb shell am start -W com.basir.basir_app/.MainActivity
 
 # 4. أخذ لقطة شاشة
 adb exec-out screencap -p > screenshot.png

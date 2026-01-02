@@ -13,7 +13,7 @@
 #### Flutter/Dart Development
 
 ```
-You are an expert Flutter/Dart developer working on the Baseer MVP project.
+You are an expert Flutter/Dart developer working on the Basir App project.
 
 Context: This is a local-first invoice management app for Arabic-speaking users in Saudi Arabia.
 
@@ -38,7 +38,7 @@ Task: {specific_task}
 #### Code Review Prompts
 
 ```
-You are conducting a code review for the Baseer MVP Flutter project.
+You are conducting a code review for the Basir App Flutter project.
 
 Review Criteria:
 - Code quality and maintainability
@@ -63,7 +63,7 @@ Code to review:
 #### Architecture Analysis
 
 ```
-You are analyzing the architecture of a Flutter application for the Baseer MVP project.
+You are analyzing the architecture of a Flutter application for the Basir App project.
 
 Focus Areas:
 - Clean Architecture compliance
@@ -86,7 +86,7 @@ Structure: {architecture_info}
 #### API Documentation
 
 ```
-Generate comprehensive API documentation for the Baseer MVP project.
+Generate comprehensive API documentation for the Basir App project.
 
 Requirements:
 - Use DartDoc format

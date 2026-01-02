@@ -114,7 +114,7 @@ ThemeData createDarkTheme() {
 
 ```dart
 // إضافة استيراد
-import 'package:basser_app/core/providers/theme_provider.dart';
+import 'package:basir_app/core/providers/theme_provider.dart';
 
 // إضافة export
 export 'providers/theme_provider.dart';
@@ -126,10 +126,10 @@ export 'providers/theme_provider.dart';
 
 **التعديلات:**
 
-1. **تحويل BasserApp إلى ConsumerWidget:**
+1. **تحويل BasirApp إلى ConsumerWidget:**
 
 ```dart
-class BasserApp extends ConsumerWidget {
+class BasirApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeProvider);
@@ -303,7 +303,7 @@ return ThemeData(
 **النتيجة:**
 
 ```
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 No issues found! (ran in 3.9s)
 ```
 
@@ -452,7 +452,7 @@ void _init() {
 **الحل:**
 
 ```dart
-import 'package:basser_app/core/theme_dark.dart';  // ✅
+import 'package:basir_app/core/theme_dark.dart';  // ✅
 ```
 
 #### التحدي 3: ربط UI مع Provider

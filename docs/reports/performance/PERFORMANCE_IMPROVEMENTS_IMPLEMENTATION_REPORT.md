@@ -70,10 +70,10 @@ await Future.wait([
 #### ب. أمثلة على الأيقونات
 
 ```dart
-BasserIcons.customers    // أيقونة العملاء
-BasserIcons.invoices     // أيقونة الفواتير
-BasserIcons.dashboard    // أيقونة لوحة التحكم
-BasserIcons.export       // أيقونة التصدير
+BasirIcons.customers    // أيقونة العملاء
+BasirIcons.invoices     // أيقونة الفواتير
+BasirIcons.dashboard    // أيقونة لوحة التحكم
+BasirIcons.export       // أيقونة التصدير
 // ... 96+ أيقونة أخرى
 ```
 
@@ -343,7 +343,7 @@ class PerformanceMonitor {
 ### 3. اختبار البدء
 
 ```bash
-✅ adb shell am start -W com.basser.basser_app/.MainActivity
+✅ adb shell am start -W com.basir.basir_app/.MainActivity
    النتيجة: WaitTime: 632ms
    الحالة: Complete
 ```

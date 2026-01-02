@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:ui' as ui;
 
-import 'package:basser_app/core/assets/app_logo.dart';
+import 'package:basir_app/core/assets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,7 +10,7 @@ import 'package:integration_test/integration_test.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Generate Mastery 2.0 PNG Assets on Device', (tester) async {
+  testWidgets('Generate Basir 2.0 PNG Assets on Device', (tester) async {
     // 1. Setup
     final exports = [
       {
@@ -57,7 +57,7 @@ void main() {
                     height: size,
                     color: bg,
                     alignment: Alignment.center,
-                    child: BasserLogo(
+                    child: BasirLogo(
                       size: size * 0.8,
                     ), // 80% padding for safe area
                   ),

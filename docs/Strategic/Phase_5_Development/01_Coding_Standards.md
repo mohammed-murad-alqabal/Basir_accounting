@@ -1,6 +1,6 @@
-# Coding Standards & Guidelines: Baseer Intelligent Financial System
+# Coding Standards & Guidelines: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P5-002  
+**Document ID:** basir-P5-002  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -146,7 +146,7 @@ import (
     "context"
     "errors"
 
-    "github.com/baseer/backend/internal/model"
+    "github.com/basir/backend/internal/model"
 )
 
 // Errors
@@ -358,5 +358,5 @@ linters:
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

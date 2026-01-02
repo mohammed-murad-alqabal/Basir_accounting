@@ -10,7 +10,7 @@ metrics:
   context_usage: "4%"
 ---
 
-# Engineering Philosophy - Baseer MVP
+# Engineering Philosophy - Basir App
 
 ## Core Principles for AI Assistant
 
@@ -219,7 +219,7 @@ metrics:
 
 ## Project Context
 
-### **Baseer MVP Specifics**
+### **Basir App Specifics**
 
 **AI Implementation:**
 
