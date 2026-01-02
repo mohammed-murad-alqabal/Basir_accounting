@@ -1,4 +1,4 @@
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:isar/isar.dart';
 
 part 'invoice_model.g.dart';

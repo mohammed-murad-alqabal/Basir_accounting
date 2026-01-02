@@ -1,10 +1,10 @@
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/theme/services/icon_customization_service.dart';
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/widgets/index.dart';
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
-import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
-import 'package:basser_app/features/customers/presentation/screens/customer_form_screen.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/theme/services/icon_customization_service.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_app/features/customers/presentation/screens/customer_form_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,7 +23,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
     final appIcons = ref.watch(appIconsProvider);
 
     return Scaffold(
-      backgroundColor: SemanticColors.background,
+      backgroundColor: AppColors.background,
       appBar: AppAppBar(
         title: context.l10n.customerDetailsTitle,
         actions: [
@@ -33,7 +33,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
             onPressed: () => _editCustomer(context),
           ),
           IconButton(
-            icon: Icon(appIcons.delete, color: SemanticColors.error),
+            icon: Icon(appIcons.delete, color: AppColors.error),
             tooltip: context.l10n.actionDeleteCustomer,
             onPressed: () => _deleteCustomer(context, ref),
           ),
@@ -48,13 +48,13 @@ class CustomerDetailsScreen extends ConsumerWidget {
             Center(
               child: CircleAvatar(
                 radius: 50,
-                backgroundColor: SemanticColors.primary.withValues(alpha: 0.2),
+                backgroundColor: AppColors.primary.withValues(alpha: 0.2),
                 child: Text(
                   customer.name.isNotEmpty ? customer.name[0] : '؟',
                   style: const TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
-                    color: SemanticColors.primary,
+                    color: AppColors.primary,
                   ),
                 ),
               ),
@@ -66,9 +66,9 @@ class CustomerDetailsScreen extends ConsumerWidget {
               child: Text(
                 customer.name,
                 style: const TextStyle(
-                  fontSize: FontSizes.titleLarge,
+                  fontSize: AppTypography.titleLarge,
                   fontWeight: FontWeight.bold,
-                  color: SemanticColors.textPrimary,
+                  color: AppColors.textPrimary,
                 ),
               ),
             ),
@@ -113,8 +113,8 @@ class CustomerDetailsScreen extends ConsumerWidget {
                   child: Text(
                     customer.notes!,
                     style: const TextStyle(
-                      fontSize: FontSizes.bodyMedium,
-                      color: SemanticColors.textSecondary,
+                      fontSize: AppTypography.bodyMedium,
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ),
@@ -145,9 +145,9 @@ class CustomerDetailsScreen extends ConsumerWidget {
   Widget _buildSectionTitle(String title) => Text(
         title,
         style: const TextStyle(
-          fontSize: FontSizes.titleMedium,
+          fontSize: AppTypography.titleMedium,
           fontWeight: FontWeight.w600,
-          color: SemanticColors.textPrimary,
+          color: AppColors.textPrimary,
         ),
       );
 
@@ -161,7 +161,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(Spacing.md),
           child: Row(
             children: [
-              Icon(icon, color: SemanticColors.primary, size: 24),
+              Icon(icon, color: AppColors.primary, size: 24),
               const SizedBox(width: Spacing.md),
               Expanded(
                 child: Column(
@@ -170,16 +170,16 @@ class CustomerDetailsScreen extends ConsumerWidget {
                     Text(
                       label,
                       style: const TextStyle(
-                        fontSize: FontSizes.bodySmall,
-                        color: SemanticColors.textSecondary,
+                        fontSize: AppTypography.bodySmall,
+                        color: AppColors.textSecondary,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       value,
                       style: const TextStyle(
-                        fontSize: FontSizes.bodyMedium,
-                        color: SemanticColors.textPrimary,
+                        fontSize: AppTypography.bodyMedium,
+                        color: AppColors.textPrimary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -247,7 +247,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.l10n.msgCustomerDeleted),
-            backgroundColor: SemanticColors.secondary,
+            backgroundColor: AppColors.secondary,
           ),
         );
         Navigator.pop(
@@ -258,7 +258,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.l10n.errCustomerDelete),
-            backgroundColor: SemanticColors.error,
+            backgroundColor: AppColors.error,
           ),
         );
       }
@@ -267,7 +267,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(context.l10n.errGeneric(e.toString())),
-          backgroundColor: SemanticColors.error,
+          backgroundColor: AppColors.error,
         ),
       );
     }

@@ -1,4 +1,4 @@
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 
 /// واجهة مستودع الفواتير (Invoice Repository Interface)
 ///

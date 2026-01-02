@@ -1,4 +1,4 @@
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
 import 'package:isar/isar.dart';
 
 part 'customer_model.g.dart';

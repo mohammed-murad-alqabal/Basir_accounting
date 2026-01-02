@@ -1,5 +1,5 @@
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/widgets/index.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/widgets/index.dart';
 import 'package:flutter/material.dart';
 
 /// شاشة اختبار شاملة لجميع أنواع الأزرار.
