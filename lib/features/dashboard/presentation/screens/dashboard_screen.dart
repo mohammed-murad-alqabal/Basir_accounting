@@ -1,217 +1,190 @@
-import 'dart:async';
-
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/core/theme/services/icon_customization_service.dart';
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/widgets/index.dart';
-import 'package:basser_app/core/widgets/mastery_dashboard_widgets.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/extensions/invoice_extensions.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/utils/format_helpers.dart';
+import 'package:basir_app/core/widgets/basir_dashboard_widgets.dart';
+import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/features/dashboard/domain/entities/dashboard_data.dart';
+import 'package:basir_app/features/dashboard/presentation/providers/dashboard_controller.dart';
+import 'package:basir_app/features/dashboard/presentation/widgets/dashboard_charts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// شاشة لوحة التحكم (Dashboard Screen)
-/// تعرض ملخص الإحصائيات والعمليات الرئيسية
-class DashboardScreen extends ConsumerStatefulWidget {
+/// تعرض ملخص الإحصائيات والعمليات الحقيقية بنظام Basir
+class DashboardScreen extends ConsumerWidget {
   /// إنشاء شاشة لوحة التحكم
   const DashboardScreen({super.key});
 
   @override
-  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends ConsumerState<DashboardScreen> {
-  int _selectedIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    final appIcons = ref.watch(appIconsProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dashboardAsync = ref.watch(dashboardControllerProvider);
 
     return Scaffold(
-      backgroundColor: SemanticColors.background,
+      backgroundColor: AppColors.background,
       appBar: AppSimpleAppBar(
         title: context.l10n.dashboardTitle,
-        actions: const [],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              // ignore: discarded_futures
+              ref.read(dashboardControllerProvider.notifier).refresh();
+            },
+          ),
+        ],
       ),
-      body: SingleChildScrollView(
+      body: dashboardAsync.when(
+        data: (data) => _buildContent(context, ref, data),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, st) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.error_outline,
+                size: 48,
+                color: AppColors.error,
+              ),
+              const SizedBox(height: Spacing.md),
+              Text(context.l10n.errorLoadingSettings),
+              TextButton(
+                onPressed: () => ref.invalidate(dashboardControllerProvider),
+                child: Text(context.l10n.retryLabel),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContent(
+    BuildContext context,
+    WidgetRef ref,
+    DashboardData data,
+  ) {
+    final appIcons = ref.watch(appIconsProvider);
+
+    return RefreshIndicator(
+      onRefresh: () => ref.read(dashboardControllerProvider.notifier).refresh(),
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(Spacing.lg),
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // رأس لوحة التحكم المطور
-            const DashboardMasteryHeader(),
+            const DashboardBasirHeader(),
             const SizedBox(height: Spacing.xl),
 
-            // الإحصائيات المطورة
-            _buildMasteryStatistics(appIcons),
+            // قسم الإحصائيات الحقيقية
+            _buildStatisticsSection(context, ref, data),
             const SizedBox(height: Spacing.xl),
 
-            // زر ترقية الحساب للضيوف
-            FutureBuilder<bool>(
-              future: ref.read(authServiceProvider).isGuest(),
-              builder: (context, snapshot) {
-                if (snapshot.data ?? false) {
-                  return Column(
-                    children: [
-                      AppPrimaryButton(
-                        label: context.l10n.actionUpgradeAccount,
-                        icon: Icons.upgrade,
-                        onPressed: () =>
-                            Navigator.of(context).pushNamed('/guest-upgrade'),
-                      ),
-                      const SizedBox(height: Spacing.xl),
-                    ],
-                  );
-                }
-                return const SizedBox.shrink();
-              },
-            ),
+            // الرسوم البيانية التفاعلية
+            DashboardCharts(data: data),
+            const SizedBox(height: Spacing.xl),
 
             // الإجراءات السريعة
             _buildQuickActions(context, appIcons),
             const SizedBox(height: Spacing.xl),
 
-            // الأنشطة الأخيرة
-            _buildRecentActivity(appIcons),
-
-            // مسافة إضافية في الأسفل لتجنب overflow
+            // الأنشطة الأخيرة (حقيقية)
+            _buildRecentActivity(context, ref, data),
             const SizedBox(height: Spacing.xxl),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: SemanticColors.surface,
-        selectedItemColor: SemanticColors.primary,
-        unselectedItemColor: SemanticColors.textSecondary,
-        selectedFontSize: 13,
-        unselectedFontSize: 13,
-        iconSize: 26,
-        elevation: 8,
-        onTap: (index) {
-          setState(
-            () => _selectedIndex = index,
-          );
-          switch (index) {
-            case 0:
-              // البقاء في لوحة التحكم
-              break;
-            case 1:
-              unawaited(
-                Navigator.of(context).pushNamed('/invoices'),
-              );
-            case 2:
-              unawaited(
-                Navigator.of(context).pushNamed('/customers'),
-              );
-            case 3:
-              unawaited(
-                Navigator.of(context).pushNamed('/settings'),
-              );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(appIcons.home),
-            label: context.l10n.navHome,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(appIcons.invoices),
-            label: context.l10n.navInvoices,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(appIcons.customers),
-            label: context.l10n.navCustomers,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(appIcons.settings),
-            label: context.l10n.navSettings,
-          ),
-        ],
-      ),
     );
   }
 
-  Widget _buildMasteryStatistics(AppIconsData appIcons) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                appIcons.dashboard,
-                size: 20,
-                color: SemanticColors.primary,
-              ),
-              const SizedBox(width: Spacing.xs),
-              Text(
-                context.l10n.dashboardStatsTitle,
-                style: const TextStyle(
-                  fontSize: FontSizes.titleMedium,
-                  fontWeight: FontWeight.bold,
-                  color: SemanticColors.textPrimary,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: Spacing.md),
-          GridView.count(
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisSpacing: Spacing.md,
-            mainAxisSpacing: Spacing.md,
-            childAspectRatio: 1.2,
-            children: [
-              GlassStatCard(
-                label: context.l10n.statTotalInvoices,
-                value: '24',
-                icon: appIcons.invoices,
-                color: SemanticColors.primary,
-              ),
-              GlassStatCard(
-                label: context.l10n.statActiveCustomers,
-                value: '12',
-                icon: appIcons.customers, // Proxy for people_outline
-                color: SemanticColors.secondary,
-              ),
-              GlassStatCard(
-                label: context.l10n.statTotalSales,
-                value: '5,240 ${context.l10n.hintCurrencySymbol}',
-                icon: appIcons.invoices, // Proxy for wallet
-                color: SemanticColors.warning,
-              ),
-              GlassStatCard(
-                label: context.l10n.statOverdueInvoices,
-                value: '3',
-                icon: appIcons.error,
-                color: SemanticColors.error,
-              ),
-            ],
-          ),
-        ],
-      );
-
-  Widget _buildQuickActions(
+  Widget _buildStatisticsSection(
     BuildContext context,
-    AppIconsData appIcons,
-  ) =>
-      Column(
+    WidgetRef ref,
+    DashboardData data,
+  ) {
+    final appIcons = ref.read(appIconsProvider);
+    final locale = context.l10n.localeName;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(appIcons.dashboard, size: 20, color: AppColors.primary),
+            const SizedBox(width: Spacing.xs),
+            Text(
+              context.l10n.dashboardStatsTitle,
+              style: const TextStyle(
+                fontSize: AppTypography.titleMedium,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: Spacing.md),
+        GridView.count(
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisSpacing: Spacing.md,
+          mainAxisSpacing: Spacing.md,
+          childAspectRatio: 1.2,
+          children: [
+            GlassStatCard(
+              label: context.l10n.statTotalSales,
+              value: FormatHelpers.formatCurrency(
+                data.totalSales,
+                locale: locale,
+              ),
+              icon: appIcons.invoices,
+              color: AppColors.primary,
+            ),
+            GlassStatCard(
+              label: context.l10n.statActiveCustomers,
+              value: data.activeCustomersCount.toString(),
+              icon: appIcons.customers,
+              color: AppColors.secondary,
+            ),
+            GlassStatCard(
+              label: context.l10n.statPaid,
+              value: FormatHelpers.formatCurrency(
+                data.paidRevenue,
+                locale: locale,
+              ),
+              icon: appIcons.check,
+              color: AppColors.success,
+            ),
+            GlassStatCard(
+              label: context.l10n.statOverdue,
+              value: FormatHelpers.formatCurrency(
+                data.pendingRevenue,
+                locale: locale,
+              ),
+              icon: appIcons.error,
+              color: AppColors.error,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildQuickActions(BuildContext context, AppIcons appIcons) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
-                appIcons.bolt,
-                size: 20,
-                color: SemanticColors.primary,
-              ),
+              Icon(appIcons.bolt, size: 20, color: AppColors.primary),
               const SizedBox(width: Spacing.xs),
               Text(
                 context.l10n.dashboardQuickActionsTitle,
                 style: const TextStyle(
-                  fontSize: FontSizes.titleMedium,
+                  fontSize: AppTypography.titleMedium,
                   fontWeight: FontWeight.bold,
-                  color: SemanticColors.textPrimary,
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
@@ -220,26 +193,21 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           Row(
             children: [
               Expanded(
-                child: AppPrimaryButton(
+                child: AppButton(
                   label: context.l10n.actionAddInvoice,
-                  onPressed: () {
-                    unawaited(
+                  onPressed: () =>
                       Navigator.of(context).pushNamed('/invoice-form'),
-                    );
-                  },
                   icon: appIcons.add,
                 ),
               ),
               const SizedBox(width: Spacing.md),
               Expanded(
-                child: AppSecondaryButton(
+                child: AppButton(
                   label: context.l10n.actionAddCustomer,
-                  onPressed: () {
-                    unawaited(
+                  onPressed: () =>
                       Navigator.of(context).pushNamed('/customer-form'),
-                    );
-                  },
                   icon: appIcons.add,
+                  type: AppButtonType.secondary,
                 ),
               ),
             ],
@@ -247,51 +215,60 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         ],
       );
 
-  Widget _buildRecentActivity(AppIconsData appIcons) => Column(
-        children: [
-          Row(
-            children: [
-              Icon(
-                appIcons.dashboard, // Proxy for history
+  Widget _buildRecentActivity(
+    BuildContext context,
+    WidgetRef ref,
+    DashboardData data,
+  ) {
+    final appIcons = ref.read(appIconsProvider);
+    final locale = context.l10n.localeName;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(appIcons.dashboard, size: 20, color: AppColors.primary),
+            const SizedBox(width: Spacing.xs),
+            Text(
+              context.l10n.dashboardRecentActivityTitle,
+              style: const TextStyle(
+                fontSize: AppTypography.titleMedium,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: Spacing.md),
+        if (data.recentInvoices.isEmpty)
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: Spacing.xl),
+              child: Text(
+                context.l10n.filterAll, // Placeholder for empty recent activity
+                style: const TextStyle(color: AppColors.textSecondary),
+              ),
+            ),
+          )
+        else
+          ...data.recentInvoices.map(
+            (invoice) => AppListCard(
+              title: context.l10n.invoiceTitle(invoice.id),
+              subtitle: invoice.customerName,
+              trailing: FormatHelpers.formatCurrency(
+                invoice.grandTotal,
+                locale: locale,
+              ),
+              leading: Icon(
+                invoice.getStatusIcon(appIcons),
+                color: invoice.getStatusColor(Theme.of(context).colorScheme),
                 size: 20,
-                color: SemanticColors.primary,
               ),
-              const SizedBox(width: Spacing.xs),
-              Text(
-                context.l10n.dashboardRecentActivityTitle,
-                style: const TextStyle(
-                  fontSize: FontSizes.titleMedium,
-                  fontWeight: FontWeight.bold,
-                  color: SemanticColors.textPrimary,
-                ),
-              ),
-            ],
+              onTap: () => Navigator.of(context).pushNamed('/invoices'),
+            ),
           ),
-          const SizedBox(height: Spacing.md),
-          AppListCard(
-            title: context.l10n.invoiceTitle('#001'),
-            subtitle: 'أحمد محمد - 1,500 ${context.l10n.hintCurrencySymbol}',
-            trailing: context.l10n.statusPaid,
-            leading: Icon(appIcons.check, color: SemanticColors.secondary),
-            onTap: () =>
-                unawaited(Navigator.of(context).pushNamed('/invoices')),
-          ),
-          AppListCard(
-            title: context.l10n.invoiceTitle('#002'),
-            subtitle: 'سارة علي - 2,300 ${context.l10n.hintCurrencySymbol}',
-            trailing: context.l10n.statusPending,
-            leading: Icon(appIcons.invoices, color: SemanticColors.warning),
-            onTap: () =>
-                unawaited(Navigator.of(context).pushNamed('/invoices')),
-          ),
-          AppListCard(
-            title: context.l10n.invoiceTitle('#003'),
-            subtitle: 'محمود حسن - 1,800 ${context.l10n.hintCurrencySymbol}',
-            trailing: context.l10n.statusOverdue,
-            leading: Icon(appIcons.close, color: SemanticColors.error),
-            onTap: () =>
-                unawaited(Navigator.of(context).pushNamed('/invoices')),
-          ),
-        ],
-      );
+      ],
+    );
+  }
 }

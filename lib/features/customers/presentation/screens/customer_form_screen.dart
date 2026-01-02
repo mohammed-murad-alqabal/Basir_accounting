@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/widgets/index.dart';
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
-import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -65,7 +65,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
     final isEditing = widget.customer != null;
 
     return Scaffold(
-      backgroundColor: SemanticColors.background,
+      backgroundColor: AppColors.background,
       appBar: AppAppBar(
         // ignore: lines_longer_than_80_chars
         title: isEditing
@@ -318,7 +318,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                   ? context.l10n.msgCustomerUpdated
                   : context.l10n.msgCustomerAdded,
             ),
-            backgroundColor: SemanticColors.secondary,
+            backgroundColor: AppColors.secondary,
           ),
         );
         Navigator.pop(
@@ -334,7 +334,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                   ? context.l10n.errCustomerUpdate
                   : context.l10n.errCustomerAdd,
             ),
-            backgroundColor: SemanticColors.error,
+            backgroundColor: AppColors.error,
           ),
         );
       }
@@ -343,7 +343,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(context.l10n.errGeneric(e.toString())),
-          backgroundColor: SemanticColors.error,
+          backgroundColor: AppColors.error,
         ),
       );
     } finally {

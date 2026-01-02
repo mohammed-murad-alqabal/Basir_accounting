@@ -1,15 +1,14 @@
 import 'dart:async';
 
-import 'package:basser_app/core/extensions/context_extensions.dart'; // Added
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/core/theme/services/icon_customization_service.dart';
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/utils/format_helpers.dart';
-import 'package:basser_app/core/widgets/index.dart';
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
-import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basser_app/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart'; // Added
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/utils/format_helpers.dart';
+import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -75,7 +74,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
 
     return Scaffold(
-      backgroundColor: SemanticColors.background,
+      backgroundColor: AppColors.background,
       appBar: AppAppBar(
         title: isEditing
             ? context.l10n.invoiceFormTitleEdit
@@ -94,7 +93,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 loading: () => const Center(child: CircularProgressIndicator()),
                 error: (error, stack) => Text(
                   context.l10n.errLoadCustomers(error.toString()),
-                  style: const TextStyle(color: SemanticColors.error),
+                  style: const TextStyle(color: AppColors.error),
                 ),
               ),
               const SizedBox(height: Spacing.md),
@@ -147,7 +146,6 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
               // زر الحفظ
               AppEnhancedButton(
-                // ignore: lines_longer_than_80_chars
                 text: isEditing
                     ? context.l10n.btnUpdateInvoice
                     : context.l10n.btnSaveInvoice,
@@ -165,9 +163,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   Widget _buildCustomerSelector(List<Customer> customers) => Container(
         padding: const EdgeInsets.all(Spacing.md),
         decoration: BoxDecoration(
-          color: SemanticColors.surface,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(Radii.md),
-          border: Border.all(color: SemanticColors.border),
+          border: Border.all(color: AppColors.border),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,9 +173,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             Text(
               context.l10n.labelCustomer,
               style: const TextStyle(
-                fontSize: FontSizes.bodyLarge,
+                fontSize: AppTypography.bodyLarge,
                 fontWeight: FontWeight.w600,
-                color: SemanticColors.textPrimary,
+                color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: Spacing.sm),
@@ -224,15 +222,15 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       Container(
         padding: const EdgeInsets.all(Spacing.md),
         decoration: BoxDecoration(
-          color: SemanticColors.surface,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(Radii.md),
-          border: Border.all(color: SemanticColors.border),
+          border: Border.all(color: AppColors.border),
         ),
         child: InkWell(
           onTap: onTap,
           child: Row(
             children: [
-              Icon(icon, color: SemanticColors.primary), // Use dynamic icon
+              Icon(icon, color: AppColors.primary), // Use dynamic icon
               const SizedBox(width: Spacing.md),
               Expanded(
                 child: Column(
@@ -241,8 +239,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                     Text(
                       label,
                       style: const TextStyle(
-                        fontSize: FontSizes.bodyMedium,
-                        color: SemanticColors.textSecondary,
+                        fontSize: AppTypography.bodyMedium,
+                        color: AppColors.textSecondary,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -253,9 +251,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                         calendarType: calendarType,
                       ),
                       style: const TextStyle(
-                        fontSize: FontSizes.bodyLarge,
+                        fontSize: AppTypography.bodyLarge,
                         fontWeight: FontWeight.w600,
-                        color: SemanticColors.textPrimary,
+                        color: AppColors.textPrimary,
                       ),
                     ),
                   ],
@@ -266,16 +264,16 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ),
       );
 
-  Widget _buildTaxRateField(AppIconsData appIcons) => Container(
+  Widget _buildTaxRateField(AppIcons appIcons) => Container(
         padding: const EdgeInsets.all(Spacing.md),
         decoration: BoxDecoration(
-          color: SemanticColors.surface,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(Radii.md),
-          border: Border.all(color: SemanticColors.border),
+          border: Border.all(color: AppColors.border),
         ),
         child: Row(
           children: [
-            Icon(appIcons.percent, color: SemanticColors.primary), // Dynamic
+            Icon(appIcons.percent, color: AppColors.primary), // Dynamic
             const SizedBox(width: Spacing.md),
             Expanded(
               child: Column(
@@ -284,17 +282,17 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   Text(
                     context.l10n.labelTaxRate,
                     style: const TextStyle(
-                      fontSize: FontSizes.bodyMedium,
-                      color: SemanticColors.textSecondary,
+                      fontSize: AppTypography.bodyMedium,
+                      color: AppColors.textSecondary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     '${(_taxRate * 100).toStringAsFixed(0)}%',
                     style: const TextStyle(
-                      fontSize: FontSizes.bodyLarge,
+                      fontSize: AppTypography.bodyLarge,
                       fontWeight: FontWeight.w600,
-                      color: SemanticColors.textPrimary,
+                      color: AppColors.textPrimary,
                     ),
                   ),
                 ],
@@ -312,9 +310,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   Widget _buildStatusSelector() => Container(
         padding: const EdgeInsets.all(Spacing.md),
         decoration: BoxDecoration(
-          color: SemanticColors.surface,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(Radii.md),
-          border: Border.all(color: SemanticColors.border),
+          border: Border.all(color: AppColors.border),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,9 +320,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             Text(
               context.l10n.labelInvoiceStatus,
               style: const TextStyle(
-                fontSize: FontSizes.bodyLarge,
+                fontSize: AppTypography.bodyLarge,
                 fontWeight: FontWeight.w600,
-                color: SemanticColors.textPrimary,
+                color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: Spacing.sm),
@@ -365,12 +363,12 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ),
       );
 
-  Widget _buildItemsSection(AppIconsData appIcons) => Container(
+  Widget _buildItemsSection(AppIcons appIcons) => Container(
         padding: const EdgeInsets.all(Spacing.md),
         decoration: BoxDecoration(
-          color: SemanticColors.surface,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(Radii.md),
-          border: Border.all(color: SemanticColors.border),
+          border: Border.all(color: AppColors.border),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -381,15 +379,15 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 Text(
                   context.l10n.labelInvoiceItems,
                   style: const TextStyle(
-                    fontSize: FontSizes.bodyLarge,
+                    fontSize: AppTypography.bodyLarge,
                     fontWeight: FontWeight.w600,
-                    color: SemanticColors.textPrimary,
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 IconButton(
                   icon: Icon(
                     appIcons.addCircle, // Dynamic
-                    color: SemanticColors.primary,
+                    color: AppColors.primary,
                   ),
                   tooltip: context.l10n.tooltipAddItem,
                   onPressed: _addItem,
@@ -404,8 +402,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   child: Text(
                     context.l10n.msgNoItems,
                     style: const TextStyle(
-                      color: SemanticColors.textSecondary,
-                      fontSize: FontSizes.bodyMedium,
+                      color: AppColors.textSecondary,
+                      fontSize: AppTypography.bodyMedium,
                     ),
                   ),
                 ),
@@ -435,13 +433,13 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                             '${item.total.toStringAsFixed(2)} ر.س',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: SemanticColors.primary,
+                              color: AppColors.primary,
                             ),
                           ),
                           IconButton(
                             icon: Icon(
                               appIcons.delete, // Dynamic
-                              color: SemanticColors.error,
+                              color: AppColors.error,
                             ),
                             tooltip: context.l10n.tooltipDeleteItem,
                             onPressed: () => _removeItem(index),
@@ -467,10 +465,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     return Container(
       padding: const EdgeInsets.all(Spacing.md),
       decoration: BoxDecoration(
-        color: SemanticColors.primary.withValues(alpha: 0.1),
+        color: AppColors.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(Radii.md),
         border: Border.all(
-          color: SemanticColors.primary.withValues(alpha: 0.3),
+          color: AppColors.primary.withValues(alpha: 0.3),
         ),
       ),
       child: Column(
@@ -505,25 +503,21 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             Text(
               label,
               style: TextStyle(
-                // ignore: lines_longer_than_80_chars
-                fontSize:
-                    isGrandTotal ? FontSizes.bodyLarge : FontSizes.bodyMedium,
+                fontSize: isGrandTotal
+                    ? AppTypography.bodyLarge
+                    : AppTypography.bodyMedium,
                 fontWeight: isGrandTotal ? FontWeight.bold : FontWeight.w500,
-                color: SemanticColors.textPrimary,
+                color: AppColors.textPrimary,
               ),
             ),
             Text(
               '${amount.toStringAsFixed(2)} ر.س',
               style: TextStyle(
-                // ignore: lines_longer_than_80_chars
                 fontSize: isGrandTotal
-                    ? FontSizes.headlineSmall
-                    : FontSizes.bodyLarge,
+                    ? AppTypography.headlineSmall
+                    : AppTypography.bodyLarge,
                 fontWeight: FontWeight.bold,
-                // ignore: lines_longer_than_80_chars
-                color: isGrandTotal
-                    ? SemanticColors.primary
-                    : SemanticColors.textPrimary,
+                color: isGrandTotal ? AppColors.primary : AppColors.textPrimary,
               ),
             ),
           ],
@@ -709,7 +703,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(context.l10n.errSelectCustomer),
-          backgroundColor: SemanticColors.error,
+          backgroundColor: AppColors.error,
         ),
       );
       return;
@@ -719,7 +713,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(context.l10n.errNoItems),
-          backgroundColor: SemanticColors.error,
+          backgroundColor: AppColors.error,
         ),
       );
       return;
@@ -739,7 +733,6 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         dueDate: _dueDate,
         taxRate: _taxRate,
         status: _status,
-        // ignore: lines_longer_than_80_chars
         notes: _notesController.text.trim().isEmpty
             ? null
             : _notesController.text.trim(),
@@ -760,12 +753,11 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              // ignore: lines_longer_than_80_chars
               isEditing
                   ? context.l10n.msgInvoiceUpdated
                   : context.l10n.msgInvoiceAdded,
             ),
-            backgroundColor: SemanticColors.secondary,
+            backgroundColor: AppColors.secondary,
           ),
         );
         Navigator.pop(
@@ -776,12 +768,11 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              // ignore: lines_longer_than_80_chars
               isEditing
                   ? context.l10n.errInvoiceUpdate
                   : context.l10n.errInvoiceAdd,
             ),
-            backgroundColor: SemanticColors.error,
+            backgroundColor: AppColors.error,
           ),
         );
       }
@@ -790,7 +781,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(context.l10n.errGeneric(e.toString())),
-          backgroundColor: SemanticColors.error,
+          backgroundColor: AppColors.error,
         ),
       );
     } finally {

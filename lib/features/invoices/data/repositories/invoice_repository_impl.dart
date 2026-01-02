@@ -1,6 +1,6 @@
-import 'package:basser_app/features/invoices/data/models/invoice_model.dart';
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basser_app/features/invoices/domain/repositories/invoice_repository.dart';
+import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/repositories/invoice_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع الفواتير (Invoice Repository Implementation)

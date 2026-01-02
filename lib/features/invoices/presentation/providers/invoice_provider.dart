@@ -1,6 +1,6 @@
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/features/invoices/data/services/pdf_service.dart';
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/features/invoices/data/services/pdf_service.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Provider لخدمة PDF

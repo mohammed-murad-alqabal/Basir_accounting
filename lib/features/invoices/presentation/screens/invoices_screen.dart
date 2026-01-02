@@ -1,16 +1,16 @@
 import 'dart:async';
 
-import 'package:basser_app/core/assets/app_illustrations.dart';
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/core/theme/services/color_customization_service.dart';
-import 'package:basser_app/core/theme/services/icon_customization_service.dart'; // Added
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/utils/format_helpers.dart';
-import 'package:basser_app/core/widgets/index.dart';
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basser_app/features/invoices/presentation/providers/invoice_provider.dart';
-import 'package:basser_app/features/invoices/presentation/screens/invoice_form_screen.dart';
+import 'package:basir_app/core/assets/app_illustrations.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/extensions/invoice_extensions.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/theme/services/color_customization_service.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/utils/format_helpers.dart';
+import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:basir_app/features/invoices/presentation/screens/invoice_form_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -56,8 +56,11 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           _buildFilterBar(),
           Expanded(
             child: invoicesAsync.when(
-              data: (invoices) =>
-                  _buildInvoicesList(invoices, appIcons, calendarType),
+              data: (invoices) => _buildInvoicesList(
+                invoices,
+                appIcons,
+                calendarType,
+              ),
               loading: () => const Center(
                 child: CircularProgressIndicator(),
               ),
@@ -72,8 +75,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                       Text(
                         context.l10n.errorLoadingInvoices,
                         style: const TextStyle(
-                          fontSize: FontSizes.bodyLarge,
-                          color: SemanticColors.textSecondary,
+                          fontSize: AppTypography.bodyLarge,
+                          color: AppColors.textSecondary,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -96,7 +99,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _createNewInvoice,
-        backgroundColor: SemanticColors.primary,
+        backgroundColor: AppColors.primary,
         child: Icon(appIcons.add, color: Colors.white),
       ),
     );
@@ -107,7 +110,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
   ) =>
       Container(
         padding: const EdgeInsets.all(Spacing.lg),
-        color: SemanticColors.surface,
+        color: AppColors.surface,
         child: statsAsync.when(
           data: (stats) => Row(
             children: [
@@ -118,7 +121,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                     stats.totalInvoices,
                     locale: context.l10n.localeName,
                   ),
-                  SemanticColors.primary,
+                  AppColors.primary,
                 ),
               ),
               Expanded(
@@ -128,7 +131,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                     stats.paidInvoices,
                     locale: context.l10n.localeName,
                   ),
-                  SemanticColors.success,
+                  AppColors.success,
                 ),
               ),
               Expanded(
@@ -138,7 +141,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                     stats.overdueInvoices,
                     locale: context.l10n.localeName,
                   ),
-                  SemanticColors.error,
+                  AppColors.error,
                 ),
               ),
             ],
@@ -153,7 +156,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           Text(
             value,
             style: TextStyle(
-              fontSize: FontSizes.titleLarge,
+              fontSize: AppTypography.titleLarge,
               fontWeight: FontWeight.bold,
               color: color,
             ),
@@ -161,8 +164,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           Text(
             label,
             style: const TextStyle(
-              fontSize: FontSizes.bodySmall,
-              color: SemanticColors.textHint,
+              fontSize: AppTypography.bodySmall,
+              color: AppColors.textHint,
             ),
           ),
         ],
@@ -196,19 +199,18 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           setState(() => _selectedFilter = value);
           ref.read(invoiceFilterProvider.notifier).state = value;
         },
-        backgroundColor: SemanticColors.surface,
-        selectedColor: SemanticColors.primary.withValues(alpha: 0.2),
+        backgroundColor: AppColors.surface,
+        selectedColor: AppColors.primary.withValues(alpha: 0.2),
         labelStyle: TextStyle(
           // ignore: lines_longer_than_80_chars
-          color:
-              isSelected ? SemanticColors.primary : SemanticColors.textPrimary,
+          color: isSelected ? AppColors.primary : AppColors.textPrimary,
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),
         shape: RoundedRectangleBorder(
           // ignore: lines_longer_than_80_chars
           borderRadius: BorderRadius.circular(Radii.full),
           side: BorderSide(
-            color: isSelected ? SemanticColors.primary : SemanticColors.border,
+            color: isSelected ? AppColors.primary : AppColors.border,
           ),
         ),
       ),
@@ -217,7 +219,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
 
   Widget _buildInvoicesList(
     List<Invoice> invoices,
-    AppIconsData appIcons,
+    AppIcons appIcons,
     CalendarType calendarType,
   ) {
     if (invoices.isEmpty) {
@@ -231,7 +233,6 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       itemCount: invoices.length,
       itemBuilder: (context, index) {
         final invoice = invoices[index];
-        final statusColor = _getStatusColor(invoice.status);
         final dateStr = FormatHelpers.formatDate(
           invoice.issuedDate,
           locale: context.l10n.localeName,
@@ -247,17 +248,27 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           leading: Container(
             padding: const EdgeInsets.all(Spacing.sm),
             decoration: BoxDecoration(
-              color: statusColor.withValues(alpha: 0.2),
+              color: invoice
+                  .getStatusColor(Theme.of(context).colorScheme)
+                  .withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(Radii.sm),
             ),
             child: Icon(
-              _getStatusIcon(invoice.status, appIcons),
-              color: statusColor,
+              invoice.getStatusIcon(appIcons),
+              color: invoice.getStatusColor(Theme.of(context).colorScheme),
               size: 20,
             ),
           ),
           onTap: () {
-            // TODO(dev): فتح تفاصيل الفاتورة
+            // Navigate to invoice details/edit screen
+            unawaited(
+              Navigator.push<void>(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) => InvoiceFormScreen(invoice: invoice),
+                ),
+              ),
+            );
           },
           onLongPress: () => _showInvoiceActions(
             invoice,
@@ -284,7 +295,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
 
   void _showInvoiceActions(
     Invoice invoice,
-    AppIconsData appIcons,
+    AppIcons appIcons,
     CalendarType calendarType,
   ) {
     unawaited(
@@ -332,10 +343,10 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
               ),
               const Divider(),
               ListTile(
-                leading: Icon(appIcons.delete, color: SemanticColors.error),
+                leading: Icon(appIcons.delete, color: AppColors.error),
                 title: Text(
                   context.l10n.actionDeleteInvoice,
-                  style: const TextStyle(color: SemanticColors.error),
+                  style: const TextStyle(color: AppColors.error),
                 ),
                 onTap: () {
                   Navigator.pop(context);
@@ -422,7 +433,12 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           text: context.l10n.pdfShareSubject(invoice.id),
         );
       } else {
-        if (!mounted) return; // Fix async gap
+        if (!mounted) return;
+        final settingsService = ref.read(settingsServiceProvider);
+        final currencyCode = await settingsService.getCurrencyCode();
+
+        if (!mounted) return;
+        // ignore: lines_longer_than_80_chars
         final message = context.l10n.msgInvoiceShare(
           customer.name,
           invoice.id,
@@ -430,7 +446,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             invoice.grandTotal,
             locale: context.l10n.localeName,
           ),
-          'SAR', // TODO(dev): Use dynamic currency
+          currencyCode,
         );
         await sharingService.shareToWhatsApp(
           phone: customer.phone!,
@@ -460,7 +476,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             onPressed: () => Navigator.pop(context, true),
             child: Text(
               context.l10n.btnDelete,
-              style: const TextStyle(color: SemanticColors.error),
+              style: const TextStyle(color: AppColors.error),
             ),
           ),
         ],
@@ -469,32 +485,6 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
 
     if (confirmed ?? false) {
       await ref.read(deleteInvoiceProvider(invoice.id).future);
-    }
-  }
-
-  Color _getStatusColor(String status) {
-    switch (status) {
-      case 'paid':
-        return SemanticColors.success;
-      case 'overdue':
-        return SemanticColors.error;
-      case 'issued':
-        return SemanticColors.info;
-      default:
-        return SemanticColors.textHint;
-    }
-  }
-
-  IconData _getStatusIcon(String status, AppIconsData appIcons) {
-    switch (status) {
-      case 'paid':
-        return appIcons.check;
-      case 'overdue':
-        return appIcons.error;
-      case 'issued':
-        return appIcons.send;
-      default:
-        return appIcons.edit;
     }
   }
 }

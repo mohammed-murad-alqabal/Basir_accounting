@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/widgets/index.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
