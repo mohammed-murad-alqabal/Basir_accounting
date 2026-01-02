@@ -1,70 +1,78 @@
 import 'dart:async';
 
-import 'package:basser_app/core/assets/app_logo.dart';
-import 'package:basser_app/core/constants.dart';
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/core/router.dart';
-import 'package:basser_app/core/theme/app_theme.dart';
-import 'package:basser_app/core/theme/font_manager.dart';
-import 'package:basser_app/core/theme/services/color_customization_service.dart';
-import 'package:basser_app/core/theme/services/font_customization_service.dart';
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/utils/provider_observer.dart';
-import 'package:basser_app/core/widgets/error_widget.dart' as basser;
-import 'package:basser_app/l10n/app_localizations.dart';
+import 'package:basir_app/core/assets/app_logo.dart';
+import 'package:basir_app/core/constants.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/router.dart';
+import 'package:basir_app/core/theme/app_theme.dart';
+import 'package:basir_app/core/theme/font_manager.dart';
+import 'package:basir_app/core/theme/services/color_customization_service.dart';
+import 'package:basir_app/core/theme/services/font_customization_service.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/utils/provider_observer.dart';
+import 'package:basir_app/core/widgets/error_widget.dart' as basir;
+import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() async {
-  // تهيئة Flutter bindings
-  WidgetsFlutterBinding.ensureInitialized();
+void main() {
+  unawaited(
+    runZonedGuarded(() async {
+      // تهيئة Flutter bindings
+      WidgetsFlutterBinding.ensureInitialized();
 
-  // تهيئة FontManager
-  await FontManager.initialize();
+      // تهيئة FontManager
+      await FontManager.initialize();
 
-  // تحسين الأداء: تعيين اتجاه النظام
-  await SystemChrome.setPreferredOrientations(
-    [
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ],
-  );
+      // تحسين الأداء: تعيين اتجاه النظام
+      await SystemChrome.setPreferredOrientations(
+        [
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+        ],
+      );
 
-  // إعداد شاشة الأخطاء العالمية
-  // ignore: lines_longer_than_80_chars
-  ErrorWidget.builder =
-      (details) => basser.GlobalErrorWidget(errorDetails: details);
+      // إعداد شاشة الأخطاء العالمية
+      // ignore: lines_longer_than_80_chars
+      ErrorWidget.builder =
+          (details) => basir.GlobalErrorWidget(errorDetails: details);
 
-  // تهيئة الخدمات الأساسية قبل البدء
-  final container = ProviderContainer(
-    observers: [BasserProviderObserver()],
-  );
+      // تهيئة الخدمات الأساسية قبل البدء
+      final container = ProviderContainer(
+        observers: [BasirProviderObserver()],
+      );
 
-  try {
-    // تهيئة AuthService (تنظيف البيانات القديمة عند إعادة التثبيت)
-    await container.read(authServiceProvider).initialize();
-    // ignore: avoid_catches_without_on_clauses
-  } catch (e, stackTrace) {
-    debugPrint('❌ Critical initialization error: $e');
-    debugPrint('Stack trace: $stackTrace');
-  }
+      try {
+        // تهيئة AuthService (تنظيف البيانات القديمة عند إعادة التثبيت)
+        await container.read(authServiceProvider).initialize();
+        // ignore: avoid_catches_without_on_clauses
+      } catch (e, stackTrace) {
+        debugPrint('❌ Critical initialization error: $e');
+        debugPrint('Stack trace: $stackTrace');
+      }
 
-  // بدء التطبيق
-  runApp(
-    UncontrolledProviderScope(
-      container: container,
-      child: const BasserApp(),
-    ),
+      // بدء التطبيق
+      runApp(
+        UncontrolledProviderScope(
+          container: container,
+          child: const BasirApp(),
+        ),
+      );
+    }, (error, stack) {
+      debugPrint('❌ [FATAL] Uncaught Async Error: $error');
+      debugPrint('Stack trace: $stack');
+    }),
   );
 }
 
 /// تطبيق بصير الرئيسي
-class BasserApp extends ConsumerWidget {
+class BasirApp extends ConsumerWidget {
   /// إنشاء تطبيق بصير
-  const BasserApp({super.key});
+  const BasirApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -130,17 +138,17 @@ class BasserApp extends ConsumerWidget {
       loading: () => const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          backgroundColor: Color(0xFF003D82), // لون البراند الأساسي
+          backgroundColor: Colors.white,
           body: Center(
             child: CircularProgressIndicator(
-              color: Colors.white,
+              color: Color(0xFF003D82),
             ),
           ),
         ),
       ),
       error: (err, stack) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: basser.GlobalErrorWidget(
+        home: basir.GlobalErrorWidget(
           errorDetails: FlutterErrorDetails(
             exception: err,
             stack: stack,
@@ -223,14 +231,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         'LoggedIn: $isLoggedIn, Guest: $isGuest',
       );
 
-      // اتخاذ قرار التوجيه الفوري
+      // اتخاذ قرار التوجيه الفوري (Refined Logic)
       if (isGuest || (isLoggedIn && keepLoggedIn)) {
+        // ضيف أو مسجل دخول ومفعل "تذكرني" -> لوحة التحكم
         await Navigator.of(context).pushReplacementNamed('/dashboard');
       } else if (!hasAccount) {
-        await Navigator.of(context).pushReplacementNamed('/login');
-      } else if (isLoggedIn) {
-        await Navigator.of(context).pushReplacementNamed('/dashboard');
+        // لا يوجد حساب ولا وضع ضيف -> شاشة الإعداد الأولية
+        await Navigator.of(context).pushReplacementNamed('/setup');
       } else {
+        // يوجد حساب ولكن غير مسجل دخول أو انتهت الجلسة (KeepLoggedIn false)
+        // -> شاشة تسجيل الدخول
         await Navigator.of(context).pushReplacementNamed('/login');
       }
     } on Exception catch (e) {
@@ -248,28 +258,21 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   Widget build(BuildContext context) => Scaffold(
         body: DecoratedBox(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color(0xFF003D82),
-                Color(0xFF001A33),
-              ],
-            ),
+            color: Colors.white,
           ),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // الشعار المطور Mastery 2.0
-                const BasserLogo(size: 140),
+                // الشعار المطور Basir 2.0
+                const BasirLogo(size: 140),
                 const SizedBox(height: Spacing.xl),
                 Text(
                   context.l10n.appTitle,
                   style: const TextStyle(
                     fontSize: 42,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Color(0xFF003D82), // Basir Blue
                     fontFamily: 'Cairo',
                     letterSpacing: 4,
                   ),
@@ -277,8 +280,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 Text(
                   AppConfig.appDescription,
                   style: TextStyle(
-                    fontSize: FontSizes.bodyMedium,
-                    color: Colors.white.withValues(alpha: 0.6),
+                    fontSize: AppTypography.bodyMedium,
+                    color: const Color(0xFF003D82).withValues(alpha: 0.6),
                     fontFamily: 'Cairo',
                   ),
                   textAlign: TextAlign.center,
@@ -287,12 +290,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 if (_error == null)
                   Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 40,
                         height: 40,
                         child: CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            const Color(0xFFFFD700).withValues(alpha: 0.8),
+                            Color(0xFF003D82),
                           ),
                           strokeWidth: 2,
                         ),
@@ -301,39 +304,44 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       Text(
                         _status,
                         style: TextStyle(
-                          fontSize: FontSizes.bodySmall,
-                          color: Colors.white.withValues(alpha: 0.5),
+                          fontSize: AppTypography.bodySmall,
+                          color: const Color(0xFF003D82).withValues(alpha: 0.5),
                         ),
                       ),
                     ],
                   )
                 else
-                  const Icon(
-                    Icons.error_outline,
-                    size: 48,
-                    color: SemanticColors.error,
+                  Column(
+                    children: [
+                      const Icon(
+                        Icons.error_outline,
+                        size: 60,
+                        color: AppColors.error,
+                      ),
+                      const SizedBox(height: Spacing.md),
+                      Text(
+                        _error ?? context.l10n.splashCriticalError,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.white70),
+                      ),
+                      const SizedBox(height: Spacing.xl),
+                      AppButton(
+                        label: context.l10n.retryLabel,
+                        onPressed: () {
+                          setState(() {
+                            _error = null;
+                            _status = context.l10n.splashInitializing;
+                          });
+                          unawaited(_initializeApp());
+                        },
+                        type: AppButtonType.outlined,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
               ],
             ),
           ),
         ),
-      );
-}
-
-/// شاشة تجريبية مؤقتة
-///
-/// تستخدم كـ placeholder للشاشات قيد التطوير
-// ignore_for_file: unreachable_from_main
-class PlaceholderScreen extends StatelessWidget {
-  /// إنشاء شاشة تجريبية
-  const PlaceholderScreen({required this.title, super.key});
-
-  /// عنوان الشاشة
-  final String title;
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text(title)),
-        body: Center(child: Text(context.l10n.placeholderComingSoon(title))),
       );
 }
