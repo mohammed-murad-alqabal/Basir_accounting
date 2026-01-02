@@ -1,5 +1,5 @@
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Provider لـ CustomerRepository (مستورد من core/providers.dart)

@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:basser_app/core/assets/app_logo.dart';
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/theme/app_icons.dart' as legacy;
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/widgets/index.dart';
-import 'package:basser_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:basir_app/core/assets/app_logo.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/theme/services/icon_customization_service.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -137,6 +137,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final appIcons = ref.watch(appIconsProvider);
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -161,8 +162,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       label: context.l10n.labelUsername,
                       hint: context.l10n.hintEnterUsername,
                       controller: _usernameController,
-                      prefixIcon: const Icon(
-                        legacy.AppIcons.user,
+                      prefixIcon: Icon(
+                        appIcons.person,
                         size: IconSizes.sm,
                       ),
                       validator: (value) {
@@ -180,8 +181,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       hint: context.l10n.hintEnterPassword,
                       controller: _passwordController,
                       obscureText: true,
-                      prefixIcon: const Icon(
-                        legacy.AppIcons.lock,
+                      prefixIcon: Icon(
+                        appIcons.lock,
                         size: IconSizes.sm,
                       ),
                       validator: (value) {
@@ -207,7 +208,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                         Text(
                           context.l10n.labelRememberMe,
-                          style: TextStyles.bodyMedium.copyWith(
+                          style: AppTextStyles.bodyMedium.copyWith(
                             color: colorScheme.onSurface,
                           ),
                         ),
@@ -236,7 +237,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         children: [
                           Text(
                             context.l10n.msgNoAccount,
-                            style: TextStyles.bodyMedium.copyWith(
+                            style: AppTextStyles.bodyMedium.copyWith(
                               color: colorScheme.onSurfaceVariant,
                             ),
                           ),
@@ -263,29 +264,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Widget _buildHeader(ColorScheme colorScheme) => Column(
         children: [
-          Container(
-            padding: const EdgeInsets.all(Spacing.md),
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                color: colorScheme.primary,
-                borderRadius: Radii.borderRadiusXl,
-                boxShadow: [
-                  BoxShadow(
-                    color: colorScheme.primary.withValues(alpha: 0.3),
-                    blurRadius: 12,
-                    offset: const Offset(0, 6),
-                  ),
-                ],
-              ),
-              child: const BasserLogo(size: 60),
-            ),
-          ),
+          const BasirLogo(size: 140),
           const SizedBox(height: Spacing.lg),
           Text(
             context.l10n.loginTitle,
-            style: TextStyles.headlineSmall.copyWith(
+            style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeights.bold,
               color: colorScheme.onSurface,
             ),
@@ -294,7 +277,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           Text(
             context.l10n.loginSubtitle,
             textAlign: TextAlign.center,
-            style: TextStyles.bodyMedium.copyWith(
+            style: AppTextStyles.bodyMedium.copyWith(
               color: colorScheme.onSurfaceVariant,
             ),
           ),

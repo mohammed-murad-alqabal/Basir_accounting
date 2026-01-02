@@ -1,6 +1,6 @@
-import 'package:basser_app/features/customers/data/models/customer_model.dart';
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
-import 'package:basser_app/features/customers/domain/repositories/customer_repository.dart';
+import 'package:basir_app/features/customers/data/models/customer_model.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/customers/domain/repositories/customer_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع العملاء (Customer Repository Implementation)
