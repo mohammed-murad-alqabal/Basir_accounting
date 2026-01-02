@@ -39,8 +39,8 @@ void main() {
 
       // Act & Assert
       expect(
-        () => engine.generateDocumentation(element),
-        throwsA(isA<UnimplementedError>()),
+        engine.generateDocumentation(element),
+        isA<String>(),
       );
     });
 
@@ -68,9 +68,9 @@ void main() {
 
       for (final element in testElements) {
         expect(
-          () => engine.generateDocumentation(element),
-          throwsA(isA<UnimplementedError>()),
-          reason: 'Should throw for ${element.type}',
+          engine.generateDocumentation(element),
+          isA<String>(),
+          reason: 'Should return String for ${element.type}',
         );
       }
     });
@@ -88,8 +88,8 @@ void main() {
 
       // Act & Assert
       expect(
-        () => engine.generateDocumentation(element),
-        throwsA(isA<UnimplementedError>()),
+        engine.generateDocumentation(element),
+        isA<String>(),
       );
     });
   });
@@ -112,8 +112,8 @@ void main() {
 
       // Act & Assert
       expect(
-        () => engine.generateFileDocumentation(result),
-        throwsA(isA<UnimplementedError>()),
+        engine.generateFileDocumentation(result),
+        isA<Map<String, String>>(),
       );
     });
 
@@ -127,8 +127,8 @@ void main() {
 
       // Act & Assert
       expect(
-        () => engine.generateFileDocumentation(result),
-        throwsA(isA<UnimplementedError>()),
+        engine.generateFileDocumentation(result),
+        isA<Map<String, String>>(),
       );
     });
 
@@ -161,8 +161,8 @@ void main() {
 
       // Act & Assert
       expect(
-        () => engine.generateFileDocumentation(result),
-        throwsA(isA<UnimplementedError>()),
+        engine.generateFileDocumentation(result),
+        isA<Map<String, String>>(),
       );
     });
   });
@@ -177,10 +177,8 @@ void main() {
       };
 
       // Act & Assert
-      await expectLater(
-        () => engine.applyDocumentation(filePath, docs),
-        throwsA(isA<UnimplementedError>()),
-      );
+      await engine.applyDocumentation(filePath, docs);
+      // Verify no exceptions thrown
     });
 
     test('should handle empty documentation map', () async {
@@ -189,10 +187,7 @@ void main() {
       final docs = <String, String>{};
 
       // Act & Assert
-      await expectLater(
-        () => engine.applyDocumentation(filePath, docs),
-        throwsA(isA<UnimplementedError>()),
-      );
+      await engine.applyDocumentation(filePath, docs);
     });
 
     test('should handle large documentation map', () async {
@@ -206,10 +201,7 @@ void main() {
       }
 
       // Act & Assert
-      await expectLater(
-        () => engine.applyDocumentation(filePath, docs),
-        throwsA(isA<UnimplementedError>()),
-      );
+      await engine.applyDocumentation(filePath, docs);
     });
 
     test('should handle documentation with special characters', () async {
@@ -222,10 +214,7 @@ void main() {
       };
 
       // Act & Assert
-      await expectLater(
-        () => engine.applyDocumentation(filePath, docs),
-        throwsA(isA<UnimplementedError>()),
-      );
+      await engine.applyDocumentation(filePath, docs);
     });
   });
 
@@ -375,19 +364,16 @@ void main() {
 
       // Act & Assert - All should throw UnimplementedError
       expect(
-        () => engine.generateDocumentation(element),
-        throwsA(isA<UnimplementedError>()),
+        engine.generateDocumentation(element),
+        isA<String>(),
       );
 
       expect(
-        () => engine.generateFileDocumentation(result),
-        throwsA(isA<UnimplementedError>()),
+        engine.generateFileDocumentation(result),
+        isA<Map<String, String>>(),
       );
 
-      await expectLater(
-        () => engine.applyDocumentation('workflow.dart', {'test': 'doc'}),
-        throwsA(isA<UnimplementedError>()),
-      );
+      await engine.applyDocumentation('workflow.dart', {'test': 'doc'});
     });
 
     test('should handle edge cases consistently', () {
@@ -412,8 +398,8 @@ void main() {
       // Act & Assert
       for (final element in edgeCases) {
         expect(
-          () => engine.generateDocumentation(element),
-          throwsA(isA<UnimplementedError>()),
+          engine.generateDocumentation(element),
+          isA<String>(),
           reason: 'Should handle edge case: ${element.name}',
         );
       }
