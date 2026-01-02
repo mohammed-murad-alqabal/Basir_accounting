@@ -1,6 +1,6 @@
-# OKRs & KPIs Definition: Baseer Intelligent Financial System
+# OKRs & KPIs Definition: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P2-003  
+**Document ID:** basir-P2-003  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -184,5 +184,5 @@ We use the **Objectives and Key Results (OKR)** framework for strategic goal-set
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

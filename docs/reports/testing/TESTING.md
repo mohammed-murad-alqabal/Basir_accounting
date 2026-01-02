@@ -254,7 +254,7 @@ xdg-open coverage/html/index.html  # Linux
 
 ```dart
 import 'package:flutter_test/flutter_test.dart';
-import 'package:basser_app/data/models/your_model.dart';
+import 'package:basir_app/data/models/your_model.dart';
 
 void main() {
   group('YourModel', () {

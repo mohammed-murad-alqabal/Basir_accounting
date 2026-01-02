@@ -59,14 +59,14 @@
 
 ```bash
 cd ..
-tar -czf Basser_MVP_backup_$(date +%Y%m%d).tar.gz Basser_MVP/
+tar -czf Basir_MVP_backup_$(date +%Y%m%d).tar.gz Basir_MVP/
 ```
 
 ### 2. إنشاء Repository نظيف (دقيقتان)
 
 ```bash
-cp -r Basser_MVP Basser_MVP_clean
-cd Basser_MVP_clean
+cp -r Basir_MVP Basir_MVP_clean
+cd Basir_MVP_clean
 rm -rf .git
 flutter clean
 ```
@@ -82,13 +82,13 @@ git commit -m "feat: initial commit - clean repository"
 ### 4. إنشاء Repository على GitHub (دقيقة واحدة)
 
 - اذهب إلى: https://github.com/new
-- اسم: Basser_MVP_v2
+- اسم: Basir_MVP_v2
 - Create repository
 
 ### 5. الدفع (دقيقة واحدة)
 
 ```bash
-git remote add origin https://github.com/mohammed-murad-alqabal/Basser_MVP_v2.git
+git remote add origin https://github.com/mohammed-murad-alqabal/Basir_MVP_v2.git
 git push -u origin main
 ```
 

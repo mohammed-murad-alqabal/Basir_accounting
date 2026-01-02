@@ -122,7 +122,7 @@ $ echo $JAVA_HOME
 ### Flutter Analyze
 
 ```
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 
 ⚠️ 4 issues found:
   - 2 errors (GoogleFonts, duplicate parameter)

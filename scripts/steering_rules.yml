@@ -157,7 +157,7 @@ maintenance:
 
   # تحديث القواعد
   auto_update_rules: false
-  rules_update_source: "https://github.com/baseer-team/steering-rules"
+  rules_update_source: "https://github.com/basir-team/steering-rules"
 
   # النسخ الاحتياطية
   backup_before_changes: true

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This specification defines the requirements for executing a calculated and precise merge strategy to integrate 6 unmerged branches in the Baseer MVP repository while maintaining data integrity, minimizing conflicts, and ensuring zero data loss.
+This specification defines the requirements for executing a calculated and precise merge strategy to integrate 6 unmerged branches in the Basir MVP repository while maintaining data integrity, minimizing conflicts, and ensuring zero data loss.
 
 ## Glossary
 

@@ -1,6 +1,6 @@
-# Project Charter: Baseer Intelligent Financial System
+# Project Charter: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P2-001  
+**Document ID:** basir-P2-001  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -12,11 +12,11 @@
 
 | Attribute           | Value                                            |
 | ------------------- | ------------------------------------------------ |
-| **Project Name**    | Baseer Intelligent Financial & Accounting System |
-| **Project Code**    | BASEER-2025                                      |
+| **Project Name**    | Basir Intelligent Financial & Accounting System |
+| **Project Code**    | basir-2025                                      |
 | **Start Date**      | December 2025                                    |
 | **Target Launch**   | Q2 2026                                          |
-| **Project Sponsor** | Baseer Leadership                                |
+| **Project Sponsor** | Basir Leadership                                |
 | **Project Manager** | Development Agent Team Lead                      |
 
 ---
@@ -179,5 +179,5 @@ Project Lead (Agent Team Lead)
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

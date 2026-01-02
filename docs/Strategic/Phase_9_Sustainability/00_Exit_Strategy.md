@@ -1,6 +1,6 @@
-# Sustainability & Exit Strategy: Baseer Intelligent Financial System
+# Sustainability & Exit Strategy: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P9-001  
+**Document ID:** basir-P9-001  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -150,5 +150,5 @@
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

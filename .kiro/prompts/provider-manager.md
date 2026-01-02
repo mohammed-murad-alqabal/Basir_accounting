@@ -144,7 +144,7 @@ Optimizations:
 #### Project Context Template
 
 ```markdown
-Project: Baseer MVP - Flutter Invoice Management App
+Project: Basir App - Flutter Invoice Management App
 Target Users: Arabic-speaking business owners in Saudi Arabia
 Architecture: Local-first with Isar database
 UI Framework: Flutter 3.35.5+ with Material Design 3

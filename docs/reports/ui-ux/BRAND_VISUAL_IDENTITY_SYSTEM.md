@@ -1,6 +1,6 @@
 # نظام الهوية البصرية الموحدة لمشروع بصير
 
-# Unified Visual Brand Identity System - Baseer Project
+# Unified Visual Brand Identity System - Basir Project
 
 **المشروع:** بصير MVP - نظام إدارة الفواتير والعملاء  
 **التاريخ:** 6 ديسمبر 2025  
@@ -792,8 +792,8 @@ class DashboardScreen extends StatelessWidget {
         title: Text(
           'بصير',
           style: TextStyle(
-            fontSize: AppTypography.titleLarge,      // 22px
-            fontWeight: AppTypography.semiBold,      // 600
+            fontSize: AppAppTypography.titleLarge,      // 22px
+            fontWeight: AppAppTypography.semiBold,      // 600
             color: AppColors.textPrimary,            // #000000
           ),
         ),
@@ -801,13 +801,13 @@ class DashboardScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(AppSpacing.md),     // 16px
+        padding: EdgeInsets.all(Spacing.md),     // 16px
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // بطاقة الملخص المالي
             _buildFinancialSummaryCard(),
-            SizedBox(height: AppSpacing.lg),         // 24px
+            SizedBox(height: Spacing.lg),         // 24px
 
             // بطاقات الإحصائيات
             Row(
@@ -818,7 +818,7 @@ class DashboardScreen extends StatelessWidget {
                   icon: Icons.people_outline,
                   iconColor: AppColors.primary,      // #0056B3
                 )),
-                SizedBox(width: AppSpacing.md),      // 16px
+                SizedBox(width: Spacing.md),      // 16px
                 Expanded(child: _buildStatCard(
                   title: 'الفواتير',
                   value: '320',
@@ -827,7 +827,7 @@ class DashboardScreen extends StatelessWidget {
                 )),
               ],
             ),
-            SizedBox(height: AppSpacing.lg),         // 24px
+            SizedBox(height: Spacing.lg),         // 24px
 
             // الإجراءات السريعة
             _buildQuickActions(),
@@ -841,8 +841,8 @@ class DashboardScreen extends StatelessWidget {
         label: Text(
           'فاتورة جديدة',
           style: TextStyle(
-            fontSize: AppTypography.labelLarge,      // 15px
-            fontWeight: AppTypography.medium,        // 500
+            fontSize: AppAppTypography.labelLarge,      // 15px
+            fontWeight: AppAppTypography.medium,        // 500
           ),
         ),
       ),
@@ -858,19 +858,19 @@ class DashboardScreen extends StatelessWidget {
         side: BorderSide(color: AppColors.border),   // #D1D5DB
       ),
       child: Padding(
-        padding: EdgeInsets.all(AppSpacing.lg),     // 24px
+        padding: EdgeInsets.all(Spacing.lg),     // 24px
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'الملخص المالي',
               style: TextStyle(
-                fontSize: AppTypography.headlineMedium, // 18px
-                fontWeight: AppTypography.semiBold,     // 600
+                fontSize: AppAppTypography.headlineMedium, // 18px
+                fontWeight: AppAppTypography.semiBold,     // 600
                 color: AppColors.textPrimary,           // #000000
               ),
             ),
-            SizedBox(height: AppSpacing.md),           // 16px
+            SizedBox(height: Spacing.md),           // 16px
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -906,8 +906,8 @@ class InvoiceCard extends StatelessWidget {
       color: AppColors.surface,                      // #FFFFFF
       elevation: 0,
       margin: EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,                   // 16px
-        vertical: AppSpacing.sm,                     // 8px
+        horizontal: Spacing.md,                   // 16px
+        vertical: Spacing.sm,                     // 8px
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppBorderRadius.md), // 12px
@@ -917,7 +917,7 @@ class InvoiceCard extends StatelessWidget {
         onTap: () => _viewInvoiceDetails(context, invoice),
         borderRadius: BorderRadius.circular(AppBorderRadius.md),
         child: Padding(
-          padding: EdgeInsets.all(AppSpacing.md),    // 16px
+          padding: EdgeInsets.all(Spacing.md),    // 16px
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -930,20 +930,20 @@ class InvoiceCard extends StatelessWidget {
                     child: Text(
                       invoice.customerName,
                       style: TextStyle(
-                        fontSize: AppTypography.headlineMedium, // 18px
-                        fontWeight: AppTypography.semiBold,     // 600
+                        fontSize: AppAppTypography.headlineMedium, // 18px
+                        fontWeight: AppAppTypography.semiBold,     // 600
                         color: AppColors.textPrimary,           // #000000
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  SizedBox(width: AppSpacing.sm),               // 8px
+                  SizedBox(width: Spacing.sm),               // 8px
                   // شارة الحالة
                   _buildStatusBadge(invoice.status),
                 ],
               ),
-              SizedBox(height: AppSpacing.sm),                 // 8px
+              SizedBox(height: Spacing.sm),                 // 8px
 
               // معلومات الفاتورة
               Row(
@@ -953,38 +953,38 @@ class InvoiceCard extends StatelessWidget {
                     size: AppIconSize.sm,                       // 22px
                     color: AppColors.textSecondary,             // #4A4A4A
                   ),
-                  SizedBox(width: AppSpacing.xs),               // 4px
+                  SizedBox(width: Spacing.xs),               // 4px
                   Text(
                     invoice.number,
                     style: TextStyle(
-                      fontSize: AppTypography.bodyMedium,       // 15px
+                      fontSize: AppAppTypography.bodyMedium,       // 15px
                       color: AppColors.textSecondary,           // #4A4A4A
                     ),
                   ),
-                  SizedBox(width: AppSpacing.md),               // 16px
+                  SizedBox(width: Spacing.md),               // 16px
                   Icon(
                     Icons.calendar_today_outlined,
                     size: AppIconSize.sm,                       // 22px
                     color: AppColors.textSecondary,             // #4A4A4A
                   ),
-                  SizedBox(width: AppSpacing.xs),               // 4px
+                  SizedBox(width: Spacing.xs),               // 4px
                   Text(
                     _formatDate(invoice.dueDate),
                     style: TextStyle(
-                      fontSize: AppTypography.bodyMedium,       // 15px
+                      fontSize: AppAppTypography.bodyMedium,       // 15px
                       color: AppColors.textSecondary,           // #4A4A4A
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: AppSpacing.md),                 // 16px
+              SizedBox(height: Spacing.md),                 // 16px
 
               // المبلغ
               Text(
                 _formatAmount(invoice.total),
                 style: TextStyle(
-                  fontSize: AppTypography.titleLarge,          // 22px
-                  fontWeight: AppTypography.bold,              // 700
+                  fontSize: AppAppTypography.titleLarge,          // 22px
+                  fontWeight: AppAppTypography.bold,              // 700
                   color: AppColors.primary,                    // #0056B3
                 ),
               ),
@@ -1029,8 +1029,8 @@ class InvoiceCard extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,                   // 8px
-        vertical: AppSpacing.xs,                     // 4px
+        horizontal: Spacing.sm,                   // 8px
+        vertical: Spacing.xs,                     // 4px
       ),
       decoration: BoxDecoration(
         color: backgroundColor,
@@ -1044,12 +1044,12 @@ class InvoiceCard extends StatelessWidget {
             size: AppIconSize.xs,                     // 18px
             color: textColor,
           ),
-          SizedBox(width: AppSpacing.xs),             // 4px
+          SizedBox(width: Spacing.xs),             // 4px
           Text(
             label,
             style: TextStyle(
-              fontSize: AppTypography.labelSmall,     // 12px
-              fontWeight: AppTypography.medium,       // 500
+              fontSize: AppAppTypography.labelSmall,     // 12px
+              fontWeight: AppAppTypography.medium,       // 500
               color: textColor,
             ),
           ),
@@ -1079,8 +1079,8 @@ class PrimaryButton extends StatelessWidget {
         disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.5),
         elevation: 0,
         padding: EdgeInsets.symmetric(
-          horizontal: AppSpacing.lg,                 // 24px
-          vertical: AppSpacing.md + 4,               // 20px
+          horizontal: Spacing.lg,                 // 24px
+          vertical: Spacing.md + 4,               // 20px
         ),
         minimumSize: Size(88, 52),
         shape: RoundedRectangleBorder(
@@ -1103,13 +1103,13 @@ class PrimaryButton extends StatelessWidget {
               children: [
                 if (icon != null) ...[
                   Icon(icon, size: AppIconSize.sm),   // 22px
-                  SizedBox(width: AppSpacing.sm),     // 8px
+                  SizedBox(width: Spacing.sm),     // 8px
                 ],
                 Text(
                   label,
                   style: TextStyle(
-                    fontSize: AppTypography.labelLarge,  // 15px
-                    fontWeight: AppTypography.semiBold,  // 600
+                    fontSize: AppAppTypography.labelLarge,  // 15px
+                    fontWeight: AppAppTypography.semiBold,  // 600
                     height: 1.5,
                     letterSpacing: 0.5,
                   ),
@@ -1485,8 +1485,8 @@ iconSize: +30%
 ### للمطورين
 
 - [ ] استخدام AppColors للألوان
-- [ ] استخدام AppTypography للخطوط
-- [ ] استخدام AppSpacing للمسافات
+- [ ] استخدام AppAppTypography.للخطوط
+- [ ] استخدام Spacing للمسافات
 - [ ] استخدام AppBorderRadius للحواف
 - [ ] استخدام AppIconSize للأيقونات
 - [ ] استخدام const constructors حيثما أمكن

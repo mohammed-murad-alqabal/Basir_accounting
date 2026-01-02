@@ -331,7 +331,7 @@ Release Build: ⚠️ يحتاج إصلاح
 
 ```
 flutter analyze
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 250+ issues found
 ```
 
@@ -339,7 +339,7 @@ Analyzing Basser_MVP...
 
 ```
 flutter analyze
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 174 issues found (10 errors, 12 warnings, 152 info)
 ```
 

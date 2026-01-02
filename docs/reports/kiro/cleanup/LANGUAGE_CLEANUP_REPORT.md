@@ -34,7 +34,7 @@
 - npm test -- --verbose=false --silent
 - npx jest --silent --passWithNoTests
 
-+ # Flutter Test - Quiet mode (Primary for Baseer MVP)
++ # Flutter Test - Quiet mode (Primary for Basir MVP)
 + flutter test --reporter=compact
 + dart test --reporter=compact
 +

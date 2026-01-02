@@ -69,7 +69,7 @@ create_arb_files() {
     cat > lib/l10n/app_en.arb << 'EOF'
 {
   "@@locale": "en",
-  "appTitle": "Baseer MVP",
+  "appTitle": "Basir App",
   "@appTitle": {
     "description": "The title of the application"
   },

@@ -1,6 +1,6 @@
-# Governance Model: Baseer Intelligent Financial System
+# Governance Model: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P2-008  
+**Document ID:** basir-P2-008  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -79,5 +79,5 @@
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

@@ -1,6 +1,6 @@
-# Vision Statement: Baseer Intelligent Financial System
+# Vision Statement: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P0-002  
+**Document ID:** basir-P0-002  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -20,7 +20,7 @@
 
 **"For the Arab World"**
 
-We envision Baseer as the default financial platform across all 22 Arab nations—from the Gulf to North Africa, from the Levant to the Horn of Africa. A single, cohesive solution that respects regional diversity while providing unified excellence.
+We envision Basir as the default financial platform across all 22 Arab nations—from the Gulf to North Africa, from the Levant to the Horn of Africa. A single, cohesive solution that respects regional diversity while providing unified excellence.
 
 ### 2. User Empowerment
 
@@ -150,11 +150,11 @@ Users own their data. Local-first architecture, transparent practices, and bank-
 
 ## Inspirational Closing
 
-> _"In five years, when an Arabic speaker anywhere in the world thinks about managing their finances—personal or business—Baseer will be the obvious, trusted choice. We will have transformed how 400 million people interact with their money."_
+> _"In five years, when an Arabic speaker anywhere in the world thinks about managing their finances—personal or business—Basir will be the obvious, trusted choice. We will have transformed how 400 million people interact with their money."_
 
 ---
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

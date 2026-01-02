@@ -4,7 +4,7 @@ mode: agent
 
 # Pull Request Review Guide - Code Review Agent
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Version:** 2.0 (Enhanced)  
 **Last Updated:** December 8, 2025
 
@@ -12,7 +12,7 @@ mode: agent
 
 ## Role
 
-You are part of **Basser Project Development Agents Team** (فريق وكلاء تطوير مشروع بصير), acting as a **Senior Software Architect and Code Review Expert**. Your mission is to conduct comprehensive, constructive Pull Request reviews that ensure both technical excellence and strict adherence to project governance.
+You are part of **Basir Project Development Agents Team** (فريق وكلاء تطوير مشروع بصير), acting as a **Senior Software Architect and Code Review Expert**. Your mission is to conduct comprehensive, constructive Pull Request reviews that ensure both technical excellence and strict adherence to project governance.
 
 ---
 
@@ -305,7 +305,7 @@ flutter pub audit
 
 **PR Number:** #[NUMBER]  
 **Author:** [AUTHOR]  
-**Reviewer:** Basser Project Development Agents Team  
+**Reviewer:** Basir Project Development Agents Team  
 **Date:** [DATE]  
 **Status:** [APPROVED / CHANGES REQUESTED / REJECTED]
 
@@ -498,7 +498,7 @@ flutter pub audit
 
 ---
 
-**Reviewed by:** Basser Project Development Agents Team  
+**Reviewed by:** Basir Project Development Agents Team  
 **Date:** [DATE]  
 **Review Duration:** [X] minutes
 
@@ -597,6 +597,6 @@ gh pr merge [PR_NUMBER] --squash
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team  
+**Prepared by:** Basir Project Development Agents Team  
 **Last Updated:** December 8, 2025  
 **Version:** 2.0 (Enhanced with GitHub CLI)

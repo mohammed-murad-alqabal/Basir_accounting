@@ -636,18 +636,18 @@ git count-objects -vH > .git-size-before.txt
 echo "=== إنشاء Backup ==="
 
 # 1. Git bundle (كامل)
-git bundle create ../basser-backup-$(date +%Y%m%d-%H%M%S).bundle --all
+git bundle create ../basir-backup-$(date +%Y%m%d-%H%M%S).bundle --all
 
 # 2. نسخة من المجلد (اختياري)
 cd ..
-tar -czf basser-full-backup-$(date +%Y%m%d-%H%M%S).tar.gz basser/ \
+tar -czf basir-full-backup-$(date +%Y%m%d-%H%M%S).tar.gz basir/ \
   --exclude='.git' \
   --exclude='build' \
   --exclude='node_modules'
-cd basser
+cd basir
 
 echo "✅ Backup completed"
-ls -lh ../basser-backup-*.bundle
+ls -lh ../basir-backup-*.bundle
 ```
 
 **النتيجة المتوقعة:** ملف backup يمكن استعادته
@@ -707,7 +707,7 @@ git rev-parse HEAD > .git-head-before-cleanup.txt
 
 echo "✅ المرحلة 0 مكتملة"
 echo "📊 Checkpoint created"
-echo "💾 Backup: ../basser-backup-*.bundle"
+echo "💾 Backup: ../basir-backup-*.bundle"
 echo "📝 HEAD: $(cat .git-head-before-cleanup.txt)"
 ```
 
@@ -1053,7 +1053,7 @@ if ! command -v git-filter-repo &> /dev/null; then
 fi
 
 # Backup إضافي
-git bundle create ../basser-before-history-cleanup.bundle --all
+git bundle create ../basir-before-history-cleanup.bundle --all
 
 # تنظيف التاريخ
 git filter-repo --path docs/api/html --invert-paths --force
@@ -1143,8 +1143,8 @@ git reset --hard origin/main
 # إذا كان force push
 # يجب استعادة من الـ backup
 cd ..
-git clone basser-backup-*.bundle basser-restored
-cd basser-restored
+git clone basir-backup-*.bundle basir-restored
+cd basir-restored
 
 echo "✅ Restored from backup"
 ```
@@ -1156,8 +1156,8 @@ echo "=== Rollback المرحلة 4 ==="
 
 # استعادة من الـ backup قبل تنظيف التاريخ
 cd ..
-git clone basser-before-history-cleanup.bundle basser-restored
-cd basser-restored
+git clone basir-before-history-cleanup.bundle basir-restored
+cd basir-restored
 
 echo "✅ History restored from backup"
 ```
@@ -1169,11 +1169,11 @@ echo "=== Rollback كامل ==="
 
 # استعادة من الـ backup الأولي
 cd ..
-git clone basser-backup-*.bundle basser-restored
-cd basser-restored
+git clone basir-backup-*.bundle basir-restored
+cd basir-restored
 
 # نسخ الملفات غير المتتبعة
-cp -r ../basser/.kiro/docs/reports/GIT_MANAGEMENT_SURGICAL_PLAN_V2.md .kiro/docs/reports/
+cp -r ../basir/.kiro/docs/reports/GIT_MANAGEMENT_SURGICAL_PLAN_V2.md .kiro/docs/reports/
 
 echo "✅ Full restore completed"
 ```
@@ -1394,7 +1394,7 @@ if [ "$1" = "--deploy" ]; then
     git push origin gh-pages
     cd ..
 
-    echo "✅ Deployed to: https://username.github.io/basser/"
+    echo "✅ Deployed to: https://username.github.io/basir/"
 else
     echo "📖 Documentation generated in: $TEMP_DIR/docs"
     echo "💡 To deploy: $0 --deploy"

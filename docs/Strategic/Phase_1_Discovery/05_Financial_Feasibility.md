@@ -1,6 +1,6 @@
-# Financial Feasibility Study: Baseer Intelligent Financial System
+# Financial Feasibility Study: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P1-006  
+**Document ID:** basir-P1-006  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -202,5 +202,5 @@ The financial analysis demonstrates:
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

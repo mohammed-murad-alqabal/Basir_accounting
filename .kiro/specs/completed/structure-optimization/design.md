@@ -136,7 +136,7 @@ def generate_content(structure_data, templates):
         'footer': generate_footer()
     }
 
-    return merge_sections(content, templates.basser_template)
+    return merge_sections(content, templates.basir_template)
 ```
 
 ### 3. Validation Engine (محرك التحقق)
@@ -324,7 +324,7 @@ jobs:
         run: |
           structure-optimizer generate \
             --input=analysis.json \
-            --template=basser-template \
+            --template=basir-template \
             --output=new-structure.md
 
       - name: Validate Generated Content
@@ -551,7 +551,7 @@ class StructureAnalyzer:
 class ContentGenerator:
     def __init__(self, template_path: str):
         self.templates = self._load_templates(template_path)
-        self.basser_config = self._load_basser_config()
+        self.basir_config = self._load_basir_config()
 
     def generate(self, structure: StructureModel) -> str:
         """توليد محتوى STRUCTURE.md كامل"""
@@ -565,7 +565,7 @@ class ContentGenerator:
         sections.append(self._generate_toc(structure))
 
         # 3. دليل البدء السريع لبصير
-        sections.append(self._generate_quick_start_basser())
+        sections.append(self._generate_quick_start_basir())
 
         # 4. قسم المواصفات (Specs)
         sections.append(self._generate_specs_section(structure.specs))

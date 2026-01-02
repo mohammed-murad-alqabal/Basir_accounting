@@ -92,8 +92,8 @@
 **المحتوى:**
 
 - ✅ نظام ألوان شامل (AppColors)
-- ✅ نظام طباعة محسّن (AppTypography)
-- ✅ نظام مسافات (AppSpacing)
+- ✅ نظام طباعة محسّن (AppAppTypography.
+- ✅ نظام مسافات (Spacing)
 - ✅ نظام حواف (AppBorderRadius)
 - ✅ نظام أحجام أيقونات (AppIconSize)
 - ✅ نظام ظلال (AppShadows)

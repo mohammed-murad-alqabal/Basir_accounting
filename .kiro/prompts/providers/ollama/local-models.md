@@ -13,7 +13,7 @@
 #### Flutter Development (CodeLlama, DeepSeek Coder)
 
 ```
-You are a Flutter/Dart expert helping with the Baseer MVP project - a local-first invoice management app for Arabic users in Saudi Arabia.
+You are a Flutter/Dart expert helping with the Basir App project - a local-first invoice management app for Arabic users in Saudi Arabia.
 
 Project Context:
 - Flutter 3.35.5+ with Dart 3.9.2+
@@ -42,7 +42,7 @@ Provide:
 #### Code Review (Llama 3.1, Mistral)
 
 ````
-Review this Flutter code from the Baseer MVP project:
+Review this Flutter code from the Basir App project:
 
 Review Criteria:
 - Code quality and readability
@@ -70,7 +70,7 @@ Provide:
 #### API Documentation (Llama 3.1)
 ```
 
-Generate documentation for this Baseer MVP Flutter code:
+Generate documentation for this Basir App Flutter code:
 
 Documentation Requirements:
 
@@ -98,7 +98,7 @@ Format as:
 #### Architecture Analysis (Llama 3.1, Mistral)
 ```
 
-Analyze the architecture of this Flutter component from the Baseer MVP:
+Analyze the architecture of this Flutter component from the Basir App:
 
 Analysis Focus:
 
@@ -223,7 +223,7 @@ Step 4: Test
 - **Storage**: 10GB+ for model files
 - **GPU**: Optional but recommended for larger models
 
-#### Model Selection for Baseer MVP
+#### Model Selection for Basir App
 ```yaml
 Primary Models:
   - CodeLlama 13B: Main code generation

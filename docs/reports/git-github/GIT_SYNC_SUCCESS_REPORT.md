@@ -142,7 +142,7 @@ Working tree: clean (مع بعض التغييرات الجديدة)
 ### 4.2 المستودع البعيد
 
 ```
-URL: https://github.com/mohammed-murad-alqabal/Basser_MVP.git
+URL: https://github.com/mohammed-murad-alqabal/Basir_MVP.git
 Branch: main
 Last commit: e311c00
 Status: ✅ متزامن تماماً

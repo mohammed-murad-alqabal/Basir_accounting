@@ -13,7 +13,7 @@
 1. افتح المتصفح واذهب إلى:
 
    ```
-   https://github.com/mohammed-murad-alqabal/Basser_MVP/settings
+   https://github.com/mohammed-murad-alqabal/Basir_MVP/settings
    ```
 
 2. تأكد من أن لديك صلاحيات **Admin**

@@ -87,8 +87,8 @@
 ```bash
 # على GitHub، انقر Fork
 # ثم clone الـ fork الخاص بك
-git clone https://github.com/YOUR_USERNAME/Basser_MVP.git
-cd Basser_MVP
+git clone https://github.com/YOUR_USERNAME/Basir_MVP.git
+cd Basir_MVP
 ```
 
 ### 2. إعداد البيئة

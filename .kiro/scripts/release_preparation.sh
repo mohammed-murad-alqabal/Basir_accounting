@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Automated Release Preparation for Baseer MVP
+# Automated Release Preparation for Basir MVP
 # المؤلف: فريق وكلاء تطوير مشروع بصير
 # التاريخ: 18 ديسمبر 2025
 
@@ -37,7 +37,7 @@ print_info() {
 
 # التحقق من المعاملات
 if [ $# -eq 0 ]; then
-    echo "🚀 Baseer MVP Release Preparation"
+    echo "🚀 Basir MVP Release Preparation"
     echo "=================================="
     echo ""
     echo "Usage: $0 <release_type> [version]"
@@ -69,7 +69,7 @@ fi
 CURRENT_VERSION=$(grep "version:" pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)
 CURRENT_BUILD=$(grep "version:" pubspec.yaml | cut -d'+' -f2 2>/dev/null || echo "1")
 
-print_header "Release Preparation for Baseer MVP"
+print_header "Release Preparation for Basir MVP"
 print_info "Current version: $CURRENT_VERSION+$CURRENT_BUILD"
 
 # حساب الإصدار الجديد
@@ -300,7 +300,7 @@ if [ ! -f "$CHANGELOG_FILE" ]; then
     cat > "$CHANGELOG_FILE" << EOF
 # Changelog
 
-All notable changes to Baseer MVP will be documented in this file.
+All notable changes to Basir MVP will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -369,7 +369,7 @@ print_status "Git commit and tag created"
 print_header "Release Report Generation"
 
 cat > ".kiro/reports/release_${NEW_VERSION}_report.md" << EOF
-# Release Report: Baseer MVP v$NEW_VERSION
+# Release Report: Basir MVP v$NEW_VERSION
 
 **التاريخ:** $RELEASE_DATE $(date '+%H:%M:%S')
 **المؤلف:** فريق وكلاء تطوير مشروع بصير

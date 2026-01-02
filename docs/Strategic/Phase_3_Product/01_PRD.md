@@ -1,6 +1,6 @@
-# Product Requirements Document (PRD): Baseer Intelligent Financial System
+# Product Requirements Document (PRD): Basir Intelligent Financial System
 
-**Document ID:** BASEER-P3-002  
+**Document ID:** basir-P3-002  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -12,7 +12,7 @@
 
 ### 1.1 Product Name
 
-**Baseer** (بصير) - Intelligent Financial & Accounting System
+**Basir** (بصير) - Intelligent Financial & Accounting System
 
 ### 1.2 Product Vision
 
@@ -22,8 +22,8 @@ The leading intelligent financial operating system for the Arab world, combining
 
 | Mode                | Target Users          | Core Value                            |
 | ------------------- | --------------------- | ------------------------------------- |
-| **Baseer Personal** | Individuals, families | Financial clarity and control         |
-| **Baseer Business** | Freelancers, SMEs     | Professional invoicing and compliance |
+| **Basir Personal** | Individuals, families | Financial clarity and control         |
+| **Basir Business** | Freelancers, SMEs     | Professional invoicing and compliance |
 
 ---
 
@@ -129,7 +129,7 @@ The leading intelligent financial operating system for the Arab world, combining
 | SUB-003 | Subscription Dashboard | P1       | Total subscription costs         |
 | SUB-004 | Cancel Suggestions     | P2       | AI unused subscription detection |
 
-### 2.4 AI Features (Baseera Engine)
+### 2.4 AI Features (Basira Engine)
 
 | ID     | Feature                | Priority | Description                           |
 | ------ | ---------------------- | -------- | ------------------------------------- |
@@ -223,5 +223,5 @@ The leading intelligent financial operating system for the Arab world, combining
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

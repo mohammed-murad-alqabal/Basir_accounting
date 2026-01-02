@@ -23,7 +23,7 @@ Status: ✅ Pushed Successfully
 ### رابط الـ Commit
 
 ```
-https://github.com/mohammed-murad-alqabal/Basser_MVP/commit/fce7d03
+https://github.com/mohammed-murad-alqabal/Basir_MVP/commit/fce7d03
 ```
 
 ---
@@ -122,7 +122,7 @@ https://github.com/mohammed-murad-alqabal/Basser_MVP/commit/fce7d03
 
 **الخطوات التالية:**
 
-1. افتح: https://github.com/mohammed-murad-alqabal/Basser_MVP/actions
+1. افتح: https://github.com/mohammed-murad-alqabal/Basir_MVP/actions
 2. شاهد تشغيل workflows
 3. تأكد من نجاح جميع workflows
 
@@ -213,7 +213,7 @@ https://github.com/mohammed-murad-alqabal/Basser_MVP/commit/fce7d03
 1. **مراقبة GitHub Actions**
 
    ```
-   https://github.com/mohammed-murad-alqabal/Basser_MVP/actions
+   https://github.com/mohammed-murad-alqabal/Basir_MVP/actions
    ```
 
 2. **التحقق من Workflows**
@@ -341,9 +341,9 @@ curl -s "https://api.github.com/repos/OWNER/REPO/commits/HASH" | jq .sha
 
 ### GitHub
 
-- **المستودع:** https://github.com/mohammed-murad-alqabal/Basser_MVP
-- **Actions:** https://github.com/mohammed-murad-alqabal/Basser_MVP/actions
-- **Commit:** https://github.com/mohammed-murad-alqabal/Basser_MVP/commit/fce7d03
+- **المستودع:** https://github.com/mohammed-murad-alqabal/Basir_MVP
+- **Actions:** https://github.com/mohammed-murad-alqabal/Basir_MVP/actions
+- **Commit:** https://github.com/mohammed-murad-alqabal/Basir_MVP/commit/fce7d03
 
 ### التقارير المحلية
 

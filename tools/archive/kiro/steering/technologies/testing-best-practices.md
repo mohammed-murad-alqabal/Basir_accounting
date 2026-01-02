@@ -23,7 +23,7 @@ metrics:
 ## Common Test Commands
 
 ```bash
-# Flutter Test - Quiet mode (Primary for Baseer MVP)
+# Flutter Test - Quiet mode (Primary for Basir App)
 flutter test --reporter=compact
 dart test --reporter=compact
 

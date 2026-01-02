@@ -1,6 +1,6 @@
-# Value Proposition: Baseer Intelligent Financial System
+# Value Proposition: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P0-005  
+**Document ID:** basir-P0-005  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -10,7 +10,7 @@
 
 ## Value Proposition Statement
 
-> **"Baseer is the first Arabic-native intelligent financial platform that unifies personal and business finance management with AI-powered automation, regional tax compliance, and actionable insights—saving users 10+ hours monthly while ensuring 100% regulatory compliance."**
+> **"Basir is the first Arabic-native intelligent financial platform that unifies personal and business finance management with AI-powered automation, regional tax compliance, and actionable insights—saving users 10+ hours monthly while ensuring 100% regulatory compliance."**
 
 ---
 
@@ -74,15 +74,15 @@
 
 | Offering                  | Description                                     |
 | ------------------------- | ----------------------------------------------- |
-| **Baseer Business**       | E-invoicing, CRM, expense tracking, tax reports |
-| **Baseer Personal**       | Budgeting, savings goals, subscription tracking |
-| **Baseera AI Engine**     | Intelligent automation and predictions          |
+| **Basir Business**       | E-invoicing, CRM, expense tracking, tax reports |
+| **Basir Personal**       | Budgeting, savings goals, subscription tracking |
+| **Basira AI Engine**     | Intelligent automation and predictions          |
 | **Regional Tax Engine**   | Compliance for 22 Arab countries                |
 | **Multi-Currency System** | Live rates, multi-currency invoicing            |
 
 #### Pain Relievers
 
-| Pain               | Baseer Solution                                    |
+| Pain               | Basir Solution                                    |
 | ------------------ | -------------------------------------------------- |
 | Manual data entry  | OCR scanning, bank sync, AI categorization         |
 | Compliance fear    | Built-in ZATCA/VAT engines, auto-validation        |
@@ -93,7 +93,7 @@
 
 #### Gain Creators
 
-| Gain                  | Baseer Enabler                            |
+| Gain                  | Basir Enabler                            |
 | --------------------- | ----------------------------------------- |
 | Time savings          | One-click invoicing, auto-reconciliation  |
 | Guaranteed compliance | Pre-validated templates, live validation  |
@@ -158,21 +158,21 @@
 
 ## Competitive Differentiation
 
-### Why Baseer Wins
+### Why Basir Wins
 
-| Factor                          | Baseer              | Competitors         |
+| Factor                          | Basir              | Competitors         |
 | ------------------------------- | ------------------- | ------------------- |
 | Arabic-First Design             | ✅ Born Arabic      | ❌ Translated       |
 | Dual Mode (Personal + Business) | ✅ Unified          | ❌ Separate apps    |
 | Pan-Arab Coverage               | ✅ 22 countries     | ❌ 1-3 countries    |
-| AI Engine                       | ✅ Baseera          | ❌ Basic automation |
+| AI Engine                       | ✅ Basira          | ❌ Basic automation |
 | Tax Compliance                  | ✅ All Arab systems | ❌ Limited          |
 | Local-First                     | ✅ Privacy-first    | ❌ Cloud-only       |
 
-### The Baseer Difference
+### The Basir Difference
 
 ```
-Traditional Apps          Baseer
+Traditional Apps          Basir
 ┌──────────────┐          ┌──────────────┐
 │  Translated  │          │ Arabic-First │
 │  Western UX  │          │ RTL-Native   │
@@ -214,5 +214,5 @@ Traditional Apps          Baseer
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

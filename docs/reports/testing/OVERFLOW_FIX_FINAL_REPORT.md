@@ -170,7 +170,7 @@ Widget build(BuildContext context) => Card(
 
 ```bash
 $ flutter analyze --no-pub
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 No issues found! (ran in 4.1s)
 ```
 
@@ -204,7 +204,7 @@ I/flutter ( 4307): ╔═══════════════════�
 I/flutter ( 4307): ║                 ISAR CONNECT STARTED                 ║
 I/flutter ( 4307): ╚══════════════════════════════════════════════════════╝
 I/Choreographer( 4307): Skipped 38 frames!  The application may be doing too much work on its main thread.
-D/ProfileInstaller( 4307): Installing profile for com.basser.basser_app
+D/ProfileInstaller( 4307): Installing profile for com.basir.basir_app
 ```
 
 ✅ **لا توجد رسائل overflow على الإطلاق!**

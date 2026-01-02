@@ -508,13 +508,13 @@ Hero(
 fontSize: 16
 
 // استخدم:
-fontSize: AppTypography.bodyMedium // 15px
+fontSize: AppAppTypography.bodyMedium // 15px
 
 // بدلاً من:
 padding: EdgeInsets.all(16)
 
 // استخدم:
-padding: EdgeInsets.all(AppSpacing.md) // 16px
+padding: EdgeInsets.all(Spacing.md) // 16px
 ```
 
 ### 2. Semantic Colors (ألوان دلالية)

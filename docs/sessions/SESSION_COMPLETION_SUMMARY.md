@@ -45,14 +45,14 @@ await SystemChrome.setPreferredOrientations([
 
 ### 2. الأصول المخصصة 🎨
 
-#### أ. شعار بصير (BasserLogo)
+#### أ. شعار بصير (BasirLogo)
 
 - **الملف:** `lib/core/assets/app_logo.dart`
 - **التصميم:** فاتورة مع علامة صح (✓)
 - **التقنية:** CustomPainter (أداء عالي)
 - **المميزات:** قابل للتخصيص، لا يحتاج صور
 
-#### ب. أيقونة بصير (BasserIcon)
+#### ب. أيقونة بصير (BasirIcon)
 
 - **الاستخدام:** الأماكن الصغيرة (24px)
 - **التصميم:** نسخة مبسطة من الشعار
@@ -94,8 +94,8 @@ await SystemChrome.setPreferredOrientations([
 
 1. **`lib/core/assets/app_logo.dart`** (145 سطر)
 
-   - BasserLogo widget
-   - BasserIcon widget
+   - BasirLogo widget
+   - BasirIcon widget
    - CustomPainter implementations
 
 2. **`lib/core/assets/app_illustrations.dart`** (225 سطر)

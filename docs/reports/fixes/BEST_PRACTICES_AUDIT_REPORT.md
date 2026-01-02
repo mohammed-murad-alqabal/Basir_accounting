@@ -251,7 +251,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
 **نتيجة flutter analyze:**
 
 ```
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 No issues found! ✅
 (ran in 4.0s)
 ```

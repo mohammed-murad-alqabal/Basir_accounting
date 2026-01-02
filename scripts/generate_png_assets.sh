@@ -4,10 +4,10 @@
 
 set -e
 
-echo "🎨 Generating Mastery 2.0 PNG Assets..."
+echo "🎨 Generating Basir 2.0 PNG Assets..."
 
 # Use flutter test to render the CustomPainter
-flutter test test/tools/export_mastery_assets.dart --timeout=60s
+flutter test test/tools/export_basir_assets.dart --timeout=60s
 
 # Verify PNG format
 echo ""

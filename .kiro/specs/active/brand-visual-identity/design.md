@@ -65,7 +65,7 @@ graph TB
     A --> D[Theme Engine]
 
     B --> E[Colors]
-    B --> F[Typography]
+    B --> F[AppTypography.
     B --> G[Spacing]
     B --> H[Icons]
 
@@ -89,8 +89,8 @@ graph TB
 **1. طبقة Design Tokens (الأساس)**
 
 - `AppColors`: جميع الألوان المستخدمة في التطبيق
-- `AppTypography`: جميع أنماط النصوص
-- `AppSpacing`: جميع المسافات والأبعاد
+- `AppAppTypography.: جميع أنماط النصوص
+- `Spacing`: جميع المسافات والأبعاد
 - `AppIconSize`: أحجام الأيقونات المعيارية
 
 **2. طبقة Theme Engine (المحرك)**
@@ -141,7 +141,7 @@ class AppColors {
 #### نظام الطباعة
 
 ```dart
-class AppTypography {
+class AppAppTypography.{
   static const String fontFamily = 'Cairo';
 
   // Display Styles
@@ -184,7 +184,7 @@ class AppTypography {
 #### نظام المسافات
 
 ```dart
-class AppSpacing {
+class Spacing {
   static const double xs = 4.0;   // Extra Small
   static const double sm = 8.0;   // Small
   static const double md = 16.0;  // Medium (Default)
@@ -240,7 +240,7 @@ class AppThemeConfig {
     required this.colorScheme,
     required this.textTheme,
     this.borderRadius = 12.0,
-    this.defaultPadding = const EdgeInsets.all(AppSpacing.md),
+    this.defaultPadding = const EdgeInsets.all(Spacing.md),
   });
 }
 ```
@@ -297,8 +297,8 @@ _لأي_ ملف كود، يجب ألا يحتوي على ألوان مباشرة
 
 ### خصائص الطباعة
 
-**Property 4: Typography Consistency**
-_لأي_ نص في التطبيق، يجب استخدام أنماط من AppTypography فقط
+**Property 4: AppTypography.Consistency**
+_لأي_ نص في التطبيق، يجب استخدام أنماط من AppAppTypography.فقط
 **يتحقق من: المتطلبات 2.1**
 
 **Property 5: Font Family Uniformity**
@@ -312,7 +312,7 @@ _لأي_ نص عربي، يجب تطبيق TextDirection.rtl تلقائياً
 ### خصائص المسافات
 
 **Property 7: Spacing Grid Compliance**
-_لأي_ مسافة مطبقة، يجب أن تكون مضاعف 4px من AppSpacing
+_لأي_ مسافة مطبقة، يجب أن تكون مضاعف 4px من Spacing
 **يتحقق من: المتطلبات 3.1**
 
 **Property 8: Border Radius Consistency**
@@ -360,7 +360,7 @@ class ColorValidator {
 ```dart
 class SafeTheme {
   static TextStyle getSafeTextStyle(TextStyle? style) {
-    return style ?? AppTypography.bodyMedium;
+    return style ?? AppAppTypography.bodyMedium;
   }
 
   static Color getSafeColor(Color? color, Color fallback) {
@@ -435,8 +435,8 @@ test('all text-background color pairs meet WCAG contrast requirements', () {
 // Feature: brand-visual-identity, Property 7: Spacing Grid Compliance
 test('all spacing values are multiples of 4px', () {
   final spacingValues = [
-    AppSpacing.xs, AppSpacing.sm, AppSpacing.md,
-    AppSpacing.lg, AppSpacing.xl, AppSpacing.xxl
+    Spacing.xs, Spacing.sm, Spacing.md,
+    Spacing.lg, Spacing.xl, Spacing.xxl
   ];
 
   for (final spacing in spacingValues) {

@@ -28,12 +28,12 @@ final secureStorageProvider = Provider<FlutterSecureStorage>(
   (ref) => const FlutterSecureStorage(
     aOptions: AndroidOptions(
       encryptedSharedPreferences: true,
-      sharedPreferencesName: 'basser_secure_prefs',
-      preferencesKeyPrefix: 'basser_',
+      sharedPreferencesName: 'basir_secure_prefs',
+      preferencesKeyPrefix: 'basir_',
     ),
     iOptions: IOSOptions(
-      groupId: 'group.com.basser.app',
-      accountName: 'basser_keychain',
+      groupId: 'group.com.basir.app',
+      accountName: 'basir_keychain',
       accessibility: KeychainAccessibility.first_unlock_this_device,
     ),
     lOptions: LinuxOptions(
@@ -43,8 +43,8 @@ final secureStorageProvider = Provider<FlutterSecureStorage>(
       encryptedSharedPreferences: true,
     ),
     mOptions: MacOsOptions(
-      groupId: 'group.com.basser.app',
-      accountName: 'basser_keychain',
+      groupId: 'group.com.basir.app',
+      accountName: 'basir_keychain',
       accessibility: KeychainAccessibility.first_unlock_this_device,
     ),
   ),

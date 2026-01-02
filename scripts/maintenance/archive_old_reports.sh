@@ -1,7 +1,7 @@
 #!/bin/bash
 # Archive Old Reports Script
 # Archives reports older than 90 days
-# Part of Basser MVP maintenance tools
+# Part of Basir App maintenance tools
 
 # Colors
 RED='\033[0;31m'

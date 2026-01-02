@@ -80,11 +80,11 @@ await _checkAuthStatus(authService);
 **الأيقونات الرئيسية:**
 
 ```dart
-BasserIcons.customers    // العملاء
-BasserIcons.invoices     // الفواتير
-BasserIcons.dashboard    // لوحة التحكم
-BasserIcons.settings     // الإعدادات
-BasserIcons.reports      // التقارير
+BasirIcons.customers    // العملاء
+BasirIcons.invoices     // الفواتير
+BasirIcons.dashboard    // لوحة التحكم
+BasirIcons.settings     // الإعدادات
+BasirIcons.reports      // التقارير
 // ... والمزيد
 ```
 
@@ -122,7 +122,7 @@ BasserIcons.reports      // التقارير
 **التصميم:**
 
 - خلفية: #0056B3 (أزرق)
-- شعار: BasserLogo
+- شعار: BasirLogo
 - نص: "بصير - نظام الفواتير"
 
 #### د. سكريبت توليد الأيقونات
@@ -221,7 +221,7 @@ dev_dependencies:
 
 ```dart
 CustomIcon(
-  icon: BasserIcons.invoices,
+  icon: BasirIcons.invoices,
   size: 24,
   color: Colors.blue,
   badge: '5',  // شارة اختيارية
@@ -234,14 +234,14 @@ CustomIcon(
 
 ```dart
 AnimatedIcon(
-  icon: BasserIcons.customers,
+  icon: BasirIcons.customers,
   size: 32,
   color: Colors.blue,
   duration: Duration(milliseconds: 300),
 )
 ```
 
-### 5.2 BasserIcons
+### 5.2 BasirIcons
 
 **100+ أيقونة مصنفة:**
 
@@ -412,7 +412,7 @@ flutter run --profile
 
 ### للمطورين
 
-1. **استخدام BasserIcons** بدلاً من Material Icons
+1. **استخدام BasirIcons** بدلاً من Material Icons
 2. **اختبار الأداء** بانتظام
 3. **مراقبة حجم التطبيق** عند إضافة أصول
 4. **توثيق التغييرات** دائماً

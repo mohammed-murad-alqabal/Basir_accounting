@@ -79,7 +79,7 @@ class AppTheme {
       seedColor: const Color(0xFF2196F3), // بصير الأزرق
       brightness: Brightness.light,
     ),
-    typography: Typography.material2021(),
+    typography: AppTypography.material2021(),
   );
 
   static ThemeData get darkTheme => ThemeData(

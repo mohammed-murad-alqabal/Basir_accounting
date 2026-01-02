@@ -554,7 +554,7 @@ dart doc .
 من `.kiro/steering/structure.md`:
 
 ```
-Basser_MVP/
+Basir_MVP/
 ├── lib/                    # كود التطبيق
 │   ├── main.dart          # نقطة الدخول
 │   ├── core/              # المكونات المشتركة
@@ -1356,18 +1356,18 @@ SECURITY.md                         # سياسة الأمان
 #### القنوات الرسمية
 
 ```
-GitHub: github.com/YOUR_USERNAME/Basser_MVP
-Issues: github.com/YOUR_USERNAME/Basser_MVP/issues
-Discussions: github.com/YOUR_USERNAME/Basser_MVP/discussions
-Wiki: github.com/YOUR_USERNAME/Basser_MVP/wiki
+GitHub: github.com/YOUR_USERNAME/Basir_MVP
+Issues: github.com/YOUR_USERNAME/Basir_MVP/issues
+Discussions: github.com/YOUR_USERNAME/Basir_MVP/discussions
+Wiki: github.com/YOUR_USERNAME/Basir_MVP/wiki
 ```
 
 #### التواصل
 
 ```
-Email: team@basser-mvp.com
-Twitter: @BasserMVP
-LinkedIn: linkedin.com/company/basser-mvp
+Email: team@basir-mvp.com
+Twitter: @BasirMVP
+LinkedIn: linkedin.com/company/basir-mvp
 ```
 
 ---
@@ -1929,7 +1929,7 @@ Related to #124
 
 **الترخيص:** MIT License - انظر ملف LICENSE للتفاصيل
 
-**للتواصل:** team@basser-mvp.com
+**للتواصل:** team@basir-mvp.com
 
 ---
 

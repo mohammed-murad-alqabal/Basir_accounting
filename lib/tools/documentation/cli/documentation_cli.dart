@@ -2,10 +2,10 @@
 
 import 'dart:io';
 
-import 'package:basser_app/tools/documentation/analysis/analysis_engine.dart';
-import 'package:basser_app/tools/documentation/generation/generation_engine.dart';
-import 'package:basser_app/tools/documentation/repository/documentation_repository.dart';
-import 'package:basser_app/tools/documentation/validation/validation_engine.dart';
+import 'package:basir_app/tools/documentation/analysis/analysis_engine.dart';
+import 'package:basir_app/tools/documentation/generation/generation_engine.dart';
+import 'package:basir_app/tools/documentation/repository/documentation_repository.dart';
+import 'package:basir_app/tools/documentation/validation/validation_engine.dart';
 
 /// أداة سطر الأوامر لنظام التوثيق
 ///

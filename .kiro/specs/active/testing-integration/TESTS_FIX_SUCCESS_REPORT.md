@@ -147,17 +147,17 @@ expect(filterChip.selected, true);
 
 ### 7. AppTextButton - Font Size Test ✅
 
-**المشكلة:** توقع fontSize = AppTypography.bodyMedium  
-**الحل:** تصحيح إلى AppTypography.bodyLarge
+**المشكلة:** توقع fontSize = AppAppTypography.bodyMedium  
+**الحل:** تصحيح إلى AppAppTypography.bodyLarge
 
 **التغييرات:**
 
 ```dart
 // قبل
-expect(text.style?.fontSize, AppTypography.bodyMedium); // ❌ خطأ
+expect(text.style?.fontSize, AppAppTypography.bodyMedium); // ❌ خطأ
 
 // بعد
-expect(text.style?.fontSize, AppTypography.bodyLarge); // ✅ صحيح
+expect(text.style?.fontSize, AppAppTypography.bodyLarge); // ✅ صحيح
 ```
 
 **النتيجة:** الاختبار يطابق القيمة الفعلية في AppTextButton
@@ -278,7 +278,7 @@ expect(text.style?.fontWeight, FontWeight.w600); // ✅ صحيح
 
 ```bash
 $ flutter analyze
-Analyzing basser_app...
+Analyzing basir_app...
 No issues found! ✅
 ```
 

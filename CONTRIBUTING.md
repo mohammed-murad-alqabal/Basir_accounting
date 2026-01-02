@@ -262,8 +262,8 @@ Future<void> addCustomer(Customer customer) async {
 #### 1. استنساخ المستودع
 
 ```bash
-git clone https://github.com/your-username/Basser_MVP.git
-cd Basser_MVP
+git clone https://github.com/your-username/Basir_MVP.git
+cd Basir_MVP
 ```
 
 #### 2. تثبيت التبعيات

@@ -267,11 +267,11 @@ ls -d docs/api
 **الأولوية:** 🟢 منخفضة  
 **الوقت المقدر:** 3 دقائق
 
-#### 6.1: .bash_aliases_basser
+#### 6.1: .bash_aliases_basir
 
 ```bash
 # نقل أو حذف
-mv .bash_aliases_basser scripts/maintenance/ || rm .bash_aliases_basser
+mv .bash_aliases_basir scripts/maintenance/ || rm .bash_aliases_basir
 ```
 
 #### 6.2: git_fsck_report.txt

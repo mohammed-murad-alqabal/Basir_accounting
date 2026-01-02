@@ -114,7 +114,7 @@ metrics:
 - كشف عقد الأداء المحتملة
 - تحسينات استباقية
 
-#### **Baseer-Specific Model:**
+#### **Basir-Specific Model:**
 
 - التنبؤ بمشاكل Flutter/Dart
 - تحليل دعم العربية/RTL

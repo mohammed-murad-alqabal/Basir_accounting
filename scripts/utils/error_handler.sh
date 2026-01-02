@@ -402,7 +402,7 @@ check_write_permission() {
 # تنظيف الملفات المؤقتة
 cleanup_temp_files() {
     local temp_dir=${1:-/tmp}
-    local pattern=${2:-"basser_*"}
+    local pattern=${2:-"basir_*"}
     
     log_info "تنظيف الملفات المؤقتة: $temp_dir/$pattern"
     

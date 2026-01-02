@@ -135,7 +135,7 @@ Cairo-Regular.ttf: HTML document, Unicode text, UTF-8 text
 
 ### ملفات الكود (لم تتغير):
 
-- `lib/core/theme.dart` - يستخدم `fontFamily: AppTypography.arabicFont`
+- `lib/core/theme.dart` - يستخدم `fontFamily: AppAppTypography.arabicFont`
 - `lib/core/widgets/app_button.dart` - يستخدم `ResponsiveText`
 - `pubspec.yaml` - يحتوي على تعريف الخطوط
 

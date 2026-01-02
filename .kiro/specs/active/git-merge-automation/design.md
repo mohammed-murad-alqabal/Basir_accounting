@@ -1,8 +1,8 @@
-# Design Document - Baseer MVP Final Merge Completion
+# Design Document - Basir MVP Final Merge Completion
 
 ## Overview
 
-The Baseer MVP Final Merge Completion system is a focused solution designed to complete the remaining merge operations for the Baseer MVP project. Based on comprehensive analysis showing that `integration/merge-20251220_013723` contains all required merges with successful test execution (740+ tests passing) but 437 Flutter analyze issues, the system will clean up analyze warnings and complete the final merge to main branch using existing tools in `tools/git-merge-strategy/`.
+The Basir MVP Final Merge Completion system is a focused solution designed to complete the remaining merge operations for the Basir MVP project. Based on comprehensive analysis showing that `integration/merge-20251220_013723` contains all required merges with successful test execution (740+ tests passing) but 437 Flutter analyze issues, the system will clean up analyze warnings and complete the final merge to main branch using existing tools in `tools/git-merge-strategy/`.
 
 ## Architecture
 

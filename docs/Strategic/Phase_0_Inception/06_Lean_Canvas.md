@@ -1,6 +1,6 @@
-# Lean Canvas: Baseer Intelligent Financial System
+# Lean Canvas: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P0-007  
+**Document ID:** basir-P0-007  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -12,12 +12,12 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐
-│                           BASEER LEAN CANVAS                                     │
+│                           basir LEAN CANVAS                                     │
 ├──────────────────┬──────────────────┬──────────────────┬────────────────────────┤
 │     PROBLEM      │    SOLUTION      │   UNIQUE VALUE   │  UNFAIR ADVANTAGE      │
 │                  │                  │   PROPOSITION    │                        │
 │ 1. No Arabic-    │ 1. Arabic-first  │                  │ • Arabic-first design  │
-│    first finance │    platform      │ "The first       │ • Baseera AI engine    │
+│    first finance │    platform      │ "The first       │ • Basira AI engine    │
 │    platform      │                  │ Arabic-native    │ • Pan-Arab tax DB      │
 │                  │ 2. Dual-mode     │ intelligent      │ • Network effects      │
 │ 2. Manual data   │    (Personal +   │ financial        │ • First mover in       │
@@ -102,7 +102,7 @@
 | Advantage             | Why It's Hard to Copy          |
 | --------------------- | ------------------------------ |
 | Arabic-first design   | 2+ years to replicate properly |
-| Baseera AI engine     | Proprietary ML models          |
+| Basira AI engine     | Proprietary ML models          |
 | Pan-Arab tax database | Deep regulatory expertise      |
 | Community network     | User-generated trust           |
 | First mover           | Time + market presence         |
@@ -174,5 +174,5 @@
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

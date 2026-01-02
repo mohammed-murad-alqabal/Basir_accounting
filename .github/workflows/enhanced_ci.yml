@@ -291,7 +291,7 @@ jobs:
           file: coverage/lcov.info
           fail_ci_if_error: false
           flags: unittests
-          name: basser-coverage
+          name: basir-coverage
 
   # Job 4: Security
   security:

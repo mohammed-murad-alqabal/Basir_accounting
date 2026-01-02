@@ -1,6 +1,6 @@
-# SWOT Analysis: Baseer Intelligent Financial System
+# SWOT Analysis: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P1-005  
+**Document ID:** basir-P1-005  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -16,7 +16,7 @@
 │                                     │                                     │
 │ • Arabic-first architecture         │ • New entrant, no brand yet         │
 │ • Dual-mode (Personal + Business)   │ • Limited initial funding           │
-│ • AI engine "Baseera"               │ • Small team at start               │
+│ • AI engine "Basira"               │ • Small team at start               │
 │ • Pan-Arab tax compliance           │ • Feature parity needed             │
 │ • Modern tech stack (Flutter+Go)    │ • No existing user base             │
 │ • Local-first privacy design        │ • Single product focus              │
@@ -46,7 +46,7 @@
 | -------------------------------- | ------ | ---------------------------------- |
 | **Arabic-First Architecture**    | High   | Market as key differentiator       |
 | **Dual-Mode Platform**           | High   | Unique value proposition           |
-| **AI Engine "Baseera"**          | High   | Continuous improvement, automation |
+| **AI Engine "Basira"**          | High   | Continuous improvement, automation |
 | **Multi-Country Tax Compliance** | High   | Competitive barrier                |
 | **Modern Tech Stack**            | Medium | Rapid development, quality         |
 | **Local-First Privacy**          | Medium | Trust differentiator               |
@@ -128,5 +128,5 @@
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025
