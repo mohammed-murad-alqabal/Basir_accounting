@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/theme/services/color_customization_service.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/theme/services/color_customization_service.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

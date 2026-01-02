@@ -1,6 +1,6 @@
-import 'package:basser_app/core/theme/services/theme_storage_utils.dart';
-import 'package:basser_app/core/theme/tokens/app_icons.dart';
-import 'package:basser_app/features/auth/presentation/providers/current_user_provider.dart';
+import 'package:basir_app/core/theme/services/theme_storage_utils.dart';
+import 'package:basir_app/core/theme/tokens/app_icons.dart';
+import 'package:basir_app/features/auth/presentation/providers/current_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +16,7 @@ class IconCustomizationState {
   final IconPack iconPack;
 
   /// الحصول على بيانات الأيقونات بناءً على الحزمة
-  AppIconsData get icons {
+  AppIcons get icons {
     switch (iconPack) {
       case IconPack.material:
         return const MaterialAppIcons();
@@ -36,20 +36,18 @@ class IconCustomizationService extends AsyncNotifier<IconCustomizationState> {
   @override
   Future<IconCustomizationState> build() async {
     // إعادة البناء عند تغيير المستخدم
-    ref.watch(currentUserProvider);
-    return _loadSettings();
+    final userState = ref.watch(currentUserProvider);
+    return _loadSettings(userState.value);
   }
 
-  /// الحصول على المفتاح المناسب للمستخدم الحالي
-  String get _storageKey {
-    final username = ref.read(currentUserProvider).value;
-    return ThemeStorageUtils.getUserSpecificKey(_iconPackKey, username);
-  }
+  /// الحصول على المفتاح المناسب للمستخدم
+  String _getStorageKey(String? username) =>
+      ThemeStorageUtils.getUserSpecificKey(_iconPackKey, username);
 
-  Future<IconCustomizationState> _loadSettings() async {
+  Future<IconCustomizationState> _loadSettings(String? username) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final key = <credential-fixture>;
+      final key = <credential-fixture>(username);
       final packString = prefs.getString(key) ?? 'material';
 
       final pack = IconPack.values.firstWhere(
@@ -69,10 +67,25 @@ class IconCustomizationService extends AsyncNotifier<IconCustomizationState> {
     state = AsyncValue.data(IconCustomizationState(iconPack: pack));
     try {
       final prefs = await SharedPreferences.getInstance();
-      final key = <credential-fixture>;
+      final username = ref.read(currentUserProvider).value;
+      final key = <credential-fixture>(username);
       await prefs.setString(key, pack.name);
     } on Object catch (e) {
       debugPrint('Error saving icon pack: $e');
+    }
+  }
+
+  /// استعادة الافتراضي
+  Future<void> resetToDefault() async {
+    state = const AsyncValue.data(
+      IconCustomizationState(iconPack: IconPack.material),
+    );
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final username = ref.read(currentUserProvider).value;
+      await prefs.remove(_getStorageKey(username));
+    } on Object catch (e) {
+      debugPrint('Error resetting icon pack: $e');
     }
   }
 }
@@ -84,7 +97,7 @@ final iconCustomizationProvider =
 );
 
 /// مزود الأيقونات الحالي لسهولة الوصول
-final appIconsProvider = Provider<AppIconsData>((ref) {
+final appIconsProvider = Provider<AppIcons>((ref) {
   final state = ref.watch(iconCustomizationProvider).valueOrNull;
   return state?.icons ?? const MaterialAppIcons();
 });

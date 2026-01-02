@@ -2,7 +2,7 @@
 // يحتوي على جميع القيم الثابتة المستخدمة في جميع أنحاء التطبيق
 
 // ملاحظة: تم نقل إعدادات الخطوط والأحجام إلى Design Tokens في core/theme/tokens/
-// استخدم FontSizes و FontFamilies من هناك.
+// استخدم AppTypography.و FontFamilies من هناك.
 
 /// مفاتيح التخزين الآمن
 ///

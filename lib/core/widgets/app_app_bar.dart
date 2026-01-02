@@ -1,6 +1,6 @@
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/theme/services/icon_customization_service.dart';
-import 'package:basser_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/theme/services/icon_customization_service.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,17 +13,17 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
   /// - [actions]: قائمة الإجراءات في النهاية (اختياري)
   /// - [onBackPressed]: دالة تُستدعى عند الضغط على زر الرجوع (اختياري)
   /// - [showBackButton]: إظهار زر الرجوع (افتراضي: true)
-  /// - [backgroundColor]: لون الخلفية (افتراضي: SemanticColors.surface)
+  /// - [backgroundColor]: لون الخلفية (افتراضي: AppColors.surface)
   /// - [foregroundColor]: لون النص والأيقونات
-  /// (افتراضي: SemanticColors.textPrimary)
+  /// (افتراضي: AppColors.textPrimary)
   const AppAppBar({
     required this.title,
     super.key,
     this.actions,
     this.onBackPressed,
     this.showBackButton = true,
-    this.backgroundColor = SemanticColors.surface,
-    this.foregroundColor = SemanticColors.textPrimary,
+    this.backgroundColor = AppColors.surface,
+    this.foregroundColor = AppColors.textPrimary,
   });
 
   /// عنوان شريط التطبيق
@@ -53,7 +53,7 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
       title: Text(
         title,
         style: TextStyle(
-          fontSize: FontSizes.titleLarge,
+          fontSize: AppTypography.titleLarge,
           fontWeight: FontWeight.w600,
           color: foregroundColor,
         ),
@@ -74,7 +74,7 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(1),
         child: Container(
-          color: SemanticColors.primary.withValues(alpha: 0.1),
+          color: AppColors.primary.withValues(alpha: 0.1),
           height: 1,
         ),
       ),
@@ -116,15 +116,15 @@ class AppSimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Parameters:
   /// - [title]: عنوان الشريط (مطلوب)
   /// - [actions]: قائمة الإجراءات في النهاية (اختياري)
-  /// - [backgroundColor]: لون الخلفية (افتراضي: SemanticColors.surface)
+  /// - [backgroundColor]: لون الخلفية (افتراضي: AppColors.surface)
   /// - [foregroundColor]: لون النص والأيقونات
-  /// (افتراضي: SemanticColors.textPrimary)
+  /// (افتراضي: AppColors.textPrimary)
   const AppSimpleAppBar({
     required this.title,
     super.key,
     this.actions,
-    this.backgroundColor = SemanticColors.surface,
-    this.foregroundColor = SemanticColors.textPrimary,
+    this.backgroundColor = AppColors.surface,
+    this.foregroundColor = AppColors.textPrimary,
   });
 
   /// عنوان شريط التطبيق
@@ -144,7 +144,7 @@ class AppSimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: Text(
           title,
           style: TextStyle(
-            fontSize: FontSizes.titleLarge,
+            fontSize: AppTypography.titleLarge,
             fontWeight: FontWeight.w600,
             color: foregroundColor,
           ),
@@ -158,7 +158,7 @@ class AppSimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
           child: Container(
-            color: SemanticColors.primary.withValues(alpha: 0.1),
+            color: AppColors.primary.withValues(alpha: 0.1),
             height: 1,
           ),
         ),

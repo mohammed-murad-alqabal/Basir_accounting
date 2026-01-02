@@ -1,12 +1,12 @@
-import 'package:basser_app/core/assets/app_logo.dart';
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/assets/app_logo.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 
-/// رأس لوحة التحكم المطور (Mastery Premium Header)
-class DashboardMasteryHeader extends StatelessWidget {
+/// رأس لوحة التحكم المطور (Basir Premium Header)
+class DashboardBasirHeader extends StatelessWidget {
   /// إنشاء رأس لوحة التحكم
-  const DashboardMasteryHeader({super.key});
+  const DashboardBasirHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +39,10 @@ class DashboardMasteryHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  context.l10n.dashboardMasterySystemTitle,
+                  context.l10n.dashboardBasirSystemTitle,
                   style: const TextStyle(
                     color: Color(0xFFFFD700),
-                    fontSize: FontSizes.labelSmall,
+                    fontSize: AppTypography.labelSmall,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.2,
                   ),
@@ -52,7 +52,7 @@ class DashboardMasteryHeader extends StatelessWidget {
                   context.l10n.dashboardWelcomeMessage,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: FontSizes.headlineSmall,
+                    fontSize: AppTypography.headlineSmall,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -61,13 +61,13 @@ class DashboardMasteryHeader extends StatelessWidget {
                   context.l10n.dashboardMotto,
                   style: const TextStyle(
                     color: Colors.white70,
-                    fontSize: FontSizes.bodySmall,
+                    fontSize: AppTypography.bodySmall,
                   ),
                 ),
               ],
             ),
           ),
-          const BasserShimmerLogo(size: 60),
+          const BasirShimmerLogo(size: 60),
         ],
       ),
     );
@@ -100,7 +100,7 @@ class GlassStatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         decoration: BoxDecoration(
-          color: SemanticColors.surface.withValues(alpha: 0.7),
+          color: AppColors.surface.withValues(alpha: 0.7),
           borderRadius: BorderRadius.circular(Radii.md),
           border: Border.all(
             color: color.withValues(alpha: 0.2),
@@ -126,7 +126,7 @@ class GlassStatCard extends StatelessWidget {
                 child: Text(
                   label,
                   style: const TextStyle(
-                    color: SemanticColors.textSecondary,
+                    color: AppColors.textSecondary,
                     fontSize: 11,
                   ),
                   textAlign: TextAlign.center,
@@ -140,7 +140,7 @@ class GlassStatCard extends StatelessWidget {
                 child: Text(
                   value,
                   style: const TextStyle(
-                    color: SemanticColors.textPrimary,
+                    color: AppColors.textPrimary,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),

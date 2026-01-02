@@ -1,6 +1,6 @@
-import 'package:basser_app/core/theme/services/theme_storage_utils.dart';
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/features/auth/presentation/providers/current_user_provider.dart';
+import 'package:basir_app/core/theme/services/theme_storage_utils.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/features/auth/presentation/providers/current_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,22 +41,20 @@ class FontCustomizationService extends AsyncNotifier<FontCustomizationState> {
   @override
   Future<FontCustomizationState> build() async {
     // إعادة البناء عند تغيير المستخدم
-    ref.watch(currentUserProvider);
-    return _loadSettings();
+    final userState = ref.watch(currentUserProvider);
+    return _loadSettings(userState.value);
   }
 
-  /// الحصول على المفتاح المناسب للمستخدم الحالي
-  String _getUserKey(String baseKey) {
-    final username = ref.read(currentUserProvider).value;
-    return ThemeStorageUtils.getUserSpecificKey(baseKey, username);
-  }
+  /// الحصول على المفتاح المناسب للمستخدم
+  String _getStorageKey(String baseKey, String? username) =>
+      ThemeStorageUtils.getUserSpecificKey(baseKey, username);
 
-  Future<FontCustomizationState> _loadSettings() async {
+  Future<FontCustomizationState> _loadSettings(String? username) async {
     try {
       final prefs = await SharedPreferences.getInstance();
 
-      final familyKey = <credential-fixture>(_fontFamilyKey);
-      final scaleKey = <credential-fixture>(_textScaleKey);
+      final familyKey = <credential-fixture>(_fontFamilyKey, username);
+      final scaleKey = <credential-fixture>(_textScaleKey, username);
 
       final fontFamily = prefs.getString(familyKey) ?? FontFamilies.arabic;
       final textScale = prefs.getDouble(scaleKey) ?? 1.0;
@@ -82,7 +80,8 @@ class FontCustomizationService extends AsyncNotifier<FontCustomizationState> {
     state = AsyncValue.data(currentState.copyWith(fontFamily: fontFamily));
     try {
       final prefs = await SharedPreferences.getInstance();
-      final key = <credential-fixture>(_fontFamilyKey);
+      final username = ref.read(currentUserProvider).value;
+      final key = <credential-fixture>(_fontFamilyKey, username);
       await prefs.setString(key, fontFamily);
     } on Object catch (e) {
       debugPrint('Error saving font family: $e');
@@ -102,7 +101,8 @@ class FontCustomizationService extends AsyncNotifier<FontCustomizationState> {
     );
     try {
       final prefs = await SharedPreferences.getInstance();
-      final key = <credential-fixture>(_textScaleKey);
+      final username = ref.read(currentUserProvider).value;
+      final key = <credential-fixture>(_textScaleKey, username);
       await prefs.setDouble(key, clampedScale);
     } on Object catch (e) {
       debugPrint('Error saving text scale: $e');
@@ -119,8 +119,9 @@ class FontCustomizationService extends AsyncNotifier<FontCustomizationState> {
     );
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.remove(_getUserKey(_fontFamilyKey));
-      await prefs.remove(_getUserKey(_textScaleKey));
+      final username = ref.read(currentUserProvider).value;
+      await prefs.remove(_getStorageKey(_fontFamilyKey, username));
+      await prefs.remove(_getStorageKey(_textScaleKey, username));
     } on Object catch (e) {
       debugPrint('Error removing font settings: $e');
     }

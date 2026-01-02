@@ -15,8 +15,8 @@ library;
 
 import 'dart:async';
 
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/widgets/responsive_text.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/widgets/responsive_text.dart';
 import 'package:flutter/material.dart' hide Durations;
 import 'package:flutter/services.dart';
 
@@ -332,9 +332,9 @@ class _AppButtonState extends State<AppButton>
 
   TextStyle _getTextStyle() {
     final baseStyle = switch (widget.size) {
-      AppButtonSize.small => TextStyles.labelMedium,
-      AppButtonSize.medium => TextStyles.labelLarge,
-      AppButtonSize.large => TextStyles.titleSmall,
+      AppButtonSize.small => AppTextStyles.labelMedium,
+      AppButtonSize.medium => AppTextStyles.labelLarge,
+      AppButtonSize.large => AppTextStyles.titleSmall,
     };
 
     if (widget.fontSize != null) {

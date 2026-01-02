@@ -78,9 +78,24 @@ class AppearanceService extends AsyncNotifier<AppearanceState> {
       debugPrint('Error saving reduce motion setting: $e');
     }
   }
+
+  /// استعادة الإعدادات الافتراضية
+  Future<void> resetToDefault() async {
+    state = const AsyncValue.data(
+      AppearanceState(highContrast: false, reduceMotion: false),
+    );
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove(_highContrastKey);
+      await prefs.remove(_reduceMotionKey);
+    } on Object catch (e) {
+      debugPrint('Error resetting appearance settings: $e');
+    }
+  }
 }
 
 /// موفر خدمة المظهر
+// ignore: lines_longer_than_80_chars
 final appearanceServiceProvider =
     AsyncNotifierProvider<AppearanceService, AppearanceState>(
   AppearanceService.new,

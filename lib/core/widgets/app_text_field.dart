@@ -1,4 +1,4 @@
-import 'package:basser_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 
 /// حقل إدخال نصي موحد (Unified App Text Field)
@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 /// مع دعم كامل لـ RTL والتحقق من الصحة
 ///
 /// Features:
-/// - استخدام InputColors و Typography tokens
+/// - استخدام InputColors و AppTypography.tokens
 /// - دعم RTL ذكي
 /// - إخفاء/إظهار كلمة المرور مدمج
 /// - امتثال WCAG (Touch target ≥ 44px)
@@ -104,12 +104,12 @@ class _AppTextFieldState extends State<AppTextField> {
                 padding: const EdgeInsets.only(bottom: Spacing.xs),
                 child: Text(
                   widget.label,
-                  style: TextStyles.labelLarge.copyWith(
+                  style: AppTextStyles.labelLarge.copyWith(
                     color: widget.isEnabled
                         ? (_isFocused
                             ? InputColors.borderFocused
                             : InputColors.label)
-                        : SemanticColors.textDisabled,
+                        : AppColors.textDisabled,
                     fontWeight: FontWeights.semiBold,
                   ),
                 ),
@@ -127,14 +127,14 @@ class _AppTextFieldState extends State<AppTextField> {
                 onChanged: widget.onChanged,
                 textInputAction: widget.textInputAction,
                 enabled: widget.isEnabled,
-                style: TextStyles.bodyLarge.copyWith(
+                style: AppTextStyles.bodyLarge.copyWith(
                   color: widget.isEnabled
                       ? InputColors.text
-                      : SemanticColors.textDisabled,
+                      : AppColors.textDisabled,
                 ),
                 decoration: InputDecoration(
                   hintText: widget.hint,
-                  hintStyle: TextStyles.bodyMedium.copyWith(
+                  hintStyle: AppTextStyles.bodyMedium.copyWith(
                     color: InputColors.placeholder,
                   ),
                   prefixIcon: widget.prefixIcon != null
@@ -165,7 +165,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   filled: true,
                   fillColor: widget.isEnabled
                       ? InputColors.background
-                      : SemanticColors.surfaceVariant,
+                      : AppColors.surfaceVariant,
                   border: _getBorder(InputColors.border),
                   enabledBorder: _getBorder(InputColors.border),
                   focusedBorder:
@@ -173,7 +173,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   errorBorder: _getBorder(InputColors.borderError),
                   focusedErrorBorder:
                       _getBorder(InputColors.borderError, width: 2),
-                  disabledBorder: _getBorder(SemanticColors.borderLight),
+                  disabledBorder: _getBorder(AppColors.borderLight),
                 ),
               ),
             ),
@@ -243,23 +243,23 @@ class _AppSearchFieldState extends State<AppSearchField> {
   Widget build(BuildContext context) => TextField(
         controller: _controller,
         onChanged: widget.onChanged,
-        style: TextStyles.bodyLarge,
+        style: AppTextStyles.bodyLarge,
         decoration: InputDecoration(
           hintText: widget.hint,
-          hintStyle: TextStyles.bodyMedium.copyWith(
-            color: SemanticColors.textHint,
+          hintStyle: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textHint,
           ),
           prefixIcon: const Icon(
             Icons.search,
             size: IconSizes.sm,
-            color: SemanticColors.textSecondary,
+            color: AppColors.textSecondary,
           ),
           suffixIcon: _hasText
               ? IconButton(
                   icon: const Icon(
                     Icons.clear,
                     size: IconSizes.sm,
-                    color: SemanticColors.textSecondary,
+                    color: AppColors.textSecondary,
                   ),
                   onPressed: () {
                     _controller.clear();
@@ -269,7 +269,7 @@ class _AppSearchFieldState extends State<AppSearchField> {
                 )
               : null,
           filled: true,
-          fillColor: SemanticColors.surface,
+          fillColor: AppColors.surface,
           border: _getBorder(Radii.borderRadiusFull),
           enabledBorder: _getBorder(Radii.borderRadiusFull),
           focusedBorder: _getBorder(Radii.borderRadiusFull, isFocused: true),
@@ -283,7 +283,7 @@ class _AppSearchFieldState extends State<AppSearchField> {
       OutlineInputBorder(
         borderRadius: radius,
         borderSide: BorderSide(
-          color: isFocused ? SemanticColors.primary : SemanticColors.border,
+          color: isFocused ? AppColors.primary : AppColors.border,
           width: isFocused ? 2 : 1,
         ),
       );
