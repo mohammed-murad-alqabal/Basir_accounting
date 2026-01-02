@@ -78,7 +78,7 @@ git push origin main
 cat .kiro/docs/reports/GIT_MANAGEMENT_SURGICAL_PLAN_V2.md
 
 # 2. نفذ المرحلة 0
-git bundle create ../basser-backup-$(date +%Y%m%d).bundle --all
+git bundle create ../basir-backup-$(date +%Y%m%d).bundle --all
 
 # 3. نفذ المرحلة 1
 # ... اتبع الخطوات في الخطة الكاملة

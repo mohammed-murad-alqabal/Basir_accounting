@@ -207,3 +207,14 @@ backups/
 # Dart API documentation (auto-generated)
 docs/api/html/
 .env
+
+# Professional Cleanliness - Digital Noise
+analysis_output.txt
+analysis_report.txt
+analysis_success.txt
+todo_list.txt
+~
+*~
+*.bak
+*.tmp
+*.temp

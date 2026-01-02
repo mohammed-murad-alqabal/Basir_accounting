@@ -28,7 +28,7 @@
 import 'core/widgets/app_button.dart';
 
 // بعد
-import 'package:basser_app/core/widgets/app_button.dart';
+import 'package:basir_app/core/widgets/app_button.dart';
 ```
 
 #### ب. مشاكل التوثيق (1 مشكلة)
@@ -127,7 +127,7 @@ adb -s 52001034 install -r build/app/outputs/flutter-apk/app-debug.apk
 **التشغيل:**
 
 ```bash
-adb shell monkey -p com.basser.basser_app -c android.intent.category.LAUNCHER 1
+adb shell monkey -p com.basir.basir_app -c android.intent.category.LAUNCHER 1
 ✅ Events injected: 1
 ```
 

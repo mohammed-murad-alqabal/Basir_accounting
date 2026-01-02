@@ -101,7 +101,7 @@ class QualityGatesSystem:
                         "scalability_score": 85
                     }
                 },
-                "baseer_optimization": {
+                "basir_optimization": {
                     "enabled": True,
                     "blocking": False,
                     "auto_fix": "context_aware",
@@ -229,8 +229,8 @@ class QualityGatesSystem:
                 return self._gate_content_excellence(gate_config, target_files)
             elif gate_name == "performance_future":
                 return self._gate_performance_future(gate_config, target_files)
-            elif gate_name == "baseer_optimization":
-                return self._gate_baseer_optimization(gate_config, target_files)
+            elif gate_name == "basir_optimization":
+                return self._gate_basir_optimization(gate_config, target_files)
             elif gate_name == "ultimate_excellence":
                 return self._gate_ultimate_excellence(gate_config, target_files)
             else:
@@ -428,8 +428,8 @@ class QualityGatesSystem:
             details=details
         )
 
-    def _gate_baseer_optimization(self, config: Dict, target_files: Optional[List[str]]) -> GateResult:
-        """Baseer-Specific Optimization Gate"""
+    def _gate_basir_optimization(self, config: Dict, target_files: Optional[List[str]]) -> GateResult:
+        """Basir-Specific Optimization Gate"""
         issues = []
         warnings = []
         details = {}
@@ -449,7 +449,7 @@ class QualityGatesSystem:
         status = QualityGateStatus.PASSED
         
         return GateResult(
-            gate_name="baseer_optimization",
+            gate_name="basir_optimization",
             status=status,
             score=score,
             issues=issues,

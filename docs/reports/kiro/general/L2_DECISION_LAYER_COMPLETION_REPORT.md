@@ -325,10 +325,10 @@ console.log(`Generated ${result.decisions.length} decisions`);
 ### التكوين المتقدم
 
 ```typescript
-import { getBasserMVPConfig } from "./config/l2-config";
+import { getBasirMVPConfig } from "./config/l2-config";
 
 // الحصول على تكوين مشروع بصير
-const config = getBasserMVPConfig();
+const config = getBasirMVPConfig();
 
 // تخصيص للبيئة
 config.engine.confidenceThreshold = 0.8;

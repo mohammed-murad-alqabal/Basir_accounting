@@ -100,7 +100,7 @@ analyzer:
 
 ```bash
 $ flutter analyze
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 
    info • Unnecessary duplication of receiver • ... • cascade_invocations
    info • Unnecessary duplication of receiver • ... • cascade_invocations
@@ -115,7 +115,7 @@ Analyzing Basser_MVP...
 
 ```bash
 $ flutter analyze
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 
 No issues found! (ran in 2.4s)
 ```

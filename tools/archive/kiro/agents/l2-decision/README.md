@@ -114,10 +114,10 @@ await l2Layer.stop();
 ### التكوين المخصص
 
 ```typescript
-import { L2DecisionLayer, getBasserMVPConfig } from './l2-decision-layer';
+import { L2DecisionLayer, getBasirMVPConfig } from './l2-decision-layer';
 
 // الحصول على تكوين مشروع بصير
-const config = getBasserMVPConfig();
+const config = getBasirMVPConfig();
 
 // تخصيص التكوين
 config.engine.confidenceThreshold = 0.8;
@@ -142,13 +142,13 @@ const config = {
   },
   
   rules: {
-    rulesPath: '.kiro/config/basser-rules.yml',
+    rulesPath: '.kiro/config/basir-rules.yml',
     autoReload: true,
     cacheTimeout: 300000
   },
   
   ml: {
-    modelsPath: '.kiro/data/basser-models',
+    modelsPath: '.kiro/data/basir-models',
     autoUpdate: true,
     confidenceThreshold: 0.6
   },
@@ -164,7 +164,7 @@ const config = {
 ### قواعد القرار (YAML)
 
 ```yaml
-# .kiro/config/basser-rules.yml
+# .kiro/config/basir-rules.yml
 rules:
   flutter_performance:
     - id: "widget_optimization"

@@ -448,7 +448,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
 ```bash
 $ flutter analyze --no-pub
 
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 No issues found! ✅
 (ran in 4.0s)
 ```

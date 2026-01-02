@@ -293,8 +293,8 @@ GridView.count(
   crossAxisCount: 2,
   shrinkWrap: true,
   physics: const NeverScrollableScrollPhysics(),
-  crossAxisSpacing: AppSpacing.md,
-  mainAxisSpacing: AppSpacing.md,
+  crossAxisSpacing: Spacing.md,
+  mainAxisSpacing: Spacing.md,
   childAspectRatio: 2.2, // زيادة من 1.8
   children: const [
     // ...

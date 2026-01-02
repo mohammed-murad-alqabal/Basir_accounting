@@ -26,12 +26,12 @@
 
 ```bash
 # 1. إنشاء keystore (إذا لم يكن موجوداً)
-keytool -genkey -v -keystore basser-release-key.jks \
+keytool -genkey -v -keystore basir-release-key.jks \
   -keyalg RSA -keysize 2048 -validity 10000 \
-  -alias basser
+  -alias basir
 
 # 2. تحويل إلى base64
-base64 basser-release-key.jks > keystore.base64
+base64 basir-release-key.jks > keystore.base64
 
 # 3. نسخ المحتوى وإضافته كـ Secret
 cat keystore.base64
@@ -56,7 +56,7 @@ cat keystore.base64
 **الوصف:** اسم المفتاح (alias)  
 **الاستخدام:** تحديد المفتاح المستخدم
 
-**القيمة:** `basser` (أو الاسم الذي استخدمته)
+**القيمة:** `basir` (أو الاسم الذي استخدمته)
 
 ---
 
@@ -202,7 +202,7 @@ keytool -list -v -keystore test.jks
 
 ```bash
 # عرض جميع aliases
-keytool -list -v -keystore basser-release-key.jks
+keytool -list -v -keystore basir-release-key.jks
 ```
 
 ---

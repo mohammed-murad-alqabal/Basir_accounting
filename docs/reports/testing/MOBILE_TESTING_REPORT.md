@@ -116,7 +116,7 @@ adb -s 52001034 install -r build/app/outputs/flutter-apk/app-debug.apk
 **الأمر:**
 
 ```bash
-adb shell monkey -p com.basser.basser_app -c android.intent.category.LAUNCHER 1
+adb shell monkey -p com.basir.basir_app -c android.intent.category.LAUNCHER 1
 ```
 
 **النتيجة:**

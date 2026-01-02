@@ -27,7 +27,7 @@ Commits Pushed: 11
 ### ✅ المستودع البعيد
 
 ```
-URL: https://github.com/mohammed-murad-alqabal/Basser_MVP.git
+URL: https://github.com/mohammed-murad-alqabal/Basir_MVP.git
 Branch: main
 Last Commit: 1619942
 Status: متزامن تماماً

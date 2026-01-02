@@ -1,6 +1,6 @@
-# CI/CD & DevOps: Baseer Intelligent Financial System
+# CI/CD & DevOps: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P6-001  
+**Document ID:** basir-P6-001  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -84,8 +84,8 @@ jobs:
 | Environment | Purpose    | URL                | Deployment      |
 | ----------- | ---------- | ------------------ | --------------- |
 | Development | Local dev  | localhost          | Manual          |
-| Staging     | QA/Testing | staging.baseer.app | Auto on develop |
-| Production  | Live users | api.baseer.app     | Manual approval |
+| Staging     | QA/Testing | staging.basir.app | Auto on develop |
+| Production  | Live users | api.basir.app     | Manual approval |
 
 ---
 
@@ -219,5 +219,5 @@ infrastructure/
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

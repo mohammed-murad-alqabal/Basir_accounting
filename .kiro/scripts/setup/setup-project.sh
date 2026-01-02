@@ -3,7 +3,7 @@
 
 set -e
 
-echo "🚀 Setting up Basser MVP project..."
+echo "🚀 Setting up Basir MVP project..."
 
 # Install Flutter dependencies
 echo "📦 Installing Flutter dependencies..."

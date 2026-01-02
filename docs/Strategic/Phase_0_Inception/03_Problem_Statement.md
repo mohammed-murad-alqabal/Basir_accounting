@@ -1,6 +1,6 @@
-# Problem Statement: Baseer Intelligent Financial System
+# Problem Statement: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P0-004  
+**Document ID:** basir-P0-004  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -179,5 +179,5 @@ The problem space represents a significant market opportunity:
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

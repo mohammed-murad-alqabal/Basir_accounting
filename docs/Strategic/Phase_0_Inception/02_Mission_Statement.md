@@ -1,6 +1,6 @@
-# Mission Statement: Baseer Intelligent Financial System
+# Mission Statement: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P0-003  
+**Document ID:** basir-P0-003  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -103,7 +103,7 @@
 **How We Achieve It:**
 
 - OCR for receipts and documents
-- AI insights engine "Baseera"
+- AI insights engine "Basira"
 - Country configuration system
 - Localized templates and formats
 
@@ -158,5 +158,5 @@ We build deep knowledge of each market. Generic doesn't win in finance.
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

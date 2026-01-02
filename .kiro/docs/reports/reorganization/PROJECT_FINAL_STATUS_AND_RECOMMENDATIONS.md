@@ -37,7 +37,7 @@
 ### الجذر (نظيف 100%)
 
 ```
-basser_mobile/
+basir_mobile/
 ├── .gitignore              ✅ محدث ونظيف
 ├── .metadata
 ├── analysis_options.yaml

@@ -18,11 +18,11 @@ import 'package:dartz/dartz.dart';
 import 'package:isar/isar.dart';
 
 // Import the repository under test
-// import 'package:basser_app/features/${FEATURE_NAME}/domain/repositories/${REPOSITORY_NAME}.dart';
-// import 'package:basser_app/features/${FEATURE_NAME}/data/repositories/${REPOSITORY_NAME}_impl.dart';
-// import 'package:basser_app/features/${FEATURE_NAME}/data/datasources/${DATASOURCE_NAME}.dart';
-// import 'package:basser_app/features/${FEATURE_NAME}/data/models/${MODEL_NAME}.dart';
-// import 'package:basser_app/features/${FEATURE_NAME}/domain/entities/${ENTITY_NAME}.dart';
+// import 'package:basir_app/features/${FEATURE_NAME}/domain/repositories/${REPOSITORY_NAME}.dart';
+// import 'package:basir_app/features/${FEATURE_NAME}/data/repositories/${REPOSITORY_NAME}_impl.dart';
+// import 'package:basir_app/features/${FEATURE_NAME}/data/datasources/${DATASOURCE_NAME}.dart';
+// import 'package:basir_app/features/${FEATURE_NAME}/data/models/${MODEL_NAME}.dart';
+// import 'package:basir_app/features/${FEATURE_NAME}/domain/entities/${ENTITY_NAME}.dart';
 
 // Import test helpers
 import '../../helpers/test_helpers.dart';

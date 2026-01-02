@@ -132,7 +132,7 @@
 
 #### 3.3 اختبارات Constants (33 اختبار)
 
-- ✅ AppFontSizes (6)
+- ✅ AppAppTypography.(6)
 - ✅ AppFonts (3)
 - ✅ StorageKeys (4)
 - ✅ AppMessages (4)

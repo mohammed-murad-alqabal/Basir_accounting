@@ -13,9 +13,9 @@ metrics:
 note: "ملف كبير - استخدم tech-stack-index.md للتحميل الافتراضي"
 ---
 
-# Tech Stack - Baseer MVP
+# Tech Stack - Basir MVP
 
-**Project:** Baseer MVP - Flutter Invoice Management App  
+**Project:** Basir MVP - Flutter Invoice Management App  
 **Architecture:** Local-first, offline-capable mobile application  
 **Primary Language:** Arabic (UI) + English (code)  
 **Last Updated:** December 17, 2025

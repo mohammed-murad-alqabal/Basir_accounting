@@ -1,6 +1,6 @@
-# Concept Note: Baseer Intelligent Financial & Accounting System
+# Concept Note: Basir Intelligent Financial & Accounting System
 
-**Document ID:** BASEER-P0-001  
+**Document ID:** basir-P0-001  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -10,28 +10,28 @@
 
 ## 1. Executive Overview
 
-**Baseer** (بصير - meaning "The Insightful One" in Arabic) is an intelligent, unified financial operating system designed specifically for the Arab world. It combines personal finance management and business accounting into a single, AI-powered platform that transforms complex financial data into clear, actionable insights.
+**Basir** (بصير - meaning "The Insightful One" in Arabic) is an intelligent, unified financial operating system designed specifically for the Arab world. It combines personal finance management and business accounting into a single, AI-powered platform that transforms complex financial data into clear, actionable insights.
 
 ## 2. The Core Idea
 
-### 2.1 What is Baseer?
+### 2.1 What is Basir?
 
-Baseer is a **dual-mode financial platform** that serves:
+Basir is a **dual-mode financial platform** that serves:
 
 | Mode                | Target Users                   | Core Functions                                                                          |
 | ------------------- | ------------------------------ | --------------------------------------------------------------------------------------- |
-| **Baseer Personal** | Individuals & Families         | Budget tracking, expense management, savings goals, subscription monitoring             |
-| **Baseer Business** | Freelancers, SMEs, Enterprises | E-invoicing, customer management, expense tracking, tax compliance, financial reporting |
+| **Basir Personal** | Individuals & Families         | Budget tracking, expense management, savings goals, subscription monitoring             |
+| **Basir Business** | Freelancers, SMEs, Enterprises | E-invoicing, customer management, expense tracking, tax compliance, financial reporting |
 
 ### 2.2 The Unique Proposition
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    BASEER PLATFORM                          │
+│                    basir PLATFORM                          │
 ├─────────────────────────────────────────────────────────────┤
 │  ┌─────────────┐    ┌─────────────┐    ┌─────────────────┐ │
 │  │  Personal   │◄──►│  AI Engine  │◄──►│    Business     │ │
-│  │   Mode      │    │  "Baseera"  │    │     Mode        │ │
+│  │   Mode      │    │  "Basira"  │    │     Mode        │ │
 │  └─────────────┘    └─────────────┘    └─────────────────┘ │
 ├─────────────────────────────────────────────────────────────┤
 │  • 22 Arab Countries Support    • Multi-Currency           │
@@ -52,7 +52,7 @@ Baseer is a **dual-mode financial platform** that serves:
 
 ### 3.2 Target Problems to Solve
 
-| Problem                 | Impact                | Baseer Solution                 |
+| Problem                 | Impact                | Basir Solution                 |
 | ----------------------- | --------------------- | ------------------------------- |
 | Manual data entry       | Time waste, errors    | AI-powered automation, OCR      |
 | Regulatory compliance   | Penalties, stress     | Built-in tax engine per country |
@@ -67,7 +67,7 @@ Baseer is a **dual-mode financial platform** that serves:
 **Shared Infrastructure:**
 
 - Dynamic widget-based dashboard
-- AI engine "Baseera" for classification and predictions
+- AI engine "Basira" for classification and predictions
 - Multi-input: Manual, OCR scan, bank integration
 - Multi-currency with live exchange rates
 - Bank-grade encryption (E2EE, ISO 27001)
@@ -136,7 +136,7 @@ Each country receives:
 
 1. **Arabic-First Design**: Not translated, but conceived in Arabic
 2. **Dual-Mode Platform**: Unique Personal + Business combination
-3. **AI Engine "Baseera"**: Intelligent automation and predictions
+3. **AI Engine "Basira"**: Intelligent automation and predictions
 4. **Pan-Arab Coverage**: Single platform for entire Arab world
 5. **Privacy-First**: Local-first architecture, on-device AI
 6. **Compliance Built-In**: All regional tax systems integrated
@@ -173,10 +173,10 @@ Each country receives:
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Reviewed by: [Pending]
 - Approved by: [Pending]
 
 ---
 
-_This document establishes the foundational concept for the Baseer platform and serves as the primary reference for all subsequent strategic and technical documentation._
+_This document establishes the foundational concept for the Basir platform and serves as the primary reference for all subsequent strategic and technical documentation._

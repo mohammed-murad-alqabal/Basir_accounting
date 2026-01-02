@@ -1,6 +1,6 @@
 # 📚 Strategic Documentation Framework
 
-**Baseer Intelligent Financial & Accounting System**  
+**Basir Intelligent Financial & Accounting System**  
 **Version:** 1.0 | **Last Updated:** December 27, 2025
 
 ---
@@ -86,4 +86,4 @@
 
 ---
 
-**Maintained by:** Baseer Development Agent Team
+**Maintained by:** Basir Development Agent Team

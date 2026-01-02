@@ -1,6 +1,6 @@
-# Database Design & ERD: Baseer Intelligent Financial System
+# Database Design & ERD: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P4-002  
+**Document ID:** basir-P4-002  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -310,5 +310,5 @@ CREATE INDEX idx_overdue_invoices
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

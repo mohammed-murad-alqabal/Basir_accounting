@@ -345,7 +345,7 @@ flutter build apk --release --split-per-abi
 adb install -r build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
 
 # اختبار البدء
-adb shell am start -W com.basser.basser_app/.MainActivity
+adb shell am start -W com.basir.basir_app/.MainActivity
 ```
 
 ### المرحلة 2: رفع تغطية الاختبارات (أولوية متوسطة) 📊
@@ -506,7 +506,7 @@ flutter build apk --release --split-per-abi
 adb install -r build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
 
 # 3. اختبار البدء
-adb shell am start -W com.basser.basser_app/.MainActivity
+adb shell am start -W com.basir.basir_app/.MainActivity
 
 # 4. أخذ لقطة شاشة
 adb exec-out screencap -p > screenshot.png
@@ -601,7 +601,7 @@ flutter build apk --release --split-per-abi
 adb install -r build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
 
 # 3. اختبار
-adb shell am start -W com.basser.basser_app/.MainActivity
+adb shell am start -W com.basir.basir_app/.MainActivity
 ```
 
 **قائمة الاختبار:**

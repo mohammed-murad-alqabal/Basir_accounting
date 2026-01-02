@@ -370,7 +370,7 @@ class QualityMonitor {
 ```yaml
 alert_system:
   channels:
-    - email: "team@baseer.com"
+    - email: "team@basir.com"
     - slack: "#quality-alerts"
     - dashboard: "real_time"
 

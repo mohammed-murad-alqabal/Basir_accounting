@@ -106,7 +106,7 @@ Success
 ### 4. التحقق من التشغيل
 
 ```bash
-$ adb -s R38M906XL2Z shell monkey -p com.basser.basser_app ...
+$ adb -s R38M906XL2Z shell monkey -p com.basir.basir_app ...
 Events injected: 1
 ✅ التطبيق يعمل
 ```
@@ -114,9 +114,9 @@ Events injected: 1
 ### 5. التحقق من الشاشة
 
 ```bash
-$ adb -s R38M906XL2Z shell screencap -p > /tmp/basser_test.png
-$ file /tmp/basser_test.png
-/tmp/basser_test.png: PNG image data, 1080 x 2280...
+$ adb -s R38M906XL2Z shell screencap -p > /tmp/basir_test.png
+$ file /tmp/basir_test.png
+/tmp/basir_test.png: PNG image data, 1080 x 2280...
 ✅ لقطة الشاشة تم التقاطها
 ```
 

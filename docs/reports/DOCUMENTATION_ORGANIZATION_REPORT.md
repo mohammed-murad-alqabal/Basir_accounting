@@ -68,7 +68,7 @@ docs/reports/
 **الملفات المتبقية في الجذر:**
 
 ```
-Basser_MVP/
+Basir_MVP/
 ├── ARCHITECTURE.md          # وثيقة المعمارية
 ├── CHANGELOG.md             # سجل التغييرات
 ├── CONTRIBUTING.md          # دليل المساهمة

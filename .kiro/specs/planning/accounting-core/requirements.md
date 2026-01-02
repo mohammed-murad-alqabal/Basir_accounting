@@ -95,7 +95,7 @@
 - [ ] اجتياز وحدة اختبارات الـ Tafqeet لجميع العملات (SAR, AED, EGP).
 - [ ] توافق رمز QR مع محاكي ZATCA الرسمي.
 - [ ] سرعة استرداد البيانات (Search < 50ms) على أجهزة Android المتوسطة.
-- [ ] التزام كامل بـ Baseer Coding Rules (Line length 100, Null Safety).
+- [ ] التزام كامل بـ Basir Coding Rules (Line length 100, Null Safety).
 
 ---
 

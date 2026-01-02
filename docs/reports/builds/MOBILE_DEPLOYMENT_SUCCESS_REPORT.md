@@ -191,7 +191,7 @@ fonts:
 // import 'package:google_fonts/google_fonts.dart'; ❌
 
 // استخدام الخط المحلي
-const String fontFamily = AppTypography.arabicFont; // 'Cairo'
+const String fontFamily = AppAppTypography.arabicFont; // 'Cairo'
 
 ThemeData(
   fontFamily: fontFamily,  // ✅

@@ -43,8 +43,8 @@
 ```bash
 # 1. إنشاء مجلد جديد
 cd ..
-cp -r Basser_MVP Basser_MVP_clean
-cd Basser_MVP_clean
+cp -r Basir_MVP Basir_MVP_clean
+cd Basir_MVP_clean
 
 # 2. حذف .git القديم
 rm -rf .git
@@ -56,7 +56,7 @@ rm -rf android/.gradle/
 # 4. Git جديد
 git init
 git add .
-git commit -m "feat: initial commit - Basser MVP
+git commit -m "feat: initial commit - Basir MVP
 
 Complete Flutter application with:
 - Customer Management
@@ -74,10 +74,10 @@ Refs: .kiro/docs/reports/git/FINAL_SOLUTION.md"
 
 # 5. إنشاء repository على GitHub
 # اذهب إلى: https://github.com/new
-# اسم: Basser_MVP_v2
+# اسم: Basir_MVP_v2
 
 # 6. الدفع
-git remote add origin https://github.com/mohammed-murad-alqabal/Basser_MVP_v2.git
+git remote add origin https://github.com/mohammed-murad-alqabal/Basir_MVP_v2.git
 git push -u origin main
 ```
 
@@ -158,8 +158,8 @@ git reset --hard origin/main
 
 ```bash
 cd ..
-cp -r Basser_MVP Basser_MVP_clean
-cd Basser_MVP_clean
+cp -r Basir_MVP Basir_MVP_clean
+cd Basir_MVP_clean
 ```
 
 ### 2. التنظيف (دقيقة واحدة)
@@ -175,19 +175,19 @@ rm -rf android/.gradle/
 ```bash
 git init
 git add .
-git commit -m "feat: initial commit - Basser MVP"
+git commit -m "feat: initial commit - Basir MVP"
 ```
 
 ### 4. GitHub (دقيقة واحدة)
 
 - اذهب إلى: https://github.com/new
-- اسم: `Basser_MVP_v2`
+- اسم: `Basir_MVP_v2`
 - Create repository
 
 ### 5. الدفع (دقيقة واحدة)
 
 ```bash
-git remote add origin https://github.com/mohammed-murad-alqabal/Basser_MVP_v2.git
+git remote add origin https://github.com/mohammed-murad-alqabal/Basir_MVP_v2.git
 git push -u origin main
 ```
 

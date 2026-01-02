@@ -3,7 +3,7 @@
 **Scenario:** Product Review System  
 **Prompt Used:** `createSpec.prompt.md` v2.0  
 **Date:** December 8, 2025  
-**Author:** Basser Project Development Agents Team
+**Author:** Basir Project Development Agents Team
 
 ---
 
@@ -72,10 +72,10 @@ Before I create the requirements specification, I need to clarify a few points:
 ```markdown
 # Product Review System - Requirements Specification
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Feature:** Product Review System  
 **Date:** December 8, 2025  
-**Author:** Basser Project Development Agents Team  
+**Author:** Basir Project Development Agents Team  
 **Status:** Draft → Approved  
 **Version:** 1.0
 
@@ -635,7 +635,7 @@ Rating must be:
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team  
+**Prepared by:** Basir Project Development Agents Team  
 **Date:** December 8, 2025  
 **Status:** ✅ Ready for Design Phase
 
@@ -705,7 +705,7 @@ Rating must be:
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team
+**Prepared by:** Basir Project Development Agents Team
 **Date:** December 8, 2025
 **Example:** 1 of 6
 ```

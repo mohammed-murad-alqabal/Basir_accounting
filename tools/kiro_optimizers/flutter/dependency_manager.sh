@@ -82,9 +82,9 @@ analyze_dependencies() {
     print_info "  - Production: $PROD_DEPS"
     print_info "  - Development: $DEV_DEPS"
     
-    # فحص Dependencies الأساسية لـ Baseer MVP
+    # فحص Dependencies الأساسية لـ Basir MVP
     echo ""
-    print_info "Baseer MVP Essential Dependencies:"
+    print_info "Basir App Essential Dependencies:"
     
     check_dependency() {
         local dep_name=$1

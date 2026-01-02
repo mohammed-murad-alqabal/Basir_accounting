@@ -7,7 +7,7 @@ Running Gradle task 'assembleDebug'...                             87.0s
 Installing build/app/outputs/flutter-apk/app-debug.apk...           7.0s
 D/FlutterJNI( 6509): Beginning load of flutter...
 D/FlutterJNI( 6509): flutter (null) was loaded normally!
-I/flutter ( 6509): 00:00 +0: Generate Mastery 2.0 PNG Assets on Device
+I/flutter ( 6509): 00:00 +0: Generate Basir 2.0 PNG Assets on Device
 I/flutter ( 6509): 🎨 Generating app_icon.png...
 I/flutter ( 6509): ℹ️ Image Captured: 1024x1024, Bytes: 259655
 I/flutter ( 6509): BASE64_START:app_icon.png

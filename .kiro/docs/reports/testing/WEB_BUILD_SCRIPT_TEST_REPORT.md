@@ -33,7 +33,7 @@
 | **الإصدار**    | v2.0                                    |
 | **المسار**     | `.kiro/scripts/deployment/build-web.sh` |
 | **التاريخ**    | 8 ديسمبر 2025                           |
-| **المطور**     | Basser Development Agents Team          |
+| **المطور**     | Basir Development Agents Team          |
 | **اللغة**      | Bash                                    |
 | **عدد الأسطر** | 267 سطر                                 |
 | **الحجم**      | ~9 KB                                   |
@@ -108,7 +108,7 @@
 
 ```
 🔍 Running static analysis...
-Analyzing basser_invoice_app...
+Analyzing basir_invoice_app...
 No issues found!
 ✅ Static analysis passed
 ```

@@ -41,7 +41,7 @@
     افتح `lib/l10n/app_en.arb` وأضف المفتاح نفسه مع الترجمة الإنجليزية.
 
     ```json
-    "welcomeMessage": "Welcome to Basser"
+    "welcomeMessage": "Welcome to Basir"
     ```
 
     > **نصيحة:** استخدم سكريبت المزامنة `scripts/i18n/sync_keys.sh` لإضافة المفاتيح المفقودة في الملفات الأخرى تلقائياً.

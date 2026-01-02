@@ -36,7 +36,7 @@
 **الإضافات:**
 
 - ✅ 100+ أيقونة مخصصة
-- ✅ BasserIcons class
+- ✅ BasirIcons class
 - ✅ CustomIcon widget مع badges
 - ✅ AnimatedIcon widget
 - ✅ تناسق كامل مع التصميم

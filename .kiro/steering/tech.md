@@ -1,4 +1,4 @@
-# Baseer MVP - Technology Stack
+# Basir MVP - Technology Stack
 
 **Last Updated:** 2025-12-26
 
@@ -24,7 +24,7 @@
 
 > **Detailed Reference:** `docs/guides/kiro_reference/flutter-dart-standards.md`
 
-- **Line Length:** 100 characters.
+- **Line Length:** 80 characters.
 - **Linter:** `effective_dart` + project rules.
 - **Null Safety:** Strict Sound Null Safety.
 - **Comments:** Doc comments `///` for public APIs. English only.

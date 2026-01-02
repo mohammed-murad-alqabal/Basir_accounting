@@ -3,7 +3,7 @@
 **Scenario:** Product Review System  
 **Prompt Used:** `commit.prompt.md` v2.0  
 **Date:** December 8, 2025  
-**Author:** Basser Project Development Agents Team
+**Author:** Basir Project Development Agents Team
 
 ---
 
@@ -468,6 +468,6 @@ git log --oneline
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team  
+**Prepared by:** Basir Project Development Agents Team  
 **Date:** December 8, 2025  
 **Example:** 5 of 6

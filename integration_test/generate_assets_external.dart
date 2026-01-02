@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:basser_app/core/assets/app_logo.dart';
+import 'package:basir_app/core/assets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,7 +11,7 @@ import 'package:path_provider/path_provider.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Generate Mastery 2.0 PNG Assets to External Storage',
+  testWidgets('Generate Basir 2.0 PNG Assets to External Storage',
       (tester) async {
     final exports = [
       {'name': 'app_icon.png', 'size': 1024.0, 'bg': Colors.white},
@@ -34,7 +34,7 @@ void main() {
 
     // Use app-scoped storage (no permissions needed)
     final directory = await getApplicationDocumentsDirectory();
-    final outputDir = '${directory.path}/basser_assets';
+    final outputDir = '${directory.path}/basir_assets';
     final dir = Directory(outputDir);
     // ignore: avoid_slow_async_io
     if (!await dir.exists()) {
@@ -70,7 +70,7 @@ void main() {
                     height: size,
                     color: bg,
                     alignment: Alignment.center,
-                    child: BasserLogo(size: size * 0.8),
+                    child: BasirLogo(size: size * 0.8),
                   ),
                 ),
               ),
@@ -112,7 +112,7 @@ void main() {
 
     debugPrint('✨ All assets saved to $outputDir');
     debugPrint(
-      '📱 Pull with: adb pull /sdcard/Download/basser_assets assets/icons/',
+      '📱 Pull with: adb pull /sdcard/Download/basir_assets assets/icons/',
     );
   });
 }

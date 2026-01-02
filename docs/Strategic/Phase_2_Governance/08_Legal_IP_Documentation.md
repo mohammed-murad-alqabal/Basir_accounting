@@ -1,6 +1,6 @@
-# Legal Entity & IP Documentation: Baseer Intelligent Financial System
+# Legal Entity & IP Documentation: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P2-009  
+**Document ID:** basir-P2-009  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** 📋 Planning  
@@ -13,13 +13,13 @@
 ### Entity Strategy
 
 ```
-                 Baseer Holdings Ltd
+                 Basir Holdings Ltd
                  (Cayman Islands)
                         │
          ┌──────────────┼──────────────┐
          │              │              │
    ┌─────▼─────┐  ┌─────▼─────┐  ┌─────▼─────┐
-   │ Baseer    │  │ Baseer    │  │ Baseer    │
+   │ Basir    │  │ Basir    │  │ Basir    │
    │ Saudi LLC │  │ UAE LLC   │  │ Egypt LLC │
    │ (Primary) │  │ (Phase 2) │  │ (Phase 3) │
    └───────────┘  └───────────┘  └───────────┘
@@ -33,7 +33,7 @@
 
 | Mark   | Type          | Territory | Status      |
 | ------ | ------------- | --------- | ----------- |
-| BASEER | Word          | GCC       | To register |
+| basir | Word          | GCC       | To register |
 | بصير   | Word (Arabic) | GCC       | To register |
 | Logo   | Design        | GCC       | To register |
 
@@ -91,6 +91,6 @@
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025
 - Legal Review: Pending

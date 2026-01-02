@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
   - name: 📚 التوثيق الشامل
-    url: https://github.com/mohammed-murad-alqabal/Basser_MVP/tree/main/Documentation
+    url: https://github.com/mohammed-murad-alqabal/Basir_MVP/tree/main/Documentation
     about: راجع التوثيق الشامل للمشروع قبل إنشاء Issue
   - name: 💬 المناقشات
-    url: https://github.com/mohammed-murad-alqabal/Basser_MVP/discussions
+    url: https://github.com/mohammed-murad-alqabal/Basir_MVP/discussions
     about: للأسئلة العامة والمناقشات، استخدم قسم Discussions
   - name: 🔍 دليل استكشاف الأخطاء
-    url: https://github.com/mohammed-murad-alqabal/Basser_MVP/blob/main/docs/ERROR_TRACKING_GUIDE.md
+    url: https://github.com/mohammed-murad-alqabal/Basir_MVP/blob/main/docs/ERROR_TRACKING_GUIDE.md
     about: دليل شامل لاستكشاف وإصلاح الأخطاء الشائعة

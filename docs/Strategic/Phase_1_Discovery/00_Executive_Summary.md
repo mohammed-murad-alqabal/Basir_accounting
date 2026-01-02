@@ -1,6 +1,6 @@
-# Executive Summary: Baseer Intelligent Financial System
+# Executive Summary: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P1-001  
+**Document ID:** basir-P1-001  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -10,7 +10,7 @@
 
 ## Investment Opportunity Summary
 
-**Baseer** is an intelligent financial operating system designed for the Arab world, combining personal and business finance management into a single, AI-powered platform. With 400+ million Arabic speakers and mandatory e-invoicing regulations driving adoption, Baseer is positioned to become the dominant financial platform in the region.
+**Basir** is an intelligent financial operating system designed for the Arab world, combining personal and business finance management into a single, AI-powered platform. With 400+ million Arabic speakers and mandatory e-invoicing regulations driving adoption, Basir is positioned to become the dominant financial platform in the region.
 
 ---
 
@@ -35,17 +35,17 @@
 
 ## The Solution
 
-Baseer offers a **dual-mode platform**:
+Basir offers a **dual-mode platform**:
 
 | Mode                | Users                 | Key Features                                            |
 | ------------------- | --------------------- | ------------------------------------------------------- |
-| **Baseer Personal** | Individuals, Families | Budget tracking, savings goals, subscription management |
-| **Baseer Business** | Freelancers, SMEs     | E-invoicing, CRM, expense tracking, tax compliance      |
+| **Basir Personal** | Individuals, Families | Budget tracking, savings goals, subscription management |
+| **Basir Business** | Freelancers, SMEs     | E-invoicing, CRM, expense tracking, tax compliance      |
 
 **Core Differentiators:**
 
 - 🇸🇦 Arabic-first design (not translated)
-- 🤖 AI engine "Baseera" for automation
+- 🤖 AI engine "Basira" for automation
 - ✅ Built-in compliance for 22 Arab countries
 - 🔐 Bank-grade security, local-first architecture
 
@@ -131,7 +131,7 @@ Baseer offers a **dual-mode platform**:
                          │
 SIMPLE ──────────────────┼────────────────── COMPLEX
                          │
-       Basic Arabic Apps │   BASEER ★
+       Basic Arabic Apps │   basir ★
        (Limited)         │   (Sweet Spot)
                          │
                     LOW FEATURES
@@ -205,11 +205,11 @@ SIMPLE ──────────────────┼─────�
 
 ## Contact
 
-**Baseer Development Agent Team**  
-Project: Baseer Intelligent Financial System  
+**Basir Development Agent Team**  
+Project: Basir Intelligent Financial System  
 Status: Active Development  
 Location: Saudi Arabia
 
 ---
 
-_This executive summary provides a strategic overview of the Baseer opportunity for stakeholders, investors, and decision-makers._
+_This executive summary provides a strategic overview of the Basir opportunity for stakeholders, investors, and decision-makers._

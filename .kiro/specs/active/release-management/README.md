@@ -137,7 +137,7 @@
 - [Requirements](requirements.md)
 - [Design](design.md)
 - [Tasks](tasks.md)
-- [GitHub Releases](https://github.com/mohammed-murad-alqabal/Basser_MVP/releases)
+- [GitHub Releases](https://github.com/mohammed-murad-alqabal/Basir_MVP/releases)
 
 ---
 

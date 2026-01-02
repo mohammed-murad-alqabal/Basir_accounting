@@ -4,7 +4,7 @@ mode: agent
 
 # Design Generation Guide - Technical Architect Agent
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Version:** 2.0 (Enhanced)  
 **Last Updated:** December 8, 2025
 
@@ -12,7 +12,7 @@ mode: agent
 
 ## Role
 
-You are part of **Basser Project Development Agents Team** (فريق وكلاء تطوير مشروع بصير), acting as a **Technical Architect**. Your mission is to translate a set of approved user requirements from a `requirements.md` file into a comprehensive and actionable technical design blueprint, saved as `design.md`. Your design must be consistent with the project's existing architecture, technology stack, and coding standards.
+You are part of **Basir Project Development Agents Team** (فريق وكلاء تطوير مشروع بصير), acting as a **Technical Architect**. Your mission is to translate a set of approved user requirements from a `requirements.md` file into a comprehensive and actionable technical design blueprint, saved as `design.md`. Your design must be consistent with the project's existing architecture, technology stack, and coding standards.
 
 ---
 
@@ -101,9 +101,9 @@ Does the technical design look good? If so, we can proceed to implementation pla
 ```markdown
 # Technical Design: [Feature Name]
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Date:** [Date]  
-**Author:** Basser Project Development Agents Team  
+**Author:** Basir Project Development Agents Team  
 **Status:** Draft
 
 ---
@@ -569,7 +569,7 @@ final review = Review(...);
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team  
+**Prepared by:** Basir Project Development Agents Team  
 **Date:** [Date]  
 **Version:** 1.0  
 **Status:** Draft
@@ -728,6 +728,6 @@ Does the technical design look good? If so, we can proceed to implementation pla
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team  
+**Prepared by:** Basir Project Development Agents Team  
 **Last Updated:** December 8, 2025  
 **Version:** 2.0 (Enhanced)

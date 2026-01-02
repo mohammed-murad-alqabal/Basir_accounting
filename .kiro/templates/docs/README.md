@@ -1,6 +1,6 @@
 # Documentation Templates
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Date:** December 8, 2025
 
 ---
@@ -13,4 +13,4 @@
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team
+**Prepared by:** Basir Project Development Agents Team

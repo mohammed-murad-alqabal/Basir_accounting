@@ -1,8 +1,8 @@
 # [Feature Name] Task Breakdown
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Date:** [Date]  
-**Author:** Basser Project Development Agents Team  
+**Author:** Basir Project Development Agents Team  
 **Status:** 🔄 In Progress
 
 ---
@@ -150,4 +150,4 @@ Additional notes or considerations.
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team
+**Prepared by:** Basir Project Development Agents Team

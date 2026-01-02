@@ -193,9 +193,9 @@
 
 **الخوادم المقترحة:**
 
-1. **basser-flutter-docs** - توثيق Flutter مخصص
-2. **basser-dart-analyzer** - تحليل Dart مخصص
-3. **basser-invoice-helper** - مساعد الفواتير
+1. **basir-flutter-docs** - توثيق Flutter مخصص
+2. **basir-dart-analyzer** - تحليل Dart مخصص
+3. **basir-invoice-helper** - مساعد الفواتير
 
 **الفوائد:**
 

@@ -149,7 +149,7 @@ class SecureInvoice {
 
 ```dart
 class KeyManager {
-  static const String _keyAlias = 'baseer_encryption_key';
+  static const String _keyAlias = 'basir_encryption_key';
 
   static Future<String> getOrCreateKey() async {
     const storage = FlutterSecureStorage();

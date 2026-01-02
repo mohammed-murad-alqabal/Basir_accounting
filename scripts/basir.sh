@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Mastery CLI - Basser Institutional Tool
+# Basir CLI - Basir Institutional Tool
 # Created: 2025-12-25
 # Purpose: High-precision engineering checks and project management.
 
@@ -11,8 +11,8 @@ GOLD='\033[0;33m'
 NC='\033[0m' # No Color
 
 function show_help() {
-    echo -e "${GOLD}Basser Mastery CLI v1.0.0${NC}"
-    echo "Usage: ./scripts/mastery.sh [command]"
+    echo -e "${GOLD}Basir Basir CLI v1.0.0${NC}"
+    echo "Usage: ./scripts/basir.sh [command]"
     echo ""
     echo "Commands:"
     echo "  check      Run analyze, test, and format (Institutional Audit)"
@@ -22,7 +22,7 @@ function show_help() {
 }
 
 function run_check() {
-    echo -e "${BLUE}Starting Mastery Institutional Audit...${NC}"
+    echo -e "${BLUE}Starting Basir Institutional Audit...${NC}"
     
     echo -e "1. Running Dart Format..."
     dart format .
@@ -41,11 +41,11 @@ function run_check() {
         exit 1
     fi
     
-    echo -e "${GREEN}Audit Passed: Mastery level achieved! 🏆${NC}"
+    echo -e "${GREEN}Audit Passed: Basir level achieved! 🏆${NC}"
 }
 
 function run_info() {
-    echo -e "${GOLD}Basser Mastery Project Metrics${NC}"
+    echo -e "${GOLD}Basir Basir Project Metrics${NC}"
     echo "--------------------------------"
     
     # Count Lines of Code (Dart)

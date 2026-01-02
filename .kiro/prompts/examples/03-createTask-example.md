@@ -3,7 +3,7 @@
 **Scenario:** Product Review System  
 **Prompt Used:** `createTask.prompt.md` v2.0  
 **Date:** December 8, 2025  
-**Author:** Basser Project Development Agents Team
+**Author:** Basir Project Development Agents Team
 
 ---
 
@@ -71,10 +71,10 @@ specs/product-reviews/design.md
 ```markdown
 # Product Review System - Implementation Tasks
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Feature:** Product Review System  
 **Date:** December 8, 2025  
-**Author:** Basser Project Development Agents Team  
+**Author:** Basir Project Development Agents Team  
 **Status:** Ready for Implementation  
 **Version:** 1.0
 
@@ -870,7 +870,7 @@ TASK-011, TASK-012, TASK-013 (Testing)
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team  
+**Prepared by:** Basir Project Development Agents Team  
 **Date:** December 8, 2025  
 **Status:** ✅ Ready for Implementation
 
@@ -938,7 +938,7 @@ TASK-011, TASK-012, TASK-013 (Testing)
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team
+**Prepared by:** Basir Project Development Agents Team
 **Date:** December 8, 2025
 **Example:** 3 of 6
 ```

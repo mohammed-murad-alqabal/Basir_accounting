@@ -1,7 +1,7 @@
 #!/bin/bash
 # Check Size Script
 # Monitors directory sizes and warns if they exceed thresholds
-# Part of Basser MVP maintenance tools
+# Part of Basir App maintenance tools
 
 # Colors
 RED='\033[0;31m'

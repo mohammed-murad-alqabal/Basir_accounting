@@ -83,8 +83,8 @@
 ```bash
 # 1. إنشاء repository جديد على GitHub
 # 2. نسخ الكود الحالي (بدون .git)
-cp -r . ../Basser_MVP_clean
-cd ../Basser_MVP_clean
+cp -r . ../Basir_MVP_clean
+cd ../Basir_MVP_clean
 rm -rf .git
 
 # 3. تهيئة git جديد
@@ -105,7 +105,7 @@ This is a fresh start with clean history.
 Refs: .kiro/docs/reports/git/GIT_PUSH_SOLUTION_REPORT.md"
 
 # 4. ربط بـ repository جديد
-git remote add origin https://github.com/mohammed-murad-alqabal/Basser_MVP_v2.git
+git remote add origin https://github.com/mohammed-murad-alqabal/Basir_MVP_v2.git
 git push -u origin main
 ```
 
@@ -134,14 +134,14 @@ git push -u origin main
 
 ```bash
 # 1. إنشاء shallow clone
-git clone --depth 1 file://$(pwd) ../Basser_MVP_shallow
-cd ../Basser_MVP_shallow
+git clone --depth 1 file://$(pwd) ../Basir_MVP_shallow
+cd ../Basir_MVP_shallow
 
 # 2. إزالة remote القديم
 git remote remove origin
 
 # 3. إضافة remote جديد
-git remote add origin https://github.com/mohammed-murad-alqabal/Basser_MVP.git
+git remote add origin https://github.com/mohammed-murad-alqabal/Basir_MVP.git
 
 # 4. Force push
 git push origin main --force
@@ -245,15 +245,15 @@ git push origin main
 ```bash
 # نسخ احتياطي للـ repository الحالي
 cd ..
-tar -czf Basser_MVP_backup_$(date +%Y%m%d).tar.gz Basser_MVP/
+tar -czf Basir_MVP_backup_$(date +%Y%m%d).tar.gz Basir_MVP/
 ```
 
 #### 2. إنشاء repository نظيف
 
 ```bash
 # نسخ الكود بدون .git
-cp -r Basser_MVP Basser_MVP_clean
-cd Basser_MVP_clean
+cp -r Basir_MVP Basir_MVP_clean
+cd Basir_MVP_clean
 rm -rf .git
 
 # تنظيف إضافي
@@ -269,7 +269,7 @@ git init
 git add .
 git commit -m "feat: initial commit - clean repository
 
-Complete Basser MVP Application
+Complete Basir MVP Application
 ================================
 
 ## Features
@@ -311,8 +311,8 @@ Refs: .kiro/docs/reports/git/GIT_PUSH_SOLUTION_REPORT.md"
 
 ```
 1. اذهب إلى: https://github.com/new
-2. اسم الـ repository: Basser_MVP_v2 (أو Basser_MVP إذا حذفت القديم)
-3. Description: "Basser MVP - Clean Repository"
+2. اسم الـ repository: Basir_MVP_v2 (أو Basir_MVP إذا حذفت القديم)
+3. Description: "Basir MVP - Clean Repository"
 4. Public/Private: حسب الرغبة
 5. لا تضف README أو .gitignore
 6. Create repository
@@ -321,7 +321,7 @@ Refs: .kiro/docs/reports/git/GIT_PUSH_SOLUTION_REPORT.md"
 #### 5. ربط ودفع
 
 ```bash
-git remote add origin https://github.com/mohammed-murad-alqabal/Basser_MVP_v2.git
+git remote add origin https://github.com/mohammed-murad-alqabal/Basir_MVP_v2.git
 git branch -M main
 git push -u origin main
 ```

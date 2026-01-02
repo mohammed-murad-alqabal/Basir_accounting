@@ -160,7 +160,7 @@
         "tool",
         "run",
         "mcp-server-filesystem@latest",
-        "/home/m/Projects/Basser_MVP"
+        "/home/m/Projects/Basir_MVP"
       ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
@@ -293,12 +293,12 @@
     "figma": {
       "command": "/home/m/.pyenv/versions/3.12.5/bin/python3",
       "args": [
-        "/home/m/Projects/Basser_MVP/scripts/figma_mcp_server.py"
+        "/home/m/Projects/Basir_MVP/scripts/figma_mcp_server.py"
       ],
       "env": {
         "FASTMCP_LOG_LEVEL": "INFO",
         "FIGMA_ACCESS_TOKEN": "${FIGMA_ACCESS_TOKEN}",
-        "PYTHONPATH": "/home/m/Projects/Basser_MVP/scripts:/home/m/.pyenv/versions/3.12.5/lib/python3.12/site-packages"
+        "PYTHONPATH": "/home/m/Projects/Basir_MVP/scripts:/home/m/.pyenv/versions/3.12.5/lib/python3.12/site-packages"
       },
       "disabled": false,
       "autoApprove": [

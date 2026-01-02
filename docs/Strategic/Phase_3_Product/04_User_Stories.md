@@ -1,6 +1,6 @@
-# User Stories & Acceptance Criteria: Baseer Intelligent Financial System
+# User Stories & Acceptance Criteria: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P3-005  
+**Document ID:** basir-P3-005  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -285,5 +285,5 @@
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

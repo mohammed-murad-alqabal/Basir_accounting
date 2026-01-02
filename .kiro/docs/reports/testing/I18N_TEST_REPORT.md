@@ -62,7 +62,7 @@ mkdir -p lib/l10n
 // lib/l10n/app_en.arb
 {
   "@@locale": "en",
-  "appTitle": "Basser",
+  "appTitle": "Basir",
   "customers": "Customers",
   "invoices": "Invoices"
 }

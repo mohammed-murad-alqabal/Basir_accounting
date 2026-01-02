@@ -51,7 +51,7 @@
 **المشكلة:**
 
 ```
-Hook('/home/m/Projects/Basser_MVP/.git/hooks/pre-commit') failed
+Hook('/home/m/Projects/Basir_MVP/.git/hooks/pre-commit') failed
 Exit code: 1
 ```
 

@@ -33,7 +33,7 @@
    - **المشكلة:** كان يستخدم نص "بصير" في مربع بدلاً من شعار مخصص
    - **التأثير:** مظهر غير احترافي
    - **الحل المنفذ:**
-     - استبدال النص بـ `BasserLogo` widget المخصص
+     - استبدال النص بـ `BasirLogo` widget المخصص
      - زيادة حجم container من 80x80 إلى 100x100
      - إضافة استيراد `app_logo.dart`
 
@@ -77,8 +77,8 @@
 #### التغييرات:
 
 ```dart
-// ✅ إضافة استيراد BasserLogo
-import 'package:basser_app/core/assets/app_logo.dart';
+// ✅ إضافة استيراد BasirLogo
+import 'package:basir_app/core/assets/app_logo.dart';
 
 // ✅ إضافة متغير autovalidateMode
 AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
@@ -105,7 +105,7 @@ Form(
   ),
 )
 
-// ✅ استبدال الشعار النصي بـ BasserLogo
+// ✅ استبدال الشعار النصي بـ BasirLogo
 Container(
   width: 100,
   height: 100,
@@ -120,7 +120,7 @@ Container(
       ),
     ],
   ),
-  child: const BasserLogo(
+  child: const BasirLogo(
     size: 60,
     color: Colors.white,
   ),
@@ -234,12 +234,12 @@ autovalidateMode: AutovalidateMode.onUserInteraction
 autovalidateMode: AutovalidateMode.disabled
 ```
 
-### 2. BasserLogo
+### 2. BasirLogo
 
 الشعار المخصص يستخدم `CustomPainter` لأداء عالي:
 
 ```dart
-const BasserLogo(
+const BasirLogo(
   size: 60,        // حجم الشعار
   color: Colors.white,  // لون الشعار
 )
@@ -308,24 +308,24 @@ ThemeData createAppTheme() {
   final textTheme = GoogleFonts.cairoTextTheme().copyWith(
     // إضافة fallback fonts للتأكد من ظهور النص دائماً
     bodyLarge: GoogleFonts.cairo(
-      fontSize: AppTypography.bodyLarge,
-      fontWeight: AppTypography.regular,
+      fontSize: AppAppTypography.bodyLarge,
+      fontWeight: AppAppTypography.regular,
       color: AppColors.textPrimary,
-      height: AppTypography.bodyLineHeight,
+      height: AppAppTypography.bodyLineHeight,
       letterSpacing: 0.5,
     ),
     bodyMedium: GoogleFonts.cairo(
-      fontSize: AppTypography.bodyMedium,
-      fontWeight: AppTypography.regular,
+      fontSize: AppAppTypography.bodyMedium,
+      fontWeight: AppAppTypography.regular,
       color: AppColors.textPrimary,
-      height: AppTypography.bodyLineHeight,
+      height: AppAppTypography.bodyLineHeight,
       letterSpacing: 0.25,
     ),
     labelLarge: GoogleFonts.cairo(
-      fontSize: AppTypography.labelLarge,
-      fontWeight: AppTypography.medium,
+      fontSize: AppAppTypography.labelLarge,
+      fontWeight: AppAppTypography.medium,
       color: AppColors.textPrimary,
-      height: AppTypography.labelLineHeight,
+      height: AppAppTypography.labelLineHeight,
       letterSpacing: 0.1,
     ),
   );

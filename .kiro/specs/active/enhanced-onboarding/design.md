@@ -1353,7 +1353,7 @@ class OnboardingStrings {
   };
 
   static const Map<String, String> en = {
-    'welcome_title': 'Welcome to Basser',
+    'welcome_title': 'Welcome to Basir',
     'welcome_subtitle': 'The first invoice management app in Saudi Arabia',
     'skip': 'Skip',
     'next': 'Next',

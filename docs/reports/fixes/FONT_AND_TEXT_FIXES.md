@@ -268,7 +268,7 @@ static ThemeData lightTheme = ThemeData(
 
 ### P3 - منخفضة (المرحلة القادمة)
 
-1. 📋 تحسين Typography بشكل عام
+1. 📋 تحسين AppTypography.بشكل عام
 2. 📋 إضافة animations للنصوص
 3. 📋 تحسين accessibility
 
@@ -304,7 +304,7 @@ static ThemeData lightTheme = ThemeData(
    - تحسينات إضافية
 
 3. **المرحلة القادمة (P3):**
-   - تحسينات Typography متقدمة
+   - تحسينات AppTypography.متقدمة
    - إضافة ميزات إضافية
 
 ---

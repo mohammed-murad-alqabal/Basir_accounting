@@ -835,7 +835,7 @@
 
   - [ ] **الوصول إلى GitHub:**
 
-    - [ ] فتح https://github.com/mohammed-murad-alqabal/Basser_MVP/settings
+    - [ ] فتح https://github.com/mohammed-murad-alqabal/Basir_MVP/settings
     - [ ] التحقق من صلاحيات Admin
     - [ ] فتح `GITHUB_REPOSITORY_AUDIT.md`
 

@@ -107,7 +107,7 @@ label: 'الفواتير'
 **flutter analyze:**
 
 ```
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 No issues found! (ran in 3.7s)
 ```
 

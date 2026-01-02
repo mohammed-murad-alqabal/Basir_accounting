@@ -71,7 +71,7 @@ await SystemChrome.setPreferredOrientations([
 
 ## 🎨 الأصول المخصصة الجديدة
 
-### 1. شعار بصير (BasserLogo)
+### 1. شعار بصير (BasirLogo)
 
 **الوصف:** شعار احترافي يمثل فاتورة مع علامة صح (✓)
 
@@ -85,7 +85,7 @@ await SystemChrome.setPreferredOrientations([
 **الاستخدام:**
 
 ```dart
-const BasserLogo(
+const BasirLogo(
   size: 100,
   color: Colors.white,
 )
@@ -93,7 +93,7 @@ const BasserLogo(
 
 **الموقع:** `lib/core/assets/app_logo.dart`
 
-### 2. أيقونة بصير المبسطة (BasserIcon)
+### 2. أيقونة بصير المبسطة (BasirIcon)
 
 **الوصف:** نسخة مبسطة من الشعار للاستخدام في الأماكن الصغيرة
 
@@ -106,7 +106,7 @@ const BasserLogo(
 **الاستخدام:**
 
 ```dart
-const BasserIcon(
+const BasirIcon(
   size: 24,
   color: Colors.white,
 )
@@ -157,7 +157,7 @@ const ErrorIllustration(
 
 ```dart
 void main() {
-  runApp(const ProviderScope(child: BasserApp()));
+  runApp(const ProviderScope(child: BasirApp()));
 }
 ```
 
@@ -168,7 +168,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _preloadFonts();
   await SystemChrome.setPreferredOrientations([...]);
-  runApp(const ProviderScope(child: BasserApp()));
+  runApp(const ProviderScope(child: BasirApp()));
 }
 ```
 
@@ -193,25 +193,25 @@ const Icon(
 **بعد:**
 
 ```dart
-const BasserLogo(
+const BasirLogo(
   size: 100,
   color: Colors.white,
 )
-const SizedBox(height: AppSpacing.lg),
+const SizedBox(height: Spacing.lg),
 const Text(
   AppConfig.appName,
   style: TextStyle(
-    fontSize: AppTypography.headlineLarge,
+    fontSize: AppAppTypography.headlineLarge,
     fontWeight: FontWeight.bold,
     color: Colors.white,
     letterSpacing: 2,
   ),
 ),
-const SizedBox(height: AppSpacing.sm),
+const SizedBox(height: Spacing.sm),
 const Text(
   AppConfig.appDescription,
   style: TextStyle(
-    fontSize: AppTypography.bodyMedium,
+    fontSize: AppAppTypography.bodyMedium,
     color: Colors.white70,
   ),
 )
@@ -279,8 +279,8 @@ Future<void> _initializeApp() async {
 
 1. **`lib/core/assets/app_logo.dart`**
 
-   - BasserLogo widget
-   - BasserIcon widget
+   - BasirLogo widget
+   - BasirIcon widget
    - CustomPainter للرسم
 
 2. **`lib/core/assets/app_illustrations.dart`**

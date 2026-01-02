@@ -1,6 +1,6 @@
-# Strategic Risk Assessment: Baseer Intelligent Financial System
+# Strategic Risk Assessment: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P1-008  
+**Document ID:** basir-P1-008  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -169,5 +169,5 @@ Risk Level: Low (1-6) | Medium (7-12) | High (13-19) | Critical (20-25)
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

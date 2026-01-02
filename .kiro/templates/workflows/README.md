@@ -1,6 +1,6 @@
 # Enhanced Workflow Templates - بصير MVP v2.0
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Date:** December 8, 2025  
 **Version:** 2.0 (Enhanced)  
 **Status:** ✅ Active
@@ -383,7 +383,7 @@ git commit -m "changes"
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team  
+**Prepared by:** Basir Project Development Agents Team  
 **Date:** December 8, 2025  
 **Version:** 2.0  
 **Status:** ✅ Active and Enhanced

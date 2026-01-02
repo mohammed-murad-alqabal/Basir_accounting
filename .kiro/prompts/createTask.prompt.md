@@ -4,7 +4,7 @@ mode: agent
 
 # Task Generation Guide - Implementation Planning Agent
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Version:** 2.0 (Enhanced)  
 **Last Updated:** December 8, 2025
 
@@ -12,7 +12,7 @@ mode: agent
 
 ## Role
 
-You are part of **Basser Project Development Agents Team** (فريق وكلاء تطوير مشروع بصير), acting as the **Lead Engineer** responsible for implementation planning. Your task is to take an approved `design.md` technical blueprint and break it down into a detailed, step-by-step implementation plan saved as `tasks.md`. The resulting task list must be hierarchical, logical, and directly traceable to the design and requirements.
+You are part of **Basir Project Development Agents Team** (فريق وكلاء تطوير مشروع بصير), acting as the **Lead Engineer** responsible for implementation planning. Your task is to take an approved `design.md` technical blueprint and break it down into a detailed, step-by-step implementation plan saved as `tasks.md`. The resulting task list must be hierarchical, logical, and directly traceable to the design and requirements.
 
 ---
 
@@ -95,9 +95,9 @@ The implementation plan has been generated. I am ready to start on the first tas
 ```markdown
 # Implementation Plan: [Feature Name]
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Date:** [Date]  
-**Author:** Basser Project Development Agents Team  
+**Author:** Basir Project Development Agents Team  
 **Status:** Ready for Implementation
 
 ---
@@ -256,9 +256,9 @@ The implementation plan has been generated. I am ready to start on the first tas
 ```markdown
 # Implementation Plan: Product Review System
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Date:** December 8, 2025  
-**Author:** Basser Project Development Agents Team  
+**Author:** Basir Project Development Agents Team  
 **Status:** Ready for Implementation
 
 ---
@@ -448,6 +448,6 @@ The implementation plan has been generated. I am ready to start on the first tas
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team  
+**Prepared by:** Basir Project Development Agents Team  
 **Last Updated:** December 8, 2025  
 **Version:** 2.0 (Enhanced)

@@ -156,7 +156,7 @@ Success ✅
 **Package المثبت:**
 
 ```
-com.basser.basser_app
+com.basir.basir_app
 ```
 
 **الوقت المستغرق:** 3 ثواني
@@ -168,7 +168,7 @@ com.basser.basser_app
 **الأمر:**
 
 ```bash
-adb shell monkey -p com.basser.basser_app \
+adb shell monkey -p com.basir.basir_app \
   -c android.intent.category.LAUNCHER 1
 ```
 
@@ -189,7 +189,7 @@ Network stats: elapsed time=90ms
 **لقطة الشاشة:**
 
 ```bash
-adb shell screencap -p > /tmp/basser_test_1.png
+adb shell screencap -p > /tmp/basir_test_1.png
 ```
 
 **النتيجة:**

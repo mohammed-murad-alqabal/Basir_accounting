@@ -1,6 +1,6 @@
-# Communication Plan: Baseer Intelligent Financial System
+# Communication Plan: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P2-005  
+**Document ID:** basir-P2-005  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -76,5 +76,5 @@ This document defines how information flows within the team and to external stak
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

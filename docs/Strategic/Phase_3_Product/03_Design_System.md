@@ -1,6 +1,6 @@
-# Design System: Baseer Intelligent Financial System
+# Design System: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P3-004  
+**Document ID:** basir-P3-004  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -245,5 +245,5 @@ Using **Phosphor Icons** - consistent, RTL-friendly
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

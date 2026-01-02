@@ -1,6 +1,6 @@
-# User Personas: Baseer Intelligent Financial System
+# User Personas: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P3-001  
+**Document ID:** basir-P3-001  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -10,7 +10,7 @@
 
 ## Persona Overview
 
-Baseer serves four primary user personas across personal and business modes.
+Basir serves four primary user personas across personal and business modes.
 
 ---
 
@@ -61,7 +61,7 @@ Khalid is a successful freelance UI/UX designer who left his corporate job 2 yea
 > "أريد تطبيق يجعلني أبدو محترفاً أمام عملائي بدون تعقيد"
 > "I want an app that makes me look professional to clients without complexity"
 
-### Baseer Solution
+### Basir Solution
 
 - 30-second invoice creation
 - Payment tracking with reminders
@@ -119,7 +119,7 @@ Noura owns a successful women's fashion boutique with both physical and online p
 > "أحتاج أعرف وضعي المالي الحقيقي، مو بس نهاية السنة"
 > "I need to know my real financial situation, not just at year-end"
 
-### Baseer Solution
+### Basir Solution
 
 - Real-time financial dashboard
 - Multi-user team access
@@ -176,7 +176,7 @@ Ahmed is a marketing manager at a tech company in Dubai. He earns a good salary 
 > "أبي أعرف وين راتبي يروح كل شهر"
 > "I want to know where my salary goes each month"
 
-### Baseer Solution
+### Basir Solution
 
 - Automatic expense categorization
 - Savings goals with progress tracking
@@ -234,7 +234,7 @@ Sara founded an EdTech startup 2 years ago and recently raised seed funding. She
 > "محتاجة نظام يكبر معانا من غير ما يكلفنا ثروة"
 > "I need a system that grows with us without costing a fortune"
 
-### Baseer Solution
+### Basir Solution
 
 - Multi-entity management
 - Custom reporting for investors
@@ -260,5 +260,5 @@ Sara founded an EdTech startup 2 years ago and recently raised seed funding. She
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

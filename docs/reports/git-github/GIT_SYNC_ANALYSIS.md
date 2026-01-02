@@ -26,7 +26,7 @@
 ### 1.2 المستودع البعيد
 
 ```
-URL: https://github.com/mohammed-murad-alqabal/Basser_MVP.git
+URL: https://github.com/mohammed-murad-alqabal/Basir_MVP.git
 الفرع الرئيسي: main
 الحالة: متصل وجاهز
 ```
@@ -34,8 +34,8 @@ URL: https://github.com/mohammed-murad-alqabal/Basser_MVP.git
 ### 1.3 الإعدادات
 
 ```
-user.name: Basser MVP Team
-user.email: team@basser.local
+user.name: Basir MVP Team
+user.email: team@basir.local
 remote: origin (GitHub)
 branch tracking: main → origin/main
 ```

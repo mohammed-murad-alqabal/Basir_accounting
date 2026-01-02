@@ -1,6 +1,6 @@
-# Initial Success Metrics: Baseer Intelligent Financial System
+# Initial Success Metrics: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P0-010  
+**Document ID:** basir-P0-010  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -10,7 +10,7 @@
 
 ## Success Metrics Framework
 
-This document defines the key metrics that will measure Baseer's success from MVP through growth phases. Metrics are organized using the AARRR (Pirate Metrics) framework plus financial and operational indicators.
+This document defines the key metrics that will measure Basir's success from MVP through growth phases. Metrics are organized using the AARRR (Pirate Metrics) framework plus financial and operational indicators.
 
 ---
 
@@ -42,7 +42,7 @@ This document defines the key metrics that will measure Baseer's success from MV
 | Metric           | Definition                     | Target        | Frequency |
 | ---------------- | ------------------------------ | ------------- | --------- |
 | App Downloads    | Total installs (iOS + Android) | 10K/mo by M6  | Weekly    |
-| Website Visitors | Unique visitors to baseer.io   | 50K/mo        | Daily     |
+| Website Visitors | Unique visitors to basir.io   | 50K/mo        | Daily     |
 | Sign-up Rate     | Visitors → Sign-ups            | > 5%          | Weekly    |
 | CAC              | Cost per acquired user         | < $20         | Monthly   |
 | Channel Mix      | % from each channel            | Organic > 40% | Monthly   |
@@ -233,5 +233,5 @@ This document defines the key metrics that will measure Baseer's success from MV
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025
