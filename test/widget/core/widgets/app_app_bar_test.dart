@@ -1,6 +1,6 @@
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/widgets/app_app_bar.dart';
-import 'package:basser_app/l10n/app_localizations.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/widgets/app_app_bar.dart';
+import 'package:basir_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -193,8 +193,8 @@ void main() {
 
       // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, SemanticColors.surface);
-      expect(appBar.foregroundColor, SemanticColors.textPrimary);
+      expect(appBar.backgroundColor, AppColors.surface);
+      expect(appBar.foregroundColor, AppColors.textPrimary);
     });
 
     testWidgets('should have elevation of 0', (tester) async {
@@ -334,8 +334,8 @@ void main() {
 
       // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, SemanticColors.surface);
-      expect(appBar.foregroundColor, SemanticColors.textPrimary);
+      expect(appBar.backgroundColor, AppColors.surface);
+      expect(appBar.foregroundColor, AppColors.textPrimary);
     });
 
     testWidgets('should have elevation of 0', (tester) async {

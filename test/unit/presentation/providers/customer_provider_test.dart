@@ -3,7 +3,7 @@
 /// يختبر جميع عمليات إدارة العملاء في طبقة Presentation
 library;
 
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 

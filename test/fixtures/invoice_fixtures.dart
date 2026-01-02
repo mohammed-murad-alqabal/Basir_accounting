@@ -3,7 +3,7 @@
 /// يوفر مجموعة من الفواتير النموذجية للاستخدام في الاختبارات
 library;
 
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 
 import 'customer_fixtures.dart';
 

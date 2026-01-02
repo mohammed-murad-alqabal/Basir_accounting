@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:basser_app/core/assets/app_logo.dart';
+import 'package:basir_app/core/assets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Export Mastery 2.0 PNG Assets', (tester) async {
+  testWidgets('Export Basir 2.0 PNG Assets', (tester) async {
     // Setup for high-quality rendering
     const size = Size(1024, 1024);
 
@@ -44,7 +44,7 @@ void main() {
             backgroundColor: config['bg']! as Color,
             body: Center(
               child: RepaintBoundary(
-                child: BasserLogo(size: config['size']! as double),
+                child: BasirLogo(size: config['size']! as double),
               ),
             ),
           ),
@@ -71,6 +71,6 @@ void main() {
       );
     }
 
-    debugPrint('✨ All Mastery 2.0 PNG assets generated successfully!');
+    debugPrint('✨ All Basir 2.0 PNG assets generated successfully!');
   });
 }

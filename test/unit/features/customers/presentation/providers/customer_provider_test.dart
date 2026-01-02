@@ -1,9 +1,9 @@
 /// اختبارات Customer Providers
 library;
 
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
-import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 

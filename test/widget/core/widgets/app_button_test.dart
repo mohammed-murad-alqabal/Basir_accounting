@@ -3,9 +3,9 @@
 /// يختبر جميع أنواع الأزرار في التطبيق
 library;
 
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/widgets/app_button.dart';
-import 'package:basser_app/core/widgets/responsive_text.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/widgets/app_button.dart';
+import 'package:basir_app/core/widgets/responsive_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -383,7 +383,7 @@ void main() {
       // Verify ResponsiveText baseSize
       final responsiveText =
           tester.widget<ResponsiveText>(find.byType(ResponsiveText));
-      expect(responsiveText.style?.fontSize, equals(FontSizes.bodyMedium));
+      expect(responsiveText.style?.fontSize, equals(AppTypography.bodyMedium));
     });
 
     testWidgets('should respect custom font size', (tester) async {

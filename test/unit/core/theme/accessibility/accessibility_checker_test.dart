@@ -3,7 +3,7 @@
 /// يختبر أدوات التحقق من إمكانية الوصول (Accessibility) في التطبيق
 library;
 
-import 'package:basser_app/core/theme/utils/accessibility_checker.dart';
+import 'package:basir_app/core/theme/utils/accessibility_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

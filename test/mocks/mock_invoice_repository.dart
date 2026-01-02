@@ -3,8 +3,8 @@
 /// يوفر تطبيق وهمي لـ InvoiceRepository للاستخدام في الاختبارات
 library;
 
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basser_app/features/invoices/domain/repositories/invoice_repository.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/repositories/invoice_repository.dart';
 
 /// Mock implementation لـ InvoiceRepository
 ///
