@@ -1,5 +1,5 @@
-name: basser_app
-description: "A new Flutter project."
+name: basir_app
+description: "بصير - نظام المحاسبة المتقدم (Basir MVP Accounting System)"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -31,6 +31,7 @@ dependencies:
   # Dependencies (sorted alphabetically)
   crypto: ^3.0.7
   cupertino_icons: ^1.0.8
+  fl_chart: ^1.1.1
   flex_color_picker: ^3.7.2
   flutter:
     sdk: flutter
@@ -91,6 +92,7 @@ flutter:
     - assets/fonts/
     - assets/icons/
     - assets/store/
+    - assets/images/
 
   # خطوط Cairo المحلية للعمل بدون إنترنت
   fonts:
@@ -110,14 +112,14 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/icons/app_icon.png"
-  adaptive_icon_background: "#003D82"
+  adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/icons/app_icon_foreground.png"
   remove_alpha_ios: true
 
 flutter_native_splash:
-  color: "#003D82"
+  color: "#FFFFFF"
   image: "assets/icons/splash_logo_transparent.png"
   android_12:
-    color: "#003D82"
+    color: "#FFFFFF"
     image: "assets/icons/splash_logo_transparent.png"
-    icon_background_color: "#003D82"
+    icon_background_color: "#FFFFFF"
