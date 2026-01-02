@@ -2,8 +2,8 @@
 
 # Enhanced Accessibility Testing Script v2.0
 # Implements: COLLABORATION FIRST, KISS, Security First, Quality First, ENGLISH FOR CODE
-# Project: Basser MVP
-# Author: Basser Development Agents Team
+# Project: Basir MVP
+# Author: Basir Development Agents Team
 # Date: December 8, 2025
 
 set -e

@@ -1,6 +1,6 @@
-# Security Architecture: Baseer Intelligent Financial System
+# Security Architecture: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P4-004  
+**Document ID:** basir-P4-004  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -292,5 +292,5 @@ type CreateInvoiceRequest struct {
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Feature Generator Script for Baseer MVP
+# Feature Generator Script for Basir MVP
 # المؤلف: فريق وكلاء تطوير مشروع بصير
 # التاريخ: 18 ديسمبر 2025
 
@@ -31,7 +31,7 @@ print_info() {
 
 # التحقق من المعاملات
 if [ $# -ne 2 ]; then
-    echo "🏗️ Baseer MVP Feature Generator"
+    echo "🏗️ Basir MVP Feature Generator"
     echo "================================"
     echo ""
     echo "Usage: $0 <feature_name> <entity_name>"
@@ -137,7 +137,7 @@ EOF
 
 # Repository Interface
 cat > "lib/features/$FEATURE_SNAKE/domain/repositories/${ENTITY_CAMEL}_repository.dart" << EOF
-import 'package:baseer_app/features/$FEATURE_SNAKE/domain/entities/$ENTITY_CAMEL.dart';
+import 'package:basir_app/features/$FEATURE_SNAKE/domain/entities/$ENTITY_CAMEL.dart';
 
 /// مستودع $ENTITY_PASCAL - واجهة العمليات الأساسية
 abstract class ${ENTITY_PASCAL}Repository {
@@ -168,7 +168,7 @@ print_info "Generating Data layer..."
 
 # Model
 cat > "lib/features/$FEATURE_SNAKE/data/models/${ENTITY_CAMEL}_model.dart" << EOF
-import 'package:baseer_app/features/$FEATURE_SNAKE/domain/entities/$ENTITY_CAMEL.dart';
+import 'package:basir_app/features/$FEATURE_SNAKE/domain/entities/$ENTITY_CAMEL.dart';
 import 'package:isar/isar.dart';
 
 part '${ENTITY_CAMEL}_model.g.dart';
@@ -217,9 +217,9 @@ EOF
 
 # Repository Implementation
 cat > "lib/features/$FEATURE_SNAKE/data/repositories/${ENTITY_CAMEL}_repository_impl.dart" << EOF
-import 'package:baseer_app/features/$FEATURE_SNAKE/data/models/${ENTITY_CAMEL}_model.dart';
-import 'package:baseer_app/features/$FEATURE_SNAKE/domain/entities/$ENTITY_CAMEL.dart';
-import 'package:baseer_app/features/$FEATURE_SNAKE/domain/repositories/${ENTITY_CAMEL}_repository.dart';
+import 'package:basir_app/features/$FEATURE_SNAKE/data/models/${ENTITY_CAMEL}_model.dart';
+import 'package:basir_app/features/$FEATURE_SNAKE/domain/entities/$ENTITY_CAMEL.dart';
+import 'package:basir_app/features/$FEATURE_SNAKE/domain/repositories/${ENTITY_CAMEL}_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:uuid/uuid.dart';
@@ -328,8 +328,8 @@ print_info "Generating Presentation layer..."
 
 # Providers
 cat > "lib/features/$FEATURE_SNAKE/presentation/providers/${ENTITY_CAMEL}_provider.dart" << EOF
-import 'package:baseer_app/core/providers.dart';
-import 'package:baseer_app/features/$FEATURE_SNAKE/domain/entities/$ENTITY_CAMEL.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/features/$FEATURE_SNAKE/domain/entities/$ENTITY_CAMEL.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Provider لقائمة جميع ${ENTITY_PASCAL}s
@@ -416,7 +416,7 @@ EOF
 cat > "lib/features/$FEATURE_SNAKE/presentation/screens/${ENTITY_CAMEL}_screen.dart" << EOF
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:baseer_app/features/$FEATURE_SNAKE/presentation/providers/${ENTITY_CAMEL}_provider.dart';
+import 'package:basir_app/features/$FEATURE_SNAKE/presentation/providers/${ENTITY_CAMEL}_provider.dart';
 
 /// شاشة $ENTITY_PASCAL الرئيسية
 class ${ENTITY_PASCAL}Screen extends ConsumerWidget {
@@ -506,7 +506,7 @@ print_info "Generating tests..."
 # Entity Test
 cat > "test/unit/features/$FEATURE_SNAKE/domain/entities/${ENTITY_CAMEL}_test.dart" << EOF
 import 'package:flutter_test/flutter_test.dart';
-import 'package:baseer_app/features/$FEATURE_SNAKE/domain/entities/$ENTITY_CAMEL.dart';
+import 'package:basir_app/features/$FEATURE_SNAKE/domain/entities/$ENTITY_CAMEL.dart';
 
 void main() {
   group('$ENTITY_PASCAL Entity Tests', () {

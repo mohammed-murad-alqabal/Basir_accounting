@@ -1,6 +1,6 @@
-# Assumptions Log: Baseer Intelligent Financial System
+# Assumptions Log: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P0-009  
+**Document ID:** basir-P0-009  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Active - Living Document  
@@ -10,7 +10,7 @@
 
 ## Purpose
 
-This document tracks all assumptions made during the planning and development of Baseer. Each assumption is logged with its risk level, validation status, and required actions.
+This document tracks all assumptions made during the planning and development of Basir. Each assumption is logged with its risk level, validation status, and required actions.
 
 ---
 
@@ -120,12 +120,12 @@ This document tracks all assumptions made during the planning and development of
 
 | Date       | Change                    | Author            |
 | ---------- | ------------------------- | ----------------- |
-| 2025-12-26 | Initial document creation | Baseer Agent Team |
+| 2025-12-26 | Initial document creation | Basir Agent Team |
 
 ---
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025
 - Review Frequency: Monthly

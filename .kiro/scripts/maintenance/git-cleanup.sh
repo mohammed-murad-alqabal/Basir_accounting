@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Git Repository Cleanup Script
-# Project: Basser MVP
-# Author: Basser Development Agents Team
+# Project: Basir MVP
+# Author: Basir Development Agents Team
 # Date: December 8, 2025
 # Version: 1.0.0
 
@@ -63,7 +63,7 @@ print_header() {
 # Start script
 print_header "🧹 Git Repository Cleanup"
 log_report "Date: $(date)"
-log_report "Project: Basser MVP"
+log_report "Project: Basir MVP"
 log_report ""
 
 # Principle 1: COLLABORATION FIRST

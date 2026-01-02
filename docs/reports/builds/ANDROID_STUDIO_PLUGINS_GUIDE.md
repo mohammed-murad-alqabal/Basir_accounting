@@ -332,7 +332,7 @@ android-studio &
 
    ```bash
    # من Terminal
-   cd ~/Projects/Basser_MVP
+   cd ~/Projects/Basir_MVP
    android-studio .
    ```
 

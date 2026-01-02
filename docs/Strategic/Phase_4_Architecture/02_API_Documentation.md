@@ -1,6 +1,6 @@
-# API Design & Documentation: Baseer Intelligent Financial System
+# API Design & Documentation: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P4-003  
+**Document ID:** basir-P4-003  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -13,8 +13,8 @@
 ### Base URL
 
 ```
-Production:  https://api.baseer.app/v1
-Staging:     https://api-staging.baseer.app/v1
+Production:  https://api.basir.app/v1
+Staging:     https://api-staging.basir.app/v1
 ```
 
 ### Standards
@@ -422,5 +422,5 @@ Financial summary
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

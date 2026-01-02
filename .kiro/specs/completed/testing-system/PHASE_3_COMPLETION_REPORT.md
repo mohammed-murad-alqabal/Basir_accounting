@@ -169,7 +169,7 @@
 
 ### 3. اختبارات Constants (33 اختبار)
 
-#### AppFontSizes (6 اختبارات)
+#### AppAppTypography.(6 اختبارات)
 
 - ✅ heading sizes should be defined correctly
 - ✅ body sizes should be defined correctly

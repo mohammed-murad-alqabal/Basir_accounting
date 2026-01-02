@@ -134,7 +134,7 @@ Automati - ✅ Done
 ColumnsdBoare:
 Typ
 ```yamlpment
-MVP Develo: Basser ject 1
+MVP Develo: Basir ject 1
 
 #### Prooject`` → `New prctsroje:** `Pلمسار
 
@@ -368,7 +368,7 @@ Featureentr-managemstomeator
 Ts-sur-docyohttps://
 nal) (optio
 
-Website:ent System"omer ManagemCust- Invoice & Basser لاء |اتير والعمارة الفور - نظام إدبصيtion:
+Website:ent System"omer ManagemCust- Invoice & Basir لاء |اتير والعمارة الفور - نظام إدبصيtion:
 "Descripr_MVP
 
 name: Basse

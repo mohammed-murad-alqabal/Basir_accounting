@@ -3,7 +3,7 @@
 **Scenario:** Product Review System  
 **Prompt Used:** `design.prompt.md` v2.0  
 **Date:** December 8, 2025  
-**Author:** Basser Project Development Agents Team
+**Author:** Basir Project Development Agents Team
 
 ---
 
@@ -60,10 +60,10 @@ specs/product-reviews/requirements.md
 ````markdown
 # Product Review System - Technical Design
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Feature:** Product Review System  
 **Date:** December 8, 2025  
-**Author:** Basser Project Development Agents Team  
+**Author:** Basir Project Development Agents Team  
 **Status:** Draft → Approved  
 **Version:** 1.0
 
@@ -1016,7 +1016,7 @@ Semantics(
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team  
+**Prepared by:** Basir Project Development Agents Team  
 **Date:** December 8, 2025  
 **Status:** ✅ Ready for Task Breakdown
 
@@ -1087,7 +1087,7 @@ Semantics(
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team
+**Prepared by:** Basir Project Development Agents Team
 **Date:** December 8, 2025
 **Example:** 2 of 6
 ```

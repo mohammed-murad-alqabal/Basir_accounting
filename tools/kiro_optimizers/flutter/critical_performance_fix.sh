@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Critical Performance Fixes for Baseer MVP
-# المشروع: بصير MVP - workspace-transformation
+# Critical Performance Fixes for Basir App
+# المشروع: بصير - workspace-transformation
 # المؤلف: فريق وكلاء تطوير مشروع بصير
 
 set -e

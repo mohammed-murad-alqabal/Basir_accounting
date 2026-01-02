@@ -324,11 +324,11 @@ Future<void> _initializeApp() async {
 }
 ```
 
-### 5.2 BasserLogo المحسّن
+### 5.2 BasirLogo المحسّن
 
 ```dart
-class BasserLogo extends StatelessWidget {
-  const BasserLogo({
+class BasirLogo extends StatelessWidget {
+  const BasirLogo({
     super.key,
     this.size = 80,
     this.color = Colors.white,
@@ -342,11 +342,11 @@ class BasserLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (animated) {
-      return AnimatedBasserLogo(size: size, color: color);
+      return AnimatedBasirLogo(size: size, color: color);
     }
     return CustomPaint(
       size: Size(size, size),
-      painter: _BasserLogoPainter(color: color),
+      painter: _BasirLogoPainter(color: color),
     );
   }
 }

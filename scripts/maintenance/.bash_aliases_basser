@@ -4,7 +4,7 @@
 # التاريخ: 1 ديسمبر 2025
 #
 # للاستخدام: أضف هذا السطر إلى ~/.bashrc
-# source /path/to/Basser_MVP/.bash_aliases_basser
+# source /path/to/Basir_MVP/.bash_aliases_basser
 
 # ═══════════════════════════════════════════════════════════
 # Git Aliases - للسرعة والإنتاجية
@@ -86,7 +86,7 @@ alias fldev='flutter devices'
 alias flup='flutter upgrade'
 
 # ═══════════════════════════════════════════════════════════
-# Basser Project Aliases - خاص بالمشروع
+# Basir Project Aliases - خاص بالمشروع
 # ═══════════════════════════════════════════════════════════
 
 # الاختبارات
@@ -261,7 +261,7 @@ function btest-all() {
 # Welcome Message - رسالة الترحيب
 # ═══════════════════════════════════════════════════════════
 
-echo "✅ تم تحميل Basser MVP aliases بنجاح!"
+echo "✅ تم تحميل Basir MVP aliases بنجاح!"
 echo "💡 استخدم 'bstatus' لعرض حالة المشروع"
 echo "💡 استخدم 'btest' لتشغيل الاختبارات"
 echo "💡 استخدم 'banalyze' لتحليل الكود"

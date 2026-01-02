@@ -27,7 +27,7 @@
 عند محاولة الوصول إلى:
 
 ```
-https://github.com/mohammed-murad-alqabal/Basser_MVP/actions
+https://github.com/mohammed-murad-alqabal/Basir_MVP/actions
 ```
 
 النتيجة: **404 Not Found**
@@ -132,7 +132,7 @@ gh run list
 ```bash
 # باستخدام curl مع token
 curl -H "Authorization: token <credential-fixture>" \
-  https://api.github.com/repos/mohammed-murad-alqabal/Basser_MVP/actions/workflows
+  https://api.github.com/repos/mohammed-murad-alqabal/Basir_MVP/actions/workflows
 ```
 
 ---
@@ -144,7 +144,7 @@ curl -H "Authorization: token <credential-fixture>" \
 **المشكلة:**
 
 ```
-Failed to fetch https://github.com/mohammed-murad-alqabal/Basser_MVP/actions - status code 404
+Failed to fetch https://github.com/mohammed-murad-alqabal/Basir_MVP/actions - status code 404
 ```
 
 **السبب:**

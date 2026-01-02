@@ -125,7 +125,7 @@ Remote: Pushed to origin
 
 ```bash
 # إنشاء Pull Request
-https://github.com/mohammed-murad-alqabal/Basser_MVP/pull/new/integration/final-merge
+https://github.com/mohammed-murad-alqabal/Basir_MVP/pull/new/integration/final-merge
 
 # بعد المراجعة والموافقة
 git checkout main

@@ -173,7 +173,7 @@
 `shot.pp > screenreencap -c-out sc
       adb exe لقطة شاشة
 
-# 4. أخذActivity_app/.Mainser.bassercom.basm start -W aadb shell البدء
+# 4. أخذActivity_app/.Mainser.basircom.basm start -W aadb shell البدء
 
 # 3. اختبار
 

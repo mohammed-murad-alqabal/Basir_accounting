@@ -183,7 +183,7 @@ git push origin main
 
 ```bash
 # زيارة GitHub Actions
-# https://github.com/mohammed-murad-alqabal/Basser_MVP/actions
+# https://github.com/mohammed-murad-alqabal/Basir_MVP/actions
 ```
 
 ### للوكيل

@@ -1,4 +1,4 @@
-# Baseer MVP - Project Structure
+# Basir MVP - Project Structure
 
 ## 📂 Root Directory
 

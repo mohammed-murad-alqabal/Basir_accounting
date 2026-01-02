@@ -1,6 +1,6 @@
 # API Documentation
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Version:** 1.0.0  
 **Base URL:** `https://api.example.com/v1`
 
@@ -52,4 +52,4 @@ Create new item.
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team
+**Prepared by:** Basir Project Development Agents Team

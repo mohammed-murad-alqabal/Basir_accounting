@@ -105,7 +105,7 @@
 ThemeData createAppTheme() {
   // استخدام خط Cairo المحلي (من assets/fonts/)
   // هذا يضمن عمل الخط بدون الحاجة للإنترنت
-  const String fontFamily = AppTypography.arabicFont;
+  const String fontFamily = AppAppTypography.arabicFont;
 
   return ThemeData(
     fontFamily: fontFamily,  // ✅ إضافة هذا السطر
@@ -178,7 +178,7 @@ $ ls -la assets/fonts/
 
 ```bash
 $ flutter analyze --no-pub
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 No issues found! (ran in 2.9s)
 ```
 
@@ -188,7 +188,7 @@ No issues found! (ran in 2.9s)
 
 ```bash
 $ dart fix --apply
-Computing fixes in Basser_MVP... 6.2s
+Computing fixes in Basir_MVP... 6.2s
 Applying fixes...                      0.0s
 
 lib/core/theme_dark.dart

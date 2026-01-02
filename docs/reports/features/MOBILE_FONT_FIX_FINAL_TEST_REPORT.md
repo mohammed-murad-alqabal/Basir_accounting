@@ -166,7 +166,7 @@ Success ✅
 **Package المثبت:**
 
 ```
-com.basser.basser_app
+com.basir.basir_app
 ```
 
 ---
@@ -176,7 +176,7 @@ com.basser.basser_app
 **الأمر:**
 
 ```bash
-adb shell monkey -p com.basser.basser_app \
+adb shell monkey -p com.basir.basir_app \
   -c android.intent.category.LAUNCHER 1
 ```
 
@@ -195,7 +195,7 @@ Network stats: elapsed time=90ms
 **لقطة الشاشة:**
 
 ```bash
-adb shell screencap -p > /tmp/basser_test_1.png
+adb shell screencap -p > /tmp/basir_test_1.png
 ```
 
 **النتيجة:**
@@ -229,7 +229,7 @@ PNG image data, 1080 x 2280, 8-bit/color RGBA
 #### 3. padding وline-height ✅ **محسّن**
 
 - **التحسينات:**
-  - زيادة `fontSize` في الأزرار إلى `AppTypography.bodyLarge` (17px)
+  - زيادة `fontSize` في الأزرار إلى `AppAppTypography.bodyLarge` (17px)
   - زيادة `fontWeight` إلى `FontWeight.w600` (SemiBold)
   - `padding` مناسب في `ElevatedButton.styleFrom`
 - **الحالة:** ✅ محسّن للوضوح
@@ -276,7 +276,7 @@ PNG image data, 1080 x 2280, 8-bit/color RGBA
 
 #### 10. وحدات قياس ثابتة ✅
 
-- **الحالة:** نستخدم `AppSpacing` و `AppTypography`
+- **الحالة:** نستخدم `Spacing` و `AppAppTypography.
 - **التحقق:** جميع القياسات مرنة
 - **الأولوية:** منخفضة
 
@@ -353,7 +353,7 @@ PNG image data, 1080 x 2280, 8-bit/color RGBA
 
 1. **فحص لقطة الشاشة** 📸
 
-   - فتح `/tmp/basser_test_1.png`
+   - فتح `/tmp/basir_test_1.png`
    - التحقق من عرض النصوص
    - تحديد أي مشاكل متبقية
 

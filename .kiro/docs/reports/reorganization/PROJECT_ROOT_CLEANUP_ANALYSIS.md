@@ -306,7 +306,7 @@ docs/
 **الملفات المكتشفة:**
 
 ```
-.bash_aliases_basser
+.bash_aliases_basir
 git_fsck_report.txt
 sqlite_mcp_server.db
 libisar.so
@@ -315,7 +315,7 @@ fix_int_literals.py
 
 ### التقييم
 
-#### `.bash_aliases_basser`
+#### `.bash_aliases_basir`
 
 - **الحالة:** ملف شخصي
 - **الحل:** نقل إلى `scripts/` أو حذف
@@ -395,7 +395,7 @@ fix_int_literals.py
 
 **الخطوات:**
 
-1. نقل/حذف `.bash_aliases_basser`
+1. نقل/حذف `.bash_aliases_basir`
 2. نقل/حذف `git_fsck_report.txt`
 3. نقل `sqlite_mcp_server.db` إلى `.kiro/data/`
 4. التحقق من `libisar.so`
@@ -447,7 +447,7 @@ fix_int_literals.py
 ### جذر المشروع (نظيف)
 
 ```
-basser_mobile/
+basir_mobile/
 ├── .dart_tool/
 ├── .git/
 ├── .github/

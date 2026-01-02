@@ -1,6 +1,6 @@
 # المخطط الاستراتيجي الرئيسي لمشروع بصير
 
-# Strategic Master Blueprint: Baseer Project
+# Strategic Master Blueprint: Basir Project
 
 **الإصدار (Version):** 1.0  
 **تاريخ الإنشاء (Created):** 2026-01-28  

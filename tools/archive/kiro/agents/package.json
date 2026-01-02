@@ -1,7 +1,7 @@
 {
-  "name": "basser-mvp-agents",
+  "name": "basir-mvp-agents",
   "version": "1.0.0",
-  "description": "Intelligent Agent Layers for Basser MVP Project",
+  "description": "Intelligent Agent Layers for Basir MVP Project",
   "main": "l1-analysis/l1-analysis-layer.ts",
   "scripts": {
     "build": "tsc",

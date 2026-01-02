@@ -1,6 +1,6 @@
-# Competitive Benchmarking: Baseer Intelligent Financial System
+# Competitive Benchmarking: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P1-004  
+**Document ID:** basir-P1-004  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -10,7 +10,7 @@
 
 ## Competitive Landscape Overview
 
-This document provides a comprehensive analysis of competitors in the Arab financial software market, identifying gaps and opportunities for Baseer.
+This document provides a comprehensive analysis of competitors in the Arab financial software market, identifying gaps and opportunities for Basir.
 
 ---
 
@@ -143,7 +143,7 @@ This document provides a comprehensive analysis of competitors in the Arab finan
 
 ### Business Features
 
-| Feature           | Baseer | Wafeq | Qoyod | QuickBooks |
+| Feature           | Basir | Wafeq | Qoyod | QuickBooks |
 | ----------------- | ------ | ----- | ----- | ---------- |
 | Invoice Creation  | ✅     | ✅    | ✅    | ✅         |
 | ZATCA Phase 2     | ✅     | ✅    | ✅    | ❌         |
@@ -158,7 +158,7 @@ This document provides a comprehensive analysis of competitors in the Arab finan
 
 ### Personal Features
 
-| Feature                | Baseer | Other Arab Apps | Global Apps |
+| Feature                | Basir | Other Arab Apps | Global Apps |
 | ---------------------- | ------ | --------------- | ----------- |
 | Budget Tracking        | ✅     | ❌              | ✅          |
 | Savings Goals          | ✅     | ❌              | ✅          |
@@ -169,7 +169,7 @@ This document provides a comprehensive analysis of competitors in the Arab finan
 
 ### Localization Quality
 
-| Aspect             | Baseer     | Wafeq    | Qoyod  | Global |
+| Aspect             | Basir     | Wafeq    | Qoyod  | Global |
 | ------------------ | ---------- | -------- | ------ | ------ |
 | RTL Design         | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐   |
 | Arabic Terminology | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐   |
@@ -192,7 +192,7 @@ This document provides a comprehensive analysis of competitors in the Arab finan
    POOR ─────────────────┼────────────────── EXCELLENT
  ARABIC                   │                   ARABIC
                           │
-         Basic Apps       │    ★ BASEER
+         Basic Apps       │    ★ basir
            ●●●            │    ● Wafeq
                           │    ● Qoyod
                           │
@@ -201,19 +201,19 @@ This document provides a comprehensive analysis of competitors in the Arab finan
 
 ### Strategic Position
 
-Baseer targets the **"Sweet Spot"**: Feature-rich with excellent Arabic support—a combination no competitor currently offers.
+Basir targets the **"Sweet Spot"**: Feature-rich with excellent Arabic support—a combination no competitor currently offers.
 
 ---
 
 ## Competitive Advantages
 
-### Baseer's Moat
+### Basir's Moat
 
 | Advantage                     | Description                     | Defensibility             |
 | ----------------------------- | ------------------------------- | ------------------------- |
 | **Arabic-First Architecture** | Built from ground up for Arabic | 2+ years to replicate     |
 | **Dual-Mode Platform**        | Personal + Business             | Unique value proposition  |
-| **AI Engine (Baseera)**       | Proprietary ML models           | High technical barrier    |
+| **AI Engine (Basira)**       | Proprietary ML models           | High technical barrier    |
 | **Pan-Arab Coverage**         | 22 countries supported          | Regulatory expertise      |
 | **Local-First Design**        | Privacy + offline capability    | Technical differentiation |
 
@@ -256,5 +256,5 @@ Baseer targets the **"Sweet Spot"**: Feature-rich with excellent Arabic support�
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

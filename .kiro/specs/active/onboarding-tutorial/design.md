@@ -465,9 +465,9 @@ class _TutorialOverlayState extends State<TutorialOverlay>
 
         // أزرار التحكم
         Positioned(
-          bottom: AppSpacing.xl,
-          left: AppSpacing.lg,
-          right: AppSpacing.lg,
+          bottom: Spacing.xl,
+          left: Spacing.lg,
+          right: Spacing.lg,
           child: TutorialControls(
             controller: widget.controller,
           ),
@@ -498,11 +498,11 @@ class TutorialTooltip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       top: _calculateTop(context),
-      left: AppSpacing.lg,
-      right: AppSpacing.lg,
+      left: Spacing.lg,
+      right: Spacing.lg,
       child: AppCard(
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+          padding: const EdgeInsets.all(Spacing.lg),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -516,13 +516,13 @@ class TutorialTooltip extends StatelessWidget {
                       color: AppColors.primary,
                       size: 24,
                     ),
-                    const SizedBox(width: AppSpacing.sm),
+                    const SizedBox(width: Spacing.sm),
                   ],
                   Expanded(
                     child: Text(
                       step.title,
                       style: const TextStyle(
-                        fontSize: AppTypography.titleMedium,
+                        fontSize: AppAppTypography.titleMedium,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
@@ -530,25 +530,25 @@ class TutorialTooltip extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: Spacing.md),
 
               // الوصف
               Text(
                 step.description,
                 style: const TextStyle(
-                  fontSize: AppTypography.bodyMedium,
+                  fontSize: AppAppTypography.bodyMedium,
                   color: AppColors.textSecondary,
                   height: 1.5,
                 ),
               ),
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: Spacing.lg),
 
               // رقم الخطوة
               Center(
                 child: Text(
                   '$currentStep / $totalSteps',
                   style: TextStyle(
-                    fontSize: AppTypography.bodySmall,
+                    fontSize: AppAppTypography.bodySmall,
                     color: AppColors.textSecondary.withOpacity(0.7),
                     fontWeight: FontWeight.w500,
                   ),
@@ -603,7 +603,7 @@ class TutorialControls extends StatelessWidget {
             'تخطي',
             style: TextStyle(
               color: AppColors.textSecondary,
-              fontSize: AppTypography.bodyMedium,
+              fontSize: AppAppTypography.bodyMedium,
             ),
           ),
         ),

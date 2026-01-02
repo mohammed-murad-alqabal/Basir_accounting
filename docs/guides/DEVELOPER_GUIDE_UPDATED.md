@@ -68,8 +68,8 @@ git --version
 #### 1. **استنساخ المشروع**
 
 ```bash
-git clone [repository-url] baseer-mvp
-cd baseer-mvp
+git clone [repository-url] basir-mvp
+cd basir-mvp
 ```
 
 #### 2. **تثبيت التبعيات**
@@ -110,7 +110,7 @@ flutter run -d android # للأندرويد
 ### هيكل المجلدات الرئيسية
 
 ```
-baseer-mvp/
+basir-mvp/
 ├── lib/                          # الكود الرئيسي
 │   ├── core/                     # الوظائف الأساسية
 │   │   ├── constants/            # الثوابت
@@ -738,7 +738,7 @@ void main() {
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:baseer_mvp/main.dart' as app;
+import 'package:basir_mvp/main.dart' as app;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -1139,13 +1139,13 @@ flutter build ipa --release
 
 ```bash
 # إنشاء keystore
-keytool -genkey -v -keystore baseer-release-key.keystore -alias baseer -keyalg RSA -keysize 2048 -validity 10000
+keytool -genkey -v -keystore basir-release-key.keystore -alias basir -keyalg RSA -keysize 2048 -validity 10000
 
 # إعداد key.properties
 echo "storePassword=your_store_password
 keyPassword=<credential-fixture>
-keyAlias=baseer
-storeFile=../baseer-release-key.keystore" > android/key.properties
+keyAlias=basir
+storeFile=../basir-release-key.keystore" > android/key.properties
 ```
 
 #### تحديث build.gradle
@@ -1156,7 +1156,7 @@ android {
     compileSdkVersion 34
 
     defaultConfig {
-        applicationId "com.baseer.mvp"
+        applicationId "com.basir.mvp"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
@@ -1303,7 +1303,7 @@ echo "📁 الملفات في: build/app/outputs/bundle/release/"
 
 ### مجتمع بصير
 
-- **Slack**: #baseer-development
+- **Slack**: #basir-development
 - **GitHub**: [مستودع المشروع]
 - **Wiki**: [صفحة المشروع الداخلية]
 

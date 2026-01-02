@@ -3,7 +3,7 @@
 [![Flutter](https://img.shields.io/badge/Flutter-3.35.5-blue.svg)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.9.2-blue.svg)](https://dart.dev)
 [![Figma](https://img.shields.io/badge/Figma-Design-F24E1E.svg?logo=figma&logoColor=white)](YOUR_FIGMA_LINK_HERE)
-[![CI/CD](https://github.com/YOUR_USERNAME/Basser_MVP/workflows/Flutter%20CI/CD%20-%20بصير%20MVP/badge.svg)](https://github.com/YOUR_USERNAME/Basser_MVP/actions)
+[![CI/CD](https://github.com/YOUR_USERNAME/basir-app/workflows/Flutter%20CI/CD%20-%20بصير/badge.svg)](https://github.com/YOUR_USERNAME/basir-app/actions)
 [![Tests](https://img.shields.io/badge/Tests-924%20Passed-success.svg)](test/)
 [![Coverage](https://img.shields.io/badge/Coverage-67.9%25-green.svg)](coverage/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -136,7 +136,7 @@ python3 scripts/figma_api.py project-files PROJECT_ID
 ```bash
 # استنساخ المشروع
 git clone <repository-url>
-cd Basser_MVP
+cd basir-app
 
 # تثبيت المكتبات
 flutter pub get

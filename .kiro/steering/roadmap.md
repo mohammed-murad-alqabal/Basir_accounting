@@ -1,6 +1,6 @@
-# Strategic Roadmap: Baseer Intelligent Financial System
+# Strategic Roadmap: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P2-002  
+**Document ID:** BASIR-P2-002  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -221,5 +221,5 @@
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025

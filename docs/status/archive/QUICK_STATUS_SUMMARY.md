@@ -64,7 +64,7 @@ flutter build apk --release --split-per-abi
 adb install -r build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
 
 # 3. اختبار
-adb shell am start -W com.basser.basser_app/.MainActivity
+adb shell am start -W com.basir.basir_app/.MainActivity
 ```
 
 **قائمة الاختبار:**

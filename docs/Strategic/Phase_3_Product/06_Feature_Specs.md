@@ -1,6 +1,6 @@
-# Feature Specifications: Baseer Intelligent Financial System
+# Feature Specifications: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P3-007  
+**Document ID:** basir-P3-007  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -297,5 +297,5 @@ String formatCurrency(double amount, String currencyCode) {
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

@@ -127,7 +127,7 @@ create_project_config() {
     
     cat > .steering-compatibility.conf << EOF
 # تكوين نظام فحص التوافق لمشروع بصير
-# Steering Compatibility System Configuration for Baseer Project
+# Steering Compatibility System Configuration for Basir Project
 
 # معلومات المشروع
 PROJECT_NAME="بصير MVP"

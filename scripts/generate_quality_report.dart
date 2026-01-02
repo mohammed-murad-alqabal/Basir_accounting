@@ -6,7 +6,7 @@ Future<void> main() async {
   print('================================\n');
 
   final report = StringBuffer();
-  report.writeln('# Basser MVP Quality Report');
+  report.writeln('# Basir App Quality Report');
   report.writeln(
     'Date: ${DateTime.now().toIso8601String()}\n',
   );

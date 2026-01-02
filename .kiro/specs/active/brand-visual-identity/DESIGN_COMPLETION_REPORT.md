@@ -49,7 +49,7 @@
 - ضمان تباين WCAG 2.1 Level AA
 - دوال مساعدة للتحقق من التباين
 
-#### TypographyTokens
+#### AppTypography.okens
 
 - Type Scale كامل (12 نمط نص)
 - خط Cairo مع 4 أوزان
@@ -147,7 +147,7 @@
 #### Compliance Tests
 
 - Color compliance (تباين، استخدام tokens)
-- Typography compliance (خط Cairo، line heights)
+- AppTypography.compliance (خط Cairo، line heights)
 - Spacing compliance (8-point grid، touch targets)
 
 #### Visual Regression Tests

@@ -1,6 +1,6 @@
-# تقرير المراجعة الهندسية الشاملة لمشروع بصير (Basser MVP)
+# تقرير المراجعة الهندسية الشاملة لمشروع بصير (Basir MVP)
 
-**المشروع:** Basser MVP - تطبيق Flutter لإدارة الفواتير والعملاء  
+**المشروع:** Basir MVP - تطبيق Flutter لإدارة الفواتير والعملاء  
 **التاريخ:** 2 ديسمبر 2025  
 **المؤلف:** فريق وكلاء تطوير مشروع بصير  
 **النوع:** مراجعة هندسية شاملة ودقيقة  
@@ -139,7 +139,7 @@ class Customer {
 
 ```bash
 $ flutter analyze --no-pub
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 No issues found! (ran in 2.4s)
 ```
 

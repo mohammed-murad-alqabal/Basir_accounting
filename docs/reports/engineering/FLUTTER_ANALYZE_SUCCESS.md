@@ -31,8 +31,8 @@ import 'core/widgets/app_button.dart';
 import 'core/widgets/app_text_field.dart';
 
 // بعد
-import 'package:basser_app/core/widgets/app_button.dart';
-import 'package:basser_app/core/widgets/app_text_field.dart';
+import 'package:basir_app/core/widgets/app_button.dart';
+import 'package:basir_app/core/widgets/app_text_field.dart';
 ```
 
 ### 2. مشاكل التوثيق (Documentation Issues)
@@ -153,7 +153,7 @@ flutter analyze --no-pub
 **النتيجة:**
 
 ```
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 No issues found! (ran in 3.2s)
 ```
 

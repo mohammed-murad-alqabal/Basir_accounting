@@ -1,8 +1,8 @@
 # Quick Start Guide - Enhanced Prompts
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Date:** December 8, 2025  
-**Author:** Basser Project Development Agents Team  
+**Author:** Basir Project Development Agents Team  
 **Status:** ✅ Active
 
 ---
@@ -583,7 +583,7 @@ Need help?
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team  
+**Prepared by:** Basir Project Development Agents Team  
 **Date:** December 8, 2025  
 **Version:** 1.0  
 **Status:** ✅ Active

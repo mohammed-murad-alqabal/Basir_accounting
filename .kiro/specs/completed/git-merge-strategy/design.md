@@ -4,7 +4,7 @@
 
 The Git Merge Strategy System is a comprehensive, automated solution for safely merging multiple unmerged branches in complex software repositories. The system implements a calculated, phased approach that prioritizes data integrity, minimizes conflicts, and ensures zero data loss while maintaining high performance and security standards.
 
-The system addresses the critical challenge of consolidating 6 unmerged branches in the Baseer MVP repository, each with different risk profiles and complexity levels. By implementing intelligent risk assessment, automated conflict detection, comprehensive testing, and robust rollback capabilities, the system ensures successful integration with minimal manual intervention.
+The system addresses the critical challenge of consolidating 6 unmerged branches in the Basir MVP repository, each with different risk profiles and complexity levels. By implementing intelligent risk assessment, automated conflict detection, comprehensive testing, and robust rollback capabilities, the system ensures successful integration with minimal manual intervention.
 
 ## Architecture
 

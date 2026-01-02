@@ -22,7 +22,7 @@
 **الحل:**
 
 ```bash
-cd ~/Projects/Basser_MVP
+cd ~/Projects/Basir_MVP
 bash scripts/install.sh --force
 ```
 

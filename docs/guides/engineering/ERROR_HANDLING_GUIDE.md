@@ -359,7 +359,7 @@ cleanup_temp_files [temp_dir] [pattern]
 **المعاملات:**
 
 - `temp_dir`: المجلد المؤقت (افتراضي: /tmp)
-- `pattern`: نمط الملفات (افتراضي: basser\_\*)
+- `pattern`: نمط الملفات (افتراضي: basir\_\*)
 
 **مثال:**
 

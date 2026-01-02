@@ -316,7 +316,7 @@
 12-25 22:06:44.215  2188  2188 W init.qcom.usb.s: type=1400 audit(0.0:139305): avc: denied { write } for name="0x409" dev="configfs" ino=12197 scontext=u:r:qti_init_shell:s0 tcontext=u:object_r:configfs:s0 tclass=dir permissive=0
 12-25 22:06:44.235  2188  2188 W init.qcom.usb.s: type=1400 audit(0.0:139306): avc: denied { write } for name="0x409" dev="configfs" ino=12197 scontext=u:r:qti_init_shell:s0 tcontext=u:object_r:configfs:s0 tclass=dir permissive=0
 12-25 22:06:49.225  2233  2233 W init.qcom.usb.s: type=1400 audit(0.0:139307): avc: denied { write } for name="0x409" dev="configfs" ino=12197 scontext=u:r:qti_init_shell:s0 tcontext=u:object_r:configfs:s0 tclass=dir permissive=0
-12-25 22:06:49.967  1102  3999 W ActivityManager: Invalid packageName: com.basser.basser_app
+12-25 22:06:49.967  1102  3999 W ActivityManager: Invalid packageName: com.basir.basir_app
 12-25 22:06:49.245  2233  2233 W init.qcom.usb.s: type=1400 audit(0.0:139308): avc: denied { write } for name="0x409" dev="configfs" ino=12197 scontext=u:r:qti_init_shell:s0 tcontext=u:object_r:configfs:s0 tclass=dir permissive=0
 12-25 22:06:50.223  1498  1809 I signal_bar: SignalLevel---getSrvLevel---mIsGsm = false
 12-25 22:06:50.223  1498  1809 I signal_bar: SignalLevel---getSrvLevel---level_2 = 5
@@ -501,30 +501,30 @@
 12-25 22:06:56.634  1102  1157 D CompatibilityInfo: mCompatibilityFlags - 4
 12-25 22:06:56.634  1102  1157 D CompatibilityInfo: applicationDensity - 240
 12-25 22:06:56.634  1102  1157 D CompatibilityInfo: applicationScale - 1.0
-12-25 22:06:56.640 31077 31077 I Finsky  : [2] VerifyApps: Install-time verification requested for package com.basser.basser_app, PackageManager id = 53, Verifier id = de03fd0d-4b3a-4c0f-b556-11b134d545c7
+12-25 22:06:56.640 31077 31077 I Finsky  : [2] VerifyApps: Install-time verification requested for package com.basir.basir_app, PackageManager id = 53, Verifier id = de03fd0d-4b3a-4c0f-b556-11b134d545c7
 12-25 22:06:56.644  1102  2435 D CompatibilityInfo: mCompatibilityFlags - 4
 12-25 22:06:56.644  1102  2435 D CompatibilityInfo: applicationDensity - 240
 12-25 22:06:56.644  1102  2435 D CompatibilityInfo: applicationScale - 1.0
 12-25 22:06:56.645   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:06:56.648 31077 31108 I Finsky  : [2668] RECEIVER_PACKAGE_VERIFICATION#logWorkEndAndFinishGoAsync: SUCCESS
-12-25 22:06:56.666 31077  2323 I Finsky  : [2878] VerifyApps: Anti-malware verification task started for package=com.basser.basser_app
+12-25 22:06:56.666 31077  2323 I Finsky  : [2878] VerifyApps: Anti-malware verification task started for package=com.basir.basir_app
 12-25 22:06:56.672 31077  2323 I Finsky  : [2878] VerifyApps: Skipping verification. Disabled by user setting
-12-25 22:06:56.672 31077  2323 I Finsky  : [2878] VerifyApps: Skipping anti malware verification (preconditions not met). package=com.basser.basser_app
-12-25 22:06:56.674 31077  2323 I Finsky  : [2878] VerifyApps: Starting required split types check for com.basser.basser_app.
-12-25 22:06:56.677 31077  2323 I Finsky  : [2878] VerifyApps: Required split types check successful for com.basser.basser_app.
+12-25 22:06:56.672 31077  2323 I Finsky  : [2878] VerifyApps: Skipping anti malware verification (preconditions not met). package=com.basir.basir_app
+12-25 22:06:56.674 31077  2323 I Finsky  : [2878] VerifyApps: Starting required split types check for com.basir.basir_app.
+12-25 22:06:56.677 31077  2323 I Finsky  : [2878] VerifyApps: Required split types check successful for com.basir.basir_app.
 12-25 22:06:56.679 31077  2323 I Finsky  : [2878] VerifyApps AdvancedProtection: Verify AP install started
 12-25 22:06:56.679 31077  2323 I Finsky  : [2878] VerifyApps AdvancedProtection: Allowing install because there are no Advanced Protection users
 12-25 22:06:56.679 31077 31077 I Finsky  : [2] VerifyApps AdvancedProtection: Reported Advanced Protection verification result: ALLOW
 12-25 22:06:56.684 31077  2323 E Finsky  : [2878] Package name null is not an installed package
 12-25 22:06:56.688 31077  2323 I Finsky  : [2878] Skipping logging for attempted installation. The source is a system package.
 12-25 22:06:56.700 31077  2323 I Finsky  : [2878] VerifyApps: Returning package verification result id=53, result=ALLOW
-12-25 22:06:56.706 31077 31077 I Finsky  : [2] VerifyApps: Install-time verification complete: id=53, package_name=com.basser.basser_app
+12-25 22:06:56.706 31077 31077 I Finsky  : [2] VerifyApps: Install-time verification complete: id=53, package_name=com.basir.basir_app
 12-25 22:06:56.716   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:06:56.725  1102  1178 W PackageParser: Unknown element under <manifest>: queries at /data/app/vmdl535485944.tmp/base.apk Binary XML file line #23
 12-25 22:06:56.944  1498  1809 I signal_bar: SignalLevel---getSrvLevel---mIsGsm = false
 12-25 22:06:56.944  1498  1809 I signal_bar: SignalLevel---getSrvLevel---level_2 = 4
 12-25 22:06:56.944  1498  1809 I signal_bar: ---updateTelephony---mCurrentState.level = 4
-12-25 22:06:56.945  1102  1178 V BackupManagerService: restoreAtInstall pkg=com.basser.basser_app token=36 restoreSet=0
+12-25 22:06:56.945  1102  1178 V BackupManagerService: restoreAtInstall pkg=com.basir.basir_app token=36 restoreSet=0
 12-25 22:06:56.946  1102  1178 V BackupManagerService: Finishing install immediately
 12-25 22:06:56.946  7570 29751 D PhoneInterfaceManager: [PhoneIntfMgr] isUserDataEnabled: subId=1 phoneId=0
 12-25 22:06:56.946  7570 29751 D PhoneInterfaceManager: [PhoneIntfMgr] isUserDataEnabled: subId=1 retVal=false
@@ -543,9 +543,9 @@
 12-25 22:06:56.969  1102  1178 D CompatibilityInfo: applicationScale - 1.0
 12-25 22:06:56.976 31077 31077 I Finsky  : [2] ahcw - Received: android.intent.action.PACKAGE_ADDED, [qyF9prxDlo2snidM5E6enq2ahu_ZCBDikuQGZLGne0s]
 12-25 22:06:56.976 15823 15823 I Finsky:background: [2] ahcm - Received: android.intent.action.PACKAGE_ADDED, [qyF9prxDlo2snidM5E6enq2ahu_ZCBDikuQGZLGne0s]
-12-25 22:06:56.978  7570  7570 D ImsResolver: maybeAddedImsService, packageName: com.basser.basser_app
+12-25 22:06:56.978  7570  7570 D ImsResolver: maybeAddedImsService, packageName: com.basir.basir_app
 12-25 22:06:56.983  1102  1137 W BroadcastQueue: component.getPackageName():com.android.musicfx
-12-25 22:06:56.983  1102  1137 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.android.musicfx/.Compatibility$Receiver
+12-25 22:06:56.983  1102  1137 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.android.musicfx/.Compatibility$Receiver
 12-25 22:06:56.985  1102  1433 I InputReader: Reconfiguring input devices.  changes=0x00000010
 12-25 22:06:57.000  1102  1102 I Telecom : DefaultDialerCache: Refreshing default dialer for user 0: now com.android.dialer: DDC.oR@Tus
 12-25 22:06:57.003 31077 31077 I Finsky  : [2] Clearing split related stale data.
@@ -555,11 +555,11 @@
 12-25 22:06:57.031  1102  2435 D CompatibilityInfo: applicationScale - 1.0
 12-25 22:06:57.032   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:06:57.040  1102  1157 W BroadcastQueue: component.getPackageName():com.android.vending
-12-25 22:06:57.040  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.android.vending/com.google.android.finsky.packagemonitor.impl.PackageMonitorReceiverImpl$RegisteredReceiver
+12-25 22:06:57.040  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.android.vending/com.google.android.finsky.packagemonitor.impl.PackageMonitorReceiverImpl$RegisteredReceiver
 12-25 22:06:57.041  1102  1157 W BroadcastQueue: component.getPackageName():com.android.vending
-12-25 22:06:57.042  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.android.vending/com.google.android.finsky.packagemonitor.backgroundimpl.BackgroundPackageMonitorReceiverImpl$RegisteredReceiver
+12-25 22:06:57.042  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.android.vending/com.google.android.finsky.packagemonitor.backgroundimpl.BackgroundPackageMonitorReceiverImpl$RegisteredReceiver
 12-25 22:06:57.042  1102  1157 W BroadcastQueue: component.getPackageName():com.facebook.appmanager
-12-25 22:06:57.042  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.facebook.appmanager/com.facebook.oxygen.common.packages.event.manifest.ManifestPackageEventReceiver
+12-25 22:06:57.042  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.facebook.appmanager/com.facebook.oxygen.common.packages.event.manifest.ManifestPackageEventReceiver
 12-25 22:06:57.042  1102  1157 W BroadcastQueue: component.getPackageName():com.google.android.gms
 12-25 22:06:57.042  1102  1157 W BroadcastQueue: lllxx skip paragon.sprint.SprintWizard ...
 12-25 22:06:57.044  1102  1157 D CompatibilityInfo: mCompatibilityFlags - 4
@@ -584,15 +584,15 @@
 12-25 22:06:57.076  1102  2266 D CompatibilityInfo: applicationScale - 1.0
 12-25 22:06:57.087  1102  1160 W libprocessgroup: kill(-1083, 9) failed: No such process
 12-25 22:06:57.090  1102  2266 W BroadcastQueue: component.getPackageName():com.google.android.ims
-12-25 22:06:57.090  1102  2266 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.google.android.ims/.receivers.RcsAutoStartReceiver
+12-25 22:06:57.090  1102  2266 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.google.android.ims/.receivers.RcsAutoStartReceiver
 12-25 22:06:57.091  1102  1157 W BroadcastQueue: component.getPackageName():com.ironsource.appcloud.oobe
-12-25 22:06:57.091  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.ironsource.appcloud.oobe/com.ironsource.appmanager.receivers.ExportedBroadcastReceiver
+12-25 22:06:57.091  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.ironsource.appcloud.oobe/com.ironsource.appmanager.receivers.ExportedBroadcastReceiver
 12-25 22:06:57.092  1102  1157 W BroadcastQueue: component.getPackageName():com.ironsource.appcloud.oobe
-12-25 22:06:57.092  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.ironsource.appcloud.oobe/com.ironsource.aura.rengage.apps_info.ChangedPackagesReceiver
+12-25 22:06:57.092  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.ironsource.appcloud.oobe/com.ironsource.aura.rengage.apps_info.ChangedPackagesReceiver
 12-25 22:06:57.092  1102  1157 W BroadcastQueue: component.getPackageName():com.ironsource.appcloud.oobe
-12-25 22:06:57.093  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.ironsource.appcloud.oobe/com.ironsource.aura.gamebox.AppTrackerBroadcastReceiver
+12-25 22:06:57.093  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.ironsource.appcloud.oobe/com.ironsource.aura.gamebox.AppTrackerBroadcastReceiver
 12-25 22:06:57.093  1102  1157 W BroadcastQueue: component.getPackageName():com.ironsource.appcloud.oobe
-12-25 22:06:57.093  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.ironsource.appcloud.oobe/com.ironsource.aura.sdk.feature.delivery.TrackPackagesBroadcastReceiver
+12-25 22:06:57.093  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.ironsource.appcloud.oobe/com.ironsource.aura.sdk.feature.delivery.TrackPackagesBroadcastReceiver
 12-25 22:06:57.093 31077 31077 I Finsky  : [2] Do not start WearSupportService due to Wear service optimization
 12-25 22:06:57.097 15823  2341 I Finsky:background: [2895] Wrote row to frosting DB: 330
 12-25 22:06:57.101   394   394 I Zygote  : Process 1083 exited due to signal (9)
@@ -604,19 +604,19 @@
 12-25 22:06:57.133  1102  2435 D CompatibilityInfo: mCompatibilityFlags - 4
 12-25 22:06:57.133  1102  2435 D CompatibilityInfo: applicationDensity - 240
 12-25 22:06:57.133  1102  2435 D CompatibilityInfo: applicationScale - 1.0
-12-25 22:06:57.134 23298  2358 W GCM     : Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
+12-25 22:06:57.134 23298  2358 W GCM     : Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
 12-25 22:06:57.136   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:06:57.148 29872 29872 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.common.BIND_SHARED_PREFS pkg=com.google.android.gms }
 12-25 22:06:57.148 29872 29872 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.common.BIND_SHARED_PREFS pkg=com.google.android.gms }
 12-25 22:06:57.153  7570  7570 D CarrierSvcBindHelper: No carrier app for: 0
-12-25 22:06:57.154 23298  2356 W NetworkScheduler: Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
+12-25 22:06:57.154 23298  2356 W NetworkScheduler: Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
 12-25 22:06:57.159 29872  2353 I Auth    : (REDACTED) [SupervisedAccountIntentOperation] onHandleIntent: %s
 12-25 22:06:57.164 15823  2341 I Finsky:background: [2895] Wrote row to frosting DB: 331
 12-25 22:06:57.168  7570  7570 D CarrierConfigLoader: mHandler: 9 phoneId: 0
-12-25 22:06:57.178 23298  2364 W GCM     : Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
+12-25 22:06:57.178 23298  2364 W GCM     : Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
 12-25 22:06:57.178 29872  2355 I Blockstore: (REDACTED) [DataStoreImpl] Clearing Blockstore Data for package %s
 12-25 22:06:57.180 29872  2355 I Blockstore: [DataStoreImpl] Keyless data not found or its IsLastInstallationData = false. [CONTEXT service_id=258 ]
-12-25 22:06:57.180 23298  2365 W NetworkScheduler: Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basser.basser_app flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
+12-25 22:06:57.180 23298  2365 W NetworkScheduler: Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:com.basir.basir_app flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
 12-25 22:06:57.217  1102  1620 D CompatibilityInfo: mCompatibilityFlags - 4
 12-25 22:06:57.218  1102  1620 D CompatibilityInfo: applicationDensity - 240
 12-25 22:06:57.218  1102  1620 D CompatibilityInfo: applicationScale - 1.0
@@ -681,7 +681,7 @@
 12-25 22:06:57.510 29872 29872 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.feedback.internal.IFeedbackService dat=chimera-action: cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
 12-25 22:06:57.550  1102  1118 I system_server: Background concurrent copying GC freed 86803(5MB) AllocSpace objects, 25(1204KB) LOS objects, 42% free, 17MB/30MB, paused 334us total 594.758ms
 12-25 22:06:57.560   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
-12-25 22:06:57.574  1102  5760 I ActivityManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x30000000 cmp=com.basser.basser_app/.MainActivity (has extras)} from uid 2000
+12-25 22:06:57.574  1102  5760 I ActivityManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x30000000 cmp=com.basir.basir_app/.MainActivity (has extras)} from uid 2000
 12-25 22:06:57.578  1498  1809 I signal_bar: SignalLevel---getSrvLevel---mIsGsm = false
 12-25 22:06:57.578  1498  1809 I signal_bar: SignalLevel---getSrvLevel---level_2 = 4
 12-25 22:06:57.578  1498  1809 I signal_bar: ---updateTelephony---mCurrentState.level = 4
@@ -701,7 +701,7 @@
 12-25 22:06:57.622   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:06:57.628   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:06:57.660   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
-12-25 22:06:57.662  1102  1159 I ActivityManager: Start proc 2397:com.basser.basser_app/u0a153 for activity com.basser.basser_app/.MainActivity
+12-25 22:06:57.662  1102  1159 I ActivityManager: Start proc 2397:com.basir.basir_app/u0a153 for activity com.basir.basir_app/.MainActivity
 12-25 22:06:57.666   496   496 I chatty  : uid=1000(system) /system/bin/surfaceflinger identical 1 line
 12-25 22:06:57.667   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
 12-25 22:06:57.676 29872 31779 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
@@ -710,7 +710,7 @@
 12-25 22:06:57.693   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
 12-25 22:06:57.713   496   496 I chatty  : uid=1000(system) /system/bin/surfaceflinger identical 3 lines
 12-25 22:06:57.714   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
-12-25 22:06:57.717  2397  2397 I sser.basser_ap: Late-enabling -Xcheck:jni
+12-25 22:06:57.717  2397  2397 I sser.basir_ap: Late-enabling -Xcheck:jni
 12-25 22:06:57.727   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
 12-25 22:06:57.735   496   496 I chatty  : uid=1000(system) /system/bin/surfaceflinger identical 1 line
 12-25 22:06:57.735   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
@@ -739,160 +739,160 @@
 12-25 22:06:59.583  1102  2153 V BackupManagerConstants: getFullBackupRequireCharging(...) returns true
 12-25 22:06:59.255  2418  2418 W init.qcom.usb.s: type=1400 audit(0.0:139353): avc: denied { write } for name="0x409" dev="configfs" ino=12197 scontext=u:r:qti_init_shell:s0 tcontext=u:object_r:configfs:s0 tclass=dir permissive=0
 12-25 22:06:59.587  2397  2397 I Perf    : Connecting to perf service.
-12-25 22:06:59.619  2397  2397 W sser.basser_ap: Accessing hidden field Landroid/os/Trace;->TRACE_TAG_APP:J (light greylist, reflection)
-12-25 22:06:59.619  2397  2397 W sser.basser_ap: Accessing hidden method Landroid/os/Trace;->isTagEnabled(J)Z (light greylist, reflection)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap: Rejecting re-init on previously-failed class java.lang.Class<io.flutter.embedding.android.FlutterActivity$1>: java.lang.NoClassDefFoundError: Failed resolution of: Landroid/window/OnBackAnimationCallback;
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at void android.os.Looper.loop() (Looper.java:193)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap: Caused by: java.lang.ClassNotFoundException: Didn't find class "android.window.OnBackAnimationCallback" on path: DexPathList[[zip file "/data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk"],nativeLibraryDirectories=[/data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/lib/arm64, /data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk!/lib/arm64-v8a, /system/lib64, /vendor/lib64, /vendor/lib64/hw]]
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:134)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:379)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
-12-25 22:06:59.697  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.os.Looper.loop() (Looper.java:193)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap: 
-12-25 22:06:59.698  2397  2397 I sser.basser_ap: Rejecting re-init on previously-failed class java.lang.Class<io.flutter.embedding.android.FlutterActivity$1>: java.lang.NoClassDefFoundError: Failed resolution of: Landroid/window/OnBackAnimationCallback;
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.os.Looper.loop() (Looper.java:193)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
-12-25 22:06:59.698  2397  2397 I sser.basser_ap: Caused by: java.lang.ClassNotFoundException: Didn't find class "android.window.OnBackAnimationCallback" on path: DexPathList[[zip file "/data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk"],nativeLibraryDirectories=[/data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/lib/arm64, /data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk!/lib/arm64-v8a, /system/lib64, /vendor/lib64, /vendor/lib64/hw]]
-12-25 22:06:59.698  2397  2397 I sser.basser_ap:   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:134)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:379)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at void android.os.Looper.loop() (Looper.java:193)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
-12-25 22:06:59.699  2397  2397 I sser.basser_ap: 
-12-25 22:06:59.701  2397  2397 I sser.basser_ap: Rejecting re-init on previously-failed class java.lang.Class<io.flutter.embedding.android.FlutterActivity$$ExternalSyntheticLambda0>: java.lang.NoClassDefFoundError: Failed resolution of: Landroid/window/OnBackInvokedCallback;
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.os.Looper.loop() (Looper.java:193)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap: Caused by: java.lang.ClassNotFoundException: Didn't find class "android.window.OnBackInvokedCallback" on path: DexPathList[[zip file "/data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk"],nativeLibraryDirectories=[/data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/lib/arm64, /data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk!/lib/arm64-v8a, /system/lib64, /vendor/lib64, /vendor/lib64/hw]]
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:134)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:379)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.os.Looper.loop() (Looper.java:193)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
-12-25 22:06:59.701  2397  2397 I sser.basser_ap: 
-12-25 22:06:59.702  2397  2397 I sser.basser_ap: Rejecting re-init on previously-failed class java.lang.Class<io.flutter.embedding.android.FlutterActivity$$ExternalSyntheticLambda0>: java.lang.NoClassDefFoundError: Failed resolution of: Landroid/window/OnBackInvokedCallback;
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.os.Looper.loop() (Looper.java:193)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap: Caused by: java.lang.ClassNotFoundException: Didn't find class "android.window.OnBackInvokedCallback" on path: DexPathList[[zip file "/data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk"],nativeLibraryDirectories=[/data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/lib/arm64, /data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk!/lib/arm64-v8a, /system/lib64, /vendor/lib64, /vendor/lib64/hw]]
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:134)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:379)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.os.Looper.loop() (Looper.java:193)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
-12-25 22:06:59.702  2397  2397 I sser.basser_ap: 
+12-25 22:06:59.619  2397  2397 W sser.basir_ap: Accessing hidden field Landroid/os/Trace;->TRACE_TAG_APP:J (light greylist, reflection)
+12-25 22:06:59.619  2397  2397 W sser.basir_ap: Accessing hidden method Landroid/os/Trace;->isTagEnabled(J)Z (light greylist, reflection)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap: Rejecting re-init on previously-failed class java.lang.Class<io.flutter.embedding.android.FlutterActivity$1>: java.lang.NoClassDefFoundError: Failed resolution of: Landroid/window/OnBackAnimationCallback;
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at void android.os.Looper.loop() (Looper.java:193)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap: Caused by: java.lang.ClassNotFoundException: Didn't find class "android.window.OnBackAnimationCallback" on path: DexPathList[[zip file "/data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk"],nativeLibraryDirectories=[/data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/lib/arm64, /data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk!/lib/arm64-v8a, /system/lib64, /vendor/lib64, /vendor/lib64/hw]]
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:134)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:379)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
+12-25 22:06:59.697  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.os.Looper.loop() (Looper.java:193)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap: 
+12-25 22:06:59.698  2397  2397 I sser.basir_ap: Rejecting re-init on previously-failed class java.lang.Class<io.flutter.embedding.android.FlutterActivity$1>: java.lang.NoClassDefFoundError: Failed resolution of: Landroid/window/OnBackAnimationCallback;
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.os.Looper.loop() (Looper.java:193)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
+12-25 22:06:59.698  2397  2397 I sser.basir_ap: Caused by: java.lang.ClassNotFoundException: Didn't find class "android.window.OnBackAnimationCallback" on path: DexPathList[[zip file "/data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk"],nativeLibraryDirectories=[/data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/lib/arm64, /data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk!/lib/arm64-v8a, /system/lib64, /vendor/lib64, /vendor/lib64/hw]]
+12-25 22:06:59.698  2397  2397 I sser.basir_ap:   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:134)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:379)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at void android.os.Looper.loop() (Looper.java:193)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
+12-25 22:06:59.699  2397  2397 I sser.basir_ap: 
+12-25 22:06:59.701  2397  2397 I sser.basir_ap: Rejecting re-init on previously-failed class java.lang.Class<io.flutter.embedding.android.FlutterActivity$$ExternalSyntheticLambda0>: java.lang.NoClassDefFoundError: Failed resolution of: Landroid/window/OnBackInvokedCallback;
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.os.Looper.loop() (Looper.java:193)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap: Caused by: java.lang.ClassNotFoundException: Didn't find class "android.window.OnBackInvokedCallback" on path: DexPathList[[zip file "/data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk"],nativeLibraryDirectories=[/data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/lib/arm64, /data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk!/lib/arm64-v8a, /system/lib64, /vendor/lib64, /vendor/lib64/hw]]
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:134)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:379)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.os.Looper.loop() (Looper.java:193)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
+12-25 22:06:59.701  2397  2397 I sser.basir_ap: 
+12-25 22:06:59.702  2397  2397 I sser.basir_ap: Rejecting re-init on previously-failed class java.lang.Class<io.flutter.embedding.android.FlutterActivity$$ExternalSyntheticLambda0>: java.lang.NoClassDefFoundError: Failed resolution of: Landroid/window/OnBackInvokedCallback;
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.os.Looper.loop() (Looper.java:193)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap: Caused by: java.lang.ClassNotFoundException: Didn't find class "android.window.OnBackInvokedCallback" on path: DexPathList[[zip file "/data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk"],nativeLibraryDirectories=[/data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/lib/arm64, /data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk!/lib/arm64-v8a, /system/lib64, /vendor/lib64, /vendor/lib64/hw]]
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:134)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:379)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.Class.newInstance() (Class.java:-2)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.AppComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (AppComponentFactory.java:69)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at android.app.Activity androidx.core.app.CoreComponentFactory.instantiateActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (CoreComponentFactory.java:44)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader, java.lang.String, android.content.Intent) (Instrumentation.java:1216)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.performLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.content.Intent) (ActivityThread.java:2870)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at android.app.Activity android.app.ActivityThread.handleLaunchActivity(android.app.ActivityThread$ActivityClientRecord, android.app.servertransaction.PendingTransactionActions, android.content.Intent) (ActivityThread.java:3087)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.LaunchActivityItem.execute(android.app.ClientTransactionHandler, android.os.IBinder, android.app.servertransaction.PendingTransactionActions) (LaunchActivityItem.java:78)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.executeCallbacks(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:108)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.app.servertransaction.TransactionExecutor.execute(android.app.servertransaction.ClientTransaction) (TransactionExecutor.java:68)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread$H.handleMessage(android.os.Message) (ActivityThread.java:1817)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:106)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.os.Looper.loop() (Looper.java:193)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
+12-25 22:06:59.702  2397  2397 I sser.basir_ap: 
 12-25 22:06:59.798  2397  2445 I ResourceExtractor: Resource version mismatch res_timestamp-1-1766689616736
 12-25 22:06:59.801  2397  2444 D FlutterJNI: Beginning load of flutter...
 12-25 22:06:59.820  2397  2444 D FlutterJNI: flutter (null) was loaded normally!
@@ -904,11 +904,11 @@
 12-25 22:07:01.215  2397  2445 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/kernel_blob.bin
 12-25 22:07:01.217  2397  2445 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/vm_snapshot_data
 12-25 22:07:01.458  2397  2445 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
-12-25 22:07:01.542  2397  2397 W sser.basser_ap: Accessing hidden method Landroid/view/SurfaceControl$Transaction;-><init>()V (light greylist, linking)
-12-25 22:07:01.543  2397  2397 W sser.basser_ap: Accessing hidden method Landroid/view/SurfaceControl$Transaction;->merge(Landroid/view/SurfaceControl$Transaction;)Landroid/view/SurfaceControl$Transaction; (dark greylist, linking)
-12-25 22:07:01.543  2397  2397 W sser.basser_ap: Accessing hidden method Landroid/view/SurfaceControl$Transaction;->apply()V (light greylist, linking)
-12-25 22:07:01.547  2397  2397 W sser.basser_ap: Accessing hidden method Landroid/view/SurfaceControl$Transaction;->merge(Landroid/view/SurfaceControl$Transaction;)Landroid/view/SurfaceControl$Transaction; (dark greylist, linking)
-12-25 22:07:01.545  2397  2397 W sser.basser_app: type=1400 audit(0.0:139354): avc: denied { read } for name="max_map_count" dev="proc" ino=4167916 scontext=u:r:untrusted_app:s0:c153,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0
+12-25 22:07:01.542  2397  2397 W sser.basir_ap: Accessing hidden method Landroid/view/SurfaceControl$Transaction;-><init>()V (light greylist, linking)
+12-25 22:07:01.543  2397  2397 W sser.basir_ap: Accessing hidden method Landroid/view/SurfaceControl$Transaction;->merge(Landroid/view/SurfaceControl$Transaction;)Landroid/view/SurfaceControl$Transaction; (dark greylist, linking)
+12-25 22:07:01.543  2397  2397 W sser.basir_ap: Accessing hidden method Landroid/view/SurfaceControl$Transaction;->apply()V (light greylist, linking)
+12-25 22:07:01.547  2397  2397 W sser.basir_ap: Accessing hidden method Landroid/view/SurfaceControl$Transaction;->merge(Landroid/view/SurfaceControl$Transaction;)Landroid/view/SurfaceControl$Transaction; (dark greylist, linking)
+12-25 22:07:01.545  2397  2397 W sser.basir_app: type=1400 audit(0.0:139354): avc: denied { read } for name="max_map_count" dev="proc" ino=4167916 scontext=u:r:untrusted_app:s0:c153,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0
 12-25 22:07:01.577  2397  2397 I Adreno  : QUALCOMM build                   : 75650bd, Ic4545e348f
 12-25 22:07:01.577  2397  2397 I Adreno  : Build Date                       : 06/15/19
 12-25 22:07:01.577  2397  2397 I Adreno  : OpenGL ES Shader Compiler Version: EV031.25.03.07
@@ -922,125 +922,125 @@
 12-25 22:07:01.595  2397  2397 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasWideColorDisplay retrieved: 0
 12-25 22:07:01.596   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.display.config@1.7::IDisplayConfig/default in either framework or device manifest.
 12-25 22:07:01.597  2397  2397 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
-12-25 22:07:01.664  2397  2397 W sser.basser_ap: Accessing hidden field Landroid/view/WindowInsets;->CONSUMED:Landroid/view/WindowInsets; (light greylist, reflection)
+12-25 22:07:01.664  2397  2397 W sser.basir_ap: Accessing hidden field Landroid/view/WindowInsets;->CONSUMED:Landroid/view/WindowInsets; (light greylist, reflection)
 12-25 22:07:02.203  2397  2457 I flutter : The Dart VM service is listening on http://127.0.0.1:41683/wNXUYIYR2V4=/
 12-25 22:07:03.001  2397  2397 D OpenGLRenderer: Skia GL Pipeline
-12-25 22:07:03.142  2397  2397 W sser.basser_ap: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (light greylist, reflection)
-12-25 22:07:03.142  2397  2397 W sser.basser_ap: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (light greylist, reflection)
-12-25 22:07:03.142  2397  2397 W sser.basser_ap: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (light greylist, reflection)
-12-25 22:07:03.145  2397  2397 W sser.basser_ap: Accessing hidden method Landroid/util/LongArray;->get(I)J (light greylist, reflection)
+12-25 22:07:03.142  2397  2397 W sser.basir_ap: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (light greylist, reflection)
+12-25 22:07:03.142  2397  2397 W sser.basir_ap: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (light greylist, reflection)
+12-25 22:07:03.142  2397  2397 W sser.basir_ap: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (light greylist, reflection)
+12-25 22:07:03.145  2397  2397 W sser.basir_ap: Accessing hidden method Landroid/util/LongArray;->get(I)J (light greylist, reflection)
 12-25 22:07:03.243  1102  1620 E WindowManager: App trying to use insecure INPUT_FEATURE_NO_INPUT_CHANNEL flag. Ignoring
-12-25 22:07:03.746  2397  2397 W sser.basser_ap: Accessing hidden method Landroid/os/Trace;->asyncTraceBegin(JLjava/lang/String;I)V (light greylist, reflection)
+12-25 22:07:03.746  2397  2397 W sser.basir_ap: Accessing hidden method Landroid/os/Trace;->asyncTraceBegin(JLjava/lang/String;I)V (light greylist, reflection)
 12-25 22:07:03.747  2397  2397 I Choreographer: Skipped 245 frames!  The application may be doing too much work on its main thread.
-12-25 22:07:03.879  2397  2397 I sser.basser_ap: Rejecting re-init on previously-failed class java.lang.Class<androidx.window.layout.adapter.sidecar.DistinctElementSidecarCallback>: java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/window/sidecar/SidecarInterface$SidecarCallback;
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at androidx.window.layout.adapter.sidecar.ExtensionInterfaceCompat androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.initAndVerifyExtension(android.content.Context) (SidecarWindowBackend.kt:207)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at androidx.window.layout.adapter.sidecar.SidecarWindowBackend androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.getInstance(android.content.Context) (SidecarWindowBackend.kt:191)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at androidx.window.layout.WindowInfoTracker androidx.window.layout.WindowInfoTracker$Companion.getOrCreate(android.content.Context) (WindowInfoTracker.kt:135)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at io.flutter.embedding.android.WindowInfoRepositoryCallbackAdapterWrapper io.flutter.embedding.android.FlutterView.createWindowInfoRepo() (FlutterView.java:489)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void io.flutter.embedding.android.FlutterView.onAttachedToWindow() (FlutterView.java:510)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.View.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (View.java:18351)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3397)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
-12-25 22:07:03.879  2397  2397 I chatty  : uid=10153(com.basser.basser_app) identical 1 line
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.ViewRootImpl.performTraversals() (ViewRootImpl.java:1769)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.ViewRootImpl.doTraversal() (ViewRootImpl.java:1468)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.ViewRootImpl$TraversalRunnable.run() (ViewRootImpl.java:7211)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.Choreographer$CallbackRecord.run(long) (Choreographer.java:1012)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.Choreographer.doCallbacks(int, long) (Choreographer.java:823)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.Choreographer.doFrame(long, int) (Choreographer.java:758)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.Choreographer$FrameDisplayEventReceiver.run() (Choreographer.java:998)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.os.Handler.handleCallback(android.os.Message) (Handler.java:873)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:99)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.os.Looper.loop() (Looper.java:193)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap: Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.window.sidecar.SidecarInterface$SidecarCallback" on path: DexPathList[[zip file "/data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk"],nativeLibraryDirectories=[/data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/lib/arm64, /data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk!/lib/arm64-v8a, /system/lib64, /vendor/lib64, /vendor/lib64/hw]]
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:134)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:379)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at androidx.window.layout.adapter.sidecar.ExtensionInterfaceCompat androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.initAndVerifyExtension(android.content.Context) (SidecarWindowBackend.kt:207)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at androidx.window.layout.adapter.sidecar.SidecarWindowBackend androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.getInstance(android.content.Context) (SidecarWindowBackend.kt:191)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at androidx.window.layout.WindowInfoTracker androidx.window.layout.WindowInfoTracker$Companion.getOrCreate(android.content.Context) (WindowInfoTracker.kt:135)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at io.flutter.embedding.android.WindowInfoRepositoryCallbackAdapterWrapper io.flutter.embedding.android.FlutterView.createWindowInfoRepo() (FlutterView.java:489)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void io.flutter.embedding.android.FlutterView.onAttachedToWindow() (FlutterView.java:510)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.View.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (View.java:18351)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3397)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
-12-25 22:07:03.879  2397  2397 I chatty  : uid=10153(com.basser.basser_app) identical 1 line
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.ViewRootImpl.performTraversals() (ViewRootImpl.java:1769)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.ViewRootImpl.doTraversal() (ViewRootImpl.java:1468)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.ViewRootImpl$TraversalRunnable.run() (ViewRootImpl.java:7211)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.Choreographer$CallbackRecord.run(long) (Choreographer.java:1012)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.Choreographer.doCallbacks(int, long) (Choreographer.java:823)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.Choreographer.doFrame(long, int) (Choreographer.java:758)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.view.Choreographer$FrameDisplayEventReceiver.run() (Choreographer.java:998)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.os.Handler.handleCallback(android.os.Message) (Handler.java:873)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:99)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.os.Looper.loop() (Looper.java:193)
-12-25 22:07:03.879  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap: 
-12-25 22:07:03.880  2397  2397 I sser.basser_ap: Rejecting re-init on previously-failed class java.lang.Class<androidx.window.layout.adapter.sidecar.DistinctElementSidecarCallback>: java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/window/sidecar/SidecarInterface$SidecarCallback;
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at androidx.window.layout.adapter.sidecar.ExtensionInterfaceCompat androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.initAndVerifyExtension(android.content.Context) (SidecarWindowBackend.kt:207)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at androidx.window.layout.adapter.sidecar.SidecarWindowBackend androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.getInstance(android.content.Context) (SidecarWindowBackend.kt:191)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at androidx.window.layout.WindowInfoTracker androidx.window.layout.WindowInfoTracker$Companion.getOrCreate(android.content.Context) (WindowInfoTracker.kt:135)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at io.flutter.embedding.android.WindowInfoRepositoryCallbackAdapterWrapper io.flutter.embedding.android.FlutterView.createWindowInfoRepo() (FlutterView.java:489)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void io.flutter.embedding.android.FlutterView.onAttachedToWindow() (FlutterView.java:510)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.view.View.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (View.java:18351)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3397)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
-12-25 22:07:03.880  2397  2397 I chatty  : uid=10153(com.basser.basser_app) identical 1 line
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.view.ViewRootImpl.performTraversals() (ViewRootImpl.java:1769)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.view.ViewRootImpl.doTraversal() (ViewRootImpl.java:1468)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.view.ViewRootImpl$TraversalRunnable.run() (ViewRootImpl.java:7211)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.view.Choreographer$CallbackRecord.run(long) (Choreographer.java:1012)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.view.Choreographer.doCallbacks(int, long) (Choreographer.java:823)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.view.Choreographer.doFrame(long, int) (Choreographer.java:758)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.view.Choreographer$FrameDisplayEventReceiver.run() (Choreographer.java:998)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.os.Handler.handleCallback(android.os.Message) (Handler.java:873)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:99)
-12-25 22:07:03.880  2397  2397 I sser.basser_ap:   at void android.os.Looper.loop() (Looper.java:193)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap: Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.window.sidecar.SidecarInterface$SidecarCallback" on path: DexPathList[[zip file "/data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk"],nativeLibraryDirectories=[/data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/lib/arm64, /data/app/com.basser.basser_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk!/lib/arm64-v8a, /system/lib64, /vendor/lib64, /vendor/lib64/hw]]
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:134)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:379)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at androidx.window.layout.adapter.sidecar.ExtensionInterfaceCompat androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.initAndVerifyExtension(android.content.Context) (SidecarWindowBackend.kt:207)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at androidx.window.layout.adapter.sidecar.SidecarWindowBackend androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.getInstance(android.content.Context) (SidecarWindowBackend.kt:191)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at androidx.window.layout.WindowInfoTracker androidx.window.layout.WindowInfoTracker$Companion.getOrCreate(android.content.Context) (WindowInfoTracker.kt:135)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at io.flutter.embedding.android.WindowInfoRepositoryCallbackAdapterWrapper io.flutter.embedding.android.FlutterView.createWindowInfoRepo() (FlutterView.java:489)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void io.flutter.embedding.android.FlutterView.onAttachedToWindow() (FlutterView.java:510)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.view.View.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (View.java:18351)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3397)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
-12-25 22:07:03.881  2397  2397 I chatty  : uid=10153(com.basser.basser_app) identical 1 line
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.view.ViewRootImpl.performTraversals() (ViewRootImpl.java:1769)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.view.ViewRootImpl.doTraversal() (ViewRootImpl.java:1468)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.view.ViewRootImpl$TraversalRunnable.run() (ViewRootImpl.java:7211)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.view.Choreographer$CallbackRecord.run(long) (Choreographer.java:1012)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.view.Choreographer.doCallbacks(int, long) (Choreographer.java:823)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.view.Choreographer.doFrame(long, int) (Choreographer.java:758)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.view.Choreographer$FrameDisplayEventReceiver.run() (Choreographer.java:998)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.os.Handler.handleCallback(android.os.Message) (Handler.java:873)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:99)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.os.Looper.loop() (Looper.java:193)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
-12-25 22:07:03.881  2397  2397 I sser.basser_ap: 
-12-25 22:07:03.918  2397  2397 W sser.basser_ap: Accessing hidden method Landroid/content/Context;->getOpPackageName()Ljava/lang/String; (light greylist, linking)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap: Rejecting re-init on previously-failed class java.lang.Class<androidx.window.layout.adapter.sidecar.DistinctElementSidecarCallback>: java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/window/sidecar/SidecarInterface$SidecarCallback;
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at androidx.window.layout.adapter.sidecar.ExtensionInterfaceCompat androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.initAndVerifyExtension(android.content.Context) (SidecarWindowBackend.kt:207)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at androidx.window.layout.adapter.sidecar.SidecarWindowBackend androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.getInstance(android.content.Context) (SidecarWindowBackend.kt:191)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at androidx.window.layout.WindowInfoTracker androidx.window.layout.WindowInfoTracker$Companion.getOrCreate(android.content.Context) (WindowInfoTracker.kt:135)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at io.flutter.embedding.android.WindowInfoRepositoryCallbackAdapterWrapper io.flutter.embedding.android.FlutterView.createWindowInfoRepo() (FlutterView.java:489)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void io.flutter.embedding.android.FlutterView.onAttachedToWindow() (FlutterView.java:510)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.View.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (View.java:18351)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3397)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
+12-25 22:07:03.879  2397  2397 I chatty  : uid=10153(com.basir.basir_app) identical 1 line
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.ViewRootImpl.performTraversals() (ViewRootImpl.java:1769)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.ViewRootImpl.doTraversal() (ViewRootImpl.java:1468)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.ViewRootImpl$TraversalRunnable.run() (ViewRootImpl.java:7211)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.Choreographer$CallbackRecord.run(long) (Choreographer.java:1012)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.Choreographer.doCallbacks(int, long) (Choreographer.java:823)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.Choreographer.doFrame(long, int) (Choreographer.java:758)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.Choreographer$FrameDisplayEventReceiver.run() (Choreographer.java:998)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.os.Handler.handleCallback(android.os.Message) (Handler.java:873)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:99)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.os.Looper.loop() (Looper.java:193)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap: Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.window.sidecar.SidecarInterface$SidecarCallback" on path: DexPathList[[zip file "/data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk"],nativeLibraryDirectories=[/data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/lib/arm64, /data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk!/lib/arm64-v8a, /system/lib64, /vendor/lib64, /vendor/lib64/hw]]
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:134)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:379)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at androidx.window.layout.adapter.sidecar.ExtensionInterfaceCompat androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.initAndVerifyExtension(android.content.Context) (SidecarWindowBackend.kt:207)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at androidx.window.layout.adapter.sidecar.SidecarWindowBackend androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.getInstance(android.content.Context) (SidecarWindowBackend.kt:191)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at androidx.window.layout.WindowInfoTracker androidx.window.layout.WindowInfoTracker$Companion.getOrCreate(android.content.Context) (WindowInfoTracker.kt:135)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at io.flutter.embedding.android.WindowInfoRepositoryCallbackAdapterWrapper io.flutter.embedding.android.FlutterView.createWindowInfoRepo() (FlutterView.java:489)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void io.flutter.embedding.android.FlutterView.onAttachedToWindow() (FlutterView.java:510)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.View.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (View.java:18351)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3397)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
+12-25 22:07:03.879  2397  2397 I chatty  : uid=10153(com.basir.basir_app) identical 1 line
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.ViewRootImpl.performTraversals() (ViewRootImpl.java:1769)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.ViewRootImpl.doTraversal() (ViewRootImpl.java:1468)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.ViewRootImpl$TraversalRunnable.run() (ViewRootImpl.java:7211)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.Choreographer$CallbackRecord.run(long) (Choreographer.java:1012)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.Choreographer.doCallbacks(int, long) (Choreographer.java:823)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.Choreographer.doFrame(long, int) (Choreographer.java:758)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.view.Choreographer$FrameDisplayEventReceiver.run() (Choreographer.java:998)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.os.Handler.handleCallback(android.os.Message) (Handler.java:873)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:99)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.os.Looper.loop() (Looper.java:193)
+12-25 22:07:03.879  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap: 
+12-25 22:07:03.880  2397  2397 I sser.basir_ap: Rejecting re-init on previously-failed class java.lang.Class<androidx.window.layout.adapter.sidecar.DistinctElementSidecarCallback>: java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/window/sidecar/SidecarInterface$SidecarCallback;
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at androidx.window.layout.adapter.sidecar.ExtensionInterfaceCompat androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.initAndVerifyExtension(android.content.Context) (SidecarWindowBackend.kt:207)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at androidx.window.layout.adapter.sidecar.SidecarWindowBackend androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.getInstance(android.content.Context) (SidecarWindowBackend.kt:191)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at androidx.window.layout.WindowInfoTracker androidx.window.layout.WindowInfoTracker$Companion.getOrCreate(android.content.Context) (WindowInfoTracker.kt:135)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at io.flutter.embedding.android.WindowInfoRepositoryCallbackAdapterWrapper io.flutter.embedding.android.FlutterView.createWindowInfoRepo() (FlutterView.java:489)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void io.flutter.embedding.android.FlutterView.onAttachedToWindow() (FlutterView.java:510)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.view.View.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (View.java:18351)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3397)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
+12-25 22:07:03.880  2397  2397 I chatty  : uid=10153(com.basir.basir_app) identical 1 line
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.view.ViewRootImpl.performTraversals() (ViewRootImpl.java:1769)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.view.ViewRootImpl.doTraversal() (ViewRootImpl.java:1468)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.view.ViewRootImpl$TraversalRunnable.run() (ViewRootImpl.java:7211)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.view.Choreographer$CallbackRecord.run(long) (Choreographer.java:1012)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.view.Choreographer.doCallbacks(int, long) (Choreographer.java:823)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.view.Choreographer.doFrame(long, int) (Choreographer.java:758)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.view.Choreographer$FrameDisplayEventReceiver.run() (Choreographer.java:998)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.os.Handler.handleCallback(android.os.Message) (Handler.java:873)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:99)
+12-25 22:07:03.880  2397  2397 I sser.basir_ap:   at void android.os.Looper.loop() (Looper.java:193)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap: Caused by: java.lang.ClassNotFoundException: Didn't find class "androidx.window.sidecar.SidecarInterface$SidecarCallback" on path: DexPathList[[zip file "/data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk"],nativeLibraryDirectories=[/data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/lib/arm64, /data/app/com.basir.basir_app-THAz5Hqxzf_XNwyImJHTZA==/base.apk!/lib/arm64-v8a, /system/lib64, /vendor/lib64, /vendor/lib64/hw]]
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:134)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:379)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at androidx.window.layout.adapter.sidecar.ExtensionInterfaceCompat androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.initAndVerifyExtension(android.content.Context) (SidecarWindowBackend.kt:207)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at androidx.window.layout.adapter.sidecar.SidecarWindowBackend androidx.window.layout.adapter.sidecar.SidecarWindowBackend$Companion.getInstance(android.content.Context) (SidecarWindowBackend.kt:191)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at androidx.window.layout.WindowInfoTracker androidx.window.layout.WindowInfoTracker$Companion.getOrCreate(android.content.Context) (WindowInfoTracker.kt:135)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at io.flutter.embedding.android.WindowInfoRepositoryCallbackAdapterWrapper io.flutter.embedding.android.FlutterView.createWindowInfoRepo() (FlutterView.java:489)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void io.flutter.embedding.android.FlutterView.onAttachedToWindow() (FlutterView.java:510)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.view.View.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (View.java:18351)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3397)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
+12-25 22:07:03.881  2397  2397 I chatty  : uid=10153(com.basir.basir_app) identical 1 line
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.view.ViewGroup.dispatchAttachedToWindow(android.view.View$AttachInfo, int) (ViewGroup.java:3404)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.view.ViewRootImpl.performTraversals() (ViewRootImpl.java:1769)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.view.ViewRootImpl.doTraversal() (ViewRootImpl.java:1468)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.view.ViewRootImpl$TraversalRunnable.run() (ViewRootImpl.java:7211)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.view.Choreographer$CallbackRecord.run(long) (Choreographer.java:1012)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.view.Choreographer.doCallbacks(int, long) (Choreographer.java:823)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.view.Choreographer.doFrame(long, int) (Choreographer.java:758)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.view.Choreographer$FrameDisplayEventReceiver.run() (Choreographer.java:998)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.os.Handler.handleCallback(android.os.Message) (Handler.java:873)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.os.Handler.dispatchMessage(android.os.Message) (Handler.java:99)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.os.Looper.loop() (Looper.java:193)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void android.app.ActivityThread.main(java.lang.String[]) (ActivityThread.java:6746)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at java.lang.Object java.lang.reflect.Method.invoke(java.lang.Object, java.lang.Object[]) (Method.java:-2)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run() (RuntimeInit.java:493)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap:   at void com.android.internal.os.ZygoteInit.main(java.lang.String[]) (ZygoteInit.java:858)
+12-25 22:07:03.881  2397  2397 I sser.basir_ap: 
+12-25 22:07:03.918  2397  2397 W sser.basir_ap: Accessing hidden method Landroid/content/Context;->getOpPackageName()Ljava/lang/String; (light greylist, linking)
 12-25 22:07:04.042  2397  2460 I OpenGLRenderer: Initialized EGL, version 1.4
 12-25 22:07:04.042  2397  2460 D OpenGLRenderer: Swap behavior 2
 12-25 22:07:04.060   496  1430 W ServiceManager: Permission failure: android.permission.ACCESS_SURFACE_FLINGER from uid=10153 pid=2397
@@ -1048,7 +1048,7 @@
 12-25 22:07:04.205   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:07:04.255  2462  2462 W init.qcom.usb.s: type=1400 audit(0.0:139355): avc: denied { write } for name="0x409" dev="configfs" ino=12197 scontext=u:r:qti_init_shell:s0 tcontext=u:object_r:configfs:s0 tclass=dir permissive=0
 12-25 22:07:04.275  2462  2462 W init.qcom.usb.s: type=1400 audit(0.0:139356): avc: denied { write } for name="0x409" dev="configfs" ino=12197 scontext=u:r:qti_init_shell:s0 tcontext=u:object_r:configfs:s0 tclass=dir permissive=0
-12-25 22:07:05.186  2397  2397 W sser.basser_ap: Accessing hidden method Landroid/os/Trace;->asyncTraceEnd(JLjava/lang/String;I)V (light greylist, reflection)
+12-25 22:07:05.186  2397  2397 W sser.basir_ap: Accessing hidden method Landroid/os/Trace;->asyncTraceEnd(JLjava/lang/String;I)V (light greylist, reflection)
 12-25 22:07:05.311  2397  2397 I Choreographer: Skipped 77 frames!  The application may be doing too much work on its main thread.
 12-25 22:07:05.522   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:07:06.817   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
@@ -1065,11 +1065,11 @@
 12-25 22:07:10.210   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
 12-25 22:07:10.212   496   496 I chatty  : uid=1000(system) /system/bin/surfaceflinger identical 1 line
 12-25 22:07:10.212   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
-12-25 22:07:10.219  1102  1156 I ActivityManager: Displayed com.basser.basser_app/.MainActivity: +12s608ms
+12-25 22:07:10.219  1102  1156 I ActivityManager: Displayed com.basir.basir_app/.MainActivity: +12s608ms
 12-25 22:07:10.226   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
 12-25 22:07:10.384   496   496 I chatty  : uid=1000(system) /system/bin/surfaceflinger identical 27 lines
 12-25 22:07:10.394   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
-12-25 22:07:10.396  2397  2501 D ProfileInstaller: Installing profile for com.basser.basser_app
+12-25 22:07:10.396  2397  2501 D ProfileInstaller: Installing profile for com.basir.basir_app
 12-25 22:07:10.433   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
 12-25 22:07:10.748   496   496 I chatty  : uid=1000(system) /system/bin/surfaceflinger identical 42 lines
 12-25 22:07:10.749   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
@@ -1235,12 +1235,12 @@
 12-25 22:07:14.866  7570  7619 D PhoneInterfaceManager: [PhoneIntfMgr] isUserDataEnabled: subId=1 phoneId=0
 12-25 22:07:14.866  7570  7619 D PhoneInterfaceManager: [PhoneIntfMgr] isUserDataEnabled: subId=1 retVal=false
 12-25 22:07:14.867  1498  1809 D simlock_qlei: >>>notifyListenersIfNecessary---isDirty = false ,isInvalidSim = false
-12-25 22:07:15.362  1102  3841 I ActivityManager: Force stopping com.basser.basser_app appid=10153 user=0: from pid 2530
-12-25 22:07:15.363  1102  3841 I ActivityManager: Killing 2397:com.basser.basser_app/u0a153 (adj 0): stop com.basser.basser_app
+12-25 22:07:15.362  1102  3841 I ActivityManager: Force stopping com.basir.basir_app appid=10153 user=0: from pid 2530
+12-25 22:07:15.363  1102  3841 I ActivityManager: Killing 2397:com.basir.basir_app/u0a153 (adj 0): stop com.basir.basir_app
 12-25 22:07:15.365  1102  1160 W libprocessgroup: kill(-2397, 9) failed: No such process
 12-25 22:07:15.366   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
-12-25 22:07:15.367  1102  3841 W ActivityManager: Force removing ActivityRecord{f70b58e u0 com.basser.basser_app/.MainActivity t135}: app died, no saved state
-12-25 22:07:15.378   496   715 W SurfaceFlinger: Attempting to destroy on removed layer: AppWindowToken{629f9bc token=<credential-fixture> ActivityRecord{f70b58e u0 com.basser.basser_app/.MainActivity t135}}}#0
+12-25 22:07:15.367  1102  3841 W ActivityManager: Force removing ActivityRecord{f70b58e u0 com.basir.basir_app/.MainActivity t135}: app died, no saved state
+12-25 22:07:15.378   496   715 W SurfaceFlinger: Attempting to destroy on removed layer: AppWindowToken{629f9bc token=<credential-fixture> ActivityRecord{f70b58e u0 com.basir.basir_app/.MainActivity t135}}}#0
 12-25 22:07:15.391   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
 12-25 22:07:15.394  1102  3841 D CompatibilityInfo: mCompatibilityFlags - 4
 12-25 22:07:15.395  1102  3841 D CompatibilityInfo: applicationDensity - 240
@@ -1254,13 +1254,13 @@
 12-25 22:07:15.406   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
 12-25 22:07:15.420  7570  7570 D CarrierSvcBindHelper: No carrier app for: 0
 12-25 22:07:15.443  1102  1160 W libprocessgroup: kill(-2397, 9) failed: No such process
-12-25 22:07:15.474  1498  6105 W ziparchive: Unable to open '/data/app/com.basser.basser_app-DQ2Bzk0B8GgTtuomCqRZ4Q==/base.apk': No such file or directory
-12-25 22:07:15.474  1498  6105 E ndroid.systemu: Failed to open APK '/data/app/com.basser.basser_app-DQ2Bzk0B8GgTtuomCqRZ4Q==/base.apk' I/O error
-12-25 22:07:15.474  1498  6105 E ResourcesManager: failed to add asset path /data/app/com.basser.basser_app-DQ2Bzk0B8GgTtuomCqRZ4Q==/base.apk
-12-25 22:07:15.474  1498  6105 W PackageManager: Failure retrieving resources for com.basser.basser_app
+12-25 22:07:15.474  1498  6105 W ziparchive: Unable to open '/data/app/com.basir.basir_app-DQ2Bzk0B8GgTtuomCqRZ4Q==/base.apk': No such file or directory
+12-25 22:07:15.474  1498  6105 E ndroid.systemu: Failed to open APK '/data/app/com.basir.basir_app-DQ2Bzk0B8GgTtuomCqRZ4Q==/base.apk' I/O error
+12-25 22:07:15.474  1498  6105 E ResourcesManager: failed to add asset path /data/app/com.basir.basir_app-DQ2Bzk0B8GgTtuomCqRZ4Q==/base.apk
+12-25 22:07:15.474  1498  6105 W PackageManager: Failure retrieving resources for com.basir.basir_app
 12-25 22:07:15.489  1102  1160 W libprocessgroup: kill(-2397, 9) failed: No such process
-12-25 22:07:15.513  1102  1157 I ActivityManager: Force stopping com.basser.basser_app appid=10153 user=-1: deletePackageX
-12-25 22:07:15.528  1102  1178 I PackageManager: Removing old permission tree: com.basser.basser_app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION from package com.basser.basser_app
+12-25 22:07:15.513  1102  1157 I ActivityManager: Force stopping com.basir.basir_app appid=10153 user=-1: deletePackageX
+12-25 22:07:15.528  1102  1178 I PackageManager: Removing old permission tree: com.basir.basir_app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION from package com.basir.basir_app
 12-25 22:07:15.561  1102  1171 W ActivityManager: setHasOverlayUi called on unknown pid: 2397
 12-25 22:07:15.533  1102  1160 I chatty  : uid=1000(system) ActivityManager identical 1 line
 12-25 22:07:15.573  1102  1160 W libprocessgroup: kill(-2397, 9) failed: No such process
@@ -1279,20 +1279,20 @@
 12-25 22:07:16.245  1102  1178 D CompatibilityInfo: applicationDensity - 240
 12-25 22:07:16.245  1102  1178 D CompatibilityInfo: applicationScale - 1.0
 12-25 22:07:16.247   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
-12-25 22:07:16.249  1102  1178 I ActivityManager: Force stopping com.basser.basser_app appid=10153 user=0: pkg removed
+12-25 22:07:16.249  1102  1178 I ActivityManager: Force stopping com.basir.basir_app appid=10153 user=0: pkg removed
 12-25 22:07:16.283 31077 31077 I Finsky  : [2] ahcw - Received: android.intent.action.PACKAGE_REMOVED, [qyF9prxDlo2snidM5E6enq2ahu_ZCBDikuQGZLGne0s]
 12-25 22:07:16.283  1102  1157 W BroadcastQueue: component.getPackageName():com.android.musicfx
-12-25 22:07:16.283  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.android.musicfx/.Compatibility$Receiver
+12-25 22:07:16.283  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.android.musicfx/.Compatibility$Receiver
 12-25 22:07:16.283 15823 15823 I Finsky:background: [2] ahcm - Received: android.intent.action.PACKAGE_REMOVED, [qyF9prxDlo2snidM5E6enq2ahu_ZCBDikuQGZLGne0s]
 12-25 22:07:16.283  1102  1157 W BroadcastQueue: component.getPackageName():com.android.vending
-12-25 22:07:16.284  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.android.vending/com.google.android.finsky.packagemonitor.impl.PackageMonitorReceiverImpl$RegisteredReceiver
+12-25 22:07:16.284  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.android.vending/com.google.android.finsky.packagemonitor.impl.PackageMonitorReceiverImpl$RegisteredReceiver
 12-25 22:07:16.284  1102  1157 W BroadcastQueue: component.getPackageName():com.android.vending
-12-25 22:07:16.284  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.android.vending/com.google.android.finsky.packagemonitor.backgroundimpl.BackgroundPackageMonitorReceiverImpl$RegisteredReceiver
+12-25 22:07:16.284  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.android.vending/com.google.android.finsky.packagemonitor.backgroundimpl.BackgroundPackageMonitorReceiverImpl$RegisteredReceiver
 12-25 22:07:16.287 31077 31077 I Finsky  : [2] Clearing split related stale data.
-12-25 22:07:16.287 15823 15823 I Finsky:background: [2] Package no longer installed: com.basser.basser_app
+12-25 22:07:16.287 15823 15823 I Finsky:background: [2] Package no longer installed: com.basir.basir_app
 12-25 22:07:16.288   633   788 E storaged: getDiskStats failed with result NOT_SUPPORTED and size 0
-12-25 22:07:16.293 15823 15823 I Finsky:background: [2] Package no longer installed: com.basser.basser_app
-12-25 22:07:16.294 15823 15823 I Finsky:background: [2] IQ: onPackageRemoved com.basser.basser_app, replacing=false, uninstallingFromPlay=false
+12-25 22:07:16.293 15823 15823 I Finsky:background: [2] Package no longer installed: com.basir.basir_app
+12-25 22:07:16.294 15823 15823 I Finsky:background: [2] IQ: onPackageRemoved com.basir.basir_app, replacing=false, uninstallingFromPlay=false
 12-25 22:07:16.298   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:07:16.306   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
 12-25 22:07:16.308   496   496 I chatty  : uid=1000(system) /system/bin/surfaceflinger identical 1 line
@@ -1302,12 +1302,12 @@
 12-25 22:07:16.309  1102  4335 D CompatibilityInfo: applicationScale - 1.0
 12-25 22:07:16.311   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:07:16.313  1102  1157 W BroadcastQueue: component.getPackageName():com.android.vending
-12-25 22:07:16.313  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.android.vending/com.google.android.finsky.instantapps.appmanagement.InstantAppRemoveMonitor
+12-25 22:07:16.313  1102  1157 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.android.vending/com.google.android.finsky.instantapps.appmanagement.InstantAppRemoveMonitor
 12-25 22:07:16.316   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
 12-25 22:07:16.316   496   496 I chatty  : uid=1000(system) /system/bin/surfaceflinger identical 1 line
 12-25 22:07:16.317   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
-12-25 22:07:16.328 31077  2545 I Finsky  : [2888] Asset module storage cleared for package com.basser.basser_app.
-12-25 22:07:16.329  1102  1102 I ConditionProviders: Disallowing condition provider com.basser.basser_app
+12-25 22:07:16.328 31077  2545 I Finsky  : [2888] Asset module storage cleared for package com.basir.basir_app.
+12-25 22:07:16.329  1102  1102 I ConditionProviders: Disallowing condition provider com.basir.basir_app
 12-25 22:07:16.332  1102  1433 I InputReader: Reconfiguring input devices.  changes=0x00000010
 12-25 22:07:16.343  1102  1445 W BestClock: java.time.DateTimeException: Missing NTP fix
 12-25 22:07:16.351  1102  1157 W BroadcastQueue: component.getPackageName():com.google.android.gms
@@ -1339,7 +1339,7 @@
 12-25 22:07:16.424  1102  4335 D CompatibilityInfo: applicationScale - 1.0
 12-25 22:07:16.426   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:07:16.453  1102  1466 W BroadcastQueue: component.getPackageName():com.ironsource.appcloud.oobe
-12-25 22:07:16.453  1102  1466 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:com.basser.basser_app flg=0x4000010 (has extras) } to com.ironsource.appcloud.oobe/com.ironsource.aura.rengage.apps_info.ChangedPackagesReceiver
+12-25 22:07:16.453  1102  1466 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:com.basir.basir_app flg=0x4000010 (has extras) } to com.ironsource.appcloud.oobe/com.ironsource.aura.rengage.apps_info.ChangedPackagesReceiver
 12-25 22:07:16.455  1102  1446 W BestClock: java.time.DateTimeException: Missing NTP fix
 12-25 22:07:16.485 31077  2347 I Finsky  : [2887] [ContentSync] finished, scheduled=false
 12-25 22:07:16.496 15823  2341 I Finsky:background: [2895] Frosting DB delete succeeded: false
@@ -1384,13 +1384,13 @@
 12-25 22:07:16.674 29872  2578 I chatty  : uid=10021(com.google.android.gms) ar_help_history identical 1 line
 12-25 22:07:16.674 29872  2578 I Blockstore: (REDACTED) [DataStoreImpl] Allow listed package: %s
 12-25 22:07:16.675 15823 15823 I Finsky:background: [2] ahcm - Received: android.intent.action.PACKAGE_FULLY_REMOVED, [qyF9prxDlo2snidM5E6enq2ahu_ZCBDikuQGZLGne0s]
-12-25 22:07:16.678 15823 15823 I Finsky:background: [2] Package no longer installed: com.basser.basser_app
+12-25 22:07:16.678 15823 15823 I Finsky:background: [2] Package no longer installed: com.basir.basir_app
 12-25 22:07:16.678  1102  2436 D CompatibilityInfo: mCompatibilityFlags - 4
 12-25 22:07:16.678  1102  2436 D CompatibilityInfo: applicationDensity - 240
 12-25 22:07:16.678  1102  2436 D CompatibilityInfo: applicationScale - 1.0
 12-25 22:07:16.679   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:07:16.681 15823 15823 I Finsky:background: [2] ahcm - Deduping intent android.intent.action.PACKAGE_FULLY_REMOVED
-12-25 22:07:16.682 29872  2582 W RWIPackageIntentOps: Registries cleared for package: com.basser.basser_app
+12-25 22:07:16.682 29872  2582 W RWIPackageIntentOps: Registries cleared for package: com.basir.basir_app
 12-25 22:07:16.683 15823 15893 I Finsky:background: [2838] RECEIVER_PACKAGE_MONITOR_BACKGROUND#logWorkEndAndFinishGoAsync: SUCCESS
 12-25 22:07:16.685 15823  2341 I Finsky:background: [2895] Frosting DB delete succeeded: false
 12-25 22:07:16.693  1102  3863 D CompatibilityInfo: mCompatibilityFlags - 4
@@ -1422,7 +1422,7 @@
 12-25 22:07:16.755  1102  4335 D CompatibilityInfo: applicationDensity - 240
 12-25 22:07:16.755  1102  4335 D CompatibilityInfo: applicationScale - 1.0
 12-25 22:07:16.771   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
-12-25 22:07:16.774 29872 13363 I Icing   : doRemovePackageData com.basser.basser_app
+12-25 22:07:16.774 29872 13363 I Icing   : doRemovePackageData com.basir.basir_app
 12-25 22:07:16.777   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:07:16.782   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:07:16.784  1102  3863 D CompatibilityInfo: mCompatibilityFlags - 4
@@ -1469,7 +1469,7 @@
 12-25 22:07:16.894  1102  5760 D CompatibilityInfo: applicationScale - 1.0
 12-25 22:07:16.894   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
 12-25 22:07:16.894   496   496 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 0
-12-25 22:07:16.896 29872  2582 W RWIPackageIntentOps: Registries cleared for package: com.basser.basser_app
+12-25 22:07:16.896 29872  2582 W RWIPackageIntentOps: Registries cleared for package: com.basir.basir_app
 12-25 22:07:16.902 29872  2585 W Blockstore: [DataStoreImpl] Does not contain gms package key space. [CONTEXT service_id=258 ]
 12-25 22:07:16.916 29872  2585 I Blockstore: (REDACTED) [PackageIntentOperation] Deleted restore credential for package %s is successful: %s
 12-25 22:07:16.917 29872  2585 I Blockstore: (REDACTED) [DataStoreImpl] Clearing all the Blockstore Data for package %s
@@ -1523,7 +1523,7 @@
 12-25 22:07:17.019  1102  1486 D CompatibilityInfo: applicationScale - 1.0
 12-25 22:07:17.029   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:07:17.031 32049 32049 V MCM-AppListener: TimeStamp =٢٠٢٥-١٢-٢٥ ٢٢:٠٧:١٧::MCM-Action::android.intent.action.PACKAGE_FULLY_REMOVED received
-12-25 22:07:17.031 32049 32049 V MCM-AppController: TimeStamp =٢٠٢٥-١٢-٢٥ ٢٢:٠٧:١٧::MCM-App removed event for com.basser.basser_app
+12-25 22:07:17.031 32049 32049 V MCM-AppController: TimeStamp =٢٠٢٥-١٢-٢٥ ٢٢:٠٧:١٧::MCM-App removed event for com.basir.basir_app
 12-25 22:07:17.037  1102  4335 D CompatibilityInfo: mCompatibilityFlags - 4
 12-25 22:07:17.037  1102  4335 D CompatibilityInfo: applicationDensity - 240
 12-25 22:07:17.037  1102  4335 D CompatibilityInfo: applicationScale - 1.0
@@ -1531,11 +1531,11 @@
 12-25 22:07:17.042  1102  1486 D CompatibilityInfo: applicationDensity - 240
 12-25 22:07:17.042  1102  1486 D CompatibilityInfo: applicationScale - 1.0
 12-25 22:07:17.049   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
-12-25 22:07:17.052 32049  2606 V MCM-EventsReportsHandler: TimeStamp =٢٠٢٥-١٢-٢٥ ٢٢:٠٧:١٧::MCM-com.basser.basser_app not installed by MCM.
+12-25 22:07:17.052 32049  2606 V MCM-EventsReportsHandler: TimeStamp =٢٠٢٥-١٢-٢٥ ٢٢:٠٧:١٧::MCM-com.basir.basir_app not installed by MCM.
 12-25 22:07:17.056   355   355 W hwservicemanager: getTransport: Cannot find entry vendor.qti.hardware.servicetracker@1.0::IServicetracker/default in either framework or device manifest.
 12-25 22:07:17.074 29872 29902 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.gms componentName=null serviceId=30
 12-25 22:07:17.078 29872  2594 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
-12-25 22:07:17.079 29872  2594 I Icing   : doRemovePackageData com.basser.basser_app
+12-25 22:07:17.079 29872  2594 I Icing   : doRemovePackageData com.basir.basir_app
 12-25 22:07:17.123 29872  2594 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
 12-25 22:07:17.124 29872  2594 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
 12-25 22:07:17.230 29872  2594 I Icing   : Indexing done com.google.android.gms-apps

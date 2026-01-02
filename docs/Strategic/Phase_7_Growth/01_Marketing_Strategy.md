@@ -1,6 +1,6 @@
-# Marketing Strategy: Baseer Intelligent Financial System
+# Marketing Strategy: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P7-002  
+**Document ID:** basir-P7-002  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -46,13 +46,13 @@
 
 ### Positioning Statement
 
-> For **Arab professionals and businesses** who need **financial management tools**, **Baseer** is the **intelligent financial operating system** that **combines personal and business finance with AI-powered insights** unlike **generic international tools** because **it's built Arabic-first with regional compliance built-in**.
+> For **Arab professionals and businesses** who need **financial management tools**, **Basir** is the **intelligent financial operating system** that **combines personal and business finance with AI-powered insights** unlike **generic international tools** because **it's built Arabic-first with regional compliance built-in**.
 
 ### Key Messages
 
 | Audience    | Message (Arabic)                                            |
 | ----------- | ----------------------------------------------------------- |
-| All         | "بصير - رؤية مالية واضحة" (Baseer - Clear Financial Vision) |
+| All         | "بصير - رؤية مالية واضحة" (Basir - Clear Financial Vision) |
 | Freelancers | "فواتيرك الاحترافية في ثوانٍ"                               |
 | SMEs        | "ودّع تعقيدات الفوترة - متوافق مع فاتورة"                   |
 | Individuals | "اعرف وين راتبك يروح"                                       |
@@ -232,5 +232,5 @@
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

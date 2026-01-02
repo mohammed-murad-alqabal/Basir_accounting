@@ -17,7 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 // Import the widget under test
-// import 'package:basser_app/path/to/${WIDGET_NAME}.dart';
+// import 'package:basir_app/path/to/${WIDGET_NAME}.dart';
 
 // Import test helpers
 import '../../helpers/test_helpers.dart';

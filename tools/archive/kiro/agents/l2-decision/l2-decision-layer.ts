@@ -11,7 +11,7 @@ import { promises as fs } from 'fs';
 import * as path from 'path';
 
 import { ActionExecutor, ExecutionContext } from './actions/action-executor';
-import { L2DecisionConfig, getBasserMVPConfig } from './config/l2-config';
+import { L2DecisionConfig, getBasirMVPConfig } from './config/l2-config';
 import { ContextManager } from './context/context-manager';
 import { AnalysisData, Decision, DecisionEngine } from './engine/decision-engine';
 import { MLModelsManager } from './ml/ml-models-manager';
@@ -73,8 +73,8 @@ export class L2DecisionLayer extends EventEmitter {
     
     // استخدام تكوين بصير MVP كافتراضي
     this.config = config ? 
-      { ...getBasserMVPConfig(), ...config } : 
-      getBasserMVPConfig();
+      { ...getBasirMVPConfig(), ...config } : 
+      getBasirMVPConfig();
     
     this.initializeMetrics();
     this.initializeComponents();

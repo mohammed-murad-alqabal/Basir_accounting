@@ -1,6 +1,6 @@
 # [Feature Name] Documentation
 
-**Project:** Basser MVP  
+**Project:** Basir App  
 **Date:** [Date]  
 **Status:** ✅ Active
 
@@ -62,4 +62,4 @@ Common issues and solutions.
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team
+**Prepared by:** Basir Project Development Agents Team

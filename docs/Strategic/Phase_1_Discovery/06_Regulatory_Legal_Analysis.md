@@ -1,6 +1,6 @@
-# Regulatory & Legal Analysis: Baseer Intelligent Financial System
+# Regulatory & Legal Analysis: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P1-007  
+**Document ID:** basir-P1-007  
 **Version:** 1.0  
 **Date:** December 26, 2025  
 **Status:** ✅ Approved  
@@ -26,7 +26,7 @@ Operating a financial software platform across the Arab world requires complianc
 | **Phase 2**                | Integration (active, ongoing rollout)        |
 | **Technical Requirements** | UUID, QR code, digital signature, XML format |
 | **Penalties**              | Up to SAR 50,000 per violation               |
-| **Baseer Status**          | ✅ Compliant                                 |
+| **Basir Status**          | ✅ Compliant                                 |
 
 ### UAE - FTA
 
@@ -36,7 +36,7 @@ Operating a financial software platform across the Arab world requires complianc
 | **VAT Rate**       | 5% (standard)                    |
 | **E-Invoice**      | Planned mandatory implementation |
 | **Current Status** | VAT invoicing rules apply        |
-| **Baseer Status**  | 📋 Planned                       |
+| **Basir Status**  | 📋 Planned                       |
 
 ### Egypt - ETA
 
@@ -45,7 +45,7 @@ Operating a financial software platform across the Arab world requires complianc
 | **Authority**     | Egyptian Tax Authority (ETA)        |
 | **E-Invoice**     | Mandatory for registered businesses |
 | **Technical**     | Integration with ETA system         |
-| **Baseer Status** | 📋 Planned                          |
+| **Basir Status** | 📋 Planned                          |
 
 ### Jordan - ISTD
 
@@ -54,7 +54,7 @@ Operating a financial software platform across the Arab world requires complianc
 | **Authority**     | Income and Sales Tax Department (ISTD) |
 | **Sales Tax**     | 16% standard                           |
 | **E-Invoice**     | Under development                      |
-| **Baseer Status** | 📋 Research phase                      |
+| **Basir Status** | 📋 Research phase                      |
 
 ### Other Arab Countries Summary
 
@@ -84,7 +84,7 @@ Operating a financial software platform across the Arab world requires complianc
 | **Key Requirements**  | Consent, purpose limitation, data security, breach notification |
 | **Cross-Border**      | Restrictions on data transfer outside KSA                       |
 | **Penalties**         | Up to SAR 5M                                                    |
-| **Baseer Compliance** | ✅ Designed for compliance                                      |
+| **Basir Compliance** | ✅ Designed for compliance                                      |
 
 ### UAE - Federal Data Protection Law
 
@@ -93,7 +93,7 @@ Operating a financial software platform across the Arab world requires complianc
 | **Law**           | Federal Decree-Law No. 45/2021 |
 | **Scope**         | Personal data processing       |
 | **Requirements**  | Similar to GDPR principles     |
-| **Baseer Status** | 📋 Planned compliance          |
+| **Basir Status** | 📋 Planned compliance          |
 
 ### Egypt - Data Protection Law
 
@@ -101,7 +101,7 @@ Operating a financial software platform across the Arab world requires complianc
 | ----------------- | ----------------------------------------- |
 | **Law**           | Law No. 151/2020                          |
 | **Requirements**  | Consent, data localization considerations |
-| **Baseer Status** | 📋 Research phase                         |
+| **Basir Status** | 📋 Research phase                         |
 
 ### GDPR Applicability
 
@@ -110,7 +110,7 @@ Operating a financial software platform across the Arab world requires complianc
 | EU users accessing platform      | Yes                      |
 | EU data subjects' data processed | Yes                      |
 | Pure Arab operations             | No                       |
-| **Baseer Approach**              | GDPR-compliant by design |
+| **Basir Approach**              | GDPR-compliant by design |
 
 ---
 
@@ -124,7 +124,7 @@ Operating a financial software platform across the Arab world requires complianc
 | UAE          | CBUAE     | None for invoicing software |
 | Egypt        | CBE       | None for invoicing software |
 
-**Note**: Baseer does not hold customer funds or process payments directly. Payment gateway integrations comply with respective regulations.
+**Note**: Basir does not hold customer funds or process payments directly. Payment gateway integrations comply with respective regulations.
 
 ### Open Banking
 
@@ -196,15 +196,15 @@ Operating a financial software platform across the Arab world requires complianc
 ### Recommended Entity Structure
 
 ```
-Baseer Holding (Cayman/BVI)
+Basir Holding (Cayman/BVI)
     │
-    ├── Baseer Saudi LLC
+    ├── Basir Saudi LLC
     │   └── Primary operations, ZATCA compliance
     │
-    ├── Baseer UAE LLC
+    ├── Basir UAE LLC
     │   └── GCC expansion, DIFC potential
     │
-    └── Baseer Egypt LLC
+    └── Basir Egypt LLC
         └── North Africa operations
 ```
 
@@ -212,6 +212,6 @@ Baseer Holding (Cayman/BVI)
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 26, 2025
 - Legal Review: Pending

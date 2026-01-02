@@ -90,7 +90,7 @@
 
 **الكلاسات الموثقة:**
 
-- `AppFontSizes` - 9 أحجام خطوط
+- `AppAppTypography. - 9 أحجام خطوط
 - `AppFonts` - 2 خطوط (عربي، إنجليزي)
 - `StorageKeys` - 6 مفاتيح تخزين آمن
 - `AppMessages` - 13 رسالة (نجاح وخطأ)
@@ -111,8 +111,8 @@
 **الكلاسات الموثقة:**
 
 - `AppColors` - 13 لون (أساسي، ثانوي، نصوص، UI)
-- `AppTypography` - 15 حجم خط + 2 خطوط
-- `AppSpacing` - 6 مسافات قياسية
+- `AppAppTypography. - 15 حجم خط + 2 خطوط
+- `Spacing` - 6 مسافات قياسية
 - `AppBorderRadius` - 6 أنصاف أقطار
 - `createAppTheme()` - دالة إنشاء الثيم الكامل
 

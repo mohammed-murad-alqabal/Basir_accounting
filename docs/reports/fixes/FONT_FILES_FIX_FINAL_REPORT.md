@@ -191,7 +191,7 @@ total 2.3M
 
 الكود الحالي صحيح:
 
-- ✅ `lib/core/theme.dart` يستخدم `fontFamily: AppTypography.arabicFont`
+- ✅ `lib/core/theme.dart` يستخدم `fontFamily: AppAppTypography.arabicFont`
 - ✅ `pubspec.yaml` يحتوي على تعريف الخطوط
 - ✅ `lib/core/widgets/app_button.dart` يستخدم `ResponsiveText`
 

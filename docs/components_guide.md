@@ -27,7 +27,7 @@
 #### 1. AppPrimaryButton (الزر الأساسي)
 
 ```dart
-import 'package:basser_app/core/widgets/app_button.dart';
+import 'package:basir_app/core/widgets/app_button.dart';
 
 AppPrimaryButton(
   label: 'حفظ',
@@ -183,7 +183,7 @@ AppPrimaryButton({
 ### AppCard الأساسية
 
 ```dart
-import 'package:basser_app/core/widgets/app_card.dart';
+import 'package:basir_app/core/widgets/app_card.dart';
 
 AppCard(
   child: Padding(
@@ -195,7 +195,7 @@ AppCard(
 
 **الميزات:**
 
-- خلفية بيضاء (`SemanticColors.surface`)
+- خلفية بيضاء (`AppColors.surface`)
 - حدود مستديرة (`Radii.md`)
 - ظل خفيف (`Elevation.low`)
 
@@ -282,7 +282,7 @@ AppCard({
 ### الاستخدام الأساسي
 
 ```dart
-import 'package:basser_app/core/widgets/app_text_field.dart';
+import 'package:basir_app/core/widgets/app_text_field.dart';
 
 AppTextField(
   label: 'اسم المستخدم',
@@ -516,8 +516,8 @@ flutter test test/core/theme/tokens_test.dart
 ## 📚 روابط مفيدة
 
 - [دليل Design Tokens](design_tokens_guide.md)
-- [الكود المصدري](file:///home/m/Projects/Basser_MVP/lib/core/widgets)
-- [الاختبارات](file:///home/m/Projects/Basser_MVP/test/core/widgets)
+- [الكود المصدري](file:///home/m/Projects/Basir_MVP/lib/core/widgets)
+- [الاختبارات](file:///home/m/Projects/Basir_MVP/test/core/widgets)
 
 ---
 

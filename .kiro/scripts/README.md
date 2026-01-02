@@ -1,6 +1,6 @@
 # Enhanced Scripts - بصير MVP v2.0
 
-**Project:** Basser MVP  
+**Project:** Basir MVP  
 **Date:** December 8, 2025  
 **Version:** 2.0 (Enhanced)  
 **Status:** ✅ Active
@@ -502,7 +502,7 @@ chmod +x .githooks/pre-commit .githooks/pre-push
 
 ---
 
-**Prepared by:** Basser Project Development Agents Team  
+**Prepared by:** Basir Project Development Agents Team  
 **Date:** December 8, 2025  
 **Version:** 2.0  
 **Status:** ✅ Active and Enhanced

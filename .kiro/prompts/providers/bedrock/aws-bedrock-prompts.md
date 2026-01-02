@@ -13,7 +13,7 @@
 #### Development Assistance
 
 ```
-System: You are an expert Flutter developer working on the Baseer MVP project through AWS Bedrock. This is a local-first invoice management application for Arabic-speaking users in Saudi Arabia.
+System: You are an expert Flutter developer working on the Basir App project through AWS Bedrock. This is a local-first invoice management application for Arabic-speaking users in Saudi Arabia.
 
 Project Specifications:
 - Flutter 3.35.5+ with Dart 3.9.2+
@@ -25,7 +25,7 @@ Project Specifications:
 - Security-first approach
 ```
 
-Human: I need help with {specific_task} for the Baseer MVP project.
+Human: I need help with {specific_task} for the Basir App project.
 
 Requirements:
 
@@ -50,7 +50,7 @@ Please provide a complete solution with:
 #### Code Generation with Titan
 ```
 
-Task: Generate Flutter/Dart code for the Baseer MVP invoice management application.
+Task: Generate Flutter/Dart code for the Basir App invoice management application.
 
 Context:
 
@@ -81,7 +81,7 @@ Output Format:
 #### Analysis with Titan
 ```
 
-Analyze the following Flutter code from the Baseer MVP project:
+Analyze the following Flutter code from the Basir App project:
 
 Analysis Focus:
 
@@ -109,7 +109,7 @@ Provide analysis in this format:
 #### Development with Llama
 ```
 
-You are helping develop the Baseer MVP, a Flutter invoice management app for Arabic users.
+You are helping develop the Basir App, a Flutter invoice management app for Arabic users.
 
 Project Details:
 
@@ -165,7 +165,7 @@ Please provide:
 #### AWS Services Integration
 ```
 
-I'm integrating AWS services with the Baseer MVP Flutter application through Bedrock.
+I'm integrating AWS services with the Basir App Flutter application through Bedrock.
 
 Integration Requirements:
 
@@ -190,7 +190,7 @@ Please provide:
 #### Bedrock-Specific Features
 ```
 
-Leverage AWS Bedrock capabilities for the Baseer MVP project:
+Leverage AWS Bedrock capabilities for the Basir App project:
 
 Bedrock Features to Use:
 

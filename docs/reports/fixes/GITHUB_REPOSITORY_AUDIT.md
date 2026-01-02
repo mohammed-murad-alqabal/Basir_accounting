@@ -1,7 +1,7 @@
 # تقرير مراجعة شاملة لإعدادات GitHub والمستودع البعيد
 
 **المشروع:** بصير MVP  
-**المستودع:** https://github.com/mohammed-murad-alqabal/Basser_MVP  
+**المستودع:** https://github.com/mohammed-murad-alqabal/Basir_MVP  
 **التاريخ:** 4 ديسمبر 2025  
 **المُعِد:** فريق وكلاء تطوير مشروع بصير  
 **النوع:** تقرير مراجعة وتدقيق شامل  
@@ -60,7 +60,7 @@
 
 **يجب التحقق من:**
 
-- [ ] **Repository Name:** `Basser_MVP` (صحيح؟)
+- [ ] **Repository Name:** `Basir_MVP` (صحيح؟)
 - [ ] **Description:** وصف واضح للمشروع بالعربية والإنجليزية
 - [ ] **Website:** رابط التوثيق أو الموقع (إن وُجد)
 - [ ] **Topics/Tags:** إضافة tags مناسبة:
@@ -82,8 +82,8 @@
 
 ```yaml
 Repository Settings:
-  Name: Basser_MVP
-  Description: "بصير - نظام إدارة الفواتير والعملاء | Basser - Invoice & Customer Management System"
+  Name: Basir_MVP
+  Description: "بصير - نظام إدارة الفواتير والعملاء | Basir - Invoice & Customer Management System"
   Topics:
     [flutter, dart, invoice-management, arabic, mvp, mobile-app, isar, riverpod]
   Visibility: Private (حالياً) → Public (عند الإطلاق)
@@ -385,7 +385,7 @@ updates:
 
 **يجب إنشاء GitHub Projects:**
 
-- [ ] **Basser MVP Development**
+- [ ] **Basir MVP Development**
 
   - Board view: To Do, In Progress, Review, Done
   - Automation: Auto-move cards
@@ -405,7 +405,7 @@ updates:
 
 - [ ] **1.1 الوصول إلى GitHub:**
 
-  - [ ] تسجيل الدخول إلى https://github.com/mohammed-murad-alqabal/Basser_MVP
+  - [ ] تسجيل الدخول إلى https://github.com/mohammed-murad-alqabal/Basir_MVP
   - [ ] التحقق من صلاحيات الوصول (Admin)
   - [ ] فتح Settings
 

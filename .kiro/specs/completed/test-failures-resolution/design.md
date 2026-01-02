@@ -2,7 +2,7 @@
 
 ## Overview
 
-This design document outlines a comprehensive approach to resolve 22 failing tests in the Baseer MVP project, bringing the test success rate from 98.0% (1087/1109) to 100% (1109/1109). The solution addresses three main categories of test failures: Golden Tests (12 failures), CI/CD Integration Tests (9 failures), and UI Overflow Tests (1 failure), along with resolving 32 Flutter analyze warnings.
+This design document outlines a comprehensive approach to resolve 22 failing tests in the Basir MVP project, bringing the test success rate from 98.0% (1087/1109) to 100% (1109/1109). The solution addresses three main categories of test failures: Golden Tests (12 failures), CI/CD Integration Tests (9 failures), and UI Overflow Tests (1 failure), along with resolving 32 Flutter analyze warnings.
 
 ## Architecture
 

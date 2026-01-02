@@ -1,6 +1,6 @@
-# ZATCA Compliance Specification: Baseer Intelligent Financial System
+# ZATCA Compliance Specification: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P4-006  
+**Document ID:** basir-P4-006  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -232,7 +232,7 @@ class ZatcaQrGenerator {
 | Invalid total      | TOT-001    | Total must equal sum of lines |
 | Missing QR         | QR-001     | QR code is required           |
 
-### Baseer Validation Layer
+### Basir Validation Layer
 
 ```dart
 class ZatcaValidator {
@@ -283,5 +283,5 @@ class ZatcaValidator {
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

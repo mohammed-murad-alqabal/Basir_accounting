@@ -57,7 +57,7 @@ import '../../../../lib/core/widgets/responsive_text.dart';
 **الإصلاح:**
 
 ```dart
-import 'package:basser_app/core/widgets/responsive_text.dart';
+import 'package:basir_app/core/widgets/responsive_text.dart';
 ```
 
 **السبب:** استخدام استيراد package بدلاً من المسار النسبي.
@@ -182,7 +182,7 @@ unawaited(Navigator.push(context, ...))
 **الإصلاح:**
 
 ```dart
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 ```
 
 **السبب:** إضافة الاستيراد المفقود.

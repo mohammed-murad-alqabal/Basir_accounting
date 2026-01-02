@@ -25,7 +25,7 @@
 ### 2️⃣ Design Tokens (4 أنظمة)
 
 - **ColorTokens:** 40+ لون مع 3 مستويات تنظيم
-- **TypographyTokens:** 12 نمط نص مع Type Scale كامل
+- **AppTypography.okens:** 12 نمط نص مع Type Scale كامل
 - **SpacingTokens:** 8-point grid system مع 20+ قيمة
 - **AnimationTokens:** مدد ومنحنيات موحدة
 

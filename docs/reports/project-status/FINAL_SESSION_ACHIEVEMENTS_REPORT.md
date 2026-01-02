@@ -176,7 +176,7 @@
 ### الجذر (نظيف 100%)
 
 ```
-basser_mobile/
+basir_mobile/
 ├── .gitignore              ✅ محدث ونظيف
 ├── .metadata
 ├── analysis_options.yaml
@@ -222,7 +222,7 @@ basser_mobile/
 
 ```
 scripts/maintenance/
-├── .bash_aliases_basser
+├── .bash_aliases_basir
 ├── cleanup_project.sh
 ├── fix_all_issues.sh
 ├── fix_int_literals.py

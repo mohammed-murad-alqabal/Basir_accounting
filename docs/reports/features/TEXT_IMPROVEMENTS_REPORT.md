@@ -83,7 +83,7 @@ AlertDialog(
       mainAxisSize: MainAxisSize.min,
       children: [
         TextField(...),
-        SizedBox(height: AppSpacing.md),
+        SizedBox(height: Spacing.md),
         TextField(...),
       ],
     ),
@@ -120,22 +120,22 @@ AlertDialog(
 ```dart
 // ElevatedButton
 textStyle: const TextStyle(
-  fontSize: AppTypography.labelLarge,  // 15px ✅
-  fontWeight: AppTypography.semiBold,  // 600 ✅
+  fontSize: AppAppTypography.labelLarge,  // 15px ✅
+  fontWeight: AppAppTypography.semiBold,  // 600 ✅
   letterSpacing: 0.5,                  // واضح ✅
 )
 
 // TextButton
 textStyle: const TextStyle(
-  fontSize: AppTypography.labelLarge,  // 15px ✅
-  fontWeight: AppTypography.medium,    // 500 ✅
+  fontSize: AppAppTypography.labelLarge,  // 15px ✅
+  fontWeight: AppAppTypography.medium,    // 500 ✅
   letterSpacing: 0.25,                 // واضح ✅
 )
 
 // OutlinedButton
 textStyle: const TextStyle(
-  fontSize: AppTypography.labelLarge,  // 15px ✅
-  fontWeight: AppTypography.semiBold,  // 600 ✅
+  fontSize: AppAppTypography.labelLarge,  // 15px ✅
+  fontWeight: AppAppTypography.semiBold,  // 600 ✅
   letterSpacing: 0.5,                  // واضح ✅
 )
 ```

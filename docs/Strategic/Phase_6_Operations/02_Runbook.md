@@ -1,6 +1,6 @@
-# Operational Runbook: Baseer Intelligent Financial System
+# Operational Runbook: Basir Intelligent Financial System
 
-**Document ID:** BASEER-P6-003  
+**Document ID:** basir-P6-003  
 **Version:** 1.0  
 **Date:** December 27, 2025  
 **Status:** ✅ Approved  
@@ -41,7 +41,7 @@
 | Kubernetes | `kubectl`       | k8s/README.md         |
 | Database   | Cloud SQL Proxy | Secrets in Vault      |
 | Logs       | Cloud Logging   | GCP Console           |
-| Monitoring | Grafana         | monitoring.baseer.app |
+| Monitoring | Grafana         | monitoring.basir.app |
 
 ---
 
@@ -51,31 +51,31 @@
 
 ```bash
 # Scale API pods
-kubectl scale deployment baseer-api --replicas=5 -n baseer-prod
+kubectl scale deployment basir-api --replicas=5 -n basir-prod
 
 # Check HPA status
-kubectl get hpa -n baseer-prod
+kubectl get hpa -n basir-prod
 ```
 
 ### Log Access
 
 ```bash
 # Stream live logs
-kubectl logs -f deployment/baseer-api -n baseer-prod
+kubectl logs -f deployment/basir-api -n basir-prod
 
 # Search logs (last hour)
-gcloud logging read 'resource.type="k8s_container" AND resource.labels.namespace_name="baseer-prod"' --limit=100 --freshness=1h
+gcloud logging read 'resource.type="k8s_container" AND resource.labels.namespace_name="basir-prod"' --limit=100 --freshness=1h
 ```
 
 ### Database Operations
 
 ```bash
 # Connect to database
-cloud_sql_proxy -instances=baseer-prod:us-central1:main=tcp:5432 &
-psql "host=127.0.0.1 dbname=baseer user=app"
+cloud_sql_proxy -instances=basir-prod:us-central1:main=tcp:5432 &
+psql "host=127.0.0.1 dbname=basir user=app"
 
 # Create backup
-gcloud sql backups create --instance=baseer-main --async
+gcloud sql backups create --instance=basir-main --async
 ```
 
 ---
@@ -123,7 +123,7 @@ gcloud sql backups create --instance=baseer-main --async
 
 ```bash
 # Check pod resource usage
-kubectl top pods -n baseer-prod
+kubectl top pods -n basir-prod
 
 # Check database connections
 SELECT count(*) FROM pg_stat_activity;
@@ -169,8 +169,8 @@ ORDER BY query_start;
 **Diagnosis:**
 
 ```bash
-kubectl describe pod <pod-name> -n baseer-prod
-kubectl logs <pod-name> --previous -n baseer-prod
+kubectl describe pod <pod-name> -n basir-prod
+kubectl logs <pod-name> --previous -n basir-prod
 ```
 
 **Resolution:**
@@ -210,7 +210,7 @@ openssl x509 -in zatca-cert.pem -noout -dates
 | Task         | Frequency     | Command                    |
 | ------------ | ------------- | -------------------------- |
 | Vacuum       | Weekly (auto) | `VACUUM ANALYZE;`          |
-| Reindex      | Monthly       | `REINDEX DATABASE baseer;` |
+| Reindex      | Monthly       | `REINDEX DATABASE basir;` |
 | Stats update | Daily (auto)  | `ANALYZE;`                 |
 
 ### Certificate Renewal
@@ -267,10 +267,10 @@ openssl x509 -in zatca-cert.pem -noout -dates
 
 ```bash
 # List available backups
-gcloud sql backups list --instance=baseer-main
+gcloud sql backups list --instance=basir-main
 
 # Restore from backup
-gcloud sql backups restore <BACKUP_ID> --restore-instance=baseer-main
+gcloud sql backups restore <BACKUP_ID> --restore-instance=basir-main
 
 # Verify data integrity
 SELECT COUNT(*) FROM invoices;
@@ -302,5 +302,5 @@ SELECT COUNT(*) FROM users;
 
 **Document Control:**
 
-- Prepared by: Baseer Development Agent Team
+- Prepared by: Basir Development Agent Team
 - Date: December 27, 2025

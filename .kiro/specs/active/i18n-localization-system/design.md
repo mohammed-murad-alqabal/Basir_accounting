@@ -970,7 +970,7 @@ testWidgets('switching language updates entire UI', (tester) async {
   await tester.pumpAndSettle();
 
   // Verify language changed
-  expect(find.text('Basser'), findsOneWidget);
+  expect(find.text('Basir'), findsOneWidget);
   expect(find.text('بصير'), findsNothing);
 });
 ```

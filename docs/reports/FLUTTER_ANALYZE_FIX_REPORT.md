@@ -24,7 +24,7 @@
 ### 🎉 النتيجة النهائية
 
 ```
-Analyzing Basser_MVP...
+Analyzing Basir_MVP...
 No issues found! (ran in 3.8s)
 ```
 
@@ -69,9 +69,9 @@ final customerRepositoryProvider = Provider<CustomerRepository>(
 **الحل:**
 
 ```dart
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
-import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
 ```
 
 **الحالة:** ✅ تم الإصلاح
@@ -85,15 +85,15 @@ import 'package:basser_app/features/customers/presentation/providers/customer_pr
 **المشكلة:**
 
 ```dart
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
 // تضارب في customerRepositoryProvider
 ```
 
 **الحل:**
 
 ```dart
-import 'package:basser_app/core/providers.dart' as core_providers;
+import 'package:basir_app/core/providers.dart' as core_providers;
 // ...
 core_providers.customerRepositoryProvider.overrideWithValue(mockRepository)
 ```
@@ -640,7 +640,7 @@ linter:
 flutter analyze --no-pub
 
 # النتيجة المتوقعة
-# Analyzing Basser_MVP...
+# Analyzing Basir_MVP...
 # No issues found! (ran in 3.8s)
 ```
 

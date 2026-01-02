@@ -26,12 +26,12 @@
 
 ```bash
 # إنشاء keystore جديد
-keytool -genkey -v -keystore ~/basser-release-key.jks \
+keytool -genkey -v -keystore ~/basir-release-key.jks \
   -keyalg RSA -keysize 2048 -validity 10000 \
-  -alias basser
+  -alias basir
 
 # التحقق من الـ keystore
-keytool -list -v -keystore ~/basser-release-key.jks
+keytool -list -v -keystore ~/basir-release-key.jks
 ```
 
 ### 2. تكوين Gradle
@@ -41,7 +41,7 @@ keytool -list -v -keystore ~/basser-release-key.jks
 ```properties
 storePassword=<password>
 keyPassword=<password>
-keyAlias=basser
+keyAlias=basir
 storeFile=<path-to-keystore>
 ```
 

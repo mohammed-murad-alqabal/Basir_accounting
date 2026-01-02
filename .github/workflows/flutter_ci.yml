@@ -86,7 +86,7 @@ jobs:
           file: coverage/lcov.info
           fail_ci_if_error: false
           flags: unittests
-          name: basser-coverage
+          name: basir-coverage
 
       - name: 💾 Upload coverage artifact
         uses: actions/upload-artifact@v4

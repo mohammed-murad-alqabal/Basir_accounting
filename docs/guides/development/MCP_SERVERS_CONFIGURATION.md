@@ -58,7 +58,7 @@
   - عرض المجلدات
   - البحث في الملفات
 - **الحالة:** ✅ نشط ومكوّن
-- **المسار:** /home/m/Projects/Basser_MVP
+- **المسار:** /home/m/Projects/Basir_MVP
 
 #### memory
 

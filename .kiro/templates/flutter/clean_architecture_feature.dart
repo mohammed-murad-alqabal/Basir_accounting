@@ -81,7 +81,7 @@ class [Feature] with _$[Feature] {
 // repositories/[feature]_repository.dart
 // ═══════════════════════════════════════════════════════════════
 
-import 'package:basser_app/features/[feature_name]/domain/entities/[feature].dart';
+import 'package:basir_app/features/[feature_name]/domain/entities/[feature].dart';
 
 /// مستودع [Feature] - واجهة العمليات الأساسية
 ///
@@ -182,7 +182,7 @@ abstract class [Feature]Repository {
 // ═══════════════════════════════════════════════════════════════
 
 // models/[feature]_model.dart
-import 'package:basser_app/features/[feature_name]/domain/entities/[feature].dart';
+import 'package:basir_app/features/[feature_name]/domain/entities/[feature].dart';
 import 'package:isar/isar.dart';
 
 part '[feature]_model.g.dart';
@@ -235,9 +235,9 @@ class [Feature]Model {
 // repositories/[feature]_repository_impl.dart
 // ═══════════════════════════════════════════════════════════════
 
-import 'package:basser_app/features/[feature_name]/data/models/[feature]_model.dart';
-import 'package:basser_app/features/[feature_name]/domain/entities/[feature].dart';
-import 'package:basser_app/features/[feature_name]/domain/repositories/[feature]_repository.dart';
+import 'package:basir_app/features/[feature_name]/data/models/[feature]_model.dart';
+import 'package:basir_app/features/[feature_name]/domain/entities/[feature].dart';
+import 'package:basir_app/features/[feature_name]/domain/repositories/[feature]_repository.dart';
 import 'package:isar/isar.dart';
 import 'package:uuid/uuid.dart';
 
@@ -344,8 +344,8 @@ class [Feature]RepositoryImpl implements [Feature]Repository {
 // ═══════════════════════════════════════════════════════════════
 
 // providers/[feature]_provider.dart
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/features/[feature_name]/domain/entities/[feature].dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/features/[feature_name]/domain/entities/[feature].dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Provider لقائمة جميع [Feature]s
@@ -433,7 +433,7 @@ final search[Feature]sProvider = Provider<AsyncValue<List<[Feature]>>>((ref) {
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:basser_app/features/[feature_name]/presentation/providers/[feature]_provider.dart';
+import 'package:basir_app/features/[feature_name]/presentation/providers/[feature]_provider.dart';
 
 /// شاشة [Feature] الرئيسية
 ///
@@ -526,7 +526,7 @@ class [Feature]Screen extends ConsumerWidget {
 
 // test/unit/features/[feature_name]/domain/entities/[feature]_test.dart
 import 'package:flutter_test/flutter_test.dart';
-import 'package:basser_app/features/[feature_name]/domain/entities/[feature].dart';
+import 'package:basir_app/features/[feature_name]/domain/entities/[feature].dart';
 
 void main() {
   group('[Feature] Entity Tests', () {
