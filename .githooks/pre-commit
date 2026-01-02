@@ -38,6 +38,13 @@ command_exists() {
 
 # Main execution
 main() {
+    # 0. Elite Sentinel Guard
+    if [ -f .githooks/elite-sentinel ]; then
+        if ! ./.githooks/elite-sentinel; then
+            exit 1
+        fi
+    fi
+
     print_header "🔍 Pre-Commit Hook v2.0"
     
     print_message "$BLUE" "Running pre-commit checks..."

@@ -1,0 +1,88 @@
+#!/bin/bash
+
+# Basir Elite Sentinel v1.0
+# "Forbidding the imperfections, securing the legacy."
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+print_sentinel_msg() {
+    echo -e "${BLUE}[Sentinel]${NC} $1"
+}
+
+print_sentinel_error() {
+    echo -e "${RED}[Sentinel ERROR]${NC} $1"
+}
+
+# 1. Branding Guard: Forbid "Basser"
+check_branding() {
+    print_sentinel_msg "Checking for legacy branding 'Basser'..."
+    forbidden="Basser"
+    staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+    
+    found_legacy=$(echo "$staged_files" | xargs grep -i "$forbidden" 2>/dev/null | grep -v "elite_sentinel_strategy.md" | grep -v ".githooks/elite-sentinel" || true)
+    
+    if [ -n "$found_legacy" ]; then
+        print_sentinel_error "Found legacy branding 'Basser' in staged files:"
+        echo "$found_legacy"
+        return 1
+    fi
+    return 0
+}
+
+# 2. Architectural Guard: UI cannot import Data/Repositories directly
+check_architecture() {
+    print_sentinel_msg "Checking architectural guardrails (Layer Isolation)..."
+    ui_files=$(git diff --cached --name-only --diff-filter=ACM | grep "presentation/" || true)
+    
+    if [ -n "$ui_files" ]; then
+        forbidden_imports=$(echo "$ui_files" | xargs grep -E "import.*(data/|repositories/)" 2>/dev/null | grep -v "repository_impl.dart" || true)
+        if [ -n "$forbidden_imports" ]; then
+            print_sentinel_error "Architectural violation: UI layer depends on Data/Repository layer directly:"
+            echo "$forbidden_imports"
+            print_sentinel_msg "💡 Use Domain Entities and Controllers/Providers instead."
+            return 1
+        fi
+    fi
+    return 0
+}
+
+# 3. Token Enforcement: Forbid hardcoded hex colors in features
+check_tokens() {
+    print_sentinel_msg "Checking for hardcoded design tokens..."
+    feature_files=$(git diff --cached --name-only --diff-filter=ACM | grep "lib/features/" || true)
+    
+    if [ -n "$feature_files" ]; then
+        # Check for Color(0x...) or hex strings
+        hardcoded_colors=$(echo "$feature_files" | xargs grep -E "Color\(0x|#[0-9a-fA-F]{6}" 2>/dev/null || true)
+        if [ -n "$hardcoded_colors" ]; then
+            print_sentinel_error "Hardcoded colors found in feature files. Use 'AppColors' tokens instead:"
+            echo "$hardcoded_colors"
+            return 1
+        fi
+    fi
+    return 0
+}
+
+# Main
+main() {
+    echo -e "${YELLOW}🛡️  Basir Elite Sentinel is scanning staged changes...${NC}"
+    
+    error=0
+    
+    check_branding || error=1
+    check_architecture || error=1
+    check_tokens || error=1
+    
+    if [ $error -eq 1 ]; then
+        echo -e "${RED}❌ Sentinel Scan Failed. Please correct the violations above.${NC}"
+        exit 1
+    else
+        echo -e "${GREEN}✅ Sentinel Scan Passed. Repository integrity secured.${NC}"
+    fi
+}
+
+main "$@"
