@@ -1,7 +1,0 @@
-DART_FILES=87
-TEST_FILES=52
-TOTAL_LINES=26758
-PROJECT_SIZE=13G
-COMMIT_COUNT=63
-LAST_COMMIT=e19f81a - chore(repo): optimize repository structure - secure .env, clean root, update docs (15 hours ago)
-CONTRIBUTORS=3
