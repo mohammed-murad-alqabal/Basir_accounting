@@ -1,4 +1,4 @@
-import 'package:basser_app/core/providers/calendar_provider.dart';
+import 'package:basir_app/core/providers/calendar_provider.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 

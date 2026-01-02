@@ -1,4 +1,4 @@
-import 'package:basser_app/core/models/log_entry.dart';
+import 'package:basir_app/core/models/log_entry.dart';
 
 /// نموذج بيانات لتقرير شامل عن حالة المشروع.
 ///

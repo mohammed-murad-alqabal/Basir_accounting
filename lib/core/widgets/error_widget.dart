@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/widgets/app_button.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 
 /// واجهة الأخطاء العالمية
@@ -22,7 +22,7 @@ class GlobalErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          backgroundColor: SemanticColors.background,
+          backgroundColor: AppColors.background,
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(Spacing.xl),
@@ -32,16 +32,16 @@ class GlobalErrorWidget extends StatelessWidget {
                   children: [
                     const Icon(
                       Icons.error_outline,
-                      color: SemanticColors.error,
+                      color: AppColors.error,
                       size: 80,
                     ),
                     const SizedBox(height: Spacing.xl),
                     const Text(
                       'عذراً، حدث خطأ غير متوقع',
                       style: TextStyle(
-                        fontSize: FontSizes.headlineSmall,
+                        fontSize: AppTypography.headlineSmall,
                         fontWeight: FontWeight.bold,
-                        color: SemanticColors.textPrimary,
+                        color: AppColors.textPrimary,
                         fontFamily: FontFamilies.arabic,
                       ),
                     ),
@@ -51,8 +51,8 @@ class GlobalErrorWidget extends StatelessWidget {
                       ' يرجى محاولة إعادة تشغيل التطبيق.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: FontSizes.bodyMedium,
-                        color: SemanticColors.textSecondary,
+                        fontSize: AppTypography.bodyMedium,
+                        color: AppColors.textSecondary,
                         fontFamily: FontFamilies.arabic,
                       ),
                     ),

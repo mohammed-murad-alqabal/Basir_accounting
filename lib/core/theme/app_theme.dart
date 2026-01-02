@@ -9,7 +9,7 @@
 /// - darkTheme: الثيم الداكن (جاهز للتوسع المستقبلي)
 library;
 
-import 'package:basser_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -47,7 +47,7 @@ abstract final class AppTheme {
         seedColor: seedColor,
         brightness: isDark ? Brightness.dark : Brightness.light,
         // يمكننا تخصيص الألوان الأخرى للحفاظ على هوية العلامة التجارية
-        error: SemanticColors.error,
+        error: AppColors.error,
         contrastLevel: highContrast ? 1.0 : 0.0,
       );
     } else {
@@ -93,19 +93,19 @@ abstract final class AppTheme {
 
   static ColorScheme get _highContrastLightColorScheme =>
       const ColorScheme.light(
-        primary: PrimitiveColors.blue900, // Darker blue
-        secondary: PrimitiveColors.green900, // Darker green
-        onSecondary: PrimitiveColors.white,
-        error: PrimitiveColors.red700,
-        outline: PrimitiveColors.black,
+        primary: AppPalette.navyDeep, // Maximum contrast
+        secondary: AppPalette.greenForest, // Maximum contrast
+        onSecondary: AppPalette.white,
+        error: AppPalette.redBurgundy,
+        outline: AppPalette.charcoal,
       );
 
   static ColorScheme get _highContrastDarkColorScheme => const ColorScheme.dark(
-        primary: PrimitiveColors.blue100, // Brighter blue
-        secondary: PrimitiveColors.green100, // Brighter green
-        error: PrimitiveColors.red100,
-        surface: PrimitiveColors.black,
-        outline: PrimitiveColors.white,
+        primary: AppPalette.blueSky, // High visibility
+        secondary: AppPalette.greenEmerald, // High visibility
+        error: AppPalette.redAlert,
+        surface: AppPalette.darkBackground,
+        outline: AppPalette.darkTextPrimary,
       );
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -124,8 +124,8 @@ abstract final class AppTheme {
         primaryTextTheme: textTheme,
         fontFamily: fontFamily ?? FontFamilies.arabic,
         scaffoldBackgroundColor: colorScheme.brightness == Brightness.dark
-            ? colorScheme.surface
-            : SemanticColors.background,
+            ? AppPalette.darkBackground // Professional Deep Navy
+            : AppColors.background,
 
         // AppBar
         appBarTheme: AppBarTheme(
@@ -137,7 +137,7 @@ abstract final class AppTheme {
               : colorScheme.onPrimary,
           elevation: Elevation.none,
           centerTitle: true,
-          titleTextStyle: TextStyles.titleLarge.copyWith(
+          titleTextStyle: AppTextStyles.titleLarge.copyWith(
             color: colorScheme.brightness == Brightness.dark
                 ? colorScheme.onSurface
                 : colorScheme.onPrimary,
@@ -156,7 +156,7 @@ abstract final class AppTheme {
         // Card
         cardTheme: CardThemeData(
           color: colorScheme.brightness == Brightness.dark
-              ? PrimitiveColors.gray700
+              ? AppPalette.darkSurface
               : colorScheme.surface,
           elevation: Elevation.sm,
           shape: const RoundedRectangleBorder(
@@ -182,7 +182,7 @@ abstract final class AppTheme {
             shape: const RoundedRectangleBorder(
               borderRadius: Radii.borderRadiusMd,
             ),
-            textStyle: TextStyles.labelLarge,
+            textStyle: AppTextStyles.labelLarge,
           ),
         ),
 
@@ -205,7 +205,7 @@ abstract final class AppTheme {
               color: colorScheme.outline,
               width: BorderWidths.normal,
             ),
-            textStyle: TextStyles.labelLarge,
+            textStyle: AppTextStyles.labelLarge,
           ),
         ),
 
@@ -224,7 +224,7 @@ abstract final class AppTheme {
             shape: const RoundedRectangleBorder(
               borderRadius: Radii.borderRadiusMd,
             ),
-            textStyle: TextStyles.labelLarge,
+            textStyle: AppTextStyles.labelLarge,
           ),
         ),
 
@@ -242,7 +242,7 @@ abstract final class AppTheme {
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: colorScheme.brightness == Brightness.dark
-              ? PrimitiveColors.gray700
+              ? AppPalette.darkSurface
               : colorScheme.surface,
           contentPadding: Spacing.paddingMd,
           border: OutlineInputBorder(
@@ -280,13 +280,13 @@ abstract final class AppTheme {
               width: BorderWidths.thick,
             ),
           ),
-          labelStyle: TextStyles.bodyMedium.copyWith(
+          labelStyle: AppTextStyles.bodyMedium.copyWith(
             color: colorScheme.onSurfaceVariant,
           ),
-          hintStyle: TextStyles.bodyMedium.copyWith(
+          hintStyle: AppTextStyles.bodyMedium.copyWith(
             color: colorScheme.onSurfaceVariant,
           ),
-          errorStyle: TextStyles.bodySmall.copyWith(
+          errorStyle: AppTextStyles.bodySmall.copyWith(
             color: colorScheme.error,
           ),
         ),
@@ -307,16 +307,16 @@ abstract final class AppTheme {
         // Dialog
         dialogTheme: DialogThemeData(
           backgroundColor: colorScheme.brightness == Brightness.dark
-              ? PrimitiveColors.gray700
+              ? AppPalette.darkSurface
               : colorScheme.surface,
           elevation: Elevation.xl,
           shape: const RoundedRectangleBorder(
             borderRadius: Radii.borderRadiusXl,
           ),
-          titleTextStyle: TextStyles.headlineSmall.copyWith(
+          titleTextStyle: AppTextStyles.headlineSmall.copyWith(
             color: colorScheme.onSurface,
           ),
-          contentTextStyle: TextStyles.bodyMedium.copyWith(
+          contentTextStyle: AppTextStyles.bodyMedium.copyWith(
             color: colorScheme.onSurfaceVariant,
           ),
         ),
@@ -324,7 +324,7 @@ abstract final class AppTheme {
         // Bottom Sheet
         bottomSheetTheme: BottomSheetThemeData(
           backgroundColor: colorScheme.brightness == Brightness.dark
-              ? PrimitiveColors.gray700
+              ? AppPalette.darkSurface
               : colorScheme.surface,
           elevation: Elevation.lg,
           shape: const RoundedRectangleBorder(
@@ -337,12 +337,12 @@ abstract final class AppTheme {
         // Bottom Navigation
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: colorScheme.brightness == Brightness.dark
-              ? PrimitiveColors.gray900
+              ? AppPalette.darkSurface
               : colorScheme.surface,
           selectedItemColor: colorScheme.primary,
           unselectedItemColor: colorScheme.onSurfaceVariant,
-          selectedLabelStyle: TextStyles.labelSmall,
-          unselectedLabelStyle: TextStyles.labelSmall,
+          selectedLabelStyle: AppTextStyles.labelSmall,
+          unselectedLabelStyle: AppTextStyles.labelSmall,
           type: BottomNavigationBarType.fixed,
           elevation: Elevation.sm,
         ),
@@ -354,37 +354,37 @@ abstract final class AppTheme {
 
   static ColorScheme get _lightColorScheme => const ColorScheme.light(
         // الألوان الأساسية
-        primary: SemanticColors.primary,
-        primaryContainer: SemanticColors.primaryLight,
-        onPrimaryContainer: SemanticColors.primaryDark,
+        primary: AppColors.primary,
+        primaryContainer: AppColors.primaryLight,
+        onPrimaryContainer: AppColors.primaryDark,
 
         // الألوان الثانوية
-        secondary: SemanticColors.secondary,
-        onSecondary: SemanticColors.textOnDark,
-        secondaryContainer: SemanticColors.secondaryLight,
-        onSecondaryContainer: SemanticColors.secondaryDark,
+        secondary: AppColors.secondary,
+        onSecondary: AppColors.textOnDark,
+        secondaryContainer: AppColors.secondaryLight,
+        onSecondaryContainer: AppColors.secondaryDark,
 
         // الألوان الإضافية
-        tertiary: SemanticColors.info,
-        onTertiary: SemanticColors.textOnDark,
-        tertiaryContainer: SemanticColors.infoLight,
-        onTertiaryContainer: SemanticColors.info,
+        tertiary: AppColors.info,
+        onTertiary: AppColors.textOnDark,
+        tertiaryContainer: AppColors.infoLight,
+        onTertiaryContainer: AppColors.info,
 
         // ألوان الخطأ
-        error: SemanticColors.error,
-        errorContainer: SemanticColors.errorLight,
-        onErrorContainer: SemanticColors.error,
-        onSurface: SemanticColors.textPrimary,
-        surfaceContainerHighest: SemanticColors.surfaceVariant,
-        onSurfaceVariant: SemanticColors.textSecondary,
+        error: AppColors.error,
+        errorContainer: AppColors.errorLight,
+        onErrorContainer: AppColors.error,
+        onSurface: AppColors.textPrimary,
+        surfaceContainerHighest: AppColors.surfaceVariant,
+        onSurfaceVariant: AppColors.textSecondary,
 
         // الحدود
-        outline: SemanticColors.border,
-        outlineVariant: SemanticColors.borderLight,
+        outline: AppColors.border,
+        outlineVariant: AppColors.borderLight,
 
         // الظلال
-        shadow: SemanticColors.shadow,
-        scrim: SemanticColors.overlay,
+        shadow: AppColors.shadow,
+        scrim: AppColors.overlay,
       );
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -392,32 +392,32 @@ abstract final class AppTheme {
   // ═══════════════════════════════════════════════════════════════════════════
 
   static ColorScheme get _darkColorScheme => const ColorScheme.dark(
-        // الألوان الأساسية - أفتح للوضع الداكن
-        primary: PrimitiveColors.blue500, // أزرق متوسط
-        onPrimary: PrimitiveColors.white,
-        primaryContainer: PrimitiveColors.blue900,
-        onPrimaryContainer: PrimitiveColors.blue100,
+        // الألوان الأساسية - Professional Blue for Dark Mode
+        primary: AppPalette.blueCorporate,
+        onPrimary: AppPalette.white,
+        primaryContainer: AppPalette.navyDeep,
+        onPrimaryContainer: AppPalette.blueLight,
 
-        // الألوان الثانوية
-        secondary: PrimitiveColors.green600,
-        onSecondary: PrimitiveColors.white,
-        secondaryContainer: PrimitiveColors.green900,
-        onSecondaryContainer: PrimitiveColors.green100,
+        // الألوان الثانوية - Accounting Green
+        secondary: AppPalette.greenEmerald,
+        onSecondary: AppPalette.white,
+        secondaryContainer: AppPalette.greenForest,
+        onSecondaryContainer: AppPalette.greenLight,
 
-        // الخلفيات والأسطح
-        surface: PrimitiveColors.gray900, // خلفية داكنة جداً
-        onSurface: PrimitiveColors.gray50, // نص فاتح جداً
-        surfaceContainerHighest: PrimitiveColors.gray700,
-        onSurfaceVariant: PrimitiveColors.gray300,
+        // الخلفيات والأسطح - Professional Deep Navy
+        surface: AppPalette.darkSurface,
+        onSurface: AppPalette.darkTextPrimary,
+        surfaceContainerHighest: AppPalette.darkBorder,
+        onSurfaceVariant: Color(0xFFCBD5E1), // Slate 300
 
         // الأخطاء
-        error: PrimitiveColors.red700,
-        onError: PrimitiveColors.white,
-        errorContainer: PrimitiveColors.red700,
+        error: Color(0xFFEF4444), // Red 500
+        onError: Colors.white,
+        errorContainer: Color(0xFF7F1D1D), // Red 900
 
         // الحدود
-        outline: PrimitiveColors.gray600,
-        outlineVariant: PrimitiveColors.gray700,
+        outline: Color(0xFF475569), // Slate 500
+        outlineVariant: Color(0xFF334155), // Slate 700
       );
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -426,28 +426,28 @@ abstract final class AppTheme {
 
   static TextTheme get _textTheme => const TextTheme(
         // العناوين الكبيرة
-        displayLarge: TextStyles.headlineLarge,
-        displayMedium: TextStyles.headlineMedium,
-        displaySmall: TextStyles.headlineSmall,
+        displayLarge: AppTextStyles.headlineLarge,
+        displayMedium: AppTextStyles.headlineMedium,
+        displaySmall: AppTextStyles.headlineSmall,
 
         // العناوين
-        headlineLarge: TextStyles.headlineMedium,
-        headlineMedium: TextStyles.headlineSmall,
-        headlineSmall: TextStyles.titleLarge,
+        headlineLarge: AppTextStyles.headlineMedium,
+        headlineMedium: AppTextStyles.headlineSmall,
+        headlineSmall: AppTextStyles.titleLarge,
 
         // العناوين الرئيسية
-        titleLarge: TextStyles.titleLarge,
-        titleMedium: TextStyles.titleMedium,
-        titleSmall: TextStyles.titleSmall,
+        titleLarge: AppTextStyles.titleLarge,
+        titleMedium: AppTextStyles.titleMedium,
+        titleSmall: AppTextStyles.titleSmall,
 
         // النصوص
-        bodyLarge: TextStyles.bodyLarge,
-        bodyMedium: TextStyles.bodyMedium,
-        bodySmall: TextStyles.bodySmall,
+        bodyLarge: AppTextStyles.bodyLarge,
+        bodyMedium: AppTextStyles.bodyMedium,
+        bodySmall: AppTextStyles.bodySmall,
 
         // التسميات
-        labelLarge: TextStyles.labelLarge,
-        labelMedium: TextStyles.labelMedium,
-        labelSmall: TextStyles.labelSmall,
+        labelLarge: AppTextStyles.labelLarge,
+        labelMedium: AppTextStyles.labelMedium,
+        labelSmall: AppTextStyles.labelSmall,
       );
 }

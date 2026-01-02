@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 ///
 /// يقوم بمراقبة جميع التغييرات والأخطاء في Providers
 /// مفيد لتتبع حالة التطبيق واكتشاف المشاكل في وقت مبكر
-class BasserProviderObserver extends ProviderObserver {
+class BasirProviderObserver extends ProviderObserver {
   @override
   void didUpdateProvider(
     ProviderBase<Object?> provider,
