@@ -1,8 +1,8 @@
-import 'package:basser_app/core/assets/app_illustrations.dart';
-import 'package:basser_app/core/providers/calendar_provider.dart';
-import 'package:basser_app/features/invoices/presentation/providers/invoice_provider.dart';
-import 'package:basser_app/features/invoices/presentation/screens/invoices_screen.dart';
-import 'package:basser_app/l10n/app_localizations.dart'; // Fixed import
+import 'package:basir_app/core/assets/app_illustrations.dart';
+import 'package:basir_app/core/providers/calendar_provider.dart';
+import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:basir_app/features/invoices/presentation/screens/invoices_screen.dart';
+import 'package:basir_app/l10n/app_localizations.dart'; // Fixed import
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -69,7 +69,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Assert Mastery Strings
+      // Assert basir Strings
       expect(find.text('سجل الفواتير الذكي منظم'), findsOneWidget);
       expect(find.text('فاتورتك الأولى بانتظارك'), findsOneWidget);
       expect(find.byType(EmptyStateIllustration), findsOneWidget);

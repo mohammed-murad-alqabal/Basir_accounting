@@ -1,5 +1,5 @@
-import 'package:basser_app/core/providers/calendar_provider.dart';
-import 'package:basser_app/core/utils/format_helpers.dart';
+import 'package:basir_app/core/providers/calendar_provider.dart';
+import 'package:basir_app/core/utils/format_helpers.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 

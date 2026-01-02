@@ -4,8 +4,8 @@
 /// للعملاء والفواتير وغيرها.
 library;
 
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 
 /// بيانات اختبار نموذجية
 class MockData {

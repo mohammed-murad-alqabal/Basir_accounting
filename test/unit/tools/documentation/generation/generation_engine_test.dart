@@ -3,8 +3,8 @@
 /// يختبر محرك توليد التوثيق التلقائي
 library;
 
-import 'package:basser_app/tools/documentation/analysis/analysis_engine.dart';
-import 'package:basser_app/tools/documentation/generation/generation_engine.dart';
+import 'package:basir_app/tools/documentation/analysis/analysis_engine.dart';
+import 'package:basir_app/tools/documentation/generation/generation_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

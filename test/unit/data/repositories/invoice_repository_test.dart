@@ -3,9 +3,9 @@
 /// يختبر جميع عمليات CRUD والبحث في مستودع الفواتير
 library;
 
-import 'package:basser_app/features/invoices/data/models/invoice_model.dart';
-import 'package:basser_app/features/invoices/data/repositories/invoice_repository_impl.dart';
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
+import 'package:basir_app/features/invoices/data/repositories/invoice_repository_impl.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
 

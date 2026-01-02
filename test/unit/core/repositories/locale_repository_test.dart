@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:basser_app/core/repositories/locale_repository.dart';
+import 'package:basir_app/core/repositories/locale_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

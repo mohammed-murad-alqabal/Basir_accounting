@@ -1,4 +1,4 @@
-import 'package:basser_app/core/widgets/overflow_detector.dart';
+import 'package:basir_app/core/widgets/overflow_detector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

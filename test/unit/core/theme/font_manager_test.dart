@@ -1,4 +1,4 @@
-import 'package:basser_app/core/theme/font_manager.dart';
+import 'package:basir_app/core/theme/font_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -3,7 +3,7 @@
 /// يختبر تحويل البيانات والتحقق من الصحة لنموذج الفاتورة
 library;
 
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../fixtures/invoice_fixtures.dart';

@@ -3,7 +3,7 @@
 /// يختبر جميع عمليات CRUD على مستودع العملاء
 library;
 
-import 'package:basser_app/features/customers/data/repositories/customer_repository_impl.dart';
+import 'package:basir_app/features/customers/data/repositories/customer_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
 
