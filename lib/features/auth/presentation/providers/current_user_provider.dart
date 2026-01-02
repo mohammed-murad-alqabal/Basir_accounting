@@ -1,4 +1,4 @@
-import 'package:basser_app/core/providers.dart';
+import 'package:basir_app/core/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// موفر حالة المستخدم الحالي

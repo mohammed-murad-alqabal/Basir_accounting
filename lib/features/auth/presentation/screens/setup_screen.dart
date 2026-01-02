@@ -1,9 +1,9 @@
-import 'package:basser_app/core/assets/app_logo.dart';
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/core/theme/app_icons.dart' as legacy;
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/widgets/index.dart';
-import 'package:basser_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:basir_app/core/assets/app_logo.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/theme/services/icon_customization_service.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -102,103 +102,107 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: SemanticColors.background,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(Spacing.lg),
-            child: Column(
-              children: [
-                // رأس الشاشة
-                _buildHeader(),
-                const SizedBox(height: Spacing.xl),
+  Widget build(BuildContext context) {
+    final appIcons = ref.watch(appIconsProvider);
 
-                // نموذج الإعداد
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // حقل اسم المستخدم
-                      AppTextField(
-                        label: context.l10n.labelUsername,
-                        hint: context.l10n.hintEnterUsername,
-                        controller: _usernameController,
-                        prefixIcon: const Icon(
-                          legacy.AppIcons.user,
-                          size: IconSizes.sm,
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.l10n.errEmptyField;
-                          }
-                          if (value.length < 3) {
-                            return context.l10n.errUsernameShort;
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: Spacing.lg),
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(Spacing.lg),
+          child: Column(
+            children: [
+              // رأس الشاشة
+              _buildHeader(),
+              const SizedBox(height: Spacing.xl),
 
-                      // حقل كلمة المرور
-                      AppTextField(
-                        label: context.l10n.labelPassword,
-                        hint: context.l10n.hintEnterPassword,
-                        controller: _passwordController,
-                        obscureText: true,
-                        prefixIcon: const Icon(
-                          legacy.AppIcons.lock,
-                          size: IconSizes.sm,
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.l10n.errEmptyField;
-                          }
-                          if (value.length < 6) {
-                            return context.l10n.errPasswordShort;
-                          }
-                          return null;
-                        },
+              // نموذج الإعداد
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // حقل اسم المستخدم
+                    AppTextField(
+                      label: context.l10n.labelUsername,
+                      hint: context.l10n.hintEnterUsername,
+                      controller: _usernameController,
+                      prefixIcon: Icon(
+                        appIcons.person,
+                        size: IconSizes.sm,
                       ),
-                      const SizedBox(height: Spacing.lg),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return context.l10n.errEmptyField;
+                        }
+                        if (value.length < 3) {
+                          return context.l10n.errUsernameShort;
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: Spacing.lg),
 
-                      // حقل تأكيد كلمة المرور
-                      AppTextField(
-                        label: context.l10n.labelConfirmPassword,
-                        hint: context.l10n.hintConfirmPassword,
-                        controller: _confirmPasswordController,
-                        obscureText: true,
-                        prefixIcon: const Icon(
-                          legacy.AppIcons.lock,
-                          size: IconSizes.sm,
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.l10n.errEmptyField;
-                          }
-                          if (value != _passwordController.text) {
-                            return context.l10n.errPasswordsDoNotMatch;
-                          }
-                          return null;
-                        },
+                    // حقل كلمة المرور
+                    AppTextField(
+                      label: context.l10n.labelPassword,
+                      hint: context.l10n.hintEnterPassword,
+                      controller: _passwordController,
+                      obscureText: true,
+                      prefixIcon: Icon(
+                        appIcons.lock,
+                        size: IconSizes.sm,
                       ),
-                      const SizedBox(height: Spacing.xl),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return context.l10n.errEmptyField;
+                        }
+                        if (value.length < 6) {
+                          return context.l10n.errPasswordShort;
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: Spacing.lg),
 
-                      // زر الإنشاء
-                      AppEnhancedButton(
-                        text: context.l10n.btnCreateAccount,
-                        onPressed: _handleSetup,
-                        isLoading: _isLoading,
-                        icon: legacy.AppIcons.userAdd,
+                    // حقل تأكيد كلمة المرور
+                    AppTextField(
+                      label: context.l10n.labelConfirmPassword,
+                      hint: context.l10n.hintConfirmPassword,
+                      controller: _confirmPasswordController,
+                      obscureText: true,
+                      prefixIcon: Icon(
+                        appIcons.lock,
+                        size: IconSizes.sm,
                       ),
-                    ],
-                  ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return context.l10n.errEmptyField;
+                        }
+                        if (value != _passwordController.text) {
+                          return context.l10n.errPasswordsDoNotMatch;
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: Spacing.xl),
+
+                    // زر الإنشاء
+                    AppEnhancedButton(
+                      text: context.l10n.btnCreateAccount,
+                      onPressed: _handleSetup,
+                      isLoading: _isLoading,
+                      icon: appIcons.userAdd,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    );
+  }
 
   Widget _buildHeader() => Column(
         children: [
@@ -206,35 +210,35 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: SemanticColors.primary,
+              color: AppColors.primary,
               borderRadius: BorderRadius.circular(Radii.lg),
               boxShadow: [
                 BoxShadow(
-                  color: SemanticColors.primary.withValues(alpha: 0.2),
+                  color: AppColors.primary.withValues(alpha: 0.2),
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),
               ],
             ),
             child: const Center(
-              child: BasserLogo(size: 60),
+              child: BasirLogo(size: 60),
             ),
           ),
           const SizedBox(height: Spacing.lg),
           Text(
             context.l10n.setupTitle,
             style: const TextStyle(
-              fontSize: FontSizes.headlineSmall,
+              fontSize: AppTypography.headlineSmall,
               fontWeight: FontWeight.bold,
-              color: SemanticColors.textPrimary,
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: Spacing.sm),
           Text(
             context.l10n.setupSubtitle,
             style: const TextStyle(
-              fontSize: FontSizes.bodyMedium,
-              color: SemanticColors.textSecondary,
+              fontSize: AppTypography.bodyMedium,
+              color: AppColors.textSecondary,
             ),
           ),
         ],

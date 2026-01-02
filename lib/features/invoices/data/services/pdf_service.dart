@@ -1,7 +1,7 @@
-import 'package:basser_app/core/utils/format_helpers.dart';
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basser_app/services/settings_service.dart';
+import 'package:basir_app/core/utils/format_helpers.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/services/settings_service.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -52,7 +52,7 @@ class PdfService {
   }) async {
     final pdf = pw.Document(
       title: 'فاتورة رقم ${invoice.id}',
-      author: 'Basser MVP',
+      author: 'Basir MVP',
     );
 
     // تحويل لون التطبيق إلى لون PDF

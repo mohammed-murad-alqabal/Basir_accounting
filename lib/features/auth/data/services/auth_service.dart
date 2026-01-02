@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:basser_app/core/constants.dart';
-import 'package:basser_app/features/auth/domain/models/auth_models.dart';
+import 'package:basir_app/core/constants.dart';
+import 'package:basir_app/features/auth/domain/models/auth_models.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -55,7 +55,7 @@ class AuthService {
   /// يتم مسحها لضمان بداية نظيفة ومنع التعليق أو الأخطاء الغامضة.
   Future<void> initialize() async {
     try {
-      const firstRunKey = 'basser_first_run_flag';
+      const firstRunKey = 'basir_first_run_flag';
       final firstRun = await secureStorage.read(key: firstRunKey);
 
       if (firstRun == null) {
@@ -83,7 +83,7 @@ class AuthService {
   }
 
   /// Salt ثابت للتطبيق (في بيئة إنتاج حقيقية، يجب أن يكون فريد لكل مستخدم)
-  static const String _appSalt = 'basser_mvp_2025_secure_salt';
+  static const String _appSalt = 'basir_mvp_2025_secure_salt';
 
   /// تشفير كلمة المرور باستخدام SHA-256 مع Salt
   ///
@@ -509,6 +509,52 @@ class AuthService {
       );
     } on Exception {
       return null;
+    }
+  }
+
+  /// تغيير اسم المستخدم
+  ///
+  /// يغير اسم المستخدم المسجل في التخزين الآمن
+  ///
+  /// Parameters:
+  /// - [newUsername]: اسم المستخدم الجديد (3 أحرف على الأقل)
+  ///
+  /// Throws:
+  /// - [Exception] إذا كان اسم المستخدم الجديد أقل من 3 أحرف
+  /// - [Exception] إذا لم يكن هناك حساب مسجل
+  Future<void> updateUsername(String newUsername) async {
+    try {
+      if (newUsername.isEmpty || newUsername.length < 3) {
+        throw Exception('اسم المستخدم يجب أن يكون 3 أحرف على الأقل');
+      }
+
+      final currentUsername = await getCurrentUsername();
+      if (currentUsername == null) {
+        throw Exception('لا يوجد حساب مسجل');
+      }
+
+      // حفظ الاسم الجديد
+      await secureStorage.write(
+        key: StorageKeys.username,
+        value: newUsername,
+      );
+
+      // إذا كان هناك Salt باسم المستخدم القديم، يفضل تحديثه ليتناسب مع الجديد
+      // ملاحظة: في النسخة الحالية، نستخدم `${StorageKeys.username}_salt`
+      // كمفتاح ثابت، ولكن الكود في createAccount استخدم
+      // `StorageKeys.username` و `${StorageKeys.username}_salt`.
+      // للتأكد من التوافق، سنحدث الـ Salt أيضاً إذا لزم الأمر.
+      final salt = await secureStorage.read(key: '${currentUsername}_salt');
+      if (salt != null) {
+        await secureStorage.write(key: '${newUsername}_salt', value: salt);
+        // لا نحذف القديم لضمان عدم تلف البيانات في حالة الفشل،
+        // ولكن مستقبلاً يمكن تنظيفه
+      }
+
+      // بث حدث التحديث
+      _authStateController.add(newUsername);
+    } on Exception catch (e) {
+      throw Exception('خطأ في تحديث اسم المستخدم: $e');
     }
   }
 

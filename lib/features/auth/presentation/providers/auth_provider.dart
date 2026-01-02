@@ -1,5 +1,5 @@
-import 'package:basser_app/core/providers/secure_storage_provider.dart';
-import 'package:basser_app/features/auth/data/services/auth_service.dart';
+import 'package:basir_app/core/providers/secure_storage_provider.dart';
+import 'package:basir_app/features/auth/data/services/auth_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// مزود خدمة المصادقة
