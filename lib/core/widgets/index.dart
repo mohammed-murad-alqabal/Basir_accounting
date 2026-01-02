@@ -4,7 +4,7 @@
 ///
 /// Example:
 /// ```dart
-/// import 'package:basser_app/core/widgets/index.dart';
+/// import 'package:basir_app/core/widgets/index.dart';
 ///
 /// // الآن يمكن استخدام جميع الـ Widgets:
 /// AppEnhancedButton(...)

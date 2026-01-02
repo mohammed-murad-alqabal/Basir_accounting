@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:basser_app/core/theme/tokens/index.dart';
-import 'package:basser_app/core/widgets/responsive_text.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/widgets/responsive_text.dart';
 import 'package:flutter/material.dart' hide Durations;
 import 'package:flutter/services.dart';
 
@@ -63,7 +63,7 @@ class AppCard extends StatefulWidget {
   /// لون الحدود (اختياري)
   final Color? borderColor;
 
-  /// تفعيل haptic feedback
+  /// تفعیل haptic feedback
   final bool hapticFeedback;
 
   /// حالة التحقق
@@ -146,7 +146,7 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
         boxShadow: effectiveElevation > 0
             ? [
                 BoxShadow(
-                  color: SemanticColors.shadow,
+                  color: AppColors.shadow,
                   blurRadius: effectiveElevation * 2,
                   offset: Offset(0, effectiveElevation),
                 ),
@@ -234,9 +234,9 @@ class AppListCard extends StatelessWidget {
     if (trailing is String) {
       trailingWidget = ResponsiveText(
         trailing as String,
-        style: TextStyles.bodyMedium.copyWith(
+        style: AppTextStyles.bodyMedium.copyWith(
           fontWeight: FontWeights.semiBold,
-          color: SemanticColors.primary,
+          color: AppColors.primary,
         ),
         maxLines: 1,
         autoScale: true,
@@ -265,7 +265,7 @@ class AppListCard extends StatelessWidget {
                 children: [
                   ResponsiveText(
                     title,
-                    style: TextStyles.titleSmall.copyWith(
+                    style: AppTextStyles.titleSmall.copyWith(
                       fontWeight: FontWeights.semiBold,
                     ),
                     maxLines: 1,
@@ -275,8 +275,8 @@ class AppListCard extends StatelessWidget {
                     const SizedBox(height: Spacing.xs),
                     ResponsiveText(
                       subtitle!,
-                      style: TextStyles.bodySmall.copyWith(
-                        color: SemanticColors.textSecondary,
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.textSecondary,
                       ),
                       maxLines: 2,
                     ),
@@ -331,15 +331,15 @@ class AppStatCard extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: iconColor ?? SemanticColors.primary,
+              color: iconColor ?? AppColors.primary,
               size: IconSizes.md,
             ),
             const SizedBox(height: Spacing.xs),
             Flexible(
               child: ResponsiveText(
                 label,
-                style: TextStyles.labelSmall.copyWith(
-                  color: SemanticColors.textSecondary,
+                style: AppTextStyles.labelSmall.copyWith(
+                  color: AppColors.textSecondary,
                 ),
                 maxLines: 1,
                 textAlign: TextAlign.center,
@@ -351,9 +351,9 @@ class AppStatCard extends StatelessWidget {
                 fit: BoxFit.scaleDown,
                 child: ResponsiveText(
                   value,
-                  style: TextStyles.headlineSmall.copyWith(
+                  style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeights.bold,
-                    color: SemanticColors.textPrimary,
+                    color: AppColors.textPrimary,
                   ),
                   maxLines: 1,
                   textAlign: TextAlign.center,

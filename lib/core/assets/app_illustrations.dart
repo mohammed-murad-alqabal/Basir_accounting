@@ -1,7 +1,7 @@
-import 'package:basser_app/core/theme/tokens/index.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 
-/// رسم توضيحي للحالة الفارغة بنظام Mastery 2.0
+/// رسم توضيحي للحالة الفارغة بنظام Professional 2.0
 class EmptyStateIllustration extends StatelessWidget {
   /// إنشاء رسم توضيحي للحالة الفارغة
   const EmptyStateIllustration({
@@ -25,9 +25,9 @@ class EmptyStateIllustration extends StatelessWidget {
               width: size,
               height: size,
               child: CustomPaint(
-                painter: _Mastery2IllustrationPainter(
+                painter: _Professional2IllustrationPainter(
                   isCustomers: isCustomers,
-                  themeColor: SemanticColors.primary,
+                  themeColor: AppColors.primary,
                 ),
               ),
             ),
@@ -37,9 +37,9 @@ class EmptyStateIllustration extends StatelessWidget {
                   ? 'قاعدة بيانات العملاء جاهزة'
                   : 'سجل الفواتير الذكي منظم',
               style: const TextStyle(
-                fontSize: FontSizes.titleMedium,
+                fontSize: AppTypography.titleMedium,
                 fontWeight: FontWeight.bold,
-                color: SemanticColors.primary,
+                color: AppColors.primary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -49,8 +49,8 @@ class EmptyStateIllustration extends StatelessWidget {
                   ? 'ابدأ بإضافة أول شريك نجاح لك'
                   : 'فاتورتك الأولى بانتظارك',
               style: const TextStyle(
-                fontSize: FontSizes.bodyMedium,
-                color: SemanticColors.textSecondary,
+                fontSize: AppTypography.bodyMedium,
+                color: AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -59,7 +59,7 @@ class EmptyStateIllustration extends StatelessWidget {
       );
 }
 
-/// رسم توضيحي للأونبوردينج بنظام Mastery 2.0
+/// رسم توضيحي للأونبوردينج بنظام Professional 2.0
 class OnboardingIllustration extends StatelessWidget {
   /// إنشاء رسم توضيحي للأونبوردينج
   const OnboardingIllustration({
@@ -79,17 +79,16 @@ class OnboardingIllustration extends StatelessWidget {
         width: size,
         height: size,
         child: CustomPaint(
-          painter: _Mastery2IllustrationPainter(
+          painter: _Professional2IllustrationPainter(
             index: index,
             isOnboarding: true,
-            themeColor:
-                index == 0 ? SemanticColors.primary : SemanticColors.secondary,
+            themeColor: index == 0 ? AppColors.primary : AppColors.secondary,
           ),
         ),
       );
 }
 
-/// رسم توضيحي لحالة الخطأ بنظام Mastery 2.0
+/// رسم توضيحي لحالة الخطأ بنظام Professional 2.0
 class ErrorIllustration extends StatelessWidget {
   /// إنشاء رسم توضيحي لحالة الخطأ
   const ErrorIllustration({super.key, this.size = 150});
@@ -102,15 +101,15 @@ class ErrorIllustration extends StatelessWidget {
         width: size,
         height: size,
         child: CustomPaint(
-          painter: _Mastery2IllustrationPainter(
+          painter: _Professional2IllustrationPainter(
             isError: true,
-            themeColor: SemanticColors.error,
+            themeColor: AppColors.error,
           ),
         ),
       );
 }
 
-/// رسم توضيحي لحالة النجاح بنظام Mastery 2.0
+/// رسم توضيحي لحالة النجاح بنظام Professional 2.0
 class SuccessIllustration extends StatelessWidget {
   /// إنشاء رسم توضيحي لحالة النجاح
   const SuccessIllustration({super.key, this.size = 150});
@@ -123,16 +122,16 @@ class SuccessIllustration extends StatelessWidget {
         width: size,
         height: size,
         child: CustomPaint(
-          painter: _Mastery2IllustrationPainter(
+          painter: _Professional2IllustrationPainter(
             isSuccess: true,
-            themeColor: SemanticColors.success,
+            themeColor: AppColors.success,
           ),
         ),
       );
 }
 
-class _Mastery2IllustrationPainter extends CustomPainter {
-  _Mastery2IllustrationPainter({
+class _Professional2IllustrationPainter extends CustomPainter {
+  _Professional2IllustrationPainter({
     required this.themeColor,
     this.isCustomers = false,
     this.index = 0,
