@@ -157,19 +157,6 @@ void main() {
       });
     });
 
-    group('Bottom Navigation Bar', () {
-      testWidgets('should display bottom navigation bar', (tester) async {
-        await setUpWidgets(tester);
-        expect(find.byType(BottomNavigationBar), findsOneWidget);
-      });
-
-      testWidgets('should display 4 navigation items', (tester) async {
-        await setUpWidgets(tester);
-        expect(find.text(l10n.navHome), findsOneWidget);
-        expect(find.text(l10n.navInvoices), findsOneWidget);
-        expect(find.text(l10n.navCustomers), findsOneWidget);
-        expect(find.text(l10n.navSettings), findsOneWidget);
-      });
-    });
+    // Note: Bottom Navigation Bar test removed as it's now part of MainShell
   });
 }
