@@ -1,14 +1,13 @@
-import 'package:basser_app/core/extensions/context_extensions.dart';
-import 'package:basser_app/features/auth/presentation/screens/guest_upgrade_screen.dart';
-import 'package:basser_app/features/auth/presentation/screens/login_screen.dart';
-import 'package:basser_app/features/auth/presentation/screens/setup_screen.dart';
-import 'package:basser_app/features/customers/presentation/screens/customer_form_screen.dart';
-import 'package:basser_app/features/customers/presentation/screens/customers_screen.dart';
-import 'package:basser_app/features/dashboard/presentation/screens/dashboard_screen.dart';
-import 'package:basser_app/features/invoices/presentation/screens/invoice_form_screen.dart';
-import 'package:basser_app/features/invoices/presentation/screens/invoices_screen.dart';
-import 'package:basser_app/features/settings/presentation/screens/settings_screen.dart';
-import 'package:basser_app/features/testing/button_test_screen.dart';
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/features/auth/presentation/screens/guest_upgrade_screen.dart';
+import 'package:basir_app/features/auth/presentation/screens/login_screen.dart';
+import 'package:basir_app/features/auth/presentation/screens/setup_screen.dart';
+import 'package:basir_app/features/customers/presentation/screens/customer_form_screen.dart';
+import 'package:basir_app/features/customers/presentation/screens/customers_screen.dart';
+import 'package:basir_app/features/dashboard/presentation/screens/main_shell.dart';
+import 'package:basir_app/features/invoices/presentation/screens/invoice_form_screen.dart';
+import 'package:basir_app/features/invoices/presentation/screens/invoices_screen.dart';
+import 'package:basir_app/features/settings/presentation/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 /// نظام التوجيه للتطبيق
@@ -58,7 +57,7 @@ class AppRouter {
         );
       case '/dashboard':
         return MaterialPageRoute(
-          builder: (_) => const DashboardScreen(),
+          builder: (_) => const MainShell(),
         );
       case '/customers':
         return MaterialPageRoute(
@@ -80,10 +79,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const SettingsScreen(),
         );
-      case '/button-test':
-        return MaterialPageRoute(
-          builder: (_) => const ButtonTestScreen(),
-        );
+
       case '/guest-upgrade':
         return MaterialPageRoute(
           builder: (_) => const GuestUpgradeScreen(),

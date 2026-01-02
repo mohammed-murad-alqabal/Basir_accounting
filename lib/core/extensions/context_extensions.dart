@@ -1,4 +1,4 @@
-import 'package:basser_app/l10n/app_localizations.dart';
+import 'package:basir_app/l10n/app_localizations.dart';
 import 'package:flutter/widgets.dart';
 
 /// امتدادات للسياق (BuildContext Extensions)

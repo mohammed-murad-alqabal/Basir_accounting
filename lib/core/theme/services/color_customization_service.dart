@@ -1,5 +1,5 @@
-import 'package:basser_app/core/theme/services/theme_storage_utils.dart';
-import 'package:basser_app/features/auth/presentation/providers/current_user_provider.dart';
+import 'package:basir_app/core/theme/services/theme_storage_utils.dart';
+import 'package:basir_app/features/auth/presentation/providers/current_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,21 +14,19 @@ class ColorCustomizationService extends AsyncNotifier<Color?> {
   @override
   Future<Color?> build() async {
     // إعادة البناء عند تغيير المستخدم
-    ref.watch(currentUserProvider);
-    return _loadColor();
+    final userState = ref.watch(currentUserProvider);
+    return _loadColor(userState.value);
   }
 
-  /// الحصول على المفتاح المناسب للمستخدم الحالي
-  String get _storageKey {
-    final username = ref.read(currentUserProvider).value;
-    return ThemeStorageUtils.getUserSpecificKey(_customColorKey, username);
-  }
+  /// الحصول على المفتاح المناسب للمستخدم
+  String _getStorageKey(String? username) =>
+      ThemeStorageUtils.getUserSpecificKey(_customColorKey, username);
 
   /// تحميل اللون المخصص
-  Future<Color?> _loadColor() async {
+  Future<Color?> _loadColor(String? username) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final key = _storageKey;
+      final key = _getStorageKey(username);
       final colorInt = prefs.getInt(key);
       if (colorInt != null) {
         return Color(colorInt);
@@ -44,7 +42,8 @@ class ColorCustomizationService extends AsyncNotifier<Color?> {
     state = AsyncValue.data(color);
     try {
       final prefs = await SharedPreferences.getInstance();
-      final key = _storageKey;
+      final username = ref.read(currentUserProvider).value;
+      final key = _getStorageKey(username);
       await prefs.setInt(key, color.toARGB32());
     } on Object catch (e) {
       debugPrint('Error saving custom color: $e');
@@ -56,7 +55,8 @@ class ColorCustomizationService extends AsyncNotifier<Color?> {
     state = const AsyncValue.data(null);
     try {
       final prefs = await SharedPreferences.getInstance();
-      final key = _storageKey;
+      final username = ref.read(currentUserProvider).value;
+      final key = _getStorageKey(username);
       await prefs.remove(key);
     } on Object catch (e) {
       debugPrint('Error removing custom color: $e');
@@ -68,6 +68,7 @@ class ColorCustomizationService extends AsyncNotifier<Color?> {
 }
 
 /// موفر خدمة تخصيص الألوان
+// ignore: lines_longer_than_80_chars
 final colorCustomizationProvider =
     AsyncNotifierProvider<ColorCustomizationService, Color?>(
   ColorCustomizationService.new,

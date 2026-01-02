@@ -1,6 +1,6 @@
-import 'package:basser_app/core/theme/app_font_metrics.dart';
-import 'package:basser_app/core/theme/font_manager.dart';
-import 'package:basser_app/core/widgets/overflow_detector.dart';
+import 'package:basir_app/core/theme/app_font_metrics.dart';
+import 'package:basir_app/core/theme/font_manager.dart';
+import 'package:basir_app/core/widgets/overflow_detector.dart';
 import 'package:flutter/material.dart';
 
 /// زر محسّن يحل مشكلة قص واختفاء النصوص.
@@ -285,6 +285,10 @@ class AppEnhancedButton extends StatelessWidget {
         backgroundColor = Colors.transparent;
         foregroundColor = colorScheme.primary;
         borderColor = null;
+      case AppEnhancedButtonStyle.destructive:
+        backgroundColor = colorScheme.error;
+        foregroundColor = colorScheme.onError;
+        borderColor = null;
     }
 
     return ElevatedButton.styleFrom(
@@ -394,6 +398,9 @@ enum AppEnhancedButtonStyle {
 
   /// زر نصي (بدون خلفية أو حدود)
   text,
+
+  /// زر مدمر/خطير (للإجراءات الخطيرة مثل الحذف)
+  destructive,
 }
 
 /// أحجام الزر المحسّن.
@@ -473,7 +480,7 @@ class AppEnhancedButtonHelper {
         text: text,
         onPressed: onPressed,
         icon: Icons.delete,
-        style: AppEnhancedButtonStyle.outlined,
+        style: AppEnhancedButtonStyle.destructive,
         size: size,
         isLoading: isLoading,
         tooltip: tooltip,
