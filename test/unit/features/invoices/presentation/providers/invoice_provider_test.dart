@@ -1,6 +1,6 @@
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/features/invoices/data/services/pdf_service.dart';
-import 'package:basser_app/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/features/invoices/data/services/pdf_service.dart';
+import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 

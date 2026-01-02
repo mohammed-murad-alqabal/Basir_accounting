@@ -3,10 +3,10 @@
 /// يختبر عمليات توليد PDF للفواتير
 library;
 
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
-import 'package:basser_app/features/invoices/data/services/pdf_service.dart';
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basser_app/services/settings_service.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/invoices/data/services/pdf_service.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/services/settings_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

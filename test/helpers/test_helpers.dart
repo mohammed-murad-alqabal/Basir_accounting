@@ -8,8 +8,8 @@ library;
 
 import 'dart:io';
 
-import 'package:basser_app/features/customers/data/models/customer_model.dart';
-import 'package:basser_app/features/invoices/data/models/invoice_model.dart';
+import 'package:basir_app/features/customers/data/models/customer_model.dart';
+import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
@@ -58,7 +58,7 @@ class TestHelpers {
   /// الحصول على مجلد الاختبارات المؤقت
   static String _getTestDirectory() {
     final tempDir = Directory.systemTemp;
-    final testDir = Directory(path.join(tempDir.path, 'basser_test_db'));
+    final testDir = Directory(path.join(tempDir.path, 'basir_test_db'));
     if (!testDir.existsSync()) {
       testDir.createSync(recursive: true);
     }

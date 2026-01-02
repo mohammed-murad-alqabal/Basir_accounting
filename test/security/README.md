@@ -120,7 +120,7 @@ bash test/security/run_security_tests.sh
 ### تشغيل جميع الاختبارات
 
 ```bash
-cd /path/to/Basser_MVP
+cd /path/to/Basir_MVP
 bash test/security/run_security_tests.sh
 ```
 

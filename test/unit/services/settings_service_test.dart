@@ -3,8 +3,8 @@
 /// يختبر جميع عمليات إدارة الإعدادات
 library;
 
-import 'package:basser_app/core/constants.dart';
-import 'package:basser_app/services/settings_service.dart';
+import 'package:basir_app/core/constants.dart';
+import 'package:basir_app/services/settings_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../mocks/mock_secure_storage.dart';

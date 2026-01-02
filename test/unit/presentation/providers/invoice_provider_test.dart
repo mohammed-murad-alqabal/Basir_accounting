@@ -3,7 +3,7 @@
 /// يختبر جميع عمليات إدارة الفواتير في طبقة Presentation
 library;
 
-import 'package:basser_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 

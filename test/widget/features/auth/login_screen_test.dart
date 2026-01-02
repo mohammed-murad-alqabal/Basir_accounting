@@ -2,11 +2,11 @@
 // ignore_for_file: lines_longer_than_80_chars
 library;
 
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/core/widgets/index.dart';
-import 'package:basser_app/features/auth/data/services/auth_service.dart';
-import 'package:basser_app/features/auth/presentation/screens/login_screen.dart';
-import 'package:basser_app/l10n/app_localizations.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/features/auth/data/services/auth_service.dart';
+import 'package:basir_app/features/auth/presentation/screens/login_screen.dart';
+import 'package:basir_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

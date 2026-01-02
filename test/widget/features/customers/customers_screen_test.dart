@@ -1,8 +1,8 @@
-import 'package:basser_app/core/assets/app_illustrations.dart';
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
-import 'package:basser_app/features/customers/presentation/providers/customer_provider.dart';
-import 'package:basser_app/features/customers/presentation/screens/customers_screen.dart';
-import 'package:basser_app/l10n/app_localizations.dart';
+import 'package:basir_app/core/assets/app_illustrations.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_app/features/customers/presentation/screens/customers_screen.dart';
+import 'package:basir_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -58,7 +58,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Assert Mastery Strings
+      // Assert basir Strings
       expect(find.text('قاعدة بيانات العملاء جاهزة'), findsOneWidget);
       expect(find.text('ابدأ بإضافة أول شريك نجاح لك'), findsOneWidget);
       expect(find.byType(EmptyStateIllustration), findsOneWidget);
