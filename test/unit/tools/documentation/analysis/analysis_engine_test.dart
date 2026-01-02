@@ -13,44 +13,34 @@ void main() {
     });
 
     group('analyzeFile', () {
-      test('should throw UnimplementedError when not implemented', () {
-        expect(
-          () => engine.analyzeFile('test.dart'),
-          throwsA(isA<UnimplementedError>()),
-        );
+      test('should return AnalysisResult for missing file', () async {
+        final result = await engine.analyzeFile('non_existent.dart');
+        expect(result, isA<AnalysisResult>());
+        expect(result.undocumentedElements, isEmpty);
       });
 
-      test('should accept valid file path', () {
-        // This will throw UnimplementedError, but we're testing the signature
-        expect(
-          () => engine.analyzeFile('lib/core/constants.dart'),
-          throwsA(isA<UnimplementedError>()),
-        );
+      test('should accept valid file path', () async {
+        final result = await engine.analyzeFile('lib/main.dart');
+        expect(result, isA<AnalysisResult>());
       });
     });
 
     group('analyzeDirectory', () {
-      test('should throw UnimplementedError when not implemented', () {
-        expect(
-          () => engine.analyzeDirectory('lib/'),
-          throwsA(isA<UnimplementedError>()),
-        );
+      test('should return list of results for directory', () async {
+        final results = await engine.analyzeDirectory('lib/');
+        expect(results, isA<List<AnalysisResult>>());
       });
 
-      test('should accept valid directory path', () {
-        expect(
-          () => engine.analyzeDirectory('lib/core/'),
-          throwsA(isA<UnimplementedError>()),
-        );
+      test('should accept valid directory path', () async {
+        final results = await engine.analyzeDirectory('lib/core/');
+        expect(results, isA<List<AnalysisResult>>());
       });
     });
 
     group('getCoverageStats', () {
-      test('should throw UnimplementedError when not implemented', () {
-        expect(
-          () => engine.getCoverageStats(),
-          throwsA(isA<UnimplementedError>()),
-        );
+      test('should return CoverageStats', () {
+        final stats = engine.getCoverageStats();
+        expect(stats, isA<CoverageStats>());
       });
     });
   });
