@@ -1,5 +1,5 @@
-import 'package:basser_app/core/theme/app_theme.dart';
-import 'package:basser_app/core/widgets/app_text_field.dart';
+import 'package:basir_app/core/theme/app_theme.dart';
+import 'package:basir_app/core/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -3,7 +3,7 @@
 /// يوفر مجموعة من العملاء النموذجيين للاستخدام في الاختبارات
 library;
 
-import 'package:basser_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_app/features/customers/domain/entities/customer.dart';
 
 /// بيانات عملاء ثابتة للاختبار
 class CustomerFixtures {

@@ -1,7 +1,7 @@
-import 'package:basser_app/core/providers/calendar_provider.dart';
-import 'package:basser_app/core/theme/app_theme.dart';
-import 'package:basser_app/features/settings/presentation/screens/appearance_settings_screen.dart';
-import 'package:basser_app/l10n/app_localizations.dart';
+import 'package:basir_app/core/providers/calendar_provider.dart';
+import 'package:basir_app/core/theme/app_theme.dart';
+import 'package:basir_app/features/settings/presentation/screens/appearance_settings_screen.dart';
+import 'package:basir_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,8 +1,8 @@
-import 'package:basser_app/core/constants.dart';
+import 'package:basir_app/core/constants.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // Note: AppFontSizes and AppFonts have been migrated to Design Tokens
+  // Note: AppAppTypography.and AppFonts have been migrated to Design Tokens
   // in core/theme/tokens/. Tests for those should be in typography_tokens_test.dart
 
   group('StorageKeys', () {

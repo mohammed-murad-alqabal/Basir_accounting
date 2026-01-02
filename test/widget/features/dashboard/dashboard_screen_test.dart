@@ -1,10 +1,10 @@
 /// اختبارات DashboardScreen
 library;
 
-import 'package:basser_app/core/widgets/index.dart';
-import 'package:basser_app/core/widgets/mastery_dashboard_widgets.dart';
-import 'package:basser_app/features/dashboard/presentation/screens/dashboard_screen.dart';
-import 'package:basser_app/l10n/app_localizations.dart';
+import 'package:basir_app/core/widgets/basir_dashboard_widgets.dart';
+import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:basir_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +12,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('DashboardScreen', () {
-    Widget createTestWidget({Map<String, WidgetBuilder>? routes}) =>
+    Widget createTestWidget({
+      Map<String, WidgetBuilder>? routes,
+    }) =>
         ProviderScope(
           child: MaterialApp(
             home: const DashboardScreen(),
@@ -33,7 +35,7 @@ void main() {
     Future<void> setUpWidgets(WidgetTester tester) async {
       await tester.pumpWidget(createTestWidget());
       // We use pump() instead of pumpAndSettle() because the screen contains
-      // an infinite shimmer animation (BasserShimmerLogo) which causes
+      // an infinite shimmer animation (BasirShimmerLogo) which causes
       // pumpAndSettle to time out.
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));

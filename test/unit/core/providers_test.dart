@@ -1,10 +1,10 @@
-import 'package:basser_app/core/providers.dart';
-import 'package:basser_app/features/auth/data/services/auth_service.dart';
-import 'package:basser_app/features/customers/data/models/customer_model.dart';
-import 'package:basser_app/features/customers/data/repositories/customer_repository_impl.dart';
-import 'package:basser_app/features/invoices/data/models/invoice_model.dart';
-import 'package:basser_app/features/invoices/data/repositories/invoice_repository_impl.dart';
-import 'package:basser_app/services/settings_service.dart';
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/features/auth/data/services/auth_service.dart';
+import 'package:basir_app/features/customers/data/models/customer_model.dart';
+import 'package:basir_app/features/customers/data/repositories/customer_repository_impl.dart';
+import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
+import 'package:basir_app/features/invoices/data/repositories/invoice_repository_impl.dart';
+import 'package:basir_app/services/settings_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
