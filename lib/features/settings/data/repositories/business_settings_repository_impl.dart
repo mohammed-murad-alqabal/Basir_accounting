@@ -16,7 +16,10 @@ class BusinessSettingsRepositoryImpl implements BusinessSettingsRepository {
 
   @override
   Future<BusinessSettings?> getSettings() async {
-    final model = await isar.businessSettingsModels.filter().userIdEqualTo(userId).findFirst();
+    final model = await isar.businessSettingsModels
+        .filter()
+        .userIdEqualTo(userId)
+        .findFirst();
     return model?.toEntity();
   }
 

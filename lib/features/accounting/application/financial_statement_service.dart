@@ -11,7 +11,8 @@ part 'financial_statement_service.g.dart';
 /// مزود خدمة القوائم المالية
 @riverpod
 class FinancialStatementService extends _$FinancialStatementService {
-  AccountingRepository get _repository => ref.read(accountingRepositoryProvider);
+  AccountingRepository get _repository =>
+      ref.read(accountingRepositoryProvider);
 
   @override
   void build() {}
@@ -28,8 +29,10 @@ class FinancialStatementService extends _$FinancialStatementService {
 
       final balance = await _repository.getAccountBalance(account.id);
 
-      final debit = account.nature == AccountNature.debit ? balance : Decimal.zero;
-      final credit = account.nature == AccountNature.credit ? balance : Decimal.zero;
+      final debit =
+          account.nature == AccountNature.debit ? balance : Decimal.zero;
+      final credit =
+          account.nature == AccountNature.credit ? balance : Decimal.zero;
 
       if (balance != Decimal.zero) {
         lines.add(
@@ -80,14 +83,16 @@ class FinancialStatementService extends _$FinancialStatementService {
       );
 
       var sectionTotal = Decimal.zero;
-      final sectionAccounts = accounts.where((a) => a.ifrs18Category == entry.key);
+      final sectionAccounts =
+          accounts.where((a) => a.ifrs18Category == entry.key);
 
       for (final account in sectionAccounts) {
         if (account.isParent) continue;
         final balance = await _repository.getAccountBalance(account.id);
 
         // في قائمة الدخل: الإيرادات موجبة والمصروفات سالبة
-        final adjustedBalance = account.type == AccountType.revenue ? balance : -balance;
+        final adjustedBalance =
+            account.type == AccountType.revenue ? balance : -balance;
 
         if (adjustedBalance != Decimal.zero) {
           lines.add(
@@ -143,7 +148,8 @@ class FinancialStatementService extends _$FinancialStatementService {
       ),
     );
     var totalAssets = Decimal.zero;
-    for (final account in accounts.where((a) => a.type == AccountType.asset && !a.isParent)) {
+    for (final account
+        in accounts.where((a) => a.type == AccountType.asset && !a.isParent)) {
       final balance = await _repository.getAccountBalance(account.id);
       if (balance != Decimal.zero) {
         lines.add(
@@ -175,7 +181,8 @@ class FinancialStatementService extends _$FinancialStatementService {
     var totalLiabilitiesEquity = Decimal.zero;
 
     for (final type in [AccountType.liability, AccountType.equity]) {
-      for (final account in accounts.where((a) => a.type == type && !a.isParent)) {
+      for (final account
+          in accounts.where((a) => a.type == type && !a.isParent)) {
         final balance = await _repository.getAccountBalance(account.id);
         if (balance != Decimal.zero) {
           lines.add(

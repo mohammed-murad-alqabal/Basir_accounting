@@ -29,5 +29,6 @@ class Profile with _$Profile {
   }) = _Profile;
 
   /// التحويل من JSON
-  factory Profile.fromJson(Map<String, dynamic> json) => _$ProfileFromJson(json);
+  factory Profile.fromJson(Map<String, dynamic> json) =>
+      _$ProfileFromJson(json);
 }
