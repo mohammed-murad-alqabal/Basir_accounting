@@ -61,7 +61,8 @@ class AppEnhancedButton extends StatefulWidget {
   State<AppEnhancedButton> createState() => _AppEnhancedButtonState();
 }
 
-class _AppEnhancedButtonState extends State<AppEnhancedButton> with SingleTickerProviderStateMixin {
+class _AppEnhancedButtonState extends State<AppEnhancedButton>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scale;
 
@@ -102,10 +103,11 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton> with SingleTicker
   Widget build(BuildContext context) {
     final isEnabled = widget.onPressed != null && !widget.isLoading;
 
-    final effectiveGradient = widget.gradient ?? (isEnabled ? AppGradients.primary : null);
+    final effectiveGradient =
+        widget.gradient ?? (isEnabled ? AppGradients.primary : null);
 
-    final effectiveBgColor =
-        widget.backgroundColor ?? (isEnabled ? AppColors.primary : AppColors.disabled);
+    final effectiveBgColor = widget.backgroundColor ??
+        (isEnabled ? AppColors.primary : AppColors.disabled);
 
     final effectiveFgColor = widget.foregroundColor ?? Colors.white;
 
@@ -126,7 +128,8 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton> with SingleTicker
             boxShadow: isEnabled && widget.elevation > 0
                 ? [
                     BoxShadow(
-                      color: (widget.backgroundColor ?? AppColors.primary).withValues(alpha: 0.3),
+                      color: (widget.backgroundColor ?? AppColors.primary)
+                          .withValues(alpha: 0.3),
                       blurRadius: widget.elevation * 2,
                       offset: Offset(0, widget.elevation),
                     ),
@@ -140,7 +143,8 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton> with SingleTicker
                     height: 24,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(effectiveFgColor),
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(effectiveFgColor),
                     ),
                   )
                 : Row(

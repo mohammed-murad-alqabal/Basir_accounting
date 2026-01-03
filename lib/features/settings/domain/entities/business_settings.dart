@@ -32,5 +32,6 @@ class BusinessSettings with _$BusinessSettings {
   }) = _BusinessSettings;
 
   /// التحويل من JSON
-  factory BusinessSettings.fromJson(Map<String, dynamic> json) => _$BusinessSettingsFromJson(json);
+  factory BusinessSettings.fromJson(Map<String, dynamic> json) =>
+      _$BusinessSettingsFromJson(json);
 }

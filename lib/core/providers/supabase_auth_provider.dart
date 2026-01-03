@@ -12,11 +12,13 @@ SupabaseAuthService supabaseAuth(SupabaseAuthRef ref) =>
 
 /// مزود حالة المصادقة
 @Riverpod(keepAlive: true)
-Stream<AuthState> authState(AuthStateRef ref) => ref.watch(supabaseAuthProvider).onAuthStateChange;
+Stream<AuthState> authState(AuthStateRef ref) =>
+    ref.watch(supabaseAuthProvider).onAuthStateChange;
 
 /// مزود المستخدم الحالي
 @Riverpod(keepAlive: true)
 User? currentUser(CurrentUserRef ref) {
   final authState = <credential-fixture>(authStateProvider).value;
-  return authState?.session?.user ?? ref.watch(supabaseAuthProvider).currentUser;
+  return authState?.session?.user ??
+      ref.watch(supabaseAuthProvider).currentUser;
 }

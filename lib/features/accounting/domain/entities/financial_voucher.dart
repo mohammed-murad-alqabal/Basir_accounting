@@ -84,5 +84,6 @@ class FinancialVoucher with _$FinancialVoucher {
   }) = _FinancialVoucher;
 
   /// التحويل من JSON
-  factory FinancialVoucher.fromJson(Map<String, dynamic> json) => _$FinancialVoucherFromJson(json);
+  factory FinancialVoucher.fromJson(Map<String, dynamic> json) =>
+      _$FinancialVoucherFromJson(json);
 }
