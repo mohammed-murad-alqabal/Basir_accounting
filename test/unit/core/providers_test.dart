@@ -4,6 +4,8 @@ import 'package:basir_app/features/customers/data/models/customer_model.dart';
 import 'package:basir_app/features/customers/data/repositories/customer_repository_impl.dart';
 import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
 import 'package:basir_app/features/invoices/data/repositories/invoice_repository_impl.dart';
+import 'package:basir_app/features/settings/data/models/business_settings_model.dart';
+import 'package:basir_app/features/settings/data/models/profile_model.dart';
 import 'package:basir_app/services/settings_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -18,7 +20,12 @@ void main() {
     setUp(() async {
       // إنشاء Isar في الذاكرة للاختبار
       isar = await Isar.open(
-        [CustomerModelSchema, InvoiceModelSchema],
+        [
+          CustomerModelSchema,
+          InvoiceModelSchema,
+          ProfileModelSchema,
+          BusinessSettingsModelSchema,
+        ],
         directory: '',
         name: 'test_providers_${DateTime.now().millisecondsSinceEpoch}',
       );
@@ -26,6 +33,8 @@ void main() {
       container = ProviderContainer(
         overrides: [isarProvider.overrideWith((ref) => Future.value(isar))],
       );
+      // Wait for Isar to be ready
+      await container.read(isarProvider.future);
     });
 
     tearDown(() async {
