@@ -3,15 +3,20 @@ import 'package:basir_app/features/settings/domain/entities/profile.dart';
 import 'package:basir_app/features/settings/domain/repositories/profile_repository.dart';
 import 'package:isar/isar.dart';
 
+/// تنفيذ مستودع الملف الشخصي
 class ProfileRepositoryImpl implements ProfileRepository {
+  /// المنشئ
   ProfileRepositoryImpl({required this.isar, this.userId});
+
+  /// مثيل Isar
   final Isar isar;
+
+  /// معرف المستخدم
   final String? userId;
 
   @override
   Future<Profile?> getProfile() async {
-    final model =
-        await isar.profileModels.filter().userIdEqualTo(userId).findFirst();
+    final model = await isar.profileModels.filter().userIdEqualTo(userId).findFirst();
     return model?.toEntity();
   }
 

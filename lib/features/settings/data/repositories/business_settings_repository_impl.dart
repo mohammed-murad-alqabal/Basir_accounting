@@ -3,17 +3,20 @@ import 'package:basir_app/features/settings/domain/entities/business_settings.da
 import 'package:basir_app/features/settings/domain/repositories/business_settings_repository.dart';
 import 'package:isar/isar.dart';
 
+/// تنفيذ مستودع إعدادات العمل
 class BusinessSettingsRepositoryImpl implements BusinessSettingsRepository {
+  /// المنشئ
   BusinessSettingsRepositoryImpl({required this.isar, this.userId});
+
+  /// مثيل Isar
   final Isar isar;
+
+  /// معرف المستخدم
   final String? userId;
 
   @override
   Future<BusinessSettings?> getSettings() async {
-    final model = await isar.businessSettingsModels
-        .filter()
-        .userIdEqualTo(userId)
-        .findFirst();
+    final model = await isar.businessSettingsModels.filter().userIdEqualTo(userId).findFirst();
     return model?.toEntity();
   }
 
