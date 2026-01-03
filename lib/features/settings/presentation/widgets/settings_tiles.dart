@@ -18,14 +18,15 @@ class CompanySettingsTile extends ConsumerWidget {
     final theme = Theme.of(context);
     final settingsAsync = ref.watch(companySettingsProvider);
     final settings = settingsAsync.value ?? {};
+    final appIcons = ref.watch(appIconsProvider);
 
     return ListTile(
-      leading: Icon(Icons.business, color: theme.colorScheme.primary),
+      leading: Icon(appIcons.business, color: theme.colorScheme.primary),
       title: Text(context.l10n.companySettingsTitle),
       subtitle: Text(
         settings['companyName'] ?? context.l10n.companySettingsTitle,
       ),
-      trailing: const Icon(Icons.edit_outlined, size: 20),
+      trailing: Icon(appIcons.edit, size: 20),
       onTap: () => CompanySettingsSheet.show(context, settings),
     );
   }
@@ -40,12 +41,13 @@ class AccountSettingsTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final username = ref.watch(currentUsernameProvider);
+    final appIcons = ref.watch(appIconsProvider);
 
     return ListTile(
-      leading: Icon(Icons.person_outline, color: theme.colorScheme.primary),
+      leading: Icon(appIcons.users, color: theme.colorScheme.primary),
       title: Text(context.l10n.accountTitle),
       subtitle: Text(username ?? context.l10n.accountTitle),
-      trailing: const Icon(Icons.lock_outline, size: 20),
+      trailing: Icon(appIcons.security, size: 20),
       onTap: () => AccountSettingsSheet.show(context, username),
     );
   }
@@ -60,12 +62,13 @@ class NotificationSettingsTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final state = ref.watch(settingsControllerProvider);
+    final appIcons = ref.watch(appIconsProvider);
 
     return SwitchListTile(
       secondary: Icon(
         state.notificationsEnabled
-            ? Icons.notifications_active
-            : Icons.notifications_off,
+            ? appIcons.notifications
+            : appIcons.notificationsOff,
         color: state.notificationsEnabled
             ? theme.colorScheme.primary
             : theme.colorScheme.outline,
@@ -94,16 +97,17 @@ class LanguageSettingsTile extends ConsumerWidget {
     final theme = Theme.of(context);
     final localeAsync = ref.watch(localeProvider);
     final currentLocale = localeAsync.value ?? const Locale('ar');
+    final appIcons = ref.watch(appIconsProvider);
 
     return ListTile(
-      leading: Icon(Icons.language, color: theme.colorScheme.primary),
+      leading: Icon(appIcons.language, color: theme.colorScheme.primary),
       title: Text(context.l10n.languageTitle),
       subtitle: Text(
         currentLocale.languageCode == 'ar'
             ? context.l10n.langArabic
             : context.l10n.langEnglish,
       ),
-      trailing: const Icon(Icons.translate, size: 20),
+      trailing: Icon(appIcons.translate, size: 20),
       onTap: () => _showLanguageDialog(context, ref, currentLocale),
     );
   }
@@ -184,16 +188,17 @@ class CalendarSettingsTile extends ConsumerWidget {
     final theme = Theme.of(context);
     final calendarAsync = ref.watch(calendarProvider);
     final currentType = calendarAsync.value ?? CalendarType.gregorian;
+    final appIcons = ref.watch(appIconsProvider);
 
     return ListTile(
-      leading: Icon(Icons.calendar_month, color: theme.colorScheme.primary),
+      leading: Icon(appIcons.calendar, color: theme.colorScheme.primary),
       title: Text(context.l10n.sectionCalendar),
       subtitle: Text(
         currentType == CalendarType.hijri
             ? context.l10n.calendarHijri
             : context.l10n.calendarGregorian,
       ),
-      trailing: const Icon(Icons.settings_suggest, size: 20),
+      trailing: Icon(appIcons.settings, size: 20),
       onTap: () => _showCalendarDialog(context, ref, currentType),
     );
   }

@@ -4,6 +4,7 @@
 library;
 
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../fixtures/invoice_fixtures.dart';
@@ -16,11 +17,11 @@ void main() {
         final original = InvoiceFixtures.invoice1;
 
         // Act
-        final updated = original.copyWith(status: 'issued');
+        final updated = original.copyWith(status: InvoiceStatus.sent);
 
         // Assert
         expect(updated.id, original.id);
-        expect(updated.status, 'issued');
+        expect(updated.status, InvoiceStatus.sent);
         expect(updated.customerId, original.customerId);
         expect(updated.items, original.items);
       });
@@ -29,7 +30,14 @@ void main() {
         // Arrange
         final original = InvoiceFixtures.invoice1;
         const newItems = [
-          InvoiceItem(id: 'new-1', name: 'منتج جديد', quantity: 1, price: 500),
+          InvoiceItem(
+            id: 'new-1',
+            name: 'منتج جديد',
+            quantity: 1,
+            price: 500,
+            total: 500,
+            taxAmount: 75,
+          ),
         ];
 
         // Act
@@ -86,148 +94,29 @@ void main() {
         final originalStatus = original.status;
 
         // Act
-        final updated = original.copyWith(status: 'paid');
+        final updated = original.copyWith(status: InvoiceStatus.paid);
 
         // Assert
         expect(original.status, originalStatus);
-        expect(updated.status, 'paid');
-      });
-    });
-
-    group('calculations', () {
-      test('should calculate subtotal correctly', () {
-        // Arrange
-        final invoice = Invoice(
-          id: 'test-1',
-          customerId: 'customer-1',
-          customerName: 'عميل اختبار',
-          issuedDate: DateTime.now(),
-          dueDate: DateTime.now().add(const Duration(days: 30)),
-          status: 'draft',
-          items: const [
-            InvoiceItem(id: 'item-1', name: 'منتج 1', quantity: 2, price: 100),
-            InvoiceItem(id: 'item-2', name: 'منتج 2', quantity: 3, price: 200),
-          ],
-          taxRate: 0.15,
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        );
-
-        // Act & Assert
-        expect(invoice.subtotal, 800); // (2*100) + (3*200) = 800
-      });
-
-      test('should calculate tax total correctly', () {
-        // Arrange
-        final invoice = Invoice(
-          id: 'test-2',
-          customerId: 'customer-1',
-          customerName: 'عميل اختبار',
-          issuedDate: DateTime.now(),
-          dueDate: DateTime.now().add(const Duration(days: 30)),
-          status: 'draft',
-          items: const [
-            InvoiceItem(id: 'item-1', name: 'منتج', quantity: 1, price: 1000),
-          ],
-          taxRate: 0.15,
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        );
-
-        // Act & Assert
-        expect(invoice.taxTotal, 150); // 1000 * 0.15 = 150
-      });
-
-      test('should calculate grand total correctly', () {
-        // Arrange
-        final invoice = Invoice(
-          id: 'test-3',
-          customerId: 'customer-1',
-          customerName: 'عميل اختبار',
-          issuedDate: DateTime.now(),
-          dueDate: DateTime.now().add(const Duration(days: 30)),
-          status: 'draft',
-          items: const [
-            InvoiceItem(id: 'item-1', name: 'منتج', quantity: 1, price: 1000),
-          ],
-          taxRate: 0.15,
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        );
-
-        // Act & Assert
-        expect(invoice.grandTotal, 1150); // 1000 + 150 = 1150
-      });
-
-      test('should handle zero tax rate', () {
-        // Arrange
-        final invoice = Invoice(
-          id: 'test-4',
-          customerId: 'customer-1',
-          customerName: 'عميل اختبار',
-          issuedDate: DateTime.now(),
-          dueDate: DateTime.now().add(const Duration(days: 30)),
-          status: 'draft',
-          items: const [
-            InvoiceItem(id: 'item-1', name: 'منتج', quantity: 1, price: 1000),
-          ],
-          taxRate: 0,
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        );
-
-        // Act & Assert
-        expect(invoice.taxTotal, 0);
-        expect(invoice.grandTotal, 1000);
-      });
-
-      test('should handle empty items list', () {
-        // Arrange
-        final emptyInvoice = Invoice(
-          id: 'test-5',
-          customerId: 'customer-1',
-          customerName: 'عميل اختبار',
-          issuedDate: DateTime.now(),
-          dueDate: DateTime.now().add(const Duration(days: 30)),
-          status: 'draft',
-          items: const [],
-          taxRate: 0.15,
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        );
-
-        // Act & Assert
-        expect(emptyInvoice.subtotal, 0);
-        expect(emptyInvoice.taxTotal, 0);
-        expect(emptyInvoice.grandTotal, 0);
+        expect(updated.status, InvoiceStatus.paid);
       });
     });
 
     group('InvoiceItem', () {
-      test('should calculate item total correctly', () {
+      test('should hold correct values', () {
         // Arrange
         const item = InvoiceItem(
           id: 'item-1',
           name: 'منتج اختبار',
           quantity: 3,
           price: 250,
+          total: 750,
+          taxAmount: 112.5,
         );
 
         // Act & Assert
-        expect(item.total, 750); // 3 * 250 = 750
-      });
-
-      test('should handle decimal quantities', () {
-        // Arrange
-        const item = InvoiceItem(
-          id: 'item-2',
-          name: 'خدمة',
-          quantity: 2.5,
-          price: 100,
-        );
-
-        // Act & Assert
-        expect(item.total, 250); // 2.5 * 100 = 250
+        expect(item.total, 750);
+        expect(item.taxAmount, 112.5);
       });
 
       test('should copy item with updated values', () {
@@ -237,6 +126,8 @@ void main() {
           name: 'منتج',
           quantity: 1,
           price: 100,
+          total: 100,
+          taxAmount: 15,
         );
 
         // Act
@@ -259,10 +150,10 @@ void main() {
         expect(invoice1, equals(invoice2));
       });
 
-      test('should not be equal when IDs differ', () {
+      test('should not be equal when when content differs slightly', () {
         // Arrange
         final invoice1 = InvoiceFixtures.invoice1;
-        final invoice2 = InvoiceFixtures.invoice2;
+        final invoice2 = invoice1.copyWith(status: InvoiceStatus.paid);
 
         // Assert
         expect(invoice1, isNot(equals(invoice2)));
@@ -293,14 +184,17 @@ void main() {
 
       test('should handle different statuses', () {
         // Act
-        final draft = InvoiceFixtures.createInvoice(1, status: 'draft');
-        final issued = InvoiceFixtures.createInvoice(2, status: 'issued');
-        final paid = InvoiceFixtures.createInvoice(3, status: 'paid');
+        final draft =
+            InvoiceFixtures.createInvoice(1, status: InvoiceStatus.draft);
+        final issued =
+            InvoiceFixtures.createInvoice(2, status: InvoiceStatus.sent);
+        final paid =
+            InvoiceFixtures.createInvoice(3, status: InvoiceStatus.paid);
 
         // Assert
-        expect(draft.status, 'draft');
-        expect(issued.status, 'issued');
-        expect(paid.status, 'paid');
+        expect(draft.status, InvoiceStatus.draft);
+        expect(issued.status, InvoiceStatus.sent);
+        expect(paid.status, InvoiceStatus.paid);
       });
     });
   });

@@ -1,13 +1,8 @@
 import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/invoices/data/services/pdf_service.dart';
+import 'package:basir_app/features/accounting/application/accounting_service.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-/// Provider لخدمة PDF
-final pdfServiceProvider = Provider((ref) {
-  final settingsService = ref.watch(settingsServiceProvider);
-  return PdfService(settingsService: settingsService);
-});
 
 /// Provider لقائمة جميع الفواتير
 final invoicesProvider = FutureProvider<List<Invoice>>((ref) async {
@@ -30,6 +25,13 @@ final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
     await repository.addInvoice(
       invoice,
     );
+
+    // ترحيل القيد المحاسبي تلقائياً (نظام القيد المزدوج)
+    if (invoice.status == InvoiceStatus.sent ||
+        invoice.status == InvoiceStatus.paid) {
+      final accountingService = ref.read(accountingServiceProvider.notifier);
+      await accountingService.postSalesInvoice(invoice);
+    }
     ref.invalidate(
       invoicesProvider,
     );
@@ -52,6 +54,13 @@ final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
     await repository.updateInvoice(
       invoice,
     );
+
+    // ترحيل أو تحديث القيد المحاسبي (نظام القيد المزدوج)
+    if (invoice.status == InvoiceStatus.sent ||
+        invoice.status == InvoiceStatus.paid) {
+      final accountingService = ref.read(accountingServiceProvider.notifier);
+      await accountingService.postSalesInvoice(invoice);
+    }
     ref.invalidate(
       invoicesProvider,
     );
@@ -90,7 +99,7 @@ final invoiceSearchProvider = StateProvider<String>(
 
 /// State Provider لحالة الفلتر
 final invoiceFilterProvider = StateProvider<String>(
-  (ref) => 'الكل',
+  (ref) => 'all',
 );
 
 /// Provider لقائمة الفواتير المفلترة حسب البحث والحالة
@@ -108,15 +117,33 @@ final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
   return invoicesAsync.whenData((invoices) {
     var filtered = invoices;
 
-    if (filterStatus != 'الكل') {
-      filtered =
-          filtered.where((invoice) => invoice.status == filterStatus).toList();
+    if (filterStatus != 'all' && filterStatus != 'الكل') {
+      filtered = filtered.where((invoice) {
+        if (filterStatus == 'draft') {
+          return invoice.status == InvoiceStatus.draft;
+        }
+        if (filterStatus == 'paid') return invoice.status == InvoiceStatus.paid;
+        if (filterStatus == 'overdue') {
+          return invoice.status == InvoiceStatus.overdue;
+        }
+        if (filterStatus == 'sent' || filterStatus == 'issued') {
+          return invoice.status == InvoiceStatus.sent;
+        }
+        if (filterStatus == 'cancelled') {
+          return invoice.status == InvoiceStatus.cancelled;
+        }
+        if (filterStatus == 'refunded') {
+          return invoice.status == InvoiceStatus.refunded;
+        }
+        return false;
+      }).toList();
     }
 
     if (searchQuery.isNotEmpty) {
       filtered = filtered
           .where(
             (invoice) =>
+                invoice.invoiceNumber.contains(searchQuery) ||
                 invoice.id.contains(searchQuery) ||
                 invoice.customerName.contains(searchQuery),
           )
@@ -134,8 +161,10 @@ final totalSalesProvider = Provider<AsyncValue<double>>((ref) {
   );
 
   return invoicesAsync.whenData(
-    (invoices) =>
-        invoices.fold<double>(0, (sum, invoice) => sum + invoice.grandTotal),
+    (invoices) => invoices.fold<double>(
+      0,
+      (sum, invoice) => sum + invoice.totalAmount,
+    ),
   );
 });
 
@@ -146,8 +175,9 @@ final overdueInvoicesCountProvider = Provider<AsyncValue<int>>((ref) {
   );
 
   return invoicesAsync.whenData(
-    (invoices) =>
-        invoices.where((invoice) => invoice.status == 'overdue').length,
+    (invoices) => invoices
+        .where((invoice) => invoice.status == InvoiceStatus.overdue)
+        .length,
   );
 });
 
@@ -211,9 +241,99 @@ final invoiceStatisticsProvider =
   return invoicesAsync.whenData(
     (invoices) => InvoiceStatistics(
       totalInvoices: invoices.length,
-      paidInvoices: invoices.where((i) => i.status == 'paid').length,
-      overdueInvoices: invoices.where((i) => i.status == 'overdue').length,
-      totalAmount: invoices.fold(0, (sum, i) => sum + i.grandTotal),
+      paidInvoices:
+          invoices.where((i) => i.status == InvoiceStatus.paid).length,
+      overdueInvoices:
+          invoices.where((i) => i.status == InvoiceStatus.overdue).length,
+      totalAmount: invoices.fold(0, (sum, i) => sum + i.totalAmount),
     ),
   );
+});
+
+/// Provider لمضاعفة فاتورة (Logic from Go backend)
+final duplicateInvoiceProvider =
+    FutureProvider.family<Invoice, String>((ref, invoiceId) async {
+  final repository = ref.watch(invoiceRepositoryProvider);
+  final duplicated = await repository.duplicateInvoice(invoiceId);
+  ref.invalidate(invoicesProvider);
+  return duplicated;
+});
+
+/// Provider لتحديد فاتورة كمدفوعة (Logic from Go backend)
+final markInvoiceAsPaidProvider =
+    FutureProvider.family<bool, String>((ref, invoiceId) async {
+  final repository = ref.watch(invoiceRepositoryProvider);
+
+  try {
+    final invoice = await repository.getInvoiceById(invoiceId);
+    if (invoice == null) return false;
+
+    // تكييف المنطق من Go: تحديث مبالغ الدفع والحالة
+    final updatedInvoice = invoice.copyWith(
+      status: InvoiceStatus.paid,
+      paidAmount: invoice.totalAmount,
+      paidDate: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+
+    await repository.updateInvoice(updatedInvoice);
+
+    // ترحيل القيد المحاسبي تلقائياً عند الدفع (إذا لم يرحل عند الإرسال)
+    final accountingService = ref.read(accountingServiceProvider.notifier);
+    await accountingService.postSalesInvoice(updatedInvoice);
+
+    ref.invalidate(invoicesProvider);
+    return true;
+  } catch (e) {
+    return false;
+  }
+});
+
+/// Provider لإرسال الفاتورة (تغيير الحالة)
+final sendInvoiceProvider =
+    FutureProvider.family<bool, String>((ref, invoiceId) async {
+  final repository = ref.watch(invoiceRepositoryProvider);
+
+  try {
+    final invoice = await repository.getInvoiceById(invoiceId);
+    if (invoice == null) return false;
+
+    final updatedInvoice = invoice.copyWith(
+      status: InvoiceStatus.sent,
+      updatedAt: DateTime.now(),
+    );
+
+    await repository.updateInvoice(updatedInvoice);
+
+    // ترحيل القيد المحاسبي عند الانتقال لحالة 'مرسلة'
+    final accountingService = ref.read(accountingServiceProvider.notifier);
+    await accountingService.postSalesInvoice(updatedInvoice);
+
+    ref.invalidate(invoicesProvider);
+    return true;
+  } catch (e) {
+    return false;
+  }
+});
+
+/// Provider لإلغاء الفاتورة
+final cancelInvoiceProvider =
+    FutureProvider.family<bool, String>((ref, invoiceId) async {
+  final repository = ref.watch(invoiceRepositoryProvider);
+
+  try {
+    final invoice = await repository.getInvoiceById(invoiceId);
+    if (invoice == null) return false;
+
+    final updatedInvoice = invoice.copyWith(
+      status: InvoiceStatus.cancelled,
+      updatedAt: DateTime.now(),
+    );
+
+    await repository.updateInvoice(updatedInvoice);
+    ref.invalidate(invoicesProvider);
+    return true;
+  } catch (e) {
+    return false;
+  }
 });

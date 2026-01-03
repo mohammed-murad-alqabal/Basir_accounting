@@ -9,6 +9,38 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
+  String get labelTermsAndConditions => 'الشروط والأحكام';
+
+  @override
+  String get labelPaidDate => 'تاريخ الدفع';
+
+  @override
+  String get labelDiscountAmount => 'قيمة الخصم';
+
+  @override
+  String get labelZatcaQrCode => 'رمز الاستجابة السريعة (ZATCA)';
+
+  @override
+  String get zatcaComplianceText =>
+      'هذه الفاتورة متوافقة مع متطلبات هيئة الزكاة والضريبة والجمارك';
+
+  @override
+  String get actionCreateFirstInvoice => 'إنشاء أول فاتورة';
+
+  @override
+  String get noInvoicesTitle => 'لا توجد فواتير';
+
+  @override
+  String get noInvoicesDescription =>
+      'ابدأ بإضافة فاتورتك الأولى لإدارة مبيعاتك بشكل احترافي.';
+
+  @override
+  String get journalEntryFormTitleAdd => 'إضافة قيد يدوي';
+
+  @override
+  String get journalEntryFormTitleEdit => 'تعديل قيد يدوي';
+
+  @override
   String get aboutAppSubtitle => 'الإصدار 1.0.0';
 
   @override
@@ -59,6 +91,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get actionShareWhatsappText => 'إرسال عبر الواتساب (نص)';
+
+  @override
+  String get actionShare => 'مشاركة';
+
+  @override
+  String get actionExportPdf => 'تصدير PDF';
 
   @override
   String get actionUpgradeAccount => 'ترقية الحساب';
@@ -514,6 +552,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelTaxRateWithExample => 'نسبة الضريبة (مثال: 0.15)';
 
   @override
+  String get privacyAnalyticsTitle => 'الخصوصية والتحليلات';
+
+  @override
+  String get privacyAnalyticsSubtitle =>
+      'إدارة بيانات الاستخدام والخصوصية المحلية';
+
+  @override
+  String get analyticsEnableTracking => 'تفعيل التحليلات المحلية';
+
+  @override
+  String get analyticsPrivacyNotice =>
+      'نحن نحترم خصوصيتك. جميع التحليلات تُخزن محلياً فقط على جهازك ولا نجمع أي بيانات شخصية أو مالية. تساعدنا هذه البيانات في تحسين تجربة المستخدم وفهم الميزات الأكثر استخداماً.';
+
+  @override
+  String get analyticsClearData => 'مسح بيانات التحليلات';
+
+  @override
+  String get analyticsDataCleared => 'تم مسح بيانات التحليلات بنجاح';
+
+  @override
+  String get lastSyncLabel => 'آخر مزامنة';
+
+  @override
   String get labelUsername => 'اسم المستخدم';
 
   @override
@@ -850,4 +911,353 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sectionSpecialCases => 'حالات خاصة';
+
+  @override
+  String get msgResetConfirmation =>
+      'سيتم إعادة جميع إعدادات المظهر للوضع الافتراضي. هل أنت متأكد؟';
+
+  @override
+  String get errorTitle => 'عذراً، حدث خطأ غير متوقع';
+
+  @override
+  String get errorDescription =>
+      'نحن نعمل على إصلاح المشكلة حالياً. يرجى محاولة إعادة تشغيل التطبيق.';
+
+  @override
+  String get labelCurrencySAR => 'ر.س';
+
+  @override
+  String get msgNoActivity => 'لا يوجد نشاط حديث حتى الآن.';
+
+  @override
+  String get labelAccounting => 'المحاسبة';
+
+  @override
+  String get labelChartOfAccounts => 'دليل الحسابات';
+
+  @override
+  String get labelJournalEntries => 'القيود اليومية';
+
+  @override
+  String get financialSummaryTitle => 'ملخص مالي (تجريبي)';
+
+  @override
+  String get statAssets => 'الأصول';
+
+  @override
+  String get statLiabilities => 'الخصوم';
+
+  @override
+  String get statNetIncome => 'صافي الدخل';
+
+  @override
+  String get tooltipRefresh => 'تحديث';
+
+  @override
+  String get emptyAccountsMessage =>
+      'لا توجد حسابات. اضغط تحديث لإنشاء الدليل الافتراضي.';
+
+  @override
+  String get errorLoadingAccounts => 'خطأ في تحميل الحسابات';
+
+  @override
+  String get labelBalance => 'الرصيد';
+
+  @override
+  String get labelTotal => 'الإجمالي';
+
+  @override
+  String get statusPosted => 'مرحل';
+
+  @override
+  String get statusDraft => 'مسودة';
+
+  @override
+  String get emptyJournalEntriesMessage => 'لا توجد قيود مسجلة.';
+
+  @override
+  String get labelDebit => 'مدين';
+
+  @override
+  String get labelCredit => 'دائن';
+
+  @override
+  String get labelReference => 'المرجع / الرقم';
+
+  @override
+  String get msgColorPickerHint => 'اختر لوناً أساسياً مخصصاً للتطبيق';
+
+  @override
+  String get msgJournalEntryAdded => 'تم حفظ القيد المحاسبي بنجاح';
+
+  @override
+  String get errUnbalancedEntry =>
+      'القيد غير متزن! يجب أن يتساوى المدين والدائن';
+
+  @override
+  String get btnSaveEntry => 'حفظ كمسودة';
+
+  @override
+  String get btnPostEntry => 'ترحيل القيد';
+
+  @override
+  String get msgJournalEntryPosted => 'تم ترحيل القيد بنجاح';
+
+  @override
+  String get msgJournalEntryDrafted => 'تم حفظ القيد كمسودة';
+
+  @override
+  String get hintJournalDescription => 'أدخل وصف العملية المالية';
+
+  @override
+  String get labelJournalEntryLines => 'بنود القيد';
+
+  @override
+  String get expenseDistributionTitle => 'توزيع المصروفات';
+
+  @override
+  String get noExpenseDataMessage => 'لا توجد بيانات مصروفات';
+
+  @override
+  String get otherExpensesLabel => 'مصروفات أخرى';
+
+  @override
+  String get trialBalanceTitle => 'ميزان المراجعة';
+
+  @override
+  String get btnExport => 'تصدير';
+
+  @override
+  String get labelCode => 'الكود';
+
+  @override
+  String get labelAccount => 'الحساب';
+
+  @override
+  String get labelExportPdf => 'تصدير PDF';
+
+  @override
+  String get labelExportCsv => 'تصدير CSV (Excel)';
+
+  @override
+  String get cashFlowTitle => 'قائمة التدفقات النقدية';
+
+  @override
+  String get incomeStatementTitle => 'قائمة الدخل';
+
+  @override
+  String get balanceSheetTitle => 'الميزانية العمومية';
+
+  @override
+  String get labelOperating => 'العمليات التشغيلية';
+
+  @override
+  String get labelInvesting => 'العمليات الاستثمارية';
+
+  @override
+  String get labelFinancing => 'العمليات التمويلية';
+
+  @override
+  String get labelNetCashFlow => 'صافي التدفق النقدي';
+
+  @override
+  String get reportingOverviewTitle => 'التقارير المالية';
+
+  @override
+  String get trialBalanceSubtitle => 'تحقق من توازن الحسابات المدينة والدائنة';
+
+  @override
+  String get incomeStatementSubtitle => 'ملخص الإيرادات والمصروفات حسب IFRS 18';
+
+  @override
+  String get balanceSheetSubtitle => 'حالة الأصول والالتزامات وحقوق الملكية';
+
+  @override
+  String get cashFlowSubtitle =>
+      'حركة النقدية (الأنشطة التشغيلية، الاستثمارية، التمويلية)';
+
+  @override
+  String get agingReportsSubtitle => 'تحليل أعمار أرصدة العملاء والموردين';
+
+  @override
+  String get agingReportsTitle => 'تقارير تعمير الديون';
+
+  @override
+  String get receivablesAgingLabel => 'ذمم مدينة (عملاء)';
+
+  @override
+  String get payablesAgingLabel => 'ذمم دائنة (موردون)';
+
+  @override
+  String get noDataMessage => 'لا توجد بيانات';
+
+  @override
+  String get periodCurrent => 'الحالي';
+
+  @override
+  String get period1_30 => '1-30 يوم';
+
+  @override
+  String get period31_60 => '31-60 يوم';
+
+  @override
+  String get period61_90 => '61-90 يوم';
+
+  @override
+  String get periodOver90 => 'أكثر من 90 يوم';
+
+  @override
+  String get labelAssets => 'الأصول';
+
+  @override
+  String get labelLiabilities => 'الالتزامات';
+
+  @override
+  String get labelEquity => 'حقوق الملكية';
+
+  @override
+  String get labelTotalAssets => 'إجمالي الأصول';
+
+  @override
+  String get labelTotalLiabilitiesAndEquity =>
+      'إجمالي الالتزامات وحقوق الملكية';
+
+  @override
+  String get msgBalanceBalanced =>
+      'الميزانية متزنة: الأصول تساوي الالتزامات وحقوق الملكية.';
+
+  @override
+  String msgBalanceUnbalanced(Object diff) {
+    return 'تنبيه: الميزانية غير متزنة! الفرق: $diff';
+  }
+
+  @override
+  String get treasuryTitle => 'الخزينة والنقدية';
+
+  @override
+  String get cashBalancesTitle => 'أرصدة النقدية والبنوك';
+
+  @override
+  String get recentVouchersTitle => 'أحدث السندات';
+
+  @override
+  String get receiptVoucherAction => 'سند قبض';
+
+  @override
+  String get paymentVoucherAction => 'سند صرف';
+
+  @override
+  String get newVoucherLabel => 'سند جديد';
+
+  @override
+  String get noVouchersMessage => 'لا توجد سندات مسجلة';
+
+  @override
+  String get anonymousPerson => 'بدون اسم';
+
+  @override
+  String get actionReverse => 'عكس القيد';
+
+  @override
+  String get actionEdit => 'تعديل';
+
+  @override
+  String get actionPostNow => 'ترحيل الآن';
+
+  @override
+  String get msgConfirmReverse =>
+      'هل أنت متأكد من رغبتك في عكس هذا القيد؟ سيؤدي ذلك إلى إنشاء قيد عكسي تلقائي.';
+
+  @override
+  String get msgReverseSuccess => 'تم عكس القيد بنجاح';
+
+  @override
+  String get labelBalanced => 'متزن';
+
+  @override
+  String get labelUnbalanced => 'غير متزن';
+
+  @override
+  String get labelDiff => 'الفرق';
+
+  @override
+  String get voucherReceiptTitle => 'سند قبض جديد';
+
+  @override
+  String get voucherPaymentTitle => 'سند صرف جديد';
+
+  @override
+  String get btnSaveAndPostVoucher => 'حفظ السند وترحيله';
+
+  @override
+  String get errInvalidAmount => 'مبلغ غير صالح';
+
+  @override
+  String get errAmountRequired => 'يرجى إدخال المبلغ';
+
+  @override
+  String get errDescriptionRequired => 'يرجى إدخال الشرح';
+
+  @override
+  String get labelPaymentMethod => 'طريقة الدفع';
+
+  @override
+  String get methodCash => 'نقدي';
+
+  @override
+  String get methodBank => 'بنكي';
+
+  @override
+  String get methodCheck => 'شيك';
+
+  @override
+  String get labelTreasuryAccount => 'حساب الصندوق/البنك';
+
+  @override
+  String get labelSourceClient => 'العميل (مصدر السند)';
+
+  @override
+  String get labelBeneficiaryVendor => 'المورد (المستفيد)';
+
+  @override
+  String get msgVoucherSavedSuccess => 'تم حفظ السند وترحيله بنجاح';
+
+  @override
+  String get errFormFill => 'يرجى إكمال البيانات';
+
+  @override
+  String get labelAccountSelector => 'اختر الحساب';
+
+  @override
+  String get labelRequired => 'مطلوب';
+
+  @override
+  String get labelStatus => 'الحالة';
+
+  @override
+  String get labelDescription => 'الوصف';
+
+  @override
+  String get errorExportingReport => 'خطأ أثناء تصدير التقرير';
+
+  @override
+  String get labelAmount => 'المبلغ';
+
+  @override
+  String get labelDate => 'التاريخ';
+
+  @override
+  String get labelType => 'النوع';
+
+  @override
+  String get labelRevenue => 'الإيرادات';
+
+  @override
+  String get labelExpenses => 'المصروفات';
+
+  @override
+  String get labelIncomeTax => 'ضريبة الدخل';
+
+  @override
+  String get labelNetProfit => 'صافي الربح / الخسارة';
 }

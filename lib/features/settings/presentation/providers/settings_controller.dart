@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:basir_app/core/models/sync_status.dart';
 import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/providers/supabase_auth_provider.dart';
+import 'package:basir_app/features/settings/domain/entities/profile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// حالة شاشة الإعدادات
@@ -107,6 +110,38 @@ class SettingsController extends StateNotifier<SettingsState> {
           newPassword.isNotEmpty) {
         await authService.changePassword(oldPassword, newPassword);
       }
+
+      state = state.copyWith(isLoading: false);
+      return true;
+    } on Object catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString());
+      return false;
+    }
+  }
+
+  /// تحديث الملف الشخصي
+  Future<bool> updateProfile({
+    String? displayName,
+    String? avatarUrl,
+    String? phoneNumber,
+  }) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final repository = _ref.read(profileRepositoryProvider);
+      final profile = await repository.getProfile() ??
+          Profile(
+            id: DateTime.now().millisecondsSinceEpoch.toString(),
+            email: _ref.read(supabaseAuthProvider).currentUser?.email ?? '',
+          );
+
+      await repository.saveProfile(
+        profile.copyWith(
+          displayName: displayName ?? profile.displayName,
+          avatarUrl: avatarUrl ?? profile.avatarUrl,
+          phoneNumber: phoneNumber ?? profile.phoneNumber,
+          syncStatus: SyncStatus.pendingPush,
+        ),
+      );
 
       state = state.copyWith(isLoading: false);
       return true;

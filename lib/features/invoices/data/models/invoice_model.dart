@@ -1,178 +1,233 @@
+import 'package:basir_app/core/models/sync_status.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:isar/isar.dart';
 
 part 'invoice_model.g.dart';
 
 /// نموذج بند الفاتورة (Invoice Item Model)
 ///
-/// نموذج Isar مضمن (Embedded) لتخزين بنود الفاتورة.
-/// يتم تخزينه كجزء من [InvoiceModel] وليس كمجموعة منفصلة.
-///
-/// **مثال:**
-/// ```dart
-/// final itemModel = InvoiceItemModel()
-///   ..id = 'item-1'
-///   ..name = 'خدمة استشارية'
-///   ..quantity = 2.0
-///   ..price = 500.0;
-/// ```
+/// يستخدم لتخزين تفاصيل بنود الفاتورة في قاعدة بيانات Isar.
 @embedded
 class InvoiceItemModel {
-  /// Constructor افتراضي (مطلوب لـ Isar)
+  /// إنشاء نموذج بند فاتورة فارغ (مطلوب لـ Isar)
   InvoiceItemModel();
 
-  /// إنشاء نموذج من كيان
-  ///
-  /// يحول كيان [InvoiceItem] إلى نموذج Isar.
-  ///
-  /// **Parameters:**
-  /// - [item]: كيان البند المراد تحويله
-  ///
-  /// **Returns:** نموذج Isar جاهز للحفظ
+  /// إنشاء نموذج بند من كيان المجال
   factory InvoiceItemModel.fromEntity(InvoiceItem item) => InvoiceItemModel()
     ..id = item.id
     ..name = item.name
+    ..description = item.description
     ..quantity = item.quantity
-    ..price = item.price;
+    ..price = item.price
+    ..total = item.total
+    ..taxAmount = item.taxAmount;
 
-  /// معرف البند الفريد
+  /// المعرف الفريد للبند
   late String id;
 
   /// اسم المنتج أو الخدمة
   late String name;
 
+  /// وصف تفصيلي للبند (اختياري)
+  String? description;
+
   /// الكمية
   late double quantity;
 
-  /// السعر للوحدة الواحدة
+  /// سعر الوحدة
   late double price;
 
-  /// تحويل النموذج إلى كيان
-  ///
-  /// يحول نموذج Isar إلى كيان [InvoiceItem].
-  ///
-  /// **Returns:** كيان بند الفاتورة
+  /// الإجمالي (الكمية * السعر)
+  late double total;
+
+  /// مبلغ الضريبة لهذا البند
+  late double taxAmount;
+
+  /// تحويل النموذج إلى كيان مجال
   InvoiceItem toEntity() => InvoiceItem(
         id: id,
         name: name,
+        description: description,
         quantity: quantity,
         price: price,
+        total: total,
+        taxAmount: taxAmount,
       );
 }
 
 /// نموذج الفاتورة (Invoice Model)
 ///
-/// نموذج Isar لتخزين الفواتير محلياً في قاعدة البيانات.
-/// يحتوي على جميع بيانات الفاتورة وبنودها.
-///
-/// **الميزات:**
-/// - تخزين محلي آمن باستخدام Isar
-/// - معرف تلقائي (Auto-increment)
-/// - تخزين البنود كـ Embedded objects
-/// - تحويل سهل بين النموذج والكيان
-///
-/// **مثال:**
-/// ```dart
-/// final invoice = Invoice(...,);
-/// final model = InvoiceModel.fromEntity(invoice,);
-/// await isar.invoiceModels.put(model,);
-/// ```
+/// يمثل جدول الفواتير في قاعدة بيانات Isar.
 @collection
 class InvoiceModel {
-  /// Constructor افتراضي (مطلوب لـ Isar)
+  /// إنشاء نموذج فاتورة فارغ (مطلوب لـ Isar)
   InvoiceModel();
 
-  /// إنشاء نموذج من كيان
-  ///
-  /// يحول كيان [Invoice] إلى نموذج Isar للتخزين المحلي.
-  ///
-  /// **الاستخدام:**
-  /// ```dart
-  /// final invoice = Invoice(...,);
-  /// final model = InvoiceModel.fromEntity(invoice,);
-  /// await isar.invoiceModels.put(model,);
-  /// ```
-  ///
-  /// **Parameters:**
-  /// - [invoice]: كيان الفاتورة المراد تحويله
-  ///
-  /// **Returns:** نموذج Isar جاهز للحفظ
+  /// إنشاء نموذج فاتورة من كيان المجال
   factory InvoiceModel.fromEntity(Invoice invoice) => InvoiceModel()
     ..invoiceId = invoice.id
+    ..invoiceNumber = invoice.invoiceNumber
     ..customerId = invoice.customerId
     ..customerName = invoice.customerName
     ..items = invoice.items.map(InvoiceItemModel.fromEntity).toList()
     ..issuedDate = invoice.issuedDate
     ..dueDate = invoice.dueDate
-    ..taxRate = invoice.taxRate
-    ..status = invoice.status
-    ..notes = invoice.notes
+    ..paidDate = invoice.paidDate
     ..createdAt = invoice.createdAt
-    ..updatedAt = invoice.updatedAt;
+    ..updatedAt = invoice.updatedAt
+    ..status = invoice.status // Isar handles Enum with @enumerated
+    ..subtotalAmount = invoice.subtotalAmount
+    ..taxAmount = invoice.taxAmount
+    ..discountAmount = invoice.discountAmount
+    ..totalAmount = invoice.totalAmount
+    ..paidAmount = invoice.paidAmount
+    ..taxRate = invoice.taxRate
+    ..discountRate = invoice.discountRate
+    ..currency = invoice.currency
+    ..notes = invoice.notes
+    ..terms = invoice.terms
+    ..zatcaUuid = invoice.zatcaUuid
+    ..zatcaHash = invoice.zatcaHash
+    ..qrCode = invoice.qrCode
+    ..xmlContent = invoice.xmlContent
+    ..userId = invoice.userId
+    ..syncStatus = invoice.syncStatus
+    ..serverUpdatedAt = invoice.serverUpdatedAt
+    ..isDeleted = invoice.isDeleted;
 
-  /// معرف Isar التلقائي (Auto-increment)
+  /// المعرف الداخلي لـ Isar (تلقائي)
   Id id = Isar.autoIncrement;
 
-  /// معرف الفاتورة الفريد (UUID)
+  /// المعرف الفريد للفاتورة (UUID)
   @Index(unique: true)
   late String invoiceId;
 
-  /// معرف العميل
+  /// رقم الفاتورة التسلسلي (مثال: INV-2023-001)
+  @Index()
+  late String invoiceNumber;
+
+  /// معرف العميل صاحب الفاتورة
   @Index()
   late String customerId;
 
-  /// اسم العميل
+  /// اسم العميل (للتخزين المؤقت والعرض السريع)
   late String customerName;
 
   /// قائمة بنود الفاتورة
-  late List<InvoiceItemModel> items;
+  List<InvoiceItemModel>? items;
 
   /// تاريخ إصدار الفاتورة
   @Index()
   late DateTime issuedDate;
 
-  /// تاريخ استحقاق الدفع
+  /// تاريخ استحقاق الفاتورة
   late DateTime dueDate;
 
-  /// نسبة الضريبة (0.15 = 15%)
-  late double taxRate;
+  /// تاريخ السداد (إن وجد)
+  DateTime? paidDate;
 
-  /// حالة الفاتورة (draft, issued, paid, overdue, cancelled)
-  @Index()
-  late String status;
-
-  /// ملاحظات إضافية (اختياري)
-  String? notes;
-
-  /// تاريخ إنشاء الفاتورة
+  /// تاريخ إنشاء السجل
   @Index()
   late DateTime createdAt;
 
-  /// تاريخ آخر تحديث
+  /// تاريخ آخر تحديث للسجل
   late DateTime updatedAt;
 
-  /// تحويل النموذج إلى كيان
-  ///
-  /// يحول نموذج Isar إلى كيان [Invoice] مع جميع بنوده.
-  ///
-  /// **الاستخدام:**
-  /// ```dart
-  /// final model = await isar.invoiceModels.get(1,);
-  /// final invoice = model?.toEntity();
-  /// ```
-  ///
-  /// **Returns:** كيان الفاتورة الكامل
+  /// حالة الفاتورة (مسودة، مرسلة، مدفوعة، إلخ)
+  @Enumerated(EnumType.name)
+  late InvoiceStatus status;
+
+  // Amounts
+
+  /// المجموع الفرعي (قبل الضريبة والخصم)
+  late double subtotalAmount;
+
+  /// إجمالي مبلغ الضريبة
+  late double taxAmount;
+
+  /// إجمالي مبلغ الخصم
+  late double discountAmount;
+
+  /// المبلغ الإجمالي النهائي (المستحق)
+  late double totalAmount;
+
+  /// المبلغ المدفوع حتى الآن
+  late double paidAmount;
+
+  /// نسبة الضريبة المطبقة
+  late double taxRate;
+
+  /// نسبة الخصم المطبقة
+  late double discountRate;
+
+  /// رمز العملة (مثال: SAR)
+  late String currency;
+
+  /// ملاحظات إضافية على الفاتورة
+  String? notes;
+
+  /// الشروط والأحكام الخاصة بالفاتورة
+  String? terms;
+
+  // ZATCA
+
+  /// المعرف الفريد للفاتورة الإلكترونية (UUID)
+  String? zatcaUuid;
+
+  /// التوقيع الرقمي (Hash) للفاتورة
+  String? zatcaHash;
+
+  /// رمز الاستجابة السريعة (QR Code) المشفر
+  String? qrCode;
+
+  /// محتوى الفاتورة بصيغة XML (المطلوب من ZATCA)
+  String? xmlContent;
+
+  /// معرف المستخدم (لعزل البيانات).
+  @Index()
+  String? userId;
+
+  /// حالة المزامنة
+  @enumerated
+  late SyncStatus syncStatus;
+
+  /// تاريخ آخر تحديث من السيرفر
+  DateTime? serverUpdatedAt;
+
+  /// هل السجل محذوف
+  late bool isDeleted;
+
+  /// تحويل النموذج إلى كيان مجال
   Invoice toEntity() => Invoice(
         id: invoiceId,
+        invoiceNumber: invoiceNumber,
         customerId: customerId,
         customerName: customerName,
-        items: items.map((item) => item.toEntity()).toList(),
+        items: items?.map((item) => item.toEntity()).toList() ?? [],
         issuedDate: issuedDate,
         dueDate: dueDate,
-        taxRate: taxRate,
-        status: status,
-        notes: notes,
+        paidDate: paidDate,
         createdAt: createdAt,
         updatedAt: updatedAt,
+        status: status,
+        subtotalAmount: subtotalAmount,
+        taxAmount: taxAmount,
+        discountAmount: discountAmount,
+        totalAmount: totalAmount,
+        paidAmount: paidAmount,
+        taxRate: taxRate,
+        discountRate: discountRate,
+        currency: currency,
+        notes: notes,
+        terms: terms,
+        zatcaUuid: zatcaUuid,
+        zatcaHash: zatcaHash,
+        qrCode: qrCode,
+        xmlContent: xmlContent,
+        userId: userId,
+        syncStatus: syncStatus,
+        serverUpdatedAt: serverUpdatedAt,
+        isDeleted: isDeleted,
       );
 }

@@ -1,5 +1,6 @@
 import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_app/features/invoices/domain/repositories/invoice_repository.dart';
 import 'package:isar/isar.dart';
 
@@ -8,15 +9,19 @@ import 'package:isar/isar.dart';
 /// يتعامل مع التخزين المحلي للفواتير باستخدام Isar
 class InvoiceRepositoryImpl implements InvoiceRepository {
   /// إنشاء مستودع الفواتير
-  InvoiceRepositoryImpl({required this.isar});
+  InvoiceRepositoryImpl({required this.isar, required this.userId});
 
   /// قاعدة البيانات المحلية
   final Isar isar;
 
+  /// معرف المستخدم لعزل البيانات.
+  final String? userId;
+
   @override
   Future<List<Invoice>> getAllInvoices() async {
     try {
-      final models = await isar.invoiceModels.where().findAll();
+      final models =
+          await isar.invoiceModels.filter().userIdEqualTo(userId).findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
       throw Exception(
@@ -28,11 +33,12 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   @override
   Future<Invoice?> getInvoiceById(String id) async {
     try {
-      final models = await isar.invoiceModels.where().findAll();
-      final model = models.cast<InvoiceModel?>().firstWhere(
-            (m) => m?.invoiceId == id,
-            orElse: () => null,
-          );
+      final model = await isar.invoiceModels
+          .filter()
+          .invoiceIdEqualTo(id)
+          .and()
+          .userIdEqualTo(userId)
+          .findFirst();
       return model?.toEntity();
     } on Exception catch (e) {
       throw Exception(
@@ -44,9 +50,13 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   @override
   Future<List<Invoice>> getInvoicesByCustomerId(String customerId) async {
     try {
-      final models = await isar.invoiceModels.where().findAll();
-      final filtered = models.where((m) => m.customerId == customerId).toList();
-      return filtered.map((model) => model.toEntity()).toList();
+      final models = await isar.invoiceModels
+          .filter()
+          .customerIdEqualTo(customerId)
+          .and()
+          .userIdEqualTo(userId)
+          .findAll();
+      return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
       throw Exception(
         'خطأ في جلب فواتير العميل: $e',
@@ -55,11 +65,15 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   }
 
   @override
-  Future<List<Invoice>> getInvoicesByStatus(String status) async {
+  Future<List<Invoice>> getInvoicesByStatus(InvoiceStatus status) async {
     try {
-      final models = await isar.invoiceModels.where().findAll();
-      final filtered = models.where((m) => m.status == status).toList();
-      return filtered.map((model) => model.toEntity()).toList();
+      final models = await isar.invoiceModels
+          .filter()
+          .statusEqualTo(status)
+          .and()
+          .userIdEqualTo(userId)
+          .findAll();
+      return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
       throw Exception(
         'خطأ في جلب الفواتير حسب الحالة: $e',
@@ -71,7 +85,7 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   Future<void> addInvoice(Invoice invoice) async {
     try {
       final model = InvoiceModel.fromEntity(
-        invoice,
+        invoice.copyWith(userId: userId),
       );
       await isar.writeTxn(() async {
         await isar.invoiceModels.put(
@@ -90,11 +104,12 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
     try {
       await isar.writeTxn(() async {
         // البحث عن الفاتورة الموجودة
-        final models = await isar.invoiceModels.where().findAll();
-        final existingModel = models.cast<InvoiceModel?>().firstWhere(
-              (m) => m?.invoiceId == invoice.id,
-              orElse: () => null,
-            );
+        final existingModel = await isar.invoiceModels
+            .filter()
+            .invoiceIdEqualTo(invoice.id)
+            .and()
+            .userIdEqualTo(userId)
+            .findFirst();
 
         if (existingModel == null) {
           throw Exception(
@@ -103,8 +118,9 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
         }
 
         // تحديث الفاتورة مع الاحتفاظ بنفس id
-        final updatedModel = InvoiceModel.fromEntity(invoice)
-          ..id = existingModel.id;
+        final updatedModel =
+            InvoiceModel.fromEntity(invoice.copyWith(userId: userId))
+              ..id = existingModel.id;
         await isar.invoiceModels.put(
           updatedModel,
         );
@@ -120,11 +136,12 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   Future<void> deleteInvoice(String id) async {
     try {
       await isar.writeTxn(() async {
-        final models = await isar.invoiceModels.where().findAll();
-        final model = models.cast<InvoiceModel?>().firstWhere(
-              (m) => m?.invoiceId == id,
-              orElse: () => null,
-            );
+        final model = await isar.invoiceModels
+            .filter()
+            .invoiceIdEqualTo(id)
+            .and()
+            .userIdEqualTo(userId)
+            .findFirst();
         if (model != null) {
           await isar.invoiceModels.delete(
             model.id,
@@ -142,7 +159,7 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   Future<void> deleteAllInvoices() async {
     try {
       await isar.writeTxn(() async {
-        await isar.invoiceModels.clear();
+        await isar.invoiceModels.filter().userIdEqualTo(userId).deleteAll();
       });
     } on Exception catch (e) {
       throw Exception(
@@ -156,19 +173,21 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
     try {
       final allInvoices = await getAllInvoices();
 
-      final paidInvoices =
-          allInvoices.where((invoice) => invoice.status == 'paid').toList();
+      final paidInvoices = allInvoices
+          .where((invoice) => invoice.status == InvoiceStatus.paid)
+          .toList();
 
-      final overdueInvoices =
-          allInvoices.where((invoice) => invoice.status == 'overdue').toList();
+      final overdueInvoices = allInvoices
+          .where((invoice) => invoice.status == InvoiceStatus.overdue)
+          .toList();
 
       final totalRevenue = allInvoices.fold<double>(
         0,
-        (sum, invoice) => sum + invoice.grandTotal,
+        (sum, invoice) => sum + invoice.totalAmount,
       );
       final paidRevenue = paidInvoices.fold<double>(
         0,
-        (sum, invoice) => sum + invoice.grandTotal,
+        (sum, invoice) => sum + invoice.totalAmount,
       );
 
       return InvoiceStatistics(
@@ -201,7 +220,7 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
         issuedDate: DateTime.now(),
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
-        status: 'draft', // النسخة تبدأ دائماً كمسودة
+        status: InvoiceStatus.draft, // النسخة تبدأ دائماً كمسودة
       );
 
       await addInvoice(duplicated);

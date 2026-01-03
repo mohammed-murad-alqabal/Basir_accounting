@@ -1,387 +1,325 @@
 import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/core/theme/services/icon_customization_service.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة اختبار شاملة لجميع أنواع الأزرار.
+/// شاشة اختبار شاملة لجميع أنواع الأزرار الموحدة.
 ///
 /// تحتوي على جميع أنواع الأزرار (primary, secondary, text) في حالات مختلفة
 /// (عادي، مع أيقونة، معطل، تحميل، نص طويل) لاختبار عدم وجود قص للنصوص.
-///
-/// **الاستخدام:**
-/// ```dart
-/// Navigator.push(
-///   context,
-///   MaterialPageRoute(builder: (_) => const ButtonTestScreen()),
-///,);
-/// ```
-class ButtonTestScreen extends StatelessWidget {
+class ButtonTestScreen extends ConsumerWidget {
   /// ينشئ شاشة اختبار الأزرار.
   const ButtonTestScreen({super.key});
 
-  /// يبني شاشة اختبار الأزرار مع جميع أنواع الأزرار.
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(context.l10n.testButtonsTitle),
-          backgroundColor: Colors.blue,
-          foregroundColor: Colors.white,
-        ),
-        body: TextScaleFactorTester(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // مقدمة
-                _buildIntroCard(),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appIcons = ref.watch(appIconsProvider);
 
-                const SizedBox(height: 24),
+    return Scaffold(
+      appBar: AppAppBar(title: context.l10n.testButtonsTitle),
+      body: TextScaleFactorTester(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(Spacing.lg),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              buildIntroCard(context),
+              const SizedBox(height: Spacing.xl),
 
-                // قسم: أزرار Primary
-                _buildSection(
-                  title: context.l10n.sectionPrimaryButtons,
-                  icon: Icons.touch_app,
-                  children: [
-                    AppEnhancedButton(text: 'نص قصير', onPressed: () {}),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'نص متوسط الطول للاختبار',
-                      onPressed: () {},
-                    ),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'نص طويل جداً جداً جداً قد يسبب مشاكل في العرض',
-                      onPressed: () {},
-                    ),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'مع أيقونة',
-                      icon: Icons.add,
-                      onPressed: () {},
-                    ),
-                    const SizedBox(height: 12),
-                    const AppEnhancedButton(text: 'معطل', onPressed: null),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'تحميل',
-                      onPressed: () {},
-                      isLoading: true,
-                    ),
-                  ],
-                ),
+              // قسم: أزرار Primary
+              buildSection(
+                context: context,
+                title: context.l10n.sectionPrimaryButtons,
+                icon: appIcons.touch,
+                children: [
+                  AppButton(label: 'نص قصير', onPressed: () {}),
+                  const SizedBox(height: Spacing.md),
+                  AppButton(
+                    label: 'نص متوسط الطول للاختبار',
+                    onPressed: () {},
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  AppButton(
+                    label: 'نص طويل جداً جداً قد يسبب مشاكل في العرض',
+                    onPressed: () {},
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  AppButton(
+                    label: 'مع أيقونة',
+                    icon: appIcons.add,
+                    onPressed: () {},
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  const AppButton(label: 'معطل', onPressed: null),
+                  const SizedBox(height: Spacing.md),
+                  AppButton(
+                    label: 'تحميل',
+                    onPressed: () {},
+                    isLoading: true,
+                  ),
+                ],
+              ),
 
-                const SizedBox(height: 24),
+              const SizedBox(height: Spacing.xl),
 
-                // قسم: أزرار Secondary
-                _buildSection(
-                  title: context.l10n.sectionSecondaryButtons,
-                  icon: Icons.radio_button_unchecked,
-                  children: [
-                    AppEnhancedButton(
-                      text: 'نص قصير',
-                      onPressed: () {},
-                      style: AppEnhancedButtonStyle.secondary,
-                    ),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'نص متوسط الطول للاختبار',
-                      onPressed: () {},
-                      style: AppEnhancedButtonStyle.secondary,
-                    ),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'نص طويل جداً جداً جداً قد يسبب مشاكل في العرض',
-                      onPressed: () {},
-                      style: AppEnhancedButtonStyle.secondary,
-                    ),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'مع أيقونة',
-                      icon: Icons.edit,
-                      onPressed: () {},
-                      style: AppEnhancedButtonStyle.secondary,
-                    ),
-                    const SizedBox(height: 12),
-                    const AppEnhancedButton(
-                      text: 'معطل',
-                      onPressed: null,
-                      style: AppEnhancedButtonStyle.secondary,
-                    ),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'تحميل',
-                      onPressed: () {},
-                      isLoading: true,
-                      style: AppEnhancedButtonStyle.secondary,
-                    ),
-                  ],
-                ),
+              // قسم: أزرار Secondary
+              buildSection(
+                context: context,
+                title: context.l10n.sectionSecondaryButtons,
+                icon: appIcons.circle,
+                children: [
+                  AppButton(
+                    label: 'نص قصير',
+                    onPressed: () {},
+                    type: AppButtonType.secondary,
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  AppButton(
+                    label: 'نص متوسط الطول للاختبار',
+                    onPressed: () {},
+                    type: AppButtonType.secondary,
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  AppButton(
+                    label: 'نص طويل جداً جداً قد يسبب مشاكل في العرض',
+                    onPressed: () {},
+                    type: AppButtonType.secondary,
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  AppButton(
+                    label: 'مع أيقونة',
+                    icon: appIcons.edit,
+                    onPressed: () {},
+                    type: AppButtonType.secondary,
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  const AppButton(
+                    label: 'معطل',
+                    onPressed: null,
+                    type: AppButtonType.secondary,
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  AppButton(
+                    label: 'تحميل',
+                    onPressed: () {},
+                    isLoading: true,
+                    type: AppButtonType.secondary,
+                  ),
+                ],
+              ),
 
-                const SizedBox(height: 24),
+              const SizedBox(height: Spacing.xl),
 
-                // قسم: أزرار Text
-                _buildSection(
-                  title: context.l10n.sectionTextButtons,
-                  icon: Icons.text_fields,
-                  children: [
-                    AppEnhancedButton(
-                      text: 'نص قصير',
-                      onPressed: () {},
-                      style: AppEnhancedButtonStyle.text,
-                    ),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'نص متوسط الطول للاختبار',
-                      onPressed: () {},
-                      style: AppEnhancedButtonStyle.text,
-                    ),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'نص طويل جداً جداً جداً قد يسبب مشاكل في العرض',
-                      onPressed: () {},
-                      style: AppEnhancedButtonStyle.text,
-                    ),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'مع أيقونة',
-                      icon: Icons.delete,
-                      onPressed: () {},
-                      style: AppEnhancedButtonStyle.text,
-                    ),
-                    const SizedBox(height: 12),
-                    const AppEnhancedButton(
-                      text: 'معطل',
-                      onPressed: null,
-                      style: AppEnhancedButtonStyle.text,
-                    ),
-                  ],
-                ),
+              // قسم: أزرار Text
+              buildSection(
+                context: context,
+                title: context.l10n.sectionTextButtons,
+                icon: appIcons.text,
+                children: [
+                  AppButton(
+                    label: 'نص قصير',
+                    onPressed: () {},
+                    type: AppButtonType.text,
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  AppButton(
+                    label: 'نص متوسط الطول للاختبار',
+                    onPressed: () {},
+                    type: AppButtonType.text,
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  AppButton(
+                    label: 'نص طويل جداً جداً قد يسبب مشاكل في العرض',
+                    onPressed: () {},
+                    type: AppButtonType.text,
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  AppButton(
+                    label: 'مع أيقونة',
+                    icon: appIcons.delete,
+                    onPressed: () {},
+                    type: AppButtonType.text,
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  const AppButton(
+                    label: 'معطل',
+                    onPressed: null,
+                    type: AppButtonType.text,
+                  ),
+                ],
+              ),
 
-                const SizedBox(height: 24),
+              const SizedBox(height: Spacing.xl),
 
-                // قسم: أزرار في Row
-                _buildSection(
-                  title: context.l10n.sectionRowButtons,
-                  icon: Icons.view_column,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: AppEnhancedButton(
-                            text: 'إلغاء',
-                            onPressed: () {},
-                            style: AppEnhancedButtonStyle.secondary,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: AppEnhancedButton(
-                            text: 'موافق',
-                            onPressed: () {},
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: AppEnhancedButton(
-                            text: 'حذف',
-                            icon: Icons.delete,
-                            onPressed: () {},
-                            style: AppEnhancedButtonStyle.text,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: AppEnhancedButton(
-                            text: 'حفظ',
-                            icon: Icons.save,
-                            onPressed: () {},
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: AppEnhancedButton(
-                            text: 'نص طويل جداً',
-                            onPressed: () {},
-                            style: AppEnhancedButtonStyle.secondary,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: AppEnhancedButton(
-                            text: 'نص طويل جداً أيضاً',
-                            onPressed: () {},
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 24),
-
-                // قسم: حالات خاصة
-                _buildSection(
-                  title: context.l10n.sectionSpecialCases,
-                  icon: Icons.warning,
-                  children: [
-                    AppEnhancedButton(
-                      text: 'نص عربي طويل جداً جداً جداً مع أيقونة',
-                      icon: Icons.info,
-                      onPressed: () {},
-                    ),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'نص قصير',
-                      icon: Icons.check_circle,
-                      onPressed: () {},
-                    ),
-                    const SizedBox(height: 12),
-                    AppEnhancedButton(
-                      text: 'نص طويل جداً في زر بعرض محدد',
-                      onPressed: () {},
-                      style: AppEnhancedButtonStyle.secondary,
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 32),
-
-                // ملاحظة نهائية
-                _buildNoteCard(),
-              ],
-            ),
-          ),
-        ),
-      );
-
-  /// بناء بطاقة المقدمة
-  Widget _buildIntroCard() => Builder(
-        builder: (context) {
-          final colorScheme = Theme.of(context).colorScheme;
-          return Card(
-            color: colorScheme.primaryContainer,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              // قسم: أزرار في Row
+              buildSection(
+                context: context,
+                title: context.l10n.sectionRowButtons,
+                icon: Icons.view_column,
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.info, color: colorScheme.primary),
-                      const SizedBox(width: 8),
                       Expanded(
-                        child: Text(
-                          'شاشة اختبار الأزرار',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.onPrimaryContainer,
-                          ),
-                          overflow: TextOverflow.ellipsis,
+                        child: AppButton(
+                          label: 'إلغاء',
+                          onPressed: () {},
+                          type: AppButtonType.secondary,
+                        ),
+                      ),
+                      const SizedBox(width: Spacing.md),
+                      Expanded(
+                        child: AppButton(
+                          label: 'موافق',
+                          onPressed: () {},
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'استخدم شريط التحكم أعلاه لتغيير textScaleFactor '
-                    'واختبار جميع الأزرار للتأكد من عدم وجود قص للنصوص.',
+                  const SizedBox(height: Spacing.md),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AppButton(
+                          label: 'حذف',
+                          icon: appIcons.delete,
+                          onPressed: () {},
+                          type: AppButtonType.text,
+                        ),
+                      ),
+                      const SizedBox(width: Spacing.md),
+                      Expanded(
+                        child: AppButton(
+                          label: 'حفظ',
+                          icon: appIcons.save,
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: Spacing.xxl),
+              buildNoteCard(context),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// ينشئ بطاقة مقدمة الشاشة.
+  Widget buildIntroCard(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Card(
+      color: colorScheme.primaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(Spacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.info, color: colorScheme.primary),
+                const SizedBox(width: Spacing.sm),
+                Expanded(
+                  child: Text(
+                    'اختبار الأزرار الموحدة (AppButton)',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: AppTypography.titleLarge,
+                      fontWeight: FontWeight.bold,
                       color: colorScheme.onPrimaryContainer,
                     ),
                   ),
-                ],
+                ),
+              ],
+            ),
+            const SizedBox(height: Spacing.md),
+            Text(
+              'تم توحيد جميع الأزرار في مكون AppButton واحد يدعم '
+              'Cairo Font Metrics ومنع قص النصوص التلقائي.',
+              style: TextStyle(
+                fontSize: AppTypography.bodyMedium,
+                color: colorScheme.onPrimaryContainer,
               ),
             ),
-          );
-        },
-      );
+          ],
+        ),
+      ),
+    );
+  }
 
-  /// بناء بطاقة الملاحظة
-  Widget _buildNoteCard() => Builder(
-        builder: (context) {
-          final colorScheme = Theme.of(context).colorScheme;
-          return Card(
-            color: colorScheme.tertiaryContainer,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.lightbulb, color: colorScheme.tertiary),
-                      const SizedBox(width: 8),
-                      Text(
-                        'ملاحظة',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: colorScheme.onTertiaryContainer,
-                        ),
-                      ),
-                    ],
+  /// ينشئ بطاقة ملاحظات الشاشة.
+  Widget buildNoteCard(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Card(
+      color: colorScheme.tertiaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(Spacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.lightbulb, color: colorScheme.tertiary),
+                const SizedBox(width: Spacing.sm),
+                Text(
+                  'ملاحظة',
+                  style: TextStyle(
+                    fontSize: AppTypography.titleMedium,
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.onTertiaryContainer,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '• جرب جميع قيم textScaleFactor (1.0x - 2.0x)\n'
-                    '• تحقق من عدم وجود قص أفقي أو عمودي\n'
-                    '• تحقق من وضوح النصوص في جميع الحالات\n'
-                    '• اختبر الأزرار في Row للتأكد من التوزيع الصحيح',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: colorScheme.onTertiaryContainer,
-                    ),
-                  ),
-                ],
+                ),
+              ],
+            ),
+            const SizedBox(height: Spacing.sm),
+            Text(
+              '• تم حذف AppEnhancedButton بالكامل.\n'
+              '• AppButton هو المكون الوحيد المعتمد حالياً.',
+              style: TextStyle(
+                fontSize: AppTypography.bodyMedium,
+                color: colorScheme.onTertiaryContainer,
               ),
             ),
-          );
-        },
-      );
+          ],
+        ),
+      ),
+    );
+  }
 
-  /// بناء قسم من الأزرار
-  Widget _buildSection({
+  /// ينشئ قسماً في شاشة الاختبار.
+  Widget buildSection({
+    required BuildContext context,
     required String title,
     required IconData icon,
     required List<Widget> children,
-  }) =>
-      Builder(
-        builder: (context) {
-          final colorScheme = Theme.of(context).colorScheme;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(icon, size: 24, color: colorScheme.primary),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.primary,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, size: IconSizes.md, color: colorScheme.primary),
+            const SizedBox(width: Spacing.sm),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: AppTypography.titleLarge,
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.primary,
+                ),
               ),
-              const SizedBox(height: 16),
-              ...children,
-            ],
-          );
-        },
-      );
+            ),
+          ],
+        ),
+        const SizedBox(height: Spacing.lg),
+        ...children,
+      ],
+    );
+  }
 }

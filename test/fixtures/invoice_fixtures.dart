@@ -4,6 +4,7 @@
 library;
 
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 
 import 'customer_fixtures.dart';
 
@@ -12,20 +13,28 @@ class InvoiceFixtures {
   /// فاتورة 1: فاتورة مسودة بسيطة
   static final invoice1 = Invoice(
     id: 'invoice-1',
+    invoiceNumber: 'INV-001',
     customerId: CustomerFixtures.customer1.id,
     customerName: CustomerFixtures.customer1.name,
     issuedDate: DateTime(2025, 11),
     dueDate: DateTime(2025, 12),
-    status: 'draft',
+    status: InvoiceStatus.draft,
     items: const [
       InvoiceItem(
         id: 'item-1',
         name: 'خدمة استشارية',
         quantity: 1,
         price: 1000,
+        total: 1000,
+        taxAmount: 150,
       ),
     ],
     taxRate: 0.15,
+    subtotalAmount: 1000,
+    taxAmount: 150,
+    totalAmount: 1150,
+    paidAmount: 0,
+    discountAmount: 0,
     createdAt: DateTime(2025, 11),
     updatedAt: DateTime(2025, 11),
   );
@@ -33,22 +42,44 @@ class InvoiceFixtures {
   /// فاتورة 2: فاتورة مرسلة مع عدة بنود
   static final invoice2 = Invoice(
     id: 'invoice-2',
+    invoiceNumber: 'INV-002',
     customerId: CustomerFixtures.customer2.id,
     customerName: CustomerFixtures.customer2.name,
     issuedDate: DateTime(2025, 11, 5),
     dueDate: DateTime(2025, 12, 5),
-    status: 'issued',
+    status: InvoiceStatus.sent,
     items: const [
-      InvoiceItem(id: 'item-2-1', name: 'منتج أ', quantity: 2, price: 500),
-      InvoiceItem(id: 'item-2-2', name: 'منتج ب', quantity: 3, price: 300),
+      InvoiceItem(
+        id: 'item-2-1',
+        name: 'منتج أ',
+        quantity: 2,
+        price: 500,
+        total: 1000,
+        taxAmount: 150,
+      ),
+      InvoiceItem(
+        id: 'item-2-2',
+        name: 'منتج ب',
+        quantity: 3,
+        price: 300,
+        total: 900,
+        taxAmount: 135,
+      ),
       InvoiceItem(
         id: 'item-2-3',
         name: 'خدمة التوصيل',
         quantity: 1,
         price: 100,
+        total: 100,
+        taxAmount: 15,
       ),
     ],
     taxRate: 0.15,
+    subtotalAmount: 2000,
+    taxAmount: 300,
+    totalAmount: 2300,
+    paidAmount: 0,
+    discountAmount: 0,
     createdAt: DateTime(2025, 11, 5),
     updatedAt: DateTime(2025, 11, 5),
   );
@@ -56,15 +87,28 @@ class InvoiceFixtures {
   /// فاتورة 3: فاتورة مدفوعة
   static final invoice3 = Invoice(
     id: 'invoice-3',
+    invoiceNumber: 'INV-003',
     customerId: CustomerFixtures.customer3.id,
     customerName: CustomerFixtures.customer3.name,
     issuedDate: DateTime(2025, 10, 15),
     dueDate: DateTime(2025, 11, 15),
-    status: 'paid',
+    status: InvoiceStatus.paid,
     items: const [
-      InvoiceItem(id: 'item-3', name: 'اشتراك شهري', quantity: 1, price: 2000),
+      InvoiceItem(
+        id: 'item-3',
+        name: 'اشتراك شهري',
+        quantity: 1,
+        price: 2000,
+        total: 2000,
+        taxAmount: 300,
+      ),
     ],
     taxRate: 0.15,
+    subtotalAmount: 2000,
+    taxAmount: 300,
+    totalAmount: 2300,
+    paidAmount: 2300,
+    discountAmount: 0,
     createdAt: DateTime(2025, 10, 15),
     updatedAt: DateTime(2025, 11, 16),
   );
@@ -72,15 +116,28 @@ class InvoiceFixtures {
   /// فاتورة 4: فاتورة متأخرة
   static final invoice4 = Invoice(
     id: 'invoice-4',
+    invoiceNumber: 'INV-004',
     customerId: CustomerFixtures.customer4.id,
     customerName: CustomerFixtures.customer4.name,
     issuedDate: DateTime(2025, 9),
     dueDate: DateTime(2025, 10),
-    status: 'overdue',
+    status: InvoiceStatus.overdue,
     items: const [
-      InvoiceItem(id: 'item-4', name: 'خدمة صيانة', quantity: 1, price: 1500),
+      InvoiceItem(
+        id: 'item-4',
+        name: 'خدمة صيانة',
+        quantity: 1,
+        price: 1500,
+        total: 1500,
+        taxAmount: 225,
+      ),
     ],
     taxRate: 0.15,
+    subtotalAmount: 1500,
+    taxAmount: 225,
+    totalAmount: 1725,
+    paidAmount: 0,
+    discountAmount: 0,
     createdAt: DateTime(2025, 9),
     updatedAt: DateTime(2025, 10, 2),
   );
@@ -88,15 +145,28 @@ class InvoiceFixtures {
   /// فاتورة 5: فاتورة ملغاة
   static final invoice5 = Invoice(
     id: 'invoice-5',
+    invoiceNumber: 'INV-005',
     customerId: CustomerFixtures.customer5.id,
     customerName: CustomerFixtures.customer5.name,
     issuedDate: DateTime(2025, 11, 10),
     dueDate: DateTime(2025, 12, 10),
-    status: 'cancelled',
+    status: InvoiceStatus.cancelled,
     items: const [
-      InvoiceItem(id: 'item-5', name: 'طلب ملغي', quantity: 1, price: 800),
+      InvoiceItem(
+        id: 'item-5',
+        name: 'طلب ملغي',
+        quantity: 1,
+        price: 800,
+        total: 800,
+        taxAmount: 120,
+      ),
     ],
     taxRate: 0.15,
+    subtotalAmount: 800,
+    taxAmount: 120,
+    totalAmount: 920,
+    paidAmount: 0,
+    discountAmount: 0,
     createdAt: DateTime(2025, 11, 10),
     updatedAt: DateTime(2025, 11, 11),
   );
@@ -104,26 +174,76 @@ class InvoiceFixtures {
   /// فاتورة 6: فاتورة مع بنود متعددة
   static final invoice6 = Invoice(
     id: 'invoice-6',
+    invoiceNumber: 'INV-006',
     customerId: CustomerFixtures.customer1.id,
     customerName: CustomerFixtures.customer1.name,
     issuedDate: DateTime(2025, 11, 20),
     dueDate: DateTime(2025, 12, 20),
-    status: 'draft',
+    status: InvoiceStatus.draft,
     items: const [
-      InvoiceItem(id: 'item-6-1', name: 'منتج 1', quantity: 5, price: 100),
-      InvoiceItem(id: 'item-6-2', name: 'منتج 2', quantity: 3, price: 200),
-      InvoiceItem(id: 'item-6-3', name: 'منتج 3', quantity: 2, price: 300),
-      InvoiceItem(id: 'item-6-4', name: 'منتج 4', quantity: 1, price: 400),
-      InvoiceItem(id: 'item-6-5', name: 'منتج 5', quantity: 4, price: 150),
+      InvoiceItem(
+        id: 'item-6-1',
+        name: 'منتج 1',
+        quantity: 5,
+        price: 100,
+        total: 500,
+        taxAmount: 75,
+      ),
+      InvoiceItem(
+        id: 'item-6-2',
+        name: 'منتج 2',
+        quantity: 3,
+        price: 200,
+        total: 600,
+        taxAmount: 90,
+      ),
+      InvoiceItem(
+        id: 'item-6-3',
+        name: 'منتج 3',
+        quantity: 2,
+        price: 300,
+        total: 600,
+        taxAmount: 90,
+      ),
+      InvoiceItem(
+        id: 'item-6-4',
+        name: 'منتج 4',
+        quantity: 1,
+        price: 400,
+        total: 400,
+        taxAmount: 60,
+      ),
+      InvoiceItem(
+        id: 'item-6-5',
+        name: 'منتج 5',
+        quantity: 4,
+        price: 150,
+        total: 600,
+        taxAmount: 90,
+      ),
       InvoiceItem(
         id: 'item-6-6',
         name: 'خدمة التركيب',
         quantity: 1,
         price: 500,
+        total: 500,
+        taxAmount: 75,
       ),
-      InvoiceItem(id: 'item-6-7', name: 'خدمة الضمان', quantity: 1, price: 250),
+      InvoiceItem(
+        id: 'item-6-7',
+        name: 'خدمة الضمان',
+        quantity: 1,
+        price: 250,
+        total: 250,
+        taxAmount: 37.5,
+      ),
     ],
     taxRate: 0.15,
+    subtotalAmount: 3450,
+    taxAmount: 517.5,
+    totalAmount: 3967.5,
+    paidAmount: 0,
+    discountAmount: 0,
     createdAt: DateTime(2025, 11, 20),
     updatedAt: DateTime(2025, 11, 20),
   );
@@ -131,20 +251,27 @@ class InvoiceFixtures {
   /// فاتورة 7: فاتورة بدون ضريبة
   static final invoice7 = Invoice(
     id: 'invoice-7',
+    invoiceNumber: 'INV-007',
     customerId: CustomerFixtures.customer2.id,
     customerName: CustomerFixtures.customer2.name,
     issuedDate: DateTime(2025, 11, 25),
     dueDate: DateTime(2025, 12, 25),
-    status: 'draft',
+    status: InvoiceStatus.draft,
     items: const [
       InvoiceItem(
         id: 'item-7',
         name: 'خدمة معفاة من الضريبة',
         quantity: 1,
         price: 1000,
+        total: 1000,
       ),
     ],
     taxRate: 0, // بدون ضريبة
+    subtotalAmount: 1000,
+    taxAmount: 0,
+    totalAmount: 1000,
+    paidAmount: 0,
+    discountAmount: 0,
     createdAt: DateTime(2025, 11, 25),
     updatedAt: DateTime(2025, 11, 25),
   );
@@ -176,22 +303,30 @@ class InvoiceFixtures {
   static final List<Invoice> cancelledInvoices = [invoice5];
 
   /// إنشاء فاتورة ديناميكية للاختبار
-  static Invoice createInvoice(int index, {String? status}) => Invoice(
+  static Invoice createInvoice(int index, {InvoiceStatus? status}) => Invoice(
         id: 'invoice-$index',
+        invoiceNumber: 'INV-$index',
         customerId: 'customer-$index',
         customerName: 'عميل رقم $index',
         issuedDate: DateTime.now(),
         dueDate: DateTime.now().add(const Duration(days: 30)),
-        status: status ?? 'draft',
+        status: status ?? InvoiceStatus.draft,
         items: [
           InvoiceItem(
             id: 'item-$index',
             name: 'منتج رقم $index',
             quantity: 1,
             price: 100.0 * index,
+            total: 100.0 * index,
+            taxAmount: (100.0 * index) * 0.15,
           ),
         ],
         taxRate: 0.15,
+        subtotalAmount: 100.0 * index,
+        taxAmount: (100.0 * index) * 0.15,
+        totalAmount: (100.0 * index) * 1.15,
+        paidAmount: 0,
+        discountAmount: 0,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
