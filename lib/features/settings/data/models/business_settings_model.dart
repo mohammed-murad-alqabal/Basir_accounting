@@ -11,6 +11,7 @@ class BusinessSettingsModel {
   BusinessSettingsModel();
 
   /// التحويل من Entity
+  /// التحويل من Entity
   factory BusinessSettingsModel.fromEntity(BusinessSettings entity) =>
       BusinessSettingsModel()
         ..id = entity.id
@@ -29,6 +30,7 @@ class BusinessSettingsModel {
   /// المعرف الداخلي (Isar)
   Id? isarId;
 
+  /// المعرف الفريد
   @Index(unique: true, replace: true)
   late String id;
 
