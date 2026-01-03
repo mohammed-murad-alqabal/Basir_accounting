@@ -4,8 +4,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'business_settings.freezed.dart';
 part 'business_settings.g.dart';
 
+/// إعدادات العمل (المنشأة)
 @freezed
 class BusinessSettings with _$BusinessSettings {
+  /// المنشئ
   const factory BusinessSettings({
     required String id,
     required String companyName,
@@ -29,6 +31,6 @@ class BusinessSettings with _$BusinessSettings {
     @Default(false) bool isDeleted,
   }) = _BusinessSettings;
 
-  factory BusinessSettings.fromJson(Map<String, dynamic> json) =>
-      _$BusinessSettingsFromJson(json);
+  /// التحويل من JSON
+  factory BusinessSettings.fromJson(Map<String, dynamic> json) => _$BusinessSettingsFromJson(json);
 }

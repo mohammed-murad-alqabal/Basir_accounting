@@ -83,7 +83,9 @@ abstract class InvoiceRepository {
   ///
   /// **مثال:**
   /// ```dart
-  /// final paidInvoices = await repository.getInvoicesByStatus(InvoiceStatus.paid,);
+  /// final paidInvoices = await repository.getInvoicesByStatus(
+  ///   InvoiceStatus.paid,
+  /// );
   /// debugPrint('الفواتير المدفوعة: ${paidInvoices.length}',);
   /// ```
   Future<List<Invoice>> getInvoicesByStatus(

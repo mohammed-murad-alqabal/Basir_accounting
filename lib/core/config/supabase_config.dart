@@ -3,7 +3,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 /// إعدادات Supabase (Supabase Configuration)
 /// يرجى استبدال القيم Placeholder بالقيم الحقيقية من لوحة تحكم Supabase.
 class SupabaseConfig {
+  /// رابط مشروع Supabase
   static const String supabaseUrl = 'https://your-project-url.supabase.co';
+
+  /// المفتاح المجهول (Anonymous Key)
   static const String anonKey = '<credential-fixture>';
 
   /// تهيئة Supabase

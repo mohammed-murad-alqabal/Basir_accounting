@@ -3,11 +3,11 @@ import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:printing/printing.dart';
 
+/// مزود خدمة إنشاء PDF
 final invoicePdfServiceProvider = Provider((ref) => InvoicePdfService());
 
 /// Provider لتصدير الفاتورة كملف PDF
-final exportInvoicePdfProvider =
-    FutureProvider.family<void, Invoice>((ref, invoice) async {
+final exportInvoicePdfProvider = FutureProvider.family<void, Invoice>((ref, invoice) async {
   final pdfService = ref.read(invoicePdfServiceProvider);
   final pdfBytes = await pdfService.generateInvoicePdf(invoice);
 
@@ -18,8 +18,7 @@ final exportInvoicePdfProvider =
 });
 
 /// Provider لمشاركة الفاتورة كملف PDF
-final shareInvoicePdfProvider =
-    FutureProvider.family<void, Invoice>((ref, invoice) async {
+final shareInvoicePdfProvider = FutureProvider.family<void, Invoice>((ref, invoice) async {
   final pdfService = ref.read(invoicePdfServiceProvider);
   final pdfBytes = await pdfService.generateInvoicePdf(invoice);
 

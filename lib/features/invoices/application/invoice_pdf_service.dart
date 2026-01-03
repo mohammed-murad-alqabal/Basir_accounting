@@ -66,8 +66,7 @@ class InvoicePdfService {
               ),
               pw.Text(
                 'Tax Invoice',
-                style:
-                    const pw.TextStyle(fontSize: 16, color: PdfColors.grey700),
+                style: const pw.TextStyle(fontSize: 16, color: PdfColors.grey700),
                 textDirection: pw.TextDirection.ltr,
               ),
             ],
@@ -80,7 +79,8 @@ class InvoicePdfService {
                 style: pw.TextStyle(font: boldFont, fontSize: 14),
               ),
               pw.Text(
-                'تاريخ الإصدار: ${intl.DateFormat('yyyy/MM/dd').format(invoice.issuedDate)}',
+                'تاريخ الإصدار: '
+                '${intl.DateFormat('yyyy/MM/dd').format(invoice.issuedDate)}',
                 style: const pw.TextStyle(fontSize: 12),
               ),
             ],
@@ -88,8 +88,7 @@ class InvoicePdfService {
         ],
       );
 
-  pw.Widget _buildCustomerInfo(Invoice invoice, pw.Font boldFont) =>
-      pw.Container(
+  pw.Widget _buildCustomerInfo(Invoice invoice, pw.Font boldFont) => pw.Container(
         padding: const pw.EdgeInsets.all(10),
         decoration: pw.BoxDecoration(
           border: pw.Border.all(color: PdfColors.grey300),
@@ -119,7 +118,8 @@ class InvoicePdfService {
                   style: pw.TextStyle(font: boldFont),
                 ),
                 pw.Text(
-                  '${invoice.totalAmount.toStringAsFixed(2)} ${invoice.currency}',
+                  '${invoice.totalAmount.toStringAsFixed(2)} '
+                  '${invoice.currency}',
                   style: pw.TextStyle(
                     font: boldFont,
                     fontSize: 16,

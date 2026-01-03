@@ -55,10 +55,14 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       _items = List.from(
         widget.invoice!.items,
       );
-      // Ensure selected customer logic if needed, but here we just need to bind if we had full list.
-      // Since we load customers async, we might not set _selectedCustomer immediately unless we fetch it.
-      // For simplicity, we assume the user re-selects or we'd need to fetch the customer by ID.
-      // However, the original code didn't pre-populate _selectedCustomer for editing correctly unless the list is loaded.
+      // Ensure selected customer logic if needed, but here we just need to
+      // bind if we had full list.
+      // Since we load customers async, we might not set _selectedCustomer
+      // immediately unless we fetch it.
+      // For simplicity, we assume the user re-selects or we'd need to fetch
+      // the customer by ID.
+      // However, the original code didn't pre-populate _selectedCustomer for
+      // editing correctly unless the list is loaded.
       // We will leave that logic as is, focusing on type fixes.
     }
   }
@@ -76,25 +80,20 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       customersProvider,
     );
     final appIcons = ref.watch(appIconsProvider);
-    final calendarType =
-        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
+    final calendarType = ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
 
     // Correctly set selected customer if editing and customers are loaded
-    if (widget.invoice != null &&
-        _selectedCustomer == null &&
-        customersAsync.hasValue) {
+    if (widget.invoice != null && _selectedCustomer == null && customersAsync.hasValue) {
       try {
-        _selectedCustomer = customersAsync.value!
-            .firstWhere((c) => c.id == widget.invoice!.customerId);
-      } catch (_) {}
+        _selectedCustomer =
+            customersAsync.value!.firstWhere((c) => c.id == widget.invoice!.customerId);
+      } on Object catch (_) {}
     }
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppAppBar(
-        title: isEditing
-            ? context.l10n.invoiceFormTitleEdit
-            : context.l10n.invoiceFormTitleAdd,
+        title: isEditing ? context.l10n.invoiceFormTitleEdit : context.l10n.invoiceFormTitleAdd,
       ),
       body: Form(
         key: <credential-fixture>,
@@ -161,9 +160,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               ),
               const SizedBox(height: Spacing.xl),
               AppButton(
-                label: isEditing
-                    ? context.l10n.btnUpdateInvoice
-                    : context.l10n.btnSaveInvoice,
+                label: isEditing ? context.l10n.btnUpdateInvoice : context.l10n.btnSaveInvoice,
                 onPressed: _isLoading ? null : _saveInvoice,
                 isLoading: _isLoading,
                 icon: appIcons.save,
@@ -502,9 +499,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             Text(
               label,
               style: TextStyle(
-                fontSize: isGrandTotal
-                    ? AppTypography.bodyLarge
-                    : AppTypography.bodyMedium,
+                fontSize: isGrandTotal ? AppTypography.bodyLarge : AppTypography.bodyMedium,
                 fontWeight: isGrandTotal ? FontWeight.bold : FontWeight.w500,
                 color: AppColors.textPrimary,
               ),
@@ -515,9 +510,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 locale: context.l10n.localeName,
               ),
               style: TextStyle(
-                fontSize: isGrandTotal
-                    ? AppTypography.headlineSmall
-                    : AppTypography.bodyLarge,
+                fontSize: isGrandTotal ? AppTypography.headlineSmall : AppTypography.bodyLarge,
                 fontWeight: FontWeight.bold,
                 color: isGrandTotal ? AppColors.primary : AppColors.textPrimary,
               ),
@@ -727,9 +720,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       final grandTotal = subtotal + taxTotal;
       final isNew = widget.invoice == null;
       final invoiceId = isNew ? const Uuid().v4() : widget.invoice!.id;
-      final invoiceNumber = isNew
-          ? 'INV-${DateTime.now().millisecondsSinceEpoch}'
-          : widget.invoice!.invoiceNumber;
+      final invoiceNumber =
+          isNew ? 'INV-${DateTime.now().millisecondsSinceEpoch}' : widget.invoice!.invoiceNumber;
 
       final invoice = Invoice(
         id: invoiceId,
@@ -746,9 +738,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         totalAmount: grandTotal,
         paidAmount: isNew ? 0.0 : widget.invoice!.paidAmount,
         discountAmount: 0,
-        notes: _notesController.text.trim().isEmpty
-            ? null
-            : _notesController.text.trim(),
+        notes: _notesController.text.trim().isEmpty ? null : _notesController.text.trim(),
         createdAt: widget.invoice?.createdAt ?? DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -766,9 +756,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              isEditing
-                  ? context.l10n.msgInvoiceUpdated
-                  : context.l10n.msgInvoiceAdded,
+              isEditing ? context.l10n.msgInvoiceUpdated : context.l10n.msgInvoiceAdded,
             ),
             backgroundColor: AppColors.secondary,
           ),
@@ -781,9 +769,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              isEditing
-                  ? context.l10n.errInvoiceUpdate
-                  : context.l10n.errInvoiceAdd,
+              isEditing ? context.l10n.errInvoiceUpdate : context.l10n.errInvoiceAdd,
             ),
             backgroundColor: AppColors.error,
           ),

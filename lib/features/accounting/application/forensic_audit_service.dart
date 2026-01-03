@@ -10,23 +10,28 @@ part 'forensic_audit_service.g.dart';
 
 /// نتيجة فحص التدقيق الجنائي
 class AuditResult {
+  /// المنشئ
   const AuditResult({
     required this.isSuccess,
     required this.message,
     this.findings = const [],
   });
+
+  /// هل العملية ناجحة؟
   final bool isSuccess;
+
+  /// رسالة التدقيق
   final String message;
+
+  /// الملاحظات (إن وجدت)
   final List<String> findings;
 }
 
 /// خدمة التدقيق الجنائي المحاسبي (Forensic Audit Service)
 /// تضمن سلامة البيانات وتراقب التغييرات غير المصرح بها.
 @riverpod
-class ForensicAuditService extends _$ForensicAuditService
-    implements AccountingAgent {
-  AccountingRepository get _repository =>
-      ref.read(accountingRepositoryProvider);
+class ForensicAuditService extends _$ForensicAuditService implements AccountingAgent {
+  AccountingRepository get _repository => ref.read(accountingRepositoryProvider);
 
   @override
   void build() {}
@@ -129,15 +134,15 @@ class ForensicAuditService extends _$ForensicAuditService
       }
 
       // تحويل الرصيد المحسوب ليتناسب مع طبيعة الحساب
-      final absoluteCalculated = account.nature == AccountNature.debit
-          ? calculatedBalance
-          : -calculatedBalance;
+      final absoluteCalculated =
+          account.nature == AccountNature.debit ? calculatedBalance : -calculatedBalance;
 
       final storedBalance = await _repository.getAccountBalance(account.id);
 
       if (absoluteCalculated != storedBalance) {
         discrepancies.add(
-          'حساب ${account.nameAr}: الرصيد المخزن ($storedBalance) لا يطابق المحسوب ($absoluteCalculated)',
+          'حساب ${account.nameAr}: الرصيد المخزن ($storedBalance) لا يطابق '
+          'المحسوب ($absoluteCalculated)',
         );
       }
     }
@@ -167,7 +172,8 @@ class ForensicAuditService extends _$ForensicAuditService
     for (final entry in entries) {
       if (entry.totalDebit > threshold) {
         findings.add(
-          'تنبيه: قيد رقم ${entry.referenceNumber} بمبلغ ضخم (${entry.totalDebit})',
+          'تنبيه: قيد رقم ${entry.referenceNumber} بمبلغ ضخم '
+          '(${entry.totalDebit})',
         );
       }
 

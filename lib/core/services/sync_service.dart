@@ -26,6 +26,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'sync_service.g.dart';
 
+/// خدمة المزامنة (Sync Service)
 @riverpod
 class SyncService extends _$SyncService {
   late Isar _isar;
@@ -33,7 +34,8 @@ class SyncService extends _$SyncService {
 
   @override
   FutureOr<void> build() {
-    // Initialization will be handled by a separate method or dependency injection
+    // Initialization will be handled by a separate method or dependency
+    // injection
   }
 
   /// التهيئة الأولية للخدمة
@@ -51,10 +53,8 @@ class SyncService extends _$SyncService {
     await _syncTable<CustomerModel, Customer>(
       tableName: 'customers',
       collection: _isar.customerModels,
-      getPendingPush: (col) =>
-          col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
-      getLastSynced: (col) =>
-          col.where().sortByServerUpdatedAtDesc().findFirst(),
+      getPendingPush: (col) => col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
+      getLastSynced: (col) => col.where().sortByServerUpdatedAtDesc().findFirst(),
       toEntity: (m) => m.toEntity(),
       toJson: (e) => e.toJson(),
       fromJson: Customer.fromJson,
@@ -70,10 +70,8 @@ class SyncService extends _$SyncService {
     await _syncTable<VendorModel, Vendor>(
       tableName: 'vendors',
       collection: _isar.vendorModels,
-      getPendingPush: (col) =>
-          col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
-      getLastSynced: (col) =>
-          col.where().sortByServerUpdatedAtDesc().findFirst(),
+      getPendingPush: (col) => col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
+      getLastSynced: (col) => col.where().sortByServerUpdatedAtDesc().findFirst(),
       toEntity: (m) => m.toEntity(),
       toJson: (e) => e.toJson(),
       fromJson: Vendor.fromJson,
@@ -89,10 +87,8 @@ class SyncService extends _$SyncService {
     await _syncTable<AccountModel, Account>(
       tableName: 'accounts',
       collection: _isar.accountModels,
-      getPendingPush: (col) =>
-          col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
-      getLastSynced: (col) =>
-          col.where().sortByServerUpdatedAtDesc().findFirst(),
+      getPendingPush: (col) => col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
+      getLastSynced: (col) => col.where().sortByServerUpdatedAtDesc().findFirst(),
       toEntity: (m) => m.toEntity(),
       toJson: (e) => e.toJson(),
       fromJson: Account.fromJson,
@@ -108,10 +104,8 @@ class SyncService extends _$SyncService {
     await _syncTable<FinancialYearModel, FinancialYear>(
       tableName: 'financial_years',
       collection: _isar.financialYearModels,
-      getPendingPush: (col) =>
-          col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
-      getLastSynced: (col) =>
-          col.where().sortByServerUpdatedAtDesc().findFirst(),
+      getPendingPush: (col) => col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
+      getLastSynced: (col) => col.where().sortByServerUpdatedAtDesc().findFirst(),
       toEntity: (m) => m.toEntity(),
       toJson: (e) => e.toJson(),
       fromJson: FinancialYear.fromJson,
@@ -127,10 +121,8 @@ class SyncService extends _$SyncService {
     await _syncTable<InvoiceModel, Invoice>(
       tableName: 'invoices',
       collection: _isar.invoiceModels,
-      getPendingPush: (col) =>
-          col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
-      getLastSynced: (col) =>
-          col.where().sortByServerUpdatedAtDesc().findFirst(),
+      getPendingPush: (col) => col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
+      getLastSynced: (col) => col.where().sortByServerUpdatedAtDesc().findFirst(),
       toEntity: (m) => m.toEntity(),
       toJson: (e) => e.toJson(),
       fromJson: Invoice.fromJson,
@@ -146,10 +138,8 @@ class SyncService extends _$SyncService {
     await _syncTable<JournalEntryModel, JournalEntry>(
       tableName: 'journal_entries',
       collection: _isar.journalEntryModels,
-      getPendingPush: (col) =>
-          col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
-      getLastSynced: (col) =>
-          col.where().sortByServerUpdatedAtDesc().findFirst(),
+      getPendingPush: (col) => col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
+      getLastSynced: (col) => col.where().sortByServerUpdatedAtDesc().findFirst(),
       toEntity: (m) => m.toEntity(),
       toJson: (e) => e.toJson(),
       fromJson: JournalEntry.fromJson,
@@ -165,10 +155,8 @@ class SyncService extends _$SyncService {
     await _syncTable<FinancialVoucherModel, FinancialVoucher>(
       tableName: 'financial_vouchers',
       collection: _isar.financialVoucherModels,
-      getPendingPush: (col) =>
-          col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
-      getLastSynced: (col) =>
-          col.where().sortByServerUpdatedAtDesc().findFirst(),
+      getPendingPush: (col) => col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
+      getLastSynced: (col) => col.where().sortByServerUpdatedAtDesc().findFirst(),
       toEntity: (m) => m.toEntity(),
       fromJson: FinancialVoucher.fromJson,
       toJson: (e) => e.toJson(),
@@ -184,10 +172,8 @@ class SyncService extends _$SyncService {
     await _syncTable<ProfileModel, Profile>(
       tableName: 'profiles',
       collection: _isar.profileModels,
-      getPendingPush: (col) =>
-          col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
-      getLastSynced: (col) =>
-          col.where().sortByServerUpdatedAtDesc().findFirst(),
+      getPendingPush: (col) => col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
+      getLastSynced: (col) => col.where().sortByServerUpdatedAtDesc().findFirst(),
       toEntity: (m) => m.toEntity(),
       toJson: (e) => e.toJson(),
       fromJson: Profile.fromJson,
@@ -203,10 +189,8 @@ class SyncService extends _$SyncService {
     await _syncTable<BusinessSettingsModel, BusinessSettings>(
       tableName: 'business_settings',
       collection: _isar.businessSettingsModels,
-      getPendingPush: (col) =>
-          col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
-      getLastSynced: (col) =>
-          col.where().sortByServerUpdatedAtDesc().findFirst(),
+      getPendingPush: (col) => col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
+      getLastSynced: (col) => col.where().sortByServerUpdatedAtDesc().findFirst(),
       toEntity: (m) => m.toEntity(),
       toJson: (e) => e.toJson(),
       fromJson: BusinessSettings.fromJson,
@@ -239,20 +223,16 @@ class SyncService extends _$SyncService {
         final entity = toEntity(record);
         final json = toJson(entity);
 
-        final response = await _supabase
-            .from(tableName)
-            .upsert(json)
-            .select('server_updated_at')
-            .single();
+        final response =
+            await _supabase.from(tableName).upsert(json).select('server_updated_at').single();
 
-        final serverUpdatedAt =
-            DateTime.parse(response['server_updated_at'] as String);
+        final serverUpdatedAt = DateTime.parse(response['server_updated_at'] as String);
 
         await _isar.writeTxn(() async {
           setSyncMetadata(record, SyncStatus.synced, serverUpdatedAt);
           await collection.put(record);
         });
-      } catch (e) {
+      } on Exception catch (e) {
         // In production, use a proper logger
         debugPrint('Error pushing $tableName: $e');
       }
@@ -260,8 +240,8 @@ class SyncService extends _$SyncService {
 
     // 2. سحب التعديلات من السيرفر (Pull)
     final lastSync = await getLastSynced(collection);
-    final lastSyncDate = getServerUpdatedAt(lastSync as M)?.toIso8601String() ??
-        DateTime(1970).toIso8601String();
+    final lastSyncDate =
+        getServerUpdatedAt(lastSync as M)?.toIso8601String() ?? DateTime(1970).toIso8601String();
 
     try {
       final response = await _supabase
@@ -275,7 +255,7 @@ class SyncService extends _$SyncService {
         final entity = fromJson(json as Map<String, dynamic>);
         final model = fromEntity(entity);
 
-        // TODO: تنفيذ منطق فض النزاعات (Conflict Resolution)
+        // TODO(dev): تنفيذ منطق فض النزاعات (Conflict Resolution)
         // حالياً: السيرفر يفوز دائماً (Server Wins)
         await _isar.writeTxn(() async {
           await collection.put(model);
