@@ -10,6 +10,9 @@ import 'dart:io';
 
 import 'package:basir_app/features/customers/data/models/customer_model.dart';
 import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_app/features/settings/data/models/business_settings_model.dart';
+import 'package:basir_app/features/settings/data/models/profile_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
@@ -46,7 +49,12 @@ class TestHelpers {
           customName ?? 'test_${DateTime.now().millisecondsSinceEpoch}';
 
       return Isar.open(
-        [CustomerModelSchema, InvoiceModelSchema],
+        [
+          CustomerModelSchema,
+          InvoiceModelSchema,
+          ProfileModelSchema,
+          BusinessSettingsModelSchema,
+        ],
         directory: useMemory ? '' : _getTestDirectory(),
         name: dbName,
       );
@@ -130,7 +138,7 @@ class TestHelpers {
           ..customerId = 'customer_${index + 1}'
           ..customerName = 'عميل ${index + 1}'
           ..taxRate = 0.15
-          ..status = index == 0 ? 'draft' : 'issued'
+          ..status = index == 0 ? InvoiceStatus.draft : InvoiceStatus.sent
           ..issuedDate = DateTime.now().subtract(Duration(days: index))
           ..dueDate = DateTime.now().add(Duration(days: 30 - index))
           ..createdAt = DateTime.now().subtract(Duration(days: index))

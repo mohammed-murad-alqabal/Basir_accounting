@@ -1,0 +1,130 @@
+import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/features/accounting/application/financial_statement_service.dart';
+import 'package:basir_app/features/accounting/domain/entities/financial_report.dart';
+import 'package:basir_app/shared/widgets/index.dart';
+import 'package:decimal/decimal.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart' as intl;
+
+/// شاشة ميزان المراجعة (Trial Balance Screen)
+/// تعرض الأرصدة المدينة والدائنة لكل الحسابات.
+class TrialBalanceScreen extends ConsumerWidget {
+  /// إنشاء شاشة ميزان المراجعة.
+  const TrialBalanceScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final trialBalanceAsync = ref
+        .watch(
+          financialStatementServiceProvider.notifier,
+        )
+        .generateTrialBalance(DateTime.now());
+
+    final currencyFormatter =
+        intl.NumberFormat.currency(symbol: '', decimalDigits: 2);
+
+    return Scaffold(
+      appBar: AppAppBar(
+        title: context.l10n.trialBalanceTitle,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () => _exportReport(context, ref),
+            tooltip: context.l10n.actionShare,
+          ),
+        ],
+      ),
+      body: FutureBuilder<TrialBalance>(
+        future: trialBalanceAsync,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: AppLoadingIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+
+          final trialBalance = snapshot.data;
+          final rows = trialBalance?.lines ?? [];
+
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SingleChildScrollView(
+              child: DataTable(
+                columnSpacing: Spacing.lg,
+                columns: [
+                  DataColumn(label: Text(context.l10n.labelCode)),
+                  DataColumn(label: Text(context.l10n.labelAccount)),
+                  DataColumn(
+                    label: Text(
+                      context.l10n.labelDebit,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      context.l10n.labelCredit,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+                rows: rows
+                    .map(
+                      (row) => DataRow(
+                        cells: [
+                          DataCell(Text(row.accountCode)),
+                          DataCell(Text(row.accountName)),
+                          DataCell(
+                            Text(
+                              row.debitBalance > Decimal.zero
+                                  ? currencyFormatter
+                                      .format(row.debitBalance.toDouble())
+                                  : '-',
+                              style: TextStyle(
+                                color: row.debitBalance > Decimal.zero
+                                    ? AppColors.success
+                                    : null,
+                                fontWeight: row.debitBalance > Decimal.zero
+                                    ? FontWeight.bold
+                                    : null,
+                              ),
+                            ),
+                          ),
+                          DataCell(
+                            Text(
+                              row.creditBalance > Decimal.zero
+                                  ? currencyFormatter
+                                      .format(row.creditBalance.toDouble())
+                                  : '-',
+                              style: TextStyle(
+                                color: row.creditBalance > Decimal.zero
+                                    ? AppColors.error
+                                    : null,
+                                fontWeight: row.creditBalance > Decimal.zero
+                                    ? FontWeight.bold
+                                    : null,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> _exportReport(BuildContext context, WidgetRef ref) async {
+    // منطق التصدير مستقبلاً
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('ميزة التصدير ستتوفر قريباً')),
+    );
+  }
+}

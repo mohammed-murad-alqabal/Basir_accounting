@@ -1,6 +1,8 @@
+import 'package:basir_app/core/models/sync_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'customer.freezed.dart';
+part 'customer.g.dart';
 
 /// كيان العميل
 ///
@@ -63,6 +65,9 @@ class Customer with _$Customer {
     /// تاريخ آخر تحديث للعميل
     required DateTime updatedAt,
 
+    /// الرقم الضريبي (مطلوب للفواتير الضريبية)
+    String? taxNumber,
+
     /// رقم هاتف العميل (اختياري)
     String? phone,
 
@@ -80,5 +85,24 @@ class Customer with _$Customer {
 
     /// الرصيد الحالي للعميل
     @Default(0.0) double balance,
+
+    /// معرف حساب العميل في دليل الحسابات (AR Account)
+    String? receivableAccountId,
+
+    /// معرف المستخدم صاحب العميل (لعزل البيانات)
+    String? userId,
+
+    /// حالة المزامنة
+    @Default(SyncStatus.synced) SyncStatus syncStatus,
+
+    /// تاريخ آخر تحديث من السيرفر
+    DateTime? serverUpdatedAt,
+
+    /// هل السجل محذوف (حذف ناعم)
+    @Default(false) bool isDeleted,
   }) = _Customer;
+
+  /// إنشاء كيان من JSON
+  factory Customer.fromJson(Map<String, dynamic> json) =>
+      _$CustomerFromJson(json);
 }

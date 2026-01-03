@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/widgets/index.dart';
 import 'package:basir_app/features/customers/domain/entities/customer.dart';
 import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,11 +63,11 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
   @override
   Widget build(BuildContext context) {
     final isEditing = widget.customer != null;
+    final appIcons = ref.watch(appIconsProvider);
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppAppBar(
-        // ignore: lines_longer_than_80_chars
         title: isEditing
             ? context.l10n.customerFormTitleEdit
             : context.l10n.customerFormTitleAdd,
@@ -81,11 +81,12 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
             children: [
               // زر اختيار من جهات الاتصال
               if (!isEditing)
-                AppEnhancedButton(
-                  text: context.l10n.btnSelectFromContacts,
+                AppButton(
+                  label: context.l10n.btnSelectFromContacts,
                   onPressed: _selectFromContacts,
-                  icon: Icons.contact_page,
-                  style: AppEnhancedButtonStyle.secondary,
+                  icon: appIcons.users,
+                  type: AppButtonType.secondary,
+                  isFullWidth: true,
                 ),
               if (!isEditing) const SizedBox(height: Spacing.md),
 
@@ -94,7 +95,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                 controller: _nameController,
                 label: context.l10n.labelCustomerName,
                 hint: context.l10n.hintCustomerName,
-                prefixIcon: const Icon(Icons.person),
+                prefixIcon: Icon(appIcons.person),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return context.l10n.errCustomerNameRequired;
@@ -112,7 +113,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                 controller: _emailController,
                 label: context.l10n.labelEmailOptional,
                 hint: 'example@email.com',
-                prefixIcon: const Icon(Icons.email),
+                prefixIcon: Icon(appIcons.email),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
                   if (value != null && value.isNotEmpty) {
@@ -133,7 +134,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                 controller: _phoneController,
                 label: context.l10n.labelPhoneOptional,
                 hint: '05xxxxxxxx',
-                prefixIcon: const Icon(Icons.phone),
+                prefixIcon: Icon(appIcons.phone),
                 keyboardType: TextInputType.phone,
                 validator: (value) {
                   if (value != null && value.isNotEmpty) {
@@ -154,7 +155,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                 controller: _addressController,
                 label: context.l10n.labelAddressOptional,
                 hint: context.l10n.hintAddress,
-                prefixIcon: const Icon(Icons.location_on),
+                prefixIcon: Icon(appIcons.location),
                 maxLines: 2,
               ),
               const SizedBox(height: Spacing.md),
@@ -164,7 +165,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                 controller: _notesController,
                 label: context.l10n.labelNotesOptional,
                 hint: context.l10n.hintCustomerNotes,
-                prefixIcon: const Icon(Icons.note),
+                prefixIcon: Icon(appIcons.note),
                 maxLines: 3,
               ),
               const SizedBox(height: Spacing.md),
@@ -174,7 +175,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                 controller: _creditLimitController,
                 label: context.l10n.labelCreditLimit,
                 hint: '0.0',
-                prefixIcon: const Icon(Icons.account_balance_wallet),
+                prefixIcon: Icon(appIcons.accounting),
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
@@ -190,14 +191,14 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
               const SizedBox(height: Spacing.xl),
 
               // زر الحفظ
-              AppEnhancedButton(
-                // ignore: lines_longer_than_80_chars
-                text: isEditing
-                    ? context.l10n.btnSaveChanges
-                    : context.l10n.btnAddCustomer,
+              AppButton(
+                label: isEditing
+                    ? context.l10n.customerFormTitleEdit
+                    : context.l10n.customerFormTitleAdd,
                 onPressed: _isLoading ? null : _saveCustomer,
                 isLoading: _isLoading,
-                icon: Icons.save,
+                icon: appIcons.save,
+                isFullWidth: true,
               ),
             ],
           ),
@@ -221,28 +222,30 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       if (!mounted) return;
       final dynamic result = await showModalBottomSheet<dynamic>(
         context: context,
-        builder: (context) => ListView.builder(
-          itemCount: contacts.length,
-          itemBuilder: (context, index) {
-            final contact = contacts[index];
-            return ListTile(
-              leading: const Icon(Icons.person),
-              title: Text('${contact.name.first} ${contact.name.last}'),
-              subtitle: Text(
-                contact.phones.isNotEmpty ? contact.phones.first.number : '',
-              ),
-              onTap: () => Navigator.pop(context, contact),
-            );
-          },
-        ),
+        builder: (context) {
+          final appIcons = ref.watch(appIconsProvider);
+          return ListView.builder(
+            itemCount: contacts.length,
+            itemBuilder: (context, index) {
+              final contact = contacts[index];
+              return ListTile(
+                leading: Icon(appIcons.person),
+                title: Text('${contact.name.first} ${contact.name.last}'),
+                subtitle: Text(
+                  contact.phones.isNotEmpty ? contact.phones.first.number : '',
+                ),
+                onTap: () => Navigator.pop(context, contact),
+              );
+            },
+          );
+        },
       );
 
       if (result != null && result is Contact) {
         final selectedContact = result;
         setState(() {
-          // ignore: lines_longer_than_80_chars
-          _nameController.text =
-              '${selectedContact.name.first} ${selectedContact.name.last}';
+          _nameController.text = '${selectedContact.name.first} '
+              '${selectedContact.name.last}';
           if (selectedContact.phones.isNotEmpty) {
             _phoneController.text = selectedContact.phones.first.number;
           }
@@ -278,19 +281,15 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       final customer = Customer(
         id: widget.customer?.id ?? const Uuid().v4(),
         name: _nameController.text.trim(),
-        // ignore: lines_longer_than_80_chars
         email: _emailController.text.trim().isEmpty
             ? null
             : _emailController.text.trim(),
-        // ignore: lines_longer_than_80_chars
         phone: _phoneController.text.trim().isEmpty
             ? null
             : _phoneController.text.trim(),
-        // ignore: lines_longer_than_80_chars
         address: _addressController.text.trim().isEmpty
             ? null
             : _addressController.text.trim(),
-        // ignore: lines_longer_than_80_chars
         notes: _notesController.text.trim().isEmpty
             ? null
             : _notesController.text.trim(),
@@ -313,7 +312,6 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              // ignore: lines_longer_than_80_chars
               isEditing
                   ? context.l10n.msgCustomerUpdated
                   : context.l10n.msgCustomerAdded,
@@ -329,7 +327,6 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              // ignore: lines_longer_than_80_chars
               isEditing
                   ? context.l10n.errCustomerUpdate
                   : context.l10n.errCustomerAdd,

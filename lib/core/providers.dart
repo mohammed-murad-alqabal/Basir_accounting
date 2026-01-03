@@ -1,4 +1,14 @@
 import 'package:basir_app/core/providers/secure_storage_provider.dart';
+import 'package:basir_app/core/providers/supabase_auth_provider.dart';
+import 'package:basir_app/features/accounting/data/models/account_model.dart';
+import 'package:basir_app/features/accounting/data/models/financial_voucher_model.dart';
+import 'package:basir_app/features/accounting/data/models/financial_year_model.dart';
+import 'package:basir_app/features/accounting/data/models/journal_entry_model.dart';
+import 'package:basir_app/features/accounting/data/repositories/financial_voucher_repository_impl.dart';
+import 'package:basir_app/features/accounting/data/repositories/financial_year_repository_impl.dart';
+import 'package:basir_app/features/accounting/domain/repositories/financial_voucher_repository.dart';
+import 'package:basir_app/features/accounting/domain/repositories/financial_year_repository.dart';
+import 'package:basir_app/features/analytics/domain/entities/analytics_event.dart';
 import 'package:basir_app/features/customers/data/models/customer_model.dart';
 import 'package:basir_app/features/customers/data/repositories/customer_repository_impl.dart';
 import 'package:basir_app/features/customers/data/services/contact_service.dart';
@@ -7,12 +17,22 @@ import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
 import 'package:basir_app/features/invoices/data/repositories/invoice_repository_impl.dart';
 import 'package:basir_app/features/invoices/data/services/sharing_service.dart';
 import 'package:basir_app/features/invoices/domain/repositories/invoice_repository.dart';
+import 'package:basir_app/features/settings/data/models/business_settings_model.dart';
+import 'package:basir_app/features/settings/data/models/profile_model.dart';
+import 'package:basir_app/features/settings/data/repositories/business_settings_repository_impl.dart';
+import 'package:basir_app/features/settings/data/repositories/profile_repository_impl.dart';
+import 'package:basir_app/features/settings/domain/repositories/business_settings_repository.dart';
+import 'package:basir_app/features/settings/domain/repositories/profile_repository.dart';
+import 'package:basir_app/features/vendors/data/models/vendor_model.dart';
+import 'package:basir_app/features/vendors/data/repositories/vendor_repository_impl.dart';
+import 'package:basir_app/features/vendors/domain/repositories/vendor_repository.dart';
 import 'package:basir_app/services/settings_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
+export '../features/accounting/data/repositories/accounting_repository_impl.dart';
 // تصدير مزودات المصادقة من مكانها الجديد
 export '../features/auth/presentation/providers/auth_provider.dart';
 // تصدير المزودات الأساسية
@@ -31,8 +51,14 @@ export 'theme/services/icon_customization_service.dart';
 /// - تغيير كلمة المرور
 final settingsServiceProvider = Provider<SettingsService>((ref) {
   final secureStorage = ref.watch(secureStorageProvider);
+  final businessSettingsRepository =
+      ref.watch(businessSettingsRepositoryProvider);
+  final profileRepository = ref.watch(profileRepositoryProvider);
+
   return SettingsService(
     secureStorage: secureStorage,
+    businessSettingsRepository: businessSettingsRepository,
+    profileRepository: profileRepository,
   );
 });
 
@@ -60,7 +86,18 @@ final isarProvider = FutureProvider<Isar>((ref) async {
 
     final dir = await getApplicationDocumentsDirectory();
     final isar = await Isar.open(
-      [CustomerModelSchema, InvoiceModelSchema],
+      [
+        CustomerModelSchema,
+        InvoiceModelSchema,
+        FinancialYearModelSchema,
+        AccountModelSchema,
+        JournalEntryModelSchema,
+        VendorModelSchema,
+        FinancialVoucherModelSchema,
+        AnalyticsEventSchema,
+        ProfileModelSchema,
+        BusinessSettingsModelSchema,
+      ],
       directory: dir.path,
       name: 'basir_db',
       // Note: Isar 3.1.0 does not support native encryption
@@ -79,14 +116,73 @@ final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
-  return CustomerRepositoryImpl(isar: isar);
+  final user = ref.watch(currentUserProvider);
+  return CustomerRepositoryImpl(isar: isar, userId: user?.id);
 });
 
 /// مزود مستودع الفواتير (Invoice Repository)
 final invoiceRepositoryProvider = Provider<InvoiceRepository>((ref) {
-  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
+  final isar = ref.watch(
+    isarProvider.select((asyncIsar) => asyncIsar.value),
+  );
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
-  return InvoiceRepositoryImpl(isar: isar);
+  final user = ref.watch(currentUserProvider);
+  return InvoiceRepositoryImpl(isar: isar, userId: user?.id);
+});
+
+/// مزود مستودع السنوات المالية (Financial Year Repository)
+final financialYearRepositoryProvider =
+    Provider<FinancialYearRepository>((ref) {
+  final isar = ref.watch(
+    isarProvider.select((asyncIsar) => asyncIsar.value),
+  );
+  if (isar == null) {
+    throw Exception('قاعدة البيانات غير جاهزة');
+  }
+  final user = ref.watch(currentUserProvider);
+  return FinancialYearRepositoryImpl(isar: isar, userId: user?.id);
+});
+
+/// مزود مستودع الموردين (Vendor Repository)
+final vendorRepositoryProvider = Provider<VendorRepository>((ref) {
+  final isar = ref.watch(
+    isarProvider.select((asyncIsar) => asyncIsar.value),
+  );
+  if (isar == null) {
+    throw Exception('قاعدة البيانات غير جاهزة');
+  }
+  final user = ref.watch(currentUserProvider);
+  return VendorRepositoryImpl(isar: isar, userId: user?.id);
+});
+
+/// مزود مستودع السندات المالية (Financial Voucher Repository)
+final financialVoucherRepositoryProvider =
+    Provider<FinancialVoucherRepository>((ref) {
+  final isar = ref.watch(
+    isarProvider.select((asyncIsar) => asyncIsar.value),
+  );
+  if (isar == null) {
+    throw Exception('قاعدة البيانات غير جاهزة');
+  }
+  final user = ref.watch(currentUserProvider);
+  return FinancialVoucherRepositoryImpl(isar: isar, userId: user?.id);
+});
+
+/// مزود مستودع الملف الشخصي (Profile Repository)
+final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
+  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
+  if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
+  final user = ref.watch(currentUserProvider);
+  return ProfileRepositoryImpl(isar: isar, userId: user?.id);
+});
+
+/// مزود مستودع إعدادات العمل (Business Settings Repository)
+final businessSettingsRepositoryProvider =
+    Provider<BusinessSettingsRepository>((ref) {
+  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
+  if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
+  final user = ref.watch(currentUserProvider);
+  return BusinessSettingsRepositoryImpl(isar: isar, userId: user?.id);
 });

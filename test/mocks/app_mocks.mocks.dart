@@ -13,6 +13,8 @@ import 'package:basir_app/features/customers/domain/repositories/customer_reposi
     as _i8;
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart'
     as _i5;
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart'
+    as _i10;
 import 'package:basir_app/features/invoices/domain/repositories/invoice_repository.dart'
     as _i4;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i2;
@@ -422,7 +424,8 @@ class MockInvoiceRepository extends _i1.Mock implements _i4.InvoiceRepository {
       ) as _i7.Future<List<_i5.Invoice>>);
 
   @override
-  _i7.Future<List<_i5.Invoice>> getInvoicesByStatus(String? status) =>
+  _i7.Future<List<_i5.Invoice>> getInvoicesByStatus(
+          _i10.InvoiceStatus? status) =>
       (super.noSuchMethod(
         Invocation.method(
           #getInvoicesByStatus,

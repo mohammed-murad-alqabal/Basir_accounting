@@ -25,8 +25,8 @@ class SharingService {
     }
   }
 
-  /// مشاركة ملف PDF
-  Future<void> sharePdfFile({
+  /// مشاركة ملف (PDF, CSV, إلخ)
+  Future<void> shareFile({
     required List<int> bytes,
     required String fileName,
     String? subject,
@@ -36,17 +36,36 @@ class SharingService {
     final file = File('${tempDir.path}/$fileName');
     await file.writeAsBytes(bytes);
 
-    // ignore: deprecated_member_use
-    await Share.shareXFiles(
-      [XFile(file.path)],
-      subject: subject,
-      text: text,
+    await SharePlus.instance.share(
+      ShareParams(
+        files: [XFile(file.path)],
+        subject: subject,
+        text: text,
+      ),
     );
   }
 
+  /// مشاركة ملف PDF (للتوافق مع الكود القديم)
+  Future<void> sharePdfFile({
+    required List<int> bytes,
+    required String fileName,
+    String? subject,
+    String? text,
+  }) =>
+      shareFile(
+        bytes: bytes,
+        fileName: fileName,
+        subject: subject,
+        text: text,
+      );
+
   /// مشاركة نص عام
   Future<void> shareText(String text, {String? subject}) async {
-    // ignore: deprecated_member_use
-    await Share.share(text, subject: subject);
+    await SharePlus.instance.share(
+      ShareParams(
+        text: text,
+        subject: subject,
+      ),
+    );
   }
 }

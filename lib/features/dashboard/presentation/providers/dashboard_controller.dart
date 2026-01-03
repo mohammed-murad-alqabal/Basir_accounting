@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/features/dashboard/domain/entities/dashboard_data.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// مزود وحدة تحكم لوحة التحكم (Dashboard Controller Provider)
@@ -35,8 +34,9 @@ class DashboardController extends AsyncNotifier<DashboardData> {
     final allCustomers = results[1] as List<dynamic>;
 
     // تصفية الفواتير غير الملغاة
-    final activeInvoices =
-        allInvoices.where((inv) => inv.status != 'cancelled').toList();
+    final activeInvoices = allInvoices
+        .where((inv) => inv.status != InvoiceStatus.cancelled)
+        .toList();
 
     // حساب الإحصائيات
     var paidCount = 0;
@@ -48,13 +48,13 @@ class DashboardController extends AsyncNotifier<DashboardData> {
     double overdueRevenue = 0;
 
     for (final inv in activeInvoices) {
-      final total = inv.grandTotal;
+      final total = inv.totalAmount;
       totalSales += total;
 
-      if (inv.status == 'paid') {
+      if (inv.status == InvoiceStatus.paid) {
         paidCount++;
         paidRevenue += total;
-      } else if (inv.status == 'overdue') {
+      } else if (inv.status == InvoiceStatus.overdue) {
         overdueCount++;
         overdueRevenue += total;
       } else {
@@ -102,7 +102,7 @@ class DashboardController extends AsyncNotifier<DashboardData> {
                 inv.issuedDate.month == date.month &&
                 inv.issuedDate.day == date.day,
           )
-          .fold<double>(0, (sum, inv) => sum + inv.grandTotal);
+          .fold<double>(0, (sum, inv) => sum + inv.totalAmount);
 
       trend[dateKey] = dailyTotal;
     }

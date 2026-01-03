@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'package:basir_app/core/theme/app_theme.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/widgets/app_button.dart';
+import 'package:basir_app/shared/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

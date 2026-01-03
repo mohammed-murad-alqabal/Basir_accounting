@@ -98,6 +98,66 @@ abstract class AppLocalizations {
     Locale('en')
   ];
 
+  /// No description provided for @labelTermsAndConditions.
+  ///
+  /// In ar, this message translates to:
+  /// **'الشروط والأحكام'**
+  String get labelTermsAndConditions;
+
+  /// No description provided for @labelPaidDate.
+  ///
+  /// In ar, this message translates to:
+  /// **'تاريخ الدفع'**
+  String get labelPaidDate;
+
+  /// No description provided for @labelDiscountAmount.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيمة الخصم'**
+  String get labelDiscountAmount;
+
+  /// No description provided for @labelZatcaQrCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'رمز الاستجابة السريعة (ZATCA)'**
+  String get labelZatcaQrCode;
+
+  /// No description provided for @zatcaComplianceText.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذه الفاتورة متوافقة مع متطلبات هيئة الزكاة والضريبة والجمارك'**
+  String get zatcaComplianceText;
+
+  /// No description provided for @actionCreateFirstInvoice.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنشاء أول فاتورة'**
+  String get actionCreateFirstInvoice;
+
+  /// No description provided for @noInvoicesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد فواتير'**
+  String get noInvoicesTitle;
+
+  /// No description provided for @noInvoicesDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ بإضافة فاتورتك الأولى لإدارة مبيعاتك بشكل احترافي.'**
+  String get noInvoicesDescription;
+
+  /// No description provided for @journalEntryFormTitleAdd.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة قيد يدوي'**
+  String get journalEntryFormTitleAdd;
+
+  /// No description provided for @journalEntryFormTitleEdit.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل قيد يدوي'**
+  String get journalEntryFormTitleEdit;
+
   /// No description provided for @aboutAppSubtitle.
   ///
   /// In ar, this message translates to:
@@ -199,6 +259,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'إرسال عبر الواتساب (نص)'**
   String get actionShareWhatsappText;
+
+  /// No description provided for @actionShare.
+  ///
+  /// In ar, this message translates to:
+  /// **'مشاركة'**
+  String get actionShare;
+
+  /// No description provided for @actionExportPdf.
+  ///
+  /// In ar, this message translates to:
+  /// **'تصدير PDF'**
+  String get actionExportPdf;
 
   /// No description provided for @actionUpgradeAccount.
   ///
@@ -1070,6 +1142,48 @@ abstract class AppLocalizations {
   /// **'نسبة الضريبة (مثال: 0.15)'**
   String get labelTaxRateWithExample;
 
+  /// عنوان شاشة الخصوصية والتحليلات
+  ///
+  /// In ar, this message translates to:
+  /// **'الخصوصية والتحليلات'**
+  String get privacyAnalyticsTitle;
+
+  /// وصف شاشة الخصوصية والتحليلات
+  ///
+  /// In ar, this message translates to:
+  /// **'إدارة بيانات الاستخدام والخصوصية المحلية'**
+  String get privacyAnalyticsSubtitle;
+
+  /// تفعيل التتبع المحلي
+  ///
+  /// In ar, this message translates to:
+  /// **'تفعيل التحليلات المحلية'**
+  String get analyticsEnableTracking;
+
+  /// تنبيه الخصوصية للتحليلات
+  ///
+  /// In ar, this message translates to:
+  /// **'نحن نحترم خصوصيتك. جميع التحليلات تُخزن محلياً فقط على جهازك ولا نجمع أي بيانات شخصية أو مالية. تساعدنا هذه البيانات في تحسين تجربة المستخدم وفهم الميزات الأكثر استخداماً.'**
+  String get analyticsPrivacyNotice;
+
+  /// مسح جميع بيانات التحليلات
+  ///
+  /// In ar, this message translates to:
+  /// **'مسح بيانات التحليلات'**
+  String get analyticsClearData;
+
+  /// تم مسح البيانات
+  ///
+  /// In ar, this message translates to:
+  /// **'تم مسح بيانات التحليلات بنجاح'**
+  String get analyticsDataCleared;
+
+  /// No description provided for @lastSyncLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر مزامنة'**
+  String get lastSyncLabel;
+
   /// No description provided for @labelUsername.
   ///
   /// In ar, this message translates to:
@@ -1717,6 +1831,684 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حالات خاصة'**
   String get sectionSpecialCases;
+
+  /// No description provided for @msgResetConfirmation.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم إعادة جميع إعدادات المظهر للوضع الافتراضي. هل أنت متأكد؟'**
+  String get msgResetConfirmation;
+
+  /// No description provided for @errorTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'عذراً، حدث خطأ غير متوقع'**
+  String get errorTitle;
+
+  /// No description provided for @errorDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'نحن نعمل على إصلاح المشكلة حالياً. يرجى محاولة إعادة تشغيل التطبيق.'**
+  String get errorDescription;
+
+  /// No description provided for @labelCurrencySAR.
+  ///
+  /// In ar, this message translates to:
+  /// **'ر.س'**
+  String get labelCurrencySAR;
+
+  /// No description provided for @msgNoActivity.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد نشاط حديث حتى الآن.'**
+  String get msgNoActivity;
+
+  /// No description provided for @labelAccounting.
+  ///
+  /// In ar, this message translates to:
+  /// **'المحاسبة'**
+  String get labelAccounting;
+
+  /// No description provided for @labelChartOfAccounts.
+  ///
+  /// In ar, this message translates to:
+  /// **'دليل الحسابات'**
+  String get labelChartOfAccounts;
+
+  /// No description provided for @labelJournalEntries.
+  ///
+  /// In ar, this message translates to:
+  /// **'القيود اليومية'**
+  String get labelJournalEntries;
+
+  /// No description provided for @financialSummaryTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملخص مالي (تجريبي)'**
+  String get financialSummaryTitle;
+
+  /// No description provided for @statAssets.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأصول'**
+  String get statAssets;
+
+  /// No description provided for @statLiabilities.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخصوم'**
+  String get statLiabilities;
+
+  /// No description provided for @statNetIncome.
+  ///
+  /// In ar, this message translates to:
+  /// **'صافي الدخل'**
+  String get statNetIncome;
+
+  /// No description provided for @tooltipRefresh.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحديث'**
+  String get tooltipRefresh;
+
+  /// No description provided for @emptyAccountsMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد حسابات. اضغط تحديث لإنشاء الدليل الافتراضي.'**
+  String get emptyAccountsMessage;
+
+  /// No description provided for @errorLoadingAccounts.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطأ في تحميل الحسابات'**
+  String get errorLoadingAccounts;
+
+  /// No description provided for @labelBalance.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرصيد'**
+  String get labelBalance;
+
+  /// No description provided for @labelTotal.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإجمالي'**
+  String get labelTotal;
+
+  /// No description provided for @statusPosted.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرحل'**
+  String get statusPosted;
+
+  /// No description provided for @statusDraft.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسودة'**
+  String get statusDraft;
+
+  /// No description provided for @emptyJournalEntriesMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد قيود مسجلة.'**
+  String get emptyJournalEntriesMessage;
+
+  /// No description provided for @labelDebit.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدين'**
+  String get labelDebit;
+
+  /// No description provided for @labelCredit.
+  ///
+  /// In ar, this message translates to:
+  /// **'دائن'**
+  String get labelCredit;
+
+  /// No description provided for @labelReference.
+  ///
+  /// In ar, this message translates to:
+  /// **'المرجع / الرقم'**
+  String get labelReference;
+
+  /// No description provided for @msgColorPickerHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر لوناً أساسياً مخصصاً للتطبيق'**
+  String get msgColorPickerHint;
+
+  /// No description provided for @msgJournalEntryAdded.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم حفظ القيد المحاسبي بنجاح'**
+  String get msgJournalEntryAdded;
+
+  /// No description provided for @errUnbalancedEntry.
+  ///
+  /// In ar, this message translates to:
+  /// **'القيد غير متزن! يجب أن يتساوى المدين والدائن'**
+  String get errUnbalancedEntry;
+
+  /// No description provided for @btnSaveEntry.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ كمسودة'**
+  String get btnSaveEntry;
+
+  /// No description provided for @btnPostEntry.
+  ///
+  /// In ar, this message translates to:
+  /// **'ترحيل القيد'**
+  String get btnPostEntry;
+
+  /// No description provided for @msgJournalEntryPosted.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم ترحيل القيد بنجاح'**
+  String get msgJournalEntryPosted;
+
+  /// No description provided for @msgJournalEntryDrafted.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم حفظ القيد كمسودة'**
+  String get msgJournalEntryDrafted;
+
+  /// No description provided for @hintJournalDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدخل وصف العملية المالية'**
+  String get hintJournalDescription;
+
+  /// No description provided for @labelJournalEntryLines.
+  ///
+  /// In ar, this message translates to:
+  /// **'بنود القيد'**
+  String get labelJournalEntryLines;
+
+  /// No description provided for @expenseDistributionTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'توزيع المصروفات'**
+  String get expenseDistributionTitle;
+
+  /// No description provided for @noExpenseDataMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد بيانات مصروفات'**
+  String get noExpenseDataMessage;
+
+  /// No description provided for @otherExpensesLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'مصروفات أخرى'**
+  String get otherExpensesLabel;
+
+  /// No description provided for @trialBalanceTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ميزان المراجعة'**
+  String get trialBalanceTitle;
+
+  /// No description provided for @btnExport.
+  ///
+  /// In ar, this message translates to:
+  /// **'تصدير'**
+  String get btnExport;
+
+  /// No description provided for @labelCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكود'**
+  String get labelCode;
+
+  /// No description provided for @labelAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحساب'**
+  String get labelAccount;
+
+  /// No description provided for @labelExportPdf.
+  ///
+  /// In ar, this message translates to:
+  /// **'تصدير PDF'**
+  String get labelExportPdf;
+
+  /// No description provided for @labelExportCsv.
+  ///
+  /// In ar, this message translates to:
+  /// **'تصدير CSV (Excel)'**
+  String get labelExportCsv;
+
+  /// No description provided for @cashFlowTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'قائمة التدفقات النقدية'**
+  String get cashFlowTitle;
+
+  /// No description provided for @incomeStatementTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'قائمة الدخل'**
+  String get incomeStatementTitle;
+
+  /// No description provided for @balanceSheetTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الميزانية العمومية'**
+  String get balanceSheetTitle;
+
+  /// No description provided for @labelOperating.
+  ///
+  /// In ar, this message translates to:
+  /// **'العمليات التشغيلية'**
+  String get labelOperating;
+
+  /// No description provided for @labelInvesting.
+  ///
+  /// In ar, this message translates to:
+  /// **'العمليات الاستثمارية'**
+  String get labelInvesting;
+
+  /// No description provided for @labelFinancing.
+  ///
+  /// In ar, this message translates to:
+  /// **'العمليات التمويلية'**
+  String get labelFinancing;
+
+  /// No description provided for @labelNetCashFlow.
+  ///
+  /// In ar, this message translates to:
+  /// **'صافي التدفق النقدي'**
+  String get labelNetCashFlow;
+
+  /// No description provided for @reportingOverviewTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'التقارير المالية'**
+  String get reportingOverviewTitle;
+
+  /// No description provided for @trialBalanceSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحقق من توازن الحسابات المدينة والدائنة'**
+  String get trialBalanceSubtitle;
+
+  /// No description provided for @incomeStatementSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملخص الإيرادات والمصروفات حسب IFRS 18'**
+  String get incomeStatementSubtitle;
+
+  /// No description provided for @balanceSheetSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حالة الأصول والالتزامات وحقوق الملكية'**
+  String get balanceSheetSubtitle;
+
+  /// No description provided for @cashFlowSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حركة النقدية (الأنشطة التشغيلية، الاستثمارية، التمويلية)'**
+  String get cashFlowSubtitle;
+
+  /// No description provided for @agingReportsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحليل أعمار أرصدة العملاء والموردين'**
+  String get agingReportsSubtitle;
+
+  /// No description provided for @agingReportsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تقارير تعمير الديون'**
+  String get agingReportsTitle;
+
+  /// No description provided for @receivablesAgingLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'ذمم مدينة (عملاء)'**
+  String get receivablesAgingLabel;
+
+  /// No description provided for @payablesAgingLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'ذمم دائنة (موردون)'**
+  String get payablesAgingLabel;
+
+  /// No description provided for @noDataMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد بيانات'**
+  String get noDataMessage;
+
+  /// No description provided for @periodCurrent.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحالي'**
+  String get periodCurrent;
+
+  /// No description provided for @period1_30.
+  ///
+  /// In ar, this message translates to:
+  /// **'1-30 يوم'**
+  String get period1_30;
+
+  /// No description provided for @period31_60.
+  ///
+  /// In ar, this message translates to:
+  /// **'31-60 يوم'**
+  String get period31_60;
+
+  /// No description provided for @period61_90.
+  ///
+  /// In ar, this message translates to:
+  /// **'61-90 يوم'**
+  String get period61_90;
+
+  /// No description provided for @periodOver90.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكثر من 90 يوم'**
+  String get periodOver90;
+
+  /// No description provided for @labelAssets.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأصول'**
+  String get labelAssets;
+
+  /// No description provided for @labelLiabilities.
+  ///
+  /// In ar, this message translates to:
+  /// **'الالتزامات'**
+  String get labelLiabilities;
+
+  /// No description provided for @labelEquity.
+  ///
+  /// In ar, this message translates to:
+  /// **'حقوق الملكية'**
+  String get labelEquity;
+
+  /// No description provided for @labelTotalAssets.
+  ///
+  /// In ar, this message translates to:
+  /// **'إجمالي الأصول'**
+  String get labelTotalAssets;
+
+  /// No description provided for @labelTotalLiabilitiesAndEquity.
+  ///
+  /// In ar, this message translates to:
+  /// **'إجمالي الالتزامات وحقوق الملكية'**
+  String get labelTotalLiabilitiesAndEquity;
+
+  /// No description provided for @msgBalanceBalanced.
+  ///
+  /// In ar, this message translates to:
+  /// **'الميزانية متزنة: الأصول تساوي الالتزامات وحقوق الملكية.'**
+  String get msgBalanceBalanced;
+
+  /// No description provided for @msgBalanceUnbalanced.
+  ///
+  /// In ar, this message translates to:
+  /// **'تنبيه: الميزانية غير متزنة! الفرق: {diff}'**
+  String msgBalanceUnbalanced(Object diff);
+
+  /// No description provided for @treasuryTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخزينة والنقدية'**
+  String get treasuryTitle;
+
+  /// No description provided for @cashBalancesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرصدة النقدية والبنوك'**
+  String get cashBalancesTitle;
+
+  /// No description provided for @recentVouchersTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أحدث السندات'**
+  String get recentVouchersTitle;
+
+  /// No description provided for @receiptVoucherAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'سند قبض'**
+  String get receiptVoucherAction;
+
+  /// No description provided for @paymentVoucherAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'سند صرف'**
+  String get paymentVoucherAction;
+
+  /// No description provided for @newVoucherLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'سند جديد'**
+  String get newVoucherLabel;
+
+  /// No description provided for @noVouchersMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد سندات مسجلة'**
+  String get noVouchersMessage;
+
+  /// No description provided for @anonymousPerson.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدون اسم'**
+  String get anonymousPerson;
+
+  /// No description provided for @actionReverse.
+  ///
+  /// In ar, this message translates to:
+  /// **'عكس القيد'**
+  String get actionReverse;
+
+  /// No description provided for @actionEdit.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل'**
+  String get actionEdit;
+
+  /// No description provided for @actionPostNow.
+  ///
+  /// In ar, this message translates to:
+  /// **'ترحيل الآن'**
+  String get actionPostNow;
+
+  /// No description provided for @msgConfirmReverse.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل أنت متأكد من رغبتك في عكس هذا القيد؟ سيؤدي ذلك إلى إنشاء قيد عكسي تلقائي.'**
+  String get msgConfirmReverse;
+
+  /// No description provided for @msgReverseSuccess.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم عكس القيد بنجاح'**
+  String get msgReverseSuccess;
+
+  /// No description provided for @labelBalanced.
+  ///
+  /// In ar, this message translates to:
+  /// **'متزن'**
+  String get labelBalanced;
+
+  /// No description provided for @labelUnbalanced.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متزن'**
+  String get labelUnbalanced;
+
+  /// No description provided for @labelDiff.
+  ///
+  /// In ar, this message translates to:
+  /// **'الفرق'**
+  String get labelDiff;
+
+  /// No description provided for @voucherReceiptTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سند قبض جديد'**
+  String get voucherReceiptTitle;
+
+  /// No description provided for @voucherPaymentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سند صرف جديد'**
+  String get voucherPaymentTitle;
+
+  /// No description provided for @btnSaveAndPostVoucher.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ السند وترحيله'**
+  String get btnSaveAndPostVoucher;
+
+  /// No description provided for @errInvalidAmount.
+  ///
+  /// In ar, this message translates to:
+  /// **'مبلغ غير صالح'**
+  String get errInvalidAmount;
+
+  /// No description provided for @errAmountRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'يرجى إدخال المبلغ'**
+  String get errAmountRequired;
+
+  /// No description provided for @errDescriptionRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'يرجى إدخال الشرح'**
+  String get errDescriptionRequired;
+
+  /// No description provided for @labelPaymentMethod.
+  ///
+  /// In ar, this message translates to:
+  /// **'طريقة الدفع'**
+  String get labelPaymentMethod;
+
+  /// No description provided for @methodCash.
+  ///
+  /// In ar, this message translates to:
+  /// **'نقدي'**
+  String get methodCash;
+
+  /// No description provided for @methodBank.
+  ///
+  /// In ar, this message translates to:
+  /// **'بنكي'**
+  String get methodBank;
+
+  /// No description provided for @methodCheck.
+  ///
+  /// In ar, this message translates to:
+  /// **'شيك'**
+  String get methodCheck;
+
+  /// No description provided for @labelTreasuryAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'حساب الصندوق/البنك'**
+  String get labelTreasuryAccount;
+
+  /// No description provided for @labelSourceClient.
+  ///
+  /// In ar, this message translates to:
+  /// **'العميل (مصدر السند)'**
+  String get labelSourceClient;
+
+  /// No description provided for @labelBeneficiaryVendor.
+  ///
+  /// In ar, this message translates to:
+  /// **'المورد (المستفيد)'**
+  String get labelBeneficiaryVendor;
+
+  /// No description provided for @msgVoucherSavedSuccess.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم حفظ السند وترحيله بنجاح'**
+  String get msgVoucherSavedSuccess;
+
+  /// No description provided for @errFormFill.
+  ///
+  /// In ar, this message translates to:
+  /// **'يرجى إكمال البيانات'**
+  String get errFormFill;
+
+  /// No description provided for @labelAccountSelector.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر الحساب'**
+  String get labelAccountSelector;
+
+  /// No description provided for @labelRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'مطلوب'**
+  String get labelRequired;
+
+  /// No description provided for @labelStatus.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحالة'**
+  String get labelStatus;
+
+  /// No description provided for @labelDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'الوصف'**
+  String get labelDescription;
+
+  /// No description provided for @errorExportingReport.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطأ أثناء تصدير التقرير'**
+  String get errorExportingReport;
+
+  /// No description provided for @labelAmount.
+  ///
+  /// In ar, this message translates to:
+  /// **'المبلغ'**
+  String get labelAmount;
+
+  /// No description provided for @labelDate.
+  ///
+  /// In ar, this message translates to:
+  /// **'التاريخ'**
+  String get labelDate;
+
+  /// No description provided for @labelType.
+  ///
+  /// In ar, this message translates to:
+  /// **'النوع'**
+  String get labelType;
+
+  /// No description provided for @labelRevenue.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإيرادات'**
+  String get labelRevenue;
+
+  /// No description provided for @labelExpenses.
+  ///
+  /// In ar, this message translates to:
+  /// **'المصروفات'**
+  String get labelExpenses;
+
+  /// No description provided for @labelIncomeTax.
+  ///
+  /// In ar, this message translates to:
+  /// **'ضريبة الدخل'**
+  String get labelIncomeTax;
+
+  /// No description provided for @labelNetProfit.
+  ///
+  /// In ar, this message translates to:
+  /// **'صافي الربح / الخسارة'**
+  String get labelNetProfit;
 }
 
 class _AppLocalizationsDelegate

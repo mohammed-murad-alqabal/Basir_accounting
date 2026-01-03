@@ -4,18 +4,55 @@
 library;
 
 import 'package:basir_app/core/constants.dart';
+import 'package:basir_app/features/settings/domain/entities/business_settings.dart';
+import 'package:basir_app/features/settings/domain/entities/profile.dart';
+import 'package:basir_app/features/settings/domain/repositories/business_settings_repository.dart';
+import 'package:basir_app/features/settings/domain/repositories/profile_repository.dart';
 import 'package:basir_app/services/settings_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../mocks/mock_secure_storage.dart';
 
+class MockBusinessSettingsRepository implements BusinessSettingsRepository {
+  BusinessSettings? _settings;
+  @override
+  Future<BusinessSettings?> getSettings() async => _settings;
+  @override
+  Future<void> saveSettings(BusinessSettings settings) async {
+    _settings = settings;
+  }
+}
+
+class MockProfileRepository implements ProfileRepository {
+  Profile? _profile;
+  @override
+  Future<Profile?> getProfile() async => _profile;
+  @override
+  Future<void> saveProfile(Profile profile) async {
+    _profile = profile;
+  }
+
+  @override
+  Future<void> deleteProfile() async {
+    _profile = null;
+  }
+}
+
 void main() {
   late MockSecureStorage mockStorage;
+  late MockBusinessSettingsRepository mockBusinessRepo;
+  late MockProfileRepository mockProfileRepo;
   late SettingsService settingsService;
 
   setUp(() {
     mockStorage = MockSecureStorage();
-    settingsService = SettingsService(secureStorage: mockStorage);
+    mockBusinessRepo = MockBusinessSettingsRepository();
+    mockProfileRepo = MockProfileRepository();
+    settingsService = SettingsService(
+      secureStorage: mockStorage,
+      businessSettingsRepository: mockBusinessRepo,
+      profileRepository: mockProfileRepo,
+    );
   });
 
   group('SettingsService - Tax Rate', () {

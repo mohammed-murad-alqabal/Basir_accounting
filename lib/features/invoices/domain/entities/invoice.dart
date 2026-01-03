@@ -1,238 +1,129 @@
 /// كيان الفاتورة (Invoice Entity)
 ///
 /// يمثل بيانات الفاتورة الأساسية في طبقة المجال (Domain Layer).
-/// يحتوي على جميع المعلومات المتعلقة بالفاتورة وبنودها.
+/// يحتوي على جميع المعلومات المتعلقة بالفاتورة وبنودها، وحقول ZATCA.
 library;
 
+import 'package:basir_app/core/models/sync_status.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'invoice.freezed.dart';
+part 'invoice.g.dart';
 
 /// بند الفاتورة (Invoice Item)
 ///
 /// يمثل بنداً واحداً في الفاتورة مع الكمية والسعر.
-///
-/// **الخصائص:**
-/// - معرف فريد للبند
-/// - اسم المنتج/الخدمة
-/// - الكمية
-/// - السعر للوحدة الواحدة
-///
-/// **مثال:**
-/// ```dart
-/// final item = InvoiceItem(
-///   id: 'item-1',
-///   name: 'خدمة استشارية',
-///   quantity: 2.0,
-///   price: 500.0,
-///,);
-/// debugPrint('الإجمالي: ${item.total}',); // 1000.0
-/// ```
 @freezed
 class InvoiceItem with _$InvoiceItem {
   /// إنشاء بند فاتورة جديد
-  ///
-  /// **Parameters:**
-  /// - [id]: معرف فريد للبند
-  /// - [name]: اسم المنتج أو الخدمة
-  /// - [quantity]: الكمية (يمكن أن تكون كسرية)
-  /// - [price]: السعر للوحدة الواحدة
   const factory InvoiceItem({
-    /// معرف البند الفريد
     required String id,
-
-    /// اسم المنتج أو الخدمة
-    ///
-    /// **مثال:** 'خدمة استشارية', 'تصميم موقع'
     required String name,
-
-    /// الكمية
-    ///
-    /// يمكن أن تكون عدداً صحيحاً أو كسرياً (مثل 1.5 ساعة).
-    ///
-    /// **مثال:** 2.0, 1.5, 10.0
     required double quantity,
-
-    /// السعر للوحدة الواحدة
-    ///
-    /// **مثال:** 500.0 ريال
     required double price,
+
+    /// إجمالي البند (المحسوب والمخزن)
+    /// quantity * price
+    required double total,
+
+    /// الوصف (اختياري)
+    String? description,
+
+    /// مبلغ الضريبة للبند (اختياري إذا كان مفصلاً)
+    @Default(0.0) double taxAmount,
   }) = _InvoiceItem;
 
-  const InvoiceItem._();
+  /// إنشاء بند فاتورة من JSON
+  factory InvoiceItem.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceItemFromJson(json);
 
-  /// حساب الإجمالي للبند
-  ///
-  /// يحسب الإجمالي بضرب الكمية في السعر.
-  ///
-  /// **Formula:** `quantity × price`
-  ///
-  /// **مثال:**
-  /// ```dart
-  /// final item = InvoiceItem(
-  ///   id: 'item-1',
-  ///   name: 'خدمة',
-  ///   quantity: 2.0,
-  ///   price: 500.0,
-  ///,);
-  /// debugPrint(item.total,); // 1000.0
-  /// ```
-  double get total => quantity * price;
+  const InvoiceItem._();
 }
 
 /// الفاتورة (Invoice)
 ///
 /// كيان رئيسي يمثل فاتورة كاملة مع جميع بنودها وتفاصيلها.
-///
-/// **الميزات:**
-/// - إدارة بنود متعددة
-/// - حساب تلقائي للضرائب والإجماليات
-/// - تتبع حالة الفاتورة
-/// - ربط بالعميل
-///
-/// **حالات الفاتورة:**
-/// - `draft`: مسودة
-/// - `issued`: صادرة
-/// - `paid`: مدفوعة
-/// - `overdue`: متأخرة
-/// - `cancelled`: ملغاة
-///
-/// **مثال:**
-/// ```dart
-/// final invoice = Invoice(
-///   id: 'inv-001',
-///   customerId: 'customer-1',
-///   customerName: 'أحمد محمد',
-///   items: [
-///     InvoiceItem(
-///       id: 'item-1',
-///       name: 'خدمة استشارية',
-///       quantity: 2.0,
-///       price: 500.0,
-///     ),
-///   ],
-///   issuedDate: DateTime.now(),
-///   dueDate: DateTime.now().add(Duration(days: 30)),
-///   taxRate: 0.15, // 15%
-///   status: 'issued',
-///   createdAt: DateTime.now(),
-///   updatedAt: DateTime.now(),
-///,);
-/// debugPrint('الإجمالي: ${invoice.grandTotal}',); // 1150.0
-/// ```
+/// متوافق مع معايير ZATCA والفاتورة الإلكترونية السعودية.
 @freezed
 class Invoice with _$Invoice {
   /// إنشاء فاتورة جديدة
-  ///
-  /// **Parameters:**
-  /// - [id]: معرف فريد للفاتورة
-  /// - [customerId]: معرف العميل
-  /// - [customerName]: اسم العميل
-  /// - [items]: قائمة بنود الفاتورة
-  /// - [issuedDate]: تاريخ الإصدار
-  /// - [dueDate]: تاريخ الاستحقاق
-  /// - [taxRate]: نسبة الضريبة (0.15 = 15%)
-  /// - [status]: حالة الفاتورة
-  /// - [createdAt]: تاريخ الإنشاء
-  /// - [updatedAt]: تاريخ آخر تحديث
-  /// - [notes]: ملاحظات إضافية (اختياري)
   const factory Invoice({
-    /// معرف الفاتورة الفريد
+    /// معرف الفاتورة الفريد (UUID)
     required String id,
+
+    /// رقم الفاتورة التسلسلي (للعرض)
+    /// مثال: INV-2025-0001
+    required String invoiceNumber,
 
     /// معرف العميل
     required String customerId,
-
-    /// اسم العميل
-    ///
-    /// يتم نسخه من بيانات العميل لسهولة الوصول.
     required String customerName,
 
     /// قائمة بنود الفاتورة
-    ///
-    /// يجب أن تحتوي على بند واحد على الأقل.
     required List<InvoiceItem> items,
 
-    /// تاريخ إصدار الفاتورة
+    /// تواريخ
     required DateTime issuedDate,
-
-    /// تاريخ استحقاق الدفع
     required DateTime dueDate,
-
-    /// نسبة الضريبة
-    ///
-    /// **مثال:** 0.15 = 15%
-    required double taxRate,
-
-    /// حالة الفاتورة
-    ///
-    /// **القيم الممكنة:**
-    /// - `draft`: مسودة
-    /// - `issued`: صادرة
-    /// - `paid`: مدفوعة
-    /// - `overdue`: متأخرة
-    /// - `cancelled`: ملغاة
-    required String status,
-
-    /// تاريخ إنشاء الفاتورة
     required DateTime createdAt,
-
-    /// تاريخ آخر تحديث للفاتورة
     required DateTime updatedAt,
 
-    /// ملاحظات إضافية
-    ///
-    /// **اختياري** - يمكن استخدامه لشروط الدفع أو ملاحظات خاصة.
+    /// الحالة
+    required InvoiceStatus status,
+
+    /// مبالغ (Persisted for Data Integrity)
+    required double subtotalAmount,
+    required double taxAmount,
+    required double discountAmount,
+    required double totalAmount,
+    required double paidAmount,
+
+    /// نسب
+    required double taxRate,
+    DateTime? paidDate,
+    @Default(0.0) double discountRate,
+
+    /// العملة
+    @Default('SAR') String currency,
+
+    /// معلومات إضافية
     String? notes,
+    String? terms,
+
+    /// بيانات ZATCA (الفاتورة الإلكترونية)
+    String? zatcaUuid,
+    String? zatcaHash,
+    String? qrCode,
+    String? xmlContent,
+
+    /// معرف المستخدم لغرض عزل البيانات
+    String? userId,
+
+    /// حالة المزامنة
+    @Default(SyncStatus.synced) SyncStatus syncStatus,
+
+    /// تاريخ آخر تحديث من السيرفر
+    DateTime? serverUpdatedAt,
+
+    /// هل السجل محذوف (حذف ناعم)
+    @Default(false) bool isDeleted,
   }) = _Invoice;
+
+  /// إنشاء فاتورة من JSON
+  factory Invoice.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceFromJson(json);
 
   const Invoice._();
 
-  /// حساب الإجمالي الفرعي (Subtotal)
-  ///
-  /// يحسب مجموع إجماليات جميع البنود قبل الضريبة.
-  ///
-  /// **Formula:** `Σ(item.total)`
-  ///
-  /// **مثال:**
-  /// ```dart
-  /// // بند 1: 2 × 500 = 1000
-  /// // بند 2: 1 × 300 = 300
-  /// // الإجمالي الفرعي = 1300
-  /// debugPrint(invoice.subtotal,); // 1300.0
-  /// ```
-  double get subtotal => items.fold(
-        0,
-        (sum, item) => sum + item.total,
-      );
+  /// المتبقي للدفع
+  double get remainingAmount => totalAmount - paidAmount;
 
-  /// حساب إجمالي الضريبة (Tax Total)
-  ///
-  /// يحسب قيمة الضريبة بناءً على الإجمالي الفرعي ونسبة الضريبة.
-  ///
-  /// **Formula:** `subtotal × taxRate`
-  ///
-  /// **مثال:**
-  /// ```dart
-  /// // الإجمالي الفرعي: 1000
-  /// // نسبة الضريبة: 15%
-  /// // الضريبة = 1000 × 0.15 = 150
-  /// debugPrint(invoice.taxTotal,); // 150.0
-  /// ```
-  double get taxTotal => subtotal * taxRate;
-
-  /// حساب الإجمالي الكلي (Grand Total)
-  ///
-  /// يحسب المبلغ النهائي المستحق شاملاً الضريبة.
-  ///
-  /// **Formula:** `subtotal + taxTotal`
-  ///
-  /// **مثال:**
-  /// ```dart
-  /// // الإجمالي الفرعي: 1000
-  /// // الضريبة: 150
-  /// // الإجمالي الكلي = 1150
-  /// debugPrint(invoice.grandTotal,); // 1150.0
-  /// ```
-  double get grandTotal => subtotal + taxTotal;
+  /// هل الفاتورة متأخرة؟
+  bool get isOverdue {
+    if (status == InvoiceStatus.paid || status == InvoiceStatus.cancelled) {
+      return false;
+    }
+    return DateTime.now().isAfter(dueDate);
+  }
 }

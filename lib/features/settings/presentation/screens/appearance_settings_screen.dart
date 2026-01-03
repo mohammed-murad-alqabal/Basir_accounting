@@ -1,4 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 
 import 'package:basir_app/core/extensions/context_extensions.dart';
@@ -9,10 +8,10 @@ import 'package:basir_app/core/theme/services/color_customization_service.dart';
 import 'package:basir_app/core/theme/services/font_customization_service.dart';
 import 'package:basir_app/core/theme/services/icon_customization_service.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/widgets/color_picker_dialog.dart';
 import 'package:basir_app/features/settings/presentation/widgets/font_settings_tile.dart';
 import 'package:basir_app/features/settings/presentation/widgets/icon_settings_tile.dart';
 import 'package:basir_app/features/settings/presentation/widgets/theme_preview_card.dart';
+import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,28 +23,38 @@ class AppearanceSettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeProvider).valueOrNull ?? ThemeMode.system;
-    final appearanceState = ref.watch(appearanceServiceProvider).valueOrNull ??
-        const AppearanceState(highContrast: false, reduceMotion: false);
+    final appearanceState = ref
+            .watch(
+              appearanceServiceProvider,
+            )
+            .valueOrNull ??
+        const AppearanceState(
+          highContrast: false,
+          reduceMotion: false,
+        );
     final calendarType =
         ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
     final customColor = ref.watch(colorCustomizationProvider).valueOrNull;
+    final appIcons = ref.watch(appIconsProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.appearanceSettingsTitle),
-        centerTitle: true,
+      appBar: AppAppBar(
+        title: context.l10n.appearanceSettingsTitle,
       ),
       body: ListView(
         padding: const EdgeInsets.all(Spacing.lg),
         children: [
           // 0. Preview Section
-          _buildSectionHeader(context, 'نظرة سريعة'),
+          const AppSectionHeader(title: 'نظرة سريعة'),
           const SizedBox(height: Spacing.md),
           const ThemePreviewCard(),
           const SizedBox(height: Spacing.xxl),
 
           // 1. Theme Mode Section
-          _buildSectionHeader(context, context.l10n.sectionMode),
+          AppSectionHeader(
+            title: context.l10n.sectionMode,
+            icon: appIcons.brightness,
+          ),
           const SizedBox(height: Spacing.md),
           Center(
             child: SegmentedButton<ThemeMode>(
@@ -53,25 +62,27 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                 ButtonSegment<ThemeMode>(
                   value: ThemeMode.system,
                   label: Text(context.l10n.modeSystem),
-                  icon: const Icon(Icons.brightness_auto),
+                  icon: Icon(appIcons.update),
                 ),
                 ButtonSegment<ThemeMode>(
                   value: ThemeMode.light,
                   label: Text(context.l10n.modeLight),
-                  icon: const Icon(Icons.light_mode),
+                  icon: Icon(appIcons.lightMode),
                 ),
                 ButtonSegment<ThemeMode>(
                   value: ThemeMode.dark,
                   label: Text(context.l10n.modeDark),
-                  icon: const Icon(Icons.dark_mode),
+                  icon: Icon(appIcons.darkMode),
                 ),
               ],
-              selected: {themeMode},
+              selected: {
+                themeMode,
+              },
               onSelectionChanged: (newSelection) {
                 unawaited(
-                  ref
-                      .read(themeProvider.notifier)
-                      .setThemeMode(newSelection.first),
+                  ref.read(themeProvider.notifier).setThemeMode(
+                        newSelection.first,
+                      ),
                 );
               },
               showSelectedIcon: false,
@@ -80,33 +91,41 @@ class AppearanceSettingsScreen extends ConsumerWidget {
           const SizedBox(height: Spacing.xxl),
 
           // 2. Color Selection Section
-          _buildSectionHeader(context, context.l10n.sectionStyle),
+          AppSectionHeader(
+            title: context.l10n.sectionStyle,
+            icon: appIcons.theme,
+          ),
           const SizedBox(height: Spacing.md),
-          ListTile(
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: Spacing.md,
-            ),
-            leading: Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: customColor ?? Theme.of(context).colorScheme.primary,
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.outlineVariant,
+          Semantics(
+            label: context.l10n.appColor,
+            button: true,
+            hint: context.l10n.appColor, // Fallback to avoid undefined key
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: Spacing.md,
+              ),
+              leading: Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: customColor ?? Theme.of(context).colorScheme.primary,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.outlineVariant,
+                  ),
                 ),
               ),
+              title: Text(context.l10n.appColor),
+              subtitle: Text(
+                customColor == null
+                    ? context.l10n.colorDefault
+                    : context.l10n.colorCustomized,
+              ),
+              trailing: Icon(appIcons.palette),
+              onTap: () {
+                unawaited(ColorPickerDialog.show(context));
+              },
             ),
-            title: Text(context.l10n.appColor),
-            subtitle: Text(
-              customColor == null
-                  ? context.l10n.colorDefault
-                  : context.l10n.colorCustomized,
-            ),
-            trailing: const Icon(Icons.color_lens_outlined),
-            onTap: () {
-              unawaited(ColorPickerDialog.show(context));
-            },
           ),
           const SizedBox(height: Spacing.xl),
 
@@ -119,7 +138,10 @@ class AppearanceSettingsScreen extends ConsumerWidget {
           const SizedBox(height: Spacing.xxl),
 
           // 5. Accessibility Section
-          _buildSectionHeader(context, context.l10n.sectionAccessibility),
+          AppSectionHeader(
+            title: context.l10n.sectionAccessibility,
+            icon: appIcons.accessibility,
+          ),
           const SizedBox(height: Spacing.md),
           DecoratedBox(
             decoration: BoxDecoration(
@@ -137,7 +159,7 @@ class AppearanceSettingsScreen extends ConsumerWidget {
             child: Column(
               children: [
                 SwitchListTile(
-                  secondary: const Icon(Icons.contrast),
+                  secondary: Icon(appIcons.contrast),
                   title: Text(context.l10n.highContrast),
                   subtitle: Text(context.l10n.highContrastSubtitle),
                   value: appearanceState.highContrast,
@@ -145,13 +167,15 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                     unawaited(
                       ref
                           .read(appearanceServiceProvider.notifier)
-                          .setHighContrast(enabled: value),
+                          .setHighContrast(
+                            enabled: value,
+                          ),
                     );
                   },
                 ),
                 const Divider(height: 1),
                 SwitchListTile(
-                  secondary: const Icon(Icons.motion_photos_off),
+                  secondary: Icon(appIcons.reduceMotion),
                   title: Text(context.l10n.reduceMotion),
                   subtitle: Text(context.l10n.reduceMotionSubtitle),
                   value: appearanceState.reduceMotion,
@@ -159,7 +183,9 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                     unawaited(
                       ref
                           .read(appearanceServiceProvider.notifier)
-                          .setReduceMotion(enabled: value),
+                          .setReduceMotion(
+                            enabled: value,
+                          ),
                     );
                   },
                 ),
@@ -169,7 +195,10 @@ class AppearanceSettingsScreen extends ConsumerWidget {
           const SizedBox(height: Spacing.xxl),
 
           // 6. Calendar Section
-          _buildSectionHeader(context, context.l10n.sectionCalendar),
+          AppSectionHeader(
+            title: context.l10n.sectionCalendar,
+            icon: appIcons.calendar,
+          ),
           const SizedBox(height: Spacing.md),
           Center(
             child: SegmentedButton<CalendarType>(
@@ -177,20 +206,22 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                 ButtonSegment<CalendarType>(
                   value: CalendarType.gregorian,
                   label: Text(context.l10n.calendarGregorian),
-                  icon: const Icon(Icons.calendar_today),
+                  icon: Icon(appIcons.calendar),
                 ),
                 ButtonSegment<CalendarType>(
                   value: CalendarType.hijri,
-                  label: Text(context.l10n.calendarHijri),
-                  icon: const Icon(Icons.auto_awesome),
+                  label: Text(
+                    context.l10n.calendarHijri,
+                  ),
+                  icon: Icon(appIcons.bolt),
                 ),
               ],
               selected: {calendarType},
               onSelectionChanged: (newSelection) {
                 unawaited(
-                  ref
-                      .read(calendarProvider.notifier)
-                      .setCalendarType(newSelection.first),
+                  ref.read(calendarProvider.notifier).setCalendarType(
+                        newSelection.first,
+                      ),
                 );
               },
               showSelectedIcon: false,
@@ -200,16 +231,11 @@ class AppearanceSettingsScreen extends ConsumerWidget {
 
           // 7. Reset All Section
           Center(
-            child: OutlinedButton.icon(
-              icon: const Icon(Icons.restore),
-              label: Text(context.l10n.btnRestoreDefault),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: Theme.of(context).colorScheme.error,
-                side: BorderSide(
-                  color: Theme.of(context).colorScheme.error,
-                ),
-              ),
+            child: AppButton(
+              label: context.l10n.btnRestoreDefault,
               onPressed: () => _showResetConfirmation(context, ref),
+              type: AppButtonType.danger,
+              icon: appIcons.restore,
             ),
           ),
           const SizedBox(height: Spacing.xxl),
@@ -222,51 +248,46 @@ class AppearanceSettingsScreen extends ConsumerWidget {
     unawaited(
       showDialog<void>(
         context: context,
-        builder: (ctx) => AlertDialog(
-          icon: const Icon(Icons.warning_amber_rounded, size: 48),
-          title: Text(context.l10n.btnRestoreDefault),
-          content: const Text(
-            'سيتم إعادة جميع إعدادات المظهر للوضع الافتراضي.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: Text(context.l10n.dialogCancel),
+        builder: (ctx) {
+          final appIcons = ref.watch(appIconsProvider);
+          return AlertDialog(
+            icon: Icon(appIcons.warning, size: 48),
+            title: Text(context.l10n.btnRestoreDefault),
+            content: Text(
+              context.l10n.msgResetConfirmation,
             ),
-            TextButton(
-              onPressed: () async {
-                await ref
-                    .read(colorCustomizationProvider.notifier)
-                    .resetToDefault();
-                await ref
-                    .read(fontCustomizationProvider.notifier)
-                    .resetToDefault();
-                await ref
-                    .read(iconCustomizationProvider.notifier)
-                    .resetToDefault();
-                await ref
-                    .read(appearanceServiceProvider.notifier)
-                    .resetToDefault();
-                if (ctx.mounted) Navigator.pop(ctx);
-              },
-              child: Text(
-                context.l10n.btnRestoreDefault,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.error,
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: Text(context.l10n.dialogCancel),
+              ),
+              TextButton(
+                onPressed: () async {
+                  await ref
+                      .read(colorCustomizationProvider.notifier)
+                      .resetToDefault();
+                  await ref
+                      .read(fontCustomizationProvider.notifier)
+                      .resetToDefault();
+                  await ref
+                      .read(iconCustomizationProvider.notifier)
+                      .resetToDefault();
+                  await ref
+                      .read(appearanceServiceProvider.notifier)
+                      .resetToDefault();
+                  if (ctx.mounted) Navigator.pop(ctx);
+                },
+                child: Text(
+                  context.l10n.btnRestoreDefault,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          );
+        },
       ),
     );
   }
-
-  Widget _buildSectionHeader(BuildContext context, String title) => Text(
-        title,
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
-            ),
-      );
 }

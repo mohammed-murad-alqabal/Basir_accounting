@@ -1,35 +1,20 @@
 import 'dart:async';
 
-import 'package:basir_app/core/providers.dart'; // Ensure correct import for providers
-import 'package:basir_app/core/widgets/app_button.dart';
-import 'package:basir_app/features/auth/data/services/auth_service.dart';
+import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/features/auth/presentation/screens/guest_upgrade_screen.dart';
 import 'package:basir_app/l10n/app_localizations.dart';
+import 'package:basir_app/shared/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class MockAuthService implements AuthService {
-  bool convertCalled = false;
-  String? lastUsername;
-  String? lastPassword;
-
-  @override
-  Future<void> convertGuestToUser(String username, String password) async {
-    convertCalled = true;
-    lastUsername = username;
-    lastPassword = password;
-  }
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
+import '../../../../../helpers/auth_test_helper.dart';
 
 void main() {
-  late MockAuthService mockAuthService;
+  late MockAuthServiceTestHelper mockAuthService;
 
   setUp(() {
-    mockAuthService = MockAuthService();
+    mockAuthService = MockAuthServiceTestHelper();
   });
 
   Widget createSubject() => ProviderScope(

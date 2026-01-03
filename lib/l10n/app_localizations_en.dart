@@ -9,6 +9,38 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get labelTermsAndConditions => 'Terms and Conditions';
+
+  @override
+  String get labelPaidDate => 'Paid Date';
+
+  @override
+  String get labelDiscountAmount => 'Discount Amount';
+
+  @override
+  String get labelZatcaQrCode => 'QR Code (ZATCA)';
+
+  @override
+  String get zatcaComplianceText =>
+      'This invoice is compliant with ZATCA electronic invoicing requirements.';
+
+  @override
+  String get actionCreateFirstInvoice => 'Create Your First Invoice';
+
+  @override
+  String get noInvoicesTitle => 'No Invoices Found';
+
+  @override
+  String get noInvoicesDescription =>
+      'Start by adding your first invoice to manage your sales professionally.';
+
+  @override
+  String get journalEntryFormTitleAdd => 'Add Journal Entry';
+
+  @override
+  String get journalEntryFormTitleEdit => 'Edit Journal Entry';
+
+  @override
   String get aboutAppSubtitle => 'Version 1.0.0';
 
   @override
@@ -59,6 +91,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionShareWhatsappText => 'Share via WhatsApp (Text)';
+
+  @override
+  String get actionShare => 'Share';
+
+  @override
+  String get actionExportPdf => 'Export PDF';
 
   @override
   String get actionUpgradeAccount => 'Upgrade Account';
@@ -514,6 +552,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelTaxRateWithExample => 'Tax Rate (e.g. 0.15)';
 
   @override
+  String get privacyAnalyticsTitle => 'الخصوصية والتحليلات';
+
+  @override
+  String get privacyAnalyticsSubtitle =>
+      'إدارة بيانات الاستخدام والخصوصية المحلية';
+
+  @override
+  String get analyticsEnableTracking => 'تفعيل التحليلات المحلية';
+
+  @override
+  String get analyticsPrivacyNotice =>
+      'نحن نحترم خصوصيتك. جميع التحليلات تُخزن محلياً فقط على جهازك ولا نجمع أي بيانات شخصية أو مالية. تساعدنا هذه البيانات في تحسين تجربة المستخدم وفهم الميزات الأكثر استخداماً.';
+
+  @override
+  String get analyticsClearData => 'مسح بيانات التحليلات';
+
+  @override
+  String get analyticsDataCleared => 'تم مسح بيانات التحليلات بنجاح';
+
+  @override
+  String get lastSyncLabel => 'آخر مزامنة';
+
+  @override
   String get labelUsername => 'Username';
 
   @override
@@ -859,4 +920,355 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sectionSpecialCases => 'Special Cases';
+
+  @override
+  String get msgResetConfirmation =>
+      'Resetting all appearance settings to default. Are you sure?';
+
+  @override
+  String get errorTitle => 'Oops, an unexpected error occurred';
+
+  @override
+  String get errorDescription =>
+      'We are working on fixing it. Please try restarting the app.';
+
+  @override
+  String get labelCurrencySAR => 'SAR';
+
+  @override
+  String get msgNoActivity => 'لا يوجد نشاط حديث حتى الآن.';
+
+  @override
+  String get labelAccounting => 'Accounting';
+
+  @override
+  String get labelChartOfAccounts => 'Chart of Accounts';
+
+  @override
+  String get labelJournalEntries => 'Journal Entries';
+
+  @override
+  String get financialSummaryTitle => 'Financial Summary (Beta)';
+
+  @override
+  String get statAssets => 'Assets';
+
+  @override
+  String get statLiabilities => 'Liabilities';
+
+  @override
+  String get statNetIncome => 'Net Income';
+
+  @override
+  String get tooltipRefresh => 'Refresh';
+
+  @override
+  String get emptyAccountsMessage =>
+      'No accounts found. Click refresh to seed default data.';
+
+  @override
+  String get errorLoadingAccounts => 'Error loading accounts';
+
+  @override
+  String get labelBalance => 'Balance';
+
+  @override
+  String get labelTotal => 'Total';
+
+  @override
+  String get statusPosted => 'Posted';
+
+  @override
+  String get statusDraft => 'Draft';
+
+  @override
+  String get emptyJournalEntriesMessage => 'No journal entries found.';
+
+  @override
+  String get labelDebit => 'Debit';
+
+  @override
+  String get labelCredit => 'Credit';
+
+  @override
+  String get labelReference => 'Reference / ID';
+
+  @override
+  String get msgColorPickerHint =>
+      'Pick a custom primary color for the application';
+
+  @override
+  String get msgJournalEntryAdded => 'Journal entry saved successfully';
+
+  @override
+  String get errUnbalancedEntry =>
+      'Entry is unbalanced! Debits must equal credits.';
+
+  @override
+  String get btnSaveEntry => 'Save as Draft';
+
+  @override
+  String get btnPostEntry => 'Post Entry';
+
+  @override
+  String get msgJournalEntryPosted => 'Journal entry posted successfully';
+
+  @override
+  String get msgJournalEntryDrafted => 'Journal entry saved as draft';
+
+  @override
+  String get hintJournalDescription => 'Enter transaction description';
+
+  @override
+  String get labelJournalEntryLines => 'Entry Lines';
+
+  @override
+  String get expenseDistributionTitle => 'Expense Distribution';
+
+  @override
+  String get noExpenseDataMessage => 'No expense data available';
+
+  @override
+  String get otherExpensesLabel => 'Other Expenses';
+
+  @override
+  String get trialBalanceTitle => 'Trial Balance';
+
+  @override
+  String get btnExport => 'Export';
+
+  @override
+  String get labelCode => 'Code';
+
+  @override
+  String get labelAccount => 'Account';
+
+  @override
+  String get labelExportPdf => 'Export PDF';
+
+  @override
+  String get labelExportCsv => 'Export CSV (Excel)';
+
+  @override
+  String get cashFlowTitle => 'Cash Flow Statement';
+
+  @override
+  String get incomeStatementTitle => 'Income Statement';
+
+  @override
+  String get balanceSheetTitle => 'Balance Sheet';
+
+  @override
+  String get labelOperating => 'Operating Activities';
+
+  @override
+  String get labelInvesting => 'Investing Activities';
+
+  @override
+  String get labelFinancing => 'Financing Activities';
+
+  @override
+  String get labelNetCashFlow => 'Net Cash Flow';
+
+  @override
+  String get reportingOverviewTitle => 'Financial Reports';
+
+  @override
+  String get trialBalanceSubtitle => 'Verify balance of debits and credits';
+
+  @override
+  String get incomeStatementSubtitle =>
+      'Summary of revenue and expenses by IFRS 18';
+
+  @override
+  String get balanceSheetSubtitle => 'State of assets, liabilities, and equity';
+
+  @override
+  String get cashFlowSubtitle =>
+      'Cash movement (Operating, Investing, Financing)';
+
+  @override
+  String get agingReportsSubtitle =>
+      'Analyze age of customer and supplier balances';
+
+  @override
+  String get agingReportsTitle => 'Aging Reports';
+
+  @override
+  String get receivablesAgingLabel => 'Accounts Receivable (Customers)';
+
+  @override
+  String get payablesAgingLabel => 'Accounts Payable (Suppliers)';
+
+  @override
+  String get noDataMessage => 'No data available';
+
+  @override
+  String get periodCurrent => 'Current';
+
+  @override
+  String get period1_30 => '1-30 Days';
+
+  @override
+  String get period31_60 => '31-60 Days';
+
+  @override
+  String get period61_90 => '61-90 Days';
+
+  @override
+  String get periodOver90 => 'Over 90 Days';
+
+  @override
+  String get labelAssets => 'Assets';
+
+  @override
+  String get labelLiabilities => 'Liabilities';
+
+  @override
+  String get labelEquity => 'Equity';
+
+  @override
+  String get labelTotalAssets => 'Total Assets';
+
+  @override
+  String get labelTotalLiabilitiesAndEquity => 'Total Liabilities and Equity';
+
+  @override
+  String get msgBalanceBalanced =>
+      'Balance is balanced: Assets equal Liabilities and Equity.';
+
+  @override
+  String msgBalanceUnbalanced(Object diff) {
+    return 'Warning: Balance is unbalanced! Difference: $diff';
+  }
+
+  @override
+  String get treasuryTitle => 'Treasury & Cash';
+
+  @override
+  String get cashBalancesTitle => 'Cash & Bank Balances';
+
+  @override
+  String get recentVouchersTitle => 'Recent Vouchers';
+
+  @override
+  String get receiptVoucherAction => 'Receipt Voucher';
+
+  @override
+  String get paymentVoucherAction => 'Payment Voucher';
+
+  @override
+  String get newVoucherLabel => 'New Voucher';
+
+  @override
+  String get noVouchersMessage => 'No vouchers recorded';
+
+  @override
+  String get anonymousPerson => 'No name';
+
+  @override
+  String get actionReverse => 'Reverse Entry';
+
+  @override
+  String get actionEdit => 'Edit';
+
+  @override
+  String get actionPostNow => 'Post Now';
+
+  @override
+  String get msgConfirmReverse =>
+      'Are you sure you want to reverse this entry? This will create an automatic reversing entry.';
+
+  @override
+  String get msgReverseSuccess => 'Entry reversed successfully';
+
+  @override
+  String get labelBalanced => 'Balanced';
+
+  @override
+  String get labelUnbalanced => 'Unbalanced';
+
+  @override
+  String get labelDiff => 'Diff';
+
+  @override
+  String get voucherReceiptTitle => 'New Receipt Voucher';
+
+  @override
+  String get voucherPaymentTitle => 'New Payment Voucher';
+
+  @override
+  String get btnSaveAndPostVoucher => 'Save and Post Voucher';
+
+  @override
+  String get errInvalidAmount => 'Invalid amount';
+
+  @override
+  String get errAmountRequired => 'Please enter amount';
+
+  @override
+  String get errDescriptionRequired => 'Please enter description';
+
+  @override
+  String get labelPaymentMethod => 'Payment Method';
+
+  @override
+  String get methodCash => 'Cash';
+
+  @override
+  String get methodBank => 'Bank';
+
+  @override
+  String get methodCheck => 'Check';
+
+  @override
+  String get labelTreasuryAccount => 'Treasury/Bank Account';
+
+  @override
+  String get labelSourceClient => 'Customer (Source)';
+
+  @override
+  String get labelBeneficiaryVendor => 'Vendor (Beneficiary)';
+
+  @override
+  String get msgVoucherSavedSuccess => 'Voucher saved and posted successfully';
+
+  @override
+  String get errFormFill => 'Please complete the data';
+
+  @override
+  String get labelAccountSelector => 'Select Account';
+
+  @override
+  String get labelRequired => 'Required';
+
+  @override
+  String get labelStatus => 'Status';
+
+  @override
+  String get labelDescription => 'Description';
+
+  @override
+  String get errorExportingReport => 'Error exporting report';
+
+  @override
+  String get labelAmount => 'Amount';
+
+  @override
+  String get labelDate => 'Date';
+
+  @override
+  String get labelType => 'Type';
+
+  @override
+  String get labelRevenue => 'Revenue';
+
+  @override
+  String get labelExpenses => 'Expenses';
+
+  @override
+  String get labelIncomeTax => 'Income Tax';
+
+  @override
+  String get labelNetProfit => 'Net Profit / Loss';
 }

@@ -1,3 +1,4 @@
+import 'package:basir_app/core/models/sync_status.dart';
 import 'package:basir_app/features/customers/domain/entities/customer.dart';
 import 'package:isar/isar.dart';
 
@@ -56,13 +57,19 @@ class CustomerModel {
   factory CustomerModel.fromEntity(Customer customer) => CustomerModel()
     ..customerId = customer.id
     ..name = customer.name
+    ..taxNumber = customer.taxNumber
     ..phone = customer.phone
     ..email = customer.email
     ..address = customer.address
     ..createdAt = customer.createdAt
     ..updatedAt = customer.updatedAt
     ..creditLimit = customer.creditLimit
-    ..balance = customer.balance;
+    ..balance = customer.balance
+    ..receivableAccountId = customer.receivableAccountId
+    ..userId = customer.userId
+    ..syncStatus = customer.syncStatus
+    ..serverUpdatedAt = customer.serverUpdatedAt
+    ..isDeleted = customer.isDeleted;
 
   /// معرف Isar التلقائي (Auto-increment)
   ///
@@ -84,6 +91,9 @@ class CustomerModel {
   /// **مثال:** 'أحمد محمد علي'
   @Index()
   late String name;
+
+  /// الرقم الضريبي للعميل (اختياري)
+  String? taxNumber;
 
   /// رقم هاتف العميل
   ///
@@ -127,6 +137,23 @@ class CustomerModel {
   /// الرصيد الحالي
   double balance = 0;
 
+  /// معرف حساب العميل في دليل الحسابات
+  String? receivableAccountId;
+
+  /// معرف المستخدم (لعزل البيانات).
+  @Index()
+  String? userId;
+
+  /// حالة المزامنة
+  @enumerated
+  late SyncStatus syncStatus;
+
+  /// تاريخ آخر تحديث من السيرفر
+  DateTime? serverUpdatedAt;
+
+  /// هل السجل محذوف
+  late bool isDeleted;
+
   /// تحويل النموذج إلى كيان (Entity)
   ///
   /// يحول نموذج Isar إلى كيان العميل (Customer Entity)
@@ -142,6 +169,7 @@ class CustomerModel {
   Customer toEntity() => Customer(
         id: customerId,
         name: name,
+        taxNumber: taxNumber,
         phone: phone,
         email: email,
         address: address,
@@ -149,5 +177,10 @@ class CustomerModel {
         updatedAt: updatedAt,
         creditLimit: creditLimit,
         balance: balance,
+        receivableAccountId: receivableAccountId,
+        userId: userId,
+        syncStatus: syncStatus,
+        serverUpdatedAt: serverUpdatedAt,
+        isDeleted: isDeleted,
       );
 }
