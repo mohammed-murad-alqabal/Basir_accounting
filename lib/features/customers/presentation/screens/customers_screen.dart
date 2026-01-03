@@ -2,11 +2,11 @@ import 'package:basir_app/core/assets/app_illustrations.dart';
 import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/theme/services/icon_customization_service.dart'; // Added
 import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/widgets/index.dart';
 import 'package:basir_app/features/customers/domain/entities/customer.dart';
 import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
 import 'package:basir_app/features/customers/presentation/screens/customer_details_screen.dart';
 import 'package:basir_app/features/customers/presentation/screens/customer_form_screen.dart';
+import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -69,7 +69,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
           Expanded(
             child: customersAsync.when(
               data: _buildCustomersList,
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => const Center(child: AppLoadingIndicator()),
               error: (error, stack) => Center(
                 child: Text(context.l10n.errLoadCustomers(error.toString())),
               ),
@@ -94,21 +94,27 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
       itemCount: customers.length,
       itemBuilder: (context, index) {
         final customer = customers[index];
-        return AppListCard(
-          title: customer.name,
-          subtitle: customer.email ?? '',
-          trailing: customer.phone ?? '',
-          leading: CircleAvatar(
-            backgroundColor: AppColors.primary.withValues(alpha: 0.2),
-            child: Text(
-              customer.name.isNotEmpty ? customer.name[0] : '؟',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: AppColors.primary,
+        return Semantics(
+          label: '${customer.name}, '
+              '${customer.email ?? ""}, '
+              '${customer.phone ?? ""}',
+          button: true,
+          child: AppListCard(
+            title: customer.name,
+            subtitle: customer.email ?? '',
+            trailing: customer.phone ?? '',
+            leading: CircleAvatar(
+              backgroundColor: AppColors.primary.withValues(alpha: 0.2),
+              child: Text(
+                customer.name.isNotEmpty ? customer.name[0] : '؟',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                ),
               ),
             ),
+            onTap: () => _viewCustomerDetails(customer),
           ),
-          onTap: () => _viewCustomerDetails(customer),
         );
       },
     );

@@ -1,13 +1,15 @@
 import 'dart:async';
 
 import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/features/analytics/presentation/screens/privacy_analytics_screen.dart';
 import 'package:basir_app/features/settings/presentation/providers/settings_controller.dart';
 import 'package:basir_app/features/settings/presentation/screens/appearance_settings_screen.dart';
 import 'package:basir_app/features/settings/presentation/widgets/help_settings_group.dart';
 import 'package:basir_app/features/settings/presentation/widgets/settings_shared_widgets.dart';
 import 'package:basir_app/features/settings/presentation/widgets/settings_tiles.dart';
+import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,6 +22,7 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final appIcons = ref.watch(appIconsProvider);
     final controller = ref.read(settingsControllerProvider.notifier);
 
     return Scaffold(
@@ -33,7 +36,7 @@ class SettingsScreen extends ConsumerWidget {
             // 🏢 قسم الشركة والفواتير
             SettingsSectionHeader(
               title: context.l10n.companySettingsTitle,
-              icon: Icons.business_center,
+              icon: appIcons.business,
             ),
             const SettingsGroupCard(
               children: [
@@ -45,7 +48,7 @@ class SettingsScreen extends ConsumerWidget {
             // 👤 قسم الحساب والأمن
             SettingsSectionHeader(
               title: context.l10n.accountTitle,
-              icon: Icons.security,
+              icon: appIcons.security,
             ),
             const SettingsGroupCard(
               children: [
@@ -57,7 +60,7 @@ class SettingsScreen extends ConsumerWidget {
             // 🔔 قسم التنبيهات
             SettingsSectionHeader(
               title: context.l10n.notificationsTitle,
-              icon: Icons.notifications_none,
+              icon: appIcons.notifications,
             ),
             const SettingsGroupCard(
               children: [
@@ -69,7 +72,7 @@ class SettingsScreen extends ConsumerWidget {
             // 🎨 قسم المظهر والتخصيص
             SettingsSectionHeader(
               title: context.l10n.appearanceTitle,
-              icon: Icons.palette_outlined,
+              icon: appIcons.theme,
             ),
             SettingsGroupCard(
               children: [
@@ -77,15 +80,38 @@ class SettingsScreen extends ConsumerWidget {
                 const Divider(height: 1),
                 const CalendarSettingsTile(),
                 const Divider(height: 1),
+                Semantics(
+                  label: context.l10n.appearanceSettingsTitle,
+                  button: true,
+                  child: ListTile(
+                    leading: Icon(
+                      appIcons.style,
+                      color: theme.colorScheme.primary,
+                    ),
+                    title: Text(context.l10n.appearanceSettingsTitle),
+                    subtitle: Text(context.l10n.appearanceSettingsSubtitle),
+                    trailing: Icon(appIcons.chevronRight),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (context) => const AppearanceSettingsScreen(),
+                      ),
+                    ),
+                  ),
+                ),
+                const Divider(height: 1),
                 ListTile(
-                  leading: Icon(Icons.style, color: theme.colorScheme.primary),
-                  title: Text(context.l10n.appearanceSettingsTitle),
-                  subtitle: Text(context.l10n.appearanceSettingsSubtitle),
-                  trailing: const Icon(Icons.chevron_right),
+                  leading: Icon(
+                    appIcons.security,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: Text(context.l10n.privacyAnalyticsTitle),
+                  subtitle: Text(context.l10n.privacyAnalyticsSubtitle),
+                  trailing: Icon(appIcons.chevronRight),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (context) => const AppearanceSettingsScreen(),
+                      builder: (context) => const PrivacyAnalyticsScreen(),
                     ),
                   ),
                 ),

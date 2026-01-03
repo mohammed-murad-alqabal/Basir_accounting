@@ -1,0 +1,46 @@
+import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:flutter/material.dart';
+
+/// ترويسة قسم قياسية (Standard Section Header)
+///
+/// تضمن اتساق العناوين في جميع الشاشات مع أيقونة اختيارية
+class AppSectionHeader extends StatelessWidget {
+  /// إنشاء ترويسة قسم
+  const AppSectionHeader({
+    required this.title,
+    this.icon,
+    this.color,
+    super.key,
+  });
+
+  /// عنوان القسم
+  final String title;
+
+  /// أيقونة اختيارية
+  final IconData? icon;
+
+  /// لون العنوان والأيقونة
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    final themeColor = color ?? Theme.of(context).colorScheme.primary;
+
+    return Row(
+      children: [
+        if (icon != null) ...[
+          Icon(icon, size: 20, color: themeColor),
+          const SizedBox(width: Spacing.xs),
+        ],
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: AppTypography.titleMedium,
+            fontWeight: FontWeight.bold,
+            color: color ?? AppColors.textPrimary,
+          ),
+        ),
+      ],
+    );
+  }
+}

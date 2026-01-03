@@ -1,24 +1,48 @@
+import 'dart:async';
+
 import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/extensions/invoice_extensions.dart';
 import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:basir_app/core/utils/format_helpers.dart';
-import 'package:basir_app/core/widgets/basir_dashboard_widgets.dart';
-import 'package:basir_app/core/widgets/index.dart';
+import 'package:basir_app/features/accounting/presentation/screens/chart_of_accounts_screen.dart';
+import 'package:basir_app/features/accounting/presentation/screens/journal_entries_screen.dart';
+import 'package:basir_app/features/accounting/presentation/widgets/financial_summary_card.dart';
+import 'package:basir_app/features/analytics/application/analytics_service.dart';
+import 'package:basir_app/features/analytics/domain/entities/analytics_event.dart';
 import 'package:basir_app/features/dashboard/domain/entities/dashboard_data.dart';
 import 'package:basir_app/features/dashboard/presentation/providers/dashboard_controller.dart';
 import 'package:basir_app/features/dashboard/presentation/widgets/dashboard_charts.dart';
+import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// شاشة لوحة التحكم (Dashboard Screen)
 /// تعرض ملخص الإحصائيات والعمليات الحقيقية بنظام Basir
-class DashboardScreen extends ConsumerWidget {
+class DashboardScreen extends ConsumerStatefulWidget {
   /// إنشاء شاشة لوحة التحكم
   const DashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _logSessionStart();
+  }
+
+  void _logSessionStart() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final analytics = ref.read(analyticsServiceProvider);
+      unawaited(analytics?.logEvent(AnalyticsEventType.sessionStart));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final dashboardAsync = ref.watch(dashboardControllerProvider);
 
     return Scaffold(
@@ -29,15 +53,16 @@ class DashboardScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
-              // ignore: discarded_futures
-              ref.read(dashboardControllerProvider.notifier).refresh();
+              unawaited(
+                ref.read(dashboardControllerProvider.notifier).refresh(),
+              );
             },
           ),
         ],
       ),
       body: dashboardAsync.when(
         data: (data) => _buildContent(context, ref, data),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const AppLoadingScreen(),
         error: (e, st) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -78,6 +103,10 @@ class DashboardScreen extends ConsumerWidget {
             const DashboardBasirHeader(),
             const SizedBox(height: Spacing.xl),
 
+            // الملخص المالي (ميزة المحاسبة الجديدة)
+            const FinancialSummaryCard(),
+            const SizedBox(height: Spacing.md),
+
             // قسم الإحصائيات الحقيقية
             _buildStatisticsSection(context, ref, data),
             const SizedBox(height: Spacing.xl),
@@ -87,7 +116,7 @@ class DashboardScreen extends ConsumerWidget {
             const SizedBox(height: Spacing.xl),
 
             // الإجراءات السريعة
-            _buildQuickActions(context, appIcons),
+            _buildQuickActions(context, ref, appIcons),
             const SizedBox(height: Spacing.xl),
 
             // الأنشطة الأخيرة (حقيقية)
@@ -110,19 +139,9 @@ class DashboardScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Icon(appIcons.dashboard, size: 20, color: AppColors.primary),
-            const SizedBox(width: Spacing.xs),
-            Text(
-              context.l10n.dashboardStatsTitle,
-              style: const TextStyle(
-                fontSize: AppTypography.titleMedium,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
-            ),
-          ],
+        AppSectionHeader(
+          title: context.l10n.dashboardStatsTitle,
+          icon: appIcons.dashboard,
         ),
         const SizedBox(height: Spacing.md),
         GridView.count(
@@ -172,48 +191,107 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildQuickActions(BuildContext context, AppIcons appIcons) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(appIcons.bolt, size: 20, color: AppColors.primary),
-              const SizedBox(width: Spacing.xs),
-              Text(
-                context.l10n.dashboardQuickActionsTitle,
-                style: const TextStyle(
-                  fontSize: AppTypography.titleMedium,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
-                ),
+  Widget _buildQuickActions(
+    BuildContext context,
+    WidgetRef ref,
+    AppIcons appIcons,
+  ) {
+    final analytics = ref.read(analyticsServiceProvider);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        AppSectionHeader(
+          title: context.l10n.dashboardQuickActionsTitle,
+          icon: appIcons.bolt,
+        ),
+        const SizedBox(height: Spacing.md),
+        Row(
+          children: [
+            Expanded(
+              child: AppButton(
+                label: context.l10n.actionAddInvoice,
+                onPressed: () {
+                  unawaited(
+                    analytics?.logEvent(AnalyticsEventType.invoiceCreated),
+                  );
+                  unawaited(Navigator.of(context).pushNamed('/invoice-form'));
+                },
+                icon: appIcons.add,
               ),
-            ],
-          ),
-          const SizedBox(height: Spacing.md),
-          Row(
-            children: [
-              Expanded(
-                child: AppButton(
-                  label: context.l10n.actionAddInvoice,
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed('/invoice-form'),
-                  icon: appIcons.add,
-                ),
+            ),
+            const SizedBox(width: Spacing.md),
+            Expanded(
+              child: AppButton(
+                label: context.l10n.actionAddCustomer,
+                onPressed: () {
+                  unawaited(
+                    analytics?.logEvent(AnalyticsEventType.customerAdded),
+                  );
+                  unawaited(Navigator.of(context).pushNamed('/customer-form'));
+                },
+                icon: appIcons.add,
+                type: AppButtonType.secondary,
               ),
-              const SizedBox(width: Spacing.md),
-              Expanded(
-                child: AppButton(
-                  label: context.l10n.actionAddCustomer,
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed('/customer-form'),
-                  icon: appIcons.add,
-                  type: AppButtonType.secondary,
-                ),
+            ),
+          ],
+        ),
+        const SizedBox(height: Spacing.md),
+        // أدوات المحاسبة السريعة
+        Row(
+          children: [
+            Expanded(
+              child: AppButton(
+                label: context.l10n.labelChartOfAccounts,
+                onPressed: () {
+                  unawaited(
+                    analytics?.logEvent(
+                      AnalyticsEventType.featureUsed,
+                      metadata: {'feature': 'chart_of_accounts'},
+                    ),
+                  );
+                  unawaited(
+                    Navigator.of(context).push<void>(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const ChartOfAccountsScreen(),
+                      ),
+                    ),
+                  );
+                },
+                icon: appIcons.accounting,
+                type: AppButtonType.outlined,
+                semanticLabel: 'فتح دليل الحسابات',
               ),
-            ],
-          ),
-        ],
-      );
+            ),
+            const SizedBox(width: Spacing.md),
+            Expanded(
+              child: AppButton(
+                label: context.l10n.labelJournalEntries,
+                onPressed: () {
+                  unawaited(
+                    analytics?.logEvent(
+                      AnalyticsEventType.featureUsed,
+                      metadata: {'feature': 'journal_entries'},
+                    ),
+                  );
+                  unawaited(
+                    Navigator.of(context).push<void>(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const JournalEntriesScreen(),
+                      ),
+                    ),
+                  );
+                },
+                icon: appIcons.list,
+                type: AppButtonType.outlined,
+                semanticLabel: 'عرض القيود اليومية',
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 
   Widget _buildRecentActivity(
     BuildContext context,
@@ -226,19 +304,9 @@ class DashboardScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Icon(appIcons.dashboard, size: 20, color: AppColors.primary),
-            const SizedBox(width: Spacing.xs),
-            Text(
-              context.l10n.dashboardRecentActivityTitle,
-              style: const TextStyle(
-                fontSize: AppTypography.titleMedium,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
-            ),
-          ],
+        AppSectionHeader(
+          title: context.l10n.dashboardRecentActivityTitle,
+          icon: appIcons.dashboard,
         ),
         const SizedBox(height: Spacing.md),
         if (data.recentInvoices.isEmpty)
@@ -246,7 +314,7 @@ class DashboardScreen extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: Spacing.xl),
               child: Text(
-                context.l10n.filterAll, // Placeholder for empty recent activity
+                context.l10n.msgNoActivity,
                 style: const TextStyle(color: AppColors.textSecondary),
               ),
             ),
@@ -257,7 +325,7 @@ class DashboardScreen extends ConsumerWidget {
               title: context.l10n.invoiceTitle(invoice.id),
               subtitle: invoice.customerName,
               trailing: FormatHelpers.formatCurrency(
-                invoice.grandTotal,
+                invoice.totalAmount,
                 locale: locale,
               ),
               leading: Icon(

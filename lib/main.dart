@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:basir_app/core/assets/app_logo.dart';
+import 'package:basir_app/core/config/supabase_config.dart';
 import 'package:basir_app/core/constants.dart';
 import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/providers.dart';
@@ -11,9 +12,9 @@ import 'package:basir_app/core/theme/services/color_customization_service.dart';
 import 'package:basir_app/core/theme/services/font_customization_service.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:basir_app/core/utils/provider_observer.dart';
-import 'package:basir_app/core/widgets/error_widget.dart' as basir;
-import 'package:basir_app/core/widgets/index.dart';
 import 'package:basir_app/l10n/app_localizations.dart';
+import 'package:basir_app/shared/widgets/error_widget.dart' as basir;
+import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -24,6 +25,9 @@ void main() {
     runZonedGuarded(() async {
       // تهيئة Flutter bindings
       WidgetsFlutterBinding.ensureInitialized();
+
+      // تهيئة Supabase
+      await SupabaseConfig.initialize();
 
       // تهيئة FontManager
       await FontManager.initialize();
@@ -46,14 +50,7 @@ void main() {
         observers: [BasirProviderObserver()],
       );
 
-      try {
-        // تهيئة AuthService (تنظيف البيانات القديمة عند إعادة التثبيت)
-        await container.read(authServiceProvider).initialize();
-        // ignore: avoid_catches_without_on_clauses
-      } catch (e, stackTrace) {
-        debugPrint('❌ Critical initialization error: $e');
-        debugPrint('Stack trace: $stackTrace');
-      }
+      // AuthService initialization is handled in SplashScreen for better TTI
 
       // بدء التطبيق
       runApp(

@@ -102,8 +102,10 @@ void main() {
       test('should export report in JSON format', () async {
         // Act & Assert
         expect(await repository.exportReport(ReportFormat.json), isA<String>());
-        expect(await repository.exportReport(ReportFormat.markdown),
-            isA<String>());
+        expect(
+          await repository.exportReport(ReportFormat.markdown),
+          isA<String>(),
+        );
         expect(await repository.exportReport(ReportFormat.html), isA<String>());
         expect(await repository.exportReport(ReportFormat.csv), isA<String>());
         expect(await repository.exportReport(ReportFormat.text), isA<String>());
@@ -113,12 +115,18 @@ void main() {
     group('deleteOldReports', () {
       test('should delete reports older than specified duration', () async {
         // Act & Assert
-        expect(await repository.deleteOldReports(const Duration(days: 30)),
-            isA<int>());
-        expect(await repository.deleteOldReports(const Duration(days: 7)),
-            isA<int>());
-        expect(await repository.deleteOldReports(const Duration(days: 1)),
-            isA<int>());
+        expect(
+          await repository.deleteOldReports(const Duration(days: 30)),
+          isA<int>(),
+        );
+        expect(
+          await repository.deleteOldReports(const Duration(days: 7)),
+          isA<int>(),
+        );
+        expect(
+          await repository.deleteOldReports(const Duration(days: 1)),
+          isA<int>(),
+        );
       });
     });
 
@@ -128,22 +136,32 @@ void main() {
         expect(await repository.getLatestReport(), isNull);
         // ...
         final report = await repository.getLatestReport();
-        expect(report,
-            isNull); // Since no reports were saved in this specific scope
+        expect(
+          report,
+          isNull,
+        ); // Since no reports were saved in this specific scope
       });
     });
 
     group('calculateTrend', () {
       test('should calculate improving trend', () async {
         // Act & Assert
-        expect(await repository.calculateTrend(const Duration(days: 7)),
-            isA<CoverageTrend>());
-        expect(await repository.calculateTrend(const Duration(days: 7)),
-            isA<CoverageTrend>());
-        expect(await repository.calculateTrend(const Duration(days: 7)),
-            isA<CoverageTrend>());
-        expect(await repository.calculateTrend(const Duration(days: 30)),
-            isA<CoverageTrend>());
+        expect(
+          await repository.calculateTrend(const Duration(days: 7)),
+          isA<CoverageTrend>(),
+        );
+        expect(
+          await repository.calculateTrend(const Duration(days: 7)),
+          isA<CoverageTrend>(),
+        );
+        expect(
+          await repository.calculateTrend(const Duration(days: 7)),
+          isA<CoverageTrend>(),
+        );
+        expect(
+          await repository.calculateTrend(const Duration(days: 30)),
+          isA<CoverageTrend>(),
+        );
       });
     });
   });

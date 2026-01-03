@@ -3,6 +3,8 @@
 /// يحتوي على الكلاسات المساعدة لنتائج العمليات الأمنية
 library;
 
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 /// نتيجة فحص قوة كلمة المرور
 class PasswordStrengthResult {
   /// إنشاء نتيجة فحص القوة
@@ -65,4 +67,38 @@ class SecurityAuditResult {
     if (securityScore >= 60) return 'مقبول';
     return 'غير آمن';
   }
+}
+
+/// مستخدم بصير (Basir User)
+class BasirUser {
+  const BasirUser({
+    required this.id,
+    required this.email,
+    this.displayName,
+    this.isGuest = false,
+    this.metadata = const {},
+  });
+
+  /// تحويل من Supabase User
+  factory BasirUser.fromSupabase(User user) => BasirUser(
+        id: user.id,
+        email: user.email ?? '',
+        displayName: user.userMetadata?['display_name'] as String?,
+        metadata: user.userMetadata ?? {},
+      );
+
+  /// المعرف الفريد للمستخدم
+  final String id;
+
+  /// البريد الإلكتروني
+  final String email;
+
+  /// الاسم المعروض
+  final String? displayName;
+
+  /// هل هو مستخدم ضيف؟
+  final bool isGuest;
+
+  /// بيانات إضافية
+  final Map<String, dynamic> metadata;
 }
