@@ -6,7 +6,8 @@ import 'package:flutter/services.dart';
 
 /// زر محسّن (Enhanced Button)
 ///
-/// يقدم تجربة بصرية فائقة مع دعم للتدرجات اللونية (Gradients) وتأثيرات الظلال المتقدمة.
+/// يقدم تجربة بصرية فائقة مع دعم للتدرجات اللونية (Gradients) وتأثيرات
+/// الظلال المتقدمة.
 class AppEnhancedButton extends StatefulWidget {
   /// المنشئ
   const AppEnhancedButton({

@@ -110,7 +110,11 @@ class InvoiceDetailScreen extends ConsumerWidget {
                   invoice.paidDate != null)
                 Text(
                   '${context.l10n.labelPaidDate}: '
-                  '${FormatHelpers.formatDate(invoice.paidDate!, locale: context.l10n.localeName)}',
+                  '${FormatHelpers.formatDate(
+                    invoice.paidDate!,
+                    locale: context.l10n.localeName,
+                  )}',
+                  textDirection: TextDirection.ltr,
                   style: AppTextStyles.bodySmall,
                 ),
             ],
@@ -360,8 +364,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
         children: [
           Text(
             title,
-            style:
-                AppTextStyles.titleSmall.copyWith(fontWeight: FontWeights.bold),
+            style: AppTextStyles.titleSmall.copyWith(
+              fontWeight: FontWeights.bold,
+            ),
           ),
           const SizedBox(height: Spacing.sm),
           Text(content, style: AppTextStyles.bodyMedium),
