@@ -30,8 +30,10 @@ class AuditResult {
 /// خدمة التدقيق الجنائي المحاسبي (Forensic Audit Service)
 /// تضمن سلامة البيانات وتراقب التغييرات غير المصرح بها.
 @riverpod
-class ForensicAuditService extends _$ForensicAuditService implements AccountingAgent {
-  AccountingRepository get _repository => ref.read(accountingRepositoryProvider);
+class ForensicAuditService extends _$ForensicAuditService
+    implements AccountingAgent {
+  AccountingRepository get _repository =>
+      ref.read(accountingRepositoryProvider);
 
   @override
   void build() {}
@@ -134,8 +136,9 @@ class ForensicAuditService extends _$ForensicAuditService implements AccountingA
       }
 
       // تحويل الرصيد المحسوب ليتناسب مع طبيعة الحساب
-      final absoluteCalculated =
-          account.nature == AccountNature.debit ? calculatedBalance : -calculatedBalance;
+      final absoluteCalculated = account.nature == AccountNature.debit
+          ? calculatedBalance
+          : -calculatedBalance;
 
       final storedBalance = await _repository.getAccountBalance(account.id);
 
