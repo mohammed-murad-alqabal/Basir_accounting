@@ -23,8 +23,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appIcons = ref.watch(appIconsProvider);
-    final calendarType =
-        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
+    final calendarType = ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
 
     return Scaffold(
       appBar: AppAppBar(
@@ -33,12 +32,12 @@ class InvoiceDetailScreen extends ConsumerWidget {
           IconButton(
             icon: Icon(appIcons.share),
             tooltip: context.l10n.actionShare,
-            onPressed: () => ref.read(shareInvoicePdfProvider(invoice)),
+            onPressed: () => ref.refresh(shareInvoicePdfProvider(invoice)),
           ),
           IconButton(
             icon: Icon(appIcons.pdf),
             tooltip: context.l10n.actionExportPdf,
-            onPressed: () => ref.read(exportInvoicePdfProvider(invoice)),
+            onPressed: () => ref.refresh(exportInvoicePdfProvider(invoice)),
           ),
           IconButton(
             icon: Icon(appIcons.edit),
@@ -106,10 +105,10 @@ class InvoiceDetailScreen extends ConsumerWidget {
                   fontWeight: FontWeights.bold,
                 ),
               ),
-              if (invoice.status == InvoiceStatus.paid &&
-                  invoice.paidDate != null)
+              if (invoice.status == InvoiceStatus.paid && invoice.paidDate != null)
                 Text(
-                  '${context.l10n.labelPaidDate}: ${FormatHelpers.formatDate(invoice.paidDate!, locale: context.l10n.localeName)}',
+                  '${context.l10n.labelPaidDate}: '
+                  '${FormatHelpers.formatDate(invoice.paidDate!, locale: context.l10n.localeName)}',
                   style: AppTextStyles.bodySmall,
                 ),
             ],
@@ -239,7 +238,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            '${FormatHelpers.formatNumber(item.quantity)} × ${FormatHelpers.formatCurrency(item.price)}',
+                            '${FormatHelpers.formatNumber(item.quantity)} × '
+                            '${FormatHelpers.formatCurrency(item.price)}',
                             style: AppTextStyles.bodySmall.copyWith(
                               color: AppColors.textSecondary,
                             ),
@@ -249,8 +249,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
                     ),
                     Text(
                       FormatHelpers.formatCurrency(item.total),
-                      style: AppTextStyles.bodyMedium
-                          .copyWith(fontWeight: FontWeights.bold),
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        fontWeight: FontWeights.bold,
+                      ),
                     ),
                   ],
                 );
@@ -266,7 +267,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
           children: [
             _buildTotalRow(context.l10n.labelSubtotal, invoice.subtotalAmount),
             _buildTotalRow(
-              '${context.l10n.labelTax}: ${FormatHelpers.formatNumber(invoice.taxRate * 100)}%',
+              '${context.l10n.labelTax}: '
+              '${FormatHelpers.formatNumber(invoice.taxRate * 100)}%',
               invoice.taxAmount,
             ),
             if (invoice.discountAmount > 0)
@@ -280,8 +282,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
               children: [
                 Text(
                   context.l10n.labelGrandTotal,
-                  style: AppTextStyles.titleMedium
-                      .copyWith(fontWeight: FontWeights.bold),
+                  style: AppTextStyles.titleMedium.copyWith(
+                    fontWeight: FontWeights.bold,
+                  ),
                 ),
                 Text(
                   FormatHelpers.formatCurrency(
@@ -307,8 +310,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
             Text(label, style: AppTextStyles.bodyMedium),
             Text(
               FormatHelpers.formatCurrency(amount),
-              style: AppTextStyles.bodyMedium
-                  .copyWith(fontWeight: FontWeights.medium),
+              style: AppTextStyles.bodyMedium.copyWith(
+                fontWeight: FontWeights.medium,
+              ),
             ),
           ],
         ),
@@ -354,17 +358,12 @@ class InvoiceDetailScreen extends ConsumerWidget {
         children: [
           Text(
             title,
-            style:
-                AppTextStyles.titleSmall.copyWith(fontWeight: FontWeights.bold),
+            style: AppTextStyles.titleSmall.copyWith(fontWeight: FontWeights.bold),
           ),
           const SizedBox(height: Spacing.sm),
           Text(content, style: AppTextStyles.bodyMedium),
         ],
       );
-
-  void _shareInvoice(BuildContext context, WidgetRef ref) {
-    // منطق المشاركة المستدعى من InvoicesScreen
-  }
 
   void _editInvoice(BuildContext context) {
     // منطق التعديل

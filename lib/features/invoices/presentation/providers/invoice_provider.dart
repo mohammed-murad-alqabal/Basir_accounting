@@ -27,8 +27,7 @@ final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
     );
 
     // ترحيل القيد المحاسبي تلقائياً (نظام القيد المزدوج)
-    if (invoice.status == InvoiceStatus.sent ||
-        invoice.status == InvoiceStatus.paid) {
+    if (invoice.status == InvoiceStatus.sent || invoice.status == InvoiceStatus.paid) {
       final accountingService = ref.read(accountingServiceProvider.notifier);
       await accountingService.postSalesInvoice(invoice);
     }
@@ -56,8 +55,7 @@ final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
     );
 
     // ترحيل أو تحديث القيد المحاسبي (نظام القيد المزدوج)
-    if (invoice.status == InvoiceStatus.sent ||
-        invoice.status == InvoiceStatus.paid) {
+    if (invoice.status == InvoiceStatus.sent || invoice.status == InvoiceStatus.paid) {
       final accountingService = ref.read(accountingServiceProvider.notifier);
       await accountingService.postSalesInvoice(invoice);
     }
@@ -175,9 +173,7 @@ final overdueInvoicesCountProvider = Provider<AsyncValue<int>>((ref) {
   );
 
   return invoicesAsync.whenData(
-    (invoices) => invoices
-        .where((invoice) => invoice.status == InvoiceStatus.overdue)
-        .length,
+    (invoices) => invoices.where((invoice) => invoice.status == InvoiceStatus.overdue).length,
   );
 });
 
@@ -204,8 +200,7 @@ final invoicesCountProvider = Provider<AsyncValue<int>>(
 final hasInvoicesProvider = Provider<AsyncValue<bool>>(
   (ref) => ref.watch(
     invoicesProvider.select(
-      (asyncInvoices) =>
-          asyncInvoices.whenData((invoices) => invoices.isNotEmpty),
+      (asyncInvoices) => asyncInvoices.whenData((invoices) => invoices.isNotEmpty),
     ),
   ),
 );
@@ -234,25 +229,21 @@ class InvoiceStatistics {
 }
 
 /// Provider لإحصائيات الفواتير
-final invoiceStatisticsProvider =
-    Provider<AsyncValue<InvoiceStatistics>>((ref) {
+final invoiceStatisticsProvider = Provider<AsyncValue<InvoiceStatistics>>((ref) {
   final invoicesAsync = ref.watch(invoicesProvider);
 
   return invoicesAsync.whenData(
     (invoices) => InvoiceStatistics(
       totalInvoices: invoices.length,
-      paidInvoices:
-          invoices.where((i) => i.status == InvoiceStatus.paid).length,
-      overdueInvoices:
-          invoices.where((i) => i.status == InvoiceStatus.overdue).length,
+      paidInvoices: invoices.where((i) => i.status == InvoiceStatus.paid).length,
+      overdueInvoices: invoices.where((i) => i.status == InvoiceStatus.overdue).length,
       totalAmount: invoices.fold(0, (sum, i) => sum + i.totalAmount),
     ),
   );
 });
 
 /// Provider لمضاعفة فاتورة (Logic from Go backend)
-final duplicateInvoiceProvider =
-    FutureProvider.family<Invoice, String>((ref, invoiceId) async {
+final duplicateInvoiceProvider = FutureProvider.family<Invoice, String>((ref, invoiceId) async {
   final repository = ref.watch(invoiceRepositoryProvider);
   final duplicated = await repository.duplicateInvoice(invoiceId);
   ref.invalidate(invoicesProvider);
@@ -260,8 +251,7 @@ final duplicateInvoiceProvider =
 });
 
 /// Provider لتحديد فاتورة كمدفوعة (Logic from Go backend)
-final markInvoiceAsPaidProvider =
-    FutureProvider.family<bool, String>((ref, invoiceId) async {
+final markInvoiceAsPaidProvider = FutureProvider.family<bool, String>((ref, invoiceId) async {
   final repository = ref.watch(invoiceRepositoryProvider);
 
   try {
@@ -284,14 +274,13 @@ final markInvoiceAsPaidProvider =
 
     ref.invalidate(invoicesProvider);
     return true;
-  } catch (e) {
+  } on Exception {
     return false;
   }
 });
 
 /// Provider لإرسال الفاتورة (تغيير الحالة)
-final sendInvoiceProvider =
-    FutureProvider.family<bool, String>((ref, invoiceId) async {
+final sendInvoiceProvider = FutureProvider.family<bool, String>((ref, invoiceId) async {
   final repository = ref.watch(invoiceRepositoryProvider);
 
   try {
@@ -311,14 +300,13 @@ final sendInvoiceProvider =
 
     ref.invalidate(invoicesProvider);
     return true;
-  } catch (e) {
+  } on Exception {
     return false;
   }
 });
 
 /// Provider لإلغاء الفاتورة
-final cancelInvoiceProvider =
-    FutureProvider.family<bool, String>((ref, invoiceId) async {
+final cancelInvoiceProvider = FutureProvider.family<bool, String>((ref, invoiceId) async {
   final repository = ref.watch(invoiceRepositoryProvider);
 
   try {
@@ -333,7 +321,7 @@ final cancelInvoiceProvider =
     await repository.updateInvoice(updatedInvoice);
     ref.invalidate(invoicesProvider);
     return true;
-  } catch (e) {
+  } on Exception {
     return false;
   }
 });

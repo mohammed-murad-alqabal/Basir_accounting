@@ -6,6 +6,7 @@ part 'financial_report.freezed.dart';
 /// بند في تقرير مالي
 @freezed
 class FinancialReportLine with _$FinancialReportLine {
+  /// المنشئ
   const factory FinancialReportLine({
     required String label,
     required Decimal amount,
@@ -18,6 +19,7 @@ class FinancialReportLine with _$FinancialReportLine {
 /// تقرير مالي (ميزانية، قائمة دخل، إلخ)
 @freezed
 class FinancialReport with _$FinancialReport {
+  /// المنشئ
   const factory FinancialReport({
     required String title,
     required DateTime fromDate,
@@ -30,6 +32,7 @@ class FinancialReport with _$FinancialReport {
 /// ميزان المراجعة (Trial Balance)
 @freezed
 class TrialBalanceLine with _$TrialBalanceLine {
+  /// المنشئ
   const factory TrialBalanceLine({
     required String accountCode,
     required String accountName,
@@ -40,6 +43,7 @@ class TrialBalanceLine with _$TrialBalanceLine {
 
 @freezed
 class TrialBalance with _$TrialBalance {
+  /// المنشئ
   const factory TrialBalance({
     required DateTime date,
     required List<TrialBalanceLine> lines,

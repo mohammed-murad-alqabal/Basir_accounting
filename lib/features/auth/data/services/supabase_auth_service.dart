@@ -6,13 +6,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 ///
 /// تدير عمليات المصادقة باستخدام Supabase Auth.
 class SupabaseAuthService {
+  /// المنشئ
   SupabaseAuthService({required this.supabaseClient});
 
+  /// عميل Supabase
   final SupabaseClient supabaseClient;
 
   /// دفق التغييرات في حالة المصادقة
-  Stream<AuthState> get onAuthStateChange =>
-      supabaseClient.auth.onAuthStateChange;
+  Stream<AuthState> get onAuthStateChange => supabaseClient.auth.onAuthStateChange;
 
   /// الحصول على المستخدم الحالي
   User? get currentUser => supabaseClient.auth.currentUser;

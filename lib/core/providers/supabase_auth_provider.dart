@@ -5,17 +5,18 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'supabase_auth_provider.g.dart';
 
+/// مزود خدمة المصادقة
 @Riverpod(keepAlive: true)
 SupabaseAuthService supabaseAuth(SupabaseAuthRef ref) =>
     SupabaseAuthService(supabaseClient: SupabaseConfig.client);
 
+/// مزود حالة المصادقة
 @Riverpod(keepAlive: true)
-Stream<AuthState> authState(AuthStateRef ref) =>
-    ref.watch(supabaseAuthProvider).onAuthStateChange;
+Stream<AuthState> authState(AuthStateRef ref) => ref.watch(supabaseAuthProvider).onAuthStateChange;
 
+/// مزود المستخدم الحالي
 @Riverpod(keepAlive: true)
 User? currentUser(CurrentUserRef ref) {
   final authState = ref.watch(authStateProvider).value;
-  return authState?.session?.user ??
-      ref.watch(supabaseAuthProvider).currentUser;
+  return authState?.session?.user ?? ref.watch(supabaseAuthProvider).currentUser;
 }

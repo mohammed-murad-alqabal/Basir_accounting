@@ -54,7 +54,7 @@ enum InvoiceStatus {
       case InvoiceStatus.cancelled:
         return context.l10n.statusCancelled;
       case InvoiceStatus.refunded:
-        return 'مرتجعة'; // TODO: add to l10n
+        return 'مرتجعة'; // TODO(User): add to l10n
     }
   }
 }

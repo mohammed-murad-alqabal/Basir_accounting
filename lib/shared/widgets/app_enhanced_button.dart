@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 ///
 /// يقدم تجربة بصرية فائقة مع دعم للتدرجات اللونية (Gradients) وتأثيرات الظلال المتقدمة.
 class AppEnhancedButton extends StatefulWidget {
+  /// المنشئ
   const AppEnhancedButton({
     required this.label,
     required this.onPressed,
@@ -60,8 +61,7 @@ class AppEnhancedButton extends StatefulWidget {
   State<AppEnhancedButton> createState() => _AppEnhancedButtonState();
 }
 
-class _AppEnhancedButtonState extends State<AppEnhancedButton>
-    with SingleTickerProviderStateMixin {
+class _AppEnhancedButtonState extends State<AppEnhancedButton> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scale;
 
@@ -86,7 +86,7 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
   void _onTapDown(TapDownDetails details) {
     if (widget.onPressed != null && !widget.isLoading) {
       unawaited(_controller.forward());
-      HapticFeedback.selectionClick();
+      unawaited(HapticFeedback.selectionClick());
     }
   }
 
@@ -102,11 +102,10 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
   Widget build(BuildContext context) {
     final isEnabled = widget.onPressed != null && !widget.isLoading;
 
-    final effectiveGradient =
-        widget.gradient ?? (isEnabled ? AppGradients.primary : null);
+    final effectiveGradient = widget.gradient ?? (isEnabled ? AppGradients.primary : null);
 
-    final effectiveBgColor = widget.backgroundColor ??
-        (isEnabled ? AppColors.primary : AppColors.disabled);
+    final effectiveBgColor =
+        widget.backgroundColor ?? (isEnabled ? AppColors.primary : AppColors.disabled);
 
     final effectiveFgColor = widget.foregroundColor ?? Colors.white;
 
@@ -127,8 +126,7 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
             boxShadow: isEnabled && widget.elevation > 0
                 ? [
                     BoxShadow(
-                      color: (widget.backgroundColor ?? AppColors.primary)
-                          .withValues(alpha: 0.3),
+                      color: (widget.backgroundColor ?? AppColors.primary).withValues(alpha: 0.3),
                       blurRadius: widget.elevation * 2,
                       offset: Offset(0, widget.elevation),
                     ),
@@ -142,8 +140,7 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
                     height: 24,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(effectiveFgColor),
+                      valueColor: AlwaysStoppedAnimation<Color>(effectiveFgColor),
                     ),
                   )
                 : Row(
