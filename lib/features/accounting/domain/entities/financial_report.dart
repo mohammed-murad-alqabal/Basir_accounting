@@ -25,6 +25,8 @@ class FinancialReport with _$FinancialReport {
     required DateTime fromDate,
     required DateTime toDate,
     required List<FinancialReportLine> lines,
+
+    /// توقيت التوليد
     required DateTime generatedAt,
   }) = _FinancialReport;
 }
@@ -41,6 +43,7 @@ class TrialBalanceLine with _$TrialBalanceLine {
   }) = _TrialBalanceLine;
 }
 
+/// تفاصيل ميزان المراجعة
 @freezed
 class TrialBalance with _$TrialBalance {
   /// المنشئ
