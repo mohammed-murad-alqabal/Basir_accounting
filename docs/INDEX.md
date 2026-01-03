@@ -165,6 +165,22 @@
 - **الوصف:** تقرير تحليل شامل للمرحلة الثانية
 - **الأولوية:** عالية ⭐⭐⭐⭐
 
+**[Strategic/Phase_5_Development/03_Accounting_Core_Status.md](./Strategic/Phase_5_Development/03_Accounting_Core_Status.md)**
+
+- **النوع:** تقرير حالة تنفيذ
+- **الجمهور:** الفريق التقني
+- **العلامات:** `#محاسبة` `#أساس`
+- **الوصف:** حالة تنفيذ النواة المحاسبية
+- **الأولوية:** عالية ⭐⭐⭐⭐
+
+**[Strategic/Phase_6_Advanced_Accounting/00_Strategy_Overview.md](./Strategic/Phase_6_Advanced_Accounting/00_Strategy_Overview.md)**
+
+- **النوع:** استراتيجية توسع
+- **الجمهور:** القيادة، المهندسين
+- **العلامات:** `#محاسبة_عالمية` `#استراتيجية` `#مرحلة6`
+- **الوصف:** خطة التحول للنظام المحاسبي العالمي المتقدم
+- **الأولوية:** عالية جداً ⭐⭐⭐⭐⭐
+
 **[reports/project-status/FINAL_DEPLOYMENT_REPORT.md](./reports/project-status/FINAL_DEPLOYMENT_REPORT.md)**
 
 - **النوع:** تقرير نشر نهائي

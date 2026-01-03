@@ -4,6 +4,7 @@
 library;
 
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_app/features/invoices/domain/repositories/invoice_repository.dart';
 
 /// Mock implementation لـ InvoiceRepository
@@ -46,7 +47,7 @@ class MockInvoiceRepository implements InvoiceRepository {
       _invoices.where((i) => i.customerId == customerId).toList();
 
   @override
-  Future<List<Invoice>> getInvoicesByStatus(String status) async =>
+  Future<List<Invoice>> getInvoicesByStatus(InvoiceStatus status) async =>
       _invoices.where((i) => i.status == status).toList();
 
   @override
@@ -83,16 +84,17 @@ class MockInvoiceRepository implements InvoiceRepository {
   @override
   Future<InvoiceStatistics> getInvoiceStatistics() async {
     final totalInvoices = _invoices.length;
-    final paidInvoices = _invoices.where((i) => i.status == 'paid').length;
+    final paidInvoices =
+        _invoices.where((i) => i.status == InvoiceStatus.paid).length;
     final overdueInvoices =
-        _invoices.where((i) => i.status == 'overdue').length;
+        _invoices.where((i) => i.status == InvoiceStatus.overdue).length;
     final totalRevenue = _invoices.fold<double>(
       0,
-      (sum, invoice) => sum + invoice.grandTotal,
+      (sum, invoice) => sum + invoice.totalAmount,
     );
     final paidRevenue = _invoices
-        .where((i) => i.status == 'paid')
-        .fold<double>(0, (sum, invoice) => sum + invoice.grandTotal);
+        .where((i) => i.status == InvoiceStatus.paid)
+        .fold<double>(0, (sum, invoice) => sum + invoice.totalAmount);
 
     return InvoiceStatistics(
       totalInvoices: totalInvoices,

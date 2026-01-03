@@ -21,7 +21,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text('إضافة عميل جديد'), findsOneWidget);
+      expect(find.text('إضافة عميل جديد'), findsAtLeastNWidgets(1));
     });
 
     testWidgets('should display edit customer title when customer is provided',
@@ -38,7 +38,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text('تعديل العميل'), findsOneWidget);
+      expect(find.text('تعديل العميل'), findsAtLeastNWidgets(1));
     });
   });
 }

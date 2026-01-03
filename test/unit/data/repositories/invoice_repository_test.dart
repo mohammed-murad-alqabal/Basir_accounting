@@ -6,28 +6,33 @@ library;
 import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
 import 'package:basir_app/features/invoices/data/repositories/invoice_repository_impl.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
 
 import '../../../helpers/mock_data.dart';
 
 void main() {
+  const testUserId = 'test-user-123';
   late Isar isar;
   late InvoiceRepositoryImpl repository;
 
   setUp(() async {
     // إنشاء قاعدة بيانات Isar في الذاكرة للاختبار
+    await Isar.initializeIsarCore(download: true);
     isar = await Isar.open(
       [InvoiceModelSchema],
       directory: '',
-      name: 'test_invoice_${DateTime.now().millisecondsSinceEpoch}',
+      name: 'test_invoice_${DateTime.now().microsecondsSinceEpoch}',
     );
-    repository = InvoiceRepositoryImpl(isar: isar);
+    repository = InvoiceRepositoryImpl(isar: isar, userId: testUserId);
   });
 
   tearDown(() async {
     // تنظيف قاعدة البيانات بعد كل اختبار
-    await isar.close(deleteFromDisk: true);
+    if (isar.isOpen) {
+      await isar.close(deleteFromDisk: true);
+    }
   });
 
   group('InvoiceRepository', () {
@@ -38,6 +43,7 @@ void main() {
           id: 'test-invoice-1',
           customerId: 'customer-1',
           customerName: 'عميل اختبار',
+          userId: testUserId,
         );
 
         // Act
@@ -59,6 +65,7 @@ void main() {
         final invoice2 = MockData.createTestInvoice(
           id: 'invoice-2',
           customerId: 'customer-2',
+          userId: testUserId,
         );
 
         // Act
@@ -74,22 +81,30 @@ void main() {
         // Arrange
         final invoice = Invoice(
           id: 'test-invoice',
+          invoiceNumber: 'INV-TEST-001',
           customerId: 'customer-1',
           customerName: 'أحمد محمد',
           issuedDate: DateTime(2025, 11),
           dueDate: DateTime(2025, 12),
-          status: 'draft',
+          status: InvoiceStatus.draft,
           items: const [
             InvoiceItem(
               id: 'item-1',
               name: 'خدمة استشارية',
               quantity: 2,
               price: 500,
+              total: 1000,
+              taxAmount: 150,
             ),
           ],
           taxRate: 0.15,
           createdAt: DateTime(2025, 11),
           updatedAt: DateTime(2025, 11),
+          subtotalAmount: 1000,
+          taxAmount: 150,
+          totalAmount: 1150,
+          paidAmount: 0,
+          discountAmount: 0,
         );
 
         // Act
@@ -99,7 +114,7 @@ void main() {
         final foundInvoice = await repository.getInvoiceById('test-invoice');
         expect(foundInvoice, isNotNull);
         expect(foundInvoice!.customerName, 'أحمد محمد');
-        expect(foundInvoice.status, 'draft');
+        expect(foundInvoice.status, InvoiceStatus.draft);
         expect(foundInvoice.items.length, 1);
         expect(foundInvoice.items.first.name, 'خدمة استشارية');
         expect(foundInvoice.taxRate, 0.15);
@@ -139,6 +154,7 @@ void main() {
         final invoice = MockData.createTestInvoice(
           id: 'test-invoice',
           customerName: 'عميل مميز',
+          userId: testUserId,
         );
         await repository.addInvoice(invoice);
 
@@ -166,14 +182,17 @@ void main() {
         final invoice1 = MockData.createTestInvoice(
           id: 'invoice-1',
           customerName: 'عميل 1',
+          userId: testUserId,
         );
         final invoice2 = MockData.createTestInvoice(
           id: 'invoice-2',
           customerName: 'عميل 2',
+          userId: testUserId,
         );
         final invoice3 = MockData.createTestInvoice(
           id: 'invoice-3',
           customerName: 'عميل 3',
+          userId: testUserId,
         );
 
         await repository.addInvoice(invoice1);
@@ -196,14 +215,17 @@ void main() {
         final invoice1 = MockData.createTestInvoice(
           id: 'invoice-1',
           customerId: 'customer-1',
+          userId: testUserId,
         );
         final invoice2 = MockData.createTestInvoice(
           id: 'invoice-2',
           customerId: 'customer-1',
+          userId: testUserId,
         );
         final invoice3 = MockData.createTestInvoice(
           id: 'invoice-3',
           customerId: 'customer-2',
+          userId: testUserId,
         );
 
         await repository.addInvoice(invoice1);
@@ -225,7 +247,10 @@ void main() {
 
       test('should return empty list when customer has no invoices', () async {
         // Arrange
-        final invoice = MockData.createTestInvoice(customerId: 'customer-1');
+        final invoice = MockData.createTestInvoice(
+          customerId: 'customer-1',
+          userId: testUserId,
+        );
         await repository.addInvoice(invoice);
 
         // Act
@@ -243,15 +268,18 @@ void main() {
         // Arrange
         final invoice1 = MockData.createTestInvoice(
           id: 'invoice-1',
-          status: 'draft',
+          status: InvoiceStatus.draft,
+          userId: testUserId,
         );
         final invoice2 = MockData.createTestInvoice(
           id: 'invoice-2',
-          status: 'paid',
+          status: InvoiceStatus.paid,
+          userId: testUserId,
         );
         final invoice3 = MockData.createTestInvoice(
           id: 'invoice-3',
-          status: 'draft',
+          status: InvoiceStatus.draft,
+          userId: testUserId,
         );
 
         await repository.addInvoice(invoice1);
@@ -259,20 +287,30 @@ void main() {
         await repository.addInvoice(invoice3);
 
         // Act
-        final draftInvoices = await repository.getInvoicesByStatus('draft');
+        final draftInvoices = await repository.getInvoicesByStatus(
+          InvoiceStatus.draft,
+        );
 
         // Assert
         expect(draftInvoices.length, 2);
-        expect(draftInvoices.every((i) => i.status == 'draft'), isTrue);
+        expect(
+          draftInvoices.every((i) => i.status == InvoiceStatus.draft),
+          isTrue,
+        );
       });
 
       test('should return empty list when no invoices with status', () async {
         // Arrange
-        final invoice = MockData.createTestInvoice(status: 'draft');
+        final invoice = MockData.createTestInvoice(
+          status: InvoiceStatus.draft,
+          userId: testUserId,
+        );
         await repository.addInvoice(invoice);
 
         // Act
-        final paidInvoices = await repository.getInvoicesByStatus('paid');
+        final paidInvoices = await repository.getInvoicesByStatus(
+          InvoiceStatus.paid,
+        );
 
         // Assert
         expect(paidInvoices, isEmpty);
@@ -284,47 +322,62 @@ void main() {
         // Arrange
         final invoice = MockData.createTestInvoice(
           id: 'test-invoice',
-          status: 'draft',
+          status: InvoiceStatus.draft,
+          userId: testUserId,
         );
         await repository.addInvoice(invoice);
 
         // Act
         final updatedInvoice = invoice.copyWith(
-          status: 'paid',
+          status: InvoiceStatus.paid,
           updatedAt: DateTime.now(),
         );
         await repository.updateInvoice(updatedInvoice);
 
         // Assert
         final foundInvoice = await repository.getInvoiceById('test-invoice');
-        expect(foundInvoice?.status, 'paid');
+        expect(foundInvoice?.status, InvoiceStatus.paid);
       });
 
       test('should update only specified fields', () async {
         // Arrange
         final invoice = Invoice(
           id: 'test-invoice',
+          invoiceNumber: 'INV-TEST-002',
           customerId: 'customer-1',
           customerName: 'عميل أصلي',
           issuedDate: DateTime(2025, 11),
           dueDate: DateTime(2025, 12),
-          status: 'draft',
+          status: InvoiceStatus.draft,
+          userId: testUserId,
           items: const [
-            InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 1, price: 1000),
+            InvoiceItem(
+              id: 'item-1',
+              name: 'خدمة',
+              quantity: 1,
+              price: 1000,
+              total: 1000,
+              taxAmount: 150,
+            ),
           ],
           taxRate: 0.15,
           createdAt: DateTime(2025, 11),
           updatedAt: DateTime(2025, 11),
+          subtotalAmount: 1000,
+          taxAmount: 150,
+          totalAmount: 1150,
+          paidAmount: 0,
+          discountAmount: 0,
         );
         await repository.addInvoice(invoice);
 
         // Act - تحديث الحالة فقط
-        final updatedInvoice = invoice.copyWith(status: 'paid');
+        final updatedInvoice = invoice.copyWith(status: InvoiceStatus.paid);
         await repository.updateInvoice(updatedInvoice);
 
         // Assert
         final foundInvoice = await repository.getInvoiceById('test-invoice');
-        expect(foundInvoice?.status, 'paid');
+        expect(foundInvoice?.status, InvoiceStatus.paid);
         expect(foundInvoice?.customerName, 'عميل أصلي'); // لم يتغير
         expect(foundInvoice?.taxRate, 0.15); // لم يتغير
       });
@@ -333,7 +386,8 @@ void main() {
     group('deleteInvoice', () {
       test('should delete invoice successfully', () async {
         // Arrange
-        final invoice = MockData.createTestInvoice(id: 'test-invoice');
+        final invoice =
+            MockData.createTestInvoice(id: 'test-invoice', userId: testUserId);
         await repository.addInvoice(invoice);
 
         // Act
@@ -394,32 +448,60 @@ void main() {
         // Arrange
         final invoice1 = Invoice(
           id: 'invoice-1',
+          invoiceNumber: 'INV-STAT-001',
           customerId: 'customer-1',
           customerName: 'عميل 1',
           issuedDate: DateTime.now(),
           dueDate: DateTime.now(),
-          status: 'paid',
+          status: InvoiceStatus.paid,
+          userId: testUserId,
           items: const [
-            InvoiceItem(id: 'item-1', name: 'خدمة', quantity: 1, price: 1000),
+            InvoiceItem(
+              id: 'item-1',
+              name: 'خدمة',
+              quantity: 1,
+              price: 1000,
+              total: 1000,
+              taxAmount: 150,
+            ),
           ],
           taxRate: 0.15,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
+          subtotalAmount: 1000,
+          taxAmount: 150,
+          totalAmount: 1150,
+          paidAmount: 1150,
+          discountAmount: 0,
         );
 
         final invoice2 = Invoice(
           id: 'invoice-2',
+          invoiceNumber: 'INV-STAT-002',
           customerId: 'customer-2',
           customerName: 'عميل 2',
           issuedDate: DateTime.now(),
           dueDate: DateTime.now(),
-          status: 'overdue',
+          status: InvoiceStatus.overdue,
+          userId: testUserId,
           items: const [
-            InvoiceItem(id: 'item-2', name: 'خدمة', quantity: 1, price: 2000),
+            InvoiceItem(
+              id: 'item-2',
+              name: 'خدمة',
+              quantity: 1,
+              price: 2000,
+              total: 2000,
+              taxAmount: 300,
+            ),
           ],
           taxRate: 0.15,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
+          subtotalAmount: 2000,
+          taxAmount: 300,
+          totalAmount: 2300,
+          paidAmount: 0,
+          discountAmount: 0,
         );
 
         await repository.addInvoice(invoice1);

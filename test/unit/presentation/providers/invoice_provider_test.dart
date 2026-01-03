@@ -4,6 +4,7 @@
 library;
 
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -81,7 +82,7 @@ void main() {
       expect(loadedInvoice.customerName, invoice.customerName);
       expect(loadedInvoice.status, invoice.status);
       expect(loadedInvoice.items, invoice.items);
-      expect(loadedInvoice.grandTotal, invoice.grandTotal);
+      expect(loadedInvoice.totalAmount, invoice.totalAmount);
     });
   });
 
@@ -126,7 +127,7 @@ void main() {
       final invoice = MockData.createTestInvoice(
         id: 'test-id',
         customerName: 'أحمد محمد',
-        status: 'مسودة',
+        status: InvoiceStatus.draft,
       );
 
       // Act
@@ -151,9 +152,9 @@ void main() {
       final addedInvoice = invoices.first;
 
       // Assert
-      expect(addedInvoice.subtotal, 300.0); // 3 items * 100
-      expect(addedInvoice.taxTotal, 45.0); // 300 * 0.15
-      expect(addedInvoice.grandTotal, 345.0); // 300 + 45
+      expect(addedInvoice.subtotalAmount, 300.0); // 3 items * 100
+      expect(addedInvoice.taxAmount, 45.0); // 300 * 0.15
+      expect(addedInvoice.totalAmount, 345.0); // 300 + 45
     });
   });
 
@@ -163,13 +164,13 @@ void main() {
       final originalInvoice = MockData.createTestInvoice(
         id: 'invoice-1',
         customerName: 'اسم قديم',
-        status: 'مسودة',
+        status: InvoiceStatus.draft,
       );
       await mockRepository.addInvoice(originalInvoice);
 
       final updatedInvoice = originalInvoice.copyWith(
         customerName: 'اسم جديد',
-        status: 'مرسلة',
+        status: InvoiceStatus.sent,
       );
 
       // Act
@@ -179,7 +180,7 @@ void main() {
       // Assert
       expect(invoice, isNotNull);
       expect(invoice!.customerName, 'اسم جديد');
-      expect(invoice.status, 'مرسلة');
+      expect(invoice.status, InvoiceStatus.sent);
     });
 
     test('should update only specified fields', () async {
@@ -187,11 +188,12 @@ void main() {
       final originalInvoice = MockData.createTestInvoice(
         id: 'invoice-1',
         customerName: 'أحمد',
-        status: 'مسودة',
+        status: InvoiceStatus.draft,
       );
       await mockRepository.addInvoice(originalInvoice);
 
-      final updatedInvoice = originalInvoice.copyWith(status: 'مدفوعة');
+      final updatedInvoice =
+          originalInvoice.copyWith(status: InvoiceStatus.paid);
 
       // Act
       await mockRepository.updateInvoice(updatedInvoice);
@@ -199,7 +201,7 @@ void main() {
 
       // Assert
       expect(invoice!.customerName, 'أحمد'); // لم يتغير
-      expect(invoice.status, 'مدفوعة'); // تغير
+      expect(invoice.status, InvoiceStatus.paid); // تغير
     });
 
     test('should handle updating non-existent invoice', () async {
@@ -231,9 +233,9 @@ void main() {
       final invoice = await mockRepository.getInvoiceById('invoice-1');
 
       // Assert
-      expect(invoice!.subtotal, 450.0); // 3 * 150
-      expect(invoice.taxTotal, 67.5); // 450 * 0.15
-      expect(invoice.grandTotal, 517.5); // 450 + 67.5
+      expect(invoice!.subtotalAmount, 450.0); // 3 * 150
+      expect(invoice.taxAmount, 67.5); // 450 * 0.15
+      expect(invoice.totalAmount, 517.5); // 450 + 67.5
     });
   });
 
@@ -292,15 +294,15 @@ void main() {
       // Arrange
       final invoice1 = MockData.createTestInvoice(
         id: 'invoice-1',
-        status: 'مسودة',
+        status: InvoiceStatus.draft,
       );
       final invoice2 = MockData.createTestInvoice(
         id: 'invoice-2',
-        status: 'مرسلة',
+        status: InvoiceStatus.sent,
       );
       final invoice3 = MockData.createTestInvoice(
         id: 'invoice-3',
-        status: 'مسودة',
+        status: InvoiceStatus.draft,
       );
 
       await mockRepository.addInvoice(invoice1);
@@ -309,7 +311,8 @@ void main() {
 
       // Act
       final allInvoices = await mockRepository.getAllInvoices();
-      final filtered = allInvoices.where((i) => i.status == 'مسودة').toList();
+      final filtered =
+          allInvoices.where((i) => i.status == InvoiceStatus.draft).toList();
 
       // Assert
       expect(filtered.length, 2);
@@ -321,11 +324,11 @@ void main() {
       // Arrange
       final invoice1 = MockData.createTestInvoice(
         id: 'invoice-1',
-        status: 'مدفوعة',
+        status: InvoiceStatus.paid,
       );
       final invoice2 = MockData.createTestInvoice(
         id: 'invoice-2',
-        status: 'مرسلة',
+        status: InvoiceStatus.sent,
       );
 
       await mockRepository.addInvoice(invoice1);
@@ -333,7 +336,8 @@ void main() {
 
       // Act
       final allInvoices = await mockRepository.getAllInvoices();
-      final filtered = allInvoices.where((i) => i.status == 'مدفوعة').toList();
+      final filtered =
+          allInvoices.where((i) => i.status == InvoiceStatus.paid).toList();
 
       // Assert
       expect(filtered.length, 1);
@@ -441,7 +445,7 @@ void main() {
       final invoices = await mockRepository.getAllInvoices();
       final totalSales = invoices.fold<double>(
         0,
-        (sum, invoice) => sum + invoice.grandTotal,
+        (sum, invoice) => sum + invoice.totalAmount,
       );
 
       // Assert
@@ -454,15 +458,15 @@ void main() {
       // Arrange
       final invoice1 = MockData.createTestInvoice(
         id: 'invoice-1',
-        status: 'overdue',
+        status: InvoiceStatus.overdue,
       );
       final invoice2 = MockData.createTestInvoice(
         id: 'invoice-2',
-        status: 'مدفوعة',
+        status: InvoiceStatus.paid,
       );
       final invoice3 = MockData.createTestInvoice(
         id: 'invoice-3',
-        status: 'overdue',
+        status: InvoiceStatus.overdue,
       );
 
       await mockRepository.addInvoice(invoice1);
@@ -471,7 +475,8 @@ void main() {
 
       // Act
       final invoices = await mockRepository.getAllInvoices();
-      final overdueCount = invoices.where((i) => i.status == 'overdue').length;
+      final overdueCount =
+          invoices.where((i) => i.status == InvoiceStatus.overdue).length;
 
       // Assert
       expect(overdueCount, 2);
@@ -482,7 +487,7 @@ void main() {
       final invoices = await mockRepository.getAllInvoices();
       final totalSales = invoices.fold<double>(
         0,
-        (sum, invoice) => sum + invoice.grandTotal,
+        (sum, invoice) => sum + invoice.totalAmount,
       );
 
       // Assert

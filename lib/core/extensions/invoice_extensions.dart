@@ -1,5 +1,6 @@
 import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:flutter/material.dart';
 
 /// امتدادات الفاتورة لربط البيانات بالواجهة
@@ -7,36 +8,36 @@ extension InvoiceUiExtensions on Invoice {
   /// الحصول على لون الحالة
   Color getStatusColor(ColorScheme colorScheme) {
     switch (status) {
-      case 'paid':
+      case InvoiceStatus.paid:
         return AppColors.success;
-      case 'overdue':
+      case InvoiceStatus.overdue:
         return AppColors.error;
-      case 'issued':
+      case InvoiceStatus.sent:
         return AppColors.info;
-      case 'draft':
+      case InvoiceStatus.draft:
         return AppColors.textHint;
-      case 'cancelled':
+      case InvoiceStatus.cancelled:
         return AppColors.textDisabled;
-      default:
-        return AppColors.textHint;
+      case InvoiceStatus.refunded:
+        return AppColors.warning;
     }
   }
 
   /// الحصول على أيقونة الحالة
   IconData getStatusIcon(AppIcons appIcons) {
     switch (status) {
-      case 'paid':
+      case InvoiceStatus.paid:
         return appIcons.check;
-      case 'overdue':
+      case InvoiceStatus.overdue:
         return appIcons.error;
-      case 'issued':
+      case InvoiceStatus.sent:
         return appIcons.send;
-      case 'draft':
+      case InvoiceStatus.draft:
         return appIcons.edit;
-      case 'cancelled':
+      case InvoiceStatus.cancelled:
         return appIcons.close;
-      default:
-        return appIcons.info;
+      case InvoiceStatus.refunded:
+        return appIcons.refresh;
     }
   }
 }

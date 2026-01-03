@@ -1,5 +1,5 @@
 import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/invoices/data/services/pdf_service.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,19 +24,6 @@ void main() {
 
     tearDown(() {
       container.dispose();
-    });
-
-    group('pdfServiceProvider', () {
-      test('should provide PdfService instance', () {
-        final pdfService = container.read(pdfServiceProvider);
-        expect(pdfService, isA<PdfService>());
-      });
-
-      test('should provide same instance on multiple reads', () {
-        final service1 = container.read(pdfServiceProvider);
-        final service2 = container.read(pdfServiceProvider);
-        expect(service1, same(service2));
-      });
     });
 
     group('invoicesProvider', () {
@@ -88,17 +75,17 @@ void main() {
         final testInvoices = [
           MockData.createTestInvoice(
             id: 'inv-1',
-            status: 'paid',
+            status: InvoiceStatus.paid,
             itemPrice: 1000,
           ),
           MockData.createTestInvoice(
             id: 'inv-2',
-            status: 'overdue',
+            status: InvoiceStatus.overdue,
             itemPrice: 500,
           ),
           MockData.createTestInvoice(
             id: 'inv-3',
-            status: 'draft',
+            status: InvoiceStatus.draft,
             itemPrice: 200,
           ),
         ];

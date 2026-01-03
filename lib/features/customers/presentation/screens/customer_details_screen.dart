@@ -1,12 +1,13 @@
 import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/theme/services/icon_customization_service.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/widgets/index.dart';
 import 'package:basir_app/features/customers/domain/entities/customer.dart';
 import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
 import 'package:basir_app/features/customers/presentation/screens/customer_form_screen.dart';
+import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart' as intl;
 
 /// شاشة تفاصيل العميل
 ///
@@ -156,42 +157,46 @@ class CustomerDetailsScreen extends ConsumerWidget {
     required String label,
     required String value,
   }) =>
-      AppCard(
-        child: Padding(
-          padding: const EdgeInsets.all(Spacing.md),
-          child: Row(
-            children: [
-              Icon(icon, color: AppColors.primary, size: 24),
-              const SizedBox(width: Spacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      label,
-                      style: const TextStyle(
-                        fontSize: AppTypography.bodySmall,
-                        color: AppColors.textSecondary,
+      Semantics(
+        label: '$label: $value',
+        child: AppCard(
+          child: Padding(
+            padding: const EdgeInsets.all(Spacing.md),
+            child: Row(
+              children: [
+                Icon(icon, color: AppColors.primary, size: 24),
+                const SizedBox(width: Spacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        label,
+                        style: const TextStyle(
+                          fontSize: AppTypography.bodySmall,
+                          color: AppColors.textSecondary,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      value,
-                      style: const TextStyle(
-                        fontSize: AppTypography.bodyMedium,
-                        color: AppColors.textPrimary,
-                        fontWeight: FontWeight.w500,
+                      const SizedBox(height: 4),
+                      Text(
+                        value,
+                        style: const TextStyle(
+                          fontSize: AppTypography.bodyMedium,
+                          color: AppColors.textPrimary,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
 
-  String _formatDate(DateTime date) => '${date.day}/${date.month}/${date.year}';
+  String _formatDate(DateTime date) =>
+      intl.DateFormat('yyyy/MM/dd').format(date);
 
   Future<void> _editCustomer(BuildContext context) async {
     final result = await Navigator.push<bool>(
@@ -217,18 +222,18 @@ class CustomerDetailsScreen extends ConsumerWidget {
         title: Text(context.l10n.actionDeleteCustomer),
         content: Text(context.l10n.msgConfirmDeleteCustomer(customer.name)),
         actions: [
-          AppEnhancedButton(
-            text: context.l10n.dialogCancel,
+          AppButton(
+            label: context.l10n.dialogCancel,
             onPressed: () => Navigator.pop(context, false),
-            style: AppEnhancedButtonStyle.text,
-            size: AppEnhancedButtonSize.small,
+            type: AppButtonType.text,
+            size: AppButtonSize.small,
           ),
-          AppEnhancedButton(
-            text: context.l10n.btnDelete,
+          AppButton(
+            label: context.l10n.btnDelete,
             onPressed: () => Navigator.pop(context, true),
-            style: AppEnhancedButtonStyle.text,
-            size: AppEnhancedButtonSize.small,
-            // TODO(enhancement): Add error color support to AppEnhancedButton
+            type: AppButtonType.text,
+            size: AppButtonSize.small,
+            color: AppColors.error,
           ),
         ],
       ),

@@ -12,13 +12,14 @@ import '../../../helpers/test_helpers.dart';
 
 void main() {
   group('CustomerRepository', () {
+    const testUserId = 'test-user-123';
     late Isar isar;
     late CustomerRepositoryImpl repository;
 
     setUp(() async {
       // إعداد قاعدة بيانات Isar في الذاكرة
       isar = await TestHelpers.createTestIsar();
-      repository = CustomerRepositoryImpl(isar: isar);
+      repository = CustomerRepositoryImpl(isar: isar, userId: testUserId);
     });
 
     tearDown(() async {
@@ -32,6 +33,7 @@ void main() {
         final customer = MockData.createTestCustomer(
           name: 'أحمد محمد',
           phone: '0501234567',
+          userId: testUserId,
         );
 
         // Act
@@ -65,6 +67,7 @@ void main() {
           phone: '0507654321',
           email: 'fatima@example.com',
           address: 'جدة، السعودية',
+          userId: testUserId,
         );
 
         // Act
@@ -131,6 +134,7 @@ void main() {
         final customer = MockData.createTestCustomer(
           id: 'test-customer-123',
           name: 'عميل محدد',
+          userId: testUserId,
         );
         await repository.addCustomer(customer);
 
@@ -181,6 +185,7 @@ void main() {
           id: 'test-customer-update',
           name: 'اسم قديم',
           phone: '0501111111',
+          userId: testUserId,
         );
         await repository.addCustomer(customer);
 
@@ -206,6 +211,7 @@ void main() {
           name: 'اسم أصلي',
           phone: '0501111111',
           email: 'original@example.com',
+          userId: testUserId,
         );
         await repository.addCustomer(customer);
 
@@ -316,13 +322,13 @@ void main() {
       test('should find customers by name', () async {
         // Arrange
         await repository.addCustomer(
-          MockData.createTestCustomer(name: 'أحمد محمد'),
+          MockData.createTestCustomer(name: 'أحمد محمد', userId: testUserId),
         );
         await repository.addCustomer(
-          MockData.createTestCustomer(name: 'محمد علي'),
+          MockData.createTestCustomer(name: 'محمد علي', userId: testUserId),
         );
         await repository.addCustomer(
-          MockData.createTestCustomer(name: 'فاطمة أحمد'),
+          MockData.createTestCustomer(name: 'فاطمة أحمد', userId: testUserId),
         );
 
         // Act
@@ -335,8 +341,12 @@ void main() {
 
       test('should return empty list when no matches', () async {
         // Arrange
-        await repository.addCustomer(MockData.createTestCustomer(name: 'أحمد'));
-        await repository.addCustomer(MockData.createTestCustomer(name: 'علي'));
+        await repository.addCustomer(
+          MockData.createTestCustomer(name: 'أحمد', userId: testUserId),
+        );
+        await repository.addCustomer(
+          MockData.createTestCustomer(name: 'علي', userId: testUserId),
+        );
 
         // Act
         final results = await repository.searchCustomers('خالد');

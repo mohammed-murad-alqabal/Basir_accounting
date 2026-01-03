@@ -1,4 +1,5 @@
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 
 /// واجهة مستودع الفواتير (Invoice Repository Interface)
 ///
@@ -76,17 +77,17 @@ abstract class InvoiceRepository {
   /// يسترجع جميع الفواتير التي لها حالة معينة.
   ///
   /// **Parameters:**
-  /// - [status]: حالة الفاتورة (draft, issued, paid, overdue, cancelled)
+  /// - [status]: حالة الفاتورة (InvoiceStatus enum)
   ///
   /// **Returns:** قائمة بالفواتير المطابقة، قائمة فارغة إذا لم توجد
   ///
   /// **مثال:**
   /// ```dart
-  /// final paidInvoices = await repository.getInvoicesByStatus('paid',);
+  /// final paidInvoices = await repository.getInvoicesByStatus(InvoiceStatus.paid,);
   /// debugPrint('الفواتير المدفوعة: ${paidInvoices.length}',);
   /// ```
   Future<List<Invoice>> getInvoicesByStatus(
-    String status,
+    InvoiceStatus status,
   );
 
   /// إضافة فاتورة جديدة

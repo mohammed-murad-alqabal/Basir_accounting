@@ -48,12 +48,13 @@ class CustomerRepositoryImpl implements CustomerRepository {
   /// final isar = await Isar.open([CustomerModelSchema],);
   /// final repository = CustomerRepositoryImpl(isar: isar,);
   /// ```
-  CustomerRepositoryImpl({required this.isar});
+  CustomerRepositoryImpl({required this.isar, required this.userId});
 
   /// مثيل قاعدة البيانات المحلية (Isar)
-  ///
-  /// يستخدم لجميع عمليات القراءة والكتابة على بيانات العملاء.
   final Isar isar;
+
+  /// معرف المستخدم لعزل البيانات.
+  final String? userId;
 
   /// {@macro customer_repository.getAllCustomers}
   ///
@@ -66,7 +67,8 @@ class CustomerRepositoryImpl implements CustomerRepository {
   @override
   Future<List<Customer>> getAllCustomers() async {
     try {
-      final models = await isar.customerModels.where().findAll();
+      final models =
+          await isar.customerModels.filter().userIdEqualTo(userId).findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
       throw Exception(
@@ -86,11 +88,12 @@ class CustomerRepositoryImpl implements CustomerRepository {
   @override
   Future<Customer?> getCustomerById(String id) async {
     try {
-      final models = await isar.customerModels.where().findAll();
-      final model = models.cast<CustomerModel?>().firstWhere(
-            (m) => m?.customerId == id,
-            orElse: () => null,
-          );
+      final model = await isar.customerModels
+          .filter()
+          .customerIdEqualTo(id)
+          .and()
+          .userIdEqualTo(userId)
+          .findFirst();
       return model?.toEntity();
     } on Exception catch (e) {
       throw Exception(
@@ -111,9 +114,13 @@ class CustomerRepositoryImpl implements CustomerRepository {
   @override
   Future<List<Customer>> searchCustomers(String query) async {
     try {
-      final models = await isar.customerModels.where().findAll();
-      final filtered = models.where((m) => m.name.contains(query)).toList();
-      return filtered.map((model) => model.toEntity()).toList();
+      final models = await isar.customerModels
+          .filter()
+          .userIdEqualTo(userId)
+          .and()
+          .nameContains(query)
+          .findAll();
+      return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
       throw Exception(
         'خطأ في البحث عن العملاء: $e',
@@ -133,7 +140,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
   Future<void> addCustomer(Customer customer) async {
     try {
       final model = CustomerModel.fromEntity(
-        customer,
+        customer.copyWith(userId: userId),
       );
       await isar.writeTxn(() async {
         await isar.customerModels.put(
@@ -163,6 +170,8 @@ class CustomerRepositoryImpl implements CustomerRepository {
         final existingModel = await isar.customerModels
             .filter()
             .customerIdEqualTo(customer.id)
+            .and()
+            .userIdEqualTo(userId)
             .findFirst();
 
         if (existingModel == null) {
@@ -177,7 +186,8 @@ class CustomerRepositoryImpl implements CustomerRepository {
           ..phone = customer.phone
           ..email = customer.email
           ..address = customer.address
-          ..updatedAt = customer.updatedAt;
+          ..updatedAt = customer.updatedAt
+          ..userId = userId;
 
         // حفظ التحديثات
         await isar.customerModels.put(
@@ -203,11 +213,12 @@ class CustomerRepositoryImpl implements CustomerRepository {
   Future<void> deleteCustomer(String id) async {
     try {
       await isar.writeTxn(() async {
-        final models = await isar.customerModels.where().findAll();
-        final model = models.cast<CustomerModel?>().firstWhere(
-              (m) => m?.customerId == id,
-              orElse: () => null,
-            );
+        final model = await isar.customerModels
+            .filter()
+            .customerIdEqualTo(id)
+            .and()
+            .userIdEqualTo(userId)
+            .findFirst();
         if (model != null) {
           await isar.customerModels.delete(
             model.id,
@@ -235,7 +246,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
   Future<void> deleteAllCustomers() async {
     try {
       await isar.writeTxn(() async {
-        await isar.customerModels.clear();
+        await isar.customerModels.filter().userIdEqualTo(userId).deleteAll();
       });
     } on Exception catch (e) {
       throw Exception(

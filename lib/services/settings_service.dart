@@ -1,140 +1,125 @@
 import 'package:basir_app/core/constants.dart';
+import 'package:basir_app/core/models/sync_status.dart';
+import 'package:basir_app/features/settings/domain/entities/business_settings.dart';
+import 'package:basir_app/features/settings/domain/repositories/business_settings_repository.dart';
+import 'package:basir_app/features/settings/domain/repositories/profile_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// خدمة الإعدادات (Settings Service)
 /// تتعامل مع تخزين واسترجاع إعدادات التطبيق
 class SettingsService {
   /// إنشاء خدمة الإعدادات
-  SettingsService({required this.secureStorage});
+  SettingsService({
+    required this.secureStorage,
+    required this.businessSettingsRepository,
+    required this.profileRepository,
+  });
 
   /// خدمة التخزين الآمن
   final FlutterSecureStorage secureStorage;
 
+  /// مستودع إعدادات العمل
+  final BusinessSettingsRepository businessSettingsRepository;
+
+  /// مستودع الملف الشخصي
+  final ProfileRepository profileRepository;
+
   /// الحصول على نسبة الضريبة
   Future<double> getTaxRate() async {
-    try {
-      final taxRate = await secureStorage.read(
-        key: <credential-fixture>,
-      );
-      return double.tryParse(taxRate ?? '') ?? AppConfig.defaultTaxRate;
-    } on Exception {
-      return AppConfig.defaultTaxRate;
-    }
+    final settings = await businessSettingsRepository.getSettings();
+    return settings?.defaultTaxRate ?? AppConfig.defaultTaxRate;
   }
 
   /// تعيين نسبة الضريبة
   Future<void> setTaxRate(double taxRate) async {
-    try {
-      await secureStorage.write(
-        key: <credential-fixture>,
-        value: taxRate.toString(),
-      );
-    } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حفظ نسبة الضريبة: $e',
-      );
-    }
+    final settings = await businessSettingsRepository.getSettings() ??
+        const BusinessSettings(id: 'default', companyName: '');
+    await businessSettingsRepository.saveSettings(
+      settings.copyWith(
+        defaultTaxRate: taxRate,
+        syncStatus: SyncStatus.pendingPush,
+      ),
+    );
   }
 
   /// الحصول على اسم الشركة
   Future<String?> getCompanyName() async {
-    try {
-      return await secureStorage.read(
-        key: <credential-fixture>,
-      );
-    } on Exception {
-      return null;
-    }
+    final settings = await businessSettingsRepository.getSettings();
+    return settings?.companyName;
   }
 
   /// تعيين اسم الشركة
   Future<void> setCompanyName(String companyName) async {
-    try {
-      await secureStorage.write(
-        key: <credential-fixture>,
-        value: companyName,
-      );
-    } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حفظ اسم الشركة: $e',
-      );
-    }
+    final settings = await businessSettingsRepository.getSettings() ??
+        BusinessSettings(id: 'default', companyName: companyName);
+    await businessSettingsRepository.saveSettings(
+      settings.copyWith(
+        companyName: companyName,
+        syncStatus: SyncStatus.pendingPush,
+      ),
+    );
   }
 
   /// الحصول على الرقم الضريبي للشركة
   Future<String?> getCompanyTaxNumber() async {
-    try {
-      return await secureStorage.read(
-        key: <credential-fixture>,
-      );
-    } on Exception {
-      return null;
-    }
+    final settings = await businessSettingsRepository.getSettings();
+    return settings?.taxNumber;
   }
 
   /// تعيين الرقم الضريبي للشركة
   Future<void> setCompanyTaxNumber(String taxNumber) async {
-    try {
-      await secureStorage.write(
-        key: <credential-fixture>,
-        value: taxNumber,
-      );
-    } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حفظ الرقم الضريبي: $e',
-      );
-    }
+    final settings = await businessSettingsRepository.getSettings() ??
+        const BusinessSettings(id: 'default', companyName: '');
+    await businessSettingsRepository.saveSettings(
+      settings.copyWith(
+        taxNumber: taxNumber,
+        syncStatus: SyncStatus.pendingPush,
+      ),
+    );
   }
 
   /// الحصول على رمز العملة
   Future<String> getCurrencySymbol() async {
-    try {
-      final symbol = await secureStorage.read(key: <credential-fixture>);
-      return symbol ?? AppConfig.defaultCurrencySymbol;
-    } on Exception {
-      return AppConfig.defaultCurrencySymbol;
-    }
+    final settings = await businessSettingsRepository.getSettings();
+    return settings?.currencySymbol ?? AppConfig.defaultCurrencySymbol;
   }
 
   /// تعيين رمز العملة
   Future<void> setCurrencySymbol(String symbol) async {
-    try {
-      await secureStorage.write(
-        key: <credential-fixture>,
-        value: symbol,
-      );
-    } on Exception catch (e) {
-      throw Exception('خطأ في حفظ رمز العملة: $e');
-    }
+    final settings = await businessSettingsRepository.getSettings() ??
+        const BusinessSettings(id: 'default', companyName: '');
+    await businessSettingsRepository.saveSettings(
+      settings.copyWith(
+        currencySymbol: symbol,
+        syncStatus: SyncStatus.pendingPush,
+      ),
+    );
   }
 
   /// الحصول على كود العملة
   Future<String> getCurrencyCode() async {
-    try {
-      final code = await secureStorage.read(key: <credential-fixture>);
-      return code ?? AppConfig.defaultCurrencyCode;
-    } on Exception {
-      return AppConfig.defaultCurrencyCode;
-    }
+    final settings = await businessSettingsRepository.getSettings();
+    return settings?.currencyCode ?? AppConfig.defaultCurrencyCode;
   }
 
   /// تعيين كود العملة
   Future<void> setCurrencyCode(String code) async {
-    try {
-      await secureStorage.write(
-        key: <credential-fixture>,
-        value: code,
-      );
-    } on Exception catch (e) {
-      throw Exception('خطأ في حفظ كود العملة: $e');
-    }
+    final settings = await businessSettingsRepository.getSettings() ??
+        const BusinessSettings(id: 'default', companyName: '');
+    await businessSettingsRepository.saveSettings(
+      settings.copyWith(
+        currencyCode: code,
+        syncStatus: SyncStatus.pendingPush,
+      ),
+    );
   }
 
   /// الحصول على كود الدولة الافتراضي
   Future<String> getDefaultCountryCode() async {
     try {
-      final code =
-          await secureStorage.read(key: <credential-fixture>);
+      final code = await secureStorage.read(
+        key: <credential-fixture>,
+      );
       return code ?? AppConfig.defaultCountryCode;
     } on Exception {
       return AppConfig.defaultCountryCode;
@@ -204,17 +189,25 @@ class SettingsService {
     String? countryCode,
     String? invoiceStyle,
   }) async {
-    try {
-      await setCompanyName(companyName);
-      await setCompanyTaxNumber(taxNumber);
-      await setTaxRate(taxRate);
-      if (currencySymbol != null) await setCurrencySymbol(currencySymbol);
-      if (currencyCode != null) await setCurrencyCode(currencyCode);
-      if (countryCode != null) await setDefaultCountryCode(countryCode);
-      if (invoiceStyle != null) await setInvoiceStyle(invoiceStyle);
-    } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حفظ إعدادات الشركة: $e',
+    final settings = await businessSettingsRepository.getSettings() ??
+        BusinessSettings(id: 'default', companyName: companyName);
+
+    await businessSettingsRepository.saveSettings(
+      settings.copyWith(
+        companyName: companyName,
+        taxNumber: taxNumber,
+        defaultTaxRate: taxRate,
+        currencySymbol: currencySymbol ?? settings.currencySymbol,
+        currencyCode: currencyCode ?? settings.currencyCode,
+        address: countryCode ?? settings.address,
+        syncStatus: SyncStatus.pendingPush,
+      ),
+    );
+
+    if (invoiceStyle != null) {
+      await secureStorage.write(
+        key: <credential-fixture>,
+        value: invoiceStyle,
       );
     }
   }

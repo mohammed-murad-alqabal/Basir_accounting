@@ -22,25 +22,27 @@
 
   "core": {
     "description": "الملفات الأساسية - تُحمّل تلقائياً من Kiro",
-    "location": ".kiro/steering/core/",
+    "location": ".kiro/steering/",
     "autoLoad": true,
     "files": [
       "philosophy.md",
-      "quick-reference.md",
-      "team-identity.md",
-      "kiro-compliance.md"
+      "AGENTS.md",
+      "tech.md",
+      "product.md"
     ],
-    "estimatedSize": "8KB",
-    "estimatedLines": 220,
-    "contextUsage": "3.5%",
+    "estimatedSize": "10KB",
+    "estimatedLines": 300,
+    "contextUsage": "4%",
     "kiroCompliance": true
   },
-
+ 
   "standards": {
     "description": "المعايير التفصيلية - تُحمّل عند الطلب",
     "location": ".kiro/standards/",
     "autoLoad": false,
     "files": [
+      "accounting.md",
+      "engineering.md",
       "naming.md",
       "code-quality.md",
       "flutter.md",
@@ -48,8 +50,8 @@
       "documentation.md",
       "testing.md"
     ],
-    "estimatedSize": "30KB",
-    "estimatedLines": 900,
+    "estimatedSize": "40KB",
+    "estimatedLines": 1200,
     "loadWhen": [
       "عند العمل على كود جديد",
       "عند المراجعة",

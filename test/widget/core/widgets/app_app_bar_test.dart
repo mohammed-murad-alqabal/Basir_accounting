@@ -1,6 +1,6 @@
 import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/widgets/app_app_bar.dart';
 import 'package:basir_app/l10n/app_localizations.dart';
+import 'package:basir_app/shared/widgets/app_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

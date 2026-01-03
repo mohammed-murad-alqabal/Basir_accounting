@@ -4,8 +4,8 @@ import 'package:basir_app/core/assets/app_logo.dart';
 import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/theme/services/icon_customization_service.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/widgets/index.dart';
 import 'package:basir_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -221,6 +221,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       label: context.l10n.loginTitle,
                       onPressed: _handleLogin,
                       isLoading: _isLoading,
+                      icon: appIcons.login,
                     ),
                     const SizedBox(height: Spacing.md),
 
@@ -228,6 +229,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       label: context.l10n.loginGuest,
                       onPressed: _isLoading ? null : _handleGuestLogin,
                       isLoading: _isLoading,
+                      icon: appIcons.person,
                     ),
                     const SizedBox(height: Spacing.xl),
 
@@ -264,7 +266,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Widget _buildHeader(ColorScheme colorScheme) => Column(
         children: [
-          const BasirLogo(size: 140),
+          Semantics(
+            label: context.l10n.dashboardBasirSystemTitle,
+            image: true,
+            child: const BasirLogo(size: 140),
+          ),
           const SizedBox(height: Spacing.lg),
           Text(
             context.l10n.loginTitle,
