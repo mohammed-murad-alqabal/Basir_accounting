@@ -46,8 +46,8 @@ class FinancialYear with _$FinancialYear {
     @Default(false) bool isDeleted,
   }) = _FinancialYear;
 
-  factory FinancialYear.fromJson(Map<String, dynamic> json) =>
-      _$FinancialYearFromJson(json);
+  /// التحويل من JSON
+  factory FinancialYear.fromJson(Map<String, dynamic> json) => _$FinancialYearFromJson(json);
   const FinancialYear._();
 
   /// التحقق من أن تاريخ معين يقع ضمن هذه السنة المالية

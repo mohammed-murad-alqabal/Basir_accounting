@@ -4,8 +4,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'profile.freezed.dart';
 part 'profile.g.dart';
 
+/// الملف الشخصي للمستخدم
 @freezed
 class Profile with _$Profile {
+  /// المنشئ
   const factory Profile({
     required String id,
     required String email,
@@ -26,6 +28,6 @@ class Profile with _$Profile {
     @Default(false) bool isDeleted,
   }) = _Profile;
 
-  factory Profile.fromJson(Map<String, dynamic> json) =>
-      _$ProfileFromJson(json);
+  /// التحويل من JSON
+  factory Profile.fromJson(Map<String, dynamic> json) => _$ProfileFromJson(json);
 }

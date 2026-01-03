@@ -83,6 +83,6 @@ class FinancialVoucher with _$FinancialVoucher {
     @Default(false) bool isDeleted,
   }) = _FinancialVoucher;
 
-  factory FinancialVoucher.fromJson(Map<String, dynamic> json) =>
-      _$FinancialVoucherFromJson(json);
+  /// التحويل من JSON
+  factory FinancialVoucher.fromJson(Map<String, dynamic> json) => _$FinancialVoucherFromJson(json);
 }

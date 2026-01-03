@@ -71,6 +71,7 @@ class SecurityAuditResult {
 
 /// مستخدم بصير (Basir User)
 class BasirUser {
+  /// المنشئ
   const BasirUser({
     required this.id,
     required this.email,
