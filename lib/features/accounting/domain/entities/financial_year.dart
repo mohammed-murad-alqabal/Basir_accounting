@@ -47,7 +47,8 @@ class FinancialYear with _$FinancialYear {
   }) = _FinancialYear;
 
   /// التحويل من JSON
-  factory FinancialYear.fromJson(Map<String, dynamic> json) => _$FinancialYearFromJson(json);
+  factory FinancialYear.fromJson(Map<String, dynamic> json) =>
+      _$FinancialYearFromJson(json);
   const FinancialYear._();
 
   /// التحقق من أن تاريخ معين يقع ضمن هذه السنة المالية

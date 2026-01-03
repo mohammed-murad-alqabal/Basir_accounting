@@ -11,19 +11,20 @@ class BusinessSettingsModel {
   BusinessSettingsModel();
 
   /// التحويل من Entity
-  factory BusinessSettingsModel.fromEntity(BusinessSettings entity) => BusinessSettingsModel()
-    ..id = entity.id
-    ..companyName = entity.companyName
-    ..taxNumber = entity.taxNumber
-    ..address = entity.address
-    ..logoUrl = entity.logoUrl
-    ..defaultTaxRate = entity.defaultTaxRate
-    ..currencyCode = entity.currencyCode
-    ..currencySymbol = entity.currencySymbol
-    ..userId = entity.userId
-    ..syncStatus = entity.syncStatus
-    ..serverUpdatedAt = entity.serverUpdatedAt
-    ..isDeleted = entity.isDeleted;
+  factory BusinessSettingsModel.fromEntity(BusinessSettings entity) =>
+      BusinessSettingsModel()
+        ..id = entity.id
+        ..companyName = entity.companyName
+        ..taxNumber = entity.taxNumber
+        ..address = entity.address
+        ..logoUrl = entity.logoUrl
+        ..defaultTaxRate = entity.defaultTaxRate
+        ..currencyCode = entity.currencyCode
+        ..currencySymbol = entity.currencySymbol
+        ..userId = entity.userId
+        ..syncStatus = entity.syncStatus
+        ..serverUpdatedAt = entity.serverUpdatedAt
+        ..isDeleted = entity.isDeleted;
 
   /// المعرف الداخلي (Isar)
   Id? isarId;

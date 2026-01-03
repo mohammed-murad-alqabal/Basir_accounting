@@ -7,7 +7,8 @@ import 'package:printing/printing.dart';
 final invoicePdfServiceProvider = Provider((ref) => InvoicePdfService());
 
 /// Provider لتصدير الفاتورة كملف PDF
-final exportInvoicePdfProvider = FutureProvider.family<void, Invoice>((ref, invoice) async {
+final exportInvoicePdfProvider =
+    FutureProvider.family<void, Invoice>((ref, invoice) async {
   final pdfService = ref.read(invoicePdfServiceProvider);
   final pdfBytes = await pdfService.generateInvoicePdf(invoice);
 
@@ -18,7 +19,8 @@ final exportInvoicePdfProvider = FutureProvider.family<void, Invoice>((ref, invo
 });
 
 /// Provider لمشاركة الفاتورة كملف PDF
-final shareInvoicePdfProvider = FutureProvider.family<void, Invoice>((ref, invoice) async {
+final shareInvoicePdfProvider =
+    FutureProvider.family<void, Invoice>((ref, invoice) async {
   final pdfService = ref.read(invoicePdfServiceProvider);
   final pdfBytes = await pdfService.generateInvoicePdf(invoice);
 

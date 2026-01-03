@@ -13,7 +13,8 @@ class SupabaseAuthService {
   final SupabaseClient supabaseClient;
 
   /// دفق التغييرات في حالة المصادقة
-  Stream<AuthState> get onAuthStateChange => supabaseClient.auth.onAuthStateChange;
+  Stream<AuthState> get onAuthStateChange =>
+      supabaseClient.auth.onAuthStateChange;
 
   /// الحصول على المستخدم الحالي
   User? get currentUser => supabaseClient.auth.currentUser;

@@ -23,7 +23,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appIcons = ref.watch(appIconsProvider);
-    final calendarType = ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
+    final calendarType =
+        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
 
     return Scaffold(
       appBar: AppAppBar(
@@ -105,7 +106,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
                   fontWeight: FontWeights.bold,
                 ),
               ),
-              if (invoice.status == InvoiceStatus.paid && invoice.paidDate != null)
+              if (invoice.status == InvoiceStatus.paid &&
+                  invoice.paidDate != null)
                 Text(
                   '${context.l10n.labelPaidDate}: '
                   '${FormatHelpers.formatDate(invoice.paidDate!, locale: context.l10n.localeName)}',
@@ -358,7 +360,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
         children: [
           Text(
             title,
-            style: AppTextStyles.titleSmall.copyWith(fontWeight: FontWeights.bold),
+            style:
+                AppTextStyles.titleSmall.copyWith(fontWeight: FontWeights.bold),
           ),
           const SizedBox(height: Spacing.sm),
           Text(content, style: AppTextStyles.bodyMedium),
