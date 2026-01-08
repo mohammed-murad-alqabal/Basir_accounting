@@ -1,0 +1,36 @@
+[package]
+name = "rust_lib_basir_app"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+# Internal dependencies
+accounting_core = { path = "../accounting_core" }
+accounting_data = { path = "../accounting_data" }
+accounting_zatca = { path = "../accounting_zatca" }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Async runtime
+tokio = { workspace = true }
+
+# Error handling
+# Error handling
+anyhow = { workspace = true }
+
+# Data Types
+uuid = { workspace = true }
+chrono = { workspace = true }
+rust_decimal = { workspace = true }
+
+# Database
+sqlx = { workspace = true }
+
+# FFI Bridge
+flutter_rust_bridge = { features = ["chrono", "uuid"], version = "=2.11.1" }

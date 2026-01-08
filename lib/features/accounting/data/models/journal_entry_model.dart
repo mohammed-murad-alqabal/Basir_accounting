@@ -7,6 +7,9 @@ part 'journal_entry_model.g.dart';
 
 /// نموذج بيانات القيد المحاسبي للتخزين في Isar.
 @collection
+
+/// نموذج بيانات القيد المحاسبي للتخزين في Isar.
+@collection
 class JournalEntryModel {
   /// مُنشئ افتراضي.
   JournalEntryModel();
@@ -16,14 +19,19 @@ class JournalEntryModel {
     id = entity.id;
     referenceNumber = entity.referenceNumber;
     date = entity.date;
+    temporal = TemporalJustificationModel.fromEntity(entity.temporal);
+    standards = StandardsJustificationModel.fromEntity(entity.standards);
     description = entity.description;
     status = entity.status;
     lines = entity.lines.map(JournalEntryLineModel.fromEntity).toList();
     sourceDocument = entity.sourceDocument;
     sourceId = entity.sourceId;
+    hash = entity.hash;
+    previousHash = entity.previousHash;
     createdBy = entity.createdBy;
     createdAt = entity.createdAt;
     updatedAt = entity.updatedAt;
+    postedAt = entity.postedAt;
     userId = entity.userId;
     syncStatus = entity.syncStatus;
     serverUpdatedAt = entity.serverUpdatedAt;
@@ -44,6 +52,12 @@ class JournalEntryModel {
   /// تاريخ القيد.
   late DateTime date;
 
+  /// التبرير الزمني.
+  late TemporalJustificationModel temporal;
+
+  /// تبرير المعايير.
+  late StandardsJustificationModel standards;
+
   /// الوصف.
   late String description;
 
@@ -60,6 +74,12 @@ class JournalEntryModel {
   /// معرف المستند المصدر.
   late String sourceId;
 
+  /// بصمة سلامة البيانات.
+  String? hash;
+
+  /// بصمة السجل السابق.
+  String? previousHash;
+
   /// معرف المستخدم الذي أنشأ القيد.
   late String createdBy;
 
@@ -68,6 +88,9 @@ class JournalEntryModel {
 
   /// تاريخ آخر تحديث.
   late DateTime updatedAt;
+
+  /// تاريخ النشر.
+  DateTime? postedAt;
 
   /// معرف المستخدم (لعزل البيانات).
   @Index()
@@ -88,18 +111,83 @@ class JournalEntryModel {
         id: id,
         referenceNumber: referenceNumber,
         date: date,
+        temporal: temporal.toEntity(),
+        standards: standards.toEntity(),
         description: description,
         status: status,
         lines: lines.map((l) => l.toEntity()).toList(),
         sourceDocument: sourceDocument,
         sourceId: sourceId,
+        hash: hash,
+        previousHash: previousHash,
         createdBy: createdBy,
         createdAt: createdAt,
         updatedAt: updatedAt,
+        postedAt: postedAt,
         userId: userId,
         syncStatus: syncStatus,
         serverUpdatedAt: serverUpdatedAt,
         isDeleted: isDeleted,
+      );
+}
+
+/// نموذج التبرير الزمني المضمن.
+@embedded
+class TemporalJustificationModel {
+  /// إنشاء نموذج فارغ.
+  TemporalJustificationModel();
+
+  /// إنشاء نموذج من كيان.
+  TemporalJustificationModel.fromEntity(TemporalJustification entity) {
+    transactionDate = entity.transactionDate;
+    effectiveDate = entity.effectiveDate;
+    recordingDate = entity.recordingDate;
+  }
+
+  /// تاريخ العملية.
+  late DateTime transactionDate;
+
+  /// تاريخ السريان.
+  late DateTime effectiveDate;
+
+  /// تاريخ التسجيل.
+  late DateTime recordingDate;
+
+  /// تحويل إلى كيان.
+  TemporalJustification toEntity() => TemporalJustification(
+        transactionDate: transactionDate,
+        effectiveDate: effectiveDate,
+        recordingDate: recordingDate,
+      );
+}
+
+/// نموذج تبرير المعايير المضمن.
+@embedded
+class StandardsJustificationModel {
+  /// إنشاء نموذج فارغ.
+  StandardsJustificationModel();
+
+  /// إنشاء نموذج من كيان.
+  StandardsJustificationModel.fromEntity(StandardsJustification entity) {
+    standardReference = entity.standardReference;
+    recognitionBasis = entity.recognitionBasis;
+    measurementBasis = entity.measurementBasis;
+  }
+
+  /// مرجع المعيار المحاسبي.
+  late String standardReference;
+
+  /// أساس الاعتراف.
+  String? recognitionBasis;
+
+  /// أساس القياس.
+  String? measurementBasis;
+
+  /// تحويل إلى كيان.
+  StandardsJustification toEntity() => StandardsJustification(
+        standardReference: standardReference,
+        recognitionBasis: recognitionBasis,
+        measurementBasis: measurementBasis,
       );
 }
 
@@ -116,6 +204,7 @@ class JournalEntryLineModel {
     debit = entity.debit.toString();
     credit = entity.credit.toString();
     description = entity.description;
+    sourceDocumentRef = entity.sourceDocumentRef;
     costCenterId = entity.costCenterId;
   }
 
@@ -134,6 +223,9 @@ class JournalEntryLineModel {
   /// الوصف لللبند.
   String? description;
 
+  /// مرجع المستند المصدر.
+  String? sourceDocumentRef;
+
   /// مركز التكلفة المرتبط.
   String? costCenterId;
 
@@ -144,6 +236,7 @@ class JournalEntryLineModel {
         debit: Decimal.parse(debit),
         credit: Decimal.parse(credit),
         description: description,
+        sourceDocumentRef: sourceDocumentRef,
         costCenterId: costCenterId,
       );
 }

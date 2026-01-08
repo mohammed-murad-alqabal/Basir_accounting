@@ -1,0 +1,60 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                SELECT \n                    e.id as entry_id,\n                    e.entry_number,\n                    e.effective_date,\n                    l.description,\n                    l.debit as \"debit: Decimal\",\n                    l.credit as \"credit: Decimal\",\n                    e.standard_reference\n                FROM journal_entries e\n                JOIN journal_entry_lines l ON e.id = l.entry_id\n                WHERE l.account_id = $1\n                  AND e.effective_date >= $2\n                  AND e.effective_date <= $3\n                ORDER BY e.effective_date, e.entry_number\n                ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "entry_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "entry_number",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "effective_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 3,
+        "name": "description",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "debit: Decimal",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 5,
+        "name": "credit: Decimal",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 6,
+        "name": "standard_reference",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Date",
+        "Date"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "43bfc85cb5119855438cd42e2ea9a36561034ce64e16f8ae32dd88a8a4dcf487"
+}

@@ -1,0 +1,52 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT id, name, start_date, end_date, status, is_year_end\n            FROM financial_periods\n            WHERE $1 >= start_date AND $1 <= end_date\n            LIMIT 1\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "start_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 3,
+        "name": "end_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 4,
+        "name": "status",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "is_year_end",
+        "type_info": "Bool"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Date"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "751a2d8ec7b592cbd8fa76e4a45a055da4005867a7985c6b1413087dd803b9f0"
+}

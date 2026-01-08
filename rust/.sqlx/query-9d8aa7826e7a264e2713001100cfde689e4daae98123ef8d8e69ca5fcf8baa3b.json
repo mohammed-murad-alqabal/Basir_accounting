@@ -1,0 +1,34 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT \n                a.id,\n                COALESCE(SUM(l.debit), 0) as \"total_debits!: Decimal\",\n                COALESCE(SUM(l.credit), 0) as \"total_credits!: Decimal\"\n            FROM accounts a\n            LEFT JOIN journal_entry_lines l ON a.id = l.account_id\n            LEFT JOIN journal_entries e ON l.entry_id = e.id\n            WHERE e.effective_date <= $1 OR e.effective_date IS NULL\n            GROUP BY a.id\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "total_debits!: Decimal",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 2,
+        "name": "total_credits!: Decimal",
+        "type_info": "Numeric"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Date"
+      ]
+    },
+    "nullable": [
+      false,
+      null,
+      null
+    ]
+  },
+  "hash": "9d8aa7826e7a264e2713001100cfde689e4daae98123ef8d8e69ca5fcf8baa3b"
+}

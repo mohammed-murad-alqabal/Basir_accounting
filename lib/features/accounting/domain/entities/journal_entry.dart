@@ -17,6 +17,48 @@ enum JournalEntryStatus {
   voided,
 }
 
+/// تبرير التاريخ (Temporal Justification)
+/// (CP-008: شمولية التبرير الزمني)
+@freezed
+class TemporalJustification with _$TemporalJustification {
+  /// إنشاء تبرير زمني.
+  const factory TemporalJustification({
+    /// تاريخ العملية الفعلي (Transaction Date)
+    required DateTime transactionDate,
+
+    /// تاريخ الأثر المحاسبي (Effective Date)
+    required DateTime effectiveDate,
+
+    /// تاريخ التسجيل في النظام (Recording Date)
+    required DateTime recordingDate,
+  }) = _TemporalJustification;
+
+  /// إنشاء من JSON.
+  factory TemporalJustification.fromJson(Map<String, dynamic> json) =>
+      _$TemporalJustificationFromJson(json);
+}
+
+/// تبرير المعايير (Standards Justification)
+/// (CP-002: شمولية مرجعية المعايير)
+@freezed
+class StandardsJustification with _$StandardsJustification {
+  /// إنشاء تبرير معايير.
+  const factory StandardsJustification({
+    /// مرجع المعيار (مثل IFRS 15.35)
+    required String standardReference,
+
+    /// أساس الاعتراف (Recognition Basis)
+    String? recognitionBasis,
+
+    /// أساس القياس (Measurement Basis)
+    String? measurementBasis,
+  }) = _StandardsJustification;
+
+  /// إنشاء من JSON.
+  factory StandardsJustification.fromJson(Map<String, dynamic> json) =>
+      _$StandardsJustificationFromJson(json);
+}
+
 /// بند القيد المحاسبي (الطرف المدين أو الدائن)
 @freezed
 class JournalEntryLine with _$JournalEntryLine {
@@ -36,6 +78,10 @@ class JournalEntryLine with _$JournalEntryLine {
 
     /// الوصف الخاص بالبند
     String? description,
+
+    /// مرجع المستند المصدر (Source Document Reference)
+    /// (CP-009: شمولية التتبع)
+    String? sourceDocumentRef,
 
     /// مركز التكلفة (اختياري) - (FR-ACC-011)
     String? costCenterId,
@@ -59,8 +105,14 @@ class JournalEntry with _$JournalEntry {
     /// رقم القيد المرجعي (مثال: JE-2024-001)
     required String referenceNumber,
 
-    /// تاريخ القيد
+    /// تاريخ القيد (للتوافق، يفضل استخدام temporalCheck)
     required DateTime date,
+
+    /// التبرير الزمني الشامل (CP-008)
+    required TemporalJustification temporal,
+
+    /// التبرير المرجعي للمعايير (CP-002)
+    required StandardsJustification standards,
 
     /// شرح القيد
     required String description,
@@ -84,6 +136,14 @@ class JournalEntry with _$JournalEntry {
 
     /// تاريخ آخر تحديث
     required DateTime updatedAt,
+
+    /// بصمة سلامة البيانات (Hash Trail)
+    /// (CP-003: عدم القابلية للتعديل)
+    String? hash,
+    String? previousHash,
+
+    /// تاريخ النشر (تاريخ الترحيل النهائي)
+    DateTime? postedAt,
 
     /// معرف المستخدم لغرض عزل البيانات
     String? userId,

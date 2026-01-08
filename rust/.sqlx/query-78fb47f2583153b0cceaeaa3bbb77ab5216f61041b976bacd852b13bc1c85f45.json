@@ -1,0 +1,23 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                INSERT INTO journal_entry_lines (\n                    id, entry_id, account_id, description, debit, credit,\n                    original_currency, exchange_rate, original_amount, partner_id\n                )\n                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)\n                ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Numeric",
+        "Numeric",
+        "Text",
+        "Numeric",
+        "Numeric",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "78fb47f2583153b0cceaeaa3bbb77ab5216f61041b976bacd852b13bc1c85f45"
+}
