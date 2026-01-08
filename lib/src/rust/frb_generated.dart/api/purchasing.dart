@@ -33,14 +33,17 @@ Future<PurchaseBillDto?> getPurchaseBillById({required String id}) =>
 Future<void> deleteBill({required String id}) =>
     RustLib.instance.api.crateApiPurchasingDeleteBill(id: id);
 
-Future<String> createPurchaseBill(
-        {required PurchaseBillDto bill, required AuditMetadataDto metadata}) =>
+Future<String> createPurchaseBill({
+  required PurchaseBillDto bill,
+  required AuditMetadataDto metadata,
+}) =>
     RustLib.instance.api
         .crateApiPurchasingCreatePurchaseBill(bill: bill, metadata: metadata);
 
-Future<void> recordBillPayment(
-        {required BillPaymentDto payment,
-        required AuditMetadataDto metadata}) =>
+Future<void> recordBillPayment({
+  required BillPaymentDto payment,
+  required AuditMetadataDto metadata,
+}) =>
     RustLib.instance.api.crateApiPurchasingRecordBillPayment(
         payment: payment, metadata: metadata);
 

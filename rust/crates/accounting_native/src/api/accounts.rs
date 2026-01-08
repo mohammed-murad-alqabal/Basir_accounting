@@ -13,6 +13,7 @@ pub struct AccountDto {
     pub parent_id: Option<String>,
     pub ifrs_tag: Option<String>,
     pub classification: Option<String>,
+    pub ifrs18_category: String,
     pub currency: String,
 }
 
@@ -27,6 +28,7 @@ impl From<Account> for AccountDto {
             parent_id: a.parent_id.map(|id| id.to_string()),
             ifrs_tag: a.ifrs_tag,
             classification: a.classification.map(|c| format!("{:?}", c)),
+            ifrs18_category: format!("{:?}", a.ifrs18_category),
             currency: a.currency.unwrap_or_default(),
         }
     }
@@ -63,6 +65,14 @@ pub async fn create_account(dto: AccountDto, metadata: AuditMetadataDto) -> anyh
             "ZakahLiabilities" => AccountClassification::ZakahLiabilities,
             _ => AccountClassification::Current,
         }),
+        ifrs18_category: match dto.ifrs18_category.as_str() {
+            "Operating" => accounting_core::accounts::models::Ifrs18Category::Operating,
+            "Investing" => accounting_core::accounts::models::Ifrs18Category::Investing,
+            "Financing" => accounting_core::accounts::models::Ifrs18Category::Financing,
+            "IncomeTax" => accounting_core::accounts::models::Ifrs18Category::IncomeTax,
+            "Discontinued" => accounting_core::accounts::models::Ifrs18Category::Discontinued,
+            _ => accounting_core::accounts::models::Ifrs18Category::Operating,
+        },
         currency: Some(dto.currency),
         description: None,
         requires_partner: false,
@@ -110,6 +120,14 @@ pub async fn update_account(dto: AccountDto, metadata: AuditMetadataDto) -> anyh
         "ZakahLiabilities" => AccountClassification::ZakahLiabilities,
         _ => AccountClassification::Current,
     });
+    account.ifrs18_category = match dto.ifrs18_category.as_str() {
+        "Operating" => accounting_core::accounts::models::Ifrs18Category::Operating,
+        "Investing" => accounting_core::accounts::models::Ifrs18Category::Investing,
+        "Financing" => accounting_core::accounts::models::Ifrs18Category::Financing,
+        "IncomeTax" => accounting_core::accounts::models::Ifrs18Category::IncomeTax,
+        "Discontinued" => accounting_core::accounts::models::Ifrs18Category::Discontinued,
+        _ => accounting_core::accounts::models::Ifrs18Category::Operating,
+    };
     account.currency = Some(dto.currency);
 
     let audit_meta = metadata.try_into()?;

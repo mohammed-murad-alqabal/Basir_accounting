@@ -1,4 +1,5 @@
 import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/features/accounting/application/financial_year_service.dart';
 import 'package:basir_app/features/accounting/domain/entities/financial_voucher.dart';
 import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
@@ -52,18 +53,32 @@ class TreasuryService extends _$TreasuryService {
       ),
     ];
 
+    final now = DateTime.now();
+    final user = ref.read(currentUserProvider);
+
     final entry = JournalEntry(
       id: 'je-vouch-${voucher.id}',
       referenceNumber: 'JE-RE-${voucher.referenceNumber}',
       date: voucher.date,
+      temporal: TemporalJustification(
+        transactionDate: voucher.date,
+        effectiveDate: voucher.date,
+        recordingDate: now,
+      ),
+      standards: const StandardsJustification(
+        standardReference: 'IFRS 9', // GAAP: Financial Instruments
+        recognitionBasis: 'Fair Value',
+        measurementBasis: 'Amortized Cost',
+      ),
       description: voucher.description,
       status: JournalEntryStatus.posted,
       lines: lines,
       sourceDocument: 'receipt_voucher',
       sourceId: voucher.id,
-      createdAt: DateTime.now(),
-      createdBy: 'system',
-      updatedAt: DateTime.now(),
+      createdAt: now,
+      createdBy: user?.id ?? 'system',
+      updatedAt: now,
+      postedAt: now,
     );
 
     await repository.addJournalEntry(entry);
@@ -108,18 +123,32 @@ class TreasuryService extends _$TreasuryService {
       ),
     ];
 
+    final now = DateTime.now();
+    final user = ref.read(currentUserProvider);
+
     final entry = JournalEntry(
       id: 'je-vouch-${voucher.id}',
       referenceNumber: 'JE-PY-${voucher.referenceNumber}',
       date: voucher.date,
+      temporal: TemporalJustification(
+        transactionDate: voucher.date,
+        effectiveDate: voucher.date,
+        recordingDate: now,
+      ),
+      standards: const StandardsJustification(
+        standardReference: 'IFRS 9', // GAAP: Financial Instruments
+        recognitionBasis: 'Fair Value',
+        measurementBasis: 'Amortized Cost',
+      ),
       description: voucher.description,
       status: JournalEntryStatus.posted,
       lines: lines,
       sourceDocument: 'payment_voucher',
       sourceId: voucher.id,
-      createdAt: DateTime.now(),
-      createdBy: 'system',
-      updatedAt: DateTime.now(),
+      createdAt: now,
+      createdBy: user?.id ?? 'system',
+      updatedAt: now,
+      postedAt: now,
     );
 
     await repository.addJournalEntry(entry);

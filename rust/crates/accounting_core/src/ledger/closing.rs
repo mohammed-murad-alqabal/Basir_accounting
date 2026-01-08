@@ -135,4 +135,85 @@ impl ClosingEntryGenerator {
             previous_hash: String::new(),
         }
     }
+
+    /// Generates an opening balance entry for a new period.
+    ///
+    /// # Logic
+    /// 1. Calculate the Trial Balance as of the start of the new period.
+    /// 2. For each Asset, Liability, and Equity account with a non-zero balance:
+    ///    - Create a line that carries the balance forward.
+    ///
+    /// # Arguments
+    /// * `period_name` - Name for the entry (e.g., "Opening Balances 2026")
+    /// * `opening_date` - The start date of the new period
+    /// * `entries` - All posted journal entries from previous periods
+    /// * `accounts` - Full chart of accounts
+    pub fn generate_opening_entry(
+        period_name: &str,
+        opening_date: NaiveDate,
+        entries: &[JournalEntry],
+        accounts: &[Account],
+    ) -> JournalEntry {
+        // Calculate TB as of the opening date (includes all history)
+        let tb = generate_trial_balance(entries, accounts, opening_date, None);
+
+        let mut lines = Vec::new();
+        let mut line_num = 1;
+
+        for tb_line in tb.lines {
+            // Find the account kind
+            let account = accounts.iter().find(|a| a.code == tb_line.account_code);
+            if let Some(acc) = account {
+                // Only Balance Sheet accounts (Asset, Liability, Equity) are carried forward.
+                // Income and Expense should have been zeroed out by a closing entry.
+                if matches!(
+                    acc.kind,
+                    AccountKind::Asset | AccountKind::Liability | AccountKind::Equity
+                ) {
+                    if tb_line.debit_balance != Decimal::ZERO
+                        || tb_line.credit_balance != Decimal::ZERO
+                    {
+                        lines.push(JournalEntryLine {
+                            line_id: Uuid::new_v4(),
+                            line_number: line_num,
+                            account_id: acc.id,
+                            debit_amount: tb_line.debit_balance,
+                            credit_amount: tb_line.credit_balance,
+                            description: format!(
+                                "Opening balance carry-forward for {}",
+                                acc.name_en
+                            ),
+                            source_document_ref: None,
+                            original_currency: None,
+                            exchange_rate: None,
+                            original_amount: None,
+                            partner_id: None,
+                        });
+                        line_num += 1;
+                    }
+                }
+            }
+        }
+
+        JournalEntry {
+            entry_id: Uuid::new_v4(),
+            entry_number: format!("OPN-{}", period_name),
+            description: format!("Opening balances for {}", period_name),
+            entry_type: EntryType::Standard, // Opening entries are usually standard or specialized types
+            status: EntryStatus::Draft,
+            linked_entry_id: None,
+            adjustment_reason: None,
+            temporal: TemporalJustification::new(opening_date, opening_date),
+            standards: StandardsJustification::simple("IAS 1.10"),
+            lines,
+            created_by: Uuid::nil(),
+            created_at: Utc::now(),
+            approved_by: None,
+            approved_at: None,
+            posted_by: None,
+            posted_at: None,
+            hash: String::new(),
+            previous_hash: String::new(),
+        }
+    }
 }

@@ -17,6 +17,7 @@
 //! - Temporal Justification: 3 dates required (transaction, effective, recording)
 //! - Standards Justification: Standard.Paragraph reference required
 
+pub mod closing;
+pub mod fiscal_period;
 pub mod models;
 pub mod validation;
-pub mod closing;

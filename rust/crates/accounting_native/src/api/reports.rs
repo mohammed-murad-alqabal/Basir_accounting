@@ -46,6 +46,28 @@ pub struct FinancialReportDto {
     pub generated_at: String,
 }
 
+pub struct ManagementPerformanceMeasureDto {
+    pub name: String,
+    pub description: String,
+    pub value: String,
+    pub reconciliation: String,
+}
+
+pub struct Ifrs18IncomeStatementDto {
+    pub entity_id: String,
+    pub from_date: String,
+    pub to_date: String,
+    pub operating: String,
+    pub investing: String,
+    pub financing: String,
+    pub income_tax: String,
+    pub discontinued_operations: String,
+    pub operating_profit: String,
+    pub profit_before_financing_and_tax: String,
+    pub total_profit_or_loss: String,
+    pub mpm_disclosures: Vec<ManagementPerformanceMeasureDto>,
+}
+
 pub struct DrillDownEntryDto {
     pub entry_id: String,
     pub entry_number: String,

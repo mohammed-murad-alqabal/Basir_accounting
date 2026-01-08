@@ -14,18 +14,20 @@ Future<void> validateJournalEntry({required EntryDto dto}) =>
     RustLib.instance.api.crateApiLedgerValidateJournalEntry(dto: dto);
 
 /// List journal entries with pagination
-Future<List<EntryDto>> listJournalEntries(
-        {required PlatformInt64 limit,
-        required PlatformInt64 offset,
-        String? fromDate,
-        String? toDate,
-        String? accountId}) =>
+Future<List<EntryDto>> listJournalEntries({
+  required PlatformInt64 limit,
+  required PlatformInt64 offset,
+  String? fromDate,
+  String? toDate,
+  String? accountId,
+}) =>
     RustLib.instance.api.crateApiLedgerListJournalEntries(
-        limit: limit,
-        offset: offset,
-        fromDate: fromDate,
-        toDate: toDate,
-        accountId: accountId);
+      limit: limit,
+      offset: offset,
+      fromDate: fromDate,
+      toDate: toDate,
+      accountId: accountId,
+    );
 
 /// Post a journal entry to the database
 Future<String> postJournalEntry(
@@ -34,20 +36,28 @@ Future<String> postJournalEntry(
         .crateApiLedgerPostJournalEntry(dto: dto, metadata: metadata);
 
 /// Reverse a journal entry
-Future<String> reverseJournalEntry(
-        {required String entryId,
-        required String reason,
-        required AuditMetadataDto metadata}) =>
+Future<String> reverseJournalEntry({
+  required String entryId,
+  required String reason,
+  required AuditMetadataDto metadata,
+}) =>
     RustLib.instance.api.crateApiLedgerReverseJournalEntry(
-        entryId: entryId, reason: reason, metadata: metadata);
+      entryId: entryId,
+      reason: reason,
+      metadata: metadata,
+    );
 
 /// Log the cognitive agent consensus for a journal entry
-Future<void> logAgentConsensus(
-        {required String entryId,
-        required String consensusJson,
-        required AuditMetadataDto metadata}) =>
+Future<void> logAgentConsensus({
+  required String entryId,
+  required String consensusJson,
+  required AuditMetadataDto metadata,
+}) =>
     RustLib.instance.api.crateApiLedgerLogAgentConsensus(
-        entryId: entryId, consensusJson: consensusJson, metadata: metadata);
+      entryId: entryId,
+      consensusJson: consensusJson,
+      metadata: metadata,
+    );
 
 /// Retrieve the cognitive agent consensus for a journal entry
 Future<String?> getAgentConsensus({required String entryId}) =>
