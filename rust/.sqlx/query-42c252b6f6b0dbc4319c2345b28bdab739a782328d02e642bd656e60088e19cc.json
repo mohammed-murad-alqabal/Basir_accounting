@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "SELECT code, name, type, classification FROM accounts WHERE id = $1",
+  "query": "SELECT code, name_ar, name_en, type as \"account_type!\", classification FROM accounts WHERE id = $1",
   "describe": {
     "columns": [
       {
@@ -10,16 +10,21 @@
       },
       {
         "ordinal": 1,
-        "name": "name",
+        "name": "name_ar",
         "type_info": "Text"
       },
       {
         "ordinal": 2,
-        "name": "type",
+        "name": "name_en",
         "type_info": "Text"
       },
       {
         "ordinal": 3,
+        "name": "account_type!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
         "name": "classification",
         "type_info": "Text"
       }
@@ -33,8 +38,9 @@
       false,
       false,
       false,
+      false,
       true
     ]
   },
-  "hash": "6a418740baac4581faaaabe39b19fb704b5d80d9eac3498bf0e04539e1050e1f"
+  "hash": "42c252b6f6b0dbc4319c2345b28bdab739a782328d02e642bd656e60088e19cc"
 }
