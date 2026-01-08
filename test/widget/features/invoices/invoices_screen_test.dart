@@ -89,7 +89,8 @@ void main() {
     });
 
     // ignore: lines_longer_than_80_chars
-    testWidgets('should display invoice list when data is available', (tester) async {
+    testWidgets('should display invoice list when data is available',
+        (tester) async {
       tester.view.physicalSize = const Size(1080, 2400);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
