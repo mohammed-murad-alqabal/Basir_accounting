@@ -2700,6 +2700,7 @@ impl SseDecode for crate::api::accounts::AccountDto {
         let mut var_parentId = <Option<String>>::sse_decode(deserializer);
         let mut var_ifrsTag = <Option<String>>::sse_decode(deserializer);
         let mut var_classification = <Option<String>>::sse_decode(deserializer);
+        let mut var_ifrs18Category = <String>::sse_decode(deserializer);
         let mut var_currency = <String>::sse_decode(deserializer);
         return crate::api::accounts::AccountDto {
             id: var_id,
@@ -2710,6 +2711,7 @@ impl SseDecode for crate::api::accounts::AccountDto {
             parent_id: var_parentId,
             ifrs_tag: var_ifrsTag,
             classification: var_classification,
+            ifrs18_category: var_ifrs18Category,
             currency: var_currency,
         };
     }
@@ -4017,6 +4019,7 @@ impl flutter_rust_bridge::IntoDart for crate::api::accounts::AccountDto {
             self.parent_id.into_into_dart().into_dart(),
             self.ifrs_tag.into_into_dart().into_dart(),
             self.classification.into_into_dart().into_dart(),
+            self.ifrs18_category.into_into_dart().into_dart(),
             self.currency.into_into_dart().into_dart(),
         ]
         .into_dart()
@@ -4831,6 +4834,7 @@ impl SseEncode for crate::api::accounts::AccountDto {
         <Option<String>>::sse_encode(self.parent_id, serializer);
         <Option<String>>::sse_encode(self.ifrs_tag, serializer);
         <Option<String>>::sse_encode(self.classification, serializer);
+        <String>::sse_encode(self.ifrs18_category, serializer);
         <String>::sse_encode(self.currency, serializer);
     }
 }

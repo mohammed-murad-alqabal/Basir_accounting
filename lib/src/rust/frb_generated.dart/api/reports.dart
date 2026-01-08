@@ -12,19 +12,27 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 Future<TrialBalanceDto> generateTrialBalance(
         {required String asOfDate, String? periodStart}) =>
     RustLib.instance.api.crateApiReportsGenerateTrialBalance(
-        asOfDate: asOfDate, periodStart: periodStart);
+      asOfDate: asOfDate,
+      periodStart: periodStart,
+    );
 
 /// Drill down into account entries (Task 16.3)
-Future<List<DrillDownEntryDto>> getAccountEntries(
-        {required String accountId,
-        required String periodEnd,
-        String? periodStart}) =>
+Future<List<DrillDownEntryDto>> getAccountEntries({
+  required String accountId,
+  required String periodEnd,
+  String? periodStart,
+}) =>
     RustLib.instance.api.crateApiReportsGetAccountEntries(
-        accountId: accountId, periodStart: periodStart, periodEnd: periodEnd);
+      accountId: accountId,
+      periodStart: periodStart,
+      periodEnd: periodEnd,
+    );
 
 /// Generate an Income Statement (Task 16.2 extension)
-Future<FinancialReportDto> generateIncomeStatement(
-        {required String fromDate, required String toDate}) =>
+Future<FinancialReportDto> generateIncomeStatement({
+  required String fromDate,
+  required String toDate,
+}) =>
     RustLib.instance.api.crateApiReportsGenerateIncomeStatement(
         fromDate: fromDate, toDate: toDate);
 
@@ -34,16 +42,24 @@ Future<FinancialReportDto> generateBalanceSheet({required String asOfDate}) =>
         .crateApiReportsGenerateBalanceSheet(asOfDate: asOfDate);
 
 /// Generate a Statement of Cash Flows (Task 14.2)
-Future<FinancialReportDto> generateCashFlowStatement(
-        {required String fromDate, required String toDate}) =>
+Future<FinancialReportDto> generateCashFlowStatement({
+  required String fromDate,
+  required String toDate,
+}) =>
     RustLib.instance.api.crateApiReportsGenerateCashFlowStatement(
-        fromDate: fromDate, toDate: toDate);
+      fromDate: fromDate,
+      toDate: toDate,
+    );
 
 /// Generate a Zakah Statement (Task 14.3)
-Future<FinancialReportDto> generateZakahStatement(
-        {required String asOfDate, required ZakahCalendarDto calendar}) =>
+Future<FinancialReportDto> generateZakahStatement({
+  required String asOfDate,
+  required ZakahCalendarDto calendar,
+}) =>
     RustLib.instance.api.crateApiReportsGenerateZakahStatement(
-        asOfDate: asOfDate, calendar: calendar);
+      asOfDate: asOfDate,
+      calendar: calendar,
+    );
 
 /// Generate Accounts Receivable Aging Report
 Future<List<AgingReportLineDto>> getReceivablesAging(
@@ -287,8 +303,4 @@ class TrialBalanceLineDto {
           creditBalance == other.creditBalance;
 }
 
-enum ZakahCalendarDto {
-  hijri,
-  gregorian,
-  ;
-}
+enum ZakahCalendarDto { hijri, gregorian }

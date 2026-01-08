@@ -12,16 +12,12 @@ void main() {
   group(
     'AppearanceSettingsScreen Tests',
     () {
-      // Skipped due to persistent Semantics Stack Overflow in test environment.
-      // Core logic is verified in calendar_radio_test.dart
+      // Logic verified in calendar_radio_test.dart
     },
-    skip: true,
   );
 
   // Original group content commented out or handled via skip
-  group('Legacy AppearanceSettingsScreen Tests (Skipped)',
-      skip: 'Skipped due to persistent Semantics rendering issues in test env',
-      () {
+  group('Legacy AppearanceSettingsScreen Tests', () {
     late ProviderContainer container;
 
     setUp(() {
@@ -59,20 +55,17 @@ void main() {
       // the state.
 
       await tester.pumpWidget(createTestWidget());
-      await tester.pumpAndSettle();
+      l10n = AppLocalizations.of(
+        tester.element(find.byType(AppearanceSettingsScreen)),
+      );
 
       // Tap on 'Light' mode
-      await tester.tap(find.text('فاتح'));
+      await tester.tap(find.text(l10n.modeLight));
       await tester.pumpAndSettle();
 
-      // Verify that the provider was updated (implicitly by checking UI
-      // or mock)
-      // Here we just verify the tap happened and UI is responsive.
-      // In a real integration test, we would check if the AppTheme changed.
-
       // Verify other options exist
-      expect(find.text('داكن'), findsOneWidget);
-      expect(find.text('نظام'), findsOneWidget);
+      expect(find.text(l10n.modeDark), findsOneWidget);
+      expect(find.text(l10n.modeSystem), findsOneWidget);
     });
     testWidgets('should display calendar selection section', (tester) async {
       await tester.pumpWidget(createTestWidget());
@@ -86,7 +79,11 @@ void main() {
       // The calendar section is near the bottom, we need to scroll
       // First find the Gregorian text and scroll to it
       final gregorianFinder = find.text(l10n.calendarGregorian);
-      await tester.scrollUntilVisible(gregorianFinder, 200);
+      await tester.scrollUntilVisible(
+        gregorianFinder,
+        500,
+        scrollable: find.byType(Scrollable).first,
+      );
       await tester.pumpAndSettle();
 
       // Now verify the SegmentedButton is visible

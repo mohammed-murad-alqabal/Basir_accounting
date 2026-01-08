@@ -73,9 +73,12 @@ impl TemporalJustification {
 
     /// Validate the temporal relationships.
     ///
-    /// Per CP-008: effective_date <= recording_date
-    pub fn is_valid(&self) -> bool {
-        self.effective_date <= self.recording_date.date_naive()
+    /// Per CP-008: effective_date <= recording_date + tolerance
+    /// Default tolerance is 0 days for strict IFRS compliance.
+    pub fn is_valid(&self, future_tolerance_days: i64) -> bool {
+        let max_valid_date =
+            self.recording_date.date_naive() + chrono::Duration::days(future_tolerance_days);
+        self.effective_date <= max_valid_date
     }
 }
 

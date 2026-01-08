@@ -108,7 +108,7 @@ pub fn validate_standards_exists(
 
 /// Validate temporal justification (CP-008).
 pub fn validate_temporal(entry: &JournalEntry) -> ValidationResult<()> {
-    if entry.temporal.is_valid() {
+    if entry.temporal.is_valid(0) {
         Ok(())
     } else {
         Err(EntryValidationError::InvalidTemporalJustification)

@@ -27,6 +27,7 @@ struct AccountSummary {
     kind: AccountKind,
     total_debits: Decimal,
     total_credits: Decimal,
+    source_entries: Vec<Uuid>,
 }
 
 /// Generate a Trial Balance from a set of journal entries and accounts.
@@ -84,11 +85,17 @@ pub fn generate_trial_balance(
                     kind: acc.map(|a| a.kind).unwrap_or(AccountKind::Asset),
                     total_debits: Decimal::ZERO,
                     total_credits: Decimal::ZERO,
+                    source_entries: Vec::new(),
                 }
             });
 
             summary.total_debits += line.debit_amount;
             summary.total_credits += line.credit_amount;
+
+            // Add entry ID to source entries if not already present
+            if !summary.source_entries.contains(&entry.entry_id) {
+                summary.source_entries.push(entry.entry_id);
+            }
         }
     }
 
@@ -128,6 +135,7 @@ pub fn generate_trial_balance(
                 account_name: summary.name_ar, // Defaulting to Arabic for the report label for now
                 debit_balance,
                 credit_balance,
+                source_entries: summary.source_entries,
             });
         }
     }

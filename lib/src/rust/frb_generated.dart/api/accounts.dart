@@ -25,12 +25,16 @@ Future<List<AccountDto>> listAccounts() =>
 Future<AccountDto?> getAccountById({required String id}) =>
     RustLib.instance.api.crateApiAccountsGetAccountById(id: id);
 
-Future<void> updateAccountCategory(
-        {required String accountId,
-        required String category,
-        required AuditMetadataDto metadata}) =>
+Future<void> updateAccountCategory({
+  required String accountId,
+  required String category,
+  required AuditMetadataDto metadata,
+}) =>
     RustLib.instance.api.crateApiAccountsUpdateAccountCategory(
-        accountId: accountId, category: category, metadata: metadata);
+      accountId: accountId,
+      category: category,
+      metadata: metadata,
+    );
 
 /// DTO for Account
 class AccountDto {

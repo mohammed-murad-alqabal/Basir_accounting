@@ -6,8 +6,8 @@
 //! # Task 2.1: IFRS Conceptual Framework 2018
 //! # Task 2.2: Core IFRS Standards (IAS 1, IAS 8, IAS 10, IFRS 15)
 
-use chrono::NaiveDate;
 use super::models::{StandardBody, StandardEntry, StandardReference};
+use chrono::NaiveDate;
 
 /// Load IFRS Conceptual Framework 2018 standards.
 ///
@@ -22,7 +22,7 @@ use super::models::{StandardBody, StandardEntry, StandardReference};
 /// - Chapter 8: Concepts of capital and capital maintenance
 pub fn load_conceptual_framework() -> Vec<StandardEntry> {
     let effective_date = NaiveDate::from_ymd_opt(2018, 3, 29).unwrap();
-    
+
     vec![
         // Chapter 1: Objective of General Purpose Financial Reporting
         StandardEntry {
@@ -31,12 +31,12 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             full_text: "The objective of general purpose financial reporting is to provide \
                        financial information about the reporting entity that is useful to \
                        existing and potential investors, lenders and other creditors in \
-                       making decisions relating to providing resources to the entity.".to_string(),
+                       making decisions relating to providing resources to the entity."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
         },
-        
         // Chapter 2: Qualitative Characteristics
         StandardEntry {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "2.4"),
@@ -44,7 +44,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             full_text: "Relevant financial information is capable of making a difference in \
                        the decisions made by users. Information may be capable of making a \
                        difference in a decision even if some users choose not to take \
-                       advantage of it or are already aware of it from other sources.".to_string(),
+                       advantage of it or are already aware of it from other sources."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -53,7 +54,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "2.12"),
             title: "Faithful Representation".to_string(),
             full_text: "To be a perfectly faithful representation, a depiction would have \
-                       three characteristics. It would be complete, neutral and free from error.".to_string(),
+                       three characteristics. It would be complete, neutral and free from error."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -62,7 +64,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "2.29"),
             title: "Comparability".to_string(),
             full_text: "Comparability is the qualitative characteristic that enables users \
-                       to identify and understand similarities in, and differences among, items.".to_string(),
+                       to identify and understand similarities in, and differences among, items."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -71,7 +74,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "2.31"),
             title: "Verifiability".to_string(),
             full_text: "Verifiability helps assure users that information faithfully represents \
-                       the economic phenomena it purports to represent.".to_string(),
+                       the economic phenomena it purports to represent."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -80,7 +84,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "2.33"),
             title: "Timeliness".to_string(),
             full_text: "Timeliness means having information available to decision-makers in time \
-                       to be capable of influencing their decisions.".to_string(),
+                       to be capable of influencing their decisions."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -89,19 +94,20 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "2.34"),
             title: "Understandability".to_string(),
             full_text: "Classifying, characterising and presenting information clearly and \
-                       concisely makes it understandable.".to_string(),
+                       concisely makes it understandable."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
         },
-
         // Chapter 4: Elements of Financial Statements
         StandardEntry {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "4.3"),
             title: "Definition of an Asset".to_string(),
             full_text: "An asset is a present economic resource controlled by the entity \
                        as a result of past events. An economic resource is a right that \
-                       has the potential to produce economic benefits.".to_string(),
+                       has the potential to produce economic benefits."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -110,7 +116,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "4.4"),
             title: "Economic Resource".to_string(),
             full_text: "An economic resource is a right that has the potential to produce \
-                       economic benefits.".to_string(),
+                       economic benefits."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -119,7 +126,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "4.26"),
             title: "Definition of a Liability".to_string(),
             full_text: "A liability is a present obligation of the entity to transfer an \
-                       economic resource as a result of past events.".to_string(),
+                       economic resource as a result of past events."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -128,7 +136,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "4.63"),
             title: "Definition of Equity".to_string(),
             full_text: "Equity is the residual interest in the assets of the entity after \
-                       deducting all its liabilities.".to_string(),
+                       deducting all its liabilities."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -138,7 +147,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             title: "Definition of Income".to_string(),
             full_text: "Income is increases in assets, or decreases in liabilities, that \
                        result in increases in equity, other than those relating to \
-                       contributions from holders of equity claims.".to_string(),
+                       contributions from holders of equity claims."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -148,12 +158,12 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             title: "Definition of Expenses".to_string(),
             full_text: "Expenses are decreases in assets, or increases in liabilities, that \
                        result in decreases in equity, other than those relating to \
-                       distributions to holders of equity claims.".to_string(),
+                       distributions to holders of equity claims."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
         },
-
         // Chapter 5: Recognition and Derecognition
         StandardEntry {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "5.1"),
@@ -161,7 +171,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             full_text: "Recognition is the process of capturing for inclusion in the statement \
                        of financial position or the statement(s) of financial performance an \
                        item that meets the definition of one of the elements of financial \
-                       statements—an asset, a liability, equity, income or expenses.".to_string(),
+                       statements—an asset, a liability, equity, income or expenses."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -175,7 +186,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
                        is useful, ie with: (a) relevant information about the asset or \
                        liability and about any resulting income, expenses or changes in equity; \
                        and (b) a faithful representation of the asset or liability and of any \
-                       resulting income, expenses or changes in equity.".to_string(),
+                       resulting income, expenses or changes in equity."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -184,18 +196,19 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "5.25"),
             title: "Derecognition".to_string(),
             full_text: "Derecognition is the removal of all or part of a recognised asset or \
-                       liability from an entity's statement of financial position.".to_string(),
+                       liability from an entity's statement of financial position."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
         },
-
         // Chapter 6: Measurement
         StandardEntry {
             reference: StandardReference::new(StandardBody::IFRS, "CF", "6.1"),
             title: "Measurement Process".to_string(),
             full_text: "Measurement is the process of quantifying, in monetary terms, information \
-                       about an entity's assets, liabilities, equity, income and expenses.".to_string(),
+                       about an entity's assets, liabilities, equity, income and expenses."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -206,7 +219,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             full_text: "Historical cost measures provide monetary information about assets, \
                        liabilities and related income and expenses using information derived, \
                        at least in part, from the price of the transaction or other event \
-                       that gave rise to them.".to_string(),
+                       that gave rise to them."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -216,7 +230,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             title: "Current Value - Fair Value".to_string(),
             full_text: "Fair value is the price that would be received to sell an asset, or \
                        paid to transfer a liability, in an orderly transaction between market \
-                       participants at the measurement date.".to_string(),
+                       participants at the measurement date."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -226,7 +241,8 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             title: "Value in Use".to_string(),
             full_text: "Value in use is the present value of the cash flows, or other economic \
                        benefits, that an entity expects to derive from the use of an asset and \
-                       from its ultimate disposal.".to_string(),
+                       from its ultimate disposal."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -237,7 +253,58 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
             full_text: "The current cost of an asset is the cost of an equivalent asset at the \
                        measurement date, comprising the consideration that would be paid at the \
                        measurement date plus the transaction costs that would be incurred at \
-                       that date.".to_string(),
+                       that date."
+                .to_string(),
+            effective_date,
+            supersedes: vec![],
+            superseded_by: None,
+        },
+        // Chapter 3: Financial Statements and the Reporting Entity
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IFRS, "CF", "3.2"),
+            title: "Objective and Scope of Financial Statements".to_string(),
+            full_text: "The objective of financial statements is to provide financial information \
+                       about the reporting entity's assets, liabilities, equity, income and expenses \
+                       that is useful to users of financial statements in assessing the prospects \
+                       for future net cash inflows to the reporting entity and in assessing \
+                       management's stewardship of the entity's economic resources."
+                .to_string(),
+            effective_date,
+            supersedes: vec![],
+            superseded_by: None,
+        },
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IFRS, "CF", "3.10"),
+            title: "Reporting Entity".to_string(),
+            full_text: "A reporting entity is an entity that is required, or chooses, to \
+                       prepare financial statements. A reporting entity can be a single \
+                       entity or a portion of an entity or can comprise more than one entity."
+                .to_string(),
+            effective_date,
+            supersedes: vec![],
+            superseded_by: None,
+        },
+        // Chapter 7: Presentation and Disclosure
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IFRS, "CF", "7.1"),
+            title: "Effective Communication".to_string(),
+            full_text: "A reporting entity communicates information about its assets, \
+                       liabilities, equity, income and expenses by presenting and \
+                       disclosing information in its financial statements."
+                .to_string(),
+            effective_date,
+            supersedes: vec![],
+            superseded_by: None,
+        },
+        // Chapter 8: Concepts of Capital and Capital Maintenance
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IFRS, "CF", "8.1"),
+            title: "Concepts of Capital".to_string(),
+            full_text: "A financial concept of capital is adopted by most entities in \
+                       preparing their financial statements. Under a financial concept of \
+                       capital, such as invested money or invested purchasing power, \
+                       capital is synonymous with the net assets or equity of the entity."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -248,7 +315,7 @@ pub fn load_conceptual_framework() -> Vec<StandardEntry> {
 /// Load IAS 1 - Presentation of Financial Statements
 pub fn load_ias_1() -> Vec<StandardEntry> {
     let effective_date = NaiveDate::from_ymd_opt(2007, 9, 6).unwrap();
-    
+
     vec![
         StandardEntry {
             reference: StandardReference::new(StandardBody::IAS, "1", "1"),
@@ -369,14 +436,15 @@ pub fn load_ias_1() -> Vec<StandardEntry> {
 /// Load IAS 8 - Accounting Policies, Changes in Estimates and Errors
 pub fn load_ias_8() -> Vec<StandardEntry> {
     let effective_date = NaiveDate::from_ymd_opt(2005, 1, 1).unwrap();
-    
+
     vec![
         StandardEntry {
             reference: StandardReference::new(StandardBody::IAS, "8", "5"),
             title: "Definition of Accounting Policies".to_string(),
             full_text: "Accounting policies are the specific principles, bases, conventions, \
                        rules and practices applied by an entity in preparing and presenting \
-                       financial statements.".to_string(),
+                       financial statements."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -386,7 +454,8 @@ pub fn load_ias_8() -> Vec<StandardEntry> {
             title: "Selection of Accounting Policies".to_string(),
             full_text: "When an IFRS specifically applies to a transaction, other event or \
                        condition, the accounting policy or policies applied to that item shall \
-                       be determined by applying that IFRS.".to_string(),
+                       be determined by applying that IFRS."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -395,7 +464,8 @@ pub fn load_ias_8() -> Vec<StandardEntry> {
             reference: StandardReference::new(StandardBody::IAS, "8", "13"),
             title: "Consistency of Accounting Policies".to_string(),
             full_text: "An entity shall select and apply its accounting policies consistently \
-                       for similar transactions, other events and conditions.".to_string(),
+                       for similar transactions, other events and conditions."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -405,7 +475,8 @@ pub fn load_ias_8() -> Vec<StandardEntry> {
             title: "Changes in Accounting Policies".to_string(),
             full_text: "An entity shall change an accounting policy only if the change: \
                        (a) is required by an IFRS; or (b) results in the financial statements \
-                       providing reliable and more relevant information.".to_string(),
+                       providing reliable and more relevant information."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -414,7 +485,8 @@ pub fn load_ias_8() -> Vec<StandardEntry> {
             reference: StandardReference::new(StandardBody::IAS, "8", "32"),
             title: "Definition of Accounting Estimate".to_string(),
             full_text: "Accounting estimates are monetary amounts in financial statements that \
-                       are subject to measurement uncertainty.".to_string(),
+                       are subject to measurement uncertainty."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -424,7 +496,8 @@ pub fn load_ias_8() -> Vec<StandardEntry> {
             title: "Prior Period Errors".to_string(),
             full_text: "Prior period errors are omissions from, and misstatements in, the \
                        entity's financial statements for one or more prior periods arising \
-                       from a failure to use, or misuse of, reliable information.".to_string(),
+                       from a failure to use, or misuse of, reliable information."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -434,7 +507,8 @@ pub fn load_ias_8() -> Vec<StandardEntry> {
             title: "Retrospective Restatement".to_string(),
             full_text: "An entity shall correct material prior period errors retrospectively \
                        in the first set of financial statements approved for issue after \
-                       their discovery.".to_string(),
+                       their discovery."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -445,14 +519,15 @@ pub fn load_ias_8() -> Vec<StandardEntry> {
 /// Load IAS 10 - Events After the Reporting Period
 pub fn load_ias_10() -> Vec<StandardEntry> {
     let effective_date = NaiveDate::from_ymd_opt(2005, 1, 1).unwrap();
-    
+
     vec![
         StandardEntry {
             reference: StandardReference::new(StandardBody::IAS, "10", "3"),
             title: "Definition of Events After Reporting Period".to_string(),
             full_text: "Events after the reporting period are those events, favourable and \
                        unfavourable, that occur between the end of the reporting period and \
-                       the date when the financial statements are authorised for issue.".to_string(),
+                       the date when the financial statements are authorised for issue."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -461,7 +536,8 @@ pub fn load_ias_10() -> Vec<StandardEntry> {
             reference: StandardReference::new(StandardBody::IAS, "10", "8"),
             title: "Adjusting Events".to_string(),
             full_text: "An entity shall adjust the amounts recognised in its financial statements \
-                       to reflect adjusting events after the reporting period.".to_string(),
+                       to reflect adjusting events after the reporting period."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -469,8 +545,10 @@ pub fn load_ias_10() -> Vec<StandardEntry> {
         StandardEntry {
             reference: StandardReference::new(StandardBody::IAS, "10", "10"),
             title: "Non-Adjusting Events".to_string(),
-            full_text: "An entity shall not adjust the amounts recognised in its financial statements \
-                       to reflect non-adjusting events after the reporting period.".to_string(),
+            full_text:
+                "An entity shall not adjust the amounts recognised in its financial statements \
+                       to reflect non-adjusting events after the reporting period."
+                    .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -481,7 +559,8 @@ pub fn load_ias_10() -> Vec<StandardEntry> {
             full_text: "An entity shall not prepare its financial statements on a going concern \
                        basis if management determines after the reporting period either that it \
                        intends to liquidate the entity or to cease trading, or that it has no \
-                       realistic alternative but to do so.".to_string(),
+                       realistic alternative but to do so."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -492,7 +571,7 @@ pub fn load_ias_10() -> Vec<StandardEntry> {
 /// Load IFRS 15 - Revenue from Contracts with Customers
 pub fn load_ifrs_15() -> Vec<StandardEntry> {
     let effective_date = NaiveDate::from_ymd_opt(2018, 1, 1).unwrap();
-    
+
     vec![
         StandardEntry {
             reference: StandardReference::new(StandardBody::IFRS, "15", "1"),
@@ -585,7 +664,7 @@ pub fn load_ifrs_15() -> Vec<StandardEntry> {
 /// Task 2.3: Load Audit/Control Standards References
 pub fn load_isa_500() -> Vec<StandardEntry> {
     let effective_date = NaiveDate::from_ymd_opt(2009, 12, 15).unwrap();
-    
+
     vec![
         StandardEntry {
             reference: StandardReference::new(StandardBody::ISA, "500", "4"),
@@ -593,7 +672,8 @@ pub fn load_isa_500() -> Vec<StandardEntry> {
             full_text: "The objective of the auditor is to design and perform audit procedures \
                        in such a way as to enable the auditor to obtain sufficient appropriate \
                        audit evidence to be able to draw reasonable conclusions on which to \
-                       base the auditor's opinion.".to_string(),
+                       base the auditor's opinion."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -604,7 +684,8 @@ pub fn load_isa_500() -> Vec<StandardEntry> {
             full_text: "Audit evidence is information used by the auditor in arriving at the \
                        conclusions on which the auditor's opinion is based. Audit evidence \
                        includes both information contained in the accounting records underlying \
-                       the financial statements and other information.".to_string(),
+                       the financial statements and other information."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -615,7 +696,8 @@ pub fn load_isa_500() -> Vec<StandardEntry> {
             full_text: "Sufficiency is the measure of the quantity of audit evidence. \
                        Appropriateness is the measure of the quality of audit evidence; \
                        that is, its relevance and its reliability in providing support for \
-                       the conclusions on which the auditor's opinion is based.".to_string(),
+                       the conclusions on which the auditor's opinion is based."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -625,7 +707,8 @@ pub fn load_isa_500() -> Vec<StandardEntry> {
             title: "Reliability of Audit Evidence".to_string(),
             full_text: "The reliability of information to be used as audit evidence is influenced \
                        by its source and its nature, and the circumstances under which it is \
-                       obtained, including the controls over its preparation and maintenance.".to_string(),
+                       obtained, including the controls over its preparation and maintenance."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -638,7 +721,7 @@ pub fn load_isa_500() -> Vec<StandardEntry> {
 /// Task 2.3: Load Audit/Control Standards References
 pub fn load_sox_404() -> Vec<StandardEntry> {
     let effective_date = NaiveDate::from_ymd_opt(2002, 7, 30).unwrap();
-    
+
     vec![
         StandardEntry {
             reference: StandardReference::new(StandardBody::SOX, "404", "a"),
@@ -648,7 +731,8 @@ pub fn load_sox_404() -> Vec<StandardEntry> {
                        responsibility of management for establishing and maintaining an \
                        adequate internal control structure and procedures for financial reporting; \
                        and (2) contain an assessment of the effectiveness of the internal control \
-                       structure and procedures.".to_string(),
+                       structure and procedures."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -658,7 +742,8 @@ pub fn load_sox_404() -> Vec<StandardEntry> {
             title: "Attestation by External Auditor".to_string(),
             full_text: "Each registered public accounting firm that prepares or issues the audit \
                        report for the issuer shall attest to, and report on, the assessment made \
-                       by the management of the issuer.".to_string(),
+                       by the management of the issuer."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -669,7 +754,8 @@ pub fn load_sox_404() -> Vec<StandardEntry> {
             full_text: "The principal executive officer and principal financial officer certify \
                        that the signing officer has reviewed the report; the report does not \
                        contain any untrue statement of a material fact; and the financial \
-                       statements fairly present in all material respects the financial condition.".to_string(),
+                       statements fairly present in all material respects the financial condition."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -682,15 +768,17 @@ pub fn load_sox_404() -> Vec<StandardEntry> {
 /// Task 2.3: Load Audit/Control Standards References
 pub fn load_coso_framework() -> Vec<StandardEntry> {
     let effective_date = NaiveDate::from_ymd_opt(2013, 5, 14).unwrap();
-    
+
     vec![
         StandardEntry {
             reference: StandardReference::new(StandardBody::COSO, "IC", "1"),
             title: "Control Environment".to_string(),
-            full_text: "The control environment is the set of standards, processes, and structures \
+            full_text:
+                "The control environment is the set of standards, processes, and structures \
                        that provide the basis for carrying out internal control across the \
                        organization. The board of directors and senior management establish \
-                       the tone at the top regarding the importance of internal control.".to_string(),
+                       the tone at the top regarding the importance of internal control."
+                    .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -701,7 +789,8 @@ pub fn load_coso_framework() -> Vec<StandardEntry> {
             full_text: "Risk assessment involves a dynamic and iterative process for identifying \
                        and assessing risks to the achievement of objectives. Risks to the \
                        achievement of these objectives are considered relative to established \
-                       risk tolerances.".to_string(),
+                       risk tolerances."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -711,7 +800,8 @@ pub fn load_coso_framework() -> Vec<StandardEntry> {
             title: "Control Activities".to_string(),
             full_text: "Control activities are the actions established through policies and \
                        procedures that help ensure that management's directives to mitigate \
-                       risks to the achievement of objectives are carried out.".to_string(),
+                       risks to the achievement of objectives are carried out."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -722,7 +812,8 @@ pub fn load_coso_framework() -> Vec<StandardEntry> {
             full_text: "Information is necessary for the entity to carry out internal control \
                        responsibilities. Management obtains or generates and uses relevant and \
                        quality information from both internal and external sources to support \
-                       the functioning of internal control.".to_string(),
+                       the functioning of internal control."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -732,7 +823,83 @@ pub fn load_coso_framework() -> Vec<StandardEntry> {
             title: "Monitoring Activities".to_string(),
             full_text: "Ongoing evaluations, separate evaluations, or some combination of the two \
                        are used to ascertain whether each of the five components of internal \
-                       control is present and functioning.".to_string(),
+                       control is present and functioning."
+                .to_string(),
+            effective_date,
+            supersedes: vec![],
+            superseded_by: None,
+        },
+    ]
+}
+
+/// Load IFRS 18 - Presentation and Disclosure in Financial Statements
+pub fn load_ifrs_18() -> Vec<StandardEntry> {
+    let effective_date = NaiveDate::from_ymd_opt(2024, 4, 9).unwrap();
+
+    vec![
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IFRS, "18", "1"),
+            title: "Objective of IFRS 18".to_string(),
+            full_text: "The objective of this Standard is to set out requirements for the \
+                       presentation and disclosure of information in financial statements \
+                       to help users of financial statements make better decisions."
+                .to_string(),
+            effective_date,
+            supersedes: vec![], // Supersedes components of IAS 1
+            superseded_by: None,
+        },
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IFRS, "18", "25"),
+            title: "Operating Category".to_string(),
+            full_text: "The operating category comprises all income and expenses that are not \
+                       classified in the other categories (investing, financing, income taxes \
+                       and discontinued operations)."
+                .to_string(),
+            effective_date,
+            supersedes: vec![],
+            superseded_by: None,
+        },
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IFRS, "18", "27"),
+            title: "Investing Category".to_string(),
+            full_text: "The investing category comprises income and expenses from assets \
+                       that generate a return individually and largely independently of other \
+                       resources held by the entity."
+                .to_string(),
+            effective_date,
+            supersedes: vec![],
+            superseded_by: None,
+        },
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IFRS, "18", "29"),
+            title: "Financing Category".to_string(),
+            full_text: "The financing category comprises income and expenses from liabilities \
+                       that arise from transactions that involve only the raising of finance."
+                .to_string(),
+            effective_date,
+            supersedes: vec![],
+            superseded_by: None,
+        },
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IFRS, "18", "33"),
+            title: "Operating Profit Subtotal".to_string(),
+            full_text: "An entity shall present an operating profit subtotal in the statement \
+                       of profit or loss. Operating profit is the subtotal of all income and \
+                       expenses classified in the operating category."
+                .to_string(),
+            effective_date,
+            supersedes: vec![],
+            superseded_by: None,
+        },
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IFRS, "18", "105"),
+            title: "Management Performance Measures".to_string(),
+            full_text: "Management performance measures are subtotals of income and expenses \
+                       that: (a) are used in public communications outside financial statements; \
+                       (b) complement totals or subtotals specified by IFRS Accounting Standards; \
+                       and (c) communicate management's view of an aspect of the financial \
+                       performance of the entity as a whole."
+                .to_string(),
             effective_date,
             supersedes: vec![],
             superseded_by: None,
@@ -748,6 +915,7 @@ pub fn load_coso_framework() -> Vec<StandardEntry> {
 /// - IAS 8: Accounting Policies (Task 2.2)
 /// - IAS 10: Events After Reporting Period (Task 2.2)
 /// - IFRS 15: Revenue Recognition (Task 2.2)
+/// - IFRS 18: Presentation and Disclosure (Added Phase 6)
 /// - ISA 500: Audit Evidence (Task 2.3)
 /// - SOX 404: Internal Controls (Task 2.3)
 /// - COSO: Internal Control Framework (Task 2.3)
@@ -758,6 +926,7 @@ pub fn load_all_standards() -> Vec<StandardEntry> {
     all.extend(load_ias_8());
     all.extend(load_ias_10());
     all.extend(load_ifrs_15());
+    all.extend(load_ifrs_18());
     all.extend(load_isa_500());
     all.extend(load_sox_404());
     all.extend(load_coso_framework());
@@ -772,33 +941,78 @@ mod tests {
     fn test_conceptual_framework_coverage() {
         let cf = load_conceptual_framework();
         // Verify we have key paragraphs
-        assert!(cf.iter().any(|e| e.reference.paragraph == "4.3"), "Should have Asset definition");
-        assert!(cf.iter().any(|e| e.reference.paragraph == "4.26"), "Should have Liability definition");
-        assert!(cf.iter().any(|e| e.reference.paragraph == "4.63"), "Should have Equity definition");
-        assert!(cf.iter().any(|e| e.reference.paragraph == "4.68"), "Should have Income definition");
-        assert!(cf.iter().any(|e| e.reference.paragraph == "4.69"), "Should have Expense definition");
-        assert!(cf.iter().any(|e| e.reference.paragraph == "5.1"), "Should have Recognition");
-        assert!(cf.iter().any(|e| e.reference.paragraph == "6.1"), "Should have Measurement");
+        assert!(
+            cf.iter().any(|e| e.reference.paragraph == "4.3"),
+            "Should have Asset definition"
+        );
+        assert!(
+            cf.iter().any(|e| e.reference.paragraph == "4.26"),
+            "Should have Liability definition"
+        );
+        assert!(
+            cf.iter().any(|e| e.reference.paragraph == "4.63"),
+            "Should have Equity definition"
+        );
+        assert!(
+            cf.iter().any(|e| e.reference.paragraph == "4.68"),
+            "Should have Income definition"
+        );
+        assert!(
+            cf.iter().any(|e| e.reference.paragraph == "4.69"),
+            "Should have Expense definition"
+        );
+        assert!(
+            cf.iter().any(|e| e.reference.paragraph == "5.1"),
+            "Should have Recognition"
+        );
+        assert!(
+            cf.iter().any(|e| e.reference.paragraph == "6.1"),
+            "Should have Measurement"
+        );
     }
 
     #[test]
     fn test_ias_1_coverage() {
         let ias1 = load_ias_1();
-        assert!(ias1.iter().any(|e| e.reference.paragraph == "10"), "Should have Complete Set definition");
-        assert!(ias1.iter().any(|e| e.reference.paragraph == "54"), "Should have Line Items");
-        assert!(ias1.iter().any(|e| e.reference.paragraph == "60"), "Should have Current/Non-Current");
+        assert!(
+            ias1.iter().any(|e| e.reference.paragraph == "10"),
+            "Should have Complete Set definition"
+        );
+        assert!(
+            ias1.iter().any(|e| e.reference.paragraph == "54"),
+            "Should have Line Items"
+        );
+        assert!(
+            ias1.iter().any(|e| e.reference.paragraph == "60"),
+            "Should have Current/Non-Current"
+        );
     }
 
     #[test]
     fn test_ifrs_15_five_step_model() {
         let ifrs15 = load_ifrs_15();
         // All 5 steps should be present
-        assert!(ifrs15.iter().any(|e| e.title.contains("Step 1")), "Should have Step 1");
-        assert!(ifrs15.iter().any(|e| e.title.contains("Step 2")), "Should have Step 2");
-        assert!(ifrs15.iter().any(|e| e.title.contains("Step 3")), "Should have Step 3");
-        assert!(ifrs15.iter().any(|e| e.title.contains("Step 4")), "Should have Step 4");
+        assert!(
+            ifrs15.iter().any(|e| e.title.contains("Step 1")),
+            "Should have Step 1"
+        );
+        assert!(
+            ifrs15.iter().any(|e| e.title.contains("Step 2")),
+            "Should have Step 2"
+        );
+        assert!(
+            ifrs15.iter().any(|e| e.title.contains("Step 3")),
+            "Should have Step 3"
+        );
+        assert!(
+            ifrs15.iter().any(|e| e.title.contains("Step 4")),
+            "Should have Step 4"
+        );
         // Step 5 is effectively covered by paragraph 35 (Satisfaction)
-        assert!(ifrs15.iter().any(|e| e.reference.paragraph == "35"), "Should have Step 5 (para 35)");
+        assert!(
+            ifrs15.iter().any(|e| e.reference.paragraph == "35"),
+            "Should have Step 5 (para 35)"
+        );
     }
 
     #[test]

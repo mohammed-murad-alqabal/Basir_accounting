@@ -1,5 +1,5 @@
 use accounting_core::{
-    accounts::models::{Account, AccountKind},
+    accounts::models::{Account, AccountKind, Ifrs18Category},
     accounts::registry::AccountRegistry,
     audit::{
         chain::GENESIS_HASH,
@@ -78,6 +78,7 @@ fn test_e2e_accounting_workflow() {
             parent_id: None,
             ifrs_tag: Some("ifrs-full:Cash".to_string()),
             currency: Some("USD".to_string()),
+            ifrs18_category: Ifrs18Category::Operating,
             description: None,
             requires_partner: false,
             is_active: true,
@@ -92,6 +93,7 @@ fn test_e2e_accounting_workflow() {
             parent_id: None,
             ifrs_tag: Some("ifrs-full:Revenue".to_string()),
             currency: Some("USD".to_string()),
+            ifrs18_category: Ifrs18Category::Operating,
             description: None,
             requires_partner: false,
             is_active: true,
