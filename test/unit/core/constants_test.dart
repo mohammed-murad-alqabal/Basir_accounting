@@ -53,7 +53,7 @@ void main() {
       expect(AppConfig.appVersion, equals('1.0.0'));
       expect(
         AppConfig.appDescription,
-        equals('نظام إدارة الفواتير والعملاء الذكي'),
+        equals('نظام بصير المحاسبي والمالي الذكي'),
       );
     });
 
