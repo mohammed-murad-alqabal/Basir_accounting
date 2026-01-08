@@ -1,0 +1,53 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT id, base_currency, target_currency, rate, effective_date, source\n            FROM exchange_rates\n            WHERE ($1::text IS NULL OR base_currency = $1)\n              AND ($2::text IS NULL OR target_currency = $2)\n            ORDER BY effective_date DESC\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "base_currency",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "target_currency",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "rate",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 4,
+        "name": "effective_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 5,
+        "name": "source",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "e0744bd2d8835938c8f1c9d691e3f8e36dab3fc637478193787a3ba94ff69144"
+}
