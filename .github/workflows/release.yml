@@ -59,6 +59,17 @@ jobs:
       - name: Build App Bundle
         run: flutter build appbundle --release
 
+      - name: Generate API Docs
+        run: |
+          dart doc .
+          zip -r api-docs.zip doc/api
+
+      - name: Upload API Docs
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-docs
+          path: api-docs.zip
+
       - name: Extract version
         id: version
         run: |
