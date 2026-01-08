@@ -1,0 +1,53 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                WITH RECURSIVE account_tree AS (\n                    -- Base case: Leaf accounts and their balances in the period\n                    SELECT \n                        a.id, \n                        a.parent_id, \n                        COALESCE(SUM(l.debit), 0) as leaf_debits,\n                        COALESCE(SUM(l.credit), 0) as leaf_credits\n                    FROM accounts a\n                    LEFT JOIN journal_entry_lines l ON a.id = l.account_id\n                    LEFT JOIN journal_entries e ON l.entry_id = e.id\n                    WHERE a.is_leaf = true\n                      AND e.effective_date >= $1 AND e.effective_date <= $2\n                    GROUP BY a.id, a.parent_id\n                    \n                    UNION ALL\n                    \n                    -- Recursive step: Propagate leaf balances up to parents\n                    SELECT \n                        p.id, \n                        p.parent_id,\n                        t.leaf_debits,\n                        t.leaf_credits\n                    FROM accounts p\n                    JOIN account_tree t ON p.id = t.parent_id\n                )\n                SELECT \n                    t.id as \"account_id!\",\n                    a.code as \"account_code!\",\n                    a.name as \"account_name!\",\n                    a.type as \"account_type!\",\n                    SUM(t.leaf_debits) as \"total_debits!: Decimal\",\n                    SUM(t.leaf_credits) as \"total_credits!: Decimal\"\n                FROM account_tree t\n                JOIN accounts a ON t.id = a.id\n                GROUP BY t.id, a.code, a.name, a.type\n                ORDER BY a.code\n                ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "account_id!",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "account_code!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "account_name!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "account_type!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "total_debits!: Decimal",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 5,
+        "name": "total_credits!: Decimal",
+        "type_info": "Numeric"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Date",
+        "Date"
+      ]
+    },
+    "nullable": [
+      null,
+      false,
+      false,
+      false,
+      null,
+      null
+    ]
+  },
+  "hash": "962655164821bd69841b2dc3e36d3352227b03624ad9ff279ab4dd3f537d4ec3"
+}

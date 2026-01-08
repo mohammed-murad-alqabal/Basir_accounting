@@ -1,0 +1,54 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT id, base_currency, target_currency, rate, effective_date, source\n            FROM exchange_rates\n            WHERE base_currency = $1 AND target_currency = $2 AND effective_date <= $3\n            ORDER BY effective_date DESC\n            LIMIT 1\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "base_currency",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "target_currency",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "rate",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 4,
+        "name": "effective_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 5,
+        "name": "source",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "Date"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "7a84ed5f5c2aec85cd37877d2c439050840e6ca34e96c455caca2db892ac625b"
+}

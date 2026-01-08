@@ -1,0 +1,16 @@
+[package]
+name = "accounting_cli"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[dependencies]
+# Internal dependencies
+accounting_core = { path = "../accounting_core" }
+accounting_data = { path = "../accounting_data" }
+
+# Async runtime
+tokio = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }

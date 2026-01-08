@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT payload->'what'->>'new_value' as consensus\n            FROM audit_log\n            WHERE entity_id = $1 AND action = 'CognitiveVerify'\n            ORDER BY timestamp DESC\n            LIMIT 1\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "consensus",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "41b237325d004ea0b4c3512b01ff9a0ca1f5ca95b91cff30bb2eae044a859b1f"
+}

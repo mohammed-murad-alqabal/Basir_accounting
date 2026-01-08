@@ -1,0 +1,37 @@
+[package]
+name = "accounting_data"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[dependencies]
+# Internal dependencies
+accounting_core = { path = "../accounting_core" }
+
+# Decimal arithmetic
+rust_decimal = { workspace = true }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# UUID
+uuid = { workspace = true }
+
+# Date/Time
+chrono = { workspace = true }
+
+# Error handling
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+
+# Async runtime
+tokio = { workspace = true }
+
+# Database
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "uuid", "chrono", "rust_decimal", "macros"] }
+
+
+[dev-dependencies]
+proptest = { workspace = true }
+dotenvy = { workspace = true }

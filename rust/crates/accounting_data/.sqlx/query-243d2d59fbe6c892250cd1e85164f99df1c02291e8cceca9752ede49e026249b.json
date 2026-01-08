@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO accounts (id, code, name, type, parent_id, is_leaf, ifrs_tag, classification, currency)\n            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)\n            ON CONFLICT (id) DO UPDATE SET\n                code = EXCLUDED.code,\n                name = EXCLUDED.name,\n                type = EXCLUDED.type,\n                parent_id = EXCLUDED.parent_id,\n                ifrs_tag = EXCLUDED.ifrs_tag,\n                classification = EXCLUDED.classification,\n                currency = EXCLUDED.currency\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Uuid",
+        "Bool",
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "243d2d59fbe6c892250cd1e85164f99df1c02291e8cceca9752ede49e026249b"
+}

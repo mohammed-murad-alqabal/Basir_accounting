@@ -9,6 +9,7 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - "**/*.mocks.dart"
+    - "lib/src/rust/frb_generated.dart/**"
     - "build/**"
     - ".dart_tool/**"
     - "coverage/**"
@@ -272,6 +273,7 @@ dart_code_metrics:
     - test/**
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - "lib/src/rust/frb_generated.dart/**"
 
   rules:
     - avoid-dynamic

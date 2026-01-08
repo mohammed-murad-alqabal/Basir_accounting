@@ -1,0 +1,34 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT entry_number, entry_type, standard_reference FROM journal_entries WHERE id = $1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "entry_number",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 1,
+        "name": "entry_type",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "standard_reference",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "db5d1a34b0d8109a20a7e2740e5dd2a4a0f71a8f117cc988b2c4c62cf21b2c45"
+}

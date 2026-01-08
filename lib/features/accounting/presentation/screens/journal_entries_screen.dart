@@ -245,18 +245,10 @@ class JournalEntriesScreen extends ConsumerWidget {
     JournalEntry entry,
   ) async {
     try {
-      final updated = JournalEntry(
-        id: entry.id,
-        referenceNumber: entry.referenceNumber,
-        date: entry.date,
-        description: entry.description,
+      final updated = entry.copyWith(
         status: JournalEntryStatus.posted,
-        sourceDocument: entry.sourceDocument,
-        sourceId: entry.sourceId,
-        lines: entry.lines,
-        createdAt: entry.createdAt,
-        createdBy: entry.createdBy,
         updatedAt: DateTime.now(),
+        postedAt: DateTime.now(),
       );
       await ref
           .read(accountingServiceProvider.notifier)
@@ -362,10 +354,9 @@ class JournalEntriesScreen extends ConsumerWidget {
         ),
       );
 
-  String _formatCurrency(Decimal value) => intl.NumberFormat.currency(
-        symbol: '',
-        decimalDigits: 2,
-      ).format(value.toDouble());
+  String _formatCurrency(Decimal value) =>
+      intl.NumberFormat.currency(symbol: '', decimalDigits: 2)
+          .format(value.toDouble());
 
   Future<void> _showExportOptions(BuildContext context, WidgetRef ref) async {
     await showModalBottomSheet<void>(
