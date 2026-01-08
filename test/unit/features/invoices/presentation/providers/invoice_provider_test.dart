@@ -63,9 +63,9 @@ void main() {
     });
 
     group('invoiceFilterProvider', () {
-      test('should have "الكل" as initial value', () {
+      test('should have "all" as initial value', () {
         final filter = container.read(invoiceFilterProvider);
-        expect(filter, 'الكل');
+        expect(filter, 'all');
       });
     });
 
