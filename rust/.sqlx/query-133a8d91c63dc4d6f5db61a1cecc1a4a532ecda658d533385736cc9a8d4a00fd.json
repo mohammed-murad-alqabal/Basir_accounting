@@ -1,0 +1,19 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO financial_periods (id, name, start_date, end_date, status, is_year_end)\n            VALUES ($1, $2, $3, $4, $5, $6)\n            ON CONFLICT (id) DO UPDATE SET\n                name = EXCLUDED.name,\n                status = EXCLUDED.status,\n                is_year_end = EXCLUDED.is_year_end\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Date",
+        "Date",
+        "Text",
+        "Bool"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "133a8d91c63dc4d6f5db61a1cecc1a4a532ecda658d533385736cc9a8d4a00fd"
+}

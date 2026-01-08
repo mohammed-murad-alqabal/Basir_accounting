@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO journal_entry_lines (\n                id, entry_id, account_id, description, debit, credit,\n                original_currency, exchange_rate, original_amount\n            )\n            SELECT gen_random_uuid(), $1, account_id, 'Reversal: ' || description, credit, debit,\n                   original_currency, exchange_rate, original_amount\n            FROM journal_entry_lines\n            WHERE entry_id = $2\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "989eefb657fe8b3e3eb4bd31c4389fb9c2a5da57e0a5bea885551658f8e8b324"
+}

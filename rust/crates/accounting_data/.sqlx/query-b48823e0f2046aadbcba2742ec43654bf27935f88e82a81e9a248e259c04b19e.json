@@ -1,0 +1,98 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT \n                je.id, je.entry_number, je.entry_type, je.status,\n                je.transaction_date, je.effective_date, je.recording_date,\n                je.standard_reference, je.description, je.hash,\n                je.linked_entry_id, je.adjustment_reason,\n                -- Aggregate lines into a JSON array\n                COALESCE(\n                    json_agg(\n                        json_build_object(\n                            'line_id', jel.id,\n                            'account_id', jel.account_id,\n                            'description', jel.description,\n                            'debit_amount', jel.debit,\n                            'credit_amount', jel.credit,\n                            'original_currency', jel.original_currency,\n                            'exchange_rate', jel.exchange_rate,\n                            'original_amount', jel.original_amount,\n                            'partner_id', jel.partner_id\n                        ) ORDER BY jel.debit DESC, jel.credit DESC\n                    ) FILTER (WHERE jel.id IS NOT NULL), \n                    '[]'::json\n                ) as lines\n            FROM journal_entries je\n            LEFT JOIN journal_entry_lines jel ON je.id = jel.entry_id\n            WHERE \n                ($3::date IS NULL OR je.transaction_date >= $3)\n                AND ($4::date IS NULL OR je.transaction_date <= $4)\n                AND ($5::uuid IS NULL OR EXISTS (\n                    SELECT 1 FROM journal_entry_lines jel2 \n                    WHERE jel2.entry_id = je.id AND jel2.account_id = $5\n                ))\n            GROUP BY je.id\n            ORDER BY je.transaction_date DESC, je.recording_date DESC\n            LIMIT $1 OFFSET $2\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "entry_number",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "entry_type",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "status",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "transaction_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 5,
+        "name": "effective_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 6,
+        "name": "recording_date",
+        "type_info": "Timestamp"
+      },
+      {
+        "ordinal": 7,
+        "name": "standard_reference",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "description",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 9,
+        "name": "hash",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 10,
+        "name": "linked_entry_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 11,
+        "name": "adjustment_reason",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 12,
+        "name": "lines",
+        "type_info": "Json"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Int8",
+        "Date",
+        "Date",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      true,
+      true,
+      true,
+      null
+    ]
+  },
+  "hash": "b48823e0f2046aadbcba2742ec43654bf27935f88e82a81e9a248e259c04b19e"
+}

@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE financial_periods \n            SET status = 'Closed', closed_at = $1, closed_by = $2\n            WHERE id = $3\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Timestamp",
+        "Text",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "10ad1b9105b70723ce36ea3132d98208472322b44bc7c079dc79858e969dcaaa"
+}

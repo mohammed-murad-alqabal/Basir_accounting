@@ -1,4 +1,5 @@
 import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/features/accounting/application/financial_year_service.dart';
 import 'package:basir_app/features/accounting/application/multi_standard_coa_engine.dart';
 import 'package:basir_app/features/accounting/domain/entities/account.dart';
@@ -165,6 +166,8 @@ class AccountingService extends _$AccountingService {
 
     // 3. إنشاء القيد
     final journalEntryId = 'je-inv-${invoice.id}';
+    final now = DateTime.now();
+    final user = ref.read(currentUserProvider);
 
     final existingEntries = await _repository.getJournalEntries();
     if (existingEntries.any((e) => e.id == journalEntryId)) {
@@ -175,14 +178,25 @@ class AccountingService extends _$AccountingService {
       id: journalEntryId,
       referenceNumber: 'JE-${invoice.id}',
       date: invoice.issuedDate,
+      temporal: TemporalJustification(
+        transactionDate: invoice.issuedDate,
+        effectiveDate: invoice.issuedDate,
+        recordingDate: now,
+      ),
+      standards: const StandardsJustification(
+        standardReference: 'IFRS 15', // GAAP: Revenue from Contracts
+        recognitionBasis: 'Accrual',
+        measurementBasis: 'Transaction Price',
+      ),
       description: 'ترحيل فاتورة مبيعات ${invoice.id}',
       status: JournalEntryStatus.posted,
       lines: lines,
       sourceDocument: 'invoice',
       sourceId: invoice.id,
-      createdAt: DateTime.now(),
-      createdBy: 'system',
-      updatedAt: DateTime.now(),
+      createdAt: now,
+      createdBy: user?.id ?? 'system',
+      updatedAt: now,
+      postedAt: now,
     );
 
     // 4. التحقق والحفظ
@@ -208,7 +222,9 @@ class AccountingService extends _$AccountingService {
     String accountId,
     List<Account> allAccounts,
   ) {
-    final account = allAccounts.firstWhere((a) => a.id == accountId);
+    final account = allAccounts.firstWhere(
+      (a) => a.id == accountId,
+    );
     var total = account.balance;
 
     final children = allAccounts.where((a) => a.parentId == accountId);
@@ -258,17 +274,31 @@ class AccountingService extends _$AccountingService {
       throw Exception('Can only reverse posted entries');
     }
 
+    final now = DateTime.now();
+    final user = ref.read(currentUserProvider);
+
     final reversal = JournalEntry(
       id: const Uuid().v4(),
       referenceNumber: 'RV-${original.referenceNumber}',
-      date: DateTime.now(),
+      date: now,
+      temporal: TemporalJustification(
+        transactionDate: now,
+        effectiveDate: now,
+        recordingDate: now,
+      ),
+      standards: StandardsJustification(
+        standardReference: original.standards.standardReference,
+        recognitionBasis: 'Reversal',
+        measurementBasis: original.standards.measurementBasis,
+      ),
       description: 'عكس القيد رقم ${original.referenceNumber}',
       status: JournalEntryStatus.posted,
       sourceDocument: original.sourceDocument,
       sourceId: original.sourceId,
-      createdBy: 'user', // TODO(user): Get current user
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
+      createdBy: user?.id ?? 'user',
+      createdAt: now,
+      updatedAt: now,
+      postedAt: now,
       lines: original.lines
           .map(
             (l) => JournalEntryLine(
@@ -277,6 +307,7 @@ class AccountingService extends _$AccountingService {
               debit: l.credit, // SWAP
               credit: l.debit, // SWAP
               description: 'عكس: ${l.description ?? ""}',
+              sourceDocumentRef: l.sourceDocumentRef,
             ),
           )
           .toList(),
