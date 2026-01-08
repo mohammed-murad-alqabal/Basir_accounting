@@ -63,7 +63,7 @@ class AppConfig {
   static const String appVersion = '1.0.0';
 
   /// وصف التطبيق
-  static const String appDescription = 'نظام إدارة الفواتير والعملاء الذكي';
+  static const String appDescription = 'نظام بصير المحاسبي والمالي الذكي';
 
   /// نسبة الضريبة الافتراضية (15%)
   /// تُستخدم عند إنشاء فواتير جديدة
