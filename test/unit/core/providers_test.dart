@@ -1,4 +1,5 @@
 import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/features/auth/data/services/auth_service.dart';
 import 'package:basir_app/features/customers/data/models/customer_model.dart';
 import 'package:basir_app/features/customers/data/repositories/customer_repository_impl.dart';
@@ -31,7 +32,10 @@ void main() {
       );
 
       container = ProviderContainer(
-        overrides: [isarProvider.overrideWith((ref) => Future.value(isar))],
+        overrides: [
+          isarProvider.overrideWith((ref) => Future.value(isar)),
+          currentUserProvider.overrideWith((ref) => null),
+        ],
       );
       // Wait for Isar to be ready
       await container.read(isarProvider.future);
