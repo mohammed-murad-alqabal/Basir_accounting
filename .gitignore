@@ -218,3 +218,16 @@ todo_list.txt
 *.bak
 *.tmp
 *.temp
+
+# Rust / Native
+rust/target/
+**/target/
+rust_builder/build/
+rust_builder/.dart_tool/
+rust_builder/ios/Flutter/*.xcconfig
+rust_builder/ios/Flutter/*.sh
+rust_builder/macos/Flutter/ephemeral/
+rust_builder/linux/flutter/
+rust_builder/windows/flutter/
+
+

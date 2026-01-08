@@ -1,8 +1,9 @@
 import 'package:basir_app/core/assets/app_illustrations.dart';
 import 'package:basir_app/core/providers/calendar_provider.dart';
+import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:basir_app/features/invoices/presentation/screens/invoices_screen.dart';
-import 'package:basir_app/l10n/app_localizations.dart'; // Fixed import
+import 'package:basir_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,10 +12,28 @@ import '../../../helpers/mock_data.dart';
 
 void main() {
   group('InvoicesScreen Tests', () {
+    setUp(() {
+      final binding = TestWidgetsFlutterBinding.ensureInitialized();
+      binding.window.physicalSizeTestValue = const Size(1080, 2400);
+      binding.window.devicePixelRatioTestValue = 1.0;
+    });
+
+    tearDown(() {
+      final binding = TestWidgetsFlutterBinding.ensureInitialized();
+      binding.window.clearPhysicalSizeTestValue();
+      binding.window.clearDevicePixelRatioTestValue();
+    });
+
     testWidgets('should display app bar with title', (tester) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            currentUserProvider.overrideWith((ref) => null),
             filteredInvoicesProvider.overrideWithValue(
               const AsyncValue.data([]),
             ),
@@ -45,6 +64,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            currentUserProvider.overrideWith((ref) => null),
             filteredInvoicesProvider.overrideWithValue(
               const AsyncValue.data([]),
             ),
@@ -82,6 +102,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            currentUserProvider.overrideWith((ref) => null),
             filteredInvoicesProvider.overrideWithValue(
               AsyncValue.data([invoice]),
             ),
@@ -120,6 +141,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            currentUserProvider.overrideWith((ref) => null),
             calendarProvider
                 .overrideWith(() => _MockCalendarNotifier(CalendarType.hijri)),
             filteredInvoicesProvider.overrideWithValue(
