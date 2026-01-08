@@ -1,0 +1,30 @@
+[package]
+name = "accounting_core"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[dependencies]
+# Financial precision
+rust_decimal = { workspace = true }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# UUID
+uuid = { workspace = true }
+
+# Date/Time
+chrono = { workspace = true }
+
+# Cryptography (SHA-256 for hash chain)
+sha2 = { workspace = true }
+hex = { workspace = true }
+
+# Error handling
+thiserror = { workspace = true }
+
+[dev-dependencies]
+# Property-based testing
+proptest = { workspace = true }

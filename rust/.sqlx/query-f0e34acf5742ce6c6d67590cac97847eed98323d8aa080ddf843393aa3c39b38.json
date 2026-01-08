@@ -1,0 +1,25 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO journal_entries (\n                id, entry_number, entry_type, status, \n                transaction_date, effective_date, recording_date,\n                standard_reference, description, hash,\n                linked_entry_id, adjustment_reason\n            )\n            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Date",
+        "Date",
+        "Timestamp",
+        "Text",
+        "Text",
+        "Text",
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "f0e34acf5742ce6c6d67590cac97847eed98323d8aa080ddf843393aa3c39b38"
+}

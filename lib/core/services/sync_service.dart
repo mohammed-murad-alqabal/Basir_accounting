@@ -62,6 +62,7 @@ class SyncService extends _$SyncService {
       fromJson: Customer.fromJson,
       fromEntity: CustomerModel.fromEntity,
       getServerUpdatedAt: (m) => m.serverUpdatedAt,
+      getById: (col, id) => col.filter().customerIdEqualTo(id).findFirst(),
       setSyncMetadata: (m, status, time) {
         m.syncStatus = status;
         m.serverUpdatedAt = time;
@@ -81,6 +82,7 @@ class SyncService extends _$SyncService {
       fromJson: Vendor.fromJson,
       fromEntity: VendorModel.fromEntity,
       getServerUpdatedAt: (m) => m.serverUpdatedAt,
+      getById: (col, id) => col.filter().vendorIdEqualTo(id).findFirst(),
       setSyncMetadata: (m, status, time) {
         m.syncStatus = status;
         m.serverUpdatedAt = time;
@@ -100,6 +102,7 @@ class SyncService extends _$SyncService {
       fromJson: Account.fromJson,
       fromEntity: AccountModel.fromEntity,
       getServerUpdatedAt: (m) => m.serverUpdatedAt,
+      getById: (col, id) => col.filter().idEqualTo(id).findFirst(),
       setSyncMetadata: (m, status, time) {
         m.syncStatus = status;
         m.serverUpdatedAt = time;
@@ -119,6 +122,7 @@ class SyncService extends _$SyncService {
       fromJson: FinancialYear.fromJson,
       fromEntity: FinancialYearModel.fromEntity,
       getServerUpdatedAt: (m) => m.serverUpdatedAt,
+      getById: (col, id) => col.filter().idEqualTo(id).findFirst(),
       setSyncMetadata: (m, status, time) {
         m.syncStatus = status;
         m.serverUpdatedAt = time;
@@ -138,6 +142,7 @@ class SyncService extends _$SyncService {
       fromJson: Invoice.fromJson,
       fromEntity: InvoiceModel.fromEntity,
       getServerUpdatedAt: (m) => m.serverUpdatedAt,
+      getById: (col, id) => col.filter().invoiceIdEqualTo(id).findFirst(),
       setSyncMetadata: (m, status, time) {
         m.syncStatus = status;
         m.serverUpdatedAt = time;
@@ -157,6 +162,7 @@ class SyncService extends _$SyncService {
       fromJson: JournalEntry.fromJson,
       fromEntity: JournalEntryModel.fromEntity,
       getServerUpdatedAt: (m) => m.serverUpdatedAt,
+      getById: (col, id) => col.filter().idEqualTo(id).findFirst(),
       setSyncMetadata: (m, status, time) {
         m.syncStatus = status;
         m.serverUpdatedAt = time;
@@ -176,6 +182,7 @@ class SyncService extends _$SyncService {
       toJson: (e) => e.toJson(),
       fromEntity: FinancialVoucherModel.fromEntity,
       getServerUpdatedAt: (m) => m.serverUpdatedAt,
+      getById: (col, id) => col.filter().idEqualTo(id).findFirst(),
       setSyncMetadata: (m, status, time) {
         m.syncStatus = status;
         m.serverUpdatedAt = time;
@@ -195,6 +202,7 @@ class SyncService extends _$SyncService {
       fromJson: Profile.fromJson,
       fromEntity: ProfileModel.fromEntity,
       getServerUpdatedAt: (m) => m.serverUpdatedAt,
+      getById: (col, id) => col.filter().idEqualTo(id).findFirst(),
       setSyncMetadata: (m, status, time) {
         m.syncStatus = status;
         m.serverUpdatedAt = time;
@@ -214,6 +222,7 @@ class SyncService extends _$SyncService {
       fromJson: BusinessSettings.fromJson,
       fromEntity: BusinessSettingsModel.fromEntity,
       getServerUpdatedAt: (m) => m.serverUpdatedAt,
+      getById: (col, id) => col.filter().idEqualTo(id).findFirst(),
       setSyncMetadata: (m, status, time) {
         m.syncStatus = status;
         m.serverUpdatedAt = time;
@@ -232,6 +241,7 @@ class SyncService extends _$SyncService {
     required E Function(Map<String, dynamic>) fromJson,
     required M Function(E) fromEntity,
     required DateTime? Function(M) getServerUpdatedAt,
+    required Future<M?> Function(IsarCollection<M>, String) getById,
     required void Function(M, SyncStatus, DateTime) setSyncMetadata,
   }) async {
     // 1. دفع التعديلات المحلية (Push)
@@ -274,14 +284,44 @@ class SyncService extends _$SyncService {
 
       final remoteRecords = response as List<dynamic>;
       for (final json in remoteRecords) {
-        final entity = fromJson(json as Map<String, dynamic>);
-        final model = fromEntity(entity);
+        final remoteData = json as Map<String, dynamic>;
+        final remoteEntity = fromJson(remoteData);
+        final remoteModel = fromEntity(remoteEntity);
+        final id = remoteData['id'] as String;
 
-        // TODO(dev): تنفيذ منطق فض النزاعات (Conflict Resolution)
-        // حالياً: السيرفر يفوز دائماً (Server Wins)
-        await _isar.writeTxn(() async {
-          await collection.put(model);
-        });
+        // Conflict Resolution: Last Write Wins (LWW)
+        final localRecord = await getById(collection, id);
+
+        if (localRecord != null) {
+          final localSyncStatus =
+              (localRecord as dynamic).syncStatus as SyncStatus;
+          final localUpdatedAt = (localRecord as dynamic).updatedAt as DateTime;
+          final remoteUpdatedAt =
+              DateTime.parse(remoteData['updatedAt'] as String);
+
+          if (localSyncStatus == SyncStatus.pendingPush) {
+            // Local has unsynced changes and server has updates (conflict)
+            if (remoteUpdatedAt.isAfter(localUpdatedAt)) {
+              // Server is newer -> Server Wins
+              await _isar.writeTxn(() async {
+                await collection.put(remoteModel);
+              });
+            } else {
+              // Local is newer -> Local Wins (Will be pushed in next cycle)
+              continue;
+            }
+          } else {
+            // No local changes -> Server Wins
+            await _isar.writeTxn(() async {
+              await collection.put(remoteModel);
+            });
+          }
+        } else {
+          // New record from server
+          await _isar.writeTxn(() async {
+            await collection.put(remoteModel);
+          });
+        }
       }
     } on Exception catch (e) {
       debugPrint('Error pulling $tableName: $e');
