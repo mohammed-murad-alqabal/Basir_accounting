@@ -1,5 +1,6 @@
 use accounting_core::currency::ExchangeRate;
 use chrono::NaiveDate;
+use rust_decimal::Decimal;
 use sqlx::PgPool;
 
 pub struct PgExchangeRateRepository {
