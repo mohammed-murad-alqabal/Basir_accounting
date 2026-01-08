@@ -38,6 +38,12 @@ impl AccountKind {
             AccountKind::Liability | AccountKind::Equity | AccountKind::Income
         )
     }
+
+    /// Returns true if this kind is compatible with a parent kind.
+    /// In IFRS, a child account must be of the same element kind as its parent.
+    pub fn is_compatible_with(&self, parent_kind: &AccountKind) -> bool {
+        self == parent_kind
+    }
 }
 
 /// Helper to classify accounts into current/non-current (Balance Sheet)
@@ -55,6 +61,22 @@ pub enum AccountClassification {
     ZakahLiabilities, // AAOIFI FAS 9: Deductible Liabilities
 }
 
+/// IFRS 18 Categories for the Statement of Profit or Loss.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, Default)]
+pub enum Ifrs18Category {
+    /// Items that are not classified in other categories
+    #[default]
+    Operating,
+    /// Income and expenses from assets that generate a return individually and largely independently
+    Investing,
+    /// Income and expenses from liabilities that arise from transactions that involve only the raising of finance
+    Financing,
+    /// Income tax as defined in IAS 12
+    IncomeTax,
+    /// Discontinued operations as defined in IFRS 5
+    Discontinued,
+}
+
 /// A generic Account definition.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Account {
@@ -70,6 +92,8 @@ pub struct Account {
     pub kind: AccountKind,
     /// Detailed classification
     pub classification: Option<AccountClassification>,
+    /// IFRS 18 Category (for Profit or Loss classification)
+    pub ifrs18_category: Ifrs18Category,
     /// Parent account ID (for hierarchy)
     pub parent_id: Option<Uuid>,
     /// IFRS Taxonomy tag (e.g., "ifrs-full:CashAndCashEquivalents")
@@ -99,6 +123,7 @@ impl Account {
             name_en: name_en.into(),
             kind,
             classification: None,
+            ifrs18_category: Ifrs18Category::Operating,
             parent_id: None,
             ifrs_tag: None,
             currency: None,
@@ -119,6 +144,24 @@ impl Account {
         self.ifrs_tag = Some(tag.into());
         self
     }
+}
+
+/// Errors related to account hierarchy and taxonomy.
+#[derive(Debug, thiserror::Error)]
+pub enum HierarchyError {
+    #[error("Circular reference detected for account {0}")]
+    CircularReference(Uuid),
+    #[error("Parent account {0} not found")]
+    ParentNotFound(Uuid),
+    #[error("Account {child} kind {child_kind:?} is incompatible with parent {parent} kind {parent_kind:?}")]
+    IncompatibleKind {
+        child: Uuid,
+        child_kind: AccountKind,
+        parent: Uuid,
+        parent_kind: AccountKind,
+    },
+    #[error("Cannot post to account {0} because it has children (not a leaf node)")]
+    NotALeafNode(Uuid),
 }
 
 #[cfg(test)]

@@ -10,8 +10,11 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 Future<void> saveExchangeRate({required ExchangeRateDto dto}) =>
     RustLib.instance.api.crateApiCurrencySaveExchangeRate(dto: dto);
 
-Future<ExchangeRateDto?> getExchangeRate(
-        {required String base, required String target, required String date}) =>
+Future<ExchangeRateDto?> getExchangeRate({
+  required String base,
+  required String target,
+  required String date,
+}) =>
     RustLib.instance.api.crateApiCurrencyGetExchangeRate(
         base: base, target: target, date: date);
 
@@ -20,16 +23,18 @@ Future<List<ExchangeRateDto>> listExchangeRates(
     RustLib.instance.api
         .crateApiCurrencyListExchangeRates(base: base, target: target);
 
-Future<String> performRevaluation(
-        {required String date,
-        required String systemBase,
-        required String unrealizedGainLossAccountId,
-        required AuditMetadataDto metadata}) =>
+Future<String> performRevaluation({
+  required String date,
+  required String systemBase,
+  required String unrealizedGainLossAccountId,
+  required AuditMetadataDto metadata,
+}) =>
     RustLib.instance.api.crateApiCurrencyPerformRevaluation(
-        date: date,
-        systemBase: systemBase,
-        unrealizedGainLossAccountId: unrealizedGainLossAccountId,
-        metadata: metadata);
+      date: date,
+      systemBase: systemBase,
+      unrealizedGainLossAccountId: unrealizedGainLossAccountId,
+      metadata: metadata,
+    );
 
 class ExchangeRateDto {
   const ExchangeRateDto({

@@ -68,6 +68,8 @@ pub struct TrialBalanceLine {
     pub debit_balance: Decimal,
     /// Credit balance (if credit-normal and positive net)
     pub credit_balance: Decimal,
+    /// List of source journal entry IDs contributing to this balance (Drill-down)
+    pub source_entries: Vec<Uuid>,
 }
 
 /// Complete Trial Balance report.
@@ -127,6 +129,59 @@ pub struct FinancialReport {
     pub generated_at: NaiveDate,
 }
 
+/// Management Performance Measure (MPM) per IFRS 18.
+///
+/// Under IFRS 18, entities must disclose measures of performance that
+/// are not defined by IFRS but are used in public communications.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ManagementPerformanceMeasure {
+    /// Name of the measure (e.g., "Adjusted EBITDA")
+    pub name: String,
+    /// Detailed description of why it provides useful information
+    pub description: String,
+    /// The calculated value
+    pub value: Decimal,
+    /// Detailed reconciliation to the most directly comparable IFRS subtotal
+    pub reconciliation: String,
+}
+
+/// IFRS 18 Income Statement Structure.
+///
+/// IFRS 18 introduces mandatory subtotals and categories for the
+/// statement of profit or loss.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Ifrs18IncomeStatement {
+    /// Entity ID
+    pub entity_id: Uuid,
+    /// Reporting period start
+    pub from_date: NaiveDate,
+    /// Reporting period end
+    pub to_date: NaiveDate,
+
+    // Categories
+    /// Operating Category (Income and expenses not in other categories)
+    pub operating: Decimal,
+    /// Investing Category (Income and expenses from assets that generate returns independently)
+    pub investing: Decimal,
+    /// Financing Category (Income and expenses from liabilities that involve raising finance)
+    pub financing: Decimal,
+    /// Income Tax
+    pub income_tax: Decimal,
+    /// Discontinued Operations
+    pub discontinued_operations: Decimal,
+
+    // Subtotals (Mandatory per IFRS 18)
+    /// Operating Profit (Subtotal of all income and expenses in operating category)
+    pub operating_profit: Decimal,
+    /// Profit or loss before financing and income taxes (Operating + Investing)
+    pub profit_before_financing_and_tax: Decimal,
+    /// Total Profit or Loss
+    pub total_profit_or_loss: Decimal,
+
+    /// Disclosed Management Performance Measures
+    pub mpm_disclosures: Vec<ManagementPerformanceMeasure>,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -143,7 +198,7 @@ mod tests {
             credit_movements: Decimal::from(200),
             closing_balance: Decimal::ZERO, // Will calculate
         };
-        
+
         // Assets are debit-normal: 1000 + 500 - 200 = 1300
         assert_eq!(balance.calculate_closing(), Decimal::from(1300));
     }
@@ -160,7 +215,7 @@ mod tests {
             credit_movements: Decimal::from(500),
             closing_balance: Decimal::ZERO,
         };
-        
+
         // Liabilities are credit-normal: 1000 - 200 + 500 = 1300
         assert_eq!(balance.calculate_closing(), Decimal::from(1300));
     }

@@ -30,20 +30,25 @@ Future<SalesInvoiceDto?> getInvoiceById({required String id}) =>
 Future<void> deleteInvoice({required String id}) =>
     RustLib.instance.api.crateApiSalesDeleteInvoice(id: id);
 
-Future<String> createInvoice(
-        {required SalesInvoiceDto invoice,
-        required List<SalesInvoiceLineDto> lines,
-        required AuditMetadataDto metadata}) =>
+Future<String> createInvoice({
+  required SalesInvoiceDto invoice,
+  required List<SalesInvoiceLineDto> lines,
+  required AuditMetadataDto metadata,
+}) =>
     RustLib.instance.api.crateApiSalesCreateInvoice(
-        invoice: invoice, lines: lines, metadata: metadata);
+      invoice: invoice,
+      lines: lines,
+      metadata: metadata,
+    );
 
 Future<void> postInvoice(
         {required String id, required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiSalesPostInvoice(id: id, metadata: metadata);
 
-Future<void> recordCustomerPayment(
-        {required CustomerPaymentDto payment,
-        required AuditMetadataDto metadata}) =>
+Future<void> recordCustomerPayment({
+  required CustomerPaymentDto payment,
+  required AuditMetadataDto metadata,
+}) =>
     RustLib.instance.api.crateApiSalesRecordCustomerPayment(
         payment: payment, metadata: metadata);
 

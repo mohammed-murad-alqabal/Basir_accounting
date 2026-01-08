@@ -418,7 +418,8 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   InventoryValuationReportDto sse_decode_inventory_valuation_report_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   LineDto sse_decode_line_dto(SseDeserializer deserializer);
@@ -457,7 +458,8 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   List<FinancialReportLineDto> sse_decode_list_financial_report_line_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<InventoryItemDto> sse_decode_list_inventory_item_dto(
@@ -654,7 +656,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_box_autoadd_customer_payment_dto(
-      CustomerPaymentDto self, SseSerializer serializer);
+    CustomerPaymentDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_entry_dto(
@@ -729,7 +733,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_inventory_valuation_report_dto(
-      InventoryValuationReportDto self, SseSerializer serializer);
+    InventoryValuationReportDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_line_dto(LineDto self, SseSerializer serializer);
@@ -740,7 +746,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_list_aging_report_line_dto(
-      List<AgingReportLineDto> self, SseSerializer serializer);
+    List<AgingReportLineDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_asset_category_dto(
@@ -770,7 +778,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_list_financial_report_line_dto(
-      List<FinancialReportLineDto> self, SseSerializer serializer);
+    List<FinancialReportLineDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_inventory_item_dto(
@@ -797,7 +807,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_list_sales_invoice_line_dto(
-      List<SalesInvoiceLineDto> self, SseSerializer serializer);
+    List<SalesInvoiceLineDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_standard_dto(
@@ -809,7 +821,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_list_trial_balance_line_dto(
-      List<TrialBalanceLineDto> self, SseSerializer serializer);
+    List<TrialBalanceLineDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_valuation_item_dto(
@@ -832,11 +846,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_opt_box_autoadd_exchange_rate_dto(
-      ExchangeRateDto? self, SseSerializer serializer);
+    ExchangeRateDto? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_box_autoadd_inventory_item_dto(
-      InventoryItemDto? self, SseSerializer serializer);
+    InventoryItemDto? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_box_autoadd_period_dto(
@@ -844,11 +862,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_opt_box_autoadd_purchase_bill_dto(
-      PurchaseBillDto? self, SseSerializer serializer);
+    PurchaseBillDto? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_box_autoadd_sales_invoice_dto(
-      SalesInvoiceDto? self, SseSerializer serializer);
+    SalesInvoiceDto? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_box_autoadd_vendor_dto(
