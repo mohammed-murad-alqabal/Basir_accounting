@@ -1,5 +1,6 @@
 import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:basir_app/features/accounting/application/accounting_service.dart';
 import 'package:basir_app/features/accounting/domain/entities/account.dart';
@@ -349,18 +350,35 @@ class _JournalEntryFormScreenState
 
     setState(() => _isLoading = true);
     try {
+      final now = DateTime.now();
+      final user = ref.read(currentUserProvider);
+
       final entry = JournalEntry(
         id: widget.entry?.id ?? const Uuid().v4(),
         referenceNumber: widget.entry?.referenceNumber ??
             'JE-${DateTime.now().millisecondsSinceEpoch}',
         date: _date,
+        temporal: TemporalJustification(
+          transactionDate: _date,
+          effectiveDate: _date,
+          recordingDate: now,
+        ),
+        standards: StandardsJustification(
+          standardReference:
+              widget.entry?.standards.standardReference ?? 'IAS 1',
+          recognitionBasis:
+              widget.entry?.standards.recognitionBasis ?? 'Manual',
+          measurementBasis:
+              widget.entry?.standards.measurementBasis ?? 'Historical Cost',
+        ),
         description: _descriptionController.text.trim(),
         status: status,
         sourceDocument: 'manual',
         sourceId: 'manual',
-        createdBy: 'user', // TODO(user): Get current user
-        createdAt: widget.entry?.createdAt ?? DateTime.now(),
-        updatedAt: DateTime.now(),
+        createdBy: user?.id ?? 'user',
+        createdAt: widget.entry?.createdAt ?? now,
+        updatedAt: now,
+        postedAt: status == JournalEntryStatus.posted ? now : null,
         lines: _lines
             .map(
               (l) => JournalEntryLine(

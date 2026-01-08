@@ -45,12 +45,8 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 
   /// Initialize flutter_rust_bridge in mock mode.
   /// No libraries for FFI are loaded.
-  static void initMock({
-    required RustLibApi api,
-  }) {
-    instance.initMockImpl(
-      api: api,
-    );
+  static void initMock({required RustLibApi api}) {
+    instance.initMockImpl(api: api);
   }
 
   /// Dispose flutter_rust_bridge
@@ -91,26 +87,32 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 abstract class RustLibApi extends BaseApi {
   bool crateApiCheckHealth();
 
-  Future<String> crateApiCalendarCloseFinancialYear(
-      {required String periodId,
-      required String closingDate,
-      required String retainedEarningsAccountId});
+  Future<String> crateApiCalendarCloseFinancialYear({
+    required String periodId,
+    required String closingDate,
+    required String retainedEarningsAccountId,
+  });
 
   Future<void> crateApiCalendarClosePeriod(
       {required String id, required String userId});
 
-  Future<String> crateApiAccountsCreateAccount(
-      {required AccountDto dto, required AuditMetadataDto metadata});
+  Future<String> crateApiAccountsCreateAccount({
+    required AccountDto dto,
+    required AuditMetadataDto metadata,
+  });
 
   Future<String> crateApiSalesCreateCustomer({required CustomerDto customer});
 
-  Future<String> crateApiSalesCreateInvoice(
-      {required SalesInvoiceDto invoice,
-      required List<SalesInvoiceLineDto> lines,
-      required AuditMetadataDto metadata});
+  Future<String> crateApiSalesCreateInvoice({
+    required SalesInvoiceDto invoice,
+    required List<SalesInvoiceLineDto> lines,
+    required AuditMetadataDto metadata,
+  });
 
-  Future<String> crateApiPurchasingCreatePurchaseBill(
-      {required PurchaseBillDto bill, required AuditMetadataDto metadata});
+  Future<String> crateApiPurchasingCreatePurchaseBill({
+    required PurchaseBillDto bill,
+    required AuditMetadataDto metadata,
+  });
 
   Future<String> crateApiPurchasingCreateVendor({required VendorDto vendor});
 
@@ -125,31 +127,43 @@ abstract class RustLibApi extends BaseApi {
   Future<FinancialReportDto> crateApiReportsGenerateBalanceSheet(
       {required String asOfDate});
 
-  Future<FinancialReportDto> crateApiReportsGenerateCashFlowStatement(
-      {required String fromDate, required String toDate});
+  Future<FinancialReportDto> crateApiReportsGenerateCashFlowStatement({
+    required String fromDate,
+    required String toDate,
+  });
 
-  Future<FinancialReportDto> crateApiReportsGenerateIncomeStatement(
-      {required String fromDate, required String toDate});
+  Future<FinancialReportDto> crateApiReportsGenerateIncomeStatement({
+    required String fromDate,
+    required String toDate,
+  });
 
-  Future<TrialBalanceDto> crateApiReportsGenerateTrialBalance(
-      {required String asOfDate, String? periodStart});
+  Future<TrialBalanceDto> crateApiReportsGenerateTrialBalance({
+    required String asOfDate,
+    String? periodStart,
+  });
 
-  Future<FinancialReportDto> crateApiReportsGenerateZakahStatement(
-      {required String asOfDate, required ZakahCalendarDto calendar});
+  Future<FinancialReportDto> crateApiReportsGenerateZakahStatement({
+    required String asOfDate,
+    required ZakahCalendarDto calendar,
+  });
 
   Future<AccountDto?> crateApiAccountsGetAccountById({required String id});
 
-  Future<List<DrillDownEntryDto>> crateApiReportsGetAccountEntries(
-      {required String accountId,
-      required String periodEnd,
-      String? periodStart});
+  Future<List<DrillDownEntryDto>> crateApiReportsGetAccountEntries({
+    required String accountId,
+    required String periodEnd,
+    String? periodStart,
+  });
 
   Future<String?> crateApiLedgerGetAgentConsensus({required String entryId});
 
   Future<AssetDto?> crateApiAssetsGetAssetById({required String id});
 
-  Future<ExchangeRateDto?> crateApiCurrencyGetExchangeRate(
-      {required String base, required String target, required String date});
+  Future<ExchangeRateDto?> crateApiCurrencyGetExchangeRate({
+    required String base,
+    required String target,
+    required String date,
+  });
 
   Future<SalesInvoiceDto?> crateApiSalesGetInvoiceById({required String id});
 
@@ -194,12 +208,13 @@ abstract class RustLibApi extends BaseApi {
 
   Future<List<InventoryItemDto>> crateApiInventoryListItems();
 
-  Future<List<EntryDto>> crateApiLedgerListJournalEntries(
-      {required PlatformInt64 limit,
-      required PlatformInt64 offset,
-      String? fromDate,
-      String? toDate,
-      String? accountId});
+  Future<List<EntryDto>> crateApiLedgerListJournalEntries({
+    required PlatformInt64 limit,
+    required PlatformInt64 offset,
+    String? fromDate,
+    String? toDate,
+    String? accountId,
+  });
 
   Future<List<StockMovementDto>> crateApiInventoryListMovements(
       {required String itemId});
@@ -210,66 +225,80 @@ abstract class RustLibApi extends BaseApi {
 
   Future<List<VendorDto>> crateApiPurchasingListVendors();
 
-  Future<void> crateApiLedgerLogAgentConsensus(
-      {required String entryId,
-      required String consensusJson,
-      required AuditMetadataDto metadata});
+  Future<void> crateApiLedgerLogAgentConsensus({
+    required String entryId,
+    required String consensusJson,
+    required AuditMetadataDto metadata,
+  });
 
-  Future<String> crateApiCurrencyPerformRevaluation(
-      {required String date,
-      required String systemBase,
-      required String unrealizedGainLossAccountId,
-      required AuditMetadataDto metadata});
+  Future<String> crateApiCurrencyPerformRevaluation({
+    required String date,
+    required String systemBase,
+    required String unrealizedGainLossAccountId,
+    required AuditMetadataDto metadata,
+  });
 
   Future<void> crateApiSalesPostInvoice(
       {required String id, required AuditMetadataDto metadata});
 
-  Future<String> crateApiLedgerPostJournalEntry(
-      {required EntryDto dto, required AuditMetadataDto metadata});
+  Future<String> crateApiLedgerPostJournalEntry({
+    required EntryDto dto,
+    required AuditMetadataDto metadata,
+  });
 
-  Future<void> crateApiPurchasingRecordBillPayment(
-      {required BillPaymentDto payment, required AuditMetadataDto metadata});
+  Future<void> crateApiPurchasingRecordBillPayment({
+    required BillPaymentDto payment,
+    required AuditMetadataDto metadata,
+  });
 
-  Future<void> crateApiSalesRecordCustomerPayment(
-      {required CustomerPaymentDto payment,
-      required AuditMetadataDto metadata});
+  Future<void> crateApiSalesRecordCustomerPayment({
+    required CustomerPaymentDto payment,
+    required AuditMetadataDto metadata,
+  });
 
-  Future<String> crateApiInventoryRecordImpairment(
-      {required String itemId,
-      required String totalImpairmentAmount,
-      required AuditMetadataDto metadata,
-      String? referenceId});
+  Future<String> crateApiInventoryRecordImpairment({
+    required String itemId,
+    required String totalImpairmentAmount,
+    required AuditMetadataDto metadata,
+    String? referenceId,
+  });
 
-  Future<String> crateApiInventoryRecordMovement(
-      {required StockMovementDto movement, required AuditMetadataDto metadata});
+  Future<String> crateApiInventoryRecordMovement({
+    required StockMovementDto movement,
+    required AuditMetadataDto metadata,
+  });
 
-  Future<String> crateApiInventoryRecordPurchase(
-      {required String itemId,
-      required String quantity,
-      required String unitCost,
-      required AuditMetadataDto metadata,
-      String? referenceId});
+  Future<String> crateApiInventoryRecordPurchase({
+    required String itemId,
+    required String quantity,
+    required String unitCost,
+    required AuditMetadataDto metadata,
+    String? referenceId,
+  });
 
-  Future<String> crateApiInventoryRecordSale(
-      {required String itemId,
-      required String quantity,
-      required AuditMetadataDto metadata,
-      String? referenceId});
+  Future<String> crateApiInventoryRecordSale({
+    required String itemId,
+    required String quantity,
+    required AuditMetadataDto metadata,
+    String? referenceId,
+  });
 
   Future<String> crateApiAssetsRegisterAsset({required AssetDto asset});
 
   Future<String> crateApiAssetsRegisterCategory(
       {required AssetCategoryDto category});
 
-  Future<String> crateApiLedgerReverseJournalEntry(
-      {required String entryId,
-      required String reason,
-      required AuditMetadataDto metadata});
+  Future<String> crateApiLedgerReverseJournalEntry({
+    required String entryId,
+    required String reason,
+    required AuditMetadataDto metadata,
+  });
 
-  Future<void> crateApiAssetsRunDepreciationCycle(
-      {required String assetId,
-      required String asOf,
-      required AuditMetadataDto metadata});
+  Future<void> crateApiAssetsRunDepreciationCycle({
+    required String assetId,
+    required String asOf,
+    required AuditMetadataDto metadata,
+  });
 
   Future<void> crateApiCurrencySaveExchangeRate({required ExchangeRateDto dto});
 
@@ -280,13 +309,16 @@ abstract class RustLibApi extends BaseApi {
   Future<List<StandardDto>> crateApiStandardsSearchStandards(
       {required String query});
 
-  Future<void> crateApiAccountsUpdateAccount(
-      {required AccountDto dto, required AuditMetadataDto metadata});
+  Future<void> crateApiAccountsUpdateAccount({
+    required AccountDto dto,
+    required AuditMetadataDto metadata,
+  });
 
-  Future<void> crateApiAccountsUpdateAccountCategory(
-      {required String accountId,
-      required String category,
-      required AuditMetadataDto metadata});
+  Future<void> crateApiAccountsUpdateAccountCategory({
+    required String accountId,
+    required String category,
+    required AuditMetadataDto metadata,
+  });
 
   Future<void> crateApiSalesUpdateCustomer({required CustomerDto customer});
 
@@ -313,25 +345,22 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
             return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 1);
           },
           codec: SseCodec(
-            decodeSuccessData: sse_decode_bool,
-            decodeErrorData: null,
-          ),
+              decodeSuccessData: sse_decode_bool, decodeErrorData: null),
           constMeta: kCrateApiCheckHealthConstMeta,
           argValues: [],
           apiImpl: this,
         ),
       );
 
-  TaskConstMeta get kCrateApiCheckHealthConstMeta => const TaskConstMeta(
-        debugName: 'check_health',
-        argNames: [],
-      );
+  TaskConstMeta get kCrateApiCheckHealthConstMeta =>
+      const TaskConstMeta(debugName: 'check_health', argNames: []);
 
   @override
-  Future<String> crateApiCalendarCloseFinancialYear(
-          {required String periodId,
-          required String closingDate,
-          required String retainedEarningsAccountId}) =>
+  Future<String> crateApiCalendarCloseFinancialYear({
+    required String periodId,
+    required String closingDate,
+    required String retainedEarningsAccountId,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -382,13 +411,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiCalendarClosePeriodConstMeta =>
       const TaskConstMeta(
-        debugName: 'close_period',
-        argNames: ['id', 'userId'],
-      );
+          debugName: 'close_period', argNames: ['id', 'userId']);
 
   @override
-  Future<String> crateApiAccountsCreateAccount(
-          {required AccountDto dto, required AuditMetadataDto metadata}) =>
+  Future<String> crateApiAccountsCreateAccount({
+    required AccountDto dto,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -410,9 +439,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiAccountsCreateAccountConstMeta =>
       const TaskConstMeta(
-        debugName: 'create_account',
-        argNames: ['dto', 'metadata'],
-      );
+          debugName: 'create_account', argNames: ['dto', 'metadata']);
 
   @override
   Future<String> crateApiSalesCreateCustomer({required CustomerDto customer}) =>
@@ -435,16 +462,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiSalesCreateCustomerConstMeta =>
-      const TaskConstMeta(
-        debugName: 'create_customer',
-        argNames: ['customer'],
-      );
+      const TaskConstMeta(debugName: 'create_customer', argNames: ['customer']);
 
   @override
-  Future<String> crateApiSalesCreateInvoice(
-          {required SalesInvoiceDto invoice,
-          required List<SalesInvoiceLineDto> lines,
-          required AuditMetadataDto metadata}) =>
+  Future<String> crateApiSalesCreateInvoice({
+    required SalesInvoiceDto invoice,
+    required List<SalesInvoiceLineDto> lines,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -466,14 +491,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiSalesCreateInvoiceConstMeta => const TaskConstMeta(
-        debugName: 'create_invoice',
-        argNames: ['invoice', 'lines', 'metadata'],
-      );
+      debugName: 'create_invoice', argNames: ['invoice', 'lines', 'metadata']);
 
   @override
-  Future<String> crateApiPurchasingCreatePurchaseBill(
-          {required PurchaseBillDto bill,
-          required AuditMetadataDto metadata}) =>
+  Future<String> crateApiPurchasingCreatePurchaseBill({
+    required PurchaseBillDto bill,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -495,9 +519,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiPurchasingCreatePurchaseBillConstMeta =>
       const TaskConstMeta(
-        debugName: 'create_purchase_bill',
-        argNames: ['bill', 'metadata'],
-      );
+          debugName: 'create_purchase_bill', argNames: ['bill', 'metadata']);
 
   @override
   Future<String> crateApiPurchasingCreateVendor({required VendorDto vendor}) =>
@@ -520,10 +542,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiPurchasingCreateVendorConstMeta =>
-      const TaskConstMeta(
-        debugName: 'create_vendor',
-        argNames: ['vendor'],
-      );
+      const TaskConstMeta(debugName: 'create_vendor', argNames: ['vendor']);
 
   @override
   Future<void> crateApiPurchasingDeleteBill({required String id}) =>
@@ -546,10 +565,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiPurchasingDeleteBillConstMeta =>
-      const TaskConstMeta(
-        debugName: 'delete_bill',
-        argNames: ['id'],
-      );
+      const TaskConstMeta(debugName: 'delete_bill', argNames: ['id']);
 
   @override
   Future<void> crateApiSalesDeleteCustomer({required String id}) =>
@@ -572,10 +588,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiSalesDeleteCustomerConstMeta =>
-      const TaskConstMeta(
-        debugName: 'delete_customer',
-        argNames: ['id'],
-      );
+      const TaskConstMeta(debugName: 'delete_customer', argNames: ['id']);
 
   @override
   Future<void> crateApiSalesDeleteInvoice({required String id}) =>
@@ -597,10 +610,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         ),
       );
 
-  TaskConstMeta get kCrateApiSalesDeleteInvoiceConstMeta => const TaskConstMeta(
-        debugName: 'delete_invoice',
-        argNames: ['id'],
-      );
+  TaskConstMeta get kCrateApiSalesDeleteInvoiceConstMeta =>
+      const TaskConstMeta(debugName: 'delete_invoice', argNames: ['id']);
 
   @override
   Future<void> crateApiPurchasingDeleteVendor({required String id}) =>
@@ -623,10 +634,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiPurchasingDeleteVendorConstMeta =>
-      const TaskConstMeta(
-        debugName: 'delete_vendor',
-        argNames: ['id'],
-      );
+      const TaskConstMeta(debugName: 'delete_vendor', argNames: ['id']);
 
   @override
   Future<FinancialReportDto> crateApiReportsGenerateBalanceSheet(
@@ -651,13 +659,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiReportsGenerateBalanceSheetConstMeta =>
       const TaskConstMeta(
-        debugName: 'generate_balance_sheet',
-        argNames: ['asOfDate'],
-      );
+          debugName: 'generate_balance_sheet', argNames: ['asOfDate']);
 
   @override
-  Future<FinancialReportDto> crateApiReportsGenerateCashFlowStatement(
-          {required String fromDate, required String toDate}) =>
+  Future<FinancialReportDto> crateApiReportsGenerateCashFlowStatement({
+    required String fromDate,
+    required String toDate,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -684,8 +692,10 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<FinancialReportDto> crateApiReportsGenerateIncomeStatement(
-          {required String fromDate, required String toDate}) =>
+  Future<FinancialReportDto> crateApiReportsGenerateIncomeStatement({
+    required String fromDate,
+    required String toDate,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -707,13 +717,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiReportsGenerateIncomeStatementConstMeta =>
       const TaskConstMeta(
-        debugName: 'generate_income_statement',
-        argNames: ['fromDate', 'toDate'],
-      );
+          debugName: 'generate_income_statement',
+          argNames: ['fromDate', 'toDate']);
 
   @override
-  Future<TrialBalanceDto> crateApiReportsGenerateTrialBalance(
-          {required String asOfDate, String? periodStart}) =>
+  Future<TrialBalanceDto> crateApiReportsGenerateTrialBalance({
+    required String asOfDate,
+    String? periodStart,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -740,8 +751,10 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<FinancialReportDto> crateApiReportsGenerateZakahStatement(
-          {required String asOfDate, required ZakahCalendarDto calendar}) =>
+  Future<FinancialReportDto> crateApiReportsGenerateZakahStatement({
+    required String asOfDate,
+    required ZakahCalendarDto calendar,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -788,16 +801,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiAccountsGetAccountByIdConstMeta =>
-      const TaskConstMeta(
-        debugName: 'get_account_by_id',
-        argNames: ['id'],
-      );
+      const TaskConstMeta(debugName: 'get_account_by_id', argNames: ['id']);
 
   @override
-  Future<List<DrillDownEntryDto>> crateApiReportsGetAccountEntries(
-          {required String accountId,
-          required String periodEnd,
-          String? periodStart}) =>
+  Future<List<DrillDownEntryDto>> crateApiReportsGetAccountEntries({
+    required String accountId,
+    required String periodEnd,
+    String? periodStart,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -846,9 +857,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiLedgerGetAgentConsensusConstMeta =>
       const TaskConstMeta(
-        debugName: 'get_agent_consensus',
-        argNames: ['entryId'],
-      );
+          debugName: 'get_agent_consensus', argNames: ['entryId']);
 
   @override
   Future<AssetDto?> crateApiAssetsGetAssetById({required String id}) =>
@@ -870,16 +879,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         ),
       );
 
-  TaskConstMeta get kCrateApiAssetsGetAssetByIdConstMeta => const TaskConstMeta(
-        debugName: 'get_asset_by_id',
-        argNames: ['id'],
-      );
+  TaskConstMeta get kCrateApiAssetsGetAssetByIdConstMeta =>
+      const TaskConstMeta(debugName: 'get_asset_by_id', argNames: ['id']);
 
   @override
-  Future<ExchangeRateDto?> crateApiCurrencyGetExchangeRate(
-          {required String base,
-          required String target,
-          required String date}) =>
+  Future<ExchangeRateDto?> crateApiCurrencyGetExchangeRate({
+    required String base,
+    required String target,
+    required String date,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -902,9 +910,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiCurrencyGetExchangeRateConstMeta =>
       const TaskConstMeta(
-        debugName: 'get_exchange_rate',
-        argNames: ['base', 'target', 'date'],
-      );
+          debugName: 'get_exchange_rate', argNames: ['base', 'target', 'date']);
 
   @override
   Future<SalesInvoiceDto?> crateApiSalesGetInvoiceById({required String id}) =>
@@ -927,10 +933,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiSalesGetInvoiceByIdConstMeta =>
-      const TaskConstMeta(
-        debugName: 'get_invoice_by_id',
-        argNames: ['id'],
-      );
+      const TaskConstMeta(debugName: 'get_invoice_by_id', argNames: ['id']);
 
   @override
   Future<InventoryItemDto?> crateApiInventoryGetItemById(
@@ -954,10 +957,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiInventoryGetItemByIdConstMeta =>
-      const TaskConstMeta(
-        debugName: 'get_item_by_id',
-        argNames: ['id'],
-      );
+      const TaskConstMeta(debugName: 'get_item_by_id', argNames: ['id']);
 
   @override
   Future<List<AgingReportLineDto>> crateApiReportsGetPayablesAging(
@@ -982,9 +982,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiReportsGetPayablesAgingConstMeta =>
       const TaskConstMeta(
-        debugName: 'get_payables_aging',
-        argNames: ['asOfDate'],
-      );
+          debugName: 'get_payables_aging', argNames: ['asOfDate']);
 
   @override
   Future<PeriodDto?> crateApiCalendarGetPeriodByDate({required String date}) =>
@@ -1007,10 +1005,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiCalendarGetPeriodByDateConstMeta =>
-      const TaskConstMeta(
-        debugName: 'get_period_by_date',
-        argNames: ['date'],
-      );
+      const TaskConstMeta(debugName: 'get_period_by_date', argNames: ['date']);
 
   @override
   Future<PurchaseBillDto?> crateApiPurchasingGetPurchaseBillById(
@@ -1035,9 +1030,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiPurchasingGetPurchaseBillByIdConstMeta =>
       const TaskConstMeta(
-        debugName: 'get_purchase_bill_by_id',
-        argNames: ['id'],
-      );
+          debugName: 'get_purchase_bill_by_id', argNames: ['id']);
 
   @override
   Future<List<AgingReportLineDto>> crateApiReportsGetReceivablesAging(
@@ -1062,9 +1055,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiReportsGetReceivablesAgingConstMeta =>
       const TaskConstMeta(
-        debugName: 'get_receivables_aging',
-        argNames: ['asOfDate'],
-      );
+          debugName: 'get_receivables_aging', argNames: ['asOfDate']);
 
   @override
   Future<StandardDto> crateApiStandardsGetStandardInfo(
@@ -1089,9 +1080,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiStandardsGetStandardInfoConstMeta =>
       const TaskConstMeta(
-        debugName: 'get_standard_info',
-        argNames: ['reference'],
-      );
+          debugName: 'get_standard_info', argNames: ['reference']);
 
   @override
   Future<InventoryValuationReportDto> crateApiInventoryGetValuationReport(
@@ -1116,9 +1105,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiInventoryGetValuationReportConstMeta =>
       const TaskConstMeta(
-        debugName: 'get_valuation_report',
-        argNames: ['asOf'],
-      );
+          debugName: 'get_valuation_report', argNames: ['asOf']);
 
   @override
   Future<VendorDto?> crateApiPurchasingGetVendorById({required String id}) =>
@@ -1141,10 +1128,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiPurchasingGetVendorByIdConstMeta =>
-      const TaskConstMeta(
-        debugName: 'get_vendor_by_id',
-        argNames: ['id'],
-      );
+      const TaskConstMeta(debugName: 'get_vendor_by_id', argNames: ['id']);
 
   @override
   Future<void> crateApiInitApi({required String databaseUrl}) =>
@@ -1166,10 +1150,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         ),
       );
 
-  TaskConstMeta get kCrateApiInitApiConstMeta => const TaskConstMeta(
-        debugName: 'init_api',
-        argNames: ['databaseUrl'],
-      );
+  TaskConstMeta get kCrateApiInitApiConstMeta =>
+      const TaskConstMeta(debugName: 'init_api', argNames: ['databaseUrl']);
 
   @override
   Future<List<AccountDto>> crateApiAccountsListAccounts() =>
@@ -1191,10 +1173,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiAccountsListAccountsConstMeta =>
-      const TaskConstMeta(
-        debugName: 'list_accounts',
-        argNames: [],
-      );
+      const TaskConstMeta(debugName: 'list_accounts', argNames: []);
 
   @override
   Future<List<AssetDto>> crateApiAssetsListAssets() => handler.executeNormal(
@@ -1214,10 +1193,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         ),
       );
 
-  TaskConstMeta get kCrateApiAssetsListAssetsConstMeta => const TaskConstMeta(
-        debugName: 'list_assets',
-        argNames: [],
-      );
+  TaskConstMeta get kCrateApiAssetsListAssetsConstMeta =>
+      const TaskConstMeta(debugName: 'list_assets', argNames: []);
 
   @override
   Future<List<AuditRecordDto>> crateApiLedgerListAuditLogs(
@@ -1241,10 +1218,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiLedgerListAuditLogsConstMeta =>
-      const TaskConstMeta(
-        debugName: 'list_audit_logs',
-        argNames: ['entityId'],
-      );
+      const TaskConstMeta(debugName: 'list_audit_logs', argNames: ['entityId']);
 
   @override
   Future<List<AssetCategoryDto>> crateApiAssetsListCategories() =>
@@ -1266,10 +1240,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiAssetsListCategoriesConstMeta =>
-      const TaskConstMeta(
-        debugName: 'list_categories',
-        argNames: [],
-      );
+      const TaskConstMeta(debugName: 'list_categories', argNames: []);
 
   @override
   Future<List<CustomerDto>> crateApiSalesListCustomers() =>
@@ -1290,10 +1261,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         ),
       );
 
-  TaskConstMeta get kCrateApiSalesListCustomersConstMeta => const TaskConstMeta(
-        debugName: 'list_customers',
-        argNames: [],
-      );
+  TaskConstMeta get kCrateApiSalesListCustomersConstMeta =>
+      const TaskConstMeta(debugName: 'list_customers', argNames: []);
 
   @override
   Future<List<ExchangeRateDto>> crateApiCurrencyListExchangeRates(
@@ -1319,9 +1288,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiCurrencyListExchangeRatesConstMeta =>
       const TaskConstMeta(
-        debugName: 'list_exchange_rates',
-        argNames: ['base', 'target'],
-      );
+          debugName: 'list_exchange_rates', argNames: ['base', 'target']);
 
   @override
   Future<List<SalesInvoiceDto>> crateApiSalesListInvoices() =>
@@ -1342,10 +1309,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         ),
       );
 
-  TaskConstMeta get kCrateApiSalesListInvoicesConstMeta => const TaskConstMeta(
-        debugName: 'list_invoices',
-        argNames: [],
-      );
+  TaskConstMeta get kCrateApiSalesListInvoicesConstMeta =>
+      const TaskConstMeta(debugName: 'list_invoices', argNames: []);
 
   @override
   Future<List<InventoryItemDto>> crateApiInventoryListItems() =>
@@ -1366,18 +1331,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         ),
       );
 
-  TaskConstMeta get kCrateApiInventoryListItemsConstMeta => const TaskConstMeta(
-        debugName: 'list_items',
-        argNames: [],
-      );
+  TaskConstMeta get kCrateApiInventoryListItemsConstMeta =>
+      const TaskConstMeta(debugName: 'list_items', argNames: []);
 
   @override
-  Future<List<EntryDto>> crateApiLedgerListJournalEntries(
-          {required PlatformInt64 limit,
-          required PlatformInt64 offset,
-          String? fromDate,
-          String? toDate,
-          String? accountId}) =>
+  Future<List<EntryDto>> crateApiLedgerListJournalEntries({
+    required PlatformInt64 limit,
+    required PlatformInt64 offset,
+    String? fromDate,
+    String? toDate,
+    String? accountId,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -1428,10 +1392,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiInventoryListMovementsConstMeta =>
-      const TaskConstMeta(
-        debugName: 'list_movements',
-        argNames: ['itemId'],
-      );
+      const TaskConstMeta(debugName: 'list_movements', argNames: ['itemId']);
 
   @override
   Future<List<PeriodDto>> crateApiCalendarListPeriods() =>
@@ -1453,10 +1414,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiCalendarListPeriodsConstMeta =>
-      const TaskConstMeta(
-        debugName: 'list_periods',
-        argNames: [],
-      );
+      const TaskConstMeta(debugName: 'list_periods', argNames: []);
 
   @override
   Future<List<PurchaseBillDto>> crateApiPurchasingListPurchaseBills() =>
@@ -1478,10 +1436,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiPurchasingListPurchaseBillsConstMeta =>
-      const TaskConstMeta(
-        debugName: 'list_purchase_bills',
-        argNames: [],
-      );
+      const TaskConstMeta(debugName: 'list_purchase_bills', argNames: []);
 
   @override
   Future<List<VendorDto>> crateApiPurchasingListVendors() =>
@@ -1503,16 +1458,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiPurchasingListVendorsConstMeta =>
-      const TaskConstMeta(
-        debugName: 'list_vendors',
-        argNames: [],
-      );
+      const TaskConstMeta(debugName: 'list_vendors', argNames: []);
 
   @override
-  Future<void> crateApiLedgerLogAgentConsensus(
-          {required String entryId,
-          required String consensusJson,
-          required AuditMetadataDto metadata}) =>
+  Future<void> crateApiLedgerLogAgentConsensus({
+    required String entryId,
+    required String consensusJson,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -1540,11 +1493,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<String> crateApiCurrencyPerformRevaluation(
-          {required String date,
-          required String systemBase,
-          required String unrealizedGainLossAccountId,
-          required AuditMetadataDto metadata}) =>
+  Future<String> crateApiCurrencyPerformRevaluation({
+    required String date,
+    required String systemBase,
+    required String unrealizedGainLossAccountId,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -1600,13 +1554,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiSalesPostInvoiceConstMeta => const TaskConstMeta(
-        debugName: 'post_invoice',
-        argNames: ['id', 'metadata'],
-      );
+      debugName: 'post_invoice', argNames: ['id', 'metadata']);
 
   @override
-  Future<String> crateApiLedgerPostJournalEntry(
-          {required EntryDto dto, required AuditMetadataDto metadata}) =>
+  Future<String> crateApiLedgerPostJournalEntry({
+    required EntryDto dto,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -1628,14 +1582,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiLedgerPostJournalEntryConstMeta =>
       const TaskConstMeta(
-        debugName: 'post_journal_entry',
-        argNames: ['dto', 'metadata'],
-      );
+          debugName: 'post_journal_entry', argNames: ['dto', 'metadata']);
 
   @override
-  Future<void> crateApiPurchasingRecordBillPayment(
-          {required BillPaymentDto payment,
-          required AuditMetadataDto metadata}) =>
+  Future<void> crateApiPurchasingRecordBillPayment({
+    required BillPaymentDto payment,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -1657,14 +1610,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiPurchasingRecordBillPaymentConstMeta =>
       const TaskConstMeta(
-        debugName: 'record_bill_payment',
-        argNames: ['payment', 'metadata'],
-      );
+          debugName: 'record_bill_payment', argNames: ['payment', 'metadata']);
 
   @override
-  Future<void> crateApiSalesRecordCustomerPayment(
-          {required CustomerPaymentDto payment,
-          required AuditMetadataDto metadata}) =>
+  Future<void> crateApiSalesRecordCustomerPayment({
+    required CustomerPaymentDto payment,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -1686,16 +1638,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiSalesRecordCustomerPaymentConstMeta =>
       const TaskConstMeta(
-        debugName: 'record_customer_payment',
-        argNames: ['payment', 'metadata'],
-      );
+          debugName: 'record_customer_payment',
+          argNames: ['payment', 'metadata']);
 
   @override
-  Future<String> crateApiInventoryRecordImpairment(
-          {required String itemId,
-          required String totalImpairmentAmount,
-          required AuditMetadataDto metadata,
-          String? referenceId}) =>
+  Future<String> crateApiInventoryRecordImpairment({
+    required String itemId,
+    required String totalImpairmentAmount,
+    required AuditMetadataDto metadata,
+    String? referenceId,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -1729,9 +1681,10 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<String> crateApiInventoryRecordMovement(
-          {required StockMovementDto movement,
-          required AuditMetadataDto metadata}) =>
+  Future<String> crateApiInventoryRecordMovement({
+    required StockMovementDto movement,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -1753,17 +1706,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiInventoryRecordMovementConstMeta =>
       const TaskConstMeta(
-        debugName: 'record_movement',
-        argNames: ['movement', 'metadata'],
-      );
+          debugName: 'record_movement', argNames: ['movement', 'metadata']);
 
   @override
-  Future<String> crateApiInventoryRecordPurchase(
-          {required String itemId,
-          required String quantity,
-          required String unitCost,
-          required AuditMetadataDto metadata,
-          String? referenceId}) =>
+  Future<String> crateApiInventoryRecordPurchase({
+    required String itemId,
+    required String quantity,
+    required String unitCost,
+    required AuditMetadataDto metadata,
+    String? referenceId,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -1793,11 +1745,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<String> crateApiInventoryRecordSale(
-          {required String itemId,
-          required String quantity,
-          required AuditMetadataDto metadata,
-          String? referenceId}) =>
+  Future<String> crateApiInventoryRecordSale({
+    required String itemId,
+    required String quantity,
+    required AuditMetadataDto metadata,
+    String? referenceId,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -1846,10 +1799,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiAssetsRegisterAssetConstMeta =>
-      const TaskConstMeta(
-        debugName: 'register_asset',
-        argNames: ['asset'],
-      );
+      const TaskConstMeta(debugName: 'register_asset', argNames: ['asset']);
 
   @override
   Future<String> crateApiAssetsRegisterCategory(
@@ -1874,15 +1824,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiAssetsRegisterCategoryConstMeta =>
       const TaskConstMeta(
-        debugName: 'register_category',
-        argNames: ['category'],
-      );
+          debugName: 'register_category', argNames: ['category']);
 
   @override
-  Future<String> crateApiLedgerReverseJournalEntry(
-          {required String entryId,
-          required String reason,
-          required AuditMetadataDto metadata}) =>
+  Future<String> crateApiLedgerReverseJournalEntry({
+    required String entryId,
+    required String reason,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -1910,10 +1859,11 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<void> crateApiAssetsRunDepreciationCycle(
-          {required String assetId,
-          required String asOf,
-          required AuditMetadataDto metadata}) =>
+  Future<void> crateApiAssetsRunDepreciationCycle({
+    required String assetId,
+    required String asOf,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -1962,10 +1912,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiCurrencySaveExchangeRateConstMeta =>
-      const TaskConstMeta(
-        debugName: 'save_exchange_rate',
-        argNames: ['dto'],
-      );
+      const TaskConstMeta(debugName: 'save_exchange_rate', argNames: ['dto']);
 
   @override
   Future<void> crateApiInventorySaveItem({required InventoryItemDto item}) =>
@@ -1987,10 +1934,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         ),
       );
 
-  TaskConstMeta get kCrateApiInventorySaveItemConstMeta => const TaskConstMeta(
-        debugName: 'save_item',
-        argNames: ['item'],
-      );
+  TaskConstMeta get kCrateApiInventorySaveItemConstMeta =>
+      const TaskConstMeta(debugName: 'save_item', argNames: ['item']);
 
   @override
   Future<void> crateApiCalendarSavePeriod({required PeriodDto dto}) =>
@@ -2012,10 +1957,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         ),
       );
 
-  TaskConstMeta get kCrateApiCalendarSavePeriodConstMeta => const TaskConstMeta(
-        debugName: 'save_period',
-        argNames: ['dto'],
-      );
+  TaskConstMeta get kCrateApiCalendarSavePeriodConstMeta =>
+      const TaskConstMeta(debugName: 'save_period', argNames: ['dto']);
 
   @override
   Future<List<StandardDto>> crateApiStandardsSearchStandards(
@@ -2039,14 +1982,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiStandardsSearchStandardsConstMeta =>
-      const TaskConstMeta(
-        debugName: 'search_standards',
-        argNames: ['query'],
-      );
+      const TaskConstMeta(debugName: 'search_standards', argNames: ['query']);
 
   @override
-  Future<void> crateApiAccountsUpdateAccount(
-          {required AccountDto dto, required AuditMetadataDto metadata}) =>
+  Future<void> crateApiAccountsUpdateAccount({
+    required AccountDto dto,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -2068,15 +2010,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiAccountsUpdateAccountConstMeta =>
       const TaskConstMeta(
-        debugName: 'update_account',
-        argNames: ['dto', 'metadata'],
-      );
+          debugName: 'update_account', argNames: ['dto', 'metadata']);
 
   @override
-  Future<void> crateApiAccountsUpdateAccountCategory(
-          {required String accountId,
-          required String category,
-          required AuditMetadataDto metadata}) =>
+  Future<void> crateApiAccountsUpdateAccountCategory({
+    required String accountId,
+    required String category,
+    required AuditMetadataDto metadata,
+  }) =>
       handler.executeNormal(
         NormalTask(
           callFfi: (port_) {
@@ -2124,10 +2065,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiSalesUpdateCustomerConstMeta =>
-      const TaskConstMeta(
-        debugName: 'update_customer',
-        argNames: ['customer'],
-      );
+      const TaskConstMeta(debugName: 'update_customer', argNames: ['customer']);
 
   @override
   Future<void> crateApiPurchasingUpdateVendor({required VendorDto vendor}) =>
@@ -2150,10 +2088,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   TaskConstMeta get kCrateApiPurchasingUpdateVendorConstMeta =>
-      const TaskConstMeta(
-        debugName: 'update_vendor',
-        argNames: ['vendor'],
-      );
+      const TaskConstMeta(debugName: 'update_vendor', argNames: ['vendor']);
 
   @override
   Future<void> crateApiLedgerValidateJournalEntry({required EntryDto dto}) =>
@@ -2177,9 +2112,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiLedgerValidateJournalEntryConstMeta =>
       const TaskConstMeta(
-        debugName: 'validate_journal_entry',
-        argNames: ['dto'],
-      );
+          debugName: 'validate_journal_entry', argNames: ['dto']);
 
   @override
   Future<bool> crateApiInventoryVerifyInventoryChain(
@@ -2204,9 +2137,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiInventoryVerifyInventoryChainConstMeta =>
       const TaskConstMeta(
-        debugName: 'verify_inventory_chain',
-        argNames: ['itemId'],
-      );
+          debugName: 'verify_inventory_chain', argNames: ['itemId']);
 
   @protected
   AnyhowException dco_decode_AnyhowException(dynamic raw) {
@@ -3108,16 +3039,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_ifrs18Category = sse_decode_String(deserializer);
     final var_currency = sse_decode_String(deserializer);
     return AccountDto(
-        id: var_id,
-        code: var_code,
-        nameAr: var_nameAr,
-        nameEn: var_nameEn,
-        kind: var_kind,
-        parentId: var_parentId,
-        ifrsTag: var_ifrsTag,
-        classification: var_classification,
-        ifrs18Category: var_ifrs18Category,
-        currency: var_currency);
+      id: var_id,
+      code: var_code,
+      nameAr: var_nameAr,
+      nameEn: var_nameEn,
+      kind: var_kind,
+      parentId: var_parentId,
+      ifrsTag: var_ifrsTag,
+      classification: var_classification,
+      ifrs18Category: var_ifrs18Category,
+      currency: var_currency,
+    );
   }
 
   @protected
@@ -3133,14 +3065,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_periodOver90 = sse_decode_String(deserializer);
     final var_totalAmount = sse_decode_String(deserializer);
     return AgingReportLineDto(
-        partnerId: var_partnerId,
-        partnerName: var_partnerName,
-        currentAmount: var_currentAmount,
-        period130: var_period130,
-        period3160: var_period3160,
-        period6190: var_period6190,
-        periodOver90: var_periodOver90,
-        totalAmount: var_totalAmount);
+      partnerId: var_partnerId,
+      partnerName: var_partnerName,
+      currentAmount: var_currentAmount,
+      period130: var_period130,
+      period3160: var_period3160,
+      period6190: var_period6190,
+      periodOver90: var_periodOver90,
+      totalAmount: var_totalAmount,
+    );
   }
 
   @protected
@@ -3152,11 +3085,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_defaultDepreciationMethod = sse_decode_String(deserializer);
     final var_defaultUsefulLifeYears = sse_decode_u_32(deserializer);
     return AssetCategoryDto(
-        id: var_id,
-        nameAr: var_nameAr,
-        nameEn: var_nameEn,
-        defaultDepreciationMethod: var_defaultDepreciationMethod,
-        defaultUsefulLifeYears: var_defaultUsefulLifeYears);
+      id: var_id,
+      nameAr: var_nameAr,
+      nameEn: var_nameEn,
+      defaultDepreciationMethod: var_defaultDepreciationMethod,
+      defaultUsefulLifeYears: var_defaultUsefulLifeYears,
+    );
   }
 
   @protected
@@ -3178,21 +3112,22 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_accumDepreciationAccountId = sse_decode_String(deserializer);
     final var_isActive = sse_decode_bool(deserializer);
     return AssetDto(
-        id: var_id,
-        code: var_code,
-        nameAr: var_nameAr,
-        nameEn: var_nameEn,
-        categoryId: var_categoryId,
-        purchaseDate: var_purchaseDate,
-        cost: var_cost,
-        salvageValue: var_salvageValue,
-        usefulLifeYears: var_usefulLifeYears,
-        depreciationMethod: var_depreciationMethod,
-        accumulatedDepreciation: var_accumulatedDepreciation,
-        assetAccountId: var_assetAccountId,
-        depreciationAccountId: var_depreciationAccountId,
-        accumDepreciationAccountId: var_accumDepreciationAccountId,
-        isActive: var_isActive);
+      id: var_id,
+      code: var_code,
+      nameAr: var_nameAr,
+      nameEn: var_nameEn,
+      categoryId: var_categoryId,
+      purchaseDate: var_purchaseDate,
+      cost: var_cost,
+      salvageValue: var_salvageValue,
+      usefulLifeYears: var_usefulLifeYears,
+      depreciationMethod: var_depreciationMethod,
+      accumulatedDepreciation: var_accumulatedDepreciation,
+      assetAccountId: var_assetAccountId,
+      depreciationAccountId: var_depreciationAccountId,
+      accumDepreciationAccountId: var_accumDepreciationAccountId,
+      isActive: var_isActive,
+    );
   }
 
   @protected
@@ -3220,16 +3155,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_previousHash = sse_decode_String(deserializer);
     final var_isVerified = sse_decode_bool(deserializer);
     return AuditRecordDto(
-        recordId: var_recordId,
-        who: var_who,
-        what: var_what,
-        when: var_when,
-        where: var_where,
-        why: var_why,
-        how: var_how,
-        hash: var_hash,
-        previousHash: var_previousHash,
-        isVerified: var_isVerified);
+      recordId: var_recordId,
+      who: var_who,
+      what: var_what,
+      when: var_when,
+      where: var_where,
+      why: var_why,
+      how: var_how,
+      hash: var_hash,
+      previousHash: var_previousHash,
+      isVerified: var_isVerified,
+    );
   }
 
   @protected
@@ -3243,13 +3179,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_bankAccountId = sse_decode_String(deserializer);
     final var_reference = sse_decode_opt_String(deserializer);
     return BillPaymentDto(
-        id: var_id,
-        billId: var_billId,
-        amount: var_amount,
-        paymentDate: var_paymentDate,
-        paymentMethod: var_paymentMethod,
-        bankAccountId: var_bankAccountId,
-        reference: var_reference);
+      id: var_id,
+      billId: var_billId,
+      amount: var_amount,
+      paymentDate: var_paymentDate,
+      paymentMethod: var_paymentMethod,
+      bankAccountId: var_bankAccountId,
+      reference: var_reference,
+    );
   }
 
   @protected
@@ -3367,11 +3304,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_nameEn = sse_decode_String(deserializer);
     final var_taxId = sse_decode_opt_String(deserializer);
     return CustomerDto(
-        id: var_id,
-        code: var_code,
-        nameAr: var_nameAr,
-        nameEn: var_nameEn,
-        taxId: var_taxId);
+      id: var_id,
+      code: var_code,
+      nameAr: var_nameAr,
+      nameEn: var_nameEn,
+      taxId: var_taxId,
+    );
   }
 
   @protected
@@ -3386,13 +3324,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_paymentMethod = sse_decode_String(deserializer);
     final var_reference = sse_decode_opt_String(deserializer);
     return CustomerPaymentDto(
-        id: var_id,
-        invoiceId: var_invoiceId,
-        amount: var_amount,
-        paymentDate: var_paymentDate,
-        bankAccountId: var_bankAccountId,
-        paymentMethod: var_paymentMethod,
-        reference: var_reference);
+      id: var_id,
+      invoiceId: var_invoiceId,
+      amount: var_amount,
+      paymentDate: var_paymentDate,
+      bankAccountId: var_bankAccountId,
+      paymentMethod: var_paymentMethod,
+      reference: var_reference,
+    );
   }
 
   @protected
@@ -3407,13 +3346,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_credit = sse_decode_String(deserializer);
     final var_standardReference = sse_decode_opt_String(deserializer);
     return DrillDownEntryDto(
-        entryId: var_entryId,
-        entryNumber: var_entryNumber,
-        effectiveDate: var_effectiveDate,
-        description: var_description,
-        debit: var_debit,
-        credit: var_credit,
-        standardReference: var_standardReference);
+      entryId: var_entryId,
+      entryNumber: var_entryNumber,
+      effectiveDate: var_effectiveDate,
+      description: var_description,
+      debit: var_debit,
+      credit: var_credit,
+      standardReference: var_standardReference,
+    );
   }
 
   @protected
@@ -3428,14 +3368,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_linkedEntryId = sse_decode_opt_String(deserializer);
     final var_adjustmentReason = sse_decode_opt_String(deserializer);
     return EntryDto(
-        entryId: var_entryId,
-        entryNumber: var_entryNumber,
-        description: var_description,
-        date: var_date,
-        standardRef: var_standardRef,
-        lines: var_lines,
-        linkedEntryId: var_linkedEntryId,
-        adjustmentReason: var_adjustmentReason);
+      entryId: var_entryId,
+      entryNumber: var_entryNumber,
+      description: var_description,
+      date: var_date,
+      standardRef: var_standardRef,
+      lines: var_lines,
+      linkedEntryId: var_linkedEntryId,
+      adjustmentReason: var_adjustmentReason,
+    );
   }
 
   @protected
@@ -3447,11 +3388,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_effectiveDate = sse_decode_String(deserializer);
     final var_source = sse_decode_opt_String(deserializer);
     return ExchangeRateDto(
-        baseCurrency: var_baseCurrency,
-        targetCurrency: var_targetCurrency,
-        rate: var_rate,
-        effectiveDate: var_effectiveDate,
-        source: var_source);
+      baseCurrency: var_baseCurrency,
+      targetCurrency: var_targetCurrency,
+      rate: var_rate,
+      effectiveDate: var_effectiveDate,
+      source: var_source,
+    );
   }
 
   @protected
@@ -3464,11 +3406,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_lines = sse_decode_list_financial_report_line_dto(deserializer);
     final var_generatedAt = sse_decode_String(deserializer);
     return FinancialReportDto(
-        title: var_title,
-        fromDate: var_fromDate,
-        toDate: var_toDate,
-        lines: var_lines,
-        generatedAt: var_generatedAt);
+      title: var_title,
+      fromDate: var_fromDate,
+      toDate: var_toDate,
+      lines: var_lines,
+      generatedAt: var_generatedAt,
+    );
   }
 
   @protected
@@ -3481,11 +3424,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_isTotal = sse_decode_bool(deserializer);
     final var_indentLevel = sse_decode_i_32(deserializer);
     return FinancialReportLineDto(
-        label: var_label,
-        amount: var_amount,
-        isTitle: var_isTitle,
-        isTotal: var_isTotal,
-        indentLevel: var_indentLevel);
+      label: var_label,
+      amount: var_amount,
+      isTitle: var_isTitle,
+      isTotal: var_isTotal,
+      indentLevel: var_indentLevel,
+    );
   }
 
   @protected
@@ -3495,9 +3439,10 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_procedureReference = sse_decode_opt_String(deserializer);
     final var_apiEndpoint = <credential-fixture>(deserializer);
     return HowDto(
-        method: var_method,
-        procedureReference: var_procedureReference,
-        apiEndpoint: <credential-fixture>);
+      method: var_method,
+      procedureReference: var_procedureReference,
+      apiEndpoint: <credential-fixture>,
+    );
   }
 
   @protected
@@ -3526,27 +3471,32 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_cogsAccountId = sse_decode_String(deserializer);
     final var_revenueAccountId = sse_decode_String(deserializer);
     return InventoryItemDto(
-        id: var_id,
-        code: var_code,
-        nameAr: var_nameAr,
-        nameEn: var_nameEn,
-        description: var_description,
-        unit: var_unit,
-        valuationMethod: var_valuationMethod,
-        assetAccountId: var_assetAccountId,
-        cogsAccountId: var_cogsAccountId,
-        revenueAccountId: var_revenueAccountId);
+      id: var_id,
+      code: var_code,
+      nameAr: var_nameAr,
+      nameEn: var_nameEn,
+      description: var_description,
+      unit: var_unit,
+      valuationMethod: var_valuationMethod,
+      assetAccountId: var_assetAccountId,
+      cogsAccountId: var_cogsAccountId,
+      revenueAccountId: var_revenueAccountId,
+    );
   }
 
   @protected
   InventoryValuationReportDto sse_decode_inventory_valuation_report_dto(
-      SseDeserializer deserializer) {
+    SseDeserializer deserializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     final var_asOf = sse_decode_String(deserializer);
     final var_items = sse_decode_list_valuation_item_dto(deserializer);
     final var_totalValue = sse_decode_String(deserializer);
     return InventoryValuationReportDto(
-        asOf: var_asOf, items: var_items, totalValue: var_totalValue);
+      asOf: var_asOf,
+      items: var_items,
+      totalValue: var_totalValue,
+    );
   }
 
   @protected
@@ -3560,13 +3510,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_exchangeRate = sse_decode_opt_String(deserializer);
     final var_originalAmount = sse_decode_opt_String(deserializer);
     return LineDto(
-        accountId: var_accountId,
-        amount: var_amount,
-        isDebit: var_isDebit,
-        description: var_description,
-        originalCurrency: var_originalCurrency,
-        exchangeRate: var_exchangeRate,
-        originalAmount: var_originalAmount);
+      accountId: var_accountId,
+      amount: var_amount,
+      isDebit: var_isDebit,
+      description: var_description,
+      originalCurrency: var_originalCurrency,
+      exchangeRate: var_exchangeRate,
+      originalAmount: var_originalAmount,
+    );
   }
 
   @protected
@@ -3684,7 +3635,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   List<FinancialReportLineDto> sse_decode_list_financial_report_line_dto(
-      SseDeserializer deserializer) {
+    SseDeserializer deserializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
     final len_ = sse_decode_i_32(deserializer);
@@ -3957,12 +3909,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_status = sse_decode_String(deserializer);
     final var_isYearEnd = sse_decode_bool(deserializer);
     return PeriodDto(
-        id: var_id,
-        name: var_name,
-        startDate: var_startDate,
-        endDate: var_endDate,
-        status: var_status,
-        isYearEnd: var_isYearEnd);
+      id: var_id,
+      name: var_name,
+      startDate: var_startDate,
+      endDate: var_endDate,
+      status: var_status,
+      isYearEnd: var_isYearEnd,
+    );
   }
 
   @protected
@@ -3980,17 +3933,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_apAccountId = sse_decode_String(deserializer);
     final var_description = sse_decode_opt_String(deserializer);
     return PurchaseBillDto(
-        id: var_id,
-        billNumber: var_billNumber,
-        vendorId: var_vendorId,
-        billDate: var_billDate,
-        dueDate: var_dueDate,
-        totalAmount: var_totalAmount,
-        balanceDue: var_balanceDue,
-        status: var_status,
-        expenseAccountId: var_expenseAccountId,
-        apAccountId: var_apAccountId,
-        description: var_description);
+      id: var_id,
+      billNumber: var_billNumber,
+      vendorId: var_vendorId,
+      billDate: var_billDate,
+      dueDate: var_dueDate,
+      totalAmount: var_totalAmount,
+      balanceDue: var_balanceDue,
+      status: var_status,
+      expenseAccountId: var_expenseAccountId,
+      apAccountId: var_apAccountId,
+      description: var_description,
+    );
   }
 
   @protected
@@ -4009,18 +3963,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_arAccountId = sse_decode_String(deserializer);
     final var_qrCodeData = sse_decode_opt_String(deserializer);
     return SalesInvoiceDto(
-        id: var_id,
-        invoiceNumber: var_invoiceNumber,
-        customerId: var_customerId,
-        invoiceDate: var_invoiceDate,
-        dueDate: var_dueDate,
-        status: var_status,
-        totalAmount: var_totalAmount,
-        balanceDue: var_balanceDue,
-        description: var_description,
-        incomeAccountId: var_incomeAccountId,
-        arAccountId: var_arAccountId,
-        qrCodeData: var_qrCodeData);
+      id: var_id,
+      invoiceNumber: var_invoiceNumber,
+      customerId: var_customerId,
+      invoiceDate: var_invoiceDate,
+      dueDate: var_dueDate,
+      status: var_status,
+      totalAmount: var_totalAmount,
+      balanceDue: var_balanceDue,
+      description: var_description,
+      incomeAccountId: var_incomeAccountId,
+      arAccountId: var_arAccountId,
+      qrCodeData: var_qrCodeData,
+    );
   }
 
   @protected
@@ -4033,11 +3988,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_unitPrice = sse_decode_String(deserializer);
     final var_taxAmount = sse_decode_String(deserializer);
     return SalesInvoiceLineDto(
-        productId: var_productId,
-        description: var_description,
-        quantity: var_quantity,
-        unitPrice: var_unitPrice,
-        taxAmount: var_taxAmount);
+      productId: var_productId,
+      description: var_description,
+      quantity: var_quantity,
+      unitPrice: var_unitPrice,
+      taxAmount: var_taxAmount,
+    );
   }
 
   @protected
@@ -4064,14 +4020,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_date = sse_decode_String(deserializer);
     final var_description = sse_decode_opt_String(deserializer);
     return StockMovementDto(
-        id: var_id,
-        itemId: var_itemId,
-        movementType: var_movementType,
-        quantity: var_quantity,
-        unitCost: var_unitCost,
-        referenceId: var_referenceId,
-        date: var_date,
-        description: var_description);
+      id: var_id,
+      itemId: var_itemId,
+      movementType: var_movementType,
+      quantity: var_quantity,
+      unitCost: var_unitCost,
+      referenceId: var_referenceId,
+      date: var_date,
+      description: var_description,
+    );
   }
 
   @protected
@@ -4085,13 +4042,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_totalCredits = sse_decode_String(deserializer);
     final var_isBalanced = sse_decode_bool(deserializer);
     return TrialBalanceDto(
-        asOfDate: var_asOfDate,
-        periodStart: var_periodStart,
-        periodEnd: var_periodEnd,
-        lines: var_lines,
-        totalDebits: var_totalDebits,
-        totalCredits: var_totalCredits,
-        isBalanced: var_isBalanced);
+      asOfDate: var_asOfDate,
+      periodStart: var_periodStart,
+      periodEnd: var_periodEnd,
+      lines: var_lines,
+      totalDebits: var_totalDebits,
+      totalCredits: var_totalCredits,
+      isBalanced: var_isBalanced,
+    );
   }
 
   @protected
@@ -4104,11 +4062,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_debitBalance = sse_decode_String(deserializer);
     final var_creditBalance = sse_decode_String(deserializer);
     return TrialBalanceLineDto(
-        accountId: var_accountId,
-        accountCode: var_accountCode,
-        accountName: var_accountName,
-        debitBalance: var_debitBalance,
-        creditBalance: var_creditBalance);
+      accountId: var_accountId,
+      accountCode: var_accountCode,
+      accountName: var_accountName,
+      debitBalance: var_debitBalance,
+      creditBalance: var_creditBalance,
+    );
   }
 
   @protected
@@ -4138,12 +4097,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_unitCost = sse_decode_String(deserializer);
     final var_totalValue = sse_decode_String(deserializer);
     return ValuationItemDto(
-        itemId: var_itemId,
-        itemNameAr: var_itemNameAr,
-        itemNameEn: var_itemNameEn,
-        quantity: var_quantity,
-        unitCost: var_unitCost,
-        totalValue: var_totalValue);
+      itemId: var_itemId,
+      itemNameAr: var_itemNameAr,
+      itemNameEn: var_itemNameEn,
+      quantity: var_quantity,
+      unitCost: var_unitCost,
+      totalValue: var_totalValue,
+    );
   }
 
   @protected
@@ -4155,11 +4115,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_nameEn = sse_decode_String(deserializer);
     final var_taxId = sse_decode_opt_String(deserializer);
     return VendorDto(
-        id: var_id,
-        code: var_code,
-        nameAr: var_nameAr,
-        nameEn: var_nameEn,
-        taxId: var_taxId);
+      id: var_id,
+      code: var_code,
+      nameAr: var_nameAr,
+      nameEn: var_nameEn,
+      taxId: var_taxId,
+    );
   }
 
   @protected
@@ -4172,12 +4133,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_oldValue = sse_decode_opt_String(deserializer);
     final var_newValue = sse_decode_opt_String(deserializer);
     return WhatDto(
-        action: var_action,
-        entityType: var_entityType,
-        entityId: var_entityId,
-        changeDescription: var_changeDescription,
-        oldValue: var_oldValue,
-        newValue: var_newValue);
+      action: var_action,
+      entityType: var_entityType,
+      entityId: var_entityId,
+      changeDescription: var_changeDescription,
+      oldValue: var_oldValue,
+      newValue: var_newValue,
+    );
   }
 
   @protected
@@ -4189,11 +4151,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_deviceId = sse_decode_opt_String(deserializer);
     final var_appVersion = sse_decode_opt_String(deserializer);
     return WhereDto(
-        systemId: var_systemId,
-        ipAddress: var_ipAddress,
-        location: var_location,
-        deviceId: var_deviceId,
-        appVersion: var_appVersion);
+      systemId: var_systemId,
+      ipAddress: var_ipAddress,
+      location: var_location,
+      deviceId: var_deviceId,
+      appVersion: var_appVersion,
+    );
   }
 
   @protected
@@ -4204,10 +4167,11 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_role = sse_decode_String(deserializer);
     final var_sessionId = sse_decode_String(deserializer);
     return WhoDto(
-        userId: var_userId,
-        userName: var_userName,
-        role: var_role,
-        sessionId: var_sessionId);
+      userId: var_userId,
+      userName: var_userName,
+      role: var_role,
+      sessionId: var_sessionId,
+    );
   }
 
   @protected
@@ -4217,9 +4181,10 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     final var_justification = sse_decode_opt_String(deserializer);
     final var_authorizationReference = <credential-fixture>(deserializer);
     return WhyDto(
-        reasonCode: var_reasonCode,
-        justification: var_justification,
-        authorizationReference: <credential-fixture>);
+      reasonCode: var_reasonCode,
+      justification: var_justification,
+      authorizationReference: <credential-fixture>,
+    );
   }
 
   @protected
@@ -4391,7 +4356,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void sse_encode_box_autoadd_customer_payment_dto(
-      CustomerPaymentDto self, SseSerializer serializer) {
+    CustomerPaymentDto self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_customer_payment_dto(self, serializer);
   }
@@ -4572,7 +4539,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void sse_encode_inventory_valuation_report_dto(
-      InventoryValuationReportDto self, SseSerializer serializer) {
+    InventoryValuationReportDto self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_String(self.asOf, serializer);
     sse_encode_list_valuation_item_dto(self.items, serializer);
@@ -4603,7 +4572,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void sse_encode_list_aging_report_line_dto(
-      List<AgingReportLineDto> self, SseSerializer serializer) {
+    List<AgingReportLineDto> self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
     for (final item in self) {
@@ -4653,7 +4624,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void sse_encode_list_drill_down_entry_dto(
-      List<DrillDownEntryDto> self, SseSerializer serializer) {
+    List<DrillDownEntryDto> self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
     for (final item in self) {
@@ -4683,7 +4656,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void sse_encode_list_financial_report_line_dto(
-      List<FinancialReportLineDto> self, SseSerializer serializer) {
+    List<FinancialReportLineDto> self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
     for (final item in self) {
@@ -4750,7 +4725,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void sse_encode_list_sales_invoice_line_dto(
-      List<SalesInvoiceLineDto> self, SseSerializer serializer) {
+    List<SalesInvoiceLineDto> self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
     for (final item in self) {
@@ -4780,7 +4757,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void sse_encode_list_trial_balance_line_dto(
-      List<TrialBalanceLineDto> self, SseSerializer serializer) {
+    List<TrialBalanceLineDto> self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
     for (final item in self) {
@@ -4842,7 +4821,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void sse_encode_opt_box_autoadd_exchange_rate_dto(
-      ExchangeRateDto? self, SseSerializer serializer) {
+    ExchangeRateDto? self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
     sse_encode_bool(self != null, serializer);
@@ -4853,7 +4834,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void sse_encode_opt_box_autoadd_inventory_item_dto(
-      InventoryItemDto? self, SseSerializer serializer) {
+    InventoryItemDto? self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
     sse_encode_bool(self != null, serializer);
@@ -4875,7 +4858,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void sse_encode_opt_box_autoadd_purchase_bill_dto(
-      PurchaseBillDto? self, SseSerializer serializer) {
+    PurchaseBillDto? self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
     sse_encode_bool(self != null, serializer);
@@ -4886,7 +4871,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void sse_encode_opt_box_autoadd_sales_invoice_dto(
-      SalesInvoiceDto? self, SseSerializer serializer) {
+    SalesInvoiceDto? self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
     sse_encode_bool(self != null, serializer);

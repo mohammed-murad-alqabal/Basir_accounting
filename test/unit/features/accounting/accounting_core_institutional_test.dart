@@ -1,4 +1,5 @@
 import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/features/accounting/application/accounting_service.dart';
 import 'package:basir_app/features/accounting/application/accounts_payable_service.dart';
 import 'package:basir_app/features/accounting/application/accounts_receivable_service.dart';
@@ -117,6 +118,7 @@ void main() {
           financialVoucherRepositoryProvider.overrideWithValue(
             InMemoryFinancialVoucherRepository(),
           ),
+          currentUserProvider.overrideWith((ref) => null),
         ],
       );
     });
@@ -315,6 +317,17 @@ void main() {
         id: 'je-supp-001',
         referenceNumber: 'SUPP-001',
         date: now,
+        temporal: TemporalJustification(
+          transactionDate: now,
+          effectiveDate: now,
+          recordingDate: now,
+        ),
+        standards: const StandardsJustification(
+          standardReference:
+              'IFRS 2', // GAAP: Share-based Payment (Placeholder)
+          recognitionBasis: 'Accrual',
+          measurementBasis: 'Historical Cost',
+        ),
         description: 'Purchase from Supplier A',
         status: JournalEntryStatus.posted,
         lines: [
@@ -338,6 +351,7 @@ void main() {
         createdAt: now,
         createdBy: 'test',
         updatedAt: now,
+        postedAt: now,
       );
       await repository.addJournalEntry(entry);
 
