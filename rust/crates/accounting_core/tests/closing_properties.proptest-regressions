@@ -1,0 +1,7 @@
+# Seeds for failure cases proptest has generated in the past. It is
+# automatically read and these particular cases re-run before any
+# novel cases are generated.
+#
+# It is recommended to check this file in to source control so that
+# everyone who runs the test benefits from these saved cases.
+cc 40b7329bac702197cc4fbee32524f050ac432d659f497872530d8e1b0d0a88fa # shrinks to asset_amount = 0.00, liab_amount = 0.00
