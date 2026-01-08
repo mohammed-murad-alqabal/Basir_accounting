@@ -1,0 +1,64 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT\n                c.id as partner_id,\n                c.name_ar as partner_name,\n                COALESCE(SUM(CASE WHEN i.due_date > $1 THEN i.balance_due ELSE 0 END), 0) as \"current_amount!: Decimal\",\n                COALESCE(SUM(CASE WHEN i.due_date <= $1 AND ($1 - i.due_date) <= 30 THEN i.balance_due ELSE 0 END), 0) as \"period_1_30!: Decimal\",\n                COALESCE(SUM(CASE WHEN i.due_date <= $1 AND ($1 - i.due_date) > 30 AND ($1 - i.due_date) <= 60 THEN i.balance_due ELSE 0 END), 0) as \"period_31_60!: Decimal\",\n                COALESCE(SUM(CASE WHEN i.due_date <= $1 AND ($1 - i.due_date) > 60 AND ($1 - i.due_date) <= 90 THEN i.balance_due ELSE 0 END), 0) as \"period_61_90!: Decimal\",\n                COALESCE(SUM(CASE WHEN i.due_date <= $1 AND ($1 - i.due_date) > 90 THEN i.balance_due ELSE 0 END), 0) as \"period_over_90!: Decimal\",\n                COALESCE(SUM(i.balance_due), 0) as \"total_amount!: Decimal\"\n            FROM sales_invoices i\n            JOIN customers c ON i.customer_id = c.id\n            WHERE (i.status = 'Posted' OR i.status = 'PartiallyPaid' OR i.status = 'Open')\n              AND i.balance_due > 0\n              AND i.invoice_date <= $1\n            GROUP BY c.id, c.name_ar\n            ORDER BY c.name_ar\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "partner_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "partner_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "current_amount!: Decimal",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 3,
+        "name": "period_1_30!: Decimal",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 4,
+        "name": "period_31_60!: Decimal",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 5,
+        "name": "period_61_90!: Decimal",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 6,
+        "name": "period_over_90!: Decimal",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 7,
+        "name": "total_amount!: Decimal",
+        "type_info": "Numeric"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Date"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "b23e0451f65287cb891f17a5daf9527b24df80ecb4fe9efb7344e1c8412aa0ce"
+}

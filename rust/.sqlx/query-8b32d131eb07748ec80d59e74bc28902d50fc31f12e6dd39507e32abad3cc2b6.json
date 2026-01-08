@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            SELECT id, code, name, unit, valuation_method, asset_account_id, cogs_account_id, revenue_account_id\n            FROM inventory_items\n            WHERE id = $1\n            ",
+  "query": "\n            SELECT id, code, name_ar, name_en, type, parent_id, ifrs_tag, classification, currency\n            FROM accounts\n            ORDER BY code\n            ",
   "describe": {
     "columns": [
       {
@@ -15,39 +15,42 @@
       },
       {
         "ordinal": 2,
-        "name": "name",
+        "name": "name_ar",
         "type_info": "Text"
       },
       {
         "ordinal": 3,
-        "name": "unit",
+        "name": "name_en",
         "type_info": "Text"
       },
       {
         "ordinal": 4,
-        "name": "valuation_method",
+        "name": "type",
         "type_info": "Text"
       },
       {
         "ordinal": 5,
-        "name": "asset_account_id",
+        "name": "parent_id",
         "type_info": "Uuid"
       },
       {
         "ordinal": 6,
-        "name": "cogs_account_id",
-        "type_info": "Uuid"
+        "name": "ifrs_tag",
+        "type_info": "Text"
       },
       {
         "ordinal": 7,
-        "name": "revenue_account_id",
-        "type_info": "Uuid"
+        "name": "classification",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "currency",
+        "type_info": "Text"
       }
     ],
     "parameters": {
-      "Left": [
-        "Uuid"
-      ]
+      "Left": []
     },
     "nullable": [
       false,
@@ -55,10 +58,11 @@
       false,
       false,
       false,
-      false,
-      false,
-      false
+      true,
+      true,
+      true,
+      true
     ]
   },
-  "hash": "1da7b739f4333cc6aa8bdff853a0bc36da67656ab0c2d5bbe95a872fc69d7bf8"
+  "hash": "8b32d131eb07748ec80d59e74bc28902d50fc31f12e6dd39507e32abad3cc2b6"
 }
