@@ -8,6 +8,7 @@ export 'app_button.dart';
 export 'app_card.dart';
 export 'app_empty_state.dart';
 export 'app_enhanced_button.dart';
+export 'app_error_widget.dart';
 export 'app_loading_indicator.dart';
 export 'app_qr_code.dart';
 export 'app_section_header.dart';

@@ -1,5 +1,7 @@
 import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/features/accounting/domain/entities/account.dart';
+import 'package:basir_app/features/accounting/presentation/providers/accounts_provider.dart';
 import 'package:basir_app/features/inventory/domain/entities/inventory_item.dart';
 import 'package:basir_app/features/inventory/presentation/providers/inventory_provider.dart';
 import 'package:basir_app/shared/widgets/index.dart';
@@ -31,6 +33,10 @@ class _InventoryItemFormScreenState
   late TextEditingController _unitController;
   late TextEditingController _quantityController;
   late TextEditingController _descriptionController;
+  late ValuationMethod _valuationMethod;
+  String? _assetAccountId;
+  String? _cogsAccountId;
+  String? _revenueAccountId;
 
   @override
   void initState() {
@@ -51,6 +57,11 @@ class _InventoryItemFormScreenState
     _descriptionController = TextEditingController(
       text: widget.item?.description ?? '',
     );
+    _valuationMethod =
+        widget.item?.valuationMethod ?? ValuationMethod.weightedAverage;
+    _assetAccountId = widget.item?.assetAccountId;
+    _cogsAccountId = widget.item?.cogsAccountId;
+    _revenueAccountId = widget.item?.revenueAccountId;
   }
 
   @override
@@ -146,7 +157,10 @@ class _InventoryItemFormScreenState
               maxLines: 3,
             ),
             const SizedBox(height: Spacing.xl),
-            AppButton(
+            _buildIAS2Section(context),
+            const SizedBox(height: Spacing.xl),
+            const SizedBox(height: Spacing.xl),
+            AppEnhancedButton(
               label: context.l10n.btnSave,
               isLoading: isLoading,
               onPressed: _save,
@@ -172,6 +186,10 @@ class _InventoryItemFormScreenState
       description: _descriptionController.text.isEmpty
           ? null
           : _descriptionController.text,
+      valuationMethod: _valuationMethod,
+      assetAccountId: _assetAccountId,
+      cogsAccountId: _cogsAccountId,
+      revenueAccountId: _revenueAccountId,
       createdAt: widget.item?.createdAt ?? DateTime.now(),
       updatedAt: DateTime.now(),
     );
@@ -186,4 +204,97 @@ class _InventoryItemFormScreenState
       Navigator.pop(context, true);
     }
   }
+
+  Widget _buildIAS2Section(BuildContext context) {
+    final accountsAsync = ref.watch(accountsProvider);
+
+    return AppCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppSectionHeader(
+            title: context.l10n.labelInventoryValuation,
+            icon: Icons.inventory_2_outlined,
+          ),
+          const SizedBox(height: Spacing.md),
+          DropdownButtonFormField<ValuationMethod>(
+            initialValue: _valuationMethod,
+            decoration: InputDecoration(
+              labelText: context.l10n.labelValuationMethod,
+            ),
+            items: ValuationMethod.values
+                .map(
+                  (v) => DropdownMenuItem(
+                    value: v,
+                    child: Text(
+                      v.localizedName(isArabic: context.isArabic),
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: (v) {
+              if (v != null) setState(() => _valuationMethod = v);
+            },
+          ),
+          const SizedBox(height: Spacing.md),
+          accountsAsync.when(
+            data: (accounts) => Column(
+              children: [
+                _buildAccountDropdown(
+                  label: context.l10n.labelAssetAccountId,
+                  value: _assetAccountId,
+                  accounts: accounts
+                      .where((a) => a.type == AccountType.asset)
+                      .toList(),
+                  onChanged: (v) => setState(() => _assetAccountId = v),
+                ),
+                const SizedBox(height: Spacing.md),
+                _buildAccountDropdown(
+                  label: context.l10n.labelCogsAccountId,
+                  value: _cogsAccountId,
+                  accounts: accounts
+                      .where((a) => a.type == AccountType.expense)
+                      .toList(),
+                  onChanged: (v) => setState(() => _cogsAccountId = v),
+                ),
+                const SizedBox(height: Spacing.md),
+                _buildAccountDropdown(
+                  label: context.l10n.labelRevenueAccountId,
+                  value: _revenueAccountId,
+                  accounts: accounts
+                      .where((a) => a.type == AccountType.revenue)
+                      .toList(),
+                  onChanged: (v) => setState(() => _revenueAccountId = v),
+                ),
+              ],
+            ),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (e, s) => Text('Error loading accounts: $e'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAccountDropdown({
+    required String label,
+    required String? value,
+    required List<Account> accounts,
+    required ValueChanged<String?> onChanged,
+  }) =>
+      DropdownButtonFormField<String>(
+        initialValue: value,
+        decoration: InputDecoration(labelText: label),
+        items: accounts
+            .map(
+              (a) => DropdownMenuItem(
+                value: a.id,
+                child: Text(
+                  '${a.code} - ${a.name(isArabic: context.isArabic)}',
+                ),
+              ),
+            )
+            .toList(),
+        onChanged: onChanged,
+      );
 }

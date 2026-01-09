@@ -206,6 +206,9 @@ class JournalEntryLineModel {
     description = entity.description;
     sourceDocumentRef = entity.sourceDocumentRef;
     costCenterId = entity.costCenterId;
+    originalCurrency = entity.originalCurrency;
+    exchangeRate = entity.exchangeRate?.toString();
+    originalAmount = entity.originalAmount?.toString();
   }
 
   /// معرف الحساب.
@@ -229,6 +232,15 @@ class JournalEntryLineModel {
   /// مركز التكلفة المرتبط.
   String? costCenterId;
 
+  /// العملة الأصلية.
+  String? originalCurrency;
+
+  /// سعر الصرف (كمت نص).
+  String? exchangeRate;
+
+  /// المبلغ بالعملة الأصلية (كنص).
+  String? originalAmount;
+
   /// تحويل النموذج إلى كيان.
   JournalEntryLine toEntity() => JournalEntryLine(
         accountId: accountId,
@@ -238,5 +250,10 @@ class JournalEntryLineModel {
         description: description,
         sourceDocumentRef: sourceDocumentRef,
         costCenterId: costCenterId,
+        originalCurrency: originalCurrency,
+        exchangeRate:
+            exchangeRate != null ? Decimal.parse(exchangeRate!) : null,
+        originalAmount:
+            originalAmount != null ? Decimal.parse(originalAmount!) : null,
       );
 }

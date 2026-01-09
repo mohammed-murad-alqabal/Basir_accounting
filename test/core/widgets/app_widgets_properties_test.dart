@@ -1,6 +1,6 @@
 import 'package:basir_app/core/theme/app_theme.dart';
-import 'package:basir_app/shared/widgets/app_button.dart';
 import 'package:basir_app/shared/widgets/app_card.dart';
+import 'package:basir_app/shared/widgets/app_enhanced_button.dart';
 import 'package:basir_app/shared/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -47,13 +47,14 @@ void main() {
         await tester.pumpWidget(
           MaterialApp(
             theme: AppTheme.lightTheme,
-            home: const MediaQuery(
-              data: MediaQueryData(
+            home: MediaQuery(
+              data: const MediaQueryData(
                 textScaler: TextScaler.linear(2),
               ),
               child: Scaffold(
-                body: AppPrimaryButton(
+                body: AppEnhancedButton(
                   label: 'Button',
+                  onPressed: () {},
                 ),
               ),
             ),
@@ -62,7 +63,7 @@ void main() {
 
         // Find the Text widget inside the button
         final textFinder = find.descendant(
-          of: find.byType(AppPrimaryButton),
+          of: find.byType(AppEnhancedButton),
           matching: find.byType(Text),
         );
         expect(textFinder, findsOneWidget);

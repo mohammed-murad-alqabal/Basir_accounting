@@ -72,7 +72,19 @@ impl InventoryService {
         }
 
         let cogs = if total_outbound_qty > Decimal::ZERO {
-            Self::calculate_cogs(item, total_outbound_qty, movements)?
+            // Important: We only pass Inbound movements to the valuator
+            // because we are calculating the total COGS for all units ever sold.
+            let inbound_only: Vec<StockMovement> = movements
+                .iter()
+                .filter(|m| {
+                    matches!(
+                        m.movement_type,
+                        MovementType::Inbound | MovementType::Adjustment
+                    )
+                })
+                .cloned()
+                .collect();
+            Self::calculate_cogs(item, total_outbound_qty, &inbound_only)?
         } else {
             Decimal::ZERO
         };

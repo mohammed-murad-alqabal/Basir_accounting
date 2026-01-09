@@ -73,6 +73,15 @@ class FinancialVoucher with _$FinancialVoucher {
     /// معرف المستخدم صاحب السند (لعزل البيانات)
     String? userId,
 
+    /// العملة الأصلية (للمعاملات متعددة العملات)
+    String? originalCurrency,
+
+    /// سعر الصرف وقت العملية
+    Decimal? exchangeRate,
+
+    /// المبلغ بالعملة الأصلية
+    Decimal? originalAmount,
+
     /// حالة المزامنة
     @Default(SyncStatus.synced) SyncStatus syncStatus,
 

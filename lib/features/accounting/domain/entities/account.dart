@@ -99,5 +99,5 @@ class Account with _$Account {
   const Account._();
 
   /// الاسم حسب اللغة
-  String name(String locale) => locale == 'ar' ? nameAr : nameEn;
+  String name({required bool isArabic}) => isArabic ? nameAr : nameEn;
 }

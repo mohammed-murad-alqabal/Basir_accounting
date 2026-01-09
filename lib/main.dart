@@ -322,7 +322,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                         style: const TextStyle(color: Colors.white70),
                       ),
                       const SizedBox(height: Spacing.xl),
-                      AppButton(
+                      AppEnhancedButton(
                         label: context.l10n.retryLabel,
                         onPressed: () {
                           setState(() {
@@ -331,8 +331,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                           });
                           unawaited(_initializeApp());
                         },
-                        type: AppButtonType.outlined,
-                        color: Colors.white,
+                        type: AppEnhancedButtonType.outlined,
+                        foregroundColor: Colors.white,
                       ),
                     ],
                   ),

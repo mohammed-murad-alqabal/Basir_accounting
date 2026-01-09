@@ -242,7 +242,7 @@ void main() {
       testWidgets('should display new invoice button', (tester) async {
         await setUpWidgets(tester);
         expect(
-          find.widgetWithText(AppButton, l10n.actionAddInvoice),
+          find.widgetWithText(AppEnhancedButton, l10n.actionAddInvoice),
           findsOneWidget,
         );
       });
@@ -250,7 +250,7 @@ void main() {
       testWidgets('should display new customer button', (tester) async {
         await setUpWidgets(tester);
         expect(
-          find.widgetWithText(AppButton, l10n.actionAddCustomer),
+          find.widgetWithText(AppEnhancedButton, l10n.actionAddCustomer),
           findsOneWidget,
         );
       });
@@ -314,7 +314,7 @@ void main() {
 
         // Scroll to make the button visible
         final buttonFinder =
-            find.widgetWithText(AppButton, l10n.actionAddInvoice);
+            find.widgetWithText(AppEnhancedButton, l10n.actionAddInvoice);
         await tester.ensureVisible(buttonFinder);
         await tester.pump();
 
@@ -346,7 +346,7 @@ void main() {
 
         // Scroll to make the button visible
         final buttonFinder =
-            find.widgetWithText(AppButton, l10n.actionAddCustomer);
+            find.widgetWithText(AppEnhancedButton, l10n.actionAddCustomer);
         await tester.ensureVisible(buttonFinder);
         await tester.pump();
 
@@ -375,8 +375,14 @@ void main() {
         );
 
         // Verify Accounting buttons have their custom semantic labels
-        expect(find.bySemanticsLabel('فتح دليل الحسابات'), findsOneWidget);
-        expect(find.bySemanticsLabel('عرض القيود اليومية'), findsOneWidget);
+        expect(
+          find.bySemanticsLabel(l10n.labelChartOfAccounts),
+          findsOneWidget,
+        );
+        expect(
+          find.bySemanticsLabel(l10n.labelJournalEntries),
+          findsOneWidget,
+        );
       });
     });
   });

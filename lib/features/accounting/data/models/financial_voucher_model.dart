@@ -28,6 +28,9 @@ class FinancialVoucherModel {
     isPosted = voucher.isPosted;
     journalEntryId = voucher.journalEntryId;
     userId = voucher.userId;
+    originalCurrency = voucher.originalCurrency;
+    exchangeRate = voucher.exchangeRate?.toString();
+    originalAmount = voucher.originalAmount?.toString();
     syncStatus = voucher.syncStatus;
     serverUpdatedAt = voucher.serverUpdatedAt;
     isDeleted = voucher.isDeleted;
@@ -91,6 +94,15 @@ class FinancialVoucherModel {
   /// تاريخ آخر تحديث من السيرفر
   DateTime? serverUpdatedAt;
 
+  /// العملة الأصلية.
+  String? originalCurrency;
+
+  /// سعر الصرف (يخزن كنص).
+  String? exchangeRate;
+
+  /// المبلغ بالعملة الأصلية (يخزن كنص).
+  String? originalAmount;
+
   /// هل السجل محذوف
   late bool isDeleted;
 
@@ -110,6 +122,11 @@ class FinancialVoucherModel {
         isPosted: isPosted,
         journalEntryId: journalEntryId,
         userId: userId,
+        originalCurrency: originalCurrency,
+        exchangeRate:
+            exchangeRate != null ? Decimal.parse(exchangeRate!) : null,
+        originalAmount:
+            originalAmount != null ? Decimal.parse(originalAmount!) : null,
         syncStatus: syncStatus,
         serverUpdatedAt: serverUpdatedAt,
         isDeleted: isDeleted,

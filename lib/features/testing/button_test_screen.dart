@@ -5,10 +5,10 @@ import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة اختبار شاملة لجميع أنواع الأزرار الموحدة.
+/// شاشة اختبار شاملة لجميع أنواع الأزرار الموحدة (Enhanced).
 ///
-/// تحتوي على جميع أنواع الأزرار (primary, secondary, text) في حالات مختلفة
-/// (عادي، مع أيقونة، معطل، تحميل، نص طويل) لاختبار عدم وجود قص للنصوص.
+/// تحتوي على جميع أنواع الأزرار (primary, secondary, text, outlined, danger)
+/// في حالات مختلفة اختبار عدم وجود قص للنصوص.
 class ButtonTestScreen extends ConsumerWidget {
   /// ينشئ شاشة اختبار الأزرار.
   const ButtonTestScreen({super.key});
@@ -34,27 +34,27 @@ class ButtonTestScreen extends ConsumerWidget {
                 title: context.l10n.sectionPrimaryButtons,
                 icon: appIcons.touch,
                 children: [
-                  AppButton(label: 'نص قصير', onPressed: () {}),
+                  AppEnhancedButton(label: 'نص قصير', onPressed: () {}),
                   const SizedBox(height: Spacing.md),
-                  AppButton(
+                  AppEnhancedButton(
                     label: 'نص متوسط الطول للاختبار',
                     onPressed: () {},
                   ),
                   const SizedBox(height: Spacing.md),
-                  AppButton(
+                  AppEnhancedButton(
                     label: 'نص طويل جداً جداً قد يسبب مشاكل في العرض',
                     onPressed: () {},
                   ),
                   const SizedBox(height: Spacing.md),
-                  AppButton(
+                  AppEnhancedButton(
                     label: 'مع أيقونة',
                     icon: appIcons.add,
                     onPressed: () {},
                   ),
                   const SizedBox(height: Spacing.md),
-                  const AppButton(label: 'معطل', onPressed: null),
+                  const AppEnhancedButton(label: 'معطل', onPressed: null),
                   const SizedBox(height: Spacing.md),
-                  AppButton(
+                  AppEnhancedButton(
                     label: 'تحميل',
                     onPressed: () {},
                     isLoading: true,
@@ -70,42 +70,64 @@ class ButtonTestScreen extends ConsumerWidget {
                 title: context.l10n.sectionSecondaryButtons,
                 icon: appIcons.circle,
                 children: [
-                  AppButton(
+                  AppEnhancedButton(
                     label: 'نص قصير',
                     onPressed: () {},
-                    type: AppButtonType.secondary,
+                    type: AppEnhancedButtonType.secondary,
                   ),
                   const SizedBox(height: Spacing.md),
-                  AppButton(
+                  AppEnhancedButton(
                     label: 'نص متوسط الطول للاختبار',
                     onPressed: () {},
-                    type: AppButtonType.secondary,
+                    type: AppEnhancedButtonType.secondary,
                   ),
                   const SizedBox(height: Spacing.md),
-                  AppButton(
+                  AppEnhancedButton(
                     label: 'نص طويل جداً جداً قد يسبب مشاكل في العرض',
                     onPressed: () {},
-                    type: AppButtonType.secondary,
+                    type: AppEnhancedButtonType.secondary,
                   ),
                   const SizedBox(height: Spacing.md),
-                  AppButton(
+                  AppEnhancedButton(
                     label: 'مع أيقونة',
                     icon: appIcons.edit,
                     onPressed: () {},
-                    type: AppButtonType.secondary,
+                    type: AppEnhancedButtonType.secondary,
                   ),
                   const SizedBox(height: Spacing.md),
-                  const AppButton(
+                  const AppEnhancedButton(
                     label: 'معطل',
                     onPressed: null,
-                    type: AppButtonType.secondary,
+                    type: AppEnhancedButtonType.secondary,
                   ),
                   const SizedBox(height: Spacing.md),
-                  AppButton(
+                  AppEnhancedButton(
                     label: 'تحميل',
                     onPressed: () {},
                     isLoading: true,
-                    type: AppButtonType.secondary,
+                    type: AppEnhancedButtonType.secondary,
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: Spacing.xl),
+
+              // قسم: أزرار Outlined
+              buildSection(
+                context: context,
+                title: 'Outlined Buttons', // Localize if needed
+                icon: Icons.check_box_outline_blank,
+                children: [
+                  AppEnhancedButton(
+                    label: 'نص قصير',
+                    onPressed: () {},
+                    type: AppEnhancedButtonType.outlined,
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  AppEnhancedButton(
+                    label: 'نص طويل جداً جداً قد يسبب مشاكل في العرض',
+                    onPressed: () {},
+                    type: AppEnhancedButtonType.outlined,
                   ),
                 ],
               ),
@@ -118,35 +140,38 @@ class ButtonTestScreen extends ConsumerWidget {
                 title: context.l10n.sectionTextButtons,
                 icon: appIcons.text,
                 children: [
-                  AppButton(
+                  AppEnhancedButton(
                     label: 'نص قصير',
                     onPressed: () {},
-                    type: AppButtonType.text,
+                    type: AppEnhancedButtonType.text,
                   ),
                   const SizedBox(height: Spacing.md),
-                  AppButton(
+                  AppEnhancedButton(
                     label: 'نص متوسط الطول للاختبار',
                     onPressed: () {},
-                    type: AppButtonType.text,
+                    type: AppEnhancedButtonType.text,
                   ),
                   const SizedBox(height: Spacing.md),
-                  AppButton(
+                  AppEnhancedButton(
                     label: 'نص طويل جداً جداً قد يسبب مشاكل في العرض',
                     onPressed: () {},
-                    type: AppButtonType.text,
+                    type: AppEnhancedButtonType.text,
                   ),
-                  const SizedBox(height: Spacing.md),
-                  AppButton(
-                    label: 'مع أيقونة',
-                    icon: appIcons.delete,
+                ],
+              ),
+
+              const SizedBox(height: Spacing.xl),
+
+              // قسم: أزرار Danger
+              buildSection(
+                context: context,
+                title: 'Danger Buttons',
+                icon: Icons.warning,
+                children: [
+                  AppEnhancedButton(
+                    label: 'حذف',
                     onPressed: () {},
-                    type: AppButtonType.text,
-                  ),
-                  const SizedBox(height: Spacing.md),
-                  const AppButton(
-                    label: 'معطل',
-                    onPressed: null,
-                    type: AppButtonType.text,
+                    type: AppEnhancedButtonType.danger,
                   ),
                 ],
               ),
@@ -162,15 +187,15 @@ class ButtonTestScreen extends ConsumerWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: AppButton(
+                        child: AppEnhancedButton(
                           label: 'إلغاء',
                           onPressed: () {},
-                          type: AppButtonType.secondary,
+                          type: AppEnhancedButtonType.secondary,
                         ),
                       ),
                       const SizedBox(width: Spacing.md),
                       Expanded(
-                        child: AppButton(
+                        child: AppEnhancedButton(
                           label: 'موافق',
                           onPressed: () {},
                         ),
@@ -181,16 +206,17 @@ class ButtonTestScreen extends ConsumerWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: AppButton(
+                        child: AppEnhancedButton(
                           label: 'حذف',
                           icon: appIcons.delete,
                           onPressed: () {},
-                          type: AppButtonType.text,
+                          type: AppEnhancedButtonType.text,
+                          foregroundColor: AppColors.error,
                         ),
                       ),
                       const SizedBox(width: Spacing.md),
                       Expanded(
-                        child: AppButton(
+                        child: AppEnhancedButton(
                           label: 'حفظ',
                           icon: appIcons.save,
                           onPressed: () {},
@@ -226,7 +252,7 @@ class ButtonTestScreen extends ConsumerWidget {
                 const SizedBox(width: Spacing.sm),
                 Expanded(
                   child: Text(
-                    'اختبار الأزرار الموحدة (AppButton)',
+                    'اختبار الأزرار المحسنة (AppEnhancedButton)',
                     style: TextStyle(
                       fontSize: AppTypography.titleLarge,
                       fontWeight: FontWeight.bold,
@@ -238,8 +264,8 @@ class ButtonTestScreen extends ConsumerWidget {
             ),
             const SizedBox(height: Spacing.md),
             Text(
-              'تم توحيد جميع الأزرار في مكون AppButton واحد يدعم '
-              'Cairo Font Metrics ومنع قص النصوص التلقائي.',
+              'تم ترحيل جميع الأزرار إلى AppEnhancedButton الذي يدعم '
+              'مرونة النصوص، التدرجات اللونية، وتفادي القص.',
               style: TextStyle(
                 fontSize: AppTypography.bodyMedium,
                 color: colorScheme.onPrimaryContainer,
@@ -277,8 +303,8 @@ class ButtonTestScreen extends ConsumerWidget {
             ),
             const SizedBox(height: Spacing.sm),
             Text(
-              '• تم حذف AppEnhancedButton بالكامل.\n'
-              '• AppButton هو المكون الوحيد المعتمد حالياً.',
+              '• تم استبدال AppButton بـ AppEnhancedButton.\n'
+              '• AppButton الآن يعتبر Deprecated.',
               style: TextStyle(
                 fontSize: AppTypography.bodyMedium,
                 color: colorScheme.onTertiaryContainer,
