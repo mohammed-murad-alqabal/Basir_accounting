@@ -101,7 +101,7 @@ class AgingReportsScreen extends ConsumerWidget {
       data.add(['--- RECEIVABLES ---', '', '', '', '', '', '']);
       for (final r in receivables) {
         data.add([
-          r.customerName,
+          r.name(isArabic: context.isArabic),
           r.current.toString(),
           r.period1_30.toString(),
           r.period31_60.toString(),
@@ -114,7 +114,7 @@ class AgingReportsScreen extends ConsumerWidget {
       data.add(['--- PAYABLES ---', '', '', '', '', '', '']);
       for (final p in payables) {
         data.add([
-          p.supplierName,
+          p.name(isArabic: context.isArabic),
           p.current.toString(),
           p.period1_30.toString(),
           p.period31_60.toString(),
@@ -185,7 +185,7 @@ class _ReceivableAgingTab extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    report.customerName,
+                    report.name(isArabic: context.isArabic),
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -271,7 +271,7 @@ class _PayableAgingTab extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    report.supplierName,
+                    report.name(isArabic: context.isArabic),
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,

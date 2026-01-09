@@ -119,7 +119,8 @@ class TestHelpers {
         count,
         (index) => CustomerModel()
           ..customerId = 'customer_${index + 1}'
-          ..name = 'عميل ${index + 1}'
+          ..nameAr = 'عميل ${index + 1}'
+          ..nameEn = 'Customer ${index + 1}'
           ..email = 'customer${index + 1}@example.com'
           ..phone = '05${(index + 1).toString().padLeft(8, '0')}'
           ..address = 'عنوان العميل ${index + 1}'

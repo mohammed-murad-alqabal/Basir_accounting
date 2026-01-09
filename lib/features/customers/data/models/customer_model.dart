@@ -56,7 +56,8 @@ class CustomerModel {
   /// **Returns:** نموذج Isar جاهز للحفظ
   factory CustomerModel.fromEntity(Customer customer) => CustomerModel()
     ..customerId = customer.id
-    ..name = customer.name
+    ..nameAr = customer.nameAr
+    ..nameEn = customer.nameEn
     ..taxNumber = customer.taxNumber
     ..phone = customer.phone
     ..email = customer.email
@@ -84,13 +85,13 @@ class CustomerModel {
   @Index(unique: true)
   late String customerId;
 
-  /// اسم العميل الكامل
-  ///
-  /// **مطلوب** - لا يمكن أن يكون فارغًا.
-  ///
-  /// **مثال:** 'أحمد محمد علي'
+  /// اسم العميل بالعربية
   @Index()
-  late String name;
+  late String nameAr;
+
+  /// اسم العميل بالإنجليزية
+  @Index()
+  late String nameEn;
 
   /// الرقم الضريبي للعميل (اختياري)
   String? taxNumber;
@@ -168,7 +169,8 @@ class CustomerModel {
   /// **Returns:** كيان العميل (Customer Entity)
   Customer toEntity() => Customer(
         id: customerId,
-        name: name,
+        nameAr: nameAr,
+        nameEn: nameEn,
         taxNumber: taxNumber,
         phone: phone,
         email: email,

@@ -51,7 +51,8 @@ void main() {
 
       final newCustomer = Customer(
         id: 'test-3',
-        name: 'Test Customer',
+        nameEn: 'Test Customer',
+        nameAr: 'Test Customer',
         phone: '0501234567',
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
@@ -75,7 +76,8 @@ void main() {
 
       final newCustomer = Customer(
         id: 'test-3',
-        name: 'Test Customer',
+        nameEn: 'Test Customer',
+        nameAr: 'Test Customer',
         phone: '0501234567',
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
@@ -101,7 +103,8 @@ void main() {
 
       final updatedCustomer = Customer(
         id: 'test-1',
-        name: 'Updated Name',
+        nameEn: 'Updated Name',
+        nameAr: 'Updated Name',
         phone: '0509876543',
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
@@ -125,7 +128,8 @@ void main() {
 
       final updatedCustomer = Customer(
         id: 'test-1',
-        name: 'Updated Name',
+        nameEn: 'Updated Name',
+        nameAr: 'Updated Name',
         phone: '0509876543',
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),

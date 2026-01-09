@@ -17,7 +17,8 @@ class MockCustomerRepository implements CustomerRepository {
             [
               Customer(
                 id: 'test-1',
-                name: 'أحمد محمد',
+                nameAr: 'أحمد محمد',
+                nameEn: 'Ahmed Mohammed',
                 phone: '0501234567',
                 email: 'ahmed@test.com',
                 createdAt: DateTime(2024),
@@ -25,7 +26,8 @@ class MockCustomerRepository implements CustomerRepository {
               ),
               Customer(
                 id: 'test-2',
-                name: 'سارة علي',
+                nameAr: 'سارة علي',
+                nameEn: 'Sara Ali',
                 phone: '0509876543',
                 email: 'sara@test.com',
                 createdAt: DateTime(2024, 1, 2),
@@ -137,7 +139,8 @@ class MockCustomerRepository implements CustomerRepository {
     return _customers
         .where(
           (c) =>
-              c.name.toLowerCase().contains(lowerQuery) ||
+              c.nameAr.toLowerCase().contains(lowerQuery) ||
+              c.nameEn.toLowerCase().contains(lowerQuery) ||
               (c.phone?.contains(query) ?? false) ||
               (c.email?.toLowerCase().contains(lowerQuery) ?? false),
         )

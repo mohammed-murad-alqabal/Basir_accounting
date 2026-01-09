@@ -375,4 +375,31 @@ mod tests {
             Err(EntryValidationError::StandardsReferenceNotFound(_))
         ));
     }
+
+    #[test]
+    fn test_validate_currency_success() {
+        let mut entry = make_entry(Decimal::from(375), Decimal::from(375), "IFRS 15.35");
+        // 100 USD * 3.75 = 375 SAR
+        entry.lines[0].original_currency = Some("USD".to_string());
+        entry.lines[0].original_amount = Some(Decimal::from(100));
+        entry.lines[0].exchange_rate = Some(Decimal::from_str_exact("3.75").unwrap());
+
+        assert!(validate_currency(&entry).is_ok());
+    }
+
+    #[test]
+    fn test_validate_currency_mismatch() {
+        let mut entry = make_entry(Decimal::from(375), Decimal::from(375), "IFRS 15.35");
+        // 100 USD * 3.75 = 375 SAR, but we put 380 in functional
+        entry.lines[0].debit_amount = Decimal::from(380);
+        entry.lines[0].original_currency = Some("USD".to_string());
+        entry.lines[0].original_amount = Some(Decimal::from(100));
+        entry.lines[0].exchange_rate = Some(Decimal::from_str_exact("3.75").unwrap());
+
+        let result = validate_currency(&entry);
+        assert!(matches!(
+            result,
+            Err(EntryValidationError::CurrencyMismatch(_))
+        ));
+    }
 }

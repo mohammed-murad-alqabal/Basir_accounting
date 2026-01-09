@@ -31,7 +31,8 @@ void main() {
       test('should add customer successfully', () async {
         // Arrange
         final customer = MockData.createTestCustomer(
-          name: 'أحمد محمد',
+          nameEn: 'أحمد محمد',
+          nameAr: 'أحمد محمد',
           phone: '0501234567',
           userId: testUserId,
         );
@@ -42,7 +43,7 @@ void main() {
 
         // Assert
         expect(customers.length, 1);
-        expect(customers.first.name, 'أحمد محمد');
+        expect(customers.first.nameAr, 'أحمد محمد');
         expect(customers.first.phone, '0501234567');
       });
 
@@ -63,7 +64,8 @@ void main() {
       test('should preserve all customer data', () async {
         // Arrange
         final customer = MockData.createTestCustomer(
-          name: 'فاطمة علي',
+          nameEn: 'فاطمة علي',
+          nameAr: 'فاطمة علي',
           phone: '0507654321',
           email: 'fatima@example.com',
           address: 'جدة، السعودية',
@@ -76,7 +78,7 @@ void main() {
         final savedCustomer = customers.first;
 
         // Assert
-        expect(savedCustomer.name, customer.name);
+        expect(savedCustomer.nameAr, customer.nameAr);
         expect(savedCustomer.phone, customer.phone);
         expect(savedCustomer.email, customer.email);
         expect(savedCustomer.address, customer.address);
@@ -108,9 +110,12 @@ void main() {
 
       test('should return customers in correct order', () async {
         // Arrange
-        final customer1 = MockData.createTestCustomer(name: 'أحمد');
-        final customer2 = MockData.createTestCustomer(name: 'بدر');
-        final customer3 = MockData.createTestCustomer(name: 'خالد');
+        final customer1 =
+            MockData.createTestCustomer(nameEn: 'أحمد', nameAr: 'أحمد');
+        final customer2 =
+            MockData.createTestCustomer(nameEn: 'بدر', nameAr: 'بدر');
+        final customer3 =
+            MockData.createTestCustomer(nameEn: 'خالد', nameAr: 'خالد');
 
         await repository.addCustomer(customer1);
         await repository.addCustomer(customer2);
@@ -122,9 +127,9 @@ void main() {
         // Assert
         expect(customers.length, 3);
         // التحقق من أن جميع العملاء موجودون
-        expect(customers.any((c) => c.name == 'أحمد'), isTrue);
-        expect(customers.any((c) => c.name == 'بدر'), isTrue);
-        expect(customers.any((c) => c.name == 'خالد'), isTrue);
+        expect(customers.any((c) => c.nameAr == 'أحمد'), isTrue);
+        expect(customers.any((c) => c.nameAr == 'بدر'), isTrue);
+        expect(customers.any((c) => c.nameAr == 'خالد'), isTrue);
       });
     });
 
@@ -133,7 +138,8 @@ void main() {
         // Arrange
         final customer = MockData.createTestCustomer(
           id: 'test-customer-123',
-          name: 'عميل محدد',
+          nameEn: 'عميل محدد',
+          nameAr: 'عميل محدد',
           userId: testUserId,
         );
         await repository.addCustomer(customer);
@@ -145,7 +151,7 @@ void main() {
 
         // Assert
         expect(foundCustomer, isNotNull);
-        expect(foundCustomer?.name, 'عميل محدد');
+        expect(foundCustomer?.nameAr, 'عميل محدد');
       });
 
       test('should return null when customer does not exist', () async {
@@ -174,7 +180,7 @@ void main() {
         // Assert
         expect(foundCustomer, isNotNull);
         expect(foundCustomer?.id, targetCustomer.id);
-        expect(foundCustomer?.name, targetCustomer.name);
+        expect(foundCustomer?.nameAr, targetCustomer.nameAr);
       });
     });
 
@@ -183,7 +189,8 @@ void main() {
         // Arrange
         final customer = MockData.createTestCustomer(
           id: 'test-customer-update',
-          name: 'اسم قديم',
+          nameEn: 'اسم قديم',
+          nameAr: 'اسم قديم',
           phone: '0501111111',
           userId: testUserId,
         );
@@ -191,7 +198,8 @@ void main() {
 
         // Act
         final updatedCustomer = customer.copyWith(
-          name: 'اسم جديد',
+          nameEn: 'اسم جديد',
+          nameAr: 'اسم جديد',
           phone: '0502222222',
         );
         await repository.updateCustomer(updatedCustomer);
@@ -200,7 +208,7 @@ void main() {
         final foundCustomer = await repository.getCustomerById(
           'test-customer-update',
         );
-        expect(foundCustomer?.name, 'اسم جديد');
+        expect(foundCustomer?.nameAr, 'اسم جديد');
         expect(foundCustomer?.phone, '0502222222');
       });
 
@@ -208,7 +216,8 @@ void main() {
         // Arrange
         final customer = MockData.createTestCustomer(
           id: 'test-customer-partial',
-          name: 'اسم أصلي',
+          nameEn: 'اسم أصلي',
+          nameAr: 'اسم أصلي',
           phone: '0501111111',
           email: 'original@example.com',
           userId: testUserId,
@@ -216,14 +225,15 @@ void main() {
         await repository.addCustomer(customer);
 
         // Act - تحديث الاسم فقط
-        final updatedCustomer = customer.copyWith(name: 'اسم محدث');
+        final updatedCustomer =
+            customer.copyWith(nameEn: 'اسم محدث', nameAr: 'اسم محدث');
         await repository.updateCustomer(updatedCustomer);
 
         // Assert
         final foundCustomer = await repository.getCustomerById(
           'test-customer-partial',
         );
-        expect(foundCustomer?.name, 'اسم محدث');
+        expect(foundCustomer?.nameAr, 'اسم محدث');
         expect(foundCustomer?.phone, '0501111111'); // لم يتغير
         expect(foundCustomer?.email, 'original@example.com'); // لم يتغير
       });
@@ -232,24 +242,27 @@ void main() {
         // Arrange
         final customer1 = MockData.createTestCustomer(
           id: 'customer-1',
-          name: 'عميل 1',
+          nameEn: 'عميل 1',
+          nameAr: 'عميل 1',
         );
         final customer2 = MockData.createTestCustomer(
           id: 'customer-2',
-          name: 'عميل 2',
+          nameEn: 'عميل 2',
+          nameAr: 'عميل 2',
         );
         await repository.addCustomer(customer1);
         await repository.addCustomer(customer2);
 
         // Act - تحديث العميل الأول فقط
-        final updatedCustomer1 = customer1.copyWith(name: 'عميل 1 محدث');
+        final updatedCustomer1 =
+            customer1.copyWith(nameEn: 'عميل 1 محدث', nameAr: 'عميل 1 محدث');
         await repository.updateCustomer(updatedCustomer1);
 
         // Assert
         final foundCustomer1 = await repository.getCustomerById('customer-1');
         final foundCustomer2 = await repository.getCustomerById('customer-2');
-        expect(foundCustomer1?.name, 'عميل 1 محدث');
-        expect(foundCustomer2?.name, 'عميل 2'); // لم يتغير
+        expect(foundCustomer1?.nameAr, 'عميل 1 محدث');
+        expect(foundCustomer2?.nameAr, 'عميل 2'); // لم يتغير
       });
     });
 
@@ -322,13 +335,25 @@ void main() {
       test('should find customers by name', () async {
         // Arrange
         await repository.addCustomer(
-          MockData.createTestCustomer(name: 'أحمد محمد', userId: testUserId),
+          MockData.createTestCustomer(
+            nameEn: 'أحمد محمد',
+            nameAr: 'أحمد محمد',
+            userId: testUserId,
+          ),
         );
         await repository.addCustomer(
-          MockData.createTestCustomer(name: 'محمد علي', userId: testUserId),
+          MockData.createTestCustomer(
+            nameEn: 'محمد علي',
+            nameAr: 'محمد علي',
+            userId: testUserId,
+          ),
         );
         await repository.addCustomer(
-          MockData.createTestCustomer(name: 'فاطمة أحمد', userId: testUserId),
+          MockData.createTestCustomer(
+            nameEn: 'فاطمة أحمد',
+            nameAr: 'فاطمة أحمد',
+            userId: testUserId,
+          ),
         );
 
         // Act
@@ -336,16 +361,29 @@ void main() {
 
         // Assert
         expect(results.length, 2);
-        expect(results.every((c) => c.name.contains('محمد')), isTrue);
+        expect(
+          results.every(
+            (c) => c.nameAr.contains('محمد') || c.nameEn.contains('محمد'),
+          ),
+          isTrue,
+        );
       });
 
       test('should return empty list when no matches', () async {
         // Arrange
         await repository.addCustomer(
-          MockData.createTestCustomer(name: 'أحمد', userId: testUserId),
+          MockData.createTestCustomer(
+            nameEn: 'أحمد',
+            nameAr: 'أحمد',
+            userId: testUserId,
+          ),
         );
         await repository.addCustomer(
-          MockData.createTestCustomer(name: 'علي', userId: testUserId),
+          MockData.createTestCustomer(
+            nameEn: 'علي',
+            nameAr: 'علي',
+            userId: testUserId,
+          ),
         );
 
         // Act
@@ -358,7 +396,7 @@ void main() {
       test('should be case insensitive', () async {
         // Arrange
         await repository.addCustomer(
-          MockData.createTestCustomer(name: 'أحمد محمد'),
+          MockData.createTestCustomer(nameEn: 'أحمد محمد', nameAr: 'أحمد محمد'),
         );
 
         // Act

@@ -9,10 +9,17 @@ import 'package:basir_app/features/accounting/data/repositories/financial_year_r
 import 'package:basir_app/features/accounting/domain/repositories/financial_voucher_repository.dart';
 import 'package:basir_app/features/accounting/domain/repositories/financial_year_repository.dart';
 import 'package:basir_app/features/analytics/domain/entities/analytics_event.dart';
+import 'package:basir_app/features/assets/data/models/asset_category_model.dart';
+import 'package:basir_app/features/assets/data/models/fixed_asset_model.dart';
+import 'package:basir_app/features/assets/data/repositories/asset_repository_impl.dart';
+import 'package:basir_app/features/assets/domain/repositories/asset_repository.dart';
 import 'package:basir_app/features/customers/data/models/customer_model.dart';
 import 'package:basir_app/features/customers/data/repositories/customer_repository_impl.dart';
 import 'package:basir_app/features/customers/data/services/contact_service.dart';
 import 'package:basir_app/features/customers/domain/repositories/customer_repository.dart';
+import 'package:basir_app/features/inventory/data/models/inventory_item_model.dart';
+import 'package:basir_app/features/inventory/data/repositories/inventory_repository_impl.dart';
+import 'package:basir_app/features/inventory/domain/repositories/inventory_repository.dart';
 import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
 import 'package:basir_app/features/invoices/data/repositories/invoice_repository_impl.dart';
 import 'package:basir_app/features/invoices/data/services/sharing_service.dart';
@@ -97,6 +104,9 @@ final isarProvider = FutureProvider<Isar>((ref) async {
         AnalyticsEventSchema,
         ProfileModelSchema,
         BusinessSettingsModelSchema,
+        InventoryItemModelSchema,
+        FixedAssetModelSchema,
+        AssetCategoryModelSchema,
       ],
       directory: dir.path,
       name: 'basir_db',
@@ -185,4 +195,24 @@ final businessSettingsRepositoryProvider =
   if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
   final user = ref.watch(currentUserProvider);
   return BusinessSettingsRepositoryImpl(isar: isar, userId: user?.id);
+});
+
+/// مزود مستودع المخزون (Inventory Repository)
+final inventoryRepositoryProvider = Provider<InventoryRepository>((ref) {
+  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
+  if (isar == null) {
+    throw Exception('قاعدة البيانات غير جاهزة');
+  }
+  final user = ref.watch(currentUserProvider);
+  return InventoryRepositoryImpl(isar: isar, userId: user?.id);
+});
+
+/// مزود مستودع الأصول (Asset Repository)
+final assetRepositoryProvider = Provider<AssetRepository>((ref) {
+  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
+  if (isar == null) {
+    throw Exception('قاعدة البيانات غير جاهزة');
+  }
+  final user = ref.watch(currentUserProvider);
+  return AssetRepositoryImpl(isar: isar, userId: user?.id);
 });

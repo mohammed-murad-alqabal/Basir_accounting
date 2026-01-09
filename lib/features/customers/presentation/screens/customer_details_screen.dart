@@ -51,7 +51,9 @@ class CustomerDetailsScreen extends ConsumerWidget {
                 radius: 50,
                 backgroundColor: AppColors.primary.withValues(alpha: 0.2),
                 child: Text(
-                  customer.name.isNotEmpty ? customer.name[0] : '؟',
+                  customer.name(isArabic: context.isArabic).isNotEmpty
+                      ? customer.name(isArabic: context.isArabic)[0]
+                      : '؟',
                   style: const TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
@@ -65,7 +67,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
             // اسم العميل
             Center(
               child: Text(
-                customer.name,
+                customer.name(isArabic: context.isArabic),
                 style: const TextStyle(
                   fontSize: AppTypography.titleLarge,
                   fontWeight: FontWeight.bold,
@@ -220,7 +222,11 @@ class CustomerDetailsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(context.l10n.actionDeleteCustomer),
-        content: Text(context.l10n.msgConfirmDeleteCustomer(customer.name)),
+        content: Text(
+          context.l10n.msgConfirmDeleteCustomer(
+            customer.name(isArabic: context.isArabic),
+          ),
+        ),
         actions: [
           AppButton(
             label: context.l10n.dialogCancel,
