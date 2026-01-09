@@ -2516,8 +2516,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   InventoryItemDto dco_decode_inventory_item_dto(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
-    if (arr.length != 10)
-      throw Exception('unexpected arr length: expect 10 but see ${arr.length}');
+    if (arr.length != 14)
+      throw Exception('unexpected arr length: expect 14 but see ${arr.length}');
     return InventoryItemDto(
       id: dco_decode_opt_String(arr[0]),
       code: dco_decode_String(arr[1]),
@@ -2526,9 +2526,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       description: dco_decode_opt_String(arr[4]),
       unit: dco_decode_String(arr[5]),
       valuationMethod: dco_decode_String(arr[6]),
-      assetAccountId: dco_decode_String(arr[7]),
-      cogsAccountId: dco_decode_String(arr[8]),
-      revenueAccountId: dco_decode_String(arr[9]),
+      purchasePrice: dco_decode_opt_String(arr[7]),
+      salePrice: dco_decode_opt_String(arr[8]),
+      assetAccountId: dco_decode_String(arr[9]),
+      cogsAccountId: dco_decode_String(arr[10]),
+      revenueAccountId: dco_decode_String(arr[11]),
+      createdAt: dco_decode_String(arr[12]),
+      updatedAt: dco_decode_String(arr[13]),
     );
   }
 
@@ -3458,9 +3462,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var var_description = sse_decode_opt_String(deserializer);
     var var_unit = sse_decode_String(deserializer);
     var var_valuationMethod = sse_decode_String(deserializer);
+    var var_purchasePrice = sse_decode_opt_String(deserializer);
+    var var_salePrice = sse_decode_opt_String(deserializer);
     var var_assetAccountId = sse_decode_String(deserializer);
     var var_cogsAccountId = sse_decode_String(deserializer);
     var var_revenueAccountId = sse_decode_String(deserializer);
+    var var_createdAt = sse_decode_String(deserializer);
+    var var_updatedAt = sse_decode_String(deserializer);
     return InventoryItemDto(
         id: var_id,
         code: var_code,
@@ -3469,9 +3477,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         description: var_description,
         unit: var_unit,
         valuationMethod: var_valuationMethod,
+        purchasePrice: var_purchasePrice,
+        salePrice: var_salePrice,
         assetAccountId: var_assetAccountId,
         cogsAccountId: var_cogsAccountId,
-        revenueAccountId: var_revenueAccountId);
+        revenueAccountId: var_revenueAccountId,
+        createdAt: var_createdAt,
+        updatedAt: var_updatedAt);
   }
 
   @protected
@@ -4504,9 +4516,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_opt_String(self.description, serializer);
     sse_encode_String(self.unit, serializer);
     sse_encode_String(self.valuationMethod, serializer);
+    sse_encode_opt_String(self.purchasePrice, serializer);
+    sse_encode_opt_String(self.salePrice, serializer);
     sse_encode_String(self.assetAccountId, serializer);
     sse_encode_String(self.cogsAccountId, serializer);
     sse_encode_String(self.revenueAccountId, serializer);
+    sse_encode_String(self.createdAt, serializer);
+    sse_encode_String(self.updatedAt, serializer);
   }
 
   @protected

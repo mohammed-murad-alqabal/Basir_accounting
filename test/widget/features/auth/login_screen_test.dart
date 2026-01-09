@@ -3,7 +3,7 @@
 library;
 
 import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/auth/data/services/auth_service.dart';
+import 'package:basir_app/features/auth/application/auth_service.dart';
 import 'package:basir_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:basir_app/l10n/app_localizations.dart';
 import 'package:basir_app/shared/widgets/index.dart';
@@ -91,7 +91,11 @@ void main() {
         await tester.enterText(find.byType(AppTextField).last, 'password123');
         await tester.pump();
 
-        final loginButton = find.byType(AppPrimaryButton);
+        final loginButton = find.byWidgetPredicate(
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
+        );
         await tester.ensureVisible(loginButton);
         await tester.tap(loginButton);
 
@@ -115,7 +119,11 @@ void main() {
           'after guest login', (tester) async {
         await setUpWidgets(tester);
 
-        final guestButton = find.byType(AppSecondaryButton);
+        final guestButton = find.byWidgetPredicate(
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.secondary,
+        );
         await tester.ensureVisible(guestButton);
         await tester.tap(guestButton);
 
@@ -150,7 +158,11 @@ void main() {
         await tester.enterText(find.byType(AppTextField).last, 'pass');
         await tester.pump();
 
-        final loginButton = find.byType(AppPrimaryButton);
+        final loginButton = find.byWidgetPredicate(
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
+        );
         await tester.ensureVisible(loginButton);
         await tester.tap(loginButton);
 

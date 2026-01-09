@@ -3,8 +3,8 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
-import 'package:basir_app/src/rust/api.dart';
-import 'package:basir_app/src/rust/frb_generated.dart';
+import '../api.dart';
+import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `clone`, `clone`, `from`, `from`, `try_from`, `try_from`
@@ -18,16 +18,12 @@ Future<List<AssetDto>> listAssets() =>
 Future<AssetDto?> getAssetById({required String id}) =>
     RustLib.instance.api.crateApiAssetsGetAssetById(id: id);
 
-Future<void> runDepreciationCycle({
-  required String assetId,
-  required String asOf,
-  required AuditMetadataDto metadata,
-}) =>
+Future<void> runDepreciationCycle(
+        {required String assetId,
+        required String asOf,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiAssetsRunDepreciationCycle(
-      assetId: assetId,
-      asOf: asOf,
-      metadata: metadata,
-    );
+        assetId: assetId, asOf: asOf, metadata: metadata);
 
 Future<String> registerCategory({required AssetCategoryDto category}) =>
     RustLib.instance.api.crateApiAssetsRegisterCategory(category: category);
@@ -36,16 +32,6 @@ Future<List<AssetCategoryDto>> listCategories() =>
     RustLib.instance.api.crateApiAssetsListCategories();
 
 class AssetCategoryDto {
-  const AssetCategoryDto({
-    required this.nameAr,
-    required this.nameEn,
-    required this.defaultDepreciationMethod,
-    required this.defaultUsefulLifeYears,
-    required this.assetAccountId,
-    required this.depreciationAccountId,
-    required this.accumDepreciationAccountId,
-    this.id,
-  });
   final String? id;
   final String nameAr;
   final String nameEn;
@@ -54,6 +40,17 @@ class AssetCategoryDto {
   final String assetAccountId;
   final String depreciationAccountId;
   final String accumDepreciationAccountId;
+
+  const AssetCategoryDto({
+    this.id,
+    required this.nameAr,
+    required this.nameEn,
+    required this.defaultDepreciationMethod,
+    required this.defaultUsefulLifeYears,
+    required this.assetAccountId,
+    required this.depreciationAccountId,
+    required this.accumDepreciationAccountId,
+  });
 
   @override
   int get hashCode =>
@@ -82,23 +79,6 @@ class AssetCategoryDto {
 }
 
 class AssetDto {
-  const AssetDto({
-    required this.code,
-    required this.nameAr,
-    required this.nameEn,
-    required this.categoryId,
-    required this.acquisitionDate,
-    required this.cost,
-    required this.residualValue,
-    required this.usefulLifeYears,
-    required this.depreciationMethod,
-    required this.accumulatedDepreciation,
-    required this.assetAccountId,
-    required this.depreciationAccountId,
-    required this.accumDepreciationAccountId,
-    required this.isActive,
-    this.id,
-  });
   final String? id;
   final String code;
   final String nameAr;
@@ -114,6 +94,24 @@ class AssetDto {
   final String depreciationAccountId;
   final String accumDepreciationAccountId;
   final bool isActive;
+
+  const AssetDto({
+    this.id,
+    required this.code,
+    required this.nameAr,
+    required this.nameEn,
+    required this.categoryId,
+    required this.acquisitionDate,
+    required this.cost,
+    required this.residualValue,
+    required this.usefulLifeYears,
+    required this.depreciationMethod,
+    required this.accumulatedDepreciation,
+    required this.assetAccountId,
+    required this.depreciationAccountId,
+    required this.accumDepreciationAccountId,
+    required this.isActive,
+  });
 
   @override
   int get hashCode =>

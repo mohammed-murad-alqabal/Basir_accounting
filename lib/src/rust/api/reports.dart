@@ -3,42 +3,30 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
-import 'package:basir_app/src/rust/frb_generated.dart';
+import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 // These types are ignored because they are neither used by any `pub` functions nor (for structs and enums) marked `#[frb(unignore)]`: `Ifrs18IncomeStatementDto`, `ManagementPerformanceMeasureDto`
 
 /// Generate a trial balance (Task 16.1, 16.2)
-Future<TrialBalanceDto> generateTrialBalance({
-  required String asOfDate,
-  String? periodStart,
-}) =>
+Future<TrialBalanceDto> generateTrialBalance(
+        {required String asOfDate, String? periodStart}) =>
     RustLib.instance.api.crateApiReportsGenerateTrialBalance(
-      asOfDate: asOfDate,
-      periodStart: periodStart,
-    );
+        asOfDate: asOfDate, periodStart: periodStart);
 
 /// Drill down into account entries (Task 16.3)
-Future<List<DrillDownEntryDto>> getAccountEntries({
-  required String accountId,
-  required String periodEnd,
-  String? periodStart,
-}) =>
+Future<List<DrillDownEntryDto>> getAccountEntries(
+        {required String accountId,
+        String? periodStart,
+        required String periodEnd}) =>
     RustLib.instance.api.crateApiReportsGetAccountEntries(
-      accountId: accountId,
-      periodStart: periodStart,
-      periodEnd: periodEnd,
-    );
+        accountId: accountId, periodStart: periodStart, periodEnd: periodEnd);
 
 /// Generate an Income Statement (Task 16.2 extension)
-Future<FinancialReportDto> generateIncomeStatement({
-  required String fromDate,
-  required String toDate,
-}) =>
+Future<FinancialReportDto> generateIncomeStatement(
+        {required String fromDate, required String toDate}) =>
     RustLib.instance.api.crateApiReportsGenerateIncomeStatement(
-      fromDate: fromDate,
-      toDate: toDate,
-    );
+        fromDate: fromDate, toDate: toDate);
 
 /// Generate a Balance Sheet (Task 16.2 extension)
 Future<FinancialReportDto> generateBalanceSheet({required String asOfDate}) =>
@@ -46,29 +34,20 @@ Future<FinancialReportDto> generateBalanceSheet({required String asOfDate}) =>
         .crateApiReportsGenerateBalanceSheet(asOfDate: asOfDate);
 
 /// Generate a Statement of Cash Flows (Task 14.2)
-Future<FinancialReportDto> generateCashFlowStatement({
-  required String fromDate,
-  required String toDate,
-}) =>
+Future<FinancialReportDto> generateCashFlowStatement(
+        {required String fromDate, required String toDate}) =>
     RustLib.instance.api.crateApiReportsGenerateCashFlowStatement(
-      fromDate: fromDate,
-      toDate: toDate,
-    );
+        fromDate: fromDate, toDate: toDate);
 
 /// Generate a Zakah Statement (Task 14.3)
-Future<FinancialReportDto> generateZakahStatement({
-  required String asOfDate,
-  required ZakahCalendarDto calendar,
-}) =>
+Future<FinancialReportDto> generateZakahStatement(
+        {required String asOfDate, required ZakahCalendarDto calendar}) =>
     RustLib.instance.api.crateApiReportsGenerateZakahStatement(
-      asOfDate: asOfDate,
-      calendar: calendar,
-    );
+        asOfDate: asOfDate, calendar: calendar);
 
 /// Generate Accounts Receivable Aging Report
-Future<List<AgingReportLineDto>> getReceivablesAging({
-  required String asOfDate,
-}) =>
+Future<List<AgingReportLineDto>> getReceivablesAging(
+        {required String asOfDate}) =>
     RustLib.instance.api.crateApiReportsGetReceivablesAging(asOfDate: asOfDate);
 
 /// Generate Accounts Payable Aging Report
@@ -77,6 +56,15 @@ Future<List<AgingReportLineDto>> getPayablesAging({required String asOfDate}) =>
 
 /// DTO for Aging Reports
 class AgingReportLineDto {
+  final String partnerId;
+  final String partnerName;
+  final String currentAmount;
+  final String period130;
+  final String period3160;
+  final String period6190;
+  final String periodOver90;
+  final String totalAmount;
+
   const AgingReportLineDto({
     required this.partnerId,
     required this.partnerName,
@@ -87,14 +75,6 @@ class AgingReportLineDto {
     required this.periodOver90,
     required this.totalAmount,
   });
-  final String partnerId;
-  final String partnerName;
-  final String currentAmount;
-  final String period130;
-  final String period3160;
-  final String period6190;
-  final String periodOver90;
-  final String totalAmount;
 
   @override
   int get hashCode =>
@@ -123,6 +103,14 @@ class AgingReportLineDto {
 }
 
 class DrillDownEntryDto {
+  final String entryId;
+  final String entryNumber;
+  final String effectiveDate;
+  final String description;
+  final String debit;
+  final String credit;
+  final String? standardReference;
+
   const DrillDownEntryDto({
     required this.entryId,
     required this.entryNumber,
@@ -132,13 +120,6 @@ class DrillDownEntryDto {
     required this.credit,
     this.standardReference,
   });
-  final String entryId;
-  final String entryNumber;
-  final String effectiveDate;
-  final String description;
-  final String debit;
-  final String credit;
-  final String? standardReference;
 
   @override
   int get hashCode =>
@@ -165,6 +146,12 @@ class DrillDownEntryDto {
 }
 
 class FinancialReportDto {
+  final String title;
+  final String fromDate;
+  final String toDate;
+  final List<FinancialReportLineDto> lines;
+  final String generatedAt;
+
   const FinancialReportDto({
     required this.title,
     required this.fromDate,
@@ -172,11 +159,6 @@ class FinancialReportDto {
     required this.lines,
     required this.generatedAt,
   });
-  final String title;
-  final String fromDate;
-  final String toDate;
-  final List<FinancialReportLineDto> lines;
-  final String generatedAt;
 
   @override
   int get hashCode =>
@@ -199,6 +181,12 @@ class FinancialReportDto {
 }
 
 class FinancialReportLineDto {
+  final String label;
+  final String amount;
+  final bool isTitle;
+  final bool isTotal;
+  final int indentLevel;
+
   const FinancialReportLineDto({
     required this.label,
     required this.amount,
@@ -206,11 +194,6 @@ class FinancialReportLineDto {
     required this.isTotal,
     required this.indentLevel,
   });
-  final String label;
-  final String amount;
-  final bool isTitle;
-  final bool isTotal;
-  final int indentLevel;
 
   @override
   int get hashCode =>
@@ -233,15 +216,6 @@ class FinancialReportLineDto {
 }
 
 class TrialBalanceDto {
-  const TrialBalanceDto({
-    required this.asOfDate,
-    required this.periodEnd,
-    required this.lines,
-    required this.totalDebits,
-    required this.totalCredits,
-    required this.isBalanced,
-    this.periodStart,
-  });
   final String asOfDate;
   final String? periodStart;
   final String periodEnd;
@@ -249,6 +223,16 @@ class TrialBalanceDto {
   final String totalDebits;
   final String totalCredits;
   final bool isBalanced;
+
+  const TrialBalanceDto({
+    required this.asOfDate,
+    this.periodStart,
+    required this.periodEnd,
+    required this.lines,
+    required this.totalDebits,
+    required this.totalCredits,
+    required this.isBalanced,
+  });
 
   @override
   int get hashCode =>
@@ -275,6 +259,12 @@ class TrialBalanceDto {
 }
 
 class TrialBalanceLineDto {
+  final String accountId;
+  final String accountCode;
+  final String accountName;
+  final String debitBalance;
+  final String creditBalance;
+
   const TrialBalanceLineDto({
     required this.accountId,
     required this.accountCode,
@@ -282,11 +272,6 @@ class TrialBalanceLineDto {
     required this.debitBalance,
     required this.creditBalance,
   });
-  final String accountId;
-  final String accountCode;
-  final String accountName;
-  final String debitBalance;
-  final String creditBalance;
 
   @override
   int get hashCode =>

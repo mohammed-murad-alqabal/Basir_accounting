@@ -84,12 +84,12 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
             children: [
               // زر اختيار من جهات الاتصال
               if (!isEditing)
-                AppButton(
+                AppEnhancedButton(
                   label: context.l10n.btnSelectFromContacts,
                   onPressed: _selectFromContacts,
                   icon: appIcons.users,
-                  type: AppButtonType.secondary,
-                  isFullWidth: true,
+                  type: AppEnhancedButtonType.secondary,
+                  width: double.infinity,
                 ),
               if (!isEditing) const SizedBox(height: Spacing.md),
 
@@ -206,14 +206,14 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
               const SizedBox(height: Spacing.xl),
 
               // زر الحفظ
-              AppButton(
+              AppEnhancedButton(
                 label: isEditing
                     ? context.l10n.customerFormTitleEdit
                     : context.l10n.customerFormTitleAdd,
                 onPressed: _isLoading ? null : _saveCustomer,
                 isLoading: _isLoading,
                 icon: appIcons.save,
-                isFullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),

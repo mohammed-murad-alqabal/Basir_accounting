@@ -91,6 +91,8 @@ class InvoiceModel {
     ..zatcaHash = invoice.zatcaHash
     ..qrCode = invoice.qrCode
     ..xmlContent = invoice.xmlContent
+    ..zatcaDeviceId = invoice.zatcaDeviceId
+    ..zatcaCounter = invoice.zatcaCounter
     ..userId = invoice.userId
     ..syncStatus = invoice.syncStatus
     ..serverUpdatedAt = invoice.serverUpdatedAt
@@ -184,6 +186,12 @@ class InvoiceModel {
   /// محتوى الفاتورة بصيغة XML (المطلوب من ZATCA)
   String? xmlContent;
 
+  /// معرف الجهاز (ZATCA Device ID)
+  String? zatcaDeviceId;
+
+  /// عداد الفواتير (Invoice Counter)
+  late int zatcaCounter;
+
   /// معرف المستخدم (لعزل البيانات).
   @Index()
   String? userId;
@@ -225,6 +233,8 @@ class InvoiceModel {
         zatcaHash: zatcaHash,
         qrCode: qrCode,
         xmlContent: xmlContent,
+        zatcaDeviceId: zatcaDeviceId,
+        zatcaCounter: zatcaCounter,
         userId: userId,
         syncStatus: syncStatus,
         serverUpdatedAt: serverUpdatedAt,

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:basir_app/features/auth/data/services/auth_service.dart';
+import 'package:basir_app/features/auth/application/auth_service.dart';
 
 class MockAuthServiceTestHelper implements AuthService {
   bool convertCalled = false;

@@ -1,0 +1,34 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id, curr_hash, prev_hash FROM audit_log WHERE entity_id = $1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "curr_hash",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "prev_hash",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "ad412d6bf7378dd3714ded7dd0fbe18e41e578572ceeee3d73a1dc40a86a24d2"
+}

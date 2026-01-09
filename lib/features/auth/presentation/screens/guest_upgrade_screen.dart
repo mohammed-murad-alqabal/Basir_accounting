@@ -136,7 +136,8 @@ class _GuestUpgradeScreenState extends ConsumerState<GuestUpgradeScreen> {
                     ),
                   ),
                 ),
-              AppPrimaryButton(
+              AppEnhancedButton(
+                width: double.infinity,
                 label: context.l10n.actionUpgradeAccount,
                 onPressed: _isLoading ? null : _handleUpgrade,
                 isLoading: _isLoading,

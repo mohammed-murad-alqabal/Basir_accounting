@@ -81,7 +81,7 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(Spacing.lg),
-        child: AppButton(
+        child: AppEnhancedButton(
           label: context.l10n.btnSave,
           onPressed: _saveAsset,
         ),

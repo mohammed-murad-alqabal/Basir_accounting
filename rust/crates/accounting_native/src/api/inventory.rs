@@ -2,10 +2,7 @@ use crate::api::{get_pool, AuditMetadataDto};
 use accounting_core::inventory::models::{
     InventoryItem, MovementType, StockMovement, ValuationMethod,
 };
-use accounting_core::{
-    EntryStatus, EntryType, JournalEntry, JournalEntryLine, StandardsJustification,
-    TemporalJustification,
-};
+use accounting_core::EntryStatus;
 use accounting_data::db::inventory::PgInventoryRepository;
 use accounting_data::db::ledger::PgLedgerRepository;
 use chrono::Utc;
@@ -85,6 +82,7 @@ pub async fn record_sale(
 
     let item_uuid = Uuid::parse_str(&item_id)?;
     let qty = Decimal::from_str(&quantity)?;
+    let audit_meta: accounting_core::audit::models::AuditMetadata = metadata.clone().try_into()?;
 
     let item = repo
         .get_item(item_uuid)
@@ -92,18 +90,13 @@ pub async fn record_sale(
         .ok_or_else(|| anyhow::anyhow!("Item not found"))?;
 
     let movements = repo.get_movements(item_uuid).await?;
-    let (_, total_val) =
-        accounting_core::inventory::InventoryService::calculate_valuation(&item, &movements)?;
-    let total_qty: Decimal = movements
-        .iter()
-        .map(|m| match m.movement_type {
-            MovementType::Inbound | MovementType::Adjustment => m.quantity,
-            _ => -m.quantity,
-        })
-        .sum();
 
-    let unit_cost = if total_qty > Decimal::ZERO {
-        total_val / total_qty
+    // Calculate COGS using the item's valuation method (FIFO or Weighted Average)
+    let cogs_amount =
+        accounting_core::inventory::InventoryService::calculate_cogs(&item, qty, &movements)?;
+
+    let unit_cost = if qty > Decimal::ZERO {
+        (cogs_amount / qty).round_dp(4)
     } else {
         Decimal::ZERO
     };
@@ -114,53 +107,36 @@ pub async fn record_sale(
         movement_type: "Outbound".to_string(),
         quantity,
         unit_cost: unit_cost.to_string(),
-        reference_id,
+        reference_id: reference_id.clone(),
         date: Utc::now().to_rfc3339(),
-        description: Some("Sales Outbound".to_string()),
+        description: Some(format!("Sales Outbound - {}", item.name_en)),
     };
 
-    let move_id = record_movement(movement, metadata.clone()).await?;
+    let move_id = record_movement(movement, metadata).await?;
 
-    // Post COGS to Ledger
-    let audit_meta: accounting_core::audit::models::AuditMetadata = metadata.try_into()?;
-    let cogs_amount = (qty * unit_cost).round_dp(2);
-
+    // Post COGS to Ledger using centralized logic that includes IAS 2 justifications
     if cogs_amount > Decimal::ZERO {
-        let entry = JournalEntry {
-            entry_id: Uuid::new_v4(),
-            entry_number: format!("COGS-{}", move_id.as_str()[..8].to_uppercase()),
-            description: format!(
-                "Cost of Goods Sold - {} - Period {}",
-                item.name_en,
-                Utc::now().to_rfc3339()
-            ),
-            entry_type: EntryType::Standard,
-            status: EntryStatus::Posted,
-            linked_entry_id: None,
-            adjustment_reason: None,
-            temporal: TemporalJustification::new(Utc::now().date_naive(), Utc::now().date_naive()),
-            standards: StandardsJustification::simple("IFRS 2"),
-            lines: vec![
-                JournalEntryLine::debit(
-                    item.cogs_account_id,
-                    cogs_amount,
-                    &format!("Cost of Goods Sold - {}", item.name_en),
-                ),
-                JournalEntryLine::credit(
-                    item.asset_account_id,
-                    cogs_amount,
-                    &format!("Inventory Reduction - {}", item.name_en),
-                ),
-            ],
-            created_by: audit_meta.who.user_id,
-            created_at: Utc::now(),
-            approved_by: Some(audit_meta.who.user_id),
-            approved_at: Some(Utc::now()),
-            posted_by: Some(audit_meta.who.user_id),
-            posted_at: Some(Utc::now()),
-            hash: String::new(),
-            previous_hash: String::new(),
-        };
+        let mut entry = accounting_core::inventory::InventoryService::generate_cogs_entry(
+            &item,
+            qty,
+            cogs_amount,
+            Utc::now(),
+            reference_id.and_then(|s| Uuid::parse_str(&s).ok()),
+            audit_meta.who.user_id,
+        );
+
+        // Finalize entry details
+        entry.entry_number = format!(
+            "COGS-{}-{}",
+            item.code,
+            move_id.as_str()[..4].to_uppercase()
+        );
+        entry.status = EntryStatus::Posted;
+        entry.approved_by = Some(audit_meta.who.user_id);
+        entry.approved_at = Some(Utc::now());
+        entry.posted_by = Some(audit_meta.who.user_id);
+        entry.posted_at = Some(Utc::now());
+
         ledger_repo.post_entry(&entry, &audit_meta).await?;
     }
 
@@ -219,9 +195,13 @@ pub struct InventoryItemDto {
     pub description: Option<String>,
     pub unit: String,
     pub valuation_method: String,
+    pub purchase_price: Option<String>,
+    pub sale_price: Option<String>,
     pub asset_account_id: String,
     pub cogs_account_id: String,
     pub revenue_account_id: String,
+    pub created_at: String,
+    pub updated_at: String,
 }
 
 impl From<InventoryItem> for InventoryItemDto {
@@ -231,12 +211,16 @@ impl From<InventoryItem> for InventoryItemDto {
             code: item.code,
             name_ar: item.name_ar,
             name_en: item.name_en,
-            description: None,
+            description: item.description,
             unit: item.unit,
             valuation_method: format!("{:?}", item.valuation_method),
+            purchase_price: item.purchase_price.map(|d| d.to_string()),
+            sale_price: item.sale_price.map(|d| d.to_string()),
             asset_account_id: item.asset_account_id.to_string(),
             cogs_account_id: item.cogs_account_id.to_string(),
             revenue_account_id: item.revenue_account_id.to_string(),
+            created_at: item.created_at.to_rfc3339(),
+            updated_at: item.updated_at.to_rfc3339(),
         }
     }
 }
@@ -252,14 +236,26 @@ impl TryFrom<InventoryItemDto> for InventoryItem {
             code: dto.code,
             name_ar: dto.name_ar,
             name_en: dto.name_en,
+            description: dto.description,
             unit: dto.unit,
             valuation_method: match dto.valuation_method.as_str() {
                 "Fifo" => ValuationMethod::Fifo,
                 _ => ValuationMethod::WeightedAverage,
             },
+            purchase_price: dto
+                .purchase_price
+                .map(|s| Decimal::from_str(&s))
+                .transpose()?,
+            sale_price: dto.sale_price.map(|s| Decimal::from_str(&s)).transpose()?,
             asset_account_id: Uuid::parse_str(&dto.asset_account_id)?,
             cogs_account_id: Uuid::parse_str(&dto.cogs_account_id)?,
             revenue_account_id: Uuid::parse_str(&dto.revenue_account_id)?,
+            created_at: chrono::DateTime::parse_from_rfc3339(&dto.created_at)
+                .map(|dt| dt.with_timezone(&Utc))
+                .unwrap_or_else(|_| Utc::now()),
+            updated_at: chrono::DateTime::parse_from_rfc3339(&dto.updated_at)
+                .map(|dt| dt.with_timezone(&Utc))
+                .unwrap_or_else(|_| Utc::now()),
         })
     }
 }

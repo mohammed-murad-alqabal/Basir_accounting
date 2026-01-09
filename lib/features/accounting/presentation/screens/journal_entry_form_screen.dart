@@ -20,6 +20,9 @@ class _JournalLineDraft {
     this.description,
     Decimal? debit,
     Decimal? credit,
+    this.originalCurrency,
+    this.exchangeRate,
+    this.originalAmount,
   })  : debit = debit ?? Decimal.zero,
         credit = credit ?? Decimal.zero;
 
@@ -28,6 +31,9 @@ class _JournalLineDraft {
   String? description;
   Decimal debit;
   Decimal credit;
+  String? originalCurrency;
+  Decimal? exchangeRate;
+  Decimal? originalAmount;
 }
 
 /// شاشة إضافة قيد يدوي
@@ -53,6 +59,9 @@ class _JournalEntryFormScreenState
     _JournalLineDraft(),
   ];
   bool _isLoading = false;
+  String _standardReference = 'IAS 1';
+  String _recognitionBasis = 'Manual';
+  String _measurementBasis = 'Historical Cost';
 
   @override
   void initState() {
@@ -69,9 +78,16 @@ class _JournalEntryFormScreenState
             description: line.description,
             debit: line.debit,
             credit: line.credit,
+            originalCurrency: line.originalCurrency,
+            exchangeRate: line.exchangeRate,
+            originalAmount: line.originalAmount,
           ),
         );
       }
+      _standardReference = widget.entry!.standards.standardReference;
+      _recognitionBasis = widget.entry!.standards.recognitionBasis ?? 'Manual';
+      _measurementBasis =
+          widget.entry!.standards.measurementBasis ?? 'Historical Cost';
     }
   }
 
@@ -112,19 +128,19 @@ class _JournalEntryFormScreenState
               Row(
                 children: [
                   Expanded(
-                    child: AppButton(
+                    child: AppEnhancedButton(
                       label: context.l10n.btnSaveEntry,
                       onPressed: _isLoading
                           ? null
                           : () => _saveEntry(JournalEntryStatus.draft),
                       isLoading: _isLoading,
-                      type: AppButtonType.secondary,
+                      type: AppEnhancedButtonType.secondary,
                       icon: appIcons.save,
                     ),
                   ),
                   const SizedBox(width: Spacing.md),
                   Expanded(
-                    child: AppButton(
+                    child: AppEnhancedButton(
                       label: context.l10n.btnPostEntry,
                       onPressed: _isLoading
                           ? null
@@ -181,6 +197,32 @@ class _JournalEntryFormScreenState
               label: context.l10n.hintJournalDescription,
               prefixIcon: Icon(appIcons.note),
             ),
+            const SizedBox(height: Spacing.md),
+            Row(
+              children: [
+                Expanded(
+                  child: AppTextField(
+                    initialValue: _standardReference,
+                    label: context.l10n.labelStandard,
+                    onChanged: (v) => _standardReference = v,
+                  ),
+                ),
+                const SizedBox(width: Spacing.md),
+                Expanded(
+                  child: AppTextField(
+                    initialValue: _recognitionBasis,
+                    label: context.l10n.labelRecognitionBasis,
+                    onChanged: (v) => _recognitionBasis = v,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: Spacing.md),
+            AppTextField(
+              initialValue: _measurementBasis,
+              label: context.l10n.labelMeasurementBasis,
+              onChanged: (v) => _measurementBasis = v,
+            ),
           ],
         ),
       );
@@ -233,10 +275,6 @@ class _JournalEntryFormScreenState
                   },
                 ),
               ),
-              IconButton(
-                icon: Icon(appIcons.delete, color: AppColors.error, size: 20),
-                onPressed: () => setState(() => _lines.removeAt(index)),
-              ),
             ],
           ),
           Row(
@@ -271,6 +309,86 @@ class _JournalEntryFormScreenState
                     });
                   },
                 ),
+              ),
+            ],
+          ),
+          if (line.originalCurrency != null && line.originalCurrency != 'SAR')
+            Padding(
+              padding: const EdgeInsets.only(top: Spacing.sm),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: AppTextField(
+                      initialValue: line.originalAmount?.toString() ?? '',
+                      label:
+                          '${context.l10n.labelAmount} (${line.originalCurrency})',
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      onChanged: (v) {
+                        setState(() {
+                          line.originalAmount =
+                              Decimal.tryParse(v) ?? Decimal.zero;
+                          if (line.exchangeRate != null) {
+                            final lcAmount =
+                                line.originalAmount! * line.exchangeRate!;
+                            if (line.debit > Decimal.zero ||
+                                (line.debit == Decimal.zero &&
+                                    line.credit == Decimal.zero)) {
+                              line.debit = lcAmount;
+                            } else {
+                              line.credit = lcAmount;
+                            }
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: Spacing.md),
+                  Expanded(
+                    child: AppTextField(
+                      initialValue: line.exchangeRate?.toString() ?? '',
+                      label: context.l10n.labelExchangeRate,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      onChanged: (v) {
+                        setState(() {
+                          line.exchangeRate =
+                              Decimal.tryParse(v) ?? Decimal.one;
+                          if (line.originalAmount != null) {
+                            final lcAmount =
+                                line.originalAmount! * line.exchangeRate!;
+                            if (line.debit > Decimal.zero ||
+                                (line.debit == Decimal.zero &&
+                                    line.credit == Decimal.zero)) {
+                              line.debit = lcAmount;
+                            } else {
+                              line.credit = lcAmount;
+                            }
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton.icon(
+                icon: Icon(
+                  line.originalCurrency == null
+                      ? appIcons.language
+                      : appIcons.edit,
+                  size: 16,
+                ),
+                label: Text(
+                  line.originalCurrency == null
+                      ? context.l10n.labelAddCurrency
+                      : '${context.l10n.labelCurrency}: ${line.originalCurrency}',
+                ),
+                onPressed: () => _showCurrencyPicker(index),
               ),
             ],
           ),
@@ -364,12 +482,9 @@ class _JournalEntryFormScreenState
           recordingDate: now,
         ),
         standards: StandardsJustification(
-          standardReference:
-              widget.entry?.standards.standardReference ?? 'IAS 1',
-          recognitionBasis:
-              widget.entry?.standards.recognitionBasis ?? 'Manual',
-          measurementBasis:
-              widget.entry?.standards.measurementBasis ?? 'Historical Cost',
+          standardReference: _standardReference,
+          recognitionBasis: _recognitionBasis,
+          measurementBasis: _measurementBasis,
         ),
         description: _descriptionController.text.trim(),
         status: status,
@@ -387,6 +502,9 @@ class _JournalEntryFormScreenState
                 debit: l.debit,
                 credit: l.credit,
                 description: l.description,
+                originalCurrency: l.originalCurrency,
+                exchangeRate: l.exchangeRate,
+                originalAmount: l.originalAmount,
               ),
             )
             .toList(),
@@ -414,6 +532,57 @@ class _JournalEntryFormScreenState
       );
     } finally {
       if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _showCurrencyPicker(int index) async {
+    final line = _lines[index];
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.l10n.labelAddCurrency),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text('SAR'),
+              onTap: () => Navigator.pop(context, 'SAR'),
+            ),
+            ListTile(
+              title: const Text('USD'),
+              onTap: () => Navigator.pop(context, 'USD'),
+            ),
+            ListTile(
+              title: const Text('EUR'),
+              onTap: () => Navigator.pop(context, 'EUR'),
+            ),
+            ListTile(
+              title: const Text('GBP'),
+              onTap: () => Navigator.pop(context, 'GBP'),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        if (result == 'SAR') {
+          line.originalCurrency = null;
+          line.exchangeRate = null;
+          line.originalAmount = null;
+        } else {
+          line.originalCurrency = result;
+          // Set some default rates for demo
+          line.exchangeRate =
+              result == 'USD' ? Decimal.parse('3.75') : Decimal.one;
+          if (line.debit > Decimal.zero) {
+            line.originalAmount = line.debit;
+          } else if (line.credit > Decimal.zero) {
+            line.originalAmount = line.credit;
+          }
+        }
+      });
     }
   }
 }

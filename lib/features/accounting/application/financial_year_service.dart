@@ -1,5 +1,6 @@
 import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/features/accounting/domain/entities/financial_year.dart';
+import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_app/features/accounting/domain/repositories/financial_year_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -65,6 +66,25 @@ class FinancialYearService extends _$FinancialYearService {
 
   /// إغلاق السنة المالية نهائياً
   Future<void> closeYear(String yearId, String userId) async {
+    final fy = await _repository.getAllFinancialYears();
+    final targetYear = fy.firstWhere((y) => y.id == yearId);
+
+    // التحقق من وجود مسودات قيود لم ترحل بعد لهذه السنة
+    final accountingRepo = ref.read(accountingRepositoryProvider);
+    final entries = await accountingRepo.getJournalEntries();
+
+    final pendingDrafts = entries.where(
+      (e) =>
+          e.status == JournalEntryStatus.draft &&
+          targetYear.containsDate(e.date),
+    );
+
+    if (pendingDrafts.isNotEmpty) {
+      throw Exception(
+        'Cannot close year: There are ${pendingDrafts.length} unposted draft entries.',
+      );
+    }
+
     await _repository.closeFinancialYear(yearId, userId);
   }
 }

@@ -4,6 +4,33 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'inventory_item.freezed.dart';
 part 'inventory_item.g.dart';
 
+/// طرق تقييم المخزون (IAS 2)
+enum ValuationMethod {
+  /// ما يرد أولاً يصرف أولاً
+  fifo,
+
+  /// المتوسط المرجح
+  weightedAverage,
+}
+
+/// ملحق لإضافة وظائف الترجمة لطريقة التقييم
+extension ValuationMethodX on ValuationMethod {
+  /// الحصول على الاسم المترجم لطريقة التقييم
+  String localizedName({required bool isArabic}) {
+    if (isArabic) {
+      if (this == ValuationMethod.fifo) {
+        return 'الوارد أولاً يصرف أولاً (FIFO)';
+      }
+      return 'المتوسط المرجح';
+    } else {
+      if (this == ValuationMethod.fifo) {
+        return 'First-In First-Out (FIFO)';
+      }
+      return 'Weighted Average';
+    }
+  }
+}
+
 /// كيان صنف المخزون (Inventory Item Entity)
 ///
 /// يمثل صنفاً في المخزون مع دعم التسمية ثنائية اللغة وتكامل الحسابات.
@@ -47,7 +74,19 @@ class InventoryItem with _$InventoryItem {
     /// معرف الفئة
     String? categoryId,
 
-    /// الحساب الأساسي
+    /// طريقة تقييم المخزون (IAS 2)
+    @Default(ValuationMethod.weightedAverage) ValuationMethod valuationMethod,
+
+    /// حساب الأصول (المخزون)
+    String? assetAccountId,
+
+    /// حساب تكلفة البضاعة المباعة
+    String? cogsAccountId,
+
+    /// حساب إيرادات المبيعات
+    String? revenueAccountId,
+
+    /// الحساب الأساسي (للأغراض القديمة، سيتم استبداله بالأعلى)
     String? primaryAccountId,
 
     /// حالة المزامنة
@@ -64,8 +103,11 @@ class InventoryItem with _$InventoryItem {
   }) = _InventoryItem;
 
   /// إنشاء صنف مخزون من JSON.
-  factory InventoryItem.fromJson(Map<String, dynamic> json) =>
-      _$InventoryItemFromJson(json);
+  // ignore: prefer_expression_function_bodies
+  factory InventoryItem.fromJson(Map<String, dynamic> json) {
+    return _$InventoryItemFromJson(json);
+  }
+
   const InventoryItem._();
 
   /// الحصول على الاسم حسب اللغة

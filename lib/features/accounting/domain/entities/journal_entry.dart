@@ -85,6 +85,15 @@ class JournalEntryLine with _$JournalEntryLine {
 
     /// مركز التكلفة (اختياري) - (FR-ACC-011)
     String? costCenterId,
+
+    /// العملة الأصلية (للمعاملات متعددة العملات)
+    String? originalCurrency,
+
+    /// سعر الصرف وقت العملية
+    Decimal? exchangeRate,
+
+    /// المبلغ بالعملة الأصلية
+    Decimal? originalAmount,
   }) = _JournalEntryLine;
 
   /// إنشاء بند قيد من JSON

@@ -3055,9 +3055,13 @@ impl SseDecode for crate::api::inventory::InventoryItemDto {
         let mut var_description = <Option<String>>::sse_decode(deserializer);
         let mut var_unit = <String>::sse_decode(deserializer);
         let mut var_valuationMethod = <String>::sse_decode(deserializer);
+        let mut var_purchasePrice = <Option<String>>::sse_decode(deserializer);
+        let mut var_salePrice = <Option<String>>::sse_decode(deserializer);
         let mut var_assetAccountId = <String>::sse_decode(deserializer);
         let mut var_cogsAccountId = <String>::sse_decode(deserializer);
         let mut var_revenueAccountId = <String>::sse_decode(deserializer);
+        let mut var_createdAt = <String>::sse_decode(deserializer);
+        let mut var_updatedAt = <String>::sse_decode(deserializer);
         return crate::api::inventory::InventoryItemDto {
             id: var_id,
             code: var_code,
@@ -3066,9 +3070,13 @@ impl SseDecode for crate::api::inventory::InventoryItemDto {
             description: var_description,
             unit: var_unit,
             valuation_method: var_valuationMethod,
+            purchase_price: var_purchasePrice,
+            sale_price: var_salePrice,
             asset_account_id: var_assetAccountId,
             cogs_account_id: var_cogsAccountId,
             revenue_account_id: var_revenueAccountId,
+            created_at: var_createdAt,
+            updated_at: var_updatedAt,
         };
     }
 }
@@ -4403,9 +4411,13 @@ impl flutter_rust_bridge::IntoDart for crate::api::inventory::InventoryItemDto {
             self.description.into_into_dart().into_dart(),
             self.unit.into_into_dart().into_dart(),
             self.valuation_method.into_into_dart().into_dart(),
+            self.purchase_price.into_into_dart().into_dart(),
+            self.sale_price.into_into_dart().into_dart(),
             self.asset_account_id.into_into_dart().into_dart(),
             self.cogs_account_id.into_into_dart().into_dart(),
             self.revenue_account_id.into_into_dart().into_dart(),
+            self.created_at.into_into_dart().into_dart(),
+            self.updated_at.into_into_dart().into_dart(),
         ]
         .into_dart()
     }
@@ -5062,9 +5074,13 @@ impl SseEncode for crate::api::inventory::InventoryItemDto {
         <Option<String>>::sse_encode(self.description, serializer);
         <String>::sse_encode(self.unit, serializer);
         <String>::sse_encode(self.valuation_method, serializer);
+        <Option<String>>::sse_encode(self.purchase_price, serializer);
+        <Option<String>>::sse_encode(self.sale_price, serializer);
         <String>::sse_encode(self.asset_account_id, serializer);
         <String>::sse_encode(self.cogs_account_id, serializer);
         <String>::sse_encode(self.revenue_account_id, serializer);
+        <String>::sse_encode(self.created_at, serializer);
+        <String>::sse_encode(self.updated_at, serializer);
     }
 }
 

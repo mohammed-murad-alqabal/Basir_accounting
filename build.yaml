@@ -13,3 +13,7 @@ targets:
         generate_for:
           exclude:
             - lib/src/rust/**
+      riverpod_generator:
+        generate_for:
+          exclude:
+            - lib/src/rust/**

@@ -3,23 +3,19 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
-import 'package:basir_app/src/rust/api.dart';
-import 'package:basir_app/src/rust/frb_generated.dart';
+import '../api.dart';
+import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`
 
-Future<String> createAccount({
-  required AccountDto dto,
-  required AuditMetadataDto metadata,
-}) =>
+Future<String> createAccount(
+        {required AccountDto dto, required AuditMetadataDto metadata}) =>
     RustLib.instance.api
         .crateApiAccountsCreateAccount(dto: dto, metadata: metadata);
 
-Future<void> updateAccount({
-  required AccountDto dto,
-  required AuditMetadataDto metadata,
-}) =>
+Future<void> updateAccount(
+        {required AccountDto dto, required AuditMetadataDto metadata}) =>
     RustLib.instance.api
         .crateApiAccountsUpdateAccount(dto: dto, metadata: metadata);
 
@@ -29,31 +25,15 @@ Future<List<AccountDto>> listAccounts() =>
 Future<AccountDto?> getAccountById({required String id}) =>
     RustLib.instance.api.crateApiAccountsGetAccountById(id: id);
 
-Future<void> updateAccountCategory({
-  required String accountId,
-  required String category,
-  required AuditMetadataDto metadata,
-}) =>
+Future<void> updateAccountCategory(
+        {required String accountId,
+        required String category,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiAccountsUpdateAccountCategory(
-      accountId: accountId,
-      category: category,
-      metadata: metadata,
-    );
+        accountId: accountId, category: category, metadata: metadata);
 
 /// DTO for Account
 class AccountDto {
-  const AccountDto({
-    required this.id,
-    required this.code,
-    required this.nameAr,
-    required this.nameEn,
-    required this.kind,
-    required this.ifrs18Category,
-    required this.currency,
-    this.parentId,
-    this.ifrsTag,
-    this.classification,
-  });
   final String id;
   final String code;
   final String nameAr;
@@ -64,6 +44,19 @@ class AccountDto {
   final String? classification;
   final String ifrs18Category;
   final String currency;
+
+  const AccountDto({
+    required this.id,
+    required this.code,
+    required this.nameAr,
+    required this.nameEn,
+    required this.kind,
+    this.parentId,
+    this.ifrsTag,
+    this.classification,
+    required this.ifrs18Category,
+    required this.currency,
+  });
 
   @override
   int get hashCode =>

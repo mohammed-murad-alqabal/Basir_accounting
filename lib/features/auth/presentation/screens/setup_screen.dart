@@ -188,12 +188,11 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                     const SizedBox(height: Spacing.xl),
 
                     // زر الإنشاء
-                    AppButton(
+                    AppEnhancedButton(
                       label: context.l10n.btnCreateAccount,
                       onPressed: _handleSetup,
                       isLoading: _isLoading,
                       icon: appIcons.userAdd,
-                      isFullWidth: true,
                     ),
                   ],
                 ),

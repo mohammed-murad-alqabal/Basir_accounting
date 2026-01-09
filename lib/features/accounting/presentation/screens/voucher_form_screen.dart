@@ -4,11 +4,13 @@ import 'package:basir_app/features/accounting/application/treasury_service.dart'
 import 'package:basir_app/features/accounting/domain/entities/account.dart';
 import 'package:basir_app/features/accounting/domain/entities/financial_voucher.dart';
 import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_app/features/invoices/application/ocr_service.dart';
 import 'package:basir_app/features/vendors/presentation/providers/vendor_provider.dart';
 import 'package:basir_app/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:uuid/uuid.dart';
 
@@ -38,6 +40,9 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
   String? _selectedTreasuryAccountId;
   String? _selectedOppositeAccountId;
   String? _selectedEntityId;
+  String? _selectedCurrency;
+  Decimal? _exchangeRate;
+  Decimal? _originalAmount;
 
   bool _isLoading = false;
 
@@ -56,7 +61,16 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         : context.l10n.voucherPaymentTitle;
 
     return Scaffold(
-      appBar: AppAppBar(title: title),
+      appBar: AppAppBar(
+        title: title,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.document_scanner),
+            onPressed: _scanReceipt,
+            tooltip: 'مسح إيصال (OCR)',
+          ),
+        ],
+      ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
@@ -74,14 +88,16 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                     const SizedBox(height: 16),
                     _buildEntitySelector(),
                     const SizedBox(height: 16),
+                    _buildCurrencySelector(),
+                    const SizedBox(height: 16),
                     _buildAmountField(),
                     const SizedBox(height: 16),
                     _buildDescriptionField(),
                     const SizedBox(height: 32),
-                    AppButton(
+                    AppEnhancedButton(
                       label: context.l10n.btnSaveAndPostVoucher,
                       onPressed: _saveVoucher,
-                      isFullWidth: true,
+                      width: double.infinity,
                     ),
                   ],
                 ),
@@ -93,28 +109,155 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
   Widget _buildAmountField() => AppCard(
         child: Padding(
           padding: const EdgeInsets.all(8),
-          child: TextFormField(
-            controller: _amountController,
-            decoration: InputDecoration(
-              labelText: context.l10n.labelAmount,
-              border: InputBorder.none,
-              prefixIcon: const Icon(Icons.money),
-            ),
-            keyboardType: const TextInputType.numberWithOptions(
-              decimal: true,
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return context.l10n.errAmountRequired;
-              }
-              if (Decimal.tryParse(value) == null) {
-                return context.l10n.errInvalidAmount;
-              }
-              return null;
-            },
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _amountController,
+                decoration: InputDecoration(
+                  labelText:
+                      _selectedCurrency != null && _selectedCurrency != 'SAR'
+                          ? '${context.l10n.labelAmount} (SAR)'
+                          : context.l10n.labelAmount,
+                  border: InputBorder.none,
+                  prefixIcon: const Icon(Icons.money),
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                onChanged: (v) {
+                  if (_selectedCurrency != null &&
+                      _selectedCurrency != 'SAR' &&
+                      _exchangeRate != null) {
+                    final sarAmount = Decimal.tryParse(v);
+                    if (sarAmount != null) {
+                      setState(() {
+                        _originalAmount =
+                            (sarAmount / (_exchangeRate ?? Decimal.one))
+                                .toDecimal();
+                      });
+                    }
+                  }
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return context.l10n.errAmountRequired;
+                  }
+                  if (Decimal.tryParse(value) == null) {
+                    return context.l10n.errInvalidAmount;
+                  }
+                  return null;
+                },
+              ),
+              if (_selectedCurrency != null && _selectedCurrency != 'SAR') ...[
+                const Divider(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        initialValue: _originalAmount?.toString() ?? '',
+                        decoration: InputDecoration(
+                          labelText:
+                              '${context.l10n.labelAmount} ($_selectedCurrency)',
+                          border: InputBorder.none,
+                        ),
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        onChanged: (v) {
+                          _originalAmount = Decimal.tryParse(v);
+                          if (_originalAmount != null &&
+                              _exchangeRate != null) {
+                            setState(() {
+                              _amountController.text =
+                                  (_originalAmount! * _exchangeRate!)
+                                      .toString();
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextFormField(
+                        initialValue: _exchangeRate?.toString() ?? '',
+                        decoration: InputDecoration(
+                          labelText: context.l10n.labelExchangeRate,
+                          border: InputBorder.none,
+                        ),
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        onChanged: (v) {
+                          _exchangeRate = Decimal.tryParse(v);
+                          if (_originalAmount != null &&
+                              _exchangeRate != null) {
+                            setState(() {
+                              _amountController.text =
+                                  (_originalAmount! * _exchangeRate!)
+                                      .toString();
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ],
           ),
         ),
       );
+
+  Widget _buildCurrencySelector() => AppCard(
+        child: ListTile(
+          leading: const Icon(Icons.language),
+          title: Text(context.l10n.labelCurrency),
+          subtitle: Text(_selectedCurrency ?? 'SAR'),
+          onTap: _showCurrencyPicker,
+        ),
+      );
+
+  Future<void> _showCurrencyPicker() async {
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.l10n.labelAddCurrency),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+                title: const Text('SAR'),
+                onTap: () => Navigator.pop(context, 'SAR')),
+            ListTile(
+                title: const Text('USD'),
+                onTap: () => Navigator.pop(context, 'USD')),
+            ListTile(
+                title: const Text('EUR'),
+                onTap: () => Navigator.pop(context, 'EUR')),
+            ListTile(
+                title: const Text('GBP'),
+                onTap: () => Navigator.pop(context, 'GBP')),
+          ],
+        ),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        _selectedCurrency = result == 'SAR' ? null : result;
+        if (_selectedCurrency != null) {
+          _exchangeRate =
+              _selectedCurrency == 'USD' ? Decimal.parse('3.75') : Decimal.one;
+          final currentAmount =
+              Decimal.tryParse(_amountController.text) ?? Decimal.zero;
+          if (currentAmount > Decimal.zero) {
+            _originalAmount =
+                (currentAmount / (_exchangeRate ?? Decimal.one)).toDecimal();
+          }
+        } else {
+          _exchangeRate = null;
+          _originalAmount = null;
+        }
+      });
+    }
+  }
 
   Widget _buildDescriptionField() => AppCard(
         child: Padding(
@@ -331,6 +474,9 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         description: _descriptionController.text,
         createdAt: DateTime.now(),
         personName: _personNameController.text,
+        originalCurrency: _selectedCurrency,
+        exchangeRate: _exchangeRate,
+        originalAmount: _originalAmount,
       );
 
       if (widget.type == VoucherType.receipt) {
@@ -353,6 +499,41 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _scanReceipt() async {
+    final picker = ImagePicker();
+    final image = await picker.pickImage(source: ImageSource.camera);
+
+    if (image != null) {
+      setState(() => _isLoading = true);
+      try {
+        final ocrService = ref.read(ocrServiceProvider.notifier);
+        final results = await ocrService.processReceipt(image.path);
+
+        if (results['total'] != null) {
+          _amountController.text = results['total'].toString();
+        }
+        if (results['date'] != null) {
+          _selectedDate = results['date'] as DateTime;
+        }
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text('تم استخراج البيانات من الإيصال بنجاح')),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('فشل في تحليل الإيصال: $e')),
+          );
+        }
+      } finally {
+        if (mounted) setState(() => _isLoading = false);
+      }
     }
   }
 }

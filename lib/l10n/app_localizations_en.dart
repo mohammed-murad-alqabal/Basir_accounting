@@ -41,7 +41,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get journalEntryFormTitleEdit => 'Edit Journal Entry';
 
   @override
-  String get assetsSearchHint => 'Search assets...';
+  String get labelCogsAccountId => 'COGS Account';
+
+  @override
+  String get labelRevenueAccountId => 'Revenue Account';
+
+  @override
+  String get labelValuationMethod => 'Valuation Method';
+
+  @override
+  String get labelInventoryValuation => 'Inventory Valuation (IAS 2)';
 
   @override
   String get aboutAppSubtitle => 'Version 1.0.0';
@@ -111,6 +120,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get assetsScreenTitle => 'Fixed Assets';
 
   @override
+  String get assetsSearchHint => 'Search assets...';
+
+  @override
   String get actionAddAsset => 'Add Asset';
 
   @override
@@ -135,7 +147,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navInventory => 'Inventory';
 
   @override
-  String get navAssets => 'Fixed Assets';
+  String get navAssets => 'Assets';
 
   @override
   String get labelNameAr => 'Name (Arabic)';
@@ -175,7 +187,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelSalePrice => 'Sale Price';
 
   @override
-  String get labelCode => 'Code';
+  String get labelCode => 'Asset Code';
 
   @override
   String get labelPurchaseDate => 'Purchase Date';
@@ -200,7 +212,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Accumulated Depreciation Account';
 
   @override
-  String get labelAssetAccountId => 'Asset Account';
+  String get labelAssetAccountId => 'Inventory Account (Assets)';
 
   @override
   String get labelUnit => 'Unit';
@@ -680,27 +692,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelTaxRateWithExample => 'Tax Rate (e.g. 0.15)';
 
   @override
-  String get privacyAnalyticsTitle => 'الخصوصية والتحليلات';
+  String get privacyAnalyticsTitle => 'Privacy & Analytics';
 
   @override
-  String get privacyAnalyticsSubtitle =>
-      'إدارة بيانات الاستخدام والخصوصية المحلية';
+  String get privacyAnalyticsSubtitle => 'Manage local usage data and privacy';
 
   @override
-  String get analyticsEnableTracking => 'تفعيل التحليلات المحلية';
+  String get analyticsEnableTracking => 'Enable Local Analytics';
 
   @override
   String get analyticsPrivacyNotice =>
-      'نحن نحترم خصوصيتك. جميع التحليلات تُخزن محلياً فقط على جهازك ولا نجمع أي بيانات شخصية أو مالية. تساعدنا هذه البيانات في تحسين تجربة المستخدم وفهم الميزات الأكثر استخداماً.';
+      'We respect your privacy. All analytics are stored locally on your device and we do not collect any personal or financial data. This data helps us improve the user experience and understand most used features.';
 
   @override
-  String get analyticsClearData => 'مسح بيانات التحليلات';
+  String get analyticsClearData => 'Clear Analytics Data';
 
   @override
-  String get analyticsDataCleared => 'تم مسح بيانات التحليلات بنجاح';
+  String get analyticsDataCleared => 'Analytics data cleared successfully';
 
   @override
-  String get lastSyncLabel => 'آخر مزامنة';
+  String get lastSyncLabel => 'Last Sync';
 
   @override
   String get labelUsername => 'Username';
@@ -1064,7 +1075,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelCurrencySAR => 'SAR';
 
   @override
-  String get msgNoActivity => 'لا يوجد نشاط حديث حتى الآن.';
+  String get msgNoActivity => 'No recent activity yet.';
 
   @override
   String get labelAccounting => 'Accounting';
@@ -1263,7 +1274,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Balance is balanced: Assets equal Liabilities and Equity.';
 
   @override
-  String msgBalanceUnbalanced(Object diff) {
+  String msgBalanceUnbalanced(String diff) {
     return 'Warning: Balance is unbalanced! Difference: $diff';
   }
 
@@ -1375,6 +1386,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorExportingReport => 'Error exporting report';
+
+  @override
+  String get labelStandard => 'المعيار المحاسبي';
+
+  @override
+  String get labelRecognitionBasis => 'أساس الاعتراف';
+
+  @override
+  String get labelMeasurementBasis => 'أساس القياس';
+
+  @override
+  String get labelExchangeRate => 'Exchange Rate';
+
+  @override
+  String get labelAddCurrency => 'إضافة عملة';
+
+  @override
+  String get labelCurrency => 'العملة';
 
   @override
   String get labelAmount => 'Amount';

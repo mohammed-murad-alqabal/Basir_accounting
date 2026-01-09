@@ -1,0 +1,19 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO depreciation_history (id, asset_id, period_start_date, period_end_date, amount, entry_id)\n            VALUES ($1, $2, $3, $4, $5, $6)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Date",
+        "Date",
+        "Numeric",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "0f249bb41b3ff851767cc54ccca0d2834c340ec18afac80ce0a1bc8f3dac8d2c"
+}

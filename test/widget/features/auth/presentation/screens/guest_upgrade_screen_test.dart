@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/features/auth/presentation/screens/guest_upgrade_screen.dart';
 import 'package:basir_app/l10n/app_localizations.dart';
-import 'package:basir_app/shared/widgets/app_button.dart';
+import 'package:basir_app/shared/widgets/app_enhanced_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -62,7 +62,11 @@ void main() {
         // Use localized text - find button specifically (not AppBar title)
         final l10n = AppLocalizations.of(context);
         final buttonFinder = find.descendant(
-          of: find.byType(AppPrimaryButton),
+          of: find.byWidgetPredicate(
+            (widget) =>
+                widget is AppEnhancedButton &&
+                widget.type == AppEnhancedButtonType.primary,
+          ),
           matching: find.text(l10n.actionUpgradeAccount),
         );
         await tester.tap(buttonFinder);
@@ -92,7 +96,11 @@ void main() {
         // Use localized text - find button specifically (not AppBar title)
         final l10n = AppLocalizations.of(context);
         final buttonFinder = find.descendant(
-          of: find.byType(AppPrimaryButton),
+          of: find.byWidgetPredicate(
+            (widget) =>
+                widget is AppEnhancedButton &&
+                widget.type == AppEnhancedButtonType.primary,
+          ),
           matching: find.text(l10n.actionUpgradeAccount),
         );
         await tester.tap(buttonFinder);

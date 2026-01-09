@@ -164,14 +164,14 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 maxLines: 3,
               ),
               const SizedBox(height: Spacing.xl),
-              AppButton(
+              AppEnhancedButton(
                 label: isEditing
                     ? context.l10n.btnUpdateInvoice
                     : context.l10n.btnSaveInvoice,
                 onPressed: _isLoading ? null : _saveInvoice,
                 isLoading: _isLoading,
                 icon: appIcons.save,
-                isFullWidth: true,
+                width: double.infinity,
               ),
             ],
           ),
@@ -568,13 +568,13 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           ),
         ),
         actions: [
-          AppButton(
+          AppEnhancedButton(
             label: context.l10n.dialogCancel,
             onPressed: () => Navigator.pop(context),
-            type: AppButtonType.text,
-            size: AppButtonSize.small,
+            type: AppEnhancedButtonType.text,
+            height: 36,
           ),
-          AppButton(
+          AppEnhancedButton(
             label: context.l10n.btnSave,
             onPressed: () {
               final value = double.tryParse(controller.text);
@@ -583,8 +583,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 Navigator.pop(context);
               }
             },
-            type: AppButtonType.text,
-            size: AppButtonSize.small,
+            type: AppEnhancedButtonType.text,
+            height: 36,
           ),
         ],
       ),
@@ -638,13 +638,13 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           ),
         ),
         actions: [
-          AppButton(
+          AppEnhancedButton(
             label: context.l10n.dialogCancel,
             onPressed: () => Navigator.pop(context),
-            type: AppButtonType.text,
-            size: AppButtonSize.small,
+            type: AppEnhancedButtonType.text,
+            height: 36,
           ),
-          AppButton(
+          AppEnhancedButton(
             label: context.l10n.btnAdd,
             onPressed: () {
               final name = nameController.text.trim();
@@ -667,8 +667,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 Navigator.pop(context);
               }
             },
-            type: AppButtonType.text,
-            size: AppButtonSize.small,
+            type: AppEnhancedButtonType.text,
+            height: 36,
           ),
         ],
       ),
