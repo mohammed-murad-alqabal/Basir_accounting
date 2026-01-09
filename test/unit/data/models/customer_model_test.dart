@@ -28,7 +28,7 @@ void main() {
 
         // Assert
         expect(updated.id, original.id);
-        expect(updated.name, 'اسم جديد');
+        expect(updated.name(isArabic: true), 'اسم جديد');
         expect(updated.phone, original.phone);
         expect(updated.email, original.email);
         expect(updated.address, original.address);
@@ -50,7 +50,7 @@ void main() {
 
         // Assert
         expect(updated.phone, '0509999999');
-        expect(updated.name, original.name);
+        expect(updated.name(isArabic: true), original.name(isArabic: true));
       });
 
       test('should create copy with updated email', () {
@@ -113,7 +113,7 @@ void main() {
         );
 
         // Assert
-        expect(updated.name, 'اسم محدث');
+        expect(updated.name(isArabic: true), 'اسم محدث');
         expect(updated.phone, '0508888888');
         expect(updated.email, 'updated@example.com');
         expect(updated.address, original.address); // لم يتغير
@@ -129,15 +129,15 @@ void main() {
           createdAt: DateTime.utc(2025),
           updatedAt: DateTime.utc(2025),
         );
-        final originalName = original.name;
+        final originalName = original.name(isArabic: true);
 
         // Act
         final updated =
             original.copyWith(nameEn: 'اسم جديد', nameAr: 'اسم جديد');
 
         // Assert
-        expect(original.name, originalName); // الأصل لم يتغير
-        expect(updated.name, 'اسم جديد');
+        expect(original.name(isArabic: true), originalName); // الأصل لم يتغير
+        expect(updated.name(isArabic: true), 'اسم جديد');
       });
     });
 
@@ -233,7 +233,7 @@ void main() {
 
         // Assert
         expect(customer.id, 'test-1');
-        expect(customer.name, 'أحمد محمد');
+        expect(customer.name(isArabic: true), 'أحمد محمد');
         expect(customer.phone, '0501234567');
         expect(customer.email, isNull);
         expect(customer.address, isNull);
@@ -254,7 +254,7 @@ void main() {
 
         // Assert
         expect(customer.id, 'test-2');
-        expect(customer.name, 'فاطمة علي');
+        expect(customer.name(isArabic: true), 'فاطمة علي');
         expect(customer.phone, '0507654321');
         expect(customer.email, 'fatima@example.com');
         expect(customer.address, 'جدة، السعودية');
