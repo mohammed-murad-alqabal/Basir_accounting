@@ -3,8 +3,8 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
-import 'package:basir_app/src/rust/api.dart';
-import 'package:basir_app/src/rust/frb_generated.dart';
+import '../api.dart';
+import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `clone`, `from`, `from`, `try_from`, `try_from`
@@ -33,32 +33,18 @@ Future<PurchaseBillDto?> getPurchaseBillById({required String id}) =>
 Future<void> deleteBill({required String id}) =>
     RustLib.instance.api.crateApiPurchasingDeleteBill(id: id);
 
-Future<String> createPurchaseBill({
-  required PurchaseBillDto bill,
-  required AuditMetadataDto metadata,
-}) =>
+Future<String> createPurchaseBill(
+        {required PurchaseBillDto bill, required AuditMetadataDto metadata}) =>
     RustLib.instance.api
         .crateApiPurchasingCreatePurchaseBill(bill: bill, metadata: metadata);
 
-Future<void> recordBillPayment({
-  required BillPaymentDto payment,
-  required AuditMetadataDto metadata,
-}) =>
+Future<void> recordBillPayment(
+        {required BillPaymentDto payment,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiPurchasingRecordBillPayment(
-      payment: payment,
-      metadata: metadata,
-    );
+        payment: payment, metadata: metadata);
 
 class BillPaymentDto {
-  const BillPaymentDto({
-    required this.billId,
-    required this.amount,
-    required this.paymentDate,
-    required this.paymentMethod,
-    required this.bankAccountId,
-    this.id,
-    this.reference,
-  });
   final String? id;
   final String billId;
   final String amount;
@@ -66,6 +52,16 @@ class BillPaymentDto {
   final String paymentMethod;
   final String bankAccountId;
   final String? reference;
+
+  const BillPaymentDto({
+    this.id,
+    required this.billId,
+    required this.amount,
+    required this.paymentDate,
+    required this.paymentMethod,
+    required this.bankAccountId,
+    this.reference,
+  });
 
   @override
   int get hashCode =>
@@ -92,19 +88,6 @@ class BillPaymentDto {
 }
 
 class PurchaseBillDto {
-  const PurchaseBillDto({
-    required this.billNumber,
-    required this.vendorId,
-    required this.billDate,
-    required this.dueDate,
-    required this.totalAmount,
-    required this.balanceDue,
-    required this.status,
-    required this.expenseAccountId,
-    required this.apAccountId,
-    this.id,
-    this.description,
-  });
   final String? id;
   final String billNumber;
   final String vendorId;
@@ -116,6 +99,20 @@ class PurchaseBillDto {
   final String expenseAccountId;
   final String apAccountId;
   final String? description;
+
+  const PurchaseBillDto({
+    this.id,
+    required this.billNumber,
+    required this.vendorId,
+    required this.billDate,
+    required this.dueDate,
+    required this.totalAmount,
+    required this.balanceDue,
+    required this.status,
+    required this.expenseAccountId,
+    required this.apAccountId,
+    this.description,
+  });
 
   @override
   int get hashCode =>
@@ -150,18 +147,19 @@ class PurchaseBillDto {
 }
 
 class VendorDto {
-  const VendorDto({
-    required this.code,
-    required this.nameAr,
-    required this.nameEn,
-    this.id,
-    this.taxId,
-  });
   final String? id;
   final String code;
   final String nameAr;
   final String nameEn;
   final String? taxId;
+
+  const VendorDto({
+    this.id,
+    required this.code,
+    required this.nameAr,
+    required this.nameEn,
+    this.taxId,
+  });
 
   @override
   int get hashCode =>

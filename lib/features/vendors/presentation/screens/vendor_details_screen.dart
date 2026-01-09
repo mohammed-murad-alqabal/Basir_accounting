@@ -174,15 +174,15 @@ class VendorDetailsScreen extends ConsumerWidget {
               .msgConfirmDeleteVendor(vendor.name(isArabic: context.isArabic)),
         ),
         actions: [
-          AppButton(
+          AppEnhancedButton(
             label: context.l10n.dialogCancel,
             onPressed: () => Navigator.pop(context, false),
-            type: AppButtonType.text,
+            type: AppEnhancedButtonType.text,
           ),
-          AppButton(
+          AppEnhancedButton(
             label: context.l10n.dialogDelete,
             onPressed: () => Navigator.pop(context, true),
-            type: AppButtonType.danger,
+            type: AppEnhancedButtonType.danger,
           ),
         ],
       ),

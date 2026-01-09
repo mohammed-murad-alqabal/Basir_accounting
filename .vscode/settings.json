@@ -63,5 +63,5 @@
     "editor.wordBasedSuggestions": "off"
   },
   "kiroAgent.trustedCommands": ["*", "git rm *"],
-  "cmake.sourceDirectory": "linux"
+  "cmake.sourceDirectory": "/home/m/Projects/basir_accounting_system/linux"
 }

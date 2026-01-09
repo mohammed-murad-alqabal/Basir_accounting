@@ -1,6 +1,6 @@
 import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/core/providers/supabase_auth_provider.dart';
-import 'package:basir_app/features/auth/data/services/auth_service.dart';
+import 'package:basir_app/features/auth/application/auth_service.dart';
 import 'package:basir_app/features/customers/data/models/customer_model.dart';
 import 'package:basir_app/features/customers/data/repositories/customer_repository_impl.dart';
 import 'package:basir_app/features/invoices/data/models/invoice_model.dart';

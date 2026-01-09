@@ -42,6 +42,7 @@ import 'package:path_provider/path_provider.dart';
 export '../features/accounting/data/repositories/accounting_repository_impl.dart';
 // تصدير مزودات المصادقة من مكانها الجديد
 export '../features/auth/presentation/providers/auth_provider.dart';
+export '../features/reports/services/reporting_service.dart';
 // تصدير المزودات الأساسية
 export 'providers/calendar_provider.dart';
 export 'providers/locale_provider.dart';

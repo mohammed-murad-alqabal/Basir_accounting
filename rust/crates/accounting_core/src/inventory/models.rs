@@ -23,11 +23,16 @@ pub struct InventoryItem {
     pub code: String,
     pub name_ar: String,
     pub name_en: String,
+    pub description: Option<String>,
     pub unit: String,
     pub valuation_method: ValuationMethod,
+    pub purchase_price: Option<Decimal>,
+    pub sale_price: Option<Decimal>,
     pub asset_account_id: Uuid,   // Inventory (1300 typical)
     pub cogs_account_id: Uuid,    // Cost of Goods Sold (5100 typical)
     pub revenue_account_id: Uuid, // Sales Revenue (4100 typical)
+    pub created_at: DateTime<Utc>,
+    pub updated_at: DateTime<Utc>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

@@ -117,6 +117,11 @@ class AccountingService extends _$AccountingService {
         description: 'فاتورة مبيعات رقم ${invoice.invoiceNumber}',
         debit: Decimal.parse(invoice.totalAmount.toString()),
         credit: Decimal.zero,
+        originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+        originalAmount: invoice.currency != 'SAR'
+            ? Decimal.parse(invoice.totalAmount.toString())
+            : null,
+        exchangeRate: invoice.currency != 'SAR' ? Decimal.one : null,
       ),
     );
 
@@ -135,6 +140,11 @@ class AccountingService extends _$AccountingService {
       debit: Decimal.zero,
       accountName: revenueAccount.nameAr,
       description: 'إيراد فاتورة ${invoice.invoiceNumber}',
+      originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+      originalAmount: invoice.currency != 'SAR'
+          ? Decimal.parse(invoice.subtotalAmount.toString())
+          : null,
+      exchangeRate: invoice.currency != 'SAR' ? Decimal.one : null,
     );
     lines.add(revenueLine);
 
@@ -160,6 +170,11 @@ class AccountingService extends _$AccountingService {
           description: 'ضريبة فاتورة ${invoice.invoiceNumber}',
           credit: Decimal.parse(invoice.taxAmount.toString()),
           debit: Decimal.zero,
+          originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+          originalAmount: invoice.currency != 'SAR'
+              ? Decimal.parse(invoice.taxAmount.toString())
+              : null,
+          exchangeRate: invoice.currency != 'SAR' ? Decimal.one : null,
         ),
       );
     }
@@ -308,6 +323,9 @@ class AccountingService extends _$AccountingService {
               credit: l.debit, // SWAP
               description: 'عكس: ${l.description ?? ""}',
               sourceDocumentRef: l.sourceDocumentRef,
+              originalCurrency: l.originalCurrency,
+              exchangeRate: l.exchangeRate,
+              originalAmount: l.originalAmount,
             ),
           )
           .toList(),

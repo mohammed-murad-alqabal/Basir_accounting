@@ -172,7 +172,8 @@ class _CompanySettingsSheetState extends ConsumerState<CompanySettingsSheet> {
             },
           ),
           const SizedBox(height: Spacing.xl),
-          AppPrimaryButton(
+          AppEnhancedButton(
+            width: double.infinity,
             label: context.l10n.dialogSave,
             isLoading: state.isLoading,
             onPressed: () async {

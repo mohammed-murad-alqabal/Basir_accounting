@@ -3,7 +3,7 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
-import 'package:basir_app/src/rust/frb_generated.dart';
+import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 /// Look up a standard by reference string (e.g. "IFRS 15.35")
@@ -16,14 +16,15 @@ Future<List<StandardDto>> searchStandards({required String query}) =>
 
 /// Simple DTO for Standard lookup result
 class StandardDto {
+  final String reference;
+  final String title;
+  final bool isEffective;
+
   const StandardDto({
     required this.reference,
     required this.title,
     required this.isEffective,
   });
-  final String reference;
-  final String title;
-  final bool isEffective;
 
   @override
   int get hashCode =>

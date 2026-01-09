@@ -217,7 +217,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     const SizedBox(height: Spacing.md),
 
                     // أزرار الإجراءات
-                    AppPrimaryButton(
+                    // أزرار الإجراءات
+                    AppEnhancedButton(
+                      width: double.infinity,
                       label: context.l10n.loginTitle,
                       onPressed: _handleLogin,
                       isLoading: _isLoading,
@@ -225,7 +227,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                     const SizedBox(height: Spacing.md),
 
-                    AppSecondaryButton(
+                    AppEnhancedButton(
+                      type: AppEnhancedButtonType.secondary,
+                      width: double.infinity,
                       label: context.l10n.loginGuest,
                       onPressed: _isLoading ? null : _handleGuestLogin,
                       isLoading: _isLoading,
@@ -243,7 +247,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               color: colorScheme.onSurfaceVariant,
                             ),
                           ),
-                          AppTextButton(
+                          AppEnhancedButton(
+                            type: AppEnhancedButtonType.text,
                             label: context.l10n.btnCreateAccount,
                             onPressed: () {
                               unawaited(

@@ -3,7 +3,7 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
-import 'package:basir_app/src/rust/frb_generated.dart';
+import 'frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 // These functions are ignored because they are not marked as `pub`: `get_pool`, `map_audit_record_to_dto`
@@ -16,16 +16,17 @@ Future<void> initApi({required String databaseUrl}) =>
 bool checkHealth() => RustLib.instance.api.crateApiCheckHealth();
 
 class AuditMetadataDto {
+  final WhoDto who;
+  final WhereDto where;
+  final WhyDto why;
+  final HowDto how;
+
   const AuditMetadataDto({
     required this.who,
     required this.where,
     required this.why,
     required this.how,
   });
-  final WhoDto who;
-  final WhereDto where;
-  final WhyDto why;
-  final HowDto how;
 
   @override
   int get hashCode =>
@@ -43,6 +44,17 @@ class AuditMetadataDto {
 }
 
 class AuditRecordDto {
+  final String recordId;
+  final WhoDto who;
+  final WhatDto what;
+  final String when;
+  final WhereDto where;
+  final WhyDto why;
+  final HowDto how;
+  final String hash;
+  final String previousHash;
+  final bool isVerified;
+
   const AuditRecordDto({
     required this.recordId,
     required this.who,
@@ -55,16 +67,6 @@ class AuditRecordDto {
     required this.previousHash,
     required this.isVerified,
   });
-  final String recordId;
-  final WhoDto who;
-  final WhatDto what;
-  final String when;
-  final WhereDto where;
-  final WhyDto why;
-  final HowDto how;
-  final String hash;
-  final String previousHash;
-  final bool isVerified;
 
   @override
   int get hashCode =>
@@ -97,14 +99,15 @@ class AuditRecordDto {
 }
 
 class HowDto {
+  final String method;
+  final String? procedureReference;
+  final String? apiEndpoint;
+
   const HowDto({
     required this.method,
     this.procedureReference,
     this.apiEndpoint,
   });
-  final String method;
-  final String? procedureReference;
-  final String? apiEndpoint;
 
   @override
   int get hashCode =>
@@ -121,6 +124,13 @@ class HowDto {
 }
 
 class WhatDto {
+  final String action;
+  final String entityType;
+  final String entityId;
+  final String changeDescription;
+  final String? oldValue;
+  final String? newValue;
+
   const WhatDto({
     required this.action,
     required this.entityType,
@@ -129,12 +139,6 @@ class WhatDto {
     this.oldValue,
     this.newValue,
   });
-  final String action;
-  final String entityType;
-  final String entityId;
-  final String changeDescription;
-  final String? oldValue;
-  final String? newValue;
 
   @override
   int get hashCode =>
@@ -159,6 +163,12 @@ class WhatDto {
 }
 
 class WhereDto {
+  final String systemId;
+  final String? ipAddress;
+  final String? location;
+  final String? deviceId;
+  final String? appVersion;
+
   const WhereDto({
     required this.systemId,
     this.ipAddress,
@@ -166,11 +176,6 @@ class WhereDto {
     this.deviceId,
     this.appVersion,
   });
-  final String systemId;
-  final String? ipAddress;
-  final String? location;
-  final String? deviceId;
-  final String? appVersion;
 
   @override
   int get hashCode =>
@@ -193,16 +198,17 @@ class WhereDto {
 }
 
 class WhoDto {
+  final String userId;
+  final String userName;
+  final String role;
+  final String sessionId;
+
   const WhoDto({
     required this.userId,
     required this.userName,
     required this.role,
     required this.sessionId,
   });
-  final String userId;
-  final String userName;
-  final String role;
-  final String sessionId;
 
   @override
   int get hashCode =>
@@ -220,14 +226,15 @@ class WhoDto {
 }
 
 class WhyDto {
+  final String? reasonCode;
+  final String? justification;
+  final String? authorizationReference;
+
   const WhyDto({
     this.reasonCode,
     this.justification,
     this.authorizationReference,
   });
-  final String? reasonCode;
-  final String? justification;
-  final String? authorizationReference;
 
   @override
   int get hashCode =>

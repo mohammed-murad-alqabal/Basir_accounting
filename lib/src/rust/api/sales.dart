@@ -3,8 +3,8 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
-import 'package:basir_app/src/rust/api.dart';
-import 'package:basir_app/src/rust/frb_generated.dart';
+import '../api.dart';
+import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `clone`, `from`, `from`, `try_from`, `try_from`, `try_from`
@@ -30,45 +30,37 @@ Future<SalesInvoiceDto?> getInvoiceById({required String id}) =>
 Future<void> deleteInvoice({required String id}) =>
     RustLib.instance.api.crateApiSalesDeleteInvoice(id: id);
 
-Future<String> createInvoice({
-  required SalesInvoiceDto invoice,
-  required List<SalesInvoiceLineDto> lines,
-  required AuditMetadataDto metadata,
-}) =>
+Future<String> createInvoice(
+        {required SalesInvoiceDto invoice,
+        required List<SalesInvoiceLineDto> lines,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiSalesCreateInvoice(
-      invoice: invoice,
-      lines: lines,
-      metadata: metadata,
-    );
+        invoice: invoice, lines: lines, metadata: metadata);
 
-Future<void> postInvoice({
-  required String id,
-  required AuditMetadataDto metadata,
-}) =>
+Future<void> postInvoice(
+        {required String id, required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiSalesPostInvoice(id: id, metadata: metadata);
 
-Future<void> recordCustomerPayment({
-  required CustomerPaymentDto payment,
-  required AuditMetadataDto metadata,
-}) =>
+Future<void> recordCustomerPayment(
+        {required CustomerPaymentDto payment,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiSalesRecordCustomerPayment(
-      payment: payment,
-      metadata: metadata,
-    );
+        payment: payment, metadata: metadata);
 
 class CustomerDto {
-  const CustomerDto({
-    required this.code,
-    required this.nameAr,
-    required this.nameEn,
-    this.id,
-    this.taxId,
-  });
   final String? id;
   final String code;
   final String nameAr;
   final String nameEn;
   final String? taxId;
+
+  const CustomerDto({
+    this.id,
+    required this.code,
+    required this.nameAr,
+    required this.nameEn,
+    this.taxId,
+  });
 
   @override
   int get hashCode =>
@@ -91,15 +83,6 @@ class CustomerDto {
 }
 
 class CustomerPaymentDto {
-  const CustomerPaymentDto({
-    required this.invoiceId,
-    required this.amount,
-    required this.paymentDate,
-    required this.bankAccountId,
-    required this.paymentMethod,
-    this.id,
-    this.reference,
-  });
   final String? id;
   final String invoiceId;
   final String amount;
@@ -107,6 +90,16 @@ class CustomerPaymentDto {
   final String bankAccountId;
   final String paymentMethod;
   final String? reference;
+
+  const CustomerPaymentDto({
+    this.id,
+    required this.invoiceId,
+    required this.amount,
+    required this.paymentDate,
+    required this.bankAccountId,
+    required this.paymentMethod,
+    this.reference,
+  });
 
   @override
   int get hashCode =>
@@ -133,20 +126,6 @@ class CustomerPaymentDto {
 }
 
 class SalesInvoiceDto {
-  const SalesInvoiceDto({
-    required this.invoiceNumber,
-    required this.customerId,
-    required this.invoiceDate,
-    required this.dueDate,
-    required this.status,
-    required this.totalAmount,
-    required this.balanceDue,
-    required this.incomeAccountId,
-    required this.arAccountId,
-    this.id,
-    this.description,
-    this.qrCodeData,
-  });
   final String? id;
   final String invoiceNumber;
   final String customerId;
@@ -159,6 +138,21 @@ class SalesInvoiceDto {
   final String incomeAccountId;
   final String arAccountId;
   final String? qrCodeData;
+
+  const SalesInvoiceDto({
+    this.id,
+    required this.invoiceNumber,
+    required this.customerId,
+    required this.invoiceDate,
+    required this.dueDate,
+    required this.status,
+    required this.totalAmount,
+    required this.balanceDue,
+    this.description,
+    required this.incomeAccountId,
+    required this.arAccountId,
+    this.qrCodeData,
+  });
 
   @override
   int get hashCode =>
@@ -195,18 +189,19 @@ class SalesInvoiceDto {
 }
 
 class SalesInvoiceLineDto {
-  const SalesInvoiceLineDto({
-    required this.description,
-    required this.quantity,
-    required this.unitPrice,
-    required this.taxAmount,
-    this.productId,
-  });
   final String? productId;
   final String description;
   final String quantity;
   final String unitPrice;
   final String taxAmount;
+
+  const SalesInvoiceLineDto({
+    this.productId,
+    required this.description,
+    required this.quantity,
+    required this.unitPrice,
+    required this.taxAmount,
+  });
 
   @override
   int get hashCode =>

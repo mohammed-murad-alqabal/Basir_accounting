@@ -96,6 +96,8 @@ class Invoice with _$Invoice {
     String? zatcaHash,
     String? qrCode,
     String? xmlContent,
+    String? zatcaDeviceId,
+    @Default(0) int zatcaCounter,
 
     /// معرف المستخدم لغرض عزل البيانات
     String? userId,

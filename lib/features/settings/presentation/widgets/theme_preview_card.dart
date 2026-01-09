@@ -46,14 +46,17 @@ class ThemePreviewCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: AppPrimaryButton(
+                  child: AppEnhancedButton(
+                    width: double.infinity,
                     label: context.l10n.labelPrimary,
                     onPressed: () {},
                   ),
                 ),
                 const SizedBox(width: Spacing.sm),
                 Expanded(
-                  child: AppSecondaryButton(
+                  child: AppEnhancedButton(
+                    type: AppEnhancedButtonType.secondary,
+                    width: double.infinity,
                     label: context.l10n.labelSecondary,
                     onPressed: () {},
                   ),
