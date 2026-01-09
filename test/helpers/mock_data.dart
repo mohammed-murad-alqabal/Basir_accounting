@@ -13,7 +13,8 @@ class MockData {
   /// إنشاء عميل اختبار افتراضي
   static Customer createTestCustomer({
     String? id,
-    String? name,
+    String? nameAr,
+    String? nameEn,
     String? phone,
     String? email,
     String? address,
@@ -22,7 +23,8 @@ class MockData {
     final now = DateTime.now();
     return Customer(
       id: id ?? 'test-customer-${now.microsecondsSinceEpoch}',
-      name: name ?? 'عميل اختبار',
+      nameAr: nameAr ?? 'عميل اختبار',
+      nameEn: nameEn ?? 'Test Customer',
       phone: phone ?? '0501234567',
       email: email ?? 'test@example.com',
       address: address ?? 'عنوان اختبار، الرياض',
@@ -38,7 +40,8 @@ class MockData {
         count,
         (index) => createTestCustomer(
           id: 'test-customer-$index',
-          name: 'عميل اختبار ${index + 1}',
+          nameAr: 'عميل اختبار ${index + 1}',
+          nameEn: 'Test Customer ${index + 1}',
           phone: '050${1234567 + index}',
           email: 'test$index@example.com',
           userId: userId,

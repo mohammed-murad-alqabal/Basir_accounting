@@ -118,7 +118,12 @@ class CustomerRepositoryImpl implements CustomerRepository {
           .filter()
           .userIdEqualTo(userId)
           .and()
-          .nameContains(query)
+          .group(
+            (q) => q
+                .nameArContains(query, caseSensitive: false)
+                .or()
+                .nameEnContains(query, caseSensitive: false),
+          )
           .findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
@@ -182,7 +187,8 @@ class CustomerRepositoryImpl implements CustomerRepository {
 
         // تحديث الحقول
         existingModel
-          ..name = customer.name
+          ..nameAr = customer.nameAr
+          ..nameEn = customer.nameEn
           ..phone = customer.phone
           ..email = customer.email
           ..address = customer.address

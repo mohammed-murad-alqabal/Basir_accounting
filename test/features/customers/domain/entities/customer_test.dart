@@ -7,7 +7,8 @@ void main() {
       final now = DateTime.now();
       final customer = Customer(
         id: '1',
-        name: 'أحمد محمد',
+        nameEn: 'أحمد محمد',
+        nameAr: 'أحمد محمد',
         phone: '+966501234567',
         email: 'ahmed@example.com',
         address: 'الرياض',
@@ -26,7 +27,8 @@ void main() {
       final now = DateTime.now();
       final customer1 = Customer(
         id: '1',
-        name: 'أحمد',
+        nameEn: 'أحمد',
+        nameAr: 'أحمد',
         phone: '+966501234567',
         email: 'ahmed@example.com',
         address: 'الرياض',
@@ -35,7 +37,8 @@ void main() {
       );
       final customer2 = Customer(
         id: '1',
-        name: 'أحمد',
+        nameEn: 'أحمد',
+        nameAr: 'أحمد',
         phone: '+966501234567',
         email: 'ahmed@example.com',
         address: 'الرياض',
@@ -50,7 +53,8 @@ void main() {
       final now = DateTime.now();
       final customer = Customer(
         id: '1',
-        name: 'أحمد',
+        nameEn: 'أحمد',
+        nameAr: 'أحمد',
         phone: '+966501234567',
         email: 'ahmed@example.com',
         address: 'الرياض',
@@ -59,7 +63,8 @@ void main() {
       );
 
       final updatedCustomer = customer.copyWith(
-        name: 'محمد أحمد',
+        nameEn: 'محمد أحمد',
+        nameAr: 'محمد أحمد',
         updatedAt: now.add(const Duration(hours: 1)),
       );
 
@@ -72,7 +77,8 @@ void main() {
       final now = DateTime.now();
       final customer = Customer(
         id: '1',
-        name: 'أحمد',
+        nameEn: 'أحمد',
+        nameAr: 'أحمد',
         createdAt: now,
         updatedAt: now,
       );

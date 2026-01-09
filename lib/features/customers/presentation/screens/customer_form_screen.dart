@@ -27,7 +27,8 @@ class CustomerFormScreen extends ConsumerStatefulWidget {
 
 class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
+  final _nameArController = TextEditingController();
+  final _nameEnController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
   final _addressController = TextEditingController();
@@ -40,7 +41,8 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
   void initState() {
     super.initState();
     if (widget.customer != null) {
-      _nameController.text = widget.customer!.name;
+      _nameArController.text = widget.customer!.nameAr;
+      _nameEnController.text = widget.customer!.nameEn;
       _emailController.text = widget.customer!.email ?? '';
       _phoneController.text = widget.customer!.phone ?? '';
       _addressController.text = widget.customer!.address ?? '';
@@ -51,7 +53,8 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
 
   @override
   void dispose() {
-    _nameController.dispose();
+    _nameArController.dispose();
+    _nameEnController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
     _addressController.dispose();
@@ -90,18 +93,30 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                 ),
               if (!isEditing) const SizedBox(height: Spacing.md),
 
-              // اسم العميل
+              // اسم العميل بالعربية
               AppTextField(
-                controller: _nameController,
-                label: context.l10n.labelCustomerName,
+                controller: _nameArController,
+                label: '${context.l10n.labelCustomerName} (العربية)',
                 hint: context.l10n.hintCustomerName,
                 prefixIcon: Icon(appIcons.person),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return context.l10n.errCustomerNameRequired;
                   }
-                  if (value.length < 2) {
-                    return context.l10n.errCustomerNameLength;
+                  return null;
+                },
+              ),
+              const SizedBox(height: Spacing.md),
+
+              // اسم العميل بالإنجليزية
+              AppTextField(
+                controller: _nameEnController,
+                label: '${context.l10n.labelCustomerName} (English)',
+                hint: 'Customer Name in English',
+                prefixIcon: Icon(appIcons.person),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return context.l10n.errCustomerNameRequired;
                   }
                   return null;
                 },
@@ -244,7 +259,9 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       if (result != null && result is Contact) {
         final selectedContact = result;
         setState(() {
-          _nameController.text = '${selectedContact.name.first} '
+          _nameArController.text = '${selectedContact.name.first} '
+              '${selectedContact.name.last}';
+          _nameEnController.text = '${selectedContact.name.first} '
               '${selectedContact.name.last}';
           if (selectedContact.phones.isNotEmpty) {
             _phoneController.text = selectedContact.phones.first.number;
@@ -280,7 +297,8 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
     try {
       final customer = Customer(
         id: widget.customer?.id ?? const Uuid().v4(),
-        name: _nameController.text.trim(),
+        nameAr: _nameArController.text.trim(),
+        nameEn: _nameEnController.text.trim(),
         email: _emailController.text.trim().isEmpty
             ? null
             : _emailController.text.trim(),

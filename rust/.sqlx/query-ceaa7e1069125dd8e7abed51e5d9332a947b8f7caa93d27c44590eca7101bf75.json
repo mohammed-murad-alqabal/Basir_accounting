@@ -1,0 +1,19 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO currencies (code, name, symbol, decimals, is_active, is_functional)\n            VALUES ($1, $2, $3, $4, $5, $6)\n            ON CONFLICT (code) DO UPDATE SET\n                name = EXCLUDED.name,\n                symbol = EXCLUDED.symbol,\n                decimals = EXCLUDED.decimals,\n                is_active = EXCLUDED.is_active,\n                is_functional = EXCLUDED.is_functional\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "Text",
+        "Int4",
+        "Bool",
+        "Bool"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "ceaa7e1069125dd8e7abed51e5d9332a947b8f7caa93d27c44590eca7101bf75"
+}

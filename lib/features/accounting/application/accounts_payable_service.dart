@@ -11,7 +11,8 @@ class SupplierAging {
   /// إنشاء بيانات تعمير ديون المورد.
   SupplierAging({
     required this.supplierId,
-    required this.supplierName,
+    required this.supplierNameAr,
+    required this.supplierNameEn,
     required this.current,
     required this.period1_30,
     required this.period31_60,
@@ -22,8 +23,11 @@ class SupplierAging {
   /// معرف المورد.
   final String supplierId;
 
-  /// اسم المورد.
-  final String supplierName;
+  /// اسم المورد بالعربية.
+  final String supplierNameAr;
+
+  /// اسم المورد بالإنجليزية.
+  final String supplierNameEn;
 
   /// الديون الحالية (لم تستحق بعد).
   final Decimal current;
@@ -39,6 +43,10 @@ class SupplierAging {
 
   /// إجمالي رصيد الديون المستحقة للمورد.
   final Decimal totalBalance;
+
+  /// الحصول على الاسم المناسب حسب اللغة
+  String name({required bool isArabic}) =>
+      isArabic ? supplierNameAr : supplierNameEn;
 }
 
 /// خدمة حسابات الموردين (Accounts Payable Service)
@@ -118,7 +126,8 @@ class AccountsPayableService extends _$AccountsPayableService {
         result.add(
           SupplierAging(
             supplierId: vendor.id,
-            supplierName: vendor.name,
+            supplierNameAr: vendor.nameAr,
+            supplierNameEn: vendor.nameEn,
             current: current,
             period1_30: p1,
             period31_60: p2,

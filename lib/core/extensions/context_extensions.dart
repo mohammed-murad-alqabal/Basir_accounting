@@ -4,11 +4,8 @@ import 'package:flutter/widgets.dart';
 /// امتدادات للسياق (BuildContext Extensions)
 extension ContextExtensions on BuildContext {
   /// الوصول السريع للترجمات
-  ///
-  /// بدلاً من كتابة:
-  /// `AppLocalizations.of(context)!`
-  ///
-  /// يمكنك كتابة:
-  /// `context.l10n`
   AppLocalizations get l10n => AppLocalizations.of(this);
+
+  /// هل اللغة الحالية هي العربية؟
+  bool get isArabic => Localizations.localeOf(this).languageCode == 'ar';
 }

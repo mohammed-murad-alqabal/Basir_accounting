@@ -74,7 +74,8 @@ void main() {
       // Arrange
       final newCustomer = MockData.createTestCustomer(
         id: 'new-customer',
-        name: 'عميل جديد',
+        nameEn: 'عميل جديد',
+        nameAr: 'عميل جديد',
       );
 
       // Act
@@ -109,7 +110,8 @@ void main() {
       // Arrange
       final customer = MockData.createTestCustomer(
         id: 'test-id',
-        name: 'أحمد محمد',
+        nameEn: 'أحمد محمد',
+        nameAr: 'أحمد محمد',
         phone: '0501234567',
         email: 'ahmed@example.com',
         address: 'الرياض',
@@ -122,7 +124,7 @@ void main() {
 
       // Assert
       expect(addedCustomer.id, customer.id);
-      expect(addedCustomer.name, customer.name);
+      expect(addedCustomer.nameAr, customer.nameAr);
       expect(addedCustomer.phone, customer.phone);
       expect(addedCustomer.email, customer.email);
       expect(addedCustomer.address, customer.address);
@@ -134,13 +136,15 @@ void main() {
       // Arrange
       final originalCustomer = MockData.createTestCustomer(
         id: 'customer-1',
-        name: 'اسم قديم',
+        nameEn: 'اسم قديم',
+        nameAr: 'اسم قديم',
         phone: '0501111111',
       );
       await mockRepository.addCustomer(originalCustomer);
 
       final updatedCustomer = originalCustomer.copyWith(
-        name: 'اسم جديد',
+        nameEn: 'اسم جديد',
+        nameAr: 'اسم جديد',
         phone: '0502222222',
       );
 
@@ -150,7 +154,7 @@ void main() {
 
       // Assert
       expect(customer, isNotNull);
-      expect(customer!.name, 'اسم جديد');
+      expect(customer!.nameAr, 'اسم جديد');
       expect(customer.phone, '0502222222');
     });
 
@@ -158,7 +162,8 @@ void main() {
       // Arrange
       final originalCustomer = MockData.createTestCustomer(
         id: 'customer-1',
-        name: 'أحمد',
+        nameEn: 'أحمد',
+        nameAr: 'أحمد',
         phone: '0501111111',
         email: 'old@example.com',
       );
@@ -173,7 +178,7 @@ void main() {
       final customer = await mockRepository.getCustomerById('customer-1');
 
       // Assert
-      expect(customer!.name, 'أحمد'); // لم يتغير
+      expect(customer!.nameAr, 'أحمد'); // لم يتغير
       expect(customer.phone, '0501111111'); // لم يتغير
       expect(customer.email, 'new@example.com'); // تغير
     });
@@ -242,15 +247,18 @@ void main() {
       // Arrange
       final customer1 = MockData.createTestCustomer(
         id: 'customer-1',
-        name: 'أحمد محمد',
+        nameEn: 'أحمد محمد',
+        nameAr: 'أحمد محمد',
       );
       final customer2 = MockData.createTestCustomer(
         id: 'customer-2',
-        name: 'محمد علي',
+        nameEn: 'محمد علي',
+        nameAr: 'محمد علي',
       );
       final customer3 = MockData.createTestCustomer(
         id: 'customer-3',
-        name: 'علي حسن',
+        nameEn: 'علي حسن',
+        nameAr: 'علي حسن',
       );
 
       await mockRepository.addCustomer(customer1);
@@ -259,8 +267,9 @@ void main() {
 
       // Act
       final allCustomers = await mockRepository.getAllCustomers();
-      final filtered =
-          allCustomers.where((c) => c.name.contains('محمد')).toList();
+      final filtered = allCustomers
+          .where((c) => c.nameAr.contains('محمد') || c.nameEn.contains('محمد'))
+          .toList();
 
       // Assert
       expect(filtered.length, 2);
@@ -335,13 +344,19 @@ void main() {
 
     test('should return empty list when no matches found', () async {
       // Arrange
-      final customer = MockData.createTestCustomer(name: 'أحمد');
+      final customer =
+          MockData.createTestCustomer(nameEn: 'أحمد', nameAr: 'أحمد');
       await mockRepository.addCustomer(customer);
 
       // Act
       final allCustomers = await mockRepository.getAllCustomers();
-      final filtered =
-          allCustomers.where((c) => c.name.contains('غير موجود')).toList();
+      final filtered = allCustomers
+          .where(
+            (c) =>
+                c.nameAr.contains('غير موجود') ||
+                c.nameEn.contains('غير موجود'),
+          )
+          .toList();
 
       // Assert
       expect(filtered, isEmpty);
@@ -377,7 +392,7 @@ void main() {
       // Assert
       expect(retrieved, isNotNull);
       expect(retrieved!.id, customer.id);
-      expect(retrieved.name, customer.name);
+      expect(retrieved.nameAr, customer.nameAr);
       expect(retrieved.email, customer.email);
       expect(retrieved.address, customer.address);
     });

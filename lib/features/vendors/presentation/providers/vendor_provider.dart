@@ -1,5 +1,6 @@
 import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/features/vendors/domain/entities/vendor.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'vendor_provider.g.dart';
@@ -37,3 +38,35 @@ class Vendors extends _$Vendors {
     ref.invalidateSelf();
   }
 }
+
+/// موفر قائمة جميع الموردين المتزامن
+final vendorsProvider = FutureProvider<List<Vendor>>((ref) async {
+  final repository = ref.watch(vendorRepositoryProvider);
+  return repository.getAllVendors();
+});
+
+/// State Provider لحالة البحث
+final vendorSearchProvider = StateProvider<String>((ref) => '');
+
+/// Provider لقائمة الموردين المفلترة حسب البحث
+final filteredVendorsProvider = Provider<AsyncValue<List<Vendor>>>((ref) {
+  final searchQuery = ref.watch(vendorSearchProvider).toLowerCase();
+  final vendorsAsync = ref.watch(vendorsProvider);
+
+  return vendorsAsync.whenData((vendors) {
+    if (searchQuery.isEmpty) return vendors;
+    return vendors.where(
+      (v) {
+        final nameAr = v.nameAr.toLowerCase();
+        final nameEn = v.nameEn.toLowerCase();
+        final email = (v.email ?? '').toLowerCase();
+        final phone = (v.phone ?? '').toLowerCase();
+
+        return nameAr.contains(searchQuery) ||
+            nameEn.contains(searchQuery) ||
+            email.contains(searchQuery) ||
+            phone.contains(searchQuery);
+      },
+    ).toList();
+  });
+});

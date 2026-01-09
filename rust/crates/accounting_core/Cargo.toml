@@ -25,6 +25,12 @@ hex = { workspace = true }
 # Error handling
 thiserror = { workspace = true }
 
+# Async
+tokio = { workspace = true }
+sqlx = { workspace = true, features = ["postgres", "runtime-tokio-native-tls", "macros"] }
+strum = "0.27.2"
+strum_macros = "0.27.2"
+
 [dev-dependencies]
 # Property-based testing
 proptest = { workspace = true }

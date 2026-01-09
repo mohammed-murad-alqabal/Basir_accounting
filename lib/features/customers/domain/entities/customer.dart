@@ -56,8 +56,11 @@ class Customer with _$Customer {
     /// معرف فريد للعميل
     required String id,
 
-    /// اسم العميل
-    required String name,
+    /// اسم العميل بالعربية
+    required String nameAr,
+
+    /// اسم العميل بالإنجليزية
+    required String nameEn,
 
     /// تاريخ إنشاء العميل
     required DateTime createdAt,
@@ -105,4 +108,9 @@ class Customer with _$Customer {
   /// إنشاء كيان من JSON
   factory Customer.fromJson(Map<String, dynamic> json) =>
       _$CustomerFromJson(json);
+
+  const Customer._();
+
+  /// الحصول على الاسم المناسب حسب اللغة
+  String name({required bool isArabic}) => isArabic ? nameAr : nameEn;
 }

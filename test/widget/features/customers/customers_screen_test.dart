@@ -112,7 +112,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text(CustomerFixtures.customer1.name), findsOneWidget);
+      expect(find.text(CustomerFixtures.customer1.nameAr), findsOneWidget);
     });
   });
 

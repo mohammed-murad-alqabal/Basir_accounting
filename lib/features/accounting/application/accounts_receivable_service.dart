@@ -11,7 +11,8 @@ class CustomerAging {
   /// إنشاء بيانات تعمير ديون العميل.
   CustomerAging({
     required this.customerId,
-    required this.customerName,
+    required this.customerNameAr,
+    required this.customerNameEn,
     required this.current,
     required this.period1_30,
     required this.period31_60,
@@ -23,8 +24,11 @@ class CustomerAging {
   /// معرف العميل.
   final String customerId;
 
-  /// اسم العميل.
-  final String customerName;
+  /// اسم العميل بالعربية.
+  final String customerNameAr;
+
+  /// اسم العميل بالإنجليزية.
+  final String customerNameEn;
 
   /// الديون الحالية (لم تستحق بعد).
   final Decimal current;
@@ -43,6 +47,10 @@ class CustomerAging {
 
   /// إجمالي رصيد الديون المستحقة على العميل.
   final Decimal totalBalance;
+
+  /// الحصول على الاسم المناسب حسب اللغة
+  String name({required bool isArabic}) =>
+      isArabic ? customerNameAr : customerNameEn;
 }
 
 /// خدمة حسابات العملاء (Accounts Receivable Service)
@@ -124,7 +132,8 @@ class AccountsReceivableService extends _$AccountsReceivableService {
         result.add(
           CustomerAging(
             customerId: customer.id,
-            customerName: customer.name,
+            customerNameAr: customer.nameAr,
+            customerNameEn: customer.nameEn,
             current: current,
             period1_30: p1,
             period31_60: p2,
