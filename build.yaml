@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      isar_generator|isar_generator:
+        generate_for:
+          exclude:
+            - lib/src/rust/**
+      json_serializable:
+        generate_for:
+          exclude:
+            - lib/src/rust/**
+      freezed:
+        generate_for:
+          exclude:
+            - lib/src/rust/**

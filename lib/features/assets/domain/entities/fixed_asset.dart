@@ -58,10 +58,8 @@ class FixedAsset with _$FixedAsset {
   }) = _FixedAsset;
 
   /// إنشاء أصل ثابت من JSON.
-  factory FixedAsset.fromJson(Map<String, dynamic> json) {
-    final result = _$FixedAssetFromJson(json);
-    return result;
-  }
+  factory FixedAsset.fromJson(Map<String, dynamic> json) =>
+      _$FixedAssetFromJson(json);
   const FixedAsset._();
 
   /// الحصول على الاسم حسب اللغة

@@ -17,7 +17,7 @@ void main() {
       );
 
       expect(customer.id, equals('1'));
-      expect(customer.name, equals('أحمد محمد'));
+      expect(customer.name(isArabic: true), equals('أحمد محمد'));
       expect(customer.phone, equals('+966501234567'));
       expect(customer.email, equals('ahmed@example.com'));
       expect(customer.address, equals('الرياض'));
@@ -68,7 +68,7 @@ void main() {
         updatedAt: now.add(const Duration(hours: 1)),
       );
 
-      expect(updatedCustomer.name, equals('محمد أحمد'));
+      expect(updatedCustomer.name(isArabic: true), equals('محمد أحمد'));
       expect(updatedCustomer.id, equals(customer.id));
       expect(updatedCustomer.phone, equals(customer.phone));
     });
@@ -84,7 +84,7 @@ void main() {
       );
 
       expect(customer.id, equals('1'));
-      expect(customer.name, equals('أحمد'));
+      expect(customer.name(isArabic: true), equals('أحمد'));
       expect(customer.phone, isNull);
       expect(customer.email, isNull);
       expect(customer.address, isNull);
