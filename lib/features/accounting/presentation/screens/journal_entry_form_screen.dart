@@ -1,6 +1,5 @@
 import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:basir_app/features/accounting/application/accounting_service.dart';
 import 'package:basir_app/features/accounting/domain/entities/account.dart';
@@ -321,8 +320,8 @@ class _JournalEntryFormScreenState
                     flex: 2,
                     child: AppTextField(
                       initialValue: line.originalAmount?.toString() ?? '',
-                      label:
-                          '${context.l10n.labelAmount} (${line.originalCurrency})',
+                      label: '${context.l10n.labelAmount} '
+                          '(${line.originalCurrency})',
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
                       onChanged: (v) {
@@ -386,7 +385,8 @@ class _JournalEntryFormScreenState
                 label: Text(
                   line.originalCurrency == null
                       ? context.l10n.labelAddCurrency
-                      : '${context.l10n.labelCurrency}: ${line.originalCurrency}',
+                      : '${context.l10n.labelCurrency}: '
+                          '${line.originalCurrency}',
                 ),
                 onPressed: () => _showCurrencyPicker(index),
               ),
@@ -469,7 +469,7 @@ class _JournalEntryFormScreenState
     setState(() => _isLoading = true);
     try {
       final now = DateTime.now();
-      final user = ref.read(currentUserProvider);
+      final user = ref.read(basirUserProvider);
 
       final entry = JournalEntry(
         id: widget.entry?.id ?? const Uuid().v4(),

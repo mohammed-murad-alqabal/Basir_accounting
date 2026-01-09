@@ -2,13 +2,15 @@ import 'package:basir_app/core/utils/format_helpers.dart';
 import 'package:basir_app/src/rust/api/reports.dart';
 import 'package:flutter/material.dart';
 
-/// A reusable widget to display a single line in a financial report
-/// (Income Statement, Balance Sheet, etc.)
+/// ودجيت لعرض سطر واحد في التقرير المالي (قائمة الدخل، الميزانية العمومية، إلخ)
 class ReportLineItem extends StatelessWidget {
+  /// إنشاء سطر تقرير جديد.
   const ReportLineItem({
     required this.line,
     super.key,
   });
+
+  /// بيانات سطر التقرير (DTO) القادمة من محرك التقارير.
   final FinancialReportLineDto line;
 
   @override

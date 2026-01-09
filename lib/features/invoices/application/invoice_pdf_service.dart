@@ -187,8 +187,10 @@ class InvoicePdfService {
               child: pw.BarcodeWidget(
                 barcode: pw.Barcode.qrCode(),
                 data: ZatcaService.encodeTlv(
-                  sellerName: 'مؤسسة بصير التجارية', // TODO: Get from settings
-                  taxNumber: '123456789012345', // TODO: Get from settings
+                  sellerName:
+                      'مؤسسة بصير التجارية', // TODO(Basir): Get from settings
+                  taxNumber:
+                      '123456789012345', // TODO(Basir): Get from settings
                   timestamp: invoice.issuedDate,
                   totalAmount: invoice.totalAmount,
                   vatAmount: invoice.taxAmount,

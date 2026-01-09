@@ -1,5 +1,5 @@
 import 'package:basir_app/core/theme/services/theme_storage_utils.dart';
-import 'package:basir_app/features/auth/presentation/providers/current_user_provider.dart';
+import 'package:basir_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,15 +7,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// خدمة تخصيص الألوان التفاعلية
 ///
 /// تدير حالة اللون الأساسي المخصص من قبل المستخدم وتحفظه في التخزين المحلي.
-/// تدعم تعدد المستخدمين عبر [currentUserProvider].
+/// تدعم تعدد المستخدمين عبر [basirUserProvider].
 class ColorCustomizationService extends AsyncNotifier<Color?> {
   static const String _customColorKey = 'custom_primary_color';
 
   @override
   Future<Color?> build() async {
     // إعادة البناء عند تغيير المستخدم
-    final userState = ref.watch(currentUserProvider);
-    return _loadColor(userState.value);
+    final user = ref.watch(basirUserProvider);
+    return _loadColor(user?.id);
   }
 
   /// الحصول على المفتاح المناسب للمستخدم
@@ -42,8 +42,8 @@ class ColorCustomizationService extends AsyncNotifier<Color?> {
     state = AsyncValue.data(color);
     try {
       final prefs = await SharedPreferences.getInstance();
-      final username = ref.read(currentUserProvider).value;
-      final key = _getStorageKey(username);
+      final user = ref.read(basirUserProvider);
+      final key = _getStorageKey(user?.id);
       await prefs.setInt(key, color.toARGB32());
     } on Object catch (e) {
       debugPrint('Error saving custom color: $e');
@@ -55,8 +55,8 @@ class ColorCustomizationService extends AsyncNotifier<Color?> {
     state = const AsyncValue.data(null);
     try {
       final prefs = await SharedPreferences.getInstance();
-      final username = ref.read(currentUserProvider).value;
-      final key = _getStorageKey(username);
+      final user = ref.read(basirUserProvider);
+      final key = _getStorageKey(user?.id);
       await prefs.remove(key);
     } on Object catch (e) {
       debugPrint('Error removing custom color: $e');
