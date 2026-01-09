@@ -39,12 +39,6 @@ class Vendors extends _$Vendors {
   }
 }
 
-/// موفر قائمة جميع الموردين المتزامن
-final vendorsProvider = FutureProvider<List<Vendor>>((ref) async {
-  final repository = ref.watch(vendorRepositoryProvider);
-  return repository.getAllVendors();
-});
-
 /// State Provider لحالة البحث
 final vendorSearchProvider = StateProvider<String>((ref) => '');
 
