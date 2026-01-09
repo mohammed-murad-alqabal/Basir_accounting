@@ -28,8 +28,6 @@ class AssetCategory with _$AssetCategory {
   }) = _AssetCategory;
 
   /// إنشاء فئة من JSON.
-  factory AssetCategory.fromJson(Map<String, dynamic> json) {
-    final result = _$AssetCategoryFromJson(json);
-    return result;
-  }
+  factory AssetCategory.fromJson(Map<String, dynamic> json) =>
+      _$AssetCategoryFromJson(json);
 }
