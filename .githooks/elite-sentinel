@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Basir Elite Sentinel v1.0
+# basir Elite Sentinel v1.0
 # "Forbidding the imperfections, securing the legacy."
 
 RED='\033[0;31m'
@@ -17,11 +17,15 @@ print_sentinel_error() {
     echo -e "${RED}[Sentinel ERROR]${NC} $1"
 }
 
-# 1. Branding Guard: Forbid "Basser"
+# 1. Branding Guard: Forbid legacy "Basser"
 check_branding() {
     print_sentinel_msg "Checking for legacy branding 'Basser'..."
     forbidden="Basser"
     staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+    
+    if [ -z "$staged_files" ]; then
+        return 0
+    fi
     
     found_legacy=$(echo "$staged_files" | xargs grep -i "$forbidden" 2>/dev/null | grep -v "elite_sentinel_strategy.md" | grep -v ".githooks/elite-sentinel" || true)
     
@@ -69,7 +73,7 @@ check_tokens() {
 
 # Main
 main() {
-    echo -e "${YELLOW}🛡️  Basir Elite Sentinel is scanning staged changes...${NC}"
+    echo -e "${YELLOW}🛡️  basir Elite Sentinel is scanning staged changes...${NC}"
     
     error=0
     
