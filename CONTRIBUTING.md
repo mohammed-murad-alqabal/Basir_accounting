@@ -6,7 +6,7 @@
 
 ---
 
-## 🎯 مرحباً بك!
+## 🎯 مرحباً بك
 
 شكراً لاهتمامك بالمساهمة في مشروع بصير! هذا الدليل سيساعدك على فهم كيفية المساهمة بشكل فعال.
 
@@ -35,14 +35,14 @@ git --version
 
 ### الفرع الرئيسي
 
-حالياً، نستخدم `master` كفرع رئيسي للتطوير.
+حالياً، نستخدم `main` كفرع رئيسي للتطوير.
 
 ```bash
 # التأكد من أنك على الفرع الصحيح
-git checkout master
+git checkout main
 
 # تحديث الفرع
-git pull origin master
+git pull origin main
 ```
 
 ### رسائل الـ Commits
@@ -51,7 +51,7 @@ git pull origin master
 
 #### الصيغة
 
-```
+```markdown
 <type>(<scope>): <subject>
 
 <body>
@@ -117,7 +117,7 @@ flutter analyze --no-pub
 
 **يجب أن تكون النتيجة:**
 
-```
+```text
 No issues found!
 ```
 
@@ -129,7 +129,7 @@ flutter test --no-pub
 
 **يجب أن تنجح جميع الاختبارات:**
 
-```
+```text
 All tests passed!
 ```
 
@@ -244,11 +244,13 @@ Future<void> addCustomer(Customer customer) async {
    ```
 
 3. **تحقق من جميع المدخلات**
+
    ```dart
    String? validatePhone(String? value) {
      if (value == null || value.isEmpty) {
        return 'رقم الهاتف مطلوب';
      }
+
      // validation logic
    }
    ```
@@ -262,8 +264,8 @@ Future<void> addCustomer(Customer customer) async {
 #### 1. استنساخ المستودع
 
 ```bash
-git clone https://github.com/your-username/Basir_MVP.git
-cd Basir_MVP
+git clone https://github.com/your-username/basir_app.git
+cd basir_app
 ```
 
 #### 2. تثبيت التبعيات
@@ -486,7 +488,7 @@ flutter pub upgrade --major-versions
 
 ---
 
-## 🎉 شكراً لك!
+## 🎉 شكراً لك
 
 شكراً لمساهمتك في مشروع بصير! كل مساهمة، مهما كانت صغيرة، تساعد في تحسين المشروع.
 
