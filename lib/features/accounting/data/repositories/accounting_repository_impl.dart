@@ -1,5 +1,4 @@
 import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/features/accounting/data/models/account_model.dart';
 import 'package:basir_app/features/accounting/data/models/financial_year_model.dart';
 import 'package:basir_app/features/accounting/data/models/journal_entry_model.dart';
@@ -158,7 +157,7 @@ AccountingRepository accountingRepository(AccountingRepositoryRef ref) {
   if (isar == null) throw Exception('Isar is not initialized');
 
   // جلب معرف المستخدم الحالي للعزل
-  final user = ref.watch(currentUserProvider);
+  final user = ref.watch(basirUserProvider);
 
   return IsarAccountingRepository(isar: isar, userId: user?.id);
 }

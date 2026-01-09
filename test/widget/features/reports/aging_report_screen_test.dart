@@ -38,8 +38,11 @@ void main() {
 
   testWidgets('AgingReportScreen shows empty state when no data',
       (tester) async {
-    when(() => mockReportingService.getReceivablesAging(
-        asOfDate: any(named: 'asOfDate'))).thenAnswer((_) async => []);
+    when(
+      () => mockReportingService.getReceivablesAging(
+        asOfDate: any(named: 'asOfDate'),
+      ),
+    ).thenAnswer((_) async => []);
 
     await tester.pumpWidget(createWidgetUnderTest(AgingReportType.receivables));
     await tester.pumpAndSettle();
@@ -62,8 +65,11 @@ void main() {
       ),
     ];
 
-    when(() => mockReportingService.getReceivablesAging(
-        asOfDate: any(named: 'asOfDate'))).thenAnswer((_) async => mockData);
+    when(
+      () => mockReportingService.getReceivablesAging(
+        asOfDate: any(named: 'asOfDate'),
+      ),
+    ).thenAnswer((_) async => mockData);
 
     await tester.pumpWidget(createWidgetUnderTest(AgingReportType.receivables));
     await tester.pumpAndSettle();

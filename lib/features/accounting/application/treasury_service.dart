@@ -1,5 +1,4 @@
 import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/features/accounting/application/accounting_service.dart';
 import 'package:basir_app/features/accounting/application/financial_year_service.dart';
 import 'package:basir_app/features/accounting/domain/entities/financial_voucher.dart';
@@ -63,7 +62,7 @@ class TreasuryService extends _$TreasuryService {
     ];
 
     final now = DateTime.now();
-    final user = ref.read(currentUserProvider);
+    final user = ref.read(basirUserProvider);
 
     final entry = JournalEntry(
       id: 'je-vouch-${voucher.id}',
@@ -141,7 +140,7 @@ class TreasuryService extends _$TreasuryService {
     ];
 
     final now = DateTime.now();
-    final user = ref.read(currentUserProvider);
+    final user = ref.read(basirUserProvider);
 
     final entry = JournalEntry(
       id: 'je-vouch-${voucher.id}',

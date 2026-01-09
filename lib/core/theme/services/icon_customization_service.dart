@@ -1,6 +1,6 @@
 import 'package:basir_app/core/theme/services/theme_storage_utils.dart';
 import 'package:basir_app/core/theme/tokens/app_icons.dart';
-import 'package:basir_app/features/auth/presentation/providers/current_user_provider.dart';
+import 'package:basir_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,15 +29,15 @@ class IconCustomizationState {
 /// خدمة تخصيص الأيقونات
 ///
 /// تدير حالة الأيقونات المخصصة من قبل المستخدم وتحفظها في التخزين المحلي.
-/// تدعم تعدد المستخدمين عبر [currentUserProvider].
+/// تدعم تعدد المستخدمين عبر [basirUserProvider].
 class IconCustomizationService extends AsyncNotifier<IconCustomizationState> {
   static const String _iconPackKey = '<credential-fixture>';
 
   @override
   Future<IconCustomizationState> build() async {
     // إعادة البناء عند تغيير المستخدم
-    final userState = ref.watch(currentUserProvider);
-    return _loadSettings(userState.value);
+    final user = ref.watch(basirUserProvider);
+    return _loadSettings(user?.id);
   }
 
   /// الحصول على المفتاح المناسب للمستخدم
@@ -67,8 +67,8 @@ class IconCustomizationService extends AsyncNotifier<IconCustomizationState> {
     state = AsyncValue.data(IconCustomizationState(iconPack: pack));
     try {
       final prefs = await SharedPreferences.getInstance();
-      final username = ref.read(currentUserProvider).value;
-      final key = <credential-fixture>(username);
+      final user = ref.read(basirUserProvider);
+      final key = <credential-fixture>(user?.id);
       await prefs.setString(key, pack.name);
     } on Object catch (e) {
       debugPrint('Error saving icon pack: $e');
@@ -82,8 +82,8 @@ class IconCustomizationService extends AsyncNotifier<IconCustomizationState> {
     );
     try {
       final prefs = await SharedPreferences.getInstance();
-      final username = ref.read(currentUserProvider).value;
-      await prefs.remove(_getStorageKey(username));
+      final user = ref.read(basirUserProvider);
+      await prefs.remove(_getStorageKey(user?.id));
     } on Object catch (e) {
       debugPrint('Error resetting icon pack: $e');
     }

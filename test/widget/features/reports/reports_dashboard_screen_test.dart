@@ -43,7 +43,9 @@ void main() {
 
     expect(find.text('التقارير المالية'), findsOneWidget); // Dashboard section
     expect(
-        find.text('تحليل السداد وأعمار الديون'), findsOneWidget); // New section
+      find.text('تحليل السداد وأعمار الديون'),
+      findsOneWidget,
+    ); // New section
   });
 
   testWidgets('Navigation to Receivables Aging works', (tester) async {

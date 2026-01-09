@@ -1,5 +1,4 @@
 import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/features/accounting/application/financial_year_service.dart';
 import 'package:basir_app/features/accounting/application/multi_standard_coa_engine.dart';
 import 'package:basir_app/features/accounting/domain/entities/account.dart';
@@ -182,7 +181,7 @@ class AccountingService extends _$AccountingService {
     // 3. إنشاء القيد
     final journalEntryId = 'je-inv-${invoice.id}';
     final now = DateTime.now();
-    final user = ref.read(currentUserProvider);
+    final user = ref.read(basirUserProvider);
 
     final existingEntries = await _repository.getJournalEntries();
     if (existingEntries.any((e) => e.id == journalEntryId)) {
@@ -290,7 +289,7 @@ class AccountingService extends _$AccountingService {
     }
 
     final now = DateTime.now();
-    final user = ref.read(currentUserProvider);
+    final user = ref.read(basirUserProvider);
 
     final reversal = JournalEntry(
       id: const Uuid().v4(),

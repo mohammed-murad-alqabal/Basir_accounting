@@ -1,0 +1,23 @@
+Analyzing basir_accounting_system...                            
+
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:117:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:133:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:165:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:168:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:187:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:190:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:246:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:247:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:249:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:347:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:352:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:445:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/domain/entities/inventory_item.dart:106:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:18:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:35:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:55:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:57:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:100:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:202:81 • lines_longer_than_80_chars
+
+19 issues found. (ran in 8.8s)

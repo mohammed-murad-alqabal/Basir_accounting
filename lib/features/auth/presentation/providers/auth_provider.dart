@@ -1,5 +1,7 @@
 import 'package:basir_app/core/providers/secure_storage_provider.dart';
+import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/features/auth/application/auth_service.dart';
+import 'package:basir_app/features/auth/domain/models/auth_models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// مزود خدمة المصادقة
@@ -260,4 +262,33 @@ final isGuestProvider = StreamProvider<bool>((ref) async* {
   await for (final _ in authService.onAuthStateChange) {
     yield await authService.isGuest();
   }
+});
+
+/// موحد المستخدم (Unified Basir User)
+///
+/// يوفر المستخدم الحالي سواء من Supabase أو كضيف محلي
+/// هذا المزود هو المصدر الوحيد للحقيقة لبيانات المستخدم في طبقة التطبيق
+final basirUserProvider = Provider<BasirUser?>((ref) {
+  // 1. التحقق من Supabase (المصدر الأساسي)
+  final supabaseUser = ref.watch(currentUserProvider);
+  if (supabaseUser != null) {
+    return BasirUser.fromSupabase(supabaseUser);
+  }
+
+  // 2. التحقق من وضع الضيف (المصدر الثانوي)
+  final isGuest = ref.watch(isGuestProvider).maybeWhen(
+        data: (v) => v,
+        orElse: () => false,
+      );
+
+  if (isGuest) {
+    return const BasirUser(
+      id: 'guest',
+      email: 'guest@basir.local',
+      displayName: 'مستخدم ضيف',
+      isGuest: true,
+    );
+  }
+
+  return null;
 });

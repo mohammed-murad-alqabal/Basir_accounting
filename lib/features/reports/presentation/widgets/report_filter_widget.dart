@@ -2,8 +2,9 @@ import 'package:basir_app/core/utils/format_helpers.dart';
 import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 
-/// A widget for filtering financial reports by date/period.
+/// ودجيت لتصفية التقارير المالية حسب التاريخ أو الفترة.
 class ReportFilterWidget extends StatelessWidget {
+  /// إنشاء ودجيت تصفية جديد.
   const ReportFilterWidget({
     required this.toDate,
     required this.onFromDateChanged,
@@ -12,15 +13,25 @@ class ReportFilterWidget extends StatelessWidget {
     this.fromDate,
     this.showFromDate = true,
   });
+
+  /// تاريخ البداية (اختياري).
   final DateTime? fromDate;
+
+  /// تاريخ النهاية.
   final DateTime toDate;
+
+  /// وظيفة تُستدعى عند تغيير تاريخ البداية.
   final ValueChanged<DateTime> onFromDateChanged;
+
+  /// وظيفة تُستدعى عند تغيير تاريخ النهاية.
   final ValueChanged<DateTime> onToDateChanged;
+
+  /// هل يتم إظهار تاريخ البداية (للفترات) أم لا (للتقارير اللحظية).
   final bool showFromDate;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Localization
+    // TODO(Basir): Localization
     const labelFrom = 'من تاريخ';
     const labelTo = 'إلى تاريخ';
     const labelAsOf = 'كما في تاريخ';
