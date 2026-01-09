@@ -248,7 +248,7 @@ void main() {
       result.when(
         data: (customers) {
           expect(customers.length, 1);
-          expect(customers.first.name, contains('أحمد'));
+          expect(customers.first.name(isArabic: true), contains('أحمد'));
         },
         loading: () => fail('Should not be loading'),
         error: (error, stack) => fail('Should not have error: $error'),
