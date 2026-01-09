@@ -243,7 +243,7 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.byType(Scaffold), findsOneWidget);
-        // Also verify the error message is shown/localized if possible, but type check is enough for now
+        // Also verify the error message is shown/localized if possible
       });
 
       test('should handle special characters in route name', () {

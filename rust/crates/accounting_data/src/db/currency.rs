@@ -103,7 +103,6 @@ impl PgExchangeRateRepository {
         as_of_date: NaiveDate,
         system_base: &str,
     ) -> Result<Vec<RevaluationAdjustment>, anyhow::Error> {
-        // 1. Aggregate foreign balances and book values
         let rows = sqlx::query!(
             r#"
             SELECT 
@@ -126,10 +125,9 @@ impl PgExchangeRateRepository {
 
         let mut adjustments = Vec::new();
 
-        // 2. For each foreign bucket, calculate required adjustment
         for row in rows {
             if row.original_currency == system_base {
-                continue; // No revaluation for base currency
+                continue;
             }
 
             let rate_opt = self
@@ -151,22 +149,97 @@ impl PgExchangeRateRepository {
                         exchange_rate: rate_obj.rate,
                     });
                 }
-            } else {
-                // Warning: No rate found, skipping revaluation for this bucket
-                // In a real system we might error or log this.
             }
         }
 
         Ok(adjustments)
+    }
+
+    pub async fn save_currency(
+        &self,
+        currency: &accounting_core::currency::Currency,
+    ) -> anyhow::Result<()> {
+        sqlx::query!(
+            r#"
+            INSERT INTO currencies (code, name, symbol, decimals, is_active, is_functional)
+            VALUES ($1, $2, $3, $4, $5, $6)
+            ON CONFLICT (code) DO UPDATE SET
+                name = EXCLUDED.name,
+                symbol = EXCLUDED.symbol,
+                decimals = EXCLUDED.decimals,
+                is_active = EXCLUDED.is_active,
+                is_functional = EXCLUDED.is_functional
+            "#,
+            currency.code,
+            currency.name,
+            currency.symbol,
+            currency.decimals as i32,
+            currency.is_active,
+            currency.is_functional
+        )
+        .execute(&self.pool)
+        .await?;
+        Ok(())
+    }
+
+    pub async fn get_currency(
+        &self,
+        code: &str,
+    ) -> anyhow::Result<Option<accounting_core::currency::Currency>> {
+        let row = sqlx::query!(
+            r#"
+            SELECT code, name, symbol, decimals, is_active, is_functional
+            FROM currencies
+            WHERE code = $1
+            "#,
+            code
+        )
+        .fetch_optional(&self.pool)
+        .await?;
+
+        Ok(row.map(|r| accounting_core::currency::Currency {
+            code: r.code,
+            name: r.name,
+            symbol: r.symbol,
+            decimals: r.decimals as u8,
+            is_active: r.is_active,
+            is_functional: r.is_functional,
+        }))
+    }
+
+    pub async fn list_currencies(
+        &self,
+    ) -> anyhow::Result<Vec<accounting_core::currency::Currency>> {
+        let rows = sqlx::query!(
+            r#"
+            SELECT code, name, symbol, decimals, is_active, is_functional
+            FROM currencies
+            ORDER BY code ASC
+            "#
+        )
+        .fetch_all(&self.pool)
+        .await?;
+
+        Ok(rows
+            .into_iter()
+            .map(|r| accounting_core::currency::Currency {
+                code: r.code,
+                name: r.name,
+                symbol: r.symbol,
+                decimals: r.decimals as u8,
+                is_active: r.is_active,
+                is_functional: r.is_functional,
+            })
+            .collect())
     }
 }
 
 pub struct RevaluationAdjustment {
     pub account_id: uuid::Uuid,
     pub original_currency: String,
-    pub foreign_balance: rust_decimal::Decimal,
-    pub book_value: rust_decimal::Decimal,
-    pub market_value: rust_decimal::Decimal,
-    pub adjustment_amount: rust_decimal::Decimal,
-    pub exchange_rate: rust_decimal::Decimal,
+    pub foreign_balance: Decimal,
+    pub book_value: Decimal,
+    pub market_value: Decimal,
+    pub adjustment_amount: Decimal,
+    pub exchange_rate: Decimal,
 }

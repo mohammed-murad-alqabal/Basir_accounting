@@ -13,7 +13,8 @@ void main() {
         // Arrange
         final original = Customer(
           id: 'test-1',
-          name: 'أحمد محمد',
+          nameEn: 'أحمد محمد',
+          nameAr: 'أحمد محمد',
           phone: '0501234567',
           email: 'ahmed@example.com',
           address: 'الرياض',
@@ -22,7 +23,8 @@ void main() {
         );
 
         // Act
-        final updated = original.copyWith(name: 'اسم جديد');
+        final updated =
+            original.copyWith(nameEn: 'اسم جديد', nameAr: 'اسم جديد');
 
         // Assert
         expect(updated.id, original.id);
@@ -36,7 +38,8 @@ void main() {
         // Arrange
         final original = Customer(
           id: 'test-1',
-          name: 'أحمد محمد',
+          nameEn: 'أحمد محمد',
+          nameAr: 'أحمد محمد',
           phone: '0501234567',
           createdAt: DateTime.utc(2025),
           updatedAt: DateTime.utc(2025),
@@ -54,7 +57,8 @@ void main() {
         // Arrange
         final original = Customer(
           id: 'test-1',
-          name: 'أحمد محمد',
+          nameEn: 'أحمد محمد',
+          nameAr: 'أحمد محمد',
           phone: '0501234567',
           email: 'old@example.com',
           createdAt: DateTime.utc(2025),
@@ -72,7 +76,8 @@ void main() {
         // Arrange
         final original = Customer(
           id: 'test-1',
-          name: 'أحمد محمد',
+          nameEn: 'أحمد محمد',
+          nameAr: 'أحمد محمد',
           phone: '0501234567',
           address: 'عنوان قديم',
           createdAt: DateTime.utc(2025),
@@ -90,7 +95,8 @@ void main() {
         // Arrange
         final original = Customer(
           id: 'test-1',
-          name: 'أحمد محمد',
+          nameEn: 'أحمد محمد',
+          nameAr: 'أحمد محمد',
           phone: '0501234567',
           email: 'old@example.com',
           address: 'عنوان قديم',
@@ -100,7 +106,8 @@ void main() {
 
         // Act
         final updated = original.copyWith(
-          name: 'اسم محدث',
+          nameEn: 'اسم محدث',
+          nameAr: 'اسم محدث',
           phone: '0508888888',
           email: 'updated@example.com',
         );
@@ -116,7 +123,8 @@ void main() {
         // Arrange
         final original = Customer(
           id: 'test-1',
-          name: 'أحمد محمد',
+          nameEn: 'أحمد محمد',
+          nameAr: 'أحمد محمد',
           phone: '0501234567',
           createdAt: DateTime.utc(2025),
           updatedAt: DateTime.utc(2025),
@@ -124,7 +132,8 @@ void main() {
         final originalName = original.name;
 
         // Act
-        final updated = original.copyWith(name: 'اسم جديد');
+        final updated =
+            original.copyWith(nameEn: 'اسم جديد', nameAr: 'اسم جديد');
 
         // Assert
         expect(original.name, originalName); // الأصل لم يتغير
@@ -137,7 +146,8 @@ void main() {
         // Arrange
         final customer1 = Customer(
           id: 'test-1',
-          name: 'أحمد',
+          nameEn: 'أحمد',
+          nameAr: 'أحمد',
           phone: '0501234567',
           email: 'ahmed@example.com',
           address: 'الرياض',
@@ -147,7 +157,8 @@ void main() {
 
         final customer2 = Customer(
           id: 'test-1',
-          name: 'أحمد',
+          nameEn: 'أحمد',
+          nameAr: 'أحمد',
           phone: '0501234567',
           email: 'ahmed@example.com',
           address: 'الرياض',
@@ -163,7 +174,8 @@ void main() {
         // Arrange
         final customer1 = Customer(
           id: 'test-1',
-          name: 'أحمد',
+          nameEn: 'أحمد',
+          nameAr: 'أحمد',
           phone: '0501234567',
           createdAt: DateTime.utc(2025),
           updatedAt: DateTime.utc(2025),
@@ -171,7 +183,8 @@ void main() {
 
         final customer2 = Customer(
           id: 'test-2',
-          name: 'أحمد',
+          nameEn: 'أحمد',
+          nameAr: 'أحمد',
           phone: '0501234567',
           createdAt: DateTime.utc(2025),
           updatedAt: DateTime.utc(2025),
@@ -185,7 +198,8 @@ void main() {
         // Arrange
         final customer1 = Customer(
           id: 'test-1',
-          name: 'أحمد',
+          nameEn: 'أحمد',
+          nameAr: 'أحمد',
           phone: '0501234567',
           createdAt: DateTime.utc(2025),
           updatedAt: DateTime.utc(2025),
@@ -193,7 +207,8 @@ void main() {
 
         final customer2 = Customer(
           id: 'test-1',
-          name: 'محمد',
+          nameEn: 'محمد',
+          nameAr: 'محمد',
           phone: '0501234567',
           createdAt: DateTime.utc(2025),
           updatedAt: DateTime.utc(2025),
@@ -209,7 +224,8 @@ void main() {
         // Arrange & Act
         final customer = Customer(
           id: 'test-1',
-          name: 'أحمد محمد',
+          nameEn: 'أحمد محمد',
+          nameAr: 'أحمد محمد',
           phone: '0501234567',
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
@@ -227,7 +243,8 @@ void main() {
         // Arrange & Act
         final customer = Customer(
           id: 'test-2',
-          name: 'فاطمة علي',
+          nameEn: 'فاطمة علي',
+          nameAr: 'فاطمة علي',
           phone: '0507654321',
           email: 'fatima@example.com',
           address: 'جدة، السعودية',
@@ -247,7 +264,8 @@ void main() {
         // Arrange & Act
         final customer = Customer(
           id: 'test-3',
-          name: 'خالد عبدالله',
+          nameEn: 'خالد عبدالله',
+          nameAr: 'خالد عبدالله',
           phone: '0509876543',
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),

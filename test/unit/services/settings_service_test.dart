@@ -282,24 +282,26 @@ void main() {
     test('should update all settings when called multiple times', () async {
       // Arrange
       const firstSettings = (
-        name: 'شركة بصير',
+        nameEn: 'شركة بصير',
+        nameAr: 'شركة بصير',
         taxNumber: '300123456789003',
         taxRate: 0.15,
       );
       const secondSettings = (
-        name: 'شركة بصير المحدودة',
+        nameEn: 'شركة بصير المحدودة',
+        nameAr: 'شركة بصير المحدودة',
         taxNumber: '300987654321003',
         taxRate: 0.20,
       );
 
       // Act
       await settingsService.setCompanySettings(
-        companyName: firstSettings.name,
+        companyName: firstSettings.nameAr,
         taxNumber: firstSettings.taxNumber,
         taxRate: firstSettings.taxRate,
       );
       await settingsService.setCompanySettings(
-        companyName: secondSettings.name,
+        companyName: secondSettings.nameAr,
         taxNumber: secondSettings.taxNumber,
         taxRate: secondSettings.taxRate,
       );
@@ -307,7 +309,7 @@ void main() {
       final settings = await settingsService.getCompanySettings();
 
       // Assert
-      expect(settings['companyName'], secondSettings.name);
+      expect(settings['companyName'], secondSettings.nameAr);
       expect(settings['taxNumber'], secondSettings.taxNumber);
       expect(settings['taxRate'], secondSettings.taxRate.toString());
     });

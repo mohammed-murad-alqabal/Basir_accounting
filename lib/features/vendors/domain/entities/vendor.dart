@@ -12,8 +12,11 @@ class Vendor with _$Vendor {
     /// معرف فريد للمورد
     required String id,
 
-    /// اسم المورد
-    required String name,
+    /// اسم المورد بالعربية
+    required String nameAr,
+
+    /// اسم المورد بالإنجليزية
+    required String nameEn,
 
     /// تاريخ إنشاء المورد
     required DateTime createdAt,
@@ -54,4 +57,9 @@ class Vendor with _$Vendor {
 
   /// إنشاء مورد من JSON
   factory Vendor.fromJson(Map<String, dynamic> json) => _$VendorFromJson(json);
+
+  const Vendor._();
+
+  /// الحصول على الاسم المناسب حسب اللغة
+  String name({required bool isArabic}) => isArabic ? nameAr : nameEn;
 }

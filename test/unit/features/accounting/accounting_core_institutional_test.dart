@@ -47,7 +47,11 @@ class InMemoryCustomerRepository implements CustomerRepository {
 
   @override
   Future<List<Customer>> searchCustomers(String query) async =>
-      _customers.values.where((c) => c.name.contains(query)).toList();
+      _customers.values
+          .where(
+            (c) => c.nameAr.contains(query) || c.nameEn.contains(query),
+          )
+          .toList();
 
   @override
   Future<void> deleteAllCustomers() async => _customers.clear();
@@ -72,6 +76,13 @@ class InMemoryVendorRepository implements VendorRepository {
 
   @override
   Future<void> deleteVendor(String id) async => _vendors.remove(id);
+
+  @override
+  Future<List<Vendor>> searchVendors(String query) async => _vendors.values
+      .where(
+        (v) => v.nameAr.contains(query) || v.nameEn.contains(query),
+      )
+      .toList();
 }
 
 class InMemoryFinancialVoucherRepository implements FinancialVoucherRepository {

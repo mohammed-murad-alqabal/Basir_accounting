@@ -234,7 +234,8 @@ final filteredCustomersProvider = Provider<AsyncValue<List<Customer>>>((ref) {
     return customers
         .where(
           (customer) =>
-              customer.name.contains(searchQuery) ||
+              customer.nameAr.contains(searchQuery) ||
+              customer.nameEn.contains(searchQuery) ||
               (customer.email?.contains(searchQuery) ?? false) ||
               (customer.phone?.contains(searchQuery) ?? false),
         )

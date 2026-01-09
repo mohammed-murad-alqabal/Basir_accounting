@@ -152,7 +152,7 @@ class PdfInvoiceService extends _$PdfInvoiceService {
                   'إلى (العميل):',
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
-                pw.Text(customer.name),
+                pw.Text(customer.nameAr),
                 if (customer.address != null)
                   pw.Text('العنوان: ${customer.address}'),
                 if (customer.phone != null)

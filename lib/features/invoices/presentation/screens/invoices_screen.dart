@@ -469,7 +469,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
 
         if (!mounted) return;
         final message = context.l10n.msgInvoiceShare(
-          customer.name,
+          customer.nameAr,
           invoice.invoiceNumber,
           FormatHelpers.formatNumber(
             invoice.totalAmount,

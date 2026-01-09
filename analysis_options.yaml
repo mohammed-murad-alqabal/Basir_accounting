@@ -9,7 +9,7 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - "**/*.mocks.dart"
-    - "lib/src/rust/frb_generated.dart/**"
+    - "lib/src/rust/**"
     - "build/**"
     - ".dart_tool/**"
     - "coverage/**"
