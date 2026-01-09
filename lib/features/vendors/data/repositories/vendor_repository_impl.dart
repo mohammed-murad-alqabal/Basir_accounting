@@ -68,4 +68,20 @@ class VendorRepositoryImpl implements VendorRepository {
           .deleteFirst();
     });
   }
+
+  @override
+  Future<List<Vendor>> searchVendors(String query) async {
+    final models = await isar.vendorModels
+        .filter()
+        .userIdEqualTo(userId)
+        .and()
+        .group(
+          (q) => q
+              .nameArContains(query, caseSensitive: false)
+              .or()
+              .nameEnContains(query, caseSensitive: false),
+        )
+        .findAll();
+    return models.map((m) => m.toEntity()).toList();
+  }
 }

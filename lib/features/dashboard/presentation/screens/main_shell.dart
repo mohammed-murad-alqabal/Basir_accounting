@@ -2,10 +2,13 @@ import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/core/theme/services/icon_customization_service.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_app/features/assets/presentation/screens/assets_screen.dart';
 import 'package:basir_app/features/customers/presentation/screens/customers_screen.dart';
 import 'package:basir_app/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:basir_app/features/inventory/presentation/screens/inventory_items_screen.dart';
 import 'package:basir_app/features/invoices/presentation/screens/invoices_screen.dart';
 import 'package:basir_app/features/settings/presentation/screens/settings_screen.dart';
+import 'package:basir_app/features/vendors/presentation/screens/vendors_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,7 +30,10 @@ class _MainShellState extends ConsumerState<MainShell> {
   final List<Widget> _screens = const [
     DashboardScreen(),
     InvoicesScreen(),
+    VendorsScreen(),
     CustomersScreen(),
+    InventoryItemsScreen(),
+    AssetsScreen(),
     SettingsScreen(),
   ];
 
@@ -76,6 +82,18 @@ class _MainShellState extends ConsumerState<MainShell> {
             BottomNavigationBarItem(
               icon: Icon(appIcons.customers),
               label: context.l10n.navCustomers,
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.business_center),
+              label: context.l10n.navVendors,
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.inventory_2),
+              label: context.l10n.navInventory,
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.account_balance_wallet_outlined),
+              label: context.l10n.navAssets,
             ),
             BottomNavigationBarItem(
               icon: Icon(appIcons.settings),

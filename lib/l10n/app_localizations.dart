@@ -158,6 +158,12 @@ abstract class AppLocalizations {
   /// **'تعديل قيد يدوي'**
   String get journalEntryFormTitleEdit;
 
+  /// No description provided for @assetsSearchHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث في الأصول...'**
+  String get assetsSearchHint;
+
   /// No description provided for @aboutAppSubtitle.
   ///
   /// In ar, this message translates to:
@@ -224,6 +230,18 @@ abstract class AppLocalizations {
   /// **'إضافة عميل'**
   String get actionAddCustomer;
 
+  /// No description provided for @actionAddVendor.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة مورد'**
+  String get actionAddVendor;
+
+  /// No description provided for @actionAddInventoryItem.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة صنف'**
+  String get actionAddInventoryItem;
+
   /// No description provided for @actionAddInvoice.
   ///
   /// In ar, this message translates to:
@@ -236,11 +254,239 @@ abstract class AppLocalizations {
   /// **'حذف العميل'**
   String get actionDeleteCustomer;
 
+  /// No description provided for @actionDeleteVendor.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف المورد'**
+  String get actionDeleteVendor;
+
   /// No description provided for @actionDeleteInvoice.
   ///
   /// In ar, this message translates to:
   /// **'حذف الفاتورة'**
   String get actionDeleteInvoice;
+
+  /// No description provided for @titleAddVendor.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة مورد جديد'**
+  String get titleAddVendor;
+
+  /// No description provided for @titleEditVendor.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل بيانات المورد'**
+  String get titleEditVendor;
+
+  /// No description provided for @titleAddInventoryItem.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة صنف جديد'**
+  String get titleAddInventoryItem;
+
+  /// No description provided for @titleEditInventoryItem.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل بيانات الصنف'**
+  String get titleEditInventoryItem;
+
+  /// No description provided for @assetsScreenTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأصول الثابتة'**
+  String get assetsScreenTitle;
+
+  /// No description provided for @actionAddAsset.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة أصل'**
+  String get actionAddAsset;
+
+  /// No description provided for @tooltipAddAsset.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة أصل جديد'**
+  String get tooltipAddAsset;
+
+  /// No description provided for @titleAddAsset.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة أصل جديد'**
+  String get titleAddAsset;
+
+  /// No description provided for @titleEditAsset.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل بيانات الأصل'**
+  String get titleEditAsset;
+
+  /// No description provided for @vendorsScreenTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموردون'**
+  String get vendorsScreenTitle;
+
+  /// No description provided for @vendorsSearchHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث عن مورد...'**
+  String get vendorsSearchHint;
+
+  /// No description provided for @navVendors.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموردون'**
+  String get navVendors;
+
+  /// No description provided for @navInventory.
+  ///
+  /// In ar, this message translates to:
+  /// **'المخزون'**
+  String get navInventory;
+
+  /// No description provided for @navAssets.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأصول الثابتة'**
+  String get navAssets;
+
+  /// No description provided for @labelNameAr.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم بالعربية'**
+  String get labelNameAr;
+
+  /// No description provided for @labelNameEn.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم بالإنجليزية'**
+  String get labelNameEn;
+
+  /// No description provided for @tooltipAddVendor.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة مورد جديد'**
+  String get tooltipAddVendor;
+
+  /// No description provided for @msgConfirmDeleteVendor.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل أنت متأكد من حذف المورد {name}؟'**
+  String msgConfirmDeleteVendor(String name);
+
+  /// No description provided for @msgConfirmDeleteItem.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل أنت متأكد من حذف الصنف {name}؟'**
+  String msgConfirmDeleteItem(String name);
+
+  /// No description provided for @dialogDelete.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف'**
+  String get dialogDelete;
+
+  /// No description provided for @inventoryItemsScreenTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المخزون'**
+  String get inventoryItemsScreenTitle;
+
+  /// No description provided for @inventoryItemsSearchHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث في المخزون...'**
+  String get inventoryItemsSearchHint;
+
+  /// No description provided for @labelSKU.
+  ///
+  /// In ar, this message translates to:
+  /// **'رمز الصنف (SKU)'**
+  String get labelSKU;
+
+  /// No description provided for @labelPurchasePrice.
+  ///
+  /// In ar, this message translates to:
+  /// **'سعر الشراء'**
+  String get labelPurchasePrice;
+
+  /// No description provided for @labelSalePrice.
+  ///
+  /// In ar, this message translates to:
+  /// **'سعر البيع'**
+  String get labelSalePrice;
+
+  /// No description provided for @labelCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود الأصل'**
+  String get labelCode;
+
+  /// No description provided for @labelPurchaseDate.
+  ///
+  /// In ar, this message translates to:
+  /// **'تاريخ الشراء'**
+  String get labelPurchaseDate;
+
+  /// No description provided for @labelCost.
+  ///
+  /// In ar, this message translates to:
+  /// **'تكلفة الاقتناء'**
+  String get labelCost;
+
+  /// No description provided for @labelSalvageValue.
+  ///
+  /// In ar, this message translates to:
+  /// **'القيمة المتبقية'**
+  String get labelSalvageValue;
+
+  /// No description provided for @labelUsefulLife.
+  ///
+  /// In ar, this message translates to:
+  /// **'العمر الإنتاجي (سنوات)'**
+  String get labelUsefulLife;
+
+  /// No description provided for @labelDepreciationMethod.
+  ///
+  /// In ar, this message translates to:
+  /// **'طريقة الإهلاك'**
+  String get labelDepreciationMethod;
+
+  /// No description provided for @labelDepreciationAccountId.
+  ///
+  /// In ar, this message translates to:
+  /// **'حساب مصروف الإهلاك'**
+  String get labelDepreciationAccountId;
+
+  /// No description provided for @labelAccumDepreciationAccountId.
+  ///
+  /// In ar, this message translates to:
+  /// **'حساب مجمع الإهلاك'**
+  String get labelAccumDepreciationAccountId;
+
+  /// No description provided for @labelAssetAccountId.
+  ///
+  /// In ar, this message translates to:
+  /// **'حساب الأصل'**
+  String get labelAssetAccountId;
+
+  /// No description provided for @labelUnit.
+  ///
+  /// In ar, this message translates to:
+  /// **'الوحدة'**
+  String get labelUnit;
+
+  /// No description provided for @labelCategoryId.
+  ///
+  /// In ar, this message translates to:
+  /// **'الفئة'**
+  String get labelCategoryId;
+
+  /// No description provided for @tooltipAddInventoryItem.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة صنف جديد'**
+  String get tooltipAddInventoryItem;
 
   /// No description provided for @actionSharePdf.
   ///
@@ -2053,12 +2299,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تصدير'**
   String get btnExport;
-
-  /// No description provided for @labelCode.
-  ///
-  /// In ar, this message translates to:
-  /// **'الكود'**
-  String get labelCode;
 
   /// No description provided for @labelAccount.
   ///

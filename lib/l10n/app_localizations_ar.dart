@@ -41,6 +41,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get journalEntryFormTitleEdit => 'تعديل قيد يدوي';
 
   @override
+  String get assetsSearchHint => 'ابحث في الأصول...';
+
+  @override
   String get aboutAppSubtitle => 'الإصدار 1.0.0';
 
   @override
@@ -75,13 +78,137 @@ class AppLocalizationsAr extends AppLocalizations {
   String get actionAddCustomer => 'إضافة عميل';
 
   @override
+  String get actionAddVendor => 'إضافة مورد';
+
+  @override
+  String get actionAddInventoryItem => 'إضافة صنف';
+
+  @override
   String get actionAddInvoice => 'إضافة فاتورة';
 
   @override
   String get actionDeleteCustomer => 'حذف العميل';
 
   @override
+  String get actionDeleteVendor => 'حذف المورد';
+
+  @override
   String get actionDeleteInvoice => 'حذف الفاتورة';
+
+  @override
+  String get titleAddVendor => 'إضافة مورد جديد';
+
+  @override
+  String get titleEditVendor => 'تعديل بيانات المورد';
+
+  @override
+  String get titleAddInventoryItem => 'إضافة صنف جديد';
+
+  @override
+  String get titleEditInventoryItem => 'تعديل بيانات الصنف';
+
+  @override
+  String get assetsScreenTitle => 'الأصول الثابتة';
+
+  @override
+  String get actionAddAsset => 'إضافة أصل';
+
+  @override
+  String get tooltipAddAsset => 'إضافة أصل جديد';
+
+  @override
+  String get titleAddAsset => 'إضافة أصل جديد';
+
+  @override
+  String get titleEditAsset => 'تعديل بيانات الأصل';
+
+  @override
+  String get vendorsScreenTitle => 'الموردون';
+
+  @override
+  String get vendorsSearchHint => 'ابحث عن مورد...';
+
+  @override
+  String get navVendors => 'الموردون';
+
+  @override
+  String get navInventory => 'المخزون';
+
+  @override
+  String get navAssets => 'الأصول الثابتة';
+
+  @override
+  String get labelNameAr => 'الاسم بالعربية';
+
+  @override
+  String get labelNameEn => 'الاسم بالإنجليزية';
+
+  @override
+  String get tooltipAddVendor => 'إضافة مورد جديد';
+
+  @override
+  String msgConfirmDeleteVendor(String name) {
+    return 'هل أنت متأكد من حذف المورد $name؟';
+  }
+
+  @override
+  String msgConfirmDeleteItem(String name) {
+    return 'هل أنت متأكد من حذف الصنف $name؟';
+  }
+
+  @override
+  String get dialogDelete => 'حذف';
+
+  @override
+  String get inventoryItemsScreenTitle => 'المخزون';
+
+  @override
+  String get inventoryItemsSearchHint => 'ابحث في المخزون...';
+
+  @override
+  String get labelSKU => 'رمز الصنف (SKU)';
+
+  @override
+  String get labelPurchasePrice => 'سعر الشراء';
+
+  @override
+  String get labelSalePrice => 'سعر البيع';
+
+  @override
+  String get labelCode => 'كود الأصل';
+
+  @override
+  String get labelPurchaseDate => 'تاريخ الشراء';
+
+  @override
+  String get labelCost => 'تكلفة الاقتناء';
+
+  @override
+  String get labelSalvageValue => 'القيمة المتبقية';
+
+  @override
+  String get labelUsefulLife => 'العمر الإنتاجي (سنوات)';
+
+  @override
+  String get labelDepreciationMethod => 'طريقة الإهلاك';
+
+  @override
+  String get labelDepreciationAccountId => 'حساب مصروف الإهلاك';
+
+  @override
+  String get labelAccumDepreciationAccountId => 'حساب مجمع الإهلاك';
+
+  @override
+  String get labelAssetAccountId => 'حساب الأصل';
+
+  @override
+  String get labelUnit => 'الوحدة';
+
+  @override
+  String get labelCategoryId => 'الفئة';
+
+  @override
+  String get tooltipAddInventoryItem => 'إضافة صنف جديد';
 
   @override
   String get actionSharePdf => 'مشاركة ملف PDF';
@@ -1026,9 +1153,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get btnExport => 'تصدير';
-
-  @override
-  String get labelCode => 'الكود';
 
   @override
   String get labelAccount => 'الحساب';

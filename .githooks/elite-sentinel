@@ -37,17 +37,18 @@ check_branding() {
     return 0
 }
 
-# 2. Architectural Guard: UI cannot import Data/Repositories directly
+# 2. Architectural Guard: UI cannot import Data layer directly
 check_architecture() {
     print_sentinel_msg "Checking architectural guardrails (Layer Isolation)..."
     ui_files=$(git diff --cached --name-only --diff-filter=ACM | grep "presentation/" || true)
     
     if [ -n "$ui_files" ]; then
-        forbidden_imports=$(echo "$ui_files" | xargs grep -E "import.*(data/|repositories/)" 2>/dev/null | grep -v "repository_impl.dart" || true)
+        # Only forbid imports from data/ layer (implementations), NOT from domain/ (interfaces)
+        forbidden_imports=$(echo "$ui_files" | xargs grep -E "import.*/data/" 2>/dev/null | grep -v "repository_impl.dart" || true)
         if [ -n "$forbidden_imports" ]; then
-            print_sentinel_error "Architectural violation: UI layer depends on Data/Repository layer directly:"
+            print_sentinel_error "Architectural violation: UI layer imports Data layer directly:"
             echo "$forbidden_imports"
-            print_sentinel_msg "💡 Use Domain Entities and Controllers/Providers instead."
+            print_sentinel_msg "💡 Use Domain interfaces and Entities instead."
             return 1
         fi
     fi

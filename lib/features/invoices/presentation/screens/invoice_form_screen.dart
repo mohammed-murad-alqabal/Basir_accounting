@@ -203,7 +203,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   (customer) => DropdownMenuItem(
                     value: customer,
                     child: Text(
-                      customer.name,
+                      customer.nameAr,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -739,7 +739,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         id: invoiceId,
         invoiceNumber: invoiceNumber,
         customerId: _selectedCustomer!.id,
-        customerName: _selectedCustomer!.name,
+        customerName: _selectedCustomer!.nameAr,
         items: _items,
         issuedDate: _issuedDate,
         dueDate: _dueDate,

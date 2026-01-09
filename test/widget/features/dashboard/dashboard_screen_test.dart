@@ -140,7 +140,8 @@ void main() {
         12,
         (i) => Customer(
           id: 'c$i',
-          name: 'Customer $i',
+          nameAr: 'Customer $i',
+          nameEn: 'Customer $i',
           phone: '050',
           createdAt: now,
           updatedAt: now,

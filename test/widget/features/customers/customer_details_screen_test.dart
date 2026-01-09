@@ -11,7 +11,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   final testCustomer = Customer(
     id: '1',
-    name: 'Test Customer',
+    nameEn: 'Test Customer',
+    nameAr: 'Test Customer',
     email: 'test@example.com',
     phone: '1234567890',
     address: 'Test Address',

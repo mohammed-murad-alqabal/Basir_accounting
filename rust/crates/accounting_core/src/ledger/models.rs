@@ -176,6 +176,19 @@ impl JournalEntryLine {
             partner_id: None,
         }
     }
+
+    /// Add multi-currency information to a line.
+    pub fn with_currency(
+        mut self,
+        currency: impl Into<String>,
+        amount_fc: Decimal,
+        rate: Decimal,
+    ) -> Self {
+        self.original_currency = Some(currency.into());
+        self.original_amount = Some(amount_fc);
+        self.exchange_rate = Some(rate);
+        self
+    }
 }
 
 /// Reasons for an adjustment entry.
@@ -404,6 +417,22 @@ mod tests {
         let entry = create_test_entry(Decimal::from(500), Decimal::from(500));
         assert_eq!(entry.total_debits(), Decimal::from(500));
         assert_eq!(entry.total_credits(), Decimal::from(500));
+    }
+
+    #[test]
+    fn test_multi_currency_line() {
+        let acc = Uuid::new_v4();
+        let amount_fc = Decimal::from(100); // 100 USD
+        let rate = Decimal::from_str_exact("3.75").unwrap(); // SAR/USD
+        let amount_fun = Decimal::from_str_exact("375").unwrap();
+
+        let line = JournalEntryLine::debit(acc, amount_fun, "Revenue USD")
+            .with_currency("USD", amount_fc, rate);
+
+        assert_eq!(line.original_currency, Some("USD".to_string()));
+        assert_eq!(line.original_amount, Some(amount_fc));
+        assert_eq!(line.exchange_rate, Some(rate));
+        assert_eq!(line.debit_amount, amount_fun);
     }
 
     #[test]

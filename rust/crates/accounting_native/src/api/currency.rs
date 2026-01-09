@@ -24,7 +24,8 @@ pub async fn save_exchange_rate(dto: ExchangeRateDto) -> anyhow::Result<()> {
         dto.target_currency,
         rate_dec,
         date,
-    );
+        dto.source,
+    )?;
 
     repo.save_rate(&rate).await?;
     Ok(())

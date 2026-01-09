@@ -16,4 +16,7 @@ abstract class VendorRepository {
 
   /// حذف مورد.
   Future<void> deleteVendor(String id);
+
+  /// البحث عن موردين.
+  Future<List<Vendor>> searchVendors(String query);
 }

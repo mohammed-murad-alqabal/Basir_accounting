@@ -46,7 +46,7 @@ void main() {
       // Assert
       expect(result, isA<List<Customer>>());
       expect(result.length, 3);
-      expect(result.first.name, testCustomers.first.name);
+      expect(result.first.nameAr, testCustomers.first.nameAr);
     });
 
     test('should return empty list when no customers exist', () async {
@@ -117,7 +117,8 @@ void main() {
       final customer = MockData.createTestCustomer();
       await mockRepository.addCustomer(customer);
 
-      final updatedCustomer = customer.copyWith(name: 'اسم محدث');
+      final updatedCustomer =
+          customer.copyWith(nameEn: 'اسم محدث', nameAr: 'اسم محدث');
 
       // Act
       final result = await container.read(
@@ -127,7 +128,7 @@ void main() {
       // Assert
       expect(result, true);
       final customers = await mockRepository.getAllCustomers();
-      expect(customers.first.name, 'اسم محدث');
+      expect(customers.first.nameAr, 'اسم محدث');
     });
 
     test('should return false when update fails', () async {
@@ -149,14 +150,15 @@ void main() {
       final customer = MockData.createTestCustomer();
       await mockRepository.addCustomer(customer);
 
-      final updatedCustomer = customer.copyWith(name: 'اسم جديد');
+      final updatedCustomer =
+          customer.copyWith(nameEn: 'اسم جديد', nameAr: 'اسم جديد');
 
       // Act
       await container.read(updateCustomerProvider(updatedCustomer).future);
 
       // Assert - customersProvider should be invalidated
       final customers = await container.read(customersProvider.future);
-      expect(customers.first.name, 'اسم جديد');
+      expect(customers.first.nameAr, 'اسم جديد');
     });
   });
 
@@ -241,19 +243,22 @@ void main() {
       final customers = [
         MockData.createTestCustomer(
           id: '1',
-          name: 'أحمد محمد',
+          nameEn: 'أحمد محمد',
+          nameAr: 'أحمد محمد',
           phone: '0501234567',
           email: 'ahmed@example.com',
         ),
         MockData.createTestCustomer(
           id: '2',
-          name: 'فاطمة علي',
+          nameEn: 'فاطمة علي',
+          nameAr: 'فاطمة علي',
           phone: '0507654321',
           email: 'fatima@example.com',
         ),
         MockData.createTestCustomer(
           id: '3',
-          name: 'محمد أحمد',
+          nameEn: 'محمد أحمد',
+          nameAr: 'محمد أحمد',
           phone: '0509876543',
           email: 'mohammed@example.com',
         ),
@@ -301,7 +306,12 @@ void main() {
       );
 
       expect(customers.length, 2); // أحمد محمد و محمد أحمد
-      expect(customers.every((c) => c.name.contains('أحمد')), true);
+      expect(
+        customers.every(
+          (c) => c.nameAr.contains('أحمد') || c.nameEn.contains('أحمد'),
+        ),
+        true,
+      );
     });
 
     test('should filter customers by email', () async {
@@ -384,7 +394,7 @@ void main() {
         error: (_, __) => throw StateError('Should not have error'),
       );
       expect(customers2.length, 1);
-      expect(customers2.first.name, 'فاطمة علي');
+      expect(customers2.first.nameAr, 'فاطمة علي');
     });
   });
 }

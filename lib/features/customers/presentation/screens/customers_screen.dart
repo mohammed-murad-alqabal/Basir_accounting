@@ -95,18 +95,20 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
       itemBuilder: (context, index) {
         final customer = customers[index];
         return Semantics(
-          label: '${customer.name}, '
+          label: '${customer.name(isArabic: context.isArabic)}, '
               '${customer.email ?? ""}, '
               '${customer.phone ?? ""}',
           button: true,
           child: AppListCard(
-            title: customer.name,
+            title: customer.name(isArabic: context.isArabic),
             subtitle: customer.email ?? '',
             trailing: customer.phone ?? '',
             leading: CircleAvatar(
               backgroundColor: AppColors.primary.withValues(alpha: 0.2),
               child: Text(
-                customer.name.isNotEmpty ? customer.name[0] : '؟',
+                customer.name(isArabic: context.isArabic).isNotEmpty
+                    ? customer.name(isArabic: context.isArabic)[0]
+                    : '؟',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: AppColors.primary,

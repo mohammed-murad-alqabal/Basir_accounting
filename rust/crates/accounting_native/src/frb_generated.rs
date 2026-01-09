@@ -2749,12 +2749,18 @@ impl SseDecode for crate::api::assets::AssetCategoryDto {
         let mut var_nameEn = <String>::sse_decode(deserializer);
         let mut var_defaultDepreciationMethod = <String>::sse_decode(deserializer);
         let mut var_defaultUsefulLifeYears = <u32>::sse_decode(deserializer);
+        let mut var_assetAccountId = <String>::sse_decode(deserializer);
+        let mut var_depreciationAccountId = <String>::sse_decode(deserializer);
+        let mut var_accumDepreciationAccountId = <String>::sse_decode(deserializer);
         return crate::api::assets::AssetCategoryDto {
             id: var_id,
             name_ar: var_nameAr,
             name_en: var_nameEn,
             default_depreciation_method: var_defaultDepreciationMethod,
             default_useful_life_years: var_defaultUsefulLifeYears,
+            asset_account_id: var_assetAccountId,
+            depreciation_account_id: var_depreciationAccountId,
+            accum_depreciation_account_id: var_accumDepreciationAccountId,
         };
     }
 }
@@ -2767,9 +2773,9 @@ impl SseDecode for crate::api::assets::AssetDto {
         let mut var_nameAr = <String>::sse_decode(deserializer);
         let mut var_nameEn = <String>::sse_decode(deserializer);
         let mut var_categoryId = <String>::sse_decode(deserializer);
-        let mut var_purchaseDate = <String>::sse_decode(deserializer);
+        let mut var_acquisitionDate = <String>::sse_decode(deserializer);
         let mut var_cost = <String>::sse_decode(deserializer);
-        let mut var_salvageValue = <String>::sse_decode(deserializer);
+        let mut var_residualValue = <String>::sse_decode(deserializer);
         let mut var_usefulLifeYears = <u32>::sse_decode(deserializer);
         let mut var_depreciationMethod = <String>::sse_decode(deserializer);
         let mut var_accumulatedDepreciation = <String>::sse_decode(deserializer);
@@ -2783,9 +2789,9 @@ impl SseDecode for crate::api::assets::AssetDto {
             name_ar: var_nameAr,
             name_en: var_nameEn,
             category_id: var_categoryId,
-            purchase_date: var_purchaseDate,
+            acquisition_date: var_acquisitionDate,
             cost: var_cost,
-            salvage_value: var_salvageValue,
+            residual_value: var_residualValue,
             useful_life_years: var_usefulLifeYears,
             depreciation_method: var_depreciationMethod,
             accumulated_depreciation: var_accumulatedDepreciation,
@@ -4074,6 +4080,11 @@ impl flutter_rust_bridge::IntoDart for crate::api::assets::AssetCategoryDto {
                 .into_into_dart()
                 .into_dart(),
             self.default_useful_life_years.into_into_dart().into_dart(),
+            self.asset_account_id.into_into_dart().into_dart(),
+            self.depreciation_account_id.into_into_dart().into_dart(),
+            self.accum_depreciation_account_id
+                .into_into_dart()
+                .into_dart(),
         ]
         .into_dart()
     }
@@ -4098,9 +4109,9 @@ impl flutter_rust_bridge::IntoDart for crate::api::assets::AssetDto {
             self.name_ar.into_into_dart().into_dart(),
             self.name_en.into_into_dart().into_dart(),
             self.category_id.into_into_dart().into_dart(),
-            self.purchase_date.into_into_dart().into_dart(),
+            self.acquisition_date.into_into_dart().into_dart(),
             self.cost.into_into_dart().into_dart(),
-            self.salvage_value.into_into_dart().into_dart(),
+            self.residual_value.into_into_dart().into_dart(),
             self.useful_life_years.into_into_dart().into_dart(),
             self.depreciation_method.into_into_dart().into_dart(),
             self.accumulated_depreciation.into_into_dart().into_dart(),
@@ -4861,6 +4872,9 @@ impl SseEncode for crate::api::assets::AssetCategoryDto {
         <String>::sse_encode(self.name_en, serializer);
         <String>::sse_encode(self.default_depreciation_method, serializer);
         <u32>::sse_encode(self.default_useful_life_years, serializer);
+        <String>::sse_encode(self.asset_account_id, serializer);
+        <String>::sse_encode(self.depreciation_account_id, serializer);
+        <String>::sse_encode(self.accum_depreciation_account_id, serializer);
     }
 }
 
@@ -4872,9 +4886,9 @@ impl SseEncode for crate::api::assets::AssetDto {
         <String>::sse_encode(self.name_ar, serializer);
         <String>::sse_encode(self.name_en, serializer);
         <String>::sse_encode(self.category_id, serializer);
-        <String>::sse_encode(self.purchase_date, serializer);
+        <String>::sse_encode(self.acquisition_date, serializer);
         <String>::sse_encode(self.cost, serializer);
-        <String>::sse_encode(self.salvage_value, serializer);
+        <String>::sse_encode(self.residual_value, serializer);
         <u32>::sse_encode(self.useful_life_years, serializer);
         <String>::sse_encode(self.depreciation_method, serializer);
         <String>::sse_encode(self.accumulated_depreciation, serializer);

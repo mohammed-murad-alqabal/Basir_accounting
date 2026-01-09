@@ -253,7 +253,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
               .map(
                 (c) => DropdownMenuItem(
                   value: c.id,
-                  child: Text(c.name),
+                  child: Text(c.name(isArabic: context.isArabic)),
                 ),
               )
               .toList(),
@@ -262,7 +262,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
             setState(() {
               _selectedEntityId = val;
               _selectedOppositeAccountId = c.receivableAccountId ?? 'acc-1201';
-              _personNameController.text = c.name;
+              _personNameController.text = c.name(isArabic: context.isArabic);
             });
           },
           validator: (val) => val == null ? context.l10n.errFormFill : null,
@@ -282,7 +282,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
               .map(
                 (v) => DropdownMenuItem(
                   value: v.id,
-                  child: Text(v.name),
+                  child: Text(v.name(isArabic: context.isArabic)),
                 ),
               )
               .toList(),
@@ -291,7 +291,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
             setState(() {
               _selectedEntityId = val;
               _selectedOppositeAccountId = v.payableAccountId ?? 'acc-2101';
-              _personNameController.text = v.name;
+              _personNameController.text = v.name(isArabic: context.isArabic);
             });
           },
           validator: (val) => val == null ? context.l10n.errFormFill : null,

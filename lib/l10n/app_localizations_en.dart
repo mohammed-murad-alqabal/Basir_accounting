@@ -41,6 +41,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get journalEntryFormTitleEdit => 'Edit Journal Entry';
 
   @override
+  String get assetsSearchHint => 'Search assets...';
+
+  @override
   String get aboutAppSubtitle => 'Version 1.0.0';
 
   @override
@@ -75,13 +78,138 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionAddCustomer => 'Add Customer';
 
   @override
+  String get actionAddVendor => 'Add Vendor';
+
+  @override
+  String get actionAddInventoryItem => 'Add Item';
+
+  @override
   String get actionAddInvoice => 'Add Invoice';
 
   @override
   String get actionDeleteCustomer => 'Delete Customer';
 
   @override
+  String get actionDeleteVendor => 'Delete Vendor';
+
+  @override
   String get actionDeleteInvoice => 'Delete Invoice';
+
+  @override
+  String get titleAddVendor => 'Add New Vendor';
+
+  @override
+  String get titleEditVendor => 'Edit Vendor Details';
+
+  @override
+  String get titleAddInventoryItem => 'Add New Item';
+
+  @override
+  String get titleEditInventoryItem => 'Edit Item Details';
+
+  @override
+  String get assetsScreenTitle => 'Fixed Assets';
+
+  @override
+  String get actionAddAsset => 'Add Asset';
+
+  @override
+  String get tooltipAddAsset => 'Add New Asset';
+
+  @override
+  String get titleAddAsset => 'Add New Asset';
+
+  @override
+  String get titleEditAsset => 'Edit Asset Details';
+
+  @override
+  String get vendorsScreenTitle => 'Vendors';
+
+  @override
+  String get vendorsSearchHint => 'Search vendors...';
+
+  @override
+  String get navVendors => 'Vendors';
+
+  @override
+  String get navInventory => 'Inventory';
+
+  @override
+  String get navAssets => 'Fixed Assets';
+
+  @override
+  String get labelNameAr => 'Name (Arabic)';
+
+  @override
+  String get labelNameEn => 'Name (English)';
+
+  @override
+  String get tooltipAddVendor => 'Add New Vendor';
+
+  @override
+  String msgConfirmDeleteVendor(String name) {
+    return 'Are you sure you want to delete vendor $name?';
+  }
+
+  @override
+  String msgConfirmDeleteItem(String name) {
+    return 'Are you sure you want to delete item $name?';
+  }
+
+  @override
+  String get dialogDelete => 'Delete';
+
+  @override
+  String get inventoryItemsScreenTitle => 'Inventory';
+
+  @override
+  String get inventoryItemsSearchHint => 'Search inventory...';
+
+  @override
+  String get labelSKU => 'SKU';
+
+  @override
+  String get labelPurchasePrice => 'Purchase Price';
+
+  @override
+  String get labelSalePrice => 'Sale Price';
+
+  @override
+  String get labelCode => 'Code';
+
+  @override
+  String get labelPurchaseDate => 'Purchase Date';
+
+  @override
+  String get labelCost => 'Purchase Cost';
+
+  @override
+  String get labelSalvageValue => 'Salvage Value';
+
+  @override
+  String get labelUsefulLife => 'Useful Life (Years)';
+
+  @override
+  String get labelDepreciationMethod => 'Depreciation Method';
+
+  @override
+  String get labelDepreciationAccountId => 'Depreciation Expense Account';
+
+  @override
+  String get labelAccumDepreciationAccountId =>
+      'Accumulated Depreciation Account';
+
+  @override
+  String get labelAssetAccountId => 'Asset Account';
+
+  @override
+  String get labelUnit => 'Unit';
+
+  @override
+  String get labelCategoryId => 'Category';
+
+  @override
+  String get tooltipAddInventoryItem => 'Add New Item';
 
   @override
   String get actionSharePdf => 'Share PDF';
@@ -1036,9 +1164,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get btnExport => 'Export';
-
-  @override
-  String get labelCode => 'Code';
 
   @override
   String get labelAccount => 'Account';

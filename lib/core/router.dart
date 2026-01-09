@@ -1,13 +1,19 @@
 import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/features/assets/presentation/screens/asset_form_screen.dart';
+import 'package:basir_app/features/assets/presentation/screens/assets_screen.dart';
 import 'package:basir_app/features/auth/presentation/screens/guest_upgrade_screen.dart';
 import 'package:basir_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:basir_app/features/auth/presentation/screens/setup_screen.dart';
 import 'package:basir_app/features/customers/presentation/screens/customer_form_screen.dart';
 import 'package:basir_app/features/customers/presentation/screens/customers_screen.dart';
 import 'package:basir_app/features/dashboard/presentation/screens/main_shell.dart';
+import 'package:basir_app/features/inventory/presentation/screens/inventory_item_form_screen.dart';
+import 'package:basir_app/features/inventory/presentation/screens/inventory_items_screen.dart';
 import 'package:basir_app/features/invoices/presentation/screens/invoice_form_screen.dart';
 import 'package:basir_app/features/invoices/presentation/screens/invoices_screen.dart';
 import 'package:basir_app/features/settings/presentation/screens/settings_screen.dart';
+import 'package:basir_app/features/vendors/presentation/screens/vendor_form_screen.dart';
+import 'package:basir_app/features/vendors/presentation/screens/vendors_screen.dart';
 import 'package:flutter/material.dart';
 
 /// نظام التوجيه للتطبيق
@@ -63,6 +69,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const CustomersScreen(),
         );
+      case '/vendors':
+        return MaterialPageRoute(
+          builder: (_) => const VendorsScreen(),
+        );
       case '/invoices':
         return MaterialPageRoute(
           builder: (_) => const InvoicesScreen(),
@@ -75,9 +85,29 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const CustomerFormScreen(),
         );
+      case '/vendor-form':
+        return MaterialPageRoute(
+          builder: (_) => const VendorFormScreen(),
+        );
       case '/settings':
         return MaterialPageRoute(
           builder: (_) => const SettingsScreen(),
+        );
+      case '/inventory':
+        return MaterialPageRoute(
+          builder: (_) => const InventoryItemsScreen(),
+        );
+      case '/inventory-form':
+        return MaterialPageRoute(
+          builder: (_) => const InventoryItemFormScreen(),
+        );
+      case '/assets':
+        return MaterialPageRoute(
+          builder: (_) => const AssetsScreen(),
+        );
+      case '/asset-form':
+        return MaterialPageRoute(
+          builder: (_) => const AssetFormScreen(),
         );
 
       case '/guest-upgrade':

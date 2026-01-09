@@ -13,7 +13,8 @@ class VendorModel {
   /// إنشاء نموذج مورد من كيان المورد.
   factory VendorModel.fromEntity(Vendor vendor) => VendorModel()
     ..vendorId = vendor.id
-    ..name = vendor.name
+    ..nameAr = vendor.nameAr
+    ..nameEn = vendor.nameEn
     ..phone = vendor.phone
     ..email = vendor.email
     ..address = vendor.address
@@ -33,9 +34,13 @@ class VendorModel {
   @Index(unique: true)
   late String vendorId;
 
-  /// اسم المورد.
+  /// اسم المورد بالعربية
   @Index()
-  late String name;
+  late String nameAr;
+
+  /// اسم المورد بالإنجليزية
+  @Index()
+  late String nameEn;
 
   /// رقم هاتف المورد.
   String? phone;
@@ -76,7 +81,8 @@ class VendorModel {
   /// تحويل النموذج إلى كيان مورد.
   Vendor toEntity() => Vendor(
         id: vendorId,
-        name: name,
+        nameAr: nameAr,
+        nameEn: nameEn,
         phone: phone,
         email: email,
         address: address,

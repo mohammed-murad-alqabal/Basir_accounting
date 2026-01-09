@@ -10,7 +10,8 @@ class CustomerFixtures {
   /// عميل 1: أحمد محمد - عميل كامل البيانات
   static final customer1 = Customer(
     id: 'customer-1',
-    name: 'أحمد محمد',
+    nameAr: 'أحمد محمد',
+    nameEn: 'Ahmed Mohammed',
     phone: '0501234567',
     email: 'ahmed@example.com',
     address: 'الرياض، حي النخيل، شارع الملك فهد',
@@ -21,7 +22,8 @@ class CustomerFixtures {
   /// عميل 2: فاطمة علي - عميل بدون عنوان
   static final customer2 = Customer(
     id: 'customer-2',
-    name: 'فاطمة علي',
+    nameAr: 'فاطمة علي',
+    nameEn: 'Fatima Ali',
     phone: '0507654321',
     email: 'fatima@example.com',
     createdAt: DateTime(2025, 1, 2),
@@ -31,7 +33,8 @@ class CustomerFixtures {
   /// عميل 3: خالد عبدالله - عميل بدون بريد إلكتروني
   static final customer3 = Customer(
     id: 'customer-3',
-    name: 'خالد عبدالله',
+    nameAr: 'خالد عبدالله',
+    nameEn: 'Khalid Abdullah',
     phone: '0509876543',
     address: 'جدة، حي الحمراء',
     createdAt: DateTime(2025, 1, 3),
@@ -41,7 +44,8 @@ class CustomerFixtures {
   /// عميل 4: نورة سعيد - عميل بالحد الأدنى من البيانات
   static final customer4 = Customer(
     id: 'customer-4',
-    name: 'نورة سعيد',
+    nameAr: 'نورة سعيد',
+    nameEn: 'Noura Saeed',
     phone: '0505555555',
     createdAt: DateTime(2025, 1, 4),
     updatedAt: DateTime(2025, 1, 4),
@@ -50,7 +54,8 @@ class CustomerFixtures {
   /// عميل 5: محمد الأحمد
   static final customer5 = Customer(
     id: 'customer-5',
-    name: 'محمد الأحمد',
+    nameAr: 'محمد الأحمد',
+    nameEn: 'Mohammed Al-Ahmad',
     phone: '0501111111',
     email: 'mohammed@example.com',
     address: 'الدمام، حي الفيصلية',
@@ -61,7 +66,8 @@ class CustomerFixtures {
   /// عميل 6: سارة خالد - عميل بعنوان طويل
   static final customer6 = Customer(
     id: 'customer-6',
-    name: 'سارة خالد',
+    nameAr: 'سارة خالد',
+    nameEn: 'Sara Khalid',
     phone: '0502222222',
     email: 'sara@example.com',
     address: 'مكة المكرمة، حي العزيزية، شارع الحج، مبنى رقم 123، الطابق الثاني',
@@ -72,7 +78,8 @@ class CustomerFixtures {
   /// عميل 7: عبدالرحمن يوسف - عميل باسم طويل
   static final customer7 = Customer(
     id: 'customer-7',
-    name: 'عبدالرحمن بن يوسف بن عبدالله آل سعود',
+    nameAr: 'عبدالرحمن بن يوسف بن عبدالله آل سعود',
+    nameEn: 'Abdulrahman Al Saud',
     phone: '0503333333',
     email: 'abdulrahman@example.com',
     address: 'الطائف',
@@ -115,7 +122,8 @@ class CustomerFixtures {
   /// إنشاء عميل مخصص بناءً على index
   static Customer createCustomer(int index) => Customer(
         id: 'customer-$index',
-        name: 'عميل رقم $index',
+        nameAr: 'عميل رقم $index',
+        nameEn: 'Customer $index',
         phone: '050${1000000 + index}',
         email: 'customer$index@example.com',
         address: 'عنوان العميل رقم $index',
