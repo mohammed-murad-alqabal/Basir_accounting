@@ -1,5 +1,4 @@
 import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
 import 'package:decimal/decimal.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -25,7 +24,7 @@ class ContraSettlementService extends _$ContraSettlementService {
     required String description,
   }) async {
     final repository = ref.read(accountingRepositoryProvider);
-    final user = ref.read(currentUserProvider);
+    final user = ref.read(basirUserProvider);
     final now = DateTime.now();
 
     // التحقق من صحة المبلغ

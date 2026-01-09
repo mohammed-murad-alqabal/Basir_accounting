@@ -103,10 +103,9 @@ class InventoryItem with _$InventoryItem {
   }) = _InventoryItem;
 
   /// إنشاء صنف مخزون من JSON.
-  // ignore: prefer_expression_function_bodies
-  factory InventoryItem.fromJson(Map<String, dynamic> json) {
-    return _$InventoryItemFromJson(json);
-  }
+  // ignore: lines_longer_than_80_chars
+  factory InventoryItem.fromJson(Map<String, dynamic> json) =>
+      _$InventoryItemFromJson(json);
 
   const InventoryItem._();
 

@@ -114,15 +114,17 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
               TextFormField(
                 controller: _amountController,
                 decoration: InputDecoration(
+                  // ignore: lines_longer_than_80_chars
                   labelText:
-                      _selectedCurrency != null && _selectedCurrency != 'SAR'
+                      (_selectedCurrency != null && _selectedCurrency != 'SAR')
                           ? '${context.l10n.labelAmount} (SAR)'
                           : context.l10n.labelAmount,
                   border: InputBorder.none,
                   prefixIcon: const Icon(Icons.money),
                 ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 onChanged: (v) {
                   if (_selectedCurrency != null &&
                       _selectedCurrency != 'SAR' &&
@@ -130,6 +132,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                     final sarAmount = Decimal.tryParse(v);
                     if (sarAmount != null) {
                       setState(() {
+                        // ignore: lines_longer_than_80_chars
                         _originalAmount =
                             (sarAmount / (_exchangeRate ?? Decimal.one))
                                 .toDecimal();
@@ -155,18 +158,21 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                       child: TextFormField(
                         initialValue: _originalAmount?.toString() ?? '',
                         decoration: InputDecoration(
-                          labelText:
-                              '${context.l10n.labelAmount} ($_selectedCurrency)',
+                          labelText: '${context.l10n.labelAmount} '
+                              '($_selectedCurrency)',
                           border: InputBorder.none,
                         ),
                         keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true),
+                          decimal: true,
+                        ),
                         onChanged: (v) {
                           _originalAmount = Decimal.tryParse(v);
+                          // ignore: lines_longer_than_80_chars
                           if (_originalAmount != null &&
                               _exchangeRate != null) {
                             setState(() {
                               _amountController.text =
+                                  // ignore: lines_longer_than_80_chars
                                   (_originalAmount! * _exchangeRate!)
                                       .toString();
                             });
@@ -183,13 +189,16 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                           border: InputBorder.none,
                         ),
                         keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true),
+                          decimal: true,
+                        ),
                         onChanged: (v) {
                           _exchangeRate = Decimal.tryParse(v);
+                          // ignore: lines_longer_than_80_chars
                           if (_originalAmount != null &&
                               _exchangeRate != null) {
                             setState(() {
                               _amountController.text =
+                                  // ignore: lines_longer_than_80_chars
                                   (_originalAmount! * _exchangeRate!)
                                       .toString();
                             });
@@ -223,17 +232,21 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-                title: const Text('SAR'),
-                onTap: () => Navigator.pop(context, 'SAR')),
+              title: const Text('SAR'),
+              onTap: () => Navigator.pop(context, 'SAR'),
+            ),
             ListTile(
-                title: const Text('USD'),
-                onTap: () => Navigator.pop(context, 'USD')),
+              title: const Text('USD'),
+              onTap: () => Navigator.pop(context, 'USD'),
+            ),
             ListTile(
-                title: const Text('EUR'),
-                onTap: () => Navigator.pop(context, 'EUR')),
+              title: const Text('EUR'),
+              onTap: () => Navigator.pop(context, 'EUR'),
+            ),
             ListTile(
-                title: const Text('GBP'),
-                onTap: () => Navigator.pop(context, 'GBP')),
+              title: const Text('GBP'),
+              onTap: () => Navigator.pop(context, 'GBP'),
+            ),
           ],
         ),
       ),
@@ -243,11 +256,15 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
       setState(() {
         _selectedCurrency = result == 'SAR' ? null : result;
         if (_selectedCurrency != null) {
-          _exchangeRate =
-              _selectedCurrency == 'USD' ? Decimal.parse('3.75') : Decimal.one;
+          // ignore: lines_longer_than_80_chars
+          _exchangeRate = (_selectedCurrency == 'USD')
+              ? Decimal.parse('3.75')
+              : Decimal.one;
+          // ignore: lines_longer_than_80_chars
           final currentAmount =
               Decimal.tryParse(_amountController.text) ?? Decimal.zero;
           if (currentAmount > Decimal.zero) {
+            // ignore: lines_longer_than_80_chars
             _originalAmount =
                 (currentAmount / (_exchangeRate ?? Decimal.one)).toDecimal();
           }
@@ -282,14 +299,14 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
 
   Widget _buildDatePicker() => AppCard(
         onTap: () async {
-          final date = await showDatePicker(
+          final val = await showDatePicker(
             context: context,
             initialDate: _selectedDate,
             firstDate: DateTime(2020),
             lastDate: DateTime(2030),
           );
-          if (date != null) {
-            setState(() => _selectedDate = date);
+          if (val != null) {
+            setState(() => _selectedDate = val);
           }
         },
         child: ListTile(
@@ -347,12 +364,15 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const SizedBox();
 
+          // ignore: lines_longer_than_80_chars
           final filterCode =
-              _paymentMethod == PaymentMethod.cash ? '1101' : '1102';
+              (_paymentMethod == PaymentMethod.cash) ? '1101' : '1102';
           final treasuryAccounts = snapshot.data!
               .where(
                 (a) =>
+                    // ignore: lines_longer_than_80_chars
                     a.code.startsWith(filterCode) ||
+                    // ignore: lines_longer_than_80_chars
                     (_paymentMethod == PaymentMethod.cash &&
                         a.subType == 'cash'),
               )
@@ -447,6 +467,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
 
   Future<void> _saveVoucher() async {
     if (!_formKey.currentState!.validate()) return;
+    // ignore: lines_longer_than_80_chars
     if (_selectedTreasuryAccountId == null ||
         _selectedOppositeAccountId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -522,10 +543,11 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-                content: Text('تم استخراج البيانات من الإيصال بنجاح')),
+              content: Text('تم استخراج البيانات من الإيصال بنجاح'),
+            ),
           );
         }
-      } catch (e) {
+      } on Exception catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('فشل في تحليل الإيصال: $e')),

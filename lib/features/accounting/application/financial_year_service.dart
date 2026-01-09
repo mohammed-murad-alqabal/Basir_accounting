@@ -81,7 +81,7 @@ class FinancialYearService extends _$FinancialYearService {
 
     if (pendingDrafts.isNotEmpty) {
       throw Exception(
-        'Cannot close year: There are ${pendingDrafts.length} unposted draft entries.',
+        'Cannot close year: ${pendingDrafts.length} unposted draft entries.',
       );
     }
 

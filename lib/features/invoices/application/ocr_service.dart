@@ -3,6 +3,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ocr_service.g.dart';
 
+/// خدمة التعرف الضوئي على الحروف (OCR Service)
+///
+/// تستخدم لاستخراج البيانات من فواتير المشتريات والإيصالات.
 @riverpod
 class OcrService extends _$OcrService {
   @override
@@ -11,18 +14,17 @@ class OcrService extends _$OcrService {
   /// Processes an image and returns extracted data (Total, Date).
   Future<Map<String, dynamic>> processReceipt(String imagePath) async {
     final inputImage = InputImage.fromFilePath(imagePath);
-    final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
+    final textRecognizer = TextRecognizer();
 
     try {
-      final RecognizedText recognizedText =
-          await textRecognizer.processImage(inputImage);
+      final recognizedText = await textRecognizer.processImage(inputImage);
 
       double? total;
       DateTime? date;
 
       // Simple heuristic for totals and dates
-      for (TextBlock block in recognizedText.blocks) {
-        for (TextLine line in block.lines) {
+      for (final block in recognizedText.blocks) {
+        for (final line in block.lines) {
           final text = line.text.toLowerCase();
 
           // Look for total/amount
@@ -51,7 +53,7 @@ class OcrService extends _$OcrService {
         'rawText': recognizedText.text,
       };
     } finally {
-      textRecognizer.close();
+      await textRecognizer.close();
     }
   }
 }
