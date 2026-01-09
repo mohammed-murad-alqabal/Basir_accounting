@@ -62,7 +62,7 @@ class NativeReportingApi {
       rust.generateZakahStatement(asOfDate: asOfDate, calendar: calendar);
 }
 
-/// Service responsible for fetching financial reports from the native Rust core.
+/// خدمة جلب التقارير المالية من المحرك الأساسي (Rust).
 class ReportingService {
   /// Creates a reporting service.
   ReportingService({NativeReportingApi? api})

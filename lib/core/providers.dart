@@ -1,5 +1,4 @@
 import 'package:basir_app/core/providers/secure_storage_provider.dart';
-import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/features/accounting/data/models/account_model.dart';
 import 'package:basir_app/features/accounting/data/models/financial_voucher_model.dart';
 import 'package:basir_app/features/accounting/data/models/financial_year_model.dart';
@@ -13,6 +12,7 @@ import 'package:basir_app/features/assets/data/models/asset_category_model.dart'
 import 'package:basir_app/features/assets/data/models/fixed_asset_model.dart';
 import 'package:basir_app/features/assets/data/repositories/asset_repository_impl.dart';
 import 'package:basir_app/features/assets/domain/repositories/asset_repository.dart';
+import 'package:basir_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:basir_app/features/customers/data/models/customer_model.dart';
 import 'package:basir_app/features/customers/data/repositories/customer_repository_impl.dart';
 import 'package:basir_app/features/customers/data/services/contact_service.dart';
@@ -127,7 +127,7 @@ final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
-  final user = ref.watch(currentUserProvider);
+  final user = ref.watch(basirUserProvider);
   return CustomerRepositoryImpl(isar: isar, userId: user?.id);
 });
 
@@ -139,7 +139,7 @@ final invoiceRepositoryProvider = Provider<InvoiceRepository>((ref) {
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
-  final user = ref.watch(currentUserProvider);
+  final user = ref.watch(basirUserProvider);
   return InvoiceRepositoryImpl(isar: isar, userId: user?.id);
 });
 
@@ -152,7 +152,7 @@ final financialYearRepositoryProvider =
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
-  final user = ref.watch(currentUserProvider);
+  final user = ref.watch(basirUserProvider);
   return FinancialYearRepositoryImpl(isar: isar, userId: user?.id);
 });
 
@@ -164,7 +164,7 @@ final vendorRepositoryProvider = Provider<VendorRepository>((ref) {
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
-  final user = ref.watch(currentUserProvider);
+  final user = ref.watch(basirUserProvider);
   return VendorRepositoryImpl(isar: isar, userId: user?.id);
 });
 
@@ -177,7 +177,7 @@ final financialVoucherRepositoryProvider =
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
-  final user = ref.watch(currentUserProvider);
+  final user = ref.watch(basirUserProvider);
   return FinancialVoucherRepositoryImpl(isar: isar, userId: user?.id);
 });
 
@@ -185,7 +185,7 @@ final financialVoucherRepositoryProvider =
 final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
   final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
-  final user = ref.watch(currentUserProvider);
+  final user = ref.watch(basirUserProvider);
   return ProfileRepositoryImpl(isar: isar, userId: user?.id);
 });
 
@@ -194,7 +194,7 @@ final businessSettingsRepositoryProvider =
     Provider<BusinessSettingsRepository>((ref) {
   final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
-  final user = ref.watch(currentUserProvider);
+  final user = ref.watch(basirUserProvider);
   return BusinessSettingsRepositoryImpl(isar: isar, userId: user?.id);
 });
 
@@ -204,7 +204,7 @@ final inventoryRepositoryProvider = Provider<InventoryRepository>((ref) {
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
-  final user = ref.watch(currentUserProvider);
+  final user = ref.watch(basirUserProvider);
   return InventoryRepositoryImpl(isar: isar, userId: user?.id);
 });
 
@@ -214,6 +214,6 @@ final assetRepositoryProvider = Provider<AssetRepository>((ref) {
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
-  final user = ref.watch(currentUserProvider);
+  final user = ref.watch(basirUserProvider);
   return AssetRepositoryImpl(isar: isar, userId: user?.id);
 });

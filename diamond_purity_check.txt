@@ -1,0 +1,27 @@
+Analyzing basir_accounting_system...                            
+
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:117:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:123:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:131:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:163:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:166:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:185:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:188:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:244:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:245:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:247:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:345:81 • lines_longer_than_80_chars
+  error • The argument type 'bool' can't be assigned to the parameter type 'bool Function(Account)'.  • lib/features/accounting/presentation/screens/voucher_form_screen.dart:348:17 • argument_type_not_assignable
+  error • Undefined name 'a' • lib/features/accounting/presentation/screens/voucher_form_screen.dart:348:17 • undefined_identifier
+  error • Undefined name 'a' • lib/features/accounting/presentation/screens/voucher_form_screen.dart:349:62 • undefined_identifier
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:349:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:442:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/domain/entities/inventory_item.dart:106:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:18:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:35:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:55:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:57:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:100:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:202:81 • lines_longer_than_80_chars
+
+23 issues found. (ran in 11.3s)
