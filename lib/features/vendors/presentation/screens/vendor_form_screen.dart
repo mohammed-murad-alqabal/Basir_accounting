@@ -103,7 +103,7 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
             const SizedBox(height: Spacing.xl),
 
             // زر الحفظ
-            AppButton(
+            AppEnhancedButton(
               label: context.l10n.btnSave,
               onPressed: _save,
             ),

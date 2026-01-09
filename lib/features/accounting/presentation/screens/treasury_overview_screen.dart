@@ -126,7 +126,7 @@ class TreasuryOverviewScreen extends ConsumerWidget {
   Widget _buildQuickActions(BuildContext context) => Row(
         children: [
           Expanded(
-            child: AppButton(
+            child: AppEnhancedButton(
               label: context.l10n.receiptVoucherAction,
               icon: Icons.call_received,
               onPressed: () => _createNewVoucher(context, VoucherType.receipt),
@@ -134,9 +134,9 @@ class TreasuryOverviewScreen extends ConsumerWidget {
           ),
           const SizedBox(width: 12),
           Expanded(
-            child: AppButton(
+            child: AppEnhancedButton(
               label: context.l10n.paymentVoucherAction,
-              type: AppButtonType.secondary,
+              type: AppEnhancedButtonType.secondary,
               icon: Icons.call_made,
               onPressed: () => _createNewVoucher(context, VoucherType.payment),
             ),

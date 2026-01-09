@@ -1,5 +1,6 @@
 import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/core/providers/supabase_auth_provider.dart';
+import 'package:basir_app/features/accounting/application/accounting_service.dart';
 import 'package:basir_app/features/accounting/application/financial_year_service.dart';
 import 'package:basir_app/features/accounting/domain/entities/financial_voucher.dart';
 import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
@@ -34,6 +35,8 @@ class TreasuryService extends _$TreasuryService {
     final isPeriodOpen = await financialYearService.canPostToDate(voucher.date);
     if (!isPeriodOpen) throw Exception('Financial period is closed');
 
+    await _validateTreasuryAccount(voucher.treasuryAccountId);
+
     final repository = ref.read(accountingRepositoryProvider);
 
     final lines = [
@@ -43,6 +46,9 @@ class TreasuryService extends _$TreasuryService {
         debit: voucher.amount,
         credit: Decimal.zero,
         description: 'قبض: ${voucher.description}',
+        originalCurrency: voucher.originalCurrency,
+        exchangeRate: voucher.exchangeRate,
+        originalAmount: voucher.originalAmount,
       ),
       JournalEntryLine(
         accountId: voucher.accountId,
@@ -50,6 +56,9 @@ class TreasuryService extends _$TreasuryService {
         credit: voucher.amount,
         debit: Decimal.zero,
         description: 'سند قبض رقم ${voucher.referenceNumber}',
+        originalCurrency: voucher.originalCurrency,
+        exchangeRate: voucher.exchangeRate,
+        originalAmount: voucher.originalAmount,
       ),
     ];
 
@@ -104,6 +113,8 @@ class TreasuryService extends _$TreasuryService {
     final isPeriodOpen = await financialYearService.canPostToDate(voucher.date);
     if (!isPeriodOpen) throw Exception('Financial period is closed');
 
+    await _validateTreasuryAccount(voucher.treasuryAccountId);
+
     final repository = ref.read(accountingRepositoryProvider);
 
     final lines = [
@@ -113,6 +124,9 @@ class TreasuryService extends _$TreasuryService {
         debit: voucher.amount,
         credit: Decimal.zero,
         description: 'صرف: ${voucher.description}',
+        originalCurrency: voucher.originalCurrency,
+        exchangeRate: voucher.exchangeRate,
+        originalAmount: voucher.originalAmount,
       ),
       JournalEntryLine(
         accountId: voucher.treasuryAccountId,
@@ -120,6 +134,9 @@ class TreasuryService extends _$TreasuryService {
         credit: voucher.amount,
         debit: Decimal.zero,
         description: 'سند صرف رقم ${voucher.referenceNumber}',
+        originalCurrency: voucher.originalCurrency,
+        exchangeRate: voucher.exchangeRate,
+        originalAmount: voucher.originalAmount,
       ),
     ];
 
@@ -160,6 +177,27 @@ class TreasuryService extends _$TreasuryService {
     );
     await voucherRepo.addVoucher(postedVoucher);
     return entry.id;
+  }
+
+  /// التحقق من أن الحساب هو حساب خزينة (نقد أو بنك)
+  Future<void> _validateTreasuryAccount(String accountId) async {
+    final accountingService = ref.read(accountingServiceProvider.notifier);
+    final account = await accountingService.getAccountById(accountId);
+
+    if (account == null) {
+      throw Exception('Treasury account not found');
+    }
+
+    final isCashOrBank = account.subType == 'cash' ||
+        account.subType == 'bank' ||
+        account.code.startsWith('1101') ||
+        account.code.startsWith('1102');
+
+    if (!isCashOrBank) {
+      throw Exception(
+        'Account must be a Cash or Bank account for treasury operations',
+      );
+    }
   }
 }
 

@@ -3,8 +3,8 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
-import 'package:basir_app/src/rust/api.dart';
-import 'package:basir_app/src/rust/frb_generated.dart';
+import '../api.dart';
+import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `clone`, `from`, `from`, `from`, `try_from`, `try_from`
@@ -18,53 +18,46 @@ Future<InventoryItemDto?> getItemById({required String id}) =>
 Future<void> saveItem({required InventoryItemDto item}) =>
     RustLib.instance.api.crateApiInventorySaveItem(item: item);
 
-Future<String> recordMovement({
-  required StockMovementDto movement,
-  required AuditMetadataDto metadata,
-}) =>
+Future<String> recordMovement(
+        {required StockMovementDto movement,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiInventoryRecordMovement(
         movement: movement, metadata: metadata);
 
-Future<String> recordPurchase({
-  required String itemId,
-  required String quantity,
-  required String unitCost,
-  required AuditMetadataDto metadata,
-  String? referenceId,
-}) =>
+Future<String> recordPurchase(
+        {required String itemId,
+        required String quantity,
+        required String unitCost,
+        String? referenceId,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiInventoryRecordPurchase(
-      itemId: itemId,
-      quantity: quantity,
-      unitCost: unitCost,
-      referenceId: referenceId,
-      metadata: metadata,
-    );
+        itemId: itemId,
+        quantity: quantity,
+        unitCost: unitCost,
+        referenceId: referenceId,
+        metadata: metadata);
 
-Future<String> recordSale({
-  required String itemId,
-  required String quantity,
-  required AuditMetadataDto metadata,
-  String? referenceId,
-}) =>
+Future<String> recordSale(
+        {required String itemId,
+        required String quantity,
+        String? referenceId,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiInventoryRecordSale(
-      itemId: itemId,
-      quantity: quantity,
-      referenceId: referenceId,
-      metadata: metadata,
-    );
+        itemId: itemId,
+        quantity: quantity,
+        referenceId: referenceId,
+        metadata: metadata);
 
-Future<String> recordImpairment({
-  required String itemId,
-  required String totalImpairmentAmount,
-  required AuditMetadataDto metadata,
-  String? referenceId,
-}) =>
+Future<String> recordImpairment(
+        {required String itemId,
+        required String totalImpairmentAmount,
+        String? referenceId,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiInventoryRecordImpairment(
-      itemId: itemId,
-      totalImpairmentAmount: totalImpairmentAmount,
-      referenceId: referenceId,
-      metadata: metadata,
-    );
+        itemId: itemId,
+        totalImpairmentAmount: totalImpairmentAmount,
+        referenceId: referenceId,
+        metadata: metadata);
 
 Future<bool> verifyInventoryChain({required String itemId}) =>
     RustLib.instance.api.crateApiInventoryVerifyInventoryChain(itemId: itemId);
@@ -77,18 +70,6 @@ Future<List<StockMovementDto>> listMovements({required String itemId}) =>
     RustLib.instance.api.crateApiInventoryListMovements(itemId: itemId);
 
 class InventoryItemDto {
-  const InventoryItemDto({
-    required this.code,
-    required this.nameAr,
-    required this.nameEn,
-    required this.unit,
-    required this.valuationMethod,
-    required this.assetAccountId,
-    required this.cogsAccountId,
-    required this.revenueAccountId,
-    this.id,
-    this.description,
-  });
   final String? id;
   final String code;
   final String nameAr;
@@ -96,9 +77,30 @@ class InventoryItemDto {
   final String? description;
   final String unit;
   final String valuationMethod;
+  final String? purchasePrice;
+  final String? salePrice;
   final String assetAccountId;
   final String cogsAccountId;
   final String revenueAccountId;
+  final String createdAt;
+  final String updatedAt;
+
+  const InventoryItemDto({
+    this.id,
+    required this.code,
+    required this.nameAr,
+    required this.nameEn,
+    this.description,
+    required this.unit,
+    required this.valuationMethod,
+    this.purchasePrice,
+    this.salePrice,
+    required this.assetAccountId,
+    required this.cogsAccountId,
+    required this.revenueAccountId,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
   @override
   int get hashCode =>
@@ -109,9 +111,13 @@ class InventoryItemDto {
       description.hashCode ^
       unit.hashCode ^
       valuationMethod.hashCode ^
+      purchasePrice.hashCode ^
+      salePrice.hashCode ^
       assetAccountId.hashCode ^
       cogsAccountId.hashCode ^
-      revenueAccountId.hashCode;
+      revenueAccountId.hashCode ^
+      createdAt.hashCode ^
+      updatedAt.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -125,20 +131,25 @@ class InventoryItemDto {
           description == other.description &&
           unit == other.unit &&
           valuationMethod == other.valuationMethod &&
+          purchasePrice == other.purchasePrice &&
+          salePrice == other.salePrice &&
           assetAccountId == other.assetAccountId &&
           cogsAccountId == other.cogsAccountId &&
-          revenueAccountId == other.revenueAccountId;
+          revenueAccountId == other.revenueAccountId &&
+          createdAt == other.createdAt &&
+          updatedAt == other.updatedAt;
 }
 
 class InventoryValuationReportDto {
+  final String asOf;
+  final List<ValuationItemDto> items;
+  final String totalValue;
+
   const InventoryValuationReportDto({
     required this.asOf,
     required this.items,
     required this.totalValue,
   });
-  final String asOf;
-  final List<ValuationItemDto> items;
-  final String totalValue;
 
   @override
   int get hashCode => asOf.hashCode ^ items.hashCode ^ totalValue.hashCode;
@@ -154,16 +165,6 @@ class InventoryValuationReportDto {
 }
 
 class StockMovementDto {
-  const StockMovementDto({
-    required this.itemId,
-    required this.movementType,
-    required this.quantity,
-    required this.unitCost,
-    required this.date,
-    this.id,
-    this.referenceId,
-    this.description,
-  });
   final String? id;
   final String itemId;
   final String movementType;
@@ -172,6 +173,17 @@ class StockMovementDto {
   final String? referenceId;
   final String date;
   final String? description;
+
+  const StockMovementDto({
+    this.id,
+    required this.itemId,
+    required this.movementType,
+    required this.quantity,
+    required this.unitCost,
+    this.referenceId,
+    required this.date,
+    this.description,
+  });
 
   @override
   int get hashCode =>
@@ -200,6 +212,13 @@ class StockMovementDto {
 }
 
 class ValuationItemDto {
+  final String itemId;
+  final String itemNameAr;
+  final String itemNameEn;
+  final String quantity;
+  final String unitCost;
+  final String totalValue;
+
   const ValuationItemDto({
     required this.itemId,
     required this.itemNameAr,
@@ -208,12 +227,6 @@ class ValuationItemDto {
     required this.unitCost,
     required this.totalValue,
   });
-  final String itemId;
-  final String itemNameAr;
-  final String itemNameEn;
-  final String quantity;
-  final String unitCost;
-  final String totalValue;
 
   @override
   int get hashCode =>

@@ -3,7 +3,7 @@
 /// يختبر جميع عمليات المصادقة والأمان
 library;
 
-import 'package:basir_app/features/auth/data/services/auth_service.dart';
+import 'package:basir_app/features/auth/application/auth_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../mocks/mock_secure_storage.dart';

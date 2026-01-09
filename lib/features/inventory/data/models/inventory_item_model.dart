@@ -23,6 +23,10 @@ class InventoryItemModel {
         ..currentQuantity = item.currentQuantity
         ..unit = item.unit
         ..categoryId = item.categoryId
+        ..valuationMethod = item.valuationMethod
+        ..assetAccountId = item.assetAccountId
+        ..cogsAccountId = item.cogsAccountId
+        ..revenueAccountId = item.revenueAccountId
         ..primaryAccountId = item.primaryAccountId
         ..syncStatus = item.syncStatus
         ..serverUpdatedAt = item.serverUpdatedAt
@@ -67,6 +71,19 @@ class InventoryItemModel {
   /// معرف الفئة
   String? categoryId;
 
+  /// طريقة تقييم المخزون
+  @Enumerated(EnumType.name)
+  ValuationMethod valuationMethod = ValuationMethod.weightedAverage;
+
+  /// حساب الأصول (المخزون)
+  String? assetAccountId;
+
+  /// حساب تكلفة البضاعة المباعة
+  String? cogsAccountId;
+
+  /// حساب إيرادات المبيعات
+  String? revenueAccountId;
+
   /// الحساب الأساسي المرتبط
   String? primaryAccountId;
 
@@ -101,6 +118,10 @@ class InventoryItemModel {
         currentQuantity: currentQuantity ?? 0,
         unit: unit,
         categoryId: categoryId,
+        valuationMethod: valuationMethod,
+        assetAccountId: assetAccountId,
+        cogsAccountId: cogsAccountId,
+        revenueAccountId: revenueAccountId,
         primaryAccountId: primaryAccountId,
         syncStatus: syncStatus,
         serverUpdatedAt: serverUpdatedAt,

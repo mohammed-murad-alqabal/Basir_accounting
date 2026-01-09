@@ -130,7 +130,8 @@ class _AccountSettingsSheetState extends ConsumerState<AccountSettingsSheet> {
                 textAlign: TextAlign.center,
               ),
             ),
-          AppPrimaryButton(
+          AppEnhancedButton(
+            width: double.infinity,
             label: context.l10n.dialogSave,
             isLoading: state.isLoading,
             onPressed: () async {

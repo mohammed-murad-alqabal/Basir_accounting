@@ -1,5 +1,5 @@
 import 'package:basir_app/core/providers/secure_storage_provider.dart';
-import 'package:basir_app/features/auth/data/services/auth_service.dart';
+import 'package:basir_app/features/auth/application/auth_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// مزود خدمة المصادقة
@@ -235,5 +235,29 @@ final changePasswordProvider = FutureProvider.family<bool, (String, String)>((
     return true;
   } on Exception {
     return false;
+  }
+});
+
+/// مزود التحقق من وضع الضيف
+///
+/// يتحقق مما إذا كان المستخدم الحالي ضيفاً
+/// يتفاعل مع تغييرات حالة المصادقة (تسجيل دخول/خروج/ترقية)
+///
+/// Example:
+/// ```dart
+/// final isGuest = ref.watch(isGuestProvider);
+/// if (isGuest.value == true) {
+///   // إظهار زر الترقية
+/// }
+/// ```
+final isGuestProvider = StreamProvider<bool>((ref) async* {
+  final authService = ref.watch(authServiceProvider);
+
+  // التحقق الأولي
+  yield await authService.isGuest();
+
+  // الاستماع للتغييرات
+  await for (final _ in authService.onAuthStateChange) {
+    yield await authService.isGuest();
   }
 });

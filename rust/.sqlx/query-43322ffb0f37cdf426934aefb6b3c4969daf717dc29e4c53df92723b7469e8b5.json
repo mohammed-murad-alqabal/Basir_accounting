@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO asset_categories (\n                id, name_ar, name_en, description, default_useful_life_years, \n                default_depreciation_method, asset_account_id, depreciation_account_id, \n                accum_depreciation_account_id\n            )\n            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Int4",
+        "Text",
+        "Uuid",
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "43322ffb0f37cdf426934aefb6b3c4969daf717dc29e4c53df92723b7469e8b5"
+}

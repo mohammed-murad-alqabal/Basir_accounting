@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i7;
 
-import 'package:basir_app/features/auth/data/services/auth_service.dart' as _i6;
+import 'package:basir_app/features/auth/application/auth_service.dart' as _i6;
 import 'package:basir_app/features/auth/domain/models/auth_models.dart' as _i3;
 import 'package:basir_app/features/customers/domain/entities/customer.dart'
     as _i9;

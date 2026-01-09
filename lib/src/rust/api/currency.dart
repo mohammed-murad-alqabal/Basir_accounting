@@ -3,45 +3,41 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
-import 'package:basir_app/src/rust/api.dart';
-import 'package:basir_app/src/rust/frb_generated.dart';
+import '../api.dart';
+import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 Future<void> saveExchangeRate({required ExchangeRateDto dto}) =>
     RustLib.instance.api.crateApiCurrencySaveExchangeRate(dto: dto);
 
-Future<ExchangeRateDto?> getExchangeRate({
-  required String base,
-  required String target,
-  required String date,
-}) =>
+Future<ExchangeRateDto?> getExchangeRate(
+        {required String base, required String target, required String date}) =>
     RustLib.instance.api.crateApiCurrencyGetExchangeRate(
-      base: base,
-      target: target,
-      date: date,
-    );
+        base: base, target: target, date: date);
 
-Future<List<ExchangeRateDto>> listExchangeRates({
-  String? base,
-  String? target,
-}) =>
+Future<List<ExchangeRateDto>> listExchangeRates(
+        {String? base, String? target}) =>
     RustLib.instance.api
         .crateApiCurrencyListExchangeRates(base: base, target: target);
 
-Future<String> performRevaluation({
-  required String date,
-  required String systemBase,
-  required String unrealizedGainLossAccountId,
-  required AuditMetadataDto metadata,
-}) =>
+Future<String> performRevaluation(
+        {required String date,
+        required String systemBase,
+        required String unrealizedGainLossAccountId,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiCurrencyPerformRevaluation(
-      date: date,
-      systemBase: systemBase,
-      unrealizedGainLossAccountId: unrealizedGainLossAccountId,
-      metadata: metadata,
-    );
+        date: date,
+        systemBase: systemBase,
+        unrealizedGainLossAccountId: unrealizedGainLossAccountId,
+        metadata: metadata);
 
 class ExchangeRateDto {
+  final String baseCurrency;
+  final String targetCurrency;
+  final String rate;
+  final String effectiveDate;
+  final String? source;
+
   const ExchangeRateDto({
     required this.baseCurrency,
     required this.targetCurrency,
@@ -49,11 +45,6 @@ class ExchangeRateDto {
     required this.effectiveDate,
     this.source,
   });
-  final String baseCurrency;
-  final String targetCurrency;
-  final String rate;
-  final String effectiveDate;
-  final String? source;
 
   @override
   int get hashCode =>

@@ -228,18 +228,18 @@ class CustomerDetailsScreen extends ConsumerWidget {
           ),
         ),
         actions: [
-          AppButton(
+          AppEnhancedButton(
             label: context.l10n.dialogCancel,
             onPressed: () => Navigator.pop(context, false),
-            type: AppButtonType.text,
-            size: AppButtonSize.small,
+            type: AppEnhancedButtonType.text,
+            height: 36,
           ),
-          AppButton(
+          AppEnhancedButton(
             label: context.l10n.btnDelete,
             onPressed: () => Navigator.pop(context, true),
-            type: AppButtonType.text,
-            size: AppButtonSize.small,
-            color: AppColors.error,
+            type: AppEnhancedButtonType.text,
+            height: 36,
+            foregroundColor: AppColors.error,
           ),
         ],
       ),

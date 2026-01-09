@@ -158,11 +158,29 @@ abstract class AppLocalizations {
   /// **'تعديل قيد يدوي'**
   String get journalEntryFormTitleEdit;
 
-  /// No description provided for @assetsSearchHint.
+  /// No description provided for @labelCogsAccountId.
   ///
   /// In ar, this message translates to:
-  /// **'ابحث في الأصول...'**
-  String get assetsSearchHint;
+  /// **'حساب تكلفة البضاعة (COGS)'**
+  String get labelCogsAccountId;
+
+  /// No description provided for @labelRevenueAccountId.
+  ///
+  /// In ar, this message translates to:
+  /// **'حساب إيرادات المبيعات'**
+  String get labelRevenueAccountId;
+
+  /// No description provided for @labelValuationMethod.
+  ///
+  /// In ar, this message translates to:
+  /// **'طريقة تقييم المخزون'**
+  String get labelValuationMethod;
+
+  /// No description provided for @labelInventoryValuation.
+  ///
+  /// In ar, this message translates to:
+  /// **'تقييم المخزون (IAS 2)'**
+  String get labelInventoryValuation;
 
   /// No description provided for @aboutAppSubtitle.
   ///
@@ -295,6 +313,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الأصول الثابتة'**
   String get assetsScreenTitle;
+
+  /// No description provided for @assetsSearchHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث في الأصول...'**
+  String get assetsSearchHint;
 
   /// No description provided for @actionAddAsset.
   ///
@@ -467,7 +491,7 @@ abstract class AppLocalizations {
   /// No description provided for @labelAssetAccountId.
   ///
   /// In ar, this message translates to:
-  /// **'حساب الأصل'**
+  /// **'حساب المخزون (الأصول)'**
   String get labelAssetAccountId;
 
   /// No description provided for @labelUnit.
@@ -2490,7 +2514,7 @@ abstract class AppLocalizations {
   ///
   /// In ar, this message translates to:
   /// **'تنبيه: الميزانية غير متزنة! الفرق: {diff}'**
-  String msgBalanceUnbalanced(Object diff);
+  String msgBalanceUnbalanced(String diff);
 
   /// No description provided for @treasuryTitle.
   ///
@@ -2707,6 +2731,42 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'خطأ أثناء تصدير التقرير'**
   String get errorExportingReport;
+
+  /// No description provided for @labelStandard.
+  ///
+  /// In ar, this message translates to:
+  /// **'المعيار المحاسبي'**
+  String get labelStandard;
+
+  /// No description provided for @labelRecognitionBasis.
+  ///
+  /// In ar, this message translates to:
+  /// **'أساس الاعتراف'**
+  String get labelRecognitionBasis;
+
+  /// No description provided for @labelMeasurementBasis.
+  ///
+  /// In ar, this message translates to:
+  /// **'أساس القياس'**
+  String get labelMeasurementBasis;
+
+  /// No description provided for @labelExchangeRate.
+  ///
+  /// In ar, this message translates to:
+  /// **'سعر الصرف'**
+  String get labelExchangeRate;
+
+  /// No description provided for @labelAddCurrency.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة عملة'**
+  String get labelAddCurrency;
+
+  /// No description provided for @labelCurrency.
+  ///
+  /// In ar, this message translates to:
+  /// **'العملة'**
+  String get labelCurrency;
 
   /// No description provided for @labelAmount.
   ///

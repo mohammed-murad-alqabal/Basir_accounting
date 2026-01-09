@@ -41,7 +41,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get journalEntryFormTitleEdit => 'تعديل قيد يدوي';
 
   @override
-  String get assetsSearchHint => 'ابحث في الأصول...';
+  String get labelCogsAccountId => 'حساب تكلفة البضاعة (COGS)';
+
+  @override
+  String get labelRevenueAccountId => 'حساب إيرادات المبيعات';
+
+  @override
+  String get labelValuationMethod => 'طريقة تقييم المخزون';
+
+  @override
+  String get labelInventoryValuation => 'تقييم المخزون (IAS 2)';
 
   @override
   String get aboutAppSubtitle => 'الإصدار 1.0.0';
@@ -109,6 +118,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get assetsScreenTitle => 'الأصول الثابتة';
+
+  @override
+  String get assetsSearchHint => 'ابحث في الأصول...';
 
   @override
   String get actionAddAsset => 'إضافة أصل';
@@ -199,7 +211,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelAccumDepreciationAccountId => 'حساب مجمع الإهلاك';
 
   @override
-  String get labelAssetAccountId => 'حساب الأصل';
+  String get labelAssetAccountId => 'حساب المخزون (الأصول)';
 
   @override
   String get labelUnit => 'الوحدة';
@@ -1251,7 +1263,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'الميزانية متزنة: الأصول تساوي الالتزامات وحقوق الملكية.';
 
   @override
-  String msgBalanceUnbalanced(Object diff) {
+  String msgBalanceUnbalanced(String diff) {
     return 'تنبيه: الميزانية غير متزنة! الفرق: $diff';
   }
 
@@ -1363,6 +1375,24 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get errorExportingReport => 'خطأ أثناء تصدير التقرير';
+
+  @override
+  String get labelStandard => 'المعيار المحاسبي';
+
+  @override
+  String get labelRecognitionBasis => 'أساس الاعتراف';
+
+  @override
+  String get labelMeasurementBasis => 'أساس القياس';
+
+  @override
+  String get labelExchangeRate => 'سعر الصرف';
+
+  @override
+  String get labelAddCurrency => 'إضافة عملة';
+
+  @override
+  String get labelCurrency => 'العملة';
 
   @override
   String get labelAmount => 'المبلغ';

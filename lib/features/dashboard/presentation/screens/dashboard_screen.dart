@@ -197,6 +197,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     AppIcons appIcons,
   ) {
     final analytics = ref.read(analyticsServiceProvider);
+    final isGuestAsync = ref.watch(isGuestProvider);
+    final isGuest = isGuestAsync.value ?? false;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,10 +208,29 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           icon: appIcons.bolt,
         ),
         const SizedBox(height: Spacing.md),
+        if (isGuest) ...[
+          AppEnhancedButton(
+            label: context.l10n.actionUpgradeAccount,
+            onPressed: () {
+              unawaited(
+                analytics?.logEvent(
+                  AnalyticsEventType.featureUsed,
+                  metadata: {
+                    'feature': 'guest_upgrade_click',
+                  },
+                ),
+              );
+              unawaited(Navigator.of(context).pushNamed('/guest-upgrade'));
+            },
+            icon: appIcons.upgrade,
+          ),
+          const SizedBox(height: Spacing.md),
+        ],
+
         Row(
           children: [
             Expanded(
-              child: AppButton(
+              child: AppEnhancedButton(
                 label: context.l10n.actionAddInvoice,
                 onPressed: () {
                   unawaited(
@@ -222,7 +243,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             ),
             const SizedBox(width: Spacing.md),
             Expanded(
-              child: AppButton(
+              child: AppEnhancedButton(
                 label: context.l10n.actionAddCustomer,
                 onPressed: () {
                   unawaited(
@@ -231,17 +252,18 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   unawaited(Navigator.of(context).pushNamed('/customer-form'));
                 },
                 icon: appIcons.add,
-                type: AppButtonType.secondary,
+                type: AppEnhancedButtonType.secondary,
               ),
             ),
           ],
         ),
+
         const SizedBox(height: Spacing.md),
         // أدوات المحاسبة السريعة
         Row(
           children: [
             Expanded(
-              child: AppButton(
+              child: AppEnhancedButton(
                 label: context.l10n.labelChartOfAccounts,
                 onPressed: () {
                   unawaited(
@@ -259,13 +281,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   );
                 },
                 icon: appIcons.accounting,
-                type: AppButtonType.outlined,
-                semanticLabel: 'فتح دليل الحسابات',
+                type: AppEnhancedButtonType.outlined,
               ),
             ),
             const SizedBox(width: Spacing.md),
             Expanded(
-              child: AppButton(
+              child: AppEnhancedButton(
                 label: context.l10n.labelJournalEntries,
                 onPressed: () {
                   unawaited(
@@ -283,8 +304,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   );
                 },
                 icon: appIcons.list,
-                type: AppButtonType.outlined,
-                semanticLabel: 'عرض القيود اليومية',
+                type: AppEnhancedButtonType.outlined,
               ),
             ),
           ],

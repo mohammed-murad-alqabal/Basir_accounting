@@ -261,17 +261,17 @@ class AppButtonTestSuite extends StatelessWidget {
         spacing: 8,
         runSpacing: 8,
         children: [
-          AppButton(
+          AppEnhancedButton(
             label: 'حفظ',
             onPressed: () {},
             icon: Icons.save,
           ),
-          AppButton(
+          AppEnhancedButton(
             label: 'إضافة عميل جديد',
             onPressed: () {},
             icon: Icons.add,
           ),
-          AppButton(
+          AppEnhancedButton(
             label: 'نص طويل جداً قد يسبب مشاكل في العرض',
             onPressed: () {},
           ),
@@ -283,16 +283,16 @@ class AppButtonTestSuite extends StatelessWidget {
         spacing: 8,
         runSpacing: 8,
         children: [
-          AppButton(
+          AppEnhancedButton(
             label: 'تعديل',
             onPressed: () {},
             icon: Icons.edit,
-            type: AppButtonType.secondary,
+            type: AppEnhancedButtonType.secondary,
           ),
-          AppButton(
+          AppEnhancedButton(
             label: 'عرض التفاصيل الكاملة للعنصر المحدد',
             onPressed: () {},
-            type: AppButtonType.secondary,
+            type: AppEnhancedButtonType.secondary,
           ),
         ],
       );
@@ -302,15 +302,15 @@ class AppButtonTestSuite extends StatelessWidget {
         spacing: 8,
         runSpacing: 8,
         children: [
-          AppButton(
+          AppEnhancedButton(
             label: 'تخطي',
             onPressed: () {},
-            type: AppButtonType.text,
+            type: AppEnhancedButtonType.text,
           ),
-          AppButton(
+          AppEnhancedButton(
             label: 'عرض المزيد من الخيارات المتاحة',
             onPressed: () {},
-            type: AppButtonType.text,
+            type: AppEnhancedButtonType.text,
           ),
         ],
       );
@@ -321,34 +321,34 @@ class AppButtonTestSuite extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: AppButton(
+                child: AppEnhancedButton(
                   label: 'صغير',
                   onPressed: () {},
-                  size: AppButtonSize.small,
+                  height: 36,
                 ),
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: AppButton(
+                child: AppEnhancedButton(
                   label: 'متوسط',
                   onPressed: () {},
                 ),
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: AppButton(
+                child: AppEnhancedButton(
                   label: 'كبير',
                   onPressed: () {},
-                  size: AppButtonSize.large,
+                  height: 60,
                 ),
               ),
             ],
           ),
           const SizedBox(height: 8),
-          AppButton(
+          AppEnhancedButton(
             label: 'نص طويل جداً مع حجم صغير للاختبار',
             onPressed: () {},
-            size: AppButtonSize.small,
+            height: 36,
             icon: Icons.warning,
           ),
         ],
@@ -359,12 +359,12 @@ class AppButtonTestSuite extends StatelessWidget {
         spacing: 8,
         runSpacing: 8,
         children: [
-          AppButton(
+          AppEnhancedButton(
             label: 'تحميل...',
             onPressed: () {},
             isLoading: true,
           ),
-          const AppButton(
+          const AppEnhancedButton(
             label: 'معطل',
             onPressed: null,
           ),

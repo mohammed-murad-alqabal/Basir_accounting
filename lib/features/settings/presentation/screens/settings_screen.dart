@@ -124,10 +124,11 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: Spacing.xxl),
 
             // 🚪 منطقة الأوامر النهائية
-            AppButton(
+            // 🚪 منطقة الأوامر النهائية
+            AppEnhancedButton(
               label: context.l10n.logoutLabel,
               onPressed: () => _showLogoutDialog(context, controller),
-              type: AppButtonType.danger,
+              type: AppEnhancedButtonType.danger,
             ),
             const SizedBox(height: Spacing.xl),
 

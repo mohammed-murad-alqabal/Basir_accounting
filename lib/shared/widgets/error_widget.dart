@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/shared/widgets/app_button.dart';
+import 'package:basir_app/shared/widgets/app_enhanced_button.dart';
 import 'package:flutter/material.dart';
 
 /// واجهة الأخطاء العالمية
@@ -77,7 +77,7 @@ class GlobalErrorWidget extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: Spacing.xxl),
-                      AppButton(
+                      AppEnhancedButton(
                         label: context.l10n.btnRetry,
                         onPressed: () {
                           unawaited(
@@ -87,7 +87,7 @@ class GlobalErrorWidget extends StatelessWidget {
                             ),
                           );
                         },
-                        isFullWidth: true,
+                        width: double.infinity,
                       ),
                     ],
                   ),

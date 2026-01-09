@@ -1,12 +1,9 @@
 {
   "en": [
-    "privacyAnalyticsTitle",
-    "privacyAnalyticsSubtitle",
-    "analyticsEnableTracking",
-    "analyticsPrivacyNotice",
-    "analyticsClearData",
-    "analyticsDataCleared",
-    "lastSyncLabel",
-    "msgNoActivity"
+    "labelStandard",
+    "labelRecognitionBasis",
+    "labelMeasurementBasis",
+    "labelAddCurrency",
+    "labelCurrency"
   ]
 }

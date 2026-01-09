@@ -17,6 +17,8 @@ import 'dart:async';
 
 import 'package:basir_app/core/theme/app_font_metrics.dart';
 import 'package:basir_app/core/theme/font_manager.dart';
+// ignore_for_file: deprecated_member_use_from_same_package
+// Intentionally using deprecated member
 import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:basir_app/shared/widgets/overflow_detector.dart';
 import 'package:flutter/material.dart' hide Durations;
@@ -63,8 +65,11 @@ enum AppButtonSize {
 ///   size: AppButtonSize.medium,
 /// )
 /// ```
+/// ```
+@Deprecated('Use AppEnhancedButton instead')
 class AppButton extends StatefulWidget {
   /// إنشاء زر مخصص متقدم
+  @Deprecated('Use AppEnhancedButton instead')
   const AppButton({
     required this.label,
     required this.onPressed,
@@ -218,6 +223,8 @@ class _AppButtonState extends State<AppButton>
           onTapCancel: _handleTapCancel,
           onTap: _handleTap,
           child: AnimatedContainer(
+            /// (Default: [Durations.short3] for scale,
+            /// [Durations.medium1] for color)
             duration: Durations.short,
             curve: AnimationCurves.decelerate,
             width:
@@ -412,8 +419,10 @@ class _AppButtonState extends State<AppButton>
 // ═══════════════════════════════════════════════════════════════════════════
 
 /// مغلف لـ AppPrimaryButton للحفاظ على التوافق مع الكود الموجود
+@Deprecated('Use AppEnhancedButton instead')
 class AppPrimaryButton extends StatelessWidget {
   /// إنشاء زر أساسي متوافق مع الإصدارات السابقة
+  @Deprecated('Use AppEnhancedButton instead')
   const AppPrimaryButton({
     @Deprecated('Use label instead') String? text,
     String? label,
@@ -464,8 +473,10 @@ class AppPrimaryButton extends StatelessWidget {
 }
 
 /// مغلف لـ AppSecondaryButton للحفاظ على التوافق مع الكود الموجود
+@Deprecated('Use AppEnhancedButton instead')
 class AppSecondaryButton extends StatelessWidget {
   /// إنشاء زر ثانوي متوافق مع الإصدارات السابقة
+  @Deprecated('Use AppEnhancedButton instead')
   const AppSecondaryButton({
     @Deprecated('Use label instead') String? text,
     String? label,
@@ -517,8 +528,10 @@ class AppSecondaryButton extends StatelessWidget {
 }
 
 /// مغلف لـ AppTextButton للحفاظ على التوافق مع الكود الموجود
+@Deprecated('Use AppEnhancedButton instead')
 class AppTextButton extends StatelessWidget {
   /// إنشاء زر نصي متوافق مع الإصدارات السابقة
+  @Deprecated('Use AppEnhancedButton instead')
   const AppTextButton({
     @Deprecated('Use label instead') String? text,
     String? label,

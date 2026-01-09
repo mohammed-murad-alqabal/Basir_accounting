@@ -3,7 +3,7 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
-import 'package:basir_app/src/rust/frb_generated.dart';
+import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 Future<void> savePeriod({required PeriodDto dto}) =>
@@ -18,32 +18,31 @@ Future<void> closePeriod({required String id, required String userId}) =>
 Future<List<PeriodDto>> listPeriods() =>
     RustLib.instance.api.crateApiCalendarListPeriods();
 
-Future<String> closeFinancialYear({
-  required String periodId,
-  required String closingDate,
-  required String retainedEarningsAccountId,
-}) =>
+Future<String> closeFinancialYear(
+        {required String periodId,
+        required String closingDate,
+        required String retainedEarningsAccountId}) =>
     RustLib.instance.api.crateApiCalendarCloseFinancialYear(
-      periodId: periodId,
-      closingDate: closingDate,
-      retainedEarningsAccountId: retainedEarningsAccountId,
-    );
+        periodId: periodId,
+        closingDate: closingDate,
+        retainedEarningsAccountId: retainedEarningsAccountId);
 
 class PeriodDto {
-  const PeriodDto({
-    required this.name,
-    required this.startDate,
-    required this.endDate,
-    required this.status,
-    required this.isYearEnd,
-    this.id,
-  });
   final String? id;
   final String name;
   final String startDate;
   final String endDate;
   final String status;
   final bool isYearEnd;
+
+  const PeriodDto({
+    this.id,
+    required this.name,
+    required this.startDate,
+    required this.endDate,
+    required this.status,
+    required this.isYearEnd,
+  });
 
   @override
   int get hashCode =>

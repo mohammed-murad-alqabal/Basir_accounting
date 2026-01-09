@@ -3,8 +3,8 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
-import 'package:basir_app/src/rust/api.dart';
-import 'package:basir_app/src/rust/frb_generated.dart';
+import '../api.dart';
+import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 // These functions are ignored because they are not marked as `pub`: `map_dto_to_entity`, `map_entity_to_dto`
@@ -14,52 +14,40 @@ Future<void> validateJournalEntry({required EntryDto dto}) =>
     RustLib.instance.api.crateApiLedgerValidateJournalEntry(dto: dto);
 
 /// List journal entries with pagination
-Future<List<EntryDto>> listJournalEntries({
-  required PlatformInt64 limit,
-  required PlatformInt64 offset,
-  String? fromDate,
-  String? toDate,
-  String? accountId,
-}) =>
+Future<List<EntryDto>> listJournalEntries(
+        {required PlatformInt64 limit,
+        required PlatformInt64 offset,
+        String? fromDate,
+        String? toDate,
+        String? accountId}) =>
     RustLib.instance.api.crateApiLedgerListJournalEntries(
-      limit: limit,
-      offset: offset,
-      fromDate: fromDate,
-      toDate: toDate,
-      accountId: accountId,
-    );
+        limit: limit,
+        offset: offset,
+        fromDate: fromDate,
+        toDate: toDate,
+        accountId: accountId);
 
 /// Post a journal entry to the database
-Future<String> postJournalEntry({
-  required EntryDto dto,
-  required AuditMetadataDto metadata,
-}) =>
+Future<String> postJournalEntry(
+        {required EntryDto dto, required AuditMetadataDto metadata}) =>
     RustLib.instance.api
         .crateApiLedgerPostJournalEntry(dto: dto, metadata: metadata);
 
 /// Reverse a journal entry
-Future<String> reverseJournalEntry({
-  required String entryId,
-  required String reason,
-  required AuditMetadataDto metadata,
-}) =>
+Future<String> reverseJournalEntry(
+        {required String entryId,
+        required String reason,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiLedgerReverseJournalEntry(
-      entryId: entryId,
-      reason: reason,
-      metadata: metadata,
-    );
+        entryId: entryId, reason: reason, metadata: metadata);
 
 /// Log the cognitive agent consensus for a journal entry
-Future<void> logAgentConsensus({
-  required String entryId,
-  required String consensusJson,
-  required AuditMetadataDto metadata,
-}) =>
+Future<void> logAgentConsensus(
+        {required String entryId,
+        required String consensusJson,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiLedgerLogAgentConsensus(
-      entryId: entryId,
-      consensusJson: consensusJson,
-      metadata: metadata,
-    );
+        entryId: entryId, consensusJson: consensusJson, metadata: metadata);
 
 /// Retrieve the cognitive agent consensus for a journal entry
 Future<String?> getAgentConsensus({required String entryId}) =>
@@ -70,16 +58,6 @@ Future<List<AuditRecordDto>> listAuditLogs({required String entityId}) =>
     RustLib.instance.api.crateApiLedgerListAuditLogs(entityId: entityId);
 
 class EntryDto {
-  const EntryDto({
-    required this.entryNumber,
-    required this.description,
-    required this.date,
-    required this.standardRef,
-    required this.lines,
-    this.entryId,
-    this.linkedEntryId,
-    this.adjustmentReason,
-  });
   final String? entryId;
   final String entryNumber;
   final String description;
@@ -88,6 +66,17 @@ class EntryDto {
   final List<LineDto> lines;
   final String? linkedEntryId;
   final String? adjustmentReason;
+
+  const EntryDto({
+    this.entryId,
+    required this.entryNumber,
+    required this.description,
+    required this.date,
+    required this.standardRef,
+    required this.lines,
+    this.linkedEntryId,
+    this.adjustmentReason,
+  });
 
   @override
   int get hashCode =>
@@ -116,6 +105,14 @@ class EntryDto {
 }
 
 class LineDto {
+  final String accountId;
+  final String amount;
+  final bool isDebit;
+  final String description;
+  final String? originalCurrency;
+  final String? exchangeRate;
+  final String? originalAmount;
+
   const LineDto({
     required this.accountId,
     required this.amount,
@@ -125,13 +122,6 @@ class LineDto {
     this.exchangeRate,
     this.originalAmount,
   });
-  final String accountId;
-  final String amount;
-  final bool isDebit;
-  final String description;
-  final String? originalCurrency;
-  final String? exchangeRate;
-  final String? originalAmount;
 
   @override
   int get hashCode =>

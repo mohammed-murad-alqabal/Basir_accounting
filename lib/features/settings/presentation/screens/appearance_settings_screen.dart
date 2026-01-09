@@ -230,11 +230,12 @@ class AppearanceSettingsScreen extends ConsumerWidget {
           const SizedBox(height: Spacing.xxl),
 
           // 7. Reset All Section
+          // 7. Reset All Section
           Center(
-            child: AppButton(
+            child: AppEnhancedButton(
               label: context.l10n.btnRestoreDefault,
               onPressed: () => _showResetConfirmation(context, ref),
-              type: AppButtonType.danger,
+              type: AppEnhancedButtonType.danger,
               icon: appIcons.restore,
             ),
           ),

@@ -86,13 +86,13 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: Spacing.xl),
-                      AppButton(
+                      AppEnhancedButton(
                         label: context.l10n.retryLabel,
                         onPressed: () {
                           ref.invalidate(invoicesProvider);
                         },
                         icon: appIcons.refresh,
-                        type: AppButtonType.secondary,
+                        type: AppEnhancedButtonType.secondary,
                       ),
                     ],
                   ),

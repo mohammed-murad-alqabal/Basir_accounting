@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE fixed_assets\n            SET accumulated_depreciation = accumulated_depreciation + $1\n            WHERE id = $2\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Numeric",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "8103195c086d92b4c06c0c1d01a0f3e3c006374a17487e1eb18a4f6da6784221"
+}

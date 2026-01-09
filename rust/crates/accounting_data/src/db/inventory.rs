@@ -21,6 +21,24 @@ struct StockMovementRow {
     previous_hash: String,
 }
 
+#[derive(FromRow)]
+struct InventoryItemRow {
+    id: Uuid,
+    code: String,
+    name_ar: String,
+    name_en: String,
+    description: Option<String>,
+    unit: String,
+    valuation_method: String,
+    purchase_price: Option<Decimal>,
+    sale_price: Option<Decimal>,
+    asset_account_id: Uuid,
+    cogs_account_id: Uuid,
+    revenue_account_id: Uuid,
+    created_at: chrono::DateTime<chrono::Utc>,
+    updated_at: chrono::DateTime<chrono::Utc>,
+}
+
 impl PgInventoryRepository {
     pub fn new(pool: PgPool) -> Self {
         Self { pool }
@@ -29,14 +47,21 @@ impl PgInventoryRepository {
     pub async fn save_item(&self, item: &InventoryItem) -> anyhow::Result<()> {
         sqlx::query(
             r#"
-            INSERT INTO inventory_items (id, code, name_ar, name_en, unit, valuation_method, asset_account_id, cogs_account_id, revenue_account_id)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            INSERT INTO inventory_items (
+                id, code, name_ar, name_en, description, unit, valuation_method, 
+                purchase_price, sale_price, asset_account_id, cogs_account_id, revenue_account_id,
+                created_at, updated_at
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
             ON CONFLICT (id) DO UPDATE SET
                 code = EXCLUDED.code,
                 name_ar = EXCLUDED.name_ar,
                 name_en = EXCLUDED.name_en,
+                description = EXCLUDED.description,
                 unit = EXCLUDED.unit,
                 valuation_method = EXCLUDED.valuation_method,
+                purchase_price = EXCLUDED.purchase_price,
+                sale_price = EXCLUDED.sale_price,
                 asset_account_id = EXCLUDED.asset_account_id,
                 cogs_account_id = EXCLUDED.cogs_account_id,
                 revenue_account_id = EXCLUDED.revenue_account_id,
@@ -47,20 +72,29 @@ impl PgInventoryRepository {
         .bind(&item.code)
         .bind(&item.name_ar)
         .bind(&item.name_en)
+        .bind(item.description.as_ref())
         .bind(&item.unit)
         .bind(format!("{:?}", item.valuation_method))
+        .bind(item.purchase_price)
+        .bind(item.sale_price)
         .bind(item.asset_account_id)
         .bind(item.cogs_account_id)
         .bind(item.revenue_account_id)
+        .bind(item.created_at)
+        .bind(item.updated_at)
         .execute(&self.pool)
         .await?;
         Ok(())
     }
 
     pub async fn get_item(&self, id: Uuid) -> anyhow::Result<Option<InventoryItem>> {
-        let row = sqlx::query!(
+        let row = sqlx::query_as!(
+            InventoryItemRow,
             r#"
-            SELECT id, code, name_ar, name_en, unit, valuation_method, asset_account_id, cogs_account_id, revenue_account_id
+            SELECT 
+                id, code, name_ar, name_en, description, unit, valuation_method,
+                purchase_price, sale_price, asset_account_id, cogs_account_id, revenue_account_id,
+                created_at, updated_at
             FROM inventory_items
             WHERE id = $1
             "#,
@@ -80,11 +114,16 @@ impl PgInventoryRepository {
                 code: r.code,
                 name_ar: r.name_ar,
                 name_en: r.name_en,
+                description: r.description,
                 unit: r.unit,
                 valuation_method,
+                purchase_price: r.purchase_price,
+                sale_price: r.sale_price,
                 asset_account_id: r.asset_account_id,
                 cogs_account_id: r.cogs_account_id,
                 revenue_account_id: r.revenue_account_id,
+                created_at: r.created_at,
+                updated_at: r.updated_at,
             }))
         } else {
             Ok(None)
@@ -173,9 +212,13 @@ impl PgInventoryRepository {
     }
 
     pub async fn get_all_items(&self) -> anyhow::Result<Vec<InventoryItem>> {
-        let rows = sqlx::query!(
+        let rows = sqlx::query_as!(
+            InventoryItemRow,
             r#"
-            SELECT id, code, name_ar, name_en, unit, valuation_method, asset_account_id, cogs_account_id, revenue_account_id
+            SELECT 
+                id, code, name_ar, name_en, description, unit, valuation_method,
+                purchase_price, sale_price, asset_account_id, cogs_account_id, revenue_account_id,
+                created_at, updated_at
             FROM inventory_items
             ORDER BY code ASC
             "#
@@ -196,11 +239,16 @@ impl PgInventoryRepository {
                     code: r.code,
                     name_ar: r.name_ar,
                     name_en: r.name_en,
+                    description: r.description,
                     unit: r.unit,
                     valuation_method,
+                    purchase_price: r.purchase_price,
+                    sale_price: r.sale_price,
                     asset_account_id: r.asset_account_id,
                     cogs_account_id: r.cogs_account_id,
                     revenue_account_id: r.revenue_account_id,
+                    created_at: r.created_at,
+                    updated_at: r.updated_at,
                 }
             })
             .collect();

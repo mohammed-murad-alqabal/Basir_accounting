@@ -1,3 +1,4 @@
+import 'package:basir_app/features/invoices/application/zatca_service.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' as intl;
@@ -62,6 +63,16 @@ class InvoicePdfService {
                   font: boldFont,
                   fontSize: 24,
                   color: PdfColors.blue900,
+                ),
+              ),
+              pw.Text(
+                invoice.zatcaDeviceId != null
+                    ? 'فاتورة ضريبية مبسطة'
+                    : 'فاتورة ضريبية',
+                style: pw.TextStyle(
+                  font: boldFont,
+                  fontSize: 12,
+                  color: PdfColors.grey700,
                 ),
               ),
               pw.Text(
@@ -169,13 +180,19 @@ class InvoicePdfService {
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
           // QR Code
-          if (invoice.qrCode != null)
+          if (invoice.qrCode != null || true)
             pw.Container(
               width: 100,
               height: 100,
               child: pw.BarcodeWidget(
                 barcode: pw.Barcode.qrCode(),
-                data: invoice.qrCode!,
+                data: ZatcaService.encodeTlv(
+                  sellerName: 'مؤسسة بصير التجارية', // TODO: Get from settings
+                  taxNumber: '123456789012345', // TODO: Get from settings
+                  timestamp: invoice.issuedDate,
+                  totalAmount: invoice.totalAmount,
+                  vatAmount: invoice.taxAmount,
+                ),
                 width: 100,
                 height: 100,
               ),
