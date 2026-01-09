@@ -62,5 +62,6 @@
     "editor.tabCompletion": "onlySnippets",
     "editor.wordBasedSuggestions": "off"
   },
-  "kiroAgent.trustedCommands": ["*", "git rm *"]
+  "kiroAgent.trustedCommands": ["*", "git rm *"],
+  "cmake.sourceDirectory": "linux"
 }
