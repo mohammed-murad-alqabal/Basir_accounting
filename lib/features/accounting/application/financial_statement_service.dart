@@ -11,7 +11,8 @@ part 'financial_statement_service.g.dart';
 /// Financial Statement Service for generating core balance and performance reports.
 ///
 /// Implements logic for Trial Balance, IFRS 18 Income Statements, and
-/// Balance Sheets, incorporating hierarchical account groupings and net income calculations.
+/// Balance Sheets, incorporating hierarchical account groupings and net income
+/// calculations.
 @riverpod
 class FinancialStatementService extends _$FinancialStatementService {
   AccountingRepository get _repository =>

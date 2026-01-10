@@ -46,7 +46,9 @@ class ChartOfAccountsScreen extends ConsumerWidget {
             icon: Icon(appIcons.refresh),
             tooltip: context.l10n.tooltipRefresh,
             onPressed: () async {
-              await ref.read(accountingServiceProvider.notifier).seedDefaultAccounts();
+              await ref
+                  .read(accountingServiceProvider.notifier)
+                  .seedDefaultAccounts();
             },
           ),
         ],
@@ -331,7 +333,9 @@ class _AccountTreeItem extends StatelessWidget {
                       Text(
                         '${account.code} - ${account.nameAr}',
                         style: TextStyle(
-                          fontWeight: account.isParent ? FontWeight.bold : FontWeight.w600,
+                          fontWeight: account.isParent
+                              ? FontWeight.bold
+                              : FontWeight.w600,
                           fontSize: account.isParent
                               ? AppTypography.titleMedium
                               : AppTypography.bodyLarge,
@@ -350,7 +354,9 @@ class _AccountTreeItem extends StatelessWidget {
                   _formatCurrency(balance),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: balance < Decimal.zero ? AppColors.error : AppColors.success,
+                    color: balance < Decimal.zero
+                        ? AppColors.error
+                        : AppColors.success,
                   ),
                 ),
               ],

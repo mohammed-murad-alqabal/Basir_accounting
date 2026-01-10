@@ -9,6 +9,7 @@ part 'reporting_service.g.dart';
 
 /// Represents a standardized row in a Trial Balance report.
 class TrialBalanceRow {
+  /// Creates a single row entry for the Trial Balance report.
   const TrialBalanceRow({
     required this.accountId,
     required this.accountCode,
@@ -123,7 +124,8 @@ class ReportingService extends _$ReportingService {
 
   /// Generates a Balance Sheet summary (Statement of Financial Position).
   ///
-  /// Aggregates top-level account hierarchies for Assets, Liabilities, and Equity.
+  /// Aggregates top-level account hierarchies for Assets, Liabilities, and
+  /// Equity.
   Future<Map<String, Decimal>> getBalanceSheet() async {
     final accountingService = ref.read(accountingServiceProvider.notifier);
     final accounts = await accountingService.getAccounts();

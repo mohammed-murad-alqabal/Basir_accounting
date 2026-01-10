@@ -63,15 +63,17 @@ class CalendarNotifier extends AsyncNotifier<CalendarType> {
   /// Toggles between Hijri and Gregorian calendar systems.
   Future<void> toggleCalendar() async {
     final calendarType = state.valueOrNull ?? CalendarType.gregorian;
-    final newType =
-        calendarType == CalendarType.hijri ? CalendarType.gregorian : CalendarType.hijri;
+    final newType = calendarType == CalendarType.hijri
+        ? CalendarType.gregorian
+        : CalendarType.hijri;
     await setCalendarType(newType);
   }
 }
 
 /// Primary calendar state provider.
 ///
-/// Exposes the current [CalendarType] and [CalendarNotifier] for state management.
+/// Exposes the current [CalendarType] and [CalendarNotifier] for state
+/// management.
 final calendarProvider = AsyncNotifierProvider<CalendarNotifier, CalendarType>(
   CalendarNotifier.new,
 );

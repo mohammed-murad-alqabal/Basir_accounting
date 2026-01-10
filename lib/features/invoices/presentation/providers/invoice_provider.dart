@@ -139,7 +139,9 @@ final totalSalesProvider = Provider<AsyncValue<Decimal>>((ref) {
 
   return invoicesAsync.whenData(
     (invoices) => invoices.fold<Decimal>(
-        Decimal.zero, (sum, invoice) => sum + invoice.totalAmount,),
+      Decimal.zero,
+      (sum, invoice) => sum + invoice.totalAmount,
+    ),
   );
 });
 

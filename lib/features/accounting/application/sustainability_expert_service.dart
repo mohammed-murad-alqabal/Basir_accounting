@@ -9,7 +9,8 @@ part 'sustainability_expert_service.g.dart';
 /// or social disclosures comply with International Sustainability Standards
 /// Board (ISSB) S1 and S2 mandates.
 @Riverpod(keepAlive: true)
-class SustainabilityExpertService extends _$SustainabilityExpertService implements AccountingAgent {
+class SustainabilityExpertService extends _$SustainabilityExpertService
+    implements AccountingAgent {
   @override
   FutureOr<void> build() {}
 
@@ -32,10 +33,12 @@ class SustainabilityExpertService extends _$SustainabilityExpertService implemen
 
     if (context.isSustainabilityRequired) {
       rationale.add(
-        'ISSB Analysis: This transaction is flagged for mandatory environmental/social disclosure.',
+        'ISSB Analysis: This transaction is flagged for mandatory '
+        'environmental/social disclosure.',
       );
 
-      if (context.sustainabilityMetrics == null || context.sustainabilityMetrics!.isEmpty) {
+      if (context.sustainabilityMetrics == null ||
+          context.sustainabilityMetrics!.isEmpty) {
         isAllowed = false;
         rationale.add(
           'CRITICAL REJECTION: ISSB S2 standards require carbon footprint '
@@ -43,7 +46,8 @@ class SustainabilityExpertService extends _$SustainabilityExpertService implemen
         );
       } else {
         rationale.add(
-          'SUCCESS: Integrated ${context.sustainabilityMetrics!.length} compliant sustainability metrics.',
+          'SUCCESS: Integrated ${context.sustainabilityMetrics!.length} '
+          'compliant sustainability metrics.',
         );
       }
     } else {
