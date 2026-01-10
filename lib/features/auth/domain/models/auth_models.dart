@@ -1,8 +1,9 @@
 /// ***
 /// Cognitive Foundation: Auth Models
 ///
-/// This module defines high-fidelity data structures for authentication results,
-/// security posture assessments, and institutional identity management.
+/// This module defines high-fidelity data structures for authentication
+/// results, security posture assessments, and institutional identity
+/// management.
 ///
 /// Ref: BASIR-AUTH-SPEC-2025
 /// ***
@@ -12,9 +13,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// [PasswordStrengthResult]
 ///
-/// Encapsulates the quantitative and qualitative analysis of credential entropy.
-/// Used during setup and password change workflows to ensure institutional
-/// security standards.
+/// Encapsulates the quantitative and qualitative analysis of credential
+/// entropy. Used during setup and password change workflows to ensure
+/// institutional security standards.
 class PasswordStrengthResult {
   /// Initializes a strength assessment.
   const PasswordStrengthResult({
@@ -86,9 +87,16 @@ class SecurityAuditResult {
 ///
 /// Defines the institutional hierarchy of operators.
 enum UserRole {
+  /// Full administrative privileges.
   admin,
+
+  /// Financial data management role.
   accountant,
+
+  /// Inventory and warehouse management role.
   storeManager,
+
+  /// Read-only access for oversight.
   viewer,
 }
 
@@ -96,14 +104,28 @@ enum UserRole {
 ///
 /// Bitmask flags for granular access control.
 class Permission {
+  /// No permissions.
   static const int none = 0;
+
+  /// View financial statements and reports.
   static const int viewFinancials = 1 << 0;
+
+  /// Create and post journal entries.
   static const int postJournalEntry = 1 << 1;
+
+  /// Manage inventory items and stock.
   static const int manageInventory = 1 << 2;
+
+  /// User administration capabilities.
   static const int manageUsers = 1 << 3;
+
+  /// Approve pending transactions.
   static const int approveTransactions = 1 << 4;
+
+  /// Access to sensitive financial reports.
   static const int viewSensitiveReports = 1 << 5;
 
+  /// All permissions combined.
   static const int all = viewFinancials |
       postJournalEntry |
       manageInventory |
@@ -140,8 +162,7 @@ class BasirUser {
     );
 
     // Determine permissions from metadata or role defaults
-    final permissions = user.userMetadata?['permissions'] as int? ??
-        getDefaultPermissions(role);
+    final permissions = user.userMetadata?['permissions'] as int? ?? getDefaultPermissions(role);
 
     return BasirUser(
       id: user.id,
@@ -179,8 +200,7 @@ class BasirUser {
   final Map<String, dynamic> metadata;
 
   /// Checks if the user has a specific permission.
-  bool hasPermission(int permission) =>
-      (permissions & permission) == permission;
+  bool hasPermission(int permission) => (permissions & permission) == permission;
 
   /// Checks if the user accesses a specific warehouse scope.
   bool hasAccessToWarehouse(String targetWarehouseId) {

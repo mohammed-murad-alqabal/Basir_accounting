@@ -23,8 +23,8 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
   /// Processes a transaction context to verify tax compliance.
   ///
   /// ## Validations
-  /// 1. **Tax ID Verification**: Ensures provided Tax IDs meet ZATCA requirements
-  ///    for high-value transactions (>10,000 SAR).
+  /// 1. **Tax ID Verification**: Ensures provided Tax IDs meet ZATCA
+  ///    requirements for high-value transactions (>10,000 SAR).
   /// 2. **VAT Rate Accuracy**: Cross-references recorded tax amounts against
   ///    standard local rates (e.g., 15% for KSA).
   /// 3. **Missing Tax Detection**: Identifies sales/purchase documents without
@@ -43,7 +43,8 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
       if (context.proposedJournalEntry.totalDebit > Decimal.fromInt(10000)) {
         isAllowed = false;
         rationale.add(
-          'REJECT: Transactions exceeding 10,000 SAR require a valid Tax ID for ZATCA Phase 2 compliance.',
+          'REJECT: Transactions exceeding 10,000 SAR require a valid '
+          'Tax ID for ZATCA Phase 2 compliance.',
         );
       }
     } else {
@@ -68,7 +69,8 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
 
           if ((calculatedRate - expectedRate).abs() > Decimal.parse('0.001')) {
             rationale.add(
-              'ALERT: Calculated VAT rate ($calculatedRate) deviates from the regional standard (15%).',
+              'ALERT: Calculated VAT rate ($calculatedRate) deviates from '
+              'the regional standard (15%).',
             );
           } else {
             rationale.add(
@@ -77,10 +79,8 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
           }
         }
       }
-    } else if (context.transactionType == 'sales' ||
-        context.transactionType == 'purchase') {
-      rationale
-          .add('WARNING: Commercial transaction detected without VAT lines.');
+    } else if (context.transactionType == 'sales' || context.transactionType == 'purchase') {
+      rationale.add('WARNING: Commercial transaction detected without VAT lines.');
     }
 
     return AgentResult(
