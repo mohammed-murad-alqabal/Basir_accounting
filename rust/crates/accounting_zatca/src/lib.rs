@@ -1,5 +1,6 @@
 pub mod crypto;
 pub mod qr;
+pub mod xades;
 pub mod xml_builder;
 
 #[cfg(test)]
@@ -18,6 +19,7 @@ mod tests {
             hash: "hash".to_string(),
             signature: "sig".to_string(),
             public_key: "pubkey".to_string(),
+            certificate_signature: "certsig".to_string(),
         };
         let b64 = payload.to_base64();
         assert!(b64.is_ok());

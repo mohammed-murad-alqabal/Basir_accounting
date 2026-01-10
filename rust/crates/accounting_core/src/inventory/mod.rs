@@ -1,8 +1,12 @@
-pub mod models;
-pub mod valuation;
-pub mod service;
 pub mod chain;
+pub mod models;
+pub mod service;
+pub mod transfer_service;
+pub mod valuation;
+pub mod warehouse;
 
 pub use models::*;
-pub use valuation::*;
 pub use service::*;
+pub use transfer_service::*;
+pub use valuation::*;
+pub use warehouse::*;
