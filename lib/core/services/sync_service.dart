@@ -26,7 +26,29 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'sync_service.g.dart';
 
-/// خدمة المزامنة (Sync Service)
+/// Bidirectional data synchronization service.
+///
+/// Manages offline-first data synchronization between local Isar database
+/// and remote Supabase backend. Implements Last-Write-Wins (LWW) conflict
+/// resolution strategy.
+///
+/// ## Features
+/// - Offline-first architecture with local persistence
+/// - Bidirectional sync (push local changes, pull remote updates)
+/// - Last-Write-Wins conflict resolution
+/// - Supports 9 entity types across all business domains
+///
+/// ## Sync Process
+/// 1. **Push Phase**: Upload pending local changes to server
+/// 2. **Pull Phase**: Download server changes since last sync
+/// 3. **Conflict Resolution**: LWW based on `updatedAt` timestamps
+///
+/// ## Usage
+/// ```dart
+/// final syncService = ref.read(syncServiceProvider.notifier);
+/// syncService.init(isar, supabaseClient);
+/// await syncService.syncAll();
+/// ```
 @riverpod
 class SyncService extends _$SyncService {
   late Isar _isar;
@@ -34,17 +56,34 @@ class SyncService extends _$SyncService {
 
   @override
   FutureOr<void> build() {
-    // Initialization will be handled by a separate method or dependency
-    // injection
+    // Initialization handled by init() method for dependency injection
   }
 
-  /// التهيئة الأولية للخدمة
+  /// Initializes the sync service with database connections.
+  ///
+  /// Must be called before [syncAll] to provide database instances.
+  ///
+  /// - [isar]: Local Isar database instance.
+  /// - [supabase]: Supabase client for remote operations.
   void init(Isar isar, SupabaseClient supabase) {
     _isar = isar;
     _supabase = supabase;
   }
 
-  /// بدء عملية المزامنة الشاملة
+  /// Executes full synchronization across all entity types.
+  ///
+  /// Syncs the following entities in order:
+  /// 1. Customers
+  /// 2. Vendors
+  /// 3. Accounts
+  /// 4. Financial Years
+  /// 5. Invoices
+  /// 6. Journal Entries
+  /// 7. Financial Vouchers
+  /// 8. Profiles
+  /// 9. Business Settings
+  ///
+  /// Requires authenticated user. Returns early if not authenticated.
   Future<void> syncAll() async {
     final userId = _supabase.auth.currentUser?.id;
     if (userId == null) return;
@@ -230,7 +269,12 @@ class SyncService extends _$SyncService {
     );
   }
 
-  /// مزامنة جدول محدد
+  /// Synchronizes a single table with bidirectional sync.
+  ///
+  /// Implements the core sync algorithm:
+  /// 1. Push: Upload records with [SyncStatus.pendingPush]
+  /// 2. Pull: Download records updated after last sync timestamp
+  /// 3. Resolve: Apply LWW conflict resolution
   Future<void> _syncTable<M, E>({
     required String tableName,
     required IsarCollection<M> collection,
@@ -244,7 +288,7 @@ class SyncService extends _$SyncService {
     required Future<M?> Function(IsarCollection<M>, String) getById,
     required void Function(M, SyncStatus, DateTime) setSyncMetadata,
   }) async {
-    // 1. دفع التعديلات المحلية (Push)
+    // Phase 1: Push local changes to server
     final pendingRecords = await getPendingPush(collection);
     for (final record in pendingRecords) {
       try {
@@ -266,12 +310,11 @@ class SyncService extends _$SyncService {
           await collection.put(record);
         });
       } on Exception catch (e) {
-        // In production, use a proper logger
         debugPrint('Error pushing $tableName: $e');
       }
     }
 
-    // 2. سحب التعديلات من السيرفر (Pull)
+    // Phase 2: Pull server changes
     final lastSync = await getLastSynced(collection);
     final lastSyncDate = getServerUpdatedAt(lastSync as M)?.toIso8601String() ??
         DateTime(1970).toIso8601String();
@@ -302,18 +345,18 @@ class SyncService extends _$SyncService {
           );
 
           if (localSyncStatus == SyncStatus.pendingPush) {
-            // Local has unsynced changes and server has updates (conflict)
+            // Conflict: Local has unsynced changes, server has updates
             if (remoteUpdatedAt.isAfter(localUpdatedAt)) {
               // Server is newer -> Server Wins
               await _isar.writeTxn(() async {
                 await collection.put(remoteModel);
               });
             } else {
-              // Local is newer -> Local Wins (Will be pushed in next cycle)
+              // Local is newer -> Local Wins (pushed in next cycle)
               continue;
             }
           } else {
-            // No local changes -> Server Wins
+            // No local conflict -> Accept server version
             await _isar.writeTxn(() async {
               await collection.put(remoteModel);
             });
