@@ -61,8 +61,9 @@ void main() {
       );
 
       // 2. Accounting Repo mocks
-      when(() => mockAccountingRepo.addJournalEntry(any()))
-          .thenAnswer((_) async {});
+      when(
+        () => mockAccountingRepo.addJournalEntry(any()),
+      ).thenAnswer((_) async {});
 
       // 3. Voucher Repo mocks
       when(() => mockVoucherRepo.addVoucher(any())).thenAnswer((_) async {});
@@ -83,33 +84,36 @@ void main() {
       subType: 'cash',
     );
 
-    test('issueReceipt should succeed when period is open and account is valid',
-        () async {
-      // Setup: Return valid treasury account
-      when(() => mockAccountingRepo.getAccountById('acc-1'))
-          .thenAnswer((_) async => testAccount);
+    test(
+      'issueReceipt should succeed when period is open and account is valid',
+      () async {
+        // Setup: Return valid treasury account
+        when(
+          () => mockAccountingRepo.getAccountById('acc-1'),
+        ).thenAnswer((_) async => testAccount);
 
-      final voucher = FinancialVoucher(
-        id: 'v-1',
-        type: VoucherType.receipt,
-        referenceNumber: 'REC-001',
-        date: DateTime.now(),
-        accountId: 'cust-1',
-        treasuryAccountId: 'acc-1',
-        amount: Decimal.parse('500'),
-        originalAmount: Decimal.parse('500'),
-        personName: 'Customer A',
-        description: 'Payment for INV-001',
-        paymentMethod: PaymentMethod.bank,
-        createdAt: DateTime.now(),
-      );
+        final voucher = FinancialVoucher(
+          id: 'v-1',
+          type: VoucherType.receipt,
+          referenceNumber: 'REC-001',
+          date: DateTime.now(),
+          accountId: 'cust-1',
+          treasuryAccountId: 'acc-1',
+          amount: Decimal.parse('500'),
+          originalAmount: Decimal.parse('500'),
+          personName: 'Customer A',
+          description: 'Payment for INV-001',
+          paymentMethod: PaymentMethod.bank,
+          createdAt: DateTime.now(),
+        );
 
-      final service = container.read(treasuryServiceProvider.notifier);
-      await service.issueReceipt(voucher);
+        final service = container.read(treasuryServiceProvider.notifier);
+        await service.issueReceipt(voucher);
 
-      verify(() => mockAccountingRepo.addJournalEntry(any())).called(1);
-      verify(() => mockVoucherRepo.addVoucher(any())).called(1);
-    });
+        verify(() => mockAccountingRepo.addJournalEntry(any())).called(1);
+        verify(() => mockVoucherRepo.addVoucher(any())).called(1);
+      },
+    );
 
     test('issueReceipt should fail if period is closed', () async {
       // Setup: Return CLOSED financial year
@@ -144,33 +148,36 @@ void main() {
       );
     });
 
-    test('issuePayment should succeed when period is open and account is valid',
-        () async {
-      when(() => mockAccountingRepo.getAccountById('acc-1'))
-          .thenAnswer((_) async => testAccount);
+    test(
+      'issuePayment should succeed when period is open and account is valid',
+      () async {
+        when(
+          () => mockAccountingRepo.getAccountById('acc-1'),
+        ).thenAnswer((_) async => testAccount);
 
-      final voucher = FinancialVoucher(
-        id: 'v-3',
-        type: VoucherType.payment,
-        referenceNumber: 'PAY-001',
-        date: DateTime.now(),
-        accountId: 'vend-1',
-        treasuryAccountId: 'acc-1',
-        amount: Decimal.parse('200'),
-        originalAmount: Decimal.parse('200'),
-        personName: 'Vendor B',
-        description: 'Payment for Bill-123',
-        paymentMethod: PaymentMethod.check,
-        createdAt: DateTime.now(),
-      );
+        final voucher = FinancialVoucher(
+          id: 'v-3',
+          type: VoucherType.payment,
+          referenceNumber: 'PAY-001',
+          date: DateTime.now(),
+          accountId: 'vend-1',
+          treasuryAccountId: 'acc-1',
+          amount: Decimal.parse('200'),
+          originalAmount: Decimal.parse('200'),
+          personName: 'Vendor B',
+          description: 'Payment for Bill-123',
+          paymentMethod: PaymentMethod.check,
+          createdAt: DateTime.now(),
+        );
 
-      await container
-          .read(treasuryServiceProvider.notifier)
-          .issuePayment(voucher);
+        await container
+            .read(treasuryServiceProvider.notifier)
+            .issuePayment(voucher);
 
-      verify(() => mockAccountingRepo.addJournalEntry(any())).called(1);
-      verify(() => mockVoucherRepo.addVoucher(any())).called(1);
-    });
+        verify(() => mockAccountingRepo.addJournalEntry(any())).called(1);
+        verify(() => mockVoucherRepo.addVoucher(any())).called(1);
+      },
+    );
 
     test('should fail if treasury account is not cash or bank', () async {
       final invalidAccount = Account(
@@ -183,8 +190,9 @@ void main() {
         balance: Decimal.zero,
       );
 
-      when(() => mockAccountingRepo.getAccountById('acc-bad'))
-          .thenAnswer((_) async => invalidAccount);
+      when(
+        () => mockAccountingRepo.getAccountById('acc-bad'),
+      ).thenAnswer((_) async => invalidAccount);
 
       final voucher = FinancialVoucher(
         id: 'v-4',

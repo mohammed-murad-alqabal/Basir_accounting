@@ -106,9 +106,10 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
       vsync: this,
       duration: const Duration(milliseconds: 150),
     );
-    _scale = Tween<double>(begin: 1, end: 0.96).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _scale = Tween<double>(
+      begin: 1,
+      end: 0.96,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -161,19 +162,14 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
           scale: _scale,
           child: Container(
             width: widget.width ?? double.infinity,
-            constraints: BoxConstraints(
-              minHeight: widget.height,
-            ),
+            constraints: BoxConstraints(minHeight: widget.height),
             padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
             decoration: BoxDecoration(
               color: gradient == null ? bgColor : null,
               gradient: gradient,
               borderRadius: widget.borderRadius ?? Radii.borderRadiusMd,
               border: widget.type == AppEnhancedButtonType.outlined
-                  ? Border.all(
-                      color: fgColor,
-                      width: 1.5,
-                    )
+                  ? Border.all(color: fgColor, width: 1.5)
                   : null,
               boxShadow: isEnabled && elevation > 0
                   ? [

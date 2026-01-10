@@ -51,8 +51,9 @@ void main() {
 
     setUp(() {
       mockAuthService = MockAuthService();
-      when(() => mockAuthService.login(any(), any()))
-          .thenAnswer((_) async => true);
+      when(
+        () => mockAuthService.login(any(), any()),
+      ).thenAnswer((_) async => true);
       when(() => mockAuthService.loginAsGuest()).thenAnswer((_) async {});
       when(
         () => mockAuthService.setKeepLoggedIn(
@@ -64,9 +65,7 @@ void main() {
     Future<void> setUpWidgets(WidgetTester tester) async {
       await tester.pumpWidget(
         createTestWidget(
-          overrides: [
-            authServiceProvider.overrideWithValue(mockAuthService),
-          ],
+          overrides: [authServiceProvider.overrideWithValue(mockAuthService)],
         ),
       );
       await tester.pump();
@@ -83,8 +82,9 @@ void main() {
     });
 
     group('Interaction Tests', () {
-      testWidgets('should navigate to dashboard after successful login',
-          (tester) async {
+      testWidgets('should navigate to dashboard after successful login', (
+        tester,
+      ) async {
         await setUpWidgets(tester);
 
         await tester.enterText(find.byType(AppTextField).first, 'testuser');
@@ -130,11 +130,13 @@ void main() {
         // Use a more careful pumping sequence to avoid "Future already
         // completed"
         await tester.pump(); // Start logic
-        await tester
-            .pump(const Duration(milliseconds: 50)); // AuthService completes
+        await tester.pump(
+          const Duration(milliseconds: 50),
+        ); // AuthService completes
         await tester.pump(); // SnackBar shows
-        await tester
-            .pump(const Duration(milliseconds: 50)); // Navigation starts
+        await tester.pump(
+          const Duration(milliseconds: 50),
+        ); // Navigation starts
 
         var navigated = false;
         for (var i = 0; i < 60; i++) {
@@ -150,8 +152,9 @@ void main() {
 
     group('Error Handling', () {
       testWidgets('should show error on login failure', (tester) async {
-        when(() => mockAuthService.login(any(), any()))
-            .thenAnswer((_) async => false);
+        when(
+          () => mockAuthService.login(any(), any()),
+        ).thenAnswer((_) async => false);
         await setUpWidgets(tester);
 
         await tester.enterText(find.byType(AppTextField).first, 'user');

@@ -83,8 +83,9 @@ class FinancialStatementService extends _$FinancialStatementService {
       );
 
       var sectionTotal = Decimal.zero;
-      final sectionAccounts =
-          accounts.where((a) => a.ifrs18Category == entry.key);
+      final sectionAccounts = accounts.where(
+        (a) => a.ifrs18Category == entry.key,
+      );
 
       for (final account in sectionAccounts) {
         if (account.isParent) continue;
@@ -148,8 +149,9 @@ class FinancialStatementService extends _$FinancialStatementService {
       ),
     );
     var totalAssets = Decimal.zero;
-    for (final account
-        in accounts.where((a) => a.type == AccountType.asset && !a.isParent)) {
+    for (final account in accounts.where(
+      (a) => a.type == AccountType.asset && !a.isParent,
+    )) {
       final balance = await _repository.getAccountBalance(account.id);
       if (balance != Decimal.zero) {
         lines.add(
@@ -181,8 +183,9 @@ class FinancialStatementService extends _$FinancialStatementService {
     var totalLiabilitiesEquity = Decimal.zero;
 
     for (final type in [AccountType.liability, AccountType.equity]) {
-      for (final account
-          in accounts.where((a) => a.type == type && !a.isParent)) {
+      for (final account in accounts.where(
+        (a) => a.type == type && !a.isParent,
+      )) {
         final balance = await _repository.getAccountBalance(account.id);
         if (balance != Decimal.zero) {
           lines.add(

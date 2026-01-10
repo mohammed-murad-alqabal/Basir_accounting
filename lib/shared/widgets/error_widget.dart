@@ -10,10 +10,7 @@ import 'package:flutter/material.dart';
 /// تعرض شاشة خطأ احترافية عند حدوث خطأ غير متوقع في Flutter
 class GlobalErrorWidget extends StatelessWidget {
   /// إنشاء واجهة أخطاء
-  const GlobalErrorWidget({
-    required this.errorDetails,
-    super.key,
-  });
+  const GlobalErrorWidget({required this.errorDetails, super.key});
 
   /// تفاصيل الخطأ
   final FlutterErrorDetails errorDetails;
@@ -32,10 +29,7 @@ class GlobalErrorWidget extends StatelessWidget {
               gradient: RadialGradient(
                 center: Alignment(0, -0.5),
                 radius: 1.5,
-                colors: [
-                  AppColors.surface,
-                  AppColors.background,
-                ],
+                colors: [AppColors.surface, AppColors.background],
               ),
             ),
             child: SafeArea(
@@ -81,10 +75,9 @@ class GlobalErrorWidget extends StatelessWidget {
                         label: context.l10n.btnRetry,
                         onPressed: () {
                           unawaited(
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/',
-                              (route) => false,
-                            ),
+                            Navigator.of(
+                              context,
+                            ).pushNamedAndRemoveUntil('/', (route) => false),
                           );
                         },
                         width: double.infinity,

@@ -117,13 +117,8 @@ class AuthService {
   /// Returns: salt عشوائي بطول 32 حرف
   String _generateUserSalt() {
     final random = Random.secure();
-    final bytes = List<int>.generate(
-      16,
-      (i) => random.nextInt(256),
-    );
-    return base64Encode(
-      bytes,
-    );
+    final bytes = List<int>.generate(16, (i) => random.nextInt(256));
+    return base64Encode(bytes);
   }
 
   /// التحقق من وجود حساب مسجل
@@ -145,14 +140,10 @@ class AuthService {
   /// ```
   Future<bool> hasAccount() async {
     try {
-      final username = await secureStorage.read(
-        key: StorageKeys.username,
-      );
+      final username = await secureStorage.read(key: StorageKeys.username);
       return username != null;
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في التحقق من الحساب: $e',
-      );
+      throw Exception('خطأ في التحقق من الحساب: $e');
     }
   }
 
@@ -181,30 +172,20 @@ class AuthService {
     try {
       // التحقق من صحة المدخلات
       if (username.isEmpty || username.length < 3) {
-        throw Exception(
-          'اسم المستخدم يجب أن يكون 3 أحرف على الأقل',
-        );
+        throw Exception('اسم المستخدم يجب أن يكون 3 أحرف على الأقل');
       }
       if (password.isEmpty || password.length < 6) {
-        throw Exception(
-          'كلمة المرور يجب أن تكون 6 أحرف على الأقل',
-        );
+        throw Exception('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
       }
 
       // إنشاء salt فريد للمستخدم
       final userSalt = _generateUserSalt();
 
       // تشفير كلمة المرور باستخدام التشفير المحسن
-      final passwordHash = _hashPassword(
-        password,
-        userSalt,
-      );
+      final passwordHash = _hashPassword(password, userSalt);
 
       // حفظ البيانات بشكل آمن
-      await secureStorage.write(
-        key: StorageKeys.username,
-        value: username,
-      );
+      await secureStorage.write(key: StorageKeys.username, value: username);
       await secureStorage.write(
         key: StorageKeys.passwordHash,
         value: passwordHash,
@@ -213,17 +194,12 @@ class AuthService {
         key: '${StorageKeys.username}_salt',
         value: userSalt,
       );
-      await secureStorage.write(
-        key: StorageKeys.isLoggedIn,
-        value: 'true',
-      );
+      await secureStorage.write(key: StorageKeys.isLoggedIn, value: 'true');
 
       // بث حدث تسجيل الدخول
       _authStateController.add(username);
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في إنشاء الحساب: $e',
-      );
+      throw Exception('خطأ في إنشاء الحساب: $e');
     }
   }
 
@@ -270,41 +246,27 @@ class AuthService {
       );
 
       if (storedUsername == null || storedPasswordHash == null) {
-        throw Exception(
-          'لا يوجد حساب مسجل',
-        );
+        throw Exception('لا يوجد حساب مسجل');
       }
 
       if (storedUsername != username) {
-        throw Exception(
-          'اسم المستخدم غير صحيح',
-        );
+        throw Exception('اسم المستخدم غير صحيح');
       }
 
       // التحقق من كلمة المرور باستخدام التشفير المحسن
-      final passwordHash = _hashPassword(
-        password,
-        userSalt,
-      );
+      final passwordHash = _hashPassword(password, userSalt);
       if (storedPasswordHash != passwordHash) {
-        throw Exception(
-          'كلمة المرور غير صحيحة',
-        );
+        throw Exception('كلمة المرور غير صحيحة');
       }
 
       // تحديث حالة تسجيل الدخول
-      await secureStorage.write(
-        key: StorageKeys.isLoggedIn,
-        value: 'true',
-      );
+      await secureStorage.write(key: StorageKeys.isLoggedIn, value: 'true');
 
       // بث حدث تسجيل الدخول
       _authStateController.add(username);
       return true;
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في تسجيل الدخول: $e',
-      );
+      throw Exception('خطأ في تسجيل الدخول: $e');
     }
   }
 
@@ -323,17 +285,12 @@ class AuthService {
   /// ```
   Future<void> logout() async {
     try {
-      await secureStorage.write(
-        key: StorageKeys.isLoggedIn,
-        value: 'false',
-      );
+      await secureStorage.write(key: StorageKeys.isLoggedIn, value: 'false');
 
       // بث حدث تسجيل الخروج
       _authStateController.add(null);
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في تسجيل الخروج: $e',
-      );
+      throw Exception('خطأ في تسجيل الخروج: $e');
     }
   }
 
@@ -356,9 +313,7 @@ class AuthService {
   /// ```
   Future<bool> isLoggedIn() async {
     try {
-      final isLoggedIn = await secureStorage.read(
-        key: StorageKeys.isLoggedIn,
-      );
+      final isLoggedIn = await secureStorage.read(key: StorageKeys.isLoggedIn);
       return isLoggedIn == 'true';
     } on Exception {
       return false;
@@ -383,9 +338,7 @@ class AuthService {
         value: keepLoggedIn.toString(),
       );
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حفظ إعداد البقاء مسجلاً: $e',
-      );
+      throw Exception('خطأ في حفظ إعداد البقاء مسجلاً: $e');
     }
   }
 
@@ -418,21 +371,13 @@ class AuthService {
   /// ```
   Future<void> loginAsGuest() async {
     try {
-      await secureStorage.write(
-        key: StorageKeys.isGuest,
-        value: 'true',
-      );
-      await secureStorage.write(
-        key: StorageKeys.isLoggedIn,
-        value: 'true',
-      );
+      await secureStorage.write(key: StorageKeys.isGuest, value: 'true');
+      await secureStorage.write(key: StorageKeys.isLoggedIn, value: 'true');
 
       // بث حدث تسجيل الدخول كضيف (بدون اسم مستخدم)
       _authStateController.add(null);
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في تسجيل الدخول كضيف: $e',
-      );
+      throw Exception('خطأ في تسجيل الدخول كضيف: $e');
     }
   }
 
@@ -446,9 +391,7 @@ class AuthService {
   /// ```
   Future<bool> isGuest() async {
     try {
-      final isGuest = await secureStorage.read(
-        key: StorageKeys.isGuest,
-      );
+      final isGuest = await secureStorage.read(key: StorageKeys.isGuest);
       return isGuest == 'true';
     } on Exception {
       return false;
@@ -470,22 +413,15 @@ class AuthService {
   Future<void> convertGuestToUser(String username, String password) async {
     try {
       // إنشاء الحساب
-      await createAccount(
-        username,
-        password,
-      );
+      await createAccount(username, password);
 
       // إزالة وضع الضيف
-      await secureStorage.delete(
-        key: StorageKeys.isGuest,
-      );
+      await secureStorage.delete(key: StorageKeys.isGuest);
 
       // بث حدث تسجيل الدخول بالمستخدم الجديد
       _authStateController.add(username);
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في تحويل الضيف إلى مستخدم: $e',
-      );
+      throw Exception('خطأ في تحويل الضيف إلى مستخدم: $e');
     }
   }
 
@@ -504,9 +440,7 @@ class AuthService {
   /// ```
   Future<String?> getCurrentUsername() async {
     try {
-      return await secureStorage.read(
-        key: StorageKeys.username,
-      );
+      return await secureStorage.read(key: StorageKeys.username);
     } on Exception {
       return null;
     }
@@ -534,10 +468,7 @@ class AuthService {
       }
 
       // حفظ الاسم الجديد
-      await secureStorage.write(
-        key: StorageKeys.username,
-        value: newUsername,
-      );
+      await secureStorage.write(key: StorageKeys.username, value: newUsername);
 
       // إذا كان هناك Salt باسم المستخدم القديم، يفضل تحديثه ليتناسب مع الجديد
       // ملاحظة: في النسخة الحالية، نستخدم `${StorageKeys.username}_salt`
@@ -589,37 +520,25 @@ class AuthService {
       );
 
       if (storedPasswordHash == null) {
-        throw Exception(
-          'لا يوجد حساب مسجل',
-        );
+        throw Exception('لا يوجد حساب مسجل');
       }
 
       // التحقق من كلمة المرور القديمة باستخدام التشفير المحسن
-      final oldPasswordHash = _hashPassword(
-        oldPassword,
-        userSalt,
-      );
+      final oldPasswordHash = _hashPassword(oldPassword, userSalt);
       if (storedPasswordHash != oldPasswordHash) {
-        throw Exception(
-          'كلمة المرور القديمة غير صحيحة',
-        );
+        throw Exception('كلمة المرور القديمة غير صحيحة');
       }
 
       // التحقق من صحة كلمة المرور الجديدة
       if (newPassword.isEmpty || newPassword.length < 6) {
-        throw Exception(
-          'كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل',
-        );
+        throw Exception('كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل');
       }
 
       // إنشاء salt جديد لكلمة المرور الجديدة (أمان إضافي)
       final newUserSalt = _generateUserSalt();
 
       // تشفير وحفظ كلمة المرور الجديدة
-      final newPasswordHash = _hashPassword(
-        newPassword,
-        newUserSalt,
-      );
+      final newPasswordHash = _hashPassword(newPassword, newUserSalt);
       await secureStorage.write(
         key: StorageKeys.passwordHash,
         value: newPasswordHash,
@@ -629,9 +548,7 @@ class AuthService {
         value: newUserSalt,
       );
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في تغيير كلمة المرور: $e',
-      );
+      throw Exception('خطأ في تغيير كلمة المرور: $e');
     }
   }
 
@@ -653,45 +570,35 @@ class AuthService {
 
     // فحص الطول
     if (password.length < 8) {
-      issues.add(
-        'كلمة المرور يجب أن تكون 8 أحرف على الأقل',
-      );
+      issues.add('كلمة المرور يجب أن تكون 8 أحرف على الأقل');
     } else {
       score += 25;
     }
 
     // فحص الأحرف الكبيرة
     if (!password.contains(RegExp('[A-Z]'))) {
-      issues.add(
-        'يجب أن تحتوي على حرف كبير واحد على الأقل',
-      );
+      issues.add('يجب أن تحتوي على حرف كبير واحد على الأقل');
     } else {
       score += 25;
     }
 
     // فحص الأحرف الصغيرة
     if (!password.contains(RegExp('[a-z]'))) {
-      issues.add(
-        'يجب أن تحتوي على حرف صغير واحد على الأقل',
-      );
+      issues.add('يجب أن تحتوي على حرف صغير واحد على الأقل');
     } else {
       score += 25;
     }
 
     // فحص الأرقام
     if (!password.contains(RegExp('[0-9]'))) {
-      issues.add(
-        'يجب أن تحتوي على رقم واحد على الأقل',
-      );
+      issues.add('يجب أن تحتوي على رقم واحد على الأقل');
     } else {
       score += 15;
     }
 
     // فحص الرموز الخاصة
     if (!password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      issues.add(
-        r'يجب أن تحتوي على رمز خاص واحد على الأقل (!@#$%^&*)',
-      );
+      issues.add(r'يجب أن تحتوي على رمز خاص واحد على الأقل (!@#$%^&*)');
     } else {
       score += 10;
     }
@@ -714,9 +621,7 @@ class AuthService {
 
     try {
       // فحص وجود البيانات الأساسية
-      final username = await secureStorage.read(
-        key: StorageKeys.username,
-      );
+      final username = await secureStorage.read(key: StorageKeys.username);
       final passwordHash = await secureStorage.read(
         key: StorageKeys.passwordHash,
       );
@@ -725,24 +630,18 @@ class AuthService {
       );
 
       if (username != null && passwordHash == null) {
-        issues.add(
-          'اسم المستخدم موجود لكن كلمة المرور مفقودة',
-        );
+        issues.add('اسم المستخدم موجود لكن كلمة المرور مفقودة');
         securityScore -= 50;
       }
 
       if (passwordHash != null && userSalt == null) {
-        issues.add(
-          'كلمة المرور موجودة لكن Salt مفقود (تشفير قديم)',
-        );
+        issues.add('كلمة المرور موجودة لكن Salt مفقود (تشفير قديم)');
         securityScore -= 30;
       }
 
       // فحص قوة التشفير
       if (passwordHash != null && passwordHash.length != 64) {
-        issues.add(
-          'تنسيق تشفير كلمة المرور غير صحيح',
-        );
+        issues.add('تنسيق تشفير كلمة المرور غير صحيح');
         securityScore -= 40;
       }
 

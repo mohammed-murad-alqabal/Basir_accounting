@@ -19,10 +19,7 @@ enum AgingReportType {
 /// Screen to display aging analysis for receivables or payables.
 class AgingReportScreen extends ConsumerStatefulWidget {
   /// Creates an aging report screen.
-  const AgingReportScreen({
-    required this.reportType,
-    super.key,
-  });
+  const AgingReportScreen({required this.reportType, super.key});
 
   /// The category of accounts to analyze.
   final AgingReportType reportType;
@@ -154,13 +151,12 @@ class _AgingReportScreenState extends ConsumerState<AgingReportScreen> {
 
 // Internal provider for aging data
 final _agingReportProvider = FutureProvider.autoDispose.family<
-    List<AgingReportLineDto>, ({AgingReportType type, String asOfDate})>(
-  (ref, params) {
-    final service = ref.watch(nativeReportingServiceProvider);
-    if (params.type == AgingReportType.receivables) {
-      return service.getReceivablesAging(asOfDate: params.asOfDate);
-    } else {
-      return service.getPayablesAging(asOfDate: params.asOfDate);
-    }
-  },
-);
+    List<AgingReportLineDto>,
+    ({AgingReportType type, String asOfDate})>((ref, params) {
+  final service = ref.watch(nativeReportingServiceProvider);
+  if (params.type == AgingReportType.receivables) {
+    return service.getReceivablesAging(asOfDate: params.asOfDate);
+  } else {
+    return service.getPayablesAging(asOfDate: params.asOfDate);
+  }
+});

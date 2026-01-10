@@ -17,9 +17,7 @@ class TreasuryOverviewScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-        appBar: AppAppBar(
-          title: context.l10n.treasuryTitle,
-        ),
+        appBar: AppAppBar(title: context.l10n.treasuryTitle),
         body: RefreshIndicator(
           onRefresh: () async {
             ref.invalidate(getVouchersProvider);
@@ -34,10 +32,8 @@ class TreasuryOverviewScreen extends ConsumerWidget {
               const SizedBox(height: 24),
               Text(
                 context.l10n.recentVouchersTitle,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
               _buildVouchersList(context, ref),
@@ -185,18 +181,16 @@ class TreasuryOverviewScreen extends ConsumerWidget {
                       color: color,
                     ),
                   ),
-                  title:
-                      Text(voucher.personName ?? context.l10n.anonymousPerson),
+                  title: Text(
+                    voucher.personName ?? context.l10n.anonymousPerson,
+                  ),
                   subtitle: Text(
                     '${intl.DateFormat('yyyy/MM/dd').format(voucher.date)} '
                     '- ${voucher.referenceNumber}',
                   ),
                   trailing: Text(
                     '${voucher.amount} ر.س',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: color,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: color),
                   ),
                 ),
               );

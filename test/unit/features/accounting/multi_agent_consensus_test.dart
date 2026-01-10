@@ -33,8 +33,9 @@ void main() {
     setUp(() {
       container = ProviderContainer(
         overrides: [
-          accountingRepositoryProvider
-              .overrideWithValue(MockAccountingRepository()),
+          accountingRepositoryProvider.overrideWithValue(
+            MockAccountingRepository(),
+          ),
           currentUserProvider.overrideWith((ref) => null),
         ],
       );
@@ -107,10 +108,7 @@ void main() {
       expect(consensus.explanation.contains('agent-1-standards-engine'), true);
       expect(consensus.explanation.contains('agent-2-tax-engine'), true);
       expect(consensus.explanation.contains('agent-3-forensic-audit'), true);
-      expect(
-        consensus.explanation.contains('agent-4-operational-intel'),
-        true,
-      );
+      expect(consensus.explanation.contains('agent-4-operational-intel'), true);
       expect(
         consensus.explanation.contains('agent-5-financial-strategy'),
         true,
@@ -121,66 +119,70 @@ void main() {
       );
     });
 
-    test('Consensus Test 2: Rejection on Missing Tax ID for Large Transaction',
-        () async {
-      final orchestrator = container.read(orchestratorServiceProvider.notifier);
+    test(
+      'Consensus Test 2: Rejection on Missing Tax ID for Large Transaction',
+      () async {
+        final orchestrator = container.read(
+          orchestratorServiceProvider.notifier,
+        );
 
-      final entry = JournalEntry(
-        id: 'je-002',
-        referenceNumber: 'JE-BIG-001',
-        date: DateTime.now(),
-        temporal: TemporalJustification(
-          transactionDate: DateTime.now(),
-          effectiveDate: DateTime.now(),
-          recordingDate: DateTime.now(),
-        ),
-        standards: const StandardsJustification(
-          standardReference: 'IAS 16', // Property, Plant and Equipment
-          recognitionBasis: 'Accrual',
-          measurementBasis: 'Historical Cost',
-        ),
-        description: 'Large Asset Purchase',
-        status: JournalEntryStatus.posted,
-        lines: [
-          JournalEntryLine(
-            accountId: 'acc-1501', // Fixed Assets
-            accountName: 'Machines',
-            debit: Decimal.parse('50000'),
-            credit: Decimal.zero,
+        final entry = JournalEntry(
+          id: 'je-002',
+          referenceNumber: 'JE-BIG-001',
+          date: DateTime.now(),
+          temporal: TemporalJustification(
+            transactionDate: DateTime.now(),
+            effectiveDate: DateTime.now(),
+            recordingDate: DateTime.now(),
           ),
-          JournalEntryLine(
-            accountId: 'acc-1101', // Cash
-            accountName: 'Main Cash',
-            credit: Decimal.parse('50000'),
-            debit: Decimal.zero,
+          standards: const StandardsJustification(
+            standardReference: 'IAS 16', // Property, Plant and Equipment
+            recognitionBasis: 'Accrual',
+            measurementBasis: 'Historical Cost',
           ),
-        ],
-        sourceDocument: 'manual',
-        sourceId: 'm-001',
-        createdBy: 'user-001',
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        postedAt: DateTime.now(),
-      );
+          description: 'Large Asset Purchase',
+          status: JournalEntryStatus.posted,
+          lines: [
+            JournalEntryLine(
+              accountId: 'acc-1501', // Fixed Assets
+              accountName: 'Machines',
+              debit: Decimal.parse('50000'),
+              credit: Decimal.zero,
+            ),
+            JournalEntryLine(
+              accountId: 'acc-1101', // Cash
+              accountName: 'Main Cash',
+              credit: Decimal.parse('50000'),
+              debit: Decimal.zero,
+            ),
+          ],
+          sourceDocument: 'manual',
+          sourceId: 'm-001',
+          createdBy: 'user-001',
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+          postedAt: DateTime.now(),
+        );
 
-      final context = AccountingContext(
-        proposedJournalEntry: entry,
-        transactionType: 'purchase',
-        metadata: {
-          'tax_id': '', // MISSING TAX ID
-        },
-      );
+        final context = AccountingContext(
+          proposedJournalEntry: entry,
+          transactionType: 'purchase',
+          metadata: {
+            'tax_id': '', // MISSING TAX ID
+          },
+        );
 
-      final consensus = await orchestrator.orchestrate(context);
+        final consensus = await orchestrator.orchestrate(context);
 
-      // Should be false because Agent 2 rejects > 10,000 without tax_id
-      expect(consensus.isApproved, false);
-      expect(
-        consensus.explanation.contains(
-          'رفض: العمليات التي تتجاوز 10,000 ريال تتطلب رقم ضريبي صالح',
-        ),
-        true,
-      );
-    });
+        // Should be false because Agent 2 rejects > 10,000 without tax_id
+        expect(consensus.isApproved, false);
+        expect(
+          consensus.explanation.contains(
+            'رفض: العمليات التي تتجاوز 10,000 ريال تتطلب رقم ضريبي صالح',
+          ),
+          true,
+        );
+      },
+    );
   });
 }

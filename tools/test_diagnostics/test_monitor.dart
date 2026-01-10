@@ -30,7 +30,7 @@ enum TestHealthStatus {
   poor,
 
   /// Critical status: <55% success rate
-  critical
+  critical,
 }
 
 /// Alert severity levels
@@ -50,8 +50,9 @@ class TestAlert {
 
   factory TestAlert.fromJson(Map<String, dynamic> json) => TestAlert(
         id: json['id']?.toString() ?? '',
-        severity:
-            AlertSeverity.values.byName(json['severity']?.toString() ?? 'info'),
+        severity: AlertSeverity.values.byName(
+          json['severity']?.toString() ?? 'info',
+        ),
         title: json['title']?.toString() ?? '',
         message: json['message']?.toString() ?? '',
         timestamp: DateTime.parse(
@@ -94,7 +95,9 @@ class TestPerformanceHistory {
     required this.criticalFailures,
   });
 
-  factory TestPerformanceHistory.fromJson(Map<String, dynamic> json) =>
+  factory TestPerformanceHistory.fromJson(
+    Map<String, dynamic> json,
+  ) =>
       TestPerformanceHistory(
         timestamp: DateTime.parse(
           json['timestamp']?.toString() ?? DateTime.now().toIso8601String(),
@@ -201,10 +204,13 @@ class TestMonitor {
 
       // Run quick test analysis
       final testResult = await Process.run(
-        'flutter',
-        ['test', '--reporter=compact', '--timeout=30s'],
-        workingDirectory: '.',
-      );
+          'flutter',
+          [
+            'test',
+            '--reporter=compact',
+            '--timeout=30s',
+          ],
+          workingDirectory: '.');
 
       final testOutput =
           testResult.stdout.toString() + testResult.stderr.toString();
@@ -260,8 +266,9 @@ class TestMonitor {
       final recent = _history.length >= 3
           ? _history.sublist(_history.length - 3)
           : _history;
-      final isDecline =
-          _isDecreasingTrend(recent.map((h) => h.metrics.successRate).toList());
+      final isDecline = _isDecreasingTrend(
+        recent.map((h) => h.metrics.successRate).toList(),
+      );
 
       if (isDecline && current.metrics.successRate < 90.0) {
         await _createAlert(
@@ -559,18 +566,12 @@ class TestMonitor {
 
     for (final historyData in data['history'] as List) {
       _history.add(
-        TestPerformanceHistory.fromJson(
-          historyData as Map<String, dynamic>,
-        ),
+        TestPerformanceHistory.fromJson(historyData as Map<String, dynamic>),
       );
     }
 
     for (final alertData in data['activeAlerts'] as List) {
-      _activeAlerts.add(
-        TestAlert.fromJson(
-          alertData as Map<String, dynamic>,
-        ),
-      );
+      _activeAlerts.add(TestAlert.fromJson(alertData as Map<String, dynamic>));
     }
   }
 }

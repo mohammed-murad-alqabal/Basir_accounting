@@ -8,9 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// حالة تخصيص الأيقونات
 class IconCustomizationState {
   /// إنشاء حالة تخصيص الأيقونات
-  const IconCustomizationState({
-    required this.iconPack,
-  });
+  const IconCustomizationState({required this.iconPack});
 
   /// حزمة الأيقونات المختارة
   final IconPack iconPack;

@@ -43,9 +43,7 @@ void main() {
       // or a similar setup that simulates a loading state.
       // For this test to be meaningful, the provider for CustomerDetailsScreen
       // would need to be mocked to return an AsyncValue.loading().
-      await tester.pumpWidget(
-        createTestWidget(null),
-      );
+      await tester.pumpWidget(createTestWidget(null));
       // No data emitted yet, so loading should
       // be visible if handleLoading is true
       // However, AsyncValue.loading() usually shows nothing if data is null?

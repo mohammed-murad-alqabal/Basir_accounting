@@ -74,10 +74,7 @@ class DashboardCharts extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: Spacing.xl),
-              const SizedBox(
-                height: 200,
-                child: RevenueTrendChart(),
-              ),
+              const SizedBox(height: 200, child: RevenueTrendChart()),
             ],
           ),
         ),
@@ -103,10 +100,7 @@ class DashboardCharts extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: Spacing.xl),
-              const SizedBox(
-                height: 200,
-                child: ExpenseCompositionChart(),
-              ),
+              const SizedBox(height: 200, child: ExpenseCompositionChart()),
             ],
           ),
         ),

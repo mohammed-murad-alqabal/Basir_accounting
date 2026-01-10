@@ -9,15 +9,23 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`
 
-Future<String> createAccount(
-        {required AccountDto dto, required AuditMetadataDto metadata}) =>
-    RustLib.instance.api
-        .crateApiAccountsCreateAccount(dto: dto, metadata: metadata);
+Future<String> createAccount({
+  required AccountDto dto,
+  required AuditMetadataDto metadata,
+}) =>
+    RustLib.instance.api.crateApiAccountsCreateAccount(
+      dto: dto,
+      metadata: metadata,
+    );
 
-Future<void> updateAccount(
-        {required AccountDto dto, required AuditMetadataDto metadata}) =>
-    RustLib.instance.api
-        .crateApiAccountsUpdateAccount(dto: dto, metadata: metadata);
+Future<void> updateAccount({
+  required AccountDto dto,
+  required AuditMetadataDto metadata,
+}) =>
+    RustLib.instance.api.crateApiAccountsUpdateAccount(
+      dto: dto,
+      metadata: metadata,
+    );
 
 Future<List<AccountDto>> listAccounts() =>
     RustLib.instance.api.crateApiAccountsListAccounts();
@@ -25,12 +33,16 @@ Future<List<AccountDto>> listAccounts() =>
 Future<AccountDto?> getAccountById({required String id}) =>
     RustLib.instance.api.crateApiAccountsGetAccountById(id: id);
 
-Future<void> updateAccountCategory(
-        {required String accountId,
-        required String category,
-        required AuditMetadataDto metadata}) =>
+Future<void> updateAccountCategory({
+  required String accountId,
+  required String category,
+  required AuditMetadataDto metadata,
+}) =>
     RustLib.instance.api.crateApiAccountsUpdateAccountCategory(
-        accountId: accountId, category: category, metadata: metadata);
+      accountId: accountId,
+      category: category,
+      metadata: metadata,
+    );
 
 /// DTO for Account
 class AccountDto {

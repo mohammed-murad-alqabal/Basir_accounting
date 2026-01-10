@@ -354,17 +354,19 @@ void main() {
       expect(result, false);
     });
 
-    test('should handle storage errors gracefully for keep logged in',
-        () async {
-      // Arrange
-      mockStorage.shouldThrowOnRead = true;
+    test(
+      'should handle storage errors gracefully for keep logged in',
+      () async {
+        // Arrange
+        mockStorage.shouldThrowOnRead = true;
 
-      // Act
-      final result = await authService.shouldKeepLoggedIn();
+        // Act
+        final result = await authService.shouldKeepLoggedIn();
 
-      // Assert
-      expect(result, false);
-    });
+        // Assert
+        expect(result, false);
+      },
+    );
   });
 
   group('AuthService - Guest Mode', () {

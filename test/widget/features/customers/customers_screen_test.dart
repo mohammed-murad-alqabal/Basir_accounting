@@ -64,8 +64,9 @@ void main() {
       expect(find.byType(EmptyStateIllustration), findsOneWidget);
     });
 
-    testWidgets('should display loading indicator when loading',
-        (tester) async {
+    testWidgets('should display loading indicator when loading', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -92,8 +93,9 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets('should display list of customers when data is available',
-        (tester) async {
+    testWidgets('should display list of customers when data is available', (
+      tester,
+    ) async {
       final customers = CustomerFixtures.allCustomers;
       await tester.pumpWidget(
         ProviderScope(

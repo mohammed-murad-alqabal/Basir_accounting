@@ -18,10 +18,7 @@ class DashboardBasirHeader extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            primaryColor,
-            primaryColor.withValues(alpha: 0.7),
-          ],
+          colors: [primaryColor, primaryColor.withValues(alpha: 0.7)],
         ),
         borderRadius: BorderRadius.circular(Radii.lg),
         boxShadow: [
@@ -105,10 +102,7 @@ class GlassStatCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.surface.withValues(alpha: 0.7),
             borderRadius: BorderRadius.circular(Radii.md),
-            border: Border.all(
-              color: color.withValues(alpha: 0.2),
-              width: 1.5,
-            ),
+            border: Border.all(color: color.withValues(alpha: 0.2), width: 1.5),
           ),
           padding: const EdgeInsets.all(Spacing.md),
           child: Column(

@@ -78,9 +78,7 @@ class IconSettingsTile extends ConsumerWidget {
               alpha: 0.3,
             ),
             borderRadius: BorderRadius.circular(Radii.lg),
-            border: Border.all(
-              color: theme.colorScheme.outlineVariant,
-            ),
+            border: Border.all(color: theme.colorScheme.outlineVariant),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -109,9 +107,7 @@ class IconSettingsTile extends ConsumerWidget {
   }
 
   void _updatePack(WidgetRef ref, IconPack pack) {
-    unawaited(
-      ref.read(iconCustomizationProvider.notifier).setIconPack(pack),
-    );
+    unawaited(ref.read(iconCustomizationProvider.notifier).setIconPack(pack));
   }
 }
 

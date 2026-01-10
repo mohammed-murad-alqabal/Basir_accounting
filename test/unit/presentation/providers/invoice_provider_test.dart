@@ -192,8 +192,9 @@ void main() {
       );
       await mockRepository.addInvoice(originalInvoice);
 
-      final updatedInvoice =
-          originalInvoice.copyWith(status: InvoiceStatus.paid);
+      final updatedInvoice = originalInvoice.copyWith(
+        status: InvoiceStatus.paid,
+      );
 
       // Act
       await mockRepository.updateInvoice(updatedInvoice);

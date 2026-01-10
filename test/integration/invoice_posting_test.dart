@@ -95,16 +95,17 @@ void main() {
         balance: Decimal.zero,
       );
 
-      when(() => mockAccountingRepo.getAccounts()).thenAnswer(
-        (_) async => [revenueAccount, taxAccount],
-      );
+      when(
+        () => mockAccountingRepo.getAccounts(),
+      ).thenAnswer((_) async => [revenueAccount, taxAccount]);
 
-      when(() => mockAccountingRepo.getJournalEntries()).thenAnswer(
-        (_) async => [],
-      );
+      when(
+        () => mockAccountingRepo.getJournalEntries(),
+      ).thenAnswer((_) async => []);
 
-      when(() => mockAccountingRepo.addJournalEntry(any()))
-          .thenAnswer((_) async {});
+      when(
+        () => mockAccountingRepo.addJournalEntry(any()),
+      ).thenAnswer((_) async {});
     });
 
     tearDown(() {
@@ -125,8 +126,9 @@ void main() {
         updatedAt: DateTime.now(),
       );
 
-      when(() => mockCustomerRepo.getCustomerById('cust-1'))
-          .thenAnswer((_) async => customer);
+      when(
+        () => mockCustomerRepo.getCustomerById('cust-1'),
+      ).thenAnswer((_) async => customer);
 
       // Create Invoice
       final invoice = Invoice(
@@ -163,12 +165,14 @@ void main() {
       expect(entry.lines.length, equals(3)); // AR, Revenue, Tax
 
       // Verify Lines
-      final arLine =
-          entry.lines.firstWhere((l) => l.accountId == 'acc-1201-c1');
+      final arLine = entry.lines.firstWhere(
+        (l) => l.accountId == 'acc-1201-c1',
+      );
       expect(arLine.debit, equals(Decimal.parse('1150.0')));
 
-      final revenueLine =
-          entry.lines.firstWhere((l) => l.accountId == 'acc-4101');
+      final revenueLine = entry.lines.firstWhere(
+        (l) => l.accountId == 'acc-4101',
+      );
       expect(revenueLine.credit, equals(Decimal.parse('1000.0')));
 
       final taxLine = entry.lines.firstWhere((l) => l.accountId == 'acc-2105');
@@ -207,10 +211,7 @@ void main() {
 
       final logic = container.read(accountingServiceProvider.notifier);
 
-      expect(
-        () => logic.postSalesInvoice(invoice),
-        throwsException,
-      );
+      expect(() => logic.postSalesInvoice(invoice), throwsException);
     });
   });
 }

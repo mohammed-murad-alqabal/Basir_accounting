@@ -51,9 +51,7 @@ class _ExpenseCompositionChartState
 
           return Row(
             children: <Widget>[
-              const SizedBox(
-                height: 18,
-              ),
+              const SizedBox(height: 18),
               Expanded(
                 child: AspectRatio(
                   aspectRatio: 1,
@@ -73,9 +71,7 @@ class _ExpenseCompositionChartState
                           });
                         },
                       ),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
+                      borderData: FlBorderData(show: false),
                       sectionsSpace: 0,
                       centerSpaceRadius: 40,
                       sections: _showingSections(data),
@@ -87,9 +83,7 @@ class _ExpenseCompositionChartState
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
               ),
-              const SizedBox(
-                width: 28,
-              ),
+              const SizedBox(width: 28),
             ],
           );
         },
@@ -132,11 +126,7 @@ class _ExpenseCompositionChartState
             color: Colors.white,
             shadows: const [Shadow(blurRadius: 2)],
           ),
-          badgeWidget: _Badge(
-            key,
-            size: 40,
-            borderColor: color,
-          ),
+          badgeWidget: _Badge(key, size: 40, borderColor: color),
           badgePositionPercentageOffset: .98,
         ),
       );
@@ -146,11 +136,7 @@ class _ExpenseCompositionChartState
 }
 
 class _Badge extends StatelessWidget {
-  const _Badge(
-    this.text, {
-    required this.size,
-    required this.borderColor,
-  });
+  const _Badge(this.text, {required this.size, required this.borderColor});
   final String text;
   final double size;
   final Color borderColor;
@@ -163,10 +149,7 @@ class _Badge extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(size / 2),
-          border: Border.all(
-            color: borderColor,
-            width: 2,
-          ),
+          border: Border.all(color: borderColor, width: 2),
           boxShadow: <BoxShadow>[
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.5),

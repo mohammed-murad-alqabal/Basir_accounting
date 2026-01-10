@@ -22,10 +22,7 @@ enum FinancialReportType {
 /// A generic screen to display various financial reports.
 class FinancialReportScreen extends ConsumerStatefulWidget {
   /// Creates a financial report screen.
-  const FinancialReportScreen({
-    required this.reportType,
-    super.key,
-  });
+  const FinancialReportScreen({required this.reportType, super.key});
 
   /// The type of report to display.
   final FinancialReportType reportType;
@@ -145,8 +142,10 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 child: Text(
                   _isPointInTime
                       ? 'كما في: ${report.toDate}'
@@ -167,25 +166,25 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
 // Internal provider for fetching generic reports
 final _financialReportProvider = FutureProvider.autoDispose.family<
     FinancialReportDto,
-    ({FinancialReportType type, String fromDate, String toDate})>(
-  (ref, params) {
-    final service = ref.watch(nativeReportingServiceProvider);
-    switch (params.type) {
-      case FinancialReportType.incomeStatement:
-        return service.generateIncomeStatement(
-          fromDate: params.fromDate,
-          toDate: params.toDate,
-        );
-      case FinancialReportType.balanceSheet:
-        // For BS, 'toDate' is the 'As Of' date.
-        return service.generateBalanceSheet(
-          asOfDate: params.toDate,
-        );
-      case FinancialReportType.cashFlow:
-        return service.generateCashFlowStatement(
-          fromDate: params.fromDate,
-          toDate: params.toDate,
-        );
-    }
-  },
-);
+    ({
+      FinancialReportType type,
+      String fromDate,
+      String toDate
+    })>((ref, params) {
+  final service = ref.watch(nativeReportingServiceProvider);
+  switch (params.type) {
+    case FinancialReportType.incomeStatement:
+      return service.generateIncomeStatement(
+        fromDate: params.fromDate,
+        toDate: params.toDate,
+      );
+    case FinancialReportType.balanceSheet:
+      // For BS, 'toDate' is the 'As Of' date.
+      return service.generateBalanceSheet(asOfDate: params.toDate);
+    case FinancialReportType.cashFlow:
+      return service.generateCashFlowStatement(
+        fromDate: params.fromDate,
+        toDate: params.toDate,
+      );
+  }
+});

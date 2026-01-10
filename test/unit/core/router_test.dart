@@ -224,8 +224,9 @@ void main() {
     });
 
     group('Error Handling', () {
-      testWidgets('should show error message for unknown route',
-          (tester) async {
+      testWidgets('should show error message for unknown route', (
+        tester,
+      ) async {
         const settings = RouteSettings(name: '/unknown-route');
         final route = AppRouter.generateRoute(settings) as MaterialPageRoute;
 
@@ -234,9 +235,7 @@ void main() {
             child: MaterialApp(
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
-              home: Builder(
-                builder: route.builder,
-              ),
+              home: Builder(builder: route.builder),
             ),
           ),
         );

@@ -49,8 +49,9 @@ class ReportingService extends _$ReportingService {
 
     for (final account in accounts) {
       // نحسب الرصيد الهيكلي (يشمل الحسابات الفرعية)
-      final balance =
-          await accountingService.getHierarchicalBalance(account.id);
+      final balance = await accountingService.getHierarchicalBalance(
+        account.id,
+      );
 
       if (balance != Decimal.zero) {
         // إذا كان الحساب مدين بطبيعته
@@ -102,8 +103,9 @@ class ReportingService extends _$ReportingService {
         // حالياً سنفترض Operating كافتراضي إلا إذا كان هناك منطق آخر
         final category = _detectIfrs18Category(account);
 
-        final balance =
-            await accountingService.getHierarchicalBalance(account.id);
+        final balance = await accountingService.getHierarchicalBalance(
+          account.id,
+        );
 
         // في قائمة الدخل: الإيرادات (دائنة) موجبة، والمصروفات (مدينة) سالبة
         if (account.type == AccountType.revenue) {
@@ -130,8 +132,9 @@ class ReportingService extends _$ReportingService {
       // فقط الحسابات الرئيسية (المستوى 0)
       // لتجنب التكرار عند جمع الأرصدة الهيكلية
       if (account.parentId == null) {
-        final balance =
-            await accountingService.getHierarchicalBalance(account.id);
+        final balance = await accountingService.getHierarchicalBalance(
+          account.id,
+        );
 
         switch (account.type) {
           case AccountType.asset:
@@ -148,11 +151,7 @@ class ReportingService extends _$ReportingService {
       }
     }
 
-    return {
-      'assets': assets,
-      'liabilities': liabilities,
-      'equity': equity,
-    };
+    return {'assets': assets, 'liabilities': liabilities, 'equity': equity};
   }
 
   /// توليد قائمة التدفقات النقدية (Cash Flow Statement) - الطريقة المباشرة
@@ -179,8 +178,9 @@ class ReportingService extends _$ReportingService {
                 .toList();
 
             if (otherLines.isNotEmpty) {
-              final category =
-                  await _detectCashFlowCategory(otherLines.first.accountId);
+              final category = await _detectCashFlowCategory(
+                otherLines.first.accountId,
+              );
               switch (category) {
                 case 'operating':
                   if (amount > Decimal.zero) {
@@ -228,8 +228,10 @@ class ReportingService extends _$ReportingService {
         .where((e) => e.key == Ifrs18Category.operating)
         .fold(Decimal.zero, (prev, curr) => prev + curr.value);
 
-    final netIncome =
-        incomeStatement.values.fold(Decimal.zero, (prev, curr) => prev + curr);
+    final netIncome = incomeStatement.values.fold(
+      Decimal.zero,
+      (prev, curr) => prev + curr,
+    );
 
     final profitability =
         revenue != Decimal.zero ? (netIncome / revenue).toDouble() : 0.0;

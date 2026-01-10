@@ -23,24 +23,15 @@ class AppearanceSettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeProvider).valueOrNull ?? ThemeMode.system;
-    final appearanceState = ref
-            .watch(
-              appearanceServiceProvider,
-            )
-            .valueOrNull ??
-        const AppearanceState(
-          highContrast: false,
-          reduceMotion: false,
-        );
+    final appearanceState = ref.watch(appearanceServiceProvider).valueOrNull ??
+        const AppearanceState(highContrast: false, reduceMotion: false);
     final calendarType =
         ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
     final customColor = ref.watch(colorCustomizationProvider).valueOrNull;
     final appIcons = ref.watch(appIconsProvider);
 
     return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.appearanceSettingsTitle,
-      ),
+      appBar: AppAppBar(title: context.l10n.appearanceSettingsTitle),
       body: ListView(
         padding: const EdgeInsets.all(Spacing.lg),
         children: [
@@ -75,14 +66,12 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                   icon: Icon(appIcons.darkMode),
                 ),
               ],
-              selected: {
-                themeMode,
-              },
+              selected: {themeMode},
               onSelectionChanged: (newSelection) {
                 unawaited(
-                  ref.read(themeProvider.notifier).setThemeMode(
-                        newSelection.first,
-                      ),
+                  ref
+                      .read(themeProvider.notifier)
+                      .setThemeMode(newSelection.first),
                 );
               },
               showSelectedIcon: false,
@@ -145,12 +134,9 @@ class AppearanceSettingsScreen extends ConsumerWidget {
           const SizedBox(height: Spacing.md),
           DecoratedBox(
             decoration: BoxDecoration(
-              color: Theme.of(context)
-                  .colorScheme
-                  .surfaceContainerHighest
-                  .withValues(
-                    alpha: 0.2,
-                  ),
+              color: Theme.of(
+                context,
+              ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(Radii.lg),
               border: Border.all(
                 color: Theme.of(context).colorScheme.outlineVariant,
@@ -167,9 +153,7 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                     unawaited(
                       ref
                           .read(appearanceServiceProvider.notifier)
-                          .setHighContrast(
-                            enabled: value,
-                          ),
+                          .setHighContrast(enabled: value),
                     );
                   },
                 ),
@@ -183,9 +167,7 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                     unawaited(
                       ref
                           .read(appearanceServiceProvider.notifier)
-                          .setReduceMotion(
-                            enabled: value,
-                          ),
+                          .setReduceMotion(enabled: value),
                     );
                   },
                 ),
@@ -210,18 +192,16 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                 ),
                 ButtonSegment<CalendarType>(
                   value: CalendarType.hijri,
-                  label: Text(
-                    context.l10n.calendarHijri,
-                  ),
+                  label: Text(context.l10n.calendarHijri),
                   icon: Icon(appIcons.bolt),
                 ),
               ],
               selected: {calendarType},
               onSelectionChanged: (newSelection) {
                 unawaited(
-                  ref.read(calendarProvider.notifier).setCalendarType(
-                        newSelection.first,
-                      ),
+                  ref
+                      .read(calendarProvider.notifier)
+                      .setCalendarType(newSelection.first),
                 );
               },
               showSelectedIcon: false,
@@ -254,9 +234,7 @@ class AppearanceSettingsScreen extends ConsumerWidget {
           return AlertDialog(
             icon: Icon(appIcons.warning, size: 48),
             title: Text(context.l10n.btnRestoreDefault),
-            content: Text(
-              context.l10n.msgResetConfirmation,
-            ),
+            content: Text(context.l10n.msgResetConfirmation),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(ctx),
@@ -280,9 +258,7 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                 },
                 child: Text(
                   context.l10n.btnRestoreDefault,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.error,
-                  ),
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
                 ),
               ),
             ],

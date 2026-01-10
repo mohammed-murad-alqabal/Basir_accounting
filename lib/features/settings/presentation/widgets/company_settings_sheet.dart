@@ -8,10 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// واجهة تعديل إعدادات الشركة
 class CompanySettingsSheet extends ConsumerStatefulWidget {
   /// إنشاء واجهة تعديل إعدادات الشركة
-  const CompanySettingsSheet({
-    required this.initialSettings,
-    super.key,
-  });
+  const CompanySettingsSheet({required this.initialSettings, super.key});
 
   /// الإعدادات الأولية للشركة
   final Map<String, String?> initialSettings;
@@ -44,14 +41,18 @@ class _CompanySettingsSheetState extends ConsumerState<CompanySettingsSheet> {
   @override
   void initState() {
     super.initState();
-    _nameController =
-        TextEditingController(text: widget.initialSettings['companyName']);
-    _taxNumberController =
-        TextEditingController(text: widget.initialSettings['taxNumber']);
-    _taxRateController =
-        TextEditingController(text: widget.initialSettings['taxRate']);
-    _currencySymbolController =
-        TextEditingController(text: widget.initialSettings['currencySymbol']);
+    _nameController = TextEditingController(
+      text: widget.initialSettings['companyName'],
+    );
+    _taxNumberController = TextEditingController(
+      text: widget.initialSettings['taxNumber'],
+    );
+    _taxRateController = TextEditingController(
+      text: widget.initialSettings['taxRate'],
+    );
+    _currencySymbolController = TextEditingController(
+      text: widget.initialSettings['currencySymbol'],
+    );
     _countryCodeController = TextEditingController(
       text: widget.initialSettings['defaultCountryCode'],
     );
@@ -76,8 +77,9 @@ class _CompanySettingsSheetState extends ConsumerState<CompanySettingsSheet> {
     return Container(
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
-        borderRadius:
-            const BorderRadius.vertical(top: Radius.circular(Radii.xl)),
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(Radii.xl),
+        ),
       ),
       padding: EdgeInsets.only(
         top: Spacing.lg,
@@ -102,8 +104,9 @@ class _CompanySettingsSheetState extends ConsumerState<CompanySettingsSheet> {
           const SizedBox(height: Spacing.md),
           Text(
             context.l10n.companySettingsDialogTitle,
-            style: theme.textTheme.titleLarge
-                ?.copyWith(fontWeight: FontWeight.bold),
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: Spacing.lg),
@@ -127,8 +130,9 @@ class _CompanySettingsSheetState extends ConsumerState<CompanySettingsSheet> {
                 child: AppTextField(
                   controller: _taxRateController,
                   label: context.l10n.labelTaxRate,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
                   prefixIcon: const Icon(Icons.percent),
                 ),
               ),
