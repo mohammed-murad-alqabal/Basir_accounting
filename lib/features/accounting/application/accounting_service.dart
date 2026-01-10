@@ -16,28 +16,28 @@ import 'package:uuid/uuid.dart';
 
 part 'accounting_service.g.dart';
 
-/// Central Accounting Service managing the Chart of Accounts and core ledger operations.
+/// Central Accounting Service managing the Chart of Accounts and core ledger
+/// operations.
 ///
 /// This service implements critical financial logic including COA seeding,
 /// account validation (IFRS compliance), journal entry posting, and
 /// dual-entry orchestration for sales invoices.
 ///
 /// ## Key Capabilities
-/// - **COA Management**: Multi-standard Chart of Accounts generation (IFRS, KSA, UAE).
-/// - **Ledger Integrity**: Strict validation of account types and nature for hierarchical structures.
+/// - **COA Management**: Multi-standard Chart of Accounts generation
+///   (IFRS, KSA, UAE).
+/// - **Ledger Integrity**: Strict validation of account types and nature for
+///   hierarchical structures.
 /// - **Transaction Orchestration**: Automatic journal entry generation from
 /// source documents (Invoices).
 /// - **Hierarchical Reporting**: Recursive balance calculation for
 ///   parent/child accounts.
 @Riverpod(keepAlive: true)
 class AccountingService extends _$AccountingService {
-  AccountingRepository get _repository =>
-      ref.read(accountingRepositoryProvider);
+  AccountingRepository get _repository => ref.read(accountingRepositoryProvider);
 
-  FinancialYearService get _financialYearService =>
-      ref.read(financialYearServiceProvider.notifier);
-  CustomerRepository get _customerRepository =>
-      ref.read(customerRepositoryProvider);
+  FinancialYearService get _financialYearService => ref.read(financialYearServiceProvider.notifier);
+  CustomerRepository get _customerRepository => ref.read(customerRepositoryProvider);
 
   @override
   FutureOr<List<JournalEntry>> build() => _repository.getJournalEntries();
@@ -81,12 +81,14 @@ class AccountingService extends _$AccountingService {
 
       if (parent.type != account.type) {
         throw Exception(
-          'Account type (${account.type}) must match parent type (${parent.type})',
+          'Account type (${account.type}) must match parent type '
+          '(${parent.type})',
         );
       }
       if (parent.nature != account.nature) {
         throw Exception(
-          'Account nature (${account.nature}) must match parent nature (${parent.nature})',
+          'Account nature (${account.nature}) must match parent nature '
+          '(${parent.nature})',
         );
       }
     }
@@ -106,7 +108,8 @@ class AccountingService extends _$AccountingService {
   /// - [invoice]: The [Invoice] entity to post.
   ///
   /// ## Throws
-  /// - [Exception] if the financial period is closed or invoice status is invalid.
+  /// - [Exception] if the financial period is closed or invoice status is
+  ///   invalid.
   Future<void> postSalesInvoice(Invoice invoice) async {
     final isPeriodOpen = await _financialYearService.canPostToDate(
       invoice.issuedDate,
@@ -231,7 +234,8 @@ class AccountingService extends _$AccountingService {
 
     if (!entry.isBalanced) {
       throw Exception(
-        'Journal Entry is unbalanced! Difference: ${entry.totalDebit - entry.totalCredit}',
+        'Journal Entry is unbalanced! Difference: '
+        '${entry.totalDebit - entry.totalCredit}',
       );
     }
 
@@ -240,8 +244,7 @@ class AccountingService extends _$AccountingService {
     // ZATCA Integration: Performs compliance steps via Rust bridge.
     try {
       final salesBridge = ref.read(salesBridgeServiceProvider);
-      final updatedInvoice =
-          await salesBridge.finalizeInvoiceWithZatca(invoice);
+      final updatedInvoice = await salesBridge.finalizeInvoiceWithZatca(invoice);
 
       if (updatedInvoice.qrCode != null) {
         final invoiceRepo = ref.read(invoiceRepositoryProvider);
@@ -255,7 +258,8 @@ class AccountingService extends _$AccountingService {
     ref.invalidateSelf();
   }
 
-  /// Calculates the hierarchical balance of an account, including all sub-accounts.
+  /// Calculates the hierarchical balance of an account, including all
+  /// sub-accounts.
   /// (Implementation of FR-ACC-013)
   ///
   /// ## Parameters
@@ -284,12 +288,10 @@ class AccountingService extends _$AccountingService {
   Future<List<Account>> getAccounts() async => _repository.getAccounts();
 
   /// Retrieves a specific account by identifier.
-  Future<Account?> getAccountById(String id) async =>
-      _repository.getAccountById(id);
+  Future<Account?> getAccountById(String id) async => _repository.getAccountById(id);
 
   /// Retrieves the complete list of journal entries.
-  Future<List<JournalEntry>> getJournalEntries() async =>
-      _repository.getJournalEntries();
+  Future<List<JournalEntry>> getJournalEntries() async => _repository.getJournalEntries();
 
   /// Posts a manual journal entry to the ledger.
   ///
