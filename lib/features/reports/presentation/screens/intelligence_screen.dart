@@ -26,7 +26,7 @@ class IntelligenceScreen extends ConsumerWidget {
             icon: const Icon(Icons.auto_fix_high),
             tooltip: 'بذر بيانات تجريبية',
             onPressed: () async {
-              showDialog<void>(
+              await showDialog<void>(
                 context: context,
                 barrierDismissible: false,
                 builder: (context) =>
