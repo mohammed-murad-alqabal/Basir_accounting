@@ -42,7 +42,9 @@ class _InventoryValuationReportScreenState
           title: 'تقرير تقييم المخزون',
           actions: [
             IconButton(
-                icon: const Icon(Icons.refresh), onPressed: _refreshReport,),
+              icon: const Icon(Icons.refresh),
+              onPressed: _refreshReport,
+            ),
           ],
         ),
         body: FutureBuilder<InventoryValuationReportDto>(
@@ -54,7 +56,8 @@ class _InventoryValuationReportScreenState
 
             if (snapshot.hasError) {
               return Center(
-                  child: Text('خطأ في تحميل التقرير: ${snapshot.error}'),);
+                child: Text('خطأ في تحميل التقرير: ${snapshot.error}'),
+              );
             }
 
             final report = snapshot.data;
@@ -115,7 +118,9 @@ class _InventoryValuationReportScreenState
                 Text(
                   context.isArabic ? item.itemNameAr : item.itemNameEn,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16,),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
                 Text(
                   '${item.totalValue} SAR',

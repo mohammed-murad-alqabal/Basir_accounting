@@ -212,7 +212,10 @@ class PdfInvoiceService extends _$PdfInvoiceService {
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 _buildTotalRow(
-                    'المجموع الفرعي:', invoice.subtotalAmount, currency,),
+                  'المجموع الفرعي:',
+                  invoice.subtotalAmount,
+                  currency,
+                ),
                 _buildTotalRow(
                   'الضريبة (${(invoice.taxRate * 100).toInt()}%):',
                   invoice.taxAmount,

@@ -477,8 +477,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               ),
             ),
             Text(
-              FormatHelpers.formatCurrency(amount,
-                  locale: context.l10n.localeName,),
+              FormatHelpers.formatCurrency(
+                amount,
+                locale: context.l10n.localeName,
+              ),
               style: TextStyle(
                 fontSize: isGrandTotal
                     ? AppTypography.headlineSmall
