@@ -199,7 +199,9 @@ class InvoicePdfService {
             crossAxisAlignment: pw.CrossAxisAlignment.end,
             children: [
               _buildTotalLine(
-                  'المجموع الفرعي / Subtotal:', invoice.subtotalAmount,),
+                'المجموع الفرعي / Subtotal:',
+                invoice.subtotalAmount,
+              ),
               _buildTotalLine('مبلغ الضريبة / Tax Amount:', invoice.taxAmount),
               if (invoice.discountAmount > 0)
                 _buildTotalLine('الخصم / Discount:', -invoice.discountAmount),

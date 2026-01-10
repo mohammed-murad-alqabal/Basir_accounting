@@ -179,7 +179,8 @@ abstract final class AppTheme {
               TouchTargets.buttonHeightMd,
             ),
             shape: const RoundedRectangleBorder(
-                borderRadius: Radii.borderRadiusMd,),
+              borderRadius: Radii.borderRadiusMd,
+            ),
             textStyle: AppTextStyles.labelLarge,
           ),
         ),
@@ -197,7 +198,8 @@ abstract final class AppTheme {
               TouchTargets.buttonHeightMd,
             ),
             shape: const RoundedRectangleBorder(
-                borderRadius: Radii.borderRadiusMd,),
+              borderRadius: Radii.borderRadiusMd,
+            ),
             side: BorderSide(
               color: colorScheme.outline,
               width: BorderWidths.normal,
@@ -219,7 +221,8 @@ abstract final class AppTheme {
               TouchTargets.buttonHeightMd,
             ),
             shape: const RoundedRectangleBorder(
-                borderRadius: Radii.borderRadiusMd,),
+              borderRadius: Radii.borderRadiusMd,
+            ),
             textStyle: AppTextStyles.labelLarge,
           ),
         ),

@@ -340,7 +340,10 @@ class AppButtonTestSuite extends StatelessWidget {
         runSpacing: 8,
         children: [
           AppEnhancedButton(
-              label: 'تحميل...', onPressed: () {}, isLoading: true,),
+            label: 'تحميل...',
+            onPressed: () {},
+            isLoading: true,
+          ),
           const AppEnhancedButton(label: 'معطل', onPressed: null),
         ],
       );
