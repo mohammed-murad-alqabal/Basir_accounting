@@ -29,7 +29,7 @@ anyhow = { workspace = true }
 tokio = { workspace = true }
 
 # Database
-sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "uuid", "chrono", "rust_decimal", "macros"] }
+sqlx = { workspace = true }
 
 
 [dev-dependencies]

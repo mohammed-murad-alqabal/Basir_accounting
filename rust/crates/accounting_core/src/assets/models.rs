@@ -1,6 +1,8 @@
 use chrono::NaiveDate;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
+use sqlx::encode::IsNull;
+use std::error::Error as StdError;
 use strum_macros::{Display, EnumString};
 use thiserror::Error;
 use uuid::Uuid;
@@ -54,7 +56,10 @@ impl sqlx::Type<sqlx::Postgres> for DepreciationMethod {
 }
 
 impl sqlx::Encode<'_, sqlx::Postgres> for DepreciationMethod {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+    fn encode_by_ref(
+        &self,
+        buf: &mut sqlx::postgres::PgArgumentBuffer,
+    ) -> Result<IsNull, Box<dyn StdError + Send + Sync + 'static>> {
         <String as sqlx::Encode<sqlx::Postgres>>::encode_by_ref(&self.to_string(), buf)
     }
 }
@@ -82,7 +87,10 @@ impl sqlx::Type<sqlx::Postgres> for AssetStatus {
 }
 
 impl sqlx::Encode<'_, sqlx::Postgres> for AssetStatus {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+    fn encode_by_ref(
+        &self,
+        buf: &mut sqlx::postgres::PgArgumentBuffer,
+    ) -> Result<IsNull, Box<dyn StdError + Send + Sync + 'static>> {
         <String as sqlx::Encode<sqlx::Postgres>>::encode_by_ref(&self.to_string(), buf)
     }
 }
