@@ -323,8 +323,11 @@ class AppStatCard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon,
-                color: iconColor ?? AppColors.primary, size: IconSizes.md,),
+            Icon(
+              icon,
+              color: iconColor ?? AppColors.primary,
+              size: IconSizes.md,
+            ),
             const SizedBox(height: Spacing.xs),
             Flexible(
               child: ResponsiveText(

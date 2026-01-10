@@ -190,8 +190,10 @@ class InvoiceDetailScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(context.l10n.labelDueDate,
-                      style: AppTextStyles.labelSmall,),
+                  Text(
+                    context.l10n.labelDueDate,
+                    style: AppTextStyles.labelSmall,
+                  ),
                   const SizedBox(height: Spacing.xs),
                   Text(
                     FormatHelpers.formatDate(
