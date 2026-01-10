@@ -3,22 +3,27 @@
 /// This ontology supports the disclosure of non-financial risks and
 /// opportunities related to climate and sustainability.
 enum SustainabilityMetricType {
-  /// Direct greenhouse gas emissions from sources owned or controlled (e.g., boilers, vehicles).
+  /// Direct greenhouse gas emissions from sources owned or controlled (e.g.,
+  /// boilers, vehicles).
   emissionsScope1,
 
-  /// Indirect GHG emissions from the generation of purchased electricity or energy.
+  /// Indirect GHG emissions from the generation of purchased electricity or
+  /// energy.
   emissionsScope2,
 
   /// All other indirect emissions in the organization's value chain.
   emissionsScope3,
 
-  /// Risks to operations arising from extreme weather events or rising sea levels.
+  /// Risks to operations arising from extreme weather events or rising sea
+  /// levels.
   physicalClimateRisk,
 
-  /// Risks related to moving towards a lower-carbon economy (e.g., policy changes).
+  /// Risks related to moving towards a lower-carbon economy (e.g., policy
+  /// changes).
   transitionClimateRisk,
 
-  /// Metrics tracking the usage of biodiversity, water, and circular economy resources.
+  /// Metrics tracking the usage of biodiversity, water, and circular economy
+  /// resources.
   naturalResources,
 }
 
@@ -45,6 +50,7 @@ class SustainabilityMetric {
   /// Precise point in time the measurement was recorded.
   final DateTime measuredAt;
 
-  /// Scientific or regulatory methodology used for calculation (e.g., "GHG Protocol").
+  /// Scientific or regulatory methodology used for calculation (e.g., "GHG
+  /// Protocol").
   final String methodology;
 }

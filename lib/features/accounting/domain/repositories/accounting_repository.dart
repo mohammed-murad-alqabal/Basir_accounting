@@ -25,6 +25,6 @@ abstract class AccountingRepository {
   Future<void> addJournalEntry(JournalEntry entry);
 
   /// Computes the net balance for a specific account.
-  /// Usually aggregates debit minus credit totals (or vice versa based on nature).
+  /// Usually aggregates debit minus credit totals (or vice versa based on\n  /// nature).
   Future<Decimal> getAccountBalance(String accountId);
 }

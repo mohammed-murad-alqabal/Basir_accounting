@@ -98,11 +98,10 @@ class JournalEntryLine with _$JournalEntryLine {
   }) = _JournalEntryLine;
 
   /// deserialization from JSON format.
-  factory JournalEntryLine.fromJson(Map<String, dynamic> json) =>
-      _$JournalEntryLineFromJson(json);
+  factory JournalEntryLine.fromJson(Map<String, dynamic> json) => _$JournalEntryLineFromJson(json);
 }
 
-/// The core atomic financial record representing a balanced accounting transaction.
+/// The core atomic financial record representing a balanced accounting\n/// transaction.
 /// (Standard References: FR-ACC-001, FR-ACC-008)
 @freezed
 class JournalEntry with _$JournalEntry {
@@ -171,18 +170,15 @@ class JournalEntry with _$JournalEntry {
   }) = _JournalEntry;
 
   /// deserialization from JSON format.
-  factory JournalEntry.fromJson(Map<String, dynamic> json) =>
-      _$JournalEntryFromJson(json);
+  factory JournalEntry.fromJson(Map<String, dynamic> json) => _$JournalEntryFromJson(json);
 
   const JournalEntry._();
 
   /// Aggregated total of all Debit lines.
-  Decimal get totalDebit =>
-      lines.fold(Decimal.zero, (sum, line) => sum + line.debit);
+  Decimal get totalDebit => lines.fold(Decimal.zero, (sum, line) => sum + line.debit);
 
   /// Aggregated total of all Credit lines.
-  Decimal get totalCredit =>
-      lines.fold(Decimal.zero, (sum, line) => sum + line.credit);
+  Decimal get totalCredit => lines.fold(Decimal.zero, (sum, line) => sum + line.credit);
 
   /// Mathematical verification of the accounting equation (Debits = Credits).
   /// (Standard Reference: FR-ACC-002)

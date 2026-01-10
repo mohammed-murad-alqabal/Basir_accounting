@@ -2,11 +2,13 @@ import 'package:basir_app/features/auth/presentation/providers/auth_provider.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// A widget that reveals its child only if the current user has the required permission.
+/// A widget that reveals its child only if the current user has the required
+/// permission.
 ///
 /// If [fallback] is provided, it will be shown when permission is denied.
 /// Otherwise, an empty [SizedBox] is returned.
 class PermissionGuard extends ConsumerWidget {
+  /// Creates a permission guard with required permission bitmask and child.
   const PermissionGuard({
     required this.permission,
     required this.child,

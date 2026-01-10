@@ -22,6 +22,6 @@ abstract class FinancialYearRepository {
 
   /// Diagnostic check to verify if a specific date allows for data posting.
   ///
-  /// Returns `true` if the date falls within an open year and an unlocked period.
+  /// Returns `true` if the date falls within an open year and an unlocked\n  /// period.
   Future<bool> isPeriodOpen(DateTime date);
 }
