@@ -18,8 +18,10 @@ final auditServiceProvider = Provider<AuditService>((ref) {
 /// [AuditService]
 ///
 /// Manages the security context for the current session and provides
-/// standard audit metadata (`WhoDto`, `WhereDto`) for all institutional transactions.
+/// standard audit metadata (`WhoDto`, `WhereDto`) for all institutional
+/// transactions.
 class AuditService {
+  /// Creates a new [AuditService].
   AuditService(this._authService);
 
   final AuthService _authService;
@@ -58,7 +60,7 @@ class AuditService {
         _deviceId = winInfo.deviceId;
         _systemId = 'WINDOWS_${winInfo.computerName}';
       }
-    } catch (e) {
+    } on Object catch (e) {
       debugPrint('Warning: Could not fetch device info: $e');
       _deviceId = 'UNKNOWN_DEVICE';
       _systemId = 'UNKNOWN_SYSTEM';
@@ -86,8 +88,7 @@ class AuditService {
 
     // Default to "System" or "Guest" if no user is logged in
     final userId = user?.id ?? '00000000-0000-0000-0000-000000000000';
-    final userName =
-        user?.displayName ?? (user?.isGuest ?? false ? 'Guest' : 'System');
+    final userName = user?.displayName ?? (user?.isGuest ?? false ? 'Guest' : 'System');
     final userRole = user?.role.name ?? 'system';
 
     return AuditMetadataDto(
