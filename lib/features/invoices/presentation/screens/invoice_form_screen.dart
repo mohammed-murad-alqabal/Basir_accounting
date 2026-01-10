@@ -29,8 +29,10 @@ import 'package:uuid/uuid.dart';
 /// Uses [Decimal] for all financial calculations to ensure IFRS 18 compliance.
 /// ***
 class InvoiceFormScreen extends ConsumerStatefulWidget {
+  /// Creates an invoice form screen with an optional existing invoice to edit.
   const InvoiceFormScreen({super.key, this.invoice});
 
+  /// The invoice to edit; if null, a new invoice will be created.
   final Invoice? invoice;
 
   @override
@@ -73,12 +75,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     final isEditing = widget.invoice != null;
     final customersAsync = ref.watch(customersProvider);
     final appIcons = ref.watch(appIconsProvider);
-    final calendarType =
-        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
+    final calendarType = ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
 
-    if (widget.invoice != null &&
-        _selectedCustomer == null &&
-        customersAsync.hasValue) {
+    if (widget.invoice != null && _selectedCustomer == null && customersAsync.hasValue) {
       try {
         _selectedCustomer = customersAsync.value!.firstWhere(
           (c) => c.id == widget.invoice!.customerId,
@@ -89,9 +88,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppAppBar(
-        title: isEditing
-            ? context.l10n.invoiceFormTitleEdit
-            : context.l10n.invoiceFormTitleAdd,
+        title: isEditing ? context.l10n.invoiceFormTitleEdit : context.l10n.invoiceFormTitleAdd,
       ),
       body: Form(
         key: _formKey,
@@ -103,8 +100,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               AppCard(
                 child: customersAsync.when(
                   data: _buildCustomerSelector,
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
+                  loading: () => const Center(child: CircularProgressIndicator()),
                   error: (error, stack) => Text(
                     context.l10n.errLoadCustomers(error.toString()),
                     style: const TextStyle(color: AppColors.error),
@@ -157,9 +153,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   ),
                 ),
                 child: AppEnhancedButton(
-                  label: isEditing
-                      ? context.l10n.btnUpdateInvoice
-                      : context.l10n.btnSaveInvoice,
+                  label: isEditing ? context.l10n.btnUpdateInvoice : context.l10n.btnSaveInvoice,
                   onPressed: _isLoading ? null : _saveInvoice,
                   isLoading: _isLoading,
                   icon: appIcons.save,
@@ -195,8 +189,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 .map(
                   (customer) => DropdownMenuItem(
                     value: customer,
-                    child:
-                        Text(customer.nameAr, overflow: TextOverflow.ellipsis),
+                    child: Text(customer.nameAr, overflow: TextOverflow.ellipsis),
                   ),
                 )
                 .toList(),
@@ -416,8 +409,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                               ),
                             ),
                             IconButton(
-                              icon:
-                                  Icon(appIcons.delete, color: AppColors.error),
+                              icon: Icon(appIcons.delete, color: AppColors.error),
                               tooltip: context.l10n.tooltipDeleteItem,
                               onPressed: () => _removeItem(index),
                             ),
@@ -481,9 +473,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             Text(
               label,
               style: TextStyle(
-                fontSize: isGrandTotal
-                    ? AppTypography.bodyLarge
-                    : AppTypography.bodyMedium,
+                fontSize: isGrandTotal ? AppTypography.bodyLarge : AppTypography.bodyMedium,
                 fontWeight: isGrandTotal ? FontWeight.bold : FontWeight.w500,
                 color: AppColors.textPrimary,
               ),
@@ -494,9 +484,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 locale: context.l10n.localeName,
               ),
               style: TextStyle(
-                fontSize: isGrandTotal
-                    ? AppTypography.headlineSmall
-                    : AppTypography.bodyLarge,
+                fontSize: isGrandTotal ? AppTypography.headlineSmall : AppTypography.bodyLarge,
                 fontWeight: FontWeight.bold,
                 color: isGrandTotal ? AppColors.primary : AppColors.textPrimary,
               ),
@@ -553,9 +541,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             label: context.l10n.btnSave,
             onPressed: () {
               final value = Decimal.tryParse(controller.text);
-              if (value != null &&
-                  value >= Decimal.zero &&
-                  value <= Decimal.fromInt(100)) {
+              if (value != null && value >= Decimal.zero && value <= Decimal.fromInt(100)) {
                 setState(
                   () => _taxRate = (value / Decimal.fromInt(100)).toDecimal(),
                 );
@@ -588,8 +574,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (inventoryItemsAsync.hasValue &&
-                    inventoryItemsAsync.value!.isNotEmpty)
+                if (inventoryItemsAsync.hasValue && inventoryItemsAsync.value!.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(bottom: Spacing.md),
                     child: DropdownButtonFormField<InventoryItem>(
@@ -615,8 +600,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                             nameController.text = item.name(
                               isArabic: context.l10n.localeName == 'ar',
                             );
-                            priceController.text =
-                                (item.salePrice ?? 0.0).toString();
+                            priceController.text = (item.salePrice ?? 0.0).toString();
                             selectedTaxCategory = item.taxCategory;
                           });
                         }
@@ -637,8 +621,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                         nameController.text = item.name(
                           isArabic: context.l10n.localeName == 'ar',
                         );
-                        priceController.text =
-                            (item.salePrice ?? 0.0).toString();
+                        priceController.text = (item.salePrice ?? 0.0).toString();
                         selectedTaxCategory = item.taxCategory;
                       });
                     } else {
@@ -726,8 +709,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 if (name.isNotEmpty && quantity != null && price != null) {
                   final total = quantity * price;
                   // Calculate tax based on category
-                  final rate =
-                      selectedTaxCategory == 'S' ? _taxRate : Decimal.zero;
+                  final rate = selectedTaxCategory == 'S' ? _taxRate : Decimal.zero;
                   setState(() {
                     _items.add(
                       InvoiceItem(
@@ -803,9 +785,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       final grandTotal = subtotal + taxTotal;
       final isNew = widget.invoice == null;
       final invoiceId = isNew ? const Uuid().v4() : widget.invoice!.id;
-      final invoiceNumber = isNew
-          ? 'INV-${DateTime.now().millisecondsSinceEpoch}'
-          : widget.invoice!.invoiceNumber;
+      final invoiceNumber =
+          isNew ? 'INV-${DateTime.now().millisecondsSinceEpoch}' : widget.invoice!.invoiceNumber;
 
       final invoice = Invoice(
         id: invoiceId,
@@ -823,9 +804,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         paidAmount: isNew ? Decimal.zero : widget.invoice!.paidAmount,
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
-        notes: _notesController.text.trim().isEmpty
-            ? null
-            : _notesController.text.trim(),
+        notes: _notesController.text.trim().isEmpty ? null : _notesController.text.trim(),
         createdAt: widget.invoice?.createdAt ?? DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -841,9 +820,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              isEditing
-                  ? context.l10n.msgInvoiceUpdated
-                  : context.l10n.msgInvoiceAdded,
+              isEditing ? context.l10n.msgInvoiceUpdated : context.l10n.msgInvoiceAdded,
             ),
             backgroundColor: AppColors.secondary,
           ),
@@ -853,9 +830,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              isEditing
-                  ? context.l10n.errInvoiceUpdate
-                  : context.l10n.errInvoiceAdd,
+              isEditing ? context.l10n.errInvoiceUpdate : context.l10n.errInvoiceAdd,
             ),
             backgroundColor: AppColors.error,
           ),

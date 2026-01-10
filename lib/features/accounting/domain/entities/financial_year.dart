@@ -6,7 +6,7 @@ part 'financial_year.g.dart';
 
 /// Represents a Fiscal Year cycle and its constituent accounting periods.
 ///
-/// Encapsulates the start, end, and closing state of the primary financial reporting cycle.
+/// Encapsulates the start, end, and closing state of the primary financial\n/// reporting cycle.
 @freezed
 class FinancialYear with _$FinancialYear {
   /// Creates a financial year record.
@@ -49,8 +49,7 @@ class FinancialYear with _$FinancialYear {
   }) = _FinancialYear;
 
   /// deserialization from JSON format.
-  factory FinancialYear.fromJson(Map<String, dynamic> json) =>
-      _$FinancialYearFromJson(json);
+  factory FinancialYear.fromJson(Map<String, dynamic> json) => _$FinancialYearFromJson(json);
 
   const FinancialYear._();
 

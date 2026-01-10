@@ -35,7 +35,7 @@ enum AccountNature {
   credit,
 }
 
-/// Represents a specific account within the hierarchical Chart of Accounts (COA).
+/// Represents a specific account within the hierarchical Chart of Accounts\n/// (COA).
 @freezed
 class Account with _$Account {
   /// Creates a business account entity.

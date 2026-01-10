@@ -6,7 +6,8 @@ enum Ifrs18Category {
   /// Income and expenses from core business operations and daily activities.
   operating,
 
-  /// Returns from investments in associates, joint ventures, and financial assets.
+  /// Returns from investments in associates, joint ventures, and financial
+  /// assets.
   investing,
 
   /// Income and expenses related to capital structure and debt servicing.
@@ -18,14 +19,15 @@ enum Ifrs18Category {
   /// Gains or losses from operational segments that have been terminated.
   discontinued,
 
-  /// Not applicable for this specific account type (e.g., Balance Sheet accounts).
+  /// Not applicable for this specific account type (e.g., Balance Sheet
+  /// accounts).
   none,
 }
 
 /// Management Performance Measure (MPM) container as mandated by IFRS 18.
 ///
-/// MPMs are non-GAAP measures used by management to communicate financial performance,
-/// requiring strict reconciliation to the nearest IFRS subtotal.
+/// MPMs are non-GAAP measures used by management to communicate financial
+/// performance, requiring strict reconciliation to the nearest IFRS subtotal.
 class ManagementPerformanceMeasure {
   /// Creates an MPM record.
   const ManagementPerformanceMeasure({
@@ -35,7 +37,8 @@ class ManagementPerformanceMeasure {
     required this.reconciliationToIfrs,
   });
 
-  /// The custom narrative name of the performance indicator (e.g., "Adjusted EBITDA").
+  /// The custom narrative name of the performance indicator (e.g., "Adjusted
+  /// EBITDA").
   final String name;
 
   /// Clear explanation of why this measure reflects business performance.
