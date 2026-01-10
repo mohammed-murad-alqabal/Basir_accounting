@@ -3,7 +3,7 @@
 **Document ID:** STRAT-PH6-GLOB-ACC
 **Date:** January 2, 2026
 **Status:** 🚀 Planning & Architecting
-**Objective:** Transform Baseer MVP from invoice-based tracking to a globally compliant, full-cycle accounting engine.
+**Objective:** Transform Basir Accounting System from invoice-based tracking to a globally compliant, full-cycle accounting engine.
 
 ---
 
