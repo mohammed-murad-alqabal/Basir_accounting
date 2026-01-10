@@ -41,7 +41,8 @@ void main() {
 
         // إعداد شاشة الأخطاء العالمية
         // ignore: lines_longer_than_80_chars
-        ErrorWidget.builder = (details) => basir.GlobalErrorWidget(errorDetails: details);
+        ErrorWidget.builder =
+            (details) => basir.GlobalErrorWidget(errorDetails: details);
 
         // تهيئة الخدمات الأساسية قبل البدء
         final container = ProviderContainer(

@@ -92,7 +92,8 @@ class Account with _$Account {
   }) = _Account;
 
   /// deserialization from JSON format.
-  factory Account.fromJson(Map<String, dynamic> json) => _$AccountFromJson(json);
+  factory Account.fromJson(Map<String, dynamic> json) =>
+      _$AccountFromJson(json);
 
   const Account._();
 

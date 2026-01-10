@@ -896,5 +896,7 @@
   "receiptTitleSimplified": "فاتورة ضريبية مبسطة",
   "receiptFooterThanks": "شكراً لزيارتكم",
   "receiptFooterBrand": "بصير - Basir Accounting",
-  "labelDiscount": "الخصم"
+  "labelDiscount": "الخصم",
+  "errPermissionDenied": "ليس لديك صلاحية للقيام بهذا الإجراء",
+  "msgInvoiceReversed": "تم عكس الفاتورة بنجاح"
 }

@@ -115,13 +115,15 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
               TextFormField(
                 controller: _amountController,
                 decoration: InputDecoration(
-                  labelText: (_selectedCurrency != null && _selectedCurrency != 'SAR')
-                      ? '${context.l10n.labelAmount} (SAR)'
-                      : context.l10n.labelAmount,
+                  labelText:
+                      (_selectedCurrency != null && _selectedCurrency != 'SAR')
+                          ? '${context.l10n.labelAmount} (SAR)'
+                          : context.l10n.labelAmount,
                   border: InputBorder.none,
                   prefixIcon: const Icon(Icons.money),
                 ),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 onChanged: (v) {
                   if (_selectedCurrency != null &&
                       _selectedCurrency != 'SAR' &&
@@ -129,7 +131,9 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                     final sarAmount = Decimal.tryParse(v);
                     if (sarAmount != null) {
                       setState(() {
-                        _originalAmount = (sarAmount / (_exchangeRate ?? Decimal.one)).toDecimal();
+                        _originalAmount =
+                            (sarAmount / (_exchangeRate ?? Decimal.one))
+                                .toDecimal();
                       });
                     }
                   }
@@ -161,10 +165,12 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                         ),
                         onChanged: (v) {
                           _originalAmount = Decimal.tryParse(v);
-                          if (_originalAmount != null && _exchangeRate != null) {
+                          if (_originalAmount != null &&
+                              _exchangeRate != null) {
                             setState(() {
                               _amountController.text =
-                                  (_originalAmount! * _exchangeRate!).toString();
+                                  (_originalAmount! * _exchangeRate!)
+                                      .toString();
                             });
                           }
                         },
@@ -183,10 +189,12 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                         ),
                         onChanged: (v) {
                           _exchangeRate = Decimal.tryParse(v);
-                          if (_originalAmount != null && _exchangeRate != null) {
+                          if (_originalAmount != null &&
+                              _exchangeRate != null) {
                             setState(() {
                               _amountController.text =
-                                  (_originalAmount! * _exchangeRate!).toString();
+                                  (_originalAmount! * _exchangeRate!)
+                                      .toString();
                             });
                           }
                         },
@@ -243,10 +251,14 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
       setState(() {
         _selectedCurrency = result == 'SAR' ? null : result;
         if (_selectedCurrency != null) {
-          _exchangeRate = (_selectedCurrency == 'USD') ? Decimal.parse('3.75') : Decimal.one;
-          final currentAmount = Decimal.tryParse(_amountController.text) ?? Decimal.zero;
+          _exchangeRate = (_selectedCurrency == 'USD')
+              ? Decimal.parse('3.75')
+              : Decimal.one;
+          final currentAmount =
+              Decimal.tryParse(_amountController.text) ?? Decimal.zero;
           if (currentAmount > Decimal.zero) {
-            _originalAmount = (currentAmount / (_exchangeRate ?? Decimal.one)).toDecimal();
+            _originalAmount =
+                (currentAmount / (_exchangeRate ?? Decimal.one)).toDecimal();
           }
         } else {
           _exchangeRate = null;
@@ -344,12 +356,14 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const SizedBox();
 
-          final filterCode = (_paymentMethod == PaymentMethod.cash) ? '1101' : '1102';
+          final filterCode =
+              (_paymentMethod == PaymentMethod.cash) ? '1101' : '1102';
           final treasuryAccounts = snapshot.data!
               .where(
                 (a) =>
                     a.code.startsWith(filterCode) ||
-                    (_paymentMethod == PaymentMethod.cash && a.subType == 'cash'),
+                    (_paymentMethod == PaymentMethod.cash &&
+                        a.subType == 'cash'),
               )
               .toList();
 
@@ -441,7 +455,8 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
   /// Validates and saves the financial voucher.
   Future<void> _saveVoucher() async {
     if (!_formKey.currentState!.validate()) return;
-    if (_selectedTreasuryAccountId == null || _selectedOppositeAccountId == null) {
+    if (_selectedTreasuryAccountId == null ||
+        _selectedOppositeAccountId == null) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(context.l10n.errFormFill)));

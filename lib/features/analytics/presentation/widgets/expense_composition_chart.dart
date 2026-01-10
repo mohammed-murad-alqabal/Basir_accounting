@@ -12,10 +12,12 @@ class ExpenseCompositionChart extends ConsumerStatefulWidget {
 
   @override
   @override
-  ConsumerState<ExpenseCompositionChart> createState() => _ExpenseCompositionChartState();
+  ConsumerState<ExpenseCompositionChart> createState() =>
+      _ExpenseCompositionChartState();
 }
 
-class _ExpenseCompositionChartState extends ConsumerState<ExpenseCompositionChart> {
+class _ExpenseCompositionChartState
+    extends ConsumerState<ExpenseCompositionChart> {
   late Future<Map<String, Decimal>> _compositionFuture;
   int touchedIndex = -1;
 
@@ -26,8 +28,9 @@ class _ExpenseCompositionChartState extends ConsumerState<ExpenseCompositionChar
   }
 
   void _loadData() {
-    _compositionFuture = _compositionFuture =
-        ref.read(financialReportingServiceProvider.notifier).getExpenseComposition();
+    _compositionFuture = _compositionFuture = ref
+        .read(financialReportingServiceProvider.notifier)
+        .getExpenseComposition();
   }
 
   @override
@@ -64,7 +67,8 @@ class _ExpenseCompositionChartState extends ConsumerState<ExpenseCompositionChar
                               touchedIndex = -1;
                               return;
                             }
-                            touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                            touchedIndex = pieTouchResponse
+                                .touchedSection!.touchedSectionIndex;
                           });
                         },
                       ),
@@ -89,7 +93,8 @@ class _ExpenseCompositionChartState extends ConsumerState<ExpenseCompositionChar
   List<PieChartSectionData> _showingSections(Map<String, Decimal> data) {
     final sections = <PieChartSectionData>[];
     final keys = <credential-fixture>();
-    final total = data.values.fold<Decimal>(Decimal.zero, (sum, val) => sum + val);
+    final total =
+        data.values.fold<Decimal>(Decimal.zero, (sum, val) => sum + val);
 
     // Color palette
     final colors = [
@@ -108,7 +113,8 @@ class _ExpenseCompositionChartState extends ConsumerState<ExpenseCompositionChar
       final rawKey = keys[i];
       final key = <credential-fixture> ? context.l10n.otherExpensesLabel : rawKey;
       final value = data[rawKey]!;
-      final percentage = (value.toDouble() * 100 / total.toDouble()).toStringAsFixed(1);
+      final percentage =
+          (value.toDouble() * 100 / total.toDouble()).toStringAsFixed(1);
       final color = colors[i % colors.length];
 
       sections.add(

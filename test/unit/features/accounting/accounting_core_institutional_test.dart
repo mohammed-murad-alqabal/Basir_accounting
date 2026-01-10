@@ -47,7 +47,9 @@ class InMemoryCustomerRepository implements CustomerRepository {
 
   @override
   Future<List<Customer>> searchCustomers(String query) async =>
-      _customers.values.where((c) => c.nameAr.contains(query) || c.nameEn.contains(query)).toList();
+      _customers.values
+          .where((c) => c.nameAr.contains(query) || c.nameEn.contains(query))
+          .toList();
 
   @override
   Future<void> deleteAllCustomers() async => _customers.clear();
@@ -74,24 +76,28 @@ class InMemoryVendorRepository implements VendorRepository {
   Future<void> deleteVendor(String id) async => _vendors.remove(id);
 
   @override
-  Future<List<Vendor>> searchVendors(String query) async =>
-      _vendors.values.where((v) => v.nameAr.contains(query) || v.nameEn.contains(query)).toList();
+  Future<List<Vendor>> searchVendors(String query) async => _vendors.values
+      .where((v) => v.nameAr.contains(query) || v.nameEn.contains(query))
+      .toList();
 }
 
 class InMemoryFinancialVoucherRepository implements FinancialVoucherRepository {
   final _vouchers = <String, FinancialVoucher>{};
 
   @override
-  Future<List<FinancialVoucher>> getAllVouchers() async => _vouchers.values.toList();
+  Future<List<FinancialVoucher>> getAllVouchers() async =>
+      _vouchers.values.toList();
 
   @override
   Future<FinancialVoucher?> getVoucherById(String id) async => _vouchers[id];
 
   @override
-  Future<void> addVoucher(FinancialVoucher voucher) async => _vouchers[voucher.id] = voucher;
+  Future<void> addVoucher(FinancialVoucher voucher) async =>
+      _vouchers[voucher.id] = voucher;
 
   @override
-  Future<void> updateVoucher(FinancialVoucher voucher) async => _vouchers[voucher.id] = voucher;
+  Future<void> updateVoucher(FinancialVoucher voucher) async =>
+      _vouchers[voucher.id] = voucher;
 
   @override
   Future<void> deleteVoucher(String id) async => _vouchers.remove(id);
@@ -341,7 +347,8 @@ void main() {
           recordingDate: now,
         ),
         standards: const StandardsJustification(
-          standardReference: 'IFRS 2', // GAAP: Share-based Payment (Placeholder)
+          standardReference:
+              'IFRS 2', // GAAP: Share-based Payment (Placeholder)
           recognitionBasis: 'Accrual',
           measurementBasis: 'Historical Cost',
         ),
@@ -421,7 +428,8 @@ class InMemoryFinancialYearRepository implements FinancialYearRepository {
   }
 
   @override
-  Future<List<FinancialYear>> getAllFinancialYears() async => _years.values.toList();
+  Future<List<FinancialYear>> getAllFinancialYears() async =>
+      _years.values.toList();
 
   @override
   Future<void> saveFinancialYear(FinancialYear year) async {

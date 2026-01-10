@@ -6,7 +6,8 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// مزود وحدة تحكم لوحة التحكم (Dashboard Controller Provider)
-final dashboardControllerProvider = AsyncNotifierProvider<DashboardController, DashboardData>(
+final dashboardControllerProvider =
+    AsyncNotifierProvider<DashboardController, DashboardData>(
   DashboardController.new,
 );
 
@@ -34,8 +35,9 @@ class DashboardController extends AsyncNotifier<DashboardData> {
     final allCustomers = results[1] as List<dynamic>;
 
     // تصفية الفواتير غير الملغاة
-    final activeInvoices =
-        allInvoices.where((inv) => inv.status != InvoiceStatus.cancelled).toList();
+    final activeInvoices = allInvoices
+        .where((inv) => inv.status != InvoiceStatus.cancelled)
+        .toList();
 
     // حساب الإحصائيات
     var paidCount = 0;

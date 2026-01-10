@@ -56,7 +56,9 @@ class TreasuryOverviewScreen extends ConsumerWidget {
       );
 
   /// Renders a horizontal scrollable view of atomic cash/bank accounts.
-  Widget _buildCashBalances(WidgetRef ref) => ref.watch(accountingServiceProvider).when(
+  Widget _buildCashBalances(WidgetRef ref) => ref
+      .watch(accountingServiceProvider)
+      .when(
         data: (_) => FutureBuilder<List<Account>>(
           future: ref.read(accountingServiceProvider.notifier).getAccounts(),
           builder: (context, snapshot) {
@@ -149,61 +151,66 @@ class TreasuryOverviewScreen extends ConsumerWidget {
       );
 
   /// Lists the chronologically sorted recent financial vouchers.
-  Widget _buildVouchersList(BuildContext context, WidgetRef ref) =>
-      ref.watch(getVouchersProvider).when(
-            data: (vouchers) {
-              if (vouchers.isEmpty) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: Spacing.xl),
-                    child: Text(context.l10n.noVouchersMessage),
-                  ),
-                );
-              }
+  Widget _buildVouchersList(BuildContext context, WidgetRef ref) => ref
+      .watch(getVouchersProvider)
+      .when(
+        data: (vouchers) {
+          if (vouchers.isEmpty) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: Spacing.xl),
+                child: Text(context.l10n.noVouchersMessage),
+              ),
+            );
+          }
 
-              final sortedVouchers = [...vouchers]..sort((a, b) => b.date.compareTo(a.date));
+          final sortedVouchers = [...vouchers]
+            ..sort((a, b) => b.date.compareTo(a.date));
 
-              return ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: sortedVouchers.length,
-                separatorBuilder: (_, __) => const SizedBox(height: Spacing.sm),
-                itemBuilder: (context, index) {
-                  final voucher = sortedVouchers[index];
-                  final color =
-                      voucher.type == VoucherType.receipt ? AppColors.success : AppColors.error;
+          return ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: sortedVouchers.length,
+            separatorBuilder: (_, __) => const SizedBox(height: Spacing.sm),
+            itemBuilder: (context, index) {
+              final voucher = sortedVouchers[index];
+              final color = voucher.type == VoucherType.receipt
+                  ? AppColors.success
+                  : AppColors.error;
 
-                  return AppCard(
-                    onTap: () {
-                      // Future: Navigate to voucher details/preview
-                    },
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: color.withValues(alpha: 0.1),
-                        child: Icon(
-                          voucher.type == VoucherType.receipt ? Icons.add : Icons.remove,
-                          color: color,
-                        ),
-                      ),
-                      title: Text(
-                        voucher.personName ?? context.l10n.anonymousPerson,
-                      ),
-                      subtitle: Text(
-                        '${intl.DateFormat('yyyy/MM/dd').format(voucher.date)} '
-                        '- ${voucher.referenceNumber}',
-                      ),
-                      trailing: Text(
-                        '${voucher.amount} ر.س',
-                        style: TextStyle(fontWeight: FontWeight.bold, color: color),
-                      ),
-                    ),
-                  );
+              return AppCard(
+                onTap: () {
+                  // Future: Navigate to voucher details/preview
                 },
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: color.withValues(alpha: 0.1),
+                    child: Icon(
+                      voucher.type == VoucherType.receipt
+                          ? Icons.add
+                          : Icons.remove,
+                      color: color,
+                    ),
+                  ),
+                  title: Text(
+                    voucher.personName ?? context.l10n.anonymousPerson,
+                  ),
+                  subtitle: Text(
+                    '${intl.DateFormat('yyyy/MM/dd').format(voucher.date)} '
+                    '- ${voucher.referenceNumber}',
+                  ),
+                  trailing: Text(
+                    '${voucher.amount} ر.س',
+                    style: TextStyle(fontWeight: FontWeight.bold, color: color),
+                  ),
+                ),
               );
             },
-            loading: () => const Center(child: AppLoadingIndicator()),
-            error: (e, _) => Center(child: Text('Error: $e')),
           );
+        },
+        loading: () => const Center(child: AppLoadingIndicator()),
+        error: (e, _) => Center(child: Text('Error: $e')),
+      );
 
   /// Navigates to the voucher issuance form.
   void _createNewVoucher(BuildContext context, VoucherType type) {

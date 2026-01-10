@@ -39,7 +39,9 @@ class OcrService extends _$OcrService {
           final text = line.text.toLowerCase();
 
           // Pattern: Total/Amount Detection
-          if (text.contains('total') || text.contains('amount') || text.contains('الاجمالي')) {
+          if (text.contains('total') ||
+              text.contains('amount') ||
+              text.contains('الاجمالي')) {
             final regExp = RegExp(r'(\d+[\.,]\d+)');
             final match = regExp.firstMatch(text);
             if (match != null) {

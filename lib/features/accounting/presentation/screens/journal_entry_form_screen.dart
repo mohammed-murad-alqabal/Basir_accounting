@@ -47,10 +47,12 @@ class JournalEntryFormScreen extends ConsumerStatefulWidget {
   final JournalEntry? entry;
 
   @override
-  ConsumerState<JournalEntryFormScreen> createState() => _JournalEntryFormScreenState();
+  ConsumerState<JournalEntryFormScreen> createState() =>
+      _JournalEntryFormScreenState();
 }
 
-class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen> {
+class _JournalEntryFormScreenState
+    extends ConsumerState<JournalEntryFormScreen> {
   final _formKey = <credential-fixture><FormState>();
   final _descriptionController = TextEditingController();
   DateTime _date = DateTime.now();
@@ -86,7 +88,8 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
       }
       _standardReference = widget.entry!.standards.standardReference;
       _recognitionBasis = widget.entry!.standards.recognitionBasis ?? 'Manual';
-      _measurementBasis = widget.entry!.standards.measurementBasis ?? 'Historical Cost';
+      _measurementBasis =
+          widget.entry!.standards.measurementBasis ?? 'Historical Cost';
     }
   }
 
@@ -103,7 +106,8 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
   Decimal get _totalCredit => _lines.fold(Decimal.zero, (s, l) => s + l.credit);
 
   /// Validates the fundamental accounting equation: sum(debit) == sum(credit).
-  bool get _isBalanced => _totalDebit == _totalCredit && _totalDebit > Decimal.zero;
+  bool get _isBalanced =>
+      _totalDebit == _totalCredit && _totalDebit > Decimal.zero;
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +137,9 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
                   Expanded(
                     child: AppEnhancedButton(
                       label: context.l10n.btnSaveEntry,
-                      onPressed: _isLoading ? null : () => _saveEntry(JournalEntryStatus.draft),
+                      onPressed: _isLoading
+                          ? null
+                          : () => _saveEntry(JournalEntryStatus.draft),
                       isLoading: _isLoading,
                       type: AppEnhancedButtonType.secondary,
                       icon: appIcons.save,
@@ -143,7 +149,9 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
                   Expanded(
                     child: AppEnhancedButton(
                       label: context.l10n.btnPostEntry,
-                      onPressed: _isLoading ? null : () => _saveEntry(JournalEntryStatus.posted),
+                      onPressed: _isLoading
+                          ? null
+                          : () => _saveEntry(JournalEntryStatus.posted),
                       isLoading: _isLoading,
                       icon: appIcons.check,
                     ),
@@ -243,7 +251,8 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
               ),
               IconButton(
                 icon: Icon(appIcons.addCircle, color: AppColors.primary),
-                onPressed: () => setState(() => _lines.add(_JournalLineDraft())),
+                onPressed: () =>
+                    setState(() => _lines.add(_JournalLineDraft())),
               ),
             ],
           ),
@@ -282,7 +291,8 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
             children: [
               Expanded(
                 child: AppTextField(
-                  initialValue: line.debit == Decimal.zero ? '' : line.debit.toString(),
+                  initialValue:
+                      line.debit == Decimal.zero ? '' : line.debit.toString(),
                   label: context.l10n.labelDebit,
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
@@ -298,7 +308,8 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
               const SizedBox(width: Spacing.md),
               Expanded(
                 child: AppTextField(
-                  initialValue: line.credit == Decimal.zero ? '' : line.credit.toString(),
+                  initialValue:
+                      line.credit == Decimal.zero ? '' : line.credit.toString(),
                   label: context.l10n.labelCredit,
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
@@ -329,11 +340,14 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
                       ),
                       onChanged: (v) {
                         setState(() {
-                          line.originalAmount = Decimal.tryParse(v) ?? Decimal.zero;
+                          line.originalAmount =
+                              Decimal.tryParse(v) ?? Decimal.zero;
                           if (line.exchangeRate != null) {
-                            final lcAmount = line.originalAmount! * line.exchangeRate!;
+                            final lcAmount =
+                                line.originalAmount! * line.exchangeRate!;
                             if (line.debit > Decimal.zero ||
-                                (line.debit == Decimal.zero && line.credit == Decimal.zero)) {
+                                (line.debit == Decimal.zero &&
+                                    line.credit == Decimal.zero)) {
                               line.debit = lcAmount;
                             } else {
                               line.credit = lcAmount;
@@ -353,11 +367,14 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
                       ),
                       onChanged: (v) {
                         setState(() {
-                          line.exchangeRate = Decimal.tryParse(v) ?? Decimal.one;
+                          line.exchangeRate =
+                              Decimal.tryParse(v) ?? Decimal.one;
                           if (line.originalAmount != null) {
-                            final lcAmount = line.originalAmount! * line.exchangeRate!;
+                            final lcAmount =
+                                line.originalAmount! * line.exchangeRate!;
                             if (line.debit > Decimal.zero ||
-                                (line.debit == Decimal.zero && line.credit == Decimal.zero)) {
+                                (line.debit == Decimal.zero &&
+                                    line.credit == Decimal.zero)) {
                               line.debit = lcAmount;
                             } else {
                               line.credit = lcAmount;
@@ -375,7 +392,9 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
             children: [
               TextButton.icon(
                 icon: Icon(
-                  line.originalCurrency == null ? appIcons.language : appIcons.edit,
+                  line.originalCurrency == null
+                      ? appIcons.language
+                      : appIcons.edit,
                   size: 16,
                 ),
                 label: Text(
@@ -407,7 +426,9 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  _isBalanced ? context.l10n.labelBalanced : context.l10n.labelUnbalanced,
+                  _isBalanced
+                      ? context.l10n.labelBalanced
+                      : context.l10n.labelUnbalanced,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: _isBalanced ? AppColors.success : AppColors.error,
@@ -470,8 +491,8 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
 
       final entry = JournalEntry(
         id: widget.entry?.id ?? const Uuid().v4(),
-        referenceNumber:
-            widget.entry?.referenceNumber ?? 'JE-${DateTime.now().millisecondsSinceEpoch}',
+        referenceNumber: widget.entry?.referenceNumber ??
+            'JE-${DateTime.now().millisecondsSinceEpoch}',
         date: _date,
         temporal: TemporalJustification(
           transactionDate: _date,
@@ -507,7 +528,9 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
             .toList(),
       );
 
-      await ref.read(accountingServiceProvider.notifier).postJournalEntry(entry);
+      await ref
+          .read(accountingServiceProvider.notifier)
+          .postJournalEntry(entry);
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -569,7 +592,8 @@ class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen>
           line.originalAmount = null;
         } else {
           line.originalCurrency = result;
-          line.exchangeRate = result == 'USD' ? Decimal.parse('3.75') : Decimal.one;
+          line.exchangeRate =
+              result == 'USD' ? Decimal.parse('3.75') : Decimal.one;
           if (line.debit > Decimal.zero) {
             line.originalAmount = line.debit;
           } else if (line.credit > Decimal.zero) {
@@ -593,7 +617,8 @@ class _AccountSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountsAsync = ref.watch(accountingServiceProvider.notifier).getAccounts();
+    final accountsAsync =
+        ref.watch(accountingServiceProvider.notifier).getAccounts();
 
     return FutureBuilder<List<Account>>(
       future: accountsAsync,

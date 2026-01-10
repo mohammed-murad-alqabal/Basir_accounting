@@ -209,7 +209,9 @@ class JournalEntriesScreen extends ConsumerWidget {
 
     if (confirm ?? false) {
       try {
-        await ref.read(accountingServiceProvider.notifier).reverseJournalEntry(entry.id);
+        await ref
+            .read(accountingServiceProvider.notifier)
+            .reverseJournalEntry(entry.id);
         if (!context.mounted) return;
         ScaffoldMessenger.of(
           context,
@@ -248,7 +250,9 @@ class JournalEntriesScreen extends ConsumerWidget {
         updatedAt: DateTime.now(),
         postedAt: DateTime.now(),
       );
-      await ref.read(accountingServiceProvider.notifier).postJournalEntry(updated);
+      await ref
+          .read(accountingServiceProvider.notifier)
+          .postJournalEntry(updated);
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.msgJournalEntryPosted)),
@@ -288,7 +292,8 @@ class JournalEntriesScreen extends ConsumerWidget {
       );
 
   /// Builds the scrollable list of Debit/Credit atomic lines.
-  Widget _buildEntryLines(BuildContext context, List<JournalEntryLine> lines) => Column(
+  Widget _buildEntryLines(BuildContext context, List<JournalEntryLine> lines) =>
+      Column(
         children: lines.map((line) => _buildLineRow(context, line)).toList(),
       );
 

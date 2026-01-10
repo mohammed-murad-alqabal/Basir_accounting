@@ -19,8 +19,9 @@ class TrialBalanceScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final trialBalanceAsync =
-        ref.watch(financialStatementServiceProvider.notifier).generateTrialBalance(DateTime.now());
+    final trialBalanceAsync = ref
+        .watch(financialStatementServiceProvider.notifier)
+        .generateTrialBalance(DateTime.now());
 
     final currencyFormatter = intl.NumberFormat.currency(
       symbol: '',
@@ -87,9 +88,12 @@ class TrialBalanceScreen extends ConsumerWidget {
                                     )
                                   : '-',
                               style: TextStyle(
-                                color: row.debitBalance > Decimal.zero ? AppColors.success : null,
-                                fontWeight:
-                                    row.debitBalance > Decimal.zero ? FontWeight.bold : null,
+                                color: row.debitBalance > Decimal.zero
+                                    ? AppColors.success
+                                    : null,
+                                fontWeight: row.debitBalance > Decimal.zero
+                                    ? FontWeight.bold
+                                    : null,
                                 fontSize: 13,
                               ),
                             ),
@@ -102,9 +106,12 @@ class TrialBalanceScreen extends ConsumerWidget {
                                     )
                                   : '-',
                               style: TextStyle(
-                                color: row.creditBalance > Decimal.zero ? AppColors.error : null,
-                                fontWeight:
-                                    row.creditBalance > Decimal.zero ? FontWeight.bold : null,
+                                color: row.creditBalance > Decimal.zero
+                                    ? AppColors.error
+                                    : null,
+                                fontWeight: row.creditBalance > Decimal.zero
+                                    ? FontWeight.bold
+                                    : null,
                                 fontSize: 13,
                               ),
                             ),
