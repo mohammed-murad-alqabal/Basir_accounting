@@ -50,7 +50,8 @@ class CustomerAging {
   final Decimal totalBalance;
 
   /// Returns the localized customer name based on the system locale.
-  String name({required bool isArabic}) => isArabic ? customerNameAr : customerNameEn;
+  String name({required bool isArabic}) =>
+      isArabic ? customerNameAr : customerNameEn;
 }
 
 /// Accounts Receivable (AR) Service for managing customer billing and debt.
@@ -79,7 +80,8 @@ class AccountsReceivableService extends _$AccountsReceivableService {
     for (final entry in entries) {
       for (final line in entry.lines) {
         if (line.accountId == targetAccountId ||
-            (targetAccountId == 'acc-1201' && line.accountName.contains(customerId))) {
+            (targetAccountId == 'acc-1201' &&
+                line.accountName.contains(customerId))) {
           balance += line.debit - line.credit;
         }
       }
@@ -172,7 +174,8 @@ class AccountsReceivableService extends _$AccountsReceivableService {
           (e) => e.lines.any(
             (l) =>
                 l.accountId == targetAccountId ||
-                (targetAccountId == 'acc-1201' && l.accountName.contains(customerId)),
+                (targetAccountId == 'acc-1201' &&
+                    l.accountName.contains(customerId)),
           ),
         )
         .toList();

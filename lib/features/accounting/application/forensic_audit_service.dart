@@ -32,8 +32,10 @@ class AuditResult {
 /// unusual transaction patterns, and structural imbalances. It serves
 /// as a critical layer of defense for financial accuracy.
 @riverpod
-class ForensicAuditService extends _$ForensicAuditService implements AccountingAgent {
-  AccountingRepository get _repository => ref.read(accountingRepositoryProvider);
+class ForensicAuditService extends _$ForensicAuditService
+    implements AccountingAgent {
+  AccountingRepository get _repository =>
+      ref.read(accountingRepositoryProvider);
 
   @override
   void build() {}
@@ -142,8 +144,9 @@ class ForensicAuditService extends _$ForensicAuditService implements AccountingA
         }
       }
 
-      final absoluteCalculated =
-          account.nature == AccountNature.debit ? calculatedBalance : -calculatedBalance;
+      final absoluteCalculated = account.nature == AccountNature.debit
+          ? calculatedBalance
+          : -calculatedBalance;
 
       final storedBalance = await _repository.getAccountBalance(account.id);
 
@@ -158,7 +161,8 @@ class ForensicAuditService extends _$ForensicAuditService implements AccountingA
     if (discrepancies.isEmpty) {
       return const AuditResult(
         isSuccess: true,
-        message: 'Data integrity verified: Account balances match transaction history.',
+        message:
+            'Data integrity verified: Account balances match transaction history.',
       );
     }
 

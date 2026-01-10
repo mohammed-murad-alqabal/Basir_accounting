@@ -72,7 +72,9 @@ class InvoicePdfService {
                 ),
               ),
               pw.Text(
-                invoice.zatcaDeviceId != null ? 'فاتورة ضريبية مبسطة' : 'فاتورة ضريبية',
+                invoice.zatcaDeviceId != null
+                    ? 'فاتورة ضريبية مبسطة'
+                    : 'فاتورة ضريبية',
                 style: pw.TextStyle(
                   font: boldFont,
                   fontSize: 12,
@@ -81,7 +83,8 @@ class InvoicePdfService {
               ),
               pw.Text(
                 'Tax Invoice',
-                style: const pw.TextStyle(fontSize: 16, color: PdfColors.grey700),
+                style:
+                    const pw.TextStyle(fontSize: 16, color: PdfColors.grey700),
                 textDirection: pw.TextDirection.ltr,
               ),
             ],
@@ -103,7 +106,8 @@ class InvoicePdfService {
         ],
       );
 
-  pw.Widget _buildCustomerInfo(Invoice invoice, pw.Font boldFont) => pw.Container(
+  pw.Widget _buildCustomerInfo(Invoice invoice, pw.Font boldFont) =>
+      pw.Container(
         padding: const pw.EdgeInsets.all(10),
         decoration: pw.BoxDecoration(
           border: pw.Border.all(color: PdfColors.grey300),
@@ -186,8 +190,10 @@ class InvoicePdfService {
               child: pw.BarcodeWidget(
                 barcode: pw.Barcode.qrCode(),
                 data: ZatcaService.encodeTlv(
-                  sellerName: 'مؤسسة بصير التجارية', // TODO(Basir): Get from settings
-                  taxNumber: '123456789012345', // TODO(Basir): Get from settings
+                  sellerName:
+                      'مؤسسة بصير التجارية', // TODO(Basir): Get from settings
+                  taxNumber:
+                      '123456789012345', // TODO(Basir): Get from settings
                   timestamp: invoice.issuedDate,
                   totalAmount: invoice.totalAmount,
                   vatAmount: invoice.taxAmount,

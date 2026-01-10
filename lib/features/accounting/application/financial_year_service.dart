@@ -15,7 +15,8 @@ class FinancialYearService extends _$FinancialYearService {
   @override
   FutureOr<void> build() {}
 
-  FinancialYearRepository get _repository => ref.read(financialYearRepositoryProvider);
+  FinancialYearRepository get _repository =>
+      ref.read(financialYearRepositoryProvider);
 
   /// Initializes the default financial year if none exists in the system.
   /// (Implementation of FR-ACC-015)
@@ -95,7 +96,9 @@ class FinancialYearService extends _$FinancialYearService {
     final entries = await accountingRepo.getJournalEntries();
 
     final pendingDrafts = entries.where(
-      (e) => e.status == JournalEntryStatus.draft && targetYear.containsDate(e.date),
+      (e) =>
+          e.status == JournalEntryStatus.draft &&
+          targetYear.containsDate(e.date),
     );
 
     if (pendingDrafts.isNotEmpty) {

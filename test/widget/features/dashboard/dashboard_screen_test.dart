@@ -158,7 +158,8 @@ void main() {
       mockCustomerRepo.setCustomers(customers);
     });
 
-    Widget createTestWidget({Map<String, WidgetBuilder>? routes}) => ProviderScope(
+    Widget createTestWidget({Map<String, WidgetBuilder>? routes}) =>
+        ProviderScope(
           overrides: [
             invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepo),
             customerRepositoryProvider.overrideWithValue(mockCustomerRepo),
