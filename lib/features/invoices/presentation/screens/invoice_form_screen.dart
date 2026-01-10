@@ -6,23 +6,29 @@ import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:basir_app/core/utils/format_helpers.dart';
 import 'package:basir_app/features/customers/domain/entities/customer.dart';
 import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_app/features/inventory/domain/entities/inventory_item.dart';
+import 'package:basir_app/features/inventory/presentation/providers/inventory_provider.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:basir_app/shared/widgets/index.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
-/// شاشة إضافة/تعديل فاتورة
+/// ***
+/// Cognitive Foundation: InvoiceFormScreen
 ///
-/// تسمح بإضافة فاتورة جديدة أو تعديل فاتورة موجودة.
-/// تتضمن اختيار العميل، إضافة بنود، وحساب الإجماليات تلقائياً.
+/// Orchestration interface for creating and modifying institutional invoices.
+/// Manages customer selection, high-precision line item composition,
+/// and automated totalization.
+///
+/// Uses [Decimal] for all financial calculations to ensure IFRS 18 compliance.
+/// ***
 class InvoiceFormScreen extends ConsumerStatefulWidget {
-  /// إنشاء شاشة نموذج الفاتورة
   const InvoiceFormScreen({super.key, this.invoice});
 
-  /// الفاتورة المراد تعديلها (null للإضافة)
   final Invoice? invoice;
 
   @override
@@ -37,8 +43,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   Customer? _selectedCustomer;
   DateTime _issuedDate = DateTime.now();
   DateTime _dueDate = DateTime.now().add(const Duration(days: 30));
-  double _taxRate = 0.15; // 15% ضريبة افتراضية
-  InvoiceStatus _status = InvoiceStatus.draft; // مسودة افتراضياً
+  Decimal _taxRate = Decimal.parse('0.15');
+  InvoiceStatus _status = InvoiceStatus.draft;
   List<InvoiceItem> _items = [];
 
   @override
@@ -51,15 +57,6 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       _taxRate = widget.invoice!.taxRate;
       _status = widget.invoice!.status;
       _items = List.from(widget.invoice!.items);
-      // Ensure selected customer logic if needed, but here we just need to
-      // bind if we had full list.
-      // Since we load customers async, we might not set _selectedCustomer
-      // immediately unless we fetch it.
-      // For simplicity, we assume the user re-selects or we'd need to fetch
-      // the customer by ID.
-      // However, the original code didn't pre-populate _selectedCustomer for
-      // editing correctly unless the list is loaded.
-      // We will leave that logic as is, focusing on type fixes.
     }
   }
 
@@ -74,13 +71,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     final isEditing = widget.invoice != null;
     final customersAsync = ref.watch(customersProvider);
     final appIcons = ref.watch(appIconsProvider);
-    final calendarType =
-        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
+    final calendarType = ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
 
-    // Correctly set selected customer if editing and customers are loaded
-    if (widget.invoice != null &&
-        _selectedCustomer == null &&
-        customersAsync.hasValue) {
+    if (widget.invoice != null && _selectedCustomer == null && customersAsync.hasValue) {
       try {
         _selectedCustomer = customersAsync.value!.firstWhere(
           (c) => c.id == widget.invoice!.customerId,
@@ -91,9 +84,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppAppBar(
-        title: isEditing
-            ? context.l10n.invoiceFormTitleEdit
-            : context.l10n.invoiceFormTitleAdd,
+        title: isEditing ? context.l10n.invoiceFormTitleEdit : context.l10n.invoiceFormTitleAdd,
       ),
       body: Form(
         key: _formKey,
@@ -105,8 +96,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               AppCard(
                 child: customersAsync.when(
                   data: _buildCustomerSelector,
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
+                  loading: () => const Center(child: CircularProgressIndicator()),
                   error: (error, stack) => Text(
                     context.l10n.errLoadCustomers(error.toString()),
                     style: const TextStyle(color: AppColors.error),
@@ -151,9 +141,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               ),
               const SizedBox(height: Spacing.xl),
               AppEnhancedButton(
-                label: isEditing
-                    ? context.l10n.btnUpdateInvoice
-                    : context.l10n.btnSaveInvoice,
+                label: isEditing ? context.l10n.btnUpdateInvoice : context.l10n.btnSaveInvoice,
                 onPressed: _isLoading ? null : _saveInvoice,
                 isLoading: _isLoading,
                 icon: appIcons.save,
@@ -188,8 +176,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 .map(
                   (customer) => DropdownMenuItem(
                     value: customer,
-                    child:
-                        Text(customer.nameAr, overflow: TextOverflow.ellipsis),
+                    child: Text(customer.nameAr, overflow: TextOverflow.ellipsis),
                   ),
                 )
                 .toList(),
@@ -267,7 +254,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${(_taxRate * 100).toStringAsFixed(0)}%',
+                  '${(_taxRate * Decimal.fromInt(100)).toStringAsFixed(0)}%',
                   style: const TextStyle(
                     fontSize: AppTypography.bodyLarge,
                     fontWeight: FontWeight.w600,
@@ -409,8 +396,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                               ),
                             ),
                             IconButton(
-                              icon:
-                                  Icon(appIcons.delete, color: AppColors.error),
+                              icon: Icon(appIcons.delete, color: AppColors.error),
                               tooltip: context.l10n.tooltipDeleteItem,
                               onPressed: () => _removeItem(index),
                             ),
@@ -426,7 +412,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       );
 
   Widget _buildTotalsSection() {
-    final subtotal = _items.fold<double>(0, (sum, item) => sum + item.total);
+    final subtotal = _items.fold<Decimal>(
+      Decimal.zero,
+      (sum, item) => sum + item.total,
+    );
     final taxTotal = subtotal * _taxRate;
     final grandTotal = subtotal + taxTotal;
 
@@ -442,7 +431,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           _buildTotalRow(context.l10n.labelSubtotal, subtotal),
           const Divider(),
           _buildTotalRow(
-            context.l10n.labelTax('${(_taxRate * 100).toStringAsFixed(0)}%'),
+            context.l10n.labelTax(
+              '${(_taxRate * Decimal.fromInt(100)).toStringAsFixed(0)}%',
+            ),
             taxTotal,
           ),
           const Divider(thickness: 2),
@@ -458,7 +449,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
   Widget _buildTotalRow(
     String label,
-    double amount, {
+    Decimal amount, {
     bool isGrandTotal = false,
   }) =>
       Padding(
@@ -469,9 +460,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             Text(
               label,
               style: TextStyle(
-                fontSize: isGrandTotal
-                    ? AppTypography.bodyLarge
-                    : AppTypography.bodyMedium,
+                fontSize: isGrandTotal ? AppTypography.bodyLarge : AppTypography.bodyMedium,
                 fontWeight: isGrandTotal ? FontWeight.bold : FontWeight.w500,
                 color: AppColors.textPrimary,
               ),
@@ -482,9 +471,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 locale: context.l10n.localeName,
               ),
               style: TextStyle(
-                fontSize: isGrandTotal
-                    ? AppTypography.headlineSmall
-                    : AppTypography.bodyLarge,
+                fontSize: isGrandTotal ? AppTypography.headlineSmall : AppTypography.bodyLarge,
                 fontWeight: FontWeight.bold,
                 color: isGrandTotal ? AppColors.primary : AppColors.textPrimary,
               ),
@@ -515,7 +502,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
   Future<void> _showTaxRateDialog() async {
     final controller = TextEditingController(
-      text: (_taxRate * 100).toStringAsFixed(0),
+      text: (_taxRate * Decimal.fromInt(100)).toStringAsFixed(0),
     );
 
     await showDialog<void>(
@@ -540,9 +527,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           AppEnhancedButton(
             label: context.l10n.btnSave,
             onPressed: () {
-              final value = double.tryParse(controller.text);
-              if (value != null && value >= 0 && value <= 100) {
-                setState(() => _taxRate = value / 100);
+              final value = Decimal.tryParse(controller.text);
+              if (value != null && value >= Decimal.zero && value <= Decimal.fromInt(100)) {
+                setState(() => _taxRate = (value / Decimal.fromInt(100)).toDecimal());
                 Navigator.pop(context);
               }
             },
@@ -560,76 +547,163 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     final nameController = TextEditingController();
     final quantityController = TextEditingController(text: '1');
     final priceController = TextEditingController();
+    var selectedTaxCategory = 'S';
+    final inventoryItemsAsync = ref.read(inventoryItemsProvider);
 
     await showDialog<void>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.l10n.dialogAddItemTitle),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  labelText: context.l10n.labelItemName,
-                ),
-              ),
-              const SizedBox(height: Spacing.md),
-              TextField(
-                controller: quantityController,
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
-                decoration: InputDecoration(
-                  labelText: context.l10n.labelQuantity,
-                ),
-              ),
-              const SizedBox(height: Spacing.md),
-              TextField(
-                controller: priceController,
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
-                decoration: InputDecoration(labelText: context.l10n.labelPrice),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          AppEnhancedButton(
-            label: context.l10n.dialogCancel,
-            onPressed: () => Navigator.pop(context),
-            type: AppEnhancedButtonType.text,
-            height: 36,
-          ),
-          AppEnhancedButton(
-            label: context.l10n.btnAdd,
-            onPressed: () {
-              final name = nameController.text.trim();
-              final quantity = double.tryParse(quantityController.text);
-              final price = double.tryParse(priceController.text);
-
-              if (name.isNotEmpty && quantity != null && price != null) {
-                final total = quantity * price;
-                setState(() {
-                  _items.add(
-                    InvoiceItem(
-                      id: const Uuid().v4(),
-                      name: name,
-                      quantity: quantity,
-                      price: price,
-                      total: total,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: Text(context.l10n.dialogAddItemTitle),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (inventoryItemsAsync.hasValue && inventoryItemsAsync.value!.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: Spacing.md),
+                    child: DropdownButtonFormField<InventoryItem>(
+                      decoration: InputDecoration(
+                        labelText: context.l10n.labelInventoryItem,
+                        hintText: context.l10n.hintSelectInventoryItem,
+                      ),
+                      items: inventoryItemsAsync.value!
+                          .map(
+                            (item) => DropdownMenuItem(
+                              value: item,
+                              child: Text(item.name(isArabic: context.l10n.localeName == 'ar')),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (item) {
+                        if (item != null) {
+                          setDialogState(() {
+                            nameController.text =
+                                item.name(isArabic: context.l10n.localeName == 'ar');
+                            priceController.text = (item.salePrice ?? 0.0).toString();
+                            selectedTaxCategory = item.taxCategory;
+                          });
+                        }
+                      },
                     ),
-                  );
-                });
-                Navigator.pop(context);
-              }
-            },
-            type: AppEnhancedButtonType.text,
-            height: 36,
+                  ),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: context.l10n.labelSearchSku,
+                    hintText: context.l10n.hintSearchSku,
+                    prefixIcon: const Icon(Icons.qr_code_scanner),
+                  ),
+                  onSubmitted: (sku) async {
+                    if (sku.isEmpty) return;
+                    final item = await ref.read(itemBySkuProvider(sku).future);
+                    if (item != null) {
+                      setDialogState(() {
+                        nameController.text = item.name(
+                          isArabic: context.l10n.localeName == 'ar',
+                        );
+                        priceController.text = (item.salePrice ?? 0.0).toString();
+                        selectedTaxCategory = item.taxCategory;
+                      });
+                    } else {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(context.l10n.msgItemNotFound)),
+                        );
+                      }
+                    }
+                  },
+                ),
+                const SizedBox(height: Spacing.md),
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    labelText: context.l10n.labelItemName,
+                  ),
+                ),
+                const SizedBox(height: Spacing.md),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: quantityController,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        decoration: InputDecoration(
+                          labelText: context.l10n.labelQuantity,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: Spacing.md),
+                    Expanded(
+                      child: TextField(
+                        controller: priceController,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        decoration: InputDecoration(
+                          labelText: context.l10n.labelPrice,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: Spacing.md),
+                DropdownButtonFormField<String>(
+                  initialValue: selectedTaxCategory,
+                  decoration: InputDecoration(
+                    labelText: context.l10n.labelTaxCategory,
+                  ),
+                  items: const [
+                    DropdownMenuItem(value: 'S', child: Text('Standard (15%)')),
+                    DropdownMenuItem(value: 'Z', child: Text('Zero Rated (0%)')),
+                    DropdownMenuItem(value: 'E', child: Text('Exempt (0%)')),
+                    DropdownMenuItem(value: 'O', child: Text('Out of Scope')),
+                  ],
+                  onChanged: (val) {
+                    if (val != null) {
+                      setDialogState(() => selectedTaxCategory = val);
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
-        ],
+          actions: [
+            AppEnhancedButton(
+              label: context.l10n.dialogCancel,
+              onPressed: () => Navigator.pop(context),
+              type: AppEnhancedButtonType.text,
+              height: 36,
+            ),
+            AppEnhancedButton(
+              label: context.l10n.btnAdd,
+              onPressed: () {
+                final name = nameController.text.trim();
+                final quantity = Decimal.tryParse(quantityController.text);
+                final price = Decimal.tryParse(priceController.text);
+
+                if (name.isNotEmpty && quantity != null && price != null) {
+                  final total = quantity * price;
+                  // Calculate tax based on category
+                  final rate = selectedTaxCategory == 'S' ? _taxRate : Decimal.zero;
+                  setState(() {
+                    _items.add(
+                      InvoiceItem(
+                        id: const Uuid().v4(),
+                        name: name,
+                        quantity: quantity,
+                        price: price,
+                        total: total,
+                        taxAmount: total * rate,
+                        taxCategory: selectedTaxCategory,
+                      ),
+                    );
+                  });
+                  Navigator.pop(context);
+                }
+              },
+              type: AppEnhancedButtonType.text,
+              height: 36,
+            ),
+          ],
+        ),
       ),
     );
 
@@ -676,14 +750,16 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final subtotal = _items.fold<double>(0, (sum, item) => sum + item.total);
+      final subtotal = _items.fold<Decimal>(
+        Decimal.zero,
+        (sum, item) => sum + item.total,
+      );
       final taxTotal = subtotal * _taxRate;
       final grandTotal = subtotal + taxTotal;
       final isNew = widget.invoice == null;
       final invoiceId = isNew ? const Uuid().v4() : widget.invoice!.id;
-      final invoiceNumber = isNew
-          ? 'INV-${DateTime.now().millisecondsSinceEpoch}'
-          : widget.invoice!.invoiceNumber;
+      final invoiceNumber =
+          isNew ? 'INV-${DateTime.now().millisecondsSinceEpoch}' : widget.invoice!.invoiceNumber;
 
       final invoice = Invoice(
         id: invoiceId,
@@ -698,11 +774,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         subtotalAmount: subtotal,
         taxAmount: taxTotal,
         totalAmount: grandTotal,
-        paidAmount: isNew ? 0.0 : widget.invoice!.paidAmount,
-        discountAmount: 0,
-        notes: _notesController.text.trim().isEmpty
-            ? null
-            : _notesController.text.trim(),
+        paidAmount: isNew ? Decimal.zero : widget.invoice!.paidAmount,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        notes: _notesController.text.trim().isEmpty ? null : _notesController.text.trim(),
         createdAt: widget.invoice?.createdAt ?? DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -718,9 +793,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              isEditing
-                  ? context.l10n.msgInvoiceUpdated
-                  : context.l10n.msgInvoiceAdded,
+              isEditing ? context.l10n.msgInvoiceUpdated : context.l10n.msgInvoiceAdded,
             ),
             backgroundColor: AppColors.secondary,
           ),
@@ -730,9 +803,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              isEditing
-                  ? context.l10n.errInvoiceUpdate
-                  : context.l10n.errInvoiceAdd,
+              isEditing ? context.l10n.errInvoiceUpdate : context.l10n.errInvoiceAdd,
             ),
             backgroundColor: AppColors.error,
           ),

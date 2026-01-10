@@ -41,8 +41,7 @@ void main() {
 
         // إعداد شاشة الأخطاء العالمية
         // ignore: lines_longer_than_80_chars
-        ErrorWidget.builder =
-            (details) => basir.GlobalErrorWidget(errorDetails: details);
+        ErrorWidget.builder = (details) => basir.GlobalErrorWidget(errorDetails: details);
 
         // تهيئة الخدمات الأساسية قبل البدء
         final container = ProviderContainer(
@@ -213,6 +212,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       final isLoggedIn = results[1];
       final isGuest = results[2];
       final keepLoggedIn = results[3];
+
+      if (isLoggedIn) {
+        // Hydrate User Profile Sync (Important for RBAC)
+        final user = await authService.getCurrentUser();
+        ref.read(currentUserProfileProvider.notifier).state = user;
+      }
 
       if (!mounted) return;
 

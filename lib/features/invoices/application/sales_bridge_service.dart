@@ -1,0 +1,114 @@
+import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_app/src/rust/api.dart';
+import 'package:basir_app/src/rust/api/sales.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
+
+/// [SalesBridgeService]
+///
+/// Bridges the Flutter Invoices module with the Rust-based Sales core.
+/// Handles ZATCA Phase 2 compliance by delegating to the Rust API.
+class SalesBridgeService {
+  /// Standard constructor for [SalesBridgeService].
+  SalesBridgeService(this.ref);
+
+  /// The Riverpod reference for dependency injection.
+  final Ref ref;
+
+  /// Synchronizes an invoice with the Rust core and performs ZATCA
+  /// compliance steps.
+  Future<Invoice> finalizeInvoiceWithZatca(Invoice invoice) async {
+    final user = ref.read(basirUserProvider);
+
+    final metadata = AuditMetadataDto(
+      who: WhoDto(
+        userId: user?.id ?? 'anonymous',
+        userName: user?.displayName ?? 'Anonymous',
+        role: user?.isGuest ?? false ? 'guest' : 'user',
+        sessionId: const Uuid().v4(),
+      ),
+      where: const WhereDto(
+        systemId: 'Basir-Mobile',
+        deviceId: 'device-id', // TODO(dev): Get real device ID
+        appVersion: '1.0.0',
+      ),
+      why: const WhyDto(
+        justification: 'ZATCA Phase 2 Compliance Finalization',
+      ),
+      how: const HowDto(
+        method: 'SalesBridgeService.finalizeInvoiceWithZatca',
+      ),
+    );
+
+    final salesDto = SalesInvoiceDto(
+      id: invoice.id,
+      invoiceNumber: invoice.invoiceNumber,
+      customerId: invoice.customerId,
+      invoiceDate: invoice.issuedDate.toUtc().toIso8601String(),
+      dueDate: invoice.dueDate.toUtc().toIso8601String(),
+      status: _mapStatus(invoice.status),
+      totalAmount: invoice.totalAmount.toString(),
+      balanceDue: (invoice.totalAmount - invoice.paidAmount).toString(),
+      description: invoice.notes,
+      incomeAccountId: 'acc-4101', // Default revenue
+      arAccountId: 'acc-1201', // Default AR
+    );
+
+    final lines = invoice.items
+        .map(
+          (item) => SalesInvoiceLineDto(
+            productId: item.id,
+            description: item.name,
+            quantity: item.quantity.toString(),
+            unitPrice: item.price.toString(),
+            taxAmount: item.taxAmount.toString(),
+            taxCategory: item.taxCategory,
+          ),
+        )
+        .toList();
+
+    // 1. Create/Update in Rust core
+    await createInvoice(invoice: salesDto, lines: lines, metadata: metadata);
+
+    // 2. Post and perform ZATCA compliance checks
+    if (invoice.status != InvoiceStatus.draft) {
+      await postInvoice(id: invoice.id, metadata: metadata);
+
+      // 3. Retrieve updated invoice with compliance data (QR Code, Hash, etc.)
+      final updatedDto = await getInvoiceById(id: invoice.id);
+      if (updatedDto != null) {
+        return invoice.copyWith(
+          qrCode: updatedDto.qrCodeData,
+          // Note: In a real scenario, we'd also sync the XML content and Hash
+          // if we add them to the DTO and the domain entity.
+        );
+      }
+    }
+
+    return invoice;
+  }
+
+  String _mapStatus(InvoiceStatus status) {
+    switch (status) {
+      case InvoiceStatus.draft:
+        return 'Draft';
+      case InvoiceStatus.sent:
+        return 'Open';
+      case InvoiceStatus.paid:
+        return 'Paid';
+      case InvoiceStatus.overdue:
+        return 'Overdue';
+      case InvoiceStatus.cancelled:
+        return 'Cancelled';
+      case InvoiceStatus.refunded:
+        return 'Refunded';
+    }
+  }
+}
+
+/// [salesBridgeServiceProvider]
+///
+/// Provider for the [SalesBridgeService] instance.
+final salesBridgeServiceProvider = Provider(SalesBridgeService.new);

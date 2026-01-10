@@ -5,183 +5,182 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'journal_entry.freezed.dart';
 part 'journal_entry.g.dart';
 
-/// حالة القيد المحاسبي
+/// Operational lifecycle states of a Journal Entry.
 enum JournalEntryStatus {
-  /// مسودة - يمكن التعديل
+  /// Initial editable state for preparation.
   draft,
 
-  /// مرحل - نهائي لا يمكن التعديل (FR-ACC-006)
+  /// Final immutable state. Once posted, modifications are strictly prohibited.
+  /// (Standard Reference: FR-ACC-006)
   posted,
 
-  /// ملغي - مع قيد عكسي
+  /// Cancelled state with a corresponding reversing entry for audit integrity.
   voided,
 }
 
-/// تبرير التاريخ (Temporal Justification)
-/// (CP-008: شمولية التبرير الزمني)
+/// Comprehensive temporal metadata for multi-perspective audit trails.
+/// (Standard Reference: CP-008: Temporal Justification)
 @freezed
 class TemporalJustification with _$TemporalJustification {
-  /// إنشاء تبرير زمني.
+  /// Creates a temporal justification record.
   const factory TemporalJustification({
-    /// تاريخ العملية الفعلي (Transaction Date)
+    /// The actual date the business transaction occurred.
     required DateTime transactionDate,
 
-    /// تاريخ الأثر المحاسبي (Effective Date)
+    /// The date the entry influences the financial statements (Posting Date).
     required DateTime effectiveDate,
 
-    /// تاريخ التسجيل في النظام (Recording Date)
+    /// The system-generated timestamp of the entry creation.
     required DateTime recordingDate,
   }) = _TemporalJustification;
 
-  /// إنشاء من JSON.
+  /// deserialization from JSON format.
   factory TemporalJustification.fromJson(Map<String, dynamic> json) =>
       _$TemporalJustificationFromJson(json);
 }
 
-/// تبرير المعايير (Standards Justification)
-/// (CP-002: شمولية مرجعية المعايير)
+/// Scientific and regulatory justification for financial recognition.
+/// (Standard Reference: CP-002: Standards Reference Integrity)
 @freezed
 class StandardsJustification with _$StandardsJustification {
-  /// إنشاء تبرير معايير.
+  /// Creates a regulatory standards justification.
   const factory StandardsJustification({
-    /// مرجع المعيار (مثل IFRS 15.35)
+    /// Specific standard clause reference (e.g., "IFRS 15.35").
     required String standardReference,
 
-    /// أساس الاعتراف (Recognition Basis)
+    /// Logic for recognizing the transaction (e.g., "Cash Receipt", "Accrual").
     String? recognitionBasis,
 
-    /// أساس القياس (Measurement Basis)
+    /// Value determination method (e.g., "Amortized Cost", "Fair Value").
     String? measurementBasis,
   }) = _StandardsJustification;
 
-  /// إنشاء من JSON.
+  /// deserialization from JSON format.
   factory StandardsJustification.fromJson(Map<String, dynamic> json) =>
       _$StandardsJustificationFromJson(json);
 }
 
-/// بند القيد المحاسبي (الطرف المدين أو الدائن)
+/// Represents a single Debit or Credit line within a Journal Entry.
 @freezed
 class JournalEntryLine with _$JournalEntryLine {
-  /// إنشاء بند قيد محاسبي جديد.
+  /// Creates a journal entry line.
   const factory JournalEntryLine({
-    /// معرف الحساب (يربط مع Account)
+    /// Reference to the target [Account] ID.
     required String accountId,
 
-    /// اسم الحساب (للعرض السريع)
+    /// Denormalized account name for high-performance listing and audit.
     required String accountName,
 
-    /// المبلغ المدين (Debit)
+    /// Positive increase for Debit-nature accounts.
     required Decimal debit,
 
-    /// المبلغ الدائن (Credit)
+    /// Positive increase for Credit-nature accounts.
     required Decimal credit,
 
-    /// الوصف الخاص بالبند
+    /// Line-specific memo or explanation.
     String? description,
 
-    /// مرجع المستند المصدر (Source Document Reference)
-    /// (CP-009: شمولية التتبع)
+    /// Direct link to source documentation (e.g., Invoice #, Receipt ID).
+    /// (Standard Reference: CP-009: Traceability)
     String? sourceDocumentRef,
 
-    /// مركز التكلفة (اختياري) - (FR-ACC-011)
+    /// Cost center identifier for management accounting attribution.
     String? costCenterId,
 
-    /// العملة الأصلية (للمعاملات متعددة العملات)
+    /// ISO currency code for multi-currency transactions.
     String? originalCurrency,
 
-    /// سعر الصرف وقت العملية
+    /// Spot exchange rate at the time of recording.
     Decimal? exchangeRate,
 
-    /// المبلغ بالعملة الأصلية
+    /// Original amount in the source currency before conversion.
     Decimal? originalAmount,
   }) = _JournalEntryLine;
 
-  /// إنشاء بند قيد من JSON
-  factory JournalEntryLine.fromJson(Map<String, dynamic> json) =>
-      _$JournalEntryLineFromJson(json);
+  /// deserialization from JSON format.
+  factory JournalEntryLine.fromJson(Map<String, dynamic> json) => _$JournalEntryLineFromJson(json);
 }
 
-/// القيد المحاسبي (Journal Entry)
-/// (FR-ACC-001: القيود المحاسبية التلقائية)
-/// (FR-ACC-008: مسار التدقيق شومل)
+/// The core atomic financial record representing a balanced accounting transaction.
+/// (Standard References: FR-ACC-001, FR-ACC-008)
 @freezed
 class JournalEntry with _$JournalEntry {
-  /// إنشاء قيد محاسبي جديد.
+  /// Creates a central journal entry.
   const factory JournalEntry({
-    /// معرف فريد للقيد
+    /// Unique internal UUID for the entry.
     required String id,
 
-    /// رقم القيد المرجعي (مثال: JE-2024-001)
+    /// Human-readable unique serial number (e.g., "JE-2024-001").
     required String referenceNumber,
 
-    /// تاريخ القيد (للتوافق، يفضل استخدام temporalCheck)
+    /// Primary chronological date for the entry report.
     required DateTime date,
 
-    /// التبرير الزمني الشامل (CP-008)
+    /// Multi-dimensional temporal audit metadata.
     required TemporalJustification temporal,
 
-    /// التبرير المرجعي للمعايير (CP-002)
+    /// Explicit regulatory compliance references and justifications.
     required StandardsJustification standards,
 
-    /// شرح القيد
+    /// Concise summary of the transaction purpose.
     required String description,
 
-    /// حالة القيد
+    /// Active state of the entry (Draft/Posted/Voided).
     required JournalEntryStatus status,
 
-    /// بنود القيد
+    /// Immutable list of balanced [JournalEntryLine]s.
     required List<JournalEntryLine> lines,
 
-    /// المصدر (فاتورة مبيعات، سند قبض، قيد يدوي)
-    /// يساعد في التتبع (Audit Trail)
+    /// Categorization of the spawning source (e.g., "sales_invoice", "pos").
     required String sourceDocument,
+
+    /// Unique identifier within the source module.
     required String sourceId,
 
-    /// معرف المستخدم الذي أنشأ القيد
+    /// User ID of the originator.
     required String createdBy,
 
-    /// تاريخ الإنشاء
+    /// Creation timestamp in UTC.
     required DateTime createdAt,
 
-    /// تاريخ آخر تحديث
+    /// Last modification timestamp in UTC.
     required DateTime updatedAt,
 
-    /// بصمة سلامة البيانات (Hash Trail)
-    /// (CP-003: عدم القابلية للتعديل)
+    /// Integrity verification fingerprint (Merkle-style link).
+    /// (Standard Reference: CP-003: Immutability)
     String? hash,
+
+    /// Fingerprint of the chronologically preceding entry in the ledger.
     String? previousHash,
 
-    /// تاريخ النشر (تاريخ الترحيل النهائي)
+    /// Final posting timestamp marking the end of the draft lifecycle.
     DateTime? postedAt,
 
-    /// معرف المستخدم لغرض عزل البيانات
+    /// Tenant isolation identifier.
     String? userId,
 
-    /// حالة المزامنة
+    /// Local-to-Remote synchronization state.
     @Default(SyncStatus.synced) SyncStatus syncStatus,
 
-    /// تاريخ آخر تحديث من السيرفر
+    /// Most recent synchronization timestamp from the server.
     DateTime? serverUpdatedAt,
 
-    /// هل السجل محذوف (حذف ناعم)
+    /// Soft-deletion flag.
     @Default(false) bool isDeleted,
   }) = _JournalEntry;
 
-  /// إنشاء قيد من JSON
-  factory JournalEntry.fromJson(Map<String, dynamic> json) =>
-      _$JournalEntryFromJson(json);
+  /// deserialization from JSON format.
+  factory JournalEntry.fromJson(Map<String, dynamic> json) => _$JournalEntryFromJson(json);
 
   const JournalEntry._();
 
-  /// إجمالي المدين
-  Decimal get totalDebit =>
-      lines.fold(Decimal.zero, (sum, line) => sum + line.debit);
+  /// Aggregated total of all Debit lines.
+  Decimal get totalDebit => lines.fold(Decimal.zero, (sum, line) => sum + line.debit);
 
-  /// إجمالي الدائن
-  Decimal get totalCredit =>
-      lines.fold(Decimal.zero, (sum, line) => sum + line.credit);
+  /// Aggregated total of all Credit lines.
+  Decimal get totalCredit => lines.fold(Decimal.zero, (sum, line) => sum + line.credit);
 
-  /// التحقق من توازن القيد (المدين = الدائن)
-  /// (FR-ACC-002: ضمان توازن المعادلة المحاسبية)
+  /// Mathematical verification of the accounting equation (Debits = Credits).
+  /// (Standard Reference: FR-ACC-002)
   bool get isBalanced => totalDebit == totalCredit;
 }

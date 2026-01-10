@@ -16,6 +16,8 @@ dependencies = [
 name = "accounting_core"
 version = "0.1.0"
 dependencies = [
+ "accounting_zatca",
+ "anyhow",
  "chrono",
  "hex",
  "proptest",
@@ -60,6 +62,7 @@ dependencies = [
  "p256",
  "quick-xml",
  "rand 0.8.5",
+ "rust_decimal",
  "serde",
  "sha2",
  "thiserror 1.0.69",

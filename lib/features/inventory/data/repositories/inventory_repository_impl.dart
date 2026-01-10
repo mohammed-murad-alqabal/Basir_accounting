@@ -69,6 +69,23 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
+  Future<InventoryItem?> getItemBySku(String sku) async {
+    try {
+      final model = await isar.inventoryItemModels
+          .filter()
+          .userIdEqualTo(userId)
+          .and()
+          .isDeletedEqualTo(false)
+          .and()
+          .skuEqualTo(sku, caseSensitive: false)
+          .findFirst();
+      return model?.toEntity();
+    } on Exception catch (e) {
+      throw Exception('خطأ في جلب صنف المخزون بواسطة الكود: $e');
+    }
+  }
+
+  @override
   Future<void> addItem(InventoryItem item) async {
     try {
       final model = InventoryItemModel.fromEntity(

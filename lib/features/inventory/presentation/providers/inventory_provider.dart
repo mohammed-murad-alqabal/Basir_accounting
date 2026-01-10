@@ -8,12 +8,17 @@ final inventoryItemsProvider = FutureProvider<List<InventoryItem>>((ref) async {
   return repository.getAllItems();
 });
 
+/// مزود جلب صنف بواسطة الكود
+final itemBySkuProvider = FutureProvider.family<InventoryItem?, String>((ref, sku) async {
+  final repository = ref.watch(inventoryRepositoryProvider);
+  return repository.getItemBySku(sku);
+});
+
 /// مزود البحث في المخزون
 final inventorySearchProvider = StateProvider<String>((ref) => '');
 
 /// مزود أصناف المخزون المفلترة بناءً على البحث
-final filteredInventoryItemsProvider =
-    Provider<AsyncValue<List<InventoryItem>>>((ref) {
+final filteredInventoryItemsProvider = Provider<AsyncValue<List<InventoryItem>>>((ref) {
   final itemsAsync = ref.watch(inventoryItemsProvider);
   final searchQuery = ref.watch(inventorySearchProvider).toLowerCase();
 
@@ -81,7 +86,6 @@ class InventoryNotifier extends StateNotifier<AsyncValue<void>> {
 }
 
 /// مزود العمليات على المخزون
-final inventoryActionProvider =
-    StateNotifierProvider<InventoryNotifier, AsyncValue<void>>(
+final inventoryActionProvider = StateNotifierProvider<InventoryNotifier, AsyncValue<void>>(
   (ref) => InventoryNotifier(ref: ref),
 );

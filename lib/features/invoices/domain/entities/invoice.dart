@@ -1,97 +1,106 @@
-/// كيان الفاتورة (Invoice Entity)
+/// ***
+/// Cognitive Foundation: Invoice Entity
 ///
-/// يمثل بيانات الفاتورة الأساسية في طبقة المجال (Domain Layer).
-/// يحتوي على جميع المعلومات المتعلقة بالفاتورة وبنودها، وحقول ZATCA.
+/// High-fidelity entity representing a financial transaction (Sales/Purchase).
+/// Complies with IFRS 18 and ZATCA Phase 2 standards.
+///
+/// Uses [Decimal] for all financial calculations to ensure absolute precision
+/// across institutional accounting workflows.
+/// ***
 library;
 
 import 'package:basir_app/core/models/sync_status.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'invoice.freezed.dart';
 part 'invoice.g.dart';
 
-/// بند الفاتورة (Invoice Item)
+/// [InvoiceItem]
 ///
-/// يمثل بنداً واحداً في الفاتورة مع الكمية والسعر.
+/// Represents a single line item within an invoice.
 @freezed
 class InvoiceItem with _$InvoiceItem {
-  /// إنشاء بند فاتورة جديد
-  const factory InvoiceItem({
+  /// Standard constructor for invoice line items.
+  factory InvoiceItem({
     required String id,
     required String name,
-    required double quantity,
-    required double price,
+    required Decimal quantity,
+    required Decimal price,
 
-    /// إجمالي البند (المحسوب والمخزن)
-    /// quantity * price
-    required double total,
+    /// Calculated subtotal: quantity * price.
+    required Decimal total,
 
-    /// الوصف (اختياري)
+    /// VAT amount calculated for this specific item.
+    required Decimal taxAmount,
+
+    /// Semantic description or notes.
     String? description,
 
-    /// مبلغ الضريبة للبند (اختياري إذا كان مفصلاً)
-    @Default(0.0) double taxAmount,
+    /// VAT category (e.g., 'S' for Standard, 'Z' for Zero, etc.)
+    @Default('S') String taxCategory,
   }) = _InvoiceItem;
 
-  /// إنشاء بند فاتورة من JSON
-  factory InvoiceItem.fromJson(Map<String, dynamic> json) =>
-      _$InvoiceItemFromJson(json);
+  /// Factory for JSON hydration.
+  factory InvoiceItem.fromJson(Map<String, dynamic> json) => _$InvoiceItemFromJson(json);
 
   const InvoiceItem._();
+
+  /// Calculated getter for tax amount if null.
+  Decimal get effectiveTaxAmount => taxAmount;
 }
 
-/// الفاتورة (Invoice)
+/// [Invoice]
 ///
-/// كيان رئيسي يمثل فاتورة كاملة مع جميع بنودها وتفاصيلها.
-/// متوافق مع معايير ZATCA والفاتورة الإلكترونية السعودية.
+/// The central entity for revenue and expense recording.
+/// Bridges the gap between operational sales and the General Ledger.
 @freezed
 class Invoice with _$Invoice {
-  /// إنشاء فاتورة جديدة
-  const factory Invoice({
-    /// معرف الفاتورة الفريد (UUID)
+  /// Standard constructor for institutional invoices.
+  factory Invoice({
+    /// Unique immutable identifier (UUID).
     required String id,
 
-    /// رقم الفاتورة التسلسلي (للعرض)
-    /// مثال: INV-2025-0001
+    /// Human-readable sequential reference code.
     required String invoiceNumber,
 
-    /// معرف العميل
+    /// Target entity identifier.
     required String customerId,
     required String customerName,
 
-    /// قائمة بنود الفاتورة
+    /// Granular list of products or services.
     required List<InvoiceItem> items,
 
-    /// تواريخ
+    /// Execution and audit timestamps.
     required DateTime issuedDate,
     required DateTime dueDate,
     required DateTime createdAt,
     required DateTime updatedAt,
 
-    /// الحالة
+    /// Transaction lifecycle status.
     required InvoiceStatus status,
 
-    /// مبالغ (Persisted for Data Integrity)
-    required double subtotalAmount,
-    required double taxAmount,
-    required double discountAmount,
-    required double totalAmount,
-    required double paidAmount,
+    /// Financial aggregates (Persisted for Data Integrity).
+    required Decimal subtotalAmount,
+    required Decimal taxAmount,
+    required Decimal discountAmount,
+    required Decimal totalAmount,
+    required Decimal paidAmount,
 
-    /// نسب
-    required double taxRate,
+    /// Rates and adjustments.
+    required Decimal taxRate,
+    required Decimal discountRate,
     DateTime? paidDate,
-    @Default(0.0) double discountRate,
 
-    /// العملة
+    /// Multi-currency support (Default: SAR).
     @Default('SAR') String currency,
 
-    /// معلومات إضافية
+    /// Institutional memos and terms.
     String? notes,
     String? terms,
 
-    /// بيانات ZATCA (الفاتورة الإلكترونية)
+    /// ZATCA (Fatoora) Compliance Data.
     String? zatcaUuid,
     String? zatcaHash,
     String? qrCode,
@@ -99,29 +108,28 @@ class Invoice with _$Invoice {
     String? zatcaDeviceId,
     @Default(0) int zatcaCounter,
 
-    /// معرف المستخدم لغرض عزل البيانات
+    /// Data isolation handle.
     String? userId,
 
-    /// حالة المزامنة
+    /// Distributed ledger synchronization state.
     @Default(SyncStatus.synced) SyncStatus syncStatus,
 
-    /// تاريخ آخر تحديث من السيرفر
+    /// Authority-verified timestamp.
     DateTime? serverUpdatedAt,
 
-    /// هل السجل محذوف (حذف ناعم)
+    /// Soft-deletion flag for audit preservation.
     @Default(false) bool isDeleted,
   }) = _Invoice;
 
-  /// إنشاء فاتورة من JSON
-  factory Invoice.fromJson(Map<String, dynamic> json) =>
-      _$InvoiceFromJson(json);
+  /// Factory for JSON hydration.
+  factory Invoice.fromJson(Map<String, dynamic> json) => _$InvoiceFromJson(json);
 
   const Invoice._();
 
-  /// المتبقي للدفع
-  double get remainingAmount => totalAmount - paidAmount;
+  /// Calculates the outstanding liability.
+  Decimal get remainingAmount => totalAmount - paidAmount;
 
-  /// هل الفاتورة متأخرة؟
+  /// Validates the settlement status against temporal constraints.
   bool get isOverdue {
     if (status == InvoiceStatus.paid || status == InvoiceStatus.cancelled) {
       return false;

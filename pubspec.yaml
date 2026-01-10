@@ -32,6 +32,7 @@ dependencies:
   crypto: ^3.0.7
   cupertino_icons: ^1.0.8
   decimal: ^3.2.4
+  device_info_plus: ^12.3.0
   dio: ^5.9.0
   fl_chart: ^1.1.1
   flex_color_picker: ^3.7.2
@@ -56,6 +57,7 @@ dependencies:
   json_annotation: ^4.9.0
   lottie: ^3.3.0
   material_design_icons_flutter: ^7.0.7296
+  package_info_plus: ^9.0.0
   path: any
   path_provider: ^2.1.5
   pdf: ^3.10.4

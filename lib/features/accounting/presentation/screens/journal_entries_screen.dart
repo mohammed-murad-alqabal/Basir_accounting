@@ -14,10 +14,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
 
-/// شاشة قيود اليومية (Journal Entries Screen)
-/// تعرض قائمة بكافة القيود المحاسبية مع إمكانية البحث والتصفية والترحيل.
+/// Primary screen for browsing, filtering, and managing the General Ledger (Journal Entries).
+///
+/// Provides a detailed view of balanced accounting transactions with support for
+/// reversal of posted entries and state transitions (Draft -> Posted).
 class JournalEntriesScreen extends ConsumerWidget {
-  /// إنشاء شاشة قيود اليومية.
+  /// Creates the Journal Entries screen.
   const JournalEntriesScreen({super.key});
 
   @override
@@ -142,6 +144,7 @@ class JournalEntriesScreen extends ConsumerWidget {
     );
   }
 
+  /// Contextual action menu based on the entry's lifecycle state.
   Widget _buildActions(
     BuildContext context,
     WidgetRef ref,
@@ -180,6 +183,7 @@ class JournalEntriesScreen extends ConsumerWidget {
     }
   }
 
+  /// Initiates an automated reversal entry workflow for historical corrections.
   Future<void> _handleReverse(
     BuildContext context,
     WidgetRef ref,
@@ -205,9 +209,7 @@ class JournalEntriesScreen extends ConsumerWidget {
 
     if (confirm ?? false) {
       try {
-        await ref
-            .read(accountingServiceProvider.notifier)
-            .reverseJournalEntry(entry.id);
+        await ref.read(accountingServiceProvider.notifier).reverseJournalEntry(entry.id);
         if (!context.mounted) return;
         ScaffoldMessenger.of(
           context,
@@ -224,6 +226,7 @@ class JournalEntriesScreen extends ConsumerWidget {
     }
   }
 
+  /// Navigates to the editor for unposted draft entries.
   Future<void> _handleEdit(BuildContext context, JournalEntry entry) async {
     await Navigator.push<bool>(
       context,
@@ -233,6 +236,7 @@ class JournalEntriesScreen extends ConsumerWidget {
     );
   }
 
+  /// Transitions a Draft entry to a final Posted state in the General Ledger.
   Future<void> _handlePost(
     BuildContext context,
     WidgetRef ref,
@@ -244,9 +248,7 @@ class JournalEntriesScreen extends ConsumerWidget {
         updatedAt: DateTime.now(),
         postedAt: DateTime.now(),
       );
-      await ref
-          .read(accountingServiceProvider.notifier)
-          .postJournalEntry(updated);
+      await ref.read(accountingServiceProvider.notifier).postJournalEntry(updated);
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.msgJournalEntryPosted)),
@@ -259,6 +261,7 @@ class JournalEntriesScreen extends ConsumerWidget {
     }
   }
 
+  /// Renders a thematic badge for entry status (Draft/Posted).
   Widget _buildStatusBadge(
     BuildContext context,
     String label,
@@ -284,11 +287,12 @@ class JournalEntriesScreen extends ConsumerWidget {
         ),
       );
 
-  Widget _buildEntryLines(BuildContext context, List<JournalEntryLine> lines) =>
-      Column(
+  /// Builds the scrollable list of Debit/Credit atomic lines.
+  Widget _buildEntryLines(BuildContext context, List<JournalEntryLine> lines) => Column(
         children: lines.map((line) => _buildLineRow(context, line)).toList(),
       );
 
+  /// Renders a single accounting line with semantic balance colors.
   Widget _buildLineRow(BuildContext context, JournalEntryLine line) => Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: Spacing.md,
@@ -342,11 +346,13 @@ class JournalEntriesScreen extends ConsumerWidget {
         ),
       );
 
+  /// Formats currency values for consistency across the UI.
   String _formatCurrency(Decimal value) => intl.NumberFormat.currency(
         symbol: '',
         decimalDigits: 2,
       ).format(value.toDouble());
 
+  /// Shows export format modal (PDF/CSV).
   Future<void> _showExportOptions(BuildContext context, WidgetRef ref) async {
     await showModalBottomSheet<void>(
       context: context,
@@ -376,6 +382,7 @@ class JournalEntriesScreen extends ConsumerWidget {
     );
   }
 
+  /// Exports the current ledger view in the selected format.
   Future<void> _exportReport(
     BuildContext context,
     WidgetRef ref, {

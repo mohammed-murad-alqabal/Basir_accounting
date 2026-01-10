@@ -194,6 +194,7 @@ pub struct InventoryItemDto {
     pub name_en: String,
     pub description: Option<String>,
     pub unit: String,
+    pub min_stock_level: Option<String>,
     pub valuation_method: String,
     pub purchase_price: Option<String>,
     pub sale_price: Option<String>,
@@ -213,6 +214,7 @@ impl From<InventoryItem> for InventoryItemDto {
             name_en: item.name_en,
             description: item.description,
             unit: item.unit,
+            min_stock_level: item.min_stock_level.map(|d| d.to_string()),
             valuation_method: format!("{:?}", item.valuation_method),
             purchase_price: item.purchase_price.map(|d| d.to_string()),
             sale_price: item.sale_price.map(|d| d.to_string()),
@@ -238,6 +240,10 @@ impl TryFrom<InventoryItemDto> for InventoryItem {
             name_en: dto.name_en,
             description: dto.description,
             unit: dto.unit,
+            min_stock_level: dto
+                .min_stock_level
+                .map(|s| Decimal::from_str(&s))
+                .transpose()?,
             valuation_method: match dto.valuation_method.as_str() {
                 "Fifo" => ValuationMethod::Fifo,
                 _ => ValuationMethod::WeightedAverage,

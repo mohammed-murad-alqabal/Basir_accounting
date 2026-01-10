@@ -4,6 +4,7 @@ import 'package:basir_app/core/providers/supabase_auth_provider.dart';
 import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:basir_app/features/invoices/presentation/screens/invoices_screen.dart';
 import 'package:basir_app/l10n/app_localizations.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,7 +32,7 @@ void main() {
                   totalInvoices: 0,
                   paidInvoices: 0,
                   overdueInvoices: 0,
-                  totalAmount: 0,
+                  totalAmount: Decimal.zero,
                 ),
               ),
             ),
@@ -67,7 +68,7 @@ void main() {
                   totalInvoices: 0,
                   paidInvoices: 0,
                   overdueInvoices: 0,
-                  totalAmount: 0,
+                  totalAmount: Decimal.zero,
                 ),
               ),
             ),
@@ -111,7 +112,7 @@ void main() {
                   totalInvoices: 1,
                   paidInvoices: 0,
                   overdueInvoices: 0,
-                  totalAmount: 1000,
+                  totalAmount: Decimal.fromInt(1000),
                 ),
               ),
             ),
@@ -158,7 +159,7 @@ void main() {
                     totalInvoices: 1,
                     paidInvoices: 0,
                     overdueInvoices: 0,
-                    totalAmount: 1000,
+                    totalAmount: Decimal.fromInt(1000),
                   ),
                 ),
               ),

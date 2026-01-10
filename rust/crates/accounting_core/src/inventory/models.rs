@@ -25,6 +25,7 @@ pub struct InventoryItem {
     pub name_en: String,
     pub description: Option<String>,
     pub unit: String,
+    pub min_stock_level: Option<Decimal>,
     pub valuation_method: ValuationMethod,
     pub purchase_price: Option<Decimal>,
     pub sale_price: Option<Decimal>,

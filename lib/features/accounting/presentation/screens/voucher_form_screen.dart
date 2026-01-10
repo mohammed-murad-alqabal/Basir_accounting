@@ -14,12 +14,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:uuid/uuid.dart';
 
-/// شاشة إنشاء سند مالي (Voucher Form)
+/// Screen for issuing Receipt and Payment vouchers.
+///
+/// Automates the creation of specialized journal entries for treasury
+/// operations, supporting OCR-based data entry and multi-currency conversion.
 class VoucherFormScreen extends ConsumerStatefulWidget {
   /// Creates a voucher form screen.
   const VoucherFormScreen({required this.type, super.key});
 
-  /// The type of voucher to create.
+  /// The classification of the voucher (Receipt vs Payment).
   final VoucherType type;
 
   @override
@@ -69,7 +72,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         ],
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: AppLoadingIndicator())
           : SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Form(
@@ -103,6 +106,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
     );
   }
 
+  /// Amount field with integrated currency conversion support.
   Widget _buildAmountField() => AppCard(
         child: Padding(
           padding: const EdgeInsets.all(8),
@@ -111,16 +115,13 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
               TextFormField(
                 controller: _amountController,
                 decoration: InputDecoration(
-                  // ignore: lines_longer_than_80_chars
-                  labelText:
-                      (_selectedCurrency != null && _selectedCurrency != 'SAR')
-                          ? '${context.l10n.labelAmount} (SAR)'
-                          : context.l10n.labelAmount,
+                  labelText: (_selectedCurrency != null && _selectedCurrency != 'SAR')
+                      ? '${context.l10n.labelAmount} (SAR)'
+                      : context.l10n.labelAmount,
                   border: InputBorder.none,
                   prefixIcon: const Icon(Icons.money),
                 ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 onChanged: (v) {
                   if (_selectedCurrency != null &&
                       _selectedCurrency != 'SAR' &&
@@ -128,10 +129,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                     final sarAmount = Decimal.tryParse(v);
                     if (sarAmount != null) {
                       setState(() {
-                        // ignore: lines_longer_than_80_chars
-                        _originalAmount =
-                            (sarAmount / (_exchangeRate ?? Decimal.one))
-                                .toDecimal();
+                        _originalAmount = (sarAmount / (_exchangeRate ?? Decimal.one)).toDecimal();
                       });
                     }
                   }
@@ -163,14 +161,10 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                         ),
                         onChanged: (v) {
                           _originalAmount = Decimal.tryParse(v);
-                          // ignore: lines_longer_than_80_chars
-                          if (_originalAmount != null &&
-                              _exchangeRate != null) {
+                          if (_originalAmount != null && _exchangeRate != null) {
                             setState(() {
                               _amountController.text =
-                                  // ignore: lines_longer_than_80_chars
-                                  (_originalAmount! * _exchangeRate!)
-                                      .toString();
+                                  (_originalAmount! * _exchangeRate!).toString();
                             });
                           }
                         },
@@ -189,14 +183,10 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                         ),
                         onChanged: (v) {
                           _exchangeRate = Decimal.tryParse(v);
-                          // ignore: lines_longer_than_80_chars
-                          if (_originalAmount != null &&
-                              _exchangeRate != null) {
+                          if (_originalAmount != null && _exchangeRate != null) {
                             setState(() {
                               _amountController.text =
-                                  // ignore: lines_longer_than_80_chars
-                                  (_originalAmount! * _exchangeRate!)
-                                      .toString();
+                                  (_originalAmount! * _exchangeRate!).toString();
                             });
                           }
                         },
@@ -210,6 +200,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         ),
       );
 
+  /// Integrated currency picker and exchange rate manager.
   Widget _buildCurrencySelector() => AppCard(
         child: ListTile(
           leading: const Icon(Icons.language),
@@ -252,17 +243,10 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
       setState(() {
         _selectedCurrency = result == 'SAR' ? null : result;
         if (_selectedCurrency != null) {
-          // ignore: lines_longer_than_80_chars
-          _exchangeRate = (_selectedCurrency == 'USD')
-              ? Decimal.parse('3.75')
-              : Decimal.one;
-          // ignore: lines_longer_than_80_chars
-          final currentAmount =
-              Decimal.tryParse(_amountController.text) ?? Decimal.zero;
+          _exchangeRate = (_selectedCurrency == 'USD') ? Decimal.parse('3.75') : Decimal.one;
+          final currentAmount = Decimal.tryParse(_amountController.text) ?? Decimal.zero;
           if (currentAmount > Decimal.zero) {
-            // ignore: lines_longer_than_80_chars
-            _originalAmount =
-                (currentAmount / (_exchangeRate ?? Decimal.one)).toDecimal();
+            _originalAmount = (currentAmount / (_exchangeRate ?? Decimal.one)).toDecimal();
           }
         } else {
           _exchangeRate = null;
@@ -312,6 +296,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         ),
       );
 
+  /// Selects the payment instrument (Cash/Bank/Check) which filters treasury accounts.
   Widget _buildPaymentMethodSelector() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -349,6 +334,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         ],
       );
 
+  /// Context-aware selector for Treasury and Bank accounts.
   Widget _buildTreasuryAccountSelector() {
     final accountsAsync = ref.watch(accountingServiceProvider);
 
@@ -358,17 +344,12 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const SizedBox();
 
-          // ignore: lines_longer_than_80_chars
-          final filterCode =
-              (_paymentMethod == PaymentMethod.cash) ? '1101' : '1102';
+          final filterCode = (_paymentMethod == PaymentMethod.cash) ? '1101' : '1102';
           final treasuryAccounts = snapshot.data!
               .where(
                 (a) =>
-                    // ignore: lines_longer_than_80_chars
                     a.code.startsWith(filterCode) ||
-                    // ignore: lines_longer_than_80_chars
-                    (_paymentMethod == PaymentMethod.cash &&
-                        a.subType == 'cash'),
+                    (_paymentMethod == PaymentMethod.cash && a.subType == 'cash'),
               )
               .toList();
 
@@ -394,6 +375,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
     );
   }
 
+  /// Selects the counterpart participant (Customer or Vendor).
   Widget _buildEntitySelector() {
     if (widget.type == VoucherType.receipt) {
       final customersAsync = ref.watch(customersProvider);
@@ -456,11 +438,10 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
     }
   }
 
+  /// Validates and saves the financial voucher.
   Future<void> _saveVoucher() async {
     if (!_formKey.currentState!.validate()) return;
-    // ignore: lines_longer_than_80_chars
-    if (_selectedTreasuryAccountId == null ||
-        _selectedOppositeAccountId == null) {
+    if (_selectedTreasuryAccountId == null || _selectedOppositeAccountId == null) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(context.l10n.errFormFill)));
@@ -514,6 +495,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
     }
   }
 
+  /// Invokes the intelligent OCR agent to extract data from camera/gallery imagery.
   Future<void> _scanReceipt() async {
     final picker = ImagePicker();
     final image = await picker.pickImage(source: ImageSource.camera);

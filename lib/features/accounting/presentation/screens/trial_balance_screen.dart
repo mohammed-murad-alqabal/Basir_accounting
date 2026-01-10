@@ -8,17 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
 
-/// شاشة ميزان المراجعة (Trial Balance Screen)
-/// تعرض الأرصدة المدينة والدائنة لكل الحسابات.
+/// Screen presenting the Trial Balance worksheet.
+///
+/// Centrally aggregates the closing balances of all ledger accounts,
+/// categorized into Debit and Credit columns to verify mathematical
+/// equilibrium and technical ledger readiness for period closing.
 class TrialBalanceScreen extends ConsumerWidget {
-  /// إنشاء شاشة ميزان المراجعة.
+  /// Creates the trial balance screen.
   const TrialBalanceScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final trialBalanceAsync = ref
-        .watch(financialStatementServiceProvider.notifier)
-        .generateTrialBalance(DateTime.now());
+    final trialBalanceAsync =
+        ref.watch(financialStatementServiceProvider.notifier).generateTrialBalance(DateTime.now());
 
     final currencyFormatter = intl.NumberFormat.currency(
       symbol: '',
@@ -85,12 +87,10 @@ class TrialBalanceScreen extends ConsumerWidget {
                                     )
                                   : '-',
                               style: TextStyle(
-                                color: row.debitBalance > Decimal.zero
-                                    ? AppColors.success
-                                    : null,
-                                fontWeight: row.debitBalance > Decimal.zero
-                                    ? FontWeight.bold
-                                    : null,
+                                color: row.debitBalance > Decimal.zero ? AppColors.success : null,
+                                fontWeight:
+                                    row.debitBalance > Decimal.zero ? FontWeight.bold : null,
+                                fontSize: 13,
                               ),
                             ),
                           ),
@@ -102,12 +102,10 @@ class TrialBalanceScreen extends ConsumerWidget {
                                     )
                                   : '-',
                               style: TextStyle(
-                                color: row.creditBalance > Decimal.zero
-                                    ? AppColors.error
-                                    : null,
-                                fontWeight: row.creditBalance > Decimal.zero
-                                    ? FontWeight.bold
-                                    : null,
+                                color: row.creditBalance > Decimal.zero ? AppColors.error : null,
+                                fontWeight:
+                                    row.creditBalance > Decimal.zero ? FontWeight.bold : null,
+                                fontSize: 13,
                               ),
                             ),
                           ),
@@ -123,8 +121,8 @@ class TrialBalanceScreen extends ConsumerWidget {
     );
   }
 
+  /// Triggers the statutory export workflow for trial balance data.
   Future<void> _exportReport(BuildContext context, WidgetRef ref) async {
-    // منطق التصدير مستقبلاً
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(const SnackBar(content: Text('ميزة التصدير ستتوفر قريباً')));
