@@ -25,7 +25,7 @@ final authServiceProvider = Provider((ref) {
 ///
 /// يتحقق من وجود حساب مسجل في التطبيق
 ///
-/// Returns: Future<bool> - true إذا كان هناك حساب
+/// Returns: `Future<bool>` - true إذا كان هناك حساب
 ///
 /// Example:
 /// ```dart
@@ -76,7 +76,7 @@ final currentUsernameProvider = StateProvider<String?>((ref) => null);
 /// Parameters:
 /// - credentials: (username, password) - بيانات الاعتماد
 ///
-/// Returns: Future<bool> - true إذا نجح تسجيل الدخول
+/// Returns: `Future<bool>` - true إذا نجح تسجيل الدخول
 ///
 /// Side Effects:
 /// - يحدث isLoggedInProvider إلى true عند النجاح
@@ -120,7 +120,7 @@ final loginProvider = FutureProvider.family<bool, (String, String)>((
 /// Parameters:
 /// - credentials: (username, password) - بيانات الحساب الجديد
 ///
-/// Returns: Future<bool> - true إذا نجح إنشاء الحساب
+/// Returns: `Future<bool>` - true إذا نجح إنشاء الحساب
 ///
 /// Side Effects:
 /// - يحدث isLoggedInProvider إلى true عند النجاح
@@ -159,7 +159,7 @@ final setupProvider = FutureProvider.family<bool, (String, String)>((
 ///
 /// يدير عملية تسجيل الخروج ويحدث الحالة
 ///
-/// Returns: Future<bool> - true إذا نجح تسجيل الخروج
+/// Returns: `Future<bool>` - true إذا نجح تسجيل الخروج
 ///
 /// Side Effects:
 /// - يحدث isLoggedInProvider إلى false
@@ -196,7 +196,7 @@ final logoutProvider = FutureProvider<bool>((ref) async {
 /// Parameters:
 /// - passwords: (oldPassword, newPassword) - كلمة المرور القديمة والجديدة
 ///
-/// Returns: Future<bool> - true إذا نجح تغيير كلمة المرور
+/// Returns: `Future<bool>` - true إذا نجح تغيير كلمة المرور
 ///
 /// Example:
 /// ```dart
@@ -261,8 +261,10 @@ final basirUserProvider = Provider<BasirUser?>((ref) {
   }
 
   // 2. التحقق من وضع الضيف (المصدر الثانوي)
-  final isGuest =
-      ref.watch(isGuestProvider).maybeWhen(data: (v) => v, orElse: () => false);
+  final isGuest = ref.watch(isGuestProvider).maybeWhen(
+        data: (v) => v,
+        orElse: () => false,
+      );
 
   if (isGuest) {
     return const BasirUser(

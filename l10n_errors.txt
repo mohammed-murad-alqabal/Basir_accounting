@@ -1,0 +1,9 @@
+{
+  "en": [
+    "labelStandard",
+    "labelRecognitionBasis",
+    "labelMeasurementBasis",
+    "labelAddCurrency",
+    "labelCurrency"
+  ]
+}

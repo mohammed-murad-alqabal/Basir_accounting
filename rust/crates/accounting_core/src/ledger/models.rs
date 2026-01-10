@@ -12,6 +12,7 @@ use crate::standards::models::{MeasurementBasis, RecognitionBasis};
 use chrono::{DateTime, NaiveDate, Utc};
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
+use std::fmt::Write;
 use uuid::Uuid;
 
 /// Entry status workflow.
@@ -189,6 +190,23 @@ impl JournalEntryLine {
         self.exchange_rate = Some(rate);
         self
     }
+
+    /// Get deterministic content for hashing.
+    pub fn hashable_content(&self) -> String {
+        format!(
+            "{}|{}|{}|{}|{}|{}|{}|{}|{}|{}",
+            self.line_id,
+            self.line_number,
+            self.account_id,
+            self.debit_amount,
+            self.credit_amount,
+            self.description,
+            self.source_document_ref.as_deref().unwrap_or(""),
+            self.original_currency.as_deref().unwrap_or(""),
+            self.exchange_rate.unwrap_or(Decimal::ZERO),
+            self.partner_id.map(|u| u.to_string()).unwrap_or_default()
+        )
+    }
 }
 
 /// Reasons for an adjustment entry.
@@ -200,6 +218,8 @@ pub enum AdjustmentReason {
     Deferral,
     EstimationChange,
     PolicyChange,
+    /// Inter-warehouse inventory transfer
+    Transfer,
 }
 
 /// A complete journal entry.
@@ -363,6 +383,34 @@ impl JournalEntry {
     /// Called after the reversing entry is posted.
     pub fn mark_reversed(&mut self) {
         self.status = EntryStatus::Reversed;
+    }
+
+    /// Get deterministic content for hashing.
+    pub fn hashable_content(&self) -> String {
+        let mut content = String::new();
+        let _ = write!(
+            content,
+            "{}|{}|{}|{:?}|{}|{}|{}|{}|",
+            self.entry_id,
+            self.entry_number,
+            self.description,
+            self.entry_type,
+            self.temporal.transaction_date,
+            self.temporal.effective_date,
+            self.temporal.recording_date.timestamp_millis(),
+            self.standards.standard_reference
+        );
+
+        // Include lines
+        for line in &self.lines {
+            content.push_str(&line.hashable_content());
+            content.push('|');
+        }
+
+        // Include previous hash for chaining
+        content.push_str(&self.previous_hash);
+
+        content
     }
 }
 

@@ -27,6 +27,15 @@ pub struct Invoice {
     #[serde(rename = "cbc:TaxCurrencyCode")]
     pub tax_currency_code: String,
 
+    #[serde(
+        rename = "cac:AdditionalDocumentReference",
+        skip_serializing_if = "Vec::is_empty"
+    )]
+    pub additional_document_references: Vec<AdditionalDocumentReference>,
+
+    #[serde(rename = "cac:Signature", skip_serializing_if = "Vec::is_empty")]
+    pub signatures: Vec<Signature>,
+
     #[serde(rename = "cac:AccountingSupplierParty")]
     pub accounting_supplier_party: AccountingSupplierParty,
     #[serde(rename = "cac:AccountingCustomerParty")]
@@ -40,6 +49,46 @@ pub struct Invoice {
 
     #[serde(rename = "cac:InvoiceLine")]
     pub invoice_lines: Vec<InvoiceLine>,
+}
+
+#[derive(Debug, Serialize, Default)]
+#[serde(rename_all = "PascalCase")]
+pub struct AdditionalDocumentReference {
+    #[serde(rename = "cbc:ID")]
+    pub id: String,
+    #[serde(rename = "cbc:UUID", skip_serializing_if = "Option::is_none")]
+    pub uuid: Option<String>,
+    #[serde(
+        rename = "cbc:DocumentTypeCode",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub document_type_code: Option<String>,
+    #[serde(rename = "cac:Attachment", skip_serializing_if = "Option::is_none")]
+    pub attachment: Option<Attachment>,
+}
+
+#[derive(Debug, Serialize, Default)]
+#[serde(rename_all = "PascalCase")]
+pub struct Attachment {
+    #[serde(rename = "cbc:EmbeddedDocumentBinaryObject")]
+    pub embedded_document_binary_object: EmbeddedDocumentBinaryObject,
+}
+
+#[derive(Debug, Serialize, Default)]
+pub struct EmbeddedDocumentBinaryObject {
+    #[serde(rename = "@mimeCode")]
+    pub mime_code: String,
+    #[serde(rename = "$value")]
+    pub value: String,
+}
+
+#[derive(Debug, Serialize, Default)]
+#[serde(rename_all = "PascalCase")]
+pub struct Signature {
+    #[serde(rename = "cbc:ID")]
+    pub id: String,
+    #[serde(rename = "cbc:SignatureMethod")]
+    pub signature_method: String,
 }
 
 #[derive(Debug, Serialize, Default)]
