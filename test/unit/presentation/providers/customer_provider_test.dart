@@ -344,8 +344,10 @@ void main() {
 
     test('should return empty list when no matches found', () async {
       // Arrange
-      final customer =
-          MockData.createTestCustomer(nameEn: 'أحمد', nameAr: 'أحمد');
+      final customer = MockData.createTestCustomer(
+        nameEn: 'أحمد',
+        nameAr: 'أحمد',
+      );
       await mockRepository.addCustomer(customer);
 
       // Act

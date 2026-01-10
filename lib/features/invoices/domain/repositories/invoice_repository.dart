@@ -50,9 +50,7 @@ abstract class InvoiceRepository {
   ///   debugPrint('الفاتورة: ${invoice.id}',);
   /// }
   /// ```
-  Future<Invoice?> getInvoiceById(
-    String id,
-  );
+  Future<Invoice?> getInvoiceById(String id);
 
   /// الحصول على فواتير عميل معين
   ///
@@ -68,9 +66,7 @@ abstract class InvoiceRepository {
   /// final invoices = await repository.getInvoicesByCustomerId('customer-1',);
   /// debugPrint('عدد فواتير العميل: ${invoices.length}',);
   /// ```
-  Future<List<Invoice>> getInvoicesByCustomerId(
-    String customerId,
-  );
+  Future<List<Invoice>> getInvoicesByCustomerId(String customerId);
 
   /// الحصول على فواتير حسب الحالة
   ///
@@ -88,9 +84,7 @@ abstract class InvoiceRepository {
   /// );
   /// debugPrint('الفواتير المدفوعة: ${paidInvoices.length}',);
   /// ```
-  Future<List<Invoice>> getInvoicesByStatus(
-    InvoiceStatus status,
-  );
+  Future<List<Invoice>> getInvoicesByStatus(InvoiceStatus status);
 
   /// إضافة فاتورة جديدة
   ///
@@ -106,9 +100,7 @@ abstract class InvoiceRepository {
   /// final invoice = Invoice(...,);
   /// await repository.addInvoice(invoice,);
   /// ```
-  Future<void> addInvoice(
-    Invoice invoice,
-  );
+  Future<void> addInvoice(Invoice invoice);
 
   /// تحديث بيانات فاتورة
   ///
@@ -124,9 +116,7 @@ abstract class InvoiceRepository {
   /// final updatedInvoice = invoice.copyWith(status: 'paid',);
   /// await repository.updateInvoice(updatedInvoice,);
   /// ```
-  Future<void> updateInvoice(
-    Invoice invoice,
-  );
+  Future<void> updateInvoice(Invoice invoice);
 
   /// حذف فاتورة
   ///
@@ -141,9 +131,7 @@ abstract class InvoiceRepository {
   /// ```dart
   /// await repository.deleteInvoice('inv-001',);
   /// ```
-  Future<void> deleteInvoice(
-    String id,
-  );
+  Future<void> deleteInvoice(String id);
 
   /// حذف جميع الفواتير
   ///

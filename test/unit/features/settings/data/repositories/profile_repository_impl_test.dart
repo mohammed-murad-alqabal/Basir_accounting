@@ -79,8 +79,9 @@ void main() {
       await repository.saveProfile(profile);
 
       // Act
-      await repository
-          .saveProfile(profile.copyWith(displayName: 'Updated Name'));
+      await repository.saveProfile(
+        profile.copyWith(displayName: 'Updated Name'),
+      );
       final result = await repository.getProfile();
 
       // Assert

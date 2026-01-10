@@ -17,10 +17,7 @@ import 'package:uuid/uuid.dart';
 /// شاشة إنشاء سند مالي (Voucher Form)
 class VoucherFormScreen extends ConsumerStatefulWidget {
   /// Creates a voucher form screen.
-  const VoucherFormScreen({
-    required this.type,
-    super.key,
-  });
+  const VoucherFormScreen({required this.type, super.key});
 
   /// The type of voucher to create.
   final VoucherType type;
@@ -122,9 +119,8 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                   border: InputBorder.none,
                   prefixIcon: const Icon(Icons.money),
                 ),
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 onChanged: (v) {
                   if (_selectedCurrency != null &&
                       _selectedCurrency != 'SAR' &&
@@ -312,9 +308,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         child: ListTile(
           leading: const Icon(Icons.calendar_today),
           title: Text(context.l10n.labelDate),
-          trailing: Text(
-            intl.DateFormat('yyyy/MM/dd').format(_selectedDate),
-          ),
+          trailing: Text(intl.DateFormat('yyyy/MM/dd').format(_selectedDate)),
         ),
       );
 
@@ -385,10 +379,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
             ),
             items: treasuryAccounts
                 .map(
-                  (a) => DropdownMenuItem(
-                    value: a.id,
-                    child: Text(a.nameAr),
-                  ),
+                  (a) => DropdownMenuItem(value: a.id, child: Text(a.nameAr)),
                 )
                 .toList(),
             onChanged: (val) {
@@ -470,9 +461,9 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
     // ignore: lines_longer_than_80_chars
     if (_selectedTreasuryAccountId == null ||
         _selectedOppositeAccountId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errFormFill)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.l10n.errFormFill)));
       return;
     }
 
@@ -549,9 +540,9 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         }
       } on Exception catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('فشل في تحليل الإيصال: $e')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('فشل في تحليل الإيصال: $e')));
         }
       } finally {
         if (mounted) setState(() => _isLoading = false);

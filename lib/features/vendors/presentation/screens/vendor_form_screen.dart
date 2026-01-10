@@ -29,10 +29,12 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
   @override
   void initState() {
     super.initState();
-    _nameArController =
-        TextEditingController(text: widget.vendor?.nameAr ?? '');
-    _nameEnController =
-        TextEditingController(text: widget.vendor?.nameEn ?? '');
+    _nameArController = TextEditingController(
+      text: widget.vendor?.nameAr ?? '',
+    );
+    _nameEnController = TextEditingController(
+      text: widget.vendor?.nameEn ?? '',
+    );
     _emailController = TextEditingController(text: widget.vendor?.email ?? '');
     _phoneController = TextEditingController(text: widget.vendor?.phone ?? '');
   }
@@ -103,10 +105,7 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
             const SizedBox(height: Spacing.xl),
 
             // زر الحفظ
-            AppEnhancedButton(
-              label: context.l10n.btnSave,
-              onPressed: _save,
-            ),
+            AppEnhancedButton(label: context.l10n.btnSave, onPressed: _save),
           ],
         ),
       ),
@@ -142,9 +141,9 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
       if (mounted) Navigator.pop(context, true);
     } on Object catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     }
   }

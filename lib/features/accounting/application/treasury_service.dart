@@ -24,8 +24,9 @@ class TreasuryService extends _$TreasuryService {
 
   /// إصدار سند قبض (Receipt Voucher)
   Future<String> issueReceipt(FinancialVoucher voucher) async {
-    final financialYearService =
-        ref.read(financialYearServiceProvider.notifier);
+    final financialYearService = ref.read(
+      financialYearServiceProvider.notifier,
+    );
     final voucherRepo = ref.read(financialVoucherRepositoryProvider);
     if (voucher.type != VoucherType.receipt) {
       throw Exception('Voucher must be a receipt');
@@ -102,8 +103,9 @@ class TreasuryService extends _$TreasuryService {
 
   /// إصدار سند صرف (Payment Voucher)
   Future<String> issuePayment(FinancialVoucher voucher) async {
-    final financialYearService =
-        ref.read(financialYearServiceProvider.notifier);
+    final financialYearService = ref.read(
+      financialYearServiceProvider.notifier,
+    );
     final voucherRepo = ref.read(financialVoucherRepositoryProvider);
     if (voucher.type != VoucherType.payment) {
       throw Exception('Voucher must be a payment');

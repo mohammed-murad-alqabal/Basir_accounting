@@ -67,11 +67,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.error_outline,
-                size: 48,
-                color: AppColors.error,
-              ),
+              const Icon(Icons.error_outline, size: 48, color: AppColors.error),
               const SizedBox(height: Spacing.md),
               Text(context.l10n.errorLoadingSettings),
               TextButton(
@@ -215,9 +211,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               unawaited(
                 analytics?.logEvent(
                   AnalyticsEventType.featureUsed,
-                  metadata: {
-                    'feature': 'guest_upgrade_click',
-                  },
+                  metadata: {'feature': 'guest_upgrade_click'},
                 ),
               );
               unawaited(Navigator.of(context).pushNamed('/guest-upgrade'));

@@ -16,13 +16,13 @@ class BalanceSheetScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final balanceSheetAsync = ref
-        .watch(
-          financialStatementServiceProvider.notifier,
-        )
+        .watch(financialStatementServiceProvider.notifier)
         .generateBalanceSheet(DateTime.now());
 
-    final currencyFormatter =
-        intl.NumberFormat.currency(symbol: '', decimalDigits: 2);
+    final currencyFormatter = intl.NumberFormat.currency(
+      symbol: '',
+      decimalDigits: 2,
+    );
 
     return Scaffold(
       appBar: AppAppBar(
@@ -111,8 +111,8 @@ class BalanceSheetScreen extends ConsumerWidget {
   }
 
   Future<void> _exportReport(BuildContext context, WidgetRef ref) async {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('ميزة التصدير ستتوفر قريباً')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('ميزة التصدير ستتوفر قريباً')));
   }
 }

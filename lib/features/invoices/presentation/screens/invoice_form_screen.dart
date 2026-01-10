@@ -36,9 +36,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   bool _isLoading = false;
   Customer? _selectedCustomer;
   DateTime _issuedDate = DateTime.now();
-  DateTime _dueDate = DateTime.now().add(
-    const Duration(days: 30),
-  );
+  DateTime _dueDate = DateTime.now().add(const Duration(days: 30));
   double _taxRate = 0.15; // 15% ضريبة افتراضية
   InvoiceStatus _status = InvoiceStatus.draft; // مسودة افتراضياً
   List<InvoiceItem> _items = [];
@@ -52,9 +50,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       _dueDate = widget.invoice!.dueDate;
       _taxRate = widget.invoice!.taxRate;
       _status = widget.invoice!.status;
-      _items = List.from(
-        widget.invoice!.items,
-      );
+      _items = List.from(widget.invoice!.items);
       // Ensure selected customer logic if needed, but here we just need to
       // bind if we had full list.
       // Since we load customers async, we might not set _selectedCustomer
@@ -76,9 +72,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   @override
   Widget build(BuildContext context) {
     final isEditing = widget.invoice != null;
-    final customersAsync = ref.watch(
-      customersProvider,
-    );
+    final customersAsync = ref.watch(customersProvider);
     final appIcons = ref.watch(appIconsProvider);
     final calendarType =
         ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
@@ -88,8 +82,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         _selectedCustomer == null &&
         customersAsync.hasValue) {
       try {
-        _selectedCustomer = customersAsync.value!
-            .firstWhere((c) => c.id == widget.invoice!.customerId);
+        _selectedCustomer = customersAsync.value!.firstWhere(
+          (c) => c.id == widget.invoice!.customerId,
+        );
       } on Object catch (_) {}
     }
 
@@ -110,16 +105,11 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               AppCard(
                 child: customersAsync.when(
                   data: _buildCustomerSelector,
-                  loading: () => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
                   error: (error, stack) => Text(
-                    context.l10n.errLoadCustomers(
-                      error.toString(),
-                    ),
-                    style: const TextStyle(
-                      color: AppColors.error,
-                    ),
+                    context.l10n.errLoadCustomers(error.toString()),
+                    style: const TextStyle(color: AppColors.error),
                   ),
                 ),
               ),
@@ -144,13 +134,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 ),
               ),
               const SizedBox(height: Spacing.md),
-              AppCard(
-                child: _buildTaxRateField(appIcons),
-              ),
+              AppCard(child: _buildTaxRateField(appIcons)),
               const SizedBox(height: Spacing.md),
-              AppCard(
-                child: _buildStatusSelector(),
-              ),
+              AppCard(child: _buildStatusSelector()),
               const SizedBox(height: Spacing.md),
               _buildItemsSection(appIcons),
               const SizedBox(height: Spacing.md),
@@ -202,17 +188,13 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 .map(
                   (customer) => DropdownMenuItem(
                     value: customer,
-                    child: Text(
-                      customer.nameAr,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    child:
+                        Text(customer.nameAr, overflow: TextOverflow.ellipsis),
                   ),
                 )
                 .toList(),
             onChanged: (customer) {
-              setState(
-                () => _selectedCustomer = customer,
-              );
+              setState(() => _selectedCustomer = customer);
             },
             validator: (value) {
               if (value == null) {
@@ -342,9 +324,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             ],
             onChanged: (value) {
               if (value != null) {
-                setState(
-                  () => _status = value,
-                );
+                setState(() => _status = value);
               }
             },
           ),
@@ -367,10 +347,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(
-                    appIcons.addCircle,
-                    color: AppColors.primary,
-                  ),
+                  icon: Icon(appIcons.addCircle, color: AppColors.primary),
                   tooltip: context.l10n.tooltipAddItem,
                   onPressed: _addItem,
                 ),
@@ -416,10 +393,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                     child: Card(
                       margin: const EdgeInsets.only(bottom: Spacing.sm),
                       child: ListTile(
-                        title: Text(
-                          item.name,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        title: Text(item.name, overflow: TextOverflow.ellipsis),
                         subtitle: Text(
                           '${context.l10n.labelQuantity}: ${item.quantity} × '
                           '$priceStr',
@@ -435,10 +409,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                               ),
                             ),
                             IconButton(
-                              icon: Icon(
-                                appIcons.delete,
-                                color: AppColors.error,
-                              ),
+                              icon:
+                                  Icon(appIcons.delete, color: AppColors.error),
                               tooltip: context.l10n.tooltipDeleteItem,
                               onPressed: () => _removeItem(index),
                             ),
@@ -454,10 +426,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       );
 
   Widget _buildTotalsSection() {
-    final subtotal = _items.fold<double>(
-      0,
-      (sum, item) => sum + item.total,
-    );
+    final subtotal = _items.fold<double>(0, (sum, item) => sum + item.total);
     final taxTotal = subtotal * _taxRate;
     final grandTotal = subtotal + taxTotal;
 
@@ -466,18 +435,14 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       decoration: BoxDecoration(
         color: AppColors.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(Radii.md),
-        border: Border.all(
-          color: AppColors.primary.withValues(alpha: 0.3),
-        ),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
           _buildTotalRow(context.l10n.labelSubtotal, subtotal),
           const Divider(),
           _buildTotalRow(
-            context.l10n.labelTax(
-              '${(_taxRate * 100).toStringAsFixed(0)}%',
-            ),
+            context.l10n.labelTax('${(_taxRate * 100).toStringAsFixed(0)}%'),
             taxTotal,
           ),
           const Divider(thickness: 2),
@@ -497,9 +462,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     bool isGrandTotal = false,
   }) =>
       Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: Spacing.xs,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: Spacing.xs),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -514,10 +477,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               ),
             ),
             Text(
-              FormatHelpers.formatCurrency(
-                amount,
-                locale: context.l10n.localeName,
-              ),
+              FormatHelpers.formatCurrency(amount,
+                  locale: context.l10n.localeName,),
               style: TextStyle(
                 fontSize: isGrandTotal
                     ? AppTypography.headlineSmall
@@ -595,9 +556,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
   Future<void> _addItem() async {
     final nameController = TextEditingController();
-    final quantityController = TextEditingController(
-      text: '1',
-    );
+    final quantityController = TextEditingController(text: '1');
     final priceController = TextEditingController();
 
     await showDialog<void>(
@@ -630,9 +589,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                decoration: InputDecoration(
-                  labelText: context.l10n.labelPrice,
-                ),
+                decoration: InputDecoration(labelText: context.l10n.labelPrice),
               ),
             ],
           ),
@@ -681,16 +638,12 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
   void _removeItem(int index) {
     setState(() {
-      _items.removeAt(
-        index,
-      );
+      _items.removeAt(index);
     });
   }
 
   void _saveInvoice() {
-    unawaited(
-      _saveInvoiceAsync(),
-    );
+    unawaited(_saveInvoiceAsync());
   }
 
   Future<void> _saveInvoiceAsync() async {
@@ -718,15 +671,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       return;
     }
 
-    setState(
-      () => _isLoading = true,
-    );
+    setState(() => _isLoading = true);
 
     try {
-      final subtotal = _items.fold<double>(
-        0,
-        (sum, item) => sum + item.total,
-      );
+      final subtotal = _items.fold<double>(0, (sum, item) => sum + item.total);
       final taxTotal = subtotal * _taxRate;
       final grandTotal = subtotal + taxTotal;
       final isNew = widget.invoice == null;
@@ -760,9 +708,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       final isEditing = widget.invoice != null;
       final result = isEditing
           ? await ref.read(updateInvoiceProvider(invoice).future)
-          : await ref.read(
-              addInvoiceProvider(invoice).future,
-            );
+          : await ref.read(addInvoiceProvider(invoice).future);
 
       if (!mounted) return;
 
@@ -777,10 +723,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             backgroundColor: AppColors.secondary,
           ),
         );
-        Navigator.pop(
-          context,
-          true,
-        );
+        Navigator.pop(context, true);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -803,9 +746,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       );
     } finally {
       if (mounted) {
-        setState(
-          () => _isLoading = false,
-        );
+        setState(() => _isLoading = false);
       }
     }
   }

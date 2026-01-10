@@ -18,9 +18,7 @@ final authServiceProvider = <credential-fixture>((ref) {
   final secureStorage = ref.watch(
     secureStorageProvider.select((storage) => storage),
   );
-  return AuthService(
-    secureStorage: secureStorage,
-  );
+  return AuthService(secureStorage: secureStorage);
 });
 
 /// مزود التحقق من وجود حساب
@@ -56,9 +54,7 @@ final hasAccountProvider = FutureProvider<bool>((ref) async {
 /// // تحديث الحالة
 /// ref.read(isLoggedInProvider.notifier).state = true;
 /// ```
-final isLoggedInProvider = StateProvider<bool>(
-  (ref) => false,
-);
+final isLoggedInProvider = StateProvider<bool>((ref) => false);
 
 /// مزود اسم المستخدم الحالي
 ///
@@ -71,9 +67,7 @@ final isLoggedInProvider = StateProvider<bool>(
 ///   debugPrint('مرحباً $username',);
 /// }
 /// ```
-final currentUsernameProvider = StateProvider<String?>(
-  (ref) => null,
-);
+final currentUsernameProvider = StateProvider<String?>((ref) => null);
 
 /// مزود عملية تسجيل الدخول
 ///
@@ -108,10 +102,7 @@ final loginProvider = FutureProvider.family<bool, (String, String)>((
   final (username, password) = credentials;
 
   try {
-    final result = await authService.login(
-      username,
-      password,
-    );
+    final result = await authService.login(username, password);
     if (result) {
       ref.read(isLoggedInProvider.notifier).state = true;
       ref.read(currentUsernameProvider.notifier).state = username;
@@ -155,10 +146,7 @@ final setupProvider = FutureProvider.family<bool, (String, String)>((
   final (username, password) = credentials;
 
   try {
-    await authService.createAccount(
-      username,
-      password,
-    );
+    await authService.createAccount(username, password);
     ref.read(isLoggedInProvider.notifier).state = true;
     ref.read(currentUsernameProvider.notifier).state = username;
     return true;
@@ -230,10 +218,7 @@ final changePasswordProvider = FutureProvider.family<bool, (String, String)>((
   final (oldPassword, newPassword) = passwords;
 
   try {
-    await authService.changePassword(
-      oldPassword,
-      newPassword,
-    );
+    await authService.changePassword(oldPassword, newPassword);
     return true;
   } on Exception {
     return false;
@@ -276,10 +261,8 @@ final basirUserProvider = Provider<BasirUser?>((ref) {
   }
 
   // 2. التحقق من وضع الضيف (المصدر الثانوي)
-  final isGuest = ref.watch(isGuestProvider).maybeWhen(
-        data: (v) => v,
-        orElse: () => false,
-      );
+  final isGuest =
+      ref.watch(isGuestProvider).maybeWhen(data: (v) => v, orElse: () => false);
 
   if (isGuest) {
     return const BasirUser(

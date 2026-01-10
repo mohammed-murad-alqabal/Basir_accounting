@@ -35,8 +35,9 @@ class VendorRepositoryImpl implements VendorRepository {
   @override
   Future<void> addVendor(Vendor vendor) async {
     await isar.writeTxn(() async {
-      await isar.vendorModels
-          .put(VendorModel.fromEntity(vendor.copyWith(userId: userId)));
+      await isar.vendorModels.put(
+        VendorModel.fromEntity(vendor.copyWith(userId: userId)),
+      );
     });
   }
 

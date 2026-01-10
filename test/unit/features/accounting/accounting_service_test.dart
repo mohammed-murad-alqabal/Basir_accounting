@@ -16,9 +16,7 @@ void main() {
 
         expect(accounts, isNotEmpty);
         expect(
-          accounts.any(
-            (a) => a.nameAr.contains('ضريبة القيمة المضافة'),
-          ),
+          accounts.any((a) => a.nameAr.contains('ضريبة القيمة المضافة')),
           isTrue,
           reason: 'Saudi COA should include VAT account',
         );
@@ -30,22 +28,10 @@ void main() {
         );
 
         expect(accounts, isNotEmpty);
-        expect(
-          accounts.any((a) => a.type == AccountType.asset),
-          isTrue,
-        );
-        expect(
-          accounts.any((a) => a.type == AccountType.liability),
-          isTrue,
-        );
-        expect(
-          accounts.any((a) => a.type == AccountType.revenue),
-          isTrue,
-        );
-        expect(
-          accounts.any((a) => a.type == AccountType.expense),
-          isTrue,
-        );
+        expect(accounts.any((a) => a.type == AccountType.asset), isTrue);
+        expect(accounts.any((a) => a.type == AccountType.liability), isTrue);
+        expect(accounts.any((a) => a.type == AccountType.revenue), isTrue);
+        expect(accounts.any((a) => a.type == AccountType.expense), isTrue);
       });
 
       test('should generate UAE COA with FTA VAT account', () {

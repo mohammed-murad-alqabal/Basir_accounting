@@ -251,9 +251,8 @@ class _AppSearchFieldState extends State<AppSearchField> {
         style: AppTextStyles.bodyLarge,
         decoration: InputDecoration(
           hintText: widget.hint,
-          hintStyle: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textHint,
-          ),
+          hintStyle:
+              AppTextStyles.bodyMedium.copyWith(color: AppColors.textHint),
           prefixIcon: const Icon(
             Icons.search,
             size: IconSizes.sm,

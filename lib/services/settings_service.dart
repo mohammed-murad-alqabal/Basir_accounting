@@ -107,10 +107,7 @@ class SettingsService {
     final settings = await businessSettingsRepository.getSettings() ??
         const BusinessSettings(id: 'default', companyName: '');
     await businessSettingsRepository.saveSettings(
-      settings.copyWith(
-        currencyCode: code,
-        syncStatus: SyncStatus.pendingPush,
-      ),
+      settings.copyWith(currencyCode: code, syncStatus: SyncStatus.pendingPush),
     );
   }
 
@@ -151,10 +148,7 @@ class SettingsService {
   /// تعيين شكل الفاتورة
   Future<void> setInvoiceStyle(String style) async {
     try {
-      await secureStorage.write(
-        key: <credential-fixture>,
-        value: style,
-      );
+      await secureStorage.write(key: <credential-fixture>, value: style);
     } on Exception catch (e) {
       throw Exception('خطأ في حفظ شكل الفاتورة: $e');
     }
@@ -173,9 +167,7 @@ class SettingsService {
         'invoiceStyle': await getInvoiceStyle(),
       };
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في جلب إعدادات الشركة: $e',
-      );
+      throw Exception('خطأ في جلب إعدادات الشركة: $e');
     }
   }
 

@@ -90,10 +90,7 @@ class _GuestUpgradeScreenState extends ConsumerState<GuestUpgradeScreen> {
                 controller: _usernameController,
                 label: context.l10n.labelUsername,
                 hint: context.l10n.hintEnterUsername,
-                prefixIcon: Icon(
-                  appIcons.person,
-                  size: IconSizes.sm,
-                ),
+                prefixIcon: Icon(appIcons.person, size: IconSizes.sm),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return context.l10n.errEmptyField;
@@ -109,10 +106,7 @@ class _GuestUpgradeScreenState extends ConsumerState<GuestUpgradeScreen> {
                 controller: _passwordController,
                 label: context.l10n.labelPassword,
                 hint: context.l10n.hintEnterPassword,
-                prefixIcon: Icon(
-                  appIcons.lock,
-                  size: IconSizes.sm,
-                ),
+                prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
                 obscureText: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {

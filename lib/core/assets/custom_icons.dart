@@ -330,11 +330,7 @@ class CustomIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconWidget = Icon(
-      icon,
-      size: size,
-      color: color,
-    );
+    final iconWidget = Icon(icon, size: size, color: color);
 
     if (badge != null) {
       return InkWell(
@@ -419,16 +415,11 @@ class _AnimatedIconState extends State<AnimatedIcon>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    );
+    _controller = AnimationController(duration: widget.duration, vsync: this);
     _scaleAnimation = Tween<double>(
       begin: 0.8,
       end: 1,
-    ).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
     // تشغيل الأنيميشن (fire-and-forget pattern)
     _controller.forward().ignore();
   }

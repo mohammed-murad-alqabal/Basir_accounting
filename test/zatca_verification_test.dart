@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:basir_app/features/invoices/application/zatca_service.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -36,7 +37,7 @@ void main() {
       expect(decodedBytes[offset], 2);
       expect(decodedBytes[offset + 1], taxNumber.length);
 
-      print('Zatca QR TLV (Base64): $result');
+      debugPrint('Zatca QR TLV (Base64): $result');
     });
 
     test('validateInvoice should catch invalid data', () {

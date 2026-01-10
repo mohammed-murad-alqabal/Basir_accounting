@@ -41,10 +41,7 @@ class PdfInvoiceService extends _$PdfInvoiceService {
     doc.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
-        theme: pw.ThemeData.withFont(
-          base: font,
-          bold: fontBold,
-        ),
+        theme: pw.ThemeData.withFont(base: font, bold: fontBold),
         build: (context) => pw.Directionality(
           textDirection: pw.TextDirection.rtl,
           child: pw.Column(
@@ -215,10 +212,7 @@ class PdfInvoiceService extends _$PdfInvoiceService {
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 _buildTotalRow(
-                  'المجموع الفرعي:',
-                  invoice.subtotalAmount,
-                  currency,
-                ),
+                    'المجموع الفرعي:', invoice.subtotalAmount, currency,),
                 _buildTotalRow(
                   'الضريبة (${(invoice.taxRate * 100).toInt()}%):',
                   invoice.taxAmount,

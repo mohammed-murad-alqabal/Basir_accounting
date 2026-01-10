@@ -30,9 +30,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final customersAsync = ref.watch(
-      filteredCustomersProvider,
-    );
+    final customersAsync = ref.watch(filteredCustomersProvider);
     final appIcons = ref.watch(appIconsProvider);
 
     return Scaffold(
@@ -82,11 +80,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
 
   Widget _buildCustomersList(List<Customer> customers) {
     if (customers.isEmpty) {
-      return const Center(
-        child: EmptyStateIllustration(
-          isCustomers: true,
-        ),
-      );
+      return const Center(child: EmptyStateIllustration(isCustomers: true));
     }
 
     return ListView.builder(
@@ -129,9 +123,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
     );
 
     if (result ?? false) {
-      ref.invalidate(
-        customersProvider,
-      );
+      ref.invalidate(customersProvider);
     }
   }
 
@@ -144,9 +136,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
     );
 
     if (result ?? false) {
-      ref.invalidate(
-        customersProvider,
-      );
+      ref.invalidate(customersProvider);
     }
   }
 }

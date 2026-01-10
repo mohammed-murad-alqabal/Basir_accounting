@@ -257,8 +257,9 @@ class SyncService extends _$SyncService {
             .select('server_updated_at')
             .single();
 
-        final serverUpdatedAt =
-            DateTime.parse(response['server_updated_at'] as String);
+        final serverUpdatedAt = DateTime.parse(
+          response['server_updated_at'] as String,
+        );
 
         await _isar.writeTxn(() async {
           setSyncMetadata(record, SyncStatus.synced, serverUpdatedAt);
@@ -296,8 +297,9 @@ class SyncService extends _$SyncService {
           final localSyncStatus =
               (localRecord as dynamic).syncStatus as SyncStatus;
           final localUpdatedAt = (localRecord as dynamic).updatedAt as DateTime;
-          final remoteUpdatedAt =
-              DateTime.parse(remoteData['updatedAt'] as String);
+          final remoteUpdatedAt = DateTime.parse(
+            remoteData['updatedAt'] as String,
+          );
 
           if (localSyncStatus == SyncStatus.pendingPush) {
             // Local has unsynced changes and server has updates (conflict)

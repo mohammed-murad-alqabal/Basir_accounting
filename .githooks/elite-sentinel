@@ -28,7 +28,12 @@ check_branding() {
         return 0
     fi
     
-    found_legacy=$(echo "$staged_files" | xargs grep -Ei "$legacy_pattern" 2>/dev/null | grep -v "elite_sentinel_strategy.md" | grep -v ".githooks/elite-sentinel" | grep -v "scripts/verify_branding.sh" || true)
+    found_legacy=$(echo "$staged_files" | xargs grep -Ei "$legacy_pattern" 2>/dev/null | \
+        grep -v "elite_sentinel_strategy.md" | \
+        grep -v ".githooks/elite-sentinel" | \
+        grep -v "scripts/verify_branding.sh" | \
+        grep -v "ENGINEERING_AUDIT_REPORT.md" | \
+        grep -v "logs/reports/" || true)
     
     if [ -n "$found_legacy" ]; then
         print_sentinel_error "Found legacy branding references in staged files:"

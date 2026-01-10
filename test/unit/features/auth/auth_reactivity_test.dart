@@ -20,18 +20,15 @@ void main() {
 
     test('initialize emits correct initial state', () async {
       // Arrange
-      when(mockSecureStorage.read(key: <credential-fixture>))
-          .thenAnswer((_) async => 'true');
-      when(mockSecureStorage.read(key: <credential-fixture>))
-          .thenAnswer((_) async => 'test_user');
+      when(
+        mockSecureStorage.read(key: <credential-fixture>),
+      ).thenAnswer((_) async => 'true');
+      when(
+        mockSecureStorage.read(key: <credential-fixture>),
+      ).thenAnswer((_) async => 'test_user');
 
       // Act & Assert
-      expect(
-        authService.onAuthStateChange,
-        emitsInOrder([
-          'test_user',
-        ]),
-      );
+      expect(authService.onAuthStateChange, emitsInOrder(['test_user']));
 
       await authService.initialize();
     });
@@ -39,16 +36,20 @@ void main() {
     test('login emits username', () async {
       // Arrange
       // Initial state is logged out
-      when(mockSecureStorage.read(key: <credential-fixture>))
-          .thenAnswer((_) async => null);
+      when(
+        mockSecureStorage.read(key: <credential-fixture>),
+      ).thenAnswer((_) async => null);
 
       // Login mocks
-      when(mockSecureStorage.read(key: <credential-fixture>))
-          .thenAnswer((_) async => 'test_user');
-      when(mockSecureStorage.read(key: <credential-fixture>))
-          .thenAnswer((_) async => 'hashed_pass');
-      when(mockSecureStorage.read(key: '${StorageKeys.username}_salt'))
-          .thenAnswer((_) async => 'salt');
+      when(
+        mockSecureStorage.read(key: <credential-fixture>),
+      ).thenAnswer((_) async => 'test_user');
+      when(
+        mockSecureStorage.read(key: <credential-fixture>),
+      ).thenAnswer((_) async => 'hashed_pass');
+      when(
+        mockSecureStorage.read(key: '${StorageKeys.username}_salt'),
+      ).thenAnswer((_) async => 'salt');
 
       // Act
       // We can't easily mock the internal hash logic without refactoring,
@@ -68,24 +69,14 @@ void main() {
 
     test('logout emits null', () async {
       // Act & Assert
-      expect(
-        authService.onAuthStateChange,
-        emitsInOrder([
-          null,
-        ]),
-      );
+      expect(authService.onAuthStateChange, emitsInOrder([null]));
 
       await authService.logout();
     });
 
     test('loginAsGuest emits null', () async {
       // Act & Assert
-      expect(
-        authService.onAuthStateChange,
-        emitsInOrder([
-          null,
-        ]),
-      );
+      expect(authService.onAuthStateChange, emitsInOrder([null]));
 
       await authService.loginAsGuest();
     });
@@ -95,18 +86,10 @@ void main() {
       const newUsername = 'new_user';
 
       // Act & Assert
-      expect(
-        authService.onAuthStateChange,
-        emitsInOrder([
-          newUsername,
-        ]),
-      );
+      expect(authService.onAuthStateChange, emitsInOrder([newUsername]));
 
       try {
-        await authService.convertGuestToUser(
-          newUsername,
-          'pass123456',
-        );
+        await authService.convertGuestToUser(newUsername, 'pass123456');
       } on Object {
         // Ignore internal errors about storage mocking for creation
         // We just want to see if it TRIED to add to controller.

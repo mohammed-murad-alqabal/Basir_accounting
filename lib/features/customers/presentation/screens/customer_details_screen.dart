@@ -210,10 +210,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
 
     if (!context.mounted) return;
     if (result ?? false) {
-      Navigator.pop(
-        context,
-        true,
-      );
+      Navigator.pop(context, true);
     }
   }
 
@@ -248,9 +245,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
     if (confirmed != true || !context.mounted) return;
 
     try {
-      final result = await ref.read(
-        deleteCustomerProvider(customer.id).future,
-      );
+      final result = await ref.read(deleteCustomerProvider(customer.id).future);
 
       if (!context.mounted) return;
 
@@ -261,10 +256,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
             backgroundColor: AppColors.secondary,
           ),
         );
-        Navigator.pop(
-          context,
-          true,
-        );
+        Navigator.pop(context, true);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

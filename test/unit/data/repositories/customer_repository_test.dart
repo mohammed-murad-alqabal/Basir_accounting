@@ -110,12 +110,18 @@ void main() {
 
       test('should return customers in correct order', () async {
         // Arrange
-        final customer1 =
-            MockData.createTestCustomer(nameEn: 'أحمد', nameAr: 'أحمد');
-        final customer2 =
-            MockData.createTestCustomer(nameEn: 'بدر', nameAr: 'بدر');
-        final customer3 =
-            MockData.createTestCustomer(nameEn: 'خالد', nameAr: 'خالد');
+        final customer1 = MockData.createTestCustomer(
+          nameEn: 'أحمد',
+          nameAr: 'أحمد',
+        );
+        final customer2 = MockData.createTestCustomer(
+          nameEn: 'بدر',
+          nameAr: 'بدر',
+        );
+        final customer3 = MockData.createTestCustomer(
+          nameEn: 'خالد',
+          nameAr: 'خالد',
+        );
 
         await repository.addCustomer(customer1);
         await repository.addCustomer(customer2);
@@ -225,8 +231,10 @@ void main() {
         await repository.addCustomer(customer);
 
         // Act - تحديث الاسم فقط
-        final updatedCustomer =
-            customer.copyWith(nameEn: 'اسم محدث', nameAr: 'اسم محدث');
+        final updatedCustomer = customer.copyWith(
+          nameEn: 'اسم محدث',
+          nameAr: 'اسم محدث',
+        );
         await repository.updateCustomer(updatedCustomer);
 
         // Assert
@@ -254,8 +262,10 @@ void main() {
         await repository.addCustomer(customer2);
 
         // Act - تحديث العميل الأول فقط
-        final updatedCustomer1 =
-            customer1.copyWith(nameEn: 'عميل 1 محدث', nameAr: 'عميل 1 محدث');
+        final updatedCustomer1 = customer1.copyWith(
+          nameEn: 'عميل 1 محدث',
+          nameAr: 'عميل 1 محدث',
+        );
         await repository.updateCustomer(updatedCustomer1);
 
         // Assert

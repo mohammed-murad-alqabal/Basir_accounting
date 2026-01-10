@@ -11,8 +11,9 @@ final fixedAssetsProvider = FutureProvider<List<FixedAsset>>((ref) async {
 });
 
 /// موفر قائمة فئات الأصول
-final assetCategoriesProvider =
-    FutureProvider<List<AssetCategory>>((ref) async {
+final assetCategoriesProvider = FutureProvider<List<AssetCategory>>((
+  ref,
+) async {
   final repository = ref.watch(assetRepositoryProvider);
   return repository.getAllCategories();
 });

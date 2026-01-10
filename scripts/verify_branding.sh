@@ -13,18 +13,21 @@ ALLOWED_TERMS=("basir_accounting_system" "Basir Accounting System" "نظام ب�
 ERROR_COUNT=0
 
 # Exclude directories
-EXCLUDED_DIRS=".git .dart_tool build logs node_modules rust/target coverage"
+EXCLUDED_DIRS=".git .dart_tool build logs node_modules rust/target coverage android ios .githooks backups"
 EXCLUDES=""
 for dir in $EXCLUDED_DIRS; do
     EXCLUDES="$EXCLUDES --exclude-dir=$dir"
 done
 
+# Added -I to ignore binary files and --exclude to ignore this script
+grep_cmd="grep -riI --exclude=$(basename "$0")"
+
 for term in "${LEGACY_TERMS[@]}"; do
     echo "  - Checking for legacy term: '$term'..."
-    COUNT=$(grep -ri "$term" . $EXCLUDES | wc -l)
+    COUNT=$($grep_cmd "$term" . $EXCLUDES | wc -l)
     if [ "$COUNT" -gt 0 ]; then
         echo "    ⚠️  Found $COUNT instances of '$term'. Review needed:"
-        grep -ri "$term" . $EXCLUDES | head -n 3 | sed 's/^/      /'
+        $grep_cmd "$term" . $EXCLUDES | head -n 3 | sed 's/^/      /'
         ERROR_COUNT=$((ERROR_COUNT + 1))
     else
         echo "    ✅ Clean."

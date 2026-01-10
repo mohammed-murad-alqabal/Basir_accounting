@@ -18,9 +18,7 @@ void main() {
   });
 
   Widget createSubject() => ProviderScope(
-        overrides: [
-          authServiceProvider.overrideWithValue(mockAuthService),
-        ],
+        overrides: [authServiceProvider.overrideWithValue(mockAuthService)],
         child: MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
@@ -51,66 +49,56 @@ void main() {
       expect(find.byType(Icon), findsWidgets);
     });
 
-    testWidgets(
-      'shows validation errors when fields are empty',
-      (tester) async {
-        await tester.pumpWidget(createSubject());
-        final context = tester.element(find.text('Home'));
-        unawaited(Navigator.of(context).pushNamed('/upgrade'));
-        await tester.pumpAndSettle();
+    testWidgets('shows validation errors when fields are empty', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createSubject());
+      final context = tester.element(find.text('Home'));
+      unawaited(Navigator.of(context).pushNamed('/upgrade'));
+      await tester.pumpAndSettle();
 
-        // Use localized text - find button specifically (not AppBar title)
-        final l10n = AppLocalizations.of(context);
-        final buttonFinder = find.descendant(
-          of: find.byWidgetPredicate(
-            (widget) =>
-                widget is AppEnhancedButton &&
-                widget.type == AppEnhancedButtonType.primary,
-          ),
-          matching: find.text(l10n.actionUpgradeAccount),
-        );
-        await tester.tap(buttonFinder);
-        await tester.pump();
+      // Use localized text - find button specifically (not AppBar title)
+      final l10n = AppLocalizations.of(context);
+      final buttonFinder = find.descendant(
+        of: find.byWidgetPredicate(
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
+        ),
+        matching: find.text(l10n.actionUpgradeAccount),
+      );
+      await tester.tap(buttonFinder);
+      await tester.pump();
 
-        expect(find.text(l10n.errEmptyField), findsNWidgets(2));
-      },
-    );
+      expect(find.text(l10n.errEmptyField), findsNWidgets(2));
+    });
 
-    testWidgets(
-      'calls convertGuestToUser when form is valid',
-      (tester) async {
-        await tester.pumpWidget(createSubject());
-        final context = tester.element(find.text('Home'));
-        unawaited(Navigator.of(context).pushNamed('/upgrade'));
-        await tester.pumpAndSettle();
+    testWidgets('calls convertGuestToUser when form is valid', (tester) async {
+      await tester.pumpWidget(createSubject());
+      final context = tester.element(find.text('Home'));
+      unawaited(Navigator.of(context).pushNamed('/upgrade'));
+      await tester.pumpAndSettle();
 
-        await tester.enterText(
-          find.byType(TextFormField).at(0),
-          'newuser',
-        );
-        await tester.enterText(
-          find.byType(TextFormField).at(1),
-          'password123',
-        );
+      await tester.enterText(find.byType(TextFormField).at(0), 'newuser');
+      await tester.enterText(find.byType(TextFormField).at(1), 'password123');
 
-        // Use localized text - find button specifically (not AppBar title)
-        final l10n = AppLocalizations.of(context);
-        final buttonFinder = find.descendant(
-          of: find.byWidgetPredicate(
-            (widget) =>
-                widget is AppEnhancedButton &&
-                widget.type == AppEnhancedButtonType.primary,
-          ),
-          matching: find.text(l10n.actionUpgradeAccount),
-        );
-        await tester.tap(buttonFinder);
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 100));
+      // Use localized text - find button specifically (not AppBar title)
+      final l10n = AppLocalizations.of(context);
+      final buttonFinder = find.descendant(
+        of: find.byWidgetPredicate(
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
+        ),
+        matching: find.text(l10n.actionUpgradeAccount),
+      );
+      await tester.tap(buttonFinder);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
 
-        expect(mockAuthService.convertCalled, isTrue);
-        expect(mockAuthService.lastUsername, 'newuser');
-        expect(mockAuthService.lastPassword, 'password123');
-      },
-    );
+      expect(mockAuthService.convertCalled, isTrue);
+      expect(mockAuthService.lastUsername, 'newuser');
+      expect(mockAuthService.lastPassword, 'password123');
+    });
   });
 }

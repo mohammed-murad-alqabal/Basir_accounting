@@ -8,8 +8,9 @@ import '../../../fixtures/customer_fixtures.dart';
 
 void main() {
   group('CustomerFormScreen Tests', () {
-    testWidgets('should display add customer title when customer is null',
-        (tester) async {
+    testWidgets('should display add customer title when customer is null', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         const ProviderScope(
           child: MaterialApp(
@@ -24,21 +25,23 @@ void main() {
       expect(find.text('إضافة عميل جديد'), findsAtLeastNWidgets(1));
     });
 
-    testWidgets('should display edit customer title when customer is provided',
-        (tester) async {
-      final customer = CustomerFixtures.customer1;
-      await tester.pumpWidget(
-        ProviderScope(
-          child: MaterialApp(
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            locale: const Locale('ar'),
-            home: CustomerFormScreen(customer: customer),
+    testWidgets(
+      'should display edit customer title when customer is provided',
+      (tester) async {
+        final customer = CustomerFixtures.customer1;
+        await tester.pumpWidget(
+          ProviderScope(
+            child: MaterialApp(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              locale: const Locale('ar'),
+              home: CustomerFormScreen(customer: customer),
+            ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
-      expect(find.text('تعديل العميل'), findsAtLeastNWidgets(1));
-    });
+        );
+        await tester.pumpAndSettle();
+        expect(find.text('تعديل العميل'), findsAtLeastNWidgets(1));
+      },
+    );
   });
 }

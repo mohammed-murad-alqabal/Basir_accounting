@@ -117,8 +117,10 @@ void main() {
       final customer = MockData.createTestCustomer();
       await mockRepository.addCustomer(customer);
 
-      final updatedCustomer =
-          customer.copyWith(nameEn: 'اسم محدث', nameAr: 'اسم محدث');
+      final updatedCustomer = customer.copyWith(
+        nameEn: 'اسم محدث',
+        nameAr: 'اسم محدث',
+      );
 
       // Act
       final result = await container.read(
@@ -150,8 +152,10 @@ void main() {
       final customer = MockData.createTestCustomer();
       await mockRepository.addCustomer(customer);
 
-      final updatedCustomer =
-          customer.copyWith(nameEn: 'اسم جديد', nameAr: 'اسم جديد');
+      final updatedCustomer = customer.copyWith(
+        nameEn: 'اسم جديد',
+        nameAr: 'اسم جديد',
+      );
 
       // Act
       await container.read(updateCustomerProvider(updatedCustomer).future);

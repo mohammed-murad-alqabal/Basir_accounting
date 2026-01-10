@@ -24,9 +24,7 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
           await isar.invoiceModels.filter().userIdEqualTo(userId).findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في جلب الفواتير: $e',
-      );
+      throw Exception('خطأ في جلب الفواتير: $e');
     }
   }
 
@@ -41,9 +39,7 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
           .findFirst();
       return model?.toEntity();
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في جلب الفاتورة: $e',
-      );
+      throw Exception('خطأ في جلب الفاتورة: $e');
     }
   }
 
@@ -58,9 +54,7 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
           .findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في جلب فواتير العميل: $e',
-      );
+      throw Exception('خطأ في جلب فواتير العميل: $e');
     }
   }
 
@@ -75,27 +69,19 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
           .findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في جلب الفواتير حسب الحالة: $e',
-      );
+      throw Exception('خطأ في جلب الفواتير حسب الحالة: $e');
     }
   }
 
   @override
   Future<void> addInvoice(Invoice invoice) async {
     try {
-      final model = InvoiceModel.fromEntity(
-        invoice.copyWith(userId: userId),
-      );
+      final model = InvoiceModel.fromEntity(invoice.copyWith(userId: userId));
       await isar.writeTxn(() async {
-        await isar.invoiceModels.put(
-          model,
-        );
+        await isar.invoiceModels.put(model);
       });
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في إضافة الفاتورة: $e',
-      );
+      throw Exception('خطأ في إضافة الفاتورة: $e');
     }
   }
 
@@ -112,23 +98,17 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
             .findFirst();
 
         if (existingModel == null) {
-          throw Exception(
-            'الفاتورة غير موجودة',
-          );
+          throw Exception('الفاتورة غير موجودة');
         }
 
         // تحديث الفاتورة مع الاحتفاظ بنفس id
-        final updatedModel =
-            InvoiceModel.fromEntity(invoice.copyWith(userId: userId))
-              ..id = existingModel.id;
-        await isar.invoiceModels.put(
-          updatedModel,
-        );
+        final updatedModel = InvoiceModel.fromEntity(
+          invoice.copyWith(userId: userId),
+        )..id = existingModel.id;
+        await isar.invoiceModels.put(updatedModel);
       });
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في تحديث الفاتورة: $e',
-      );
+      throw Exception('خطأ في تحديث الفاتورة: $e');
     }
   }
 
@@ -143,15 +123,11 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
             .userIdEqualTo(userId)
             .findFirst();
         if (model != null) {
-          await isar.invoiceModels.delete(
-            model.id,
-          );
+          await isar.invoiceModels.delete(model.id);
         }
       });
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حذف الفاتورة: $e',
-      );
+      throw Exception('خطأ في حذف الفاتورة: $e');
     }
   }
 
@@ -162,9 +138,7 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
         await isar.invoiceModels.filter().userIdEqualTo(userId).deleteAll();
       });
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حذف جميع الفواتير: $e',
-      );
+      throw Exception('خطأ في حذف جميع الفواتير: $e');
     }
   }
 
@@ -198,9 +172,7 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
         paidRevenue: paidRevenue,
       );
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حساب إحصائيات الفواتير: $e',
-      );
+      throw Exception('خطأ في حساب إحصائيات الفواتير: $e');
     }
   }
 

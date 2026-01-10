@@ -25,9 +25,7 @@ void main() {
       (l10nConfig['template-arb-file'] as String?) ?? 'app_en.arb';
   final templatePath = path.join(arbDir, templateFile);
 
-  print(
-    '🔍 Checking ARB completeness...',
-  );
+  print('🔍 Checking ARB completeness...');
   print('📂 ARB Directory: $arbDir');
   print('📄 Template File: $templateFile');
 

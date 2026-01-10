@@ -213,12 +213,13 @@ class _ContentCell extends StatelessWidget {
 
 // Internal provider for fetching TB data
 final _trialBalanceProvider = FutureProvider.autoDispose
-    .family<TrialBalanceDto, ({String asOfDate, String? periodStart})>(
-  (ref, params) {
-    final service = ref.watch(nativeReportingServiceProvider);
-    return service.generateTrialBalance(
-      asOfDate: params.asOfDate,
-      periodStart: params.periodStart,
-    );
-  },
-);
+    .family<TrialBalanceDto, ({String asOfDate, String? periodStart})>((
+  ref,
+  params,
+) {
+  final service = ref.watch(nativeReportingServiceProvider);
+  return service.generateTrialBalance(
+    asOfDate: params.asOfDate,
+    periodStart: params.periodStart,
+  );
+});

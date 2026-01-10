@@ -55,8 +55,9 @@ class ThemeController extends AsyncNotifier<ThemeMode> {
 }
 
 /// مزود الثيم
-final themeProvider =
-    AsyncNotifierProvider<ThemeController, ThemeMode>(ThemeController.new);
+final themeProvider = AsyncNotifierProvider<ThemeController, ThemeMode>(
+  ThemeController.new,
+);
 
 /// مزود مساعد للتحقق من الوضع الداكن
 final isDarkModeProvider = Provider<bool>((ref) {

@@ -17,11 +17,7 @@ void main() {
 
     // Export configuration
     final exports = [
-      {
-        'path': 'assets/icons/app_icon.png',
-        'size': 800.0,
-        'bg': Colors.white,
-      },
+      {'path': 'assets/icons/app_icon.png', 'size': 800.0, 'bg': Colors.white},
       {
         'path': 'assets/icons/splash_logo.png',
         'size': 600.0,

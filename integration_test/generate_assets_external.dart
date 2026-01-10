@@ -11,8 +11,9 @@ import 'package:path_provider/path_provider.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Generate Basir 2.0 PNG Assets to External Storage',
-      (tester) async {
+  testWidgets('Generate Basir 2.0 PNG Assets to External Storage', (
+    tester,
+  ) async {
     final exports = [
       {'name': 'app_icon.png', 'size': 1024.0, 'bg': Colors.white},
       {

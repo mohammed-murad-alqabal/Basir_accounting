@@ -17,10 +17,7 @@ class AppearanceState {
   final bool reduceMotion;
 
   /// نسخ الحالة مع تعديلات محددة
-  AppearanceState copyWith({
-    bool? highContrast,
-    bool? reduceMotion,
-  }) =>
+  AppearanceState copyWith({bool? highContrast, bool? reduceMotion}) =>
       AppearanceState(
         highContrast: highContrast ?? this.highContrast,
         reduceMotion: reduceMotion ?? this.reduceMotion,

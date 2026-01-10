@@ -5,10 +5,7 @@ import 'package:flutter/material.dart';
 /// ودجيت لعرض سطر واحد في التقرير المالي (قائمة الدخل، الميزانية العمومية، إلخ)
 class ReportLineItem extends StatelessWidget {
   /// إنشاء سطر تقرير جديد.
-  const ReportLineItem({
-    required this.line,
-    super.key,
-  });
+  const ReportLineItem({required this.line, super.key});
 
   /// بيانات سطر التقرير (DTO) القادمة من محرك التقارير.
   final FinancialReportLineDto line;
@@ -56,17 +53,11 @@ class ReportLineItem extends StatelessWidget {
               padding: EdgeInsetsDirectional.only(
                 start: line.indentLevel * 24.0, // Indentation per level
               ),
-              child: Text(
-                line.label,
-                style: labelStyle,
-              ),
+              child: Text(line.label, style: labelStyle),
             ),
           ),
           if (showAmount)
-            Text(
-              FormatHelpers.formatCurrency(amount),
-              style: amountStyle,
-            ),
+            Text(FormatHelpers.formatCurrency(amount), style: amountStyle),
         ],
       ),
     );

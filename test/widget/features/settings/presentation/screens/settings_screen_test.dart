@@ -24,9 +24,7 @@ void main() {
               'invoiceStyle': 'standard',
             },
           ),
-          appIconsProvider.overrideWith(
-            (ref) => const MaterialAppIcons(),
-          ),
+          appIconsProvider.overrideWith((ref) => const MaterialAppIcons()),
         ],
       );
     });

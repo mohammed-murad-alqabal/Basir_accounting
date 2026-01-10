@@ -50,8 +50,9 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
         // منطق مبسط للتحقق من النسبة (مثلاً 15% للسعودية)
         final totalBase = context.proposedJournalEntry.totalDebit - line.credit;
         if (totalBase > Decimal.zero) {
-          final calculatedRate =
-              (line.credit / totalBase).toDecimal(scaleOnInfinitePrecision: 4);
+          final calculatedRate = (line.credit / totalBase).toDecimal(
+            scaleOnInfinitePrecision: 4,
+          );
           final expectedRate = Decimal.parse('0.15');
 
           if ((calculatedRate - expectedRate).abs() > Decimal.parse('0.001')) {
@@ -60,8 +61,9 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
               'القياسية (15%).',
             );
           } else {
-            rationale
-                .add('تأكيد: نسبة الضريبة (15%) مطابقة للمتطلبات المحلية.');
+            rationale.add(
+              'تأكيد: نسبة الضريبة (15%) مطابقة للمتطلبات المحلية.',
+            );
           }
         }
       }

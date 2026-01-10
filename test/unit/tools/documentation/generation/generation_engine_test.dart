@@ -38,10 +38,7 @@ void main() {
       );
 
       // Act & Assert
-      expect(
-        engine.generateDocumentation(element),
-        isA<String>(),
-      );
+      expect(engine.generateDocumentation(element), isA<String>());
     });
 
     test('should handle different element types', () {
@@ -87,10 +84,7 @@ void main() {
       );
 
       // Act & Assert
-      expect(
-        engine.generateDocumentation(element),
-        isA<String>(),
-      );
+      expect(engine.generateDocumentation(element), isA<String>());
     });
   });
 
@@ -363,10 +357,7 @@ void main() {
       );
 
       // Act & Assert - All should throw UnimplementedError
-      expect(
-        engine.generateDocumentation(element),
-        isA<String>(),
-      );
+      expect(engine.generateDocumentation(element), isA<String>());
 
       expect(
         engine.generateFileDocumentation(result),
