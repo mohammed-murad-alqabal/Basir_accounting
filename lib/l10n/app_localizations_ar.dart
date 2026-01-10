@@ -1467,4 +1467,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get labelDiscount => 'الخصم';
+
+  @override
+  String get errPermissionDenied => 'ليس لديك صلاحية للقيام بهذا الإجراء';
+
+  @override
+  String get msgInvoiceReversed => 'تم عكس الفاتورة بنجاح';
 }

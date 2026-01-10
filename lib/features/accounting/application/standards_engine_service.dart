@@ -9,7 +9,8 @@ part 'standards_engine_service.g.dart';
 /// global standards including IFRS (International Financial Reporting Standards)
 /// and ISSB (International Sustainability Standards Board).
 @Riverpod(keepAlive: true)
-class StandardsEngineService extends _$StandardsEngineService implements AccountingAgent {
+class StandardsEngineService extends _$StandardsEngineService
+    implements AccountingAgent {
   @override
   FutureOr<void> build() {}
 
@@ -34,8 +35,10 @@ class StandardsEngineService extends _$StandardsEngineService implements Account
 
     // IFRS 18 Category Validation
     for (final line in context.proposedJournalEntry.lines) {
-      if (line.accountId.startsWith('acc-4') || line.accountId.startsWith('acc-5')) {
-        rationale.add('Validating IFRS 18 Category mapping for ${line.accountName}');
+      if (line.accountId.startsWith('acc-4') ||
+          line.accountId.startsWith('acc-5')) {
+        rationale
+            .add('Validating IFRS 18 Category mapping for ${line.accountName}');
         // Note: Real-world implementation would fetch metadata from the account entity
         rationale.add(
           'SUCCESS: Account correctly mapped to Operating category per IFRS 18.34',
@@ -48,7 +51,8 @@ class StandardsEngineService extends _$StandardsEngineService implements Account
       rationale.add(
         'ISSB S1/S2: Sustainability metrics disclosure mandatory for this transaction tier.',
       );
-      if (context.sustainabilityMetrics != null && context.sustainabilityMetrics!.isNotEmpty) {
+      if (context.sustainabilityMetrics != null &&
+          context.sustainabilityMetrics!.isNotEmpty) {
         rationale.add(
           'ISSB Verified: ${context.sustainabilityMetrics!.length} metrics attached for disclosure.',
         );

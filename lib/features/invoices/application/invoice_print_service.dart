@@ -221,7 +221,8 @@ class InvoicePrintService {
 
   pw.Widget _buildReceiptFooter(AppLocalizations l10n) => pw.Column(
         children: [
-          pw.Text(l10n.receiptFooterThanks, style: const pw.TextStyle(fontSize: 8)),
+          pw.Text(l10n.receiptFooterThanks,
+              style: const pw.TextStyle(fontSize: 8),),
           pw.Text(
             l10n.receiptFooterBrand,
             style: const pw.TextStyle(fontSize: 7),

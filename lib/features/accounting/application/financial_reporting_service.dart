@@ -97,9 +97,12 @@ class FinancialReportingService extends _$FinancialReportingService {
       if (account.ifrs18Category != null) {
         final balance = account.balance;
         // Revenue (CR) is positive, Expenses (DR) are negative in P&L context
-        final sign = account.nature == AccountNature.credit ? Decimal.one : Decimal.fromInt(-1);
+        final sign = account.nature == AccountNature.credit
+            ? Decimal.one
+            : Decimal.fromInt(-1);
         categoryBalances[account.ifrs18Category!] =
-            (categoryBalances[account.ifrs18Category!] ?? Decimal.zero) + (balance * sign);
+            (categoryBalances[account.ifrs18Category!] ?? Decimal.zero) +
+                (balance * sign);
       }
     }
 
@@ -181,7 +184,8 @@ class FinancialReportingService extends _$FinancialReportingService {
             if (accountMap[line.accountId] == AccountType.revenue) {
               // Revenue is Credit nature (Increases balance)
               final amount = line.credit - line.debit;
-              monthlyRevenue[matchingKey] = (monthlyRevenue[matchingKey] ?? Decimal.zero) + amount;
+              monthlyRevenue[matchingKey] =
+                  (monthlyRevenue[matchingKey] ?? Decimal.zero) + amount;
             }
           }
         }
@@ -201,7 +205,8 @@ class FinancialReportingService extends _$FinancialReportingService {
     for (final account in accounts) {
       if (account.type == AccountType.expense) {
         final category = account.subType.isNotEmpty ? account.subType : 'Other';
-        composition[category] = (composition[category] ?? Decimal.zero) + account.balance;
+        composition[category] =
+            (composition[category] ?? Decimal.zero) + account.balance;
       }
     }
 

@@ -10,6 +10,8 @@ import 'package:basir_app/features/accounting/presentation/screens/journal_entri
 import 'package:basir_app/features/accounting/presentation/widgets/financial_summary_card.dart';
 import 'package:basir_app/features/analytics/application/analytics_service.dart';
 import 'package:basir_app/features/analytics/domain/entities/analytics_event.dart';
+import 'package:basir_app/features/auth/domain/models/auth_models.dart';
+import 'package:basir_app/features/auth/presentation/widgets/permission_guard.dart';
 import 'package:basir_app/features/dashboard/domain/entities/dashboard_data.dart';
 import 'package:basir_app/features/dashboard/presentation/providers/dashboard_controller.dart';
 import 'package:basir_app/features/dashboard/presentation/widgets/dashboard_charts.dart';
@@ -254,54 +256,57 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
         const SizedBox(height: Spacing.md),
         // أدوات المحاسبة السريعة
-        Row(
-          children: [
-            Expanded(
-              child: AppEnhancedButton(
-                label: context.l10n.labelChartOfAccounts,
-                onPressed: () {
-                  unawaited(
-                    analytics?.logEvent(
-                      AnalyticsEventType.featureUsed,
-                      metadata: {'feature': 'chart_of_accounts'},
-                    ),
-                  );
-                  unawaited(
-                    Navigator.of(context).push<void>(
-                      MaterialPageRoute<void>(
-                        builder: (_) => const ChartOfAccountsScreen(),
+        PermissionGuard(
+          permission: Permission.viewFinancials,
+          child: Row(
+            children: [
+              Expanded(
+                child: AppEnhancedButton(
+                  label: context.l10n.labelChartOfAccounts,
+                  onPressed: () {
+                    unawaited(
+                      analytics?.logEvent(
+                        AnalyticsEventType.featureUsed,
+                        metadata: {'feature': 'chart_of_accounts'},
                       ),
-                    ),
-                  );
-                },
-                icon: appIcons.accounting,
-                type: AppEnhancedButtonType.outlined,
-              ),
-            ),
-            const SizedBox(width: Spacing.md),
-            Expanded(
-              child: AppEnhancedButton(
-                label: context.l10n.labelJournalEntries,
-                onPressed: () {
-                  unawaited(
-                    analytics?.logEvent(
-                      AnalyticsEventType.featureUsed,
-                      metadata: {'feature': 'journal_entries'},
-                    ),
-                  );
-                  unawaited(
-                    Navigator.of(context).push<void>(
-                      MaterialPageRoute<void>(
-                        builder: (_) => const JournalEntriesScreen(),
+                    );
+                    unawaited(
+                      Navigator.of(context).push<void>(
+                        MaterialPageRoute<void>(
+                          builder: (_) => const ChartOfAccountsScreen(),
+                        ),
                       ),
-                    ),
-                  );
-                },
-                icon: appIcons.list,
-                type: AppEnhancedButtonType.outlined,
+                    );
+                  },
+                  icon: appIcons.accounting,
+                  type: AppEnhancedButtonType.outlined,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(width: Spacing.md),
+              Expanded(
+                child: AppEnhancedButton(
+                  label: context.l10n.labelJournalEntries,
+                  onPressed: () {
+                    unawaited(
+                      analytics?.logEvent(
+                        AnalyticsEventType.featureUsed,
+                        metadata: {'feature': 'journal_entries'},
+                      ),
+                    );
+                    unawaited(
+                      Navigator.of(context).push<void>(
+                        MaterialPageRoute<void>(
+                          builder: (_) => const JournalEntriesScreen(),
+                        ),
+                      ),
+                    );
+                  },
+                  icon: appIcons.list,
+                  type: AppEnhancedButtonType.outlined,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

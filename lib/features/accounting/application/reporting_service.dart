@@ -101,7 +101,8 @@ class ReportingService extends _$ReportingService {
     };
 
     for (final account in accounts) {
-      if (account.type == AccountType.revenue || account.type == AccountType.expense) {
+      if (account.type == AccountType.revenue ||
+          account.type == AccountType.expense) {
         final category = _detectIfrs18Category(account);
 
         final balance = await accountingService.getHierarchicalBalance(
@@ -173,7 +174,9 @@ class ReportingService extends _$ReportingService {
           if (await _isCashAccount(line.accountId)) {
             final amount = line.debit - line.credit;
 
-            final otherLines = entry.lines.where((l) => l.accountId != line.accountId).toList();
+            final otherLines = entry.lines
+                .where((l) => l.accountId != line.accountId)
+                .toList();
 
             if (otherLines.isNotEmpty) {
               final category = await _detectCashFlowCategory(
@@ -203,7 +206,8 @@ class ReportingService extends _$ReportingService {
       'netOperating': operatingReceipts - operatingPayments,
       'investing': investingFlow,
       'financing': financingFlow,
-      'netChange': operatingReceipts - operatingPayments + investingFlow + financingFlow,
+      'netChange':
+          operatingReceipts - operatingPayments + investingFlow + financingFlow,
     };
   }
 
@@ -218,7 +222,8 @@ class ReportingService extends _$ReportingService {
     final liabilities = balanceSheet['liabilities'] ?? Decimal.zero;
 
     // 1. Current Ratio (Approximate)
-    final liquidity = liabilities != Decimal.zero ? (assets / liabilities).toDouble() : 0.0;
+    final liquidity =
+        liabilities != Decimal.zero ? (assets / liabilities).toDouble() : 0.0;
 
     // 2. Net Margin
     final revenue = incomeStatement.entries
@@ -230,7 +235,8 @@ class ReportingService extends _$ReportingService {
       (prev, curr) => prev + curr,
     );
 
-    final profitability = revenue != Decimal.zero ? (netIncome / revenue).toDouble() : 0.0;
+    final profitability =
+        revenue != Decimal.zero ? (netIncome / revenue).toDouble() : 0.0;
 
     return {
       'liquidity': liquidity,

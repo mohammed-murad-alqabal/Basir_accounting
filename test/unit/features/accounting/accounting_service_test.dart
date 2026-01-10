@@ -188,7 +188,8 @@ void main() {
         expect(invoice.taxAmount, equals(expectedVat));
 
         // Verify total = subtotal + VAT - discount
-        final expectedTotal = invoice.subtotalAmount + invoice.taxAmount - invoice.discountAmount;
+        final expectedTotal =
+            invoice.subtotalAmount + invoice.taxAmount - invoice.discountAmount;
         expect(invoice.totalAmount, equals(expectedTotal));
       });
     });

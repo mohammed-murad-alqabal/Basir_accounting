@@ -140,7 +140,8 @@ class BasirUser {
     );
 
     // Determine permissions from metadata or role defaults
-    final permissions = user.userMetadata?['permissions'] as int? ?? getDefaultPermissions(role);
+    final permissions = user.userMetadata?['permissions'] as int? ??
+        getDefaultPermissions(role);
 
     return BasirUser(
       id: user.id,
@@ -178,7 +179,8 @@ class BasirUser {
   final Map<String, dynamic> metadata;
 
   /// Checks if the user has a specific permission.
-  bool hasPermission(int permission) => (permissions & permission) == permission;
+  bool hasPermission(int permission) =>
+      (permissions & permission) == permission;
 
   /// Checks if the user accesses a specific warehouse scope.
   bool hasAccessToWarehouse(String targetWarehouseId) {

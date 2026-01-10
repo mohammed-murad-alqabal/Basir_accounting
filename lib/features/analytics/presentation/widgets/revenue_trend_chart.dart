@@ -24,7 +24,8 @@ class _RevenueTrendChartState extends ConsumerState<RevenueTrendChart> {
   }
 
   void _loadData() {
-    _trendFuture = ref.read(financialReportingServiceProvider.notifier).getRevenueTrend();
+    _trendFuture =
+        ref.read(financialReportingServiceProvider.notifier).getRevenueTrend();
   }
 
   @override

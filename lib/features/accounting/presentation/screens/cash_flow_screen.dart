@@ -22,7 +22,8 @@ class CashFlowScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cashFlowAsync = ref.watch(reportingServiceProvider.notifier).getCashFlowStatement();
+    final cashFlowAsync =
+        ref.watch(reportingServiceProvider.notifier).getCashFlowStatement();
 
     return Scaffold(
       appBar: AppAppBar(
@@ -121,7 +122,9 @@ class CashFlowScreen extends ConsumerWidget {
     required bool asPdf,
   }) async {
     try {
-      final dataMap = await ref.read(reportingServiceProvider.notifier).getCashFlowStatement();
+      final dataMap = await ref
+          .read(reportingServiceProvider.notifier)
+          .getCashFlowStatement();
       if (!context.mounted) return;
 
       final exportService = ref.read(reportExportServiceProvider.notifier);
@@ -193,7 +196,8 @@ class CashFlowScreen extends ConsumerWidget {
         ),
       );
 
-  Widget _buildTotalRow(String label, Decimal value, {bool isMain = false}) => Padding(
+  Widget _buildTotalRow(String label, Decimal value, {bool isMain = false}) =>
+      Padding(
         padding: const EdgeInsets.symmetric(vertical: Spacing.sm),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -210,7 +214,8 @@ class CashFlowScreen extends ConsumerWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: isMain ? 18 : null,
-                color: value < Decimal.zero ? AppColors.error : AppColors.success,
+                color:
+                    value < Decimal.zero ? AppColors.error : AppColors.success,
               ),
             ),
           ],

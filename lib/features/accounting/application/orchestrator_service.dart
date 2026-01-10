@@ -54,10 +54,14 @@ class OrchestratorService extends _$OrchestratorService {
 
     // Stage 3: Strategy & Sustainability Cluster
     results.add(
-      await ref.read(financialStrategyServiceProvider.notifier).process(context),
+      await ref
+          .read(financialStrategyServiceProvider.notifier)
+          .process(context),
     );
     results.add(
-      await ref.read(sustainabilityExpertServiceProvider.notifier).process(context),
+      await ref
+          .read(sustainabilityExpertServiceProvider.notifier)
+          .process(context),
     );
 
     // Aggregation Logic: All agents must allow for overall approval

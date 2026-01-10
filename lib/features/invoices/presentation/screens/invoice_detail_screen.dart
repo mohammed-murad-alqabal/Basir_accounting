@@ -26,7 +26,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appIcons = ref.watch(appIconsProvider);
-    final calendarType = ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
+    final calendarType =
+        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
 
     return Scaffold(
       appBar: AppAppBar(
@@ -57,7 +58,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
               tooltip: context.l10n.btnUpdateInvoice,
               onPressed: () => _editInvoice(context),
             ),
-          if (invoice.status != InvoiceStatus.draft && invoice.status != InvoiceStatus.cancelled)
+          if (invoice.status != InvoiceStatus.draft &&
+              invoice.status != InvoiceStatus.cancelled)
             IconButton(
               icon: Icon(appIcons.delete), // Reversal icon could be different
               tooltip: context.l10n.tooltipReverseInvoice,
@@ -125,7 +127,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
                   fontWeight: FontWeights.bold,
                 ),
               ),
-              if (invoice.status == InvoiceStatus.paid && invoice.paidDate != null)
+              if (invoice.status == InvoiceStatus.paid &&
+                  invoice.paidDate != null)
                 Text(
                   '${context.l10n.labelPaidDate}: '
                   '${FormatHelpers.formatDate(
@@ -379,7 +382,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
         children: [
           Text(
             title,
-            style: AppTextStyles.titleSmall.copyWith(fontWeight: FontWeights.bold),
+            style:
+                AppTextStyles.titleSmall.copyWith(fontWeight: FontWeights.bold),
           ),
           const SizedBox(height: Spacing.sm),
           Text(content, style: AppTextStyles.bodyMedium),
@@ -415,7 +419,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
 
     if (confirmed ?? false) {
       try {
-        await ref.read(accountingServiceProvider.notifier).reverseInvoice(invoice);
+        await ref
+            .read(accountingServiceProvider.notifier)
+            .reverseInvoice(invoice);
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(context.l10n.msgInvoiceReversed)),

@@ -4,6 +4,8 @@ import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:basir_app/core/utils/format_helpers.dart';
+import 'package:basir_app/features/auth/domain/models/auth_models.dart';
+import 'package:basir_app/features/auth/presentation/widgets/permission_guard.dart';
 import 'package:basir_app/features/customers/domain/entities/customer.dart';
 import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
 import 'package:basir_app/features/inventory/domain/entities/inventory_item.dart';
@@ -140,12 +142,21 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 maxLines: 3,
               ),
               const SizedBox(height: Spacing.xl),
-              AppEnhancedButton(
-                label: isEditing ? context.l10n.btnUpdateInvoice : context.l10n.btnSaveInvoice,
-                onPressed: _isLoading ? null : _saveInvoice,
-                isLoading: _isLoading,
-                icon: appIcons.save,
-                width: double.infinity,
+              PermissionGuard(
+                permission: Permission.postJournalEntry,
+                fallback: Center(
+                  child: Text(
+                    context.l10n.errPermissionDenied,
+                    style: const TextStyle(color: AppColors.textSecondary),
+                  ),
+                ),
+                child: AppEnhancedButton(
+                  label: isEditing ? context.l10n.btnUpdateInvoice : context.l10n.btnSaveInvoice,
+                  onPressed: _isLoading ? null : _saveInvoice,
+                  isLoading: _isLoading,
+                  icon: appIcons.save,
+                  width: double.infinity,
+                ),
               ),
             ],
           ),
@@ -529,7 +540,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             onPressed: () {
               final value = Decimal.tryParse(controller.text);
               if (value != null && value >= Decimal.zero && value <= Decimal.fromInt(100)) {
-                setState(() => _taxRate = (value / Decimal.fromInt(100)).toDecimal());
+                setState(
+                  () => _taxRate = (value / Decimal.fromInt(100)).toDecimal(),
+                );
                 Navigator.pop(context);
               }
             },
@@ -571,15 +584,20 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                           .map(
                             (item) => DropdownMenuItem(
                               value: item,
-                              child: Text(item.name(isArabic: context.l10n.localeName == 'ar')),
+                              child: Text(
+                                item.name(
+                                  isArabic: context.l10n.localeName == 'ar',
+                                ),
+                              ),
                             ),
                           )
                           .toList(),
                       onChanged: (item) {
                         if (item != null) {
                           setDialogState(() {
-                            nameController.text =
-                                item.name(isArabic: context.l10n.localeName == 'ar');
+                            nameController.text = item.name(
+                              isArabic: context.l10n.localeName == 'ar',
+                            );
                             priceController.text = (item.salePrice ?? 0.0).toString();
                             selectedTaxCategory = item.taxCategory;
                           });
@@ -626,7 +644,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                     Expanded(
                       child: TextField(
                         controller: quantityController,
-                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
                         decoration: InputDecoration(
                           labelText: context.l10n.labelQuantity,
                         ),
@@ -636,7 +656,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                     Expanded(
                       child: TextField(
                         controller: priceController,
-                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
                         decoration: InputDecoration(
                           labelText: context.l10n.labelPrice,
                         ),
@@ -652,7 +674,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   ),
                   items: const [
                     DropdownMenuItem(value: 'S', child: Text('Standard (15%)')),
-                    DropdownMenuItem(value: 'Z', child: Text('Zero Rated (0%)')),
+                    DropdownMenuItem(
+                      value: 'Z',
+                      child: Text('Zero Rated (0%)'),
+                    ),
                     DropdownMenuItem(value: 'E', child: Text('Exempt (0%)')),
                     DropdownMenuItem(value: 'O', child: Text('Out of Scope')),
                   ],

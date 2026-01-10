@@ -2911,6 +2911,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الخصم'**
   String get labelDiscount;
+
+  /// No description provided for @errPermissionDenied.
+  ///
+  /// In ar, this message translates to:
+  /// **'ليس لديك صلاحية للقيام بهذا الإجراء'**
+  String get errPermissionDenied;
+
+  /// No description provided for @msgInvoiceReversed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم عكس الفاتورة بنجاح'**
+  String get msgInvoiceReversed;
 }
 
 class _AppLocalizationsDelegate
