@@ -35,6 +35,8 @@ android {
             // Signing with debug key for MVP release testing.
             // Production deployment requires a secure keystore.
             signingConfig = signingConfigs.debug
+            
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
