@@ -94,9 +94,7 @@ class AppFontMetrics {
     final extraPadding = (textHeight - scaledFontSize) / 2;
     final totalPadding = minPadding + extraPadding;
 
-    return EdgeInsets.symmetric(
-      vertical: totalPadding,
-    );
+    return EdgeInsets.symmetric(vertical: totalPadding);
   }
 
   /// يحسب الـ padding الكامل (أفقي ورأسي).
@@ -135,9 +133,7 @@ class AppFontMetrics {
     final requiredHeight = calculateRequiredHeight(
       textScaleFactor: textScaleFactor,
     );
-    final padding = calculateVerticalPadding(
-      textScaleFactor: textScaleFactor,
-    );
+    final padding = calculateVerticalPadding(textScaleFactor: textScaleFactor);
 
     final totalHeight = requiredHeight + padding.top + padding.bottom;
 
@@ -197,13 +193,8 @@ class AppFontMetrics {
   }
 
   @override
-  int get hashCode => Object.hash(
-        fontFamily,
-        fontSize,
-        lineHeight,
-        ascent,
-        descent,
-      );
+  int get hashCode =>
+      Object.hash(fontFamily, fontSize, lineHeight, ascent, descent);
 }
 
 /// مساعدات لمقاييس الخطوط الشائعة.
@@ -227,22 +218,15 @@ class FontMetricsHelper {
   ///
   /// إذا لم يكن الحجم موجوداً في الـ cache، يتم إنشاؤه.
   static AppFontMetrics getCairoMetrics(double fontSize) =>
-      cairoMetrics[fontSize] ??
-      AppFontMetrics.cairo(
-        fontSize,
-      );
+      cairoMetrics[fontSize] ?? AppFontMetrics.cairo(fontSize);
 
   /// يحسب الارتفاع المطلوب لنص بخط Cairo.
   static double calculateCairoHeight({
     required double fontSize,
     double textScaleFactor = 1.0,
   }) {
-    final metrics = getCairoMetrics(
-      fontSize,
-    );
-    return metrics.calculateRequiredHeight(
-      textScaleFactor: textScaleFactor,
-    );
+    final metrics = getCairoMetrics(fontSize);
+    return metrics.calculateRequiredHeight(textScaleFactor: textScaleFactor);
   }
 
   /// يحسب padding لنص بخط Cairo.
@@ -252,9 +236,7 @@ class FontMetricsHelper {
     double minVerticalPadding = 12.0,
     double horizontalPadding = 16.0,
   }) {
-    final metrics = getCairoMetrics(
-      fontSize,
-    );
+    final metrics = getCairoMetrics(fontSize);
     return metrics.calculatePadding(
       textScaleFactor: textScaleFactor,
       minVerticalPadding: minVerticalPadding,

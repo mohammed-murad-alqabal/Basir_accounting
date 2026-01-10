@@ -280,9 +280,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
   }
 
   void _saveCustomer() {
-    unawaited(
-      _saveCustomerAsync(),
-    );
+    unawaited(_saveCustomerAsync());
   }
 
   Future<void> _saveCustomerAsync() async {
@@ -290,9 +288,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       return;
     }
 
-    setState(
-      () => _isLoading = true,
-    );
+    setState(() => _isLoading = true);
 
     try {
       final customer = Customer(
@@ -320,9 +316,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       final isEditing = widget.customer != null;
       final result = isEditing
           ? await ref.read(updateCustomerProvider(customer).future)
-          : await ref.read(
-              addCustomerProvider(customer).future,
-            );
+          : await ref.read(addCustomerProvider(customer).future);
 
       if (!mounted) return;
 
@@ -337,10 +331,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
             backgroundColor: AppColors.secondary,
           ),
         );
-        Navigator.pop(
-          context,
-          true,
-        );
+        Navigator.pop(context, true);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -363,9 +354,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       );
     } finally {
       if (mounted) {
-        setState(
-          () => _isLoading = false,
-        );
+        setState(() => _isLoading = false);
       }
     }
   }

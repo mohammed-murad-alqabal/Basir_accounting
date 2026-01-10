@@ -64,9 +64,7 @@ class VendorDetailsScreen extends ConsumerWidget {
                   const SizedBox(height: Spacing.xs),
                   Text(
                     vendor.email!,
-                    style: const TextStyle(
-                      color: AppColors.textSecondary,
-                    ),
+                    style: const TextStyle(color: AppColors.textSecondary),
                   ),
                 ],
               ],
@@ -170,8 +168,9 @@ class VendorDetailsScreen extends ConsumerWidget {
       builder: (context) => AlertDialog(
         title: Text(context.l10n.actionDeleteVendor),
         content: Text(
-          context.l10n
-              .msgConfirmDeleteVendor(vendor.name(isArabic: context.isArabic)),
+          context.l10n.msgConfirmDeleteVendor(
+            vendor.name(isArabic: context.isArabic),
+          ),
         ),
         actions: [
           AppEnhancedButton(

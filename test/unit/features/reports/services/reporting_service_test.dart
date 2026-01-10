@@ -38,9 +38,7 @@ void main() {
 
       expect(result, mockData);
       verify(
-        () => mockApi.generateTrialBalance(
-          asOfDate: '2025-01-01',
-        ),
+        () => mockApi.generateTrialBalance(asOfDate: '2025-01-01'),
       ).called(1);
     });
 
@@ -78,9 +76,7 @@ void main() {
       const mockData = <rust.AgingReportLineDto>[];
 
       when(
-        () => mockApi.getReceivablesAging(
-          asOfDate: any(named: 'asOfDate'),
-        ),
+        () => mockApi.getReceivablesAging(asOfDate: any(named: 'asOfDate')),
       ).thenAnswer((_) async => mockData);
 
       final result = await reportingService.getReceivablesAging(
@@ -89,9 +85,7 @@ void main() {
 
       expect(result, mockData);
       verify(
-        () => mockApi.getReceivablesAging(
-          asOfDate: '2025-01-01',
-        ),
+        () => mockApi.getReceivablesAging(asOfDate: '2025-01-01'),
       ).called(1);
     });
 
@@ -99,9 +93,7 @@ void main() {
       const mockData = <rust.AgingReportLineDto>[];
 
       when(
-        () => mockApi.getPayablesAging(
-          asOfDate: any(named: 'asOfDate'),
-        ),
+        () => mockApi.getPayablesAging(asOfDate: any(named: 'asOfDate')),
       ).thenAnswer((_) async => mockData);
 
       final result = await reportingService.getPayablesAging(
@@ -109,11 +101,7 @@ void main() {
       );
 
       expect(result, mockData);
-      verify(
-        () => mockApi.getPayablesAging(
-          asOfDate: '2025-01-01',
-        ),
-      ).called(1);
+      verify(() => mockApi.getPayablesAging(asOfDate: '2025-01-01')).called(1);
     });
   });
 }

@@ -29,10 +29,7 @@ class ReportExportService extends _$ReportExportService {
     doc.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
-        theme: pw.ThemeData.withFont(
-          base: font,
-          bold: fontBold,
-        ),
+        theme: pw.ThemeData.withFont(base: font, bold: fontBold),
         build: (context) => pw.Directionality(
           textDirection: pw.TextDirection.rtl,
           child: pw.Column(

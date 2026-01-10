@@ -190,10 +190,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    context.l10n.labelDueDate,
-                    style: AppTextStyles.labelSmall,
-                  ),
+                  Text(context.l10n.labelDueDate,
+                      style: AppTextStyles.labelSmall,),
                   const SizedBox(height: Spacing.xs),
                   Text(
                     FormatHelpers.formatDate(
@@ -339,10 +337,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: Spacing.md),
-          AppQrCode(
-            data: invoice.qrCode!,
-            size: 160,
-          ),
+          AppQrCode(data: invoice.qrCode!, size: 160),
           const SizedBox(height: Spacing.sm),
           Text(
             context.l10n.zatcaComplianceText,
@@ -364,9 +359,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
         children: [
           Text(
             title,
-            style: AppTextStyles.titleSmall.copyWith(
-              fontWeight: FontWeights.bold,
-            ),
+            style:
+                AppTextStyles.titleSmall.copyWith(fontWeight: FontWeights.bold),
           ),
           const SizedBox(height: Spacing.sm),
           Text(content, style: AppTextStyles.bodyMedium),

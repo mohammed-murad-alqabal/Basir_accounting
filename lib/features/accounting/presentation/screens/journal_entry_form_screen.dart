@@ -283,8 +283,9 @@ class _JournalEntryFormScreenState
                   initialValue:
                       line.debit == Decimal.zero ? '' : line.debit.toString(),
                   label: context.l10n.labelDebit,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
                   onChanged: (v) {
                     setState(() {
                       line.debit = Decimal.tryParse(v) ?? Decimal.zero;
@@ -299,8 +300,9 @@ class _JournalEntryFormScreenState
                   initialValue:
                       line.credit == Decimal.zero ? '' : line.credit.toString(),
                   label: context.l10n.labelCredit,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
                   onChanged: (v) {
                     setState(() {
                       line.credit = Decimal.tryParse(v) ?? Decimal.zero;
@@ -322,8 +324,9 @@ class _JournalEntryFormScreenState
                       initialValue: line.originalAmount?.toString() ?? '',
                       label: '${context.l10n.labelAmount} '
                           '(${line.originalCurrency})',
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                       onChanged: (v) {
                         setState(() {
                           line.originalAmount =
@@ -348,8 +351,9 @@ class _JournalEntryFormScreenState
                     child: AppTextField(
                       initialValue: line.exchangeRate?.toString() ?? '',
                       label: context.l10n.labelExchangeRate,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                       onChanged: (v) {
                         setState(() {
                           line.exchangeRate =
@@ -460,9 +464,9 @@ class _JournalEntryFormScreenState
   Future<void> _saveEntry(JournalEntryStatus status) async {
     if (!_formKey.currentState!.validate()) return;
     if (!_isBalanced) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errUnbalancedEntry)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.l10n.errUnbalancedEntry)));
       return;
     }
 

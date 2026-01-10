@@ -68,9 +68,7 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
             child: itemsAsync.when(
               data: _buildItemsList,
               loading: () => const Center(child: AppLoadingIndicator()),
-              error: (error, stack) => Center(
-                child: Text(error.toString()),
-              ),
+              error: (error, stack) => Center(child: Text(error.toString())),
             ),
           ),
         ],
@@ -80,9 +78,7 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
 
   Widget _buildItemsList(List<InventoryItem> items) {
     if (items.isEmpty) {
-      return const Center(
-        child: EmptyStateIllustration(),
-      );
+      return const Center(child: EmptyStateIllustration());
     }
 
     return ListView.builder(

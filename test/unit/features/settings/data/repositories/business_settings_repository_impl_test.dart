@@ -13,8 +13,10 @@ void main() {
 
     setUp(() async {
       isar = await TestHelpers.createTestIsar();
-      repository =
-          BusinessSettingsRepositoryImpl(isar: isar, userId: testUserId);
+      repository = BusinessSettingsRepositoryImpl(
+        isar: isar,
+        userId: testUserId,
+      );
     });
 
     tearDown(() async {

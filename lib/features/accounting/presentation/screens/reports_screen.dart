@@ -19,9 +19,7 @@ class ReportingOverviewScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-        appBar: AppAppBar(
-          title: context.l10n.reportingOverviewTitle,
-        ),
+        appBar: AppAppBar(title: context.l10n.reportingOverviewTitle),
         body: ListView(
           padding: const EdgeInsets.all(Spacing.md),
           children: [

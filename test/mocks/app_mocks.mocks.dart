@@ -35,56 +35,31 @@ import 'package:mockito/mockito.dart' as _i1;
 
 class _FakeFlutterSecureStorage_0 extends _i1.SmartFake
     implements _i2.FlutterSecureStorage {
-  _FakeFlutterSecureStorage_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeFlutterSecureStorage_0(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakePasswordStrengthResult_1 extends _i1.SmartFake
     implements _i3.PasswordStrengthResult {
-  _FakePasswordStrengthResult_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakePasswordStrengthResult_1(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakeSecurityAuditResult_2 extends _i1.SmartFake
     implements _i3.SecurityAuditResult {
-  _FakeSecurityAuditResult_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeSecurityAuditResult_2(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakeInvoiceStatistics_3 extends _i1.SmartFake
     implements _i4.InvoiceStatistics {
-  _FakeInvoiceStatistics_3(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeInvoiceStatistics_3(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakeInvoice_4 extends _i1.SmartFake implements _i5.Invoice {
-  _FakeInvoice_4(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeInvoice_4(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 /// A class which mocks [AuthService].
@@ -112,164 +87,99 @@ class MockAuthService extends _i1.Mock implements _i6.AuthService {
 
   @override
   _i7.Future<void> initialize() => (super.noSuchMethod(
-        Invocation.method(
-          #initialize,
-          [],
-        ),
+        Invocation.method(#initialize, []),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 
   @override
   _i7.Future<bool> hasAccount() => (super.noSuchMethod(
-        Invocation.method(
-          #hasAccount,
-          [],
-        ),
+        Invocation.method(#hasAccount, []),
         returnValue: _i7.Future<bool>.value(false),
       ) as _i7.Future<bool>);
 
   @override
-  _i7.Future<void> createAccount(
-    String? username,
-    String? password,
-  ) =>
+  _i7.Future<void> createAccount(String? username, String? password) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #createAccount,
-          [
-            username,
-            password,
-          ],
-        ),
+        Invocation.method(#createAccount, [username, password]),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 
   @override
-  _i7.Future<bool> login(
-    String? username,
-    String? password,
-  ) =>
+  _i7.Future<bool> login(String? username, String? password) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #login,
-          [
-            username,
-            password,
-          ],
-        ),
+        Invocation.method(#login, [username, password]),
         returnValue: _i7.Future<bool>.value(false),
       ) as _i7.Future<bool>);
 
   @override
   _i7.Future<void> logout() => (super.noSuchMethod(
-        Invocation.method(
-          #logout,
-          [],
-        ),
+        Invocation.method(#logout, []),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 
   @override
   _i7.Future<bool> isLoggedIn() => (super.noSuchMethod(
-        Invocation.method(
-          #isLoggedIn,
-          [],
-        ),
+        Invocation.method(#isLoggedIn, []),
         returnValue: _i7.Future<bool>.value(false),
       ) as _i7.Future<bool>);
 
   @override
   _i7.Future<void> setKeepLoggedIn({required bool? keepLoggedIn}) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #setKeepLoggedIn,
-          [],
-          {#keepLoggedIn: keepLoggedIn},
-        ),
+        Invocation.method(#setKeepLoggedIn, [], {
+          #keepLoggedIn: keepLoggedIn,
+        }),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 
   @override
   _i7.Future<bool> shouldKeepLoggedIn() => (super.noSuchMethod(
-        Invocation.method(
-          #shouldKeepLoggedIn,
-          [],
-        ),
+        Invocation.method(#shouldKeepLoggedIn, []),
         returnValue: _i7.Future<bool>.value(false),
       ) as _i7.Future<bool>);
 
   @override
   _i7.Future<void> loginAsGuest() => (super.noSuchMethod(
-        Invocation.method(
-          #loginAsGuest,
-          [],
-        ),
+        Invocation.method(#loginAsGuest, []),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 
   @override
   _i7.Future<bool> isGuest() => (super.noSuchMethod(
-        Invocation.method(
-          #isGuest,
-          [],
-        ),
+        Invocation.method(#isGuest, []),
         returnValue: _i7.Future<bool>.value(false),
       ) as _i7.Future<bool>);
 
   @override
-  _i7.Future<void> convertGuestToUser(
-    String? username,
-    String? password,
-  ) =>
+  _i7.Future<void> convertGuestToUser(String? username, String? password) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #convertGuestToUser,
-          [
-            username,
-            password,
-          ],
-        ),
+        Invocation.method(#convertGuestToUser, [username, password]),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 
   @override
   _i7.Future<String?> getCurrentUsername() => (super.noSuchMethod(
-        Invocation.method(
-          #getCurrentUsername,
-          [],
-        ),
+        Invocation.method(#getCurrentUsername, []),
         returnValue: _i7.Future<String?>.value(),
       ) as _i7.Future<String?>);
 
   @override
   _i7.Future<void> updateUsername(String? newUsername) => (super.noSuchMethod(
-        Invocation.method(
-          #updateUsername,
-          [newUsername],
-        ),
+        Invocation.method(#updateUsername, [newUsername]),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 
   @override
-  _i7.Future<void> changePassword(
-    String? oldPassword,
-    String? newPassword,
-  ) =>
+  _i7.Future<void> changePassword(String? oldPassword, String? newPassword) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #changePassword,
-          [
-            oldPassword,
-            newPassword,
-          ],
-        ),
+        Invocation.method(#changePassword, [oldPassword, newPassword]),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
@@ -277,34 +187,23 @@ class MockAuthService extends _i1.Mock implements _i6.AuthService {
   @override
   _i3.PasswordStrengthResult checkPasswordStrength(String? password) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #checkPasswordStrength,
-          [password],
-        ),
+        Invocation.method(#checkPasswordStrength, [password]),
         returnValue: _FakePasswordStrengthResult_1(
           this,
-          Invocation.method(
-            #checkPasswordStrength,
-            [password],
-          ),
+          Invocation.method(#checkPasswordStrength, [password]),
         ),
       ) as _i3.PasswordStrengthResult);
 
   @override
   _i7.Future<_i3.SecurityAuditResult> performSecurityAudit() =>
       (super.noSuchMethod(
-        Invocation.method(
-          #performSecurityAudit,
-          [],
-        ),
+        Invocation.method(#performSecurityAudit, []),
         returnValue: _i7.Future<_i3.SecurityAuditResult>.value(
-            _FakeSecurityAuditResult_2(
-          this,
-          Invocation.method(
-            #performSecurityAudit,
-            [],
+          _FakeSecurityAuditResult_2(
+            this,
+            Invocation.method(#performSecurityAudit, []),
           ),
-        )),
+        ),
       ) as _i7.Future<_i3.SecurityAuditResult>);
 }
 
@@ -319,38 +218,26 @@ class MockCustomerRepository extends _i1.Mock
 
   @override
   _i7.Future<List<_i9.Customer>> getAllCustomers() => (super.noSuchMethod(
-        Invocation.method(
-          #getAllCustomers,
-          [],
-        ),
+        Invocation.method(#getAllCustomers, []),
         returnValue: _i7.Future<List<_i9.Customer>>.value(<_i9.Customer>[]),
       ) as _i7.Future<List<_i9.Customer>>);
 
   @override
   _i7.Future<_i9.Customer?> getCustomerById(String? id) => (super.noSuchMethod(
-        Invocation.method(
-          #getCustomerById,
-          [id],
-        ),
+        Invocation.method(#getCustomerById, [id]),
         returnValue: _i7.Future<_i9.Customer?>.value(),
       ) as _i7.Future<_i9.Customer?>);
 
   @override
   _i7.Future<List<_i9.Customer>> searchCustomers(String? query) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #searchCustomers,
-          [query],
-        ),
+        Invocation.method(#searchCustomers, [query]),
         returnValue: _i7.Future<List<_i9.Customer>>.value(<_i9.Customer>[]),
       ) as _i7.Future<List<_i9.Customer>>);
 
   @override
   _i7.Future<void> addCustomer(_i9.Customer? customer) => (super.noSuchMethod(
-        Invocation.method(
-          #addCustomer,
-          [customer],
-        ),
+        Invocation.method(#addCustomer, [customer]),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
@@ -358,30 +245,21 @@ class MockCustomerRepository extends _i1.Mock
   @override
   _i7.Future<void> updateCustomer(_i9.Customer? customer) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #updateCustomer,
-          [customer],
-        ),
+        Invocation.method(#updateCustomer, [customer]),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 
   @override
   _i7.Future<void> deleteCustomer(String? id) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteCustomer,
-          [id],
-        ),
+        Invocation.method(#deleteCustomer, [id]),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 
   @override
   _i7.Future<void> deleteAllCustomers() => (super.noSuchMethod(
-        Invocation.method(
-          #deleteAllCustomers,
-          [],
-        ),
+        Invocation.method(#deleteAllCustomers, []),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
@@ -397,79 +275,56 @@ class MockInvoiceRepository extends _i1.Mock implements _i4.InvoiceRepository {
 
   @override
   _i7.Future<List<_i5.Invoice>> getAllInvoices() => (super.noSuchMethod(
-        Invocation.method(
-          #getAllInvoices,
-          [],
-        ),
+        Invocation.method(#getAllInvoices, []),
         returnValue: _i7.Future<List<_i5.Invoice>>.value(<_i5.Invoice>[]),
       ) as _i7.Future<List<_i5.Invoice>>);
 
   @override
   _i7.Future<_i5.Invoice?> getInvoiceById(String? id) => (super.noSuchMethod(
-        Invocation.method(
-          #getInvoiceById,
-          [id],
-        ),
+        Invocation.method(#getInvoiceById, [id]),
         returnValue: _i7.Future<_i5.Invoice?>.value(),
       ) as _i7.Future<_i5.Invoice?>);
 
   @override
   _i7.Future<List<_i5.Invoice>> getInvoicesByCustomerId(String? customerId) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #getInvoicesByCustomerId,
-          [customerId],
-        ),
+        Invocation.method(#getInvoicesByCustomerId, [customerId]),
         returnValue: _i7.Future<List<_i5.Invoice>>.value(<_i5.Invoice>[]),
       ) as _i7.Future<List<_i5.Invoice>>);
 
   @override
   _i7.Future<List<_i5.Invoice>> getInvoicesByStatus(
-          _i10.InvoiceStatus? status) =>
+    _i10.InvoiceStatus? status,
+  ) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #getInvoicesByStatus,
-          [status],
-        ),
+        Invocation.method(#getInvoicesByStatus, [status]),
         returnValue: _i7.Future<List<_i5.Invoice>>.value(<_i5.Invoice>[]),
       ) as _i7.Future<List<_i5.Invoice>>);
 
   @override
   _i7.Future<void> addInvoice(_i5.Invoice? invoice) => (super.noSuchMethod(
-        Invocation.method(
-          #addInvoice,
-          [invoice],
-        ),
+        Invocation.method(#addInvoice, [invoice]),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 
   @override
   _i7.Future<void> updateInvoice(_i5.Invoice? invoice) => (super.noSuchMethod(
-        Invocation.method(
-          #updateInvoice,
-          [invoice],
-        ),
+        Invocation.method(#updateInvoice, [invoice]),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 
   @override
   _i7.Future<void> deleteInvoice(String? id) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteInvoice,
-          [id],
-        ),
+        Invocation.method(#deleteInvoice, [id]),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 
   @override
   _i7.Future<void> deleteAllInvoices() => (super.noSuchMethod(
-        Invocation.method(
-          #deleteAllInvoices,
-          [],
-        ),
+        Invocation.method(#deleteAllInvoices, []),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
@@ -477,32 +332,20 @@ class MockInvoiceRepository extends _i1.Mock implements _i4.InvoiceRepository {
   @override
   _i7.Future<_i4.InvoiceStatistics> getInvoiceStatistics() =>
       (super.noSuchMethod(
-        Invocation.method(
-          #getInvoiceStatistics,
-          [],
-        ),
-        returnValue:
-            _i7.Future<_i4.InvoiceStatistics>.value(_FakeInvoiceStatistics_3(
-          this,
-          Invocation.method(
-            #getInvoiceStatistics,
-            [],
+        Invocation.method(#getInvoiceStatistics, []),
+        returnValue: _i7.Future<_i4.InvoiceStatistics>.value(
+          _FakeInvoiceStatistics_3(
+            this,
+            Invocation.method(#getInvoiceStatistics, []),
           ),
-        )),
+        ),
       ) as _i7.Future<_i4.InvoiceStatistics>);
 
   @override
   _i7.Future<_i5.Invoice> duplicateInvoice(String? id) => (super.noSuchMethod(
-        Invocation.method(
-          #duplicateInvoice,
-          [id],
+        Invocation.method(#duplicateInvoice, [id]),
+        returnValue: _i7.Future<_i5.Invoice>.value(
+          _FakeInvoice_4(this, Invocation.method(#duplicateInvoice, [id])),
         ),
-        returnValue: _i7.Future<_i5.Invoice>.value(_FakeInvoice_4(
-          this,
-          Invocation.method(
-            #duplicateInvoice,
-            [id],
-          ),
-        )),
       ) as _i7.Future<_i5.Invoice>);
 }

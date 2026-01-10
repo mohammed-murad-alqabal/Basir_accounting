@@ -55,8 +55,9 @@ void main() {
     group('addInvoiceProvider', () {
       test('should add invoice successfully', () async {
         final newInvoice = MockData.createTestInvoice(id: 'new-inv');
-        final result =
-            await container.read(addInvoiceProvider(newInvoice).future);
+        final result = await container.read(
+          addInvoiceProvider(newInvoice).future,
+        );
         expect(result, isTrue);
         expect(mockRepository.invoices, contains(newInvoice));
       });

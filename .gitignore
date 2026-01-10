@@ -149,6 +149,7 @@ logs/.processing_*
 # Temporary reports (keep in docs/ instead)
 # Note: Root level temporary reports only, not in .kiro/docs/reports/
 /*_REPORT.md
+!/ENGINEERING_AUDIT_REPORT.md
 /*_SUMMARY.md
 /*_STATUS.md
 /*_GUIDE.md

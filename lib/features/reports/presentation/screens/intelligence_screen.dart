@@ -93,15 +93,12 @@ class IntelligenceScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildInsightsSection(
-    BuildContext context,
-    List<String> insights,
-  ) =>
+  Widget _buildInsightsSection(BuildContext context, List<String> insights) =>
       Card(
         elevation: 0,
-        color: Theme.of(context).colorScheme.primaryContainer.withValues(
-              alpha: 0.3,
-            ),
+        color: Theme.of(
+          context,
+        ).colorScheme.primaryContainer.withValues(alpha: 0.3),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -144,10 +141,7 @@ class IntelligenceScreen extends ConsumerWidget {
         ),
       );
 
-  Widget _buildKpiGrid(
-    BuildContext context,
-    List<FinancialKpi> kpis,
-  ) =>
+  Widget _buildKpiGrid(BuildContext context, List<FinancialKpi> kpis) =>
       GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -221,9 +215,9 @@ class IntelligenceScreen extends ConsumerWidget {
             children: [
               Text(
                 'اتجاه التدفق النقدي (30 يوم)',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 24),
               SizedBox(
@@ -251,10 +245,9 @@ class IntelligenceScreen extends ConsumerWidget {
                               dotData: const FlDotData(show: false),
                               belowBarData: BarAreaData(
                                 show: true,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary
-                                    .withValues(alpha: 0.1),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.primary.withValues(alpha: 0.1),
                               ),
                             ),
                           ],

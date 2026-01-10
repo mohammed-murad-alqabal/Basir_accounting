@@ -11,18 +11,16 @@ void main() {
     // RTL Text Direction (Property 6)
     // ═════════════════════════════════════════════════════════════════════════
     group('RTL Support', () {
-      testWidgets('AppTextField accommodates RTL text direction',
-          (tester) async {
+      testWidgets('AppTextField accommodates RTL text direction', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           MaterialApp(
             theme: AppTheme.lightTheme,
             home: const Scaffold(
               body: Directionality(
                 textDirection: TextDirection.rtl,
-                child: AppTextField(
-                  label: 'مستخدم',
-                  hint: 'أدخل الاسم',
-                ),
+                child: AppTextField(label: 'مستخدم', hint: 'أدخل الاسم'),
               ),
             ),
           ),
@@ -48,14 +46,9 @@ void main() {
           MaterialApp(
             theme: AppTheme.lightTheme,
             home: MediaQuery(
-              data: const MediaQueryData(
-                textScaler: TextScaler.linear(2),
-              ),
+              data: const MediaQueryData(textScaler: TextScaler.linear(2)),
               child: Scaffold(
-                body: AppEnhancedButton(
-                  label: 'Button',
-                  onPressed: () {},
-                ),
+                body: AppEnhancedButton(label: 'Button', onPressed: () {}),
               ),
             ),
           ),
@@ -74,15 +67,14 @@ void main() {
         expect(tester.takeException(), isNull);
       });
 
-      testWidgets('AppCard handles scaled text without overflow',
-          (tester) async {
+      testWidgets('AppCard handles scaled text without overflow', (
+        tester,
+      ) async {
         await tester.pumpWidget(
           MaterialApp(
             theme: AppTheme.lightTheme,
             home: MediaQuery(
-              data: const MediaQueryData(
-                textScaler: TextScaler.linear(1.5),
-              ),
+              data: const MediaQueryData(textScaler: TextScaler.linear(1.5)),
               child: AppListCard(
                 title: 'Large Title',
                 subtitle: 'Subtitle text here',

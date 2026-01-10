@@ -36,8 +36,9 @@ class FinancialVoucherRepositoryImpl implements FinancialVoucherRepository {
 
   @override
   Future<void> addVoucher(FinancialVoucher voucher) async {
-    final model =
-        FinancialVoucherModel.fromEntity(voucher.copyWith(userId: userId));
+    final model = FinancialVoucherModel.fromEntity(
+      voucher.copyWith(userId: userId),
+    );
     await isar.writeTxn(() async {
       await isar.financialVoucherModels.put(model);
     });
@@ -52,9 +53,9 @@ class FinancialVoucherRepositoryImpl implements FinancialVoucherRepository {
         .userIdEqualTo(userId)
         .findFirst();
     if (existingModel != null) {
-      final newModel =
-          FinancialVoucherModel.fromEntity(voucher.copyWith(userId: userId))
-            ..isarId = existingModel.isarId;
+      final newModel = FinancialVoucherModel.fromEntity(
+        voucher.copyWith(userId: userId),
+      )..isarId = existingModel.isarId;
       await isar.writeTxn(() async {
         await isar.financialVoucherModels.put(newModel);
       });

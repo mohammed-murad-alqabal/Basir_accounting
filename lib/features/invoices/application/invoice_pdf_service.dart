@@ -29,10 +29,7 @@ class InvoicePdfService {
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        theme: pw.ThemeData.withFont(
-          base: ttf,
-          bold: ttfBold,
-        ),
+        theme: pw.ThemeData.withFont(base: ttf, bold: ttfBold),
         textDirection: pw.TextDirection.rtl,
         build: (context) => [
           _buildHeader(invoice, ttfBold),
@@ -150,19 +147,16 @@ class InvoicePdfService {
 
     return pw.TableHelper.fromTextArray(
       headers: headers,
-      data: List<List<dynamic>>.generate(
-        invoice.items.length,
-        (index) {
-          final item = invoice.items[index];
-          return [
-            item.name,
-            item.quantity.toString(),
-            item.price.toStringAsFixed(2),
-            item.taxAmount.toStringAsFixed(2),
-            item.total.toStringAsFixed(2),
-          ];
-        },
-      ),
+      data: List<List<dynamic>>.generate(invoice.items.length, (index) {
+        final item = invoice.items[index];
+        return [
+          item.name,
+          item.quantity.toString(),
+          item.price.toStringAsFixed(2),
+          item.taxAmount.toStringAsFixed(2),
+          item.total.toStringAsFixed(2),
+        ];
+      }),
       headerStyle: pw.TextStyle(font: boldFont, color: PdfColors.white),
       headerDecoration: const pw.BoxDecoration(color: PdfColors.blue900),
       cellAlignment: pw.Alignment.center,
@@ -205,9 +199,7 @@ class InvoicePdfService {
             crossAxisAlignment: pw.CrossAxisAlignment.end,
             children: [
               _buildTotalLine(
-                'المجموع الفرعي / Subtotal:',
-                invoice.subtotalAmount,
-              ),
+                  'المجموع الفرعي / Subtotal:', invoice.subtotalAmount,),
               _buildTotalLine('مبلغ الضريبة / Tax Amount:', invoice.taxAmount),
               if (invoice.discountAmount > 0)
                 _buildTotalLine('الخصم / Discount:', -invoice.discountAmount),

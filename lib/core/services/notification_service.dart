@@ -17,8 +17,9 @@ class NotificationService {
   Future<void> initialize() async {
     if (_isInitialized) return;
 
-    const androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings(
+      '@mipmap/ic_launcher',
+    );
     const iosSettings = DarwinInitializationSettings();
 
     const initSettings = InitializationSettings(
@@ -67,16 +68,11 @@ class NotificationService {
       iOS: iosDetails,
     );
 
-    await _notificationsPlugin.show(
-      id,
-      title,
-      body,
-      details,
-      payload: payload,
-    );
+    await _notificationsPlugin.show(id, title, body, details, payload: payload);
   }
 }
 
 /// موفر خدمة الإشعارات
-final notificationServiceProvider =
-    Provider<NotificationService>((ref) => NotificationService());
+final notificationServiceProvider = Provider<NotificationService>(
+  (ref) => NotificationService(),
+);

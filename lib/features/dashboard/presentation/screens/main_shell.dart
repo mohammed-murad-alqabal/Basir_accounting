@@ -42,10 +42,7 @@ class _MainShellState extends ConsumerState<MainShell> {
     final appIcons = ref.watch(appIconsProvider);
 
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _screens,
-      ),
+      body: IndexedStack(index: _selectedIndex, children: _screens),
       bottomNavigationBar: DecoratedBox(
         decoration: BoxDecoration(
           boxShadow: [
@@ -67,9 +64,7 @@ class _MainShellState extends ConsumerState<MainShell> {
             fontWeight: FontWeight.bold,
             fontSize: 12,
           ),
-          unselectedLabelStyle: const TextStyle(
-            fontSize: 12,
-          ),
+          unselectedLabelStyle: const TextStyle(fontSize: 12),
           items: [
             BottomNavigationBarItem(
               icon: Icon(appIcons.home),

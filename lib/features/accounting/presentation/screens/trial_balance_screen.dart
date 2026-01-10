@@ -17,13 +17,13 @@ class TrialBalanceScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final trialBalanceAsync = ref
-        .watch(
-          financialStatementServiceProvider.notifier,
-        )
+        .watch(financialStatementServiceProvider.notifier)
         .generateTrialBalance(DateTime.now());
 
-    final currencyFormatter =
-        intl.NumberFormat.currency(symbol: '', decimalDigits: 2);
+    final currencyFormatter = intl.NumberFormat.currency(
+      symbol: '',
+      decimalDigits: 2,
+    );
 
     return Scaffold(
       appBar: AppAppBar(
@@ -80,8 +80,9 @@ class TrialBalanceScreen extends ConsumerWidget {
                           DataCell(
                             Text(
                               row.debitBalance > Decimal.zero
-                                  ? currencyFormatter
-                                      .format(row.debitBalance.toDouble())
+                                  ? currencyFormatter.format(
+                                      row.debitBalance.toDouble(),
+                                    )
                                   : '-',
                               style: TextStyle(
                                 color: row.debitBalance > Decimal.zero
@@ -96,8 +97,9 @@ class TrialBalanceScreen extends ConsumerWidget {
                           DataCell(
                             Text(
                               row.creditBalance > Decimal.zero
-                                  ? currencyFormatter
-                                      .format(row.creditBalance.toDouble())
+                                  ? currencyFormatter.format(
+                                      row.creditBalance.toDouble(),
+                                    )
                                   : '-',
                               style: TextStyle(
                                 color: row.creditBalance > Decimal.zero
@@ -123,8 +125,8 @@ class TrialBalanceScreen extends ConsumerWidget {
 
   Future<void> _exportReport(BuildContext context, WidgetRef ref) async {
     // منطق التصدير مستقبلاً
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('ميزة التصدير ستتوفر قريباً')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('ميزة التصدير ستتوفر قريباً')));
   }
 }

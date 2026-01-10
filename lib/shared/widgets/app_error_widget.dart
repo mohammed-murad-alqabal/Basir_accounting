@@ -6,11 +6,7 @@ import 'package:flutter/material.dart';
 /// يعرض رسالة خطأ مع أيقونة وزر اختياري لإعادة المحاولة.
 class AppErrorWidget extends StatelessWidget {
   /// إنشاء ودجيت خطأ جديد.
-  const AppErrorWidget({
-    required this.message,
-    super.key,
-    this.onRetry,
-  });
+  const AppErrorWidget({required this.message, super.key, this.onRetry});
 
   /// رسالة الخطأ المراد عرضها.
   final String message;

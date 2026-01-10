@@ -37,11 +37,7 @@ class SharingService {
     await file.writeAsBytes(bytes);
 
     await SharePlus.instance.share(
-      ShareParams(
-        files: [XFile(file.path)],
-        subject: subject,
-        text: text,
-      ),
+      ShareParams(files: [XFile(file.path)], subject: subject, text: text),
     );
   }
 
@@ -52,20 +48,10 @@ class SharingService {
     String? subject,
     String? text,
   }) =>
-      shareFile(
-        bytes: bytes,
-        fileName: fileName,
-        subject: subject,
-        text: text,
-      );
+      shareFile(bytes: bytes, fileName: fileName, subject: subject, text: text);
 
   /// مشاركة نص عام
   Future<void> shareText(String text, {String? subject}) async {
-    await SharePlus.instance.share(
-      ShareParams(
-        text: text,
-        subject: subject,
-      ),
-    );
+    await SharePlus.instance.share(ShareParams(text: text, subject: subject));
   }
 }

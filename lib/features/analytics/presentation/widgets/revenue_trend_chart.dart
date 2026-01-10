@@ -73,14 +73,10 @@ class _RevenueTrendChartState extends ConsumerState<RevenueTrendChart> {
                   gridData: FlGridData(
                     horizontalInterval: maxY / 5,
                     verticalInterval: 1,
-                    getDrawingHorizontalLine: (value) => const FlLine(
-                      color: Colors.grey,
-                      strokeWidth: 1,
-                    ),
-                    getDrawingVerticalLine: (value) => const FlLine(
-                      color: Colors.grey,
-                      strokeWidth: 1,
-                    ),
+                    getDrawingHorizontalLine: (value) =>
+                        const FlLine(color: Colors.grey, strokeWidth: 1),
+                    getDrawingVerticalLine: (value) =>
+                        const FlLine(color: Colors.grey, strokeWidth: 1),
                   ),
                   titlesData: FlTitlesData(
                     rightTitles: const AxisTitles(),
@@ -123,9 +119,7 @@ class _RevenueTrendChartState extends ConsumerState<RevenueTrendChart> {
                   ),
                   borderData: FlBorderData(
                     show: true,
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                    ),
+                    border: Border.all(color: Theme.of(context).dividerColor),
                   ),
                   minX: 0,
                   maxX: sortedKeys.length.toDouble() - 1,
@@ -140,9 +134,7 @@ class _RevenueTrendChartState extends ConsumerState<RevenueTrendChart> {
                       ),
                       barWidth: 5,
                       isStrokeCapRound: true,
-                      dotData: const FlDotData(
-                        show: false,
-                      ),
+                      dotData: const FlDotData(show: false),
                       belowBarData: BarAreaData(
                         show: true,
                         gradient: LinearGradient(

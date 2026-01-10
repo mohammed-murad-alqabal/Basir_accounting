@@ -60,9 +60,7 @@ void main() {
     });
 
     test('should load persisted value from SharedPreferences', () async {
-      SharedPreferences.setMockInitialValues({
-        'app_calendar_type': 'hijri',
-      });
+      SharedPreferences.setMockInitialValues({'app_calendar_type': 'hijri'});
 
       // Create new container after setting mock values
       final newContainer = ProviderContainer();

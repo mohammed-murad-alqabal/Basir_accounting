@@ -386,8 +386,10 @@ void main() {
     group('deleteInvoice', () {
       test('should delete invoice successfully', () async {
         // Arrange
-        final invoice =
-            MockData.createTestInvoice(id: 'test-invoice', userId: testUserId);
+        final invoice = MockData.createTestInvoice(
+          id: 'test-invoice',
+          userId: testUserId,
+        );
         await repository.addInvoice(invoice);
 
         // Act

@@ -59,8 +59,9 @@ export 'theme/services/icon_customization_service.dart';
 /// - تغيير كلمة المرور
 final settingsServiceProvider = Provider<SettingsService>((ref) {
   final secureStorage = ref.watch(secureStorageProvider);
-  final businessSettingsRepository =
-      ref.watch(businessSettingsRepositoryProvider);
+  final businessSettingsRepository = ref.watch(
+    businessSettingsRepositoryProvider,
+  );
   final profileRepository = ref.watch(profileRepositoryProvider);
 
   return SettingsService(
@@ -133,9 +134,7 @@ final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
 
 /// مزود مستودع الفواتير (Invoice Repository)
 final invoiceRepositoryProvider = Provider<InvoiceRepository>((ref) {
-  final isar = ref.watch(
-    isarProvider.select((asyncIsar) => asyncIsar.value),
-  );
+  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
@@ -144,11 +143,10 @@ final invoiceRepositoryProvider = Provider<InvoiceRepository>((ref) {
 });
 
 /// مزود مستودع السنوات المالية (Financial Year Repository)
-final financialYearRepositoryProvider =
-    Provider<FinancialYearRepository>((ref) {
-  final isar = ref.watch(
-    isarProvider.select((asyncIsar) => asyncIsar.value),
-  );
+final financialYearRepositoryProvider = Provider<FinancialYearRepository>((
+  ref,
+) {
+  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
@@ -158,9 +156,7 @@ final financialYearRepositoryProvider =
 
 /// مزود مستودع الموردين (Vendor Repository)
 final vendorRepositoryProvider = Provider<VendorRepository>((ref) {
-  final isar = ref.watch(
-    isarProvider.select((asyncIsar) => asyncIsar.value),
-  );
+  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
@@ -169,17 +165,16 @@ final vendorRepositoryProvider = Provider<VendorRepository>((ref) {
 });
 
 /// مزود مستودع السندات المالية (Financial Voucher Repository)
-final financialVoucherRepositoryProvider =
-    Provider<FinancialVoucherRepository>((ref) {
-  final isar = ref.watch(
-    isarProvider.select((asyncIsar) => asyncIsar.value),
-  );
-  if (isar == null) {
-    throw Exception('قاعدة البيانات غير جاهزة');
-  }
-  final user = ref.watch(basirUserProvider);
-  return FinancialVoucherRepositoryImpl(isar: isar, userId: user?.id);
-});
+final financialVoucherRepositoryProvider = Provider<FinancialVoucherRepository>(
+  (ref) {
+    final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
+    if (isar == null) {
+      throw Exception('قاعدة البيانات غير جاهزة');
+    }
+    final user = ref.watch(basirUserProvider);
+    return FinancialVoucherRepositoryImpl(isar: isar, userId: user?.id);
+  },
+);
 
 /// مزود مستودع الملف الشخصي (Profile Repository)
 final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
@@ -190,13 +185,14 @@ final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
 });
 
 /// مزود مستودع إعدادات العمل (Business Settings Repository)
-final businessSettingsRepositoryProvider =
-    Provider<BusinessSettingsRepository>((ref) {
-  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
-  if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
-  final user = ref.watch(basirUserProvider);
-  return BusinessSettingsRepositoryImpl(isar: isar, userId: user?.id);
-});
+final businessSettingsRepositoryProvider = Provider<BusinessSettingsRepository>(
+  (ref) {
+    final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
+    if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
+    final user = ref.watch(basirUserProvider);
+    return BusinessSettingsRepositoryImpl(isar: isar, userId: user?.id);
+  },
+);
 
 /// مزود مستودع المخزون (Inventory Repository)
 final inventoryRepositoryProvider = Provider<InventoryRepository>((ref) {

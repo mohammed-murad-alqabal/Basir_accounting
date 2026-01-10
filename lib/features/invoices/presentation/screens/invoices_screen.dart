@@ -59,11 +59,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           _buildFilterBar(),
           Expanded(
             child: invoicesAsync.when(
-              data: (invoices) => _buildInvoicesList(
-                invoices,
-                appIcons,
-                calendarType,
-              ),
+              data: (invoices) =>
+                  _buildInvoicesList(invoices, appIcons, calendarType),
               loading: () => ListView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
                 itemCount: 5,
@@ -110,9 +107,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     );
   }
 
-  Widget _buildStatsHeader(
-    AsyncValue<InvoiceStatistics> statsAsync,
-  ) =>
+  Widget _buildStatsHeader(AsyncValue<InvoiceStatistics> statsAsync) =>
       Container(
         padding: const EdgeInsets.all(Spacing.lg),
         decoration: BoxDecoration(
@@ -296,11 +291,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                 ),
               );
             },
-            onLongPress: () => _showInvoiceActions(
-              invoice,
-              appIcons,
-              calendarType,
-            ),
+            onLongPress: () =>
+                _showInvoiceActions(invoice, appIcons, calendarType),
           ),
         );
       },

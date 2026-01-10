@@ -68,58 +68,32 @@ class Report {
     final buffer = StringBuffer();
 
     // العنوان
-    buffer.writeln(
-      '# تقرير حالة المشروع',
-    );
+    buffer.writeln('# تقرير حالة المشروع');
     buffer.writeln();
-    buffer.writeln(
-      '**التاريخ:** ${_formatDate(generatedAt)}',
-    );
-    buffer.writeln(
-      '**المعرف:** $id',
-    );
+    buffer.writeln('**التاريخ:** ${_formatDate(generatedAt)}');
+    buffer.writeln('**المعرف:** $id');
     buffer.writeln();
 
     // الإحصائيات
-    buffer.writeln(
-      '## إحصائيات المشروع',
-    );
+    buffer.writeln('## إحصائيات المشروع');
     buffer.writeln();
-    buffer.writeln(
-      '- **عدد الملفات:** ${statistics.fileCount}',
-    );
-    buffer.writeln(
-      '- **حجم المشروع:** ${statistics.projectSize}',
-    );
-    buffer.writeln(
-      '- **عدد الـ Commits:** ${statistics.commitCount}',
-    );
-    buffer.writeln(
-      '- **عدد الأسطر:** ${statistics.totalLines}',
-    );
+    buffer.writeln('- **عدد الملفات:** ${statistics.fileCount}');
+    buffer.writeln('- **حجم المشروع:** ${statistics.projectSize}');
+    buffer.writeln('- **عدد الـ Commits:** ${statistics.commitCount}');
+    buffer.writeln('- **عدد الأسطر:** ${statistics.totalLines}');
     buffer.writeln();
 
     // الأخطاء
     if (errors.isNotEmpty) {
-      buffer.writeln(
-        '## ملخص الأخطاء والتحذيرات',
-      );
+      buffer.writeln('## ملخص الأخطاء والتحذيرات');
       buffer.writeln();
       for (final error in errors) {
-        buffer.writeln(
-          '### ${error.type.name}',
-        );
-        buffer.writeln(
-          '- **العدد:** ${error.count}',
-        );
+        buffer.writeln('### ${error.type.name}');
+        buffer.writeln('- **العدد:** ${error.count}');
         if (error.topErrors.isNotEmpty) {
-          buffer.writeln(
-            '- **الأكثر شيوعاً:**',
-          );
+          buffer.writeln('- **الأكثر شيوعاً:**');
           for (final topError in error.topErrors.take(5)) {
-            buffer.writeln(
-              '  - $topError',
-            );
+            buffer.writeln('  - $topError');
           }
         }
         buffer.writeln();
@@ -127,19 +101,11 @@ class Report {
     }
 
     // نتائج الاختبارات
-    buffer.writeln(
-      '## نتائج الاختبارات',
-    );
+    buffer.writeln('## نتائج الاختبارات');
     buffer.writeln();
-    buffer.writeln(
-      '- **إجمالي الاختبارات:** ${testResults.totalTests}',
-    );
-    buffer.writeln(
-      '- **نجح:** ${testResults.passedTests}',
-    );
-    buffer.writeln(
-      '- **فشل:** ${testResults.failedTests}',
-    );
+    buffer.writeln('- **إجمالي الاختبارات:** ${testResults.totalTests}');
+    buffer.writeln('- **نجح:** ${testResults.passedTests}');
+    buffer.writeln('- **فشل:** ${testResults.failedTests}');
     buffer.writeln(
       '- **التغطية:** ${testResults.coveragePercentage.toStringAsFixed(1)}%',
     );
@@ -150,30 +116,18 @@ class Report {
 
     // التوصيات
     if (recommendations.isNotEmpty) {
-      buffer.writeln(
-        '## التوصيات',
-      );
+      buffer.writeln('## التوصيات');
       buffer.writeln();
       for (final rec in recommendations) {
-        buffer.writeln(
-          '### ${rec.title}',
-        );
-        buffer.writeln(
-          '**الأولوية:** ${rec.priority.name}',
-        );
+        buffer.writeln('### ${rec.title}');
+        buffer.writeln('**الأولوية:** ${rec.priority.name}');
         buffer.writeln();
-        buffer.writeln(
-          rec.description,
-        );
+        buffer.writeln(rec.description);
         buffer.writeln();
         if (rec.actionItems.isNotEmpty) {
-          buffer.writeln(
-            '**الإجراءات المطلوبة:**',
-          );
+          buffer.writeln('**الإجراءات المطلوبة:**');
           for (final action in rec.actionItems) {
-            buffer.writeln(
-              '- $action',
-            );
+            buffer.writeln('- $action');
           }
           buffer.writeln();
         }

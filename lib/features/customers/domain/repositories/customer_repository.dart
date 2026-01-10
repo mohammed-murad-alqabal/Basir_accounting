@@ -49,9 +49,7 @@ abstract class CustomerRepository {
   ///   debugPrint('العميل: ${customer.name}',);
   /// }
   /// ```
-  Future<Customer?> getCustomerById(
-    String id,
-  );
+  Future<Customer?> getCustomerById(String id);
 
   /// البحث عن عملاء حسب الاسم
   ///
@@ -67,9 +65,7 @@ abstract class CustomerRepository {
   /// final results = await repository.searchCustomers('أحمد',);
   /// debugPrint('النتائج: ${results.length}',);
   /// ```
-  Future<List<Customer>> searchCustomers(
-    String query,
-  );
+  Future<List<Customer>> searchCustomers(String query);
 
   /// إضافة عميل جديد
   ///
@@ -90,9 +86,7 @@ abstract class CustomerRepository {
   ///,);
   /// await repository.addCustomer(customer,);
   /// ```
-  Future<void> addCustomer(
-    Customer customer,
-  );
+  Future<void> addCustomer(Customer customer);
 
   /// تحديث بيانات عميل
   ///
@@ -111,9 +105,7 @@ abstract class CustomerRepository {
   ///,);
   /// await repository.updateCustomer(updatedCustomer,);
   /// ```
-  Future<void> updateCustomer(
-    Customer customer,
-  );
+  Future<void> updateCustomer(Customer customer);
 
   /// حذف عميل
   ///
@@ -128,9 +120,7 @@ abstract class CustomerRepository {
   /// ```dart
   /// await repository.deleteCustomer('customer-1',);
   /// ```
-  Future<void> deleteCustomer(
-    String id,
-  );
+  Future<void> deleteCustomer(String id);
 
   /// حذف جميع العملاء
   ///

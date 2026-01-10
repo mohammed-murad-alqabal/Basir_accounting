@@ -36,8 +36,9 @@ void main() {
         ),
       );
 
-  testWidgets('AgingReportScreen shows empty state when no data',
-      (tester) async {
+  testWidgets('AgingReportScreen shows empty state when no data', (
+    tester,
+  ) async {
     when(
       () => mockReportingService.getReceivablesAging(
         asOfDate: any(named: 'asOfDate'),
@@ -50,8 +51,9 @@ void main() {
     expect(find.text('لا توجد بيانات لهذه الفترة'), findsOneWidget);
   });
 
-  testWidgets('AgingReportScreen shows data table when data is present',
-      (tester) async {
+  testWidgets('AgingReportScreen shows data table when data is present', (
+    tester,
+  ) async {
     final mockData = <AgingReportLineDto>[
       const AgingReportLineDto(
         partnerId: '1',

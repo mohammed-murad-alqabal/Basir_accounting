@@ -155,10 +155,7 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
       ),
       child: ClipRRect(
         borderRadius: effectiveBorderRadius,
-        child: Padding(
-          padding: effectivePadding,
-          child: widget.child,
-        ),
+        child: Padding(padding: effectivePadding, child: widget.child),
       ),
     );
 
@@ -182,10 +179,7 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
       );
     }
 
-    return Semantics(
-      container: true,
-      child: card,
-    );
+    return Semantics(container: true, child: card);
   }
 }
 
@@ -329,11 +323,8 @@ class AppStatCard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              icon,
-              color: iconColor ?? AppColors.primary,
-              size: IconSizes.md,
-            ),
+            Icon(icon,
+                color: iconColor ?? AppColors.primary, size: IconSizes.md,),
             const SizedBox(height: Spacing.xs),
             Flexible(
               child: ResponsiveText(

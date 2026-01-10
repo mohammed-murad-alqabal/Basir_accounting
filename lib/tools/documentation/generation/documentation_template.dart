@@ -120,8 +120,6 @@ class DocumentationTemplate {
   /// Returns: نص التوثيق المولد
   String generate(Map<String, dynamic> context) {
     // TODO(dev): تنفيذ توليد التوثيق
-    throw UnimplementedError(
-      'generate not implemented yet',
-    );
+    throw UnimplementedError('generate not implemented yet');
   }
 }

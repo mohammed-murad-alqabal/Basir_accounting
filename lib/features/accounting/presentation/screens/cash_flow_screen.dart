@@ -47,37 +47,28 @@ class CashFlowScreen extends ConsumerWidget {
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              _buildSection(
-                context.l10n.labelOperating,
-                [
-                  _buildRow('المقبوضات التشغيلية', data['operatingReceipts']!),
-                  _buildRow('المدفوعات التشغيلية', -data['operatingPayments']!),
-                  _buildTotalRow(
-                    'صافي التدفقات من الأنشطة التشغيلية',
-                    data['netOperating']!,
-                  ),
-                ],
-              ),
+              _buildSection(context.l10n.labelOperating, [
+                _buildRow('المقبوضات التشغيلية', data['operatingReceipts']!),
+                _buildRow('المدفوعات التشغيلية', -data['operatingPayments']!),
+                _buildTotalRow(
+                  'صافي التدفقات من الأنشطة التشغيلية',
+                  data['netOperating']!,
+                ),
+              ]),
               const SizedBox(height: 24),
-              _buildSection(
-                context.l10n.labelInvesting,
-                [
-                  _buildTotalRow(
-                    'صافي التدفقات من الأنشطة الاستثمارية',
-                    data['investing']!,
-                  ),
-                ],
-              ),
+              _buildSection(context.l10n.labelInvesting, [
+                _buildTotalRow(
+                  'صافي التدفقات من الأنشطة الاستثمارية',
+                  data['investing']!,
+                ),
+              ]),
               const SizedBox(height: 24),
-              _buildSection(
-                context.l10n.labelFinancing,
-                [
-                  _buildTotalRow(
-                    'صافي التدفقات من الأنشطة التمويلية',
-                    data['financing']!,
-                  ),
-                ],
-              ),
+              _buildSection(context.l10n.labelFinancing, [
+                _buildTotalRow(
+                  'صافي التدفقات من الأنشطة التمويلية',
+                  data['financing']!,
+                ),
+              ]),
               const Divider(height: 48),
               _buildTotalRow(
                 context.l10n.labelNetCashFlow,
@@ -149,8 +140,10 @@ class CashFlowScreen extends ConsumerWidget {
           subtitle: intl.DateFormat('yyyy-MM-dd').format(DateTime.now()),
         );
       } else {
-        final csv =
-            exportService.generateTableCsv(headers: headers, data: data);
+        final csv = exportService.generateTableCsv(
+          headers: headers,
+          data: data,
+        );
         final sharingService = ref.read(sharingServiceProvider);
         await sharingService.shareFile(
           bytes: Uint8List.fromList(csv.codeUnits),
@@ -160,9 +153,9 @@ class CashFlowScreen extends ConsumerWidget {
       }
     } on Exception catch (e) {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
@@ -189,19 +182,13 @@ class CashFlowScreen extends ConsumerWidget {
             Text(label),
             Text(
               '$value',
-              style: TextStyle(
-                color: value < Decimal.zero ? Colors.red : null,
-              ),
+              style: TextStyle(color: value < Decimal.zero ? Colors.red : null),
             ),
           ],
         ),
       );
 
-  Widget _buildTotalRow(
-    String label,
-    Decimal value, {
-    bool isMain = false,
-  }) =>
+  Widget _buildTotalRow(String label, Decimal value, {bool isMain = false}) =>
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Row(

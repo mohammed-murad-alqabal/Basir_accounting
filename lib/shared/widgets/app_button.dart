@@ -244,10 +244,7 @@ class _AppButtonState extends State<AppButton>
       button = Tooltip(message: widget.tooltip, child: button);
     }
 
-    return OverflowDetector(
-      name: 'AppButton(${widget.label})',
-      child: button,
-    );
+    return OverflowDetector(name: 'AppButton(${widget.label})', child: button);
   }
 
   double _getFontSizeValue() => switch (widget.size) {
@@ -282,10 +279,7 @@ class _AppButtonState extends State<AppButton>
       color: backgroundColor,
       borderRadius: Radii.borderRadiusMd,
       border: widget.type == AppButtonType.outlined
-          ? Border.all(
-              color: borderColor,
-              width: BorderWidths.normal,
-            )
+          ? Border.all(color: borderColor, width: BorderWidths.normal)
           : null,
     );
   }
@@ -346,11 +340,7 @@ class _AppButtonState extends State<AppButton>
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            widget.icon,
-            size: _getIconSize(),
-            color: foregroundColor,
-          ),
+          Icon(widget.icon, size: _getIconSize(), color: foregroundColor),
           const SizedBox(width: Spacing.sm),
           Flexible(
             child: Text(
