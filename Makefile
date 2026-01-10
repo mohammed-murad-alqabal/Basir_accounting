@@ -1,7 +1,7 @@
 # basir_accounting_system Project Makefile
 # نظام أتمتة شامل يدعم Flutter و Rust ومعايير الجودة الصارمة
 
-.PHONY: help setup dev-start dev-stop run test clean build analyze format gen gen-watch rust-build sqlx-prepare sqlx-migrate purity-check health-check auto-fix update-deps setup-hooks release-check
+.PHONY: help setup dev-start dev-stop run test clean build analyze format gen gen-watch rust-build sqlx-prepare sqlx-migrate purity-check health-check report auto-fix update-deps setup-hooks release-check
 
 # Colors for output
 BLUE := \033[0;34m
@@ -90,8 +90,13 @@ purity-check: ## Run "Diamond Purity" quality gates / التحقق من جودة
 	@echo "$(BLUE)Running quality gates...$(NC)"
 	@bash scripts/run_quality_gates.sh
 
-health-check: ## Comprehensive health scan / مسح شامل لصحة المشروع
+health-check: report ## Comprehensive health scan / مسح شامل لصحة المشروع
 	@bash scripts/health_check.sh
+
+report: ## Generate professional quality report / إنشاء تقرير جودة احترافي
+	@echo "$(BLUE)Generating Quality Report...$(NC)"
+	@chmod +x scripts/generate_quality_report.sh
+	@./scripts/generate_quality_report.sh
 
 auto-fix: ## Automatically fix linter issues / إصلاح المشاكل تلقائياً
 	@dart fix --apply
