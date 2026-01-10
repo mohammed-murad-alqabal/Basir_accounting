@@ -84,10 +84,10 @@ class FinancialSimulationService extends _$FinancialSimulationService {
           updatedAt: DateTime.now(),
           subtotalAmount: amount,
           taxAmount: tax,
-          discountAmount: 0.0,
+          discountAmount: 0,
           totalAmount: total,
-          paidAmount: 0.0,
-          taxRate: 15.0,
+          paidAmount: 0,
+          taxRate: 15,
           status: InvoiceStatus.sent,
           items: [
             InvoiceItem(
