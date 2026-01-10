@@ -2,6 +2,7 @@ import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_app/features/invoices/domain/repositories/invoice_repository.dart';
+import 'package:decimal/decimal.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع الفواتير (Invoice Repository Implementation)
@@ -20,8 +21,7 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   @override
   Future<List<Invoice>> getAllInvoices() async {
     try {
-      final models =
-          await isar.invoiceModels.filter().userIdEqualTo(userId).findAll();
+      final models = await isar.invoiceModels.filter().userIdEqualTo(userId).findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
       throw Exception('خطأ في جلب الفواتير: $e');
@@ -147,20 +147,18 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
     try {
       final allInvoices = await getAllInvoices();
 
-      final paidInvoices = allInvoices
-          .where((invoice) => invoice.status == InvoiceStatus.paid)
-          .toList();
+      final paidInvoices =
+          allInvoices.where((invoice) => invoice.status == InvoiceStatus.paid).toList();
 
-      final overdueInvoices = allInvoices
-          .where((invoice) => invoice.status == InvoiceStatus.overdue)
-          .toList();
+      final overdueInvoices =
+          allInvoices.where((invoice) => invoice.status == InvoiceStatus.overdue).toList();
 
-      final totalRevenue = allInvoices.fold<double>(
-        0,
+      final totalRevenue = allInvoices.fold<Decimal>(
+        Decimal.zero,
         (sum, invoice) => sum + invoice.totalAmount,
       );
-      final paidRevenue = paidInvoices.fold<double>(
-        0,
+      final paidRevenue = paidInvoices.fold<Decimal>(
+        Decimal.zero,
         (sum, invoice) => sum + invoice.totalAmount,
       );
 

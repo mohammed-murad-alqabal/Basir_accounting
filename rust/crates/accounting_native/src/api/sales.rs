@@ -226,6 +226,7 @@ pub struct SalesInvoiceLineDto {
     pub quantity: String,
     pub unit_price: String,
     pub tax_amount: String,
+    pub tax_category: String,
 }
 
 pub struct CustomerPaymentDto {
@@ -312,6 +313,7 @@ impl TryFrom<SalesInvoiceLineDto> for SalesInvoiceLine {
             quantity: qty,
             unit_price: price,
             tax_amount: tax,
+            tax_category: dto.tax_category,
             total_amount: (qty * price) + tax,
         })
     }

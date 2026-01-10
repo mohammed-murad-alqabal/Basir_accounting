@@ -18,62 +18,52 @@ Future<InventoryItemDto?> getItemById({required String id}) =>
 Future<void> saveItem({required InventoryItemDto item}) =>
     RustLib.instance.api.crateApiInventorySaveItem(item: item);
 
-Future<String> recordMovement({
-  required StockMovementDto movement,
-  required AuditMetadataDto metadata,
-}) =>
+Future<String> recordMovement(
+        {required StockMovementDto movement,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiInventoryRecordMovement(
-      movement: movement,
-      metadata: metadata,
-    );
+        movement: movement, metadata: metadata);
 
-Future<String> recordPurchase({
-  required String itemId,
-  required String quantity,
-  required String unitCost,
-  String? referenceId,
-  required AuditMetadataDto metadata,
-}) =>
+Future<String> recordPurchase(
+        {required String itemId,
+        required String quantity,
+        required String unitCost,
+        String? referenceId,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiInventoryRecordPurchase(
-      itemId: itemId,
-      quantity: quantity,
-      unitCost: unitCost,
-      referenceId: referenceId,
-      metadata: metadata,
-    );
+        itemId: itemId,
+        quantity: quantity,
+        unitCost: unitCost,
+        referenceId: referenceId,
+        metadata: metadata);
 
-Future<String> recordSale({
-  required String itemId,
-  required String quantity,
-  String? referenceId,
-  required AuditMetadataDto metadata,
-}) =>
+Future<String> recordSale(
+        {required String itemId,
+        required String quantity,
+        String? referenceId,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiInventoryRecordSale(
-      itemId: itemId,
-      quantity: quantity,
-      referenceId: referenceId,
-      metadata: metadata,
-    );
+        itemId: itemId,
+        quantity: quantity,
+        referenceId: referenceId,
+        metadata: metadata);
 
-Future<String> recordImpairment({
-  required String itemId,
-  required String totalImpairmentAmount,
-  String? referenceId,
-  required AuditMetadataDto metadata,
-}) =>
+Future<String> recordImpairment(
+        {required String itemId,
+        required String totalImpairmentAmount,
+        String? referenceId,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiInventoryRecordImpairment(
-      itemId: itemId,
-      totalImpairmentAmount: totalImpairmentAmount,
-      referenceId: referenceId,
-      metadata: metadata,
-    );
+        itemId: itemId,
+        totalImpairmentAmount: totalImpairmentAmount,
+        referenceId: referenceId,
+        metadata: metadata);
 
 Future<bool> verifyInventoryChain({required String itemId}) =>
     RustLib.instance.api.crateApiInventoryVerifyInventoryChain(itemId: itemId);
 
-Future<InventoryValuationReportDto> getValuationReport({
-  required String asOf,
-}) =>
+Future<InventoryValuationReportDto> getValuationReport(
+        {required String asOf}) =>
     RustLib.instance.api.crateApiInventoryGetValuationReport(asOf: asOf);
 
 Future<List<StockMovementDto>> listMovements({required String itemId}) =>
@@ -86,6 +76,7 @@ class InventoryItemDto {
   final String nameEn;
   final String? description;
   final String unit;
+  final String? minStockLevel;
   final String valuationMethod;
   final String? purchasePrice;
   final String? salePrice;
@@ -102,6 +93,7 @@ class InventoryItemDto {
     required this.nameEn,
     this.description,
     required this.unit,
+    this.minStockLevel,
     required this.valuationMethod,
     this.purchasePrice,
     this.salePrice,
@@ -120,6 +112,7 @@ class InventoryItemDto {
       nameEn.hashCode ^
       description.hashCode ^
       unit.hashCode ^
+      minStockLevel.hashCode ^
       valuationMethod.hashCode ^
       purchasePrice.hashCode ^
       salePrice.hashCode ^
@@ -140,6 +133,7 @@ class InventoryItemDto {
           nameEn == other.nameEn &&
           description == other.description &&
           unit == other.unit &&
+          minStockLevel == other.minStockLevel &&
           valuationMethod == other.valuationMethod &&
           purchasePrice == other.purchasePrice &&
           salePrice == other.salePrice &&

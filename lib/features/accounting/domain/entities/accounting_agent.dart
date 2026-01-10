@@ -4,74 +4,78 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'accounting_agent.freezed.dart';
 
-/// مستويات الصلاحية للوكلاء المحاسبيين.
+/// Hierarchy of decision-making authority for cognitive accounting agents.
 enum AgentAuthority {
-  /// قمة الهيكل: الوكيل المنسق (Master Governor).
+  /// Highest Tier: Aggregates and reconciles decisions from all other agents.
   orchestrator,
 
-  /// صلاحية عالية لمراجعة المعايير.
+  /// High Tier: Authorized to block transactions based on strict standard violations.
   high,
 
-  /// صلاحية متوسطة.
+  /// Medium Tier: Provides strategic advice and threshold warnings.
   medium,
 
-  /// صلاحية منخفضة أو للمراقبة فقط.
+  /// Low Tier: Monitoring and observation only.
   low,
 }
 
-/// يمثل نتيجة معالجة الوكيل لعملية معينة.
+/// The result of an agentic examination of a proposed financial transaction.
 @freezed
 class AgentResult with _$AgentResult {
-  /// إنشاء نتيجة الوكيل.
+  /// Creates an agent processing result.
   const factory AgentResult({
-    /// معرف الوكيل.
+    /// Unique identifier of the processing agent (e.g., "agent-3-forensic").
     required String agentId,
 
-    /// هل العملية مسموح بها محاسبياً؟
+    /// Final accounting verdict: true if compliant, false if rejected.
     required bool isAllowed,
 
-    /// التبرير العلمي أو المحاسبي للقرار.
+    /// Deep scientific or regulatory rationale explaining the decision.
     required String rationale,
 
-    /// درجة الثقة بالقرار (0.0 إلى 1.0).
+    /// Statistical confidence in the outcome (0.0 to 1.0).
     required double confidenceScore,
 
-    /// تعديلات مقترحة على القيد (اختياري).
+    /// Optional AI-driven modifications to improve entry accuracy or compliance.
     Map<String, dynamic>? suggestedAdjustments,
   }) = _AgentResult;
 }
 
-/// سياق المحاسبة الممرر بين الوكلاء.
+/// Comprehensive context provided to agents during the orchestration flow.
 @freezed
 class AccountingContext with _$AccountingContext {
-  /// إنشاء سياق محاسبي.
+  /// Creates an accounting context.
   const factory AccountingContext({
-    /// القيد المحاسبي المقترح.
+    /// The unposted journal entry currently under review.
     required JournalEntry proposedJournalEntry,
 
-    /// نوع العملية (مبيعات، مشتريات، رواتب، إلخ).
+    /// Abstract nature of the transaction (e.g., "sales", "payroll").
     required String transactionType,
 
-    /// هل يتطلب الأمر مراجعة الاستدامة (ISSB)؟
+    /// If true, the agent must verify climate/social disclosure compliance.
     @Default(false) bool isSustainabilityRequired,
 
-    /// مقاييس الاستدامة المرتبطة.
+    /// Collection of attached ISSB quantitative measures.
     List<SustainabilityMetric>? sustainabilityMetrics,
 
-    /// بيانات إضافية.
+    /// Extended operational or regulatory metadata.
     @Default({}) Map<String, dynamic> metadata,
   }) = _AccountingContext;
 }
 
-/// الواجهة البرمجية الأساسية لجميع الوكلاء المحاسبيين في نظام "بصير".
+/// Core interface for Basir's "Cognitive Hexagon" AI agents.
+///
+/// Every specialized agent must implement this interface to participate in
+/// the multi-stage consensus for financial data integrity.
 abstract class AccountingAgent {
-  /// معرف الوكيل الفريد.
+  /// Unique identifier within the agentic registry.
   String get agentId;
 
-  /// مستوى صلاحية الوكيل.
+  /// Defined rank in the consensus protocol.
   AgentAuthority get authority;
 
-  /// معالجة سياق محاسبي وإرجاع نتيجة.
-  /// يجب أن يتضمن القرار "تبريراً" (Rationale) يشرح الاستناد إلى المعايير.
+  /// Statutorily and scientifically analyzes the [context] to return a verdict.
+  ///
+  /// Must provide a detailed [AgentResult.rationale] citing relevant standards.
   Future<AgentResult> process(AccountingContext context);
 }

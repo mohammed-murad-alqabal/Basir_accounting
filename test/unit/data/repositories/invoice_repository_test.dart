@@ -7,6 +7,7 @@ import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
 import 'package:basir_app/features/invoices/data/repositories/invoice_repository_impl.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
 
@@ -87,24 +88,25 @@ void main() {
           issuedDate: DateTime(2025, 11),
           dueDate: DateTime(2025, 12),
           status: InvoiceStatus.draft,
-          items: const [
+          items: [
             InvoiceItem(
               id: 'item-1',
               name: 'خدمة استشارية',
-              quantity: 2,
-              price: 500,
-              total: 1000,
-              taxAmount: 150,
+              quantity: Decimal.fromInt(2),
+              price: Decimal.fromInt(500),
+              total: Decimal.fromInt(1000),
+              taxAmount: Decimal.fromInt(150),
             ),
           ],
-          taxRate: 0.15,
+          taxRate: Decimal.parse('0.15'),
           createdAt: DateTime(2025, 11),
           updatedAt: DateTime(2025, 11),
-          subtotalAmount: 1000,
-          taxAmount: 150,
-          totalAmount: 1150,
-          paidAmount: 0,
-          discountAmount: 0,
+          subtotalAmount: Decimal.fromInt(1000),
+          taxAmount: Decimal.fromInt(150),
+          totalAmount: Decimal.fromInt(1150),
+          paidAmount: Decimal.zero,
+          discountAmount: Decimal.zero,
+          discountRate: Decimal.zero,
         );
 
         // Act
@@ -117,7 +119,7 @@ void main() {
         expect(foundInvoice.status, InvoiceStatus.draft);
         expect(foundInvoice.items.length, 1);
         expect(foundInvoice.items.first.name, 'خدمة استشارية');
-        expect(foundInvoice.taxRate, 0.15);
+        expect(foundInvoice.taxRate, Decimal.parse('0.15'));
       });
     });
 
@@ -350,24 +352,25 @@ void main() {
           dueDate: DateTime(2025, 12),
           status: InvoiceStatus.draft,
           userId: testUserId,
-          items: const [
+          items: [
             InvoiceItem(
               id: 'item-1',
               name: 'خدمة',
-              quantity: 1,
-              price: 1000,
-              total: 1000,
-              taxAmount: 150,
+              quantity: Decimal.one,
+              price: Decimal.fromInt(1000),
+              total: Decimal.fromInt(1000),
+              taxAmount: Decimal.fromInt(150),
             ),
           ],
-          taxRate: 0.15,
+          taxRate: Decimal.parse('0.15'),
           createdAt: DateTime(2025, 11),
           updatedAt: DateTime(2025, 11),
-          subtotalAmount: 1000,
-          taxAmount: 150,
-          totalAmount: 1150,
-          paidAmount: 0,
-          discountAmount: 0,
+          subtotalAmount: Decimal.fromInt(1000),
+          taxAmount: Decimal.fromInt(150),
+          totalAmount: Decimal.fromInt(1150),
+          paidAmount: Decimal.zero,
+          discountAmount: Decimal.zero,
+          discountRate: Decimal.zero,
         );
         await repository.addInvoice(invoice);
 
@@ -379,7 +382,7 @@ void main() {
         final foundInvoice = await repository.getInvoiceById('test-invoice');
         expect(foundInvoice?.status, InvoiceStatus.paid);
         expect(foundInvoice?.customerName, 'عميل أصلي'); // لم يتغير
-        expect(foundInvoice?.taxRate, 0.15); // لم يتغير
+        expect(foundInvoice?.taxRate, Decimal.parse('0.15')); // لم يتغير
       });
     });
 
@@ -457,24 +460,25 @@ void main() {
           dueDate: DateTime.now(),
           status: InvoiceStatus.paid,
           userId: testUserId,
-          items: const [
+          items: [
             InvoiceItem(
               id: 'item-1',
               name: 'خدمة',
-              quantity: 1,
-              price: 1000,
-              total: 1000,
-              taxAmount: 150,
+              quantity: Decimal.one,
+              price: Decimal.fromInt(1000),
+              total: Decimal.fromInt(1000),
+              taxAmount: Decimal.fromInt(150),
             ),
           ],
-          taxRate: 0.15,
+          taxRate: Decimal.parse('0.15'),
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
-          subtotalAmount: 1000,
-          taxAmount: 150,
-          totalAmount: 1150,
-          paidAmount: 1150,
-          discountAmount: 0,
+          subtotalAmount: Decimal.fromInt(1000),
+          taxAmount: Decimal.fromInt(150),
+          totalAmount: Decimal.fromInt(1150),
+          paidAmount: Decimal.fromInt(1150),
+          discountAmount: Decimal.zero,
+          discountRate: Decimal.zero,
         );
 
         final invoice2 = Invoice(
@@ -486,24 +490,25 @@ void main() {
           dueDate: DateTime.now(),
           status: InvoiceStatus.overdue,
           userId: testUserId,
-          items: const [
+          items: [
             InvoiceItem(
               id: 'item-2',
               name: 'خدمة',
-              quantity: 1,
-              price: 2000,
-              total: 2000,
-              taxAmount: 300,
+              quantity: Decimal.one,
+              price: Decimal.fromInt(2000),
+              total: Decimal.fromInt(2000),
+              taxAmount: Decimal.fromInt(300),
             ),
           ],
-          taxRate: 0.15,
+          taxRate: Decimal.parse('0.15'),
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
-          subtotalAmount: 2000,
-          taxAmount: 300,
-          totalAmount: 2300,
-          paidAmount: 0,
-          discountAmount: 0,
+          subtotalAmount: Decimal.fromInt(2000),
+          taxAmount: Decimal.fromInt(300),
+          totalAmount: Decimal.fromInt(2300),
+          paidAmount: Decimal.zero,
+          discountAmount: Decimal.zero,
+          discountRate: Decimal.zero,
         );
 
         await repository.addInvoice(invoice1);
@@ -516,8 +521,8 @@ void main() {
         expect(stats.totalInvoices, 2);
         expect(stats.paidInvoices, 1);
         expect(stats.overdueInvoices, 1);
-        expect(stats.totalRevenue, 1150 + 2300); // مع الضريبة
-        expect(stats.paidRevenue, 1150); // فاتورة واحدة مدفوعة
+        expect(stats.totalRevenue, Decimal.fromInt(1150 + 2300)); // مع الضريبة
+        expect(stats.paidRevenue, Decimal.fromInt(1150)); // فاتورة واحدة مدفوعة
       });
 
       test('should return zero statistics when no invoices', () async {
@@ -528,8 +533,8 @@ void main() {
         expect(stats.totalInvoices, 0);
         expect(stats.paidInvoices, 0);
         expect(stats.overdueInvoices, 0);
-        expect(stats.totalRevenue, 0);
-        expect(stats.paidRevenue, 0);
+        expect(stats.totalRevenue, Decimal.zero);
+        expect(stats.paidRevenue, Decimal.zero);
       });
     });
   });

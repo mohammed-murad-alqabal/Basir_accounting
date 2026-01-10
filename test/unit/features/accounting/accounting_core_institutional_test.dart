@@ -47,9 +47,7 @@ class InMemoryCustomerRepository implements CustomerRepository {
 
   @override
   Future<List<Customer>> searchCustomers(String query) async =>
-      _customers.values
-          .where((c) => c.nameAr.contains(query) || c.nameEn.contains(query))
-          .toList();
+      _customers.values.where((c) => c.nameAr.contains(query) || c.nameEn.contains(query)).toList();
 
   @override
   Future<void> deleteAllCustomers() async => _customers.clear();
@@ -76,28 +74,24 @@ class InMemoryVendorRepository implements VendorRepository {
   Future<void> deleteVendor(String id) async => _vendors.remove(id);
 
   @override
-  Future<List<Vendor>> searchVendors(String query) async => _vendors.values
-      .where((v) => v.nameAr.contains(query) || v.nameEn.contains(query))
-      .toList();
+  Future<List<Vendor>> searchVendors(String query) async =>
+      _vendors.values.where((v) => v.nameAr.contains(query) || v.nameEn.contains(query)).toList();
 }
 
 class InMemoryFinancialVoucherRepository implements FinancialVoucherRepository {
   final _vouchers = <String, FinancialVoucher>{};
 
   @override
-  Future<List<FinancialVoucher>> getAllVouchers() async =>
-      _vouchers.values.toList();
+  Future<List<FinancialVoucher>> getAllVouchers() async => _vouchers.values.toList();
 
   @override
   Future<FinancialVoucher?> getVoucherById(String id) async => _vouchers[id];
 
   @override
-  Future<void> addVoucher(FinancialVoucher voucher) async =>
-      _vouchers[voucher.id] = voucher;
+  Future<void> addVoucher(FinancialVoucher voucher) async => _vouchers[voucher.id] = voucher;
 
   @override
-  Future<void> updateVoucher(FinancialVoucher voucher) async =>
-      _vouchers[voucher.id] = voucher;
+  Future<void> updateVoucher(FinancialVoucher voucher) async => _vouchers[voucher.id] = voucher;
 
   @override
   Future<void> deleteVoucher(String id) async => _vouchers.remove(id);
@@ -167,23 +161,24 @@ void main() {
         customerName: 'Global Client',
         issuedDate: DateTime.now(),
         dueDate: DateTime.now().add(const Duration(days: 30)),
-        taxRate: 0.15,
+        taxRate: Decimal.parse('0.15'),
         status: InvoiceStatus.sent,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
-        subtotalAmount: 1000,
-        taxAmount: 150,
-        totalAmount: 1150,
-        paidAmount: 0,
-        discountAmount: 0,
+        subtotalAmount: Decimal.fromInt(1000),
+        taxAmount: Decimal.fromInt(150),
+        totalAmount: Decimal.fromInt(1150),
+        paidAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
         items: [
-          const InvoiceItem(
+          InvoiceItem(
             id: 'item-1',
             name: 'Elite Consulting',
-            quantity: 1,
-            price: 1000,
-            total: 1000,
-            taxAmount: 150,
+            quantity: Decimal.one,
+            price: Decimal.fromInt(1000),
+            total: Decimal.fromInt(1000),
+            taxAmount: Decimal.fromInt(150),
           ),
         ],
       );
@@ -193,8 +188,8 @@ void main() {
       // Step 3: Verify Trial Balance sums
       final trialBalance = await reportingService.getTrialBalance();
 
-      var totalDebit = 0.0;
-      var totalCredit = 0.0;
+      var totalDebit = Decimal.zero;
+      var totalCredit = Decimal.zero;
 
       for (final report in trialBalance) {
         totalDebit += report.debit;
@@ -204,7 +199,7 @@ void main() {
       expect(totalDebit, totalCredit, reason: 'Trial Balance must be equal');
       expect(
         totalDebit,
-        1150.0,
+        Decimal.fromInt(1150),
         reason: 'Total movement should be 1150 (sum of debits) or '
             '1150 (sum of credits)',
       );
@@ -292,7 +287,11 @@ void main() {
 
         final balance = await reportingService.getTrialBalance();
         final cashAcc = balance.firstWhere((b) => b.account.id == 'acc-1101');
-        expect(cashAcc.balance, 500.0, reason: 'Cash should increase by 500');
+        expect(
+          cashAcc.balance,
+          Decimal.fromInt(500),
+          reason: 'Cash should increase by 500',
+        );
 
         // 2. Issue Payment (Dr Account, Cr Cash)
         final payment = FinancialVoucher(
@@ -315,7 +314,7 @@ void main() {
         );
         expect(
           cashAccUpdated.balance,
-          300.0,
+          Decimal.fromInt(300),
           reason: 'Cash should decrease to 300 (500-200)',
         );
       },
@@ -342,8 +341,7 @@ void main() {
           recordingDate: now,
         ),
         standards: const StandardsJustification(
-          standardReference:
-              'IFRS 2', // GAAP: Share-based Payment (Placeholder)
+          standardReference: 'IFRS 2', // GAAP: Share-based Payment (Placeholder)
           recognitionBasis: 'Accrual',
           measurementBasis: 'Historical Cost',
         ),
@@ -423,8 +421,7 @@ class InMemoryFinancialYearRepository implements FinancialYearRepository {
   }
 
   @override
-  Future<List<FinancialYear>> getAllFinancialYears() async =>
-      _years.values.toList();
+  Future<List<FinancialYear>> getAllFinancialYears() async => _years.values.toList();
 
   @override
   Future<void> saveFinancialYear(FinancialYear year) async {

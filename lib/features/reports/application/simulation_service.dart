@@ -15,28 +15,34 @@ import 'package:uuid/uuid.dart';
 
 part 'simulation_service.g.dart';
 
-/// خدمة محاكاة البيانات المالية (Financial Simulation Service)
+/// ***
+/// Cognitive Foundation: FinancialSimulationService
 ///
-/// تقوم بتوليد بيانات مالية واقعية لأغراض العرض والتجربة.
+/// High-fidelity financial simulation engine for institutional stress testing
+/// and demonstration.
+///
+/// Uses [Decimal] for all financial calculations to ensure precision during
+/// simulated institutional audits.
+/// ***
 @riverpod
 class FinancialSimulationService extends _$FinancialSimulationService {
   @override
   void build() {}
 
-  /// بذر بيانات عالية الدقة (High-Fidelity) في النظام.
+  /// Seeds high-fidelity institutional data into the system.
   Future<void> seedRealisticData() async {
     final accountingService = ref.read(accountingServiceProvider.notifier);
     final fyService = ref.read(financialYearServiceProvider.notifier);
     final customerRepo = ref.read(customerRepositoryProvider);
     const uuid = Uuid();
 
-    // 1. تهيئة السنة المالية ودليل الحسابات
+    // 1. Initialize Financial Year and COA
     await fyService.initializeDefaultYear();
     await accountingService.seedDefaultAccounts(
       country: AccountingCountry.saudiArabia,
     );
 
-    // 2. إضافة عملاء وهميين
+    // 2. Add synthetic customers
     final customerIds = <String>[];
     final names = [
       'شركة الأفق للتقنية',
@@ -60,17 +66,18 @@ class FinancialSimulationService extends _$FinancialSimulationService {
       customerIds.add(id);
     }
 
-    // 3. توليد عمليات مالية عبر الـ 60 يوماً الماضية
+    // 3. Generate transactions over the last 60 days
     final now = DateTime.now();
     final random = Random();
 
     for (var i = 60; i >= 0; i--) {
       final date = now.subtract(Duration(days: i));
 
-      // احتمال 40% لوجود فاتورة مبيعات في هذا اليوم
+      // 40% probability of a sales invoice
       if (random.nextDouble() < 0.4) {
-        final amount = 1000.0 + random.nextInt(5000);
-        final tax = amount * 0.15;
+        final rawAmount = 1000 + random.nextInt(5000);
+        final amount = Decimal.fromInt(rawAmount);
+        final tax = amount * Decimal.parse('0.15');
         final total = amount + tax;
 
         final invoice = Invoice(
@@ -84,19 +91,21 @@ class FinancialSimulationService extends _$FinancialSimulationService {
           updatedAt: DateTime.now(),
           subtotalAmount: amount,
           taxAmount: tax,
-          discountAmount: 0,
+          discountAmount: Decimal.zero,
+          discountRate: Decimal.zero,
           totalAmount: total,
-          paidAmount: 0,
-          taxRate: 15,
+          paidAmount: Decimal.zero,
+          taxRate: Decimal.parse('0.15'),
           status: InvoiceStatus.sent,
           items: [
             InvoiceItem(
               id: uuid.v4(),
               name: 'خدمات استشارية تقنية',
               description: 'خدمات استشارية تقنية',
-              quantity: 1,
+              quantity: Decimal.one,
               price: amount,
               total: amount,
+              taxAmount: tax,
             ),
           ],
         );
@@ -104,23 +113,27 @@ class FinancialSimulationService extends _$FinancialSimulationService {
         await accountingService.postSalesInvoice(invoice);
       }
 
-      // احتمال 30% لوجود مصروف في هذا اليوم
+      // 30% probability of a direct expense
       if (random.nextDouble() < 0.3) {
-        final expenseAmount = 200.0 + random.nextInt(1000);
-        await _postDirectExpense(date, expenseAmount, 'مصاريف تشغيلية دورية');
+        final expenseAmount = 200 + random.nextInt(1000);
+        await _postDirectExpense(
+          date,
+          Decimal.fromInt(expenseAmount),
+          'مصاريف تشغيلية دورية',
+        );
       }
     }
   }
 
   Future<void> _postDirectExpense(
     DateTime date,
-    double amount,
+    Decimal amount,
     String description,
   ) async {
     final accountingService = ref.read(accountingServiceProvider.notifier);
     final accounts = await accountingService.getAccounts();
 
-    // البحث عن حساب مصاريف وحساب نقدية
+    // Identify expense and cash accounts
     final expenseAccount = accounts.firstWhere(
       (a) => a.type == AccountType.expense,
     );
@@ -150,14 +163,14 @@ class FinancialSimulationService extends _$FinancialSimulationService {
         JournalEntryLine(
           accountId: expenseAccount.id,
           accountName: expenseAccount.nameAr,
-          debit: Decimal.parse(amount.toString()),
+          debit: amount,
           credit: Decimal.zero,
           description: description,
         ),
         JournalEntryLine(
           accountId: assetAccount.id,
           accountName: assetAccount.nameAr,
-          credit: Decimal.parse(amount.toString()),
+          credit: amount,
           debit: Decimal.zero,
           description: 'صرف من ${assetAccount.nameAr}',
         ),

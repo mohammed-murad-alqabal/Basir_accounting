@@ -7,9 +7,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reporting_service.g.dart';
 
-/// صف يمثل بيانات حساب في ميزان المراجعة
+/// Represents a standardized row in a Trial Balance report.
 class TrialBalanceRow {
-  /// إنشاء صف ميزان مراجعة جديد.
   const TrialBalanceRow({
     required this.accountId,
     required this.accountCode,
@@ -18,29 +17,35 @@ class TrialBalanceRow {
     required this.credit,
   });
 
-  /// معرف الحساب الفريد.
+  /// Unique identifier of the account.
   final String accountId;
 
-  /// كود الحساب.
+  /// Numerical code of the account (e.g., 101, 201).
   final String accountCode;
 
-  /// اسم الحساب.
+  /// Display name of the account.
   final String accountName;
 
-  /// الرصيد المدين.
+  /// Calculated debit balance.
   final Decimal debit;
 
-  /// الرصيد الدائن.
+  /// Calculated credit balance.
   final Decimal credit;
 }
 
-/// خدمة التقارير المالية (Reporting Service)
+/// Reporting Service for high-level financial intelligence and dashboarding.
+///
+/// Orchestrates the generation of Trial Balances, IFRS 18 Income Statements,
+/// Balance Sheets, and Direct-Method Cash Flow Statements.
 @riverpod
 class ReportingService extends _$ReportingService {
   @override
   void build() {}
 
-  /// توليد ميزان المراجعة (Trial Balance)
+  /// Generates a comprehensive Trial Balance.
+  ///
+  /// Computes hierarchical (rolled-up) balances for every account and
+  /// distributes them into Debit/Credit columns based on account nature.
   Future<List<TrialBalanceRow>> getTrialBalance() async {
     final accountingService = ref.read(accountingServiceProvider.notifier);
     final accounts = await accountingService.getAccounts();
@@ -48,30 +53,27 @@ class ReportingService extends _$ReportingService {
     final rows = <TrialBalanceRow>[];
 
     for (final account in accounts) {
-      // نحسب الرصيد الهيكلي (يشمل الحسابات الفرعية)
       final balance = await accountingService.getHierarchicalBalance(
         account.id,
       );
 
       if (balance != Decimal.zero) {
-        // إذا كان الحساب مدين بطبيعته
         if (account.nature == AccountNature.debit) {
           rows.add(
             TrialBalanceRow(
               accountId: account.id,
               accountCode: account.code,
-              accountName: account.nameAr,
+              accountName: account.nameEn,
               debit: balance > Decimal.zero ? balance : Decimal.zero,
               credit: balance < Decimal.zero ? -balance : Decimal.zero,
             ),
           );
         } else {
-          // إذا كان دائن
           rows.add(
             TrialBalanceRow(
               accountId: account.id,
               accountCode: account.code,
-              accountName: account.nameAr,
+              accountName: account.nameEn,
               debit: balance < Decimal.zero ? -balance : Decimal.zero,
               credit: balance > Decimal.zero ? balance : Decimal.zero,
             ),
@@ -83,7 +85,10 @@ class ReportingService extends _$ReportingService {
     return rows;
   }
 
-  /// توليد قائمة الدخل (Income Statement / P&L) - متوافقة مع IFRS 18
+  /// Generates an IFRS 18 compliant Income Statement (P&L).
+  ///
+  /// Automatically categorizes Revenue and Expense accounts into
+  /// Operating, Investing, and Financing sections.
   Future<Map<Ifrs18Category, Decimal>> getIncomeStatement() async {
     final accountingService = ref.read(accountingServiceProvider.notifier);
     final accounts = await accountingService.getAccounts();
@@ -96,18 +101,14 @@ class ReportingService extends _$ReportingService {
     };
 
     for (final account in accounts) {
-      // فقط حسابات الإيرادات والمصروفات
-      if (account.type == AccountType.revenue ||
-          account.type == AccountType.expense) {
-        // الحصول على الفئة من الحساب (مستقبلاً نحتاج إضافة هذا الحقل للحساب)
-        // حالياً سنفترض Operating كافتراضي إلا إذا كان هناك منطق آخر
+      if (account.type == AccountType.revenue || account.type == AccountType.expense) {
         final category = _detectIfrs18Category(account);
 
         final balance = await accountingService.getHierarchicalBalance(
           account.id,
         );
 
-        // في قائمة الدخل: الإيرادات (دائنة) موجبة، والمصروفات (مدينة) سالبة
+        // Performance Logic: Revenue (CR) adds to profit, Expense (DR) subtracts
         if (account.type == AccountType.revenue) {
           result[category] = (result[category] ?? Decimal.zero) + balance;
         } else {
@@ -119,7 +120,9 @@ class ReportingService extends _$ReportingService {
     return result;
   }
 
-  /// توليد الميزانية العمومية (Balance Sheet)
+  /// Generates a Balance Sheet summary (Statement of Financial Position).
+  ///
+  /// Aggregates top-level account hierarchies for Assets, Liabilities, and Equity.
   Future<Map<String, Decimal>> getBalanceSheet() async {
     final accountingService = ref.read(accountingServiceProvider.notifier);
     final accounts = await accountingService.getAccounts();
@@ -129,8 +132,6 @@ class ReportingService extends _$ReportingService {
     var equity = Decimal.zero;
 
     for (final account in accounts) {
-      // فقط الحسابات الرئيسية (المستوى 0)
-      // لتجنب التكرار عند جمع الأرصدة الهيكلية
       if (account.parentId == null) {
         final balance = await accountingService.getHierarchicalBalance(
           account.id,
@@ -145,7 +146,6 @@ class ReportingService extends _$ReportingService {
             equity += balance;
           case AccountType.revenue:
           case AccountType.expense:
-            // لا تدرج في الميزانية مباشرة
             break;
         }
       }
@@ -154,7 +154,10 @@ class ReportingService extends _$ReportingService {
     return {'assets': assets, 'liabilities': liabilities, 'equity': equity};
   }
 
-  /// توليد قائمة التدفقات النقدية (Cash Flow Statement) - الطريقة المباشرة
+  /// Generates a Direct-Method Cash Flow Statement.
+  ///
+  /// Analyzes posted journal entries that impact Cash/Bank accounts and
+  /// classifies them based on neighboring ledger lines.
   Future<Map<String, Decimal>> getCashFlowStatement() async {
     final accountingService = ref.read(accountingServiceProvider.notifier);
     final entries = await accountingService.getJournalEntries();
@@ -167,15 +170,10 @@ class ReportingService extends _$ReportingService {
     for (final entry in entries) {
       if (entry.status == JournalEntryStatus.posted) {
         for (final line in entry.lines) {
-          // إذا كان السطر يمس حساب "نقدية" أو "بنك"
           if (await _isCashAccount(line.accountId)) {
             final amount = line.debit - line.credit;
 
-            // نحدد نوع التدفق بناءً على الحسابات المقابلة في نفس القيد
-            // للتبسيط: نأخذ الحساب المقابل الأول
-            final otherLines = entry.lines
-                .where((l) => l.accountId != line.accountId)
-                .toList();
+            final otherLines = entry.lines.where((l) => l.accountId != line.accountId).toList();
 
             if (otherLines.isNotEmpty) {
               final category = await _detectCashFlowCategory(
@@ -205,12 +203,13 @@ class ReportingService extends _$ReportingService {
       'netOperating': operatingReceipts - operatingPayments,
       'investing': investingFlow,
       'financing': financingFlow,
-      'netChange':
-          operatingReceipts - operatingPayments + investingFlow + financingFlow,
+      'netChange': operatingReceipts - operatingPayments + investingFlow + financingFlow,
     };
   }
 
-  /// الحصول على مؤشرات الأداء المالي (FR-ACC-015)
+  /// Computes core Financial Health Indicators (Ratios).
+  ///
+  /// Includes Liquidity Ratios and Net Profit Margins for dashboarding.
   Future<Map<String, double>> getFinancialHealthIndicators() async {
     final balanceSheet = await getBalanceSheet();
     final incomeStatement = await getIncomeStatement();
@@ -218,12 +217,10 @@ class ReportingService extends _$ReportingService {
     final assets = balanceSheet['assets'] ?? Decimal.zero;
     final liabilities = balanceSheet['liabilities'] ?? Decimal.zero;
 
-    // 1. نسبة السيولة (Liquidity Ratio)
-    // حالياً نستخدم إجمالي الأصول/الالتزامات كتقريب حتى نفصل التداول
-    final liquidity =
-        liabilities != Decimal.zero ? (assets / liabilities).toDouble() : 0.0;
+    // 1. Current Ratio (Approximate)
+    final liquidity = liabilities != Decimal.zero ? (assets / liabilities).toDouble() : 0.0;
 
-    // 2. الربحية (Profitability / Net Margin)
+    // 2. Net Margin
     final revenue = incomeStatement.entries
         .where((e) => e.key == Ifrs18Category.operating)
         .fold(Decimal.zero, (prev, curr) => prev + curr.value);
@@ -233,52 +230,50 @@ class ReportingService extends _$ReportingService {
       (prev, curr) => prev + curr,
     );
 
-    final profitability =
-        revenue != Decimal.zero ? (netIncome / revenue).toDouble() : 0.0;
+    final profitability = revenue != Decimal.zero ? (netIncome / revenue).toDouble() : 0.0;
 
     return {
       'liquidity': liquidity,
       'profitability': profitability,
-      'operating_margin': profitability, // تقريب حالياً
+      'operating_margin': profitability,
     };
   }
 
+  /// Internal heuristic for IFRS 18 category detection.
   Ifrs18Category _detectIfrs18Category(Account account) {
-    // منطق تقريبي لتحديد الفئة بناءً على الاسم أو الكود
     if (account.nameEn.toLowerCase().contains('tax')) {
       return Ifrs18Category.incomeTax;
     }
     if (account.code.startsWith('44')) {
-      return Ifrs18Category.investing; // أملاك/استثمارات
+      return Ifrs18Category.investing;
     }
     if (account.code.startsWith('55')) {
-      return Ifrs18Category.financing; // فوائد تمويلية
+      return Ifrs18Category.financing;
     }
 
     return Ifrs18Category.operating;
   }
 
+  /// Verifies if an account qualifies as a Cash/Liquid Asset.
   Future<bool> _isCashAccount(String accountId) async {
     final accountingService = ref.read(accountingServiceProvider.notifier);
     final account = await accountingService.getAccountById(accountId);
     if (account == null) return false;
 
-    // حسابات النقدية والبنك عادة تبدأ بـ 11 في نظامنا
     return account.code.startsWith('11') ||
         account.nameEn.toLowerCase().contains('cash') ||
         account.nameEn.toLowerCase().contains('bank');
   }
 
+  /// Heuristic for cash flow classification (Operating/Investing/Financing).
   Future<String> _detectCashFlowCategory(String accountId) async {
     final accountingService = ref.read(accountingServiceProvider.notifier);
     final account = await accountingService.getAccountById(accountId);
     if (account == null) return 'operating';
 
-    // الأصول الثابتة -> استثماري
     if (account.code.startsWith('12') && account.type == AccountType.asset) {
       return 'investing';
     }
-    // القروض وحقوق الملكية -> تمويلي
     if (account.type == AccountType.equity || account.code.startsWith('22')) {
       return 'financing';
     }

@@ -9,7 +9,10 @@ import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة تقارير تعمير الديون (Aging Reports Screen)
+/// Screen for analyzing the age of outstanding debts and liabilities.
+///
+/// Categorizes Accounts Receivable and Accounts Payable into time buckets
+/// (e.g., 1-30 days, 31-60 days) to assess credit risk and liquidity.
 class AgingReportsScreen extends ConsumerWidget {
   /// Creates the aging reports screen.
   const AgingReportsScreen({super.key});
@@ -40,6 +43,7 @@ class AgingReportsScreen extends ConsumerWidget {
         ),
       );
 
+  /// Displays a modal with data export format options (PDF, CSV).
   Future<void> _showExportOptions(BuildContext context, WidgetRef ref) async {
     await showModalBottomSheet<void>(
       context: context,
@@ -69,6 +73,7 @@ class AgingReportsScreen extends ConsumerWidget {
     );
   }
 
+  /// Triggers the actual export generation and sharing workflow.
   Future<void> _exportReport(
     BuildContext context,
     WidgetRef ref, {
@@ -76,12 +81,9 @@ class AgingReportsScreen extends ConsumerWidget {
   }) async {
     try {
       final exportService = ref.read(reportExportServiceProvider.notifier);
-      final receivables = await ref
-          .read(accountsReceivableServiceProvider.notifier)
-          .getReceivablesAging();
-      final payables = await ref
-          .read(accountsPayableServiceProvider.notifier)
-          .getPayablesAging();
+      final receivables =
+          await ref.read(accountsReceivableServiceProvider.notifier).getReceivablesAging();
+      final payables = await ref.read(accountsPayableServiceProvider.notifier).getPayablesAging();
       if (!context.mounted) return;
 
       final headers = [
@@ -148,14 +150,13 @@ class AgingReportsScreen extends ConsumerWidget {
   }
 }
 
+/// Tab view for Accounts Receivable (AR) aging analysis.
 class _ReceivableAgingTab extends ConsumerWidget {
   const _ReceivableAgingTab();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final agingAsync = ref
-        .watch(accountsReceivableServiceProvider.notifier)
-        .getReceivablesAging();
+    final agingAsync = ref.watch(accountsReceivableServiceProvider.notifier).getReceivablesAging();
 
     return FutureBuilder<List<CustomerAging>>(
       future: agingAsync,
@@ -214,6 +215,7 @@ class _ReceivableAgingTab extends ConsumerWidget {
     );
   }
 
+  /// Builds a horizontal key-value row for an aging period.
   Widget _buildAgingRow(
     String label,
     dynamic value, {
@@ -226,26 +228,24 @@ class _ReceivableAgingTab extends ConsumerWidget {
           children: [
             Text(
               label,
-              style:
-                  isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
+              style: isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
             ),
             Text(
               '$value ر.س',
-              style:
-                  isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
+              style: isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
             ),
           ],
         ),
       );
 }
 
+/// Tab view for Accounts Payable (AP) aging analysis.
 class _PayableAgingTab extends ConsumerWidget {
   const _PayableAgingTab();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final agingAsync =
-        ref.watch(accountsPayableServiceProvider.notifier).getPayablesAging();
+    final agingAsync = ref.watch(accountsPayableServiceProvider.notifier).getPayablesAging();
 
     return FutureBuilder<List<SupplierAging>>(
       future: agingAsync,
@@ -303,6 +303,7 @@ class _PayableAgingTab extends ConsumerWidget {
     );
   }
 
+  /// Builds a horizontal key-value row for an aging period.
   Widget _buildAgingRow(
     String label,
     dynamic value, {
@@ -315,13 +316,11 @@ class _PayableAgingTab extends ConsumerWidget {
           children: [
             Text(
               label,
-              style:
-                  isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
+              style: isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
             ),
             Text(
               '$value ر.س',
-              style:
-                  isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
+              style: isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
             ),
           ],
         ),

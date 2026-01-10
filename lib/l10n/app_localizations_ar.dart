@@ -278,6 +278,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get btnDelete => 'حذف';
 
   @override
+  String get btnEdit => 'تعديل';
+
+  @override
   String get btnDone => 'تم';
 
   @override
@@ -1413,5 +1416,55 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelIncomeTax => 'ضريبة الدخل';
 
   @override
-  String get labelNetProfit => 'صافي الربح / الخسارة';
+  String get labelNetProfit => 'صافي الربح / الخساارة';
+
+  @override
+  String get labelInventoryItem => 'صنف من المخزون';
+
+  @override
+  String get hintSelectInventoryItem =>
+      'اختر صنفاً من المخزون لملء البيانات تلقائياً';
+
+  @override
+  String get labelTaxCategory => 'فئة الضريبة';
+
+  @override
+  String get labelSearchSku => 'بحث بالباركود / SKU';
+
+  @override
+  String get hintSearchSku => 'أدخل الكود واضغط Enter';
+
+  @override
+  String get msgItemNotFound => 'الصنف غير موجود';
+
+  @override
+  String get tooltipPrintReceipt => 'طباعة إيصال';
+
+  @override
+  String get tooltipReverseInvoice => 'إلغاء/عكس';
+
+  @override
+  String get titleReverseInvoice => 'عكس الفاتورة';
+
+  @override
+  String get msgConfirmReverseInvoice =>
+      'هل أنت متأكد من رغبتك في عكس هذه الفاتورة؟ سيتم إنشاء قيد عكسي في المحاسبة.';
+
+  @override
+  String get btnConfirmReverse => 'نعم، عكس الفاتورة';
+
+  @override
+  String get receiptTitleTaxInvoice => 'فاتورة ضريبية';
+
+  @override
+  String get receiptTitleSimplified => 'فاتورة ضريبية مبسطة';
+
+  @override
+  String get receiptFooterThanks => 'شكراً لزيارتكم';
+
+  @override
+  String get receiptFooterBrand => 'بصير - Basir Accounting';
+
+  @override
+  String get labelDiscount => 'الخصم';
 }

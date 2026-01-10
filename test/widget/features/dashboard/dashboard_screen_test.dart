@@ -6,6 +6,7 @@ import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_app/l10n/app_localizations.dart';
 import 'package:basir_app/shared/widgets/index.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,12 +36,13 @@ void main() {
           customerId: 'c1',
           customerName: 'أحمد محمد',
           items: [
-            const InvoiceItem(
+            InvoiceItem(
               id: 'i1',
               name: 'Test',
-              quantity: 1,
-              price: 1500,
-              total: 1500,
+              quantity: Decimal.one,
+              price: Decimal.fromInt(1500),
+              total: Decimal.fromInt(1500),
+              taxAmount: Decimal.zero,
             ),
           ],
           status: InvoiceStatus.paid,
@@ -48,12 +50,13 @@ void main() {
           dueDate: now.add(const Duration(days: 30)),
           createdAt: now,
           updatedAt: now,
-          taxRate: 0,
-          subtotalAmount: 1500,
-          taxAmount: 0,
-          totalAmount: 1500,
-          paidAmount: 1500,
-          discountAmount: 0,
+          taxRate: Decimal.zero,
+          subtotalAmount: Decimal.fromInt(1500),
+          taxAmount: Decimal.zero,
+          totalAmount: Decimal.fromInt(1500),
+          paidAmount: Decimal.fromInt(1500),
+          discountAmount: Decimal.zero,
+          discountRate: Decimal.zero,
         ),
         Invoice(
           id: '#002',
@@ -61,12 +64,13 @@ void main() {
           customerId: 'c2',
           customerName: 'سارة علي',
           items: [
-            const InvoiceItem(
+            InvoiceItem(
               id: 'i2',
               name: 'Test',
-              quantity: 1,
-              price: 2300,
-              total: 2300,
+              quantity: Decimal.one,
+              price: Decimal.fromInt(2300),
+              total: Decimal.fromInt(2300),
+              taxAmount: Decimal.zero,
             ),
           ],
           status: InvoiceStatus.sent,
@@ -74,12 +78,13 @@ void main() {
           dueDate: now.add(const Duration(days: 30)),
           createdAt: now.subtract(const Duration(minutes: 5)),
           updatedAt: now,
-          taxRate: 0,
-          subtotalAmount: 2300,
-          taxAmount: 0,
-          totalAmount: 2300,
-          paidAmount: 0,
-          discountAmount: 0,
+          taxRate: Decimal.zero,
+          subtotalAmount: Decimal.fromInt(2300),
+          taxAmount: Decimal.zero,
+          totalAmount: Decimal.fromInt(2300),
+          paidAmount: Decimal.zero,
+          discountAmount: Decimal.zero,
+          discountRate: Decimal.zero,
         ),
         Invoice(
           id: '#003',
@@ -87,12 +92,13 @@ void main() {
           customerId: 'c3',
           customerName: 'محمود حسن',
           items: [
-            const InvoiceItem(
+            InvoiceItem(
               id: 'i3',
               name: 'Test',
-              quantity: 1,
-              price: 1800,
-              total: 1800,
+              quantity: Decimal.one,
+              price: Decimal.fromInt(1800),
+              total: Decimal.fromInt(1800),
+              taxAmount: Decimal.zero,
             ),
           ],
           status: InvoiceStatus.overdue,
@@ -100,12 +106,13 @@ void main() {
           dueDate: now.subtract(const Duration(days: 1)),
           createdAt: now.subtract(const Duration(minutes: 10)),
           updatedAt: now,
-          taxRate: 0,
-          subtotalAmount: 1800,
-          taxAmount: 0,
-          totalAmount: 1800,
-          paidAmount: 0,
-          discountAmount: 0,
+          taxRate: Decimal.zero,
+          subtotalAmount: Decimal.fromInt(1800),
+          taxAmount: Decimal.zero,
+          totalAmount: Decimal.fromInt(1800),
+          paidAmount: Decimal.zero,
+          discountAmount: Decimal.zero,
+          discountRate: Decimal.zero,
         ),
       ];
 
@@ -123,12 +130,13 @@ void main() {
             dueDate: now,
             createdAt: now.subtract(Duration(hours: i)),
             updatedAt: now,
-            taxRate: 0,
-            subtotalAmount: 0,
-            taxAmount: 0,
-            totalAmount: 0,
-            paidAmount: 0,
-            discountAmount: 0,
+            taxRate: Decimal.zero,
+            subtotalAmount: Decimal.zero,
+            taxAmount: Decimal.zero,
+            totalAmount: Decimal.zero,
+            paidAmount: Decimal.zero,
+            discountAmount: Decimal.zero,
+            discountRate: Decimal.zero,
           ),
         );
       }
@@ -150,8 +158,7 @@ void main() {
       mockCustomerRepo.setCustomers(customers);
     });
 
-    Widget createTestWidget({Map<String, WidgetBuilder>? routes}) =>
-        ProviderScope(
+    Widget createTestWidget({Map<String, WidgetBuilder>? routes}) => ProviderScope(
           overrides: [
             invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepo),
             customerRepositoryProvider.overrideWithValue(mockCustomerRepo),

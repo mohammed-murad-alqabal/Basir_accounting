@@ -11,7 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:uuid/uuid.dart';
 
-/// نموذج بيانات لبند القيد في النموذج
+/// Transitory data model for an atomic journal line in the entry form.
 class _JournalLineDraft {
   _JournalLineDraft({
     this.accountId,
@@ -35,21 +35,22 @@ class _JournalLineDraft {
   Decimal? originalAmount;
 }
 
-/// شاشة إضافة قيد يدوي
+/// Advanced form Screen for manual and automated Journal Entry recording.
+///
+/// Ensures compliance with double-entry principles by enforcing balance checks.
+/// Supports multi-currency translations and statutory standard justifications.
 class JournalEntryFormScreen extends ConsumerStatefulWidget {
-  /// إنشاء الشاشة.
+  /// Creates the journal entry form screen.
   const JournalEntryFormScreen({super.key, this.entry});
 
-  /// القيد المحاسبي.
+  /// The optional entry to edit. If null, a new entry is created.
   final JournalEntry? entry;
 
   @override
-  ConsumerState<JournalEntryFormScreen> createState() =>
-      _JournalEntryFormScreenState();
+  ConsumerState<JournalEntryFormScreen> createState() => _JournalEntryFormScreenState();
 }
 
-class _JournalEntryFormScreenState
-    extends ConsumerState<JournalEntryFormScreen> {
+class _JournalEntryFormScreenState extends ConsumerState<JournalEntryFormScreen> {
   final _formKey = <credential-fixture><FormState>();
   final _descriptionController = TextEditingController();
   DateTime _date = DateTime.now();
@@ -85,8 +86,7 @@ class _JournalEntryFormScreenState
       }
       _standardReference = widget.entry!.standards.standardReference;
       _recognitionBasis = widget.entry!.standards.recognitionBasis ?? 'Manual';
-      _measurementBasis =
-          widget.entry!.standards.measurementBasis ?? 'Historical Cost';
+      _measurementBasis = widget.entry!.standards.measurementBasis ?? 'Historical Cost';
     }
   }
 
@@ -96,10 +96,14 @@ class _JournalEntryFormScreenState
     super.dispose();
   }
 
+  /// Total debit summation across all lines.
   Decimal get _totalDebit => _lines.fold(Decimal.zero, (s, l) => s + l.debit);
+
+  /// Total credit summation across all lines.
   Decimal get _totalCredit => _lines.fold(Decimal.zero, (s, l) => s + l.credit);
-  bool get _isBalanced =>
-      _totalDebit == _totalCredit && _totalDebit > Decimal.zero;
+
+  /// Validates the fundamental accounting equation: sum(debit) == sum(credit).
+  bool get _isBalanced => _totalDebit == _totalCredit && _totalDebit > Decimal.zero;
 
   @override
   Widget build(BuildContext context) {
@@ -129,9 +133,7 @@ class _JournalEntryFormScreenState
                   Expanded(
                     child: AppEnhancedButton(
                       label: context.l10n.btnSaveEntry,
-                      onPressed: _isLoading
-                          ? null
-                          : () => _saveEntry(JournalEntryStatus.draft),
+                      onPressed: _isLoading ? null : () => _saveEntry(JournalEntryStatus.draft),
                       isLoading: _isLoading,
                       type: AppEnhancedButtonType.secondary,
                       icon: appIcons.save,
@@ -141,9 +143,7 @@ class _JournalEntryFormScreenState
                   Expanded(
                     child: AppEnhancedButton(
                       label: context.l10n.btnPostEntry,
-                      onPressed: _isLoading
-                          ? null
-                          : () => _saveEntry(JournalEntryStatus.posted),
+                      onPressed: _isLoading ? null : () => _saveEntry(JournalEntryStatus.posted),
                       isLoading: _isLoading,
                       icon: appIcons.check,
                     ),
@@ -157,6 +157,7 @@ class _JournalEntryFormScreenState
     );
   }
 
+  /// Builds the metadata header (Date, Description, Standards).
   Widget _buildHeader(AppIcons appIcons) => AppCard(
         child: Column(
           children: [
@@ -226,6 +227,7 @@ class _JournalEntryFormScreenState
         ),
       );
 
+  /// Renders the section for managing double-entry atomic lines.
   Widget _buildLinesSection(AppIcons appIcons) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -241,8 +243,7 @@ class _JournalEntryFormScreenState
               ),
               IconButton(
                 icon: Icon(appIcons.addCircle, color: AppColors.primary),
-                onPressed: () =>
-                    setState(() => _lines.add(_JournalLineDraft())),
+                onPressed: () => setState(() => _lines.add(_JournalLineDraft())),
               ),
             ],
           ),
@@ -254,6 +255,7 @@ class _JournalEntryFormScreenState
         ],
       );
 
+  /// Renders a single journal line editor with account and currency support.
   Widget _buildLineItem(int index, AppIcons appIcons) {
     final line = _lines[index];
     return AppCard(
@@ -280,8 +282,7 @@ class _JournalEntryFormScreenState
             children: [
               Expanded(
                 child: AppTextField(
-                  initialValue:
-                      line.debit == Decimal.zero ? '' : line.debit.toString(),
+                  initialValue: line.debit == Decimal.zero ? '' : line.debit.toString(),
                   label: context.l10n.labelDebit,
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
@@ -297,8 +298,7 @@ class _JournalEntryFormScreenState
               const SizedBox(width: Spacing.md),
               Expanded(
                 child: AppTextField(
-                  initialValue:
-                      line.credit == Decimal.zero ? '' : line.credit.toString(),
+                  initialValue: line.credit == Decimal.zero ? '' : line.credit.toString(),
                   label: context.l10n.labelCredit,
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
@@ -329,14 +329,11 @@ class _JournalEntryFormScreenState
                       ),
                       onChanged: (v) {
                         setState(() {
-                          line.originalAmount =
-                              Decimal.tryParse(v) ?? Decimal.zero;
+                          line.originalAmount = Decimal.tryParse(v) ?? Decimal.zero;
                           if (line.exchangeRate != null) {
-                            final lcAmount =
-                                line.originalAmount! * line.exchangeRate!;
+                            final lcAmount = line.originalAmount! * line.exchangeRate!;
                             if (line.debit > Decimal.zero ||
-                                (line.debit == Decimal.zero &&
-                                    line.credit == Decimal.zero)) {
+                                (line.debit == Decimal.zero && line.credit == Decimal.zero)) {
                               line.debit = lcAmount;
                             } else {
                               line.credit = lcAmount;
@@ -356,14 +353,11 @@ class _JournalEntryFormScreenState
                       ),
                       onChanged: (v) {
                         setState(() {
-                          line.exchangeRate =
-                              Decimal.tryParse(v) ?? Decimal.one;
+                          line.exchangeRate = Decimal.tryParse(v) ?? Decimal.one;
                           if (line.originalAmount != null) {
-                            final lcAmount =
-                                line.originalAmount! * line.exchangeRate!;
+                            final lcAmount = line.originalAmount! * line.exchangeRate!;
                             if (line.debit > Decimal.zero ||
-                                (line.debit == Decimal.zero &&
-                                    line.credit == Decimal.zero)) {
+                                (line.debit == Decimal.zero && line.credit == Decimal.zero)) {
                               line.debit = lcAmount;
                             } else {
                               line.credit = lcAmount;
@@ -381,9 +375,7 @@ class _JournalEntryFormScreenState
             children: [
               TextButton.icon(
                 icon: Icon(
-                  line.originalCurrency == null
-                      ? appIcons.language
-                      : appIcons.edit,
+                  line.originalCurrency == null ? appIcons.language : appIcons.edit,
                   size: 16,
                 ),
                 label: Text(
@@ -401,6 +393,7 @@ class _JournalEntryFormScreenState
     );
   }
 
+  /// Displays the mathematical summary and balance validation.
   Widget _buildSummary() => AppCard(
         backgroundColor: _isBalanced
             ? AppColors.primary.withValues(alpha: 0.05)
@@ -414,9 +407,7 @@ class _JournalEntryFormScreenState
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  _isBalanced
-                      ? context.l10n.labelBalanced
-                      : context.l10n.labelUnbalanced,
+                  _isBalanced ? context.l10n.labelBalanced : context.l10n.labelUnbalanced,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: _isBalanced ? AppColors.success : AppColors.error,
@@ -451,6 +442,7 @@ class _JournalEntryFormScreenState
         ),
       );
 
+  /// Shows the platform-native date picker.
   Future<void> _selectDate(BuildContext context) async {
     final picked = await showDatePicker(
       context: context,
@@ -461,6 +453,7 @@ class _JournalEntryFormScreenState
     if (picked != null) setState(() => _date = picked);
   }
 
+  /// Validates and persists the entry to the General Ledger.
   Future<void> _saveEntry(JournalEntryStatus status) async {
     if (!_formKey.currentState!.validate()) return;
     if (!_isBalanced) {
@@ -477,8 +470,8 @@ class _JournalEntryFormScreenState
 
       final entry = JournalEntry(
         id: widget.entry?.id ?? const Uuid().v4(),
-        referenceNumber: widget.entry?.referenceNumber ??
-            'JE-${DateTime.now().millisecondsSinceEpoch}',
+        referenceNumber:
+            widget.entry?.referenceNumber ?? 'JE-${DateTime.now().millisecondsSinceEpoch}',
         date: _date,
         temporal: TemporalJustification(
           transactionDate: _date,
@@ -514,9 +507,7 @@ class _JournalEntryFormScreenState
             .toList(),
       );
 
-      await ref
-          .read(accountingServiceProvider.notifier)
-          .postJournalEntry(entry);
+      await ref.read(accountingServiceProvider.notifier).postJournalEntry(entry);
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -539,6 +530,7 @@ class _JournalEntryFormScreenState
     }
   }
 
+  /// Displays the modal for multi-currency selection and exchange rate setup.
   Future<void> _showCurrencyPicker(int index) async {
     final line = _lines[index];
     final result = await showDialog<String>(
@@ -577,9 +569,7 @@ class _JournalEntryFormScreenState
           line.originalAmount = null;
         } else {
           line.originalCurrency = result;
-          // Set some default rates for demo
-          line.exchangeRate =
-              result == 'USD' ? Decimal.parse('3.75') : Decimal.one;
+          line.exchangeRate = result == 'USD' ? Decimal.parse('3.75') : Decimal.one;
           if (line.debit > Decimal.zero) {
             line.originalAmount = line.debit;
           } else if (line.credit > Decimal.zero) {
@@ -591,6 +581,7 @@ class _JournalEntryFormScreenState
   }
 }
 
+/// Specialized internal selector for filtering leaf accounts from the COA.
 class _AccountSelector extends ConsumerWidget {
   const _AccountSelector({
     required this.selectedAccountId,
@@ -602,15 +593,13 @@ class _AccountSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountsAsync =
-        ref.watch(accountingServiceProvider.notifier).getAccounts();
+    final accountsAsync = ref.watch(accountingServiceProvider.notifier).getAccounts();
 
     return FutureBuilder<List<Account>>(
       future: accountsAsync,
       builder: (context, snapshot) {
         if (!snapshot.hasData) return const LinearProgressIndicator();
 
-        // Only show leaf accounts (isParent == false)
         final leafAccounts = snapshot.data!.where((a) => !a.isParent).toList();
 
         return DropdownButtonFormField<String>(
@@ -627,8 +616,10 @@ class _AccountSelector extends ConsumerWidget {
               )
               .toList(),
           onChanged: (id) {
-            final acc = leafAccounts.firstWhere((a) => a.id == id);
-            onSelected(acc);
+            if (id != null) {
+              final acc = leafAccounts.firstWhere((a) => a.id == id);
+              onSelected(acc);
+            }
           },
           validator: (v) => v == null ? context.l10n.labelRequired : null,
         );

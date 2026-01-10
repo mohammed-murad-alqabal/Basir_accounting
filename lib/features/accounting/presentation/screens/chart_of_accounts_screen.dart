@@ -12,14 +12,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-/// حالة توسيع شجرة الحسابات.
+/// Provider tracking the expansion state of hierarchical accounts in the tree view.
 final expandedAccountsProvider = StateProvider<Set<String>>(
   (ref) => <String>{},
 );
 
-/// شاشة عرض دليل الحسابات (Chart of Accounts) بنظام هرمي.
+/// Interactive screen for browsing and managing the hierarchical Chart of Accounts (COA).
+///
+/// Features a searchable tree structure, multi-standard support (IFRS/ZATCA/FTA),
+/// and real-time hierarchical balance roll-ups.
 class ChartOfAccountsScreen extends ConsumerWidget {
-  /// إنشاء شاشة دليل الحسابات.
+  /// Creates the Chart of Accounts screen.
   const ChartOfAccountsScreen({super.key});
 
   @override
@@ -41,9 +44,7 @@ class ChartOfAccountsScreen extends ConsumerWidget {
             icon: Icon(appIcons.refresh),
             tooltip: context.l10n.tooltipRefresh,
             onPressed: () async {
-              await ref
-                  .read(accountingServiceProvider.notifier)
-                  .seedDefaultAccounts();
+              await ref.read(accountingServiceProvider.notifier).seedDefaultAccounts();
             },
           ),
         ],
@@ -104,6 +105,7 @@ class ChartOfAccountsScreen extends ConsumerWidget {
     );
   }
 
+  /// Renders a placeholder when No accounts are available.
   Widget _buildEmptyState(BuildContext context) => Center(
         child: Padding(
           padding: const EdgeInsets.all(Spacing.xl),
@@ -115,6 +117,7 @@ class ChartOfAccountsScreen extends ConsumerWidget {
         ),
       );
 
+  /// Performs a depth-first traversal to flatten the tree for ListView rendering.
   List<Account> _buildDisplayList(List<Account> all, Set<String> expandedIds) {
     final roots = all.where((a) => a.parentId == null).toList();
     roots.sort((a, b) => a.code.compareTo(b.code));
@@ -126,6 +129,7 @@ class ChartOfAccountsScreen extends ConsumerWidget {
     return result;
   }
 
+  /// Appends children to the display list if their parent is marked as expanded.
   void _addChildrenRecursive(
     Account account,
     List<Account> all,
@@ -142,6 +146,7 @@ class ChartOfAccountsScreen extends ConsumerWidget {
     }
   }
 
+  /// Calculates the visual indentation depth based on COA lineage.
   int _getDepth(Account account, List<Account> all) {
     var depth = 0;
     var current = account;
@@ -152,6 +157,7 @@ class ChartOfAccountsScreen extends ConsumerWidget {
     return depth;
   }
 
+  /// Aggregates the balances of all recursive descendants for grouping accounts.
   Decimal _calculateHierarchicalBalance(Account account, List<Account> all) {
     var total = account.balance;
     final children = all.where((a) => a.parentId == account.id);
@@ -161,6 +167,7 @@ class ChartOfAccountsScreen extends ConsumerWidget {
     return total;
   }
 
+  /// Displays the export destination picker (PDF/CSV).
   Future<void> _showExportOptions(BuildContext context, WidgetRef ref) async {
     await showModalBottomSheet<void>(
       context: context,
@@ -190,6 +197,7 @@ class ChartOfAccountsScreen extends ConsumerWidget {
     );
   }
 
+  /// Generates and shares the Chart of Accounts in the requested format.
   Future<void> _exportReport(
     BuildContext context,
     WidgetRef ref, {
@@ -250,6 +258,7 @@ class ChartOfAccountsScreen extends ConsumerWidget {
     }
   }
 
+  /// Returns the RTL/LTR localized string for an [AccountType].
   String _getLocalizedTypeName(BuildContext context, AccountType type) {
     switch (type) {
       case AccountType.asset:
@@ -266,7 +275,9 @@ class ChartOfAccountsScreen extends ConsumerWidget {
   }
 }
 
+/// Visual component representing a single node in the COA tree.
 class _AccountTreeItem extends StatelessWidget {
+  /// Creates an account tree item.
   const _AccountTreeItem({
     required this.account,
     required this.depth,
@@ -275,10 +286,19 @@ class _AccountTreeItem extends StatelessWidget {
     required this.onToggle,
   });
 
+  /// The underlying account entity.
   final Account account;
+
+  /// Indentation depth (0-based level).
   final int depth;
+
+  /// Aggregated roll-up balance.
   final Decimal balance;
+
+  /// Expansion state for grouping accounts.
   final bool isExpanded;
+
+  /// Callback to toggle expansion state.
   final VoidCallback onToggle;
 
   @override
@@ -306,9 +326,7 @@ class _AccountTreeItem extends StatelessWidget {
                       Text(
                         '${account.code} - ${account.nameAr}',
                         style: TextStyle(
-                          fontWeight: account.isParent
-                              ? FontWeight.bold
-                              : FontWeight.w600,
+                          fontWeight: account.isParent ? FontWeight.bold : FontWeight.w600,
                           fontSize: account.isParent
                               ? AppTypography.titleMedium
                               : AppTypography.bodyLarge,
@@ -327,9 +345,7 @@ class _AccountTreeItem extends StatelessWidget {
                   _formatCurrency(balance),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: balance < Decimal.zero
-                        ? AppColors.error
-                        : AppColors.success,
+                    color: balance < Decimal.zero ? AppColors.error : AppColors.success,
                   ),
                 ),
               ],
@@ -338,6 +354,7 @@ class _AccountTreeItem extends StatelessWidget {
         ),
       );
 
+  /// Renders expansion indicators or account type markers.
   Widget _buildLeading(BuildContext context) {
     if (account.isParent) {
       return Icon(
@@ -366,6 +383,7 @@ class _AccountTreeItem extends StatelessWidget {
     );
   }
 
+  /// Returns the standardized thematic color for a specific [AccountType].
   Color _getColorForType(AccountType type) {
     switch (type) {
       case AccountType.asset:
@@ -381,6 +399,7 @@ class _AccountTreeItem extends StatelessWidget {
     }
   }
 
+  /// Formats currency values for display with 2 decimal precision.
   String _formatCurrency(Decimal amount) {
     final formatter = NumberFormat.currency(symbol: '', decimalDigits: 2);
     return formatter.format(amount.toDouble());

@@ -1,42 +1,43 @@
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('InvoiceItem Tests', () {
     test('should create InvoiceItem with all properties', () {
       // Arrange & Act
-      const item = InvoiceItem(
+      final item = InvoiceItem(
         id: 'item-1',
         name: 'خدمة استشارية',
-        quantity: 2,
-        price: 500,
-        total: 1000,
-        taxAmount: 150,
+        quantity: Decimal.fromInt(2),
+        price: Decimal.fromInt(500),
+        total: Decimal.fromInt(1000),
+        taxAmount: Decimal.fromInt(150),
       );
 
       // Assert
       expect(item.id, 'item-1');
       expect(item.name, 'خدمة استشارية');
-      expect(item.quantity, 2.0);
-      expect(item.price, 500.0);
-      expect(item.total, 1000.0);
-      expect(item.taxAmount, 150.0);
+      expect(item.quantity, Decimal.fromInt(2));
+      expect(item.price, Decimal.fromInt(500));
+      expect(item.total, Decimal.fromInt(1000));
+      expect(item.taxAmount, Decimal.fromInt(150));
     });
 
     test('should hold correct total', () {
       // Arrange
-      const item = InvoiceItem(
+      final item = InvoiceItem(
         id: 'item-1',
         name: 'خدمة',
-        quantity: 3,
-        price: 250,
-        total: 750,
-        taxAmount: 112.5,
+        quantity: Decimal.fromInt(3),
+        price: Decimal.fromInt(250),
+        total: Decimal.fromInt(750),
+        taxAmount: Decimal.parse('112.5'),
       );
 
       // Assert
-      expect(item.total, 750.0);
+      expect(item.total, Decimal.fromInt(750));
     });
   });
 
@@ -56,27 +57,28 @@ void main() {
         invoiceNumber: 'INV-001',
         customerId: 'customer-1',
         customerName: 'أحمد محمد',
-        items: const [
+        items: [
           InvoiceItem(
             id: 'item-1',
             name: 'خدمة',
-            quantity: 2,
-            price: 500,
-            total: 1000,
-            taxAmount: 150,
+            quantity: Decimal.fromInt(2),
+            price: Decimal.fromInt(500),
+            total: Decimal.fromInt(1000),
+            taxAmount: Decimal.fromInt(150),
           ),
         ],
         issuedDate: now,
         dueDate: dueDate,
-        taxRate: 0.15,
+        taxRate: Decimal.parse('0.15'),
         status: InvoiceStatus.sent,
         createdAt: now,
         updatedAt: now,
-        subtotalAmount: 1000,
-        taxAmount: 150,
-        totalAmount: 1150,
-        paidAmount: 0,
-        discountAmount: 0,
+        subtotalAmount: Decimal.fromInt(1000),
+        taxAmount: Decimal.fromInt(150),
+        totalAmount: Decimal.fromInt(1150),
+        paidAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
       );
 
       // Assert
@@ -84,9 +86,9 @@ void main() {
       expect(invoice.customerId, 'customer-1');
       expect(invoice.customerName, 'أحمد محمد');
       expect(invoice.items.length, 1);
-      expect(invoice.taxRate, 0.15);
+      expect(invoice.taxRate, Decimal.parse('0.15'));
       expect(invoice.status, InvoiceStatus.sent);
-      expect(invoice.totalAmount, 1150.0);
+      expect(invoice.totalAmount, Decimal.fromInt(1150));
     });
 
     test('should hold correct subtotal with single item', () {
@@ -96,31 +98,32 @@ void main() {
         invoiceNumber: 'INV-001',
         customerId: 'customer-1',
         customerName: 'أحمد',
-        items: const [
+        items: [
           InvoiceItem(
             id: 'item-1',
             name: 'خدمة',
-            quantity: 2,
-            price: 500,
-            total: 1000,
-            taxAmount: 150,
+            quantity: Decimal.fromInt(2),
+            price: Decimal.fromInt(500),
+            total: Decimal.fromInt(1000),
+            taxAmount: Decimal.fromInt(150),
           ),
         ],
         issuedDate: now,
         dueDate: dueDate,
-        taxRate: 0.15,
+        taxRate: Decimal.parse('0.15'),
         status: InvoiceStatus.sent,
         createdAt: now,
         updatedAt: now,
-        subtotalAmount: 1000,
-        taxAmount: 150,
-        totalAmount: 1150,
-        paidAmount: 0,
-        discountAmount: 0,
+        subtotalAmount: Decimal.fromInt(1000),
+        taxAmount: Decimal.fromInt(150),
+        totalAmount: Decimal.fromInt(1150),
+        paidAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
       );
 
       // Assert
-      expect(invoice.subtotalAmount, 1000.0);
+      expect(invoice.subtotalAmount, Decimal.fromInt(1000));
     });
 
     test('should hold correct tax total', () {
@@ -130,31 +133,32 @@ void main() {
         invoiceNumber: 'INV-001',
         customerId: 'customer-1',
         customerName: 'أحمد',
-        items: const [
+        items: [
           InvoiceItem(
             id: 'item-1',
             name: 'خدمة',
-            quantity: 2,
-            price: 500,
-            total: 1000,
-            taxAmount: 150,
+            quantity: Decimal.fromInt(2),
+            price: Decimal.fromInt(500),
+            total: Decimal.fromInt(1000),
+            taxAmount: Decimal.fromInt(150),
           ),
         ],
         issuedDate: now,
         dueDate: dueDate,
-        taxRate: 0.15,
+        taxRate: Decimal.parse('0.15'),
         status: InvoiceStatus.sent,
         createdAt: now,
         updatedAt: now,
-        subtotalAmount: 1000,
-        taxAmount: 150,
-        totalAmount: 1150,
-        paidAmount: 0,
-        discountAmount: 0,
+        subtotalAmount: Decimal.fromInt(1000),
+        taxAmount: Decimal.fromInt(150),
+        totalAmount: Decimal.fromInt(1150),
+        paidAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
       );
 
       // Assert
-      expect(invoice.taxAmount, 150.0); // 1000 * 0.15
+      expect(invoice.taxAmount, Decimal.fromInt(150)); // 1000 * 0.15
     });
 
     test('should hold correct grand total', () {
@@ -164,31 +168,32 @@ void main() {
         invoiceNumber: 'INV-001',
         customerId: 'customer-1',
         customerName: 'أحمد',
-        items: const [
+        items: [
           InvoiceItem(
             id: 'item-1',
             name: 'خدمة',
-            quantity: 2,
-            price: 500,
-            total: 1000,
-            taxAmount: 150,
+            quantity: Decimal.fromInt(2),
+            price: Decimal.fromInt(500),
+            total: Decimal.fromInt(1000),
+            taxAmount: Decimal.fromInt(150),
           ),
         ],
         issuedDate: now,
         dueDate: dueDate,
-        taxRate: 0.15,
+        taxRate: Decimal.parse('0.15'),
         status: InvoiceStatus.sent,
         createdAt: now,
         updatedAt: now,
-        subtotalAmount: 1000,
-        taxAmount: 150,
-        totalAmount: 1150,
-        paidAmount: 0,
-        discountAmount: 0,
+        subtotalAmount: Decimal.fromInt(1000),
+        taxAmount: Decimal.fromInt(150),
+        totalAmount: Decimal.fromInt(1150),
+        paidAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
       );
 
       // Assert
-      expect(invoice.totalAmount, 1150.0); // 1000 + 150
+      expect(invoice.totalAmount, Decimal.fromInt(1150)); // 1000 + 150
     });
 
     test('should support optional notes', () {
@@ -198,27 +203,28 @@ void main() {
         invoiceNumber: 'INV-001',
         customerId: 'customer-1',
         customerName: 'أحمد',
-        items: const [
+        items: [
           InvoiceItem(
             id: 'item-1',
             name: 'خدمة',
-            quantity: 1,
-            price: 100,
-            total: 100,
-            taxAmount: 15,
+            quantity: Decimal.one,
+            price: Decimal.fromInt(100),
+            total: Decimal.fromInt(100),
+            taxAmount: Decimal.fromInt(15),
           ),
         ],
         issuedDate: now,
         dueDate: dueDate,
-        taxRate: 0.15,
+        taxRate: Decimal.parse('0.15'),
         status: InvoiceStatus.sent,
         createdAt: now,
         updatedAt: now,
-        subtotalAmount: 100,
-        taxAmount: 15,
-        totalAmount: 115,
-        paidAmount: 0,
-        discountAmount: 0,
+        subtotalAmount: Decimal.fromInt(100),
+        taxAmount: Decimal.fromInt(15),
+        totalAmount: Decimal.fromInt(115),
+        paidAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
         notes: 'شروط الدفع: 30 يوم',
       );
 
@@ -233,27 +239,28 @@ void main() {
         invoiceNumber: 'INV-001',
         customerId: 'customer-1',
         customerName: 'أحمد',
-        items: const [
+        items: [
           InvoiceItem(
             id: 'item-1',
             name: 'خدمة',
-            quantity: 1,
-            price: 100,
-            total: 100,
-            taxAmount: 15,
+            quantity: Decimal.one,
+            price: Decimal.fromInt(100),
+            total: Decimal.fromInt(100),
+            taxAmount: Decimal.fromInt(15),
           ),
         ],
         issuedDate: now,
         dueDate: dueDate,
-        taxRate: 0.15,
+        taxRate: Decimal.parse('0.15'),
         status: InvoiceStatus.draft,
         createdAt: now,
         updatedAt: now,
-        subtotalAmount: 100,
-        taxAmount: 15,
-        totalAmount: 115,
-        paidAmount: 0,
-        discountAmount: 0,
+        subtotalAmount: Decimal.fromInt(100),
+        taxAmount: Decimal.fromInt(15),
+        totalAmount: Decimal.fromInt(115),
+        paidAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
       );
 
       // Act

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/core/providers.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:basir_app/features/accounting/application/reporting_service.dart';
 import 'package:basir_app/features/reports/application/report_export_service.dart';
 import 'package:basir_app/shared/widgets/index.dart';
@@ -10,17 +11,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
 
-/// شاشة قائمة التدفقات النقدية (Cash Flow Statement Screen)
-/// تعرض التدفقات النقدية الداخلة والخارجة مقسمة حسب الأنشطة
-/// (تشغيلية، استثمارية، تمويلية).
+/// Screen presenting the Statement of Cash Flows (Direct Method).
+///
+/// Categorizes cash inflows and outflows into Operating, Investing,
+/// and Financing activities to reveal the entity's actual liquidity
+/// movements and cash-generating capacity.
 class CashFlowScreen extends ConsumerWidget {
-  /// إنشاء شاشة قائمة التدفقات النقدية.
+  /// Creates the cash flow statement screen.
   const CashFlowScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cashFlowAsync =
-        ref.watch(reportingServiceProvider.notifier).getCashFlowStatement();
+    final cashFlowAsync = ref.watch(reportingServiceProvider.notifier).getCashFlowStatement();
 
     return Scaffold(
       appBar: AppAppBar(
@@ -37,7 +39,7 @@ class CashFlowScreen extends ConsumerWidget {
         future: cashFlowAsync,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: AppLoadingIndicator());
           }
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -45,31 +47,31 @@ class CashFlowScreen extends ConsumerWidget {
 
           final data = snapshot.data!;
           return ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(Spacing.md),
             children: [
               _buildSection(context.l10n.labelOperating, [
-                _buildRow('المقبوضات التشغيلية', data['operatingReceipts']!),
-                _buildRow('المدفوعات التشغيلية', -data['operatingPayments']!),
+                _buildRow('Operating Receipts', data['operatingReceipts']!),
+                _buildRow('Operating Payments', -data['operatingPayments']!),
                 _buildTotalRow(
-                  'صافي التدفقات من الأنشطة التشغيلية',
+                  'Net Cash from Operating Activities',
                   data['netOperating']!,
                 ),
               ]),
-              const SizedBox(height: 24),
+              const SizedBox(height: Spacing.lg),
               _buildSection(context.l10n.labelInvesting, [
                 _buildTotalRow(
-                  'صافي التدفقات من الأنشطة الاستثمارية',
+                  'Net Cash from Investing Activities',
                   data['investing']!,
                 ),
               ]),
-              const SizedBox(height: 24),
+              const SizedBox(height: Spacing.lg),
               _buildSection(context.l10n.labelFinancing, [
                 _buildTotalRow(
-                  'صافي التدفقات من الأنشطة التمويلية',
+                  'Net Cash from Financing Activities',
                   data['financing']!,
                 ),
               ]),
-              const Divider(height: 48),
+              const Divider(height: Spacing.xl),
               _buildTotalRow(
                 context.l10n.labelNetCashFlow,
                 data['netChange']!,
@@ -82,6 +84,7 @@ class CashFlowScreen extends ConsumerWidget {
     );
   }
 
+  /// Displays the modal for choosing the export format (PDF/CSV).
   Future<void> _showExportOptions(BuildContext context, WidgetRef ref) async {
     await showModalBottomSheet<void>(
       context: context,
@@ -111,15 +114,14 @@ class CashFlowScreen extends ConsumerWidget {
     );
   }
 
+  /// Triggers the actual statutory export generation and sharing workflow.
   Future<void> _exportReport(
     BuildContext context,
     WidgetRef ref, {
     required bool asPdf,
   }) async {
     try {
-      final dataMap = await ref
-          .read(reportingServiceProvider.notifier)
-          .getCashFlowStatement();
+      final dataMap = await ref.read(reportingServiceProvider.notifier).getCashFlowStatement();
       if (!context.mounted) return;
 
       final exportService = ref.read(reportExportServiceProvider.notifier);
@@ -159,6 +161,7 @@ class CashFlowScreen extends ConsumerWidget {
     }
   }
 
+  /// Renders a thematic section for a specific cash flow activity category.
   Widget _buildSection(String title, List<Widget> children) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -166,9 +169,9 @@ class CashFlowScreen extends ConsumerWidget {
             title,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: Spacing.sm),
           AppCard(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(Spacing.md),
             child: Column(children: children),
           ),
         ],
@@ -182,15 +185,16 @@ class CashFlowScreen extends ConsumerWidget {
             Text(label),
             Text(
               '$value',
-              style: TextStyle(color: value < Decimal.zero ? Colors.red : null),
+              style: TextStyle(
+                color: value < Decimal.zero ? AppColors.error : null,
+              ),
             ),
           ],
         ),
       );
 
-  Widget _buildTotalRow(String label, Decimal value, {bool isMain = false}) =>
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+  Widget _buildTotalRow(String label, Decimal value, {bool isMain = false}) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: Spacing.sm),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -206,7 +210,7 @@ class CashFlowScreen extends ConsumerWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: isMain ? 18 : null,
-                color: value < Decimal.zero ? Colors.red : Colors.green,
+                color: value < Decimal.zero ? AppColors.error : AppColors.success,
               ),
             ),
           ],

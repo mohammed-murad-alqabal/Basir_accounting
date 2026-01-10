@@ -7,33 +7,13 @@ import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة الإعداد الأولي
+/// ***
+/// Cognitive Foundation: SetupScreen
 ///
-/// تسمح للمستخدم بإنشاء حساب جديد في التطبيق
-/// للمرة الأولى
-///
-/// Features:
-/// - نموذج إنشاء حساب مع التحقق من الصحة
-/// - حقل اسم المستخدم (3 أحرف على الأقل)
-/// - حقل كلمة المرور (6 أحرف على الأقل)
-/// - حقل تأكيد كلمة المرور
-/// - التحقق من تطابق كلمات المرور
-/// - زر إنشاء الحساب مع حالة تحميل
-/// - رابط للانتقال إلى شاشة تسجيل الدخول
-///
-/// Validation:
-/// - اسم المستخدم: 3 أحرف على الأقل
-/// - كلمة المرور: 6 أحرف على الأقل
-/// - تأكيد كلمة المرور: يجب أن يطابق كلمة المرور
-///
-/// Navigation:
-/// - عند النجاح: ينتقل إلى /dashboard
-/// - رابط إلى: /login (تسجيل الدخول)
-///
-/// Example:
-/// ```dart
-/// Navigator.pushNamed(context, '/setup',);
-/// ```
+/// The orchestration interface for initial institutional identity creation.
+/// Enforces high-entropy credential standards and validates cryptographic
+/// consistency before establishing the local security context.
+/// ***
 class SetupScreen extends ConsumerStatefulWidget {
   /// إنشاء شاشة الإعداد الأولي
   const SetupScreen({super.key});

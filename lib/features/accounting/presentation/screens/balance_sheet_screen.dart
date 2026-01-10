@@ -7,17 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
 
-/// شاشة الميزانية العمومية (Balance Sheet Screen)
-/// تعرض حالة الأصول والالتزامات وحقوق الملكية.
+/// Screen presenting the Statement of Financial Position (Balance Sheet).
+///
+/// Provides a point-in-time snapshot of the entity's Assets, Liabilities,
+/// and Equity, ensuring the fundamental identity (Assets = Liabilities + Equity)
+/// is visually enforced through hierarchical groups.
 class BalanceSheetScreen extends ConsumerWidget {
-  /// إنشاء شاشة الميزانية العمومية.
+  /// Creates the balance sheet screen.
   const BalanceSheetScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final balanceSheetAsync = ref
-        .watch(financialStatementServiceProvider.notifier)
-        .generateBalanceSheet(DateTime.now());
+    final balanceSheetAsync =
+        ref.watch(financialStatementServiceProvider.notifier).generateBalanceSheet(DateTime.now());
 
     final currencyFormatter = intl.NumberFormat.currency(
       symbol: '',
@@ -86,9 +88,7 @@ class BalanceSheetScreen extends ConsumerWidget {
                         Text(
                           line.label,
                           style: AppTextStyles.bodyLarge.copyWith(
-                            fontWeight: line.isTotal
-                                ? FontWeight.bold
-                                : FontWeight.normal,
+                            fontWeight: line.isTotal ? FontWeight.bold : FontWeight.normal,
                           ),
                         ),
                         Text(
@@ -110,6 +110,7 @@ class BalanceSheetScreen extends ConsumerWidget {
     );
   }
 
+  /// Triggers the statutory export workflow for the Balance Sheet.
   Future<void> _exportReport(BuildContext context, WidgetRef ref) async {
     ScaffoldMessenger.of(
       context,

@@ -11,7 +11,9 @@ class InventoryItemModel {
   InventoryItemModel();
 
   /// إنشاء نموذج صنف مخزون من كيان
-  factory InventoryItemModel.fromEntity(InventoryItem item) =>
+  factory InventoryItemModel.fromEntity(
+    InventoryItem item,
+  ) =>
       InventoryItemModel()
         ..id = item.id
         ..nameAr = item.nameAr
@@ -33,7 +35,8 @@ class InventoryItemModel {
         ..isDeleted = item.isDeleted
         ..createdAt = item.createdAt
         ..updatedAt = item.updatedAt
-        ..userId = item.userId;
+        ..userId = item.userId
+        ..taxCategory = item.taxCategory;
 
   /// معرف Isar التلقائي
   Id? isarId;
@@ -106,6 +109,9 @@ class InventoryItemModel {
   /// معرف المستخدم
   String? userId;
 
+  /// فئة الضريبة
+  late String taxCategory;
+
   /// تحويل النموذج إلى كيان
   InventoryItem toEntity() => InventoryItem(
         id: id ?? '',
@@ -129,5 +135,6 @@ class InventoryItemModel {
         createdAt: createdAt,
         updatedAt: updatedAt,
         userId: userId,
+        taxCategory: taxCategory,
       );
 }

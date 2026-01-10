@@ -18,16 +18,14 @@ Future<void> closePeriod({required String id, required String userId}) =>
 Future<List<PeriodDto>> listPeriods() =>
     RustLib.instance.api.crateApiCalendarListPeriods();
 
-Future<String> closeFinancialYear({
-  required String periodId,
-  required String closingDate,
-  required String retainedEarningsAccountId,
-}) =>
+Future<String> closeFinancialYear(
+        {required String periodId,
+        required String closingDate,
+        required String retainedEarningsAccountId}) =>
     RustLib.instance.api.crateApiCalendarCloseFinancialYear(
-      periodId: periodId,
-      closingDate: closingDate,
-      retainedEarningsAccountId: retainedEarningsAccountId,
-    );
+        periodId: periodId,
+        closingDate: closingDate,
+        retainedEarningsAccountId: retainedEarningsAccountId);
 
 class PeriodDto {
   final String? id;

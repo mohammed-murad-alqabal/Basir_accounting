@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
 
-/// شاشة قائمة الدخل (Income Statement Screen)
-/// تعرض الأرباح والخسائر مصنفة وفق معايير IFRS 18.
+/// Screen for displaying the Statement of Profit or Loss (Income Statement).
+///
+/// Implements the structured presentation requirements of IFRS 18,
+/// categorizing performance into Operating, Investing, and Financing activities.
 class IncomeStatementScreen extends ConsumerWidget {
-  /// إنشاء شاشة قائمة الدخل.
+  /// Creates the income statement screen.
   const IncomeStatementScreen({super.key});
 
   @override
@@ -86,17 +88,14 @@ class IncomeStatementScreen extends ConsumerWidget {
                     Text(
                       line.label,
                       style: AppTextStyles.bodyLarge.copyWith(
-                        fontWeight:
-                            line.isTotal ? FontWeight.bold : FontWeight.normal,
+                        fontWeight: line.isTotal ? FontWeight.bold : FontWeight.normal,
                       ),
                     ),
                     Text(
                       currencyFormatter.format(line.amount.toDouble()),
                       style: AppTextStyles.bodyLarge.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: line.amount >= Decimal.zero
-                            ? AppColors.success
-                            : AppColors.error,
+                        color: line.amount >= Decimal.zero ? AppColors.success : AppColors.error,
                       ),
                     ),
                   ],
@@ -109,6 +108,7 @@ class IncomeStatementScreen extends ConsumerWidget {
     );
   }
 
+  /// Exports the income statement in statutory formats.
   Future<void> _exportReport(BuildContext context, WidgetRef ref) async {
     ScaffoldMessenger.of(
       context,
