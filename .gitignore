@@ -86,6 +86,9 @@ firebase_options.dart
 **/api-key*
 **/*password*
 **/*token*
+!**/*_guide.md
+!**/*_manual.md
+!**/*_spec.md
 **/*secret*
 **/*credentials*
 **/.aws/
