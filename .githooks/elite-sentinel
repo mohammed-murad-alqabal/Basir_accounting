@@ -17,20 +17,21 @@ print_sentinel_error() {
     echo -e "${RED}[Sentinel ERROR]${NC} $1"
 }
 
-# 1. Branding Guard: Forbid legacy "Basser"
+# 1. Branding Guard: Forbid legacy project names
 check_branding() {
-    print_sentinel_msg "Checking for legacy branding 'Basser'..."
-    forbidden="Basser"
+    print_sentinel_msg "Checking for legacy branding references..."
+    # Pattern to catch Basser, Baseer_0, Baseer_MVP etc.
+    legacy_pattern="Basser|Baseer_0|Baseer_MVP|Baseer MVP"
     staged_files=$(git diff --cached --name-only --diff-filter=ACM)
     
     if [ -z "$staged_files" ]; then
         return 0
     fi
     
-    found_legacy=$(echo "$staged_files" | xargs grep -i "$forbidden" 2>/dev/null | grep -v "elite_sentinel_strategy.md" | grep -v ".githooks/elite-sentinel" || true)
+    found_legacy=$(echo "$staged_files" | xargs grep -Ei "$legacy_pattern" 2>/dev/null | grep -v "elite_sentinel_strategy.md" | grep -v ".githooks/elite-sentinel" | grep -v "scripts/verify_branding.sh" || true)
     
     if [ -n "$found_legacy" ]; then
-        print_sentinel_error "Found legacy branding 'Basser' in staged files:"
+        print_sentinel_error "Found legacy branding references in staged files:"
         echo "$found_legacy"
         return 1
     fi
