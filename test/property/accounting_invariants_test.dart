@@ -103,14 +103,16 @@ void main() {
       },
     );
 
-    test('FX Conversion Invariant: Local = Foreign * Rate (100 random runs)', () {
+    test('FX Conversion Invariant: Local = Foreign * Rate (100 random runs)',
+        () {
       for (var i = 0; i < 100; i++) {
         final foreignAmount = nextDecimal(1, 10000);
         final rate = nextDecimal(0.1, 5);
 
         // Logical calculation
-        final localAmountDouble =
-            (Decimal.parse(foreignAmount.toString()) * Decimal.parse(rate.toString())).toDouble();
+        final localAmountDouble = (Decimal.parse(foreignAmount.toString()) *
+                Decimal.parse(rate.toString()))
+            .toDouble();
         final localAmount = Decimal.parse(localAmountDouble.toStringAsFixed(2));
 
         final line = JournalEntryLine(
@@ -124,7 +126,8 @@ void main() {
         );
 
         // Verify Invariant
-        final calculatedLocal = (line.originalAmount! * line.exchangeRate!).toDouble();
+        final calculatedLocal =
+            (line.originalAmount! * line.exchangeRate!).toDouble();
         final roundedCalculated = Decimal.parse(
           calculatedLocal.toStringAsFixed(2),
         );
