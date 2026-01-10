@@ -1,115 +1,226 @@
-# نظام بصير المحاسبي (Basir Accounting System)
+# 💎 نظام بصير المحاسبي (Basir Accounting System)
 
-[![Flutter](https://img.shields.io/badge/Flutter-3.35.5-blue.svg)](https://flutter.dev)
-[![Dart](https://img.shields.io/badge/Dart-3.9.2-blue.svg)](https://dart.dev)
-[![CI/CD](https://github.com/YOUR_USERNAME/basir-app/workflows/Flutter%20CI/CD/badge.svg)](https://github.com/YOUR_USERNAME/basir-app/actions)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Flutter](https://img.shields.io/badge/Flutter-3.35.5-02569B?style=flat-square&logo=flutter)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.9.2-0175C2?style=flat-square&logo=dart)](https://dart.dev)
+[![Rust](https://img.shields.io/badge/Rust-1.83-000000?style=flat-square&logo=rust)](https://www.rust-lang.org)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+[![Quality](https://img.shields.io/badge/Purity-Diamond%20💎-6366F1?style=flat-square)](ENGINEERING_AUDIT_REPORT.md)
 
-**نظام بصير المحاسبي** هو حل تقني متطور لإدارة العمليات المالية والمحاسبية، مصمم للشركات التي تسعى للنقاء الماسي في بياناتها والامتثال للمعايير العالمية (IFRS/GAAP) مع واجهة عربية احترافية.
+**نظام بصير المحاسبي** هو حل تقني متطور لإدارة العمليات المالية والمحاسبية، مصمم للشركات التي تسعى للنقاء الماسي في بياناتها، والامتثال للمعايير العالمية (**IFRS/GAAP**) مع دعم كامل لـ **ZATCA** (هيئة الزكاة والضريبة والجمارك السعودية).
 
-> 🎯 **Kiro Strategic Workspace** - يتبع المشروع منهجية Spec-Driven Development (SDD) ومبدأ Security First ومبدأ Diamond Purity.
+> 🎯 **تم بناء هذا النظام وفق منهجيات هندسية صارمة:**
+>
+> - **Spec-Driven Development (SDD)** - التطوير المبني على المواصفات.
+> - **Security First** - الأمان أولاً في كل طبقة.
+> - **Diamond Purity** - نظافة مطلقة بصفر أخطاء.
 
 ---
 
 ## 📋 المحتويات
 
-- [نظرة عامة](#نظرة-عامة)
-- [⚙️ نظام الأتمتة (Automation Hub)](#%ef%b8%8f-نظام-الأتمتة-automation-hub)
+- [✨ الميزات الرئيسية](#-الميزات-الرئيسية)
+- [🏮 مركز الأتمتة (Automation Hub)](#-مركز-الأتمتة-automation-hub)
 - [🚀 البدء السريع](#-البدء-السريع)
 - [🏗️ البنية المعمارية](#%ef%b8%8f-البنية-المعمارية)
-- [🛡️ جودة الكود والتقارير](#%ef%b8%8f-جودة-الكود-والتقارير)
-- [📚 الموارد والاختصارات](#-الموارد-والاختصارات)
+- [🛡️ الجودة والموثوقية](#%ef%b8%8f-الجودة-والموثوقية)
+- [📚 التوثيق والمراجع](#-التوثيق-والمراجع)
 
 ---
 
-## نظرة عامة
+## ✨ الميزات الرئيسية
 
-يوفر نظام بصير حلاً متكاملاً يجمع بين سرعة **Rust** ومرونة **Flutter**:
-
-- **نواة محاسبية صلبة:** محرك محاسبي مبني بـ Rust لضمان الدقة والسرعة.
-- **تخزين محلي آمن:** استخدام Isar DB مع تشفير كامل.
-- **امتثال كامل:** دعم ضريبة القيمة المضافة (VAT) ومعايير ZATCA.
-- **أتمتة شاملة:** نظام Makefile ثنائي اللغة لإدارة دورة حياة المشروع.
+| الميزة                   | الوصف                                            |
+| :----------------------- | :----------------------------------------------- |
+| **🧮 محرك محاسبي مزدوج** | نواة Rust عالية الأداء مع واجهة Flutter أنيقة.   |
+| **🌍 ثنائية اللغة**      | دعم كامل للعربية والإنجليزية مع تخطيط RTL/LTR.   |
+| **🔒 تخزين محلي آمن**    | استخدام Isar DB مع تشفير بيانات كامل.            |
+| **📜 امتثال ZATCA**      | توليد فواتير إلكترونية ورموز QR بتوقيع رقمي.     |
+| **📊 التقارير المالية**  | ميزانية عمومية، قوائم دخل، وتقارير أعمار الديون. |
+| **🤖 أتمتة ذكية**        | Makefile ثنائي اللغة يدير كافة العمليات.         |
+| **🛡️ حماية الكود**       | Git Hooks ونظام Sentinel للتدقيق التلقائي.       |
 
 ---
 
-## ⚙️ نظام الأتمتة (Automation Hub)
+## 🏮 مركز الأتمتة (Automation Hub)
 
-نستخدم `Makefile` لإدارة كافة العمليات بذكاء. يمكنك عرض المساعدة عبر:
+يستخدم المشروع `Makefile` كنقطة دخول موحدة لجميع العمليات. للحصول على قائمة الأوامر الكاملة:
 
 ```bash
 make help
 ```
 
-### الأوامر الأساسية:
+### الأوامر الأساسية
 
-| الأمر               | الوصف العربي               | English Description       |
-| :------------------ | :------------------------- | :------------------------ |
-| `make setup`        | الإعداد الأولي للبيئة      | Initial environment setup |
-| `make run`          | تشغيل التطبيق              | Run the application       |
-| `make test`         | تشغيل كافة الاختبارات      | Run all suites            |
-| `make report`       | إنشاء تقرير جودة احترافي   | Generate quality report   |
-| `make purity-check` | فحص معايير "النقاء الماسي" | Diamond Purity check      |
+| الأمر          | الوصف العربي                         | English              |
+| :------------- | :----------------------------------- | :------------------- |
+| `make setup`   | الإعداد الأولي الكامل 🏗️             | Full initial setup   |
+| `make run`     | تشغيل التطبيق 🚀                     | Run the application  |
+| `make test`    | تشغيل كافة الاختبارات 🧪             | Run all test suites  |
+| `make analyze` | تحليل الكود الثابت 🔍                | Static code analysis |
+| `make format`  | تنسيق الكود تلقائياً 📝              | Auto-format code     |
+| `make gen`     | توليد الأكواد (Freezed, Riverpod) ⚙️ | Generate code        |
+
+### أوامر الجودة والتقارير
+
+| الأمر               | الوصف                                       |
+| :------------------ | :------------------------------------------ |
+| `make report`       | إنشاء تقرير جودة شامل في `logs/reports/` 📊 |
+| `make purity-check` | فحص معايير "النقاء الماسي" 💎               |
+| `make health-check` | فحص صحة البيئة التطويرية 🏥                 |
+| `make rust-build`   | بناء المكتبة الأصلية Rust 🦀                |
 
 ---
 
 ## 🚀 البدء السريع
 
-### المتطلبات
+### المتطلبات الأساسية
 
-- Flutter SDK (Latest Stable)
-- Rust Toolchain
-- Make (للأنظمة المتوافقة مع Unix)
+- **Flutter SDK**: 3.35.5 أو أحدث
+- **Dart SDK**: 3.9.2 أو أحدث
+- **Rust Toolchain**: 1.83 أو أحدث
+- **Make**: (مثبت مسبقاً على Linux/macOS)
 
 ### خطوات التشغيل
 
 ```bash
-# 1. استنساخ المستودع
+# 1️⃣ استنساخ المستودع
 git clone <repository-url>
 cd basir_accounting_system
 
-# 2. الإعداد والبناء
+# 2️⃣ الإعداد الشامل (يشمل Flutter, Rust, Git Hooks)
 make setup
+
+# 3️⃣ توليد الأكواد (Freezed, Riverpod Generators)
 make gen
 
-# 3. التشغيل
+# 4️⃣ التشغيل في وضع التطوير
 make run
+
+# (اختياري) بناء APK للإنتاج
+make build-apk
 ```
 
 ---
 
-## 🛡️ جودة الكود والتقارير
+## 🏗️ البنية المعمارية
 
-يتميز المشروع بنظام **Elite Quality Engine** الذي يضمن سلامة الكود قبل الدمج:
-
-- **التقارير الآلية:** استخدم `make report` لإنشاء تقرير شامل في `logs/reports/`.
-- **التدقيق البرمجي:** سكريبت `verify_branding.sh` يفحص كافة الملفات لضمان ثبات الهوية.
-- **التحليل الثابت:** تحليل دقيق بنسبة أخطاء (0).
-
----
-
-## 🏗️ البنية المعمارية (Feature-First)
+يتبع المشروع **Feature-First Clean Architecture** مع فصل صارم بين الطبقات:
 
 ```text
-lib/
-├── core/              # المكونات الأساسية (Security, Theme, Providers)
-├── features/          # الميزات المستقلة (Accounting, Auth, Dashboard)
-│   ├── [Feature]/
-│   │   ├── domain/     # Logic & Interfaces
-│   │   ├── data/       # Repositories & Models
-│   │   └── presentation/# UI & State
-└── shared/            # Widgets و Utilities مشتركة
+basir_accounting_system/
+├── 📂 lib/                          # كود التطبيق (Flutter/Dart)
+│   ├── core/                        # المكونات الأساسية
+│   │   ├── assets/                  # الشعارات والرموز
+│   │   ├── theme/                   # نظام التصميم (Design Tokens)
+│   │   ├── providers/               # Riverpod Providers المشتركة
+│   │   └── services/                # الخدمات العامة (Auth, Sync)
+│   ├── features/                    # الميزات المستقلة
+│   │   ├── accounting/              # المحاسبة (Chart of Accounts, Journal)
+│   │   ├── invoices/                # الفواتير والـ ZATCA
+│   │   ├── reports/                 # التقارير المالية
+│   │   └── settings/                # الإعدادات والتخصيص
+│   └── shared/                      # Widgets مشتركة
+│
+├── 🦀 rust/                         # المحرك المحاسبي الأصلي
+│   └── src/                         # منطق الحسابات المتقدم
+│
+├── 🧪 test/                         # الاختبارات الشاملة
+│   ├── unit/                        # اختبارات الوحدات
+│   ├── widget/                      # اختبارات الواجهات
+│   ├── integration/                 # اختبارات التكامل
+│   └── property/                    # اختبارات الخصائص
+│
+├── 📜 scripts/                      # سكريبتات الأتمتة
+│   ├── verify_branding.sh           # تدقيق الهوية
+│   └── archive/                     # أرشيف السكريبتات القديمة
+│
+├── 🔧 tools/                        # أدوات التشخيص والمقاييس
+│
+└── 📚 docs/                         # التوثيق الشامل
+```
+
+### طبقات الـ Feature
+
+```text
+features/[feature_name]/
+├── domain/          # 🧠 المنطق والواجهات (Entities, Repositories)
+├── data/            # 💾 التنفيذ (API, Local Storage, Models)
+├── application/     # ⚙️ الخدمات (Business Logic Services)
+└── presentation/    # 🎨 واجهة المستخدم (Screens, Widgets, Providers)
 ```
 
 ---
 
-## 📚 الموارد والاختصارات
+## 🛡️ الجودة والموثوقية
 
-- [دليل التطوير](DEVELOPMENT_GUIDE.md) - للمساهمين الجدد.
-- [تقرير التدقيق الهندسي](ENGINEERING_AUDIT_REPORT.md) - تفاصيل التحسينات الكبرى.
-- [المعايير الاستراتيجية](.kiro/steering/README.md) - قوانين العمل في Kiro.
+### حالة النظام الحالية
+
+| المقياس                           | الحالة                     |
+| :-------------------------------- | :------------------------- |
+| **تحليل الكود (Flutter Analyze)** | ✅ No issues found!        |
+| **التنسيق (Dart Format)**         | ✅ 0 changes               |
+| **نسبة نجاح الاختبارات**          | ✅ 100% (822+ tests)       |
+| **تدقيق الهوية (Branding)**       | ✅ Clean                   |
+| **حالة النقاء**                   | 💎 Diamond Purity Achieved |
+
+### أنظمة الحماية التلقائية
+
+1. **Elite Sentinel (Git Pre-commit Hook):**
+
+   - التحقق من الهوية/البراند.
+   - منع انتهاكات Clean Architecture.
+   - اكتشاف الألوان المحددة يدوياً (Hardcoded Colors).
+
+2. **Pre-push Hooks:**
+
+   - تشغيل جميع الاختبارات قبل الدفع.
+   - التحقق من تغطية الكود.
+
+3. **Branding Verification Script:**
+
+   ```bash
+   ./scripts/verify_branding.sh
+   ```
 
 ---
 
-**الإصدار الحلي:** 1.7.5 (Global Expansion Phase)
-_تم التحديث بذكاء ودقة عالية في 10 يناير 2026_
+## 📚 التوثيق والمراجع
+
+| الملف                                                      | الوصف                    |
+| :--------------------------------------------------------- | :----------------------- |
+| [STRUCTURE.md](STRUCTURE.md)                               | 🗺️ دليل هيكلة النظام     |
+| [ENGINEERING_AUDIT_REPORT.md](ENGINEERING_AUDIT_REPORT.md) | 🛡️ تقرير التدقيق الهندسي |
+| [CONTRIBUTING.md](CONTRIBUTING.md)                         | 🤝 دليل المساهمة         |
+| [docs/design_tokens_guide.md](docs/design_tokens_guide.md) | 🎨 دليل نظام التصميم     |
+| [docs/QUICK_START.md](docs/QUICK_START.md)                 | ⚡ البدء السريع المفصل   |
+| [.kiro/steering/README.md](.kiro/steering/README.md)       | 🧭 المعايير الاستراتيجية |
+
+---
+
+## 🧰 التقنيات المستخدمة
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter"/>
+  <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart"/>
+  <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white" alt="Rust"/>
+  <img src="https://img.shields.io/badge/Riverpod-00B4AB?style=for-the-badge&logo=dart&logoColor=white" alt="Riverpod"/>
+  <img src="https://img.shields.io/badge/Isar_DB-5C2D91?style=for-the-badge&logo=database&logoColor=white" alt="Isar"/>
+</p>
+
+---
+
+## 📄 الترخيص
+
+هذا المشروع مرخص بموجب [MIT License](LICENSE).
+
+---
+
+<p align="center">
+  <strong>نظام بصير المحاسبي</strong> | Diamond Purity Framework 💎<br>
+  <em>صُمم بحب واهتمام هندسي في المملكة العربية السعودية 🇸🇦</em>
+</p>
+
+---
+
+**الإصدار:** 2.0.0 (Diamond Purity Release)  
+**آخر تحديث:** 10 يناير 2026
