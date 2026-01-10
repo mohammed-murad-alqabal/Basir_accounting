@@ -18,8 +18,9 @@ class BalanceSheetScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final balanceSheetAsync =
-        ref.watch(financialStatementServiceProvider.notifier).generateBalanceSheet(DateTime.now());
+    final balanceSheetAsync = ref
+        .watch(financialStatementServiceProvider.notifier)
+        .generateBalanceSheet(DateTime.now());
 
     final currencyFormatter = intl.NumberFormat.currency(
       symbol: '',
@@ -88,7 +89,9 @@ class BalanceSheetScreen extends ConsumerWidget {
                         Text(
                           line.label,
                           style: AppTextStyles.bodyLarge.copyWith(
-                            fontWeight: line.isTotal ? FontWeight.bold : FontWeight.normal,
+                            fontWeight: line.isTotal
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
                         ),
                         Text(

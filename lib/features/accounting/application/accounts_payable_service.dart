@@ -46,7 +46,8 @@ class SupplierAging {
   final Decimal totalBalance;
 
   /// Returns the localized supplier name based on the system locale.
-  String name({required bool isArabic}) => isArabic ? supplierNameAr : supplierNameEn;
+  String name({required bool isArabic}) =>
+      isArabic ? supplierNameAr : supplierNameEn;
 }
 
 /// Accounts Payable (AP) Service for managing supplier liabilities and obligations.
@@ -77,7 +78,8 @@ class AccountsPayableService extends _$AccountsPayableService {
     for (final entry in entries) {
       for (final line in entry.lines) {
         if (line.accountId == targetAccountId ||
-            (targetAccountId == 'acc-2101' && line.accountName.contains(supplierId))) {
+            (targetAccountId == 'acc-2101' &&
+                line.accountName.contains(supplierId))) {
           balance += line.credit - line.debit;
         }
       }
@@ -166,7 +168,8 @@ class AccountsPayableService extends _$AccountsPayableService {
           (e) => e.lines.any(
             (l) =>
                 l.accountId == targetAccountId ||
-                (targetAccountId == 'acc-2101' && l.accountName.contains(supplierId)),
+                (targetAccountId == 'acc-2101' &&
+                    l.accountName.contains(supplierId)),
           ),
         )
         .toList();

@@ -21,7 +21,8 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   @override
   Future<List<Invoice>> getAllInvoices() async {
     try {
-      final models = await isar.invoiceModels.filter().userIdEqualTo(userId).findAll();
+      final models =
+          await isar.invoiceModels.filter().userIdEqualTo(userId).findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
       throw Exception('خطأ في جلب الفواتير: $e');
@@ -147,11 +148,13 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
     try {
       final allInvoices = await getAllInvoices();
 
-      final paidInvoices =
-          allInvoices.where((invoice) => invoice.status == InvoiceStatus.paid).toList();
+      final paidInvoices = allInvoices
+          .where((invoice) => invoice.status == InvoiceStatus.paid)
+          .toList();
 
-      final overdueInvoices =
-          allInvoices.where((invoice) => invoice.status == InvoiceStatus.overdue).toList();
+      final overdueInvoices = allInvoices
+          .where((invoice) => invoice.status == InvoiceStatus.overdue)
+          .toList();
 
       final totalRevenue = allInvoices.fold<Decimal>(
         Decimal.zero,

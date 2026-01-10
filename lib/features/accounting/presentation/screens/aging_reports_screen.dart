@@ -81,9 +81,12 @@ class AgingReportsScreen extends ConsumerWidget {
   }) async {
     try {
       final exportService = ref.read(reportExportServiceProvider.notifier);
-      final receivables =
-          await ref.read(accountsReceivableServiceProvider.notifier).getReceivablesAging();
-      final payables = await ref.read(accountsPayableServiceProvider.notifier).getPayablesAging();
+      final receivables = await ref
+          .read(accountsReceivableServiceProvider.notifier)
+          .getReceivablesAging();
+      final payables = await ref
+          .read(accountsPayableServiceProvider.notifier)
+          .getPayablesAging();
       if (!context.mounted) return;
 
       final headers = [
@@ -156,7 +159,9 @@ class _ReceivableAgingTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final agingAsync = ref.watch(accountsReceivableServiceProvider.notifier).getReceivablesAging();
+    final agingAsync = ref
+        .watch(accountsReceivableServiceProvider.notifier)
+        .getReceivablesAging();
 
     return FutureBuilder<List<CustomerAging>>(
       future: agingAsync,
@@ -228,11 +233,13 @@ class _ReceivableAgingTab extends ConsumerWidget {
           children: [
             Text(
               label,
-              style: isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
+              style:
+                  isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
             ),
             Text(
               '$value ر.س',
-              style: isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
+              style:
+                  isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
             ),
           ],
         ),
@@ -245,7 +252,8 @@ class _PayableAgingTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final agingAsync = ref.watch(accountsPayableServiceProvider.notifier).getPayablesAging();
+    final agingAsync =
+        ref.watch(accountsPayableServiceProvider.notifier).getPayablesAging();
 
     return FutureBuilder<List<SupplierAging>>(
       future: agingAsync,
@@ -316,11 +324,13 @@ class _PayableAgingTab extends ConsumerWidget {
           children: [
             Text(
               label,
-              style: isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
+              style:
+                  isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
             ),
             Text(
               '$value ر.س',
-              style: isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
+              style:
+                  isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
             ),
           ],
         ),

@@ -24,7 +24,8 @@ final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
     await repository.addInvoice(invoice);
 
     // ترحيل القيد المحاسبي تلقائياً (نظام القيد المزدوج)
-    if (invoice.status == InvoiceStatus.sent || invoice.status == InvoiceStatus.paid) {
+    if (invoice.status == InvoiceStatus.sent ||
+        invoice.status == InvoiceStatus.paid) {
       final accountingService = ref.read(accountingServiceProvider.notifier);
       await accountingService.postSalesInvoice(invoice);
     }
@@ -48,7 +49,8 @@ final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
     await repository.updateInvoice(invoice);
 
     // ترحيل أو تحديث القيد المحاسبي (نظام القيد المزدوج)
-    if (invoice.status == InvoiceStatus.sent || invoice.status == InvoiceStatus.paid) {
+    if (invoice.status == InvoiceStatus.sent ||
+        invoice.status == InvoiceStatus.paid) {
       final accountingService = ref.read(accountingServiceProvider.notifier);
       await accountingService.postSalesInvoice(invoice);
     }
@@ -136,7 +138,8 @@ final totalSalesProvider = Provider<AsyncValue<Decimal>>((ref) {
   final invoicesAsync = ref.watch(invoicesProvider);
 
   return invoicesAsync.whenData(
-    (invoices) => invoices.fold<Decimal>(Decimal.zero, (sum, invoice) => sum + invoice.totalAmount),
+    (invoices) => invoices.fold<Decimal>(
+        Decimal.zero, (sum, invoice) => sum + invoice.totalAmount,),
   );
 });
 
@@ -145,7 +148,9 @@ final overdueInvoicesCountProvider = Provider<AsyncValue<int>>((ref) {
   final invoicesAsync = ref.watch(invoicesProvider);
 
   return invoicesAsync.whenData(
-    (invoices) => invoices.where((invoice) => invoice.status == InvoiceStatus.overdue).length,
+    (invoices) => invoices
+        .where((invoice) => invoice.status == InvoiceStatus.overdue)
+        .length,
   );
 });
 
@@ -172,7 +177,8 @@ final invoicesCountProvider = Provider<AsyncValue<int>>(
 final hasInvoicesProvider = Provider<AsyncValue<bool>>(
   (ref) => ref.watch(
     invoicesProvider.select(
-      (asyncInvoices) => asyncInvoices.whenData((invoices) => invoices.isNotEmpty),
+      (asyncInvoices) =>
+          asyncInvoices.whenData((invoices) => invoices.isNotEmpty),
     ),
   ),
 );
@@ -209,8 +215,10 @@ final invoiceStatisticsProvider = Provider<AsyncValue<InvoiceStatistics>>((
   return invoicesAsync.whenData(
     (invoices) => InvoiceStatistics(
       totalInvoices: invoices.length,
-      paidInvoices: invoices.where((i) => i.status == InvoiceStatus.paid).length,
-      overdueInvoices: invoices.where((i) => i.status == InvoiceStatus.overdue).length,
+      paidInvoices:
+          invoices.where((i) => i.status == InvoiceStatus.paid).length,
+      overdueInvoices:
+          invoices.where((i) => i.status == InvoiceStatus.overdue).length,
       totalAmount: invoices.fold<Decimal>(
         Decimal.zero,
         (sum, i) => sum + i.totalAmount,

@@ -798,5 +798,6 @@
   "receiptTitleSimplified": "Simplified Tax Invoice",
   "receiptFooterThanks": "Thanks for visiting",
   "receiptFooterBrand": "Basir - Basir Accounting",
-  "labelDiscount": "Discount"
+  "labelDiscount": "Discount",
+  "errPermissionDenied": "You do not have permission to perform this action"
 }

@@ -1477,4 +1477,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelDiscount => 'Discount';
+
+  @override
+  String get errPermissionDenied =>
+      'You do not have permission to perform this action';
+
+  @override
+  String get msgInvoiceReversed => 'Invoice reversed successfully';
 }

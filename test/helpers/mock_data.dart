@@ -36,7 +36,8 @@ class MockData {
   }
 
   /// إنشاء قائمة من العملاء للاختبار
-  static List<Customer> createTestCustomers({int count = 3, String? userId}) => List.generate(
+  static List<Customer> createTestCustomers({int count = 3, String? userId}) =>
+      List.generate(
         count,
         (index) => createTestCustomer(
           id: 'test-customer-$index',
@@ -49,7 +50,8 @@ class MockData {
       );
 
   /// إنشاء قائمة من الفواتير للاختبار
-  static List<Invoice> createTestInvoices({int count = 3, String? userId}) => List.generate(
+  static List<Invoice> createTestInvoices({int count = 3, String? userId}) =>
+      List.generate(
         count,
         (index) => createTestInvoice(
           id: 'test-invoice-$index',
@@ -132,8 +134,8 @@ class MockData {
       ];
     }
 
-    Decimal subtotal = Decimal.zero;
-    Decimal taxTotal = Decimal.zero;
+    var subtotal = Decimal.zero;
+    var taxTotal = Decimal.zero;
     for (final item in invoiceItems) {
       subtotal += item.total;
       taxTotal += item.taxAmount;
@@ -142,7 +144,8 @@ class MockData {
 
     return Invoice(
       id: id ?? 'test-invoice-${now.microsecondsSinceEpoch}',
-      invoiceNumber: invoiceNumber ?? 'INV-${id ?? now.microsecondsSinceEpoch.toString()}',
+      invoiceNumber:
+          invoiceNumber ?? 'INV-${id ?? now.microsecondsSinceEpoch.toString()}',
       customerId: customerId ?? 'test-customer-1',
       customerName: customerName ?? 'عميل اختبار',
       items: invoiceItems,

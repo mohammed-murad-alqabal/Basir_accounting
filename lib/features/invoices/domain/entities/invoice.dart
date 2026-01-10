@@ -43,7 +43,8 @@ class InvoiceItem with _$InvoiceItem {
   }) = _InvoiceItem;
 
   /// Factory for JSON hydration.
-  factory InvoiceItem.fromJson(Map<String, dynamic> json) => _$InvoiceItemFromJson(json);
+  factory InvoiceItem.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceItemFromJson(json);
 
   const InvoiceItem._();
 
@@ -122,7 +123,8 @@ class Invoice with _$Invoice {
   }) = _Invoice;
 
   /// Factory for JSON hydration.
-  factory Invoice.fromJson(Map<String, dynamic> json) => _$InvoiceFromJson(json);
+  factory Invoice.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceFromJson(json);
 
   const Invoice._();
 

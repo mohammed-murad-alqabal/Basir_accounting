@@ -31,10 +31,13 @@ part 'accounting_service.g.dart';
 ///   parent/child accounts.
 @Riverpod(keepAlive: true)
 class AccountingService extends _$AccountingService {
-  AccountingRepository get _repository => ref.read(accountingRepositoryProvider);
+  AccountingRepository get _repository =>
+      ref.read(accountingRepositoryProvider);
 
-  FinancialYearService get _financialYearService => ref.read(financialYearServiceProvider.notifier);
-  CustomerRepository get _customerRepository => ref.read(customerRepositoryProvider);
+  FinancialYearService get _financialYearService =>
+      ref.read(financialYearServiceProvider.notifier);
+  CustomerRepository get _customerRepository =>
+      ref.read(customerRepositoryProvider);
 
   @override
   FutureOr<List<JournalEntry>> build() => _repository.getJournalEntries();
@@ -237,7 +240,8 @@ class AccountingService extends _$AccountingService {
     // ZATCA Integration: Performs compliance steps via Rust bridge.
     try {
       final salesBridge = ref.read(salesBridgeServiceProvider);
-      final updatedInvoice = await salesBridge.finalizeInvoiceWithZatca(invoice);
+      final updatedInvoice =
+          await salesBridge.finalizeInvoiceWithZatca(invoice);
 
       if (updatedInvoice.qrCode != null) {
         final invoiceRepo = ref.read(invoiceRepositoryProvider);
@@ -280,10 +284,12 @@ class AccountingService extends _$AccountingService {
   Future<List<Account>> getAccounts() async => _repository.getAccounts();
 
   /// Retrieves a specific account by identifier.
-  Future<Account?> getAccountById(String id) async => _repository.getAccountById(id);
+  Future<Account?> getAccountById(String id) async =>
+      _repository.getAccountById(id);
 
   /// Retrieves the complete list of journal entries.
-  Future<List<JournalEntry>> getJournalEntries() async => _repository.getJournalEntries();
+  Future<List<JournalEntry>> getJournalEntries() async =>
+      _repository.getJournalEntries();
 
   /// Posts a manual journal entry to the ledger.
   ///
