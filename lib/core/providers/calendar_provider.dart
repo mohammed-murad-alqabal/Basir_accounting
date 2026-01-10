@@ -47,5 +47,6 @@ class CalendarNotifier extends AsyncNotifier<CalendarType> {
 }
 
 /// مزود التقويم (Calendar Provider)
-final calendarProvider =
-    AsyncNotifierProvider<CalendarNotifier, CalendarType>(CalendarNotifier.new);
+final calendarProvider = AsyncNotifierProvider<CalendarNotifier, CalendarType>(
+  CalendarNotifier.new,
+);

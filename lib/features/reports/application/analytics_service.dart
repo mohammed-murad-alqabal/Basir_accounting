@@ -98,10 +98,7 @@ class AnalyticsService extends _$AnalyticsService {
     ];
   }
 
-  Decimal _sumBalances(
-    List<Account> accounts,
-    bool Function(Account) filter,
-  ) =>
+  Decimal _sumBalances(List<Account> accounts, bool Function(Account) filter) =>
       accounts
           .where((a) => !a.isParent && filter(a))
           .fold(Decimal.zero, (sum, a) => sum + a.balance);

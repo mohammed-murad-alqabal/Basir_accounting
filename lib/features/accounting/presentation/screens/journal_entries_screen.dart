@@ -55,9 +55,9 @@ class JournalEntriesScreen extends ConsumerWidget {
               return Card(
                 margin: const EdgeInsets.only(bottom: Spacing.md),
                 child: Theme(
-                  data: Theme.of(context).copyWith(
-                    dividerColor: Colors.transparent,
-                  ),
+                  data: Theme.of(
+                    context,
+                  ).copyWith(dividerColor: Colors.transparent),
                   child: ExpansionTile(
                     title: Row(
                       children: [
@@ -173,14 +173,8 @@ class JournalEntriesScreen extends ConsumerWidget {
           }
         },
         itemBuilder: (context) => [
-          PopupMenuItem(
-            value: 'edit',
-            child: Text(context.l10n.actionEdit),
-          ),
-          PopupMenuItem(
-            value: 'post',
-            child: Text(context.l10n.actionPostNow),
-          ),
+          PopupMenuItem(value: 'edit', child: Text(context.l10n.actionEdit)),
+          PopupMenuItem(value: 'post', child: Text(context.l10n.actionPostNow)),
         ],
       );
     }
@@ -215,9 +209,9 @@ class JournalEntriesScreen extends ConsumerWidget {
             .read(accountingServiceProvider.notifier)
             .reverseJournalEntry(entry.id);
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.l10n.msgReverseSuccess)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.l10n.msgReverseSuccess)));
       } on Exception catch (e) {
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
@@ -260,10 +254,7 @@ class JournalEntriesScreen extends ConsumerWidget {
     } on Exception catch (e) {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-          backgroundColor: AppColors.error,
-        ),
+        SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error),
       );
     }
   }
@@ -293,10 +284,7 @@ class JournalEntriesScreen extends ConsumerWidget {
         ),
       );
 
-  Widget _buildEntryLines(
-    BuildContext context,
-    List<JournalEntryLine> lines,
-  ) =>
+  Widget _buildEntryLines(BuildContext context, List<JournalEntryLine> lines) =>
       Column(
         children: lines.map((line) => _buildLineRow(context, line)).toList(),
       );
@@ -354,9 +342,10 @@ class JournalEntriesScreen extends ConsumerWidget {
         ),
       );
 
-  String _formatCurrency(Decimal value) =>
-      intl.NumberFormat.currency(symbol: '', decimalDigits: 2)
-          .format(value.toDouble());
+  String _formatCurrency(Decimal value) => intl.NumberFormat.currency(
+        symbol: '',
+        decimalDigits: 2,
+      ).format(value.toDouble());
 
   Future<void> _showExportOptions(BuildContext context, WidgetRef ref) async {
     await showModalBottomSheet<void>(

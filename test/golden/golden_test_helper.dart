@@ -29,26 +29,18 @@ class GoldenTestHelper {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('ar', 'SA'),
-        Locale('en', 'US'),
-      ],
+      supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
       locale: locale,
       debugShowCheckedModeBanner: false,
       home: Directionality(
         textDirection: textDirection,
-        child: Scaffold(
-          body: child,
-        ),
+        child: Scaffold(body: child),
       ),
     );
 
     // إضافة ProviderScope إذا تم توفير container
     if (container != null) {
-      app = UncontrolledProviderScope(
-        container: container,
-        child: app,
-      );
+      app = UncontrolledProviderScope(container: container, child: app);
     }
 
     return app;
@@ -151,10 +143,7 @@ class GoldenTestHelper {
       final size = testSizes[i];
       await tester.binding.setSurfaceSize(size);
 
-      final testApp = createGoldenTestApp(
-        child: widget,
-        container: container,
-      );
+      final testApp = createGoldenTestApp(child: widget, container: container);
 
       await tester.pumpWidget(testApp);
       await tester.pumpAndSettle();
@@ -184,10 +173,7 @@ class GoldenTestHelper {
       final stateName = entry.key;
       final widget = entry.value;
 
-      final testApp = createGoldenTestApp(
-        child: widget,
-        container: container,
-      );
+      final testApp = createGoldenTestApp(child: widget, container: container);
 
       await tester.pumpWidget(testApp);
       await tester.pumpAndSettle();

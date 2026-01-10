@@ -22,47 +22,48 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   unawaited(
-    runZonedGuarded(() async {
-      // تهيئة Flutter bindings
-      WidgetsFlutterBinding.ensureInitialized();
+    runZonedGuarded(
+      () async {
+        // تهيئة Flutter bindings
+        WidgetsFlutterBinding.ensureInitialized();
 
-      // تهيئة Supabase
-      await SupabaseConfig.initialize();
+        // تهيئة Supabase
+        await SupabaseConfig.initialize();
 
-      // تهيئة FontManager
-      await FontManager.initialize();
+        // تهيئة FontManager
+        await FontManager.initialize();
 
-      // تحسين الأداء: تعيين اتجاه النظام
-      await SystemChrome.setPreferredOrientations(
-        [
+        // تحسين الأداء: تعيين اتجاه النظام
+        await SystemChrome.setPreferredOrientations([
           DeviceOrientation.portraitUp,
           DeviceOrientation.portraitDown,
-        ],
-      );
+        ]);
 
-      // إعداد شاشة الأخطاء العالمية
-      // ignore: lines_longer_than_80_chars
-      ErrorWidget.builder =
-          (details) => basir.GlobalErrorWidget(errorDetails: details);
+        // إعداد شاشة الأخطاء العالمية
+        // ignore: lines_longer_than_80_chars
+        ErrorWidget.builder =
+            (details) => basir.GlobalErrorWidget(errorDetails: details);
 
-      // تهيئة الخدمات الأساسية قبل البدء
-      final container = ProviderContainer(
-        observers: [BasirProviderObserver()],
-      );
+        // تهيئة الخدمات الأساسية قبل البدء
+        final container = ProviderContainer(
+          observers: [BasirProviderObserver()],
+        );
 
-      // AuthService initialization is handled in SplashScreen for better TTI
+        // AuthService initialization is handled in SplashScreen for better TTI
 
-      // بدء التطبيق
-      runApp(
-        UncontrolledProviderScope(
-          container: container,
-          child: const BasirApp(),
-        ),
-      );
-    }, (error, stack) {
-      debugPrint('❌ [FATAL] Uncaught Async Error: $error');
-      debugPrint('Stack trace: $stack');
-    }),
+        // بدء التطبيق
+        runApp(
+          UncontrolledProviderScope(
+            container: container,
+            child: const BasirApp(),
+          ),
+        );
+      },
+      (error, stack) {
+        debugPrint('❌ [FATAL] Uncaught Async Error: $error');
+        debugPrint('Stack trace: $stack');
+      },
+    ),
   );
 }
 
@@ -119,16 +120,10 @@ class BasirApp extends ConsumerWidget {
           localeResolutionCallback: (locale, supportedLocales) {
             // إذا كانت اللغة عربية، استخدم RTL
             if (locale?.languageCode == 'ar') {
-              return const Locale(
-                'ar',
-                'SA',
-              );
+              return const Locale('ar', 'SA');
             }
             // وإلا استخدم الإنجليزية
-            return const Locale(
-              'en',
-              'US',
-            );
+            return const Locale('en', 'US');
           },
         );
       },
@@ -137,9 +132,7 @@ class BasirApp extends ConsumerWidget {
         home: Scaffold(
           backgroundColor: Colors.white,
           body: Center(
-            child: CircularProgressIndicator(
-              color: Color(0xFF003D82),
-            ),
+            child: CircularProgressIndicator(color: Color(0xFF003D82)),
           ),
         ),
       ),
@@ -254,9 +247,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         body: DecoratedBox(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
+          decoration: const BoxDecoration(color: Colors.white),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

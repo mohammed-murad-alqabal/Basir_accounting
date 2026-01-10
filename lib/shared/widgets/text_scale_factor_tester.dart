@@ -59,9 +59,7 @@ class _TextScaleFactorTesterState extends State<TextScaleFactorTester> {
           if (widget.showInfo) _buildInfoPanel(),
           if (widget.showControls) _buildControlPanel(),
           const SizedBox(height: 16),
-          Expanded(
-            child: _buildTestArea(),
-          ),
+          Expanded(child: _buildTestArea()),
         ],
       );
 
@@ -88,18 +86,12 @@ class _TextScaleFactorTesterState extends State<TextScaleFactorTester> {
             const SizedBox(height: 4),
             Text(
               'القيمة الحالية: ${_currentScaleFactor.toStringAsFixed(1)}x',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.blue.shade700,
-              ),
+              style: TextStyle(fontSize: 14, color: Colors.blue.shade700),
             ),
             Text(
               'النطاق: ${widget.minScaleFactor.toStringAsFixed(1)}x - '
               '${widget.maxScaleFactor.toStringAsFixed(1)}x',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.blue.shade600,
-              ),
+              style: TextStyle(fontSize: 12, color: Colors.blue.shade600),
             ),
           ],
         ),
@@ -179,18 +171,15 @@ class _TextScaleFactorTesterState extends State<TextScaleFactorTester> {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         minimumSize: const Size(50, 32),
       ),
-      child: Text(
-        label,
-        style: const TextStyle(fontSize: 12),
-      ),
+      child: Text(label, style: const TextStyle(fontSize: 12)),
     );
   }
 
   /// يبني منطقة الاختبار.
   Widget _buildTestArea() => MediaQuery(
-        data: MediaQuery.of(context).copyWith(
-          textScaler: TextScaler.linear(_currentScaleFactor),
-        ),
+        data: MediaQuery.of(
+          context,
+        ).copyWith(textScaler: TextScaler.linear(_currentScaleFactor)),
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
@@ -199,9 +188,7 @@ class _TextScaleFactorTesterState extends State<TextScaleFactorTester> {
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: Colors.grey.shade300),
           ),
-          child: SingleChildScrollView(
-            child: widget.child,
-          ),
+          child: SingleChildScrollView(child: widget.child),
         ),
       );
 }
@@ -261,11 +248,7 @@ class AppButtonTestSuite extends StatelessWidget {
         spacing: 8,
         runSpacing: 8,
         children: [
-          AppEnhancedButton(
-            label: 'حفظ',
-            onPressed: () {},
-            icon: Icons.save,
-          ),
+          AppEnhancedButton(label: 'حفظ', onPressed: () {}, icon: Icons.save),
           AppEnhancedButton(
             label: 'إضافة عميل جديد',
             onPressed: () {},
@@ -329,10 +312,7 @@ class AppButtonTestSuite extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: AppEnhancedButton(
-                  label: 'متوسط',
-                  onPressed: () {},
-                ),
+                child: AppEnhancedButton(label: 'متوسط', onPressed: () {}),
               ),
               const SizedBox(width: 8),
               Expanded(
@@ -360,14 +340,8 @@ class AppButtonTestSuite extends StatelessWidget {
         runSpacing: 8,
         children: [
           AppEnhancedButton(
-            label: 'تحميل...',
-            onPressed: () {},
-            isLoading: true,
-          ),
-          const AppEnhancedButton(
-            label: 'معطل',
-            onPressed: null,
-          ),
+              label: 'تحميل...', onPressed: () {}, isLoading: true,),
+          const AppEnhancedButton(label: 'معطل', onPressed: null),
         ],
       );
 }

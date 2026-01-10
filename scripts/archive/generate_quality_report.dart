@@ -7,16 +7,14 @@ Future<void> main() async {
 
   final report = StringBuffer();
   report.writeln('# Basir App Quality Report');
-  report.writeln(
-    'Date: ${DateTime.now().toIso8601String()}\n',
-  );
+  report.writeln('Date: ${DateTime.now().toIso8601String()}\n');
 
   // 1. Token Integrity
   print('🎨 Running Token Integrity Tests...');
-  final tokenResult = await Process.run(
-    'flutter',
-    ['test', 'test/core/theme/tokens_test.dart'],
-  );
+  final tokenResult = await Process.run('flutter', [
+    'test',
+    'test/core/theme/tokens_test.dart',
+  ]);
 
   report.writeln('## 1. Design System Integrity');
   if (tokenResult.exitCode == 0) {
@@ -32,10 +30,10 @@ Future<void> main() async {
 
   // 2. Performance
   print('🚀 Running Performance Benchmarks...');
-  final perfResult = await Process.run(
-    'flutter',
-    ['test', 'test/performance/widget_build_perf_test.dart'],
-  );
+  final perfResult = await Process.run('flutter', [
+    'test',
+    'test/performance/widget_build_perf_test.dart',
+  ]);
 
   report.writeln('\n## 2. Performance Benchmarks');
   if (perfResult.exitCode == 0) {

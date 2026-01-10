@@ -35,10 +35,7 @@ class AgingReportsScreen extends ConsumerWidget {
             ],
           ),
           body: const TabBarView(
-            children: [
-              _ReceivableAgingTab(),
-              _PayableAgingTab(),
-            ],
+            children: [_ReceivableAgingTab(), _PayableAgingTab()],
           ),
         ),
       );
@@ -131,8 +128,10 @@ class AgingReportsScreen extends ConsumerWidget {
           data: data,
         );
       } else {
-        final csv =
-            exportService.generateTableCsv(headers: headers, data: data);
+        final csv = exportService.generateTableCsv(
+          headers: headers,
+          data: data,
+        );
         final sharingService = ref.read(sharingServiceProvider);
         await sharingService.shareFile(
           bytes: Uint8List.fromList(csv.codeUnits),
@@ -142,9 +141,9 @@ class AgingReportsScreen extends ConsumerWidget {
       }
     } on Exception catch (e) {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 }
@@ -215,7 +214,11 @@ class _ReceivableAgingTab extends ConsumerWidget {
     );
   }
 
-  Widget _buildAgingRow(String label, dynamic value, {bool isTotal = false}) =>
+  Widget _buildAgingRow(
+    String label,
+    dynamic value, {
+    bool isTotal = false,
+  }) =>
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 2),
         child: Row(
@@ -300,7 +303,11 @@ class _PayableAgingTab extends ConsumerWidget {
     );
   }
 
-  Widget _buildAgingRow(String label, dynamic value, {bool isTotal = false}) =>
+  Widget _buildAgingRow(
+    String label,
+    dynamic value, {
+    bool isTotal = false,
+  }) =>
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 2),
         child: Row(

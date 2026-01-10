@@ -16,10 +16,8 @@ class AppSkeleton extends StatelessWidget {
   });
 
   /// إنشاء هيكل عظمي دائري
-  const AppSkeleton.circle({
-    super.key,
-    double? size,
-  })  : width = size,
+  const AppSkeleton.circle({super.key, double? size})
+      : width = size,
         height = size,
         borderRadius = null,
         shape = BoxShape.circle;

@@ -49,18 +49,16 @@ final filteredVendorsProvider = Provider<AsyncValue<List<Vendor>>>((ref) {
 
   return vendorsAsync.whenData((vendors) {
     if (searchQuery.isEmpty) return vendors;
-    return vendors.where(
-      (v) {
-        final nameAr = v.nameAr.toLowerCase();
-        final nameEn = v.nameEn.toLowerCase();
-        final email = (v.email ?? '').toLowerCase();
-        final phone = (v.phone ?? '').toLowerCase();
+    return vendors.where((v) {
+      final nameAr = v.nameAr.toLowerCase();
+      final nameEn = v.nameEn.toLowerCase();
+      final email = (v.email ?? '').toLowerCase();
+      final phone = (v.phone ?? '').toLowerCase();
 
-        return nameAr.contains(searchQuery) ||
-            nameEn.contains(searchQuery) ||
-            email.contains(searchQuery) ||
-            phone.contains(searchQuery);
-      },
-    ).toList();
+      return nameAr.contains(searchQuery) ||
+          nameEn.contains(searchQuery) ||
+          email.contains(searchQuery) ||
+          phone.contains(searchQuery);
+    }).toList();
   });
 });

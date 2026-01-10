@@ -10,10 +10,7 @@ void main() {
         MaterialApp(
           theme: AppTheme.lightTheme,
           home: const Scaffold(
-            body: AppTextField(
-              label: 'User Name',
-              hint: 'Enter name',
-            ),
+            body: AppTextField(label: 'User Name', hint: 'Enter name'),
           ),
         ),
       );

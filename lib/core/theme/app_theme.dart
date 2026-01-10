@@ -159,9 +159,8 @@ abstract final class AppTheme {
               ? AppPalette.darkSurface
               : colorScheme.surface,
           elevation: Elevation.sm,
-          shape: const RoundedRectangleBorder(
-            borderRadius: Radii.borderRadiusMd,
-          ),
+          shape:
+              const RoundedRectangleBorder(borderRadius: Radii.borderRadiusMd),
           margin: EdgeInsets.zero,
         ),
 
@@ -180,8 +179,7 @@ abstract final class AppTheme {
               TouchTargets.buttonHeightMd,
             ),
             shape: const RoundedRectangleBorder(
-              borderRadius: Radii.borderRadiusMd,
-            ),
+                borderRadius: Radii.borderRadiusMd,),
             textStyle: AppTextStyles.labelLarge,
           ),
         ),
@@ -199,8 +197,7 @@ abstract final class AppTheme {
               TouchTargets.buttonHeightMd,
             ),
             shape: const RoundedRectangleBorder(
-              borderRadius: Radii.borderRadiusMd,
-            ),
+                borderRadius: Radii.borderRadiusMd,),
             side: BorderSide(
               color: colorScheme.outline,
               width: BorderWidths.normal,
@@ -222,8 +219,7 @@ abstract final class AppTheme {
               TouchTargets.buttonHeightMd,
             ),
             shape: const RoundedRectangleBorder(
-              borderRadius: Radii.borderRadiusMd,
-            ),
+                borderRadius: Radii.borderRadiusMd,),
             textStyle: AppTextStyles.labelLarge,
           ),
         ),
@@ -233,9 +229,8 @@ abstract final class AppTheme {
           backgroundColor: colorScheme.primary,
           foregroundColor: colorScheme.onPrimary,
           elevation: Elevation.md,
-          shape: const RoundedRectangleBorder(
-            borderRadius: Radii.borderRadiusLg,
-          ),
+          shape:
+              const RoundedRectangleBorder(borderRadius: Radii.borderRadiusLg),
         ),
 
         // Input Decoration
@@ -286,16 +281,13 @@ abstract final class AppTheme {
           hintStyle: AppTextStyles.bodyMedium.copyWith(
             color: colorScheme.onSurfaceVariant,
           ),
-          errorStyle: AppTextStyles.bodySmall.copyWith(
-            color: colorScheme.error,
-          ),
+          errorStyle:
+              AppTextStyles.bodySmall.copyWith(color: colorScheme.error),
         ),
 
         // Icons
-        iconTheme: IconThemeData(
-          color: colorScheme.onSurface,
-          size: IconSizes.md,
-        ),
+        iconTheme:
+            IconThemeData(color: colorScheme.onSurface, size: IconSizes.md),
 
         // Divider
         dividerTheme: DividerThemeData(
@@ -310,9 +302,8 @@ abstract final class AppTheme {
               ? AppPalette.darkSurface
               : colorScheme.surface,
           elevation: Elevation.xl,
-          shape: const RoundedRectangleBorder(
-            borderRadius: Radii.borderRadiusXl,
-          ),
+          shape:
+              const RoundedRectangleBorder(borderRadius: Radii.borderRadiusXl),
           titleTextStyle: AppTextStyles.headlineSmall.copyWith(
             color: colorScheme.onSurface,
           ),
@@ -328,9 +319,7 @@ abstract final class AppTheme {
               : colorScheme.surface,
           elevation: Elevation.lg,
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(Radii.xl),
-            ),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(Radii.xl)),
           ),
         ),
 
@@ -409,12 +398,10 @@ abstract final class AppTheme {
         onSurface: AppPalette.darkTextPrimary,
         surfaceContainerHighest: AppPalette.darkBorder,
         onSurfaceVariant: Color(0xFFCBD5E1), // Slate 300
-
         // الأخطاء
         error: Color(0xFFEF4444), // Red 500
         onError: Colors.white,
         errorContainer: Color(0xFF7F1D1D), // Red 900
-
         // الحدود
         outline: Color(0xFF475569), // Slate 500
         outlineVariant: Color(0xFF334155), // Slate 700

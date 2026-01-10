@@ -59,10 +59,12 @@ class OrchestratorService extends _$OrchestratorService {
     final overallAllowed = results.every((r) => r.isAllowed);
 
     final aggregateRationale = StringBuffer();
-    aggregateRationale
-        .writeln('--- Basir Cognitive Hexagon: Final Consensus Report ---');
-    aggregateRationale
-        .writeln('Decision: ${overallAllowed ? "APPROVED ✅" : "REJECTED ❌"}');
+    aggregateRationale.writeln(
+      '--- Basir Cognitive Hexagon: Final Consensus Report ---',
+    );
+    aggregateRationale.writeln(
+      'Decision: ${overallAllowed ? "APPROVED ✅" : "REJECTED ❌"}',
+    );
 
     // حساب متوسط درجة الثقة بشكل صحيح
     final totalConfidence = results.fold<double>(

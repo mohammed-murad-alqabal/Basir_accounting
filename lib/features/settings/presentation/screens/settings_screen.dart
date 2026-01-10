@@ -26,9 +26,7 @@ class SettingsScreen extends ConsumerWidget {
     final controller = ref.read(settingsControllerProvider.notifier);
 
     return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.settingsTitle,
-      ),
+      appBar: AppAppBar(title: context.l10n.settingsTitle),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(Spacing.lg),
         child: Column(
@@ -38,11 +36,7 @@ class SettingsScreen extends ConsumerWidget {
               title: context.l10n.companySettingsTitle,
               icon: appIcons.business,
             ),
-            const SettingsGroupCard(
-              children: [
-                CompanySettingsTile(),
-              ],
-            ),
+            const SettingsGroupCard(children: [CompanySettingsTile()]),
             const SizedBox(height: Spacing.xl),
 
             // 👤 قسم الحساب والأمن
@@ -50,11 +44,7 @@ class SettingsScreen extends ConsumerWidget {
               title: context.l10n.accountTitle,
               icon: appIcons.security,
             ),
-            const SettingsGroupCard(
-              children: [
-                AccountSettingsTile(),
-              ],
-            ),
+            const SettingsGroupCard(children: [AccountSettingsTile()]),
             const SizedBox(height: Spacing.xl),
 
             // 🔔 قسم التنبيهات
@@ -62,11 +52,7 @@ class SettingsScreen extends ConsumerWidget {
               title: context.l10n.notificationsTitle,
               icon: appIcons.notifications,
             ),
-            const SettingsGroupCard(
-              children: [
-                NotificationSettingsTile(),
-              ],
-            ),
+            const SettingsGroupCard(children: [NotificationSettingsTile()]),
             const SizedBox(height: Spacing.xl),
 
             // 🎨 قسم المظهر والتخصيص
@@ -161,8 +147,9 @@ class SettingsScreen extends ConsumerWidget {
               onPressed: () async {
                 await controller.logout();
                 if (context.mounted) {
-                  await Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/login', (route) => false);
+                  await Navigator.of(
+                    context,
+                  ).pushNamedAndRemoveUntil('/login', (route) => false);
                 }
               },
               child: Text(

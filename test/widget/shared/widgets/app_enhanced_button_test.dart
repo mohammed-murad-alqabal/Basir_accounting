@@ -8,10 +8,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppEnhancedButton(
-              label: 'Test Button',
-              onPressed: () {},
-            ),
+            body: AppEnhancedButton(label: 'Test Button', onPressed: () {}),
           ),
         ),
       );
@@ -19,8 +16,9 @@ void main() {
       expect(find.text('Test Button'), findsOneWidget);
     });
 
-    testWidgets('should show loading indicator when isLoading is true',
-        (tester) async {
+    testWidgets('should show loading indicator when isLoading is true', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -42,10 +40,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: AppEnhancedButton(
-              label: 'Primary',
-              onPressed: () {},
-            ),
+            body: AppEnhancedButton(label: 'Primary', onPressed: () {}),
           ),
         ),
       );
@@ -97,8 +92,9 @@ void main() {
       expect(container.constraints?.maxWidth, 200);
     });
 
-    testWidgets('should handle long text with Flexible support',
-        (tester) async {
+    testWidgets('should handle long text with Flexible support', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(

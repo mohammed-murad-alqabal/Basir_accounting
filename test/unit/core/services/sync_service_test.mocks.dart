@@ -33,121 +33,66 @@ import 'package:supabase/supabase.dart' as _i2;
 
 class _FakeFunctionsClient_0 extends _i1.SmartFake
     implements _i2.FunctionsClient {
-  _FakeFunctionsClient_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeFunctionsClient_0(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakeSupabaseStorageClient_1 extends _i1.SmartFake
     implements _i2.SupabaseStorageClient {
-  _FakeSupabaseStorageClient_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeSupabaseStorageClient_1(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakeRealtimeClient_2 extends _i1.SmartFake
     implements _i2.RealtimeClient {
-  _FakeRealtimeClient_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeRealtimeClient_2(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakePostgrestClient_3 extends _i1.SmartFake
     implements _i2.PostgrestClient {
-  _FakePostgrestClient_3(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakePostgrestClient_3(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakeGoTrueClient_4 extends _i1.SmartFake implements _i2.GoTrueClient {
-  _FakeGoTrueClient_4(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeGoTrueClient_4(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakeSupabaseQueryBuilder_5 extends _i1.SmartFake
     implements _i2.SupabaseQueryBuilder {
-  _FakeSupabaseQueryBuilder_5(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeSupabaseQueryBuilder_5(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakeSupabaseQuerySchema_6 extends _i1.SmartFake
     implements _i2.SupabaseQuerySchema {
-  _FakeSupabaseQuerySchema_6(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeSupabaseQuerySchema_6(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakePostgrestFilterBuilder_7<T1> extends _i1.SmartFake
     implements _i2.PostgrestFilterBuilder<T1> {
-  _FakePostgrestFilterBuilder_7(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakePostgrestFilterBuilder_7(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakeRealtimeChannel_8 extends _i1.SmartFake
     implements _i2.RealtimeChannel {
-  _FakeRealtimeChannel_8(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeRealtimeChannel_8(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakeFuture_9<T1> extends _i1.SmartFake implements _i3.Future<T1> {
-  _FakeFuture_9(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeFuture_9(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 class _FakeIsarCollection_10<OBJ> extends _i1.SmartFake
     implements _i4.IsarCollection<OBJ> {
-  _FakeIsarCollection_10(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeIsarCollection_10(Object parent, Invocation parentInvocation)
+      : super(parent, parentInvocation);
 }
 
 /// A class which mocks [SupabaseClient].
@@ -169,10 +114,7 @@ class MockSupabaseClient extends _i1.Mock implements _i2.SupabaseClient {
 
   @override
   set functions(_i2.FunctionsClient? _functions) => super.noSuchMethod(
-        Invocation.setter(
-          #functions,
-          _functions,
-        ),
+        Invocation.setter(#functions, _functions),
         returnValueForMissingStub: null,
       );
 
@@ -187,10 +129,7 @@ class MockSupabaseClient extends _i1.Mock implements _i2.SupabaseClient {
 
   @override
   set storage(_i2.SupabaseStorageClient? _storage) => super.noSuchMethod(
-        Invocation.setter(
-          #storage,
-          _storage,
-        ),
+        Invocation.setter(#storage, _storage),
         returnValueForMissingStub: null,
       );
 
@@ -205,28 +144,19 @@ class MockSupabaseClient extends _i1.Mock implements _i2.SupabaseClient {
 
   @override
   set realtime(_i2.RealtimeClient? _realtime) => super.noSuchMethod(
-        Invocation.setter(
-          #realtime,
-          _realtime,
-        ),
+        Invocation.setter(#realtime, _realtime),
         returnValueForMissingStub: null,
       );
 
   @override
   _i2.PostgrestClient get rest => (super.noSuchMethod(
         Invocation.getter(#rest),
-        returnValue: _FakePostgrestClient_3(
-          this,
-          Invocation.getter(#rest),
-        ),
+        returnValue: _FakePostgrestClient_3(this, Invocation.getter(#rest)),
       ) as _i2.PostgrestClient);
 
   @override
   set rest(_i2.PostgrestClient? _rest) => super.noSuchMethod(
-        Invocation.setter(
-          #rest,
-          _rest,
-        ),
+        Invocation.setter(#rest, _rest),
         returnValueForMissingStub: null,
       );
 
@@ -238,49 +168,31 @@ class MockSupabaseClient extends _i1.Mock implements _i2.SupabaseClient {
 
   @override
   set headers(Map<String, String>? headers) => super.noSuchMethod(
-        Invocation.setter(
-          #headers,
-          headers,
-        ),
+        Invocation.setter(#headers, headers),
         returnValueForMissingStub: null,
       );
 
   @override
   _i2.GoTrueClient get auth => (super.noSuchMethod(
         Invocation.getter(#auth),
-        returnValue: _FakeGoTrueClient_4(
-          this,
-          Invocation.getter(#auth),
-        ),
+        returnValue: _FakeGoTrueClient_4(this, Invocation.getter(#auth)),
       ) as _i2.GoTrueClient);
 
   @override
   _i2.SupabaseQueryBuilder from(String? table) => (super.noSuchMethod(
-        Invocation.method(
-          #from,
-          [table],
-        ),
+        Invocation.method(#from, [table]),
         returnValue: _FakeSupabaseQueryBuilder_5(
           this,
-          Invocation.method(
-            #from,
-            [table],
-          ),
+          Invocation.method(#from, [table]),
         ),
       ) as _i2.SupabaseQueryBuilder);
 
   @override
   _i2.SupabaseQuerySchema schema(String? schema) => (super.noSuchMethod(
-        Invocation.method(
-          #schema,
-          [schema],
-        ),
+        Invocation.method(#schema, [schema]),
         returnValue: _FakeSupabaseQuerySchema_6(
           this,
-          Invocation.method(
-            #schema,
-            [schema],
-          ),
+          Invocation.method(#schema, [schema]),
         ),
       ) as _i2.SupabaseQuerySchema);
 
@@ -291,24 +203,10 @@ class MockSupabaseClient extends _i1.Mock implements _i2.SupabaseClient {
     dynamic get = false,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #rpc,
-          [fn],
-          {
-            #params: params,
-            #get: get,
-          },
-        ),
+        Invocation.method(#rpc, [fn], {#params: params, #get: get}),
         returnValue: _FakePostgrestFilterBuilder_7<T>(
           this,
-          Invocation.method(
-            #rpc,
-            [fn],
-            {
-              #params: params,
-              #get: get,
-            },
-          ),
+          Invocation.method(#rpc, [fn], {#params: params, #get: get}),
         ),
       ) as _i2.PostgrestFilterBuilder<T>);
 
@@ -318,61 +216,40 @@ class MockSupabaseClient extends _i1.Mock implements _i2.SupabaseClient {
     _i2.RealtimeChannelConfig? opts = const _i2.RealtimeChannelConfig(),
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #channel,
-          [name],
-          {#opts: opts},
-        ),
+        Invocation.method(#channel, [name], {#opts: opts}),
         returnValue: _FakeRealtimeChannel_8(
           this,
-          Invocation.method(
-            #channel,
-            [name],
-            {#opts: opts},
-          ),
+          Invocation.method(#channel, [name], {#opts: opts}),
         ),
       ) as _i2.RealtimeChannel);
 
   @override
   List<_i2.RealtimeChannel> getChannels() => (super.noSuchMethod(
-        Invocation.method(
-          #getChannels,
-          [],
-        ),
+        Invocation.method(#getChannels, []),
         returnValue: <_i2.RealtimeChannel>[],
       ) as List<_i2.RealtimeChannel>);
 
   @override
   _i3.Future<String> removeChannel(_i2.RealtimeChannel? channel) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #removeChannel,
-          [channel],
-        ),
-        returnValue: _i3.Future<String>.value(_i5.dummyValue<String>(
-          this,
-          Invocation.method(
-            #removeChannel,
-            [channel],
+        Invocation.method(#removeChannel, [channel]),
+        returnValue: _i3.Future<String>.value(
+          _i5.dummyValue<String>(
+            this,
+            Invocation.method(#removeChannel, [channel]),
           ),
-        )),
+        ),
       ) as _i3.Future<String>);
 
   @override
   _i3.Future<List<String>> removeAllChannels() => (super.noSuchMethod(
-        Invocation.method(
-          #removeAllChannels,
-          [],
-        ),
+        Invocation.method(#removeAllChannels, []),
         returnValue: _i3.Future<List<String>>.value(<String>[]),
       ) as _i3.Future<List<String>>);
 
   @override
   _i3.Future<void> dispose() => (super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
+        Invocation.method(#dispose, []),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
@@ -389,51 +266,32 @@ class MockIsar extends _i1.Mock implements _i4.Isar {
   @override
   String get name => (super.noSuchMethod(
         Invocation.getter(#name),
-        returnValue: _i5.dummyValue<String>(
-          this,
-          Invocation.getter(#name),
-        ),
+        returnValue: _i5.dummyValue<String>(this, Invocation.getter(#name)),
       ) as String);
 
   @override
-  bool get isOpen => (super.noSuchMethod(
-        Invocation.getter(#isOpen),
-        returnValue: false,
-      ) as bool);
+  bool get isOpen =>
+      (super.noSuchMethod(Invocation.getter(#isOpen), returnValue: false)
+          as bool);
 
   @override
   void requireOpen() => super.noSuchMethod(
-        Invocation.method(
-          #requireOpen,
-          [],
-        ),
+        Invocation.method(#requireOpen, []),
         returnValueForMissingStub: null,
       );
 
   @override
   _i3.Future<T> txn<T>(_i3.Future<T> Function()? callback) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #txn,
-          [callback],
-        ),
+        Invocation.method(#txn, [callback]),
         returnValue: _i5.ifNotNull(
               _i5.dummyValueOrNull<T>(
                 this,
-                Invocation.method(
-                  #txn,
-                  [callback],
-                ),
+                Invocation.method(#txn, [callback]),
               ),
               (T v) => _i3.Future<T>.value(v),
             ) ??
-            _FakeFuture_9<T>(
-              this,
-              Invocation.method(
-                #txn,
-                [callback],
-              ),
-            ),
+            _FakeFuture_9<T>(this, Invocation.method(#txn, [callback])),
       ) as _i3.Future<T>);
 
   @override
@@ -442,116 +300,71 @@ class MockIsar extends _i1.Mock implements _i4.Isar {
     bool? silent = false,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #writeTxn,
-          [callback],
-          {#silent: silent},
-        ),
+        Invocation.method(#writeTxn, [callback], {#silent: silent}),
         returnValue: _i5.ifNotNull(
               _i5.dummyValueOrNull<T>(
                 this,
-                Invocation.method(
-                  #writeTxn,
-                  [callback],
-                  {#silent: silent},
-                ),
+                Invocation.method(#writeTxn, [callback], {#silent: silent}),
               ),
               (T v) => _i3.Future<T>.value(v),
             ) ??
             _FakeFuture_9<T>(
               this,
-              Invocation.method(
-                #writeTxn,
-                [callback],
-                {#silent: silent},
-              ),
+              Invocation.method(#writeTxn, [callback], {#silent: silent}),
             ),
       ) as _i3.Future<T>);
 
   @override
   T txnSync<T>(T Function()? callback) => (super.noSuchMethod(
-        Invocation.method(
-          #txnSync,
-          [callback],
-        ),
+        Invocation.method(#txnSync, [callback]),
         returnValue: _i5.dummyValue<T>(
           this,
-          Invocation.method(
-            #txnSync,
-            [callback],
-          ),
+          Invocation.method(#txnSync, [callback]),
         ),
       ) as T);
 
   @override
-  T writeTxnSync<T>(
-    T Function()? callback, {
-    bool? silent = false,
-  }) =>
+  T writeTxnSync<T>(T Function()? callback, {bool? silent = false}) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #writeTxnSync,
-          [callback],
-          {#silent: silent},
-        ),
+        Invocation.method(#writeTxnSync, [callback], {#silent: silent}),
         returnValue: _i5.dummyValue<T>(
           this,
-          Invocation.method(
-            #writeTxnSync,
-            [callback],
-            {#silent: silent},
-          ),
+          Invocation.method(#writeTxnSync, [callback], {#silent: silent}),
         ),
       ) as T);
 
   @override
   void attachCollections(Map<Type, _i4.IsarCollection<dynamic>>? collections) =>
       super.noSuchMethod(
-        Invocation.method(
-          #attachCollections,
-          [collections],
-        ),
+        Invocation.method(#attachCollections, [collections]),
         returnValueForMissingStub: null,
       );
 
   @override
   _i4.IsarCollection<T> collection<T>() => (super.noSuchMethod(
-        Invocation.method(
-          #collection,
-          [],
-        ),
+        Invocation.method(#collection, []),
         returnValue: _FakeIsarCollection_10<T>(
           this,
-          Invocation.method(
-            #collection,
-            [],
-          ),
+          Invocation.method(#collection, []),
         ),
       ) as _i4.IsarCollection<T>);
 
   @override
   _i4.IsarCollection<dynamic>? getCollectionByNameInternal(String? name) =>
-      (super.noSuchMethod(Invocation.method(
-        #getCollectionByNameInternal,
-        [name],
-      )) as _i4.IsarCollection<dynamic>?);
+      (super.noSuchMethod(
+        Invocation.method(#getCollectionByNameInternal, [name]),
+      ) as _i4.IsarCollection<dynamic>?);
 
   @override
   _i3.Future<void> clear() => (super.noSuchMethod(
-        Invocation.method(
-          #clear,
-          [],
-        ),
+        Invocation.method(#clear, []),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
 
   @override
   void clearSync() => super.noSuchMethod(
-        Invocation.method(
-          #clearSync,
-          [],
-        ),
+        Invocation.method(#clearSync, []),
         returnValueForMissingStub: null,
       );
 
@@ -561,60 +374,39 @@ class MockIsar extends _i1.Mock implements _i4.Isar {
     bool? includeLinks = false,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #getSize,
-          [],
-          {
-            #includeIndexes: includeIndexes,
-            #includeLinks: includeLinks,
-          },
-        ),
+        Invocation.method(#getSize, [], {
+          #includeIndexes: includeIndexes,
+          #includeLinks: includeLinks,
+        }),
         returnValue: _i3.Future<int>.value(0),
       ) as _i3.Future<int>);
 
   @override
-  int getSizeSync({
-    bool? includeIndexes = false,
-    bool? includeLinks = false,
-  }) =>
+  int getSizeSync({bool? includeIndexes = false, bool? includeLinks = false}) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #getSizeSync,
-          [],
-          {
-            #includeIndexes: includeIndexes,
-            #includeLinks: includeLinks,
-          },
-        ),
+        Invocation.method(#getSizeSync, [], {
+          #includeIndexes: includeIndexes,
+          #includeLinks: includeLinks,
+        }),
         returnValue: 0,
       ) as int);
 
   @override
   _i3.Future<void> copyToFile(String? targetPath) => (super.noSuchMethod(
-        Invocation.method(
-          #copyToFile,
-          [targetPath],
-        ),
+        Invocation.method(#copyToFile, [targetPath]),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
 
   @override
   _i3.Future<bool> close({bool? deleteFromDisk = false}) => (super.noSuchMethod(
-        Invocation.method(
-          #close,
-          [],
-          {#deleteFromDisk: deleteFromDisk},
-        ),
+        Invocation.method(#close, [], {#deleteFromDisk: deleteFromDisk}),
         returnValue: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
 
   @override
   _i3.Future<void> verify() => (super.noSuchMethod(
-        Invocation.method(
-          #verify,
-          [],
-        ),
+        Invocation.method(#verify, []),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
@@ -630,29 +422,20 @@ class MockProfileRepository extends _i1.Mock implements _i6.ProfileRepository {
 
   @override
   _i3.Future<_i7.Profile?> getProfile() => (super.noSuchMethod(
-        Invocation.method(
-          #getProfile,
-          [],
-        ),
+        Invocation.method(#getProfile, []),
         returnValue: _i3.Future<_i7.Profile?>.value(),
       ) as _i3.Future<_i7.Profile?>);
 
   @override
   _i3.Future<void> saveProfile(_i7.Profile? profile) => (super.noSuchMethod(
-        Invocation.method(
-          #saveProfile,
-          [profile],
-        ),
+        Invocation.method(#saveProfile, [profile]),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
 
   @override
   _i3.Future<void> deleteProfile() => (super.noSuchMethod(
-        Invocation.method(
-          #deleteProfile,
-          [],
-        ),
+        Invocation.method(#deleteProfile, []),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
@@ -669,20 +452,14 @@ class MockBusinessSettingsRepository extends _i1.Mock
 
   @override
   _i3.Future<_i9.BusinessSettings?> getSettings() => (super.noSuchMethod(
-        Invocation.method(
-          #getSettings,
-          [],
-        ),
+        Invocation.method(#getSettings, []),
         returnValue: _i3.Future<_i9.BusinessSettings?>.value(),
       ) as _i3.Future<_i9.BusinessSettings?>);
 
   @override
   _i3.Future<void> saveSettings(_i9.BusinessSettings? settings) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #saveSettings,
-          [settings],
-        ),
+        Invocation.method(#saveSettings, [settings]),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);

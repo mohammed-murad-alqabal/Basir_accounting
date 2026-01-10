@@ -67,9 +67,7 @@ class _AssetsScreenState extends ConsumerState<AssetsScreen> {
             child: assetsAsync.when(
               data: _buildAssetsList,
               loading: () => const Center(child: AppLoadingIndicator()),
-              error: (error, stack) => Center(
-                child: Text(error.toString()),
-              ),
+              error: (error, stack) => Center(child: Text(error.toString())),
             ),
           ),
         ],
@@ -79,9 +77,7 @@ class _AssetsScreenState extends ConsumerState<AssetsScreen> {
 
   Widget _buildAssetsList(List<FixedAsset> assets) {
     if (assets.isEmpty) {
-      return const Center(
-        child: EmptyStateIllustration(),
-      );
+      return const Center(child: EmptyStateIllustration());
     }
 
     return ListView.builder(

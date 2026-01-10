@@ -36,8 +36,9 @@ void main() {
         ),
       );
 
-  testWidgets('ReportsDashboardScreen shows all report sections',
-      (tester) async {
+  testWidgets('ReportsDashboardScreen shows all report sections', (
+    tester,
+  ) async {
     await tester.pumpWidget(createWidgetUnderTest());
     await tester.pumpAndSettle();
 

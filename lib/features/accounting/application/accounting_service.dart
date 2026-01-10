@@ -103,8 +103,9 @@ class AccountingService extends _$AccountingService {
     // الطرف المدين: العملاء (Debit)
     // الحصول على حساب العميل المخصص إذا وجد (Sub-ledger)
     var receivableAccountId = 'acc-1201'; // Default AR
-    final customer =
-        await _customerRepository.getCustomerById(invoice.customerId);
+    final customer = await _customerRepository.getCustomerById(
+      invoice.customerId,
+    );
     if (customer != null && customer.receivableAccountId != null) {
       receivableAccountId = customer.receivableAccountId!;
     }
@@ -128,9 +129,8 @@ class AccountingService extends _$AccountingService {
     final allAccounts = await _repository.getAccounts();
     final revenueAccount = allAccounts.firstWhere(
       (a) => a.code == '4101' || a.subType == 'revenue',
-      orElse: () => allAccounts.firstWhere(
-        (a) => a.type == AccountType.revenue,
-      ),
+      orElse: () =>
+          allAccounts.firstWhere((a) => a.type == AccountType.revenue),
     );
 
     final revenueLine = JournalEntryLine(
@@ -236,9 +236,7 @@ class AccountingService extends _$AccountingService {
     String accountId,
     List<Account> allAccounts,
   ) {
-    final account = allAccounts.firstWhere(
-      (a) => a.id == accountId,
-    );
+    final account = allAccounts.firstWhere((a) => a.id == accountId);
     var total = account.balance;
 
     final children = allAccounts.where((a) => a.parentId == accountId);

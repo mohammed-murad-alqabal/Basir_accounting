@@ -226,9 +226,7 @@ class _InventoryItemFormScreenState
                 .map(
                   (v) => DropdownMenuItem(
                     value: v,
-                    child: Text(
-                      v.localizedName(isArabic: context.isArabic),
-                    ),
+                    child: Text(v.localizedName(isArabic: context.isArabic)),
                   ),
                 )
                 .toList(),
@@ -289,9 +287,8 @@ class _InventoryItemFormScreenState
             .map(
               (a) => DropdownMenuItem(
                 value: a.id,
-                child: Text(
-                  '${a.code} - ${a.name(isArabic: context.isArabic)}',
-                ),
+                child:
+                    Text('${a.code} - ${a.name(isArabic: context.isArabic)}'),
               ),
             )
             .toList(),

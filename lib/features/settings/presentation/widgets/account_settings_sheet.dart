@@ -8,10 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// واجهة تعديل بيانات الحساب
 class AccountSettingsSheet extends ConsumerStatefulWidget {
   /// إنشاء واجهة تعديل بيانات الحساب
-  const AccountSettingsSheet({
-    super.key,
-    this.currentUsername,
-  });
+  const AccountSettingsSheet({super.key, this.currentUsername});
 
   /// اسم المستخدم الحالي
   final String? currentUsername;
@@ -60,8 +57,9 @@ class _AccountSettingsSheetState extends ConsumerState<AccountSettingsSheet> {
     return Container(
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
-        borderRadius:
-            const BorderRadius.vertical(top: Radius.circular(Radii.xl)),
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(Radii.xl),
+        ),
       ),
       padding: EdgeInsets.only(
         top: Spacing.lg,
@@ -86,8 +84,9 @@ class _AccountSettingsSheetState extends ConsumerState<AccountSettingsSheet> {
           const SizedBox(height: Spacing.md),
           Text(
             context.l10n.editAccountTitle,
-            style: theme.textTheme.titleLarge
-                ?.copyWith(fontWeight: FontWeight.bold),
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: Spacing.lg),

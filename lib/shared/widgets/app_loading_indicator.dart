@@ -45,7 +45,6 @@ class AppLoadingScreen extends StatelessWidget {
   const AppLoadingScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => const Scaffold(
-        body: AppLoadingIndicator(size: 40),
-      );
+  Widget build(BuildContext context) =>
+      const Scaffold(body: AppLoadingIndicator(size: 40));
 }

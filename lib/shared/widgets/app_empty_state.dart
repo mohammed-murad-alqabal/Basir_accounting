@@ -87,12 +87,7 @@ class AppEmptyState extends StatelessWidget {
 
   Widget _buildIllustration() {
     if (lottieAsset != null) {
-      return Lottie.asset(
-        lottieAsset!,
-        width: 200,
-        height: 200,
-        repeat: true,
-      );
+      return Lottie.asset(lottieAsset!, width: 200, height: 200, repeat: true);
     }
 
     if (icon != null) {

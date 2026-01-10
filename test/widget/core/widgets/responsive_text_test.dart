@@ -106,10 +106,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-              textDirection: TextDirection.rtl,
-            ),
+            body: ResponsiveText('نص تجريبي', textDirection: TextDirection.rtl),
           ),
         ),
       );

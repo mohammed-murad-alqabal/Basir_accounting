@@ -27,9 +27,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 ///
 /// **Returns:** [AsyncValue<List<Customer>>] قائمة العملاء
 final customersProvider = FutureProvider<List<Customer>>((ref) async {
-  final repository = ref.watch(
-    customerRepositoryProvider,
-  );
+  final repository = ref.watch(customerRepositoryProvider);
   return repository.getAllCustomers();
 });
 
@@ -65,17 +63,11 @@ final addCustomerProvider = FutureProvider.family<bool, Customer>((
   ref,
   customer,
 ) async {
-  final repository = ref.watch(
-    customerRepositoryProvider,
-  );
+  final repository = ref.watch(customerRepositoryProvider);
 
   try {
-    await repository.addCustomer(
-      customer,
-    );
-    ref.invalidate(
-      customersProvider,
-    );
+    await repository.addCustomer(customer);
+    ref.invalidate(customersProvider);
     return true;
   } on Exception {
     return false;
@@ -113,17 +105,11 @@ final updateCustomerProvider = FutureProvider.family<bool, Customer>((
   ref,
   customer,
 ) async {
-  final repository = ref.watch(
-    customerRepositoryProvider,
-  );
+  final repository = ref.watch(customerRepositoryProvider);
 
   try {
-    await repository.updateCustomer(
-      customer,
-    );
-    ref.invalidate(
-      customersProvider,
-    );
+    await repository.updateCustomer(customer);
+    ref.invalidate(customersProvider);
     return true;
   } on Exception {
     return false;
@@ -155,17 +141,11 @@ final deleteCustomerProvider = FutureProvider.family<bool, String>((
   ref,
   customerId,
 ) async {
-  final repository = ref.watch(
-    customerRepositoryProvider,
-  );
+  final repository = ref.watch(customerRepositoryProvider);
 
   try {
-    await repository.deleteCustomer(
-      customerId,
-    );
-    ref.invalidate(
-      customersProvider,
-    );
+    await repository.deleteCustomer(customerId);
+    ref.invalidate(customersProvider);
     return true;
   } on Exception {
     return false;
@@ -186,9 +166,7 @@ final deleteCustomerProvider = FutureProvider.family<bool, String>((
 /// ```
 ///
 /// **القيمة الافتراضية:** سلسلة فارغة ('')
-final customerSearchProvider = StateProvider<String>(
-  (ref) => '',
-);
+final customerSearchProvider = StateProvider<String>((ref) => '');
 
 /// Provider لقائمة العملاء المفلترة حسب البحث
 ///
@@ -220,12 +198,8 @@ final customerSearchProvider = StateProvider<String>(
 ///
 /// **Returns:** [AsyncValue<List<Customer>>] قائمة العملاء المفلترة
 final filteredCustomersProvider = Provider<AsyncValue<List<Customer>>>((ref) {
-  final searchQuery = ref.watch(
-    customerSearchProvider,
-  );
-  final customersAsync = ref.watch(
-    customersProvider,
-  );
+  final searchQuery = ref.watch(customerSearchProvider);
+  final customersAsync = ref.watch(customersProvider);
 
   return customersAsync.whenData((customers) {
     if (searchQuery.isEmpty) {

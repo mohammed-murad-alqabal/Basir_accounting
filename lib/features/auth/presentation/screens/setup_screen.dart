@@ -62,16 +62,13 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
       return;
     }
 
-    setState(
-      () => _isLoading = true,
-    );
+    setState(() => _isLoading = true);
 
     try {
       // إنشاء الحساب الفعلي باستخدام AuthService
-      await ref.read(authServiceProvider).createAccount(
-            _usernameController.text,
-            _passwordController.text,
-          );
+      await ref
+          .read(authServiceProvider)
+          .createAccount(_usernameController.text, _passwordController.text);
 
       if (!mounted) return;
 
@@ -81,22 +78,16 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
 
       // الانتقال إلى شاشة الإعدادات الإضافية أو لوحة التحكم
       if (!mounted) return;
-      await Navigator.of(context).pushReplacementNamed(
-        '/dashboard',
-      );
+      await Navigator.of(context).pushReplacementNamed('/dashboard');
     } on Exception catch (e) {
       if (!mounted) return;
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.errGeneric(e.toString()))),
       );
     } finally {
       if (mounted) {
-        setState(
-          () => _isLoading = false,
-        );
+        setState(() => _isLoading = false);
       }
     }
   }
@@ -127,10 +118,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                       label: context.l10n.labelUsername,
                       hint: context.l10n.hintEnterUsername,
                       controller: _usernameController,
-                      prefixIcon: Icon(
-                        appIcons.person,
-                        size: IconSizes.sm,
-                      ),
+                      prefixIcon: Icon(appIcons.person, size: IconSizes.sm),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return context.l10n.errEmptyField;
@@ -149,10 +137,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                       hint: context.l10n.hintEnterPassword,
                       controller: _passwordController,
                       obscureText: true,
-                      prefixIcon: Icon(
-                        appIcons.lock,
-                        size: IconSizes.sm,
-                      ),
+                      prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return context.l10n.errEmptyField;
@@ -171,10 +156,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                       hint: context.l10n.hintConfirmPassword,
                       controller: _confirmPasswordController,
                       obscureText: true,
-                      prefixIcon: Icon(
-                        appIcons.lock,
-                        size: IconSizes.sm,
-                      ),
+                      prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return context.l10n.errEmptyField;

@@ -150,9 +150,7 @@ void main() {
       mockCustomerRepo.setCustomers(customers);
     });
 
-    Widget createTestWidget({
-      Map<String, WidgetBuilder>? routes,
-    }) =>
+    Widget createTestWidget({Map<String, WidgetBuilder>? routes}) =>
         ProviderScope(
           overrides: [
             invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepo),
@@ -272,117 +270,109 @@ void main() {
         expect(find.byType(AppListCard), findsNWidgets(5));
       });
 
-      testWidgets('should display first activity (paid invoice)',
-          (tester) async {
+      testWidgets('should display first activity (paid invoice)', (
+        tester,
+      ) async {
         await setUpWidgets(tester);
         expect(find.text(l10n.invoiceTitle('#001')), findsOneWidget);
         expect(find.text('أحمد محمد'), findsOneWidget);
       });
 
-      testWidgets('should display second activity (pending invoice)',
-          (tester) async {
+      testWidgets('should display second activity (pending invoice)', (
+        tester,
+      ) async {
         await setUpWidgets(tester);
         expect(find.text(l10n.invoiceTitle('#002')), findsOneWidget);
         expect(find.text('سارة علي'), findsOneWidget);
       });
 
-      testWidgets('should display third activity (overdue invoice)',
-          (tester) async {
+      testWidgets('should display third activity (overdue invoice)', (
+        tester,
+      ) async {
         await setUpWidgets(tester);
         expect(find.text(l10n.invoiceTitle('#003')), findsOneWidget);
         expect(find.text('محمود حسن'), findsOneWidget);
       });
     });
 
-    testWidgets(
-      'New Invoice button should navigate to form',
-      (tester) async {
-        var navigated = false;
-        await tester.pumpWidget(
-          createTestWidget(
-            routes: {
-              '/invoice-form': (context) {
-                navigated = true;
-                return const Scaffold();
-              },
+    testWidgets('New Invoice button should navigate to form', (tester) async {
+      var navigated = false;
+      await tester.pumpWidget(
+        createTestWidget(
+          routes: {
+            '/invoice-form': (context) {
+              navigated = true;
+              return const Scaffold();
             },
-          ),
-        );
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 100));
-        await tester.pump();
+          },
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump();
 
-        // Scroll to make the button visible
-        final buttonFinder =
-            find.widgetWithText(AppEnhancedButton, l10n.actionAddInvoice);
-        await tester.ensureVisible(buttonFinder);
-        await tester.pump();
+      // Scroll to make the button visible
+      final buttonFinder = find.widgetWithText(
+        AppEnhancedButton,
+        l10n.actionAddInvoice,
+      );
+      await tester.ensureVisible(buttonFinder);
+      await tester.pump();
 
-        await tester.tap(buttonFinder);
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 100));
+      await tester.tap(buttonFinder);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
 
-        expect(navigated, isTrue);
-      },
-    );
+      expect(navigated, isTrue);
+    });
 
-    testWidgets(
-      'New Customer button should navigate to form',
-      (tester) async {
-        var navigated = false;
-        await tester.pumpWidget(
-          createTestWidget(
-            routes: {
-              '/customer-form': (context) {
-                navigated = true;
-                return const Scaffold();
-              },
+    testWidgets('New Customer button should navigate to form', (tester) async {
+      var navigated = false;
+      await tester.pumpWidget(
+        createTestWidget(
+          routes: {
+            '/customer-form': (context) {
+              navigated = true;
+              return const Scaffold();
             },
-          ),
-        );
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 100));
-        await tester.pump();
+          },
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump();
 
-        // Scroll to make the button visible
-        final buttonFinder =
-            find.widgetWithText(AppEnhancedButton, l10n.actionAddCustomer);
-        await tester.ensureVisible(buttonFinder);
-        await tester.pump();
+      // Scroll to make the button visible
+      final buttonFinder = find.widgetWithText(
+        AppEnhancedButton,
+        l10n.actionAddCustomer,
+      );
+      await tester.ensureVisible(buttonFinder);
+      await tester.pump();
 
-        await tester.tap(buttonFinder);
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 100));
+      await tester.tap(buttonFinder);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
 
-        expect(navigated, isTrue);
-      },
-    );
+      expect(navigated, isTrue);
+    });
 
     group('Accessibility', () {
       testWidgets('should have semantic labels for buttons', (tester) async {
         await setUpWidgets(tester);
 
         // Verify "Add Invoice" button has correct label
-        expect(
-          find.bySemanticsLabel(l10n.actionAddInvoice),
-          findsOneWidget,
-        );
+        expect(find.bySemanticsLabel(l10n.actionAddInvoice), findsOneWidget);
 
         // Verify "Add Customer" button has correct label
-        expect(
-          find.bySemanticsLabel(l10n.actionAddCustomer),
-          findsOneWidget,
-        );
+        expect(find.bySemanticsLabel(l10n.actionAddCustomer), findsOneWidget);
 
         // Verify Accounting buttons have their custom semantic labels
         expect(
           find.bySemanticsLabel(l10n.labelChartOfAccounts),
           findsOneWidget,
         );
-        expect(
-          find.bySemanticsLabel(l10n.labelJournalEntries),
-          findsOneWidget,
-        );
+        expect(find.bySemanticsLabel(l10n.labelJournalEntries), findsOneWidget);
       });
     });
   });

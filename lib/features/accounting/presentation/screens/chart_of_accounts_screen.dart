@@ -13,8 +13,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 /// حالة توسيع شجرة الحسابات.
-final expandedAccountsProvider =
-    StateProvider<Set<String>>((ref) => <String>{});
+final expandedAccountsProvider = StateProvider<Set<String>>(
+  (ref) => <String>{},
+);
 
 /// شاشة عرض دليل الحسابات (Chart of Accounts) بنظام هرمي.
 class ChartOfAccountsScreen extends ConsumerWidget {
@@ -67,18 +68,17 @@ class ChartOfAccountsScreen extends ConsumerWidget {
             return _buildEmptyState(context);
           }
 
-          final displayList = _buildDisplayList(
-            allAccounts,
-            expandedIds,
-          );
+          final displayList = _buildDisplayList(allAccounts, expandedIds);
 
           return ListView.builder(
             itemCount: displayList.length,
             itemBuilder: (context, index) {
               final account = displayList[index];
               final depth = _getDepth(account, allAccounts);
-              final hierarchicalBalance =
-                  _calculateHierarchicalBalance(account, allAccounts);
+              final hierarchicalBalance = _calculateHierarchicalBalance(
+                account,
+                allAccounts,
+              );
 
               return _AccountTreeItem(
                 account: account,
@@ -382,10 +382,7 @@ class _AccountTreeItem extends StatelessWidget {
   }
 
   String _formatCurrency(Decimal amount) {
-    final formatter = NumberFormat.currency(
-      symbol: '',
-      decimalDigits: 2,
-    );
+    final formatter = NumberFormat.currency(symbol: '', decimalDigits: 2);
     return formatter.format(amount.toDouble());
   }
 }

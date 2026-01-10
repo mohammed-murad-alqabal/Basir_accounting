@@ -21,9 +21,7 @@ void main() {
         for (var i = 0; i < iterations; i++) {
           await tester.pumpWidget(
             ProviderScope(
-              overrides: [
-                currentUserProvider.overrideWith((ref) => null),
-              ],
+              overrides: [currentUserProvider.overrideWith((ref) => null)],
               child: MaterialApp(
                 theme: AppTheme.lightTheme,
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -60,9 +58,7 @@ void main() {
       // Pump the widget
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [
-            currentUserProvider.overrideWith((ref) => null),
-          ],
+          overrides: [currentUserProvider.overrideWith((ref) => null)],
           child: MaterialApp(
             theme: AppTheme.lightTheme,
             localizationsDelegates: AppLocalizations.localizationsDelegates,

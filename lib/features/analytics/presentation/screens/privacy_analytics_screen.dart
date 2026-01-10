@@ -31,9 +31,7 @@ class _PrivacyAnalyticsScreenState
     final analytics = ref.watch(analyticsServiceProvider);
 
     return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.privacyAnalyticsTitle,
-      ),
+      appBar: AppAppBar(title: context.l10n.privacyAnalyticsTitle),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(Spacing.lg),
         child: Column(
@@ -101,10 +99,7 @@ class _PrivacyAnalyticsScreenState
     );
   }
 
-  void _showClearDataDialog(
-    BuildContext context,
-    AnalyticsService? analytics,
-  ) {
+  void _showClearDataDialog(BuildContext context, AnalyticsService? analytics) {
     unawaited(
       showDialog<void>(
         context: context,
@@ -127,17 +122,13 @@ class _PrivacyAnalyticsScreenState
                 if (context.mounted) {
                   unawaited(Navigator.of(context).maybePop());
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(context.l10n.analyticsDataCleared),
-                    ),
+                    SnackBar(content: Text(context.l10n.analyticsDataCleared)),
                   );
                 }
               },
               child: Text(
                 context.l10n.btnDelete,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.error,
-                ),
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             ),
           ],

@@ -12,9 +12,7 @@ class ContactService {
   /// الحصول على قائمة جهات الاتصال
   Future<List<Contact>> getContacts() async {
     if (await requestPermission()) {
-      return FlutterContacts.getContacts(
-        withProperties: true,
-      );
+      return FlutterContacts.getContacts(withProperties: true);
     }
     return [];
   }

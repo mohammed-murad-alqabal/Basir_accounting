@@ -103,56 +103,42 @@ class ReportingService {
     required String fromDate,
     required String toDate,
   }) async =>
-      _api.generateIncomeStatement(
-        fromDate: fromDate,
-        toDate: toDate,
-      );
+      _api.generateIncomeStatement(fromDate: fromDate, toDate: toDate);
 
   /// Generate a Balance Sheet.
   Future<rust.FinancialReportDto> generateBalanceSheet({
     required String asOfDate,
   }) async =>
-      _api.generateBalanceSheet(
-        asOfDate: asOfDate,
-      );
+      _api.generateBalanceSheet(asOfDate: asOfDate);
 
   /// Generate a Statement of Cash Flows.
   Future<rust.FinancialReportDto> generateCashFlowStatement({
     required String fromDate,
     required String toDate,
   }) async =>
-      _api.generateCashFlowStatement(
-        fromDate: fromDate,
-        toDate: toDate,
-      );
+      _api.generateCashFlowStatement(fromDate: fromDate, toDate: toDate);
 
   /// Generate Accounts Receivable Aging Report.
   Future<List<rust.AgingReportLineDto>> getReceivablesAging({
     required String asOfDate,
   }) async =>
-      _api.getReceivablesAging(
-        asOfDate: asOfDate,
-      );
+      _api.getReceivablesAging(asOfDate: asOfDate);
 
   /// Generate Accounts Payable Aging Report.
   Future<List<rust.AgingReportLineDto>> getPayablesAging({
     required String asOfDate,
   }) async =>
-      _api.getPayablesAging(
-        asOfDate: asOfDate,
-      );
+      _api.getPayablesAging(asOfDate: asOfDate);
 
   /// Generate Zakah Statement.
   Future<rust.FinancialReportDto> generateZakahStatement({
     required String asOfDate,
     required rust.ZakahCalendarDto calendar,
   }) async =>
-      _api.generateZakahStatement(
-        asOfDate: asOfDate,
-        calendar: calendar,
-      );
+      _api.generateZakahStatement(asOfDate: asOfDate, calendar: calendar);
 }
 
 /// Provider for the [ReportingService].
-final nativeReportingServiceProvider =
-    Provider<ReportingService>((ref) => ReportingService());
+final nativeReportingServiceProvider = Provider<ReportingService>(
+  (ref) => ReportingService(),
+);

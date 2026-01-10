@@ -87,9 +87,8 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(
-        kToolbarHeight + (bottom?.preferredSize.height ?? 1.0),
-      );
+  Size get preferredSize =>
+      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 1.0));
 }
 
 /// شريط تطبيق بسيط بدون زر رجوع
@@ -170,7 +169,5 @@ class AppSimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
       );
 
   @override
-  Size get preferredSize => const Size.fromHeight(
-        kToolbarHeight + 1.0,
-      );
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 1.0);
 }

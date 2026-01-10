@@ -54,66 +54,38 @@ class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/setup':
-        return MaterialPageRoute(
-          builder: (_) => const SetupScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const SetupScreen());
       case '/login':
-        return MaterialPageRoute(
-          builder: (_) => const LoginScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
       case '/dashboard':
-        return MaterialPageRoute(
-          builder: (_) => const MainShell(),
-        );
+        return MaterialPageRoute(builder: (_) => const MainShell());
       case '/customers':
-        return MaterialPageRoute(
-          builder: (_) => const CustomersScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const CustomersScreen());
       case '/vendors':
-        return MaterialPageRoute(
-          builder: (_) => const VendorsScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const VendorsScreen());
       case '/invoices':
-        return MaterialPageRoute(
-          builder: (_) => const InvoicesScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const InvoicesScreen());
       case '/invoice-form':
-        return MaterialPageRoute(
-          builder: (_) => const InvoiceFormScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const InvoiceFormScreen());
       case '/customer-form':
-        return MaterialPageRoute(
-          builder: (_) => const CustomerFormScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const CustomerFormScreen());
       case '/vendor-form':
-        return MaterialPageRoute(
-          builder: (_) => const VendorFormScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const VendorFormScreen());
       case '/settings':
-        return MaterialPageRoute(
-          builder: (_) => const SettingsScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const SettingsScreen());
       case '/inventory':
-        return MaterialPageRoute(
-          builder: (_) => const InventoryItemsScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const InventoryItemsScreen());
       case '/inventory-form':
         return MaterialPageRoute(
           builder: (_) => const InventoryItemFormScreen(),
         );
       case '/assets':
-        return MaterialPageRoute(
-          builder: (_) => const AssetsScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const AssetsScreen());
       case '/asset-form':
-        return MaterialPageRoute(
-          builder: (_) => const AssetFormScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const AssetFormScreen());
 
       case '/guest-upgrade':
-        return MaterialPageRoute(
-          builder: (_) => const GuestUpgradeScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const GuestUpgradeScreen());
       default:
         return MaterialPageRoute(
           builder: (context) => Scaffold(

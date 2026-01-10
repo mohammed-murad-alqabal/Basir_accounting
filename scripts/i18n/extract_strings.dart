@@ -10,9 +10,7 @@ void main() {
   final rootDir = Directory.current.path;
   final libDir = path.join(rootDir, 'lib');
 
-  print(
-    '🔍 Scanning for hardcoded strings in $libDir...',
-  );
+  print('🔍 Scanning for hardcoded strings in $libDir...');
 
   final libDirEntity = Directory(libDir);
   if (!libDirEntity.existsSync()) {

@@ -28,9 +28,7 @@ void main() {
           effectiveDate: DateTime.now(),
           recordingDate: DateTime.now(),
         ),
-        standards: const StandardsJustification(
-          standardReference: 'IFRS 9',
-        ),
+        standards: const StandardsJustification(standardReference: 'IFRS 9'),
         description: 'Precision test',
         status: JournalEntryStatus.posted,
         lines: [line1, line2],

@@ -37,8 +37,9 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
     _nameArController = TextEditingController(text: widget.asset?.nameAr ?? '');
     _nameEnController = TextEditingController(text: widget.asset?.nameEn ?? '');
     _codeController = TextEditingController(text: widget.asset?.code ?? '');
-    _costController =
-        TextEditingController(text: widget.asset?.cost.toString() ?? '');
+    _costController = TextEditingController(
+      text: widget.asset?.cost.toString() ?? '',
+    );
     _salvageValueController = TextEditingController(
       text: widget.asset?.residualValue.toString() ?? '0.0',
     );

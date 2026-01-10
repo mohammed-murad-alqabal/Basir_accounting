@@ -31,9 +31,7 @@ class SupabaseAuthService {
       supabaseClient.auth.signUp(
         email: email,
         password: password,
-        data: {
-          'display_name': displayName,
-        },
+        data: {'display_name': displayName},
       );
 
   /// تسجيل الدخول
@@ -41,10 +39,7 @@ class SupabaseAuthService {
     required String email,
     required String password,
   }) async =>
-      supabaseClient.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
+      supabaseClient.auth.signInWithPassword(email: email, password: password);
 
   /// تسجيل الخروج
   Future<void> logout() async {
@@ -62,9 +57,6 @@ class SupabaseAuthService {
     Map<String, dynamic>? data,
   }) async =>
       supabaseClient.auth.updateUser(
-        UserAttributes(
-          password: password,
-          data: data,
-        ),
+        UserAttributes(password: password, data: data),
       );
 }

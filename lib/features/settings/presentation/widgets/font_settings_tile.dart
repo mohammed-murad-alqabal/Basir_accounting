@@ -50,9 +50,9 @@ class FontSettingsTile extends ConsumerWidget {
             selected: {currentFont},
             onSelectionChanged: (newSelection) {
               unawaited(
-                ref.read(fontCustomizationProvider.notifier).setFontFamily(
-                      newSelection.first,
-                    ),
+                ref
+                    .read(fontCustomizationProvider.notifier)
+                    .setFontFamily(newSelection.first),
               );
             },
             showSelectedIcon: false,
@@ -118,9 +118,7 @@ class FontSettingsTile extends ConsumerWidget {
               alpha: 0.3,
             ),
             borderRadius: BorderRadius.circular(Radii.lg),
-            border: Border.all(
-              color: theme.colorScheme.outlineVariant,
-            ),
+            border: Border.all(color: theme.colorScheme.outlineVariant),
           ),
           child: Column(
             children: [

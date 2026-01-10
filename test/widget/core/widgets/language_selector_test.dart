@@ -32,9 +32,7 @@ void main() {
             ],
             supportedLocales: AppLocalizations.supportedLocales,
             locale: Locale('ar'),
-            home: Scaffold(
-              body: LanguageSelector(),
-            ),
+            home: Scaffold(body: LanguageSelector()),
           ),
         );
 

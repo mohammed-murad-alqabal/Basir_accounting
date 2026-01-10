@@ -17,9 +17,7 @@ void main() {
     setUp(() {
       mockRepo = MockAccountingRepository();
       container = ProviderContainer(
-        overrides: [
-          accountingRepositoryProvider.overrideWithValue(mockRepo),
-        ],
+        overrides: [accountingRepositoryProvider.overrideWithValue(mockRepo)],
       );
 
       // Default empty returns
@@ -195,8 +193,9 @@ void main() {
         ];
 
         when(() => mockRepo.getAccounts()).thenAnswer((_) async => accounts);
-        when(() => mockRepo.getJournalEntries())
-            .thenAnswer((_) async => entries);
+        when(
+          () => mockRepo.getJournalEntries(),
+        ).thenAnswer((_) async => entries);
 
         final service = container.read(analyticsServiceProvider.notifier);
         final trend = await service.getCashFlowTrend();

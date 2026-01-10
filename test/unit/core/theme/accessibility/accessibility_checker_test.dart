@@ -153,9 +153,7 @@ void main() {
   group('AccessibilityChecker - Touch Target Size', () {
     test('should pass for 48x48 touch target', () {
       // Act
-      final result = AccessibilityChecker.checkTouchTarget(
-        const Size(48, 48),
-      );
+      final result = AccessibilityChecker.checkTouchTarget(const Size(48, 48));
 
       // Assert
       expect(result, isTrue);
@@ -163,9 +161,7 @@ void main() {
 
     test('should pass for larger touch target', () {
       // Act
-      final result = AccessibilityChecker.checkTouchTarget(
-        const Size(56, 56),
-      );
+      final result = AccessibilityChecker.checkTouchTarget(const Size(56, 56));
 
       // Assert
       expect(result, isTrue);
@@ -173,9 +169,7 @@ void main() {
 
     test('should fail for small touch target', () {
       // Act
-      final result = AccessibilityChecker.checkTouchTarget(
-        const Size(32, 32),
-      );
+      final result = AccessibilityChecker.checkTouchTarget(const Size(32, 32));
 
       // Assert
       expect(result, isFalse);
@@ -183,9 +177,7 @@ void main() {
 
     test('should fail if only width is too small', () {
       // Act
-      final result = AccessibilityChecker.checkTouchTarget(
-        const Size(40, 48),
-      );
+      final result = AccessibilityChecker.checkTouchTarget(const Size(40, 48));
 
       // Assert
       expect(result, isFalse);
@@ -193,9 +185,7 @@ void main() {
 
     test('should fail if only height is too small', () {
       // Act
-      final result = AccessibilityChecker.checkTouchTarget(
-        const Size(48, 40),
-      );
+      final result = AccessibilityChecker.checkTouchTarget(const Size(48, 40));
 
       // Assert
       expect(result, isFalse);
@@ -214,9 +204,7 @@ void main() {
 
     test('should handle zero size', () {
       // Act
-      final result = AccessibilityChecker.checkTouchTarget(
-        Size.zero,
-      );
+      final result = AccessibilityChecker.checkTouchTarget(Size.zero);
 
       // Assert
       expect(result, isFalse);
@@ -260,10 +248,7 @@ void main() {
 
     test('should work with custom minimum size', () {
       // Act
-      final result = AccessibilityChecker.checkFontSize(
-        12,
-        minSize: 12,
-      );
+      final result = AccessibilityChecker.checkFontSize(12, minSize: 12);
 
       // Assert
       expect(result, isTrue);
@@ -321,10 +306,7 @@ void main() {
 
     test('should work with custom minimum height', () {
       // Act
-      final result = AccessibilityChecker.checkLineHeight(
-        1.2,
-        minHeight: 1.2,
-      );
+      final result = AccessibilityChecker.checkLineHeight(1.2, minHeight: 1.2);
 
       // Assert
       expect(result, isTrue);
@@ -468,10 +450,7 @@ void main() {
   group('AccessibilityChecker - Summary and Utilities', () {
     test('should print summary without crashing', () {
       // Act & Assert - Should not crash
-      expect(
-        AccessibilityChecker.printSummary,
-        returnsNormally,
-      );
+      expect(AccessibilityChecker.printSummary, returnsNormally);
     });
 
     test('should handle edge cases in contrast calculation', () {
@@ -501,12 +480,18 @@ void main() {
       const color2 = Colors.white;
 
       // Act
-      final ratio1 =
-          AccessibilityChecker.calculateContrastRatio(color1, color2);
-      final ratio2 =
-          AccessibilityChecker.calculateContrastRatio(color1, color2);
-      final ratio3 =
-          AccessibilityChecker.calculateContrastRatio(color1, color2);
+      final ratio1 = AccessibilityChecker.calculateContrastRatio(
+        color1,
+        color2,
+      );
+      final ratio2 = AccessibilityChecker.calculateContrastRatio(
+        color1,
+        color2,
+      );
+      final ratio3 = AccessibilityChecker.calculateContrastRatio(
+        color1,
+        color2,
+      );
 
       // Assert
       expect(ratio1, equals(ratio2));
@@ -568,7 +553,6 @@ void main() {
         [const Size(48, 48), true],
         [const Size(56, 56), true],
         [const Size(64, 32), false], // Wide but short
-
         // Poor sizes
         [const Size(32, 32), false],
         [const Size(24, 24), false],

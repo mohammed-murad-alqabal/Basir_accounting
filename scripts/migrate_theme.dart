@@ -42,9 +42,7 @@ void main() {
       // full migration
       if (entity.path.contains('core/theme.dart') ||
           entity.path.contains('core/theme_dark.dart') ||
-          entity.path.contains(
-            'core/theme/app_colors.dart',
-          )) {
+          entity.path.contains('core/theme/app_colors.dart')) {
         return;
       }
 

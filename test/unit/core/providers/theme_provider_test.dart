@@ -37,9 +37,7 @@ void main() {
 
     test('should load persisted theme from storage', () async {
       // Arrange - pre-fill storage
-      SharedPreferences.setMockInitialValues({
-        'theme_mode': 'ThemeMode.dark',
-      });
+      SharedPreferences.setMockInitialValues({'theme_mode': 'ThemeMode.dark'});
 
       // Re-create container to simulate app restart
       container = ProviderContainer();

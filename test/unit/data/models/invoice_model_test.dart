@@ -184,12 +184,18 @@ void main() {
 
       test('should handle different statuses', () {
         // Act
-        final draft =
-            InvoiceFixtures.createInvoice(1, status: InvoiceStatus.draft);
-        final issued =
-            InvoiceFixtures.createInvoice(2, status: InvoiceStatus.sent);
-        final paid =
-            InvoiceFixtures.createInvoice(3, status: InvoiceStatus.paid);
+        final draft = InvoiceFixtures.createInvoice(
+          1,
+          status: InvoiceStatus.draft,
+        );
+        final issued = InvoiceFixtures.createInvoice(
+          2,
+          status: InvoiceStatus.sent,
+        );
+        final paid = InvoiceFixtures.createInvoice(
+          3,
+          status: InvoiceStatus.paid,
+        );
 
         // Assert
         expect(draft.status, InvoiceStatus.draft);

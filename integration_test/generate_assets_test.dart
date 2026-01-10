@@ -13,11 +13,7 @@ void main() {
   testWidgets('Generate Basir 2.0 PNG Assets on Device', (tester) async {
     // 1. Setup
     final exports = [
-      {
-        'name': 'app_icon.png',
-        'size': 1024.0,
-        'bg': Colors.white,
-      },
+      {'name': 'app_icon.png', 'size': 1024.0, 'bg': Colors.white},
       {
         'name': 'splash_logo.png',
         'size': 1024.0,

@@ -40,25 +40,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (_isLoading) return;
     // تفعيل validation عند أول محاولة
     if (_autovalidateMode == AutovalidateMode.disabled) {
-      setState(
-        () => _autovalidateMode = AutovalidateMode.onUserInteraction,
-      );
+      setState(() => _autovalidateMode = AutovalidateMode.onUserInteraction);
     }
 
     if (!_formKey.currentState!.validate()) {
       return;
     }
 
-    setState(
-      () => _isLoading = true,
-    );
+    setState(() => _isLoading = true);
 
     try {
       // تسجيل الدخول الفعلي باستخدام AuthService
-      final success = await ref.read(authServiceProvider).login(
-            _usernameController.text,
-            _passwordController.text,
-          );
+      final success = await ref
+          .read(authServiceProvider)
+          .login(_usernameController.text, _passwordController.text);
 
       if (!success) {
         if (!mounted) return;
@@ -69,16 +64,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       // حفظ حالة "البقاء مسجلاً" إذا تم اختيارها
       if (_keepLoggedIn) {
-        await ref.read(authServiceProvider).setKeepLoggedIn(
-              keepLoggedIn: true,
-            );
+        await ref.read(authServiceProvider).setKeepLoggedIn(keepLoggedIn: true);
       }
 
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.msgLoginSuccess)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.l10n.msgLoginSuccess)));
 
       // الانتقال إلى لوحة التحكم
       if (!mounted) return;
@@ -91,18 +84,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       );
     } finally {
       if (mounted) {
-        setState(
-          () => _isLoading = false,
-        );
+        setState(() => _isLoading = false);
       }
     }
   }
 
   Future<void> _handleGuestLogin() async {
     if (_isLoading) return;
-    setState(
-      () => _isLoading = true,
-    );
+    setState(() => _isLoading = true);
 
     try {
       // تسجيل الدخول كضيف بشكل فوري (إزالة التأخير غير الضروري)
@@ -110,11 +99,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.l10n.msgGuestWelcome),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.l10n.msgGuestWelcome)));
 
       // الانتقال إلى لوحة التحكم
       if (!mounted) return;
@@ -127,9 +114,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       );
     } finally {
       if (mounted) {
-        setState(
-          () => _isLoading = false,
-        );
+        setState(() => _isLoading = false);
       }
     }
   }
@@ -162,10 +147,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       label: context.l10n.labelUsername,
                       hint: context.l10n.hintEnterUsername,
                       controller: _usernameController,
-                      prefixIcon: Icon(
-                        appIcons.person,
-                        size: IconSizes.sm,
-                      ),
+                      prefixIcon: Icon(appIcons.person, size: IconSizes.sm),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return context.l10n.errEmptyField;
@@ -181,10 +163,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       hint: context.l10n.hintEnterPassword,
                       controller: _passwordController,
                       obscureText: true,
-                      prefixIcon: Icon(
-                        appIcons.lock,
-                        size: IconSizes.sm,
-                      ),
+                      prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return context.l10n.errEmptyField;
@@ -201,9 +180,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           value: _keepLoggedIn,
                           activeColor: colorScheme.primary,
                           onChanged: (value) {
-                            setState(
-                              () => _keepLoggedIn = value ?? true,
-                            );
+                            setState(() => _keepLoggedIn = value ?? true);
                           },
                         ),
                         Text(
