@@ -9,10 +9,16 @@ import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة تسجيل الدخول
+/// ***
+/// Cognitive Foundation: LoginScreen
 ///
-/// تسمح للمستخدم بتسجيل الدخول إلى التطبيق باستخدام
-/// اسم المستخدم وكلمة المرور
+/// The primary interface for institutional identity verification.
+/// Implements dual-path authentication:
+/// 1. Hardware-stretching credentials (Username/Password).
+/// 2. Transient guest-mode fallback for unverified operations.
+///
+/// Features accessibility compliance (Semantics) and high-fidelity UX.
+/// ***
 class LoginScreen extends ConsumerStatefulWidget {
   /// إنشاء شاشة تسجيل الدخول
   const LoginScreen({super.key});

@@ -620,6 +620,12 @@ abstract class AppLocalizations {
   /// **'حذف'**
   String get btnDelete;
 
+  /// No description provided for @btnEdit.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل'**
+  String get btnEdit;
+
   /// No description provided for @btnDone.
   ///
   /// In ar, this message translates to:
@@ -2807,8 +2813,104 @@ abstract class AppLocalizations {
   /// No description provided for @labelNetProfit.
   ///
   /// In ar, this message translates to:
-  /// **'صافي الربح / الخسارة'**
+  /// **'صافي الربح / الخساارة'**
   String get labelNetProfit;
+
+  /// No description provided for @labelInventoryItem.
+  ///
+  /// In ar, this message translates to:
+  /// **'صنف من المخزون'**
+  String get labelInventoryItem;
+
+  /// No description provided for @hintSelectInventoryItem.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر صنفاً من المخزون لملء البيانات تلقائياً'**
+  String get hintSelectInventoryItem;
+
+  /// No description provided for @labelTaxCategory.
+  ///
+  /// In ar, this message translates to:
+  /// **'فئة الضريبة'**
+  String get labelTaxCategory;
+
+  /// No description provided for @labelSearchSku.
+  ///
+  /// In ar, this message translates to:
+  /// **'بحث بالباركود / SKU'**
+  String get labelSearchSku;
+
+  /// No description provided for @hintSearchSku.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدخل الكود واضغط Enter'**
+  String get hintSearchSku;
+
+  /// No description provided for @msgItemNotFound.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصنف غير موجود'**
+  String get msgItemNotFound;
+
+  /// No description provided for @tooltipPrintReceipt.
+  ///
+  /// In ar, this message translates to:
+  /// **'طباعة إيصال'**
+  String get tooltipPrintReceipt;
+
+  /// No description provided for @tooltipReverseInvoice.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء/عكس'**
+  String get tooltipReverseInvoice;
+
+  /// No description provided for @titleReverseInvoice.
+  ///
+  /// In ar, this message translates to:
+  /// **'عكس الفاتورة'**
+  String get titleReverseInvoice;
+
+  /// No description provided for @msgConfirmReverseInvoice.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل أنت متأكد من رغبتك في عكس هذه الفاتورة؟ سيتم إنشاء قيد عكسي في المحاسبة.'**
+  String get msgConfirmReverseInvoice;
+
+  /// No description provided for @btnConfirmReverse.
+  ///
+  /// In ar, this message translates to:
+  /// **'نعم، عكس الفاتورة'**
+  String get btnConfirmReverse;
+
+  /// No description provided for @receiptTitleTaxInvoice.
+  ///
+  /// In ar, this message translates to:
+  /// **'فاتورة ضريبية'**
+  String get receiptTitleTaxInvoice;
+
+  /// No description provided for @receiptTitleSimplified.
+  ///
+  /// In ar, this message translates to:
+  /// **'فاتورة ضريبية مبسطة'**
+  String get receiptTitleSimplified;
+
+  /// No description provided for @receiptFooterThanks.
+  ///
+  /// In ar, this message translates to:
+  /// **'شكراً لزيارتكم'**
+  String get receiptFooterThanks;
+
+  /// No description provided for @receiptFooterBrand.
+  ///
+  /// In ar, this message translates to:
+  /// **'بصير - Basir Accounting'**
+  String get receiptFooterBrand;
+
+  /// No description provided for @labelDiscount.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخصم'**
+  String get labelDiscount;
 }
 
 class _AppLocalizationsDelegate

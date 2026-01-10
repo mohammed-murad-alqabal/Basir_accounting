@@ -1,18 +1,23 @@
+import 'dart:async';
+
 import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:basir_app/features/accounting/application/accounting_service.dart';
 import 'package:basir_app/features/accounting/application/treasury_service.dart';
 import 'package:basir_app/features/accounting/domain/entities/account.dart';
 import 'package:basir_app/features/accounting/domain/entities/financial_voucher.dart';
-// ignore: unused_import
 import 'package:basir_app/features/accounting/presentation/screens/voucher_form_screen.dart';
 import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
 
-/// شاشة نظرة عامة على الخزينة (Treasury Overview)
+/// Command center for tracking liquidity and treasury operations.
+///
+/// Provides a real-time monitor for cash and bank balances, along with a
+/// prioritized list of recent Receipt and Payment vouchers.
 class TreasuryOverviewScreen extends ConsumerWidget {
-  /// إنشاء شاشة نظرة عامة على الخزينة.
+  /// Creates the treasury overview screen.
   const TreasuryOverviewScreen({super.key});
 
   @override
@@ -24,18 +29,20 @@ class TreasuryOverviewScreen extends ConsumerWidget {
             ref.invalidate(accountingServiceProvider);
           },
           child: ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(Spacing.md),
             children: [
               _buildCashBalances(ref),
-              const SizedBox(height: 24),
+              const SizedBox(height: Spacing.lg),
               _buildQuickActions(context),
-              const SizedBox(height: 24),
+              const SizedBox(height: Spacing.lg),
               Text(
                 context.l10n.recentVouchersTitle,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: Spacing.md),
               _buildVouchersList(context, ref),
             ],
           ),
@@ -44,17 +51,17 @@ class TreasuryOverviewScreen extends ConsumerWidget {
           onPressed: () => _createNewVoucher(context, VoucherType.receipt),
           label: Text(context.l10n.newVoucherLabel),
           icon: const Icon(Icons.add),
+          backgroundColor: AppColors.primary,
         ),
       );
 
-  Widget _buildCashBalances(WidgetRef ref) => ref
-      .watch(accountingServiceProvider)
-      .when(
+  /// Renders a horizontal scrollable view of atomic cash/bank accounts.
+  Widget _buildCashBalances(WidgetRef ref) => ref.watch(accountingServiceProvider).when(
         data: (_) => FutureBuilder<List<Account>>(
           future: ref.read(accountingServiceProvider.notifier).getAccounts(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: AppLoadingIndicator());
             }
 
             final cashAccounts = snapshot.data!
@@ -71,7 +78,7 @@ class TreasuryOverviewScreen extends ConsumerWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: Spacing.md),
                 SizedBox(
                   height: 120,
                   child: ListView.builder(
@@ -81,9 +88,9 @@ class TreasuryOverviewScreen extends ConsumerWidget {
                       final account = cashAccounts[index];
                       return Container(
                         width: 200,
-                        margin: const EdgeInsets.only(left: 12),
+                        margin: const EdgeInsets.only(left: Spacing.md),
                         child: AppCard(
-                          padding: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(Spacing.md),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -91,12 +98,12 @@ class TreasuryOverviewScreen extends ConsumerWidget {
                               Text(
                                 account.nameAr,
                                 style: const TextStyle(
-                                  color: Colors.grey,
+                                  color: AppColors.textSecondary,
                                   fontSize: 14,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: Spacing.sm),
                               Text(
                                 '${account.balance} ر.س',
                                 style: const TextStyle(
@@ -115,10 +122,11 @@ class TreasuryOverviewScreen extends ConsumerWidget {
             );
           },
         ),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: AppLoadingIndicator()),
         error: (e, _) => Center(child: Text('Error: $e')),
       );
 
+  /// Renders shortcut buttons for issuing new Receipts or Payments.
   Widget _buildQuickActions(BuildContext context) => Row(
         children: [
           Expanded(
@@ -128,7 +136,7 @@ class TreasuryOverviewScreen extends ConsumerWidget {
               onPressed: () => _createNewVoucher(context, VoucherType.receipt),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: Spacing.md),
           Expanded(
             child: AppEnhancedButton(
               label: context.l10n.paymentVoucherAction,
@@ -140,73 +148,71 @@ class TreasuryOverviewScreen extends ConsumerWidget {
         ],
       );
 
-  Widget _buildVouchersList(BuildContext context, WidgetRef ref) => ref
-      .watch(getVouchersProvider)
-      .when(
-        data: (vouchers) {
-          if (vouchers.isEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32),
-                child: Text(context.l10n.noVouchersMessage),
-              ),
-            );
-          }
+  /// Lists the chronologically sorted recent financial vouchers.
+  Widget _buildVouchersList(BuildContext context, WidgetRef ref) =>
+      ref.watch(getVouchersProvider).when(
+            data: (vouchers) {
+              if (vouchers.isEmpty) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: Spacing.xl),
+                    child: Text(context.l10n.noVouchersMessage),
+                  ),
+                );
+              }
 
-          final sortedVouchers = [...vouchers]
-            ..sort((a, b) => b.date.compareTo(a.date));
+              final sortedVouchers = [...vouchers]..sort((a, b) => b.date.compareTo(a.date));
 
-          return ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: sortedVouchers.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              final voucher = sortedVouchers[index];
-              final color = voucher.type == VoucherType.receipt
-                  ? Colors.green
-                  : Colors.red;
+              return ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: sortedVouchers.length,
+                separatorBuilder: (_, __) => const SizedBox(height: Spacing.sm),
+                itemBuilder: (context, index) {
+                  final voucher = sortedVouchers[index];
+                  final color =
+                      voucher.type == VoucherType.receipt ? AppColors.success : AppColors.error;
 
-              return AppCard(
-                onTap: () {
-                  // Future: Navigate to details
-                },
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: color.withValues(alpha: 0.1),
-                    child: Icon(
-                      voucher.type == VoucherType.receipt
-                          ? Icons.add
-                          : Icons.remove,
-                      color: color,
+                  return AppCard(
+                    onTap: () {
+                      // Future: Navigate to voucher details/preview
+                    },
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: color.withValues(alpha: 0.1),
+                        child: Icon(
+                          voucher.type == VoucherType.receipt ? Icons.add : Icons.remove,
+                          color: color,
+                        ),
+                      ),
+                      title: Text(
+                        voucher.personName ?? context.l10n.anonymousPerson,
+                      ),
+                      subtitle: Text(
+                        '${intl.DateFormat('yyyy/MM/dd').format(voucher.date)} '
+                        '- ${voucher.referenceNumber}',
+                      ),
+                      trailing: Text(
+                        '${voucher.amount} ر.س',
+                        style: TextStyle(fontWeight: FontWeight.bold, color: color),
+                      ),
                     ),
-                  ),
-                  title: Text(
-                    voucher.personName ?? context.l10n.anonymousPerson,
-                  ),
-                  subtitle: Text(
-                    '${intl.DateFormat('yyyy/MM/dd').format(voucher.date)} '
-                    '- ${voucher.referenceNumber}',
-                  ),
-                  trailing: Text(
-                    '${voucher.amount} ر.س',
-                    style: TextStyle(fontWeight: FontWeight.bold, color: color),
-                  ),
-                ),
+                  );
+                },
               );
             },
+            loading: () => const Center(child: AppLoadingIndicator()),
+            error: (e, _) => Center(child: Text('Error: $e')),
           );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
-      );
 
+  /// Navigates to the voucher issuance form.
   void _createNewVoucher(BuildContext context, VoucherType type) {
-    // ignore: discarded_futures
-    Navigator.push<void>(
-      context,
-      MaterialPageRoute<void>(
-        builder: (context) => VoucherFormScreen(type: type),
+    unawaited(
+      Navigator.push<void>(
+        context,
+        MaterialPageRoute<void>(
+          builder: (context) => VoucherFormScreen(type: type),
+        ),
       ),
     );
   }

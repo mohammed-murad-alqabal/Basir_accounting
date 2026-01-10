@@ -1,4 +1,5 @@
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:decimal/decimal.dart';
 
 /// بيانات لوحة التحكم (Dashboard Data)
 ///
@@ -33,16 +34,16 @@ class DashboardData {
   final int pendingInvoices;
 
   /// إجمالي المبيعات (جميع الفواتير غير الملغاة)
-  final double totalSales;
+  final Decimal totalSales;
 
   /// المبالغ المحصلة (المدفوعة فعلياً)
-  final double paidRevenue;
+  final Decimal paidRevenue;
 
   /// المبالغ المعلقة (صادرة وغير مدفوعة وليست متأخرة)
-  final double pendingRevenue;
+  final Decimal pendingRevenue;
 
   /// المبالغ المتأخرة (تجاوزت تاريخ الاستحقاق)
-  final double overdueRevenue;
+  final Decimal overdueRevenue;
 
   /// عدد العملاء النشطين
   final int activeCustomersCount;

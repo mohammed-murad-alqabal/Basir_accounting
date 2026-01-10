@@ -7,6 +7,7 @@ library;
 import 'package:basir_app/features/customers/domain/entities/customer.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:decimal/decimal.dart';
 
 /// بيانات اختبار نموذجية
 class MockData {
@@ -35,8 +36,7 @@ class MockData {
   }
 
   /// إنشاء قائمة من العملاء للاختبار
-  static List<Customer> createTestCustomers({int count = 3, String? userId}) =>
-      List.generate(
+  static List<Customer> createTestCustomers({int count = 3, String? userId}) => List.generate(
         count,
         (index) => createTestCustomer(
           id: 'test-customer-$index',
@@ -49,8 +49,7 @@ class MockData {
       );
 
   /// إنشاء قائمة من الفواتير للاختبار
-  static List<Invoice> createTestInvoices({int count = 3, String? userId}) =>
-      List.generate(
+  static List<Invoice> createTestInvoices({int count = 3, String? userId}) => List.generate(
         count,
         (index) => createTestInvoice(
           id: 'test-invoice-$index',
@@ -65,14 +64,15 @@ class MockData {
   static InvoiceItem createTestInvoiceItem({
     String? id,
     String? name,
-    double? price,
-    double? quantity,
-    double taxRate = 0.15,
+    Decimal? price,
+    Decimal? quantity,
+    Decimal? taxRate,
   }) {
-    final qty = quantity ?? 1.0;
-    final prc = price ?? 1000.0;
+    final qty = quantity ?? Decimal.one;
+    final prc = price ?? Decimal.fromInt(1000);
+    final rate = taxRate ?? Decimal.parse('0.15');
     final total = qty * prc;
-    final tax = total * taxRate;
+    final tax = total * rate;
 
     return InvoiceItem(
       id: id ?? 'test-item-${DateTime.now().microsecondsSinceEpoch}',
@@ -94,16 +94,16 @@ class MockData {
     DateTime? dueDate,
     InvoiceStatus? status,
     List<InvoiceItem>? items,
-    double? taxRate,
+    Decimal? taxRate,
     String? notes,
     int? itemCount,
     String? itemName,
-    double? itemPrice,
-    double? itemQuantity,
+    Decimal? itemPrice,
+    Decimal? itemQuantity,
     String? userId,
   }) {
     final now = DateTime.now();
-    final rate = taxRate ?? 0.15;
+    final rate = taxRate ?? Decimal.parse('0.15');
 
     // إنشاء البنود بناءً على المعاملات
     List<InvoiceItem> invoiceItems;
@@ -115,8 +115,8 @@ class MockData {
         (index) => createTestInvoiceItem(
           id: 'test-item-${index + 1}',
           name: itemName ?? 'خدمة اختبار ${index + 1}',
-          quantity: itemQuantity ?? 1.0,
-          price: itemPrice ?? 1000.0,
+          quantity: itemQuantity ?? Decimal.one,
+          price: itemPrice ?? Decimal.fromInt(1000),
           taxRate: rate,
         ),
       );
@@ -125,15 +125,15 @@ class MockData {
         createTestInvoiceItem(
           id: 'test-item-1',
           name: itemName ?? 'خدمة اختبار',
-          quantity: itemQuantity ?? 1.0,
-          price: itemPrice ?? 1000.0,
+          quantity: itemQuantity ?? Decimal.one,
+          price: itemPrice ?? Decimal.fromInt(1000),
           taxRate: rate,
         ),
       ];
     }
 
-    double subtotal = 0;
-    double taxTotal = 0;
+    Decimal subtotal = Decimal.zero;
+    Decimal taxTotal = Decimal.zero;
     for (final item in invoiceItems) {
       subtotal += item.total;
       taxTotal += item.taxAmount;
@@ -142,8 +142,7 @@ class MockData {
 
     return Invoice(
       id: id ?? 'test-invoice-${now.microsecondsSinceEpoch}',
-      invoiceNumber:
-          invoiceNumber ?? 'INV-${id ?? now.microsecondsSinceEpoch.toString()}',
+      invoiceNumber: invoiceNumber ?? 'INV-${id ?? now.microsecondsSinceEpoch.toString()}',
       customerId: customerId ?? 'test-customer-1',
       customerName: customerName ?? 'عميل اختبار',
       items: invoiceItems,
@@ -157,8 +156,9 @@ class MockData {
       subtotalAmount: subtotal,
       taxAmount: taxTotal,
       totalAmount: total,
-      paidAmount: status == InvoiceStatus.paid ? total : 0,
-      discountAmount: 0,
+      paidAmount: status == InvoiceStatus.paid ? total : Decimal.zero,
+      discountAmount: Decimal.zero,
+      discountRate: Decimal.zero,
       userId: userId,
     );
   }

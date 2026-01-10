@@ -18,16 +18,12 @@ Future<List<AssetDto>> listAssets() =>
 Future<AssetDto?> getAssetById({required String id}) =>
     RustLib.instance.api.crateApiAssetsGetAssetById(id: id);
 
-Future<void> runDepreciationCycle({
-  required String assetId,
-  required String asOf,
-  required AuditMetadataDto metadata,
-}) =>
+Future<void> runDepreciationCycle(
+        {required String assetId,
+        required String asOf,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiAssetsRunDepreciationCycle(
-      assetId: assetId,
-      asOf: asOf,
-      metadata: metadata,
-    );
+        assetId: assetId, asOf: asOf, metadata: metadata);
 
 Future<String> registerCategory({required AssetCategoryDto category}) =>
     RustLib.instance.api.crateApiAssetsRegisterCategory(category: category);

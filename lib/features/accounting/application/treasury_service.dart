@@ -9,20 +9,41 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'treasury_service.g.dart';
 
-/// خدمة الخزينة (Treasury Service)
-/// مسؤولة عن عمليات النقد والبنوك وإصدار السندات المالية.
+/// Treasury Service managing cash, banking, and financial voucher operations.
+///
+/// Responsible for issuing receipt and payment vouchers, and ensuring they
+/// are correctly reflected in the general ledger via automatic journal posting.
+///
+/// ## Features
+/// - **Voucher Management**: Lifecycle management for Receipt and Payment vouchers.
+/// - **Ledger Integration**: Automatic double-entry posting to Treasury accounts.
+/// - **Account Validation**: Enforces Cash/Bank account constraints for treasury transactions.
+/// - **Financial Year Checks**: Prevents posting to closed or locked periods.
 @riverpod
 class TreasuryService extends _$TreasuryService {
   @override
   FutureOr<void> build() {}
 
-  /// الحصول على كافة السندات المسجلة
+  /// Retrieves the complete list of financial vouchers.
   Future<List<FinancialVoucher>> getAllVouchers() async {
     final voucherRepo = ref.read(financialVoucherRepositoryProvider);
     return voucherRepo.getAllVouchers();
   }
 
-  /// إصدار سند قبض (Receipt Voucher)
+  /// Issues and posts a Receipt Voucher to the ledger.
+  ///
+  /// ## Impact
+  /// - **Debit**: Treasury Account (Cash/Bank)
+  /// - **Credit**: Target Account (Person/Entity)
+  ///
+  /// ## Parameters
+  /// - [voucher]: The [FinancialVoucher] to process.
+  ///
+  /// ## Returns
+  /// The ID of the generated [JournalEntry].
+  ///
+  /// ## Throws
+  /// - [Exception] if the voucher is not a receipt or period is closed.
   Future<String> issueReceipt(FinancialVoucher voucher) async {
     final financialYearService = ref.read(
       financialYearServiceProvider.notifier,
@@ -42,20 +63,20 @@ class TreasuryService extends _$TreasuryService {
     final lines = [
       JournalEntryLine(
         accountId: voucher.treasuryAccountId,
-        accountName: 'الخزينة/البنك',
+        accountName: 'Treasury/Bank',
         debit: voucher.amount,
         credit: Decimal.zero,
-        description: 'قبض: ${voucher.description}',
+        description: 'Receipt: ${voucher.description}',
         originalCurrency: voucher.originalCurrency,
         exchangeRate: voucher.exchangeRate,
         originalAmount: voucher.originalAmount,
       ),
       JournalEntryLine(
         accountId: voucher.accountId,
-        accountName: voucher.personName ?? 'حساب الدائن',
+        accountName: voucher.personName ?? 'Credit Account',
         credit: voucher.amount,
         debit: Decimal.zero,
-        description: 'سند قبض رقم ${voucher.referenceNumber}',
+        description: 'Receipt Voucher #${voucher.referenceNumber}',
         originalCurrency: voucher.originalCurrency,
         exchangeRate: voucher.exchangeRate,
         originalAmount: voucher.originalAmount,
@@ -75,7 +96,7 @@ class TreasuryService extends _$TreasuryService {
         recordingDate: now,
       ),
       standards: const StandardsJustification(
-        standardReference: 'IFRS 9', // GAAP: Financial Instruments
+        standardReference: 'IFRS 9',
         recognitionBasis: 'Fair Value',
         measurementBasis: 'Amortized Cost',
       ),
@@ -92,7 +113,6 @@ class TreasuryService extends _$TreasuryService {
 
     await repository.addJournalEntry(entry);
 
-    // حفظ السند نفسه في المستودع
     final postedVoucher = voucher.copyWith(
       isPosted: true,
       journalEntryId: entry.id,
@@ -101,7 +121,17 @@ class TreasuryService extends _$TreasuryService {
     return entry.id;
   }
 
-  /// إصدار سند صرف (Payment Voucher)
+  /// Issues and posts a Payment Voucher to the ledger.
+  ///
+  /// ## Impact
+  /// - **Debit**: Target Account (Person/Entity)
+  /// - **Credit**: Treasury Account (Cash/Bank)
+  ///
+  /// ## Parameters
+  /// - [voucher]: The [FinancialVoucher] to process.
+  ///
+  /// ## Throws
+  /// - [Exception] if the voucher is not a payment or period is closed.
   Future<String> issuePayment(FinancialVoucher voucher) async {
     final financialYearService = ref.read(
       financialYearServiceProvider.notifier,
@@ -121,20 +151,20 @@ class TreasuryService extends _$TreasuryService {
     final lines = [
       JournalEntryLine(
         accountId: voucher.accountId,
-        accountName: voucher.personName ?? 'حساب المدين',
+        accountName: voucher.personName ?? 'Debit Account',
         debit: voucher.amount,
         credit: Decimal.zero,
-        description: 'صرف: ${voucher.description}',
+        description: 'Payment: ${voucher.description}',
         originalCurrency: voucher.originalCurrency,
         exchangeRate: voucher.exchangeRate,
         originalAmount: voucher.originalAmount,
       ),
       JournalEntryLine(
         accountId: voucher.treasuryAccountId,
-        accountName: 'الخزينة/البنك',
+        accountName: 'Treasury/Bank',
         credit: voucher.amount,
         debit: Decimal.zero,
-        description: 'سند صرف رقم ${voucher.referenceNumber}',
+        description: 'Payment Voucher #${voucher.referenceNumber}',
         originalCurrency: voucher.originalCurrency,
         exchangeRate: voucher.exchangeRate,
         originalAmount: voucher.originalAmount,
@@ -154,7 +184,7 @@ class TreasuryService extends _$TreasuryService {
         recordingDate: now,
       ),
       standards: const StandardsJustification(
-        standardReference: 'IFRS 9', // GAAP: Financial Instruments
+        standardReference: 'IFRS 9',
         recognitionBasis: 'Fair Value',
         measurementBasis: 'Amortized Cost',
       ),
@@ -171,7 +201,6 @@ class TreasuryService extends _$TreasuryService {
 
     await repository.addJournalEntry(entry);
 
-    // حفظ السند نفسه في المستودع
     final postedVoucher = voucher.copyWith(
       isPosted: true,
       journalEntryId: entry.id,
@@ -180,7 +209,9 @@ class TreasuryService extends _$TreasuryService {
     return entry.id;
   }
 
-  /// التحقق من أن الحساب هو حساب خزينة (نقد أو بنك)
+  /// Validates that the account is a valid treasury account (Cash or Bank).
+  ///
+  /// Enforces identification by subtype or specific account code prefixes (1101/1102).
   Future<void> _validateTreasuryAccount(String accountId) async {
     final accountingService = ref.read(accountingServiceProvider.notifier);
     final account = await accountingService.getAccountById(accountId);
@@ -202,7 +233,8 @@ class TreasuryService extends _$TreasuryService {
   }
 }
 
-/// موفر قائمة السندات (FR-ACC-016)
+/// Provider for retrieving all financial vouchers.
+/// (Implementation of FR-ACC-016)
 @riverpod
 Future<List<FinancialVoucher>> getVouchers(Ref ref) async =>
     ref.watch(treasuryServiceProvider.notifier).getAllVouchers();

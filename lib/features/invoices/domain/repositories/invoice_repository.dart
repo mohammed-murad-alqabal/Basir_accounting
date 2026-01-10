@@ -1,5 +1,6 @@
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:decimal/decimal.dart';
 
 /// واجهة مستودع الفواتير (Invoice Repository Interface)
 ///
@@ -164,31 +165,8 @@ abstract class InvoiceRepository {
 /// إحصائيات الفواتير (Invoice Statistics)
 ///
 /// كائن يحتوي على إحصائيات شاملة عن جميع الفواتير في النظام.
-///
-/// **الإحصائيات المتوفرة:**
-/// - عدد الفواتير (الإجمالي، المدفوعة، المتأخرة)
-/// - الإيرادات (الإجمالية، المدفوعة)
-///
-/// **مثال:**
-/// ```dart
-/// final stats = InvoiceStatistics(
-///   totalInvoices: 100,
-///   paidInvoices: 75,
-///   overdueInvoices: 10,
-///   totalRevenue: 50000.0,
-///   paidRevenue: 37500.0,
-///,);
-/// debugPrint('نسبة الدفع: ${(stats.paidInvoices / stats.totalInvoices) * 100}%',);
-/// ```
 class InvoiceStatistics {
   /// إنشاء كائن إحصائيات الفواتير
-  ///
-  /// **Parameters:**
-  /// - [totalInvoices]: إجمالي عدد الفواتير
-  /// - [paidInvoices]: عدد الفواتير المدفوعة
-  /// - [overdueInvoices]: عدد الفواتير المتأخرة
-  /// - [totalRevenue]: إجمالي الإيرادات (جميع الفواتير)
-  /// - [paidRevenue]: الإيرادات المدفوعة فعلياً
   const InvoiceStatistics({
     required this.totalInvoices,
     required this.paidInvoices,
@@ -207,12 +185,8 @@ class InvoiceStatistics {
   final int overdueInvoices;
 
   /// إجمالي الإيرادات من جميع الفواتير
-  ///
-  /// يشمل جميع الفواتير بغض النظر عن حالتها.
-  final double totalRevenue;
+  final Decimal totalRevenue;
 
   /// الإيرادات المدفوعة فعلياً
-  ///
-  /// يشمل فقط الفواتير ذات حالة 'paid'.
-  final double paidRevenue;
+  final Decimal paidRevenue;
 }

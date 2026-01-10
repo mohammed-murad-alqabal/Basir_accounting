@@ -279,6 +279,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnDelete => 'Delete';
 
   @override
+  String get btnEdit => 'Edit';
+
+  @override
   String get btnDone => 'Done';
 
   @override
@@ -1425,4 +1428,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelNetProfit => 'Net Profit / Loss';
+
+  @override
+  String get labelInventoryItem => 'Inventory Item';
+
+  @override
+  String get hintSelectInventoryItem => 'Select an inventory item to auto-fill';
+
+  @override
+  String get labelTaxCategory => 'Tax Category';
+
+  @override
+  String get labelSearchSku => 'Search Barcode / SKU';
+
+  @override
+  String get hintSearchSku => 'Enter code and press Enter';
+
+  @override
+  String get msgItemNotFound => 'Item not found';
+
+  @override
+  String get tooltipPrintReceipt => 'Print Receipt';
+
+  @override
+  String get tooltipReverseInvoice => 'Cancel/Reverse';
+
+  @override
+  String get titleReverseInvoice => 'Reverse Invoice';
+
+  @override
+  String get msgConfirmReverseInvoice =>
+      'Are you sure you want to reverse this invoice? A reversing journal entry will be created.';
+
+  @override
+  String get btnConfirmReverse => 'Yes, Reverse Invoice';
+
+  @override
+  String get receiptTitleTaxInvoice => 'Tax Invoice';
+
+  @override
+  String get receiptTitleSimplified => 'Simplified Tax Invoice';
+
+  @override
+  String get receiptFooterThanks => 'Thanks for visiting';
+
+  @override
+  String get receiptFooterBrand => 'Basir - Basir Accounting';
+
+  @override
+  String get labelDiscount => 'Discount';
 }

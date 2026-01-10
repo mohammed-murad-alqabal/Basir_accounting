@@ -2,6 +2,7 @@ import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/features/accounting/application/accounting_service.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Provider لقائمة جميع الفواتير
@@ -23,8 +24,7 @@ final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
     await repository.addInvoice(invoice);
 
     // ترحيل القيد المحاسبي تلقائياً (نظام القيد المزدوج)
-    if (invoice.status == InvoiceStatus.sent ||
-        invoice.status == InvoiceStatus.paid) {
+    if (invoice.status == InvoiceStatus.sent || invoice.status == InvoiceStatus.paid) {
       final accountingService = ref.read(accountingServiceProvider.notifier);
       await accountingService.postSalesInvoice(invoice);
     }
@@ -48,8 +48,7 @@ final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
     await repository.updateInvoice(invoice);
 
     // ترحيل أو تحديث القيد المحاسبي (نظام القيد المزدوج)
-    if (invoice.status == InvoiceStatus.sent ||
-        invoice.status == InvoiceStatus.paid) {
+    if (invoice.status == InvoiceStatus.sent || invoice.status == InvoiceStatus.paid) {
       final accountingService = ref.read(accountingServiceProvider.notifier);
       await accountingService.postSalesInvoice(invoice);
     }
@@ -133,12 +132,11 @@ final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
 });
 
 /// Provider لحساب إجمالي المبيعات
-final totalSalesProvider = Provider<AsyncValue<double>>((ref) {
+final totalSalesProvider = Provider<AsyncValue<Decimal>>((ref) {
   final invoicesAsync = ref.watch(invoicesProvider);
 
   return invoicesAsync.whenData(
-    (invoices) =>
-        invoices.fold<double>(0, (sum, invoice) => sum + invoice.totalAmount),
+    (invoices) => invoices.fold<Decimal>(Decimal.zero, (sum, invoice) => sum + invoice.totalAmount),
   );
 });
 
@@ -147,9 +145,7 @@ final overdueInvoicesCountProvider = Provider<AsyncValue<int>>((ref) {
   final invoicesAsync = ref.watch(invoicesProvider);
 
   return invoicesAsync.whenData(
-    (invoices) => invoices
-        .where((invoice) => invoice.status == InvoiceStatus.overdue)
-        .length,
+    (invoices) => invoices.where((invoice) => invoice.status == InvoiceStatus.overdue).length,
   );
 });
 
@@ -176,8 +172,7 @@ final invoicesCountProvider = Provider<AsyncValue<int>>(
 final hasInvoicesProvider = Provider<AsyncValue<bool>>(
   (ref) => ref.watch(
     invoicesProvider.select(
-      (asyncInvoices) =>
-          asyncInvoices.whenData((invoices) => invoices.isNotEmpty),
+      (asyncInvoices) => asyncInvoices.whenData((invoices) => invoices.isNotEmpty),
     ),
   ),
 );
@@ -202,7 +197,7 @@ class InvoiceStatistics {
   final int overdueInvoices;
 
   /// إجمالي المبلغ
-  final double totalAmount;
+  final Decimal totalAmount;
 }
 
 /// Provider لإحصائيات الفواتير
@@ -214,11 +209,12 @@ final invoiceStatisticsProvider = Provider<AsyncValue<InvoiceStatistics>>((
   return invoicesAsync.whenData(
     (invoices) => InvoiceStatistics(
       totalInvoices: invoices.length,
-      paidInvoices:
-          invoices.where((i) => i.status == InvoiceStatus.paid).length,
-      overdueInvoices:
-          invoices.where((i) => i.status == InvoiceStatus.overdue).length,
-      totalAmount: invoices.fold(0, (sum, i) => sum + i.totalAmount),
+      paidInvoices: invoices.where((i) => i.status == InvoiceStatus.paid).length,
+      overdueInvoices: invoices.where((i) => i.status == InvoiceStatus.overdue).length,
+      totalAmount: invoices.fold<Decimal>(
+        Decimal.zero,
+        (sum, i) => sum + i.totalAmount,
+      ),
     ),
   );
 });

@@ -9,53 +9,58 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'orchestrator_service.g.dart';
 
-/// خدمة التنسيق (Orchestrator Service)
-/// تدير تدفق العمل المعتمد على "سداسية بصير الإدراكية" (The Cognitive Hexagon).
+/// Central Orchestrator Service managing the multi-agent consensus workflow.
+///
+/// Implements "The Cognitive Hexagon" architecture, where six specialized
+/// AI agents must reach a consensus on the validity and impact of
+/// every financial transaction.
 @Riverpod(keepAlive: true)
 class OrchestratorService extends _$OrchestratorService {
   @override
   FutureOr<void> build() {}
 
-  /// نقطة الدخول الرئيسية لتدفق التنسيق المتعدد الوكلاء.
-  /// يتم استدعاء الوكلاء الستة للوصول إلى إجماع إدراكي حول كل عملية مالية.
+  /// Primary entry point for the Multi-Agent Orchestration Flow.
+  ///
+  /// Sequentially invokes all six cognitive agents to build a final report.
+  ///
+  /// ## The Cognitive Hexagon Agents:
+  /// 1. **Standards Engine**: IFRS/ISSB global compliance.
+  /// 2. **Tax Engine**: ZATCA/FTA local regulatory compliance.
+  /// 3. **Forensic Audit**: Data integrity and anomaly detection.
+  /// 4. **Operational Intel**: Business impact and process efficiency.
+  /// 5. **Financial Strategy**: Cash flow and portfolio optimization.
+  /// 6. **Sustainability Expert**: ESG and environmental metric tracking.
+  ///
+  /// ## Returns
+  /// An [AgentConsensus] representing the collective decision of all agents.
   Future<AgentConsensus> orchestrate(AccountingContext context) async {
     final results = <AgentResult>[];
 
-    // 1. استدعاء محرك المعايير (Standards - IFRS/ISSB)
+    // Stage 1: Compliance Cluster
     results.add(
       await ref.read(standardsEngineServiceProvider.notifier).process(context),
     );
-
-    // 2. استدعاء محرك الضرائب (Tax - ZATCA/FTA)
     results.add(
       await ref.read(taxEngineServiceProvider.notifier).process(context),
     );
 
-    // 3. استدعاء وكيل التدقيق الجنائي (Forensic Audit)
+    // Stage 2: Integrity & Intel Cluster
     results.add(
       await ref.read(forensicAuditServiceProvider.notifier).process(context),
     );
-
-    // 4. استدعاء وكيل الذكاء التشغيلي (Operational Intel)
     results.add(
       await ref.read(operationalIntelServiceProvider.notifier).process(context),
     );
 
-    // 5. استدعاء وكيل الاستراتيجية المالية (Financial Strategy)
+    // Stage 3: Strategy & Sustainability Cluster
     results.add(
-      await ref
-          .read(financialStrategyServiceProvider.notifier)
-          .process(context),
+      await ref.read(financialStrategyServiceProvider.notifier).process(context),
+    );
+    results.add(
+      await ref.read(sustainabilityExpertServiceProvider.notifier).process(context),
     );
 
-    // 6. استدعاء وكيل خبير الاستدامة (Sustainability Expert)
-    results.add(
-      await ref
-          .read(sustainabilityExpertServiceProvider.notifier)
-          .process(context),
-    );
-
-    // تجميع النتائج: هل العملية مسموح بها من الجميع؟
+    // Aggregation Logic: All agents must allow for overall approval
     final overallAllowed = results.every((r) => r.isAllowed);
 
     final aggregateRationale = StringBuffer();
@@ -66,7 +71,7 @@ class OrchestratorService extends _$OrchestratorService {
       'Decision: ${overallAllowed ? "APPROVED ✅" : "REJECTED ❌"}',
     );
 
-    // حساب متوسط درجة الثقة بشكل صحيح
+    // Compute aggregate confidence score
     final totalConfidence = results.fold<double>(
       0,
       (sum, res) => sum + res.confidenceScore,
@@ -96,9 +101,8 @@ class OrchestratorService extends _$OrchestratorService {
   }
 }
 
-/// يمثل إجماع الوكلاء على عملية معينة.
+/// Represents the final consensus reached by the multi-agent system.
 class AgentConsensus {
-  /// إنشاء إجماع الوكلاء.
   AgentConsensus({
     required this.isApproved,
     required this.explanation,
@@ -106,15 +110,15 @@ class AgentConsensus {
     required this.orchestrationTimestamp,
   });
 
-  /// هل تمت الموافقة من جميع الوكلاء؟
+  /// Indicates if the transaction was approved by all participating agents.
   final bool isApproved;
 
-  /// التفسير المجمع للقرار.
+  /// Aggregated rationale and explanation from all agents.
   final String explanation;
 
-  /// قائمة بنتائج كل وكيل على حدة.
+  /// Collection of individual agent results for granular auditing.
   final List<AgentResult> agentResults;
 
-  /// طابع زمني لعملية التنسيق.
+  /// Precise moment the orchestration was finalized.
   final DateTime orchestrationTimestamp;
 }

@@ -1,5 +1,6 @@
 import 'package:basir_app/core/extensions/context_extensions.dart';
 import 'package:basir_app/features/accounting/application/financial_reporting_service.dart';
+import 'package:decimal/decimal.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,13 +12,11 @@ class ExpenseCompositionChart extends ConsumerStatefulWidget {
 
   @override
   @override
-  ConsumerState<ExpenseCompositionChart> createState() =>
-      _ExpenseCompositionChartState();
+  ConsumerState<ExpenseCompositionChart> createState() => _ExpenseCompositionChartState();
 }
 
-class _ExpenseCompositionChartState
-    extends ConsumerState<ExpenseCompositionChart> {
-  late Future<Map<String, double>> _compositionFuture;
+class _ExpenseCompositionChartState extends ConsumerState<ExpenseCompositionChart> {
+  late Future<Map<String, Decimal>> _compositionFuture;
   int touchedIndex = -1;
 
   @override
@@ -27,13 +26,12 @@ class _ExpenseCompositionChartState
   }
 
   void _loadData() {
-    _compositionFuture = _compositionFuture = ref
-        .read(financialReportingServiceProvider.notifier)
-        .getExpenseComposition();
+    _compositionFuture = _compositionFuture =
+        ref.read(financialReportingServiceProvider.notifier).getExpenseComposition();
   }
 
   @override
-  Widget build(BuildContext context) => FutureBuilder<Map<String, double>>(
+  Widget build(BuildContext context) => FutureBuilder<Map<String, Decimal>>(
         future: _compositionFuture,
         builder: (context, snapshot) {
           // ... existing builder logic ...
@@ -45,7 +43,7 @@ class _ExpenseCompositionChartState
           }
 
           final data = snapshot.data ?? {};
-          if (data.isEmpty || data.values.every((v) => v == 0)) {
+          if (data.isEmpty || data.values.every((v) => v == Decimal.zero)) {
             return Center(child: Text(context.l10n.noExpenseDataMessage));
           }
 
@@ -66,8 +64,7 @@ class _ExpenseCompositionChartState
                               touchedIndex = -1;
                               return;
                             }
-                            touchedIndex = pieTouchResponse
-                                .touchedSection!.touchedSectionIndex;
+                            touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
                           });
                         },
                       ),
@@ -89,10 +86,10 @@ class _ExpenseCompositionChartState
         },
       );
 
-  List<PieChartSectionData> _showingSections(Map<String, double> data) {
+  List<PieChartSectionData> _showingSections(Map<String, Decimal> data) {
     final sections = <PieChartSectionData>[];
     final keys = data.keys.toList();
-    final total = data.values.fold<double>(0, (sum, val) => sum + val);
+    final total = data.values.fold<Decimal>(Decimal.zero, (sum, val) => sum + val);
 
     // Color palette
     final colors = [
@@ -111,13 +108,13 @@ class _ExpenseCompositionChartState
       final rawKey = keys[i];
       final key = rawKey.isEmpty ? context.l10n.otherExpensesLabel : rawKey;
       final value = data[rawKey]!;
-      final percentage = (value / total * 100).toStringAsFixed(1);
+      final percentage = (value.toDouble() * 100 / total.toDouble()).toStringAsFixed(1);
       final color = colors[i % colors.length];
 
       sections.add(
         PieChartSectionData(
           color: color,
-          value: value,
+          value: value.toDouble(),
           title: '$percentage%',
           radius: radius,
           titleStyle: TextStyle(

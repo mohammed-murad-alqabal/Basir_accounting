@@ -3054,6 +3054,7 @@ impl SseDecode for crate::api::inventory::InventoryItemDto {
         let mut var_nameEn = <String>::sse_decode(deserializer);
         let mut var_description = <Option<String>>::sse_decode(deserializer);
         let mut var_unit = <String>::sse_decode(deserializer);
+        let mut var_minStockLevel = <Option<String>>::sse_decode(deserializer);
         let mut var_valuationMethod = <String>::sse_decode(deserializer);
         let mut var_purchasePrice = <Option<String>>::sse_decode(deserializer);
         let mut var_salePrice = <Option<String>>::sse_decode(deserializer);
@@ -3069,6 +3070,7 @@ impl SseDecode for crate::api::inventory::InventoryItemDto {
             name_en: var_nameEn,
             description: var_description,
             unit: var_unit,
+            min_stock_level: var_minStockLevel,
             valuation_method: var_valuationMethod,
             purchase_price: var_purchasePrice,
             sale_price: var_salePrice,
@@ -3609,12 +3611,14 @@ impl SseDecode for crate::api::sales::SalesInvoiceLineDto {
         let mut var_quantity = <String>::sse_decode(deserializer);
         let mut var_unitPrice = <String>::sse_decode(deserializer);
         let mut var_taxAmount = <String>::sse_decode(deserializer);
+        let mut var_taxCategory = <String>::sse_decode(deserializer);
         return crate::api::sales::SalesInvoiceLineDto {
             product_id: var_productId,
             description: var_description,
             quantity: var_quantity,
             unit_price: var_unitPrice,
             tax_amount: var_taxAmount,
+            tax_category: var_taxCategory,
         };
     }
 }
@@ -4410,6 +4414,7 @@ impl flutter_rust_bridge::IntoDart for crate::api::inventory::InventoryItemDto {
             self.name_en.into_into_dart().into_dart(),
             self.description.into_into_dart().into_dart(),
             self.unit.into_into_dart().into_dart(),
+            self.min_stock_level.into_into_dart().into_dart(),
             self.valuation_method.into_into_dart().into_dart(),
             self.purchase_price.into_into_dart().into_dart(),
             self.sale_price.into_into_dart().into_dart(),
@@ -4573,6 +4578,7 @@ impl flutter_rust_bridge::IntoDart for crate::api::sales::SalesInvoiceLineDto {
             self.quantity.into_into_dart().into_dart(),
             self.unit_price.into_into_dart().into_dart(),
             self.tax_amount.into_into_dart().into_dart(),
+            self.tax_category.into_into_dart().into_dart(),
         ]
         .into_dart()
     }
@@ -5073,6 +5079,7 @@ impl SseEncode for crate::api::inventory::InventoryItemDto {
         <String>::sse_encode(self.name_en, serializer);
         <Option<String>>::sse_encode(self.description, serializer);
         <String>::sse_encode(self.unit, serializer);
+        <Option<String>>::sse_encode(self.min_stock_level, serializer);
         <String>::sse_encode(self.valuation_method, serializer);
         <Option<String>>::sse_encode(self.purchase_price, serializer);
         <Option<String>>::sse_encode(self.sale_price, serializer);
@@ -5471,6 +5478,7 @@ impl SseEncode for crate::api::sales::SalesInvoiceLineDto {
         <String>::sse_encode(self.quantity, serializer);
         <String>::sse_encode(self.unit_price, serializer);
         <String>::sse_encode(self.tax_amount, serializer);
+        <String>::sse_encode(self.tax_category, serializer);
     }
 }
 

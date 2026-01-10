@@ -7,9 +7,13 @@ import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة ترقية حساب الضيف (Guest Upgrade Screen)
+/// ***
+/// Cognitive Foundation: GuestUpgradeScreen
 ///
-/// تتيح للمستخدم تحويل حساب الضيف إلى حساب دائم
+/// The transition interface for elevating unverified (Guest) identities to
+/// permanent institutional status. Ensures data continuity while enforcing
+/// strong credential policies during the elevation process.
+/// ***
 class GuestUpgradeScreen extends ConsumerStatefulWidget {
   /// إنشاء شاشة ترقية الحساب
   const GuestUpgradeScreen({super.key});

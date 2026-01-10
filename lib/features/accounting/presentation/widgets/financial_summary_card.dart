@@ -1,12 +1,18 @@
 import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:basir_app/features/accounting/data/repositories/accounting_repository_impl.dart';
 import 'package:basir_app/features/accounting/domain/entities/account.dart';
+import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// بطاقة ملخص مالي تعرض الأصول والخصوم وصافي الدخل.
+/// Interactive summary card for the dashboard showing mission-critical metrics.
+///
+/// Dynamically aggregates Assets, Liabilities, and Net Income from the
+/// underlying Chart of Accounts to provide an immediate pulse-check on
+/// financial health.
 class FinancialSummaryCard extends ConsumerWidget {
-  /// إنشاء بطاقة الملخص المالي.
+  /// Creates the financial summary card.
   const FinancialSummaryCard({super.key});
 
   @override
@@ -22,24 +28,19 @@ class FinancialSummaryCard extends ConsumerWidget {
 
         final accounts = snapshot.data!;
 
-        // حساب الإجماليات
+        // Aggregating hierarchical totals for dashboard consumption.
         final totalAssets = _sumByType(accounts, AccountType.asset);
         final totalLiabilities = _sumByType(accounts, AccountType.liability);
-        // Note: Equity is calculated but currently not displayed in summary
-        // final totalEquity = _sumByType(accounts, AccountType.equity);
         final totalRevenue = _sumByType(accounts, AccountType.revenue);
         final totalExpense = _sumByType(accounts, AccountType.expense);
 
         final netIncome = totalRevenue - totalExpense;
 
-        return Card(
+        return AppCard(
           elevation: 4,
-          margin: const EdgeInsets.all(16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+          margin: const EdgeInsets.all(Spacing.md),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(Spacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -51,7 +52,7 @@ class FinancialSummaryCard extends ConsumerWidget {
                   ),
                 ),
                 const Divider(),
-                const SizedBox(height: 8),
+                const SizedBox(height: Spacing.sm),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -59,19 +60,19 @@ class FinancialSummaryCard extends ConsumerWidget {
                       context,
                       context.l10n.statAssets,
                       totalAssets,
-                      Colors.blue,
+                      AppColors.info,
                     ),
                     _buildStatItem(
                       context,
                       context.l10n.statLiabilities,
                       totalLiabilities,
-                      Colors.red,
+                      AppColors.error,
                     ),
                     _buildStatItem(
                       context,
                       context.l10n.statNetIncome,
                       netIncome,
-                      netIncome >= 0 ? Colors.green : Colors.orange,
+                      netIncome >= 0 ? AppColors.success : AppColors.warning,
                     ),
                   ],
                 ),
@@ -83,10 +84,11 @@ class FinancialSummaryCard extends ConsumerWidget {
     );
   }
 
-  double _sumByType(List<Account> accounts, AccountType type) => accounts
-      .where((a) => a.type == type)
-      .fold(0, (sum, a) => sum + a.balance.toDouble());
+  /// Calculates the flat sum of balances for a specific [AccountType].
+  double _sumByType(List<Account> accounts, AccountType type) =>
+      accounts.where((a) => a.type == type).fold(0, (sum, a) => sum + a.balance.toDouble());
 
+  /// Builds a vertical metric indicator with thematic coloring.
   Widget _buildStatItem(
     BuildContext context,
     String label,
@@ -96,7 +98,7 @@ class FinancialSummaryCard extends ConsumerWidget {
       Column(
         children: [
           Text(label, style: Theme.of(context).textTheme.bodySmall),
-          const SizedBox(height: 4),
+          const SizedBox(height: Spacing.xs),
           Text(
             amount.toStringAsFixed(0),
             style: TextStyle(
