@@ -149,7 +149,8 @@ pub async fn post_invoice(id: String, metadata: AuditMetadataDto) -> anyhow::Res
         vat_amount: invoice.total_amount.to_string(), // Placeholder calculation
         hash: hash.clone(),
         signature: signature.clone(),
-        public_key,
+        public_key: public_key.clone(),
+        certificate_signature: String::new(), // TODO: Get from ZATCA CSR response
     };
     let qr_code = qr_payload.to_base64()?;
 

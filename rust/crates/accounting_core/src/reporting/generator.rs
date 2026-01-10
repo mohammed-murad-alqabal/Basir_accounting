@@ -114,6 +114,241 @@ impl FinancialReportGenerator {
             generated_at: to_date, // Simplified for core logic
         }
     }
+
+    /// Synthesizes a Balance Sheet (Statement of Financial Position) according to IAS 1.
+    ///
+    /// # Structure
+    /// Assets = Liabilities + Equity (Accounting Equation)
+    ///
+    /// # Categories
+    /// - Current Assets
+    /// - Non-Current Assets
+    /// - Current Liabilities
+    /// - Non-Current Liabilities
+    /// - Equity
+    pub fn synthesize_balance_sheet(
+        as_of_date: NaiveDate,
+        accounts: &[(Account, Decimal)],
+    ) -> FinancialReport {
+        let mut lines = Vec::new();
+
+        // 1. ASSETS
+        lines.push(FinancialReportLine {
+            label: "الأصول (ASSETS)".to_string(),
+            amount: Decimal::ZERO,
+            is_title: true,
+            is_total: false,
+            indent_level: 0,
+        });
+
+        // 1.1 Current Assets
+        lines.push(FinancialReportLine {
+            label: "الأصول المتداولة (Current Assets)".to_string(),
+            amount: Decimal::ZERO,
+            is_title: true,
+            is_total: false,
+            indent_level: 1,
+        });
+        let mut current_assets = Decimal::ZERO;
+        for (acc, balance) in accounts {
+            if acc.kind == AccountKind::Asset
+                && matches!(
+                    acc.classification,
+                    Some(AccountClassification::Current) | None
+                )
+                && *balance != Decimal::ZERO
+            {
+                lines.push(FinancialReportLine {
+                    label: format!("{} ({})", acc.name_ar, acc.name_en),
+                    amount: *balance,
+                    is_title: false,
+                    is_total: false,
+                    indent_level: 2,
+                });
+                current_assets += *balance;
+            }
+        }
+        lines.push(FinancialReportLine {
+            label: "إجمالي الأصول المتداولة".to_string(),
+            amount: current_assets,
+            is_title: false,
+            is_total: true,
+            indent_level: 1,
+        });
+
+        // 1.2 Non-Current Assets
+        lines.push(FinancialReportLine {
+            label: "الأصول غير المتداولة (Non-Current Assets)".to_string(),
+            amount: Decimal::ZERO,
+            is_title: true,
+            is_total: false,
+            indent_level: 1,
+        });
+        let mut non_current_assets = Decimal::ZERO;
+        for (acc, balance) in accounts {
+            if acc.kind == AccountKind::Asset
+                && matches!(acc.classification, Some(AccountClassification::NonCurrent))
+                && *balance != Decimal::ZERO
+            {
+                lines.push(FinancialReportLine {
+                    label: format!("{} ({})", acc.name_ar, acc.name_en),
+                    amount: *balance,
+                    is_title: false,
+                    is_total: false,
+                    indent_level: 2,
+                });
+                non_current_assets += *balance;
+            }
+        }
+        lines.push(FinancialReportLine {
+            label: "إجمالي الأصول غير المتداولة".to_string(),
+            amount: non_current_assets,
+            is_title: false,
+            is_total: true,
+            indent_level: 1,
+        });
+
+        let total_assets = current_assets + non_current_assets;
+        lines.push(FinancialReportLine {
+            label: "إجمالي الأصول (Total Assets)".to_string(),
+            amount: total_assets,
+            is_title: true,
+            is_total: true,
+            indent_level: 0,
+        });
+
+        // 2. LIABILITIES
+        lines.push(FinancialReportLine {
+            label: "الالتزامات (LIABILITIES)".to_string(),
+            amount: Decimal::ZERO,
+            is_title: true,
+            is_total: false,
+            indent_level: 0,
+        });
+
+        // 2.1 Current Liabilities
+        lines.push(FinancialReportLine {
+            label: "الالتزامات المتداولة (Current Liabilities)".to_string(),
+            amount: Decimal::ZERO,
+            is_title: true,
+            is_total: false,
+            indent_level: 1,
+        });
+        let mut current_liabilities = Decimal::ZERO;
+        for (acc, balance) in accounts {
+            if acc.kind == AccountKind::Liability
+                && matches!(
+                    acc.classification,
+                    Some(AccountClassification::Current) | None
+                )
+                && *balance != Decimal::ZERO
+            {
+                lines.push(FinancialReportLine {
+                    label: format!("{} ({})", acc.name_ar, acc.name_en),
+                    amount: *balance,
+                    is_title: false,
+                    is_total: false,
+                    indent_level: 2,
+                });
+                current_liabilities += *balance;
+            }
+        }
+        lines.push(FinancialReportLine {
+            label: "إجمالي الالتزامات المتداولة".to_string(),
+            amount: current_liabilities,
+            is_title: false,
+            is_total: true,
+            indent_level: 1,
+        });
+
+        // 2.2 Non-Current Liabilities
+        lines.push(FinancialReportLine {
+            label: "الالتزامات غير المتداولة (Non-Current Liabilities)".to_string(),
+            amount: Decimal::ZERO,
+            is_title: true,
+            is_total: false,
+            indent_level: 1,
+        });
+        let mut non_current_liabilities = Decimal::ZERO;
+        for (acc, balance) in accounts {
+            if acc.kind == AccountKind::Liability
+                && matches!(acc.classification, Some(AccountClassification::NonCurrent))
+                && *balance != Decimal::ZERO
+            {
+                lines.push(FinancialReportLine {
+                    label: format!("{} ({})", acc.name_ar, acc.name_en),
+                    amount: *balance,
+                    is_title: false,
+                    is_total: false,
+                    indent_level: 2,
+                });
+                non_current_liabilities += *balance;
+            }
+        }
+        lines.push(FinancialReportLine {
+            label: "إجمالي الالتزامات غير المتداولة".to_string(),
+            amount: non_current_liabilities,
+            is_title: false,
+            is_total: true,
+            indent_level: 1,
+        });
+
+        let total_liabilities = current_liabilities + non_current_liabilities;
+        lines.push(FinancialReportLine {
+            label: "إجمالي الالتزامات (Total Liabilities)".to_string(),
+            amount: total_liabilities,
+            is_title: false,
+            is_total: true,
+            indent_level: 0,
+        });
+
+        // 3. EQUITY
+        lines.push(FinancialReportLine {
+            label: "حقوق الملكية (EQUITY)".to_string(),
+            amount: Decimal::ZERO,
+            is_title: true,
+            is_total: false,
+            indent_level: 0,
+        });
+        let mut total_equity = Decimal::ZERO;
+        for (acc, balance) in accounts {
+            if acc.kind == AccountKind::Equity && *balance != Decimal::ZERO {
+                lines.push(FinancialReportLine {
+                    label: format!("{} ({})", acc.name_ar, acc.name_en),
+                    amount: *balance,
+                    is_title: false,
+                    is_total: false,
+                    indent_level: 1,
+                });
+                total_equity += *balance;
+            }
+        }
+        lines.push(FinancialReportLine {
+            label: "إجمالي حقوق الملكية (Total Equity)".to_string(),
+            amount: total_equity,
+            is_title: false,
+            is_total: true,
+            indent_level: 0,
+        });
+
+        // 4. Total Liabilities + Equity (Should equal Total Assets)
+        let total_liab_equity = total_liabilities + total_equity;
+        lines.push(FinancialReportLine {
+            label: "إجمالي الالتزامات وحقوق الملكية (Total L+E)".to_string(),
+            amount: total_liab_equity,
+            is_title: true,
+            is_total: true,
+            indent_level: 0,
+        });
+
+        FinancialReport {
+            title: "قائمة المركز المالي (IAS 1)".to_string(),
+            from_date: as_of_date,
+            to_date: as_of_date,
+            lines,
+            generated_at: as_of_date,
+        }
+    }
     /// Synthesizes a Statement of Cash Flows (Indirect Method) according to IAS 7.
     ///
     /// # Inputs
