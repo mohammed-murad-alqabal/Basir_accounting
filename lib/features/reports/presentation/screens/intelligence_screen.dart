@@ -230,7 +230,8 @@ class IntelligenceScreen extends ConsumerWidget {
                 height: 200,
                 child: trend.isEmpty
                     ? const Center(
-                        child: Text('لا توجد بيانات كافية للرسم البياني'))
+                        child: Text('لا توجد بيانات كافية للرسم البياني'),
+                      )
                     : LineChart(
                         LineChartData(
                           gridData: const FlGridData(show: false),
