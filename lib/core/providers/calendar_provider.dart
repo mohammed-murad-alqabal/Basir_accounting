@@ -1,20 +1,41 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// نوع التقويم (Calendar Type)
-/// أنواع التقاويم المدعومة
+/// Supported calendar systems for date display.
+///
+/// The application supports dual calendar display for regional compatibility.
 enum CalendarType {
-  /// التقويم الميلادي
+  /// Gregorian (Western) calendar system.
   gregorian,
 
-  /// التقويم الهجري
+  /// Hijri (Islamic) calendar system.
   hijri,
 }
 
-/// مفتاح تخزين نوع التقويم في SharedPreferences
+/// Storage key for calendar type preference.
 const String _calendarKey = 'app_calendar_type';
 
-/// موفر حالة التقويم المفضل للمستخدم
+/// Calendar state controller for date system preferences.
+///
+/// Manages the preferred calendar type (Gregorian/Hijri) with automatic
+/// persistence to [SharedPreferences].
+///
+/// ## Features
+/// - Persists calendar preference across sessions
+/// - Defaults to Gregorian calendar
+/// - Provides toggle functionality for quick switching
+///
+/// ## Usage
+/// ```dart
+/// // Watch current calendar type
+/// final calendarType = ref.watch(calendarProvider).valueOrNull;
+///
+/// // Toggle calendar system
+/// await ref.read(calendarProvider.notifier).toggleCalendar();
+///
+/// // Set specific calendar
+/// await ref.read(calendarProvider.notifier).setCalendarType(CalendarType.hijri);
+/// ```
 class CalendarNotifier extends AsyncNotifier<CalendarType> {
   @override
   Future<CalendarType> build() async {
@@ -26,7 +47,9 @@ class CalendarNotifier extends AsyncNotifier<CalendarType> {
     );
   }
 
-  /// تغيير نوع التقويم
+  /// Sets the calendar type and persists the preference.
+  ///
+  /// [type] - The desired [CalendarType] to apply.
   Future<void> setCalendarType(CalendarType type) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
@@ -36,7 +59,7 @@ class CalendarNotifier extends AsyncNotifier<CalendarType> {
     });
   }
 
-  /// التبديل بين الهجري والميلادي
+  /// Toggles between Hijri and Gregorian calendar systems.
   Future<void> toggleCalendar() async {
     final calendarType = state.valueOrNull ?? CalendarType.gregorian;
     final newType = calendarType == CalendarType.hijri
@@ -46,7 +69,9 @@ class CalendarNotifier extends AsyncNotifier<CalendarType> {
   }
 }
 
-/// مزود التقويم (Calendar Provider)
+/// Primary calendar state provider.
+///
+/// Exposes the current [CalendarType] and [CalendarNotifier] for state management.
 final calendarProvider = AsyncNotifierProvider<CalendarNotifier, CalendarType>(
   CalendarNotifier.new,
 );

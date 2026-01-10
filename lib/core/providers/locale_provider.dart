@@ -3,16 +3,29 @@ import 'dart:ui';
 import 'package:basir_app/core/repositories/locale_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// مزود LocaleRepository
+/// Repository provider for locale persistence operations.
 final localeRepositoryProvider = Provider<LocaleRepository>(
   (ref) => LocaleRepository(),
 );
 
-/// مزود اللغة (Locale Provider)
+/// Locale state controller for application internationalization.
 ///
-/// يدير لغة التطبيق ويحفظ تفضيلات المستخدم.
-/// - يدعم العربية (ar) كافتراضي
-/// - يدعم الإنجليزية (en)
+/// Manages the application locale with automatic persistence of user
+/// preferences. Supports Arabic (ar) as default and English (en).
+///
+/// ## Features
+/// - Persists locale preference across sessions
+/// - Defaults to Arabic locale for RTL-first design
+/// - Async loading with proper state management
+///
+/// ## Usage
+/// ```dart
+/// // Watch current locale
+/// final locale = ref.watch(localeProvider).valueOrNull;
+///
+/// // Change locale
+/// await ref.read(localeProvider.notifier).setLocale(Locale('en'));
+/// ```
 class LocaleNotifier extends AsyncNotifier<Locale> {
   @override
   Future<Locale> build() async {
@@ -23,11 +36,15 @@ class LocaleNotifier extends AsyncNotifier<Locale> {
       return savedLocale;
     }
 
-    // الافتراضي: العربية
+    // Default: Arabic (RTL-first design)
     return const Locale('ar');
   }
 
-  /// تغيير لغة التطبيق
+  /// Changes the application locale and persists the preference.
+  ///
+  /// [locale] - The target [Locale] to apply.
+  ///
+  /// Throws an [Exception] if persistence fails.
   Future<void> setLocale(Locale locale) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
@@ -43,7 +60,9 @@ class LocaleNotifier extends AsyncNotifier<Locale> {
   }
 }
 
-/// المزود العام للغة
+/// Primary locale state provider.
+///
+/// Exposes the current [Locale] and [LocaleNotifier] for state management.
 final localeProvider = AsyncNotifierProvider<LocaleNotifier, Locale>(
   LocaleNotifier.new,
 );

@@ -3,17 +3,38 @@ import 'dart:ui';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// خدمة الإشعارات المحلية
+/// Local notification service for push notification management.
 ///
-/// مسؤولة عن إعداد وعرض الإشعارات المحلية باستخدام
-/// flutter_local_notifications. تدعم التخصيص حسب ثيم التطبيق.
+/// Handles initialization and display of local notifications using
+/// [FlutterLocalNotificationsPlugin]. Supports theme-aware accent colors
+/// and customizable notification content.
+///
+/// ## Features
+/// - Cross-platform support (Android, iOS)
+/// - Theme-aware accent colors
+/// - BigText style for long messages
+/// - Attachment support via payload
+///
+/// ## Usage
+/// ```dart
+/// final service = ref.read(notificationServiceProvider);
+/// await service.initialize();
+/// await service.showNotification(
+///   id: 1,
+///   title: 'Invoice Created',
+///   body: 'Invoice #12345 has been created successfully.',
+/// );
+/// ```
 class NotificationService {
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
   bool _isInitialized = false;
 
-  /// تهيئة الخدمة
+  /// Initializes the notification service.
+  ///
+  /// Must be called before showing any notifications. Safe to call multiple
+  /// times; subsequent calls are no-ops.
   Future<void> initialize() async {
     if (_isInitialized) return;
 
@@ -30,20 +51,21 @@ class NotificationService {
     await _notificationsPlugin.initialize(
       initSettings,
       onDidReceiveNotificationResponse: (response) {
-        // يمكن إضافة منطق التفاعل هنا لاحقاً
+        // Notification tap handling can be added here
       },
     );
 
     _isInitialized = true;
   }
 
-  /// عرض إشعار بسيط
+  /// Displays a local notification.
   ///
-  /// [id] معرف الإشعار
-  /// [title] العنوان
-  /// [body] المحتوى
-  /// [accentColor] لون التمييز
-  /// (يظهر في Android كـ Small Icon Color أو Text Color)
+  /// ## Parameters
+  /// - [id]: Unique notification identifier (used for updates/cancellation).
+  /// - [title]: Notification title text.
+  /// - [body]: Notification body content.
+  /// - [accentColor]: Optional theme accent color for Android.
+  /// - [payload]: Optional data payload for tap handling.
   Future<void> showNotification({
     required int id,
     required String title,
@@ -54,10 +76,10 @@ class NotificationService {
     final androidDetails = AndroidNotificationDetails(
       'basir_default_channel',
       'Basir Notifications',
-      channelDescription: 'قناة الإشعارات الأساسية لتطبيق بصير',
+      channelDescription: 'Primary notification channel for Basir app',
       importance: Importance.max,
       priority: Priority.high,
-      color: accentColor, // تطبيق لون الثيم هنا
+      color: accentColor,
       styleInformation: BigTextStyleInformation(body),
     );
 
@@ -72,7 +94,9 @@ class NotificationService {
   }
 }
 
-/// موفر خدمة الإشعارات
+/// Notification service provider.
+///
+/// Provides a singleton [NotificationService] instance.
 final notificationServiceProvider = Provider<NotificationService>(
   (ref) => NotificationService(),
 );
