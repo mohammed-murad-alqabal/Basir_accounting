@@ -60,7 +60,9 @@ void main() {
       );
 
       expect(
-          () => ZatcaService.validateInvoice(invalidInvoice), throwsException);
+        () => ZatcaService.validateInvoice(invalidInvoice),
+        throwsException,
+      );
     });
 
     test('validateInvoice should pass for valid data', () {
