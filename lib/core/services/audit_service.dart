@@ -88,7 +88,8 @@ class AuditService {
 
     // Default to "System" or "Guest" if no user is logged in
     final userId = user?.id ?? '00000000-0000-0000-0000-000000000000';
-    final userName = user?.displayName ?? (user?.isGuest ?? false ? 'Guest' : 'System');
+    final userName =
+        user?.displayName ?? (user?.isGuest ?? false ? 'Guest' : 'System');
     final userRole = user?.role.name ?? 'system';
 
     return AuditMetadataDto(

@@ -107,6 +107,7 @@ class OrchestratorService extends _$OrchestratorService {
 
 /// Represents the final consensus reached by the multi-agent system.
 class AgentConsensus {
+  /// Creates a finalized consensus report.
   AgentConsensus({
     required this.isApproved,
     required this.explanation,

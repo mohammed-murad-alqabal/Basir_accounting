@@ -10,6 +10,7 @@ part 'forensic_audit_service.g.dart';
 
 /// Represents the result of a forensic audit examination.
 class AuditResult {
+  /// Creates an audit result with a success flag and message.
   const AuditResult({
     required this.isSuccess,
     required this.message,
@@ -26,7 +27,8 @@ class AuditResult {
   final List<String> findings;
 }
 
-/// Forensic Audit Expert Service (Agent 3) for data integrity and fraud detection.
+/// Forensic Audit Expert Service (Agent 3) for data integrity and fraud
+/// detection.
 ///
 /// This agent monitors ledger activities for unauthorized changes,
 /// unusual transaction patterns, and structural imbalances. It serves
@@ -49,8 +51,10 @@ class ForensicAuditService extends _$ForensicAuditService
   /// Real-time processing of proposed transactions for forensic anomalies.
   ///
   /// ## Checks:
-  /// 1. **Balance Verification**: Recomputes Debit vs Credit totals for exact parity.
-  /// 2. **Threshold Monitoring**: Flags unusually large transactions exceeding SAR 1M.
+  /// 1. **Balance Verification**: Recomputes Debit vs Credit totals for exact
+  ///    parity.
+  /// 2. **Threshold Monitoring**: Flags unusually large transactions exceeding
+  ///    SAR 1M.
   /// 3. **Duplicate Detection**: Prevents reuse of existing Reference Numbers.
   @override
   Future<AgentResult> process(AccountingContext context) async {
@@ -70,7 +74,8 @@ class ForensicAuditService extends _$ForensicAuditService
     if (context.proposedJournalEntry.totalDebit > threshold) {
       rationale.add(
         'WARNING: Unusually high transaction amount detected '
-        '(${context.proposedJournalEntry.totalDebit}). Administrative review recommended.',
+        '(${context.proposedJournalEntry.totalDebit}). Administrative review '
+        'recommended.',
       );
     }
 
@@ -83,7 +88,9 @@ class ForensicAuditService extends _$ForensicAuditService
       isAllowed = false;
       rationale.add(
         'REJECTION: Duplicate reference number '
-        '(${context.proposedJournalEntry.referenceNumber}) detected in history.',
+        'REJECTION: Duplicate reference number '
+        '(${context.proposedJournalEntry.referenceNumber}) detected in '
+        'history.',
       );
     }
 
@@ -121,7 +128,8 @@ class ForensicAuditService extends _$ForensicAuditService
     );
   }
 
-  /// Performs deep integrity check between account balances and transaction totals.
+  /// Performs deep integrity check between account balances and transaction
+  /// totals.
   ///
   /// Recomputes theoretical balances for every account by aggregating all
   /// posted journal lines and compares them against current stored values.
@@ -161,8 +169,8 @@ class ForensicAuditService extends _$ForensicAuditService
     if (discrepancies.isEmpty) {
       return const AuditResult(
         isSuccess: true,
-        message:
-            'Data integrity verified: Account balances match transaction history.',
+        message: 'Data integrity verified: Account balances match transaction '
+            'history.',
       );
     }
 

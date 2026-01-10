@@ -10,6 +10,7 @@ part 'accounts_receivable_service.g.dart';
 /// Categorizes outstanding customer balances into time-based buckets
 /// to assess credit risk and collection performance.
 class CustomerAging {
+  /// Creates a report entry for a specific customer.
   CustomerAging({
     required this.customerId,
     required this.customerNameAr,
