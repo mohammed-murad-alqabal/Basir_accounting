@@ -24,7 +24,7 @@ import 'package:uuid/uuid.dart';
 class AuthService {
   /// Initializes the localized authentication engine.
   ///
-  /// Requires a [FlutterSecureStorage] instance for hardware-backed persistence.
+  /// Requires a [FlutterSecureStorage] instance for hardware-backed\n  /// persistence.
   AuthService({required this.secureStorage});
 
   /// Institutional hardware-backed storage for sensitive credentials.
@@ -154,8 +154,8 @@ class AuthService {
         orElse: () => UserRole.viewer,
       );
 
-      final permissions = int.tryParse(permissionsStr ?? '') ??
-          BasirUser.getDefaultPermissions(role);
+      final permissions =
+          int.tryParse(permissionsStr ?? '') ?? BasirUser.getDefaultPermissions(role);
 
       return BasirUser(
         id: await _getUserId() ?? 'unknown',

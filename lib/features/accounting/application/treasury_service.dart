@@ -15,8 +15,10 @@ part 'treasury_service.g.dart';
 /// are correctly reflected in the general ledger via automatic journal posting.
 ///
 /// ## Features
-/// - **Voucher Management**: Lifecycle management for Receipt and Payment vouchers.
-/// - **Ledger Integration**: Automatic double-entry posting to Treasury accounts.
+/// - **Voucher Management**: Lifecycle management for Receipt and Payment
+///   vouchers.
+/// - **Ledger Integration**: Automatic double-entry posting to Treasury
+///   accounts.
 /// - **Account Validation**: Enforces Cash/Bank account constraints for treasury transactions.
 /// - **Financial Year Checks**: Prevents posting to closed or locked periods.
 @riverpod

@@ -12,12 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-/// Provider tracking the expansion state of hierarchical accounts in the tree view.
+/// Provider tracking the expansion state of hierarchical accounts in the
+/// tree view.
 final expandedAccountsProvider = StateProvider<Set<String>>(
   (ref) => <String>{},
 );
 
-/// Interactive screen for browsing and managing the hierarchical Chart of Accounts (COA).
+/// Interactive screen for browsing and managing the hierarchical Chart of
+/// Accounts (COA).
 ///
 /// Features a searchable tree structure, multi-standard support (IFRS/ZATCA/FTA),
 /// and real-time hierarchical balance roll-ups.
@@ -44,9 +46,7 @@ class ChartOfAccountsScreen extends ConsumerWidget {
             icon: Icon(appIcons.refresh),
             tooltip: context.l10n.tooltipRefresh,
             onPressed: () async {
-              await ref
-                  .read(accountingServiceProvider.notifier)
-                  .seedDefaultAccounts();
+              await ref.read(accountingServiceProvider.notifier).seedDefaultAccounts();
             },
           ),
         ],
@@ -119,7 +119,8 @@ class ChartOfAccountsScreen extends ConsumerWidget {
         ),
       );
 
-  /// Performs a depth-first traversal to flatten the tree for ListView rendering.
+  /// Performs a depth-first traversal to flatten the tree for ListView
+  /// rendering.
   List<Account> _buildDisplayList(List<Account> all, Set<String> expandedIds) {
     final roots = all.where((a) => a.parentId == null).toList();
     roots.sort((a, b) => a.code.compareTo(b.code));
@@ -131,7 +132,8 @@ class ChartOfAccountsScreen extends ConsumerWidget {
     return result;
   }
 
-  /// Appends children to the display list if their parent is marked as expanded.
+  /// Appends children to the display list if their parent is marked as
+  /// expanded.
   void _addChildrenRecursive(
     Account account,
     List<Account> all,
@@ -159,7 +161,8 @@ class ChartOfAccountsScreen extends ConsumerWidget {
     return depth;
   }
 
-  /// Aggregates the balances of all recursive descendants for grouping accounts.
+  /// Aggregates the balances of all recursive descendants for grouping
+  /// accounts.
   Decimal _calculateHierarchicalBalance(Account account, List<Account> all) {
     var total = account.balance;
     final children = all.where((a) => a.parentId == account.id);
@@ -328,9 +331,7 @@ class _AccountTreeItem extends StatelessWidget {
                       Text(
                         '${account.code} - ${account.nameAr}',
                         style: TextStyle(
-                          fontWeight: account.isParent
-                              ? FontWeight.bold
-                              : FontWeight.w600,
+                          fontWeight: account.isParent ? FontWeight.bold : FontWeight.w600,
                           fontSize: account.isParent
                               ? AppTypography.titleMedium
                               : AppTypography.bodyLarge,
@@ -349,9 +350,7 @@ class _AccountTreeItem extends StatelessWidget {
                   _formatCurrency(balance),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: balance < Decimal.zero
-                        ? AppColors.error
-                        : AppColors.success,
+                    color: balance < Decimal.zero ? AppColors.error : AppColors.success,
                   ),
                 ),
               ],

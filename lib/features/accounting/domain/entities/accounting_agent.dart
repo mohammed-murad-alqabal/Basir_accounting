@@ -9,7 +9,8 @@ enum AgentAuthority {
   /// Highest Tier: Aggregates and reconciles decisions from all other agents.
   orchestrator,
 
-  /// High Tier: Authorized to block transactions based on strict standard violations.
+  /// High Tier: Authorized to block transactions based on strict standard
+  /// violations.
   high,
 
   /// Medium Tier: Provides strategic advice and threshold warnings.
@@ -36,7 +37,8 @@ class AgentResult with _$AgentResult {
     /// Statistical confidence in the outcome (0.0 to 1.0).
     required double confidenceScore,
 
-    /// Optional AI-driven modifications to improve entry accuracy or compliance.
+    /// Optional AI-driven modifications to improve entry accuracy or
+    /// compliance.
     Map<String, dynamic>? suggestedAdjustments,
   }) = _AgentResult;
 }

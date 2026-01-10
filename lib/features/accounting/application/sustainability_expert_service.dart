@@ -9,8 +9,7 @@ part 'sustainability_expert_service.g.dart';
 /// or social disclosures comply with International Sustainability Standards
 /// Board (ISSB) S1 and S2 mandates.
 @Riverpod(keepAlive: true)
-class SustainabilityExpertService extends _$SustainabilityExpertService
-    implements AccountingAgent {
+class SustainabilityExpertService extends _$SustainabilityExpertService implements AccountingAgent {
   @override
   FutureOr<void> build() {}
 
@@ -20,7 +19,8 @@ class SustainabilityExpertService extends _$SustainabilityExpertService
   @override
   AgentAuthority get authority => AgentAuthority.medium;
 
-  /// Validates the presence of sustainability metrics for mandatory disclosures.
+  /// Validates the presence of sustainability metrics for mandatory
+  /// disclosures.
   ///
   /// ## Compliance Checks:
   /// - **ISSB S2 Readiness**: For high-impact industries, verifies that carbon
@@ -35,12 +35,11 @@ class SustainabilityExpertService extends _$SustainabilityExpertService
         'ISSB Analysis: This transaction is flagged for mandatory environmental/social disclosure.',
       );
 
-      if (context.sustainabilityMetrics == null ||
-          context.sustainabilityMetrics!.isEmpty) {
+      if (context.sustainabilityMetrics == null || context.sustainabilityMetrics!.isEmpty) {
         isAllowed = false;
         rationale.add(
-          'CRITICAL REJECTION: ISSB S2 standards require carbon footprint metrics '
-          'for this industry-specific transaction.',
+          'CRITICAL REJECTION: ISSB S2 standards require carbon footprint '
+          'metrics for this industry-specific transaction.',
         );
       } else {
         rationale.add(
@@ -49,7 +48,8 @@ class SustainabilityExpertService extends _$SustainabilityExpertService
       }
     } else {
       rationale.add(
-        'Sustainability Assessment: No specific ISSB disclosures required for this transaction tier.',
+        'Sustainability Assessment: No specific ISSB disclosures required '
+        'for this transaction tier.',
       );
     }
 
