@@ -5,6 +5,7 @@ library;
 
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../fixtures/invoice_fixtures.dart';
@@ -29,14 +30,14 @@ void main() {
       test('should create copy with updated items', () {
         // Arrange
         final original = InvoiceFixtures.invoice1;
-        const newItems = [
+        final newItems = [
           InvoiceItem(
             id: 'new-1',
             name: 'منتج جديد',
-            quantity: 1,
-            price: 500,
-            total: 500,
-            taxAmount: 75,
+            quantity: Decimal.fromInt(1),
+            price: Decimal.fromInt(500),
+            total: Decimal.fromInt(500),
+            taxAmount: Decimal.fromInt(75),
           ),
         ];
 
@@ -70,10 +71,10 @@ void main() {
         final original = InvoiceFixtures.invoice1;
 
         // Act
-        final updated = original.copyWith(taxRate: 0.10);
+        final updated = original.copyWith(taxRate: Decimal.parse('0.10'));
 
         // Assert
-        expect(updated.taxRate, 0.10);
+        expect(updated.taxRate, Decimal.parse('0.10'));
         expect(updated.id, original.id);
       });
 
@@ -105,36 +106,36 @@ void main() {
     group('InvoiceItem', () {
       test('should hold correct values', () {
         // Arrange
-        const item = InvoiceItem(
+        final item = InvoiceItem(
           id: 'item-1',
           name: 'منتج اختبار',
-          quantity: 3,
-          price: 250,
-          total: 750,
-          taxAmount: 112.5,
+          quantity: Decimal.fromInt(3),
+          price: Decimal.fromInt(250),
+          total: Decimal.fromInt(750),
+          taxAmount: Decimal.parse('112.5'),
         );
 
         // Act & Assert
-        expect(item.total, 750);
-        expect(item.taxAmount, 112.5);
+        expect(item.total, Decimal.fromInt(750));
+        expect(item.taxAmount, Decimal.parse('112.5'));
       });
 
       test('should copy item with updated values', () {
         // Arrange
-        const original = InvoiceItem(
+        final original = InvoiceItem(
           id: 'item-1',
           name: 'منتج',
-          quantity: 1,
-          price: 100,
-          total: 100,
-          taxAmount: 15,
+          quantity: Decimal.one,
+          price: Decimal.fromInt(100),
+          total: Decimal.fromInt(100),
+          taxAmount: Decimal.fromInt(15),
         );
 
         // Act
-        final updated = original.copyWith(quantity: 5);
+        final updated = original.copyWith(quantity: Decimal.fromInt(5));
 
         // Assert
-        expect(updated.quantity, 5);
+        expect(updated.quantity, Decimal.fromInt(5));
         expect(updated.name, original.name);
         expect(updated.price, original.price);
       });

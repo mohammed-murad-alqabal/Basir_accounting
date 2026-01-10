@@ -8,32 +8,32 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'forensic_audit_service.g.dart';
 
-/// نتيجة فحص التدقيق الجنائي
+/// Represents the result of a forensic audit examination.
 class AuditResult {
-  /// المنشئ
   const AuditResult({
     required this.isSuccess,
     required this.message,
     this.findings = const [],
   });
 
-  /// هل العملية ناجحة؟
+  /// Indicates if the audit check passed successfully.
   final bool isSuccess;
 
-  /// رسالة التدقيق
+  /// Human-readable summary of the audit outcome.
   final String message;
 
-  /// الملاحظات (إن وجدت)
+  /// Detailed findings or discrepancies identified during the audit.
   final List<String> findings;
 }
 
-/// خدمة التدقيق الجنائي المحاسبي (Forensic Audit Service)
-/// تضمن سلامة البيانات وتراقب التغييرات غير المصرح بها.
+/// Forensic Audit Expert Service (Agent 3) for data integrity and fraud detection.
+///
+/// This agent monitors ledger activities for unauthorized changes,
+/// unusual transaction patterns, and structural imbalances. It serves
+/// as a critical layer of defense for financial accuracy.
 @riverpod
-class ForensicAuditService extends _$ForensicAuditService
-    implements AccountingAgent {
-  AccountingRepository get _repository =>
-      ref.read(accountingRepositoryProvider);
+class ForensicAuditService extends _$ForensicAuditService implements AccountingAgent {
+  AccountingRepository get _repository => ref.read(accountingRepositoryProvider);
 
   @override
   void build() {}
@@ -44,6 +44,12 @@ class ForensicAuditService extends _$ForensicAuditService
   @override
   AgentAuthority get authority => AgentAuthority.medium;
 
+  /// Real-time processing of proposed transactions for forensic anomalies.
+  ///
+  /// ## Checks:
+  /// 1. **Balance Verification**: Recomputes Debit vs Credit totals for exact parity.
+  /// 2. **Threshold Monitoring**: Flags unusually large transactions exceeding SAR 1M.
+  /// 3. **Duplicate Detection**: Prevents reuse of existing Reference Numbers.
   @override
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];
@@ -57,15 +63,13 @@ class ForensicAuditService extends _$ForensicAuditService
       rationale.add('Check PASSED: Journal entry is balanced.');
     }
 
-    // 2. Anomaly Detection (Simple Threshold)
+    // 2. Anomaly Detection (Threshold: SAR 1,000,000)
     final threshold = Decimal.fromInt(1000000);
     if (context.proposedJournalEntry.totalDebit > threshold) {
       rationale.add(
         'WARNING: Unusually high transaction amount detected '
-        '(${context.proposedJournalEntry.totalDebit}).',
+        '(${context.proposedJournalEntry.totalDebit}). Administrative review recommended.',
       );
-      // In some forensics, we might still allow but flag it.
-      // For now, we allow but warn.
     }
 
     // 3. Duplicate Reference Check
@@ -77,7 +81,7 @@ class ForensicAuditService extends _$ForensicAuditService
       isAllowed = false;
       rationale.add(
         'REJECTION: Duplicate reference number '
-        '(${context.proposedJournalEntry.referenceNumber}) detected.',
+        '(${context.proposedJournalEntry.referenceNumber}) detected in history.',
       );
     }
 
@@ -89,32 +93,36 @@ class ForensicAuditService extends _$ForensicAuditService
     );
   }
 
-  /// فحص توازن كافة القيود المحاسبية (FR-ACC-002)
+  /// Verifies balance parity across the entire historical journal.
+  /// (Implementation of FR-ACC-002)
   Future<AuditResult> verifyAllEntriesBalanced() async {
     final entries = await _repository.getJournalEntries();
     final unbalanced = <String>[];
 
     for (final entry in entries) {
       if (!entry.isBalanced) {
-        unbalanced.add('القيد رقم ${entry.referenceNumber} غير متزن');
+        unbalanced.add('Entry #${entry.referenceNumber} is unbalanced.');
       }
     }
 
     if (unbalanced.isEmpty) {
       return const AuditResult(
         isSuccess: true,
-        message: 'جميع القيود متزنة بنجاح.',
+        message: 'All ledger entries verified as balanced.',
       );
     }
 
     return AuditResult(
       isSuccess: false,
-      message: 'تم العثور على قيود غير متزنة!',
+      message: 'Unbalanced entries identified!',
       findings: unbalanced,
     );
   }
 
-  /// فحص مطابقة أرصدة الحسابات مع مجموع القيود (Data Integrity)
+  /// Performs deep integrity check between account balances and transaction totals.
+  ///
+  /// Recomputes theoretical balances for every account by aggregating all
+  /// posted journal lines and compares them against current stored values.
   Future<AuditResult> verifyBalancesIntegrity() async {
     final accounts = await _repository.getAccounts();
     final entries = await _repository.getJournalEntries();
@@ -123,7 +131,6 @@ class ForensicAuditService extends _$ForensicAuditService
     for (final account in accounts) {
       if (account.isParent) continue;
 
-      // حساب الرصيد من القيود يدوياً للمقارنة
       var calculatedBalance = Decimal.zero;
       for (final entry in entries) {
         if (entry.status != JournalEntryStatus.posted) continue;
@@ -135,17 +142,15 @@ class ForensicAuditService extends _$ForensicAuditService
         }
       }
 
-      // تحويل الرصيد المحسوب ليتناسب مع طبيعة الحساب
-      final absoluteCalculated = account.nature == AccountNature.debit
-          ? calculatedBalance
-          : -calculatedBalance;
+      final absoluteCalculated =
+          account.nature == AccountNature.debit ? calculatedBalance : -calculatedBalance;
 
       final storedBalance = await _repository.getAccountBalance(account.id);
 
       if (absoluteCalculated != storedBalance) {
         discrepancies.add(
-          'حساب ${account.nameAr}: الرصيد المخزن ($storedBalance) لا يطابق '
-          'المحسوب ($absoluteCalculated)',
+          'Account ${account.nameEn}: Stored balance ($storedBalance) mismatch '
+          'against computed total ($absoluteCalculated)',
         );
       }
     }
@@ -153,42 +158,39 @@ class ForensicAuditService extends _$ForensicAuditService
     if (discrepancies.isEmpty) {
       return const AuditResult(
         isSuccess: true,
-        message: 'جميع أرصدة الحسابات مطابقة لسجل القيود.',
+        message: 'Data integrity verified: Account balances match transaction history.',
       );
     }
 
     return AuditResult(
       isSuccess: false,
-      message: 'تم العثور على عدم تطابق في الأرصدة!',
+      message: 'Integrity discrepancies identified!',
       findings: discrepancies,
     );
   }
 
-  /// الكشف عن معاملات مشبوهة (Anomaly Detection)
+  /// Scans for suspicious financial patterns or statistical anomalies.
   Future<AuditResult> detectAnomalies() async {
     final entries = await _repository.getJournalEntries();
     final findings = <String>[];
 
-    // مثال: قيود بمبالغ ضخمة جداً (أكثر من مليون)
+    // Check for high-value transactions
     final threshold = Decimal.fromInt(1000000);
 
     for (final entry in entries) {
       if (entry.totalDebit > threshold) {
         findings.add(
-          'تنبيه: قيد رقم ${entry.referenceNumber} بمبلغ ضخم '
-          '(${entry.totalDebit})',
+          'High-value Transaction Alert: Entry #${entry.referenceNumber} '
+          'amounting to ${entry.totalDebit}.',
         );
       }
-
-      // مثال: قيود في أوقات غير معتادة (إذا كان لدينا تاريخ إنشاء دقيق)
-      // (مستقبلاً يمكن إضافة المزيد من القواعد)
     }
 
     return AuditResult(
       isSuccess: findings.isEmpty,
       message: findings.isEmpty
-          ? 'لم يتم العثور على نشاط مشبوه.'
-          : 'تم العثور على تنبيهات تستوجب المراجعة.',
+          ? 'No suspicious patterns identified.'
+          : 'Forensic alerts require administrative review.',
       findings: findings,
     );
   }

@@ -7,6 +7,8 @@ use super::zakah::{ZakahBase, ZakahCalculator, ZakahCalendarType};
 use crate::accounts::models::{Account, AccountClassification, AccountKind};
 use chrono::NaiveDate;
 use rust_decimal::Decimal;
+use std::collections::HashMap;
+use uuid::Uuid;
 
 /// Comparative balance for an account over two points in time.
 #[derive(Debug, Clone)]
@@ -129,10 +131,26 @@ impl FinancialReportGenerator {
     pub fn synthesize_balance_sheet(
         as_of_date: NaiveDate,
         accounts: &[(Account, Decimal)],
+        fair_valuation_updates: Option<&HashMap<Uuid, Decimal>>,
     ) -> FinancialReport {
         let mut lines = Vec::new();
 
-        // 1. ASSETS
+        // Prepare Adjusted Accounts
+        let mut adjusted_accounts = accounts.to_vec();
+        let mut revaluation_surplus = Decimal::ZERO;
+
+        if let Some(updates) = fair_valuation_updates {
+            for (acc, balance) in adjusted_accounts.iter_mut() {
+                if let Some(target) = updates.get(&acc.id) {
+                    let delta = *target - *balance;
+                    *balance = *target;
+                    // If asset increases, surplus increases (credit Equity).
+                    // If asset decreases, surplus decreases (debit Equity).
+                    // This assumes account is Asset. If it's Liability, logic might differ (but req is Inventory Assets).
+                    revaluation_surplus += delta;
+                }
+            }
+        }
         lines.push(FinancialReportLine {
             label: "الأصول (ASSETS)".to_string(),
             amount: Decimal::ZERO,
@@ -150,7 +168,7 @@ impl FinancialReportGenerator {
             indent_level: 1,
         });
         let mut current_assets = Decimal::ZERO;
-        for (acc, balance) in accounts {
+        for (acc, balance) in &adjusted_accounts {
             if acc.kind == AccountKind::Asset
                 && matches!(
                     acc.classification,
@@ -185,7 +203,7 @@ impl FinancialReportGenerator {
             indent_level: 1,
         });
         let mut non_current_assets = Decimal::ZERO;
-        for (acc, balance) in accounts {
+        for (acc, balance) in &adjusted_accounts {
             if acc.kind == AccountKind::Asset
                 && matches!(acc.classification, Some(AccountClassification::NonCurrent))
                 && *balance != Decimal::ZERO
@@ -235,7 +253,7 @@ impl FinancialReportGenerator {
             indent_level: 1,
         });
         let mut current_liabilities = Decimal::ZERO;
-        for (acc, balance) in accounts {
+        for (acc, balance) in &adjusted_accounts {
             if acc.kind == AccountKind::Liability
                 && matches!(
                     acc.classification,
@@ -270,7 +288,7 @@ impl FinancialReportGenerator {
             indent_level: 1,
         });
         let mut non_current_liabilities = Decimal::ZERO;
-        for (acc, balance) in accounts {
+        for (acc, balance) in &adjusted_accounts {
             if acc.kind == AccountKind::Liability
                 && matches!(acc.classification, Some(AccountClassification::NonCurrent))
                 && *balance != Decimal::ZERO
@@ -311,7 +329,7 @@ impl FinancialReportGenerator {
             indent_level: 0,
         });
         let mut total_equity = Decimal::ZERO;
-        for (acc, balance) in accounts {
+        for (acc, balance) in &adjusted_accounts {
             if acc.kind == AccountKind::Equity && *balance != Decimal::ZERO {
                 lines.push(FinancialReportLine {
                     label: format!("{} ({})", acc.name_ar, acc.name_en),
@@ -323,6 +341,17 @@ impl FinancialReportGenerator {
                 total_equity += *balance;
             }
         }
+        if revaluation_surplus != Decimal::ZERO {
+            lines.push(FinancialReportLine {
+                label: "فائض إعادة التقييم (Revaluation Surplus)".to_string(),
+                amount: revaluation_surplus,
+                is_title: false,
+                is_total: false,
+                indent_level: 1,
+            });
+            total_equity += revaluation_surplus;
+        }
+
         lines.push(FinancialReportLine {
             label: "إجمالي حقوق الملكية (Total Equity)".to_string(),
             amount: total_equity,
@@ -869,5 +898,86 @@ mod tests {
             .find(|l| l.label.contains("الزكاة المستحقة"))
             .unwrap();
         assert_eq!(zakah_due.amount, Decimal::from(3093));
+    }
+
+    #[test]
+    fn test_synthesize_balance_sheet_fair_value() {
+        use std::collections::HashMap;
+        use uuid::Uuid;
+        let as_of = NaiveDate::from_ymd_opt(2026, 12, 31).unwrap();
+
+        // 1. Setup Accounts
+        let mut cash = Account::new("1000", "النقدية", "Cash", AccountKind::Asset);
+        cash.id = Uuid::new_v4();
+        cash.classification = Some(AccountClassification::Current);
+
+        let mut inventory = Account::new("1200", "المخزون", "Inventory", AccountKind::Asset);
+        inventory.id = Uuid::new_v4();
+        inventory.classification = Some(AccountClassification::Current);
+
+        let mut capital = Account::new("3000", "رأس المال", "Capital", AccountKind::Equity);
+        capital.id = Uuid::new_v4();
+        // Capital = 6000 (To balance)
+
+        let accounts = vec![
+            (cash.clone(), Decimal::from(1000)),
+            (inventory.clone(), Decimal::from(5000)),
+            (capital.clone(), Decimal::from(6000)),
+        ];
+
+        // 2. Base Report (No Fair Val)
+        let base_report =
+            FinancialReportGenerator::synthesize_balance_sheet(as_of, &accounts, None);
+        let total_assets = base_report
+            .lines
+            .iter()
+            .find(|l| l.label.contains("Total Assets"))
+            .unwrap();
+        assert_eq!(total_assets.amount, Decimal::from(6000));
+
+        // 3. Fair Value Update
+        // Inventory Fair Value = 7000 (Surplus 2000)
+        let mut updates = HashMap::new();
+        updates.insert(inventory.id, Decimal::from(7000));
+
+        let fv_report =
+            FinancialReportGenerator::synthesize_balance_sheet(as_of, &accounts, Some(&updates));
+
+        // Assertions
+        let fv_inventory = fv_report
+            .lines
+            .iter()
+            .find(|l| l.label.contains("Inventory"))
+            .unwrap();
+        assert_eq!(fv_inventory.amount, Decimal::from(7000));
+
+        let surplus_line = fv_report
+            .lines
+            .iter()
+            .find(|l| l.label.contains("Revaluation Surplus"))
+            .unwrap();
+        assert_eq!(surplus_line.amount, Decimal::from(2000));
+
+        let fv_total_assets = fv_report
+            .lines
+            .iter()
+            .find(|l| l.label.contains("Total Assets"))
+            .unwrap();
+        assert_eq!(fv_total_assets.amount, Decimal::from(8000)); // 1000 Cash + 7000 Inv
+
+        let fv_total_equity = fv_report
+            .lines
+            .iter()
+            .find(|l| l.label.contains("Total Equity"))
+            .unwrap();
+        // 6000 Capital + 2000 Surplus = 8000
+        assert_eq!(fv_total_equity.amount, Decimal::from(8000));
+
+        let fv_total_le = fv_report
+            .lines
+            .iter()
+            .find(|l| l.label.contains("Total L+E"))
+            .unwrap();
+        assert_eq!(fv_total_le.amount, Decimal::from(8000));
     }
 }

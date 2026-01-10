@@ -4,17 +4,19 @@ import 'package:basir_app/features/auth/application/auth_service.dart';
 import 'package:basir_app/features/auth/domain/models/auth_models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// مزود خدمة المصادقة
+/// ***
+/// Cognitive Foundation: Auth Providers
 ///
-/// يوفر instance من AuthService مع التخزين الآمن
+/// Reactive source of truth for all institutional identity and security states.
+/// These providers bridge the gap between the application services and the
+/// presentation layer, ensuring high-fidelity updates across the entire app.
+/// ***
+
+/// [authServiceProvider]
 ///
-/// Example:
-/// ```dart
-/// final authService = ref.watch(authServiceProvider,);
-/// await authService.login('username', 'password',);
-/// ```
+/// Provides the singleton instance of the [AuthService].
+/// Optimized with precise selection of dependencies to minimize rebuilds.
 final authServiceProvider = Provider((ref) {
-  // استخدام select() لتحسين الأداء - مراقبة التخزين الآمن فقط
   final secureStorage = ref.watch(
     secureStorageProvider.select((storage) => storage),
   );
@@ -22,20 +24,6 @@ final authServiceProvider = Provider((ref) {
 });
 
 /// مزود التحقق من وجود حساب
-///
-/// يتحقق من وجود حساب مسجل في التطبيق
-///
-/// Returns: `Future<bool>` - true إذا كان هناك حساب
-///
-/// Example:
-/// ```dart
-/// final hasAccount = await ref.watch(hasAccountProvider.future,);
-/// if (hasAccount) {
-///   // انتقل إلى شاشة تسجيل الدخول
-/// } else {
-///   // انتقل إلى شاشة الإعداد
-/// }
-/// ```
 final hasAccountProvider = FutureProvider<bool>((ref) async {
   // استخدام select() لتحسين الأداء - مراقبة الخدمة فقط
   final authService = ref.watch(
@@ -45,52 +33,17 @@ final hasAccountProvider = FutureProvider<bool>((ref) async {
 });
 
 /// مزود حالة تسجيل الدخول
-///
-/// يحفظ حالة تسجيل الدخول الحالية للمستخدم
-///
-/// Example:
-/// ```dart
-/// final isLoggedIn = ref.watch(isLoggedInProvider,);
-/// // تحديث الحالة
-/// ref.read(isLoggedInProvider.notifier).state = true;
-/// ```
 final isLoggedInProvider = StateProvider<bool>((ref) => false);
 
 /// مزود اسم المستخدم الحالي
-///
-/// يحفظ اسم المستخدم المسجل حالياً
-///
-/// Example:
-/// ```dart
-/// final username = ref.watch(currentUsernameProvider,);
-/// if (username != null) {
-///   debugPrint('مرحباً $username',);
-/// }
-/// ```
 final currentUsernameProvider = StateProvider<String?>((ref) => null);
+
+/// مزود الملف الشخصي للمستخدم الحالي (للوصول المتزامن)
+final currentUserProfileProvider = StateProvider<BasirUser?>((ref) => null);
 
 /// مزود عملية تسجيل الدخول
 ///
 /// يدير عملية تسجيل الدخول ويحدث الحالة عند النجاح
-///
-/// Parameters:
-/// - credentials: (username, password) - بيانات الاعتماد
-///
-/// Returns: `Future<bool>` - true إذا نجح تسجيل الدخول
-///
-/// Side Effects:
-/// - يحدث isLoggedInProvider إلى true عند النجاح
-/// - يحدث currentUsernameProvider باسم المستخدم
-///
-/// Example:
-/// ```dart
-/// final result = await ref.watch(
-///   loginProvider(('admin', 'password123')).future,
-///,);
-/// if (result) {
-///   // تسجيل الدخول نجح
-/// }
-/// ```
 final loginProvider = FutureProvider.family<bool, (String, String)>((
   ref,
   credentials,
@@ -106,6 +59,10 @@ final loginProvider = FutureProvider.family<bool, (String, String)>((
     if (result) {
       ref.read(isLoggedInProvider.notifier).state = true;
       ref.read(currentUsernameProvider.notifier).state = username;
+
+      // تحديث الملف الشخصي
+      final user = await authService.getCurrentUser();
+      ref.read(currentUserProfileProvider.notifier).state = user;
     }
     return result;
   } on Exception {
@@ -114,27 +71,6 @@ final loginProvider = FutureProvider.family<bool, (String, String)>((
 });
 
 /// مزود عملية الإعداد الأولي
-///
-/// يدير عملية إنشاء حساب جديد ويحدث الحالة عند النجاح
-///
-/// Parameters:
-/// - credentials: (username, password) - بيانات الحساب الجديد
-///
-/// Returns: `Future<bool>` - true إذا نجح إنشاء الحساب
-///
-/// Side Effects:
-/// - يحدث isLoggedInProvider إلى true عند النجاح
-/// - يحدث currentUsernameProvider باسم المستخدم
-///
-/// Example:
-/// ```dart
-/// final result = await ref.watch(
-///   setupProvider(('admin', 'password123')).future,
-///,);
-/// if (result) {
-///   // تم إنشاء الحساب بنجاح
-/// }
-/// ```
 final setupProvider = FutureProvider.family<bool, (String, String)>((
   ref,
   credentials,
@@ -149,6 +85,11 @@ final setupProvider = FutureProvider.family<bool, (String, String)>((
     await authService.createAccount(username, password);
     ref.read(isLoggedInProvider.notifier).state = true;
     ref.read(currentUsernameProvider.notifier).state = username;
+
+    // تحديث الملف الشخصي
+    final user = await authService.getCurrentUser();
+    ref.read(currentUserProfileProvider.notifier).state = user;
+
     return true;
   } on Exception {
     return false;
@@ -156,23 +97,6 @@ final setupProvider = FutureProvider.family<bool, (String, String)>((
 });
 
 /// مزود عملية تسجيل الخروج
-///
-/// يدير عملية تسجيل الخروج ويحدث الحالة
-///
-/// Returns: `Future<bool>` - true إذا نجح تسجيل الخروج
-///
-/// Side Effects:
-/// - يحدث isLoggedInProvider إلى false
-/// - يحدث currentUsernameProvider إلى null
-///
-/// Example:
-/// ```dart
-/// final result = await ref.watch(logoutProvider.future,);
-/// if (result) {
-///   // تم تسجيل الخروج بنجاح
-///   Navigator.pushReplacementNamed(context, '/login',);
-/// }
-/// ```
 final logoutProvider = FutureProvider<bool>((ref) async {
   // استخدام select() لتحسين الأداء - مراقبة الخدمة فقط
   final authService = ref.watch(
@@ -183,6 +107,7 @@ final logoutProvider = FutureProvider<bool>((ref) async {
     await authService.logout();
     ref.read(isLoggedInProvider.notifier).state = false;
     ref.read(currentUsernameProvider.notifier).state = null;
+    ref.read(currentUserProfileProvider.notifier).state = null;
     return true;
   } on Exception {
     return false;
@@ -190,23 +115,6 @@ final logoutProvider = FutureProvider<bool>((ref) async {
 });
 
 /// مزود عملية تغيير كلمة المرور
-///
-/// يدير عملية تغيير كلمة المرور للمستخدم الحالي
-///
-/// Parameters:
-/// - passwords: (oldPassword, newPassword) - كلمة المرور القديمة والجديدة
-///
-/// Returns: `Future<bool>` - true إذا نجح تغيير كلمة المرور
-///
-/// Example:
-/// ```dart
-/// final result = await ref.watch(
-///   changePasswordProvider(('oldPass', 'newPass')).future,
-///,);
-/// if (result) {
-///   // تم تغيير كلمة المرور بنجاح
-/// }
-/// ```
 final changePasswordProvider = FutureProvider.family<bool, (String, String)>((
   ref,
   passwords,
@@ -226,17 +134,6 @@ final changePasswordProvider = FutureProvider.family<bool, (String, String)>((
 });
 
 /// مزود التحقق من وضع الضيف
-///
-/// يتحقق مما إذا كان المستخدم الحالي ضيفاً
-/// يتفاعل مع تغييرات حالة المصادقة (تسجيل دخول/خروج/ترقية)
-///
-/// Example:
-/// ```dart
-/// final isGuest = ref.watch(isGuestProvider);
-/// if (isGuest.value == true) {
-///   // إظهار زر الترقية
-/// }
-/// ```
 final isGuestProvider = StreamProvider<bool>((ref) async* {
   final authService = ref.watch(authServiceProvider);
 
@@ -251,13 +148,13 @@ final isGuestProvider = StreamProvider<bool>((ref) async* {
 
 /// موحد المستخدم (Unified Basir User)
 ///
-/// يوفر المستخدم الحالي سواء من Supabase أو كضيف محلي
+/// يوفر المستخدم الحالي من الخدمة المحلية (ذات الأولوية) أو السحابية
 /// هذا المزود هو المصدر الوحيد للحقيقة لبيانات المستخدم في طبقة التطبيق
 final basirUserProvider = Provider<BasirUser?>((ref) {
-  // 1. التحقق من Supabase (المصدر الأساسي)
-  final supabaseUser = ref.watch(currentUserProvider);
-  if (supabaseUser != null) {
-    return BasirUser.fromSupabase(supabaseUser);
+  // 1. المستخدم المحلي المسجل (المصدر الأساسي)
+  final localUser = ref.watch(currentUserProfileProvider);
+  if (localUser != null) {
+    return localUser;
   }
 
   // 2. التحقق من وضع الضيف (المصدر الثانوي)
@@ -273,6 +170,12 @@ final basirUserProvider = Provider<BasirUser?>((ref) {
       displayName: 'مستخدم ضيف',
       isGuest: true,
     );
+  }
+
+  // 3. التحقق من Supabase (احتياطي قديم)
+  final supabaseUser = ref.watch(currentUserProvider);
+  if (supabaseUser != null) {
+    return BasirUser.fromSupabase(supabaseUser);
   }
 
   return null;

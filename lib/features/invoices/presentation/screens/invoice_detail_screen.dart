@@ -3,10 +3,13 @@ import 'package:basir_app/core/extensions/invoice_extensions.dart';
 import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/core/theme/tokens/index.dart';
 import 'package:basir_app/core/utils/format_helpers.dart';
+import 'package:basir_app/features/accounting/application/accounting_service.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_app/features/invoices/presentation/providers/invoice_pdf_provider.dart';
+import 'package:basir_app/features/invoices/presentation/screens/invoice_form_screen.dart';
 import 'package:basir_app/shared/widgets/index.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,8 +26,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appIcons = ref.watch(appIconsProvider);
-    final calendarType =
-        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
+    final calendarType = ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
 
     return Scaffold(
       appBar: AppAppBar(
@@ -41,9 +43,26 @@ class InvoiceDetailScreen extends ConsumerWidget {
             onPressed: () => ref.refresh(exportInvoicePdfProvider(invoice)),
           ),
           IconButton(
-            icon: Icon(appIcons.edit),
-            onPressed: () => _editInvoice(context),
+            icon: Icon(appIcons.print),
+            tooltip: context.l10n.tooltipPrintReceipt,
+            onPressed: () => ref.refresh(
+              printReceiptProvider(
+                (invoice: invoice, l10n: context.l10n),
+              ),
+            ),
           ),
+          if (invoice.status == InvoiceStatus.draft)
+            IconButton(
+              icon: Icon(appIcons.edit),
+              tooltip: context.l10n.btnUpdateInvoice,
+              onPressed: () => _editInvoice(context),
+            ),
+          if (invoice.status != InvoiceStatus.draft && invoice.status != InvoiceStatus.cancelled)
+            IconButton(
+              icon: Icon(appIcons.delete), // Reversal icon could be different
+              tooltip: context.l10n.tooltipReverseInvoice,
+              onPressed: () => _reverseInvoice(context, ref),
+            ),
         ],
       ),
       body: SingleChildScrollView(
@@ -106,8 +125,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
                   fontWeight: FontWeights.bold,
                 ),
               ),
-              if (invoice.status == InvoiceStatus.paid &&
-                  invoice.paidDate != null)
+              if (invoice.status == InvoiceStatus.paid && invoice.paidDate != null)
                 Text(
                   '${context.l10n.labelPaidDate}: '
                   '${FormatHelpers.formatDate(
@@ -274,10 +292,10 @@ class InvoiceDetailScreen extends ConsumerWidget {
             _buildTotalRow(context.l10n.labelSubtotal, invoice.subtotalAmount),
             _buildTotalRow(
               '${context.l10n.labelTax}: '
-              '${FormatHelpers.formatNumber(invoice.taxRate * 100)}%',
+              '${FormatHelpers.formatNumber(invoice.taxRate * Decimal.fromInt(100))}%',
               invoice.taxAmount,
             ),
-            if (invoice.discountAmount > 0)
+            if (invoice.discountAmount > Decimal.zero)
               _buildTotalRow(
                 context.l10n.labelDiscountAmount,
                 -invoice.discountAmount,
@@ -308,7 +326,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
         ),
       );
 
-  Widget _buildTotalRow(String label, double amount) => Padding(
+  Widget _buildTotalRow(String label, Decimal amount) => Padding(
         padding: const EdgeInsets.symmetric(vertical: Spacing.xs),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -361,15 +379,56 @@ class InvoiceDetailScreen extends ConsumerWidget {
         children: [
           Text(
             title,
-            style:
-                AppTextStyles.titleSmall.copyWith(fontWeight: FontWeights.bold),
+            style: AppTextStyles.titleSmall.copyWith(fontWeight: FontWeights.bold),
           ),
           const SizedBox(height: Spacing.sm),
           Text(content, style: AppTextStyles.bodyMedium),
         ],
       );
 
-  void _editInvoice(BuildContext context) {
-    // منطق التعديل
+  Future<void> _editInvoice(BuildContext context) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (context) => InvoiceFormScreen(invoice: invoice),
+      ),
+    );
+  }
+
+  Future<void> _reverseInvoice(BuildContext context, WidgetRef ref) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.l10n.titleReverseInvoice),
+        content: Text(context.l10n.msgConfirmReverseInvoice),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(context.l10n.dialogCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(context.l10n.btnConfirmReverse),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed ?? false) {
+      try {
+        await ref.read(accountingServiceProvider.notifier).reverseInvoice(invoice);
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.l10n.msgInvoiceReversed)),
+          );
+          Navigator.pop(context);
+        }
+      } on Exception catch (e) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error: $e')),
+          );
+        }
+      }
+    }
   }
 }

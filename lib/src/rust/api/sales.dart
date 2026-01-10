@@ -30,31 +30,22 @@ Future<SalesInvoiceDto?> getInvoiceById({required String id}) =>
 Future<void> deleteInvoice({required String id}) =>
     RustLib.instance.api.crateApiSalesDeleteInvoice(id: id);
 
-Future<String> createInvoice({
-  required SalesInvoiceDto invoice,
-  required List<SalesInvoiceLineDto> lines,
-  required AuditMetadataDto metadata,
-}) =>
+Future<String> createInvoice(
+        {required SalesInvoiceDto invoice,
+        required List<SalesInvoiceLineDto> lines,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiSalesCreateInvoice(
-      invoice: invoice,
-      lines: lines,
-      metadata: metadata,
-    );
+        invoice: invoice, lines: lines, metadata: metadata);
 
-Future<void> postInvoice({
-  required String id,
-  required AuditMetadataDto metadata,
-}) =>
+Future<void> postInvoice(
+        {required String id, required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiSalesPostInvoice(id: id, metadata: metadata);
 
-Future<void> recordCustomerPayment({
-  required CustomerPaymentDto payment,
-  required AuditMetadataDto metadata,
-}) =>
+Future<void> recordCustomerPayment(
+        {required CustomerPaymentDto payment,
+        required AuditMetadataDto metadata}) =>
     RustLib.instance.api.crateApiSalesRecordCustomerPayment(
-      payment: payment,
-      metadata: metadata,
-    );
+        payment: payment, metadata: metadata);
 
 class CustomerDto {
   final String? id;
@@ -203,6 +194,7 @@ class SalesInvoiceLineDto {
   final String quantity;
   final String unitPrice;
   final String taxAmount;
+  final String taxCategory;
 
   const SalesInvoiceLineDto({
     this.productId,
@@ -210,6 +202,7 @@ class SalesInvoiceLineDto {
     required this.quantity,
     required this.unitPrice,
     required this.taxAmount,
+    required this.taxCategory,
   });
 
   @override
@@ -218,7 +211,8 @@ class SalesInvoiceLineDto {
       description.hashCode ^
       quantity.hashCode ^
       unitPrice.hashCode ^
-      taxAmount.hashCode;
+      taxAmount.hashCode ^
+      taxCategory.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -229,5 +223,6 @@ class SalesInvoiceLineDto {
           description == other.description &&
           quantity == other.quantity &&
           unitPrice == other.unitPrice &&
-          taxAmount == other.taxAmount;
+          taxAmount == other.taxAmount &&
+          taxCategory == other.taxCategory;
 }

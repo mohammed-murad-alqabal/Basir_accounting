@@ -19,4 +19,7 @@ abstract class InventoryRepository {
 
   /// البحث عن أصناف.
   Future<List<InventoryItem>> searchItems(String query);
+
+  /// الحصول على صنف بواسطة الكود (SKU/Barcode).
+  Future<InventoryItem?> getItemBySku(String sku);
 }

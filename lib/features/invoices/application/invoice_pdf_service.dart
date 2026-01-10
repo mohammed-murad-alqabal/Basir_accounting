@@ -1,25 +1,34 @@
+/// ***
+/// Cognitive Foundation: InvoicePdfService
+///
+/// High-fidelity PDF generation engine for institutional invoices.
+/// Supports multi-language (Arabic RTL), ZATCA QR codes, and IFRS 18 standards.
+///
+/// Uses [Decimal] for precise representation of all financial values.
+/// ***
+library;
+
 import 'package:basir_app/features/invoices/application/zatca_service.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-/// خدمة إنشاء ملفات PDF للفواتير
-///
-/// تدعم اللغة العربية، رموز QR المتوافقة مع ZATCA، وتصاميم مهنية.
+/// [InvoicePdfService]
 class InvoicePdfService {
   static const String _fontPath = 'assets/fonts/Cairo-Regular.ttf';
   static const String _boldFontPath = 'assets/fonts/Cairo-Bold.ttf';
 
-  /// إنشاء ملف PDF لفاتورة محددة
+  /// Generates a professional PDF document for the given [invoice].
   Future<Uint8List> generateInvoicePdf(
     Invoice invoice, {
     String locale = 'ar',
   }) async {
     final pdf = pw.Document();
 
-    // تحميل الخطوط لدعم العربية
+    // Institutional Font Loading for RTL Support
     final fontData = await rootBundle.load(_fontPath);
     final ttf = pw.Font.ttf(fontData);
 
@@ -63,9 +72,7 @@ class InvoicePdfService {
                 ),
               ),
               pw.Text(
-                invoice.zatcaDeviceId != null
-                    ? 'فاتورة ضريبية مبسطة'
-                    : 'فاتورة ضريبية',
+                invoice.zatcaDeviceId != null ? 'فاتورة ضريبية مبسطة' : 'فاتورة ضريبية',
                 style: pw.TextStyle(
                   font: boldFont,
                   fontSize: 12,
@@ -74,8 +81,7 @@ class InvoicePdfService {
               ),
               pw.Text(
                 'Tax Invoice',
-                style:
-                    const pw.TextStyle(fontSize: 16, color: PdfColors.grey700),
+                style: const pw.TextStyle(fontSize: 16, color: PdfColors.grey700),
                 textDirection: pw.TextDirection.ltr,
               ),
             ],
@@ -97,8 +103,7 @@ class InvoicePdfService {
         ],
       );
 
-  pw.Widget _buildCustomerInfo(Invoice invoice, pw.Font boldFont) =>
-      pw.Container(
+  pw.Widget _buildCustomerInfo(Invoice invoice, pw.Font boldFont) => pw.Container(
         padding: const pw.EdgeInsets.all(10),
         decoration: pw.BoxDecoration(
           border: pw.Border.all(color: PdfColors.grey300),
@@ -173,7 +178,7 @@ class InvoicePdfService {
   pw.Widget _buildTotalsAndQr(Invoice invoice, pw.Font boldFont) => pw.Row(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
-          // QR Code
+          // ZATCA Compliant QR Code
           if (invoice.qrCode != null || true)
             pw.Container(
               width: 100,
@@ -181,10 +186,8 @@ class InvoicePdfService {
               child: pw.BarcodeWidget(
                 barcode: pw.Barcode.qrCode(),
                 data: ZatcaService.encodeTlv(
-                  sellerName:
-                      'مؤسسة بصير التجارية', // TODO(Basir): Get from settings
-                  taxNumber:
-                      '123456789012345', // TODO(Basir): Get from settings
+                  sellerName: 'مؤسسة بصير التجارية', // TODO(Basir): Get from settings
+                  taxNumber: '123456789012345', // TODO(Basir): Get from settings
                   timestamp: invoice.issuedDate,
                   totalAmount: invoice.totalAmount,
                   vatAmount: invoice.taxAmount,
@@ -194,7 +197,7 @@ class InvoicePdfService {
               ),
             ),
           pw.Spacer(),
-          // Totals
+          // Institutional Totals
           pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.end,
             children: [
@@ -203,7 +206,7 @@ class InvoicePdfService {
                 invoice.subtotalAmount,
               ),
               _buildTotalLine('مبلغ الضريبة / Tax Amount:', invoice.taxAmount),
-              if (invoice.discountAmount > 0)
+              if (invoice.discountAmount > Decimal.zero)
                 _buildTotalLine('الخصم / Discount:', -invoice.discountAmount),
               pw.Divider(color: PdfColors.grey400),
               pw.Text(
@@ -223,7 +226,7 @@ class InvoicePdfService {
         ],
       );
 
-  pw.Widget _buildTotalLine(String label, double amount) => pw.Padding(
+  pw.Widget _buildTotalLine(String label, Decimal amount) => pw.Padding(
         padding: const pw.EdgeInsets.symmetric(vertical: 2),
         child: pw.Row(
           mainAxisSize: pw.MainAxisSize.min,

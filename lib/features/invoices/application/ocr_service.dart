@@ -1,17 +1,28 @@
+/// ***
+/// Cognitive Foundation: OcrService
+///
+/// High-fidelity optical character recognition for automated data ingestion.
+/// Uses Google ML Kit to extract institutional financial metadata from physical
+/// receipts and invoices.
+///
+/// Ref: BASIR-OCR-SPEC-2025
+/// ***
+library;
+
+import 'package:decimal/decimal.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ocr_service.g.dart';
 
-/// خدمة التعرف الضوئي على الحروف (OCR Service)
-///
-/// تستخدم لاستخراج البيانات من فواتير المشتريات والإيصالات.
+/// [OcrService]
 @riverpod
 class OcrService extends _$OcrService {
   @override
   void build() {}
 
-  /// Processes an image and returns extracted data (Total, Date).
+  /// Orchestrates the forensic analysis of a physical document.
+  /// Returns a map of extracted institutional metadata (Total [Decimal], Date).
   Future<Map<String, dynamic>> processReceipt(String imagePath) async {
     final inputImage = InputImage.fromFilePath(imagePath);
     final textRecognizer = TextRecognizer();
@@ -19,26 +30,25 @@ class OcrService extends _$OcrService {
     try {
       final recognizedText = await textRecognizer.processImage(inputImage);
 
-      double? total;
+      Decimal? total;
       DateTime? date;
 
-      // Simple heuristic for totals and dates
+      // Heuristic extraction engine for institutional financial patterns
       for (final block in recognizedText.blocks) {
         for (final line in block.lines) {
           final text = line.text.toLowerCase();
 
-          // Look for total/amount
-          if (text.contains('total') ||
-              text.contains('amount') ||
-              text.contains('الاجمالي')) {
+          // Pattern: Total/Amount Detection
+          if (text.contains('total') || text.contains('amount') || text.contains('الاجمالي')) {
             final regExp = RegExp(r'(\d+[\.,]\d+)');
             final match = regExp.firstMatch(text);
             if (match != null) {
-              total = double.tryParse(match.group(1)!.replaceAll(',', '.'));
+              final cleanValue = match.group(1)!.replaceAll(',', '.');
+              total = Decimal.tryParse(cleanValue);
             }
           }
 
-          // Look for date
+          // Pattern: Temporal Metadata Detection
           final dateRegExp = RegExp(r'(\d{2,4}[-/]\d{2}[-/]\d{2,4})');
           final dateMatch = dateRegExp.firstMatch(text);
           if (dateMatch != null) {
@@ -47,7 +57,11 @@ class OcrService extends _$OcrService {
         }
       }
 
-      return {'total': total, 'date': date, 'rawText': recognizedText.text};
+      return {
+        'total': total,
+        'date': date,
+        'rawText': recognizedText.text,
+      };
     } finally {
       await textRecognizer.close();
     }

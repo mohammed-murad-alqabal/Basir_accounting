@@ -163,31 +163,32 @@ void main() {
           dueDate: DateTime.now().add(const Duration(days: 30)),
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
-          subtotalAmount: 1000,
-          taxAmount: 150,
-          discountAmount: 0,
-          totalAmount: 1150,
-          paidAmount: 0,
-          taxRate: 15,
+          subtotalAmount: Decimal.fromInt(1000),
+          taxAmount: Decimal.fromInt(150),
+          discountAmount: Decimal.zero,
+          discountRate: Decimal.zero,
+          totalAmount: Decimal.fromInt(1150),
+          paidAmount: Decimal.zero,
+          taxRate: Decimal.parse('0.15'),
           status: InvoiceStatus.sent,
           items: [
-            const InvoiceItem(
+            InvoiceItem(
               id: 'item-1',
               name: 'Service',
-              quantity: 1,
-              price: 1000,
-              total: 1000,
+              quantity: Decimal.one,
+              price: Decimal.fromInt(1000),
+              total: Decimal.fromInt(1000),
+              taxAmount: Decimal.fromInt(150),
             ),
           ],
         );
 
         // Verify VAT calculation (15% of subtotal)
-        final expectedVat = invoice.subtotalAmount * 0.15;
+        final expectedVat = invoice.subtotalAmount * Decimal.parse('0.15');
         expect(invoice.taxAmount, equals(expectedVat));
 
         // Verify total = subtotal + VAT - discount
-        final expectedTotal =
-            invoice.subtotalAmount + invoice.taxAmount - invoice.discountAmount;
+        final expectedTotal = invoice.subtotalAmount + invoice.taxAmount - invoice.discountAmount;
         expect(invoice.totalAmount, equals(expectedTotal));
       });
     });

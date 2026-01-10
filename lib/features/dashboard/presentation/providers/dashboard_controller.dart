@@ -2,11 +2,11 @@ import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/features/dashboard/domain/entities/dashboard_data.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// مزود وحدة تحكم لوحة التحكم (Dashboard Controller Provider)
-final dashboardControllerProvider =
-    AsyncNotifierProvider<DashboardController, DashboardData>(
+final dashboardControllerProvider = AsyncNotifierProvider<DashboardController, DashboardData>(
   DashboardController.new,
 );
 
@@ -34,18 +34,17 @@ class DashboardController extends AsyncNotifier<DashboardData> {
     final allCustomers = results[1] as List<dynamic>;
 
     // تصفية الفواتير غير الملغاة
-    final activeInvoices = allInvoices
-        .where((inv) => inv.status != InvoiceStatus.cancelled)
-        .toList();
+    final activeInvoices =
+        allInvoices.where((inv) => inv.status != InvoiceStatus.cancelled).toList();
 
     // حساب الإحصائيات
     var paidCount = 0;
     var overdueCount = 0;
     var pendingCount = 0;
-    double totalSales = 0;
-    double paidRevenue = 0;
-    double pendingRevenue = 0;
-    double overdueRevenue = 0;
+    var totalSales = Decimal.zero;
+    var paidRevenue = Decimal.zero;
+    var pendingRevenue = Decimal.zero;
+    var overdueRevenue = Decimal.zero;
 
     for (final inv in activeInvoices) {
       final total = inv.totalAmount;
@@ -64,8 +63,9 @@ class DashboardController extends AsyncNotifier<DashboardData> {
     }
 
     // ترتيب الفواتير حسب الأحدث
-    final recentInvoices = [...allInvoices]
-      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    final recentInvoices = [...allInvoices]..sort(
+        (a, b) => b.createdAt.compareTo(a.createdAt),
+      );
     final limitedRecent = recentInvoices.take(5).toList();
 
     // معالجة بيانات الرسم البياني
@@ -102,9 +102,9 @@ class DashboardController extends AsyncNotifier<DashboardData> {
                 inv.issuedDate.month == date.month &&
                 inv.issuedDate.day == date.day,
           )
-          .fold<double>(0, (sum, inv) => sum + inv.totalAmount);
+          .fold<Decimal>(Decimal.zero, (sum, inv) => sum + inv.totalAmount);
 
-      trend[dateKey] = dailyTotal;
+      trend[dateKey] = dailyTotal.toDouble();
     }
 
     return trend;

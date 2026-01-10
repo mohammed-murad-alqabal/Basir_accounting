@@ -4,14 +4,20 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'accounts_provider.g.dart';
 
-/// يوفر قائمة بجميع الحسابات المتوفرة في النظام.
+/// Global provider for the consolidated local Chart of Accounts (COA).
+///
+/// Serves as the reactive source of truth for all ledger accounts,
+/// enabling real-time UI updates when balances or metadata change.
 @riverpod
 Future<List<Account>> accounts(AccountsRef ref) async {
   final repository = ref.watch(accountingRepositoryProvider);
   return repository.getAccounts();
 }
 
-/// يوفر قائمة بالحسابات مصنفة حسب النوع.
+/// Dynamic filtered provider for accounts of a specific [AccountType].
+///
+/// Optimizes UI performance by providing slice-based access to the COA,
+/// useful for account selection in forms (e.g., filtering for Assets only).
 @riverpod
 Future<List<Account>> accountsByType(
   AccountsByTypeRef ref,

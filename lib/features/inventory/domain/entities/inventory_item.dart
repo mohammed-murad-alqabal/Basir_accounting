@@ -100,12 +100,14 @@ class InventoryItem with _$InventoryItem {
 
     /// معرف المستخدم
     String? userId,
+
+    /// فئة الضريبة الافتراضية (S=Standard, Z=Zero, etc)
+    @Default('S') String taxCategory,
   }) = _InventoryItem;
 
   /// إنشاء صنف مخزون من JSON.
   // ignore: lines_longer_than_80_chars
-  factory InventoryItem.fromJson(Map<String, dynamic> json) =>
-      _$InventoryItemFromJson(json);
+  factory InventoryItem.fromJson(Map<String, dynamic> json) => _$InventoryItemFromJson(json);
 
   const InventoryItem._();
 

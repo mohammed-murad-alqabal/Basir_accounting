@@ -11,10 +11,12 @@ import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة نظرة عامة على التقارير (Reporting Overview Screen)
-/// توفر الوصول إلى ميزان المراجعة، قائمة الدخل، والميزانية العمومية.
+/// Central hub for accessing statutory and management financial reports.
+///
+/// Provides a unified gateway to core statements including Trial Balance,
+/// Income Statement (IFRS 18), Balance Sheet, and Cash Flow (Direct Method).
 class ReportingOverviewScreen extends ConsumerWidget {
-  /// إنشاء شاشة نظرة عامة على التقارير.
+  /// Creates the reporting overview screen.
   const ReportingOverviewScreen({super.key});
 
   @override
@@ -111,6 +113,7 @@ class ReportingOverviewScreen extends ConsumerWidget {
         ),
       );
 
+  /// Builds a high-level navigation card for a specific report category.
   Widget _buildReportCard(
     BuildContext context, {
     required String title,

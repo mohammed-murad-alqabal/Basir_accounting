@@ -4,6 +4,7 @@ import 'package:basir_app/core/providers.dart';
 import 'package:basir_app/core/utils/format_helpers.dart';
 import 'package:basir_app/features/customers/domain/entities/customer.dart';
 import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:decimal/decimal.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -150,10 +151,8 @@ class PdfInvoiceService extends _$PdfInvoiceService {
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 pw.Text(customer.nameAr),
-                if (customer.address != null)
-                  pw.Text('العنوان: ${customer.address}'),
-                if (customer.phone != null)
-                  pw.Text('الهاتف: ${customer.phone}'),
+                if (customer.address != null) pw.Text('العنوان: ${customer.address}'),
+                if (customer.phone != null) pw.Text('الهاتف: ${customer.phone}'),
               ],
             ),
           ),
@@ -217,7 +216,7 @@ class PdfInvoiceService extends _$PdfInvoiceService {
                   currency,
                 ),
                 _buildTotalRow(
-                  'الضريبة (${(invoice.taxRate * 100).toInt()}%):',
+                  'الضريبة (${invoice.taxRate * Decimal.fromInt(100)}%):',
                   invoice.taxAmount,
                   currency,
                 ),
@@ -236,7 +235,7 @@ class PdfInvoiceService extends _$PdfInvoiceService {
 
   pw.Widget _buildTotalRow(
     String label,
-    double value,
+    Decimal value,
     String currency, {
     bool isBold = false,
   }) {

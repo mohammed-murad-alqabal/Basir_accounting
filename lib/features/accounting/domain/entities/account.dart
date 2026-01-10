@@ -6,98 +6,96 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'account.freezed.dart';
 part 'account.g.dart';
 
-/// أنواع الحسابات المحاسبية الأساسية
-/// (FR-ACC-012: تصنيف الحسابات)
+/// Fundamental accounting account types for structural classification.
+/// (Standard Reference: FR-ACC-012)
 enum AccountType {
-  /// أصول
+  /// Economic resources owned or controlled (e.g., Cash, Inventory).
   asset,
 
-  /// خصوم (التزامات)
+  /// Future sacrifices of economic benefits (e.g., Accounts Payable, Loans).
   liability,
 
-  /// حقوق ملكية
+  /// Residual interest in assets after deducting liabilities (e.g., Capital, Reserves).
   equity,
 
-  /// إيرادات
+  /// Increases in economic benefits from core or periphery activities.
   revenue,
 
-  /// مصروفات
+  /// Decreases in economic benefits resulting from business operations.
   expense,
 }
 
-/// طبيعة الحساب (مدين/دائن).
+/// The inherent accounting nature of an account (Normal Balance).
 enum AccountNature {
-  /// طبيعته مدين (مثل الأصول والمصروفات).
+  /// Increases on the left side (e.g., Assets and Expenses).
   debit,
 
-  /// طبيعته دائن (مثل الخصوم والإيرادات وحقوق الملكية).
+  /// Increases on the right side (e.g., Liabilities, Revenue, and Equity).
   credit,
 }
 
-/// كيان الحساب في دليل الحسابات.
+/// Represents a specific account within the hierarchical Chart of Accounts (COA).
 @freezed
 class Account with _$Account {
-  /// إنشاء حساب جديد.
+  /// Creates a business account entity.
   const factory Account({
-    /// معرف فريد للحساب
-    /// رمز تعريف الحساب الفريد.
+    /// Unique internal identifier for the account.
     required String id,
 
-    /// رمز الحساب (مثال: 1101)
+    /// Unique accounting code for structured reporting (e.g., "1101" for Cash).
     required String code,
 
-    /// اسم الحساب (عربي)
+    /// Primary Arabic display name (e.g., "النقدية").
     required String nameAr,
 
-    /// اسم الحساب (نجليزي)
+    /// Primary English display name (e.g., "Cash").
     required String nameEn,
 
-    /// نوع الحساب الرئيسي
+    /// High-level categorization (Asset, Liability, etc.).
     required AccountType type,
 
-    /// طبيعة الحساب (مدين/دائن)
+    /// Normal balance nature of the account (Debit/Credit).
     required AccountNature nature,
 
-    /// الرصيد الحالي (High-precision decimal)
+    /// Current net balance persisted as a high-precision [Decimal].
     required Decimal balance,
 
-    /// التصنيف الفرعي (مثال: نقدية، بنك، عملاء)
+    /// Functional sub-type for automated processing (e.g., "cash", "bank", "ar").
     @Default('') String subType,
 
-    /// IFRS 18 Category for Profit & Loss presentation
+    /// IFRS 18 specific category mapping for optimized P&L presentation.
     Ifrs18Category? ifrs18Category,
 
-    /// هل هو حساب رئيسي (تجميعي) أم فرعي (حركة)
+    /// Indicates if this is a grouping (Parent) account that aggregates child balances.
     @Default(false) bool isParent,
 
-    /// معرف الحساب الأب (للهيكلة الشجرية)
+    /// Reference to the immediate parent account for tree traversal.
     String? parentId,
 
-    /// هل الحساب نشط
+    /// Operational status: if false, the account is hidden from active posting.
     @Default(true) bool isActive,
 
-    /// هل الحساب نظامي (لا يمكن حذفه)
+    /// If true, the account is a core system-defined account and cannot be deleted.
     @Default(false) bool isSystem,
 
-    /// معرف المستخدم صاحب الحساب (لعزل البيانات)
+    /// Multi-tenant identifier isolating data per user.
     String? userId,
 
-    /// حالة المزامنة
+    /// Local-to-Remote synchronization state.
     @Default(SyncStatus.synced) SyncStatus syncStatus,
 
-    /// تاريخ آخر تحديث من السيرفر
+    /// Most recent synchronization timestamp from the server.
     DateTime? serverUpdatedAt,
 
-    /// هل السجل محذوف (حذف ناعم)
+    /// Soft-deletion flag for audit trail preservation.
     @Default(false) bool isDeleted,
   }) = _Account;
 
-  /// إنشاء حساب من JSON
-  factory Account.fromJson(Map<String, dynamic> json) =>
-      _$AccountFromJson(json);
+  /// deserialization from JSON format.
+  factory Account.fromJson(Map<String, dynamic> json) => _$AccountFromJson(json);
 
   const Account._();
 
-  /// الاسم حسب اللغة
+  /// Returns the localized name based on global [isArabic] preference.
   String name({required bool isArabic}) => isArabic ? nameAr : nameEn;
 }
