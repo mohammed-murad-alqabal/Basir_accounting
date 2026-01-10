@@ -34,7 +34,8 @@ const String _calendarKey = '<credential-fixture>';
 /// await ref.read(calendarProvider.notifier).toggleCalendar();
 ///
 /// // Set specific calendar
-/// await ref.read(calendarProvider.notifier).setCalendarType(CalendarType.hijri);
+///   await ref.read(calendarProvider.notifier)
+///       .setCalendarType(CalendarType.hijri);
 /// ```
 class CalendarNotifier extends AsyncNotifier<CalendarType> {
   @override
@@ -62,9 +63,8 @@ class CalendarNotifier extends AsyncNotifier<CalendarType> {
   /// Toggles between Hijri and Gregorian calendar systems.
   Future<void> toggleCalendar() async {
     final calendarType = state.valueOrNull ?? CalendarType.gregorian;
-    final newType = calendarType == CalendarType.hijri
-        ? CalendarType.gregorian
-        : CalendarType.hijri;
+    final newType =
+        calendarType == CalendarType.hijri ? CalendarType.gregorian : CalendarType.hijri;
     await setCalendarType(newType);
   }
 }
