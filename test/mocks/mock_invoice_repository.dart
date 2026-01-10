@@ -93,10 +93,11 @@ class MockInvoiceRepository implements InvoiceRepository {
       Decimal.zero,
       (sum, invoice) => sum + invoice.totalAmount,
     );
-    final paidRevenue = _invoices
-        .where((i) => i.status == InvoiceStatus.paid)
-        .fold<Decimal>(
-            Decimal.zero, (sum, invoice) => sum + invoice.totalAmount,);
+    final paidRevenue =
+        _invoices.where((i) => i.status == InvoiceStatus.paid).fold<Decimal>(
+              Decimal.zero,
+              (sum, invoice) => sum + invoice.totalAmount,
+            );
 
     return InvoiceStatistics(
       totalInvoices: totalInvoices,

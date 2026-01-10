@@ -79,8 +79,10 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
           }
         }
       }
-    } else if (context.transactionType == 'sales' || context.transactionType == 'purchase') {
-      rationale.add('WARNING: Commercial transaction detected without VAT lines.');
+    } else if (context.transactionType == 'sales' ||
+        context.transactionType == 'purchase') {
+      rationale
+          .add('WARNING: Commercial transaction detected without VAT lines.');
     }
 
     return AgentResult(

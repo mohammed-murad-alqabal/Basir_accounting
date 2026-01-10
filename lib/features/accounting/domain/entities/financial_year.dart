@@ -49,7 +49,8 @@ class FinancialYear with _$FinancialYear {
   }) = _FinancialYear;
 
   /// deserialization from JSON format.
-  factory FinancialYear.fromJson(Map<String, dynamic> json) => _$FinancialYearFromJson(json);
+  factory FinancialYear.fromJson(Map<String, dynamic> json) =>
+      _$FinancialYearFromJson(json);
 
   const FinancialYear._();
 

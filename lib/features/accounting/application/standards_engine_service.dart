@@ -24,10 +24,11 @@ class StandardsEngineService extends _$StandardsEngineService
   ///
   /// ## Validations:
   /// 1. **IFRS 18 Compliance**: Ensures all revenue and expense accounts are
-  ///    explicitly mapped to an IFRS 18 category (Operating, Investing, Financing).
-  /// 2. **ISSB S1/S2 Disclosure**: Checks if the transaction requires sustainability
-  ///    metrics (e.g., carbon footprint for industrial purchases) and verifies
-  ///    their presence.
+  ///    explicitly mapped to an IFRS 18 category (Operating, Investing,
+  ///    Financing).
+  /// 2. **ISSB S1/S2 Disclosure**: Checks if the transaction requires
+  ///    sustainability metrics (e.g., carbon footprint for industrial purchases)
+  ///    and verifies their presence.
   @override
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];
@@ -49,7 +50,8 @@ class StandardsEngineService extends _$StandardsEngineService
     // ISSB Sustainability Disclosure Check
     if (context.isSustainabilityRequired) {
       rationale.add(
-        'ISSB S1/S2: Sustainability metrics disclosure mandatory for this transaction tier.',
+        'ISSB S1/S2: Sustainability metrics disclosure mandatory for this '
+        'transaction tier.',
       );
       if (context.sustainabilityMetrics != null &&
           context.sustainabilityMetrics!.isNotEmpty) {
@@ -59,7 +61,8 @@ class StandardsEngineService extends _$StandardsEngineService
       } else {
         isAllowed = false;
         rationale.add(
-          'REJECTION: ISSB compliance requires non-financial sustainability metrics for industrial tier transactions.',
+          'REJECTION: ISSB compliance requires non-financial sustainability '
+          'metrics for industrial tier transactions.',
         );
       }
     }

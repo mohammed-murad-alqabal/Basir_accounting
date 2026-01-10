@@ -88,14 +88,17 @@ class IncomeStatementScreen extends ConsumerWidget {
                     Text(
                       line.label,
                       style: AppTextStyles.bodyLarge.copyWith(
-                        fontWeight: line.isTotal ? FontWeight.bold : FontWeight.normal,
+                        fontWeight:
+                            line.isTotal ? FontWeight.bold : FontWeight.normal,
                       ),
                     ),
                     Text(
                       currencyFormatter.format(line.amount.toDouble()),
                       style: AppTextStyles.bodyLarge.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: line.amount >= Decimal.zero ? AppColors.success : AppColors.error,
+                        color: line.amount >= Decimal.zero
+                            ? AppColors.success
+                            : AppColors.error,
                       ),
                     ),
                   ],
