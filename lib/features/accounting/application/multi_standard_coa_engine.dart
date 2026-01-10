@@ -25,7 +25,8 @@ class MultiStandardCoaEngine {
   /// Generates a standardized account tree for a specific target country.
   ///
   /// ## Parameters
-  /// - [country]: The jurisdiction defining the COA structure and naming conventions.
+  /// - [country]: The jurisdiction defining the COA structure and naming
+  ///   conventions.
   static List<Account> generateCoa(AccountingCountry country) {
     switch (country) {
       case AccountingCountry.saudiArabia:
@@ -39,7 +40,8 @@ class MultiStandardCoaEngine {
     }
   }
 
-  /// Generates the Global Baseline COA following standard IFRS naming and grouping.
+  /// Generates the Global Baseline COA following standard IFRS naming and
+  /// grouping.
   static List<Account> _generateGlobalIfrsCoa() => [
         _createAccount(
           id: 'acc-1',
@@ -184,7 +186,8 @@ class MultiStandardCoaEngine {
     ];
   }
 
-  /// Generates an Egyptian COA following the Unified Accounting System structure.
+  /// Generates an Egyptian COA following the Unified Accounting System
+  /// structure.
   static List<Account> _generateEgyptCoa() => [
         _createAccount(
           id: 'eg-1',

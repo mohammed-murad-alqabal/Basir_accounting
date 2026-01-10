@@ -3,7 +3,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'operational_intel_service.g.dart';
 
-/// Operational Intelligence Agent (Agent 4) bridging ledger data with business reality.
+/// Operational Intelligence Agent (Agent 4) bridging ledger data with business
+/// reality.
 ///
 /// Monitors the alignment between financial entries and operational
 /// statuses such as inventory levels and process urgency.
@@ -22,7 +23,8 @@ class OperationalIntelService extends _$OperationalIntelService
   /// Validates the operational feasibility and impact of the transaction.
   ///
   /// ## Operational Checks:
-  /// 1. **Sales-Inventory Alignment**: Verifies material availability for sales invoices.
+  /// 1. **Sales-Inventory Alignment**: Verifies material availability for
+  ///    sales invoices.
   /// 2. **Priority Monitoring**: Adjusts confidence levels and processing speed
   ///    based on operational urgency (high-priority flags).
   @override

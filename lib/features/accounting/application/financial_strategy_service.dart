@@ -3,7 +3,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'financial_strategy_service.g.dart';
 
-/// Financial Strategy Agent (Agent 5) for long-term planning and liquidity analysis.
+/// Financial Strategy Agent (Agent 5) for long-term planning and liquidity
+/// analysis.
 ///
 /// Responsible for assessing the strategic impact of transactions on
 /// cash flow, investment capacity, and overall financial health.
@@ -39,7 +40,8 @@ class FinancialStrategyService extends _$FinancialStrategyService
       for (final line in cashImpactLines) {
         if (line.credit > line.debit) {
           rationale.add(
-            'Strategy Analysis: This entry represents a cash outflow of ${line.credit}.',
+            'Strategy Analysis: This entry represents a cash outflow of '
+            '${line.credit}.',
           );
           rationale.add(
             'Recommendation: Review cash flow projections for the coming week '
@@ -47,8 +49,8 @@ class FinancialStrategyService extends _$FinancialStrategyService
           );
         } else {
           rationale.add(
-            'Strategy Analysis: Liquidity enhancement of ${line.debit} supports '
-            'short-term investment capacity.',
+            'Strategy Analysis: Liquidity enhancement of ${line.debit} '
+            'supports short-term investment capacity.',
           );
         }
       }

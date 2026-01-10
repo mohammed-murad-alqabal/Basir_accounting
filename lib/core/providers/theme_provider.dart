@@ -55,7 +55,8 @@ class ThemeController extends AsyncNotifier<ThemeMode> {
   /// If currently in system mode, switches to dark mode first.
   Future<void> toggleTheme() async {
     final currentMode = state.value ?? ThemeMode.light;
-    final newMode = currentMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    final newMode =
+        currentMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
     await setThemeMode(newMode);
   }
 
@@ -85,11 +86,13 @@ final themeProvider = AsyncNotifierProvider<ThemeController, ThemeMode>(
 
 /// Convenience provider for checking dark mode status.
 ///
-/// Resolves system theme to actual brightness when [ThemeMode.system] is active.
+/// Resolves system theme to actual brightness when [ThemeMode.system] is
+/// active.
 final isDarkModeProvider = Provider<bool>((ref) {
   final themeMode = ref.watch(themeProvider).valueOrNull ?? ThemeMode.system;
   if (themeMode == ThemeMode.system) {
-    return WidgetsBinding.instance.platformDispatcher.platformBrightness == Brightness.dark;
+    return WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+        Brightness.dark;
   }
   return themeMode == ThemeMode.dark;
 });

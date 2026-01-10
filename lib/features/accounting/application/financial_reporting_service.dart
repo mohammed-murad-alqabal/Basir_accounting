@@ -9,6 +9,7 @@ part 'financial_reporting_service.g.dart';
 
 /// Data model for an Account Balance report line.
 class AccountBalanceReport {
+  /// Creates a report summary for a single account.
   AccountBalanceReport({
     required this.account,
     required this.debit,
@@ -31,8 +32,8 @@ class AccountBalanceReport {
 
 /// Financial Reporting Service for generating regulatory and management statements.
 ///
-/// Provides orchestration for trial balances, income statements (IFRS 18 compliant),
-/// and high-level financial trend analysis.
+/// Provides orchestration for trial balances, income statements (IFRS 18
+/// compliant), and high-level financial trend analysis.
 @riverpod
 class FinancialReportingService extends _$FinancialReportingService {
   @override
