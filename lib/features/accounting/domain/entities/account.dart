@@ -15,7 +15,8 @@ enum AccountType {
   /// Future sacrifices of economic benefits (e.g., Accounts Payable, Loans).
   liability,
 
-  /// Residual interest in assets after deducting liabilities (e.g., Capital, Reserves).
+  /// Residual interest in assets after deducting liabilities (e.g., Capital,
+  /// Reserves).
   equity,
 
   /// Increases in economic benefits from core or periphery activities.
@@ -60,13 +61,15 @@ class Account with _$Account {
     /// Current net balance persisted as a high-precision [Decimal].
     required Decimal balance,
 
-    /// Functional sub-type for automated processing (e.g., "cash", "bank", "ar").
+    /// Functional sub-type for automated processing (e.g., "cash", "bank",
+    /// "ar").
     @Default('') String subType,
 
     /// IFRS 18 specific category mapping for optimized P&L presentation.
     Ifrs18Category? ifrs18Category,
 
-    /// Indicates if this is a grouping (Parent) account that aggregates child balances.
+    /// Indicates if this is a grouping (Parent) account that aggregates child
+    /// balances.
     @Default(false) bool isParent,
 
     /// Reference to the immediate parent account for tree traversal.
@@ -75,7 +78,8 @@ class Account with _$Account {
     /// Operational status: if false, the account is hidden from active posting.
     @Default(true) bool isActive,
 
-    /// If true, the account is a core system-defined account and cannot be deleted.
+    /// If true, the account is a core system-defined account and cannot be
+    /// deleted.
     @Default(false) bool isSystem,
 
     /// Multi-tenant identifier isolating data per user.
@@ -92,8 +96,7 @@ class Account with _$Account {
   }) = _Account;
 
   /// deserialization from JSON format.
-  factory Account.fromJson(Map<String, dynamic> json) =>
-      _$AccountFromJson(json);
+  factory Account.fromJson(Map<String, dynamic> json) => _$AccountFromJson(json);
 
   const Account._();
 
