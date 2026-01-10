@@ -2,17 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// مزود حالة الثيم (Theme Controller)
+/// Theme state controller for application-wide theme management.
 ///
-/// يدير حالة الثيم (فاتح/داكن) ويحفظها في SharedPreferences
-/// يستخدم AsyncNotifier لضمان تحميل التفضيلات قبل عرض التطبيق
+/// Manages the theme mode (light/dark/system) with automatic persistence
+/// to [SharedPreferences]. Uses [AsyncNotifier] to ensure preferences are
+/// loaded before the application renders.
+///
+/// ## Features
+/// - Persists user preference across app restarts
+/// - Supports system theme following
+/// - Provides toggle functionality for quick switching
+///
+/// ## Usage
+/// ```dart
+/// // Watch current theme
+/// final themeMode = ref.watch(themeProvider).valueOrNull;
+///
+/// // Toggle theme
+/// ref.read(themeProvider.notifier).toggleTheme();
+///
+/// // Set specific mode
+/// ref.read(themeProvider.notifier).setThemeMode(ThemeMode.dark);
+/// ```
 class ThemeController extends AsyncNotifier<ThemeMode> {
   static const String _themeModeKey = 'theme_mode';
 
   @override
   Future<ThemeMode> build() async => _loadThemeMode();
 
-  /// تحميل وضع الثيم المحفوظ
+  /// Loads the persisted theme mode from storage.
+  ///
+  /// Returns [ThemeMode.system] if no preference is saved or on error.
   Future<ThemeMode> _loadThemeMode() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -27,11 +47,12 @@ class ThemeController extends AsyncNotifier<ThemeMode> {
     } on Object catch (e) {
       debugPrint('Error loading theme mode: $e');
     }
-    // الوضع الافتراضي
     return ThemeMode.system;
   }
 
-  /// تبديل بين الوضع الفاتح والداكن
+  /// Toggles between light and dark theme modes.
+  ///
+  /// If currently in system mode, switches to dark mode first.
   Future<void> toggleTheme() async {
     final currentMode = state.value ?? ThemeMode.light;
     final newMode =
@@ -39,7 +60,9 @@ class ThemeController extends AsyncNotifier<ThemeMode> {
     await setThemeMode(newMode);
   }
 
-  /// تعيين وضع الثيم
+  /// Sets the application theme mode and persists it.
+  ///
+  /// [mode] - The desired [ThemeMode] to apply.
   Future<void> setThemeMode(ThemeMode mode) async {
     state = AsyncValue.data(mode);
     try {
@@ -50,16 +73,20 @@ class ThemeController extends AsyncNotifier<ThemeMode> {
     }
   }
 
-  /// التحقق من الوضع الداكن
+  /// Returns `true` if dark mode is currently active.
   bool get isDarkMode => state.value == ThemeMode.dark;
 }
 
-/// مزود الثيم
+/// Primary theme state provider.
+///
+/// Exposes the current [ThemeMode] and [ThemeController] for state management.
 final themeProvider = AsyncNotifierProvider<ThemeController, ThemeMode>(
   ThemeController.new,
 );
 
-/// مزود مساعد للتحقق من الوضع الداكن
+/// Convenience provider for checking dark mode status.
+///
+/// Resolves system theme to actual brightness when [ThemeMode.system] is active.
 final isDarkModeProvider = Provider<bool>((ref) {
   final themeMode = ref.watch(themeProvider).valueOrNull ?? ThemeMode.system;
   if (themeMode == ThemeMode.system) {
