@@ -13,9 +13,11 @@ class StandardsEngineService extends _$StandardsEngineService
   @override
   FutureOr<void> build() {}
 
+  /// المعرف الفريد للمحرك
   @override
   String get agentId => 'agent-1-standards-engine';
 
+  /// مستوى الصلاحية (عالي للمحرك المرجعي)
   @override
   AgentAuthority get authority => AgentAuthority.high;
 
@@ -27,10 +29,10 @@ class StandardsEngineService extends _$StandardsEngineService
 
     // IFRS 18 Category Validation
     for (final line in context.proposedJournalEntry.lines) {
-      if (line.accountId.startsWith('acc-4') ||
-          line.accountId.startsWith('acc-5')) {
-        rationale
-            .add('Validating IFRS 18 Category mapping for ${line.accountName}');
+      final id = line.accountId;
+      if (id.startsWith('acc-4') || id.startsWith('acc-5')) {
+        rationale.add('Validating IFRS 18 Category mapping for '
+            '${line.accountName}');
         // Note: Real-world implementation would fetch metadata from the account
         rationale.add(
           'SUCCESS: Account correctly mapped to Operating category '
@@ -54,8 +56,8 @@ class StandardsEngineService extends _$StandardsEngineService
       } else {
         isAllowed = false;
         rationale.add(
-          'REJECTION: ISSB compliance requires non-financial sustainability '
-          'metrics for industrial tier transactions.',
+          'REJECTION: ISSB compliance requires non-financial '
+          'sustainability metrics for industrial tier transactions.',
         );
       }
     }
@@ -68,3 +70,4 @@ class StandardsEngineService extends _$StandardsEngineService
     );
   }
 }
+// Forced Update

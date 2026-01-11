@@ -15,6 +15,7 @@ import 'package:basir_app/features/auth/presentation/widgets/permission_guard.da
 import 'package:basir_app/features/dashboard/domain/entities/dashboard_data.dart';
 import 'package:basir_app/features/dashboard/presentation/providers/dashboard_controller.dart';
 import 'package:basir_app/features/dashboard/presentation/widgets/dashboard_charts.dart';
+import 'package:basir_app/features/inventory/presentation/screens/warehouse_transfer_screen.dart';
 import 'package:basir_app/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -89,6 +90,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     DashboardData data,
   ) {
     final appIcons = ref.watch(appIconsProvider);
+    final analytics = ref.watch(analyticsServiceProvider);
 
     return RefreshIndicator(
       onRefresh: () => ref.read(dashboardControllerProvider.notifier).refresh(),
@@ -114,11 +116,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             const SizedBox(height: Spacing.xl),
 
             // الإجراءات السريعة
-            _buildQuickActions(context, ref, appIcons),
+            _buildQuickActions(context, ref, appIcons, analytics),
             const SizedBox(height: Spacing.xl),
 
             // الأنشطة الأخيرة (حقيقية)
-            _buildRecentActivity(context, ref, data),
+            _buildRecentActivity(context, ref, data, analytics),
             const SizedBox(height: Spacing.xxl),
           ],
         ),
@@ -193,8 +195,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     BuildContext context,
     WidgetRef ref,
     AppIcons appIcons,
+    AnalyticsService? analytics,
   ) {
-    final analytics = ref.read(analyticsServiceProvider);
     final isGuestAsync = ref.watch(isGuestProvider);
     final isGuest = isGuestAsync.value ?? false;
 
@@ -316,6 +318,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     BuildContext context,
     WidgetRef ref,
     DashboardData data,
+    AnalyticsService? analytics,
   ) {
     final appIcons = ref.read(appIconsProvider);
     final locale = context.l10n.localeName;
@@ -355,6 +358,33 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               onTap: () => Navigator.of(context).pushNamed('/invoices'),
             ),
           ),
+        const SizedBox(height: Spacing.md),
+        Row(
+          children: [
+            Expanded(
+              child: AppEnhancedButton(
+                label: context.l10n.warehouseTransferTitleAdd,
+                onPressed: () {
+                  unawaited(
+                    analytics?.logEvent(
+                      AnalyticsEventType.featureUsed,
+                      metadata: {'feature': 'warehouse_transfer'},
+                    ),
+                  );
+                  unawaited(
+                    Navigator.of(context).push<void>(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const WarehouseTransferScreen(),
+                      ),
+                    ),
+                  );
+                },
+                icon: Icons.transfer_within_a_station,
+                type: AppEnhancedButtonType.outlined,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
