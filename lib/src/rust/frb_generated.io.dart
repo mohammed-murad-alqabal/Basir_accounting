@@ -3,22 +3,21 @@
 
 // ignore_for_file: unused_import, unused_element, unnecessary_import, duplicate_ignore, invalid_use_of_internal_member, annotate_overrides, non_constant_identifier_names, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, unused_field
 
+import 'api.dart';
+import 'api/accounts.dart';
+import 'api/assets.dart';
+import 'api/calendar.dart';
+import 'api/currency.dart';
+import 'api/inventory.dart';
+import 'api/ledger.dart';
+import 'api/purchasing.dart';
+import 'api/reports.dart';
+import 'api/sales.dart';
+import 'api/standards.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ffi' as ffi;
-
-import 'package:basir_app/src/rust/frb_generated.dart/api.dart';
-import 'package:basir_app/src/rust/frb_generated.dart/api/accounts.dart';
-import 'package:basir_app/src/rust/frb_generated.dart/api/assets.dart';
-import 'package:basir_app/src/rust/frb_generated.dart/api/calendar.dart';
-import 'package:basir_app/src/rust/frb_generated.dart/api/currency.dart';
-import 'package:basir_app/src/rust/frb_generated.dart/api/inventory.dart';
-import 'package:basir_app/src/rust/frb_generated.dart/api/ledger.dart';
-import 'package:basir_app/src/rust/frb_generated.dart/api/purchasing.dart';
-import 'package:basir_app/src/rust/frb_generated.dart/api/reports.dart';
-import 'package:basir_app/src/rust/frb_generated.dart/api/sales.dart';
-import 'package:basir_app/src/rust/frb_generated.dart/api/standards.dart';
-import 'package:basir_app/src/rust/frb_generated.dart/frb_generated.dart';
+import 'frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated_io.dart';
 
 abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
@@ -31,6 +30,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   AnyhowException dco_decode_AnyhowException(dynamic raw);
+
+  @protected
+  Map<String, String> dco_decode_Map_String_String_None(dynamic raw);
 
   @protected
   String dco_decode_String(dynamic raw);
@@ -191,6 +193,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   List<PurchaseBillDto> dco_decode_list_purchase_bill_dto(dynamic raw);
 
   @protected
+  List<(String, String)> dco_decode_list_record_string_string(dynamic raw);
+
+  @protected
   List<SalesInvoiceDto> dco_decode_list_sales_invoice_dto(dynamic raw);
 
   @protected
@@ -210,6 +215,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   List<VendorDto> dco_decode_list_vendor_dto(dynamic raw);
+
+  @protected
+  Map<String, String>? dco_decode_opt_Map_String_String_None(dynamic raw);
 
   @protected
   String? dco_decode_opt_String(dynamic raw);
@@ -243,6 +251,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   PurchaseBillDto dco_decode_purchase_bill_dto(dynamic raw);
+
+  @protected
+  (String, String) dco_decode_record_string_string(dynamic raw);
 
   @protected
   SalesInvoiceDto dco_decode_sales_invoice_dto(dynamic raw);
@@ -294,6 +305,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer);
+
+  @protected
+  Map<String, String> sse_decode_Map_String_String_None(
+      SseDeserializer deserializer);
 
   @protected
   String sse_decode_String(SseDeserializer deserializer);
@@ -475,6 +490,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       SseDeserializer deserializer);
 
   @protected
+  List<(String, String)> sse_decode_list_record_string_string(
+      SseDeserializer deserializer);
+
+  @protected
   List<SalesInvoiceDto> sse_decode_list_sales_invoice_dto(
       SseDeserializer deserializer);
 
@@ -499,6 +518,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   List<VendorDto> sse_decode_list_vendor_dto(SseDeserializer deserializer);
+
+  @protected
+  Map<String, String>? sse_decode_opt_Map_String_String_None(
+      SseDeserializer deserializer);
 
   @protected
   String? sse_decode_opt_String(SseDeserializer deserializer);
@@ -539,6 +562,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   PurchaseBillDto sse_decode_purchase_bill_dto(SseDeserializer deserializer);
+
+  @protected
+  (String, String) sse_decode_record_string_string(
+      SseDeserializer deserializer);
 
   @protected
   SalesInvoiceDto sse_decode_sales_invoice_dto(SseDeserializer deserializer);
@@ -593,6 +620,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_AnyhowException(
       AnyhowException self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_Map_String_String_None(
+      Map<String, String> self, SseSerializer serializer);
 
   @protected
   void sse_encode_String(String self, SseSerializer serializer);
@@ -790,6 +821,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       List<PurchaseBillDto> self, SseSerializer serializer);
 
   @protected
+  void sse_encode_list_record_string_string(
+      List<(String, String)> self, SseSerializer serializer);
+
+  @protected
   void sse_encode_list_sales_invoice_dto(
       List<SalesInvoiceDto> self, SseSerializer serializer);
 
@@ -816,6 +851,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_list_vendor_dto(
       List<VendorDto> self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_opt_Map_String_String_None(
+      Map<String, String>? self, SseSerializer serializer);
 
   @protected
   void sse_encode_opt_String(String? self, SseSerializer serializer);
@@ -858,6 +897,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_purchase_bill_dto(
       PurchaseBillDto self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_record_string_string(
+      (String, String) self, SseSerializer serializer);
 
   @protected
   void sse_encode_sales_invoice_dto(
@@ -918,14 +961,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 // Section: wire_class
 
 class RustLibWire implements BaseWire {
-  /// The symbols are looked up in [dynamicLibrary].
-  RustLibWire(ffi.DynamicLibrary dynamicLibrary)
-      : _lookup = dynamicLibrary.lookup;
-
   factory RustLibWire.fromExternalLibrary(ExternalLibrary lib) =>
       RustLibWire(lib.ffiDynamicLibrary);
 
   /// Holds the symbol lookup function.
   final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
       _lookup;
+
+  /// The symbols are looked up in [dynamicLibrary].
+  RustLibWire(ffi.DynamicLibrary dynamicLibrary)
+      : _lookup = dynamicLibrary.lookup;
 }

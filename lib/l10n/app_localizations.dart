@@ -1268,18 +1268,6 @@ abstract class AppLocalizations {
   /// **'Invoice Style'**
   String get labelInvoiceStyle;
 
-  /// No description provided for @labelIssuedDate.
-  ///
-  /// In en, this message translates to:
-  /// **'Issued Date'**
-  String get labelIssuedDate;
-
-  /// No description provided for @labelItemName.
-  ///
-  /// In en, this message translates to:
-  /// **'Item Name'**
-  String get labelItemName;
-
   /// No description provided for @labelLastUpdated.
   ///
   /// In en, this message translates to:
@@ -1327,6 +1315,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phone (Optional)'**
   String get labelPhoneOptional;
+
+  /// No description provided for @labelSourceWarehouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Source Warehouse'**
+  String get labelSourceWarehouse;
+
+  /// No description provided for @labelDestinationWarehouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination Warehouse'**
+  String get labelDestinationWarehouse;
+
+  /// No description provided for @errSameWarehouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Source and destination warehouses cannot be the same'**
+  String get errSameWarehouse;
+
+  /// No description provided for @errSelectSourceWarehouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select source warehouse'**
+  String get errSelectSourceWarehouse;
+
+  /// No description provided for @errSelectDestinationWarehouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select destination warehouse'**
+  String get errSelectDestinationWarehouse;
+
+  /// No description provided for @btnSaveTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Transfer'**
+  String get btnSaveTransfer;
+
+  /// No description provided for @warehouseTransferTitleAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'New Warehouse Transfer'**
+  String get warehouseTransferTitleAdd;
 
   /// No description provided for @labelPrice.
   ///
@@ -2929,6 +2959,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Discount'**
   String get labelDiscount;
+
+  /// No description provided for @labelItemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Name'**
+  String get labelItemName;
+
+  /// No description provided for @labelIssuedDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued Date'**
+  String get labelIssuedDate;
 
   /// No description provided for @errPermissionDenied.
   ///

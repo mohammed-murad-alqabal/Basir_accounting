@@ -35,6 +35,7 @@ class FinancialReportScreen extends ConsumerStatefulWidget {
 class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
   late DateTime _fromDate;
   late DateTime _toDate;
+  bool _useFairValue = false;
 
   @override
   void initState() {
@@ -69,6 +70,7 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
           type: widget.reportType,
           fromDate: DateFormat('yyyy-MM-dd').format(_fromDate),
           toDate: DateFormat('yyyy-MM-dd').format(_toDate),
+          useFairValue: _useFairValue,
         ),
       ),
     );
@@ -97,6 +99,17 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
             onFromDateChanged: (val) => setState(() => _fromDate = val),
             onToDateChanged: (val) => setState(() => _toDate = val),
           ),
+          if (widget.reportType == FinancialReportType.balanceSheet)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SwitchListTile.adaptive(
+                title: const Text('التقييم بالقيمة العادلة (IFRS 13)'),
+                subtitle: const Text('استخدام أحدث أسعار السوق للمخزون'),
+                value: _useFairValue,
+                onChanged: (val) => setState(() => _useFairValue = val),
+                activeTrackColor: Theme.of(context).primaryColor,
+              ),
+            ),
           const SizedBox(height: 8),
           Expanded(
             child: reportAsync.when(
@@ -109,6 +122,7 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
                       type: widget.reportType,
                       fromDate: DateFormat('yyyy-MM-dd').format(_fromDate),
                       toDate: DateFormat('yyyy-MM-dd').format(_toDate),
+                      useFairValue: _useFairValue,
                     ),
                   ).future,
                 ),
@@ -169,9 +183,12 @@ final _financialReportProvider = FutureProvider.autoDispose.family<
     ({
       FinancialReportType type,
       String fromDate,
-      String toDate
-    })>((ref, params) {
+      String toDate,
+      bool useFairValue,
+    })>((ref, params) async {
   final service = ref.watch(nativeReportingServiceProvider);
+  final fairValueService = ref.watch(fairValuationServiceProvider);
+
   switch (params.type) {
     case FinancialReportType.incomeStatement:
       return service.generateIncomeStatement(
@@ -180,7 +197,19 @@ final _financialReportProvider = FutureProvider.autoDispose.family<
       );
     case FinancialReportType.balanceSheet:
       // For BS, 'toDate' is the 'As Of' date.
-      return service.generateBalanceSheet(asOfDate: params.toDate);
+      Map<String, String>? updates;
+      if (params.useFairValue) {
+        final asOfDate = DateTime.parse(params.toDate);
+        final adjustments =
+            await fairValueService.getFairValueAdjustments(asOfDate);
+        if (adjustments.isNotEmpty) {
+          updates = adjustments.map((k, v) => MapEntry(k, v.toString()));
+        }
+      }
+      return service.generateBalanceSheet(
+        asOfDate: params.toDate,
+        fairValuationUpdates: updates,
+      );
     case FinancialReportType.cashFlow:
       return service.generateCashFlowStatement(
         fromDate: params.fromDate,
