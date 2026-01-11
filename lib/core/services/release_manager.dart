@@ -184,7 +184,8 @@ class ReleaseManager {
 
   /// Validates version format and semantic versioning rules
   static VersionValidationResult validateVersion(String version) {
-    final cleanVersion = version.startsWith('v') ? version.substring(1) : version;
+    final cleanVersion =
+        version.startsWith('v') ? version.substring(1) : version;
     final match = _versionPattern.firstMatch('v$cleanVersion');
 
     if (match == null) {
@@ -267,15 +268,16 @@ class ReleaseManager {
 
   static Future<bool> _checkBranchExists(String branchName) async {
     try {
-      final result =
-          await Process.run('git', ['show-ref', '--verify', '--quiet', 'refs/heads/$branchName']);
+      final result = await Process.run(
+          'git', ['show-ref', '--verify', '--quiet', 'refs/heads/$branchName']);
       return result.exitCode == 0;
     } catch (e) {
       return false;
     }
   }
 
-  static Future<GitOperationResult> _createBranchFromDevelopment(String branchName) async {
+  static Future<GitOperationResult> _createBranchFromDevelopment(
+      String branchName) async {
     try {
       // Ensure we're on development branch
       await Process.run('git', ['checkout', 'development']);
@@ -287,24 +289,29 @@ class ReleaseManager {
       final result = await Process.run('git', ['checkout', '-b', branchName]);
 
       if (result.exitCode == 0) {
-        return GitOperationResult(success: true, message: 'Branch created successfully');
+        return GitOperationResult(
+            success: true, message: 'Branch created successfully');
       } else {
-        return GitOperationResult(success: false, message: result.stderr.toString());
+        return GitOperationResult(
+            success: false, message: result.stderr.toString());
       }
     } catch (e) {
       return GitOperationResult(success: false, message: e.toString());
     }
   }
 
-  static Future<GitOperationResult> _updateVersionInPubspec(String version) async {
+  static Future<GitOperationResult> _updateVersionInPubspec(
+      String version) async {
     try {
       final pubspecFile = File('pubspec.yaml');
       if (!pubspecFile.existsSync()) {
-        return GitOperationResult(success: false, message: 'pubspec.yaml not found');
+        return GitOperationResult(
+            success: false, message: 'pubspec.yaml not found');
       }
 
       final content = await pubspecFile.readAsString();
-      final cleanVersion = version.startsWith('v') ? version.substring(1) : version;
+      final cleanVersion =
+          version.startsWith('v') ? version.substring(1) : version;
 
       // Update version line
       final updatedContent = content.replaceFirst(
@@ -317,7 +324,8 @@ class ReleaseManager {
       // Stage the change
       await Process.run('git', ['add', 'pubspec.yaml']);
 
-      return GitOperationResult(success: true, message: 'Version updated in pubspec.yaml');
+      return GitOperationResult(
+          success: true, message: 'Version updated in pubspec.yaml');
     } catch (e) {
       return GitOperationResult(success: false, message: e.toString());
     }
@@ -434,7 +442,8 @@ ${releaseInfo.requiresDocumentationUpdate ? '- [ ] Documentation updated' : ''}
   }
 
   static Future<String> _getCurrentBranch() async {
-    final result = await Process.run('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
+    final result =
+        await Process.run('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
     return result.stdout.toString().trim();
   }
 
@@ -457,7 +466,8 @@ ${releaseInfo.requiresDocumentationUpdate ? '- [ ] Documentation updated' : ''}
       );
     }
 
-    return GitOperationResult(success: true, message: 'Pre-release checks passed');
+    return GitOperationResult(
+        success: true, message: 'Pre-release checks passed');
   }
 
   static Future<GitOperationResult> _mergeToMain(String branchName) async {
@@ -469,31 +479,38 @@ ${releaseInfo.requiresDocumentationUpdate ? '- [ ] Documentation updated' : ''}
 
       if (result.exitCode == 0) {
         await Process.run('git', ['push', 'origin', 'main']);
-        return GitOperationResult(success: true, message: 'Merged to main successfully');
+        return GitOperationResult(
+            success: true, message: 'Merged to main successfully');
       } else {
-        return GitOperationResult(success: false, message: result.stderr.toString());
+        return GitOperationResult(
+            success: false, message: result.stderr.toString());
       }
     } catch (e) {
       return GitOperationResult(success: false, message: e.toString());
     }
   }
 
-  static Future<GitOperationResult> _createAndPushTag(String version, String releaseNotes) async {
+  static Future<GitOperationResult> _createAndPushTag(
+      String version, String releaseNotes) async {
     try {
-      final result = await Process.run('git', ['tag', '-a', version, '-m', releaseNotes]);
+      final result =
+          await Process.run('git', ['tag', '-a', version, '-m', releaseNotes]);
 
       if (result.exitCode == 0) {
         await Process.run('git', ['push', 'origin', version]);
-        return GitOperationResult(success: true, message: 'Tag created and pushed');
+        return GitOperationResult(
+            success: true, message: 'Tag created and pushed');
       } else {
-        return GitOperationResult(success: false, message: result.stderr.toString());
+        return GitOperationResult(
+            success: false, message: result.stderr.toString());
       }
     } catch (e) {
       return GitOperationResult(success: false, message: e.toString());
     }
   }
 
-  static Future<GitOperationResult> _mergeBackToDevelopment(String branchName) async {
+  static Future<GitOperationResult> _mergeBackToDevelopment(
+      String branchName) async {
     try {
       await Process.run('git', ['checkout', 'development']);
       await Process.run('git', ['pull', 'origin', 'development']);
@@ -502,9 +519,11 @@ ${releaseInfo.requiresDocumentationUpdate ? '- [ ] Documentation updated' : ''}
 
       if (result.exitCode == 0) {
         await Process.run('git', ['push', 'origin', 'development']);
-        return GitOperationResult(success: true, message: 'Merged back to development');
+        return GitOperationResult(
+            success: true, message: 'Merged back to development');
       } else {
-        return GitOperationResult(success: false, message: result.stderr.toString());
+        return GitOperationResult(
+            success: false, message: result.stderr.toString());
       }
     } catch (e) {
       return GitOperationResult(success: false, message: e.toString());
