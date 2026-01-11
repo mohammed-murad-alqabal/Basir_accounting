@@ -2,22 +2,24 @@
 
 ## Introduction
 
-هذه الوثيقة تحدد خطة عمل شاملة لمعالجة جميع النقاط التي تحتاج إلى تحسين في مشروع بصير MVP، بناءً على التحليل الشامل للوضع الحالي.
+This document defines a comprehensive action plan to address all improvement points needed in the Basir MVP project, based on a thorough analysis of the current state.
 
 ## Glossary
 
-- **Project**: مشروع بصير MVP (نظام المحاسبة الذكي)
-- **Main_Branch**: main branch في Git repository
-- **Dependencies**: الحزم والمكتبات الخارجية المستخدمة
-- **Active_Specs**: الـ specs الموجودة في .kiro/specs/active
-- **System**: نظام بصير للمحاسبة الذكية
-- **PPP_Standards**: مبدأ Purity, Precision, Professionalism
+- **Project**: Basir MVP project (Intelligent Accounting System)
+- **Main_Branch**: main branch in Git repository
+- **Dependencies**: External packages and libraries used in the project
+- **Active_Specs**: Specifications located in .kiro/specs/active
+- **System**: Basir Intelligent Accounting System
+- **PPP_Standards**: Purity, Precision, Professionalism principles
+- **Test_Suite**: Complete collection of automated tests
+- **CI_CD_Pipeline**: Continuous Integration/Continuous Deployment pipeline
 
 ## Requirements
 
-### Requirement 1: تحديث Dependencies الحرجة
+### Requirement 1: Critical Dependencies Update
 
-**User Story:** كمطور في فريق بصير، أريد تحديث جميع Dependencies إلى أحدث الإصدارات المستقرة، حتى أضمن الأمان والأداء والاستقرار طويل المدى.
+**User Story:** As a developer on the Basir team, I want to update all Dependencies to the latest stable versions, so that I can ensure security, performance, and long-term stability.
 
 #### Acceptance Criteria
 
@@ -27,9 +29,9 @@
 4. WHEN Build Runner is updated from v2.4.13 to v2.10.4, THE System SHALL improve build performance
 5. WHEN all package updates are completed, THE System SHALL pass all tests successfully
 
-### Requirement 2: إصلاح مشاكل الاختبارات
+### Requirement 2: Test Issues Resolution
 
-**User Story:** كمطور في فريق بصير، أريد أن تعمل جميع الاختبارات بسرعة وكفاءة، حتى أتمكن من التطوير بثقة.
+**User Story:** As a developer on the Basir team, I want all tests to run quickly and efficiently, so that I can develop with confidence.
 
 #### Acceptance Criteria
 
@@ -38,9 +40,9 @@
 3. WHEN tests fail, THE System SHALL provide clear error messages
 4. WHEN tests complete, THE System SHALL achieve 80% minimum coverage
 
-### Requirement 3: تنظيم المواصفات النشطة
+### Requirement 3: Active Specifications Organization
 
-**User Story:** كمدير مشروع، أريد تنظيم المواصفات النشطة وتحديد الأولويات، حتى أركز الجهود على الأهم.
+**User Story:** As a project manager, I want to organize active specifications and set priorities, so that I can focus efforts on the most important items.
 
 #### Acceptance Criteria
 
@@ -49,9 +51,9 @@
 3. WHEN completed specifications exist, THE System SHALL move them to completed folder
 4. WHEN organization is complete, THE System SHALL maintain maximum 5 active specifications
 
-### Requirement 4: تحسين الأداء العام
+### Requirement 4: General Performance Improvement
 
-**User Story:** كمستخدم للتطبيق، أريد أداءً سريعاً ومستجيباً، حتى أتمكن من العمل بكفاءة.
+**User Story:** As an application user, I want fast and responsive performance, so that I can work efficiently.
 
 #### Acceptance Criteria
 
@@ -60,9 +62,9 @@
 3. WHEN loading data, THE System SHALL display clear loading indicators
 4. WHEN saving data, THE System SHALL confirm save within 1 second
 
-### Requirement 5: ضمان الجودة والاستقرار
+### Requirement 5: Quality and Stability Assurance
 
-**User Story:** كفريق تطوير، نريد ضمان جودة عالية واستقرار طويل المدى، حتى نحافظ على سمعة المنتج.
+**User Story:** As a development team, we want to ensure high quality and long-term stability, so that we maintain the product's reputation.
 
 #### Acceptance Criteria
 
@@ -71,9 +73,9 @@
 3. WHEN changes are made, THE System SHALL maintain backward compatibility
 4. WHEN a new version is released, THE System SHALL pass all CI/CD tests
 
-### Requirement 6: تحديث التوثيق والمعايير
+### Requirement 6: Documentation and Standards Update
 
-**User Story:** كمطور جديد في الفريق، أريد توثيقاً واضحاً ومحدثاً، حتى أتمكن من المساهمة بفعالية.
+**User Story:** As a new developer on the team, I want clear and updated documentation, so that I can contribute effectively.
 
 #### Acceptance Criteria
 
@@ -82,9 +84,9 @@
 3. WHEN a new feature is added, THE System SHALL document API and usage
 4. WHEN documentation is updated, THE System SHALL maintain compatibility with current standards
 
-### Requirement 7: إعداد CI/CD محسّن
+### Requirement 7: Enhanced CI/CD Setup
 
-**User Story:** كفريق تطوير، نريد نظام CI/CD موثوق وسريع، حتى نتمكن من النشر بثقة.
+**User Story:** As a development team, we want a reliable and fast CI/CD system, so that we can deploy with confidence.
 
 #### Acceptance Criteria
 
@@ -93,9 +95,9 @@
 3. WHEN tests succeed, THE System SHALL build application for different platforms
 4. WHEN build completes, THE System SHALL deploy results to secure location
 
-### Requirement 8: مراقبة الأداء والتحليلات
+### Requirement 8: Performance Monitoring and Analytics
 
-**User Story:** كمدير منتج، أريد مراقبة أداء التطبيق وسلوك المستخدمين، حتى أتخذ قرارات مدروسة.
+**User Story:** As a product manager, I want to monitor application performance and user behavior, so that I can make informed decisions.
 
 #### Acceptance Criteria
 
