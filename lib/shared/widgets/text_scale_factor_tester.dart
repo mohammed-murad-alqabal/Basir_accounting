@@ -1,5 +1,5 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 
 /// أداة اختبار textScaleFactor للتحقق من عدم قص النصوص.

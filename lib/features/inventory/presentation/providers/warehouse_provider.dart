@@ -1,7 +1,7 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/inventory/domain/entities/warehouse.dart';
-import 'package:basir_app/features/inventory/domain/entities/warehouse_transfer.dart';
-import 'package:basir_app/features/inventory/presentation/providers/inventory_provider.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/warehouse.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/warehouse_transfer.dart';
+import 'package:basir_accounting_system/features/inventory/presentation/providers/inventory_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// مزود قائمة المستودعات

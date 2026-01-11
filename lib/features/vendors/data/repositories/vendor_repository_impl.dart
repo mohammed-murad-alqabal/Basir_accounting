@@ -1,6 +1,6 @@
-import 'package:basir_app/features/vendors/data/models/vendor_model.dart';
-import 'package:basir_app/features/vendors/domain/entities/vendor.dart';
-import 'package:basir_app/features/vendors/domain/repositories/vendor_repository.dart';
+import 'package:basir_accounting_system/features/vendors/data/models/vendor_model.dart';
+import 'package:basir_accounting_system/features/vendors/domain/entities/vendor.dart';
+import 'package:basir_accounting_system/features/vendors/domain/repositories/vendor_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تنفيذ مستودع الموردين باستخدام Isar (Vendor Repository Implementation)

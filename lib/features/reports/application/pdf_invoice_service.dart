@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/utils/format_helpers.dart';
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/utils/format_helpers.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:decimal/decimal.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;

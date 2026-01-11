@@ -15,12 +15,12 @@ library;
 
 import 'dart:async';
 
-import 'package:basir_app/core/theme/app_font_metrics.dart';
-import 'package:basir_app/core/theme/font_manager.dart';
+import 'package:basir_accounting_system/core/theme/app_font_metrics.dart';
+import 'package:basir_accounting_system/core/theme/font_manager.dart';
 // ignore_for_file: deprecated_member_use_from_same_package
 // Intentionally using deprecated member
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/shared/widgets/overflow_detector.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/shared/widgets/overflow_detector.dart';
 import 'package:flutter/material.dart' hide Durations;
 import 'package:flutter/services.dart';
 

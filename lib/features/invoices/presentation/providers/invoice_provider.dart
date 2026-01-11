@@ -1,7 +1,8 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/application/accounting_service.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,6 +25,7 @@ final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
     await repository.addInvoice(invoice);
 
     // ترحيل القيد المحاسبي تلقائياً (نظام القيد المزدوج)
+    // ignore: lines_longer_than_80_chars
     if (invoice.status == InvoiceStatus.sent ||
         invoice.status == InvoiceStatus.paid) {
       final accountingService = ref.read(accountingServiceProvider.notifier);
@@ -31,6 +33,8 @@ final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
     }
     ref.invalidate(invoicesProvider);
     return true;
+  } on CognitiveConsensusException {
+    rethrow;
   } on Exception {
     return false;
   }
@@ -49,6 +53,7 @@ final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
     await repository.updateInvoice(invoice);
 
     // ترحيل أو تحديث القيد المحاسبي (نظام القيد المزدوج)
+    // ignore: lines_longer_than_80_chars
     if (invoice.status == InvoiceStatus.sent ||
         invoice.status == InvoiceStatus.paid) {
       final accountingService = ref.read(accountingServiceProvider.notifier);
@@ -56,6 +61,8 @@ final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
     }
     ref.invalidate(invoicesProvider);
     return true;
+  } on CognitiveConsensusException {
+    rethrow;
   } on Exception {
     return false;
   }
@@ -74,6 +81,8 @@ final deleteInvoiceProvider = FutureProvider.family<bool, String>((
     await repository.deleteInvoice(invoiceId);
     ref.invalidate(invoicesProvider);
     return true;
+  } on CognitiveConsensusException {
+    rethrow;
   } on Exception {
     return false;
   }
@@ -151,7 +160,9 @@ final overdueInvoicesCountProvider = Provider<AsyncValue<int>>((ref) {
 
   return invoicesAsync.whenData(
     (invoices) => invoices
-        .where((invoice) => invoice.status == InvoiceStatus.overdue)
+        .where(
+          (invoice) => invoice.status == InvoiceStatus.overdue,
+        )
         .length,
   );
 });
@@ -179,8 +190,9 @@ final invoicesCountProvider = Provider<AsyncValue<int>>(
 final hasInvoicesProvider = Provider<AsyncValue<bool>>(
   (ref) => ref.watch(
     invoicesProvider.select(
-      (asyncInvoices) =>
-          asyncInvoices.whenData((invoices) => invoices.isNotEmpty),
+      (asyncInvoices) => asyncInvoices.whenData(
+        (invoices) => invoices.isNotEmpty,
+      ),
     ),
   ),
 );
@@ -217,10 +229,12 @@ final invoiceStatisticsProvider = Provider<AsyncValue<InvoiceStatistics>>((
   return invoicesAsync.whenData(
     (invoices) => InvoiceStatistics(
       totalInvoices: invoices.length,
-      paidInvoices:
-          invoices.where((i) => i.status == InvoiceStatus.paid).length,
-      overdueInvoices:
-          invoices.where((i) => i.status == InvoiceStatus.overdue).length,
+      paidInvoices: invoices
+          .where((i) => i.status == InvoiceStatus.paid)
+          .length, // ignore: lines_longer_than_80_chars
+      overdueInvoices: invoices
+          .where((i) => i.status == InvoiceStatus.overdue)
+          .length, // ignore: lines_longer_than_80_chars
       totalAmount: invoices.fold<Decimal>(
         Decimal.zero,
         (sum, i) => sum + i.totalAmount,
@@ -267,6 +281,8 @@ final markInvoiceAsPaidProvider = FutureProvider.family<bool, String>((
 
     ref.invalidate(invoicesProvider);
     return true;
+  } on CognitiveConsensusException {
+    rethrow;
   } on Exception {
     return false;
   }
@@ -296,6 +312,8 @@ final sendInvoiceProvider = FutureProvider.family<bool, String>((
 
     ref.invalidate(invoicesProvider);
     return true;
+  } on CognitiveConsensusException {
+    rethrow;
   } on Exception {
     return false;
   }
@@ -320,6 +338,8 @@ final cancelInvoiceProvider = FutureProvider.family<bool, String>((
     await repository.updateInvoice(updatedInvoice);
     ref.invalidate(invoicesProvider);
     return true;
+  } on CognitiveConsensusException {
+    rethrow;
   } on Exception {
     return false;
   }

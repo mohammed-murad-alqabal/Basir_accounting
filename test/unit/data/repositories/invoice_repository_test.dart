@@ -3,10 +3,10 @@
 /// يختبر جميع عمليات CRUD والبحث في مستودع الفواتير
 library;
 
-import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
-import 'package:basir_app/features/invoices/data/repositories/invoice_repository_impl.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/data/models/invoice_model.dart';
+import 'package:basir_accounting_system/features/invoices/data/repositories/invoice_repository_impl.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';

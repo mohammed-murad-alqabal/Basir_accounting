@@ -1,9 +1,9 @@
-import 'package:basir_app/core/assets/app_illustrations.dart';
-import 'package:basir_app/core/providers/calendar_provider.dart';
-import 'package:basir_app/core/providers/supabase_auth_provider.dart';
-import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
-import 'package:basir_app/features/invoices/presentation/screens/invoices_screen.dart';
-import 'package:basir_app/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/core/assets/app_illustrations.dart';
+import 'package:basir_accounting_system/core/providers/calendar_provider.dart';
+import 'package:basir_accounting_system/core/providers/supabase_auth_provider.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/screens/invoices_screen.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:basir_app/features/auth/application/auth_service.dart';
-import 'package:basir_app/features/auth/presentation/providers/auth_provider.dart';
-import 'package:basir_app/src/rust/api.dart';
+import 'package:basir_accounting_system/features/auth/application/auth_service.dart';
+import 'package:basir_accounting_system/features/auth/presentation/providers/auth_provider.dart';
+import 'package:basir_accounting_system/src/rust/api.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

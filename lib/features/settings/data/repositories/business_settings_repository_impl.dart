@@ -1,6 +1,6 @@
-import 'package:basir_app/features/settings/data/models/business_settings_model.dart';
-import 'package:basir_app/features/settings/domain/entities/business_settings.dart';
-import 'package:basir_app/features/settings/domain/repositories/business_settings_repository.dart';
+import 'package:basir_accounting_system/features/settings/data/models/business_settings_model.dart';
+import 'package:basir_accounting_system/features/settings/domain/entities/business_settings.dart';
+import 'package:basir_accounting_system/features/settings/domain/repositories/business_settings_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تنفيذ مستودع إعدادات العمل

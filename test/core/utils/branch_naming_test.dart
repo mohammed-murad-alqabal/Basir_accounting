@@ -3,7 +3,7 @@
 /// Author: فريق وكلاء تطوير مشروع بصير
 library;
 
-import 'package:basir_app/core/utils/branch_naming.dart';
+import 'package:basir_accounting_system/core/utils/branch_naming.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

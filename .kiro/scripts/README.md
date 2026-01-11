@@ -1,7 +1,7 @@
-# Enhanced Scripts - بصير MVP v2.0
+# Enhanced Scripts - بصير المحاسبي v2.0
 
-**Project:** Basir MVP  
-**Date:** December 8, 2025  
+**Project:** basir_accounting_system  
+**Date:** January 11, 2026  
 **Version:** 2.0 (Enhanced)  
 **Status:** ✅ Active
 

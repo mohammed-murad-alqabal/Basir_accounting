@@ -1,8 +1,8 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/application/accounting_service.dart';
-import 'package:basir_app/features/accounting/application/financial_year_service.dart';
-import 'package:basir_app/features/accounting/domain/entities/financial_voucher.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/financial_year_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

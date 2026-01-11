@@ -1,10 +1,10 @@
-import 'package:basir_app/features/accounting/application/financial_strategy_service.dart';
-import 'package:basir_app/features/accounting/application/forensic_audit_service.dart';
-import 'package:basir_app/features/accounting/application/operational_intel_service.dart';
-import 'package:basir_app/features/accounting/application/standards_engine_service.dart';
-import 'package:basir_app/features/accounting/application/sustainability_expert_service.dart';
-import 'package:basir_app/features/accounting/application/tax_engine_service.dart';
-import 'package:basir_app/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/features/accounting/application/financial_strategy_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/forensic_audit_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/operational_intel_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/standards_engine_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/sustainability_expert_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/tax_engine_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'orchestrator_service.g.dart';

@@ -2,9 +2,9 @@
 
 # Enhanced Documentation Generator v2.0
 # Implements: COLLABORATION FIRST, KISS, Security First, Quality First, ENGLISH FOR CODE
-# Project: Basir MVP
-# Author: Basir Development Agents Team
-# Date: December 8, 2025
+# Project: basir_accounting_system
+# Author: Basir Accounting System Development Agents Team
+# Date: January 11, 2026
 
 set -e
 
@@ -101,7 +101,7 @@ enhance_html() {
     print_message "$BLUE" "Adding custom styling..."
     
     cat > "$HTML_DIR/custom.css" << 'EOF'
-/* Custom Basir MVP Documentation Styles */
+/* Custom basir_accounting_system Documentation Styles */
 :root {
     --primary-color: #2196F3;
     --secondary-color: #4CAF50;
@@ -259,7 +259,7 @@ generate_coverage_docs() {
         
         genhtml coverage/lcov.info \
             -o "$DOCS_DIR/coverage" \
-            --title "Basir MVP - Test Coverage" \
+            --title "basir_accounting_system - Test Coverage" \
             --legend
         
         print_message "$GREEN" "✅ Coverage report generated: $DOCS_DIR/coverage/index.html"
@@ -276,7 +276,7 @@ generate_index() {
     local index_file="$DOCS_DIR/README.md"
     
     {
-        echo "# Basir MVP - Documentation"
+        echo "# basir_accounting_system - Documentation"
         echo ""
         echo "**Generated:** $(date)"
         echo "**Flutter Version:** $(flutter --version | head -n 1)"

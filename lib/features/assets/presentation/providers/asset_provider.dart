@@ -1,7 +1,7 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/assets/domain/entities/asset_category.dart';
-import 'package:basir_app/features/assets/domain/entities/fixed_asset.dart';
-import 'package:basir_app/features/assets/domain/repositories/asset_repository.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/assets/domain/entities/asset_category.dart';
+import 'package:basir_accounting_system/features/assets/domain/entities/fixed_asset.dart';
+import 'package:basir_accounting_system/features/assets/domain/repositories/asset_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Provider for the list of all fixed assets

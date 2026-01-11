@@ -1,5 +1,5 @@
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/domain/entities/ifrs18_ontology.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/ifrs18_ontology.dart';
 import 'package:decimal/decimal.dart';
 
 /// Supported jurisdictions for standard Chart of Accounts generation.

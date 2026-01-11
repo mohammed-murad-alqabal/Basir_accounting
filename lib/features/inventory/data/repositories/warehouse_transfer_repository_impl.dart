@@ -1,6 +1,6 @@
-import 'package:basir_app/features/inventory/data/models/warehouse_transfer_model.dart';
-import 'package:basir_app/features/inventory/domain/entities/warehouse_transfer.dart';
-import 'package:basir_app/features/inventory/domain/repositories/warehouse_transfer_repository.dart';
+import 'package:basir_accounting_system/features/inventory/data/models/warehouse_transfer_model.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/warehouse_transfer.dart';
+import 'package:basir_accounting_system/features/inventory/domain/repositories/warehouse_transfer_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع تحويلات المخزون باستخدام Isar

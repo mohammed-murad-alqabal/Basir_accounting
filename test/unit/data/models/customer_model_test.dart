@@ -3,7 +3,7 @@
 /// يختبر تحويل البيانات والتحقق من الصحة لنموذج العميل
 library;
 
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

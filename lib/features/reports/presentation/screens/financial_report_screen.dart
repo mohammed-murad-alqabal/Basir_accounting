@@ -1,8 +1,8 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/reports/presentation/widgets/report_filter_widget.dart';
-import 'package:basir_app/features/reports/presentation/widgets/report_line_item.dart';
-import 'package:basir_app/shared/widgets/index.dart';
-import 'package:basir_app/src/rust/api/reports.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/reports/presentation/widgets/report_filter_widget.dart';
+import 'package:basir_accounting_system/features/reports/presentation/widgets/report_line_item.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
+import 'package:basir_accounting_system/src/rust/api/reports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';

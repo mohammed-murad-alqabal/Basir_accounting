@@ -1,6 +1,6 @@
-# Architectural Mapping: Basir MVP
+# Architectural Mapping: basir_accounting_system
 
-This document maps the **Kiro Advanced Agentic Framework** concepts to the physical structure of the **Basir Intelligent Financial System** codebase.
+This document maps the **Kiro Advanced Agentic Framework** concepts to the physical structure of the **Basir Intelligent Accounting System** codebase.
 
 ## 1. Structural Overview
 
@@ -46,6 +46,6 @@ The project follows a **Feature-First Clean Architecture** approach, ensuring se
 
 ## 4. Brand Purity Standards
 
-- **Project Identity**: All references strictly use "Basir" (بصير).
-- **Team Identity**: "Basir Development Agents Team" (فريق وكلاء تطوير مشروع بصير).
+- **Project Identity**: All references strictly use "basir_accounting_system" (نظام بصير المحاسبي).
+- **Team Identity**: "Basir Accounting System Development Agents Team" (فريق وكلاء تطوير نظام بصير المحاسبي).
 - **Line Length**: Strictly enforced 80-character limit for all steering documentation.

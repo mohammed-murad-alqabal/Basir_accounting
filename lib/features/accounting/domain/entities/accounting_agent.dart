@@ -1,5 +1,5 @@
-import 'package:basir_app/features/accounting/domain/entities/issb_ontology.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/issb_ontology.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'accounting_agent.freezed.dart';

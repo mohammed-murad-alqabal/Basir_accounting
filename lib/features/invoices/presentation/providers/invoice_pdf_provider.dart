@@ -1,7 +1,7 @@
-import 'package:basir_app/features/invoices/application/invoice_pdf_service.dart';
-import 'package:basir_app/features/invoices/application/invoice_print_service.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/features/invoices/application/invoice_pdf_service.dart';
+import 'package:basir_accounting_system/features/invoices/application/invoice_print_service.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';

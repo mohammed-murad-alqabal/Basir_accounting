@@ -1,5 +1,5 @@
-import 'package:basir_app/core/config/supabase_config.dart';
-import 'package:basir_app/features/auth/data/services/supabase_auth_service.dart';
+import 'package:basir_accounting_system/core/config/supabase_config.dart';
+import 'package:basir_accounting_system/features/auth/data/services/supabase_auth_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

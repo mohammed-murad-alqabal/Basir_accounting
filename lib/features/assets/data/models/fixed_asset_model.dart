@@ -1,4 +1,4 @@
-import 'package:basir_app/features/assets/domain/entities/fixed_asset.dart';
+import 'package:basir_accounting_system/features/assets/domain/entities/fixed_asset.dart';
 import 'package:isar/isar.dart';
 
 part 'fixed_asset_model.g.dart';

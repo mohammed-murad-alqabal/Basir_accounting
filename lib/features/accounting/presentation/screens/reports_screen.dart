@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/accounting/presentation/screens/aging_reports_screen.dart';
-import 'package:basir_app/features/accounting/presentation/screens/balance_sheet_screen.dart';
-import 'package:basir_app/features/accounting/presentation/screens/cash_flow_screen.dart';
-import 'package:basir_app/features/accounting/presentation/screens/income_statement_screen.dart';
-import 'package:basir_app/features/accounting/presentation/screens/trial_balance_screen.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/aging_reports_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/balance_sheet_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/cash_flow_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/income_statement_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/trial_balance_screen.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

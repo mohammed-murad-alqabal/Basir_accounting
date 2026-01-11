@@ -1,4 +1,4 @@
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:decimal/decimal.dart';
 
 /// بيانات لوحة التحكم (Dashboard Data)

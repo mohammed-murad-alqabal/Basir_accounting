@@ -1,4 +1,4 @@
-import 'package:basir_app/features/reports/domain/entities/financial_kpi.dart';
+import 'package:basir_accounting_system/features/reports/domain/entities/financial_kpi.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'basir_insights_engine.g.dart';
