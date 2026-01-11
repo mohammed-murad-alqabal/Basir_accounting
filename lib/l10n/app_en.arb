@@ -1,5 +1,10 @@
 {
   "@@locale": "en",
+  "labelStandard": "Accounting Standard",
+  "labelRecognitionBasis": "Recognition Basis",
+  "labelMeasurementBasis": "Measurement Basis",
+  "labelCurrency": "Currency",
+  "labelAddCurrency": "Add Currency",
   "@appTitle": {
     "description": "The main application title"
   },
