@@ -32,8 +32,12 @@ class NativeReportingApi {
   /// Generate a Balance Sheet.
   Future<rust.FinancialReportDto> generateBalanceSheet({
     required String asOfDate,
+    Map<String, String>? fairValuationUpdates,
   }) =>
-      rust.generateBalanceSheet(asOfDate: asOfDate);
+      rust.generateBalanceSheet(
+        asOfDate: asOfDate,
+        fairValuationUpdates: fairValuationUpdates,
+      );
 
   /// Generate a Statement of Cash Flows.
   Future<rust.FinancialReportDto> generateCashFlowStatement({
@@ -108,8 +112,12 @@ class ReportingService {
   /// Generate a Balance Sheet.
   Future<rust.FinancialReportDto> generateBalanceSheet({
     required String asOfDate,
+    Map<String, String>? fairValuationUpdates,
   }) async =>
-      _api.generateBalanceSheet(asOfDate: asOfDate);
+      _api.generateBalanceSheet(
+        asOfDate: asOfDate,
+        fairValuationUpdates: fairValuationUpdates,
+      );
 
   /// Generate a Statement of Cash Flows.
   Future<rust.FinancialReportDto> generateCashFlowStatement({

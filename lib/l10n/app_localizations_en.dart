@@ -618,12 +618,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelInvoiceStyle => 'Invoice Style';
 
   @override
-  String get labelIssuedDate => 'Issued Date';
-
-  @override
-  String get labelItemName => 'Item Name';
-
-  @override
   String get labelLastUpdated => 'Last Updated';
 
   @override
@@ -646,6 +640,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelPhoneOptional => 'Phone (Optional)';
+
+  @override
+  String get labelSourceWarehouse => 'Source Warehouse';
+
+  @override
+  String get labelDestinationWarehouse => 'Destination Warehouse';
+
+  @override
+  String get errSameWarehouse =>
+      'Source and destination warehouses cannot be the same';
+
+  @override
+  String get errSelectSourceWarehouse => 'Please select source warehouse';
+
+  @override
+  String get errSelectDestinationWarehouse =>
+      'Please select destination warehouse';
+
+  @override
+  String get btnSaveTransfer => 'Save Transfer';
+
+  @override
+  String get warehouseTransferTitleAdd => 'New Warehouse Transfer';
 
   @override
   String get labelPrice => 'Price';
@@ -1486,6 +1503,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelDiscount => 'Discount';
+
+  @override
+  String get labelItemName => 'Item Name';
+
+  @override
+  String get labelIssuedDate => 'Issued Date';
 
   @override
   String get errPermissionDenied =>

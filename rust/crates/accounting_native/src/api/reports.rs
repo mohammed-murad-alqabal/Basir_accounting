@@ -4,6 +4,8 @@ use accounting_core::reporting::{FinancialReport, TrialBalance};
 use accounting_data::db::reporting::PgReportingRepository;
 use chrono::NaiveDate;
 use flutter_rust_bridge::frb;
+use rust_decimal::Decimal;
+use std::collections::HashMap;
 use uuid::Uuid;
 
 #[frb]
@@ -180,13 +182,30 @@ pub async fn generate_income_statement(
 }
 
 /// Generate a Balance Sheet (Task 16.2 extension)
-pub async fn generate_balance_sheet(as_of_date: String) -> anyhow::Result<FinancialReportDto> {
+pub async fn generate_balance_sheet(
+    as_of_date: String,
+    fair_valuation_updates: Option<HashMap<String, String>>,
+) -> anyhow::Result<FinancialReportDto> {
     let pool = get_pool()?;
     let repo = PgReportingRepository::new(pool.clone());
 
     let date = NaiveDate::parse_from_str(&as_of_date, "%Y-%m-%d")?;
 
-    let report: FinancialReport = repo.generate_balance_sheet(date).await?;
+    let updates = if let Some(map) = fair_valuation_updates {
+        let mut converted = HashMap::new();
+        for (k, v) in map {
+            let id = Uuid::parse_str(&k)?;
+            let val = Decimal::from_str_exact(&v)?;
+            converted.insert(id, val);
+        }
+        Some(converted)
+    } else {
+        None
+    };
+
+    let report: FinancialReport = repo
+        .generate_balance_sheet_with_updates(date, updates.as_ref())
+        .await?;
 
     Ok(FinancialReportDto {
         title: report.title,

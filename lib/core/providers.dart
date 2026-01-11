@@ -17,13 +17,27 @@ import 'package:basir_app/features/customers/data/models/customer_model.dart';
 import 'package:basir_app/features/customers/data/repositories/customer_repository_impl.dart';
 import 'package:basir_app/features/customers/data/services/contact_service.dart';
 import 'package:basir_app/features/customers/domain/repositories/customer_repository.dart';
+import 'package:basir_app/features/inventory/application/inventory_service.dart';
 import 'package:basir_app/features/inventory/data/models/inventory_item_model.dart';
+import 'package:basir_app/features/inventory/data/models/stock_movement_model.dart';
+import 'package:basir_app/features/inventory/data/models/warehouse_model.dart';
+import 'package:basir_app/features/inventory/data/models/warehouse_transfer_model.dart';
 import 'package:basir_app/features/inventory/data/repositories/inventory_repository_impl.dart';
+import 'package:basir_app/features/inventory/data/repositories/stock_movement_repository_impl.dart';
+import 'package:basir_app/features/inventory/data/repositories/warehouse_repository_impl.dart';
+import 'package:basir_app/features/inventory/data/repositories/warehouse_transfer_repository_impl.dart';
 import 'package:basir_app/features/inventory/domain/repositories/inventory_repository.dart';
+import 'package:basir_app/features/inventory/domain/repositories/stock_movement_repository.dart';
+import 'package:basir_app/features/inventory/domain/repositories/warehouse_repository.dart';
+import 'package:basir_app/features/inventory/domain/repositories/warehouse_transfer_repository.dart';
 import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
 import 'package:basir_app/features/invoices/data/repositories/invoice_repository_impl.dart';
 import 'package:basir_app/features/invoices/data/services/sharing_service.dart';
 import 'package:basir_app/features/invoices/domain/repositories/invoice_repository.dart';
+import 'package:basir_app/features/reports/application/fair_valuation_service.dart';
+import 'package:basir_app/features/reports/data/models/market_price_model.dart';
+import 'package:basir_app/features/reports/data/repositories/market_price_repository_impl.dart';
+import 'package:basir_app/features/reports/domain/repositories/market_price_repository.dart';
 import 'package:basir_app/features/settings/data/models/business_settings_model.dart';
 import 'package:basir_app/features/settings/data/models/profile_model.dart';
 import 'package:basir_app/features/settings/data/repositories/business_settings_repository_impl.dart';
@@ -107,14 +121,39 @@ final isarProvider = FutureProvider<Isar>((ref) async {
         ProfileModelSchema,
         BusinessSettingsModelSchema,
         InventoryItemModelSchema,
+        StockMovementModelSchema,
+        WarehouseTransferModelSchema,
         FixedAssetModelSchema,
         AssetCategoryModelSchema,
+        WarehouseModelSchema,
+        MarketPriceModelSchema,
       ],
       directory: dir.path,
       name: 'basir_db',
       // Note: Isar 3.1.0 does not support native encryption
       // Data is protected by device-level encryption
     );
+    // Seed default warehouses if none exist
+    final count = await isar.warehouseModels.count();
+    if (count == 0) {
+      await isar.writeTxn(() async {
+        await isar.warehouseModels.putAll([
+          WarehouseModel()
+            ..id = 'wh-main'
+            ..nameAr = 'المستودع الرئيسي'
+            ..nameEn = 'Main Warehouse'
+            ..createdAt = DateTime.now()
+            ..updatedAt = DateTime.now(),
+          WarehouseModel()
+            ..id = 'wh-retail'
+            ..nameAr = 'مستودع التجزئة'
+            ..nameEn = 'Retail Warehouse'
+            ..createdAt = DateTime.now()
+            ..updatedAt = DateTime.now(),
+        ]);
+      });
+    }
+
     return isar;
   } on Exception catch (e) {
     debugPrint('❌ [ISAR] Critical error opening database: $e');
@@ -220,4 +259,75 @@ final assetRepositoryProvider = Provider<AssetRepository>((ref) {
   }
   final user = ref.watch(basirUserProvider);
   return AssetRepositoryImpl(isar: isar, userId: user?.id);
+});
+
+/// مزود مستودع حركات المخزون (Stock Movement Repository)
+final stockMovementRepositoryProvider =
+    Provider<StockMovementRepository>((ref) {
+  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
+  if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
+  final user = ref.watch(basirUserProvider);
+  return StockMovementRepositoryImpl(
+    isar: isar,
+    userId: user?.id,
+    warehouseId: user?.warehouseId,
+  );
+});
+
+/// مزود مستودع تحويلات المخزون (Warehouse Transfer Repository)
+final warehouseTransferRepositoryProvider =
+    Provider<WarehouseTransferRepository>((ref) {
+  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
+  if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
+  final user = ref.watch(basirUserProvider);
+  return WarehouseTransferRepositoryImpl(
+    isar: isar,
+    userId: user?.id,
+    warehouseId: user?.warehouseId,
+  );
+});
+
+/// مزود خدمة المخزون (Inventory Service)
+final inventoryServiceProvider = Provider<InventoryService>((ref) {
+  final inventoryRepo = ref.watch(inventoryRepositoryProvider);
+  final movementRepo = ref.watch(stockMovementRepositoryProvider);
+  final transferRepo = ref.watch(warehouseTransferRepositoryProvider);
+
+  return InventoryService(
+    inventoryRepo: inventoryRepo,
+    movementRepo: movementRepo,
+    transferRepo: transferRepo,
+  );
+});
+
+/// مزود مستودع المستودعات (Warehouse Repository)
+final warehouseRepositoryProvider = Provider<WarehouseRepository>((ref) {
+  final isar = ref.watch(
+    isarProvider.select((asyncIsar) => asyncIsar.value),
+  );
+  if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
+  final user = ref.watch(basirUserProvider);
+  return WarehouseRepositoryImpl(isar: isar, userId: user?.id);
+});
+
+/// مزود مستودع أسعار السوق (Market Price Repository)
+final marketPriceRepositoryProvider = Provider<MarketPriceRepository>((ref) {
+  final isar = ref.watch(
+    isarProvider.select((asyncIsar) => asyncIsar.value),
+  );
+  if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
+  return MarketPriceRepositoryImpl(isar: isar);
+});
+
+/// مزود خدمة التقييم العادل (Fair Valuation Service)
+final fairValuationServiceProvider = Provider<FairValuationService>((ref) {
+  final marketPriceRepo = ref.watch(marketPriceRepositoryProvider);
+  final movementRepo = ref.watch(stockMovementRepositoryProvider);
+  final inventoryRepo = ref.watch(inventoryRepositoryProvider);
+
+  return FairValuationService(
+    marketPriceRepo: marketPriceRepo,
+    movementRepo: movementRepo,
+    inventoryRepo: inventoryRepo,
+  );
 });
