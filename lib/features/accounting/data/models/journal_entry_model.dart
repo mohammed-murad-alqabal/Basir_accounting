@@ -33,6 +33,7 @@ class JournalEntryModel {
     updatedAt = entity.updatedAt;
     postedAt = entity.postedAt;
     userId = entity.userId;
+    warehouseId = entity.warehouseId;
     syncStatus = entity.syncStatus;
     serverUpdatedAt = entity.serverUpdatedAt;
     isDeleted = entity.isDeleted;
@@ -96,6 +97,10 @@ class JournalEntryModel {
   @Index()
   String? userId;
 
+  /// معرف المستودع.
+  @Index()
+  String? warehouseId;
+
   /// حالة المزامنة
   @enumerated
   late SyncStatus syncStatus;
@@ -125,6 +130,7 @@ class JournalEntryModel {
         updatedAt: updatedAt,
         postedAt: postedAt,
         userId: userId,
+        warehouseId: warehouseId,
         syncStatus: syncStatus,
         serverUpdatedAt: serverUpdatedAt,
         isDeleted: isDeleted,

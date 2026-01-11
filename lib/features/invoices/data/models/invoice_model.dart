@@ -104,6 +104,7 @@ class InvoiceModel {
     ..zatcaDeviceId = invoice.zatcaDeviceId
     ..zatcaCounter = invoice.zatcaCounter
     ..userId = invoice.userId
+    ..warehouseId = invoice.warehouseId
     ..syncStatus = invoice.syncStatus
     ..serverUpdatedAt = invoice.serverUpdatedAt
     ..isDeleted = invoice.isDeleted;
@@ -202,6 +203,10 @@ class InvoiceModel {
   @Index()
   String? userId;
 
+  /// Warehouse identity.
+  @Index()
+  String? warehouseId;
+
   /// Synchronization state.
   @enumerated
   late SyncStatus syncStatus;
@@ -242,6 +247,7 @@ class InvoiceModel {
         zatcaDeviceId: zatcaDeviceId,
         zatcaCounter: zatcaCounter,
         userId: userId,
+        warehouseId: warehouseId,
         syncStatus: syncStatus,
         serverUpdatedAt: serverUpdatedAt,
         isDeleted: isDeleted,

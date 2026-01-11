@@ -36,6 +36,7 @@ class InventoryItemModel {
         ..createdAt = item.createdAt
         ..updatedAt = item.updatedAt
         ..userId = item.userId
+        ..warehouseId = item.warehouseId
         ..taxCategory = item.taxCategory;
 
   /// معرف Isar التلقائي
@@ -109,6 +110,10 @@ class InventoryItemModel {
   /// معرف المستخدم
   String? userId;
 
+  /// معرف المستودع
+  @Index()
+  String? warehouseId;
+
   /// فئة الضريبة
   late String taxCategory;
 
@@ -135,6 +140,7 @@ class InventoryItemModel {
         createdAt: createdAt,
         updatedAt: updatedAt,
         userId: userId,
+        warehouseId: warehouseId,
         taxCategory: taxCategory,
       );
 }
