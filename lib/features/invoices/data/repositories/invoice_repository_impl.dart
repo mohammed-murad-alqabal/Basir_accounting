@@ -196,11 +196,13 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
     try {
       final allInvoices = await getAllInvoices();
 
-      final paidInvoices =
-          allInvoices.where((invoice) => invoice.status == InvoiceStatus.paid).toList();
+      final paidInvoices = allInvoices
+          .where((invoice) => invoice.status == InvoiceStatus.paid)
+          .toList();
 
-      final overdueInvoices =
-          allInvoices.where((invoice) => invoice.status == InvoiceStatus.overdue).toList();
+      final overdueInvoices = allInvoices
+          .where((invoice) => invoice.status == InvoiceStatus.overdue)
+          .toList();
 
       final totalRevenue = allInvoices.fold<Decimal>(
         Decimal.zero,
