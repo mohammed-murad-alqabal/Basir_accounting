@@ -101,6 +101,9 @@ class InventoryItem with _$InventoryItem {
     /// معرف المستخدم
     String? userId,
 
+    /// معرف المستودع (لعزل البيانات)
+    String? warehouseId,
+
     /// فئة الضريبة الافتراضية (S=Standard, Z=Zero, etc)
     @Default('S') String taxCategory,
   }) = _InventoryItem;
