@@ -1,104 +1,105 @@
-# خطة التحسين الشاملة - مشروع بصير MVP
+# Requirements Document
 
-## مقدمة
+## Introduction
 
 هذه الوثيقة تحدد خطة عمل شاملة لمعالجة جميع النقاط التي تحتاج إلى تحسين في مشروع بصير MVP، بناءً على التحليل الشامل للوضع الحالي.
 
-## المصطلحات
+## Glossary
 
-- **المشروع**: مشروع بصير MVP (نظام المحاسبة الذكي)
-- **الفرع الرئيسي**: main branch في Git repository
+- **Project**: مشروع بصير MVP (نظام المحاسبة الذكي)
+- **Main_Branch**: main branch في Git repository
 - **Dependencies**: الحزم والمكتبات الخارجية المستخدمة
-- **المواصفات النشطة**: الـ specs الموجودة في .kiro/specs/active
-- **PPP**: مبدأ Purity, Precision, Professionalism
+- **Active_Specs**: الـ specs الموجودة في .kiro/specs/active
+- **System**: نظام بصير للمحاسبة الذكية
+- **PPP_Standards**: مبدأ Purity, Precision, Professionalism
 
-## المتطلبات
+## Requirements
 
-### المتطلب 1: تحديث Dependencies الحرجة
+### Requirement 1: تحديث Dependencies الحرجة
 
-**قصة المستخدم:** كمطور في فريق بصير، أريد تحديث جميع Dependencies إلى أحدث الإصدارات المستقرة، حتى أضمن الأمان والأداء والاستقرار طويل المدى.
+**User Story:** كمطور في فريق بصير، أريد تحديث جميع Dependencies إلى أحدث الإصدارات المستقرة، حتى أضمن الأمان والأداء والاستقرار طويل المدى.
 
-#### معايير القبول
+#### Acceptance Criteria
 
-1. WHEN يتم فحص pubspec.yaml THEN النظام SHALL يحدد جميع الحزم التي تحتاج تحديث
-2. WHEN يتم تحديث Riverpod من v2.6.1 إلى v3.1.0 THEN النظام SHALL يحافظ على جميع الوظائف الحالية
-3. WHEN يتم تحديث Freezed من v2.5.2 إلى v3.2.4 THEN النظام SHALL يعيد توليد جميع الملفات المطلوبة
-4. WHEN يتم تحديث Build Runner من v2.4.13 إلى v2.10.4 THEN النظام SHALL يحسن أداء البناء
-5. WHEN يكتمل تحديث جميع الحزم THEN النظام SHALL يمر جميع الاختبارات بنجاح
+1. WHEN pubspec.yaml is analyzed, THE System SHALL identify all packages requiring updates
+2. WHEN Riverpod is updated from v2.6.1 to v3.1.0, THE System SHALL maintain all existing functionality
+3. WHEN Freezed is updated from v2.5.2 to v3.2.4, THE System SHALL regenerate all required files
+4. WHEN Build Runner is updated from v2.4.13 to v2.10.4, THE System SHALL improve build performance
+5. WHEN all package updates are completed, THE System SHALL pass all tests successfully
 
-### المتطلب 2: إصلاح مشاكل الاختبارات
+### Requirement 2: إصلاح مشاكل الاختبارات
 
-**قصة المستخدم:** كمطور في فريق بصير، أريد أن تعمل جميع الاختبارات بسرعة وكفاءة، حتى أتمكن من التطوير بثقة.
+**User Story:** كمطور في فريق بصير، أريد أن تعمل جميع الاختبارات بسرعة وكفاءة، حتى أتمكن من التطوير بثقة.
 
-#### معايير القبول
+#### Acceptance Criteria
 
-1. WHEN يتم تشغيل flutter test THEN النظام SHALL ينهي الاختبارات خلال 5 دقائق كحد أقصى
-2. WHEN تواجه الاختبارات timeout THEN النظام SHALL يحدد السبب ويصلحه
-3. WHEN تفشل اختبارات THEN النظام SHALL يوفر رسائل خطأ واضحة
-4. WHEN تكتمل الاختبارات THEN النظام SHALL يحقق تغطية 80% كحد أدنى
+1. WHEN flutter test is executed, THE System SHALL complete tests within 5 minutes maximum
+2. WHEN tests encounter timeout, THE System SHALL identify and fix the cause
+3. WHEN tests fail, THE System SHALL provide clear error messages
+4. WHEN tests complete, THE System SHALL achieve 80% minimum coverage
 
-### المتطلب 3: تنظيم المواصفات النشطة
+### Requirement 3: تنظيم المواصفات النشطة
 
-**قصة المستخدم:** كمدير مشروع، أريد تنظيم المواصفات النشطة وتحديد الأولويات، حتى أركز الجهود على الأهم.
+**User Story:** كمدير مشروع، أريد تنظيم المواصفات النشطة وتحديد الأولويات، حتى أركز الجهود على الأهم.
 
-#### معايير القبول
+#### Acceptance Criteria
 
-1. WHEN يتم مراجعة المواصفات النشطة THEN النظام SHALL يصنفها حسب الأولوية
-2. WHEN توجد مواصفات مكررة THEN النظام SHALL يدمجها أو يحذف المكرر
-3. WHEN توجد مواصفات مكتملة THEN النظام SHALL ينقلها إلى مجلد completed
-4. WHEN يتم التنظيم THEN النظام SHALL يحافظ على 5 مواصفات نشطة كحد أقصى
+1. WHEN Active_Specs are reviewed, THE System SHALL classify them by priority
+2. WHEN duplicate specifications exist, THE System SHALL merge or remove duplicates
+3. WHEN completed specifications exist, THE System SHALL move them to completed folder
+4. WHEN organization is complete, THE System SHALL maintain maximum 5 active specifications
 
-### المتطلب 4: تحسين الأداء العام
+### Requirement 4: تحسين الأداء العام
 
-**قصة المستخدم:** كمستخدم للتطبيق، أريد أداءً سريعاً ومستجيباً، حتى أتمكن من العمل بكفاءة.
+**User Story:** كمستخدم للتطبيق، أريد أداءً سريعاً ومستجيباً، حتى أتمكن من العمل بكفاءة.
 
-#### معايير القبول
+#### Acceptance Criteria
 
-1. WHEN يتم تشغيل التطبيق THEN النظام SHALL يبدأ خلال 3 ثوانٍ
-2. WHEN يتم التنقل بين الشاشات THEN النظام SHALL يستجيب خلال 500ms
-3. WHEN يتم تحميل البيانات THEN النظام SHALL يعرض مؤشر تحميل واضح
-4. WHEN يتم حفظ البيانات THEN النظام SHALL يؤكد الحفظ خلال ثانية واحدة
+1. WHEN the application starts, THE System SHALL launch within 3 seconds
+2. WHEN navigating between screens, THE System SHALL respond within 500ms
+3. WHEN loading data, THE System SHALL display clear loading indicators
+4. WHEN saving data, THE System SHALL confirm save within 1 second
 
-### المتطلب 5: ضمان الجودة والاستقرار
+### Requirement 5: ضمان الجودة والاستقرار
 
-**قصة المستخدم:** كفريق تطوير، نريد ضمان جودة عالية واستقرار طويل المدى، حتى نحافظ على سمعة المنتج.
+**User Story:** كفريق تطوير، نريد ضمان جودة عالية واستقرار طويل المدى، حتى نحافظ على سمعة المنتج.
 
-#### معايير القبول
+#### Acceptance Criteria
 
-1. WHEN يتم تشغيل flutter analyze THEN النظام SHALL يعرض 0 أخطاء و 0 تحذيرات
-2. WHEN يتم مراجعة الكود THEN النظام SHALL يتبع معايير PPP بنسبة 100%
-3. WHEN يتم إجراء تغييرات THEN النظام SHALL يحافظ على التوافق مع الإصدارات السابقة
-4. WHEN يتم نشر إصدار جديد THEN النظام SHALL يمر جميع اختبارات CI/CD
+1. WHEN flutter analyze is executed, THE System SHALL show 0 errors and 0 warnings
+2. WHEN code is reviewed, THE System SHALL follow PPP_Standards at 100% compliance
+3. WHEN changes are made, THE System SHALL maintain backward compatibility
+4. WHEN a new version is released, THE System SHALL pass all CI/CD tests
 
-### المتطلب 6: تحديث التوثيق والمعايير
+### Requirement 6: تحديث التوثيق والمعايير
 
-**قصة المستخدم:** كمطور جديد في الفريق، أريد توثيقاً واضحاً ومحدثاً، حتى أتمكن من المساهمة بفعالية.
+**User Story:** كمطور جديد في الفريق، أريد توثيقاً واضحاً ومحدثاً، حتى أتمكن من المساهمة بفعالية.
 
-#### معايير القبول
+#### Acceptance Criteria
 
-1. WHEN يتم مراجعة التوثيق THEN النظام SHALL يحدث جميع الملفات القديمة
-2. WHEN توجد معايير جديدة THEN النظام SHALL يوثقها في .kiro/steering
-3. WHEN يتم إضافة ميزة جديدة THEN النظام SHALL يوثق API والاستخدام
-4. WHEN يتم تحديث التوثيق THEN النظام SHALL يحافظ على التوافق مع المعايير الحالية
+1. WHEN documentation is reviewed, THE System SHALL update all outdated files
+2. WHEN new standards exist, THE System SHALL document them in .kiro/steering
+3. WHEN a new feature is added, THE System SHALL document API and usage
+4. WHEN documentation is updated, THE System SHALL maintain compatibility with current standards
 
-### المتطلب 7: إعداد CI/CD محسّن
+### Requirement 7: إعداد CI/CD محسّن
 
-**قصة المستخدم:** كفريق تطوير، نريد نظام CI/CD موثوق وسريع، حتى نتمكن من النشر بثقة.
+**User Story:** كفريق تطوير، نريد نظام CI/CD موثوق وسريع، حتى نتمكن من النشر بثقة.
 
-#### معايير القبول
+#### Acceptance Criteria
 
-1. WHEN يتم push إلى الفرع الرئيسي THEN النظام SHALL يشغل جميع الاختبارات تلقائياً
-2. WHEN تفشل الاختبارات THEN النظام SHALL يمنع الدمج ويرسل تنبيه
-3. WHEN تنجح الاختبارات THEN النظام SHALL يبني التطبيق للمنصات المختلفة
-4. WHEN يكتمل البناء THEN النظام SHALL ينشر النتائج في مكان آمن
+1. WHEN code is pushed to Main_Branch, THE System SHALL run all tests automatically
+2. WHEN tests fail, THE System SHALL prevent merge and send alerts
+3. WHEN tests succeed, THE System SHALL build application for different platforms
+4. WHEN build completes, THE System SHALL deploy results to secure location
 
-### المتطلب 8: مراقبة الأداء والتحليلات
+### Requirement 8: مراقبة الأداء والتحليلات
 
-**قصة المستخدم:** كمدير منتج، أريد مراقبة أداء التطبيق وسلوك المستخدمين، حتى أتخذ قرارات مدروسة.
+**User Story:** كمدير منتج، أريد مراقبة أداء التطبيق وسلوك المستخدمين، حتى أتخذ قرارات مدروسة.
 
-#### معايير القبول
+#### Acceptance Criteria
 
-1. WHEN يستخدم المستخدم التطبيق THEN النظام SHALL يجمع بيانات الأداء
-2. WHEN تحدث أخطاء THEN النظام SHALL يسجلها مع التفاصيل الكاملة
-3. WHEN يتم تحليل البيانات THEN النظام SHALL يوفر تقارير واضحة
-4. WHEN توجد مشاكل أداء THEN النظام SHALL ينبه الفريق فوراً
+1. WHEN users interact with the application, THE System SHALL collect performance data
+2. WHEN errors occur, THE System SHALL log them with complete details
+3. WHEN data is analyzed, THE System SHALL provide clear reports
+4. WHEN performance issues exist, THE System SHALL alert the team immediately

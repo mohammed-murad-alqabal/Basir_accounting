@@ -136,7 +136,9 @@ void main() {
         expect(suggestions, contains('feature/hr-employee-management-system'));
       });
 
-      test('should suggest multiple modules for feature without specific module', () {
+      test(
+          'should suggest multiple modules for feature without specific module',
+          () {
         final suggestions = BranchNamingConvention.suggestBranchNames(
           branchType: 'feature',
           description: 'data export',
