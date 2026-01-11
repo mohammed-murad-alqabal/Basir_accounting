@@ -9,6 +9,21 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
+  String get labelStandard => 'المعيار المحاسبي';
+
+  @override
+  String get labelRecognitionBasis => 'أساس الاعتراف';
+
+  @override
+  String get labelMeasurementBasis => 'أساس القياس';
+
+  @override
+  String get labelCurrency => 'العملة';
+
+  @override
+  String get labelAddCurrency => 'إضافة عملة';
+
+  @override
   String get labelTermsAndConditions => 'الشروط والأحكام';
 
   @override
@@ -53,9 +68,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelInventoryValuation => 'تقييم المخزون (IAS 2)';
 
   @override
-  String get aboutAppSubtitle => 'الإصدار 1.0.0';
-
-  @override
   String get aboutAppTitle => 'حول التطبيق';
 
   @override
@@ -81,58 +93,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get aboutFeaturesTitle => 'الميزات الرئيسية:';
 
   @override
-  String get accountTitle => 'الحساب';
-
-  @override
-  String get actionAddCustomer => 'إضافة عميل';
-
-  @override
-  String get actionAddVendor => 'إضافة مورد';
-
-  @override
-  String get actionAddInventoryItem => 'إضافة صنف';
-
-  @override
-  String get actionAddInvoice => 'إضافة فاتورة';
-
-  @override
-  String get actionDeleteCustomer => 'حذف العميل';
-
-  @override
-  String get actionDeleteVendor => 'حذف المورد';
-
-  @override
-  String get actionDeleteInvoice => 'حذف الفاتورة';
-
-  @override
-  String get titleAddVendor => 'إضافة مورد جديد';
-
-  @override
-  String get titleEditVendor => 'تعديل بيانات المورد';
-
-  @override
   String get titleAddInventoryItem => 'إضافة صنف جديد';
 
   @override
   String get titleEditInventoryItem => 'تعديل بيانات الصنف';
-
-  @override
-  String get assetsScreenTitle => 'الأصول الثابتة';
-
-  @override
-  String get assetsSearchHint => 'ابحث في الأصول...';
-
-  @override
-  String get actionAddAsset => 'إضافة أصل';
-
-  @override
-  String get tooltipAddAsset => 'إضافة أصل جديد';
-
-  @override
-  String get titleAddAsset => 'إضافة أصل جديد';
-
-  @override
-  String get titleEditAsset => 'تعديل بيانات الأصل';
 
   @override
   String get vendorsScreenTitle => 'الموردون';
@@ -175,16 +139,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get inventoryItemsScreenTitle => 'المخزون';
 
   @override
-  String get inventoryItemsSearchHint => 'ابحث في المخزون...';
+  String get assetsScreenTitle => 'الأصول الثابتة';
 
   @override
-  String get labelSKU => 'رمز الصنف (SKU)';
+  String get assetsSearchHint => 'ابحث في الأصول...';
 
   @override
-  String get labelPurchasePrice => 'سعر الشراء';
+  String get actionAddAsset => 'إضافة أصل';
 
   @override
-  String get labelSalePrice => 'سعر البيع';
+  String get tooltipAddAsset => 'إضافة أصل جديد';
+
+  @override
+  String get titleAddAsset => 'إضافة أصل جديد';
+
+  @override
+  String get titleEditAsset => 'تعديل بيانات الأصل';
 
   @override
   String get labelCode => 'كود الأصل';
@@ -212,6 +182,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get labelAssetAccountId => 'حساب المخزون (الأصول)';
+
+  @override
+  String get inventoryItemsSearchHint => 'ابحث في المخزون...';
+
+  @override
+  String get labelSKU => 'رمز الصنف (SKU)';
+
+  @override
+  String get labelPurchasePrice => 'سعر الشراء';
+
+  @override
+  String get labelSalePrice => 'سعر البيع';
 
   @override
   String get labelUnit => 'الوحدة';
@@ -581,9 +563,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get invoicesTitle => 'الفواتير';
-
-  @override
   String get labelAddress => 'العنوان';
 
   @override
@@ -692,29 +671,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get labelTaxRateWithExample => 'نسبة الضريبة (مثال: 0.15)';
-
-  @override
-  String get privacyAnalyticsTitle => 'الخصوصية والتحليلات';
-
-  @override
-  String get privacyAnalyticsSubtitle =>
-      'إدارة بيانات الاستخدام والخصوصية المحلية';
-
-  @override
-  String get analyticsEnableTracking => 'تفعيل التحليلات المحلية';
-
-  @override
-  String get analyticsPrivacyNotice =>
-      'نحن نحترم خصوصيتك. جميع التحليلات تُخزن محلياً فقط على جهازك ولا نجمع أي بيانات شخصية أو مالية. تساعدنا هذه البيانات في تحسين تجربة المستخدم وفهم الميزات الأكثر استخداماً.';
-
-  @override
-  String get analyticsClearData => 'مسح بيانات التحليلات';
-
-  @override
-  String get analyticsDataCleared => 'تم مسح بيانات التحليلات بنجاح';
-
-  @override
-  String get lastSyncLabel => 'آخر مزامنة';
 
   @override
   String get labelUsername => 'اسم المستخدم';
@@ -1069,16 +1025,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelCurrencySAR => 'ر.س';
 
   @override
-  String get msgNoActivity => 'لا يوجد نشاط حديث حتى الآن.';
-
-  @override
   String get labelAccounting => 'المحاسبة';
 
   @override
   String get labelChartOfAccounts => 'دليل الحسابات';
-
-  @override
-  String get labelJournalEntries => 'القيود اليومية';
 
   @override
   String get financialSummaryTitle => 'ملخص مالي (تجريبي)';
@@ -1380,24 +1330,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get errorExportingReport => 'خطأ أثناء تصدير التقرير';
 
   @override
-  String get labelStandard => 'المعيار المحاسبي';
-
-  @override
-  String get labelRecognitionBasis => 'أساس الاعتراف';
-
-  @override
-  String get labelMeasurementBasis => 'أساس القياس';
-
-  @override
-  String get labelExchangeRate => 'سعر الصرف';
-
-  @override
-  String get labelAddCurrency => 'إضافة عملة';
-
-  @override
-  String get labelCurrency => 'العملة';
-
-  @override
   String get labelAmount => 'المبلغ';
 
   @override
@@ -1417,6 +1349,80 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get labelNetProfit => 'صافي الربح / الخساارة';
+
+  @override
+  String get aboutAppSubtitle => 'الإصدار 1.0.0';
+
+  @override
+  String get accountTitle => 'الحساب';
+
+  @override
+  String get actionAddCustomer => 'إضافة عميل';
+
+  @override
+  String get actionAddVendor => 'إضافة مورد';
+
+  @override
+  String get actionAddInventoryItem => 'إضافة صنف';
+
+  @override
+  String get actionAddInvoice => 'إضافة فاتورة';
+
+  @override
+  String get actionDeleteCustomer => 'حذف العميل';
+
+  @override
+  String get actionDeleteVendor => 'حذف المورد';
+
+  @override
+  String get actionDeleteInvoice => 'حذف الفاتورة';
+
+  @override
+  String get titleAddVendor => 'إضافة مورد جديد';
+
+  @override
+  String get titleEditVendor => 'تعديل بيانات المورد';
+
+  @override
+  String get invoicesTitle => 'الفواتير';
+
+  @override
+  String get privacyAnalyticsTitle => 'الخصوصية والتحليلات';
+
+  @override
+  String get privacyAnalyticsSubtitle =>
+      'إدارة بيانات الاستخدام والخصوصية المحلية';
+
+  @override
+  String get analyticsEnableTracking => 'تفعيل التحليلات المحلية';
+
+  @override
+  String get analyticsPrivacyNotice =>
+      'نحن نحترم خصوصيتك. جميع التحليلات تُخزن محلياً فقط على جهازك ولا نجمع أي بيانات شخصية أو مالية. تساعدنا هذه البيانات في تحسين تجربة المستخدم وفهم الميزات الأكثر استخداماً.';
+
+  @override
+  String get analyticsClearData => 'مسح بيانات التحليلات';
+
+  @override
+  String get analyticsDataCleared => 'تم مسح بيانات التحليلات بنجاح';
+
+  @override
+  String get lastSyncLabel => 'آخر مزامنة';
+
+  @override
+  String get msgNoActivity => 'لا يوجد نشاط حديث حتى الآن.';
+
+  @override
+  String get labelJournalEntries => 'القيود اليومية';
+
+  @override
+  String get labelExchangeRate => 'سعر الصرف';
+
+  @override
+  String get exchangeRate => 'Exchange Rate';
+
+  @override
+  String get originalAmount => 'Original Amount';
 
   @override
   String get labelInventoryItem => 'صنف من المخزون';
@@ -1454,6 +1460,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get btnConfirmReverse => 'نعم، عكس الفاتورة';
 
   @override
+  String get msgInvoiceReversed => 'تم عكس الفاتورة بنجاح';
+
+  @override
   String get receiptTitleTaxInvoice => 'فاتورة ضريبية';
 
   @override
@@ -1470,7 +1479,4 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get errPermissionDenied => 'ليس لديك صلاحية للقيام بهذا الإجراء';
-
-  @override
-  String get msgInvoiceReversed => 'تم عكس الفاتورة بنجاح';
 }
