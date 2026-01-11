@@ -1,4 +1,4 @@
-import 'package:basir_app/features/customers/data/services/contact_service.dart';
+import 'package:basir_accounting_system/features/customers/data/services/contact_service.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

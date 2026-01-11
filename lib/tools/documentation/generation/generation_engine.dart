@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:basir_app/tools/documentation/analysis/analysis_engine.dart';
+import 'package:basir_accounting_system/tools/documentation/analysis/analysis_engine.dart';
 
 /// محرك توليد التوثيق التلقائي
 class GenerationEngine {

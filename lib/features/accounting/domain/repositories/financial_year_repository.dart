@@ -1,4 +1,4 @@
-import 'package:basir_app/features/accounting/domain/entities/financial_year.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
 
 /// Repository interface for fiscal year lifecycle and period management.
 ///

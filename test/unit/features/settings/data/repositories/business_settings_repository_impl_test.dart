@@ -1,5 +1,5 @@
-import 'package:basir_app/features/settings/data/repositories/business_settings_repository_impl.dart';
-import 'package:basir_app/features/settings/domain/entities/business_settings.dart';
+import 'package:basir_accounting_system/features/settings/data/repositories/business_settings_repository_impl.dart';
+import 'package:basir_accounting_system/features/settings/domain/entities/business_settings.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
 

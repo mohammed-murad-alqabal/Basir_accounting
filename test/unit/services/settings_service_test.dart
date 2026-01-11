@@ -3,12 +3,12 @@
 /// يختبر جميع عمليات إدارة الإعدادات
 library;
 
-import 'package:basir_app/core/constants.dart';
-import 'package:basir_app/features/settings/domain/entities/business_settings.dart';
-import 'package:basir_app/features/settings/domain/entities/profile.dart';
-import 'package:basir_app/features/settings/domain/repositories/business_settings_repository.dart';
-import 'package:basir_app/features/settings/domain/repositories/profile_repository.dart';
-import 'package:basir_app/services/settings_service.dart';
+import 'package:basir_accounting_system/core/constants.dart';
+import 'package:basir_accounting_system/features/settings/domain/entities/business_settings.dart';
+import 'package:basir_accounting_system/features/settings/domain/entities/profile.dart';
+import 'package:basir_accounting_system/features/settings/domain/repositories/business_settings_repository.dart';
+import 'package:basir_accounting_system/features/settings/domain/repositories/profile_repository.dart';
+import 'package:basir_accounting_system/services/settings_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../mocks/mock_secure_storage.dart';

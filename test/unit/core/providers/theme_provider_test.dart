@@ -4,7 +4,7 @@
 /// يستخدم AsyncNotifier ونظام التخزين المؤقت
 library;
 
-import 'package:basir_app/core/providers/theme_provider.dart';
+import 'package:basir_accounting_system/core/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

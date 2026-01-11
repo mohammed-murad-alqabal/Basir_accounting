@@ -28,7 +28,7 @@ const String _calendarKey = 'app_calendar_type';
 /// ## Usage
 /// ```dart
 /// // Watch current calendar type
-/// final calendarType = ref.watch(calendarProvider).valueOrNull;
+/// final calendarType = ref.watch(calendarProvider).value;
 ///
 /// // Toggle calendar system
 /// await ref.read(calendarProvider.notifier).toggleCalendar();
@@ -62,7 +62,7 @@ class CalendarNotifier extends AsyncNotifier<CalendarType> {
 
   /// Toggles between Hijri and Gregorian calendar systems.
   Future<void> toggleCalendar() async {
-    final calendarType = state.valueOrNull ?? CalendarType.gregorian;
+    final calendarType = state.value ?? CalendarType.gregorian;
     final newType = calendarType == CalendarType.hijri
         ? CalendarType.gregorian
         : CalendarType.hijri;

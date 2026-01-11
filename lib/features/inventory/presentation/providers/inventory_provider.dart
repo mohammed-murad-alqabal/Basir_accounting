@@ -1,5 +1,5 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/inventory/domain/entities/inventory_item.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// مزود قائمة أصناف المخزون

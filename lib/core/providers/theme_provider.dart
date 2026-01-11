@@ -16,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// ## Usage
 /// ```dart
 /// // Watch current theme
-/// final themeMode = ref.watch(themeProvider).valueOrNull;
+/// final themeMode = ref.watch(themeProvider).value;
 ///
 /// // Toggle theme
 /// ref.read(themeProvider.notifier).toggleTheme();
@@ -89,7 +89,7 @@ final themeProvider = AsyncNotifierProvider<ThemeController, ThemeMode>(
 /// Resolves system theme to actual brightness when [ThemeMode.system] is
 /// active.
 final isDarkModeProvider = Provider<bool>((ref) {
-  final themeMode = ref.watch(themeProvider).valueOrNull ?? ThemeMode.system;
+  final themeMode = ref.watch(themeProvider).value ?? ThemeMode.system;
   if (themeMode == ThemeMode.system) {
     return WidgetsBinding.instance.platformDispatcher.platformBrightness ==
         Brightness.dark;

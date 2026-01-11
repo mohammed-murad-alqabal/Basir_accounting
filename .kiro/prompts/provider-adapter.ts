@@ -43,7 +43,7 @@ export class OpenAIProvider implements AIProvider {
   responseTime = 2000; // Average 2 seconds
 
   generatePrompt(task: string, context: TaskContext): string {
-    const basePrompt = `You are an expert Flutter/Dart developer working on Basir MVP.`;
+    const basePrompt = `You are an expert Flutter/Dart developer working on basir_accounting_system.`;
     
     switch (context.type) {
       case 'code_generation':
@@ -120,7 +120,7 @@ ${task}
 </task>
 
 <context>
-Project: Basir MVP - Arabic invoice management app
+Project: basir_accounting_system - Arabic invoice management app
 Architecture: Clean Architecture with Riverpod + Isar
 Target: Local-first mobile app for Saudi small businesses
 </context>
@@ -166,7 +166,7 @@ export class BedrockProvider implements AIProvider {
     return `You are an enterprise-grade AI assistant running on AWS Bedrock.
 
 <enterprise_context>
-Application: Basir MVP - Invoice Management System
+Application: basir_accounting_system - Invoice Management System
 Environment: AWS Bedrock Enterprise
 Compliance: SOC 2, GDPR considerations for Saudi market
 </enterprise_context>
@@ -224,7 +224,7 @@ export class OllamaProvider implements AIProvider {
     return `${modelSpecific}
 
 Context:
-- Project: Basir MVP (Flutter invoice management app)
+- Project: basir_accounting_system (Flutter invoice management app)
 - Environment: Local development (offline-capable)
 - Privacy: All code stays on local machine
 - Target: Arabic small business users

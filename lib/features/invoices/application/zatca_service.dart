@@ -12,7 +12,7 @@ library;
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:decimal/decimal.dart';
 
 /// [ZatcaService]

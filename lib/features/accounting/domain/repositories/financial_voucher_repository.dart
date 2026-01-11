@@ -1,4 +1,4 @@
-import 'package:basir_app/features/accounting/domain/entities/financial_voucher.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
 
 /// Repository interface for managing financial receipt and payment vouchers.
 abstract class FinancialVoucherRepository {

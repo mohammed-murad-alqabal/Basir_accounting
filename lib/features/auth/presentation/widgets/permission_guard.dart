@@ -1,4 +1,4 @@
-import 'package:basir_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:basir_accounting_system/features/auth/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

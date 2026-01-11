@@ -1,4 +1,4 @@
-# 💎 نظام بصير المحاسبي (Basir Accounting System)
+# 💎 نظام بصير المحاسبي (basir_accounting_system)
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.35.5-02569B?style=flat-square&logo=flutter)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.9.2-0175C2?style=flat-square&logo=dart)](https://dart.dev)
@@ -153,7 +153,7 @@ basir_accounting_system/
 ---
 
 **الإصدار:** 1.0.0+1  
-**آخر تحديث:** 10 يناير 2026
+**آخر تحديث:** 11 يناير 2026
 
 ---
 

@@ -1,14 +1,14 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/extensions/invoice_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/utils/format_helpers.dart';
-import 'package:basir_app/features/accounting/application/accounting_service.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/features/invoices/presentation/providers/invoice_pdf_provider.dart';
-import 'package:basir_app/features/invoices/presentation/screens/invoice_form_screen.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/extensions/invoice_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/utils/format_helpers.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_pdf_provider.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,7 +24,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appIcons = ref.watch(appIconsProvider);
-    final calendarVal = ref.watch(calendarProvider).valueOrNull;
+    final calendarVal = ref.watch(calendarProvider).value;
     final calendarType = calendarVal ?? CalendarType.gregorian;
     final isDraft = invoice.status == InvoiceStatus.draft;
     final isCancelled = invoice.status == InvoiceStatus.cancelled;
@@ -135,22 +135,28 @@ class InvoiceDetailScreen extends ConsumerWidget {
                 const SizedBox(width: Spacing.sm),
                 Text(
                   ctx.l10n.labelCustomer,
-                  style: AppTextStyles.labelMedium
-                      .copyWith(color: AppColors.textSecondary),
+                  style: AppTextStyles.labelMedium.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: Spacing.sm),
             Text(
               invoice.customerName,
-              style: AppTextStyles.headlineSmall
-                  .copyWith(fontWeight: FontWeights.bold),
+              style: AppTextStyles.headlineSmall.copyWith(
+                fontWeight: FontWeights.bold,
+              ),
             ),
           ],
         ),
       );
 
-  Widget _buildInfoCard(BuildContext ctx, AppIcons icons, CalendarType cal) =>
+  Widget _buildInfoCard(
+    BuildContext ctx,
+    AppIcons icons,
+    CalendarType cal,
+  ) =>
       Row(
         children: [
           Expanded(
@@ -170,8 +176,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
                       locale: ctx.l10n.localeName,
                       calendarType: cal,
                     ),
-                    style: AppTextStyles.bodyMedium
-                        .copyWith(fontWeight: FontWeights.medium),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      fontWeight: FontWeights.medium,
+                    ),
                   ),
                 ],
               ),
@@ -213,8 +220,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
           children: [
             Text(
               ctx.l10n.labelInvoiceItems,
-              style: AppTextStyles.titleSmall
-                  .copyWith(fontWeight: FontWeights.bold),
+              style: AppTextStyles.titleSmall.copyWith(
+                fontWeight: FontWeights.bold,
+              ),
             ),
             const Divider(height: Spacing.lg),
             ListView.separated(
@@ -232,22 +240,25 @@ class InvoiceDetailScreen extends ConsumerWidget {
                         children: [
                           Text(
                             item.name,
-                            style: AppTextStyles.bodyMedium
-                                .copyWith(fontWeight: FontWeights.medium),
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              fontWeight: FontWeights.medium,
+                            ),
                           ),
                           Text(
                             '${FormatHelpers.formatNumber(item.quantity)} × '
                             '${FormatHelpers.formatCurrency(item.price)}',
-                            style: AppTextStyles.bodySmall
-                                .copyWith(color: AppColors.textSecondary),
+                            style: AppTextStyles.bodySmall.copyWith(
+                              color: AppColors.textSecondary,
+                            ),
                           ),
                         ],
                       ),
                     ),
                     Text(
                       FormatHelpers.formatCurrency(item.total),
-                      style: AppTextStyles.bodyMedium
-                          .copyWith(fontWeight: FontWeights.bold),
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        fontWeight: FontWeights.bold,
+                      ),
                     ),
                   ],
                 );
@@ -280,8 +291,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
               children: [
                 Text(
                   ctx.l10n.labelGrandTotal,
-                  style: AppTextStyles.titleMedium
-                      .copyWith(fontWeight: FontWeights.bold),
+                  style: AppTextStyles.titleMedium.copyWith(
+                    fontWeight: FontWeights.bold,
+                  ),
                 ),
                 Text(
                   FormatHelpers.formatCurrency(
@@ -324,8 +336,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
         children: [
           Text(
             ctx.l10n.labelZatcaQrCode,
-            style: AppTextStyles.labelMedium
-                .copyWith(color: AppColors.textSecondary),
+            style: AppTextStyles.labelMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
           const SizedBox(height: Spacing.md),
           AppQrCode(data: invoice.qrCode!, size: 160),

@@ -1,4 +1,4 @@
-import 'package:basir_app/features/assets/domain/entities/asset_category.dart';
+import 'package:basir_accounting_system/features/assets/domain/entities/asset_category.dart';
 import 'package:isar/isar.dart';
 
 part 'asset_category_model.g.dart';

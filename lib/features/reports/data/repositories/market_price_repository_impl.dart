@@ -1,6 +1,6 @@
-import 'package:basir_app/features/reports/data/models/market_price_model.dart';
-import 'package:basir_app/features/reports/domain/entities/market_price.dart';
-import 'package:basir_app/features/reports/domain/repositories/market_price_repository.dart';
+import 'package:basir_accounting_system/features/reports/data/models/market_price_model.dart';
+import 'package:basir_accounting_system/features/reports/domain/entities/market_price.dart';
+import 'package:basir_accounting_system/features/reports/domain/repositories/market_price_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تنفيذ مستودع أسعار السوق باستخدام Isar

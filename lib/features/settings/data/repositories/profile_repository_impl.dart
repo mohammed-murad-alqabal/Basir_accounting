@@ -1,6 +1,6 @@
-import 'package:basir_app/features/settings/data/models/profile_model.dart';
-import 'package:basir_app/features/settings/domain/entities/profile.dart';
-import 'package:basir_app/features/settings/domain/repositories/profile_repository.dart';
+import 'package:basir_accounting_system/features/settings/data/models/profile_model.dart';
+import 'package:basir_accounting_system/features/settings/domain/entities/profile.dart';
+import 'package:basir_accounting_system/features/settings/domain/repositories/profile_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تنفيذ مستودع الملف الشخصي

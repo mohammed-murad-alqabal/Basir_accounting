@@ -185,7 +185,8 @@ class ReleaseManager {
 
   /// Validates version format and semantic versioning rules
   static VersionValidationResult validateVersion(String version) {
-    final cleanVersion = version.startsWith('v') ? version.substring(1) : version;
+    final cleanVersion =
+        version.startsWith('v') ? version.substring(1) : version;
     final match = _versionPattern.firstMatch('v$cleanVersion');
 
     if (match == null) {

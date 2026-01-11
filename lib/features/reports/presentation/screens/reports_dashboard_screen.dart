@@ -1,7 +1,7 @@
-import 'package:basir_app/features/reports/presentation/screens/aging_report_screen.dart';
-import 'package:basir_app/features/reports/presentation/screens/financial_report_screen.dart';
-import 'package:basir_app/features/reports/presentation/screens/trial_balance_screen.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/aging_report_screen.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/financial_report_screen.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/trial_balance_screen.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 
 /// Dashboard for accessing various financial reports.

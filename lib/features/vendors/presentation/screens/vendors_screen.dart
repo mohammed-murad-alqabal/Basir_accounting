@@ -1,12 +1,12 @@
-import 'package:basir_app/core/assets/app_illustrations.dart';
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/vendors/domain/entities/vendor.dart';
-import 'package:basir_app/features/vendors/presentation/providers/vendor_provider.dart';
-import 'package:basir_app/features/vendors/presentation/screens/vendor_details_screen.dart';
-import 'package:basir_app/features/vendors/presentation/screens/vendor_form_screen.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/assets/app_illustrations.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/vendors/domain/entities/vendor.dart';
+import 'package:basir_accounting_system/features/vendors/presentation/providers/vendor_provider.dart';
+import 'package:basir_accounting_system/features/vendors/presentation/screens/vendor_details_screen.dart';
+import 'package:basir_accounting_system/features/vendors/presentation/screens/vendor_form_screen.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

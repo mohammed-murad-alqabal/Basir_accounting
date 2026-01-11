@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This document defines a comprehensive action plan to address all improvement points needed in the Basir MVP project, based on a thorough analysis of the current state.
+This document defines a comprehensive action plan to address all improvement points needed in the basir_accounting_system, based on a thorough analysis of the current state.
 
 ## Glossary
 
-- **Project**: Basir MVP project (Intelligent Accounting System)
+- **Project**: basir_accounting_system (Intelligent Accounting System)
 - **Main_Branch**: main branch in Git repository
 - **Dependencies**: External packages and libraries used in the project
 - **Active_Specs**: Specifications located in .kiro/specs/active

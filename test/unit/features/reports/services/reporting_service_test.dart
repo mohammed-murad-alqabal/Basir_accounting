@@ -1,5 +1,5 @@
-import 'package:basir_app/features/reports/services/reporting_service.dart';
-import 'package:basir_app/src/rust/api/reports.dart' as rust;
+import 'package:basir_accounting_system/features/reports/services/reporting_service.dart';
+import 'package:basir_accounting_system/src/rust/api/reports.dart' as rust;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

@@ -1,4 +1,4 @@
-import 'package:basir_app/features/inventory/domain/entities/warehouse_transfer.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/warehouse_transfer.dart';
 
 /// واجهة مستودع تحويلات المخزون
 abstract class WarehouseTransferRepository {

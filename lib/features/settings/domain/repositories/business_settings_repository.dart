@@ -1,4 +1,4 @@
-import 'package:basir_app/features/settings/domain/entities/business_settings.dart';
+import 'package:basir_accounting_system/features/settings/domain/entities/business_settings.dart';
 
 /// مستودع بيانات إعدادات العمل
 abstract class BusinessSettingsRepository {

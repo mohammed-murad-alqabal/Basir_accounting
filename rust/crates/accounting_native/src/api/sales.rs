@@ -142,8 +142,8 @@ pub async fn post_invoice(id: String, metadata: AuditMetadataDto) -> anyhow::Res
 
     // D. Generate QR Code
     let qr_payload = qr::ZatcaQrPayload {
-        seller_name: "Basir MVP Supplier".to_string(), // TODO: Get from Config
-        vat_number: "300000000000003".to_string(),     // TODO: Get from Config
+        seller_name: "Basir Accounting System Supplier".to_string(), // TODO: Get from Config
+        vat_number: "300000000000003".to_string(),                   // TODO: Get from Config
         timestamp: invoice.invoice_date.to_rfc3339(),
         total_amount: invoice.total_amount.to_string(),
         vat_amount: invoice.total_amount.to_string(), // Placeholder calculation
