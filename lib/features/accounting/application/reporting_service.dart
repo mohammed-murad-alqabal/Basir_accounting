@@ -110,7 +110,8 @@ class ReportingService extends _$ReportingService {
           account.id,
         );
 
-        // Performance Logic: Revenue (CR) adds to profit, Expense (DR) subtracts
+        // Performance Logic: Revenue (CR) adds to profit,
+        // Expense (DR) subtracts
         if (account.type == AccountType.revenue) {
           result[category] = (result[category] ?? Decimal.zero) + balance;
         } else {
@@ -140,16 +141,12 @@ class ReportingService extends _$ReportingService {
           account.id,
         );
 
-        switch (account.type) {
-          case AccountType.asset:
-            assets += balance;
-          case AccountType.liability:
-            liabilities += balance;
-          case AccountType.equity:
-            equity += balance;
-          case AccountType.revenue:
-          case AccountType.expense:
-            break;
+        if (account.type == AccountType.asset) {
+          assets += balance;
+        } else if (account.type == AccountType.liability) {
+          liabilities += balance;
+        } else if (account.type == AccountType.equity) {
+          equity += balance;
         }
       }
     }

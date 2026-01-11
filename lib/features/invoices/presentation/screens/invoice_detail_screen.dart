@@ -13,21 +13,22 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة تفاصيل الفاتورة (Invoice Detail Screen)
-///
-/// تعرض معلومات مفصلة عن الفاتورة مع رمز QR متوافق مع ZATCA.
+/// Invoice Detail Screen displaying ZATCA-compliant QR and metadata.
 class InvoiceDetailScreen extends ConsumerWidget {
-  /// إنشاء شاشة تفاصيل الفاتورة
+  /// Localized constructor.
   const InvoiceDetailScreen({required this.invoice, super.key});
 
-  /// الفاتورة المراد عرض تفاصيلها
+  /// The invoice entity to display.
   final Invoice invoice;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appIcons = ref.watch(appIconsProvider);
-    final calendarType =
-        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
+    final calendarVal = ref.watch(calendarProvider).valueOrNull;
+    final calendarType = calendarVal ?? CalendarType.gregorian;
+    final isDraft = invoice.status == InvoiceStatus.draft;
+    final isCancelled = invoice.status == InvoiceStatus.cancelled;
+    final isPaid = invoice.status == InvoiceStatus.paid;
 
     return Scaffold(
       appBar: AppAppBar(
@@ -47,21 +48,18 @@ class InvoiceDetailScreen extends ConsumerWidget {
             icon: Icon(appIcons.print),
             tooltip: context.l10n.tooltipPrintReceipt,
             onPressed: () => ref.refresh(
-              printReceiptProvider(
-                (invoice: invoice, l10n: context.l10n),
-              ),
+              printReceiptProvider((invoice: invoice, l10n: context.l10n)),
             ),
           ),
-          if (invoice.status == InvoiceStatus.draft)
+          if (isDraft)
             IconButton(
               icon: Icon(appIcons.edit),
               tooltip: context.l10n.btnUpdateInvoice,
               onPressed: () => _editInvoice(context),
             ),
-          if (invoice.status != InvoiceStatus.draft &&
-              invoice.status != InvoiceStatus.cancelled)
+          if (!isDraft && !isCancelled)
             IconButton(
-              icon: Icon(appIcons.delete), // Reversal icon could be different
+              icon: Icon(appIcons.delete),
               tooltip: context.l10n.tooltipReverseInvoice,
               onPressed: () => _reverseInvoice(context, ref),
             ),
@@ -72,7 +70,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildStatusCard(context, appIcons),
+            _buildStatusCard(context, appIcons, isPaid),
             const SizedBox(height: Spacing.lg),
             _buildCustomerCard(context, appIcons),
             const SizedBox(height: Spacing.lg),
@@ -83,32 +81,15 @@ class InvoiceDetailScreen extends ConsumerWidget {
             _buildTotalsCard(context),
             const SizedBox(height: Spacing.xl),
             _buildQrCodeSection(context),
-            const SizedBox(height: Spacing.xl),
-            if (invoice.notes != null && invoice.notes!.isNotEmpty) ...[
-              _buildNotesSection(
-                context,
-                context.l10n.labelNotes,
-                invoice.notes!,
-              ),
-              const SizedBox(height: Spacing.lg),
-            ],
-            if (invoice.terms != null && invoice.terms!.isNotEmpty) ...[
-              _buildNotesSection(
-                context,
-                context.l10n.labelTermsAndConditions,
-                invoice.terms!,
-              ),
-              const SizedBox(height: Spacing.lg),
-            ],
           ],
         ),
       ),
     );
   }
 
-  Widget _buildStatusCard(BuildContext context, AppIcons appIcons) {
-    final statusColor = invoice.getStatusColor(Theme.of(context).colorScheme);
-    final statusIcon = invoice.getStatusIcon(appIcons);
+  Widget _buildStatusCard(BuildContext ctx, AppIcons icons, bool isPaid) {
+    final statusColor = invoice.getStatusColor(Theme.of(ctx).colorScheme);
+    final statusIcon = invoice.getStatusIcon(icons);
 
     return AppCard(
       backgroundColor: statusColor.withValues(alpha: 0.1),
@@ -121,19 +102,18 @@ class InvoiceDetailScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                invoice.status.toDisplayString(context),
+                invoice.status.toDisplayString(ctx),
                 style: AppTextStyles.titleMedium.copyWith(
                   color: statusColor,
                   fontWeight: FontWeights.bold,
                 ),
               ),
-              if (invoice.status == InvoiceStatus.paid &&
-                  invoice.paidDate != null)
+              if (isPaid && invoice.paidDate != null)
                 Text(
-                  '${context.l10n.labelPaidDate}: '
+                  '${ctx.l10n.labelPaidDate}: '
                   '${FormatHelpers.formatDate(
                     invoice.paidDate!,
-                    locale: context.l10n.localeName,
+                    locale: ctx.l10n.localeName,
                   )}',
                   textDirection: TextDirection.ltr,
                   style: AppTextStyles.bodySmall,
@@ -145,38 +125,32 @@ class InvoiceDetailScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildCustomerCard(BuildContext context, AppIcons appIcons) => AppCard(
+  Widget _buildCustomerCard(BuildContext ctx, AppIcons icons) => AppCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(appIcons.person, color: AppColors.primary, size: 20),
+                Icon(icons.person, color: AppColors.primary, size: 20),
                 const SizedBox(width: Spacing.sm),
                 Text(
-                  context.l10n.labelCustomer,
-                  style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
+                  ctx.l10n.labelCustomer,
+                  style: AppTextStyles.labelMedium
+                      .copyWith(color: AppColors.textSecondary),
                 ),
               ],
             ),
             const SizedBox(height: Spacing.sm),
             Text(
               invoice.customerName,
-              style: AppTextStyles.headlineSmall.copyWith(
-                fontWeight: FontWeights.bold,
-              ),
+              style: AppTextStyles.headlineSmall
+                  .copyWith(fontWeight: FontWeights.bold),
             ),
           ],
         ),
       );
 
-  Widget _buildInfoCard(
-    BuildContext context,
-    AppIcons appIcons,
-    CalendarType calendarType,
-  ) =>
+  Widget _buildInfoCard(BuildContext ctx, AppIcons icons, CalendarType cal) =>
       Row(
         children: [
           Expanded(
@@ -186,19 +160,18 @@ class InvoiceDetailScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    context.l10n.labelIssuedDate,
+                    ctx.l10n.labelIssuedDate,
                     style: AppTextStyles.labelSmall,
                   ),
                   const SizedBox(height: Spacing.xs),
                   Text(
                     FormatHelpers.formatDate(
                       invoice.issuedDate,
-                      locale: context.l10n.localeName,
-                      calendarType: calendarType,
+                      locale: ctx.l10n.localeName,
+                      calendarType: cal,
                     ),
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      fontWeight: FontWeights.medium,
-                    ),
+                    style: AppTextStyles.bodyMedium
+                        .copyWith(fontWeight: FontWeights.medium),
                   ),
                 ],
               ),
@@ -212,15 +185,15 @@ class InvoiceDetailScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    context.l10n.labelDueDate,
+                    ctx.l10n.labelDueDate,
                     style: AppTextStyles.labelSmall,
                   ),
                   const SizedBox(height: Spacing.xs),
                   Text(
                     FormatHelpers.formatDate(
                       invoice.dueDate,
-                      locale: context.l10n.localeName,
-                      calendarType: calendarType,
+                      locale: ctx.l10n.localeName,
+                      calendarType: cal,
                     ),
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeights.medium,
@@ -234,15 +207,14 @@ class InvoiceDetailScreen extends ConsumerWidget {
         ],
       );
 
-  Widget _buildItemsCard(BuildContext context) => AppCard(
+  Widget _buildItemsCard(BuildContext ctx) => AppCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              context.l10n.labelInvoiceItems,
-              style: AppTextStyles.titleSmall.copyWith(
-                fontWeight: FontWeights.bold,
-              ),
+              ctx.l10n.labelInvoiceItems,
+              style: AppTextStyles.titleSmall
+                  .copyWith(fontWeight: FontWeights.bold),
             ),
             const Divider(height: Spacing.lg),
             ListView.separated(
@@ -260,25 +232,22 @@ class InvoiceDetailScreen extends ConsumerWidget {
                         children: [
                           Text(
                             item.name,
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              fontWeight: FontWeights.medium,
-                            ),
+                            style: AppTextStyles.bodyMedium
+                                .copyWith(fontWeight: FontWeights.medium),
                           ),
                           Text(
                             '${FormatHelpers.formatNumber(item.quantity)} × '
                             '${FormatHelpers.formatCurrency(item.price)}',
-                            style: AppTextStyles.bodySmall.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
+                            style: AppTextStyles.bodySmall
+                                .copyWith(color: AppColors.textSecondary),
                           ),
                         ],
                       ),
                     ),
                     Text(
                       FormatHelpers.formatCurrency(item.total),
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontWeight: FontWeights.bold,
-                      ),
+                      style: AppTextStyles.bodyMedium
+                          .copyWith(fontWeight: FontWeights.bold),
                     ),
                   ],
                 );
@@ -288,19 +257,21 @@ class InvoiceDetailScreen extends ConsumerWidget {
         ),
       );
 
-  Widget _buildTotalsCard(BuildContext context) => AppCard(
+  Widget _buildTotalsCard(BuildContext ctx) => AppCard(
         backgroundColor: AppColors.surfaceVariant.withValues(alpha: 0.5),
         child: Column(
           children: [
-            _buildTotalRow(context.l10n.labelSubtotal, invoice.subtotalAmount),
+            _buildTotalRow(ctx.l10n.labelSubtotal, invoice.subtotalAmount),
             _buildTotalRow(
-              '${context.l10n.labelTax}: '
-              '${FormatHelpers.formatNumber(invoice.taxRate * Decimal.fromInt(100))}%',
+              '${ctx.l10n.labelTax}: '
+              '${FormatHelpers.formatNumber(
+                invoice.taxRate * Decimal.fromInt(100),
+              )}%',
               invoice.taxAmount,
             ),
             if (invoice.discountAmount > Decimal.zero)
               _buildTotalRow(
-                context.l10n.labelDiscountAmount,
+                ctx.l10n.labelDiscountAmount,
                 -invoice.discountAmount,
               ),
             const Divider(height: Spacing.lg),
@@ -308,10 +279,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  context.l10n.labelGrandTotal,
-                  style: AppTextStyles.titleMedium.copyWith(
-                    fontWeight: FontWeights.bold,
-                  ),
+                  ctx.l10n.labelGrandTotal,
+                  style: AppTextStyles.titleMedium
+                      .copyWith(fontWeight: FontWeights.bold),
                 ),
                 Text(
                   FormatHelpers.formatCurrency(
@@ -345,25 +315,23 @@ class InvoiceDetailScreen extends ConsumerWidget {
         ),
       );
 
-  Widget _buildQrCodeSection(BuildContext context) {
+  Widget _buildQrCodeSection(BuildContext ctx) {
     if (invoice.qrCode == null || invoice.qrCode!.isEmpty) {
       return const SizedBox.shrink();
     }
-
     return Center(
       child: Column(
         children: [
           Text(
-            context.l10n.labelZatcaQrCode,
-            style: AppTextStyles.labelMedium.copyWith(
-              color: AppColors.textSecondary,
-            ),
+            ctx.l10n.labelZatcaQrCode,
+            style: AppTextStyles.labelMedium
+                .copyWith(color: AppColors.textSecondary),
           ),
           const SizedBox(height: Spacing.md),
           AppQrCode(data: invoice.qrCode!, size: 160),
           const SizedBox(height: Spacing.sm),
           Text(
-            context.l10n.zatcaComplianceText,
+            ctx.l10n.zatcaComplianceText,
             style: AppTextStyles.labelSmall.copyWith(color: AppColors.textHint),
             textAlign: TextAlign.center,
           ),
@@ -371,24 +339,6 @@ class InvoiceDetailScreen extends ConsumerWidget {
       ),
     );
   }
-
-  Widget _buildNotesSection(
-    BuildContext context,
-    String title,
-    String content,
-  ) =>
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style:
-                AppTextStyles.titleSmall.copyWith(fontWeight: FontWeights.bold),
-          ),
-          const SizedBox(height: Spacing.sm),
-          Text(content, style: AppTextStyles.bodyMedium),
-        ],
-      );
 
   Future<void> _editInvoice(BuildContext context) async {
     await Navigator.of(context).push(
@@ -401,17 +351,17 @@ class InvoiceDetailScreen extends ConsumerWidget {
   Future<void> _reverseInvoice(BuildContext context, WidgetRef ref) async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.l10n.titleReverseInvoice),
-        content: Text(context.l10n.msgConfirmReverseInvoice),
+      builder: (ctx) => AlertDialog(
+        title: Text(ctx.l10n.titleReverseInvoice),
+        content: Text(ctx.l10n.msgConfirmReverseInvoice),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(context.l10n.dialogCancel),
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(ctx.l10n.dialogCancel),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: Text(context.l10n.btnConfirmReverse),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text(ctx.l10n.btnConfirmReverse),
           ),
         ],
       ),
@@ -419,9 +369,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
 
     if (confirmed ?? false) {
       try {
-        await ref
-            .read(accountingServiceProvider.notifier)
-            .reverseInvoice(invoice);
+        final service = ref.read(accountingServiceProvider.notifier);
+        await service.reverseInvoice(invoice);
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(context.l10n.msgInvoiceReversed)),

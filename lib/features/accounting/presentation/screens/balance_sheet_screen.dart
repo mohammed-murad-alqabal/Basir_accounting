@@ -9,9 +9,9 @@ import 'package:intl/intl.dart' as intl;
 
 /// Screen presenting the Statement of Financial Position (Balance Sheet).
 ///
-/// Provides a point-in-time snapshot of the entity's Assets, Liabilities,
-/// and Equity, ensuring the fundamental identity (Assets = Liabilities + Equity)
-/// is visually enforced through hierarchical groups.
+/// and Equity, ensuring the fundamental identity
+/// (Assets = Liabilities + Equity) is visually enforced
+/// through hierarchical groups.
 class BalanceSheetScreen extends ConsumerWidget {
   /// Creates the balance sheet screen.
   const BalanceSheetScreen({super.key});
