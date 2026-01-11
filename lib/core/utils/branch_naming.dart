@@ -1,5 +1,6 @@
 /// Branch Naming Convention Utility for Basir ERP Development
-///
+library;
+
 /// This utility class provides validation and management for Git branch naming
 /// conventions specific to ERP development workflows.
 ///
@@ -111,7 +112,7 @@ class BranchNamingConvention {
   static BranchValidationResult validateBranchName(String branchName) {
     // Check for protected branches
     if (protectedBranches.contains(branchName)) {
-      return BranchValidationResult(
+      return const BranchValidationResult(
         isValid: true,
         branchType: 'protected',
         message: 'Protected branch',
@@ -148,7 +149,7 @@ class BranchNamingConvention {
       }
     }
 
-    return BranchValidationResult(
+    return const BranchValidationResult(
       isValid: false,
       branchType: 'unknown',
       message: 'Branch name does not match any valid pattern',
@@ -174,49 +175,37 @@ class BranchNamingConvention {
             suggestions.add('feature/$moduleKey-$cleanDescription');
           }
         }
-        break;
       case 'bugfix':
         suggestions.add('bugfix/$cleanDescription');
-        break;
       case 'hotfix':
         suggestions.add('hotfix/$cleanDescription');
-        break;
       case 'docs':
         suggestions.add('docs/$cleanDescription');
-        break;
       case 'chore':
         suggestions.add('chore/$cleanDescription');
-        break;
       case 'refactor':
         suggestions.add('refactor/$cleanDescription');
-        break;
       case 'experiment':
         suggestions.add('experiment/$cleanDescription');
-        break;
     }
 
     return suggestions;
   }
 
   /// Cleans and formats a description for use in branch names
-  static String _cleanDescription(String description) {
-    return description
-        .toLowerCase()
-        .replaceAll(RegExp(r'[^a-z0-9\s-]'), '')
-        .replaceAll(RegExp(r'\s+'), '-')
-        .replaceAll(RegExp(r'-+'), '-')
-        .replaceAll(RegExp(r'^-|-$'), '');
-  }
+  static String _cleanDescription(String description) => description
+      .toLowerCase()
+      .replaceAll(RegExp(r'[^a-z0-9\s-]'), '')
+      .replaceAll(RegExp(r'\s+'), '-')
+      .replaceAll(RegExp('-+'), '-')
+      .replaceAll(RegExp(r'^-|-$'), '');
 
   /// Gets information about a specific branch type
-  static BranchTypeInfo? getBranchTypeInfo(String branchType) {
-    return branchTypes[branchType];
-  }
+  static BranchTypeInfo? getBranchTypeInfo(String branchType) =>
+      branchTypes[branchType];
 
   /// Lists all available ERP modules
-  static Map<String, String> getAvailableModules() {
-    return Map.from(erpModules);
-  }
+  static Map<String, String> getAvailableModules() => Map.from(erpModules);
 
   /// Checks if a branch name indicates an ERP feature
   static bool isErpFeatureBranch(String branchName) {
@@ -236,6 +225,7 @@ class BranchNamingConvention {
 
 /// Information about a branch type
 class BranchTypeInfo {
+  /// Creates a new [BranchTypeInfo] instance
   const BranchTypeInfo({
     required this.pattern,
     required this.description,
@@ -243,14 +233,22 @@ class BranchTypeInfo {
     required this.examples,
   });
 
+  /// Regex pattern for the branch name
   final String pattern;
+
+  /// Human-readable description
   final String description;
+
+  /// Whether this branch type requires a module prefix
   final bool requiresModule;
+
+  /// Examples of valid branch names
   final List<String> examples;
 }
 
 /// Result of branch name validation
 class BranchValidationResult {
+  /// Creates a new [BranchValidationResult] instance
   const BranchValidationResult({
     required this.isValid,
     required this.branchType,
@@ -258,18 +256,23 @@ class BranchValidationResult {
     this.module,
   });
 
+  /// Whether the valid branch name is valid
   final bool isValid;
+
+  /// The identified type of the branch
   final String branchType;
+
+  /// Validation message or error description
   final String message;
+
+  /// The ERP module if applicable
   final String? module;
 
   @override
-  String toString() {
-    return 'BranchValidationResult('
-        'isValid: $isValid, '
-        'branchType: $branchType, '
-        'message: $message'
-        '${module != null ? ', module: $module' : ''}'
-        ')';
-  }
+  String toString() => 'BranchValidationResult('
+      'isValid: $isValid, '
+      'branchType: $branchType, '
+      'message: $message'
+      '${module != null ? ', module: $module' : ''}'
+      ')';
 }
