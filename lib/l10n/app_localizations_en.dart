@@ -9,6 +9,21 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get labelStandard => 'Accounting Standard';
+
+  @override
+  String get labelRecognitionBasis => 'Recognition Basis';
+
+  @override
+  String get labelMeasurementBasis => 'Measurement Basis';
+
+  @override
+  String get labelCurrency => 'Currency';
+
+  @override
+  String get labelAddCurrency => 'Add Currency';
+
+  @override
   String get labelTermsAndConditions => 'Terms and Conditions';
 
   @override
@@ -53,9 +68,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelInventoryValuation => 'Inventory Valuation (IAS 2)';
 
   @override
-  String get aboutAppSubtitle => 'Version 1.0.0';
-
-  @override
   String get aboutAppTitle => 'About App';
 
   @override
@@ -81,58 +93,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutFeaturesTitle => 'Key Features:';
 
   @override
-  String get accountTitle => 'Account';
-
-  @override
-  String get actionAddCustomer => 'Add Customer';
-
-  @override
-  String get actionAddVendor => 'Add Vendor';
-
-  @override
-  String get actionAddInventoryItem => 'Add Item';
-
-  @override
-  String get actionAddInvoice => 'Add Invoice';
-
-  @override
-  String get actionDeleteCustomer => 'Delete Customer';
-
-  @override
-  String get actionDeleteVendor => 'Delete Vendor';
-
-  @override
-  String get actionDeleteInvoice => 'Delete Invoice';
-
-  @override
-  String get titleAddVendor => 'Add New Vendor';
-
-  @override
-  String get titleEditVendor => 'Edit Vendor Details';
-
-  @override
   String get titleAddInventoryItem => 'Add New Item';
 
   @override
   String get titleEditInventoryItem => 'Edit Item Details';
-
-  @override
-  String get assetsScreenTitle => 'Fixed Assets';
-
-  @override
-  String get assetsSearchHint => 'Search assets...';
-
-  @override
-  String get actionAddAsset => 'Add Asset';
-
-  @override
-  String get tooltipAddAsset => 'Add New Asset';
-
-  @override
-  String get titleAddAsset => 'Add New Asset';
-
-  @override
-  String get titleEditAsset => 'Edit Asset Details';
 
   @override
   String get vendorsScreenTitle => 'Vendors';
@@ -175,16 +139,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inventoryItemsScreenTitle => 'Inventory';
 
   @override
-  String get inventoryItemsSearchHint => 'Search inventory...';
+  String get assetsScreenTitle => 'Fixed Assets';
 
   @override
-  String get labelSKU => 'SKU';
+  String get assetsSearchHint => 'Search assets...';
 
   @override
-  String get labelPurchasePrice => 'Purchase Price';
+  String get actionAddAsset => 'Add Asset';
 
   @override
-  String get labelSalePrice => 'Sale Price';
+  String get tooltipAddAsset => 'Add New Asset';
+
+  @override
+  String get titleAddAsset => 'Add New Asset';
+
+  @override
+  String get titleEditAsset => 'Edit Asset Details';
 
   @override
   String get labelCode => 'Asset Code';
@@ -213,6 +183,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelAssetAccountId => 'Inventory Account (Assets)';
+
+  @override
+  String get inventoryItemsSearchHint => 'Search inventory...';
+
+  @override
+  String get labelSKU => 'SKU';
+
+  @override
+  String get labelPurchasePrice => 'Purchase Price';
+
+  @override
+  String get labelSalePrice => 'Sale Price';
 
   @override
   String get labelUnit => 'Unit';
@@ -582,9 +564,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get invoicesTitle => 'Invoices';
-
-  @override
   String get labelAddress => 'Address';
 
   @override
@@ -693,28 +672,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelTaxRateWithExample => 'Tax Rate (e.g. 0.15)';
-
-  @override
-  String get privacyAnalyticsTitle => 'Privacy & Analytics';
-
-  @override
-  String get privacyAnalyticsSubtitle => 'Manage local usage data and privacy';
-
-  @override
-  String get analyticsEnableTracking => 'Enable Local Analytics';
-
-  @override
-  String get analyticsPrivacyNotice =>
-      'We respect your privacy. All analytics are stored locally on your device and we do not collect any personal or financial data. This data helps us improve the user experience and understand most used features.';
-
-  @override
-  String get analyticsClearData => 'Clear Analytics Data';
-
-  @override
-  String get analyticsDataCleared => 'Analytics data cleared successfully';
-
-  @override
-  String get lastSyncLabel => 'Last Sync';
 
   @override
   String get labelUsername => 'Username';
@@ -1078,16 +1035,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelCurrencySAR => 'SAR';
 
   @override
-  String get msgNoActivity => 'No recent activity yet.';
-
-  @override
   String get labelAccounting => 'Accounting';
 
   @override
   String get labelChartOfAccounts => 'Chart of Accounts';
-
-  @override
-  String get labelJournalEntries => 'Journal Entries';
 
   @override
   String get financialSummaryTitle => 'Financial Summary (Beta)';
@@ -1391,24 +1342,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorExportingReport => 'Error exporting report';
 
   @override
-  String get labelStandard => 'المعيار المحاسبي';
-
-  @override
-  String get labelRecognitionBasis => 'أساس الاعتراف';
-
-  @override
-  String get labelMeasurementBasis => 'أساس القياس';
-
-  @override
-  String get labelExchangeRate => 'Exchange Rate';
-
-  @override
-  String get labelAddCurrency => 'إضافة عملة';
-
-  @override
-  String get labelCurrency => 'العملة';
-
-  @override
   String get labelAmount => 'Amount';
 
   @override
@@ -1428,6 +1361,79 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelNetProfit => 'Net Profit / Loss';
+
+  @override
+  String get aboutAppSubtitle => 'Version 1.0.0';
+
+  @override
+  String get accountTitle => 'Account';
+
+  @override
+  String get actionAddCustomer => 'Add Customer';
+
+  @override
+  String get actionAddVendor => 'Add Vendor';
+
+  @override
+  String get actionAddInventoryItem => 'Add Item';
+
+  @override
+  String get actionAddInvoice => 'Add Invoice';
+
+  @override
+  String get actionDeleteCustomer => 'Delete Customer';
+
+  @override
+  String get actionDeleteVendor => 'Delete Vendor';
+
+  @override
+  String get actionDeleteInvoice => 'Delete Invoice';
+
+  @override
+  String get titleAddVendor => 'Add New Vendor';
+
+  @override
+  String get titleEditVendor => 'Edit Vendor Details';
+
+  @override
+  String get invoicesTitle => 'Invoices';
+
+  @override
+  String get privacyAnalyticsTitle => 'Privacy & Analytics';
+
+  @override
+  String get privacyAnalyticsSubtitle => 'Manage local usage data and privacy';
+
+  @override
+  String get analyticsEnableTracking => 'Enable Local Analytics';
+
+  @override
+  String get analyticsPrivacyNotice =>
+      'We respect your privacy. All analytics are stored locally on your device and we do not collect any personal or financial data. This data helps us improve the user experience and understand most used features.';
+
+  @override
+  String get analyticsClearData => 'Clear Analytics Data';
+
+  @override
+  String get analyticsDataCleared => 'Analytics data cleared successfully';
+
+  @override
+  String get lastSyncLabel => 'Last Sync';
+
+  @override
+  String get msgNoActivity => 'No recent activity yet.';
+
+  @override
+  String get labelJournalEntries => 'Journal Entries';
+
+  @override
+  String get labelExchangeRate => 'Exchange Rate';
+
+  @override
+  String get exchangeRate => 'Exchange Rate';
+
+  @override
+  String get originalAmount => 'Original Amount';
 
   @override
   String get labelInventoryItem => 'Inventory Item';
@@ -1464,6 +1470,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnConfirmReverse => 'Yes, Reverse Invoice';
 
   @override
+  String get msgInvoiceReversed => 'Invoice reversed successfully';
+
+  @override
   String get receiptTitleTaxInvoice => 'Tax Invoice';
 
   @override
@@ -1481,7 +1490,4 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errPermissionDenied =>
       'You do not have permission to perform this action';
-
-  @override
-  String get msgInvoiceReversed => 'Invoice reversed successfully';
 }

@@ -1,9 +1,6 @@
 {
-  "en": [
-    "labelStandard",
-    "labelRecognitionBasis",
-    "labelMeasurementBasis",
-    "labelAddCurrency",
-    "labelCurrency"
+  "ar": [
+    "exchangeRate",
+    "originalAmount"
   ]
 }
