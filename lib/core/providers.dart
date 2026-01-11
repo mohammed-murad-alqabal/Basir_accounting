@@ -139,7 +139,11 @@ final invoiceRepositoryProvider = Provider<InvoiceRepository>((ref) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
   final user = ref.watch(basirUserProvider);
-  return InvoiceRepositoryImpl(isar: isar, userId: user?.id);
+  return InvoiceRepositoryImpl(
+    isar: isar,
+    userId: user?.id,
+    warehouseId: user?.warehouseId,
+  );
 });
 
 /// مزود مستودع السنوات المالية (Financial Year Repository)
@@ -201,7 +205,11 @@ final inventoryRepositoryProvider = Provider<InventoryRepository>((ref) {
     throw Exception('قاعدة البيانات غير جاهزة');
   }
   final user = ref.watch(basirUserProvider);
-  return InventoryRepositoryImpl(isar: isar, userId: user?.id);
+  return InventoryRepositoryImpl(
+    isar: isar,
+    userId: user?.id,
+    warehouseId: user?.warehouseId,
+  );
 });
 
 /// مزود مستودع الأصول (Asset Repository)

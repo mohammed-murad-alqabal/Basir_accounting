@@ -160,6 +160,9 @@ class JournalEntry with _$JournalEntry {
     /// Tenant isolation identifier.
     String? userId,
 
+    /// Warehouse scope identifier.
+    String? warehouseId,
+
     /// Local-to-Remote synchronization state.
     @Default(SyncStatus.synced) SyncStatus syncStatus,
 
