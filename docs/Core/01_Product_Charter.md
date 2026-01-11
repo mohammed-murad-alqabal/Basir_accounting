@@ -1,50 +1,50 @@
-# ميثاق منتج "بصير" (Basir) - الإصدار الأولي (MVP)
+# Basir Product Charter - Initial Version (MVP)
 
-## 1. الرؤية (Vision)
+## 1. Vision
 
-أن يصبح "بصير" نظام التشغيل المالي الذكي والرائد في العالم العربي، والذي يدمج بسلاسة بين الإدارة المالية الشخصية والمحاسبة التجارية، ليُمكّن الأفراد والمنشآت الصغيرة والمتوسطة من اتخاذ قرارات مالية مستنيرة وفعالة.
+To establish **Basir** as the leading intelligent financial operating system in the Arab world, seamlessly integrating personal finance management with business accounting. The vision is to empower individuals and small-to-medium enterprises (SMEs) to make informed and effective financial decisions through actionable insights.
 
-## 2. المهمة (Mission)
+## 2. Mission
 
-توفير تطبيق موبايل احترافي (MVP) يتميز بالبساطة، السرعة، والموثوقية، يركز على تمكين المستخدم من **إدارة العملاء وإنشاء وتتبع الفواتير** محليًا على الجهاز، مع بناء نواة هندسية صلبة قابلة للتوسع المستقبلي لتلبية المتطلبات الإقليمية المتقدمة (مثل ZATCA) والخدمات المالية المتكاملة.
+To provide a professional mobile application (MVP) characterized by simplicity, speed, and reliability. The mission focuses on enabling users to **manage customers and create/track invoices** locally on the device, while establishing a robust engineering core scalable for future regional requirements (such as ZATCA compliance) and integrated financial services.
 
-## 3. الأهداف الاستراتيجية لـ MVP
+## 3. Strategic Objectives for MVP
 
-| الهدف | الوصف | مقياس النجاح (KPI) |
-| :--- | :--- | :--- |
-| **1. التحقق من القيمة الأساسية** | إثبات أن المستخدمين يجدون قيمة في استخدام التطبيق لإنشاء وتتبع فواتيرهم الأساسية. | معدل إنشاء فاتورة واحدة على الأقل لكل مستخدم نشط شهريًا. |
-| **2. بناء أساس هندسي صلب** | تطوير التطبيق باستخدام أفضل الممارسات البرمجية (Clean Architecture) لضمان سهولة الصيانة والتوسع. | تقييم جودة الكود (Code Quality Score) مرتفع وقابلية التوسع دون إعادة هيكلة جذرية. |
-| **3. تجربة مستخدم ممتازة** | توفير واجهة مستخدم عربية سلسة، جذابة، وبديهية، مع التركيز على الأداء العالي. | معدل رضا المستخدمين (CSAT) مرتفع، وزمن تحميل شاشة إنشاء الفاتورة أقل من 1 ثانية. |
-| **4. أمان البيانات المحلية** | ضمان حماية البيانات المالية المخزنة محليًا على جهاز المستخدم. | تطبيق آلية مصادقة (اسم مستخدم/كلمة مرور) وتشفير البيانات المحلية. |
+| Objective                            | Description                                                                                                           | Key Performance Indicator (KPI)                                                        |
+| :----------------------------------- | :-------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------- |
+| **1. Core Value Validation**         | Prove that users find tangible value in using the app for basic invoice creation and tracking.                        | At least one invoice created per active monthly user.                                  |
+| **2. Robust Engineering Foundation** | Develop the application using industry best practices (Clean Architecture) to ensure maintainability and scalability. | High Code Quality Score and scalability without requiring radical restructuring.       |
+| **3. Exceptional User Experience**   | Provide a seamless, attractive, and intuitive Arabic UI/UX focusing on high performance.                              | High Customer Satisfaction (CSAT) score; invoice creation screen load time < 1 second. |
+| **4. Local Data Security**           | Ensure the protection of financial data stored locally on the user's device.                                          | Implementation of local authentication (Username/Password) and local data encryption.  |
 
-## 4. نطاق المنتج الأولي (MVP Scope)
+## 4. MVP Scope
 
-المنتج الأولي هو تطبيق موبايل (Android/iOS) مبني باستخدام Flutter، يعمل بشكل مستقل (Standalone) دون الحاجة إلى خادم خلفي (Backend) في هذه المرحلة.
+The initial product is a mobile application (Android/iOS) built using Flutter, operating independently (Standalone) without a backend server requirement in this phase.
 
-### الميزات المضمنة (In-Scope)
+### In-Scope Features
 
-1.  **المصادقة المحلية:** شاشة إعداد أولي (اسم مستخدم وكلمة مرور) لحماية التطبيق.
-2.  **إدارة العملاء:** إضافة، تعديل، وحذف بيانات العملاء الأساسية (الاسم، رقم الهاتف، البريد الإلكتروني).
-3.  **إنشاء الفواتير:** واجهة سهلة لإنشاء فواتير جديدة تشمل:
-    *   تاريخ الفاتورة وتاريخ الاستحقاق.
-    *   اختيار العميل من القائمة.
-    *   إضافة بنود الفاتورة (الاسم، الكمية، السعر).
-    *   حساب الإجمالي والضرائب (نسبة ضريبة واحدة قابلة للتعديل).
-    *   حفظ الفاتورة كمسودة أو إصدارها.
-4.  **تتبع الفواتير:** عرض قائمة بجميع الفواتير مع إمكانية التصفية حسب الحالة (مسودة، مستحقة، مدفوعة).
-5.  **لوحة التحكم:** عرض ملخص مالي بسيط (إجمالي الفواتير، عدد العملاء).
-6.  **التخزين المحلي:** حفظ جميع البيانات (العملاء، الفواتير، إعدادات المستخدم) محليًا باستخدام قاعدة بيانات `Isar`.
+1.  **Local Authentication**: Initial setup screen (Username and Password) to protect the application.
+2.  **Customer Management**: Add, update, and delete basic customer data (Name, Phone Number, Email).
+3.  **Invoice Creation**: An intuitive interface for generating new invoices including:
+    - Invoice date and due date.
+    - Customer selection from a list.
+    - Line item management (Name, Quantity, Price).
+    - Automatic calculation of totals and taxes (single adjustable tax rate).
+    - Save invoice as draft or issue as final.
+4.  **Invoice Tracking**: List view of all invoices with filtering capabilities by status (Draft, Due, Paid).
+5.  **Dashboard**: A simplified financial summary (Total Invoice Value, Customer Count).
+6.  **Local Storage**: Persisting all data (Customers, Invoices, User Settings) locally using the `Isar` database.
 
-### الميزات المستبعدة (Out-of-Scope) - للتطوير المستقبلي
+### Out-of-Scope (Future Development)
 
-1.  **الخادم الخلفي (Backend):** لا يوجد API، لا يوجد مزامنة سحابية، لا يوجد تسجيل دخول عبر الإنترنت.
-2.  **التكاملات الخارجية:** لا يوجد ربط بنكي، لا يوجد تكامل مع بوابات دفع.
-3.  **الميزات المتقدمة:** لا يوجد تقارير محاسبية مفصلة، لا يوجد إدارة مخزون، لا يوجد دعم لـ ZATCA (سيتم تهيئة الواجهة لذلك، لكن لا يوجد توليد لرمز QR المشفر حاليًا).
-4.  **المصادقة البيومترية:** سيتم تهيئتها هندسيًا، لكن لن يتم تفعيلها في الـ MVP.
+1.  **Backend Infrastructure**: No API integration, no cloud synchronization, and no online login.
+2.  **External Integrations**: No bank linking or payment gateway integration.
+3.  **Advanced Features**: No detailed accounting reports, no inventory management, and no full ZATCA compliance (the UI will be prepared for it, but encrypted QR generation is deferred).
+4.  **Biometric Authentication**: Architecture will support it, but it will not be active in the MVP.
 
-## 5. التقنيات الأساسية
+## 5. Core Technologies
 
-*   **المنصة:** Flutter (Android & iOS).
-*   **إدارة الحالة:** Riverpod.
-*   **التخزين المحلي:** Isar Database.
-*   **اللغة الأساسية:** العربية (مع دعم كامل لاتجاه الكتابة من اليمين لليسار - RTL).
+- **Platform**: Flutter (Android & iOS).
+- **State Management**: Riverpod.
+- **Local Storage**: Isar Database.
+- **Primary Language**: Arabic (with full support for Right-to-Left (RTL) layout).
