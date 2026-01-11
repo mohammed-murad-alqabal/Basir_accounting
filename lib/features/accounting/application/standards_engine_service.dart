@@ -5,9 +5,8 @@ part 'standards_engine_service.g.dart';
 
 /// Standards Compliance Engine (Agent 1) for international auditing.
 ///
-/// Responsible for verifying that all financial transactions adhere to
-/// global standards including IFRS (International Financial Reporting Standards)
-/// and ISSB (International Sustainability Standards Board).
+/// Service for applying and validating accounting standards (IFRS/SOCPA) across
+/// transactions.
 @Riverpod(keepAlive: true)
 class StandardsEngineService extends _$StandardsEngineService
     implements AccountingAgent {
@@ -21,14 +20,6 @@ class StandardsEngineService extends _$StandardsEngineService
   AgentAuthority get authority => AgentAuthority.high;
 
   /// Validates the proposed journal entry against configured standards.
-  ///
-  /// ## Validations:
-  /// 1. **IFRS 18 Compliance**: Ensures all revenue and expense accounts are
-  ///    explicitly mapped to an IFRS 18 category (Operating, Investing,
-  ///    Financing).
-  /// 2. **ISSB S1/S2 Disclosure**: Checks if the transaction requires
-  ///    sustainability metrics (e.g., carbon footprint for industrial purchases)
-  ///    and verifies their presence.
   @override
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];
@@ -40,9 +31,10 @@ class StandardsEngineService extends _$StandardsEngineService
           line.accountId.startsWith('acc-5')) {
         rationale
             .add('Validating IFRS 18 Category mapping for ${line.accountName}');
-        // Note: Real-world implementation would fetch metadata from the account entity
+        // Note: Real-world implementation would fetch metadata from the account
         rationale.add(
-          'SUCCESS: Account correctly mapped to Operating category per IFRS 18.34',
+          'SUCCESS: Account correctly mapped to Operating category '
+          'per IFRS 18.34',
         );
       }
     }
@@ -53,10 +45,11 @@ class StandardsEngineService extends _$StandardsEngineService
         'ISSB S1/S2: Sustainability metrics disclosure mandatory for this '
         'transaction tier.',
       );
-      if (context.sustainabilityMetrics != null &&
-          context.sustainabilityMetrics!.isNotEmpty) {
+      final metrics = context.sustainabilityMetrics;
+      if (metrics != null && metrics.isNotEmpty) {
         rationale.add(
-          'ISSB Verified: ${context.sustainabilityMetrics!.length} metrics attached for disclosure.',
+          'ISSB Verified: ${metrics.length} metrics '
+          'attached for disclosure.',
         );
       } else {
         isAllowed = false;
