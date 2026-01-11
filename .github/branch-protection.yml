@@ -1,0 +1,129 @@
+# Branch Protection Configuration for Basir ERP Development
+# This file defines the protection rules for different branches
+
+main:
+  protection_rules:
+    # Require status checks to pass before merging
+    required_status_checks:
+      strict: true
+      contexts:
+        - "Code Quality Checks"
+        - "Security Scan"
+        - "Dependency Security Check"
+        - "Build Test (android)"
+        - "Build Test (web)"
+        - "ERP Compliance Checks"
+        - "Accounting Integrity Checks"
+        - "Performance Check"
+
+    # Enforce branch protection for administrators
+    enforce_admins: true
+
+    # Require pull request reviews before merging
+    required_pull_request_reviews:
+      required_approving_review_count: 2
+      dismiss_stale_reviews: true
+      require_code_owner_reviews: true
+      restrict_pushes_that_create_files: false
+
+    # Restrict who can push to this branch
+    restrictions:
+      users: []
+      teams: ["senior-developers", "tech-leads"]
+      apps: []
+
+    # Additional protections
+    allow_force_pushes: false
+    allow_deletions: false
+    required_linear_history: true
+    allow_auto_merge: false
+
+development:
+  protection_rules:
+    # Require status checks to pass before merging
+    required_status_checks:
+      strict: true
+      contexts:
+        - "Code Quality Checks"
+        - "Security Scan"
+        - "Build Test (android)"
+        - "ERP Compliance Checks"
+
+    # Require pull request reviews before merging
+    required_pull_request_reviews:
+      required_approving_review_count: 1
+      dismiss_stale_reviews: true
+      require_code_owner_reviews: false
+
+    # Less restrictive than main
+    allow_force_pushes: false
+    allow_deletions: false
+
+# Feature branch naming patterns
+feature_branches:
+  naming_convention:
+    patterns:
+      - "feature/hr-*"
+      - "feature/payroll-*"
+      - "feature/inventory-*"
+      - "feature/accounting-*"
+      - "feature/reports-*"
+      - "feature/erp-*"
+
+  auto_delete_on_merge: true
+
+# Release branch protection
+release_branches:
+  naming_convention:
+    pattern: "release/v*"
+
+  protection_rules:
+    required_status_checks:
+      strict: true
+      contexts:
+        - "Code Quality Checks"
+        - "Security Scan"
+        - "Build Test (android)"
+        - "Build Test (web)"
+        - "ERP Compliance Checks"
+        - "Accounting Integrity Checks"
+
+    required_pull_request_reviews:
+      required_approving_review_count: 2
+      dismiss_stale_reviews: true
+      require_code_owner_reviews: true
+
+# Hotfix branch protection
+hotfix_branches:
+  naming_convention:
+    pattern: "hotfix/*"
+
+  protection_rules:
+    required_status_checks:
+      strict: true
+      contexts:
+        - "Code Quality Checks"
+        - "Security Scan"
+        - "Accounting Integrity Checks"
+
+    required_pull_request_reviews:
+      required_approving_review_count: 1
+      dismiss_stale_reviews: false
+      require_code_owner_reviews: true
+
+    # Allow faster hotfix deployment
+    allow_auto_merge: true
+
+# Global settings
+global_settings:
+  # Automatically delete head branches after PR merge
+  delete_branch_on_merge: true
+
+  # Require branches to be up to date before merging
+  require_up_to_date_before_merge: true
+
+  # Enable vulnerability alerts
+  enable_vulnerability_alerts: true
+
+  # Enable automated security fixes
+  enable_automated_security_fixes: true
