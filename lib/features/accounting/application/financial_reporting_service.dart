@@ -30,7 +30,8 @@ class AccountBalanceReport {
   final Decimal balance;
 }
 
-/// Financial Reporting Service for generating regulatory and management statements.
+/// Financial Reporting Service for generating regulatory and management
+/// statements.
 ///
 /// Provides orchestration for trial balances, income statements (IFRS 18
 /// compliant), and high-level financial trend analysis.

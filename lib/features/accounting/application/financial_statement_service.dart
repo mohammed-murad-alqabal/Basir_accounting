@@ -8,11 +8,12 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'financial_statement_service.g.dart';
 
-/// Financial Statement Service for generating core balance and performance reports.
+/// Financial Statement Service for generating core balance
+/// and performance reports.
 ///
-/// Implements logic for Trial Balance, IFRS 18 Income Statements, and
-/// Balance Sheets, incorporating hierarchical account groupings and net income
-/// calculations.
+/// Implements logic for Trial Balance, IFRS 18 Income Statements,
+/// and Balance Sheets, incorporating hierarchical account
+/// groupings and net income calculations.
 @riverpod
 class FinancialStatementService extends _$FinancialStatementService {
   AccountingRepository get _repository =>
@@ -150,7 +151,8 @@ class FinancialStatementService extends _$FinancialStatementService {
 
   /// Generates a Balance Sheet (Statement of Financial Position).
   ///
-  /// Presents the fundamental accounting identity: Assets = Liabilities + Equity.
+  /// Presents the fundamental accounting identity:
+  /// Assets = Liabilities + Equity.
   Future<FinancialReport> generateBalanceSheet(DateTime date) async {
     final accounts = await _repository.getAccounts();
     final lines = <FinancialReportLine>[];

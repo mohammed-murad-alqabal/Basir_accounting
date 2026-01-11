@@ -130,21 +130,13 @@ class MockAuthService extends _i1.Mock implements _i6.AuthService {
       ) as _i7.Future<bool>);
 
   @override
-  _i7.Future<void> createAccount(
-    String? username,
-    String? password,
-  ) =>
-      (super.noSuchMethod(
+  _i7.Future<_i3.BasirUser?> getCurrentUser() => (super.noSuchMethod(
         Invocation.method(
-          #createAccount,
-          [
-            username,
-            password,
-          ],
+          #getCurrentUser,
+          [],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i7.Future<_i3.BasirUser?>.value(),
+      ) as _i7.Future<_i3.BasirUser?>);
 
   @override
   _i7.Future<bool> login(
@@ -233,6 +225,49 @@ class MockAuthService extends _i1.Mock implements _i6.AuthService {
             username,
             password,
           ],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<void> createAccount(
+    String? username,
+    String? password, {
+    _i3.UserRole? role = _i3.UserRole.viewer,
+    String? warehouseId,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createAccount,
+          [
+            username,
+            password,
+          ],
+          {
+            #role: role,
+            #warehouseId: warehouseId,
+          },
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<void> updateUserProfile({
+    String? displayName,
+    _i3.UserRole? role,
+    String? warehouseId,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateUserProfile,
+          [],
+          {
+            #displayName: displayName,
+            #role: role,
+            #warehouseId: warehouseId,
+          },
         ),
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
