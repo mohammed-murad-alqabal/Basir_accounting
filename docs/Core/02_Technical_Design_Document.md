@@ -1,66 +1,66 @@
-# وثيقة التصميم التقني لتطبيق "بصير" (Basir) - الإصدار الأولي (MVP)
+# Technical Design Document (TDD) - Initial Version (MVP)
 
-## 1. الهدف والمنهجية
+## 1. Objectives and Methodology
 
-تهدف هذه الوثيقة إلى تحديد البنية الهندسية والمعمارية لتطبيق "بصير" MVP، لضمان بناء أساس صلب، قابل للصيانة، والاختبار، والتوسع المستقبلي.
+This document outlines the engineering architecture and technical design of the **Basir** MVP to ensure a solid foundation that is maintainable, testable, and highly scalable for future expansions.
 
-**المنهجية المعتمدة:** Clean Architecture (المعمارية النظيفة).
+**Primary Methodology**: Clean Architecture.
 
-## 2. المعمارية النظيفة (Clean Architecture)
+## 2. Clean Architecture
 
-سيتم تقسيم المشروع إلى طبقات واضحة ومستقلة، حيث تعتمد الطبقات الخارجية على الطبقات الداخلية، مما يضمن أن منطق العمل الأساسي (Domain) لا يتأثر بتفاصيل التنفيذ (مثل واجهة المستخدم أو قاعدة البيانات).
+The project is divided into distinct, independent layers. Dependency flows from outer layers to inner layers, ensuring that core business logic (Domain) remains unaffected by implementation details such as the UI framework or database choice.
 
-| الطبقة | الوصف | التقنيات المستخدمة |
-| :--- | :--- | :--- |
-| **1. العرض (Presentation)** | تحتوي على واجهات المستخدم (Widgets) ومنطق إدارة الحالة (State Management). هي المسؤولة عن عرض البيانات والتفاعل مع المستخدم. | Flutter Widgets, Riverpod |
-| **2. المجال (Domain)** | هي قلب التطبيق. تحتوي على الكيانات (Entities)، حالات الاستخدام (Use Cases)، والمستودعات (Repositories) كواجهات (Interfaces). لا تحتوي على أي كود خاص بالتنفيذ. | Dart Classes, Entities, Use Cases, Repository Interfaces |
-| **3. البيانات (Data)** | تحتوي على التنفيذ الفعلي لواجهات المستودعات (Repositories). هي المسؤولة عن التعامل مع مصادر البيانات (قاعدة البيانات المحلية، أو API مستقبلاً). | Isar Database (Local), Repository Implementations |
+| Layer               | Description                                                                                                                                                  | Technologies                                    |
+| :------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------- |
+| **1. Presentation** | Contains UI components (Widgets) and state management logic. Responsible for data rendering and user interaction.                                            | Flutter Widgets, Riverpod                       |
+| **2. Domain**       | The heart of the application. Contains Entities, Use Cases, and Repository Interfaces. This layer is pure Dart and contains no implementation-specific code. | Dart Entities, Use Cases, Repository Interfaces |
+| **3. Data**         | Implements the Repository Interfaces defined in the Domain layer. Responsible for data persistence and retrieval (local database, and future APIs).          | Isar Database, Repository Implementations       |
 
-## 3. هيكل المجلدات (Directory Structure)
+## 3. Directory Structure
 
-سيتم تنظيم مجلد `lib` في مشروع Flutter على النحو التالي ليعكس المعمارية النظيفة:
+The `lib` directory is organized to reflect Clean Architecture principles:
 
 ```
 lib/
-├── core/             # المكونات الأساسية المشتركة (الثوابت، المساعدات، الأخطاء)
-├── features/         # الميزات الرئيسية للتطبيق (لكل ميزة مجلد خاص)
-│   ├── auth/         # ميزة المصادقة المحلية (تسجيل الدخول/الإعداد الأولي)
-│   ├── invoices/     # ميزة إدارة الفواتير
-│   ├── customers/    # ميزة إدارة العملاء
-│   └── dashboard/    # ميزة لوحة التحكم
-├── main.dart         # نقطة الدخول الرئيسية للتطبيق
-└── services/         # الخدمات الخارجية (مثل خدمة التخزين المحلي)
+├── core/             # Shared components (constants, helpers, shared models, error handling)
+├── features/         # Application features (each feature has its own subdirectory)
+│   ├── auth/         # Local authentication (login, initial setup)
+│   ├── invoices/     # Invoice management feature
+│   ├── customers/    # Customer management feature
+│   └── dashboard/    # Dashboard and analytics feature
+├── main.dart         # Main entry point of the application
+└── services/         # Cross-cutting concerns and external services (e.g., local storage)
 ```
 
-**داخل كل ميزة (مثال: `invoices/`):**
+**Inside each feature (e.g., `invoices/`):**
 
 ```
 invoices/
-├── data/             # طبقة البيانات (Isar Models, Repositories Implementation)
+├── data/             # Data Layer (Isar Models, Repository Implementations)
 │   ├── datasources/
 │   ├── models/
 │   └── repositories/
-├── domain/           # طبقة المجال (Entities, Use Cases, Repository Interfaces)
+├── domain/           # Domain Layer (Entities, Use Cases, Repository Interfaces)
 │   ├── entities/
 │   ├── repositories/
 │   └── usecases/
-└── presentation/     # طبقة العرض (UI, State Management)
-    ├── pages/
-    ├── widgets/
-    └── providers/    # Riverpod State Notifiers
+└── presentation/     # Presentation Layer (UI, State Management)
+    ├── pages/        # Full screen widgets
+    ├── widgets/      # Feature-specific components
+    └── providers/    # Riverpod State Notifiers and Controllers
 ```
 
-## 4. إدارة الحالة والتخزين
+## 4. State Management and Persistence
 
-| المكون | التقنية المختارة | سبب الاختيار |
-| :--- | :--- | :--- |
-| **إدارة الحالة (State Management)** | **Riverpod** | حل حديث وآمن من الأخطاء (Compile-safe)، يوفر تحكمًا دقيقًا في التبعيات (Dependency Injection) ويسهل الاختبار. |
-| **التخزين المحلي (Local Storage)** | **Isar Database** | قاعدة بيانات NoSQL فائقة السرعة ومصممة خصيصًا لـ Flutter/Dart. مثالية لتخزين البيانات المنظمة (الفواتير، العملاء) محليًا بكفاءة عالية. |
-| **المصادقة المحلية** | **Flutter Secure Storage** | لتخزين بيانات الاعتماد الحساسة (اسم المستخدم وكلمة المرور) بشكل آمن ومشفر على الجهاز. |
+| Component            | Technology                 | Rationale                                                                                                                                              |
+| :------------------- | :------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **State Management** | **Riverpod**               | A modern, compile-safe solution that provides fine-grained control over dependencies (Dependency Injection) and simplifies unit testing.               |
+| **Local Storage**    | **Isar Database**          | An ultra-fast NoSQL database designed specifically for Flutter/Dart. Ideal for efficient local storage of structured data like invoices and customers. |
+| **Secure Storage**   | **Flutter Secure Storage** | Used for storing sensitive credentials (username/password) securely using device-level encryption.                                                     |
 
-## 5. أفضل الممارسات الهندسية المعتمدة
+## 5. Engineering Best Practices
 
-1.  **الكود النظيف (Clean Code):** الالتزام بمبادئ SOLID و DRY.
-2.  **التوثيق:** استخدام توثيق Dart (Doc Comments) لكل فئة ودالة عامة.
-3.  **التحليل الثابت (Linting):** تفعيل قواعد `flutter_lints` الصارمة لضمان جودة الكود والالتزام بالمعايير.
-4.  **قابلية التوسع:** تصميم `Repository Interfaces` في طبقة `Domain` لتمكين التبديل السهل بين مصدر البيانات المحلي (Isar) ومصدر البيانات السحابي (API) مستقبلاً دون تغيير منطق العمل.
+1.  **Clean Code**: Strict adherence to **SOLID** and **DRY** principles.
+2.  **Documentation**: Using Dart documentation (Triple-slash `///` Doc Comments) for all public classes and members.
+3.  **Static Analysis (Linting)**: Enabling strict `flutter_lints` rules to guarantee code quality and consistency.
+4.  **Extensibility**: Designing `Repository Interfaces` in the Domain layer to allow seamless switching between the current local storage (Isar) and future cloud synchronization (REST/GraphQL API) without disrupting business logic.
