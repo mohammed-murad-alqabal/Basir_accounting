@@ -39,8 +39,12 @@ class IsarAccountingRepository implements AccountingRepository {
 
   @override
   Future<Account?> getAccountById(String id) async {
-    final model =
-        await isar.accountModels.filter().idEqualTo(id).and().userIdEqualTo(userId).findFirst();
+    final model = await isar.accountModels
+        .filter()
+        .idEqualTo(id)
+        .and()
+        .userIdEqualTo(userId)
+        .findFirst();
     return model?.toEntity();
   }
 
@@ -102,7 +106,8 @@ class IsarAccountingRepository implements AccountingRepository {
       throw Exception('Cannot post to a closed financial year: ${fy.name}');
     }
 
-    final periodId = '${entry.date.year}-${entry.date.month.toString().padLeft(2, '0')}';
+    final periodId = '${entry.date.year}-'
+        '${entry.date.month.toString().padLeft(2, '0')}';
     if (fy.lockedPeriodIds.contains(periodId)) {
       throw Exception('Financial period $periodId is locked');
     }
