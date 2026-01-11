@@ -1,4 +1,4 @@
-import 'package:basir_app/src/rust/api/reports.dart' as rust;
+import 'package:basir_accounting_system/src/rust/api/reports.dart' as rust;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Wrapper for native reporting functions to allow mocking.

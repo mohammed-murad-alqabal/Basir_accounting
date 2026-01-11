@@ -1,5 +1,5 @@
-import 'package:basir_app/core/utils/format_helpers.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/utils/format_helpers.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 
 /// ودجيت لتصفية التقارير المالية حسب التاريخ أو الفترة.

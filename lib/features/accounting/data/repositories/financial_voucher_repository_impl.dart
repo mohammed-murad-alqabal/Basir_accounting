@@ -1,6 +1,6 @@
-import 'package:basir_app/features/accounting/data/models/financial_voucher_model.dart';
-import 'package:basir_app/features/accounting/domain/entities/financial_voucher.dart';
-import 'package:basir_app/features/accounting/domain/repositories/financial_voucher_repository.dart';
+import 'package:basir_accounting_system/features/accounting/data/models/financial_voucher_model.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
+import 'package:basir_accounting_system/features/accounting/domain/repositories/financial_voucher_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع السندات المالية باستخدام Isar.

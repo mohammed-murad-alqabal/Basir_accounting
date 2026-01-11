@@ -1,5 +1,5 @@
-import 'package:basir_app/core/models/sync_status.dart';
-import 'package:basir_app/features/inventory/domain/entities/stock_movement.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/stock_movement.dart';
 import 'package:isar/isar.dart';
 
 part 'stock_movement_model.g.dart';

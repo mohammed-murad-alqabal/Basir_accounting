@@ -1,7 +1,7 @@
-import 'package:basir_app/core/providers/secure_storage_provider.dart';
-import 'package:basir_app/core/providers/supabase_auth_provider.dart';
-import 'package:basir_app/features/auth/application/auth_service.dart';
-import 'package:basir_app/features/auth/domain/models/auth_models.dart';
+import 'package:basir_accounting_system/core/providers/secure_storage_provider.dart';
+import 'package:basir_accounting_system/core/providers/supabase_auth_provider.dart';
+import 'package:basir_accounting_system/features/auth/application/auth_service.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// ***

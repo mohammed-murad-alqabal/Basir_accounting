@@ -1,19 +1,20 @@
 import 'dart:async';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/utils/format_helpers.dart';
-import 'package:basir_app/features/auth/domain/models/auth_models.dart';
-import 'package:basir_app/features/auth/presentation/widgets/permission_guard.dart';
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
-import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
-import 'package:basir_app/features/inventory/domain/entities/inventory_item.dart';
-import 'package:basir_app/features/inventory/presentation/providers/inventory_provider.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/utils/format_helpers.dart';
+import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
+import 'package:basir_accounting_system/features/auth/presentation/widgets/permission_guard.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
+import 'package:basir_accounting_system/features/inventory/presentation/providers/inventory_provider.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -75,9 +76,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     final isEditing = widget.invoice != null;
     final customersAsync = ref.watch(customersProvider);
     final appIcons = ref.watch(appIconsProvider);
-    final calendarType =
-        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
+    final calendarType = ref.watch(calendarProvider).value ??
+        CalendarType.gregorian; // ignore: lines_longer_than_80_chars
 
+    // ignore: lines_longer_than_80_chars
     if (widget.invoice != null &&
         _selectedCustomer == null &&
         customersAsync.hasValue) {
@@ -93,7 +95,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       appBar: AppAppBar(
         title: isEditing
             ? context.l10n.invoiceFormTitleEdit
-            : context.l10n.invoiceFormTitleAdd,
+            : context
+                .l10n.invoiceFormTitleAdd, // ignore: lines_longer_than_80_chars
       ),
       body: Form(
         key: _formKey,
@@ -105,8 +108,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               AppCard(
                 child: customersAsync.when(
                   data: _buildCustomerSelector,
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
+                  loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ), // ignore: lines_longer_than_80_chars
                   error: (error, stack) => Text(
                     context.l10n.errLoadCustomers(error.toString()),
                     style: const TextStyle(color: AppColors.error),
@@ -161,7 +165,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 child: AppEnhancedButton(
                   label: isEditing
                       ? context.l10n.btnUpdateInvoice
-                      : context.l10n.btnSaveInvoice,
+                      : context.l10n
+                          .btnSaveInvoice, // ignore: lines_longer_than_80_chars
                   onPressed: _isLoading ? null : _saveInvoice,
                   isLoading: _isLoading,
                   icon: appIcons.save,
@@ -423,7 +428,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                               icon: Icon(
                                 appIcons.delete,
                                 color: AppColors.error,
-                              ),
+                              ), // ignore: lines_longer_than_80_chars
                               tooltip: context.l10n.tooltipDeleteItem,
                               onPressed: () => _removeItem(index),
                             ),
@@ -489,7 +494,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               style: TextStyle(
                 fontSize: isGrandTotal
                     ? AppTypography.bodyLarge
-                    : AppTypography.bodyMedium,
+                    : AppTypography
+                        .bodyMedium, // ignore: lines_longer_than_80_chars
                 fontWeight: isGrandTotal ? FontWeight.bold : FontWeight.w500,
                 color: AppColors.textPrimary,
               ),
@@ -556,9 +562,11 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             label: context.l10n.btnSave,
             onPressed: () {
               final value = Decimal.tryParse(controller.text);
+              // ignore: lines_longer_than_80_chars
               if (value != null &&
                   value >= Decimal.zero &&
                   value <= Decimal.fromInt(100)) {
+                // ignore: lines_longer_than_80_chars
                 setState(
                   () => _taxRate = (value / Decimal.fromInt(100)).toDecimal(),
                 );
@@ -592,7 +600,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (inventoryItemsAsync.hasValue &&
-                    inventoryItemsAsync.value!.isNotEmpty)
+                    inventoryItemsAsync.value!
+                        .isNotEmpty) // ignore: lines_longer_than_80_chars
                   Padding(
                     padding: const EdgeInsets.only(bottom: Spacing.md),
                     child: DropdownButtonFormField<InventoryItem>(
@@ -618,8 +627,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                             nameController.text = item.name(
                               isArabic: context.l10n.localeName == 'ar',
                             );
-                            priceController.text =
-                                (item.salePrice ?? 0.0).toString();
+                            priceController.text = (item.salePrice ?? 0.0)
+                                .toString(); // ignore: lines_longer_than_80_chars
                             selectedTaxCategory = item.taxCategory;
                           });
                         }
@@ -634,20 +643,24 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   ),
                   onSubmitted: (sku) async {
                     if (sku.isEmpty) return;
-                    final item = await ref.read(itemBySkuProvider(sku).future);
+                    final item = await ref.read(
+                      itemBySkuProvider(sku).future,
+                    );
                     if (item != null) {
                       setDialogState(() {
                         nameController.text = item.name(
                           isArabic: context.l10n.localeName == 'ar',
                         );
-                        priceController.text =
-                            (item.salePrice ?? 0.0).toString();
+                        priceController.text = (item.salePrice ?? 0.0)
+                            .toString(); // ignore: lines_longer_than_80_chars
                         selectedTaxCategory = item.taxCategory;
                       });
                     } else {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(context.l10n.msgItemNotFound)),
+                          SnackBar(
+                            content: Text(context.l10n.msgItemNotFound),
+                          ),
                         );
                       }
                     }
@@ -695,13 +708,22 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                     labelText: context.l10n.labelTaxCategory,
                   ),
                   items: const [
-                    DropdownMenuItem(value: 'S', child: Text('Standard (15%)')),
+                    DropdownMenuItem(
+                      value: 'S',
+                      child: Text('Standard (15%)'),
+                    ),
                     DropdownMenuItem(
                       value: 'Z',
                       child: Text('Zero Rated (0%)'),
                     ),
-                    DropdownMenuItem(value: 'E', child: Text('Exempt (0%)')),
-                    DropdownMenuItem(value: 'O', child: Text('Out of Scope')),
+                    DropdownMenuItem(
+                      value: 'E',
+                      child: Text('Exempt (0%)'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'O',
+                      child: Text('Out of Scope'),
+                    ),
                   ],
                   onChanged: (val) {
                     if (val != null) {
@@ -723,14 +745,17 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               label: context.l10n.btnAdd,
               onPressed: () {
                 final name = nameController.text.trim();
-                final quantity = Decimal.tryParse(quantityController.text);
+                final quantity = Decimal.tryParse(
+                  quantityController.text,
+                );
                 final price = Decimal.tryParse(priceController.text);
 
                 if (name.isNotEmpty && quantity != null && price != null) {
                   final total = quantity * price;
                   // Calculate tax based on category
-                  final rate =
-                      selectedTaxCategory == 'S' ? _taxRate : Decimal.zero;
+                  final rate = selectedTaxCategory == 'S'
+                      ? _taxRate
+                      : Decimal.zero; // ignore: lines_longer_than_80_chars
                   setState(() {
                     _items.add(
                       InvoiceItem(
@@ -808,7 +833,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       final invoiceId = isNew ? const Uuid().v4() : widget.invoice!.id;
       final invoiceNumber = isNew
           ? 'INV-${DateTime.now().millisecondsSinceEpoch}'
-          : widget.invoice!.invoiceNumber;
+          : widget.invoice!.invoiceNumber; // ignore: lines_longer_than_80_chars
 
       final invoice = Invoice(
         id: invoiceId,
@@ -828,7 +853,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         discountRate: Decimal.zero,
         notes: _notesController.text.trim().isEmpty
             ? null
-            : _notesController.text.trim(),
+            : _notesController.text
+                .trim(), // ignore: lines_longer_than_80_chars
         createdAt: widget.invoice?.createdAt ?? DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -846,7 +872,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             content: Text(
               isEditing
                   ? context.l10n.msgInvoiceUpdated
-                  : context.l10n.msgInvoiceAdded,
+                  : context.l10n
+                      .msgInvoiceAdded, // ignore: lines_longer_than_80_chars
             ),
             backgroundColor: AppColors.secondary,
           ),
@@ -858,12 +885,16 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             content: Text(
               isEditing
                   ? context.l10n.errInvoiceUpdate
-                  : context.l10n.errInvoiceAdd,
+                  : context
+                      .l10n.errInvoiceAdd, // ignore: lines_longer_than_80_chars
             ),
             backgroundColor: AppColors.error,
           ),
         );
       }
+    } on CognitiveConsensusException catch (e) {
+      if (!mounted) return;
+      await _showCognitiveRejectionDialog(context, e);
     } on Exception catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -877,5 +908,77 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         setState(() => _isLoading = false);
       }
     }
+  }
+
+  Future<void> _showCognitiveRejectionDialog(
+    BuildContext context,
+    CognitiveConsensusException exception,
+  ) async {
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Row(
+          children: [
+            Icon(Icons.psychology, color: AppColors.error),
+            SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                'Cognitive Hexagon Rejection',
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'The Multi-Agent System has refused to '
+                'certify this transaction.',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
+              ...exception.consensus.agentResults.map((result) {
+                if (result.isAllowed) return const SizedBox.shrink();
+
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.error.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: AppColors.error.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Agent: ${result.agentId}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.error,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(result.rationale),
+                    ],
+                  ),
+                );
+              }),
+            ],
+          ),
+        ),
+        actions: [
+          AppEnhancedButton(
+            label: context.l10n.btnDone,
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+    );
   }
 }

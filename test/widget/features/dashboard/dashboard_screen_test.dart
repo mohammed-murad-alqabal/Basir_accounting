@@ -1,11 +1,12 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/app_icons.dart';
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
-import 'package:basir_app/features/dashboard/presentation/screens/dashboard_screen.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/l10n/app_localizations.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+// ignore_for_file: lines_longer_than_80_chars
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -22,139 +23,86 @@ void main() {
     late MockCustomerRepository mockCustomerRepo;
     late MockAccountingRepository mockAccountingRepo;
 
+    // Helper methods defined at the top to avoid referenced_before_declaration
+    Invoice createTestInvoice(
+      String id,
+      String customerName,
+      InvoiceStatus status,
+      int amount,
+      DateTime now,
+    ) =>
+        Invoice(
+          id: id,
+          invoiceNumber: id,
+          customerId: 'c1',
+          customerName: customerName,
+          items: [
+            InvoiceItem(
+              id: 'i1',
+              name: 'Test Item',
+              quantity: Decimal.one,
+              price: Decimal.fromInt(amount),
+              total: Decimal.fromInt(amount),
+              taxAmount: Decimal.zero,
+            ),
+          ],
+          status: status,
+          issuedDate: now,
+          dueDate: status == InvoiceStatus.overdue
+              ? now.subtract(const Duration(days: 1))
+              : now.add(const Duration(days: 30)),
+          createdAt: now,
+          updatedAt: now,
+          taxRate: Decimal.zero,
+          subtotalAmount: Decimal.fromInt(amount),
+          taxAmount: Decimal.zero,
+          totalAmount: Decimal.fromInt(amount),
+          paidAmount: status == InvoiceStatus.paid
+              ? Decimal.fromInt(amount)
+              : Decimal.zero,
+          discountAmount: Decimal.zero,
+          discountRate: Decimal.zero,
+        );
+
+    Customer createTestCustomer(String id, String name, DateTime now) =>
+        Customer(
+          id: id,
+          nameAr: name,
+          nameEn: name,
+          phone: '050',
+          createdAt: now,
+          updatedAt: now,
+        );
+
     setUp(() {
       mockInvoiceRepo = MockInvoiceRepository();
       mockCustomerRepo = MockCustomerRepository();
       mockAccountingRepo = MockAccountingRepository();
 
-      // إعداد البيانات المتوقعة للاختبارات
+      // إعداد بيانات مبسطة للاختبارات السريعة
       final now = DateTime.now();
+
+      // 3 فواتير أساسية فقط بدلاً من 24
       final invoices = [
-        Invoice(
-          id: '#001',
-          invoiceNumber: '#001',
-          customerId: 'c1',
-          customerName: 'أحمد محمد',
-          items: [
-            InvoiceItem(
-              id: 'i1',
-              name: 'Test',
-              quantity: Decimal.one,
-              price: Decimal.fromInt(1500),
-              total: Decimal.fromInt(1500),
-              taxAmount: Decimal.zero,
-            ),
-          ],
-          status: InvoiceStatus.paid,
-          issuedDate: now,
-          dueDate: now.add(const Duration(days: 30)),
-          createdAt: now,
-          updatedAt: now,
-          taxRate: Decimal.zero,
-          subtotalAmount: Decimal.fromInt(1500),
-          taxAmount: Decimal.zero,
-          totalAmount: Decimal.fromInt(1500),
-          paidAmount: Decimal.fromInt(1500),
-          discountAmount: Decimal.zero,
-          discountRate: Decimal.zero,
-        ),
-        Invoice(
-          id: '#002',
-          invoiceNumber: '#002',
-          customerId: 'c2',
-          customerName: 'سارة علي',
-          items: [
-            InvoiceItem(
-              id: 'i2',
-              name: 'Test',
-              quantity: Decimal.one,
-              price: Decimal.fromInt(2300),
-              total: Decimal.fromInt(2300),
-              taxAmount: Decimal.zero,
-            ),
-          ],
-          status: InvoiceStatus.sent,
-          issuedDate: now,
-          dueDate: now.add(const Duration(days: 30)),
-          createdAt: now.subtract(const Duration(minutes: 5)),
-          updatedAt: now,
-          taxRate: Decimal.zero,
-          subtotalAmount: Decimal.fromInt(2300),
-          taxAmount: Decimal.zero,
-          totalAmount: Decimal.fromInt(2300),
-          paidAmount: Decimal.zero,
-          discountAmount: Decimal.zero,
-          discountRate: Decimal.zero,
-        ),
-        Invoice(
-          id: '#003',
-          invoiceNumber: '#003',
-          customerId: 'c3',
-          customerName: 'محمود حسن',
-          items: [
-            InvoiceItem(
-              id: 'i3',
-              name: 'Test',
-              quantity: Decimal.one,
-              price: Decimal.fromInt(1800),
-              total: Decimal.fromInt(1800),
-              taxAmount: Decimal.zero,
-            ),
-          ],
-          status: InvoiceStatus.overdue,
-          issuedDate: now,
-          dueDate: now.subtract(const Duration(days: 1)),
-          createdAt: now.subtract(const Duration(minutes: 10)),
-          updatedAt: now,
-          taxRate: Decimal.zero,
-          subtotalAmount: Decimal.fromInt(1800),
-          taxAmount: Decimal.zero,
-          totalAmount: Decimal.fromInt(1800),
-          paidAmount: Decimal.zero,
-          discountAmount: Decimal.zero,
-          discountRate: Decimal.zero,
+        createTestInvoice('#001', 'أحمد محمد', InvoiceStatus.paid, 1500, now),
+        createTestInvoice('#002', 'سارة علي', InvoiceStatus.sent, 2300, now),
+        createTestInvoice(
+          '#003',
+          'محمود حسن',
+          InvoiceStatus.overdue,
+          1800,
+          now,
         ),
       ];
 
-      // إضافة فواتير إضافية لتصل لـ 24
-      for (var i = 4; i <= 24; i++) {
-        invoices.add(
-          Invoice(
-            id: '#0${i.toString().padLeft(2, '0')}',
-            invoiceNumber: '#0${i.toString().padLeft(2, '0')}',
-            customerId: 'c1',
-            customerName: 'Customer',
-            items: [],
-            status: InvoiceStatus.sent,
-            issuedDate: now,
-            dueDate: now,
-            createdAt: now.subtract(Duration(hours: i)),
-            updatedAt: now,
-            taxRate: Decimal.zero,
-            subtotalAmount: Decimal.zero,
-            taxAmount: Decimal.zero,
-            totalAmount: Decimal.zero,
-            paidAmount: Decimal.zero,
-            discountAmount: Decimal.zero,
-            discountRate: Decimal.zero,
-          ),
-        );
-      }
-
       mockInvoiceRepo.setInvoices(invoices);
 
-      // إعداد 12 عميل
-      final customers = List.generate(
-        12,
-        (i) => Customer(
-          id: 'c$i',
-          nameAr: 'Customer $i',
-          nameEn: 'Customer $i',
-          phone: '050',
-          createdAt: now,
-          updatedAt: now,
-        ),
-      );
+      // 3 عملاء فقط بدلاً من 12
+      final customers = [
+        createTestCustomer('c1', 'Customer 1', now),
+        createTestCustomer('c2', 'Customer 2', now),
+        createTestCustomer('c3', 'Customer 3', now),
+      ];
       mockCustomerRepo.setCustomers(customers);
     });
 
@@ -184,10 +132,8 @@ void main() {
 
     Future<void> setUpWidgets(WidgetTester tester) async {
       await tester.pumpWidget(createTestWidget());
-      // الانتظار حتى اكتمال AsyncNotifier
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-      await tester.pump();
+      // انتظار واحد مُحسن لاكتمال AsyncNotifier
+      await tester.pumpAndSettle(const Duration(milliseconds: 50));
       l10n = AppLocalizations.of(tester.element(find.byType(DashboardScreen)));
     }
 
@@ -303,66 +249,57 @@ void main() {
       });
     });
 
-    testWidgets('New Invoice button should navigate to form', (tester) async {
-      var navigated = false;
-      await tester.pumpWidget(
-        createTestWidget(
-          routes: {
-            '/invoice-form': (context) {
-              navigated = true;
-              return const Scaffold();
+    group('Navigation Tests', () {
+      testWidgets('New Invoice button should navigate to form', (tester) async {
+        var navigated = false;
+        await tester.pumpWidget(
+          createTestWidget(
+            routes: {
+              '/invoice-form': (context) {
+                navigated = true;
+                return const Scaffold();
+              },
             },
-          },
-        ),
-      );
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-      await tester.pump();
+          ),
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 50));
 
-      // Scroll to make the button visible
-      final buttonFinder = find.widgetWithText(
-        AppEnhancedButton,
-        l10n.actionAddInvoice,
-      );
-      await tester.ensureVisible(buttonFinder);
-      await tester.pump();
+        final buttonFinder = find.widgetWithText(
+          AppEnhancedButton,
+          l10n.actionAddInvoice,
+        );
+        await tester.ensureVisible(buttonFinder);
+        await tester.tap(buttonFinder);
+        await tester.pumpAndSettle();
 
-      await tester.tap(buttonFinder);
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
+        expect(navigated, isTrue);
+      });
 
-      expect(navigated, isTrue);
-    });
-
-    testWidgets('New Customer button should navigate to form', (tester) async {
-      var navigated = false;
-      await tester.pumpWidget(
-        createTestWidget(
-          routes: {
-            '/customer-form': (context) {
-              navigated = true;
-              return const Scaffold();
+      testWidgets('New Customer button should navigate to form',
+          (tester) async {
+        var navigated = false;
+        await tester.pumpWidget(
+          createTestWidget(
+            routes: {
+              '/customer-form': (context) {
+                navigated = true;
+                return const Scaffold();
+              },
             },
-          },
-        ),
-      );
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-      await tester.pump();
+          ),
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 50));
 
-      // Scroll to make the button visible
-      final buttonFinder = find.widgetWithText(
-        AppEnhancedButton,
-        l10n.actionAddCustomer,
-      );
-      await tester.ensureVisible(buttonFinder);
-      await tester.pump();
+        final buttonFinder = find.widgetWithText(
+          AppEnhancedButton,
+          l10n.actionAddCustomer,
+        );
+        await tester.ensureVisible(buttonFinder);
+        await tester.tap(buttonFinder);
+        await tester.pumpAndSettle();
 
-      await tester.tap(buttonFinder);
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-
-      expect(navigated, isTrue);
+        expect(navigated, isTrue);
+      });
     });
 
     group('Accessibility', () {

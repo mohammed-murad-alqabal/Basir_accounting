@@ -1,8 +1,8 @@
-import 'package:basir_app/features/inventory/domain/entities/stock_movement.dart';
-import 'package:basir_app/features/inventory/domain/entities/warehouse_transfer.dart';
-import 'package:basir_app/features/inventory/domain/repositories/inventory_repository.dart';
-import 'package:basir_app/features/inventory/domain/repositories/stock_movement_repository.dart';
-import 'package:basir_app/features/inventory/domain/repositories/warehouse_transfer_repository.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/stock_movement.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/warehouse_transfer.dart';
+import 'package:basir_accounting_system/features/inventory/domain/repositories/inventory_repository.dart';
+import 'package:basir_accounting_system/features/inventory/domain/repositories/stock_movement_repository.dart';
+import 'package:basir_accounting_system/features/inventory/domain/repositories/warehouse_transfer_repository.dart';
 import 'package:uuid/uuid.dart';
 
 /// خدمة إدارة المخزون (Inventory Service)

@@ -82,9 +82,9 @@ analyze_dependencies() {
     print_info "  - Production: $PROD_DEPS"
     print_info "  - Development: $DEV_DEPS"
     
-    # فحص Dependencies الأساسية لـ Basir MVP
+    # فحص Dependencies الأساسية لـ basir_accounting_system
     echo ""
-    print_info "Basir App Essential Dependencies:"
+    print_info "Basir Accounting System Essential Dependencies:"
     
     check_dependency() {
         local dep_name=$1
@@ -289,7 +289,7 @@ generate_report() {
     cat > "$REPORT_FILE" << EOF
 # Flutter Dependencies Report
 
-**المشروع:** بصير MVP  
+**المشروع:** نظام بصير المحاسبي (Basir Accounting System)  
 **التاريخ:** $(date '+%Y-%m-%d %H:%M:%S')  
 **المؤلف:** فريق وكلاء تطوير مشروع بصير
 

@@ -1,14 +1,14 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/services/icon_customization_service.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/assets/presentation/screens/assets_screen.dart';
-import 'package:basir_app/features/customers/presentation/screens/customers_screen.dart';
-import 'package:basir_app/features/dashboard/presentation/screens/dashboard_screen.dart';
-import 'package:basir_app/features/inventory/presentation/screens/inventory_items_screen.dart';
-import 'package:basir_app/features/invoices/presentation/screens/invoices_screen.dart';
-import 'package:basir_app/features/settings/presentation/screens/settings_screen.dart';
-import 'package:basir_app/features/vendors/presentation/screens/vendors_screen.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/services/icon_customization_service.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/assets/presentation/screens/assets_screen.dart';
+import 'package:basir_accounting_system/features/customers/presentation/screens/customers_screen.dart';
+import 'package:basir_accounting_system/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:basir_accounting_system/features/inventory/presentation/screens/inventory_items_screen.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/screens/invoices_screen.dart';
+import 'package:basir_accounting_system/features/settings/presentation/screens/settings_screen.dart';
+import 'package:basir_accounting_system/features/vendors/presentation/screens/vendors_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

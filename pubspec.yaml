@@ -1,5 +1,5 @@
-name: basir_app
-description: "بصير - نظام المحاسبة المتقدم (Basir MVP Accounting System)"
+name: basir_accounting_system
+description: "نظام بصير المحاسبي - نظام المحاسبة الذكي المتكامل (Basir Intelligent Accounting System)"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -42,11 +42,11 @@ dependencies:
   flutter_local_notifications: ^19.5.0
   flutter_localizations:
     sdk: flutter
-  flutter_riverpod: ^2.6.1
+  flutter_riverpod: ^2.5.1
   flutter_rust_bridge: 2.11.1
   flutter_secure_storage: ^10.0.0
   flutter_svg: ^2.2.3
-  freezed_annotation: ^2.4.4
+  freezed_annotation: ^2.2.0
   google_fonts: ^7.0.0
   google_mlkit_text_recognition: ^0.15.0
   hijri: ^3.0.0
@@ -64,7 +64,7 @@ dependencies:
   permission_handler: ^12.0.1
   printing: ^5.11.1
   qr_flutter: ^4.1.0
-  riverpod_annotation: ^2.6.1
+  riverpod_annotation: ^2.3.5
   share_plus: ^12.0.1
   shared_preferences: ^2.5.4
   shimmer: ^3.0.0
@@ -73,13 +73,13 @@ dependencies:
   uuid: ^4.0.0
 dev_dependencies:
   # Dev Dependencies (sorted alphabetically)
-  build_runner: ^2.4.13
+  build_runner: ^2.4.9
   flutter_launcher_icons: ^0.14.4
   flutter_lints: ^6.0.0
   flutter_native_splash: ^2.3.5
   flutter_test:
     sdk: flutter
-  freezed: ^2.5.2
+  freezed: ^2.3.2
   integration_test:
     sdk: flutter
   isar_generator: ^3.1.0+1

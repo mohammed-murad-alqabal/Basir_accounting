@@ -1,7 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 
-import 'package:basir_app/core/providers/calendar_provider.dart';
+import 'package:basir_accounting_system/core/providers/calendar_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -20,8 +20,8 @@ void main() {
           home: Scaffold(
             body: Consumer(
               builder: (context, ref, _) {
-                final calendarType = ref.watch(calendarProvider).valueOrNull ??
-                    CalendarType.gregorian;
+                final calendarType =
+                    ref.watch(calendarProvider).value ?? CalendarType.gregorian;
                 return Column(
                   children: [
                     RadioListTile<CalendarType>(

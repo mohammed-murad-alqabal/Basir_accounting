@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:ui' as ui;
 
-import 'package:basir_app/core/assets/app_logo.dart';
+import 'package:basir_accounting_system/core/assets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

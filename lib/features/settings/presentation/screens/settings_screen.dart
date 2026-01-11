@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/analytics/presentation/screens/privacy_analytics_screen.dart';
-import 'package:basir_app/features/settings/presentation/providers/settings_controller.dart';
-import 'package:basir_app/features/settings/presentation/screens/appearance_settings_screen.dart';
-import 'package:basir_app/features/settings/presentation/widgets/help_settings_group.dart';
-import 'package:basir_app/features/settings/presentation/widgets/settings_shared_widgets.dart';
-import 'package:basir_app/features/settings/presentation/widgets/settings_tiles.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/analytics/presentation/screens/privacy_analytics_screen.dart';
+import 'package:basir_accounting_system/features/settings/presentation/providers/settings_controller.dart';
+import 'package:basir_accounting_system/features/settings/presentation/screens/appearance_settings_screen.dart';
+import 'package:basir_accounting_system/features/settings/presentation/widgets/help_settings_group.dart';
+import 'package:basir_accounting_system/features/settings/presentation/widgets/settings_shared_widgets.dart';
+import 'package:basir_accounting_system/features/settings/presentation/widgets/settings_tiles.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

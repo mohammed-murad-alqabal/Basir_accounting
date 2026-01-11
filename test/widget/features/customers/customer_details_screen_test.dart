@@ -1,9 +1,9 @@
-import 'package:basir_app/core/theme/services/icon_customization_service.dart';
-import 'package:basir_app/core/theme/tokens/app_icons.dart';
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
-import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
-import 'package:basir_app/features/customers/presentation/screens/customer_details_screen.dart';
-import 'package:basir_app/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/core/theme/services/icon_customization_service.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_accounting_system/features/customers/presentation/screens/customer_details_screen.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

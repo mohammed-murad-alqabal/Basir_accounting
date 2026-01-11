@@ -1,5 +1,5 @@
-import 'package:basir_app/core/utils/format_helpers.dart';
-import 'package:basir_app/src/rust/api/reports.dart';
+import 'package:basir_accounting_system/core/utils/format_helpers.dart';
+import 'package:basir_accounting_system/src/rust/api/reports.dart';
 import 'package:flutter/material.dart';
 
 /// ودجيت لعرض سطر واحد في التقرير المالي (قائمة الدخل، الميزانية العمومية، إلخ)

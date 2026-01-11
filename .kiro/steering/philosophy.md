@@ -1,6 +1,6 @@
-# Basir Project Philosophy: PPP
+# Basir Accounting System Philosophy: PPP
 
-The Basir project is built on three pillars: **Purity, Precision, and Professionalism**.
+The Basir accounting system is built on three pillars: **Purity, Precision, and Professionalism**.
 
 ## 💎 Purity (النقاء)
 

@@ -10,12 +10,12 @@ void main() {
   }
 
   final replacements = {
-    "import 'package:basir_app/core/theme.dart';":
-        "import 'package:basir_app/core/theme/tokens/index.dart';",
-    'import "package:basir_app/core/theme.dart";':
-        'import "package:basir_app/core/theme/tokens/index.dart";',
-    "import 'package:basir_app/core/theme_dark.dart';": '',
-    'import "package:basir_app/core/theme_dark.dart";': '',
+    "import 'package:basir_accounting_system/core/theme.dart';":
+        "import 'package:basir_accounting_system/core/theme/tokens/index.dart';",
+    'import "package:basir_accounting_system/core/theme.dart";':
+        'import "package:basir_accounting_system/core/theme/tokens/index.dart";',
+    "import 'package:basir_accounting_system/core/theme_dark.dart';": '',
+    'import "package:basir_accounting_system/core/theme_dark.dart";': '',
     'AppColors.': 'AppColors.',
     'Spacing.': 'Spacing.',
     'AppBorderRadius.': 'Radii.',

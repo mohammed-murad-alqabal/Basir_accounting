@@ -140,7 +140,8 @@ class BackupService {
       await _decompressBackup(backupPath);
 
       // Restore items
-      final itemsToRestore = specificItems ?? manifest.items.map((item) => item.name).toList();
+      final itemsToRestore =
+          specificItems ?? manifest.items.map((item) => item.name).toList();
 
       var restoredCount = 0;
       for (final itemName in itemsToRestore) {
@@ -209,8 +210,9 @@ class BackupService {
         'enabled': config.enableAutomaticBackups,
         'intervalHours': config.backupIntervalHours,
         'lastBackup': DateTime.now().toIso8601String(),
-        'nextBackup':
-            DateTime.now().add(Duration(hours: config.backupIntervalHours)).toIso8601String(),
+        'nextBackup': DateTime.now()
+            .add(Duration(hours: config.backupIntervalHours))
+            .toIso8601String(),
       }),
     );
   }
@@ -223,7 +225,8 @@ class BackupService {
         return true; // First backup
       }
 
-      final scheduleData = jsonDecode(await scheduleFile.readAsString()) as Map<String, dynamic>;
+      final scheduleData =
+          jsonDecode(await scheduleFile.readAsString()) as Map<String, dynamic>;
       final nextBackup = DateTime.parse(scheduleData['nextBackup'] as String);
       return DateTime.now().isAfter(nextBackup);
     } on Exception {
@@ -398,7 +401,8 @@ class BackupService {
         return null;
       }
 
-      final manifestData = jsonDecode(await manifestFile.readAsString()) as Map<String, dynamic>;
+      final manifestData =
+          jsonDecode(await manifestFile.readAsString()) as Map<String, dynamic>;
       return BackupManifest.fromJson(manifestData);
     } on Exception {
       return null;
@@ -498,7 +502,8 @@ class BackupService {
       final backupsDir = Directory('.backups');
       if (!backupsDir.existsSync()) return;
 
-      final cutoffDate = DateTime.now().subtract(Duration(days: maxRetentionDays));
+      final cutoffDate =
+          DateTime.now().subtract(Duration(days: maxRetentionDays));
 
       await for (final entity in backupsDir.list()) {
         if (entity is Directory) {

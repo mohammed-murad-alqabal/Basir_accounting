@@ -9,8 +9,8 @@
 /// ***
 library;
 
-import 'package:basir_app/core/models/sync_status.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

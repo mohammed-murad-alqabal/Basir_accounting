@@ -1,6 +1,6 @@
-import 'package:basir_app/features/invoices/application/zatca_service.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/features/invoices/application/zatca_service.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' as intl;

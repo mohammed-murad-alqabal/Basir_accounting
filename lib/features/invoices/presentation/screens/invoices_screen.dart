@@ -1,18 +1,18 @@
 import 'dart:async';
 
-import 'package:basir_app/core/assets/app_illustrations.dart';
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/extensions/invoice_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/services/color_customization_service.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/utils/format_helpers.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
-import 'package:basir_app/features/invoices/presentation/screens/invoice_form_screen.dart';
-import 'package:basir_app/features/reports/application/pdf_invoice_service.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/assets/app_illustrations.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/extensions/invoice_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/services/color_customization_service.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/utils/format_helpers.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
+import 'package:basir_accounting_system/features/reports/application/pdf_invoice_service.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/pdf.dart';
@@ -35,7 +35,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     final statsAsync = ref.watch(invoiceStatisticsProvider);
     final appIcons = ref.watch(appIconsProvider);
     final calendarType =
-        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
+        ref.watch(calendarProvider).value ?? CalendarType.gregorian;
 
     return Scaffold(
       appBar: AppAppBar(
@@ -466,6 +466,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           FormatHelpers.formatNumber(
             invoice.totalAmount,
             locale: context.l10n.localeName,
+            // Removed undefined named parameter 'currencySymbol'
           ),
           currencyCode,
         );

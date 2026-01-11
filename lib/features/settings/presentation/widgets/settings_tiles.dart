@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/settings/presentation/providers/settings_controller.dart';
-import 'package:basir_app/features/settings/presentation/widgets/account_settings_sheet.dart';
-import 'package:basir_app/features/settings/presentation/widgets/company_settings_sheet.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/settings/presentation/providers/settings_controller.dart';
+import 'package:basir_accounting_system/features/settings/presentation/widgets/account_settings_sheet.dart';
+import 'package:basir_accounting_system/features/settings/presentation/widgets/company_settings_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

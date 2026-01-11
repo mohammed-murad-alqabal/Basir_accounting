@@ -1,8 +1,8 @@
-# Comprehensive Improvement Plan Design - Basir MVP Project
+# Comprehensive Improvement Plan Design - basir_accounting_system
 
 ## Overview
 
-This plan aims to improve all aspects of the Basir MVP project through a structured phased approach that ensures stability and high quality. The design follows PPP principles (Purity, Precision, Professionalism) and focuses on gradual improvement without breaking existing functionality.
+This plan aims to improve all aspects of the basir_accounting_system through a structured phased approach that ensures stability and high quality. The design follows PPP principles (Purity, Precision, Professionalism) and focuses on gradual improvement without breaking existing functionality.
 
 ## Architecture
 

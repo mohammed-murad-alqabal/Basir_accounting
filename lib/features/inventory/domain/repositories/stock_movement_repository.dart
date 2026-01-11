@@ -1,4 +1,4 @@
-import 'package:basir_app/features/inventory/domain/entities/stock_movement.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/stock_movement.dart';
 
 /// واجهة مستودع حركات المخزون
 abstract class StockMovementRepository {

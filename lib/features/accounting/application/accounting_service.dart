@@ -1,14 +1,19 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/application/financial_year_service.dart';
-import 'package:basir_app/features/accounting/application/multi_standard_coa_engine.dart';
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
-import 'package:basir_app/features/accounting/domain/repositories/accounting_repository.dart';
-import 'package:basir_app/features/customers/domain/repositories/customer_repository.dart';
-import 'package:basir_app/features/invoices/application/sales_bridge_service.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/application/financial_year_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/multi_standard_coa_engine.dart';
+import 'package:basir_accounting_system/features/accounting/application/orchestrator_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
+import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
+import 'package:basir_accounting_system/features/customers/domain/repositories/customer_repository.dart';
+import 'package:basir_accounting_system/features/invoices/application/sales_bridge_service.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart'
+    show Invoice;
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -34,11 +39,15 @@ part 'accounting_service.g.dart';
 ///   parent/child accounts.
 @Riverpod(keepAlive: true)
 class AccountingService extends _$AccountingService {
+  // ignore: lines_longer_than_80_chars
   AccountingRepository get _repository =>
       ref.read(accountingRepositoryProvider);
 
+  // ignore: lines_longer_than_80_chars
   FinancialYearService get _financialYearService =>
       ref.read(financialYearServiceProvider.notifier);
+
+  // ignore: lines_longer_than_80_chars
   CustomerRepository get _customerRepository =>
       ref.read(customerRepositoryProvider);
 
@@ -53,6 +62,7 @@ class AccountingService extends _$AccountingService {
   ///
   /// ## Parameters
   /// - [country]: The [AccountingCountry] standard to apply.
+  // ignore: lines_longer_than_80_chars
   Future<void> seedDefaultAccounts({
     AccountingCountry country = AccountingCountry.global,
   }) async {
@@ -115,9 +125,9 @@ class AccountingService extends _$AccountingService {
   /// - [Exception] if the financial period is closed or invoice status is
   ///   invalid.
   Future<void> postSalesInvoice(Invoice invoice) async {
-    final isPeriodOpen = await _financialYearService.canPostToDate(
-      invoice.issuedDate,
-    );
+    // ignore: lines_longer_than_80_chars
+    final isPeriodOpen =
+        await _financialYearService.canPostToDate(invoice.issuedDate);
     if (!isPeriodOpen) {
       throw Exception('Cannot post to a closed or undefined financial period');
     }
@@ -132,9 +142,9 @@ class AccountingService extends _$AccountingService {
 
     // Debit: Accounts Receivable
     var receivableAccountId = 'acc-1201'; // Default AR
-    final customer = await _customerRepository.getCustomerById(
-      invoice.customerId,
-    );
+    // ignore: lines_longer_than_80_chars
+    final customer =
+        await _customerRepository.getCustomerById(invoice.customerId);
     if (customer != null && customer.receivableAccountId != null) {
       receivableAccountId = customer.receivableAccountId!;
     }
@@ -156,9 +166,9 @@ class AccountingService extends _$AccountingService {
     final allAccounts = await _repository.getAccounts();
     final revenueAccount = allAccounts.firstWhere(
       (a) => a.code == '4101' || a.subType == 'revenue',
-      orElse: () => allAccounts.firstWhere(
-        (a) => a.type == AccountType.revenue,
-      ),
+      // ignore: lines_longer_than_80_chars
+      orElse: () =>
+          allAccounts.firstWhere((a) => a.type == AccountType.revenue),
     );
 
     final revenueLine = JournalEntryLine(
@@ -243,14 +253,35 @@ class AccountingService extends _$AccountingService {
       );
     }
 
+    // ------------------------------------------------------------------------
+    // COGNITIVE HEXAGON ACTIVATION (Gatekeeper Pattern)
+    // ------------------------------------------------------------------------
+    final orchestrator = ref.read(orchestratorServiceProvider.notifier);
+    final context = AccountingContext(
+      proposedJournalEntry: entry,
+      transactionType: 'sales_invoice',
+      metadata: {
+        'invoice_id': invoice.id,
+        'customer_id': invoice.customerId,
+        'amount': invoice.totalAmount.toString(),
+      },
+    );
+
+    final consensus = await orchestrator.orchestrate(context);
+
+    if (!consensus.isApproved) {
+      throw CognitiveConsensusException(consensus);
+    }
+    // ------------------------------------------------------------------------
+
     await _repository.addJournalEntry(entry);
 
     // ZATCA Integration: Performs compliance steps via Rust bridge.
     try {
       final salesBridge = ref.read(salesBridgeServiceProvider);
-      final updatedInvoice = await salesBridge.finalizeInvoiceWithZatca(
-        invoice,
-      );
+      // ignore: lines_longer_than_80_chars
+      final updatedInvoice =
+          await salesBridge.finalizeInvoiceWithZatca(invoice);
 
       if (updatedInvoice.qrCode != null) {
         final invoiceRepo = ref.read(invoiceRepositoryProvider);
@@ -294,10 +325,12 @@ class AccountingService extends _$AccountingService {
   Future<List<Account>> getAccounts() async => _repository.getAccounts();
 
   /// Retrieves a specific account by identifier.
+  // ignore: lines_longer_than_80_chars
   Future<Account?> getAccountById(String id) async =>
       _repository.getAccountById(id);
 
   /// Retrieves the complete list of journal entries.
+  // ignore: lines_longer_than_80_chars
   Future<List<JournalEntry>> getJournalEntries() async =>
       _repository.getJournalEntries();
 

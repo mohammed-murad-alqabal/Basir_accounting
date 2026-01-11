@@ -1,6 +1,6 @@
-import 'package:basir_app/features/inventory/data/models/warehouse_model.dart';
-import 'package:basir_app/features/inventory/domain/entities/warehouse.dart';
-import 'package:basir_app/features/inventory/domain/repositories/warehouse_repository.dart';
+import 'package:basir_accounting_system/features/inventory/data/models/warehouse_model.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/warehouse.dart';
+import 'package:basir_accounting_system/features/inventory/domain/repositories/warehouse_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع المستودعات باستخدام Isar

@@ -1,4 +1,4 @@
-import 'package:basir_app/features/inventory/domain/entities/warehouse.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/warehouse.dart';
 
 /// واجهة مستودع المستودعات
 abstract class WarehouseRepository {
