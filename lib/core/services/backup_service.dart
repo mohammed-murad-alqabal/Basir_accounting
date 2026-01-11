@@ -2,7 +2,8 @@
 library;
 
 /// This service handles automated backups of Git branches, database snapshots,
-/// and critical project files to ensure data integrity and recovery capabilities.
+/// and critical project files to ensure data integrity and recovery
+/// capabilities.
 ///
 /// Author: فريق وكلاء تطوير مشروع بصير
 
@@ -54,12 +55,8 @@ class BackupService {
       final backupPath = '.backups/$backupName';
       await Directory(backupPath).create(recursive: true);
 
-      final backupManifest = BackupManifest(
-        name: backupName,
-        timestamp: DateTime.now(),
-        config: backupConfig,
-        items: [],
-      );
+      // Collect backup items
+      final allItems = <BackupItem>[];
 
       // Backup Git branches
       if (backupConfig.backupBranches.isNotEmpty) {
@@ -67,20 +64,28 @@ class BackupService {
           backupPath,
           backupConfig.backupBranches,
         );
-        backupManifest.items.addAll(gitBackupResult.items);
+        allItems.addAll(gitBackupResult.items);
       }
 
       // Backup database
       if (backupConfig.backupDatabase) {
         final dbBackupResult = await _backupDatabase(backupPath);
-        backupManifest.items.addAll(dbBackupResult.items);
+        allItems.addAll(dbBackupResult.items);
       }
 
       // Backup configurations
       if (backupConfig.backupConfigurations) {
         final configBackupResult = await _backupConfigurations(backupPath);
-        backupManifest.items.addAll(configBackupResult.items);
+        allItems.addAll(configBackupResult.items);
       }
+
+      // Create backup manifest
+      final backupManifest = BackupManifest(
+        name: backupName,
+        timestamp: DateTime.now(),
+        config: backupConfig,
+        items: allItems,
+      );
 
       // Create backup manifest
       await _createBackupManifest(backupPath, backupManifest);
@@ -135,8 +140,7 @@ class BackupService {
       await _decompressBackup(backupPath);
 
       // Restore items
-      final itemsToRestore =
-          specificItems ?? manifest.items.map((item) => item.name).toList();
+      final itemsToRestore = specificItems ?? manifest.items.map((item) => item.name).toList();
 
       var restoredCount = 0;
       for (final itemName in itemsToRestore) {
@@ -190,7 +194,7 @@ class BackupService {
       // Sort by timestamp (newest first)
       backups.sort((a, b) => b.timestamp.compareTo(a.timestamp));
       return backups;
-    } on Exception catch (e) {
+    } on Exception {
       return [];
     }
   }
@@ -205,9 +209,8 @@ class BackupService {
         'enabled': config.enableAutomaticBackups,
         'intervalHours': config.backupIntervalHours,
         'lastBackup': DateTime.now().toIso8601String(),
-        'nextBackup': DateTime.now()
-            .add(Duration(hours: config.backupIntervalHours))
-            .toIso8601String(),
+        'nextBackup':
+            DateTime.now().add(Duration(hours: config.backupIntervalHours)).toIso8601String(),
       }),
     );
   }
@@ -220,11 +223,10 @@ class BackupService {
         return true; // First backup
       }
 
-      final scheduleData =
-          jsonDecode(await scheduleFile.readAsString()) as Map<String, dynamic>;
+      final scheduleData = jsonDecode(await scheduleFile.readAsString()) as Map<String, dynamic>;
       final nextBackup = DateTime.parse(scheduleData['nextBackup'] as String);
       return DateTime.now().isAfter(nextBackup);
-    } on Exception catch (e) {
+    } on Exception {
       return true; // Default to backup needed
     }
   }
@@ -239,12 +241,16 @@ class BackupService {
         final manifest = await _readBackupManifest(backup.path);
         if (manifest == null) continue;
 
-        final branchItem = manifest.items.firstWhere(
-          (item) => item.type == 'git_branch' && item.name == branchName,
-          orElse: () => const BackupItem(name: '', type: '', path: '', size: 0),
-        );
+        BackupItem? branchItem;
+        try {
+          branchItem = manifest.items.firstWhere(
+            (item) => item.type == 'git_branch' && item.name == branchName,
+          );
+        } on Exception {
+          branchItem = null;
+        }
 
-        if (branchItem.name.isNotEmpty) {
+        if (branchItem != null) {
           // Found the branch in this backup
           final restoreResult = await _restoreItem(backup.path, branchItem);
           if (restoreResult.success) {
@@ -300,7 +306,7 @@ class BackupService {
             ),
           );
         }
-      } catch (e) {
+      } on Exception {
         // Continue with other branches
       }
     }
@@ -392,10 +398,9 @@ class BackupService {
         return null;
       }
 
-      final manifestData =
-          jsonDecode(await manifestFile.readAsString()) as Map<String, dynamic>;
+      final manifestData = jsonDecode(await manifestFile.readAsString()) as Map<String, dynamic>;
       return BackupManifest.fromJson(manifestData);
-    } on Exception catch (e) {
+    } on Exception {
       return null;
     }
   }
@@ -431,7 +436,7 @@ class BackupService {
         default:
           return BackupResult.error('Unknown item type: ${item.type}');
       }
-    } catch (e) {
+    } on Exception catch (e) {
       return BackupResult.error('Failed to restore ${item.name}: $e');
     }
   }
@@ -453,7 +458,7 @@ class BackupService {
       } else {
         return BackupResult.error('Failed to restore branch: ${result.stderr}');
       }
-    } catch (e) {
+    } on Exception catch (e) {
       return BackupResult.error('Failed to restore branch: $e');
     }
   }
@@ -468,7 +473,7 @@ class BackupService {
 
       await File(sourcePath).copy(targetPath);
       return BackupResult.success('Database file ${item.name} restored');
-    } catch (e) {
+    } on Exception catch (e) {
       return BackupResult.error('Failed to restore database file: $e');
     }
   }
@@ -483,7 +488,7 @@ class BackupService {
 
       await File(sourcePath).copy(targetPath);
       return BackupResult.success('Config file ${item.name} restored');
-    } catch (e) {
+    } on Exception catch (e) {
       return BackupResult.error('Failed to restore config file: $e');
     }
   }
@@ -493,8 +498,7 @@ class BackupService {
       final backupsDir = Directory('.backups');
       if (!backupsDir.existsSync()) return;
 
-      final cutoffDate =
-          DateTime.now().subtract(Duration(days: maxRetentionDays));
+      final cutoffDate = DateTime.now().subtract(Duration(days: maxRetentionDays));
 
       await for (final entity in backupsDir.list()) {
         if (entity is Directory) {
@@ -504,7 +508,7 @@ class BackupService {
           }
         }
       }
-    } catch (e) {
+    } on Exception {
       // Ignore cleanup errors
     }
   }
@@ -521,7 +525,7 @@ class BackupService {
       }
 
       return totalSize;
-    } catch (e) {
+    } on Exception {
       return 0;
     }
   }
@@ -529,6 +533,7 @@ class BackupService {
 
 /// Configuration for backup operations
 class BackupConfig {
+  /// Creates a new [BackupConfig] instance
   const BackupConfig({
     required this.enableAutomaticBackups,
     required this.backupIntervalHours,
@@ -552,12 +557,25 @@ class BackupConfig {
         compressionEnabled: json['compressionEnabled'] as bool? ?? true,
       );
 
+  /// Whether to backup Git branches
   final bool enableAutomaticBackups;
+
+  /// Interval between backups in hours
   final int backupIntervalHours;
+
+  /// Maximum number of days to keep backups
   final int maxBackupRetentionDays;
+
+  /// List of branches to backup
   final List<String> backupBranches;
+
+  /// Whether to backup the database
   final bool backupDatabase;
+
+  /// Whether to backup configuration files
   final bool backupConfigurations;
+
+  /// Whether to compress backups
   final bool compressionEnabled;
 
   /// Converts the [BackupConfig] to a JSON map
@@ -574,6 +592,7 @@ class BackupConfig {
 
 /// Information about a backup
 class BackupInfo {
+  /// Creates a new [BackupInfo] instance
   const BackupInfo({
     required this.name,
     required this.timestamp,
@@ -598,9 +617,10 @@ class BackupInfo {
   final String path;
 }
 
-/// Manifest of a backup
+/// Manifest for backup operations
 class BackupManifest {
-  BackupManifest({
+  /// Creates a new [BackupManifest] instance
+  const BackupManifest({
     required this.name,
     required this.timestamp,
     required this.config,
@@ -612,14 +632,21 @@ class BackupManifest {
         name: json['name'] as String,
         timestamp: DateTime.parse(json['timestamp'] as String),
         config: BackupConfig.fromJson(json['config'] as Map<String, dynamic>),
-        items: (json['items'] as List)
+        items: (json['items'] as List<dynamic>)
             .map((item) => BackupItem.fromJson(item as Map<String, dynamic>))
             .toList(),
       );
 
+  /// The name of the backup
   final String name;
+
+  /// The timestamp of the backup
   final DateTime timestamp;
+
+  /// The configuration used for the backup
   final BackupConfig config;
+
+  /// The items included in the backup
   final List<BackupItem> items;
 
   /// Converts the [BackupManifest] to a JSON map
@@ -633,6 +660,7 @@ class BackupManifest {
 
 /// Individual backup item
 class BackupItem {
+  /// Creates a new [BackupItem] instance
   const BackupItem({
     required this.name,
     required this.type,
@@ -648,9 +676,16 @@ class BackupItem {
         size: json['size'] as int,
       );
 
+  /// The name of the item
   final String name;
+
+  /// The type of the item (e.g., 'git_branch', 'database_file')
   final String type;
+
+  /// The path to the item
   final String path;
+
+  /// The size of the item in bytes
   final int size;
 
   /// Converts the [BackupItem] to a JSON map
@@ -664,6 +699,7 @@ class BackupItem {
 
 /// Result of backup operations
 class BackupResult {
+  /// Creates a new [BackupResult] instance
   const BackupResult({
     required this.success,
     required this.message,
@@ -672,6 +708,7 @@ class BackupResult {
     this.itemCount,
   });
 
+  /// Creates a successful result
   factory BackupResult.success(
     String message, {
     String? backupName,
@@ -686,30 +723,51 @@ class BackupResult {
         itemCount: itemCount,
       );
 
-  factory BackupResult.error(String message) =>
-      BackupResult(success: false, message: message);
+  /// Creates an error result
+  factory BackupResult.error(String message) => BackupResult(
+        success: false,
+        message: message,
+      );
 
+  /// Whether the operation was successful
   final bool success;
+
+  /// Result message
   final String message;
+
+  /// Name of the backup
   final String? backupName;
+
+  /// Path to the backup directory
   final String? backupPath;
+
+  /// Number of items backed up
   final int? itemCount;
 }
 
 /// Result of Git backup operations
 class GitBackupResult {
+  /// Creates a new [GitBackupResult] instance
   const GitBackupResult({required this.items});
+
+  /// The list of backed up Git items
   final List<BackupItem> items;
 }
 
 /// Result of database backup operations
 class DatabaseBackupResult {
+  /// Creates a new [DatabaseBackupResult] instance
   const DatabaseBackupResult({required this.items});
+
+  /// The list of backed up database items
   final List<BackupItem> items;
 }
 
 /// Result of configuration backup operations
 class ConfigBackupResult {
+  /// Creates a new [ConfigBackupResult] instance
   const ConfigBackupResult({required this.items});
+
+  /// The list of backed up configuration items
   final List<BackupItem> items;
 }

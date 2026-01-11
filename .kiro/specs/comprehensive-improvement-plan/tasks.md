@@ -1,290 +1,290 @@
-# خطة التنفيذ - التحسين الشامل لمشروع بصير MVP
+# Implementation Plan: Comprehensive Improvement - Basir MVP Project
 
-## نظرة عامة
+## Overview
 
-هذه الخطة تحول تصميم التحسين الشامل إلى مهام قابلة للتنفيذ مع تقدم تدريجي. كل مهمة تبني على المهام السابقة وتنتهي بربط جميع المكونات معاً.
+This plan transforms the comprehensive improvement design into actionable tasks with incremental progress. Each task builds on previous tasks and ends with integrating all components together.
 
-## المهام
+## Tasks
 
-### المرحلة 1: الاستقرار والأساسيات (الأسبوع 1-2)
+### Phase 1: Stability and Fundamentals (Week 1-2)
 
-- [ ] 1. تحليل الوضع الحالي وإعداد البيئة
+- [-] 1. Current state analysis and environment setup
 
-  - إنشاء نسخة احتياطية كاملة من المشروع
-  - توثيق الحالة الحالية لجميع Dependencies
-  - إعداد بيئة اختبار منفصلة
-  - _المتطلبات: 1.1, 5.3_
+  - Create complete project backup
+  - Document current state of all Dependencies
+  - Set up separate testing environment
+  - _Requirements: 1.1, 5.3_
 
-- [ ] 2. تحديث Riverpod من v2.6.1 إلى v3.1.0
+- [ ] 2. Update Riverpod from v2.6.1 to v3.1.0
 
-  - [ ] 2.1 دراسة Breaking Changes في Riverpod v3
+  - [ ] 2.1 Study Breaking Changes in Riverpod v3
 
-    - مراجعة changelog الرسمي
-    - تحديد التأثيرات على الكود الحالي
-    - _المتطلبات: 1.2_
+    - Review official changelog
+    - Identify impacts on current code
+    - _Requirements: 1.2_
 
-  - [ ]\* 2.2 كتابة اختبار خاصية لاستقرار State Management
+  - [ ]\* 2.2 Write property test for State Management stability
 
-    - **الخاصية 1: استقرار التحديثات**
-    - **يتحقق من: المتطلبات 1.2, 1.5**
+    - **Property 2: Update Stability**
+    - **Validates: Requirements 1.2, 1.5**
 
-  - [ ] 2.3 تنفيذ التحديث التدريجي
+  - [ ] 2.3 Implement gradual update
 
-    - تحديث pubspec.yaml
-    - إصلاح import statements
-    - تحديث Provider declarations
-    - _المتطلبات: 1.2_
+    - Update pubspec.yaml
+    - Fix import statements
+    - Update Provider declarations
+    - _Requirements: 1.2_
 
-  - [ ]\* 2.4 اختبار شامل بعد تحديث Riverpod
-    - تشغيل جميع الاختبارات
-    - التحقق من عمل جميع الشاشات
-    - _المتطلبات: 1.5_
+  - [ ]\* 2.4 Comprehensive testing after Riverpod update
+    - Run all tests
+    - Verify all screens work
+    - _Requirements: 1.5_
 
-- [ ] 3. تحديث Freezed من v2.5.2 إلى v3.2.4
+- [ ] 3. Update Freezed from v2.5.2 to v3.2.4
 
-  - [ ] 3.1 تحديث Freezed وإعادة توليد الملفات
+  - [ ] 3.1 Update Freezed and regenerate files
 
-    - تحديث pubspec.yaml
-    - تشغيل build_runner
-    - _المتطلبات: 1.3_
+    - Update pubspec.yaml
+    - Run build_runner
+    - _Requirements: 1.3_
 
-  - [ ]\* 3.2 كتابة اختبار خاصية لسلامة Data Models
+  - [ ]\* 3.2 Write property test for Data Models integrity
 
-    - **الخاصية 5: جودة الكود**
-    - **يتحقق من: المتطلبات 5.1**
+    - **Property 3: Code Generation Completeness**
+    - **Validates: Requirements 1.3**
 
-  - [ ] 3.3 التحقق من سلامة جميع النماذج
-    - فحص جميع ملفات .freezed.dart
-    - اختبار serialization/deserialization
-    - _المتطلبات: 1.3_
+  - [ ] 3.3 Verify integrity of all models
+    - Check all .freezed.dart files
+    - Test serialization/deserialization
+    - _Requirements: 1.3_
 
-- [ ] 4. تحديث Build Runner وباقي الحزم
+- [ ] 4. Update Build Runner and other packages
 
-  - [ ] 4.1 تحديث Build Runner إلى v2.10.4
+  - [ ] 4.1 Update Build Runner to v2.10.4
 
-    - تحديث pubspec.yaml
-    - اختبار أداء البناء
-    - _المتطلبات: 1.4_
+    - Update pubspec.yaml
+    - Test build performance
+    - _Requirements: 1.4_
 
-  - [ ] 4.2 تحديث باقي الحزم الثانوية
+  - [ ] 4.2 Update other secondary packages
 
-    - json_serializable, mockito, وغيرها
-    - التحقق من التوافق
-    - _المتطلبات: 1.4_
+    - json_serializable, mockito, and others
+    - Verify compatibility
+    - _Requirements: 1.4_
 
-  - [ ]\* 4.3 اختبار أداء البناء المحسّن
-    - قياس وقت flutter pub get
-    - قياس وقت build_runner
-    - _المتطلبات: 1.4_
+  - [ ]\* 4.3 Test improved build performance
+    - Measure flutter pub get time
+    - Measure build_runner time
+    - _Requirements: 1.4_
 
-- [ ] 5. إصلاح مشاكل الاختبارات
+- [ ] 5. Fix test issues
 
-  - [ ] 5.1 تحليل سبب timeout في الاختبارات
+  - [ ] 5.1 Analyze timeout cause in tests
 
-    - تشغيل الاختبارات مع profiling
-    - تحديد الاختبارات البطيئة
-    - _المتطلبات: 2.1, 2.2_
+    - Run tests with profiling
+    - Identify slow tests
+    - _Requirements: 2.1, 2.2_
 
-  - [ ]\* 5.2 كتابة اختبار خاصية لأداء الاختبارات
+  - [ ]\* 5.2 Write property test for test performance
 
-    - **الخاصية 2: أداء الاختبارات**
-    - **يتحقق من: المتطلبات 2.1**
+    - **Property 5: Test Execution Time Constraint**
+    - **Validates: Requirements 2.1**
 
-  - [ ] 5.3 تحسين أداء الاختبارات البطيئة
+  - [ ] 5.3 Improve performance of slow tests
 
-    - تحسين setup/teardown
-    - استخدام mocks أكثر كفاءة
-    - تقسيم الاختبارات الكبيرة
-    - _المتطلبات: 2.2_
+    - Improve setup/teardown
+    - Use more efficient mocks
+    - Split large tests
+    - _Requirements: 2.2_
 
-  - [ ] 5.4 إصلاح الاختبارات الفاشلة
-    - مراجعة كل اختبار فاشل
-    - إصلاح المشاكل الأساسية
-    - _المتطلبات: 2.3_
+  - [ ] 5.4 Fix failing tests
+    - Review each failing test
+    - Fix underlying issues
+    - _Requirements: 2.3_
 
-- [ ] 6. تنظيف وتنظيم المواصفات النشطة
+- [ ] 6. Clean and organize active specifications
 
-  - [ ] 6.1 مراجعة جميع المواصفات في .kiro/specs/active
+  - [ ] 6.1 Review all specifications in .kiro/specs/active
 
-    - فهرسة جميع المواصفات الـ 20
-    - تحديد حالة كل مواصفة
-    - _المتطلبات: 3.1_
+    - Index all 20 specifications
+    - Determine status of each specification
+    - _Requirements: 3.1_
 
-  - [ ]\* 6.2 كتابة اختبار خاصية لتنظيم المواصفات
+  - [ ]\* 6.2 Write property test for specification organization
 
-    - **الخاصية 3: تنظيم المواصفات**
-    - **يتحقق من: المتطلبات 3.4**
+    - **Property 10: Specification Organization**
+    - **Validates: Requirements 3.4**
 
-  - [ ] 6.3 دمج المواصفات المتشابهة
+  - [ ] 6.3 Merge similar specifications
 
-    - تحديد المواصفات المكررة
-    - دمج المحتوى ذي الصلة
-    - _المتطلبات: 3.2_
+    - Identify duplicate specifications
+    - Merge related content
+    - _Requirements: 3.2_
 
-  - [ ] 6.4 أرشفة المواصفات المكتملة
-    - نقل المكتملة إلى completed/
-    - تحديث الفهارس
-    - _المتطلبات: 3.3_
+  - [ ] 6.4 Archive completed specifications
+    - Move completed to completed/
+    - Update indexes
+    - _Requirements: 3.3_
 
-- [ ] 7. نقطة تحقق - التأكد من استقرار المرحلة الأولى
-  - التأكد من نجاح جميع الاختبارات، اسأل المستخدم إذا كانت هناك أسئلة.
+- [ ] 7. Checkpoint - Ensure Phase 1 stability
+  - Ensure all tests pass, ask the user if questions arise.
 
-### المرحلة 2: التحسين والتطوير (الأسبوع 3-4)
+### Phase 2: Enhancement and Development (Week 3-4)
 
-- [ ] 8. تحسين أداء التطبيق
+- [ ] 8. Improve application performance
 
-  - [ ] 8.1 قياس وتحسين وقت بدء التطبيق
+  - [ ] 8.1 Measure and improve application startup time
 
-    - إضافة مقاييس الأداء
-    - تحسين عملية التهيئة
-    - _المتطلبات: 4.1_
+    - Add performance metrics
+    - Improve initialization process
+    - _Requirements: 4.1_
 
-  - [ ]\* 8.2 كتابة اختبار خاصية لاستجابة الواجهة
+  - [ ]\* 8.2 Write property test for UI responsiveness
 
-    - **الخاصية 4: استجابة الواجهة**
-    - **يتحقق من: المتطلبات 4.2**
+    - **Property 12: UI Response Time**
+    - **Validates: Requirements 4.2**
 
-  - [ ] 8.3 تحسين استجابة الواجهة
+  - [ ] 8.3 Improve UI responsiveness
 
-    - تحسين بناء الواجهات
-    - استخدام lazy loading
-    - _المتطلبات: 4.2_
+    - Improve UI building
+    - Use lazy loading
+    - _Requirements: 4.2_
 
-  - [ ] 8.4 تحسين إدارة الذاكرة
-    - مراجعة memory leaks
-    - تحسين caching strategies
-    - _المتطلبات: 4.3_
+  - [ ] 8.4 Improve memory management
+    - Review memory leaks
+    - Improve caching strategies
+    - _Requirements: 4.3_
 
-- [ ] 9. تطوير المواصفات عالية الأولوية
+- [ ] 9. Develop high-priority specifications
 
-  - [ ] 9.1 تحديد أهم 3 مواصفات للتطوير
+  - [ ] 9.1 Identify top 3 specifications for development
 
-    - مراجعة الأولويات مع الفريق
-    - تخصيص الموارد
-    - _المتطلبات: 3.1_
+    - Review priorities with team
+    - Allocate resources
+    - _Requirements: 3.1_
 
-  - [ ] 9.2 تطوير المواصفة الأولى
+  - [ ] 9.2 Develop first specification
 
-    - تنفيذ المتطلبات
-    - كتابة الاختبارات
-    - _المتطلبات: 5.2_
+    - Implement requirements
+    - Write tests
+    - _Requirements: 5.2_
 
-  - [ ]\* 9.3 اختبار تكامل المواصفة الأولى
-    - اختبار التكامل مع النظام الحالي
-    - التحقق من عدم كسر الوظائف
-    - _المتطلبات: 5.2_
+  - [ ]\* 9.3 Integration test for first specification
+    - Test integration with current system
+    - Verify no functionality is broken
+    - _Requirements: 5.2_
 
-- [ ] 10. تحديث وتحسين التوثيق
+- [ ] 10. Update and improve documentation
 
-  - [ ] 10.1 مراجعة وتحديث ملفات .kiro/steering
+  - [ ] 10.1 Review and update .kiro/steering files
 
-    - تحديث المعايير القديمة
-    - إضافة معايير جديدة
-    - _المتطلبات: 6.1, 6.2_
+    - Update old standards
+    - Add new standards
+    - _Requirements: 6.1, 6.2_
 
-  - [ ]\* 10.2 كتابة اختبار خاصية لتوثيق API
+  - [ ]\* 10.2 Write property test for API documentation
 
-    - **الخاصية 7: توثيق API**
-    - **يتحقق من: المتطلبات 6.3**
+    - **Property 19: API Documentation Completeness**
+    - **Validates: Requirements 6.3**
 
-  - [ ] 10.3 توثيق جميع APIs العامة
-    - إضافة doc comments
-    - كتابة أمثلة الاستخدام
-    - _المتطلبات: 6.3_
+  - [ ] 10.3 Document all public APIs
+    - Add doc comments
+    - Write usage examples
+    - _Requirements: 6.3_
 
-- [ ] 11. نقطة تحقق - مراجعة تقدم المرحلة الثانية
-  - التأكد من تحسن الأداء وجودة التوثيق، اسأل المستخدم إذا كانت هناك أسئلة.
+- [ ] 11. Checkpoint - Review Phase 2 progress
+  - Ensure performance improvement and documentation quality, ask the user if questions arise.
 
-### المرحلة 3: الجودة والاستقرار (الأسبوع 5-6)
+### Phase 3: Quality and Stability (Week 5-6)
 
-- [ ] 12. إعداد نظام CI/CD محسّن
+- [ ] 12. Set up enhanced CI/CD system
 
-  - [ ] 12.1 إنشاء GitHub Actions workflows
+  - [ ] 12.1 Create GitHub Actions workflows
 
-    - workflow للاختبارات التلقائية
-    - workflow للبناء والنشر
-    - _المتطلبات: 7.1, 7.3_
+    - Workflow for automated testing
+    - Workflow for build and deployment
+    - _Requirements: 7.1, 7.3_
 
-  - [ ]\* 12.2 كتابة اختبار خاصية لاستقرار CI/CD
+  - [ ]\* 12.2 Write property test for CI/CD stability
 
-    - **الخاصية 8: استقرار CI/CD**
-    - **يتحقق من: المتطلبات 7.1, 7.2**
+    - **Property 21: Automated Test Execution**
+    - **Validates: Requirements 7.1**
 
-  - [ ] 12.3 تكوين فحوصات الجودة التلقائية
-    - flutter analyze في CI
-    - فحص التغطية
-    - فحص الأمان
-    - _المتطلبات: 7.2_
+  - [ ] 12.3 Configure automated quality checks
+    - flutter analyze in CI
+    - Coverage checking
+    - Security checking
+    - _Requirements: 7.2_
 
-- [ ] 13. تنفيذ نظام مراقبة الأداء
+- [ ] 13. Implement performance monitoring system
 
-  - [ ] 13.1 إضافة مقاييس الأداء المحلية
+  - [ ] 13.1 Add local performance metrics
 
-    - قياس أوقات الاستجابة
-    - مراقبة استخدام الذاكرة
-    - _المتطلبات: 8.1, 8.3_
+    - Measure response times
+    - Monitor memory usage
+    - _Requirements: 8.1, 8.3_
 
-  - [ ] 13.2 إعداد تسجيل الأخطاء المحسّن
+  - [ ] 13.2 Set up enhanced error logging
 
-    - تسجيل مفصل للأخطاء
-    - تصنيف حسب الخطورة
-    - _المتطلبات: 8.2_
+    - Detailed error logging
+    - Classification by severity
+    - _Requirements: 8.2_
 
-  - [ ]\* 13.3 اختبار نظام المراقبة
-    - محاكاة أخطاء مختلفة
-    - التحقق من دقة التقارير
-    - _المتطلبات: 8.4_
+  - [ ]\* 13.3 Test monitoring system
+    - Simulate various errors
+    - Verify report accuracy
+    - _Requirements: 8.4_
 
-- [ ] 14. اختبارات شاملة وضمان الجودة
+- [ ] 14. Comprehensive testing and quality assurance
 
-  - [ ] 14.1 تشغيل جميع الاختبارات وقياس التغطية
+  - [ ] 14.1 Run all tests and measure coverage
 
-    - تشغيل flutter test مع coverage
-    - التأكد من تحقيق 80% تغطية
-    - _المتطلبات: 2.4, 5.1_
+    - Run flutter test with coverage
+    - Ensure 80% coverage achieved
+    - _Requirements: 2.4, 5.1_
 
-  - [ ]\* 14.2 كتابة اختبار خاصية لتغطية الاختبارات
+  - [ ]\* 14.2 Write property test for test coverage
 
-    - **الخاصية 6: تغطية الاختبارات**
-    - **يتحقق من: المتطلبات 2.4**
+    - **Property 7: Test Coverage Threshold**
+    - **Validates: Requirements 2.4**
 
-  - [ ] 14.3 مراجعة شاملة للكود
+  - [ ] 14.3 Comprehensive code review
 
-    - فحص جودة الكود
-    - التأكد من اتباع المعايير
-    - _المتطلبات: 5.1, 5.2_
+    - Check code quality
+    - Ensure standards compliance
+    - _Requirements: 5.1, 5.2_
 
-  - [ ] 14.4 اختبار الأداء تحت الضغط
-    - اختبار مع بيانات كبيرة
-    - اختبار الاستجابة تحت الحمل
-    - _المتطلبات: 4.1, 4.2_
+  - [ ] 14.4 Performance testing under load
+    - Test with large data
+    - Test responsiveness under load
+    - _Requirements: 4.1, 4.2_
 
-- [ ] 15. التوثيق النهائي والتسليم
+- [ ] 15. Final documentation and delivery
 
-  - [ ] 15.1 إنشاء تقرير شامل للتحسينات
+  - [ ] 15.1 Create comprehensive improvement report
 
-    - توثيق جميع التغييرات
-    - قياس التحسينات المحققة
-    - _المتطلبات: 6.4_
+    - Document all changes
+    - Measure achieved improvements
+    - _Requirements: 6.4_
 
-  - [ ] 15.2 تحديث دليل المطور
+  - [ ] 15.2 Update developer guide
 
-    - إضافة معلومات الإعداد الجديد
-    - توثيق العمليات المحسّنة
-    - _المتطلبات: 6.4_
+    - Add new setup information
+    - Document improved processes
+    - _Requirements: 6.4_
 
-  - [ ] 15.3 إعداد خطة الصيانة المستقبلية
-    - جدولة المراجعات الدورية
-    - تحديد مؤشرات المراقبة
-    - _المتطلبات: 8.4_
+  - [ ] 15.3 Set up future maintenance plan
+    - Schedule periodic reviews
+    - Define monitoring indicators
+    - _Requirements: 8.4_
 
-- [ ] 16. نقطة تحقق نهائية - التأكد من اكتمال جميع الأهداف
-  - التأكد من نجاح جميع الاختبارات وتحقيق جميع معايير الجودة، اسأل المستخدم إذا كانت هناك أسئلة.
+- [ ] 16. Final checkpoint - Ensure all objectives are complete
+  - Ensure all tests pass and all quality standards are met, ask the user if questions arise.
 
-## ملاحظات
+## Notes
 
-- المهام المميزة بـ `*` اختيارية ويمكن تخطيها للتركيز على الميزات الأساسية أولاً
-- كل مهمة تشير إلى متطلبات محددة لضمان التتبع
-- نقاط التحقق تضمن التحقق التدريجي
-- اختبارات الخصائص تتحقق من خصائص الصحة العامة
-- اختبارات الوحدة تتحقق من أمثلة محددة وحالات حدية
+- Tasks marked with `*` are optional and can be skipped to focus on core features first
+- Each task references specific requirements for traceability
+- Checkpoints ensure incremental validation
+- Property tests verify universal correctness properties
+- Unit tests verify specific examples and edge cases

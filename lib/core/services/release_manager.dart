@@ -1,5 +1,6 @@
 /// Release Management Service for Basir ERP Development
-///
+library;
+
 /// This service handles the creation, management, and finalization of release
 /// branches following ERP development best practices and semantic versioning.
 ///
@@ -116,7 +117,7 @@ class ReleaseManager {
         version: version,
         releaseType: releaseType,
       );
-    } catch (e) {
+    } on Exception catch (e) {
       return ReleaseResult.error('Failed to create release branch: $e');
     }
   }
@@ -177,19 +178,18 @@ class ReleaseManager {
         'Release $version finalized successfully',
         version: version,
       );
-    } catch (e) {
+    } on Exception catch (e) {
       return ReleaseResult.error('Failed to finalize release: $e');
     }
   }
 
   /// Validates version format and semantic versioning rules
   static VersionValidationResult validateVersion(String version) {
-    final cleanVersion =
-        version.startsWith('v') ? version.substring(1) : version;
+    final cleanVersion = version.startsWith('v') ? version.substring(1) : version;
     final match = _versionPattern.firstMatch('v$cleanVersion');
 
     if (match == null) {
-      return VersionValidationResult(
+      return const VersionValidationResult(
         isValid: false,
         message: 'Invalid version format. Expected: v1.2.3 or v1.2.3-beta',
       );
@@ -202,7 +202,7 @@ class ReleaseManager {
 
     // Validate semantic versioning rules
     if (major < 0 || minor < 0 || patch < 0) {
-      return VersionValidationResult(
+      return const VersionValidationResult(
         isValid: false,
         message: 'Version numbers cannot be negative',
       );
@@ -259,7 +259,7 @@ class ReleaseManager {
           .toList();
 
       return branches;
-    } catch (e) {
+    } on Exception {
       return [];
     }
   }
@@ -269,15 +269,18 @@ class ReleaseManager {
   static Future<bool> _checkBranchExists(String branchName) async {
     try {
       final result = await Process.run(
-          'git', ['show-ref', '--verify', '--quiet', 'refs/heads/$branchName']);
+        'git',
+        ['show-ref', '--verify', '--quiet', 'refs/heads/$branchName'],
+      );
       return result.exitCode == 0;
-    } catch (e) {
+    } on Exception {
       return false;
     }
   }
 
   static Future<GitOperationResult> _createBranchFromDevelopment(
-      String branchName) async {
+    String branchName,
+  ) async {
     try {
       // Ensure we're on development branch
       await Process.run('git', ['checkout', 'development']);
@@ -289,24 +292,31 @@ class ReleaseManager {
       final result = await Process.run('git', ['checkout', '-b', branchName]);
 
       if (result.exitCode == 0) {
-        return GitOperationResult(
-            success: true, message: 'Branch created successfully');
+        return const GitOperationResult(
+          success: true,
+          message: 'Branch created successfully',
+        );
       } else {
         return GitOperationResult(
-            success: false, message: result.stderr.toString());
+          success: false,
+          message: result.stderr.toString(),
+        );
       }
-    } catch (e) {
+    } on Exception catch (e) {
       return GitOperationResult(success: false, message: e.toString());
     }
   }
 
   static Future<GitOperationResult> _updateVersionInPubspec(
-      String version) async {
+    String version,
+  ) async {
     try {
       final pubspecFile = File('pubspec.yaml');
       if (!pubspecFile.existsSync()) {
-        return GitOperationResult(
-            success: false, message: 'pubspec.yaml not found');
+        return const GitOperationResult(
+          success: false,
+          message: 'pubspec.yaml not found',
+        );
       }
 
       final content = await pubspecFile.readAsString();
@@ -324,9 +334,11 @@ class ReleaseManager {
       // Stage the change
       await Process.run('git', ['add', 'pubspec.yaml']);
 
-      return GitOperationResult(
-          success: true, message: 'Version updated in pubspec.yaml');
-    } catch (e) {
+      return const GitOperationResult(
+        success: true,
+        message: 'Version updated in pubspec.yaml',
+      );
+    } on Exception catch (e) {
       return GitOperationResult(success: false, message: e.toString());
     }
   }
@@ -337,7 +349,8 @@ class ReleaseManager {
     String? description,
   ) async {
     final releaseInfo = releaseTypes[releaseType]!;
-    final template = '''# Release Notes - $version
+    final template = '''
+# Release Notes - $version
 
 ## Release Type: ${releaseInfo.description}
 
@@ -398,7 +411,8 @@ ${releaseType == 'major' ? '- [ ] Migration step 1\n- [ ] Migration step 2' : '-
     String version,
     ReleaseTypeInfo releaseInfo,
   ) async {
-    final checklist = '''# Release Checklist - $version
+    final checklist = '''
+# Release Checklist - $version
 
 ## Pre-Release Checks
 - [ ] All tests pass (flutter test)
@@ -442,8 +456,10 @@ ${releaseInfo.requiresDocumentationUpdate ? '- [ ] Documentation updated' : ''}
   }
 
   static Future<String> _getCurrentBranch() async {
-    final result =
-        await Process.run('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
+    final result = await Process.run(
+      'git',
+      ['rev-parse', '--abbrev-ref', 'HEAD'],
+    );
     return result.stdout.toString().trim();
   }
 
@@ -466,8 +482,10 @@ ${releaseInfo.requiresDocumentationUpdate ? '- [ ] Documentation updated' : ''}
       );
     }
 
-    return GitOperationResult(
-        success: true, message: 'Pre-release checks passed');
+    return const GitOperationResult(
+      success: true,
+      message: 'Pre-release checks passed',
+    );
   }
 
   static Future<GitOperationResult> _mergeToMain(String branchName) async {
@@ -479,38 +497,51 @@ ${releaseInfo.requiresDocumentationUpdate ? '- [ ] Documentation updated' : ''}
 
       if (result.exitCode == 0) {
         await Process.run('git', ['push', 'origin', 'main']);
-        return GitOperationResult(
-            success: true, message: 'Merged to main successfully');
+        return const GitOperationResult(
+          success: true,
+          message: 'Merged to main successfully',
+        );
       } else {
         return GitOperationResult(
-            success: false, message: result.stderr.toString());
+          success: false,
+          message: result.stderr.toString(),
+        );
       }
-    } catch (e) {
+    } on Exception catch (e) {
       return GitOperationResult(success: false, message: e.toString());
     }
   }
 
   static Future<GitOperationResult> _createAndPushTag(
-      String version, String releaseNotes) async {
+    String version,
+    String releaseNotes,
+  ) async {
     try {
-      final result =
-          await Process.run('git', ['tag', '-a', version, '-m', releaseNotes]);
+      final result = await Process.run(
+        'git',
+        ['tag', '-a', version, '-m', releaseNotes],
+      );
 
       if (result.exitCode == 0) {
         await Process.run('git', ['push', 'origin', version]);
-        return GitOperationResult(
-            success: true, message: 'Tag created and pushed');
+        return const GitOperationResult(
+          success: true,
+          message: 'Tag created and pushed',
+        );
       } else {
         return GitOperationResult(
-            success: false, message: result.stderr.toString());
+          success: false,
+          message: result.stderr.toString(),
+        );
       }
-    } catch (e) {
+    } on Exception catch (e) {
       return GitOperationResult(success: false, message: e.toString());
     }
   }
 
   static Future<GitOperationResult> _mergeBackToDevelopment(
-      String branchName) async {
+    String branchName,
+  ) async {
     try {
       await Process.run('git', ['checkout', 'development']);
       await Process.run('git', ['pull', 'origin', 'development']);
@@ -519,13 +550,17 @@ ${releaseInfo.requiresDocumentationUpdate ? '- [ ] Documentation updated' : ''}
 
       if (result.exitCode == 0) {
         await Process.run('git', ['push', 'origin', 'development']);
-        return GitOperationResult(
-            success: true, message: 'Merged back to development');
+        return const GitOperationResult(
+          success: true,
+          message: 'Merged back to development',
+        );
       } else {
         return GitOperationResult(
-            success: false, message: result.stderr.toString());
+          success: false,
+          message: result.stderr.toString(),
+        );
       }
-    } catch (e) {
+    } on Exception catch (e) {
       return GitOperationResult(success: false, message: e.toString());
     }
   }
@@ -534,7 +569,7 @@ ${releaseInfo.requiresDocumentationUpdate ? '- [ ] Documentation updated' : ''}
     try {
       await Process.run('git', ['branch', '-d', branchName]);
       await Process.run('git', ['push', 'origin', '--delete', branchName]);
-    } catch (e) {
+    } on Exception {
       // Ignore cleanup errors
     }
   }
@@ -542,6 +577,7 @@ ${releaseInfo.requiresDocumentationUpdate ? '- [ ] Documentation updated' : ''}
 
 /// Information about different release types
 class ReleaseTypeInfo {
+  /// Creates a new [ReleaseTypeInfo] instance
   const ReleaseTypeInfo({
     required this.description,
     required this.incrementType,
@@ -550,18 +586,37 @@ class ReleaseTypeInfo {
     required this.exampleChanges,
   });
 
+  /// Description of the release type
   final String description;
+
+  /// The type of version increment
   final VersionIncrement incrementType;
+
+  /// Whether full testing is required
   final bool requiresFullTesting;
+
+  /// Whether documentation update is required
   final bool requiresDocumentationUpdate;
+
+  /// Examples of changes in this release type
   final List<String> exampleChanges;
 }
 
 /// Types of version increments
-enum VersionIncrement { major, minor, patch }
+enum VersionIncrement {
+  /// Major version increment (X.0.0)
+  major,
+
+  /// Minor version increment (0.X.0)
+  minor,
+
+  /// Patch version increment (0.0.X)
+  patch,
+}
 
 /// Result of version validation
 class VersionValidationResult {
+  /// Creates a new [VersionValidationResult] instance
   const VersionValidationResult({
     required this.isValid,
     required this.message,
@@ -571,16 +626,28 @@ class VersionValidationResult {
     this.prerelease,
   });
 
+  /// Whether the version format is valid
   final bool isValid;
+
+  /// Validation message
   final String message;
+
+  /// Major version number
   final int? major;
+
+  /// Minor version number
   final int? minor;
+
+  /// Patch version number
   final int? patch;
+
+  /// Prerelease identifier
   final String? prerelease;
 }
 
 /// Result of release operations
 class ReleaseResult {
+  /// Creates a new [ReleaseResult] instance
   const ReleaseResult({
     required this.success,
     required this.message,
@@ -589,39 +656,52 @@ class ReleaseResult {
     this.releaseType,
   });
 
-  final bool success;
-  final String message;
-  final String? branchName;
-  final String? version;
-  final String? releaseType;
-
+  /// Creates a successful result
   factory ReleaseResult.success(
     String message, {
     String? branchName,
     String? version,
     String? releaseType,
-  }) {
-    return ReleaseResult(
-      success: true,
-      message: message,
-      branchName: branchName,
-      version: version,
-      releaseType: releaseType,
-    );
-  }
+  }) =>
+      ReleaseResult(
+        success: true,
+        message: message,
+        branchName: branchName,
+        version: version,
+        releaseType: releaseType,
+      );
 
-  factory ReleaseResult.error(String message) {
-    return ReleaseResult(success: false, message: message);
-  }
+  /// Creates an error result
+  factory ReleaseResult.error(String message) =>
+      ReleaseResult(success: false, message: message);
+
+  /// Whether the operation was successful
+  final bool success;
+
+  /// Result message
+  final String message;
+
+  /// Name of the release branch
+  final String? branchName;
+
+  /// Version number
+  final String? version;
+
+  /// Type of release
+  final String? releaseType;
 }
 
 /// Result of Git operations
 class GitOperationResult {
+  /// Creates a new [GitOperationResult] instance
   const GitOperationResult({
     required this.success,
     required this.message,
   });
 
+  /// Whether the operation was successful
   final bool success;
+
+  /// Result message or error output
   final String message;
 }
