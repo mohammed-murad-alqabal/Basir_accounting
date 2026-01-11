@@ -1,4 +1,4 @@
-import 'package:basir_app/features/accounting/domain/entities/financial_report.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_report.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

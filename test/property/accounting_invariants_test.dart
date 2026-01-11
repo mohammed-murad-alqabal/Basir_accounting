@@ -1,7 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'dart:math';
 
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 

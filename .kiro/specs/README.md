@@ -11,6 +11,7 @@
 
 ### **active/** - المواصفات النشطة قيد التطوير
 
+- `mvp-reality-assessment-and-recovery/` - 🔴 **أولوية قصوى** - تقييم الواقع الفعلي لـ MVP وخطة الاستعادة
 - `beta-testing-program/` - برنامج الاختبار التجريبي
 - `enhanced-onboarding/` - تحسين تجربة البداية
 - `kiro-dev-agents/` - وكلاء kiro.dev

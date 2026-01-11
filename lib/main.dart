@@ -1,20 +1,21 @@
 import 'dart:async';
 
-import 'package:basir_app/core/assets/app_logo.dart';
-import 'package:basir_app/core/config/supabase_config.dart';
-import 'package:basir_app/core/constants.dart';
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/router.dart';
-import 'package:basir_app/core/theme/app_theme.dart';
-import 'package:basir_app/core/theme/font_manager.dart';
-import 'package:basir_app/core/theme/services/color_customization_service.dart';
-import 'package:basir_app/core/theme/services/font_customization_service.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/utils/provider_observer.dart';
-import 'package:basir_app/l10n/app_localizations.dart';
-import 'package:basir_app/shared/widgets/error_widget.dart' as basir;
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/assets/app_logo.dart';
+import 'package:basir_accounting_system/core/config/supabase_config.dart';
+import 'package:basir_accounting_system/core/constants.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/router.dart';
+import 'package:basir_accounting_system/core/theme/app_theme.dart';
+import 'package:basir_accounting_system/core/theme/font_manager.dart';
+import 'package:basir_accounting_system/core/theme/services/color_customization_service.dart';
+import 'package:basir_accounting_system/core/theme/services/font_customization_service.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/utils/provider_observer.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/shared/widgets/error_widget.dart'
+    as basir;
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

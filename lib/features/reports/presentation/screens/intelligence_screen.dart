@@ -1,7 +1,7 @@
-import 'package:basir_app/features/reports/application/analytics_service.dart';
-import 'package:basir_app/features/reports/application/basir_insights_engine.dart';
-import 'package:basir_app/features/reports/application/simulation_service.dart';
-import 'package:basir_app/features/reports/domain/entities/financial_kpi.dart';
+import 'package:basir_accounting_system/features/reports/application/analytics_service.dart';
+import 'package:basir_accounting_system/features/reports/application/basir_insights_engine.dart';
+import 'package:basir_accounting_system/features/reports/application/simulation_service.dart';
+import 'package:basir_accounting_system/features/reports/domain/entities/financial_kpi.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

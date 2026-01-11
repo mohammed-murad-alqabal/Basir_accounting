@@ -1,7 +1,7 @@
-import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/features/invoices/domain/repositories/invoice_repository.dart';
+import 'package:basir_accounting_system/features/invoices/data/models/invoice_model.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/repositories/invoice_repository.dart';
 import 'package:decimal/decimal.dart';
 import 'package:isar/isar.dart';
 

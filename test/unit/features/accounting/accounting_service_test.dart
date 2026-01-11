@@ -1,8 +1,8 @@
-import 'package:basir_app/features/accounting/application/multi_standard_coa_engine.dart';
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/accounting/application/multi_standard_coa_engine.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,4 +1,4 @@
-import 'package:basir_app/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'sustainability_expert_service.g.dart';

@@ -1,5 +1,5 @@
-import 'package:basir_app/features/assets/domain/entities/asset_category.dart';
-import 'package:basir_app/features/assets/domain/entities/fixed_asset.dart';
+import 'package:basir_accounting_system/features/assets/domain/entities/asset_category.dart';
+import 'package:basir_accounting_system/features/assets/domain/entities/fixed_asset.dart';
 
 /// واجهة مستودع الأصول (Asset Repository Interface)
 abstract class AssetRepository {

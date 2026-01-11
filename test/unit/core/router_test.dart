@@ -1,10 +1,10 @@
 /// اختبارات AppRouter
 library;
 
-import 'package:basir_app/core/router.dart';
-import 'package:basir_app/features/auth/presentation/screens/login_screen.dart';
-import 'package:basir_app/features/auth/presentation/screens/setup_screen.dart';
-import 'package:basir_app/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/core/router.dart';
+import 'package:basir_accounting_system/features/auth/presentation/screens/login_screen.dart';
+import 'package:basir_accounting_system/features/auth/presentation/screens/setup_screen.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

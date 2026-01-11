@@ -1,4 +1,4 @@
-import 'package:basir_app/features/vendors/domain/entities/vendor.dart';
+import 'package:basir_accounting_system/features/vendors/domain/entities/vendor.dart';
 
 /// واجهة مستودع الموردين (Vendor Repository Interface)
 abstract class VendorRepository {

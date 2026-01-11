@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:basir_app/core/repositories/locale_repository.dart';
+import 'package:basir_accounting_system/core/repositories/locale_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Repository provider for locale persistence operations.
@@ -21,7 +21,7 @@ final localeRepositoryProvider = Provider<LocaleRepository>(
 /// ## Usage
 /// ```dart
 /// // Watch current locale
-/// final locale = ref.watch(localeProvider).valueOrNull;
+/// final locale = ref.watch(localeProvider).value;
 ///
 /// // Change locale
 /// await ref.read(localeProvider.notifier).setLocale(Locale('en'));

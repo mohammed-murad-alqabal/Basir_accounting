@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/shared/widgets/overflow_detector.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/shared/widgets/overflow_detector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

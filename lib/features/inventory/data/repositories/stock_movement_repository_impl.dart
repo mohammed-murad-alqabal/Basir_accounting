@@ -1,6 +1,6 @@
-import 'package:basir_app/features/inventory/data/models/stock_movement_model.dart';
-import 'package:basir_app/features/inventory/domain/entities/stock_movement.dart';
-import 'package:basir_app/features/inventory/domain/repositories/stock_movement_repository.dart';
+import 'package:basir_accounting_system/features/inventory/data/models/stock_movement_model.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/stock_movement.dart';
+import 'package:basir_accounting_system/features/inventory/domain/repositories/stock_movement_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع حركات المخزون باستخدام Isar

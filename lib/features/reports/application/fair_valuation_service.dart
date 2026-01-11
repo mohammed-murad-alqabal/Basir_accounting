@@ -1,6 +1,6 @@
-import 'package:basir_app/features/inventory/domain/repositories/inventory_repository.dart';
-import 'package:basir_app/features/inventory/domain/repositories/stock_movement_repository.dart';
-import 'package:basir_app/features/reports/domain/repositories/market_price_repository.dart';
+import 'package:basir_accounting_system/features/inventory/domain/repositories/inventory_repository.dart';
+import 'package:basir_accounting_system/features/inventory/domain/repositories/stock_movement_repository.dart';
+import 'package:basir_accounting_system/features/reports/domain/repositories/market_price_repository.dart';
 
 /// خدمة التقييم العادل (Fair Valuation Service)
 /// تدمج كميات المخزون مع أسعار السوق لتوفير تعديلات المركز المالي

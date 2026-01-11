@@ -1,4 +1,4 @@
-import 'package:basir_app/features/reports/domain/entities/market_price.dart';
+import 'package:basir_accounting_system/features/reports/domain/entities/market_price.dart';
 
 /// واجهة مستودع أسعار السوق (Market Price Repository Interface)
 abstract class MarketPriceRepository {

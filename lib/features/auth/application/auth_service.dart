@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:basir_app/core/constants.dart';
-import 'package:basir_app/features/auth/domain/models/auth_models.dart';
+import 'package:basir_accounting_system/core/constants.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

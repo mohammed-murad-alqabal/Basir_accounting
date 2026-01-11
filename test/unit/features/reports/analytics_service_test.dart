@@ -1,7 +1,7 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
-import 'package:basir_app/features/reports/application/analytics_service.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/reports/application/analytics_service.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

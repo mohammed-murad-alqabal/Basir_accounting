@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
-import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

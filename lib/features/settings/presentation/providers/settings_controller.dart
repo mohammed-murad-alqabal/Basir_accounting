@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:basir_app/core/models/sync_status.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/providers/supabase_auth_provider.dart';
-import 'package:basir_app/features/settings/domain/entities/profile.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/providers/supabase_auth_provider.dart';
+import 'package:basir_accounting_system/features/settings/domain/entities/profile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// حالة شاشة الإعدادات

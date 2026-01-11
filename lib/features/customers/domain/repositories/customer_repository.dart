@@ -1,4 +1,4 @@
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
 
 /// واجهة مستودع العملاء
 ///

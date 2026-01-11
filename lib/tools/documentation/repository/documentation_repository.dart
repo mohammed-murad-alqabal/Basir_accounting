@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:basir_app/tools/documentation/analysis/analysis_engine.dart';
+import 'package:basir_accounting_system/tools/documentation/analysis/analysis_engine.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as p;
 

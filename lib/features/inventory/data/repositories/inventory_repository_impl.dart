@@ -1,6 +1,6 @@
-import 'package:basir_app/features/inventory/data/models/inventory_item_model.dart';
-import 'package:basir_app/features/inventory/domain/entities/inventory_item.dart';
-import 'package:basir_app/features/inventory/domain/repositories/inventory_repository.dart';
+import 'package:basir_accounting_system/features/inventory/data/models/inventory_item_model.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
+import 'package:basir_accounting_system/features/inventory/domain/repositories/inventory_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع المخزون (Inventory Repository Implementation)

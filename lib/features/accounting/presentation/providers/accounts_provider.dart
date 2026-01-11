@@ -1,5 +1,5 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'accounts_provider.g.dart';

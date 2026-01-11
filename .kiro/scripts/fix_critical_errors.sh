@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Critical Error Fix Script for Basir MVP
-# المؤلف: فريق وكلاء تطوير مشروع بصير
-# التاريخ: 18 ديسمبر 2025
+# Critical Error Fix Script for basir_accounting_system
+# المؤلف: فريق وكلاء تطوير نظام بصير المحاسبي
+# التاريخ: 11 يناير 2026
 
 set -e
 
@@ -29,7 +29,7 @@ print_info() {
     echo -e "${BLUE}ℹ️${NC} $1"
 }
 
-echo "🔧 Critical Error Fix for Basir MVP"
+echo "🔧 Critical Error Fix for basir_accounting_system"
 echo "════════════════════════════════════════════════════════════════"
 
 # 1. إصلاح مشاكل التنسيق

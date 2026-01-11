@@ -8,11 +8,11 @@ library;
 
 import 'dart:io';
 
-import 'package:basir_app/features/customers/data/models/customer_model.dart';
-import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/features/settings/data/models/business_settings_model.dart';
-import 'package:basir_app/features/settings/data/models/profile_model.dart';
+import 'package:basir_accounting_system/features/customers/data/models/customer_model.dart';
+import 'package:basir_accounting_system/features/invoices/data/models/invoice_model.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/settings/data/models/business_settings_model.dart';
+import 'package:basir_accounting_system/features/settings/data/models/profile_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';

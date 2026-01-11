@@ -1,7 +1,7 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/domain/entities/financial_year.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
-import 'package:basir_app/features/accounting/domain/repositories/financial_year_repository.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/domain/repositories/financial_year_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'financial_year_service.g.dart';

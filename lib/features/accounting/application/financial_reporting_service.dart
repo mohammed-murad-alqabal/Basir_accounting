@@ -1,7 +1,7 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/domain/entities/ifrs18_ontology.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/ifrs18_ontology.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:decimal/decimal.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

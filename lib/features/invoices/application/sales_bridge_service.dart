@@ -1,8 +1,8 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/src/rust/api.dart';
-import 'package:basir_app/src/rust/api/sales.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/src/rust/api.dart';
+import 'package:basir_accounting_system/src/rust/api/sales.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 

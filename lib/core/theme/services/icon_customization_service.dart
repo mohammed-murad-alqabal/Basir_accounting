@@ -1,6 +1,6 @@
-import 'package:basir_app/core/theme/services/theme_storage_utils.dart';
-import 'package:basir_app/core/theme/tokens/app_icons.dart';
-import 'package:basir_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:basir_accounting_system/core/theme/services/theme_storage_utils.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/auth/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -96,6 +96,6 @@ final iconCustomizationProvider =
 
 /// مزود الأيقونات الحالي لسهولة الوصول
 final appIconsProvider = Provider<AppIcons>((ref) {
-  final state = ref.watch(iconCustomizationProvider).valueOrNull;
+  final state = ref.watch(iconCustomizationProvider).value;
   return state?.icons ?? const MaterialAppIcons();
 });
