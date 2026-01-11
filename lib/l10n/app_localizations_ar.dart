@@ -617,12 +617,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelInvoiceStyle => 'شكل الفاتورة';
 
   @override
-  String get labelIssuedDate => 'تاريخ الإصدار';
-
-  @override
-  String get labelItemName => 'اسم المنتج/الخدمة';
-
-  @override
   String get labelLastUpdated => 'آخر تحديث';
 
   @override
@@ -645,6 +639,28 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get labelPhoneOptional => 'رقم الهاتف (اختياري)';
+
+  @override
+  String get labelSourceWarehouse => 'مستودع المصدر';
+
+  @override
+  String get labelDestinationWarehouse => 'مستودع الوجهة';
+
+  @override
+  String get errSameWarehouse =>
+      'لا يمكن أن يكون مستودع المصدر والوجهة متطابقين';
+
+  @override
+  String get errSelectSourceWarehouse => 'يرجى اختيار المستودع المصدر';
+
+  @override
+  String get errSelectDestinationWarehouse => 'يرجى اختيار المستودع الوجهة';
+
+  @override
+  String get btnSaveTransfer => 'حفظ التحويل';
+
+  @override
+  String get warehouseTransferTitleAdd => 'تحويل مخزني جديد';
 
   @override
   String get labelPrice => 'السعر';
@@ -1476,6 +1492,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get labelDiscount => 'الخصم';
+
+  @override
+  String get labelItemName => 'اسم الصنف';
+
+  @override
+  String get labelIssuedDate => 'تاريخ الإصدار';
 
   @override
   String get errPermissionDenied => 'ليس لديك صلاحية للقيام بهذا الإجراء';
