@@ -112,6 +112,9 @@ class Invoice with _$Invoice {
     /// Data isolation handle.
     String? userId,
 
+    /// Warehouse scope identifier.
+    String? warehouseId,
+
     /// Distributed ledger synchronization state.
     @Default(SyncStatus.synced) SyncStatus syncStatus,
 
