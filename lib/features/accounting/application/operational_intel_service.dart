@@ -1,4 +1,8 @@
+// ignore_for_file: lines_longer_than_80_chars
+import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'operational_intel_service.g.dart';
@@ -31,18 +35,60 @@ class OperationalIntelService extends _$OperationalIntelService
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];
     var confidenceScore = 0.92;
+    var isAllowed = true;
+    final l10n = lookupAppLocalizations(Locale(context.locale));
 
     // 1. Transaction Type Operational Analysis
     if (context.transactionType == 'sales') {
       rationale.add(
-        'Operational Impact: Verifying material availability and '
-        'logistics readiness.',
+        'Operational Intel: Verifying material availability and '
+        'readiness for sales transaction.',
       );
-      // TODO(Baseer): Future integration with MawadService (Inventory)
-      rationale.add(
-        'Recommendation: Ensure floor stocks are decremented immediately '
-        'upon posting.',
-      );
+
+      // Integration with InventoryService
+      final inventoryService = ref.read(inventoryServiceProvider);
+      final items = context.metadata['items'] as List<dynamic>?;
+
+      if (items != null && items.isNotEmpty) {
+        for (final item in items) {
+          try {
+            final itemMap = item as Map<String, dynamic>;
+            final itemId = itemMap['id'] as String;
+            final quantity = (itemMap['quantity'] as num).toDouble();
+            final warehouseId = context.metadata['warehouseId'] as String?;
+
+            final stock = await inventoryService.movementRepo.getStockLevel(
+              itemId,
+              warehouseId: warehouseId,
+            );
+
+            if (stock < quantity) {
+              isAllowed = false;
+              rationale.add(
+                l10n.agentRationaleOperationalInsufficient(
+                  itemId,
+                  '$stock vs $quantity',
+                ),
+              );
+              confidenceScore = 0.75;
+            } else {
+              rationale.add(
+                l10n.agentRationaleOperationalSufficient(
+                  itemId,
+                  stock.toString(),
+                ),
+              );
+            }
+          } on Object catch (_) {
+            rationale.add('Note: Could not verify stock for some items.');
+          }
+        }
+      } else {
+        rationale.add(
+          'Recommendation: Ensure floor stocks are decremented immediately '
+          'upon posting.',
+        );
+      }
     } else if (context.transactionType == 'purchase') {
       rationale.add(
         'Operational Impact: Assessing warehouse capacity and incoming '
@@ -60,7 +106,7 @@ class OperationalIntelService extends _$OperationalIntelService
 
     return AgentResult(
       agentId: agentId,
-      isAllowed: true,
+      isAllowed: isAllowed,
       rationale: rationale.join('\n'),
       confidenceScore: confidenceScore,
     );

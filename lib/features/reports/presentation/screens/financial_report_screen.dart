@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/reports/presentation/widgets/report_filter_widget.dart';
 import 'package:basir_accounting_system/features/reports/presentation/widgets/report_line_item.dart';
@@ -46,14 +48,14 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
     _toDate = now;
   }
 
-  String get _title {
+  String _getTitle(BuildContext context) {
     switch (widget.reportType) {
       case FinancialReportType.incomeStatement:
-        return 'قائمة الدخل';
+        return context.l10n.incomeStatementTitle;
       case FinancialReportType.balanceSheet:
-        return 'المركز المالي'; // Statement of Financial Position
+        return context.l10n.balanceSheetTitle;
       case FinancialReportType.cashFlow:
-        return 'التدفقات النقدية';
+        return context.l10n.cashFlowTitle;
     }
   }
 
@@ -77,14 +79,13 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
 
     return Scaffold(
       appBar: AppAppBar(
-        title: _title,
+        title: _getTitle(context),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: () {
-              // TODO(m): Export functionality
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('سيتم تفعيل التصدير قريباً')),
+                SnackBar(content: Text(context.l10n.msgExportComingSoon)),
               );
             },
           ),
@@ -103,8 +104,8 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SwitchListTile.adaptive(
-                title: const Text('التقييم بالقيمة العادلة (IFRS 13)'),
-                subtitle: const Text('استخدام أحدث أسعار السوق للمخزون'),
+                title: Text(context.l10n.labelFairValueAdjustment),
+                subtitle: Text(context.l10n.subtitleFairValueAdjustment),
                 value: _useFairValue,
                 onChanged: (val) => setState(() => _useFairValue = val),
                 activeTrackColor: Theme.of(context).primaryColor,

@@ -1,7 +1,8 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
-import 'package:basir_accounting_system/features/reports/application/analytics_service.dart';
+import 'package:basir_accounting_system/features/reports/application/financial_intelligence_service.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,7 +11,7 @@ import 'package:mocktail/mocktail.dart';
 import '../../../helpers/mock_accounting_repository.dart';
 
 void main() {
-  group('AnalyticsService', () {
+  group('FinancialIntelligenceService', () {
     late ProviderContainer container;
     late MockAccountingRepository mockRepo;
 
@@ -31,7 +32,8 @@ void main() {
 
     group('getFinancialKpis', () {
       test('should return empty KPIs when no data exists', () async {
-        final service = container.read(analyticsServiceProvider.notifier);
+        final service =
+            container.read(financialIntelligenceServiceProvider.notifier);
         final kpis = await service.getFinancialKpis();
 
         expect(kpis.length, 3);
@@ -68,7 +70,8 @@ void main() {
 
         when(() => mockRepo.getAccounts()).thenAnswer((_) async => accounts);
 
-        final service = container.read(analyticsServiceProvider.notifier);
+        final service =
+            container.read(financialIntelligenceServiceProvider.notifier);
         final kpis = await service.getFinancialKpis();
 
         final currentRatio = kpis.firstWhere((k) => k.name == 'Current Ratio');
@@ -101,7 +104,8 @@ void main() {
 
         when(() => mockRepo.getAccounts()).thenAnswer((_) async => accounts);
 
-        final service = container.read(analyticsServiceProvider.notifier);
+        final service =
+            container.read(financialIntelligenceServiceProvider.notifier);
         final kpis = await service.getFinancialKpis();
 
         final profitMargin = kpis.firstWhere((k) => k.name == 'Profit Margin');
@@ -197,7 +201,8 @@ void main() {
           () => mockRepo.getJournalEntries(),
         ).thenAnswer((_) async => entries);
 
-        final service = container.read(analyticsServiceProvider.notifier);
+        final service =
+            container.read(financialIntelligenceServiceProvider.notifier);
         final trend = await service.getCashFlowTrend();
 
         expect(trend.length, 30);

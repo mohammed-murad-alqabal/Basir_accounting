@@ -3,7 +3,9 @@
 library;
 
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
 import 'package:basir_accounting_system/features/auth/application/auth_service.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:basir_accounting_system/features/auth/presentation/screens/login_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
@@ -28,7 +30,19 @@ void main() {
       NavigatorObserver? observer,
     }) =>
         ProviderScope(
-          overrides: overrides,
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+            currentUserProfileProvider.overrideWith(
+              (ref) => const BasirUser(
+                id: 'test-user',
+                email: 'test@example.com',
+                displayName: 'Test User',
+                role: UserRole.accountant,
+                permissions: Permission.viewFinancials,
+              ),
+            ),
+            ...overrides,
+          ],
           child: MaterialApp(
             localizationsDelegates: const [
               AppLocalizations.delegate,
@@ -92,9 +106,7 @@ void main() {
         await tester.pump();
 
         final loginButton = find.byWidgetPredicate(
-          (widget) =>
-              widget is AppEnhancedButton &&
-              widget.type == AppEnhancedButtonType.primary,
+          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
         );
         await tester.ensureVisible(loginButton);
         await tester.tap(loginButton);
@@ -120,9 +132,7 @@ void main() {
         await setUpWidgets(tester);
 
         final guestButton = find.byWidgetPredicate(
-          (widget) =>
-              widget is AppEnhancedButton &&
-              widget.type == AppEnhancedButtonType.secondary,
+          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.secondary,
         );
         await tester.ensureVisible(guestButton);
         await tester.tap(guestButton);
@@ -162,9 +172,7 @@ void main() {
         await tester.pump();
 
         final loginButton = find.byWidgetPredicate(
-          (widget) =>
-              widget is AppEnhancedButton &&
-              widget.type == AppEnhancedButtonType.primary,
+          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
         );
         await tester.ensureVisible(loginButton);
         await tester.tap(loginButton);

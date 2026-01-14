@@ -1,4 +1,6 @@
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart'; // Fixed import
@@ -21,6 +23,16 @@ void main() {
 
   Widget createTestWidget({Invoice? invoice}) => ProviderScope(
         overrides: [
+          appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          currentUserProfileProvider.overrideWith(
+            (ref) => const BasirUser(
+              id: 'test-user',
+              email: 'test@example.com',
+              displayName: 'Test User',
+              role: UserRole.admin,
+              
+            ),
+          ),
           customerRepositoryProvider.overrideWithValue(mockCustomerRepository),
           invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepository),
         ],
@@ -81,6 +93,16 @@ void main() {
         await tester.pumpWidget(
           ProviderScope(
             overrides: [
+              appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+              currentUserProfileProvider.overrideWith(
+                (ref) => const BasirUser(
+                  id: 'test-user',
+                  email: 'test@example.com',
+                  displayName: 'Test User',
+                  role: UserRole.admin,
+                  
+                ),
+              ),
               calendarProvider.overrideWith(
                 () => _MockCalendarNotifier(CalendarType.hijri),
               ),

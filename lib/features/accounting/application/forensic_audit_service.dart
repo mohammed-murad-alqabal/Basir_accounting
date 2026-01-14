@@ -1,9 +1,12 @@
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:decimal/decimal.dart';
+import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'forensic_audit_service.g.dart';
@@ -60,22 +63,23 @@ class ForensicAuditService extends _$ForensicAuditService
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];
     var isAllowed = true;
+    final l10n = lookupAppLocalizations(Locale(context.locale));
 
     // 1. Verify Entry Balance
     if (!context.proposedJournalEntry.isBalanced) {
       isAllowed = false;
-      rationale.add('REJECTION: Proposed journal entry is not balanced.');
+      rationale.add(l10n.agentRationaleForensicUnbalanced);
     } else {
-      rationale.add('Check PASSED: Journal entry is balanced.');
+      rationale.add(l10n.agentRationaleForensicBalanced);
     }
 
     // 2. Anomaly Detection (Threshold: SAR 1,000,000)
     final threshold = Decimal.fromInt(1000000);
     if (context.proposedJournalEntry.totalDebit > threshold) {
       rationale.add(
-        'WARNING: Unusually high transaction amount detected '
-        '(${context.proposedJournalEntry.totalDebit}). Administrative review '
-        'recommended.',
+        l10n.agentRationaleForensicHighValue(
+          context.proposedJournalEntry.totalDebit.toString(),
+        ),
       );
     }
 
@@ -87,11 +91,73 @@ class ForensicAuditService extends _$ForensicAuditService
     if (isDuplicate) {
       isAllowed = false;
       rationale.add(
-        'REJECTION: Duplicate reference number '
-        'REJECTION: Duplicate reference number '
-        '(${context.proposedJournalEntry.referenceNumber}) detected in '
-        'history.',
+        l10n.agentRationaleForensicDuplicate(
+          context.proposedJournalEntry.referenceNumber,
+        ),
       );
+    }
+
+    // 4. Time-of-Day Anomaly Detection (Non-standard business hours: 11 PM - 5 AM)
+    final recordingHour = context.proposedJournalEntry.date.hour;
+    if (recordingHour >= 23 || recordingHour < 5) {
+      rationale.add(
+        l10n.agentRationaleForensicTimeAnomaly(
+          '${recordingHour.toString().padLeft(2, '0')}:00',
+        ),
+      );
+    }
+
+    // 5. Reference Sequence Gap Analysis
+    if (entries.isNotEmpty) {
+      // Find the most recent entry with the same prefix (e.g., JE- or SIM-INV-)
+      final currentRef = context.proposedJournalEntry.referenceNumber;
+      final prefixMatch = RegExp(r'^([A-Z-]+)(\d+)$').firstMatch(currentRef);
+
+      if (prefixMatch != null) {
+        final currentPrefix = prefixMatch.group(1);
+        final currentNumber = int.tryParse(prefixMatch.group(2) ?? '');
+
+        if (currentNumber != null) {
+          int? lastNumber;
+          String? lastRef;
+
+          for (final e in entries.reversed) {
+            final match =
+                RegExp(r'^([A-Z-]+)(\d+)$').firstMatch(e.referenceNumber);
+            if (match != null && match.group(1) == currentPrefix) {
+              lastNumber = int.tryParse(match.group(2) ?? '');
+              lastRef = e.referenceNumber;
+              break;
+            }
+          }
+
+          if (lastNumber != null && (currentNumber - lastNumber).abs() > 1) {
+            rationale.add(
+              l10n.agentRationaleForensicSequenceGap(
+                lastRef!,
+                currentRef,
+              ),
+            );
+          }
+        }
+      }
+    }
+
+    // 6. ZATCA Phase 2 Cryptographic Identity Check
+    if (context.proposedJournalEntry.sourceDocument == 'invoice' &&
+        context.proposedJournalEntry.status == JournalEntryStatus.posted) {
+      // In a real system, we would fetch the Invoice from the repository
+      // and check zatcaUuid/zatcaHash. For this agent context, we check
+      // if these indicators should have been present.
+      // Note: This check is primarily for forensic auditing of existing records.
+      final invoiceRepo = ref.read(invoiceRepositoryProvider);
+      final invoice = await invoiceRepo
+          .getInvoiceById(context.proposedJournalEntry.sourceId);
+
+      if (invoice != null &&
+          (invoice.zatcaUuid == null || invoice.zatcaHash == null)) {
+        rationale.add(l10n.agentRationaleForensicZatcaIdentityMissing);
+      }
     }
 
     return AgentResult(

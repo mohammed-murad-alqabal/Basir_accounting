@@ -1,3 +1,4 @@
+import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/invoices/application/invoice_pdf_service.dart';
 import 'package:basir_accounting_system/features/invoices/application/invoice_print_service.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
@@ -7,10 +8,16 @@ import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 
 /// مزود خدمة إنشاء PDF
-final invoicePdfServiceProvider = Provider((ref) => InvoicePdfService());
+final invoicePdfServiceProvider = Provider((ref) {
+  final settings = ref.watch(settingsServiceProvider);
+  return InvoicePdfService(settings);
+});
 
 /// مزود خدمة الطباعة الحرارية
-final invoicePrintServiceProvider = Provider((ref) => InvoicePrintService());
+final invoicePrintServiceProvider = Provider((ref) {
+  final settings = ref.watch(settingsServiceProvider);
+  return InvoicePrintService(settings);
+});
 
 /// Provider لتصدير الفاتورة كملف PDF
 final exportInvoicePdfProvider = FutureProvider.family<void, Invoice>((

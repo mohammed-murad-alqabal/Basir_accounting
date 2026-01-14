@@ -1,6 +1,7 @@
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:basir_accounting_system/features/reports/presentation/screens/aging_report_screen.dart';
-import 'package:basir_accounting_system/features/reports/services/reporting_service.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/src/rust/api/reports.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,17 @@ void main() {
 
   Widget createWidgetUnderTest(AgingReportType type) => ProviderScope(
         overrides: [
-          nativeReportingServiceProvider
-              .overrideWithValue(mockReportingService),
+          appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          currentUserProfileProvider.overrideWith(
+            (ref) => const BasirUser(
+              id: 'test-user',
+              email: 'test@example.com',
+              displayName: 'Test User',
+              role: UserRole.accountant,
+              permissions: Permission.viewFinancials,
+            ),
+          ),
+          nativeReportingServiceProvider.overrideWithValue(mockReportingService),
         ],
         child: MaterialApp(
           localizationsDelegates: const [

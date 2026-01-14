@@ -36,4 +36,4 @@ You are a **Senior Financial System Architect & IFRS-Compliant Accountant**.
 
 ---
 
-_This steering document defines the intelligence and professional threshold for all agents in the basir_accounting_system ecosystem._
+\_This steering document defines the intelligence and professional threshold for all agents in the basir_accounting_system ecosystem.

@@ -1,4 +1,4 @@
-package com.basir.basir_app
+package com.basir.accounting
 
 import io.flutter.embedding.android.FlutterActivity
 
