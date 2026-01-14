@@ -1,6 +1,8 @@
 import 'package:basir_accounting_system/core/assets/app_illustrations.dart';
-import 'package:basir_accounting_system/core/providers/calendar_provider.dart';
+import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/providers/supabase_auth_provider.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoices_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
@@ -22,6 +24,15 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+            currentUserProfileProvider.overrideWith(
+              (ref) => const BasirUser(
+                id: 'test-user',
+                email: 'test@example.com',
+                displayName: 'Test User',
+                role: UserRole.admin,
+              ),
+            ),
             currentUserProvider.overrideWith((ref) => null),
             filteredInvoicesProvider.overrideWithValue(
               const AsyncValue.data([]),
@@ -58,6 +69,15 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+            currentUserProfileProvider.overrideWith(
+              (ref) => const BasirUser(
+                id: 'test-user',
+                email: 'test@example.com',
+                displayName: 'Test User',
+                role: UserRole.admin,
+              ),
+            ),
             currentUserProvider.overrideWith((ref) => null),
             filteredInvoicesProvider.overrideWithValue(
               const AsyncValue.data([]),
@@ -102,6 +122,15 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+            currentUserProfileProvider.overrideWith(
+              (ref) => const BasirUser(
+                id: 'test-user',
+                email: 'test@example.com',
+                displayName: 'Test User',
+                role: UserRole.admin,
+              ),
+            ),
             currentUserProvider.overrideWith((ref) => null),
             filteredInvoicesProvider.overrideWithValue(
               AsyncValue.data([invoice]),
@@ -146,6 +175,15 @@ void main() {
         await tester.pumpWidget(
           ProviderScope(
             overrides: [
+              appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+              currentUserProfileProvider.overrideWith(
+                (ref) => const BasirUser(
+                  id: 'test-user',
+                  email: 'test@example.com',
+                  displayName: 'Test User',
+                  role: UserRole.admin,
+                ),
+              ),
               currentUserProvider.overrideWith((ref) => null),
               calendarProvider.overrideWith(
                 () => _MockCalendarNotifier(CalendarType.hijri),

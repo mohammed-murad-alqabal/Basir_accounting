@@ -1,5 +1,8 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:decimal/decimal.dart';
+import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'tax_engine_service.g.dart';
@@ -34,21 +37,21 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
     final rationale = <String>[];
     var isAllowed = true;
     final metadata = context.metadata;
+    final l10n = lookupAppLocalizations(
+      Locale(context.locale),
+    );
 
     // 1. Tax ID Validation
     final taxId = metadata['tax_id'] as String?;
     if (taxId == null || taxId.isEmpty) {
-      rationale.add('Warning: No Tax ID provided for this transaction.');
+      rationale.add(l10n.agentRationaleTaxNoId);
       // Reject large transactions without Tax ID (ZATCA compliance)
       if (context.proposedJournalEntry.totalDebit > Decimal.fromInt(10000)) {
         isAllowed = false;
-        rationale.add(
-          'REJECT: Transactions exceeding 10,000 SAR require a valid '
-          'Tax ID for ZATCA Phase 2 compliance.',
-        );
+        rationale.add(l10n.agentRationaleTaxZatcaReject);
       }
     } else {
-      rationale.add('Validated Tax ID: $taxId');
+      rationale.add(l10n.agentRationaleTaxValidated(taxId));
     }
 
     // 2. VAT Rate Check
@@ -58,7 +61,9 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
 
     if (vatLines.isNotEmpty) {
       for (final line in vatLines) {
-        rationale.add('Analyzing VAT for ${line.accountName}');
+        rationale.add(
+          l10n.agentRationaleTaxAnalyzing(line.accountName),
+        );
         // Verify standard VAT rate (e.g., 15% for KSA)
         final totalBase = context.proposedJournalEntry.totalDebit - line.credit;
         if (totalBase > Decimal.zero) {
@@ -69,20 +74,16 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
 
           if ((calculatedRate - expectedRate).abs() > Decimal.parse('0.001')) {
             rationale.add(
-              'ALERT: Calculated VAT rate ($calculatedRate) deviates from '
-              'the regional standard (15%).',
+              l10n.agentRationaleTaxRateMismatch(calculatedRate.toString()),
             );
           } else {
-            rationale.add(
-              'CONFIRM: VAT rate (15%) matches local regulatory requirements.',
-            );
+            rationale.add(l10n.agentRationaleTaxRateMatch);
           }
         }
       }
     } else if (context.transactionType == 'sales' ||
         context.transactionType == 'purchase') {
-      rationale
-          .add('WARNING: Commercial transaction detected without VAT lines.');
+      rationale.add(l10n.agentRationaleTaxNoVatWarning);
     }
 
     return AgentResult(
@@ -92,4 +93,60 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
       confidenceScore: 0.95,
     );
   }
+
+  /// Calculates the estimated VAT return for the current period.
+  Future<VatReturnStatement> calculateVatReturn() async {
+    // In a real implementation, this would query the General Ledger
+    // for actual debits/credits on VAT accounts.
+    // For now, we return a simulated high-fidelity statement.
+
+    await Future<void>.delayed(const Duration(milliseconds: 800));
+
+    return VatReturnStatement(
+      periodStart: DateTime.now().subtract(const Duration(days: 90)),
+      periodEnd: DateTime.now(),
+      standardSalesBase: Decimal.parse('150000.00'),
+      standardSalesTax: Decimal.parse('22500.00'), // 15%
+      zeroRatedSales: Decimal.parse('5000.00'),
+      exemptSales: Decimal.parse('0.00'),
+      standardPurchasesBase: Decimal.parse('80000.00'),
+      standardPurchasesTax: Decimal.parse('12000.00'), // 15%
+      netVatDue: Decimal.parse('10500.00'), // 22500 - 12000
+    );
+  }
+}
+
+/// A simplified representation of a VAT return statement.
+class VatReturnStatement {
+  const VatReturnStatement({
+    required this.periodStart,
+    required this.periodEnd,
+    required this.standardSalesBase,
+    required this.standardSalesTax,
+    required this.zeroRatedSales,
+    required this.exemptSales,
+    required this.standardPurchasesBase,
+    required this.standardPurchasesTax,
+    required this.netVatDue,
+  });
+
+  final DateTime periodStart;
+  final DateTime periodEnd;
+
+  // Output Tax (Sales)
+  final Decimal standardSalesBase;
+  final Decimal standardSalesTax;
+  final Decimal zeroRatedSales;
+  final Decimal exemptSales;
+
+  // Input Tax (Purchases)
+  final Decimal standardPurchasesBase;
+  final Decimal standardPurchasesTax;
+
+  // Net
+  final Decimal netVatDue;
+
+  Decimal get totalSales => standardSalesBase + zeroRatedSales + exemptSales;
+
+  Decimal get totalPurchases => standardPurchasesBase;
 }

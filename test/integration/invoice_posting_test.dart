@@ -4,6 +4,7 @@ import 'package:basir_accounting_system/features/accounting/domain/entities/acco
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/invoices/application/sales_bridge_service.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:decimal/decimal.dart';
@@ -14,6 +15,8 @@ import 'package:mocktail/mocktail.dart';
 import '../helpers/mock_accounting_repository.dart';
 import '../helpers/mock_customer_repository.dart';
 import '../helpers/mock_financial_year_repository.dart';
+import '../helpers/mock_sales_bridge_service.dart';
+import '../helpers/rust_lib_test_helper.dart';
 
 void main() {
   group('Invoice Posting Integration', () {
@@ -21,11 +24,16 @@ void main() {
     late MockAccountingRepository mockAccountingRepo;
     late MockFinancialYearRepository mockFyRepo;
     late MockCustomerRepository mockCustomerRepo;
+    late MockSalesBridgeService mockSalesBridge;
 
     setUp(() {
+      // Initialize mock RustLib to prevent initialization errors
+      setupMockRustLib();
+
       mockAccountingRepo = MockAccountingRepository();
       mockFyRepo = MockFinancialYearRepository();
       mockCustomerRepo = MockCustomerRepository();
+      mockSalesBridge = MockSalesBridgeService();
 
       setUpAccountingMocks(); // Register fallback values if any
 
@@ -60,6 +68,7 @@ void main() {
           accountingRepositoryProvider.overrideWithValue(mockAccountingRepo),
           financialYearRepositoryProvider.overrideWithValue(mockFyRepo),
           customerRepositoryProvider.overrideWithValue(mockCustomerRepo),
+          salesBridgeServiceProvider.overrideWithValue(mockSalesBridge),
           basirUserProvider.overrideWith((ref) => null),
         ],
       );
@@ -110,6 +119,7 @@ void main() {
 
     tearDown(() {
       container.dispose();
+      disposeMockRustLib();
     });
 
     test('postSalesInvoice should create correct Journal Entry', () async {

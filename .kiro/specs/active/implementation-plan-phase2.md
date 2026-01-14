@@ -5,7 +5,7 @@
 **Date:** January 11, 2026  
 **Status:** ✅ Active  
 **Classification:** Strategic - Implementation  
-**Prepared by:** فريق وكلاء تطوير مشروع بصير
+**Prepared by:** Basir Project Agentic Development Team
 
 ---
 
@@ -405,7 +405,7 @@ chrono = { version = "0.4", features = ["serde"] }
 
 **Document Control:**
 
-- **Author:** فريق وكلاء تطوير مشروع بصير
+- **Author:** Basir Project Agentic Development Team
 - **Reviewers:** Senior Financial System Architect
 - **Approval:** Project Steering Committee
 - **Next Review:** January 18, 2026

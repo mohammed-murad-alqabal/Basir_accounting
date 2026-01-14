@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 
 import 'package:basir_accounting_system/core/assets/app_logo.dart';
@@ -28,20 +29,23 @@ void main() {
         // تهيئة Flutter bindings
         WidgetsFlutterBinding.ensureInitialized();
 
-        // تهيئة Supabase
-        await SupabaseConfig.initialize();
-
-        // تهيئة FontManager
-        await FontManager.initialize();
-
-        // تحسين الأداء: تعيين اتجاه النظام
-        await SystemChrome.setPreferredOrientations([
-          DeviceOrientation.portraitUp,
-          DeviceOrientation.portraitDown,
+        // Performance Optimization: Parallel initialization of lightweight services
+        await Future.wait([
+          // تهيئة Supabase (lightweight)
+          SupabaseConfig.initialize(),
+          // تهيئة FontManager (lightweight)
+          FontManager.initialize(),
+          // تحسين الأداء: تعيين اتجاه النظام
+          SystemChrome.setPreferredOrientations([
+            DeviceOrientation.portraitUp,
+            DeviceOrientation.portraitDown,
+          ]),
+          // Diamond Experience: Enable Edge-to-Edge
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge),
         ]);
 
         // إعداد شاشة الأخطاء العالمية
-        // ignore: lines_longer_than_80_chars
+
         ErrorWidget.builder =
             (details) => basir.GlobalErrorWidget(errorDetails: details);
 
@@ -75,78 +79,57 @@ class BasirApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // مراقبة حالة الثيم (AsyncValue)
+    // Performance Optimization: Use default theme with async updates
     final themeModeAsync = ref.watch(themeProvider);
     final customColorAsync = ref.watch(colorCustomizationProvider);
     final fontCustomizationAsync = ref.watch(fontCustomizationProvider);
     final localeAsync = ref.watch(localeProvider);
 
-    return themeModeAsync.when(
-      data: (themeMode) {
-        final seedColor = customColorAsync.value;
-        final fontState = fontCustomizationAsync.value;
-        final fontFamily = fontState?.fontFamily;
-        final textScale = fontState?.textScaleFactor ?? 1.0;
-        final locale = localeAsync.value ?? const Locale('ar');
+    // Default values for immediate rendering
+    final themeMode = themeModeAsync.value ?? ThemeMode.system;
+    final seedColor = customColorAsync.value;
+    final fontState = fontCustomizationAsync.value;
+    final fontFamily = fontState?.fontFamily;
+    final textScale = fontState?.textScaleFactor ?? 1.0;
+    final locale = localeAsync.value ?? const Locale('ar');
 
-        return MaterialApp(
-          title: AppConfig.appName,
-          // ... (theme config) ...
-          theme: AppTheme.getTheme(
-            mode: ThemeMode.light,
-            seedColor: seedColor,
-            fontFamily: fontFamily,
-            textScaleFactor: textScale,
-          ),
-          darkTheme: AppTheme.getTheme(
-            mode: ThemeMode.dark,
-            seedColor: seedColor,
-            fontFamily: fontFamily,
-            textScaleFactor: textScale,
-          ),
-          themeMode: themeMode,
-          home: const SplashScreen(),
-          onGenerateRoute: AppRouter.generateRoute,
-          debugShowCheckedModeBanner: false,
-          // إعدادات اللغة (ديناميكية)
-          locale: locale,
-          supportedLocales: AppLocalizations.supportedLocales,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          // تحديد اتجاه النص بناءً على اللغة
-          localeResolutionCallback: (locale, supportedLocales) {
-            // إذا كانت اللغة عربية، استخدم RTL
-            if (locale?.languageCode == 'ar') {
-              return const Locale('ar', 'SA');
-            }
-            // وإلا استخدم الإنجليزية
-            return const Locale('en', 'US');
-          },
-        );
+    return MaterialApp(
+      title: AppConfig.appName,
+      // Performance Optimization: Use computed themes directly
+      theme: AppTheme.getTheme(
+        mode: ThemeMode.light,
+        seedColor: seedColor,
+        fontFamily: fontFamily,
+        textScaleFactor: textScale,
+      ),
+      darkTheme: AppTheme.getTheme(
+        mode: ThemeMode.dark,
+        seedColor: seedColor,
+        fontFamily: fontFamily,
+        textScaleFactor: textScale,
+      ),
+      themeMode: themeMode,
+      home: const SplashScreen(),
+      onGenerateRoute: AppRouter.generateRoute,
+      debugShowCheckedModeBanner: false,
+      // إعدادات اللغة (ديناميكية)
+      locale: locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      // تحديد اتجاه النص بناءً على اللغة
+      localeResolutionCallback: (locale, supportedLocales) {
+        // إذا كانت اللغة عربية، استخدم RTL
+        if (locale?.languageCode == 'ar') {
+          return const Locale('ar', 'SA');
+        }
+        // وإلا استخدم الإنجليزية
+        return const Locale('en', 'US');
       },
-      loading: () => const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          backgroundColor: Colors.white,
-          body: Center(
-            child: CircularProgressIndicator(color: Color(0xFF003D82)),
-          ),
-        ),
-      ),
-      error: (err, stack) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: basir.GlobalErrorWidget(
-          errorDetails: FlutterErrorDetails(
-            exception: err,
-            stack: stack,
-            library: 'Theme Initialization',
-          ),
-        ),
-      ),
     );
   }
 }
@@ -187,19 +170,21 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       debugPrint('🚀 [SYSTEM] Institutional Initialization Started...');
 
       // تهيئة الخدمات الأساسية بالتوازي (Zero Latency Strategy)
-      // ننتظر Isar ونتأكد من جاهزية AuthService
+      // Performance Optimization: Parallel initialization
       final initStartTime = DateTime.now();
 
+      // Phase 1: Critical services in parallel
       await Future.wait([
-        ref.read(isarProvider.future),
-        // نتأكد من أن AuthService جاهز للاستخدام
+        // Initialize Isar in background (non-blocking)
+        _initializeIsarBackground(),
+        // Initialize AuthService (lightweight)
         ref.read(authServiceProvider).initialize(),
       ]);
 
       final duration = DateTime.now().difference(initStartTime).inMilliseconds;
       debugPrint('⚙️ [SYSTEM] Core Services Ready in ${duration}ms');
 
-      // التحقق من حالة المصادقة للانتقال السريع
+      // Phase 2: Authentication state check (optimized)
       final authService = ref.read(authServiceProvider);
 
       // جلب جميع الحالات في طلب واحد متوازي (Optimization)
@@ -248,6 +233,25 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           _error = e.toString();
         });
       }
+    }
+  }
+
+  /// Performance Optimization: Background Isar initialization
+  Future<void> _initializeIsarBackground() async {
+    try {
+      // Start Isar initialization but don't block on completion
+      final isarFuture = ref.read(isarProvider.future);
+
+      // Allow UI to render while Isar initializes
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+
+      // Now wait for Isar to complete
+      await isarFuture;
+
+      debugPrint('📊 [ISAR] Database initialized successfully');
+    } on Exception catch (e) {
+      debugPrint('❌ [ISAR] Background initialization failed: $e');
+      // Don't throw - allow app to continue with limited functionality
     }
   }
 

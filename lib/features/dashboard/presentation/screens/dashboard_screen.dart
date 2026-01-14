@@ -8,7 +8,6 @@ import 'package:basir_accounting_system/core/utils/format_helpers.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/chart_of_accounts_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entries_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/widgets/financial_summary_card.dart';
-import 'package:basir_accounting_system/features/analytics/application/analytics_service.dart';
 import 'package:basir_accounting_system/features/analytics/domain/entities/analytics_event.dart';
 import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:basir_accounting_system/features/auth/presentation/widgets/permission_guard.dart';
@@ -19,6 +18,7 @@ import 'package:basir_accounting_system/features/inventory/presentation/screens/
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 
 /// شاشة لوحة التحكم (Dashboard Screen)
 /// تعرض ملخص الإحصائيات والعمليات الحقيقية بنظام Basir
@@ -65,7 +65,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       ),
       body: dashboardAsync.when(
         data: (data) => _buildContent(context, ref, data),
-        loading: () => const AppLoadingScreen(),
+        loading: () => const _DashboardSkeleton(),
         error: (e, st) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -388,4 +388,59 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       ],
     );
   }
+}
+
+class _DashboardSkeleton extends StatelessWidget {
+  const _DashboardSkeleton();
+
+  @override
+  Widget build(BuildContext context) => Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(Spacing.lg),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header Skeleton
+              Container(
+                width: 200,
+                height: 24,
+                color: Colors.white,
+              ),
+              const SizedBox(height: Spacing.xl),
+
+              // Financial Summary Skeleton
+              Container(
+                width: double.infinity,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(Radii.md),
+                ),
+              ),
+              const SizedBox(height: Spacing.md),
+
+              // Stats Grid Skeleton
+              GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisSpacing: Spacing.md,
+                mainAxisSpacing: Spacing.md,
+                childAspectRatio: 1.2,
+                children: List.generate(
+                  4,
+                  (index) => Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(Radii.md),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
 }

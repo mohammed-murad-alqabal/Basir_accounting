@@ -1,56 +1,63 @@
-# Tasks Document - Strategic Vision & Execution
+# Strategic Vision and Execution: Task Checklist
 
-**المشروع:** بصير MVP  
-**التاريخ:** 26 ديسمبر 2025  
-**المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**الإصدار:** 2.0 - Documentation Basir Edition
-**الحالة:** ✅ مكتمل - الأساس الاستراتيجي جاهز (57 وثيقة)
+**Project:** Basir Accounting System  
+**Date:** December 26, 2025  
+**Author:** Basir Project Agentic Development Team  
+**Version:** 2.0 - Documentation Basir Edition  
+**Status:** ✅ Completed - Strategic Foundation Established (57 Artifacts)
 
 ---
 
 ## Overview
 
-هذا المستند يحدد المهام التفصيلية لتنفيذ الرؤية الاستراتيجية لمشروع بصير. المهام منظمة حسب الأولوية والتبعيات والمسؤوليات.
+This document defines the granular tasks required for the execution of the Basir Project's strategic vision. Tasks are organized by priority, dependencies, and organizational ownership.
 
-**النهج:**
+### Approach
 
-- تقسيم المهام إلى sprints (أسبوعين)
-- تحديد المسؤوليات بوضوح
-- تتبع التقدم يومياً
-- مراجعة أسبوعية
+- Task decomposition into bi-weekly Sprints.
+- Clear role-based accountability.
+- Daily progress tracking via Agentic Orchestrator.
+- Systematic weekly sprint reviews.
 
-### 📊 إنجازات المرحلة التأسيسية (ديسمبر 2025)
+### 📊 Foundational Achievements (December 2025)
 
-- **الوثائق المنجزة:** 57 وثيقة
-- **نسبة اكتمال التخطيط:** 100%
-- **توافق الرؤية:** 100%
+- **Documentation Produced**: 57 Enterprise-Grade Artifacts.
+- **Planning Completion**: 100%.
+- **Strategic Alignment**: 100%.
 
 ---
 
 ## Task Categories
 
-### 🎯 P0 - Critical (يجب إنجازها فوراً)
+### 🎯 P0 - Critical
 
-### 🔥 P1 - High Priority (الأسبوع الحالي)
+Immediate execution required; foundational stability.
 
-### 📋 P2 - Medium Priority (الأسبوعين القادمين)
+### 🔥 P1 - High Priority
 
-### 💡 P3 - Low Priority (الشهر القادم)
+Targeted for the current operational week.
+
+### 📋 P2 - Medium Priority
+
+Targeted for the subsequent two-week window.
+
+### 💡 P3 - Low Priority
+
+Targeted for the next monthly horizon.
 
 ---
 
-## ✅ Phase 0: Strategic Foundation & Documentation (Dec 2025) - COMPLETED
+## ✅ Phase 0: Strategic Foundation and Documentation (Dec 2025) - COMPLETED
 
-**This phase has been successfully executed to establish the theoretical and strategic groundwork for the project.**
+**This phase established the theoretical and strategic groundwork for the project lifecycle.**
 
 ### 🏆 Strategic Achievements
 
 **TASK-000-A: Strategic Documentation Framework**
 
-- **Status:** ✅ Completed
-- **Output:** 57 Enterprise-Grade Documents
-- **Scope:** Phases 0-9 (Inception to Exit)
-- **Details:**
+- **Status**: ✅ Completed
+- **Output**: 57 high-fidelity artifacts covering lifecycle phases 0-9.
+- **Coverage**:
   - [x] Phase 0: Inception (10 docs)
   - [x] Phase 1: Discovery (10 docs)
   - [x] Phase 2: Governance (9 docs)
@@ -63,753 +70,197 @@
 
 **TASK-000-B: Project Alignment Analysis**
 
-- **Status:** ✅ Completed
-- **Output:** `01_ALIGNMENT_REPORT.md` & `Implementation_Status.md`
-- **Findings:**
-  - [x] Verified 98% Test Pass Rate (886+ tests)
-  - [x] Verified 100% WCAG Compliance
-  - [x] Identified Backend Gap (Flutter MVP vs Go Target)
-  - [x] Reconciled Strategic Vision with Actual Implementation
+- **Status**: ✅ Completed
+- **Output**: `01_ALIGNMENT_REPORT.md` & `Implementation_Status.md`
+- **Key Findings**:
+  - [x] Verified 98% Test Pass Rate (886+ units).
+  - [x] Verified 100% WCAG Accessibility Compliance.
+  - [x] Identified architectural gap (Flutter MVP vs. Go Backend target).
+  - [x] Reconciled strategic vision with live implementation reality.
 
-**TASK-000-C: Core Definitions (Ready for Implementation)**
+**TASK-000-C: Core Design Definitions**
 
-- **Status:** ✅ Completed
-- **Outputs:**
-  - [x] Data Models Defined (See `01_Database_Design.md`)
-  - [x] OKRs Defined (See `09_Initial_Success_Metrics.md`)
-  - [x] Security Architecture Defined (See `03_Security_Architecture.md`)
-  - [x] ZATCA Compliance Spec Defined (See `05_ZATCA_Compliance.md`)
+- **Status**: ✅ Completed
+- **Outputs**:
+  - [x] Data Models Defined (`01_Database_Design.md`).
+  - [x] OKRs Established (`09_Initial_Success_Metrics.md`).
+  - [x] Security Architecture Validated (`03_Security_Architecture.md`).
+  - [x] ZATCA Compliance Specifications Integrated (`05_ZATCA_Compliance.md`).
 
 ---
 
-## Q1 2026: MVP Launch & Product-Market Fit
+## Q1 2026: MVP Launch and Product-Market Fit
 
-### Sprint 1 (1-14 يناير 2026): Foundation Setup
+### Sprint 1 (Jan 1–14, 2026): Foundation Setup
 
 #### 🎯 P0 Tasks
 
-**TASK-001: إنشاء Strategic Dashboard**
+**TASK-001: Strategic Dashboard Synthesis**
 
-- **الوصف:** إنشاء dashboard استراتيجي في Notion لتتبع جميع المقاييس
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 3 أيام
-- **التبعيات:** لا يوجد
-- **المخرجات:**
-  - Dashboard جاهز في Notion
-  - جميع الأقسام محددة
-  - Templates جاهزة
-- **معايير القبول:**
-  - [ ] Dashboard يعمل ويمكن الوصول إليه
-  - [ ] جميع الأقسام موجودة
-  - [ ] Templates قابلة للاستخدام
+- **Description**: Consolidate strategic metrics into a centralized Notion workspace.
+- **Owner**: Management Agent.
+- **Duration**: 3 Days.
+- **Deliverables**: Centralized Notion Dashboard with all strategic nodes.
+- **Acceptance Criteria**: Accessible, multi-dimensional views, template-driven logic.
 
-**TASK-002: تحديد OKRs Q1**
+**TASK-002: Define Q1 OKRs**
 
-- **الوصف:** تحديد Objectives و Key Results للربع الأول
-- **المسؤول:** وكيل اتخاذ القرار
-- **المدة:** 2 يوم
-- **التبعيات:** TASK-001
-- **المخرجات:**
-  - 3-5 Objectives محددة
-  - 3-5 Key Results لكل Objective
-  - Baseline و Target لكل KR
-- **معايير القبول:**
-  - [ ] OKRs محددة وموثقة
-  - [ ] جميع الأرقام واضحة
-  - [ ] الفريق متفق عليها
+- **Description**: Establish Objectives and Key Results for the first quarter.
+- **Owner**: Decision-Making Agent.
+- **Duration**: 2 Days.
+- **Deliverables**: 3–5 Objectives with 3–5 Key Results per objective (Targets + Baselines).
+- **Acceptance Criteria**: Documented, numerical clarity, organizational alignment.
 
-**TASK-003: إعداد Data Models**
+**TASK-003: Data Model Finalization**
 
-- **الوصف:** إنشاء جميع نماذج البيانات المطلوبة
-- **المسؤول:** وكيل التطوير
-- **المدة:** 2 يوم
-- **التبعيات:** TASK-002
-- **المخرجات:**
-  - 9 Data Models موثقة
-  - Schema لكل model
-  - Examples لكل model
-- **معايير القبول:**
-  - [ ] جميع Models موثقة
-  - [ ] Schema واضحة
-  - [ ] Examples موجودة
+- **Description**: Finalize all core strategic data models.
+- **Owner**: Development Agent.
+- **Duration**: 2 Days.
+- **Deliverables**: 9 standardized data models with schemas and examples.
+- **Acceptance Criteria**: Fully documented schemas, verified relationship mapping.
 
-**TASK-004: إعداد Tracking System**
+**TASK-004: Tracking System Implementation**
 
-- **الوصف:** إعداد نظام تتبع أساسي للمقاييس
-- **المسؤول:** وكيل التطوير
-- **المدة:** 3 أيام
-- **التبعيات:** TASK-003
-- **المخرجات:**
-  - نظام تتبع يعمل
-  - Integration مع Dashboard
-  - Automated updates
-- **معايير القبول:**
-  - [ ] النظام يعمل
-  - [ ] البيانات تتحدث تلقائياً
-  - [ ] Dashboard يعرض البيانات
+- **Description**: Implement the baseline metrics tracking infrastructure.
+- **Owner**: Development Agent.
+- **Duration**: 3 Days.
+- **Deliverables**: Operational tracking engine with dashboard integration.
+- **Acceptance Criteria**: Verified data ingestion and automated dashboard updates.
 
 #### 🔥 P1 Tasks
 
-**TASK-005: إكمال الميزات الأساسية**
+**TASK-005: Core MVP Feature Stabilization**
 
-- **الوصف:** إكمال جميع ميزات MVP الأساسية
-- **المسؤول:** وكيل التطوير
-- **المدة:** 5 أيام
-- **التبعيات:** لا يوجد
-- **المخرجات:**
-  - جميع الميزات تعمل
-  - Bugs حرجة مصلحة
-  - Performance محسّن
-- **معايير القبول:**
-  - [ ] 0 bugs حرجة
-  - [ ] جميع الميزات تعمل
-  - [ ] App startup < 2s
+- **Description**: Address remaining gaps in core MVP functional logic.
+- **Owner**: Development Agent.
+- **Duration**: 5 Days.
+- **Deliverables**: Bug-free core features, performance-optimized workflows.
+- **Acceptance Criteria**: 0 critical bugs, verified Cold Start < 2s.
 
-**TASK-006: اختبارات شاملة**
+**TASK-006: Comprehensive Test Coverage**
 
-- **الوصف:** كتابة وتشغيل اختبارات شاملة
-- **المسؤول:** وكيل الاختبار
-- **المدة:** 4 أيام
-- **التبعيات:** TASK-005
-- **المخرجات:**
-  - Test coverage > 70%
-  - جميع الاختبارات تنجح
-  - تقرير اختبارات
-- **معايير القبول:**
-  - [ ] Coverage > 70%
-  - [ ] 100% pass rate
-  - [ ] تقرير موثق
+- **Description**: Execute and stabilize the high-fidelity test suite.
+- **Owner**: QA/Testing Agent.
+- **Duration**: 4 Days.
+- **Deliverables**: Test coverage > 70%, 100% unit/integration pass rate.
+- **Acceptance Criteria**: Verified coverage reports, clean green build.
 
-### Sprint 2 (15-31 يناير 2026): Enhanced Onboarding
+---
+
+### Sprint 2 (Jan 15–31, 2026): Enhanced Onboarding
 
 #### 🎯 P0 Tasks
 
-**TASK-007: تصميم Onboarding Flow**
+**TASK-007: Onboarding Flow Optimization**
 
-- **الوصف:** تصميم تجربة onboarding محسّنة (4 خطوات)
-- **المسؤول:** وكيل اتخاذ القرار
-- **المدة:** 2 يوم
-- **التبعيات:** لا يوجد
-- **المخرجات:**
-  - Flow diagram
-  - Wireframes
-  - User stories
-- **معايير القبول:**
-  - [ ] Flow واضح
-  - [ ] Wireframes جاهزة
-  - [ ] User stories محددة
+- **Description**: Design a high-conversion, 4-step onboarding journey.
+- **Owner**: UX/Decision Agent.
+- **Duration**: 2 Days.
+- **Deliverables**: Logic flows, high-fidelity wireframes, and user stories.
+- **Acceptance Criteria**: Optimized journey logic, verified wireframe feasibility.
 
-**TASK-008: تطوير Onboarding System**
+**TASK-008: Onboarding System Engineering**
 
-- **الوصف:** تطوير نظام onboarding كامل
-- **المسؤول:** وكيل التطوير
-- **المدة:** 5 أيام
-- **التبعيات:** TASK-007
-- **المخرجات:**
-  - 4 خطوات onboarding
-  - Welcome video
-  - Quick setup
-  - First success experience
-- **معايير القبول:**
-  - [ ] جميع الخطوات تعمل
-  - [ ] Time to first invoice < 5 min
-  - [ ] Activation rate > 80%
+- **Description**: Implement the optimized 4-step onboarding engine.
+- **Owner**: Development Agent.
+- **Duration**: 5 Days.
+- **Deliverables**: Integrated onboarding UI, quick-setup wizard, "First Success" experience.
+- **Acceptance Criteria**: Seamless flow, "Time-to-First-Invoice" < 5 mins, Target Activation > 80%.
 
-**TASK-009: اختبار Onboarding**
+---
 
-- **الوصف:** اختبار شامل لنظام onboarding
-- **المسؤول:** وكيل الاختبار
-- **المدة:** 2 يوم
-- **التبعيات:** TASK-008
-- **المخرجات:**
-  - اختبارات unit
-  - اختبارات widget
-  - اختبارات integration
-- **معايير القبول:**
-  - [ ] جميع الاختبارات تنجح
-  - [ ] لا bugs
-  - [ ] Performance جيد
-
-### Sprint 3 (1-14 فبراير 2026): Beta Program Launch
+### Sprint 3 (Feb 1–14, 2026): Beta Program Launch
 
 #### 🎯 P0 Tasks
 
-**TASK-010: إعداد Beta Program**
+**TASK-010: Beta Program Architecture**
 
-- **الوصف:** إعداد برنامج beta testing كامل
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 3 أيام
-- **التبعيات:** TASK-009
-- **المخرجات:**
-  - معايير اختيار beta testers
-  - نماذج تسجيل
-  - خطة communication
-- **معايير القبول:**
-  - [ ] المعايير واضحة
-  - [ ] النماذج جاهزة
-  - [ ] الخطة موثقة
+- **Description**: Define the infrastructure for the high-intensity beta testing phase.
+- **Owner**: Management Agent.
+- **Duration**: 3 Days.
+- **Deliverables**: Selection criteria, registration handlers, and communication roadmap.
+- **Acceptance Criteria**: Transparent criteria, operational registration nodes.
 
-**TASK-011: دعوة Beta Testers**
+---
 
-- **الوصف:** دعوة 100 مستخدم مختار للبرنامج
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 2 يوم
-- **التبعيات:** TASK-010
-- **المخرجات:**
-  - 100 دعوة مرسلة
-  - تتبع الاستجابات
-  - onboarding للمقبولين
-- **معايير القبول:**
-  - [ ] 100 دعوة مرسلة
-  - [ ] 50+ استجابة
-  - [ ] 30+ مقبول
-
-**TASK-012: إنشاء مجموعة Telegram**
-
-- **الوصف:** إنشاء مجموعة دعم للـ beta testers
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 1 يوم
-- **التبعيات:** TASK-011
-- **المخرجات:**
-  - مجموعة Telegram
-  - قواعد المجموعة
-  - welcome message
-- **معايير القبول:**
-  - [ ] المجموعة جاهزة
-  - [ ] القواعد واضحة
-  - [ ] جميع beta testers مضافين
-
-**TASK-013: إعداد نظام Analytics**
-
-- **الوصف:** إعداد نظام analytics محلي
-- **المسؤول:** وكيل التطوير
-- **المدة:** 4 أيام
-- **التبعيات:** لا يوجد
-- **المخرجات:**
-  - نظام analytics محلي
-  - opt-in telemetry
-  - privacy-first approach
-- **معايير القبول:**
-  - [ ] النظام يعمل
-  - [ ] لا بيانات شخصية ترسل
-  - [ ] المستخدم يتحكم
-
-**TASK-014: إعداد نماذج Feedback**
-
-- **الوصف:** إعداد نماذج لجمع feedback
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 1 يوم
-- **التبعيات:** لا يوجد
-- **المخرجات:**
-  - نماذج Google Forms
-  - in-app surveys
-  - interview questions
-- **معايير القبول:**
-  - [ ] النماذج جاهزة
-  - [ ] سهلة الاستخدام
-  - [ ] تغطي جميع الجوانب
-
-### Sprint 4 (15-28 فبراير 2026): Feedback Collection
-
-#### 🔥 P1 Tasks
-
-**TASK-015: جمع Feedback مكثف**
-
-- **الوصف:** جمع feedback من beta testers
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 10 أيام
-- **التبعيات:** TASK-014
-- **المخرجات:**
-  - 50+ استجابة للنماذج
-  - 10-15 مقابلة
-  - تحليل البيانات
-- **معايير القبول:**
-  - [ ] 50+ استجابة
-  - [ ] 10+ مقابلة
-  - [ ] تحليل مكتمل
-
-**TASK-016: إصلاح Bugs المكتشفة**
-
-- **الوصف:** إصلاح جميع bugs المبلغ عنها
-- **المسؤول:** وكيل التطوير
-- **المدة:** 5 أيام
-- **التبعيات:** TASK-015
-- **المخرجات:**
-  - جميع bugs مصلحة
-  - اختبارات للـ fixes
-  - تحديث للمستخدمين
-- **معايير القبول:**
-  - [ ] 0 bugs حرجة
-  - [ ] جميع الاختبارات تنجح
-  - [ ] المستخدمون راضون
-
-**TASK-017: تحليل بيانات الاستخدام**
-
-- **الوصف:** تحليل بيانات استخدام beta testers
-- **المسؤول:** وكيل التحليل
-- **المدة:** 3 أيام
-- **التبعيات:** TASK-015
-- **المخرجات:**
-  - تقرير تحليل
-  - insights رئيسية
-  - توصيات
-- **معايير القبول:**
-  - [ ] التقرير مكتمل
-  - [ ] Insights واضحة
-  - [ ] توصيات قابلة للتنفيذ
-
-### Sprint 5 (1-14 مارس 2026): Major Improvements
+### Sprint 7 (Apr 1–14, 2026): Grand Launch
 
 #### 🎯 P0 Tasks
 
-**TASK-018: تحسينات UX**
+**TASK-026: Public App Store Deployment**
 
-- **الوصف:** تنفيذ تحسينات UX بناءً على feedback
-- **المسؤول:** وكيل التطوير
-- **المدة:** 5 أيام
-- **التبعيات:** TASK-017
-- **المخرجات:**
-  - تحسينات UI/UX
-  - تحسين navigation
-  - تحسين performance
-- **معايير القبول:**
-  - [ ] جميع التحسينات منفذة
-  - [ ] User satisfaction أعلى
-  - [ ] Performance أفضل
+- **Description**: Official release of the Basir MVP to Apple App Store and Google Play Store.
+- **Owner**: Management Agent.
+- **Duration**: 1 Day.
+- **Deliverables**: Production app availability, press releases, social announcements.
+- **Acceptance Criteria**: App available for download, synchronized media launch.
 
-**TASK-019: تحسين قوالب الفواتير**
+**TASK-027: TikTok Growth Campaign**
 
-- **الوصف:** تحسين وإضافة قوالب فواتير
-- **المسؤول:** وكيل التطوير
-- **المدة:** 3 أيام
-- **التبعيات:** لا يوجد
-- **المخرجات:**
-  - 5 قوالب جديدة
-  - تحسين القوالب الموجودة
-  - محرر قوالب
-- **معايير القبول:**
-  - [ ] 5 قوالب جديدة
-  - [ ] جودة عالية
-  - [ ] سهلة التخصيص
+- **Description**: Launch of a focused growth campaign on TikTok.
+- **Owner**: Growth Agent.
+- **Duration**: 10 Days.
+- **Deliverables**: 10 promotional videos, managed ad campaign, performance data.
+- **Acceptance Criteria**: Verified impressions (1000+) and acquisition conversion.
 
-**TASK-020: إضافة ميزات صغيرة مطلوبة**
+---
 
-- **الوصف:** إضافة ميزات صغيرة طلبها المستخدمون
-- **المسؤول:** وكيل التطوير
-- **المدة:** 4 أيام
-- **التبعيات:** TASK-017
-- **المخرجات:**
-  - 3-5 ميزات صغيرة
-  - اختبارات
-  - توثيق
-- **معايير القبول:**
-  - [ ] الميزات تعمل
-  - [ ] مختبرة
-  - [ ] موثقة
+## Q3–Q4 2026: Scaling and Regional Preparation
 
-### Sprint 6 (15-31 مارس 2026): Pre-Launch Preparation
+### Sprint 13–18 (July–December 2026): Local Domination & Regional Pre-flight
 
 #### 🎯 P0 Tasks
 
-**TASK-021: إعداد مواد التسويق**
+**TASK-031: Achievement of KSA Product-Market Fit**
 
-- **الوصف:** إعداد جميع مواد التسويق للإطلاق
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 5 أيام
-- **التبعيات:** لا يوجد
-- **المخرجات:**
-  - Landing page
-  - App Store listings
-  - Social media content
-  - Press kit
-- **معايير القبول:**
-  - [ ] جميع المواد جاهزة
-  - [ ] جودة احترافية
-  - [ ] متسقة مع Brand
+- **Objective**: Scale to 30k MAU and 1,500 Premium subscribers.
+- **Outputs**: MAU > 30k, MRR > $15k, NPS > 50.
 
-**TASK-022: إنشاء فيديوهات تعليمية**
+**TASK-032: Regional Market Forensics**
 
-- **الوصف:** إنشاء فيديوهات تعليمية للمستخدمين
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 4 أيام
-- **التبعيات:** لا يوجد
-- **المخرجات:**
-  - 5 فيديوهات تعليمية
-  - welcome video
-  - tutorial videos
-- **معايير القبول:**
-  - [ ] 5 فيديوهات جاهزة
-  - [ ] جودة عالية
-  - [ ] واضحة ومفيدة
+- **Objective**: Comprehensive analysis of UAE, Egypt, and Jordan markets.
+- **Outputs**: Market-specific tax, competitor, and regulatory reports.
 
-**TASK-023: تحسين App Store Listings**
+**TASK-033: Regional Localization Engine Development**
 
-- **الوصف:** تحسين listings في App Store و Play Store
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 2 يوم
-- **التبعيات:** TASK-021
-- **المخرجات:**
-  - App Store listing محسّن
-  - Play Store listing محسّن
-  - Screenshots احترافية
-  - Description محسّن
-- **معايير القبول:**
-  - [ ] Listings محسّنة
-  - [ ] Screenshots جذابة
-  - [ ] Description واضح
-
-**TASK-024: بناء شراكات أولية**
-
-- **الوصف:** بناء شراكات مع 2-3 حاضنات
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 5 أيام
-- **التبعيات:** لا يوجد
-- **المخرجات:**
-  - 2-3 شراكات
-  - اتفاقيات موقعة
-  - خطة تعاون
-- **معايير القبول:**
-  - [ ] 2+ شراكات
-  - [ ] اتفاقيات واضحة
-  - [ ] خطة محددة
-
-**TASK-025: إعداد Metrics Dashboard**
-
-- **الوصف:** إعداد dashboard لتتبع جميع المقاييس
-- **المسؤول:** وكيل التطوير
-- **المدة:** 3 أيام
-- **التبعيات:** لا يوجد
-- **المخرجات:**
-  - Dashboard يعمل
-  - جميع المقاييس متصلة
-  - real-time updates
-- **معايير القبول:**
-  - [ ] Dashboard جاهز
-  - [ ] البيانات دقيقة
-  - [ ] Updates فورية
+- **Objective**: Engineering the multi-market adapter engine.
+- **Outputs**: Tax Adapters (VAT/Sales Tax), Multi-currency manager, Cultural localized assets.
 
 ---
 
-## Q2 2026: Early Adoption & Growth
+## 2027 Horizon: Regional Expansion
 
-### Sprint 7 (1-14 أبريل 2026): Grand Launch
+### Q1 2027: UAE Launch
 
-#### 🎯 P0 Tasks
+- Targeting 5k MAU with full FTA compliance integration.
 
-**TASK-026: إطلاق عام في App Stores**
+### Q2–Q3 2027: Egypt and Jordan Expansion
 
-- **الوصف:** إطلاق التطبيق رسمياً في App Store و Play Store
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 1 يوم
-- **التبعيات:** جميع مهام Q1
-- **المخرجات:**
-  - التطبيق متاح للتحميل
-  - Press release
-  - Social media announcement
-- **معايير القبول:**
-  - [ ] التطبيق متاح
-  - [ ] Press release منشور
-  - [ ] Announcement منشور
-
-**TASK-027: حملة تسويقية على TikTok**
-
-- **الوصف:** إطلاق حملة تسويقية مركزة على TikTok
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 10 أيام
-- **التبعيات:** TASK-026
-- **المخرجات:**
-  - 10 فيديوهات TikTok
-  - حملة إعلانية
-  - تتبع النتائج
-- **معايير القبول:**
-  - [ ] 10 فيديوهات منشورة
-  - [ ] 1000+ views
-  - [ ] 100+ تحميل
-
-**TASK-028: إطلاق برنامج الإحالة**
-
-- **الوصف:** إطلاق برنامج إحالة للمستخدمين
-- **المسؤول:** وكيل التطوير
-- **المدة:** 3 أيام
-- **التبعيات:** TASK-026
-- **المخرجات:**
-  - نظام إحالة يعمل
-  - مكافآت واضحة
-  - تتبع الإحالات
-- **معايير القبول:**
-  - [ ] النظام يعمل
-  - [ ] المكافآت جذابة
-  - [ ] التتبع دقيق
-
-#### 🔥 P1 Tasks
-
-**TASK-029: عروض إطلاق خاصة**
-
-- **الوصف:** تقديم عروض خاصة للمستخدمين الأوائل
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 2 يوم
-- **التبعيات:** TASK-026
-- **المخرجات:**
-  - عروض محددة
-  - شروط واضحة
-  - communication plan
-- **معايير القبول:**
-  - [ ] العروض جذابة
-  - [ ] الشروط واضحة
-  - [ ] الخطة محددة
-
-**TASK-030: Press Releases**
-
-- **الوصف:** إرسال press releases للمواقع التقنية
-- **المسؤول:** وكيل الإدارة
-- **المدة:** 2 يوم
-- **التبعيات:** TASK-026
-- **المخرجات:**
-  - 5 press releases
-  - تغطية إعلامية
-  - backlinks
-- **معايير القبول:**
-  - [ ] 5 releases مرسلة
-  - [ ] 2+ تغطية
-  - [ ] traffic increase
+- **Egypt**: Target 10k users with full ETA (Electronic Tax Authority) integration.
+- **Jordan**: Target 3k users with full ISTD compliance.
 
 ---
 
-## Q3-Q4 2026: Scale & Regional Preparation
+## Task Progress Indicators
 
-### Sprint 13-18 (يوليو - ديسمبر 2026): التوسع المحلي وتحضير التوسع الإقليمي
-
-#### 🎯 P0 Tasks
-
-**TASK-031: تحقيق Product-Market Fit السعودي**
-
-- **الوصف:** الوصول لـ 30,000 مستخدم نشط و1,500 مشترك Premium
-- **المسؤول:** فريق النمو
-- **المدة:** 6 أشهر
-- **المخرجات:**
-  - 30,000 مستخدم نشط
-  - MRR > $15,000
-  - NPS > 50
-- **معايير القبول:**
-  - [ ] الأهداف المالية محققة
-  - [ ] الاستقرار التقني مثبت
-  - [ ] قاعدة مستخدمين راضين
-
-**TASK-032: دراسة الأسواق الإقليمية**
-
-- **الوصف:** تحليل شامل لأسواق الإمارات ومصر والأردن
-- **المسؤول:** وكيل التحليل
-- **المدة:** 3 أشهر
-- **المخرجات:**
-  - تقرير تحليل سوق الإمارات
-  - تقرير تحليل سوق مصر
-  - تقرير تحليل سوق الأردن
-- **معايير القبول:**
-  - [ ] متطلبات ضريبية محددة
-  - [ ] منافسون محللون
-  - [ ] فرص وتحديات موثقة
-
-**TASK-033: بناء Regional Localization Engine**
-
-- **الوصف:** تطوير محرك التوطين الإقليمي
-- **المسؤول:** وكيل التطوير
-- **المدة:** 4 أشهر
-- **المخرجات:**
-  - Tax System Adapter
-  - Currency Manager
-  - Cultural Localizer
-- **معايير القبول:**
-  - [ ] دعم UAE VAT
-  - [ ] دعم عملات متعددة
-  - [ ] قوالب إقليمية جاهزة
+- ⏳ **Not Started**: Task defined but not initiated.
+- 🔄 **In Progress**: Active execution.
+- ✅ **Completed**: Deliverables verified and approved.
+- ⚠️ **Blocked**: Execution halted due to external dependencies.
+- ❌ **Cancelled**: Task removed from the current strategic roadmap.
 
 ---
 
-## السنة الثانية 2027: التوسع الإقليمي
+## Resource Ownership
 
-### الربع الأول (Q1 2027): إطلاق الإمارات
-
-**TASK-034: إطلاق في سوق الإمارات**
-
-- **الأهداف:** 5,000 مستخدم، تكامل FTA كامل
-
-### الربع الثاني-الثالث (Q2-Q3 2027): إطلاق مصر والأردن
-
-**TASK-035: إطلاق في مصر**
-
-- **الأهداف:** 10,000 مستخدم، تكامل ETA كامل
-
-**TASK-036: إطلاق في الأردن**
-
-- **الأهداف:** 3,000 مستخدم، تكامل ISTD كامل
-
-### الربع الرابع (Q4 2027): تقييم وتخطيط
-
-**TASK-037: تقييم التوسع وتخطيط 2028**
-
-- **الأهداف:** تقييم الأداء الإقليمي، خطة السنة الثالثة
+- **Management Agent**: Strategic orchestration, communication, marketing, and partnerships.
+- **Development Agent**: Feature implementation, diagnostic resolution, performance engineering, and integration.
+- **QA/Testing Agent**: Test engineering, quality audits, regression testing, and security verification.
+- **Analytical Agent**: Data forensics, performance reporting, insight generation, and strategic recommendations.
+- **Decision Agent**: Strategic pivots, prioritization management, conflict resolution, and formal approvals.
 
 ---
 
-## Task Tracking
-
-### Status Indicators
-
-- ⏳ **Not Started** - لم تبدأ بعد
-- 🔄 **In Progress** - قيد التنفيذ
-- ✅ **Completed** - مكتملة
-- ⚠️ **Blocked** - محجوبة
-- ❌ **Cancelled** - ملغاة
-
-### Priority Matrix
-
-```
-High Impact │ 🎯 P0  │ 🔥 P1
-            │        │
-Low Impact  │ 📋 P2  │ 💡 P3
-            └────────┴────────
-             Urgent   Not Urgent
-```
-
-### Weekly Sprint Planning
-
-**كل اثنين:**
-
-1. مراجعة المهام المكتملة
-2. تحديد مهام الأسبوع
-3. تحديد المسؤوليات
-4. تحديد العوائق
-
-**كل جمعة:**
-
-1. مراجعة التقدم
-2. تحديث الحالة
-3. تحديد المشاكل
-4. تخطيط الأسبوع القادم
-
----
-
-## Dependencies Map
-
-```
-TASK-001 (Dashboard)
-    ↓
-TASK-002 (OKRs)
-    ↓
-TASK-003 (Data Models)
-    ↓
-TASK-004 (Tracking)
-
-TASK-005 (Features)
-    ↓
-TASK-006 (Testing)
-
-TASK-007 (Onboarding Design)
-    ↓
-TASK-008 (Onboarding Dev)
-    ↓
-TASK-009 (Onboarding Test)
-    ↓
-TASK-010 (Beta Program)
-    ↓
-TASK-011 (Beta Invites)
-    ↓
-TASK-012 (Telegram Group)
-
-TASK-015 (Feedback)
-    ↓
-TASK-016 (Bug Fixes)
-TASK-017 (Analysis)
-    ↓
-TASK-018 (UX Improvements)
-TASK-020 (Small Features)
-
-TASK-021 (Marketing Materials)
-    ↓
-TASK-023 (App Store)
-
-All Q1 Tasks
-    ↓
-TASK-026 (Launch)
-    ↓
-TASK-027 (TikTok Campaign)
-TASK-028 (Referral Program)
-```
-
----
-
-## Resource Allocation
-
-### وكيل الإدارة
-
-- إدارة المشروع
-- التواصل
-- التسويق
-- الشراكات
-
-### وكيل التطوير
-
-- تطوير الميزات
-- إصلاح Bugs
-- تحسين الأداء
-- Integration
-
-### وكيل الاختبار
-
-- كتابة الاختبارات
-- تشغيل الاختبارات
-- تقارير الجودة
-- Regression testing
-
-### وكيل التحليل
-
-- تحليل البيانات
-- تقارير الأداء
-- Insights
-- Recommendations
-
-### وكيل اتخاذ القرار
-
-- القرارات الاستراتيجية
-- تحديد الأولويات
-- حل المشاكل
-- Approvals
-
----
-
-## Success Metrics per Sprint
-
-### Sprint 1-2 (يناير)
-
-- Dashboard جاهز ✅
-- OKRs محددة ✅
-- Onboarding يعمل ✅
-- Test coverage > 70% ✅
-
-### Sprint 3-4 (فبراير)
-
-- 100 beta testers ✅
-- 50+ feedback responses ✅
-- NPS > 50 ✅
-- 0 critical bugs ✅
-
-### Sprint 5-6 (مارس)
-
-- UX محسّن ✅
-- Marketing materials جاهزة ✅
-- 2+ partnerships ✅
-- Ready for launch ✅
-
-### Sprint 7+ (أبريل)
-
-- 1,000 downloads ✅
-- 500 active users ✅
-- 100+ referrals ✅
-- Media coverage ✅
-
----
-
-**تم إعداده بواسطة:** فريق وكلاء تطوير مشروع بصير  
-**التاريخ:** 6 ديسمبر 2025  
-**الإصدار:** 1.0  
-**الحالة:** ✅ نشط ومعتمد
+**Last Updated**: December 26, 2025  
+**Updated by**: Basir Project Agentic Development Team  
+**Status**: ✅ Active - Strategic Horizon 1 (Dec 2025) Successfully Reached

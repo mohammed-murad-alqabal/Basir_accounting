@@ -1,70 +1,75 @@
-# معايير الكود ونظام التصميم لمشروع Basir MVP
+# Coding Standards: Basir Accounting System MVP
 
-**التاريخ:** 17 نوفمبر 2025
-**المؤلف:** فريق وكلاء تطوير مشروع بصير
-**الهدف:** ضمان أعلى مستويات الجودة، القراءة، والصيانة للكود المصدري، وتوحيد الهوية البصرية للتطبيق.
-
----
-
-## 1. نظام التصميم (Design System)
-
-تم اختيار نظام تصميم يجمع بين الاحترافية، الراحة البصرية، والتركيز على الوظيفة الأساسية للتطبيق.
-
-### 1.1. لوحة الألوان (Color Palette)
-
-تم اختيار الألوان بناءً على مبدأ **الهدوء والثقة**، مع التركيز على التباين العالي لسهولة القراءة.
-
-| المتغير              | القيمة (Hex) | الوصف                                        |
-| :------------------- | :----------- | :------------------------------------------- |
-| **Primary Color**    | `#007BFF`    | الأزرق الأساسي (الثقة، الاحترافية، الوضوح).  |
-| **Secondary Color**  | `#28A745`    | الأخضر الثانوي (النجاح، الإيجابية، التأكيد). |
-| **Background Color** | `#F8F9FA`    | الخلفية الفاتحة (النظافة، التركيز).          |
-| **Surface Color**    | `#FFFFFF`    | لون الأسطح (البطاقات، النماذج).              |
-| **Error Color**      | `#DC3545`    | لون الخطأ (التنبيه، الإخفاق).                |
-| **Text Primary**     | `#212529`    | لون النص الأساسي (داكن جداً).                |
-| **Text Secondary**   | `#6C757D`    | لون النص الثانوي (للتفاصيل).                 |
-
-### 1.2. الطباعة (AppTypography.
-
-- **الخط العربي:** سيتم استخدام خط **Cairo** (أو خط نظام التشغيل الافتراضي في حالة عدم التوفر) لضمان الوضوح والاحترافية في القراءة العربية.
-- **الخط الإنجليزي:** سيتم استخدام خط **Roboto** (أو خط نظام التشغيل الافتراضي).
-- **الاتجاه:** دعم كامل لـ **RTL (Right-to-Left)** لجميع الواجهات.
+**Date:** November 17, 2025  
+**Author:** Basir Project Agentic Development Team  
+**Objective**: Ensure the highest standards of code quality, readability, maintainability, and visual consistency across the source codebase.
 
 ---
 
-## 2. معايير الكود (Coding Standards)
+## 1. Design System Alignment
 
-هذه المعايير تضمن أن الكود المكتوب في طبقة `Presentation` يتبع أفضل ممارسات Flutter و Clean Architecture.
+Our design system prioritizes professional technical clarity, visual ergonomics, and high-fidelity functional focus.
 
-### 2.1. إدارة الحالة (State Management)
+### 1.1. Core Color Palette
 
-- **الأداة المعتمدة:** **Riverpod** (مع `flutter_riverpod`).
-- **القاعدة:** يجب أن تكون جميع البيانات التي يتم استهلاكها في الواجهات (UI) مُقدمة عبر `Provider` من Riverpod.
-- **الفصل:** يجب أن يتم فصل منطق الأعمال (Business Logic) تماماً عن الواجهة (UI) باستخدام `StateNotifierProvider` أو `NotifierProvider`.
+Values are selected to ensure high contrast and psychological alignment with financial reliability.
 
-### 2.2. هيكلة الواجهة (UI Structure)
+| Token              | Hex Value | Strategic Utiltization                       |
+| :----------------- | :-------- | :------------------------------------------- |
+| **Primary**        | `#007BFF` | Blue: Represents trust, technical authority. |
+| **Secondary**      | `#28A745` | Green: Represents success and completion.    |
+| **Background**     | `#F8F9FA` | Light Gray: Maximizes content prominence.    |
+| **Surface**        | `#FFFFFF` | White: Used for card and form containers.    |
+| **Error**          | `#DC3545` | Red: Represents failure and critical alerts. |
+| **Text Primary**   | `#212529` | Rich Black: Primary data and headers.        |
+| **Text Secondary** | `#6C757D` | Medium Gray: Secondary metadata.             |
 
-- **تقسيم الـ Widgets:** يجب تقسيم كل شاشة معقدة إلى **Widgets صغيرة قابلة لإعادة الاستخدام (Reusable Widgets)**.
-  - **القاعدة:** لا يجب أن تتجاوز دالة `build` الواحدة 50 سطرًا من الكود.
-  - **التسمية:** يجب أن تكون أسماء ملفات الـ Widgets بـ `snake_case` (مثال: `customer_card.dart`)، وأسماء الفئات بـ `PascalCase` (مثال: `CustomerCard`).
-- **الواجهات الثابتة (Stateless Widgets):** يجب استخدام `StatelessWidget` قدر الإمكان.
-- **الواجهات الديناميكية (Stateful Widgets):** يجب استخدام `ConsumerWidget` أو `ConsumerStatefulWidget` للواجهات التي تحتاج إلى التفاعل مع Riverpod.
+### 1.2. Typography and Layout
 
-### 2.3. الثوابت والأبعاد (Constants & Dimensions)
-
-- **القاعدة:** يجب استخدام ملفات الثوابت المركزية (مثل `core/constants.dart`) لجميع الألوان، النصوص الثابتة، والأبعاد المتكررة (Padding, Margin).
-- **الاستخدام:** استخدام `SizedBox` بدلاً من `Padding` أو `Container` الفارغ لإنشاء مسافات عمودية أو أفقية.
-
-### 2.4. التعليقات والتوثيق (Comments & Documentation)
-
-- **القاعدة:** يجب توثيق جميع الفئات والدوال العامة (Public Classes and Methods) باستخدام تعليقات التوثيق (`///`).
-- **الوضوح:** يجب أن تكون التعليقات واضحة وموجزة وتشرح **لماذا** تم تنفيذ الكود بهذه الطريقة، وليس **ماذا** يفعل الكود.
+- **Arabic Font**: **Tajawal** or **Cairo** (Ensuring modern, high-legibility script).
+- **English Font**: **Roboto** (Material Design standard).
+- **Alignment**: Full **Right-to-Left (RTL)** support is mandatory for all interfaces.
 
 ---
 
-## 3. التطبيق والتنفيذ
+## 2. Engineering Standards
 
-1.  **تطبيق الثيم:** إنشاء ملف `theme.dart` في مجلد `core` وتطبيق لوحة الألوان والطباعة المحددة.
-2.  **تنظيف الواجهات:** مراجعة الواجهات الستة الحالية (Setup, Login, Dashboard, Customers, Invoices, Settings) وتطبيق معايير الكود الجديدة عليها.
-3.  **تطبيق نظام التصميم:** استبدال الألوان والخطوط الافتراضية بالقيم المحددة في `theme.dart`.
-4.  **الالتزام والرفع:** رفع التغييرات إلى المستودع.
+These standards govern the implementations within the `Presentation` and `Core` layers, following Flutter and Clean Architecture best practices.
+
+### 2.1. State Management (Riverpod)
+
+- **Orchestrator**: **Riverpod** is the exclusive state management engine.
+- **Data Access**: All UI consumption of data must occurs via Riverpod Providers.
+- **Logic Separation**: Business logic must be strictly decoupled from UI code utilizing `StateNotifierProvider` or `NotifierProvider`.
+
+### 2.2. Interface (UI) Architecture
+
+- **Widget Decomposition**: Complex screens must be decomposed into atomic, reusable sub-widgets.
+- **Constraint**: A single `build` method should not exceed **50 lines** of layout code.
+- **Naming Conventions**:
+  - **Files**: `snake_case` (e.g., `invoice_card.dart`).
+  - **Classes**: `PascalCase` (e.g., `InvoiceCard`).
+- **Widget Selection**: Use `StatelessWidget` by default. Use `ConsumerWidget` or `ConsumerStatefulWidget` only when Riverpod interaction is required.
+
+### 2.3. Constants and Geometry
+
+- **Centralization**: All colors, static strings, and dimensional tokens (Padding/Margin) must reside in `core/constants.dart`.
+- **Layout**: Use `SizedBox` for explicit spacing; avoid empty `Padding` or `Container` wrappers for geometry control.
+
+### 2.4. Source Documentation
+
+- **Obligation**: All public classes, methods, and providers must feature triple-slash (`///`) DartDoc documentation.
+- **Clarity**: Comments should explain the **rationale (why)** rather than the **implementation (what)**.
+
+---
+
+## 3. Implementation Workflow
+
+1.  **Theme Synthesis**: Maintain `theme.dart` within the `core` directory to centralize typography and palette logic.
+2.  **Interface Refinement**: Audit all MVP screens (Setup, Login, Dashboard, Customers, Invoices, Settings) against these standards.
+3.  **Governance**: Enforce zero-lint tolerance during the development lifecycle.
+
+---
+
+**Prepared by:** Basir Project Agentic Development Team  
+**Status:** ✅ Active Technical Baseline

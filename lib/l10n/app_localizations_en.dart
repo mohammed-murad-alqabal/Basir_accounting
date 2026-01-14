@@ -24,6 +24,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelAddCurrency => 'Add Currency';
 
   @override
+  String get labelPartner => 'Partner';
+
+  @override
+  String get labelAccountCode => 'Account Code';
+
+  @override
+  String get labelAccountName => 'Account Name';
+
+  @override
+  String get labelFairValueAdjustment => 'Fair Value Adjustment (IFRS 13)';
+
+  @override
+  String get subtitleFairValueAdjustment =>
+      'Use latest market prices for inventory';
+
+  @override
+  String get labelTotalAmount => 'Total Amount';
+
+  @override
+  String get msgBalanceBalancedTB => 'Balance is balanced (Balanced)';
+
+  @override
+  String get msgBalanceUnbalancedTB => 'Balance is unbalanced! Please review.';
+
+  @override
+  String get sectionBasicReports => 'Basic Reports';
+
+  @override
+  String get sectionFinancialStatements => 'Financial Statements (IAS 1/IFRS)';
+
+  @override
+  String get sectionAgingAnalysis => 'Aging Analysis';
+
+  @override
+  String get receivablesAgingTitle => 'Receivables Aging';
+
+  @override
+  String get payablesAgingTitle => 'Payables Aging';
+
+  @override
+  String get msgExportComingSoon => 'Export feature coming soon';
+
+  @override
   String get labelTermsAndConditions => 'Terms and Conditions';
 
   @override
@@ -34,6 +77,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelZatcaQrCode => 'QR Code (ZATCA)';
+
+  @override
+  String get labelZatcaUuid => 'ZATCA UUID';
+
+  @override
+  String get labelZatcaHash => 'Invoice Hash';
+
+  @override
+  String get labelTaxTotal => 'Total Tax';
+
+  @override
+  String get labelVatRate => 'VAT Rate';
 
   @override
   String get zatcaComplianceText =>
@@ -48,6 +103,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get noInvoicesDescription =>
       'Start by adding your first invoice to manage your sales professionally.';
+
+  @override
+  String get labelFromDate => 'From Date';
+
+  @override
+  String get labelToDate => 'To Date';
+
+  @override
+  String get labelAsOfDate => 'As of Date';
+
+  @override
+  String get tooltipUpdateReport => 'Update Report';
 
   @override
   String get journalEntryFormTitleAdd => 'Add Journal Entry';
@@ -355,6 +422,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dialogOk => 'OK';
+
+  @override
+  String get dialogCognitiveRejectionTitle => 'Transaction Rejected';
+
+  @override
+  String get dialogCognitiveRejectionMessage =>
+      'The Cognitive Hexagon has rejected this transaction. Review the agent consensus below:';
 
   @override
   String get dialogSave => 'Save';
@@ -931,6 +1005,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusPending => 'Pending';
 
   @override
+  String get statusRefunded => 'Refunded';
+
+  @override
   String get styleCompact => 'Compact';
 
   @override
@@ -1184,11 +1261,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get trialBalanceSubtitle => 'Verify balance of debits and credits';
 
   @override
-  String get incomeStatementSubtitle =>
-      'Summary of revenue and expenses by IFRS 18';
+  String get incomeStatementSubtitle => 'Summary of revenues and profitability';
 
   @override
-  String get balanceSheetSubtitle => 'State of assets, liabilities, and equity';
+  String get balanceSheetSubtitle =>
+      'Assets, liabilities, and equity (Fair Value supported)';
 
   @override
   String get cashFlowSubtitle =>
@@ -1196,7 +1273,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get agingReportsSubtitle =>
-      'Analyze age of customer and supplier balances';
+      'Analyze age of customer and vendor balances';
 
   @override
   String get agingReportsTitle => 'Aging Reports';
@@ -1380,6 +1457,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelNetProfit => 'Net Profit / Loss';
 
   @override
+  String get msgOperationSuccess => 'Operation completed successfully';
+
+  @override
   String get aboutAppSubtitle => 'Version 1.0.0';
 
   @override
@@ -1513,4 +1593,134 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errPermissionDenied =>
       'You do not have permission to perform this action';
+
+  @override
+  String get agentRationaleStandardsPassed =>
+      'Compliance verified: Journal entry adheres to (IFRS/SOCPA) standards.';
+
+  @override
+  String agentRationaleStandardsManualReview(Object type) {
+    return 'Warning: Transaction type ($type) requires manual review for standards compliance.';
+  }
+
+  @override
+  String get agentRationaleTaxNoId =>
+      'Warning: No Tax ID provided for this transaction.';
+
+  @override
+  String get agentRationaleTaxZatcaReject =>
+      'REJECT: Transactions exceeding 10,000 SAR require a valid Tax ID for ZATCA Phase 2 compliance.';
+
+  @override
+  String agentRationaleTaxValidated(Object id) {
+    return 'Validated Tax ID: $id';
+  }
+
+  @override
+  String agentRationaleTaxAnalyzing(Object account) {
+    return 'Analyzing VAT for $account';
+  }
+
+  @override
+  String agentRationaleTaxRateMismatch(Object rate) {
+    return 'ALERT: Calculated VAT rate ($rate) deviates from the regional standard (15%).';
+  }
+
+  @override
+  String get agentRationaleTaxRateMatch =>
+      'CONFIRM: VAT rate (15%) matches local regulatory requirements.';
+
+  @override
+  String get agentRationaleTaxNoVatWarning =>
+      'WARNING: Commercial transaction detected without VAT lines.';
+
+  @override
+  String get agentRationaleForensicBalanced =>
+      'Check PASSED: Journal entry is balanced.';
+
+  @override
+  String get agentRationaleForensicUnbalanced =>
+      'REJECTION: Proposed journal entry is not balanced.';
+
+  @override
+  String agentRationaleForensicHighValue(Object amount) {
+    return 'WARNING: Unusually high transaction amount detected ($amount). Administrative review recommended.';
+  }
+
+  @override
+  String agentRationaleForensicDuplicate(Object ref) {
+    return 'REJECTION: Duplicate reference number ($ref) detected in history.';
+  }
+
+  @override
+  String agentRationaleOperationalSufficient(Object account, Object balance) {
+    return 'Liquidity Analysis: $account balance is sufficient ($balance) for this operation.';
+  }
+
+  @override
+  String agentRationaleOperationalInsufficient(Object account, Object balance) {
+    return 'REJECTION: $account balance is insufficient ($balance) for this operation.';
+  }
+
+  @override
+  String agentRationaleStrategyOutflow(Object amount) {
+    return 'Strategy Analysis: This entry represents a cash outflow of $amount.';
+  }
+
+  @override
+  String get agentRationaleStrategyRecommendation =>
+      'Recommendation: Review cash flow projections for the coming week to ensure sufficient liquidity for other obligations.';
+
+  @override
+  String agentRationaleStrategyInflow(Object amount) {
+    return 'Strategy Analysis: Liquidity enhancement of $amount supports short-term investment capacity.';
+  }
+
+  @override
+  String get agentRationaleStrategyProfitability =>
+      'Strategic Insight: Increased sales volume positively impacts Return on Assets (ROA) and net margin targets.';
+
+  @override
+  String get agentRationaleSustainabilityFlagged =>
+      'ISSB Analysis: This transaction is flagged for mandatory environmental/social disclosure.';
+
+  @override
+  String get agentRationaleSustainabilityReject =>
+      'CRITICAL REJECTION: ISSB S2 standards require carbon footprint metrics for this industry-specific transaction.';
+
+  @override
+  String agentRationaleSustainabilitySuccess(Object count) {
+    return 'SUCCESS: Integrated $count compliant sustainability metrics.';
+  }
+
+  @override
+  String get agentRationaleSustainabilityNotRequired =>
+      'Sustainability Assessment: No specific ISSB disclosures required for this transaction tier.';
+
+  @override
+  String agentRationaleForensicTimeAnomaly(Object time) {
+    return 'WARNING: Transaction recorded during non-standard hours ($time). Higher forensic weighting applied.';
+  }
+
+  @override
+  String agentRationaleForensicSequenceGap(Object current, Object last) {
+    return 'NOTICE: Gap detected in reference sequence. Last: $last, Current: $current.';
+  }
+
+  @override
+  String get agentRationaleForensicZatcaIdentityMissing =>
+      'NOTICE: ZATCA Phase 2 cryptographic identity (UUID/Hash) is missing for this invoice.';
+
+  @override
+  String get auditTrailTitle => 'Audit Trail';
+
+  @override
+  String get auditTrailSubtitle =>
+      'Internal system logs and consensus bypasses';
+
+  @override
+  String get auditTrailSectionForensic => 'Forensic Integrity Logs';
+
+  @override
+  String get auditTrailNoLogs => 'No audit logs found for the selected period.';
 }

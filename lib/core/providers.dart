@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers/secure_storage_provider.dart';
 import 'package:basir_accounting_system/features/accounting/data/models/account_model.dart';
 import 'package:basir_accounting_system/features/accounting/data/models/financial_voucher_model.dart';
@@ -54,6 +55,7 @@ import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
 export '../features/accounting/data/repositories/accounting_repository_impl.dart';
+export '../features/analytics/application/analytics_service.dart';
 // تصدير مزودات المصادقة من مكانها الجديد
 export '../features/auth/presentation/providers/auth_provider.dart';
 export '../features/reports/services/reporting_service.dart';
@@ -161,8 +163,9 @@ final isarProvider = FutureProvider<Isar>((ref) async {
   }
 });
 
-/// مزود مستودع العملاء (Customer Repository)
-final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
+/// مزود مستودع العملاء (Customer Repository) - Performance Optimized
+final customerRepositoryProvider =
+    Provider.autoDispose<CustomerRepository>((ref) {
   final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
@@ -171,8 +174,9 @@ final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
   return CustomerRepositoryImpl(isar: isar, userId: user?.id);
 });
 
-/// مزود مستودع الفواتير (Invoice Repository)
-final invoiceRepositoryProvider = Provider<InvoiceRepository>((ref) {
+/// مزود مستودع الفواتير (Invoice Repository) - Performance Optimized
+final invoiceRepositoryProvider =
+    Provider.autoDispose<InvoiceRepository>((ref) {
   final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
@@ -251,8 +255,8 @@ final inventoryRepositoryProvider = Provider<InventoryRepository>((ref) {
   );
 });
 
-/// مزود مستودع الأصول (Asset Repository)
-final assetRepositoryProvider = Provider<AssetRepository>((ref) {
+/// مزود مستودع الأصول (Asset Repository) - Performance Optimized
+final assetRepositoryProvider = Provider.autoDispose<AssetRepository>((ref) {
   final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
@@ -261,9 +265,9 @@ final assetRepositoryProvider = Provider<AssetRepository>((ref) {
   return AssetRepositoryImpl(isar: isar, userId: user?.id);
 });
 
-/// مزود مستودع حركات المخزون (Stock Movement Repository)
+/// مزود مستودع حركات المخزون (Stock Movement Repository) - Performance Optimized
 final stockMovementRepositoryProvider =
-    Provider<StockMovementRepository>((ref) {
+    Provider.autoDispose<StockMovementRepository>((ref) {
   final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
   final user = ref.watch(basirUserProvider);
@@ -274,9 +278,9 @@ final stockMovementRepositoryProvider =
   );
 });
 
-/// مزود مستودع تحويلات المخزون (Warehouse Transfer Repository)
+/// مزود مستودع تحويلات المخزون (Warehouse Transfer Repository) - Performance Optimized
 final warehouseTransferRepositoryProvider =
-    Provider<WarehouseTransferRepository>((ref) {
+    Provider.autoDispose<WarehouseTransferRepository>((ref) {
   final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
   final user = ref.watch(basirUserProvider);
@@ -287,8 +291,8 @@ final warehouseTransferRepositoryProvider =
   );
 });
 
-/// مزود خدمة المخزون (Inventory Service)
-final inventoryServiceProvider = Provider<InventoryService>((ref) {
+/// مزود خدمة المخزون (Inventory Service) - Performance Optimized
+final inventoryServiceProvider = Provider.autoDispose<InventoryService>((ref) {
   final inventoryRepo = ref.watch(inventoryRepositoryProvider);
   final movementRepo = ref.watch(stockMovementRepositoryProvider);
   final transferRepo = ref.watch(warehouseTransferRepositoryProvider);

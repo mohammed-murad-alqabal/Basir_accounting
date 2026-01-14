@@ -1,0 +1,135 @@
+Analyzing basir_accounting_system...                            
+
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_theme.dart:56:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_theme.dart:95:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_theme.dart:125:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_theme.dart:159:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_theme.dart:169:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_theme.dart:241:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_theme.dart:292:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_theme.dart:296:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_theme.dart:311:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:120:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:132:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:133:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:136:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:137:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:138:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:139:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:142:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:143:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:146:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:148:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:150:15 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/invoices/domain/entities/invoice.dart:49:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/domain/entities/invoice.dart:131:81 • lines_longer_than_80_chars
+   info • 'Future'-returning calls in a non-'async' function • lib/features/invoices/presentation/screens/invoice_form_screen.dart:1022:17 • discarded_futures
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/invoices/presentation/screens/invoice_form_screen.dart:1049:39 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/invoices/presentation/screens/invoice_form_screen.dart:1061:46 • deprecated_member_use
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/basir_insights_engine.dart:29:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/basir_insights_engine.dart:46:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/reports/application/report_pdf_service.dart:15:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/reports/application/report_pdf_service.dart:21:21 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/reports/application/report_pdf_service.dart:63:16 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:65:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:84:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:101:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:109:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:120:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:133:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:154:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:155:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:156:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:167:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:168:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:169:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:178:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/simulation_service.dart:189:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/reports/domain/entities/financial_kpi.dart:57:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/reports/domain/entities/financial_kpi.dart:69:24 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/reports/domain/entities/financial_kpi.dart:69:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/domain/entities/financial_kpi.dart:97:81 • lines_longer_than_80_chars
+   info • Invalid use of 'default' member in a switch • lib/features/reports/presentation/screens/intelligence_screen.dart:217:7 • no_default_cases
+warning • This default clause is covered by the previous cases • lib/features/reports/presentation/screens/intelligence_screen.dart:217:7 • unreachable_switch_default
+   info • Missing documentation for a public member • lib/features/reports/presentation/screens/smart_tax_report_screen.dart:11:9 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/smart_tax_report_screen.dart:17:81 • lines_longer_than_80_chars
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/reports/presentation/screens/smart_tax_report_screen.dart:78:25 • avoid_catches_without_on_clauses
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/smart_tax_report_screen.dart:111:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/smart_tax_report_screen.dart:118:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/smart_tax_report_screen.dart:163:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/smart_tax_report_screen.dart:167:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/smart_tax_report_screen.dart:171:81 • lines_longer_than_80_chars
+   info • The value of the argument is redundant because it matches the default value • test/features/invoices/domain/entities/invoice_test.dart:39:65 • avoid_redundant_argument_values
+   info • The line length exceeds the 80-character limit • test/features/invoices/domain/entities/invoice_test.dart:39:81 • lines_longer_than_80_chars
+  error • The argument for the named parameter 'taxRate' was already specified • test/features/invoices/domain/entities/invoice_test.dart:46:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/features/invoices/domain/entities/invoice_test.dart:48:65 • avoid_redundant_argument_values
+   info • The line length exceeds the 80-character limit • test/features/invoices/domain/entities/invoice_test.dart:48:81 • lines_longer_than_80_chars
+  error • The argument for the named parameter 'taxRate' was already specified • test/features/invoices/domain/entities/invoice_test.dart:55:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/features/invoices/domain/entities/invoice_test.dart:84:64 • avoid_redundant_argument_values
+   info • The line length exceeds the 80-character limit • test/features/invoices/domain/entities/invoice_test.dart:84:81 • lines_longer_than_80_chars
+  error • The argument for the named parameter 'taxRate' was already specified • test/features/invoices/domain/entities/invoice_test.dart:91:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:24:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:31:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:55:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:62:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:64:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:71:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:73:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:80:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:104:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:111:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:135:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:142:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:166:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:173:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:197:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:204:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:206:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:213:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:215:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:222:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:224:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:231:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:233:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:240:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:242:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:249:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:251:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:258:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:282:51 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:289:9 • duplicate_named_argument
+  error • The argument for the named parameter 'taxCategory' was already specified • test/fixtures/invoice_fixtures.dart:290:9 • duplicate_named_argument
+   info • The value of the argument is redundant because it matches the default value • test/fixtures/invoice_fixtures.dart:342:53 • avoid_redundant_argument_values
+  error • The argument for the named parameter 'taxRate' was already specified • test/fixtures/invoice_fixtures.dart:349:11 • duplicate_named_argument
+   info • The line length exceeds the 80-character limit • test/helpers/mock_data.dart:39:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • test/helpers/mock_data.dart:52:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • test/helpers/mock_data.dart:149:81 • lines_longer_than_80_chars
+   info • The value of the argument is redundant because it matches the default value • test/unit/data/models/invoice_model_test.dart:34:55 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/unit/data/models/invoice_model_test.dart:109:66 • avoid_redundant_argument_values
+   info • The line length exceeds the 80-character limit • test/unit/data/models/invoice_model_test.dart:109:81 • lines_longer_than_80_chars
+   info • The value of the argument is redundant because it matches the default value • test/unit/data/models/invoice_model_test.dart:125:70 • avoid_redundant_argument_values
+   info • The line length exceeds the 80-character limit • test/unit/data/models/invoice_model_test.dart:125:81 • lines_longer_than_80_chars
+   info • The value of the argument is redundant because it matches the default value • test/unit/data/repositories/invoice_repository_test.dart:92:57 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/unit/data/repositories/invoice_repository_test.dart:356:57 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/unit/data/repositories/invoice_repository_test.dart:464:57 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/unit/data/repositories/invoice_repository_test.dart:494:57 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/unit/features/accounting/accounting_core_institutional_test.dart:181:55 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/unit/features/accounting/accounting_service_test.dart:175:57 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/unit/features/invoices/domain/entities/invoice_test.dart:10:64 • avoid_redundant_argument_values
+   info • The line length exceeds the 80-character limit • test/unit/features/invoices/domain/entities/invoice_test.dart:10:81 • lines_longer_than_80_chars
+   info • The value of the argument is redundant because it matches the default value • test/unit/features/invoices/domain/entities/invoice_test.dart:30:64 • avoid_redundant_argument_values
+   info • The line length exceeds the 80-character limit • test/unit/features/invoices/domain/entities/invoice_test.dart:30:81 • lines_longer_than_80_chars
+   info • The value of the argument is redundant because it matches the default value • test/unit/features/invoices/domain/entities/invoice_test.dart:61:55 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/unit/features/invoices/domain/entities/invoice_test.dart:102:55 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/unit/features/invoices/domain/entities/invoice_test.dart:137:55 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/unit/features/invoices/domain/entities/invoice_test.dart:172:55 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/unit/features/invoices/domain/entities/invoice_test.dart:207:55 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/unit/features/invoices/domain/entities/invoice_test.dart:243:55 • avoid_redundant_argument_values
+   info • The imported package 'riverpod' isn't a dependency of the importing package • test/unit/features/reports/application/basir_insights_engine_test.dart:4:8 • depend_on_referenced_packages
+   info • The line length exceeds the 80-character limit • test/unit/features/reports/application/basir_insights_engine_test.dart:41:81 • lines_longer_than_80_chars
+   info • The value of the argument is redundant because it matches the default value • test/widget/features/dashboard/dashboard_screen_minimal_test.dart:203:57 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/widget/features/dashboard/dashboard_screen_minimal_test.dart:231:57 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/widget/features/dashboard/dashboard_screen_simplified_test.dart:46:57 • avoid_redundant_argument_values
+   info • The value of the argument is redundant because it matches the default value • test/zatca_verification_test.dart:78:55 • avoid_redundant_argument_values
+
+131 issues found. (ran in 8.2s)

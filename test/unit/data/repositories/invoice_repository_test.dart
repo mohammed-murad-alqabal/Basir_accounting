@@ -90,6 +90,8 @@ void main() {
           status: InvoiceStatus.draft,
           items: [
             InvoiceItem(
+              taxRate: Decimal.parse('0.15'),
+              taxCategory: 'S',
               id: 'item-1',
               name: 'خدمة استشارية',
               quantity: Decimal.fromInt(2),
@@ -354,6 +356,8 @@ void main() {
           userId: testUserId,
           items: [
             InvoiceItem(
+              taxRate: Decimal.parse('0.15'),
+              taxCategory: 'S',
               id: 'item-1',
               name: 'خدمة',
               quantity: Decimal.one,
@@ -462,6 +466,8 @@ void main() {
           userId: testUserId,
           items: [
             InvoiceItem(
+              taxRate: Decimal.parse('0.15'),
+              taxCategory: 'S',
               id: 'item-1',
               name: 'خدمة',
               quantity: Decimal.one,
@@ -492,6 +498,8 @@ void main() {
           userId: testUserId,
           items: [
             InvoiceItem(
+              taxRate: Decimal.parse('0.15'),
+              taxCategory: 'S',
               id: 'item-2',
               name: 'خدمة',
               quantity: Decimal.one,
