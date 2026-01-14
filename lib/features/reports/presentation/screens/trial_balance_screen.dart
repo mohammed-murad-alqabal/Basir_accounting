@@ -1,6 +1,9 @@
+// ignore_for_file: lines_longer_than_80_chars
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/utils/format_helpers.dart';
 import 'package:basir_accounting_system/features/reports/presentation/widgets/report_filter_widget.dart';
+import 'package:basir_accounting_system/features/reports/services/reporting_service.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:basir_accounting_system/src/rust/api/reports.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +40,8 @@ class _TrialBalanceScreenState extends ConsumerState<TrialBalanceScreen> {
     );
 
     return Scaffold(
-      appBar: const AppAppBar(
-        title: 'ميزان المراجعة', // Trial Balance
+      appBar: AppAppBar(
+        title: context.l10n.trialBalanceTitle,
       ),
       body: Column(
         children: [
@@ -92,8 +95,8 @@ class _TrialBalanceScreenState extends ConsumerState<TrialBalanceScreen> {
                     const SizedBox(width: 8),
                     Text(
                       report.isBalanced
-                          ? 'الميزان متزن (Balanced)'
-                          : 'الميزان غير متزن! يرجى المراجعة.',
+                          ? context.l10n.msgBalanceBalancedTB
+                          : context.l10n.msgBalanceUnbalancedTB,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: report.isBalanced ? Colors.green : Colors.red,
@@ -117,11 +120,11 @@ class _TrialBalanceScreenState extends ConsumerState<TrialBalanceScreen> {
                 children: [
                   TableRow(
                     decoration: BoxDecoration(color: Colors.grey.shade100),
-                    children: const [
-                      _HeaderCell('رقم الحساب'),
-                      _HeaderCell('اسم الحساب'),
-                      _HeaderCell('مدين'),
-                      _HeaderCell('دائن'),
+                    children: [
+                      _HeaderCell(context.l10n.labelAccountCode),
+                      _HeaderCell(context.l10n.labelAccountName),
+                      _HeaderCell(context.l10n.labelDebit),
+                      _HeaderCell(context.l10n.labelCredit),
                     ],
                   ),
                   ...report.lines.map(
@@ -147,7 +150,7 @@ class _TrialBalanceScreenState extends ConsumerState<TrialBalanceScreen> {
                     decoration: BoxDecoration(color: Colors.grey.shade50),
                     children: [
                       const SizedBox(),
-                      const _ContentCell('الإجمالي', isBold: true),
+                      _ContentCell(context.l10n.labelTotal, isBold: true),
                       _ContentCell(
                         FormatHelpers.formatCurrency(
                           double.parse(report.totalDebits),

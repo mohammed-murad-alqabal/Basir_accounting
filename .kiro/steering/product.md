@@ -1,8 +1,8 @@
-# basir_accounting_system - Product Definition
+# Basir Accounting System - Product Definition
 
-**Project:** basir_accounting_system
+**Project:** Basir Accounting System
 **Status:** Active Development
-**Team Identity:** فريق وكلاء تطوير نظام بصير المحاسبي (Basir Accounting System Development Agents Team)
+**Team Identity:** Basir Accounting System Development Agents Team
 
 ---
 
@@ -14,7 +14,7 @@ Basir is a comprehensive accounting system focused on intelligent financial mana
 
 When generating documentation, reports, or commits, ALWAYS use the official identity:
 
-> **المؤلف/المطور:** فريق وكلاء تطوير نظام بصير المحاسبي
+> **Author/Developer:** Basir Accounting System Development Agents Team
 
 ### ❌ Forbidden Terms
 
@@ -25,11 +25,11 @@ When generating documentation, reports, or commits, ALWAYS use the official iden
 
 ## 🔑 Key Objectives
 
-1.  **System Delivery:** Focus on core accounting features (General Ledger, Invoicing, ZATCA Compliance).
-2.  **Quality First:** Adhere to strict Flutter/Dart standards and accounting principles.
-3.  **Professionalism:** Maintain institutional-grade documentation and structure.
-4.  **Compliance:** Ensure ZATCA Phase 2, IFRS, and VAT compliance.
+1.  **System Delivery**: Focus on core accounting features (General Ledger, Invoicing, ZATCA Compliance).
+2.  **Quality First**: Adhere to strict Flutter/Dart standards and accounting principles.
+3.  **Professionalism**: Maintain institutional-grade documentation and structure.
+4.  **Compliance**: Ensure ZATCA Phase 2, IFRS, and VAT compliance.
 
 ---
 
-**Core Reference:** `.kiro/steering/core/team-identity.md`
+**Core Reference**: `.kiro/steering/core/team-identity.md`

@@ -1,18 +1,18 @@
-# معايير جودة الكود
+# Code Quality Standards
 
-**المشروع:** بصير MVP  
-**الحالة:** ✅ نشط
+**Project:** Basir MVP  
+**Status:** ✅ Active
 
 ---
 
-## المعايير الأساسية
+## Base Standards
 
-| المعيار         | القيمة | الإلزامية |
-| :-------------- | :----: | :-------: |
-| Test Coverage   |  70%+  |    ✅     |
-| Max Line Length |   80   |    ✅     |
-| Max Complexity  |   10   |    ✅     |
-| DRY Principle   |   -    |    ✅     |
+| Standard        | Value | Mandatory |
+| :-------------- | :---: | :-------: |
+| Test Coverage   | 70%+  |    ✅     |
+| Max Line Length |  80   |    ✅     |
+| Max Complexity  |  10   |    ✅     |
+| DRY Principle   |   -   |    ✅     |
 
 ---
 
@@ -20,23 +20,23 @@
 
 ### 1. Single Responsibility (SRP)
 
-كل class مسؤولية واحدة فقط
+Every class must have only one responsibility.
 
 ### 2. Open/Closed (OCP)
 
-مفتوح للتوسع، مغلق للتعديل
+Open for extension, closed for modification.
 
 ### 3. Liskov Substitution (LSP)
 
-الأنواع الفرعية قابلة للاستبدال
+Subtypes must be substitutable for their base types.
 
 ### 4. Interface Segregation (ISP)
 
-لا تجبر على interfaces غير مطلوبة
+Do not force dependencies on unused interfaces.
 
 ### 5. Dependency Inversion (DIP)
 
-الاعتماد على abstractions
+Depend on abstractions, not concretions.
 
 ---
 
@@ -44,37 +44,37 @@
 
 ### Meaningful Names
 
-- أسماء واضحة تعبر عن الغرض
-- تجنب الاختصارات المبهمة
-- استخدام أسماء قابلة للنطق
+- Clear names that reflect purpose.
+- Avoid ambiguous abbreviations.
+- Use pronounceable names.
 
 ### Small Functions
 
-- دالة واحدة = مسؤولية واحدة
-- الحد الأقصى: 20-30 سطر
-- مستوى واحد من التجريد
+- One function = one responsibility.
+- Maximum length: 20-30 lines.
+- Single level of abstraction.
 
 ### DRY (Don't Repeat Yourself)
 
-- تجنب تكرار الكود
-- استخدام functions للكود المتكرر
-- استخدام constants للقيم المتكررة
+- Avoid code duplication.
+- Use functions for repetitive logic.
+- Use constants for shared values.
 
 ---
 
 ## Error Handling
 
-### استخدام Exceptions
+### Use of Exceptions
 
-- استخدام custom exceptions
-- معالجة الأخطاء في المستوى المناسب
-- عدم ابتلاع الأخطاء
+- Utilize custom exceptions.
+- Handle errors at the appropriate level.
+- Do not swallow exceptions (no empty catch blocks).
 
 ### Async Operations
 
-- استخدام try-catch
-- معالجة جميع الحالات
-- تسجيل الأخطاء
+- Always use try-catch blocks.
+- Handle all potential states (loading, error, data).
+- Log errors appropriately.
 
 ---
 
@@ -82,14 +82,14 @@
 
 ### Const Constructors
 
-- استخدام const حيثما أمكن
-- تقليل rebuilds
+- Use `const` wherever possible.
+- Minimize unnecessary widget rebuilds.
 
 ### Lazy Loading
 
-- تحميل البيانات عند الحاجة
-- استخدام pagination
+- Load data only when required.
+- Implement pagination for large datasets.
 
 ---
 
-**للتفاصيل الكاملة:** `.kiro/steering/reference/quality-examples.md`
+**For full details and examples, refer to:** `.kiro/steering/reference/quality-examples.md`

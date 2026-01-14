@@ -1,6 +1,7 @@
 import 'package:basir_accounting_system/features/invoices/application/zatca_service.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/services/settings_service.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' as intl;
@@ -12,6 +13,11 @@ import 'package:pdf/widgets.dart' as pw;
 /// Specialized engine for generating thermal POS receipts.
 /// Optimized for Roll 80mm and Roll 58mm formats.
 class InvoicePrintService {
+  /// Creating the [InvoicePrintService] with [SettingsService].
+  InvoicePrintService(this._settingsService);
+
+  final SettingsService _settingsService;
+
   static const String _fontPath = 'assets/fonts/Cairo-Regular.ttf';
   static const String _boldFontPath = 'assets/fonts/Cairo-Bold.ttf';
 
@@ -21,6 +27,10 @@ class InvoicePrintService {
     AppLocalizations l10n, {
     PdfPageFormat format = PdfPageFormat.roll80,
   }) async {
+    final settings = await _settingsService.getCompanySettings();
+    final companyName = settings['companyName'] ?? 'Basir Tech';
+    final taxNumber = settings['taxNumber'] ?? '123456789012345';
+
     final pdf = pw.Document();
 
     final fontData = await rootBundle.load(_fontPath);
@@ -37,7 +47,13 @@ class InvoicePrintService {
         textDirection: pw.TextDirection.rtl,
         build: (context) => pw.Column(
           children: [
-            _buildReceiptHeader(invoice, l10n, ttfBold),
+            _buildReceiptHeader(
+              invoice,
+              l10n,
+              ttfBold,
+              companyName: companyName,
+              taxNumber: taxNumber,
+            ),
             pw.Divider(thickness: 1, color: PdfColors.grey),
             _buildReceiptInfo(invoice, l10n, ttfBold),
             pw.SizedBox(height: 5),
@@ -45,7 +61,11 @@ class InvoicePrintService {
             pw.Divider(thickness: 1, color: PdfColors.grey),
             _buildReceiptTotals(invoice, l10n, ttfBold),
             pw.SizedBox(height: 10),
-            _buildReceiptQr(invoice),
+            _buildReceiptQr(
+              invoice,
+              companyName: companyName,
+              taxNumber: taxNumber,
+            ),
             pw.SizedBox(height: 10),
             _buildReceiptFooter(l10n),
           ],
@@ -59,12 +79,14 @@ class InvoicePrintService {
   pw.Widget _buildReceiptHeader(
     Invoice invoice,
     AppLocalizations l10n,
-    pw.Font boldFont,
-  ) =>
+    pw.Font boldFont, {
+    required String companyName,
+    required String taxNumber,
+  }) =>
       pw.Column(
         children: [
           pw.Text(
-            'مؤسسة بصير التجارية', // TODO(Basir): Load from settings
+            companyName,
             style: pw.TextStyle(font: boldFont, fontSize: 14),
           ),
           pw.Text(
@@ -73,7 +95,7 @@ class InvoicePrintService {
             textDirection: pw.TextDirection.ltr,
           ),
           pw.Text(
-            '${l10n.labelTaxNumber}: 123456789012345',
+            '${l10n.labelTaxNumber}: $taxNumber',
             style: const pw.TextStyle(fontSize: 9),
           ),
           pw.SizedBox(height: 5),
@@ -203,15 +225,20 @@ class InvoicePrintService {
         ],
       );
 
-  pw.Widget _buildReceiptQr(Invoice invoice) => pw.Container(
+  pw.Widget _buildReceiptQr(
+    Invoice invoice, {
+    required String companyName,
+    required String taxNumber,
+  }) =>
+      pw.Container(
         width: 80,
         height: 80,
         child: pw.BarcodeWidget(
           barcode: pw.Barcode.qrCode(),
           data: invoice.qrCode ??
               ZatcaService.encodeTlv(
-                sellerName: 'مؤسسة بصير التجارية',
-                taxNumber: '123456789012345',
+                sellerName: companyName,
+                taxNumber: taxNumber,
                 timestamp: invoice.issuedDate,
                 totalAmount: invoice.totalAmount,
                 vatAmount: invoice.taxAmount,

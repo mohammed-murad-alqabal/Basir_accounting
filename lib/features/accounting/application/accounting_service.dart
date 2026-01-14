@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/financial_year_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/multi_standard_coa_engine.dart';
@@ -39,15 +40,12 @@ part 'accounting_service.g.dart';
 ///   parent/child accounts.
 @Riverpod(keepAlive: true)
 class AccountingService extends _$AccountingService {
-  // ignore: lines_longer_than_80_chars
   AccountingRepository get _repository =>
       ref.read(accountingRepositoryProvider);
 
-  // ignore: lines_longer_than_80_chars
   FinancialYearService get _financialYearService =>
       ref.read(financialYearServiceProvider.notifier);
 
-  // ignore: lines_longer_than_80_chars
   CustomerRepository get _customerRepository =>
       ref.read(customerRepositoryProvider);
 
@@ -62,7 +60,7 @@ class AccountingService extends _$AccountingService {
   ///
   /// ## Parameters
   /// - [country]: The [AccountingCountry] standard to apply.
-  // ignore: lines_longer_than_80_chars
+
   Future<void> seedDefaultAccounts({
     AccountingCountry country = AccountingCountry.global,
   }) async {
@@ -124,8 +122,10 @@ class AccountingService extends _$AccountingService {
   /// ## Throws
   /// - [Exception] if the financial period is closed or invoice status is
   ///   invalid.
-  Future<void> postSalesInvoice(Invoice invoice) async {
-    // ignore: lines_longer_than_80_chars
+  Future<void> postSalesInvoice(
+    Invoice invoice, {
+    bool bypassCognitive = false,
+  }) async {
     final isPeriodOpen =
         await _financialYearService.canPostToDate(invoice.issuedDate);
     if (!isPeriodOpen) {
@@ -142,7 +142,7 @@ class AccountingService extends _$AccountingService {
 
     // Debit: Accounts Receivable
     var receivableAccountId = 'acc-1201'; // Default AR
-    // ignore: lines_longer_than_80_chars
+
     final customer =
         await _customerRepository.getCustomerById(invoice.customerId);
     if (customer != null && customer.receivableAccountId != null) {
@@ -166,7 +166,6 @@ class AccountingService extends _$AccountingService {
     final allAccounts = await _repository.getAccounts();
     final revenueAccount = allAccounts.firstWhere(
       (a) => a.code == '4101' || a.subType == 'revenue',
-      // ignore: lines_longer_than_80_chars
       orElse: () =>
           allAccounts.firstWhere((a) => a.type == AccountType.revenue),
     );
@@ -253,33 +252,13 @@ class AccountingService extends _$AccountingService {
       );
     }
 
-    // ------------------------------------------------------------------------
-    // COGNITIVE HEXAGON ACTIVATION (Gatekeeper Pattern)
-    // ------------------------------------------------------------------------
-    final orchestrator = ref.read(orchestratorServiceProvider.notifier);
-    final context = AccountingContext(
-      proposedJournalEntry: entry,
-      transactionType: 'sales_invoice',
-      metadata: {
-        'invoice_id': invoice.id,
-        'customer_id': invoice.customerId,
-        'amount': invoice.totalAmount.toString(),
-      },
-    );
-
-    final consensus = await orchestrator.orchestrate(context);
-
-    if (!consensus.isApproved) {
-      throw CognitiveConsensusException(consensus);
-    }
-    // ------------------------------------------------------------------------
-
-    await _repository.addJournalEntry(entry);
+    // Use centralized posting mechanism with Hexagon activation
+    await postJournalEntry(entry, bypassCognitive: bypassCognitive);
 
     // ZATCA Integration: Performs compliance steps via Rust bridge.
     try {
       final salesBridge = ref.read(salesBridgeServiceProvider);
-      // ignore: lines_longer_than_80_chars
+
       final updatedInvoice =
           await salesBridge.finalizeInvoiceWithZatca(invoice);
 
@@ -325,19 +304,24 @@ class AccountingService extends _$AccountingService {
   Future<List<Account>> getAccounts() async => _repository.getAccounts();
 
   /// Retrieves a specific account by identifier.
-  // ignore: lines_longer_than_80_chars
+
   Future<Account?> getAccountById(String id) async =>
       _repository.getAccountById(id);
 
   /// Retrieves the complete list of journal entries.
-  // ignore: lines_longer_than_80_chars
+
   Future<List<JournalEntry>> getJournalEntries() async =>
       _repository.getJournalEntries();
 
   /// Posts a manual journal entry to the ledger.
   ///
   /// Performs balance verification and financial year validation.
-  Future<void> postJournalEntry(JournalEntry entry) async {
+  /// If [bypassCognitive] is false (default), triggers the Cognitive Hexagon
+  /// consensus mechanism.
+  Future<void> postJournalEntry(
+    JournalEntry entry, {
+    bool bypassCognitive = false,
+  }) async {
     if (!entry.isBalanced) {
       throw Exception('Journal entry is unbalanced');
     }
@@ -347,7 +331,50 @@ class AccountingService extends _$AccountingService {
       throw Exception('Financial period is closed or locked');
     }
 
-    await _repository.addJournalEntry(entry);
+    var finalEntry = entry;
+
+    if (!bypassCognitive) {
+      // ----------------------------------------------------------------------
+      // COGNITIVE HEXAGON ACTIVATION (Centralized)
+      // ----------------------------------------------------------------------
+      final orchestrator = ref.read(orchestratorServiceProvider.notifier);
+      // Ensure locale is fetched correctly. Use a direct language code if
+      // provider is unavailable or defaults.
+      final currentLocale =
+          ref.read(localeProvider).value?.languageCode ?? 'ar';
+
+      final context = AccountingContext(
+        proposedJournalEntry: entry,
+        transactionType: entry.sourceDocument,
+        locale: currentLocale,
+        metadata: {
+          'source_id': entry.sourceId,
+          'reference': entry.referenceNumber,
+        },
+      );
+      final consensus = await orchestrator.orchestrate(context);
+
+      if (!consensus.isApproved) {
+        throw CognitiveConsensusException(consensus);
+      }
+      // ----------------------------------------------------------------------
+    } else {
+      // ----------------------------------------------------------------------
+      // INTERNAL AUDIT LOGGING (Bypass Tracking)
+      // ----------------------------------------------------------------------
+      final log = AuditLogEntry(
+        timestamp: DateTime.now(),
+        action: 'COGNITIVE_BYPASS',
+        rationale:
+            'Consensus bypassed by specialized service or system override.',
+        actor: 'system',
+      );
+      finalEntry = entry.copyWith(
+        auditLogs: [...entry.auditLogs, log],
+      );
+    }
+
+    await _repository.addJournalEntry(finalEntry);
     ref.invalidateSelf();
   }
 

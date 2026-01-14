@@ -1,8 +1,11 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/treasury_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
+import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
 import 'package:basir_accounting_system/features/customers/presentation/providers/customer_provider.dart';
 import 'package:basir_accounting_system/features/invoices/application/ocr_service.dart';
 import 'package:basir_accounting_system/features/vendors/presentation/providers/vendor_provider.dart';
@@ -122,8 +125,9 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                   border: InputBorder.none,
                   prefixIcon: const Icon(Icons.money),
                 ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 onChanged: (v) {
                   if (_selectedCurrency != null &&
                       _selectedCurrency != 'SAR' &&
@@ -412,7 +416,9 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
             setState(() {
               _selectedEntityId = val;
               _selectedOppositeAccountId = c.receivableAccountId ?? 'acc-1201';
-              _personNameController.text = c.name(isArabic: context.isArabic);
+              _personNameController.text = c.name(
+                isArabic: context.isArabic,
+              );
             });
           },
           validator: (val) => val == null ? context.l10n.errFormFill : null,
@@ -441,7 +447,9 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
             setState(() {
               _selectedEntityId = val;
               _selectedOppositeAccountId = v.payableAccountId ?? 'acc-2101';
-              _personNameController.text = v.name(isArabic: context.isArabic);
+              _personNameController.text = v.name(
+                isArabic: context.isArabic,
+              );
             });
           },
           validator: (val) => val == null ? context.l10n.errFormFill : null,
@@ -499,6 +507,8 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         );
         Navigator.pop(context);
       }
+    } on CognitiveConsensusException catch (e) {
+      if (mounted) await _showCognitiveRejectionDialog(context, e);
     } on Exception catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -508,6 +518,94 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
+  }
+
+  /// Displays a detailed dialog explaining why the Cognitive Hexagon
+  /// rejected the transaction.
+  Future<void> _showCognitiveRejectionDialog(
+    BuildContext context,
+    CognitiveConsensusException exception,
+  ) async {
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.error.withValues(alpha: 0.1),
+        title: Row(
+          children: [
+            const Icon(Icons.gpp_bad, color: AppColors.error),
+            const SizedBox(width: Spacing.sm),
+            Expanded(
+              child: Text(
+                ctx.l10n.dialogCognitiveRejectionTitle,
+                style: const TextStyle(color: AppColors.error),
+              ),
+            ),
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                ctx.l10n.dialogCognitiveRejectionMessage,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: Spacing.md),
+              ...exception.consensus.agentResults.map(
+                (result) => Container(
+                  margin: const EdgeInsets.only(bottom: Spacing.sm),
+                  padding: const EdgeInsets.all(Spacing.sm),
+                  decoration: BoxDecoration(
+                    color: result.isAllowed
+                        ? AppColors.success.withValues(alpha: 0.1)
+                        : AppColors.error.withValues(alpha: 0.1),
+                    borderRadius: Radii.borderRadiusSm,
+                    border: Border.all(
+                      color: result.isAllowed
+                          ? AppColors.success.withValues(alpha: 0.3)
+                          : AppColors.error.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            result.isAllowed ? Icons.check : Icons.close,
+                            size: 16,
+                            color: result.isAllowed
+                                ? AppColors.success
+                                : AppColors.error,
+                          ),
+                          const SizedBox(width: Spacing.xs),
+                          Text(
+                            result.agentId,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: Spacing.xs),
+                      Text(
+                        result.rationale,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          AppEnhancedButton(
+            label: ctx.l10n.btnDone,
+            onPressed: () => Navigator.pop(ctx),
+          ),
+        ],
+      ),
+    );
   }
 
   /// Invokes the intelligent OCR agent to extract data from camera/gallery imagery.

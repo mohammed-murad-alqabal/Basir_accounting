@@ -35,6 +35,9 @@ class InvoiceItem with _$InvoiceItem {
     /// VAT amount calculated for this specific item.
     required Decimal taxAmount,
 
+    /// VAT rate applied to this item (e.g., 0.15, 0.05, 0.0).
+    required Decimal taxRate,
+
     /// Semantic description or notes.
     String? description,
 

@@ -106,11 +106,17 @@ class FinancialSimulationService extends _$FinancialSimulationService {
               price: amount,
               total: amount,
               taxAmount: tax,
+              taxRate: Decimal.parse('0.15'),
             ),
           ],
+          zatcaUuid: uuid.v4(),
+          zatcaHash: _generateMockHash(uuid.v4()),
         );
 
-        await accountingService.postSalesInvoice(invoice);
+        await accountingService.postSalesInvoice(
+          invoice,
+          bypassCognitive: true,
+        );
       }
 
       // 30% probability of a direct expense
@@ -177,6 +183,9 @@ class FinancialSimulationService extends _$FinancialSimulationService {
       ],
     );
 
-    await accountingService.postJournalEntry(entry);
+    await accountingService.postJournalEntry(entry, bypassCognitive: true);
   }
+
+  String _generateMockHash(String input) =>
+      'Base64Hash==${input.substring(0, 8)}';
 }

@@ -1,133 +1,133 @@
-# دليل معالجة الأخطاء الشاملة
+# Comprehensive Error Handling Guide
 
-**المشروع:** بصير MVP  
-**التاريخ:** 6 ديسمبر 2025  
-**المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**الإصدار:** 1.0  
-**الحالة:** ✅ نشط ومعتمد
-
----
-
-## نظرة عامة
-
-هذا الدليل يشرح كيفية استخدام مكتبة معالجة الأخطاء الشاملة (`error_handler.sh`) في جميع سكريبتات نظام تتبع الأخطاء والسجلات.
+**Project:** Basir MVP  
+**Date:** December 6, 2025  
+**Author:** Basir Project Agentic Development Team  
+**Version:** 1.0  
+**Status:** ✅ Active and Approved
 
 ---
 
-## المحتويات
+## Overview
 
-1. [التحميل والإعداد](#التحميل-والإعداد)
-2. [دوال الطباعة الملونة](#دوال-الطباعة-الملونة)
-3. [دوال التسجيل](#دوال-التسجيل)
-4. [معالجة الأخطاء](#معالجة-الأخطاء)
-5. [الاسترداد التلقائي](#الاسترداد-التلقائي)
-6. [التحقق والتحقيق](#التحقق-والتحقيق)
-7. [التنظيف](#التنظيف)
-8. [أمثلة عملية](#أمثلة-عملية)
+This guide explains how to use the Comprehensive Error Handling Library (`error_handler.sh`) across all scripts within the error tracking and logging ecosystem.
 
 ---
 
-## التحميل والإعداد
+## Contents
 
-### الطريقة الأساسية
+1. [Loading and Initialization](#loading-and-initialization)
+2. [Colorized Output Functions](#colorized-output-functions)
+3. [Logging Functions](#logging-functions)
+4. [Error Management](#error-management)
+5. [Automatic Recovery](#automatic-recovery)
+6. [Validation and Investigation](#validation-and-investigation)
+7. [Cleanup](#cleanup)
+8. [Practical Examples](#practical-examples)
+
+---
+
+## Loading and Initialization
+
+### Basic Method
 
 ```bash
 #!/bin/bash
 
-# تحديد مسار السكريبت
+# Determine script directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# تحميل مكتبة معالجة الأخطاء
+# Load the error handling library
 if [ -f "$SCRIPT_DIR/utils/error_handler.sh" ]; then
     source "$SCRIPT_DIR/utils/error_handler.sh"
 else
-    echo "خطأ: لم يتم العثور على مكتبة معالجة الأخطاء" >&2
+    echo "Error: Error handling library not found" >&2
     exit 1
 fi
 ```
 
-### مع إعدادات إضافية
+### With Additional Settings
 
 ```bash
 #!/bin/bash
 
-set -o errexit   # الخروج عند أي خطأ
-set -o nounset   # الخروج عند استخدام متغير غير معرف
-set -o pipefail  # فشل pipeline إذا فشل أي أمر
+set -o errexit   # Exit on any error
+set -o nounset   # Exit on unset variables
+set -o pipefail  # Pipeline fails if any command fails
 
-# تحميل المكتبة
+# Load the library
 source "$(dirname "$0")/utils/error_handler.sh"
 ```
 
 ---
 
-## دوال الطباعة الملونة
+## Colorized Output Functions
 
-### الدوال المتاحة
+### Available Functions
 
-| الدالة           | اللون   | الاستخدام     |
-| :--------------- | :------ | :------------ |
-| `print_debug`    | سماوي   | رسائل التصحيح |
-| `print_info`     | أزرق    | معلومات عامة  |
-| `print_success`  | أخضر    | عمليات ناجحة  |
-| `print_warning`  | أصفر    | تحذيرات       |
-| `print_error`    | أحمر    | أخطاء         |
-| `print_critical` | أرجواني | أخطاء حرجة    |
+| Function         | Color   | Usage                 |
+| :--------------- | :------ | :-------------------- |
+| `print_debug`    | Cyan    | Debugging messages    |
+| `print_info`     | Blue    | General information   |
+| `print_success`  | Green   | Successful operations |
+| `print_warning`  | Yellow  | Warnings              |
+| `print_error`    | Red     | Errors                |
+| `print_critical` | Magenta | Critical failures     |
 
-### أمثلة
+### Examples
 
 ```bash
-# رسائل معلوماتية
-print_info "بدء تنفيذ السكريبت..."
-print_debug "قيمة المتغير: $variable"
+# Informational messages
+print_info "Starting script execution..."
+print_debug "Variable value: $variable"
 
-# رسائل النجاح
-print_success "تم إكمال العملية بنجاح!"
+# Success messages
+print_success "Operation completed successfully!"
 
-# رسائل التحذير والأخطاء
-print_warning "هذا تحذير - قد تحتاج للانتباه"
-print_error "حدث خطأ أثناء التنفيذ"
-print_critical "خطأ حرج - يجب التدخل الفوري!"
+# Warnings and Errors
+print_warning "This is a warning - attention may be needed"
+print_error "An error occurred during execution"
+print_critical "Critical error - immediate intervention required!"
 ```
 
 ---
 
-## دوال التسجيل
+## Logging Functions
 
-### الدوال المتاحة
+### Available Functions
 
-| الدالة         | المستوى  | الوصف                 |
-| :------------- | :------- | :-------------------- |
-| `log_debug`    | DEBUG    | تسجيل معلومات التصحيح |
-| `log_info`     | INFO     | تسجيل معلومات عامة    |
-| `log_warning`  | WARNING  | تسجيل تحذيرات         |
-| `log_error`    | ERROR    | تسجيل أخطاء           |
-| `log_critical` | CRITICAL | تسجيل أخطاء حرجة      |
+| Function       | Level    | Description               |
+| :------------- | :------- | :------------------------ |
+| `log_debug`    | DEBUG    | Log debugging information |
+| `log_info`     | INFO     | Log general information   |
+| `log_warning`  | WARNING  | Log warnings              |
+| `log_error`    | ERROR    | Log errors                |
+| `log_critical` | CRITICAL | Log critical errors       |
 
-### تنسيق السجل
+### Log Format
 
 ```
-[2025-12-06 10:30:45] [INFO] [script_name.sh] رسالة السجل
+[2025-12-06 10:30:45] [INFO] [script_name.sh] Log message
 ```
 
-### أمثلة
+### Examples
 
 ```bash
-# تسجيل معلومات
-log_info "بدء معالجة الملفات..."
-log_debug "عدد الملفات: $file_count"
+# Logging information
+log_info "Starting file processing..."
+log_debug "File count: $file_count"
 
-# تسجيل تحذيرات وأخطاء
-log_warning "الملف غير موجود: $file_path"
-log_error "فشل تنفيذ الأمر: $command"
-log_critical "فشل حرج في النظام!"
+# Logging warnings and errors
+log_warning "File not found: $file_path"
+log_error "Command execution failed: $command"
+log_critical "Critical system failure!"
 ```
 
-### موقع ملف السجل
+### Log File Location
 
-الموقع الافتراضي: `logs/errors/error_YYYY-MM-DD.log`
+Default location: `logs/errors/error_YYYY-MM-DD.log`
 
-يمكن تغييره:
+Can be overridden:
 
 ```bash
 export ERROR_LOG_FILE="custom/path/error.log"
@@ -135,29 +135,29 @@ export ERROR_LOG_FILE="custom/path/error.log"
 
 ---
 
-## معالجة الأخطاء
+## Error Management
 
-### 1. معالج الأخطاء العام
+### 1. General Error Handler
 
 ```bash
-handle_error exit_code "رسالة الخطأ" [line_number] [function_name]
+handle_error exit_code "Error message" [line_number] [function_name]
 ```
 
-**مثال:**
+**Example:**
 
 ```bash
 if ! some_command; then
-    handle_error 1 "فشل تنفيذ some_command" "$LINENO" "${FUNCNAME[0]}"
+    handle_error 1 "Failed to execute some_command" "$LINENO" "${FUNCNAME[0]}"
 fi
 ```
 
-### 2. معالج أخطاء الأوامر
+### 2. Command Error Handler
 
 ```bash
 handle_command_error "command" exit_code "error_output"
 ```
 
-**مثال:**
+**Example:**
 
 ```bash
 output=$(flutter analyze 2>&1)
@@ -168,41 +168,41 @@ if [ $exit_code -ne 0 ]; then
 fi
 ```
 
-**الاقتراحات التلقائية:**
+**Automatic Suggestions:**
 
-- كود 1: تحقق من صحة المعاملات
-- كود 2: تحقق من الصلاحيات
-- كود 126: تحقق من صلاحيات التنفيذ
-- كود 127: الأمر غير موجود
+- Code 1: Verify parameters
+- Code 2: Verify permissions
+- Code 126: Verify execution permissions
+- Code 127: Command not found
 
-### 3. معالج أخطاء الملفات
+### 3. File Error Handler
 
 ```bash
 handle_file_error "operation" "file_path" "error_message"
 ```
 
-**العمليات المدعومة:**
+**Supported Operations:**
 
-- `read` - قراءة ملف
-- `write` - كتابة ملف
-- `delete` - حذف ملف
-- `create` - إنشاء ملف
+- `read` - Read file
+- `write` - Write file
+- `delete` - Delete file
+- `create` - Create file
 
-**مثال:**
+**Example:**
 
 ```bash
 if [ ! -f "$config_file" ]; then
-    handle_file_error "read" "$config_file" "الملف غير موجود"
+    handle_file_error "read" "$config_file" "File does not exist"
 fi
 ```
 
-### 4. معالج أخطاء الشبكة
+### 4. Network Error Handler
 
 ```bash
 handle_network_error "operation" "url" "error_code"
 ```
 
-**مثال:**
+**Example:**
 
 ```bash
 if ! curl -f "$url" > /dev/null 2>&1; then
@@ -212,211 +212,211 @@ fi
 
 ---
 
-## الاسترداد التلقائي
+## Automatic Recovery
 
-### 1. إعادة المحاولة التلقائية
+### 1. Automatic Retry
 
 ```bash
 retry_command max_attempts delay "command"
 ```
 
-**المعاملات:**
+**Parameters:**
 
-- `max_attempts`: عدد المحاولات (افتراضي: 3)
-- `delay`: التأخير بين المحاولات بالثواني (افتراضي: 2)
-- `command`: الأمر المراد تنفيذه
+- `max_attempts`: Number of attempts (default: 3)
+- `delay`: Delay between attempts in seconds (default: 2)
+- `command`: Command to execute
 
-**مثال:**
+**Example:**
 
 ```bash
-# محاولة 3 مرات مع تأخير 2 ثانية
+# Attempt 3 times with 2-second delay
 if retry_command 3 2 "curl -f https://example.com"; then
-    print_success "نجح الاتصال"
+    print_success "Connection successful"
 else
-    log_error "فشل الاتصال بعد 3 محاولات"
+    log_error "Connection failed after 3 attempts"
 fi
 ```
 
-### 2. النسخ الاحتياطي
+### 2. File Backup
 
 ```bash
 backup_file "file_path" ["backup_dir"]
 ```
 
-**مثال:**
+**Example:**
 
 ```bash
-# إنشاء نسخة احتياطية قبل التعديل
+# Create backup before modification
 if backup_file "config.yml" "backups"; then
-    # تعديل الملف بأمان
+    # Safely modify file
     echo "new_config" > config.yml
 fi
 ```
 
-### 3. الاستعادة من النسخة الاحتياطية
+### 3. Restore from Backup
 
 ```bash
 restore_backup "backup_path" "target_path"
 ```
 
-**مثال:**
+**Example:**
 
 ```bash
-# استعادة من نسخة احتياطية
+# Restore from backup
 if restore_backup "backups/config.yml.backup.20251206" "config.yml"; then
-    print_success "تم استعادة الملف"
+    print_success "File restored"
 fi
 ```
 
 ---
 
-## التحقق والتحقيق
+## Validation and Investigation
 
-### 1. التحقق من الأوامر
+### 1. Command Verification
 
 ```bash
 check_command "command_name"
 ```
 
-**مثال:**
+**Example:**
 
 ```bash
-# التحقق من المتطلبات
+# Verify requirements
 if ! check_command "flutter"; then
-    log_error "Flutter غير مثبت"
+    log_error "Flutter is not installed"
     exit 1
 fi
 
 if ! check_command "git"; then
-    log_warning "Git غير مثبت - بعض الميزات قد لا تعمل"
+    log_warning "Git is not installed - some features may not work"
 fi
 ```
 
-### 2. التحقق من الملفات والمجلدات
+### 2. File and Directory Verification
 
 ```bash
 check_file "file_path"
 check_directory "dir_path"
 ```
 
-**مثال:**
+**Example:**
 
 ```bash
-# التحقق من البنية
+# Verify structure
 if ! check_directory "logs"; then
-    log_info "إنشاء مجلد logs..."
+    log_info "Creating logs directory..."
     mkdir -p logs
 fi
 
 if check_file "config.yml"; then
-    log_info "تحميل التكوين..."
+    log_info "Loading configuration..."
     source config.yml
 fi
 ```
 
-### 3. التحقق من المساحة المتوفرة
+### 3. Disk Space Verification
 
 ```bash
 check_disk_space required_mb [path]
 ```
 
-**مثال:**
+**Example:**
 
 ```bash
-# التحقق من توفر 500MB
+# Verify 500MB availability
 if ! check_disk_space 500 "."; then
-    log_error "المساحة غير كافية"
-    # تنظيف أو أرشفة
+    log_error "Insufficient disk space"
+    # Cleanup or archive
     cleanup_old_files
 fi
 ```
 
-### 4. التحقق من صلاحيات الكتابة
+### 4. Write Permission Verification
 
 ```bash
 check_write_permission "path"
 ```
 
-**مثال:**
+**Example:**
 
 ```bash
 if ! check_write_permission "logs"; then
-    log_error "لا توجد صلاحيات كتابة في logs"
+    log_error "No write permissions for logs"
     exit 1
 fi
 ```
 
 ---
 
-## التنظيف
+## Cleanup
 
-### تنظيف الملفات المؤقتة
+### Temporary File Cleanup
 
 ```bash
 cleanup_temp_files [temp_dir] [pattern]
 ```
 
-**المعاملات:**
+**Parameters:**
 
-- `temp_dir`: المجلد المؤقت (افتراضي: /tmp)
-- `pattern`: نمط الملفات (افتراضي: basir\_\*)
+- `temp_dir`: Temporary directory (default: /tmp)
+- `pattern`: File pattern (default: basir\_\*)
 
-**مثال:**
+**Example:**
 
 ```bash
-# تنظيف في نهاية السكريبت
+# Cleanup at script end
 cleanup_temp_files "/tmp" "my_script_*"
 ```
 
 ---
 
-## أمثلة عملية
+## Practical Examples
 
-### مثال 1: سكريبت بسيط مع معالجة أخطاء
+### Example 1: Simple Script with Error Handling
 
 ```bash
 #!/bin/bash
 
-# تحميل المكتبة
+# Load library
 source "$(dirname "$0")/utils/error_handler.sh"
 
-# بدء التنفيذ
-print_info "بدء معالجة البيانات..."
+# Start execution
+print_info "Starting data processing..."
 
-# التحقق من المتطلبات
+# Verify requirements
 check_command "flutter" || exit 1
 check_directory "data" || mkdir -p data
 
-# تنفيذ العملية
+# Execute operation
 if flutter analyze > /dev/null 2>&1; then
-    print_success "التحليل نجح!"
+    print_success "Analysis successful!"
 else
-    log_error "فشل التحليل"
+    log_error "Analysis failed"
     exit 1
 fi
 
-print_info "انتهى السكريبت بنجاح"
+print_info "Script completed successfully"
 ```
 
-### مثال 2: سكريبت مع إعادة المحاولة
+### Example 2: Script with Automatic Retry
 
 ```bash
 #!/bin/bash
 
 source "$(dirname "$0")/utils/error_handler.sh"
 
-print_info "تحميل البيانات من الخادم..."
+print_info "Downloading data from server..."
 
-# محاولة التحميل مع إعادة المحاولة
+# Attempt download with retries
 if retry_command 5 3 "curl -f https://api.example.com/data"; then
-    print_success "تم التحميل بنجاح"
+    print_success "Download successful"
 else
-    log_error "فشل التحميل بعد 5 محاولات"
+    log_error "Download failed after 5 attempts"
     exit 1
 fi
 ```
 
-### مثال 3: سكريبت مع نسخ احتياطي
+### Example 3: Script with Backup
 
 ```bash
 #!/bin/bash
@@ -425,28 +425,28 @@ source "$(dirname "$0")/utils/error_handler.sh"
 
 CONFIG_FILE="config.yml"
 
-print_info "تحديث ملف التكوين..."
+print_info "Updating configuration file..."
 
-# إنشاء نسخة احتياطية
+# Create backup
 if ! backup_file "$CONFIG_FILE" "backups"; then
-    log_error "فشل إنشاء النسخة الاحتياطية"
+    log_error "Failed to create backup"
     exit 1
 fi
 
-# تحديث الملف
+# Update file
 if ! update_config "$CONFIG_FILE"; then
-    log_error "فشل التحديث - استعادة النسخة الاحتياطية"
+    log_error "Update failed - restoring backup"
 
-    # استعادة من النسخة الاحتياطية
+    # Restore from backup
     BACKUP=$(ls -t backups/config.yml.backup.* | head -1)
     restore_backup "$BACKUP" "$CONFIG_FILE"
     exit 1
 fi
 
-print_success "تم التحديث بنجاح"
+print_success "Update successful"
 ```
 
-### مثال 4: سكريبت شامل
+### Example 4: Comprehensive Script
 
 ```bash
 #!/bin/bash
@@ -455,53 +455,53 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# تحميل المكتبة
+# Load library
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/utils/error_handler.sh"
 
-# دالة رئيسية
+# Main function
 main() {
-    print_info "═══ بدء السكريبت ═══"
+    print_info "═══ Starting Script ═══"
 
-    # 1. التحقق من المتطلبات
-    print_info "التحقق من المتطلبات..."
+    # 1. Verify requirements
+    print_info "Verifying requirements..."
     check_command "flutter" || exit 1
     check_command "git" || exit 1
     check_disk_space 100 "." || exit 1
 
-    # 2. إنشاء البنية
-    print_info "إنشاء البنية..."
+    # 2. Create structure
+    print_info "Creating structure..."
     mkdir -p logs/{archive,errors,reports}
 
-    # 3. تنفيذ العمليات
-    print_info "تنفيذ العمليات..."
+    # 3. Execute operations
+    print_info "Executing operations..."
 
     if retry_command 3 2 "flutter pub get"; then
-        print_success "تم تحميل التبعيات"
+        print_success "Dependencies downloaded"
     else
-        log_error "فشل تحميل التبعيات"
+        log_error "Failed to download dependencies"
         return 1
     fi
 
     if flutter analyze > /dev/null 2>&1; then
-        print_success "التحليل نجح"
+        print_success "Analysis successful"
     else
-        log_warning "التحليل وجد مشاكل"
+        log_warning "Analysis found issues"
     fi
 
-    # 4. التنظيف
-    print_info "التنظيف..."
+    # 4. Cleanup
+    print_info "Cleaning up..."
     cleanup_temp_files
 
-    print_success "═══ انتهى السكريبت بنجاح ═══"
+    print_success "═══ Script completed successfully ═══"
     return 0
 }
 
-# تنفيذ
+# Execute
 main "$@"
 exit_code=$?
 
-# طباعة الملخص
+# Print summary
 print_error_summary
 
 exit $exit_code
@@ -509,158 +509,158 @@ exit $exit_code
 
 ---
 
-## أفضل الممارسات
+## Best Practices
 
-### 1. استخدم المستوى المناسب
+### 1. Use the Appropriate Level
 
 ```bash
-# ✅ جيد
-log_debug "قيمة المتغير: $var"
-log_info "بدء العملية..."
-log_warning "الملف غير موجود"
-log_error "فشل الأمر"
-log_critical "خطأ حرج في النظام"
+# ✅ Good
+log_debug "Variable value: $var"
+log_info "Operation start..."
+log_warning "File does not exist"
+log_error "Command failed"
+log_critical "Critical system error"
 
-# ❌ سيء
-log_error "بدء العملية..."  # استخدم log_info
-log_info "خطأ حرج!"  # استخدم log_critical
+# ❌ Bad
+log_error "Operation start..."  # Use log_info
+log_info "Critical error!"      # Use log_critical
 ```
 
-### 2. أضف سياق للأخطاء
+### 2. Provide Context for Errors
 
 ```bash
-# ✅ جيد
-log_error "فشل تنفيذ flutter analyze في السطر $LINENO"
-log_error "الملف غير موجود: $file_path"
+# ✅ Good
+log_error "Failed to execute flutter analyze at line $LINENO"
+log_error "File not found: $file_path"
 
-# ❌ سيء
-log_error "خطأ"
-log_error "فشل"
+# ❌ Bad
+log_error "Error"
+log_error "Failed"
 ```
 
-### 3. استخدم إعادة المحاولة للعمليات غير المستقرة
+### 3. Use Retries for Unstable Operations
 
 ```bash
-# ✅ جيد - عمليات الشبكة
+# ✅ Good - Network operations
 retry_command 3 2 "curl -f $url"
 
-# ✅ جيد - عمليات قد تفشل مؤقتاً
+# ✅ Good - Operations that may transiently fail
 retry_command 2 1 "git push"
 
-# ❌ سيء - عمليات محلية مستقرة
-retry_command 3 2 "ls -la"  # غير ضروري
+# ❌ Bad - Stable local operations
+retry_command 3 2 "ls -la"  # Unnecessary
 ```
 
-### 4. أنشئ نسخ احتياطية قبل التعديلات الحرجة
+### 4. Create Backups Before Critical Modifications
 
 ```bash
-# ✅ جيد
+# ✅ Good
 backup_file "$important_file" "backups"
 modify_file "$important_file"
 
-# ❌ سيء
-modify_file "$important_file"  # بدون نسخة احتياطية
+# ❌ Bad
+modify_file "$important_file"  # No backup
 ```
 
-### 5. نظف الموارد دائماً
+### 5. Always Clean Up Resources
 
 ```bash
-# ✅ جيد
+# ✅ Good
 trap cleanup_temp_files EXIT
 
-# أو في نهاية السكريبت
+# Or at the end of the script
 cleanup_temp_files
 ```
 
 ---
 
-## استكشاف الأخطاء
+## Troubleshooting
 
-### المشكلة: المكتبة لا تُحمل
+### Problem: Library does not load
 
-**الحل:**
+**Solution:**
 
 ```bash
-# تحقق من المسار
+# Verify path
 ls -la scripts/utils/error_handler.sh
 
-# تحقق من الصلاحيات
+# Verify permissions
 chmod +x scripts/utils/error_handler.sh
 ```
 
-### المشكلة: لا يتم الكتابة إلى ملف السجل
+### Problem: Unable to write to log file
 
-**الحل:**
+**Solution:**
 
 ```bash
-# تحقق من وجود المجلد
+# Verify directory existence
 mkdir -p logs/errors
 
-# تحقق من الصلاحيات
+# Verify permissions
 chmod 755 logs/errors
 ```
 
-### المشكلة: الألوان لا تظهر
+### Problem: Colors do not appear
 
-**الحل:**
+**Solution:**
 
 ```bash
-# تحقق من دعم الألوان
+# Verify color support
 echo -e "\033[0;31mTest\033[0m"
 
-# أو عطل الألوان
+# Or disable colors
 export NO_COLOR=1
 ```
 
 ---
 
-## المرجع السريع
+## Quick Reference
 
-### دوال الطباعة
+### Printing Functions
 
-- `print_debug` - رسائل التصحيح
-- `print_info` - معلومات
-- `print_success` - نجاح
-- `print_warning` - تحذير
-- `print_error` - خطأ
-- `print_critical` - خطأ حرج
+- `print_debug` - Debugging
+- `print_info` - Information
+- `print_success` - Success
+- `print_warning` - Warning
+- `print_error` - Error
+- `print_critical` - Critical
 
-### دوال التسجيل
+### Logging Functions
 
-- `log_debug` - تسجيل debug
-- `log_info` - تسجيل info
-- `log_warning` - تسجيل warning
-- `log_error` - تسجيل error
-- `log_critical` - تسجيل critical
+- `log_debug` - Log DEBUG
+- `log_info` - Log INFO
+- `log_warning` - Log WARNING
+- `log_error` - Log ERROR
+- `log_critical` - Log CRITICAL
 
-### معالجة الأخطاء
+### Error Handling
 
-- `handle_error` - معالج عام
-- `handle_command_error` - أخطاء الأوامر
-- `handle_file_error` - أخطاء الملفات
-- `handle_network_error` - أخطاء الشبكة
+- `handle_error` - General handler
+- `handle_command_error` - Command errors
+- `handle_file_error` - File errors
+- `handle_network_error` - Network errors
 
-### الاسترداد
+### Recovery
 
-- `retry_command` - إعادة المحاولة
-- `backup_file` - نسخ احتياطي
-- `restore_backup` - استعادة
+- `retry_command` - Retry command
+- `backup_file` - Backup file
+- `restore_backup` - Restore backup
 
-### التحقق
+### Verification
 
-- `check_command` - التحقق من أمر
-- `check_file` - التحقق من ملف
-- `check_directory` - التحقق من مجلد
-- `check_disk_space` - التحقق من المساحة
-- `check_write_permission` - التحقق من الصلاحيات
+- `check_command` - Verify command
+- `check_file` - Verify file
+- `check_directory` - Verify directory
+- `check_disk_space` - Verify space
+- `check_write_permission` - Verify permissions
 
-### التنظيف
+### Cleanup
 
-- `cleanup_temp_files` - تنظيف الملفات المؤقتة
-- `print_error_summary` - طباعة ملخص الأخطاء
+- `cleanup_temp_files` - Clean temporary files
+- `print_error_summary` - Print error summary
 
 ---
 
-**تم إعداد هذا الدليل بواسطة:** فريق وكلاء تطوير مشروع بصير  
-**التاريخ:** 6 ديسمبر 2025  
-**الحالة:** ✅ معتمد ونشط
+**This guide was prepared by:** Basir Project Agentic Development Team  
+**Date:** December 6, 2025  
+**Status:** ✅ Approved and Active

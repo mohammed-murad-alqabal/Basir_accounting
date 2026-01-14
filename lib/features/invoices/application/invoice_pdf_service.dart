@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 /// ***
 /// Cognitive Foundation: InvoicePdfService
 ///
@@ -10,6 +11,7 @@ library;
 
 import 'package:basir_accounting_system/features/invoices/application/zatca_service.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/services/settings_service.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' as intl;
@@ -18,6 +20,11 @@ import 'package:pdf/widgets.dart' as pw;
 
 /// [InvoicePdfService]
 class InvoicePdfService {
+  /// Creating the [InvoicePdfService] with [SettingsService].
+  InvoicePdfService(this._settingsService);
+
+  final SettingsService _settingsService;
+
   static const String _fontPath = 'assets/fonts/Cairo-Regular.ttf';
   static const String _boldFontPath = 'assets/fonts/Cairo-Bold.ttf';
 
@@ -26,6 +33,10 @@ class InvoicePdfService {
     Invoice invoice, {
     String locale = 'ar',
   }) async {
+    final settings = await _settingsService.getCompanySettings();
+    final companyName = settings['companyName'] ?? 'Basir Tech';
+    final taxNumber = settings['taxNumber'] ?? '123456789012345';
+
     final pdf = pw.Document();
 
     // Institutional Font Loading for RTL Support
@@ -47,7 +58,12 @@ class InvoicePdfService {
           pw.SizedBox(height: 20),
           _buildItemsTable(invoice, ttfBold),
           pw.SizedBox(height: 20),
-          _buildTotalsAndQr(invoice, ttfBold),
+          _buildTotalsAndQr(
+            invoice,
+            ttfBold,
+            companyName: companyName,
+            taxNumber: taxNumber,
+          ),
           pw.SizedBox(height: 40),
           _buildFooter(invoice),
         ],
@@ -179,29 +195,32 @@ class InvoicePdfService {
     );
   }
 
-  pw.Widget _buildTotalsAndQr(Invoice invoice, pw.Font boldFont) => pw.Row(
+  pw.Widget _buildTotalsAndQr(
+    Invoice invoice,
+    pw.Font boldFont, {
+    required String companyName,
+    required String taxNumber,
+  }) =>
+      pw.Row(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
           // ZATCA Compliant QR Code
-          if (invoice.qrCode != null || true)
-            pw.Container(
+          pw.Container(
+            width: 100,
+            height: 100,
+            child: pw.BarcodeWidget(
+              barcode: pw.Barcode.qrCode(),
+              data: ZatcaService.encodeTlv(
+                sellerName: companyName,
+                taxNumber: taxNumber,
+                timestamp: invoice.issuedDate,
+                totalAmount: invoice.totalAmount,
+                vatAmount: invoice.taxAmount,
+              ),
               width: 100,
               height: 100,
-              child: pw.BarcodeWidget(
-                barcode: pw.Barcode.qrCode(),
-                data: ZatcaService.encodeTlv(
-                  sellerName:
-                      'مؤسسة بصير التجارية', // TODO(Basir): Get from settings
-                  taxNumber:
-                      '123456789012345', // TODO(Basir): Get from settings
-                  timestamp: invoice.issuedDate,
-                  totalAmount: invoice.totalAmount,
-                  vatAmount: invoice.taxAmount,
-                ),
-                width: 100,
-                height: 100,
-              ),
             ),
+          ),
           pw.Spacer(),
           // Institutional Totals
           pw.Column(

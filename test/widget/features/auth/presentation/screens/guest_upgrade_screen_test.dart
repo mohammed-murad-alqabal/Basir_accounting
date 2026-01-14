@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:basir_accounting_system/features/auth/presentation/screens/guest_upgrade_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/app_enhanced_button.dart';
@@ -18,7 +20,19 @@ void main() {
   });
 
   Widget createSubject() => ProviderScope(
-        overrides: [authServiceProvider.overrideWithValue(mockAuthService)],
+        overrides: [
+          appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          currentUserProfileProvider.overrideWith(
+            (ref) => const BasirUser(
+              id: 'test-user',
+              email: 'test@example.com',
+              displayName: 'Test User',
+              role: UserRole.admin,
+              
+            ),
+          ),
+          authServiceProvider.overrideWithValue(mockAuthService),
+        ],
         child: MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
@@ -61,9 +75,7 @@ void main() {
       final l10n = AppLocalizations.of(context);
       final buttonFinder = find.descendant(
         of: find.byWidgetPredicate(
-          (widget) =>
-              widget is AppEnhancedButton &&
-              widget.type == AppEnhancedButtonType.primary,
+          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
         ),
         matching: find.text(l10n.actionUpgradeAccount),
       );
@@ -86,9 +98,7 @@ void main() {
       final l10n = AppLocalizations.of(context);
       final buttonFinder = find.descendant(
         of: find.byWidgetPredicate(
-          (widget) =>
-              widget is AppEnhancedButton &&
-              widget.type == AppEnhancedButtonType.primary,
+          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
         ),
         matching: find.text(l10n.actionUpgradeAccount),
       );

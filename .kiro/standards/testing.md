@@ -1,92 +1,92 @@
-# معايير الاختبارات
+# Testing Standards
 
-**المشروع:** بصير MVP  
-**الحالة:** ✅ نشط
+**Project:** Basir MVP  
+**Status:** ✅ Active
 
 ---
 
-## الأنواع
+## Testing Types
 
 ### Unit Tests
 
-- **الهدف:** اختبار الدوال والـ Classes المعزولة
-- **التغطية:** 70%+
-- **السرعة:** سريعة جداً
+- **Goal:** Test isolated functions and classes.
+- **Coverage Target:** 70%+
+- **Speed:** Near-instant.
 
 ### Widget Tests
 
-- **الهدف:** اختبار الـ Widgets
-- **التغطية:** المسارات الحرجة
-- **السرعة:** سريعة
+- **Goal:** Test UI components and single-widget behavior.
+- **Coverage Target:** Critical user paths.
+- **Speed:** Fast.
 
 ### Integration Tests
 
-- **الهدف:** اختبار التدفقات الكاملة
-- **التغطية:** رحلات المستخدم
-- **السرعة:** متوسطة
+- **Goal:** Test end-to-end user flows and service orchestration.
+- **Coverage Target:** Representative user journeys.
+- **Speed:** Moderate.
 
 ---
 
-## القواعد الأساسية
+## Core Rules
 
-### الإلزامي
+### Mandatory Requirements
 
-- ✅ اختبار كل public function
-- ✅ اختبار الحالات الطبيعية والاستثنائية
-- ✅ استخدام mocks للـ dependencies
-- ✅ اختبارات مستقلة
+- ✅ Test every public function and business logic branch.
+- ✅ Test both "Happy Paths" (expected behavior) and "Edge Cases" (exceptional behavior).
+- ✅ Use **Mocks** (e.g., Mocktail) to isolate external dependencies (databases, APIs).
+- ✅ Each test must be completely independent and self-contained.
 
-### الممنوع
+### Prohibited Practices
 
-- ❌ اختبارات تعتمد على بعضها
-- ❌ اختبارات بطيئة (> 30 ثانية للكل)
-- ❌ استخدام بيانات حقيقية
-- ❌ mocks لجعل الاختبارات تنجح
+- ❌ Interdependent tests (one test relying on the side effects of another).
+- ❌ Slow test suites (> 30 seconds for the entire local suite).
+- ❌ Using real production or persistent data during execution.
+- ❌ Over-mocking to force tests to pass without verifying real logic.
 
 ---
 
-## البنية
+## Structure
 
-### تنظيم الاختبارات
+### Test Organization
 
 ```
 test/
-├── unit/          # اختبارات الوحدة
-├── widget/        # اختبارات الـ Widgets
-└── integration/   # اختبارات التكامل
+├── unit/          # Isolated business logic tests
+├── widget/        # Individual widget and UI tests
+└── integration/   # Holistic flow and service tests
 ```
 
-### تسمية الملفات
+### File Naming Convention
 
 ```
-customer_repository.dart → customer_repository.test.dart
+customer_repository.dart → customer_repository_test.dart
 ```
 
 ---
 
-## أفضل الممارسات
+## Best Practices
 
-### Setup و Teardown
+### Setup and Teardown
 
 ```dart
 setUp(() async {
-  // إعداد قبل كل اختبار
+  // Logic to execute before every individual test.
 });
 
 tearDown(() async {
-  // تنظيف بعد كل اختبار
+  // Logic to execute after every individual test.
 });
 ```
 
-### أسماء واضحة
+### Descriptive Test Names
 
 ```dart
-test('should add customer successfully', () {
+test('should add customer successfully when data is valid', () {
   // ...
 });
 ```
 
-### استخدام Matchers
+### Effective Use of Matchers
 
 ```dart
 expect(result, isNotNull);
@@ -96,16 +96,16 @@ expect(() => validate(''), throwsException);
 
 ---
 
-## التشغيل
+## Execution
 
-### الأوامر
+### CLI Commands
 
 ```bash
-flutter test                    # جميع الاختبارات
-flutter test --coverage         # مع التغطية
-flutter test test/unit/         # اختبارات محددة
+flutter test                    # Run all tests
+flutter test --coverage         # Run with coverage report generation
+flutter test test/unit/         # Run tests in a specific directory
 ```
 
 ---
 
-**للأمثلة:** `.kiro/steering/reference/testing-examples.md`
+**For practical examples, refer to:** `.kiro/steering/reference/testing-examples.md`

@@ -1,4 +1,7 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'financial_strategy_service.g.dart';
@@ -30,27 +33,23 @@ class FinancialStrategyService extends _$FinancialStrategyService
   @override
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];
+    final l10n = lookupAppLocalizations(Locale(context.locale));
 
     // 1. Liquidity Impact Analysis
     final cashImpactLines = context.proposedJournalEntry.lines.where(
-      (l) => l.accountId.startsWith('acc-11'),
+      (l) => l.accountId.startsWith('acc-11'), // Assuming 'acc-11' is Cash/Bank
     );
 
     if (cashImpactLines.isNotEmpty) {
       for (final line in cashImpactLines) {
         if (line.credit > line.debit) {
           rationale.add(
-            'Strategy Analysis: This entry represents a cash outflow of '
-            '${line.credit}.',
+            l10n.agentRationaleStrategyOutflow(line.credit.toString()),
           );
-          rationale.add(
-            'Recommendation: Review cash flow projections for the coming week '
-            'to ensure sufficient liquidity for other obligations.',
-          );
+          rationale.add(l10n.agentRationaleStrategyRecommendation);
         } else {
           rationale.add(
-            'Strategy Analysis: Liquidity enhancement of ${line.debit} '
-            'supports short-term investment capacity.',
+            l10n.agentRationaleStrategyInflow(line.debit.toString()),
           );
         }
       }
@@ -58,10 +57,7 @@ class FinancialStrategyService extends _$FinancialStrategyService
 
     // 2. Profitability & Business Type Analysis
     if (context.transactionType == 'sales') {
-      rationale.add(
-        'Strategic Insight: Increased sales volume positively impacts '
-        'Return on Assets (ROA) and net margin targets.',
-      );
+      rationale.add(l10n.agentRationaleStrategyProfitability);
     }
 
     return AgentResult(

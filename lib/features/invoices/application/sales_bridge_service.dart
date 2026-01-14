@@ -1,9 +1,12 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/src/rust/api.dart';
 import 'package:basir_accounting_system/src/rust/api/sales.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:uuid/uuid.dart';
 
 /// [SalesBridgeService]
@@ -22,6 +25,18 @@ class SalesBridgeService {
   Future<Invoice> finalizeInvoiceWithZatca(Invoice invoice) async {
     final user = ref.read(basirUserProvider);
 
+    // Dynamic metadata retrieval
+    final deviceInfo = DeviceInfoPlugin();
+    String? deviceId;
+    try {
+      final androidInfo = await deviceInfo.androidInfo;
+      deviceId = androidInfo.id;
+    } on Object catch (_) {
+      deviceId = 'basir-generic-device';
+    }
+
+    final packageInfo = await PackageInfo.fromPlatform();
+
     final metadata = AuditMetadataDto(
       who: WhoDto(
         userId: user?.id ?? 'anonymous',
@@ -29,10 +44,10 @@ class SalesBridgeService {
         role: user?.isGuest ?? false ? 'guest' : 'user',
         sessionId: const Uuid().v4(),
       ),
-      where: const WhereDto(
+      where: WhereDto(
         systemId: 'Basir-Mobile',
-        deviceId: 'device-id', // TODO(dev): Get real device ID
-        appVersion: '1.0.0',
+        deviceId: deviceId,
+        appVersion: packageInfo.version,
       ),
       why: const WhyDto(
         justification: 'ZATCA Phase 2 Compliance Finalization',

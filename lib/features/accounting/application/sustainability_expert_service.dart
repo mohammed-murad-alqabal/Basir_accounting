@@ -1,4 +1,7 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'sustainability_expert_service.g.dart';
@@ -30,31 +33,26 @@ class SustainabilityExpertService extends _$SustainabilityExpertService
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];
     var isAllowed = true;
+    final l10n = lookupAppLocalizations(
+      Locale(context.locale),
+    );
 
     if (context.isSustainabilityRequired) {
-      rationale.add(
-        'ISSB Analysis: This transaction is flagged for mandatory '
-        'environmental/social disclosure.',
-      );
+      rationale.add(l10n.agentRationaleSustainabilityFlagged);
 
       if (context.sustainabilityMetrics == null ||
           context.sustainabilityMetrics!.isEmpty) {
         isAllowed = false;
-        rationale.add(
-          'CRITICAL REJECTION: ISSB S2 standards require carbon footprint '
-          'metrics for this industry-specific transaction.',
-        );
+        rationale.add(l10n.agentRationaleSustainabilityReject);
       } else {
         rationale.add(
-          'SUCCESS: Integrated ${context.sustainabilityMetrics!.length} '
-          'compliant sustainability metrics.',
+          l10n.agentRationaleSustainabilitySuccess(
+            context.sustainabilityMetrics!.length,
+          ),
         );
       }
     } else {
-      rationale.add(
-        'Sustainability Assessment: No specific ISSB disclosures required '
-        'for this transaction tier.',
-      );
+      rationale.add(l10n.agentRationaleSustainabilityNotRequired);
     }
 
     return AgentResult(

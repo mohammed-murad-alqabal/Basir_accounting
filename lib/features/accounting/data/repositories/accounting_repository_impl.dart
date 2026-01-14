@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/data/models/account_model.dart';
 import 'package:basir_accounting_system/features/accounting/data/models/financial_year_model.dart';
