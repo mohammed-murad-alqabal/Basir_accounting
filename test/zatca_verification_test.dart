@@ -76,6 +76,8 @@ void main() {
         customerName: 'Test Customer',
         items: [
           InvoiceItem(
+            taxRate: Decimal.parse('0.15'),
+            taxCategory: 'S',
             id: 'item-1',
             name: 'Service',
             quantity: Decimal.one,

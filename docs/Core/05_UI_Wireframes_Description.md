@@ -1,73 +1,78 @@
-# وصف وتصميم واجهات المستخدم (UI Wireframes) لتطبيق "بصير" MVP
+# User Interface (UI) Wireframes & Logic: Basir MVP
 
-تم تصميم هذه الواجهات بناءً على وثيقة متطلبات المنتج (PRD) ونظام التصميم (Design System) المعتمد، مع التركيز على اتجاه الكتابة من اليمين لليسار (RTL) والاحترافية.
+These interfaces are designed based on the approved Product Requirements Document (PRD) and Design System, with a primary focus on professional Right-to-Left (RTL) alignment and high-fidelity UX.
 
-## 1. شاشة الإعداد الأولي / تسجيل الدخول (Initial Setup / Login Screen)
+## 1. Initial Setup / Login Screen
 
-**الهدف:** تأمين التطبيق محليًا ببيانات اعتماد أساسية.
+**Objective**: Secure the local environment with baseline authentication credentials.
 
-| العنصر | الوصف | المظهر |
-| :--- | :--- | :--- |
-| **الخلفية** | خلفية بيضاء نظيفة. | بسيطة ومركزة. |
-| **العنوان** | "تأمين بياناتك المحلية" (في الإعداد الأولي) أو "تسجيل الدخول". | خط عربي كبير وواضح (Tajawal Bold). |
-| **حقل اسم المستخدم** | حقل إدخال (Text Field) لتسجيل/إدخال اسم المستخدم. | تصميم Outlined، أيقونة شخص (User Icon) على اليسار. |
-| **حقل كلمة المرور** | حقل إدخال لكلمة المرور، مع زر لإظهار/إخفاء النص. | تصميم Outlined، أيقونة قفل (Lock Icon) على اليسار. |
-| **زر الإجراء** | "بدء الاستخدام" (في الإعداد الأولي) أو "دخول". | زر رئيسي (Primary Button) باللون الأزرق (`#007BFF`)، بعرض الشاشة. |
-| **ملاحظة** | نص صغير أسفل الزر: "سيتم حفظ بياناتك محليًا على جهازك فقط." | لتأكيد الخصوصية والأمان. |
+| Element            | Specification                                   | Visual Representation                        |
+| :----------------- | :---------------------------------------------- | :------------------------------------------- |
+| **Background**     | Minimalist white container.                     | Focused and distraction-free.                |
+| **Header**         | "Secure Your Local Data" or "Login".            | High-legibility Tajawal Bold typography.     |
+| **Username Field** | Standardized Outlined Text Field.               | Leading person icon (Left alignment in RTL). |
+| **Password Field** | Secured input with toggle for visibility.       | Leading lock icon.                           |
+| **Action Button**  | "Initialize System" or "Access".                | Primary High-Visibility Blue (`#007BFF`).    |
+| **Privacy Note**   | "Data is persisted exclusively on this device." | Technical disclaimer for user confidence.    |
 
-## 2. لوحة التحكم (Dashboard Screen)
+## 2. Dashboard Screen
 
-**الهدف:** عرض ملخص مالي سريع ومحفز.
+**Objective**: Provide a high-velocity financial summary and actionable insights.
 
-| العنصر | الوصف | المظهر |
-| :--- | :--- | :--- |
-| **شريط التطبيق (AppBar)** | شعار "بصير" على اليمين، زر إعدادات (Settings Icon) على اليسار. | خلفية بيضاء. |
-| **بطاقة الملخص (Summary Card)** | بطاقة كبيرة في الأعلى تحتوي على: "إجمالي الإيرادات (مدفوعة)" و "إجمالي الفواتير المستحقة". | تصميم Card باللون الأبيض، خطوط كبيرة وواضحة للأرقام. |
-| **بطاقات الإحصائيات** | بطاقتان صغيرتان متجاورتان: "عدد العملاء" و "عدد الفواتير الكلي". | أيقونات معبرة (مثل أيقونة شخصين للعملاء). |
-| **قسم الإجراءات السريعة** | أزرار دائرية كبيرة (Floating Action Buttons) أو بطاقات صغيرة لـ: "إنشاء فاتورة جديدة" و "إضافة عميل جديد". | استخدام اللون الثانوي (الأخضر) لـ "إنشاء فاتورة جديدة" كإجراء رئيسي. |
-| **شريط التنقل السفلي** | أيقونات: لوحة التحكم (نشط)، الفواتير، العملاء، الإعدادات. | ثابت في الأسفل. |
+| Element           | Specification                                                      | Visual Representation                             |
+| :---------------- | :----------------------------------------------------------------- | :------------------------------------------------ |
+| **AppBar**        | "Basir" logo (Right) / Settings (Left).                            | Professional white background.                    |
+| **Summary Card**  | Primary container for "Paid Revenue" vs "Pending Receivables".     | High-prominence numerical readout.                |
+| **Metric Nodes**  | Dual-column cards for "Customer Count" and "Total Invoices".       | Semantic iconography.                             |
+| **Quick Actions** | High-visibility action nodes for "New Invoice" and "Add Customer". | "New Invoice" utilizes Success Green (`#28A745`). |
+| **Bottom Nav**    | Active state: Dashboard.                                           | Persistent navigation anchor.                     |
 
-## 3. شاشة قائمة الفواتير (Invoices List Screen)
+## 3. Invoices List Screen
 
-**الهدف:** تصفح، تصفية، والبحث عن الفواتير.
+**Objective**: High-speed navigation, filtering, and searching of ledger records.
 
-| العنصر | الوصف | المظهر |
-| :--- | :--- | :--- |
-| **شريط التطبيق (AppBar)** | عنوان "الفواتير"، زر بحث (Search Icon) على اليسار. | خلفية بيضاء. |
-| **شريط التصفية (Filter Bar)** | شريط أفقي يحتوي على أزرار تصفية (Chips) لـ: "الكل"، "مسودة"، "مستحقة"، "مدفوعة". | الأزرار النشطة باللون الأساسي (Primary Color). |
-| **قائمة الفواتير** | قائمة قابلة للتمرير (Scrollable List) من بطاقات الفواتير. | كل بطاقة فاتورة تحتوي على: اسم العميل (كبير)، رقم الفاتورة، تاريخ الاستحقاق، الإجمالي الكلي، وشارة (Badge) لحالة الفاتورة (أخضر للمدفوعة، أحمر للمستحقة). |
-| **زر الإضافة** | زر عائم (Floating Action Button) في الزاوية السفلية اليسرى لـ "إنشاء فاتورة جديدة". | باللون الأساسي. |
+| Element           | Specification                                 | Visual Representation                                              |
+| :---------------- | :-------------------------------------------- | :----------------------------------------------------------------- |
+| **AppBar**        | "Invoices" title with search trigger.         | Minimalist header.                                                 |
+| **Filter Chips**  | Horizontal scroll: All, Draft, Overdue, Paid. | Active state: Primary Blue.                                        |
+| **Invoice Cards** | Scrollable list of transaction summaries.     | Detail-rich: Customer name, ID, due date, total, and status badge. |
+| **Action FAB**    | Floating Action Button for "New Invoice".     | Position: Bottom Left (RTL optimization).                          |
 
-## 4. شاشة إنشاء/تعديل فاتورة (Create/Edit Invoice Screen)
+## 4. Invoice Orchestration (Create/Edit)
 
-**الهدف:** إدخال جميع تفاصيل الفاتورة وحساب الإجمالي.
+**Objective**: Precision data entry, itemization, and totalization logic.
 
-| العنصر | الوصف | المظهر |
-| :--- | :--- | :--- |
-| **شريط التطبيق (AppBar)** | عنوان "إنشاء فاتورة جديدة"، زر حفظ (Save Icon) على اليسار. | خلفية بيضاء. |
-| **قسم معلومات الفاتورة** | حقول إدخال لـ: اختيار العميل (قائمة منسدلة)، تاريخ الإصدار، تاريخ الاستحقاق. | حقول Outlined، واضحة ومتباعدة. |
-| **قسم بنود الفاتورة (Items)** | قائمة ديناميكية (Dynamic List) لبنود الفاتورة. | كل بند يحتوي على: حقل اسم البند، حقل الكمية، حقل السعر. زر صغير لـ "إضافة بند" في الأسفل. |
-| **قسم الملخص والحسابات** | عرض ثابت في الأسفل يحتوي على: الإجمالي الفرعي، نسبة الضريبة (قابلة للتعديل)، الإجمالي الكلي. | الأرقام النهائية بخط عريض وواضح. |
-| **زر الإجراء** | "حفظ كمسودة" و "إصدار الفاتورة". | زرين متجاورين، أحدهما ثانوي والآخر رئيسي. |
+| Element               | Specification                                               | Visual Representation                    |
+| :-------------------- | :---------------------------------------------------------- | :--------------------------------------- |
+| **AppBar**            | "Generate New Invoice" with persistent Save node.           | Operational header.                      |
+| **Header Data**       | Customer selection (Dropdown), Issue Date, Due Date.        | Standardized spacing and alignment.      |
+| **Line Items**        | Dynamic list for multi-line itemization.                    | Name, Quantity, and Unit Price fields.   |
+| **Financial Summary** | Sticky footer: Subtotal, VAT (Adjustable), and Grand Total. | High-prominence totalization.            |
+| **Action Suite**      | "Save Draft" vs "Finalize & Issue".                         | Balanced primary/secondary action nodes. |
 
-## 5. شاشة قائمة العملاء (Customers List Screen)
+## 5. Customer Management Screen
 
-**الهدف:** إدارة جهات الاتصال الخاصة بالعملاء.
+**Objective**: Lifecycle management of customer relationships and contact indices.
 
-| العنصر | الوصف | المظهر |
-| :--- | :--- | :--- |
-| **شريط التطبيق (AppBar)** | عنوان "العملاء"، زر بحث (Search Icon) على اليسار. | خلفية بيضاء. |
-| **قائمة العملاء** | قائمة قابلة للتمرير تعرض بطاقات العملاء. | كل بطاقة تحتوي على: اسم العميل (كبير)، رقم الهاتف، وأيقونة صغيرة لفتح تفاصيل العميل. |
-| **زر الإضافة** | زر عائم (Floating Action Button) في الزاوية السفلية اليسرى لـ "إضافة عميل جديد". | باللون الأساسي. |
+| Element          | Specification                              | Visual Representation                |
+| :--------------- | :----------------------------------------- | :----------------------------------- |
+| **AppBar**       | "Customer Index" with search capability.   | Clean header.                        |
+| **Contact List** | Scrollable index of customer profiles.     | Primary data: Name and Phone Number. |
+| **Action FAB**   | Floating Action Button for "New Customer". | Primary Blue.                        |
 
-## 6. شاشة الإعدادات (Settings Screen)
+## 6. System Settings Screen
 
-**الهدف:** إدارة إعدادات التطبيق الأساسية.
+**Objective**: Management of operational parameters and security settings.
 
-| العنصر | الوصف | المظهر |
-| :--- | :--- | :--- |
-| **شريط التطبيق (AppBar)** | عنوان "الإعدادات". | خلفية بيضاء. |
-| **قسم إعدادات العمل** | قائمة من عناصر (List Tiles) لـ: "تعديل معلومات الشركة"، "تعديل نسبة الضريبة الافتراضية". | أيقونات واضحة لكل عنصر. |
-| **قسم الأمان** | عنصر لـ: "تغيير كلمة المرور المحلية". | عنصر مع أيقونة قفل. |
-| **قسم حول التطبيق** | عنصر لـ: "حول بصير" (يعرض رقم الإصدار). | |
-| **زر تسجيل الخروج** | زر في الأسفل لـ "تسجيل الخروج" (يعود إلى شاشة تسجيل الدخول). | باللون الأحمر (Danger Color) لتأكيد الإجراء. |
+| Element             | Specification                               | Visual Representation                    |
+| :------------------ | :------------------------------------------ | :--------------------------------------- |
+| **Business Config** | Company Info, Default VAT settings.         | Standard ListTiles with semantic icons.  |
+| **Security**        | "Reset Local Password" workflow.            | Leading Lock icon.                       |
+| **About**           | System versioning and technical build info. | Informational footer.                    |
+| **Termination**     | "Secure Logout" (Returns to Auth layer).    | Crimson (`#DC3545`) for critical action. |
+
+---
+
+**Prepared by:** Basir Project Agentic Development Team  
+**Last Updated:** December 10, 2025  
+**Status:** ✅ English-First Documentation Standardized

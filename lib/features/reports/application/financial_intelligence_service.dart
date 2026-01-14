@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
@@ -5,13 +6,13 @@ import 'package:basir_accounting_system/features/reports/domain/entities/financi
 import 'package:decimal/decimal.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'analytics_service.g.dart';
+part 'financial_intelligence_service.g.dart';
 
-/// خدمة التحليلات المالية (Analytics Service)
+/// خدمة التحليلات المالية (Financial Intelligence Service)
 ///
 /// مسؤولة عن حساب مؤشرات الأداء المالي والنسب المالية.
 @Riverpod(keepAlive: true)
-class AnalyticsService extends _$AnalyticsService {
+class FinancialIntelligenceService extends _$FinancialIntelligenceService {
   @override
   void build() {}
 

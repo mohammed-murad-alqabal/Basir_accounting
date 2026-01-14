@@ -1,9 +1,9 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
-import 'package:basir_accounting_system/features/analytics/application/analytics_service.dart';
 // ignore: max_line_length
 import 'package:basir_accounting_system/features/settings/presentation/widgets/settings_shared_widgets.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';

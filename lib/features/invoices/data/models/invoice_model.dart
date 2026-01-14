@@ -29,6 +29,7 @@ class InvoiceItemModel {
     ..price = item.price.toDouble()
     ..total = item.total.toDouble()
     ..taxAmount = item.taxAmount.toDouble()
+    ..taxRate = item.taxRate.toDouble()
     ..taxCategory = item.taxCategory;
 
   /// Unique item identifier.
@@ -52,6 +53,9 @@ class InvoiceItemModel {
   /// Tax component.
   late double taxAmount;
 
+  /// Tax rate.
+  late double taxRate;
+
   /// VAT category.
   late String taxCategory;
 
@@ -64,6 +68,7 @@ class InvoiceItemModel {
         price: Decimal.parse(price.toString()),
         total: Decimal.parse(total.toString()),
         taxAmount: Decimal.parse(taxAmount.toString()),
+        taxRate: Decimal.parse(taxRate.toString()),
         taxCategory: taxCategory,
       );
 }

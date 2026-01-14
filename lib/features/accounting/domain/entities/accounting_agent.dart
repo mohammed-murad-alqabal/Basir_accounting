@@ -54,6 +54,9 @@ class AccountingContext with _$AccountingContext {
     /// Abstract nature of the transaction (e.g., "sales", "payroll").
     required String transactionType,
 
+    /// The user's current locale for providing localized reasoning.
+    @Default('ar') String locale,
+
     /// If true, the agent must verify climate/social disclosure compliance.
     @Default(false) bool isSustainabilityRequired,
 

@@ -128,6 +128,90 @@ abstract class AppLocalizations {
   /// **'Add Currency'**
   String get labelAddCurrency;
 
+  /// No description provided for @labelPartner.
+  ///
+  /// In en, this message translates to:
+  /// **'Partner'**
+  String get labelPartner;
+
+  /// No description provided for @labelAccountCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Code'**
+  String get labelAccountCode;
+
+  /// No description provided for @labelAccountName.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Name'**
+  String get labelAccountName;
+
+  /// No description provided for @labelFairValueAdjustment.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair Value Adjustment (IFRS 13)'**
+  String get labelFairValueAdjustment;
+
+  /// No description provided for @subtitleFairValueAdjustment.
+  ///
+  /// In en, this message translates to:
+  /// **'Use latest market prices for inventory'**
+  String get subtitleFairValueAdjustment;
+
+  /// No description provided for @labelTotalAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Amount'**
+  String get labelTotalAmount;
+
+  /// No description provided for @msgBalanceBalancedTB.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance is balanced (Balanced)'**
+  String get msgBalanceBalancedTB;
+
+  /// No description provided for @msgBalanceUnbalancedTB.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance is unbalanced! Please review.'**
+  String get msgBalanceUnbalancedTB;
+
+  /// No description provided for @sectionBasicReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Reports'**
+  String get sectionBasicReports;
+
+  /// No description provided for @sectionFinancialStatements.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial Statements (IAS 1/IFRS)'**
+  String get sectionFinancialStatements;
+
+  /// No description provided for @sectionAgingAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Aging Analysis'**
+  String get sectionAgingAnalysis;
+
+  /// No description provided for @receivablesAgingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receivables Aging'**
+  String get receivablesAgingTitle;
+
+  /// No description provided for @payablesAgingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payables Aging'**
+  String get payablesAgingTitle;
+
+  /// No description provided for @msgExportComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Export feature coming soon'**
+  String get msgExportComingSoon;
+
   /// No description provided for @labelTermsAndConditions.
   ///
   /// In en, this message translates to:
@@ -152,6 +236,30 @@ abstract class AppLocalizations {
   /// **'QR Code (ZATCA)'**
   String get labelZatcaQrCode;
 
+  /// No description provided for @labelZatcaUuid.
+  ///
+  /// In en, this message translates to:
+  /// **'ZATCA UUID'**
+  String get labelZatcaUuid;
+
+  /// No description provided for @labelZatcaHash.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Hash'**
+  String get labelZatcaHash;
+
+  /// No description provided for @labelTaxTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Tax'**
+  String get labelTaxTotal;
+
+  /// No description provided for @labelVatRate.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT Rate'**
+  String get labelVatRate;
+
   /// No description provided for @zatcaComplianceText.
   ///
   /// In en, this message translates to:
@@ -175,6 +283,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Start by adding your first invoice to manage your sales professionally.'**
   String get noInvoicesDescription;
+
+  /// No description provided for @labelFromDate.
+  ///
+  /// In en, this message translates to:
+  /// **'From Date'**
+  String get labelFromDate;
+
+  /// No description provided for @labelToDate.
+  ///
+  /// In en, this message translates to:
+  /// **'To Date'**
+  String get labelToDate;
+
+  /// No description provided for @labelAsOfDate.
+  ///
+  /// In en, this message translates to:
+  /// **'As of Date'**
+  String get labelAsOfDate;
+
+  /// No description provided for @tooltipUpdateReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Report'**
+  String get tooltipUpdateReport;
 
   /// No description provided for @journalEntryFormTitleAdd.
   ///
@@ -775,6 +907,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'OK'**
   String get dialogOk;
+
+  /// No description provided for @dialogCognitiveRejectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Rejected'**
+  String get dialogCognitiveRejectionTitle;
+
+  /// No description provided for @dialogCognitiveRejectionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The Cognitive Hexagon has rejected this transaction. Review the agent consensus below:'**
+  String get dialogCognitiveRejectionMessage;
 
   /// No description provided for @dialogSave.
   ///
@@ -1850,6 +1994,12 @@ abstract class AppLocalizations {
   /// **'Pending'**
   String get statusPending;
 
+  /// No description provided for @statusRefunded.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded'**
+  String get statusRefunded;
+
   /// No description provided for @styleCompact.
   ///
   /// In en, this message translates to:
@@ -2339,13 +2489,13 @@ abstract class AppLocalizations {
   /// No description provided for @incomeStatementSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Summary of revenue and expenses by IFRS 18'**
+  /// **'Summary of revenues and profitability'**
   String get incomeStatementSubtitle;
 
   /// No description provided for @balanceSheetSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'State of assets, liabilities, and equity'**
+  /// **'Assets, liabilities, and equity (Fair Value supported)'**
   String get balanceSheetSubtitle;
 
   /// No description provided for @cashFlowSubtitle.
@@ -2357,7 +2507,7 @@ abstract class AppLocalizations {
   /// No description provided for @agingReportsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Analyze age of customer and supplier balances'**
+  /// **'Analyze age of customer and vendor balances'**
   String get agingReportsSubtitle;
 
   /// No description provided for @agingReportsTitle.
@@ -2714,6 +2864,12 @@ abstract class AppLocalizations {
   /// **'Net Profit / Loss'**
   String get labelNetProfit;
 
+  /// No description provided for @msgOperationSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Operation completed successfully'**
+  String get msgOperationSuccess;
+
   /// No description provided for @aboutAppSubtitle.
   ///
   /// In en, this message translates to:
@@ -2977,6 +3133,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You do not have permission to perform this action'**
   String get errPermissionDenied;
+
+  /// No description provided for @agentRationaleStandardsPassed.
+  ///
+  /// In en, this message translates to:
+  /// **'Compliance verified: Journal entry adheres to (IFRS/SOCPA) standards.'**
+  String get agentRationaleStandardsPassed;
+
+  /// No description provided for @agentRationaleStandardsManualReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning: Transaction type ({type}) requires manual review for standards compliance.'**
+  String agentRationaleStandardsManualReview(Object type);
+
+  /// No description provided for @agentRationaleTaxNoId.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning: No Tax ID provided for this transaction.'**
+  String get agentRationaleTaxNoId;
+
+  /// No description provided for @agentRationaleTaxZatcaReject.
+  ///
+  /// In en, this message translates to:
+  /// **'REJECT: Transactions exceeding 10,000 SAR require a valid Tax ID for ZATCA Phase 2 compliance.'**
+  String get agentRationaleTaxZatcaReject;
+
+  /// No description provided for @agentRationaleTaxValidated.
+  ///
+  /// In en, this message translates to:
+  /// **'Validated Tax ID: {id}'**
+  String agentRationaleTaxValidated(Object id);
+
+  /// No description provided for @agentRationaleTaxAnalyzing.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing VAT for {account}'**
+  String agentRationaleTaxAnalyzing(Object account);
+
+  /// No description provided for @agentRationaleTaxRateMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'ALERT: Calculated VAT rate ({rate}) deviates from the regional standard (15%).'**
+  String agentRationaleTaxRateMismatch(Object rate);
+
+  /// No description provided for @agentRationaleTaxRateMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'CONFIRM: VAT rate (15%) matches local regulatory requirements.'**
+  String get agentRationaleTaxRateMatch;
+
+  /// No description provided for @agentRationaleTaxNoVatWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'WARNING: Commercial transaction detected without VAT lines.'**
+  String get agentRationaleTaxNoVatWarning;
+
+  /// No description provided for @agentRationaleForensicBalanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Check PASSED: Journal entry is balanced.'**
+  String get agentRationaleForensicBalanced;
+
+  /// No description provided for @agentRationaleForensicUnbalanced.
+  ///
+  /// In en, this message translates to:
+  /// **'REJECTION: Proposed journal entry is not balanced.'**
+  String get agentRationaleForensicUnbalanced;
+
+  /// No description provided for @agentRationaleForensicHighValue.
+  ///
+  /// In en, this message translates to:
+  /// **'WARNING: Unusually high transaction amount detected ({amount}). Administrative review recommended.'**
+  String agentRationaleForensicHighValue(Object amount);
+
+  /// No description provided for @agentRationaleForensicDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'REJECTION: Duplicate reference number ({ref}) detected in history.'**
+  String agentRationaleForensicDuplicate(Object ref);
+
+  /// No description provided for @agentRationaleOperationalSufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'Liquidity Analysis: {account} balance is sufficient ({balance}) for this operation.'**
+  String agentRationaleOperationalSufficient(Object account, Object balance);
+
+  /// No description provided for @agentRationaleOperationalInsufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'REJECTION: {account} balance is insufficient ({balance}) for this operation.'**
+  String agentRationaleOperationalInsufficient(Object account, Object balance);
+
+  /// No description provided for @agentRationaleStrategyOutflow.
+  ///
+  /// In en, this message translates to:
+  /// **'Strategy Analysis: This entry represents a cash outflow of {amount}.'**
+  String agentRationaleStrategyOutflow(Object amount);
+
+  /// No description provided for @agentRationaleStrategyRecommendation.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommendation: Review cash flow projections for the coming week to ensure sufficient liquidity for other obligations.'**
+  String get agentRationaleStrategyRecommendation;
+
+  /// No description provided for @agentRationaleStrategyInflow.
+  ///
+  /// In en, this message translates to:
+  /// **'Strategy Analysis: Liquidity enhancement of {amount} supports short-term investment capacity.'**
+  String agentRationaleStrategyInflow(Object amount);
+
+  /// No description provided for @agentRationaleStrategyProfitability.
+  ///
+  /// In en, this message translates to:
+  /// **'Strategic Insight: Increased sales volume positively impacts Return on Assets (ROA) and net margin targets.'**
+  String get agentRationaleStrategyProfitability;
+
+  /// No description provided for @agentRationaleSustainabilityFlagged.
+  ///
+  /// In en, this message translates to:
+  /// **'ISSB Analysis: This transaction is flagged for mandatory environmental/social disclosure.'**
+  String get agentRationaleSustainabilityFlagged;
+
+  /// No description provided for @agentRationaleSustainabilityReject.
+  ///
+  /// In en, this message translates to:
+  /// **'CRITICAL REJECTION: ISSB S2 standards require carbon footprint metrics for this industry-specific transaction.'**
+  String get agentRationaleSustainabilityReject;
+
+  /// No description provided for @agentRationaleSustainabilitySuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'SUCCESS: Integrated {count} compliant sustainability metrics.'**
+  String agentRationaleSustainabilitySuccess(Object count);
+
+  /// No description provided for @agentRationaleSustainabilityNotRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Sustainability Assessment: No specific ISSB disclosures required for this transaction tier.'**
+  String get agentRationaleSustainabilityNotRequired;
+
+  /// No description provided for @agentRationaleForensicTimeAnomaly.
+  ///
+  /// In en, this message translates to:
+  /// **'WARNING: Transaction recorded during non-standard hours ({time}). Higher forensic weighting applied.'**
+  String agentRationaleForensicTimeAnomaly(Object time);
+
+  /// No description provided for @agentRationaleForensicSequenceGap.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTICE: Gap detected in reference sequence. Last: {last}, Current: {current}.'**
+  String agentRationaleForensicSequenceGap(Object current, Object last);
+
+  /// No description provided for @agentRationaleForensicZatcaIdentityMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTICE: ZATCA Phase 2 cryptographic identity (UUID/Hash) is missing for this invoice.'**
+  String get agentRationaleForensicZatcaIdentityMissing;
+
+  /// No description provided for @auditTrailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit Trail'**
+  String get auditTrailTitle;
+
+  /// No description provided for @auditTrailSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal system logs and consensus bypasses'**
+  String get auditTrailSubtitle;
+
+  /// No description provided for @auditTrailSectionForensic.
+  ///
+  /// In en, this message translates to:
+  /// **'Forensic Integrity Logs'**
+  String get auditTrailSectionForensic;
+
+  /// No description provided for @auditTrailNoLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'No audit logs found for the selected period.'**
+  String get auditTrailNoLogs;
 }
 
 class _AppLocalizationsDelegate

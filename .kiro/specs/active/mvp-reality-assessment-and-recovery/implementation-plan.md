@@ -1,382 +1,280 @@
-# خطة التنفيذ التفصيلية - تقييم الواقع الفعلي لـ MVP
+# Detailed Implementation Plan: MVP Reality Assessment and Recovery
 
-**معرف المواصفة:** BASIR-SPEC-2026-001  
-**التاريخ:** 11 يناير 2026  
-**المؤلف:** فريق وكلاء تطوير نظام بصير المحاسبي  
-**الحالة:** 🔴 نشط - خطة تنفيذ
+**Specification ID:** BASIR-SPEC-2026-001  
+**Date:** January 11, 2026  
+**Author:** Basir Project Agentic Development Team  
+**Status:** 🔴 Active - Execution Plan
 
 ---
 
-## 📋 خطة التنفيذ المرحلية
+## 📋 Phased Implementation Roadmap
 
-### المرحلة 1: التقييم الشامل (7 أيام)
+### Phase 1: Comprehensive Assessment (7 Days)
 
-#### اليوم 1-2: التحليل التقني الأولي
+#### Day 1-2: Baseline Technical Audit
 
-**المهام:**
+**Tasks:**
 
 ```bash
-# تشغيل التحليل الأساسي
+# Execute core diagnostics
 flutter analyze --write=analysis_detailed.txt
 flutter test --reporter=json > test_results.json
 flutter pub outdated --json > dependencies_status.json
 flutter pub deps --json > dependencies_tree.json
 
-# تحليل حجم الكود
+# Analyze codebase metrics
 find lib -name "*.dart" | xargs wc -l > code_metrics.txt
 find test -name "*.dart" | xargs wc -l >> code_metrics.txt
 ```
 
-**النتائج المتوقعة:**
+**Expected Outcomes:**
 
-- تقرير مفصل بجميع مشاكل flutter analyze
-- قائمة بجميع الاختبارات الفاشلة مع أسباب الفشل
-- تحليل التبعيات القديمة والمتضاربة
-- إحصائيات الكود والاختبارات
+- Granular report of all `flutter analyze` diagnostics.
+- Comprehensive list of failed tests with root-cause categorization.
+- Analysis of legacy and conflicting dependencies.
+- Quantification of codebase and test suite metrics.
 
-#### اليوم 3-4: مراجعة الكود والهيكل
+#### Day 3-4: Architectural and Structural Review
 
-**المهام:**
+**Tasks:**
 
-1. **مراجعة هيكل المشروع:**
+1.  **Framework Structural Audit:**
 
-   - التحقق من تطبيق Clean Architecture
-   - مراجعة تنظيم الملفات والمجلدات
-   - فحص الاستيراد المكررة والدائرية
+    - Verify strict adherence to Clean Architecture.
+    - Audit file and directory organization standards.
+    - Scan for duplicate or circular imports.
 
-2. **مراجعة الميزات الأساسية:**
+2.  **Core Feature Audit:**
 
-   - فحص كود المصادقة (`lib/features/auth/`)
-   - فحص كود لوحة التحكم (`lib/features/dashboard/`)
-   - فحص كود إدارة العملاء (`lib/features/customers/`)
-   - فحص كود إدارة الفواتير (`lib/features/invoices/`)
+    - Audit Authentication logic (`lib/features/auth/`).
+    - Audit Dashboard orchestration (`lib/features/dashboard/`).
+    - Audit Customer Management logic (`lib/features/customers/`).
+    - Audit Invoice Management logic (`lib/features/invoices/`).
 
-3. **تحليل قاعدة البيانات:**
-   - مراجعة نماذج Isar
-   - فحص العلاقات والفهارس
-   - اختبار عمليات CRUD
+3.  **Database Layer Analysis:**
+    - Review Isar schema models and relationships.
+    - Inspect indexing and query optimization markers.
+    - Verify CRUD operation integrity.
 
-#### اليوم 5-6: الاختبار اليدوي الشامل
+#### Day 5-6: Holistic Manual Verification
 
-**سيناريوهات الاختبار:**
+**Test Scenarios:**
 
-1. **تدفق المصادقة:**
+1.  **Authentication Lifecycle:**
 
-   ```
-   ✓ فتح التطبيق لأول مرة
-   ✓ إنشاء حساب جديد
-   ✓ تسجيل الدخول بالحساب الجديد
-   ✓ تسجيل الخروج
-   ✓ تسجيل الدخول مرة أخرى
-   ✓ تسجيل الدخول كضيف
-   ✓ ترقية الحساب من ضيف
-   ```
+    - ✓ Cold start/First-time launch.
+    - ✓ New account registration flow.
+    - ✓ Valid credential login.
+    - ✓ Standard logout flow.
+    - ✓ Session persistence on restart.
+    - ✓ Guest mode access.
+    - ✓ Guest-to-Standard account upgrade path.
 
-2. **تدفق إدارة العملاء:**
+2.  **Customer Management Lifecycle:**
 
-   ```
-   ✓ إضافة عميل جديد
-   ✓ عرض قائمة العملاء
-   ✓ البحث في العملاء
-   ✓ تعديل بيانات عميل
-   ✓ حذف عميل
-   ✓ التحقق من حفظ البيانات
-   ```
+    - ✓ New customer entry/validation.
+    - ✓ Customer list rendering and pagination.
+    - ✓ Search and filtering responsiveness.
+    - ✓ Data modification persistence.
+    - ✓ Deletion flow (with safety confirmations).
+    - ✓ Validation of persistent state.
 
-3. **تدفق إدارة الفواتير:**
+3.  **Invoice Management Lifecycle:**
 
-   ```
-   ✓ إنشاء فاتورة جديدة
-   ✓ إضافة بنود للفاتورة
-   ✓ حساب الضرائب والإجماليات
-   ✓ حفظ كمسودة
-   ✓ إصدار الفاتورة
-   ✓ تغيير حالة الفاتورة
-   ✓ عرض قائمة الفواتير
-   ✓ تصفية الفواتير
-   ```
+    - ✓ New invoice draft creation.
+    - ✓ Itemized entry and validation.
+    - ✓ Precision of tax and total calculations.
+    - ✓ State transition: Draft to Issued/Posted.
+    - ✓ Status management (Paid/Overdue/Draft).
+    - ✓ Multi-dimensional list filtering.
 
-4. **تدفق لوحة التحكم:**
-   ```
-   ✓ عرض الإحصائيات
-   ✓ عرض الرسوم البيانية
-   ✓ عرض الأنشطة الأخيرة
-   ✓ الإجراءات السريعة
-   ```
+4.  **Dashboard Orchestration:**
+    - ✓ Accuracy of statistical summary tiles.
+    - ✓ Real-time chart data visualization.
+    - ✓ Recent activity log integrity.
+    - ✓ Functional integrity of Quick Actions.
 
-#### اليوم 7: إنشاء تقرير التقييم
+#### Day 7: Assessment Report Synthesis
 
-**محتويات التقرير:**
+**Report Components:**
 
-1. **ملخص تنفيذي**
-2. **المشاكل التقنية المكتشفة**
-3. **حالة الميزات الأساسية**
-4. **تقييم جودة الكود**
-5. **خطة الإصلاح المقترحة**
-6. **تقدير الوقت والجهد**
+1.  Executive Summary of findings.
+2.  Catalog of discovered technical debt.
+3.  Functional status of core MVP features.
+4.  Code quality and standards compliance score.
+5.  Proposed remediation roadmap.
+6.  Effort and timeline estimations.
 
 ---
 
-### المرحلة 2: الإصلاح الأساسي (14 يوم)
+## Phase 2: Core Remediation (14 Days)
 
-#### الأسبوع 1: إصلاح المشاكل الحرجة
+### Week 1: Critical Stability Fixes
 
-**اليوم 1-3: إصلاح Flutter Analyze**
+#### Day 1-3: Flutter Analyze Resolution
 
-**خطة العمل:**
+**Action Plan:**
 
 ```bash
-# تصنيف المشاكل
+# Categorize diagnostics
 grep "error •" analysis_detailed.txt > critical_errors.txt
 grep "warning •" analysis_detailed.txt > warnings.txt
 grep "info •" analysis_detailed.txt > info_issues.txt
 
-# إصلاح الأخطاء الحرجة أولاً
-# ثم التحذيرات
-# أخيراً المعلومات
+# Remediation Order:
+# 1. Critical Errors
+# 2. Significant Warnings
+# 3. Informational Improvements
 ```
 
-**أولويات الإصلاح:**
+**Prioritization:**
 
-1. **أخطاء الكود (Errors)** - أولوية قصوى
-2. **تحذيرات الأمان (Security Warnings)** - أولوية عالية
-3. **تحذيرات الأداء (Performance Warnings)** - أولوية متوسطة
-4. **معلومات التحسين (Info)** - أولوية منخفضة
+1.  **Compile-time Errors** - Critical Priority.
+2.  **Security Vulnerabilities** - High Priority.
+3.  **Performance Diagnostics** - Medium Priority.
+4.  **Architectural Lints (Info)** - Low Priority.
 
-**اليوم 4-6: إصلاح الاختبارات**
+#### Day 4-6: Test Suite Recovery
 
-**استراتيجية الإصلاح:**
+**Remediation Strategy:**
 
-1. **تحليل أسباب الفشل:**
+1.  **Failure Analysis:**
 
-   - مشاكل في setup/teardown
-   - مشاكل في mocking
-   - مشاكل في assertions
-   - مشاكل في async operations
+    - Debug setup/teardown inconsistencies.
+    - Resolve mocking mismatches (Mocktail/Mockito).
+    - Refactor brittle assertions.
+    - Stabilize asynchronous race conditions.
 
-2. **إصلاح تدريجي:**
+2.  **Incremental Stabilization:**
 
-   - إصلاح اختبار واحد في كل مرة
-   - تشغيل الاختبار للتأكد من الإصلاح
-   - الانتقال للاختبار التالي
+    - Fix one test unit at a time.
+    - Verify fix via targeted execution.
+    - Iteratively migrate through the entire suite.
 
-3. **تحسين التغطية:**
-   - إضافة اختبارات للكود غير المغطى
-   - التركيز على الميزات الأساسية
-   - ضمان تغطية 70%+
+3.  **Coverage Enhancement:**
+    - Implement missing tests for uncovered business logic.
+    - Focus heavily on core accounting engines.
+    - Target 70%+ overall project coverage.
 
-**اليوم 7: تحديث التبعيات**
+#### Day 7: Safe Dependency Modernization
 
-**خطة التحديث الآمنة:**
+**Migration Plan:**
 
 ```bash
-# 1. إنشاء نسخة احتياطية
+# 1. Initialize safety checkpoint
 git checkout -b backup/before-dependencies-update
 
-# 2. تحديث تدريجي
-# تحديث التبعيات الآمنة أولاً
+# 2. Incremental Upgrade
 flutter pub upgrade --major-versions
 
-# 3. اختبار بعد كل تحديث
+# 3. Post-Upgrade Verification
 flutter analyze
 flutter test
 flutter run --debug
 
-# 4. إصلاح أي breaking changes
+# 4. Resolve Breaking Changes
 ```
 
-#### الأسبوع 2: إصلاح الميزات الأساسية
+### Week 2: Core Feature Stabilization
 
-**اليوم 8-10: إصلاح المصادقة ولوحة التحكم**
+#### Day 8-10: Auth and Dashboard Remediation
 
-**مهام المصادقة:**
+- **Auth Tasks:** Resolve login failures, registration bugs, and guest upgrade desynchronizations.
+- **Dashboard Tasks:** Fix statistical tile calculations, chart rendering issues, and activity feed errors.
 
-- إصلاح مشاكل تسجيل الدخول
-- إصلاح مشاكل إنشاء الحساب
-- إصلاح مشاكل تسجيل الدخول كضيف
-- إصلاح مشاكل حفظ حالة تسجيل الدخول
+#### Day 11-13: Customer and Invoice Remediation
 
-**مهام لوحة التحكم:**
+- **Customer Tasks:** Correct CRUD failures, search glitches, and deletion state issues.
+- **Invoice Tasks:** Fix tax precision errors, status transition logic, and filtering performance.
 
-- إصلاح عرض الإحصائيات
-- إصلاح الرسوم البيانية
-- إصلاح الإجراءات السريعة
-- إصلاح عرض الأنشطة الأخيرة
+#### Day 14: Holistic Verification and Checkpoint
 
-**اليوم 11-13: إصلاح إدارة العملاء والفواتير**
-
-**مهام إدارة العملاء:**
-
-- إصلاح إضافة عميل جديد
-- إصلاح عرض قائمة العملاء
-- إصلاح البحث والتصفية
-- إصلاح تعديل وحذف العملاء
-
-**مهام إدارة الفواتير:**
-
-- إصلاح إنشاء فاتورة جديدة
-- إصلاح حساب الضرائب والإجماليات
-- إصلاح حفظ وإصدار الفواتير
-- إصلاح عرض وتصفية الفواتير
-
-**اليوم 14: اختبار شامل وتوثيق**
-
-- اختبار جميع الميزات المُصلحة
-- توثيق التغييرات المُجراة
-- إنشاء تقرير تقدم المرحلة الثانية
+- Execute end-to-end testing of all remediated features.
+- Update technical documentation to reflect changes.
+- Generate the Phase 2 progress and status report.
 
 ---
 
-### المرحلة 3: التحقق والتحسين (7 أيام)
+## Phase 3: Verification and Final Polishing (7 Days)
 
-#### اليوم 15-17: اختبار شامل
+#### Day 15-17: Comprehensive QA
 
-**اختبار تقني:**
+- **Technical Audit:** Run full coverage tests, analyze dependency tree, and execute performance profile.
+- **Functional Audit:** Re-execute all manual test scenarios across multiple devices (Android/iOS) and build modes (Debug/Release).
 
-```bash
-# تشغيل جميع الاختبارات
-flutter test --coverage
-flutter analyze
-flutter pub deps --no-dev
+#### Day 18-20: Optimization and Refinement
 
-# اختبار الأداء
-flutter run --profile
-flutter build apk --debug
-```
+- **Performance**: Optimize cold-start time, UI frame rates, and Isar query execution.
+- **Quality**: Fully align codebase with PPP standards, refactor for elegance, and enhance error state feedback.
 
-**اختبار وظيفي:**
+#### Day 21: Final Documentation and Release Report
 
-- إعادة تشغيل جميع سيناريوهات الاختبار اليدوي
-- اختبار على أجهزة مختلفة (Android/iOS)
-- اختبار في بيئات مختلفة (Debug/Release)
-
-#### اليوم 18-20: تحسين الأداء والجودة
-
-**تحسينات الأداء:**
-
-- تحسين وقت بدء التطبيق
-- تحسين استجابة الواجهة
-- تحسين استخدام الذاكرة
-- تحسين عمليات قاعدة البيانات
-
-**تحسينات الجودة:**
-
-- تطبيق معايير PPP بشكل كامل
-- تحسين تنظيم الكود
-- إضافة تعليقات وتوثيق
-- تحسين معالجة الأخطاء
-
-#### اليوم 21: التوثيق النهائي والتقرير
-
-**تحديث التوثيق:**
-
-- تحديث `README.md`
-- تحديث وثائق API
-- تحديث دليل المطور
-- إنشاء دليل المستخدم
-
-**التقرير النهائي:**
-
-- تقرير حالة المشروع الفعلية
-- مقارنة قبل وبعد الإصلاح
-- معايير النجاح المحققة
-- التوصيات للمستقبل
+- Sync `README.md`, API docs, and developer/user guides with implementation reality.
+- Generate the "Final MVP Status" report (Transparency-based).
 
 ---
 
-## 🎯 معايير النجاح لكل مرحلة
+## 🎯 Success Criteria per Phase
 
-### المرحلة 1: التقييم
+### Phase 1: Assessment
 
-| المعيار           | الهدف                     |
-| ----------------- | ------------------------- |
-| **تقرير التحليل** | مكتمل وشامل               |
-| **اختبار يدوي**   | جميع السيناريوهات مُختبرة |
-| **خطة الإصلاح**   | مفصلة ومحددة زمنياً       |
+Assessment report is comprehensive, evidence-based, and actionable.
 
-### المرحلة 2: الإصلاح
+### Phase 2: Remediation
 
-| المعيار              | الهدف           |
-| -------------------- | --------------- |
-| **Flutter Analyze**  | 0 مشاكل         |
-| **Flutter Test**     | 100% نجاح       |
-| **Test Coverage**    | 70%+            |
-| **الميزات الأساسية** | تعمل بدون أخطاء |
+- `flutter analyze`: 0 issues.
+- `flutter test`: 100% Pass rate.
+- Coverage: 70%+.
+- Core MVP features functional and stable.
 
-### المرحلة 3: التحقق
+### Phase 3: Verification
 
-| المعيار             | الهدف                 |
-| ------------------- | --------------------- |
-| **الاختبار الشامل** | جميع السيناريوهات تمر |
-| **الأداء**          | يلبي المعايير المحددة |
-| **التوثيق**         | محدث ودقيق            |
-| **التقرير النهائي** | يعكس الحالة الفعلية   |
+- Comprehensive QA suite passed.
+- Performance meets target benchmarks.
+- Documentation is 100% accurate.
 
 ---
 
-## 🚨 خطط الطوارئ
+## 🚨 Contingency Planning
 
-### إذا كانت المشاكل أكثر من المتوقع
+### Problem: Discovery of excessive technical debt
 
-**الخطة البديلة:**
+**Contingency:** Immediate scope re-prioritization. Focus exclusively on P0 "Foundational Stability" and defer P1/P2 features to ensure a stable core.
 
-1. إعادة تقييم النطاق والأولويات
-2. التركيز على الميزات الأساسية فقط
-3. تأجيل الميزات الثانوية
-4. طلب وقت إضافي إذا لزم الأمر
+### Problem: Systemic dependency breakage
 
-### إذا فشل تحديث التبعيات
+**Contingency:** Revert to the Day 7 safety backup. Implement a more granular, dependency-by-dependency upgrade path with manual refactoring.
 
-**الخطة البديلة:**
+### Problem: Exceptional test complexity
 
-1. العودة للنسخة الاحتياطية
-2. تحديث تدريجي أكثر حذراً
-3. البحث عن بدائل للتبعيات المشكلة
-4. تأجيل التحديثات غير الحرجة
-
-### إذا كانت الاختبارات معقدة جداً
-
-**الخطة البديلة:**
-
-1. التركيز على الاختبارات الحرجة
-2. إعادة كتابة الاختبارات المعقدة
-3. استخدام integration tests بدلاً من unit tests
-4. قبول تغطية أقل مؤقتاً (60% بدلاً من 70%)
+**Contingency:** Prioritize integration tests for critical flows over unit tests for minor utility logic. Maintain a minimum "Critical Path" coverage of 60%.
 
 ---
 
-## 📊 تتبع التقدم
+## 📊 Progress Monitoring
 
-### مؤشرات الأداء اليومية
+### Daily Engineering Metrics:
 
-| المؤشر                    | طريقة القياس         | الهدف اليومي  |
-| ------------------------- | -------------------- | ------------- |
-| **مشاكل Flutter Analyze** | عدد المشاكل المُصلحة | 10+ مشكلة     |
-| **الاختبارات المُصلحة**   | عدد الاختبارات       | 5+ اختبارات   |
-| **الميزات المُختبرة**     | عدد السيناريوهات     | 3+ سيناريوهات |
-
-### تقارير أسبوعية
-
-- **الأسبوع 1**: تقرير التقييم الشامل
-- **الأسبوع 2**: تقرير تقدم الإصلاح الأساسي
-- **الأسبوع 3**: تقرير التحقق والتحسين النهائي
+- **Diagnostic Reduction**: 10+ lints/errors resolved/day.
+- **Test Stabilization**: 5+ test units fixed/day.
+- **Scenario Validation**: 3+ manual journeys verified/day.
 
 ---
 
-## 🎯 النتيجة المتوقعة
+## 🎯 Final Outcome
 
-بنهاية تنفيذ هذه الخطة، سيكون لدينا:
+By the end of this 28-day cycle, the project will have:
 
-1. **تقييم صادق وشامل** للحالة الفعلية للمشروع
-2. **مشروع مستقر تقنياً** بدون أخطاء حرجة
-3. **ميزات أساسية تعمل بشكل صحيح** وموثوق
-4. **توثيق دقيق** يعكس الحالة الفعلية
-5. **أساس قوي** للتطوير المستقبلي
+1.  A **transparent and truthful assessment** of its technical health.
+2.  A **stable technical foundation** devoid of critical diagnostics.
+3.  **Fully functional core features** that meet the MVP specification.
+4.  **Accurate documentation** that reflects implementation reality.
+5.  A **professional base** ready for scaling and future phases.
 
-**الهدف النهائي:** تحويل المشروع من "Pre-MVP مع مشاكل" إلى "MVP مستقر وقابل للاستخدام"
+**Strategic Goal:** Professional transition from "Fragile State" to "Reliable MVP."
 
 ---
 
-**تم إعداده بواسطة:** فريق وكلاء تطوير نظام بصير المحاسبي  
-**التاريخ:** 11 يناير 2026  
-**الحالة:** 🔴 جاهز للتنفيذ الفوري
+**Prepared by:** Basir Project Agentic Development Team  
+**Date:** January 11, 2026  
+**Status:** 🔴 Ready for Immediate Execution

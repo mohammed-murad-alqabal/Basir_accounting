@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/models/sync_status.dart';
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -58,6 +59,30 @@ class StandardsJustification with _$StandardsJustification {
   /// deserialization from JSON format.
   factory StandardsJustification.fromJson(Map<String, dynamic> json) =>
       _$StandardsJustificationFromJson(json);
+}
+
+/// Internal audit log entry for system-level event tracking.
+/// (Standard Reference: CP-011: Forensic Traceability)
+@freezed
+class AuditLogEntry with _$AuditLogEntry {
+  /// Creates an audit log entry.
+  const factory AuditLogEntry({
+    /// Systematic timestamp of the event.
+    required DateTime timestamp,
+
+    /// Descriptive name of the action performed.
+    required String action,
+
+    /// Contextual explanation or justification for the recorded action.
+    required String rationale,
+
+    /// Entity responsible for the action (e.g., 'system', 'agent-ID', 'user-ID').
+    required String actor,
+  }) = _AuditLogEntry;
+
+  /// deserialization from JSON format.
+  factory AuditLogEntry.fromJson(Map<String, dynamic> json) =>
+      _$AuditLogEntryFromJson(json);
 }
 
 /// Represents a single Debit or Credit line within a Journal Entry.
@@ -162,6 +187,9 @@ class JournalEntry with _$JournalEntry {
 
     /// Warehouse scope identifier.
     String? warehouseId,
+
+    /// Internal audit path for system and security tracking.
+    @Default([]) List<AuditLogEntry> auditLogs,
 
     /// Local-to-Remote synchronization state.
     @Default(SyncStatus.synced) SyncStatus syncStatus,

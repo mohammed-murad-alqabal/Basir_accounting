@@ -24,6 +24,48 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelAddCurrency => 'إضافة عملة';
 
   @override
+  String get labelPartner => 'الطرف';
+
+  @override
+  String get labelAccountCode => 'رقم الحساب';
+
+  @override
+  String get labelAccountName => 'اسم الحساب';
+
+  @override
+  String get labelFairValueAdjustment => 'التقييم بالقيمة العادلة (IFRS 13)';
+
+  @override
+  String get subtitleFairValueAdjustment => 'استخدام أحدث أسعار السوق للمخزون';
+
+  @override
+  String get labelTotalAmount => 'الإجمالي';
+
+  @override
+  String get msgBalanceBalancedTB => 'الميزان متزن (Balanced)';
+
+  @override
+  String get msgBalanceUnbalancedTB => 'الميزان غير متزن! يرجى المراجعة.';
+
+  @override
+  String get sectionBasicReports => 'التقارير الأساسية';
+
+  @override
+  String get sectionFinancialStatements => 'القوائم المالية (IAS 1/IFRS)';
+
+  @override
+  String get sectionAgingAnalysis => 'تحليل السداد وأعمار الديون';
+
+  @override
+  String get receivablesAgingTitle => 'أعمار العملاء';
+
+  @override
+  String get payablesAgingTitle => 'أعمار الموردين';
+
+  @override
+  String get msgExportComingSoon => 'سيتم تفعيل التصدير قريباً';
+
+  @override
   String get labelTermsAndConditions => 'الشروط والأحكام';
 
   @override
@@ -33,7 +75,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelDiscountAmount => 'قيمة الخصم';
 
   @override
-  String get labelZatcaQrCode => 'رمز الاستجابة السريعة (ZATCA)';
+  String get labelZatcaQrCode => 'رمز الاستجابة السريعة (زاتكا)';
+
+  @override
+  String get labelZatcaUuid => 'المعرف الفريد (UUID)';
+
+  @override
+  String get labelZatcaHash => 'بصمة الفاتورة (Hash)';
+
+  @override
+  String get labelTaxTotal => 'إجمالي الضريبة';
+
+  @override
+  String get labelVatRate => 'نسبة الضريبة';
 
   @override
   String get zatcaComplianceText =>
@@ -48,6 +102,18 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get noInvoicesDescription =>
       'ابدأ بإضافة فاتورتك الأولى لإدارة مبيعاتك بشكل احترافي.';
+
+  @override
+  String get labelFromDate => 'من تاريخ';
+
+  @override
+  String get labelToDate => 'إلى تاريخ';
+
+  @override
+  String get labelAsOfDate => 'كما في تاريخ';
+
+  @override
+  String get tooltipUpdateReport => 'تحديث التقرير';
 
   @override
   String get journalEntryFormTitleAdd => 'إضافة قيد يدوي';
@@ -354,6 +420,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dialogOk => 'حسناً';
+
+  @override
+  String get dialogCognitiveRejectionTitle => 'تم رفض العملية';
+
+  @override
+  String get dialogCognitiveRejectionMessage =>
+      'تم رفض هذه العملية من قبل النظام المعرفي. راجع توافق الوكلاء أدناه:';
 
   @override
   String get dialogSave => 'حفظ';
@@ -924,6 +997,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get statusPending => 'قيد الانتظار';
 
   @override
+  String get statusRefunded => 'مرتجعة';
+
+  @override
   String get styleCompact => 'مختصر';
 
   @override
@@ -1172,17 +1248,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get trialBalanceSubtitle => 'تحقق من توازن الحسابات المدينة والدائنة';
 
   @override
-  String get incomeStatementSubtitle => 'ملخص الإيرادات والمصروفات حسب IFRS 18';
+  String get incomeStatementSubtitle => 'قائمة الدخل: الأداء المالي والربحية';
 
   @override
-  String get balanceSheetSubtitle => 'حالة الأصول والالتزامات وحقوق الملكية';
+  String get balanceSheetSubtitle =>
+      'المركز المالي: الأصول، الالتزامات، وحقوق الملكية';
 
   @override
-  String get cashFlowSubtitle =>
-      'حركة النقدية (الأنشطة التشغيلية، الاستثمارية، التمويلية)';
+  String get cashFlowSubtitle => 'حركة النقدية (تشغيلي، استثماري، تمويلي)';
 
   @override
-  String get agingReportsSubtitle => 'تحليل أعمار أرصدة العملاء والموردين';
+  String get agingReportsSubtitle => 'تحليل أعمار ذمم العملاء والموردين';
 
   @override
   String get agingReportsTitle => 'تقارير تعمير الديون';
@@ -1367,6 +1443,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelNetProfit => 'صافي الربح / الخساارة';
 
   @override
+  String get msgOperationSuccess => 'تمت العملية بنجاح';
+
+  @override
   String get aboutAppSubtitle => 'الإصدار 1.0.0';
 
   @override
@@ -1501,4 +1580,133 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get errPermissionDenied => 'ليس لديك صلاحية للقيام بهذا الإجراء';
+
+  @override
+  String get agentRationaleStandardsPassed =>
+      'تحقق الامتثال: القيد يوافق معايير (IFRS/SOCPA).';
+
+  @override
+  String agentRationaleStandardsManualReview(Object type) {
+    return 'تنبيه: نوع العملية ($type) يتطلب مراجعة بشرية للتحقق من الامتثال.';
+  }
+
+  @override
+  String get agentRationaleTaxNoId =>
+      'تنبيه: لم يتم تقديم رقم ضريبي لهذه العملية.';
+
+  @override
+  String get agentRationaleTaxZatcaReject =>
+      'رفض: العمليات التي تتجاوز 10,000 ريال تتطلب رقماً ضريبياً صالحاً للامتثال للمرحلة الثانية من (ZATCA).';
+
+  @override
+  String agentRationaleTaxValidated(Object id) {
+    return 'تم التحقق من الرقم الضريبي: $id';
+  }
+
+  @override
+  String agentRationaleTaxAnalyzing(Object account) {
+    return 'تحليل الضريبة لحساب $account';
+  }
+
+  @override
+  String agentRationaleTaxRateMismatch(Object rate) {
+    return 'تنبيه: معدل الضريبة المحسوب ($rate) يختلف عن المعدل الإقليمي الافتراضي (15%).';
+  }
+
+  @override
+  String get agentRationaleTaxRateMatch =>
+      'تأكيد: معدل الضريبة (15%) يطابق المتطلبات التنظيمية المحلية.';
+
+  @override
+  String get agentRationaleTaxNoVatWarning =>
+      'تنبيه: تم رصد عملية تجارية بدون بنود ضريبة القيمة المضافة.';
+
+  @override
+  String get agentRationaleForensicBalanced => 'فحص ناجح: القيد المحاسبي متزن.';
+
+  @override
+  String get agentRationaleForensicUnbalanced =>
+      'رفض: القيد المحاسبي المقترح غير متزن.';
+
+  @override
+  String agentRationaleForensicHighValue(Object amount) {
+    return 'تنبيه: تم رصد مبلغ عملية مرتفع بشكل غير معتاد ($amount). نوصي بالمراجعة الإدارية.';
+  }
+
+  @override
+  String agentRationaleForensicDuplicate(Object ref) {
+    return 'رفض: تم رصد رقم مرجع مكرر ($ref) في السجلات السابقة.';
+  }
+
+  @override
+  String agentRationaleOperationalSufficient(Object account, Object balance) {
+    return 'تحليل النقدية: رصيد $account كافٍ ($balance) للعملية.';
+  }
+
+  @override
+  String agentRationaleOperationalInsufficient(Object account, Object balance) {
+    return 'رفض: رصيد $account غير كافٍ ($balance) لهذه العملية.';
+  }
+
+  @override
+  String agentRationaleStrategyOutflow(Object amount) {
+    return 'تحليل استراتيجي: يمثل هذا القيد تدفقاً نقدياً خارجاً بقيمة $amount.';
+  }
+
+  @override
+  String get agentRationaleStrategyRecommendation =>
+      'توصية: راجع توقعات التدفق النقدي للأسبوع القادم لضمان السيولة الكافية للالتزامات الأخرى.';
+
+  @override
+  String agentRationaleStrategyInflow(Object amount) {
+    return 'تحليل استراتيجي: تعزيز السيولة بقيمة $amount يدعم القدرة الاستثمارية قصيرة الأجل.';
+  }
+
+  @override
+  String get agentRationaleStrategyProfitability =>
+      'رؤية استراتيجية: زيادة حجم المبيعات تؤثر إيجابياً على العائد على الأصول (ROA) وأهداف الهامش الصافي.';
+
+  @override
+  String get agentRationaleSustainabilityFlagged =>
+      'تحليل ISSB: تم وضع علامة على هذه المعاملة للإفصاح البيئي/الاجتماعي الإلزامي.';
+
+  @override
+  String get agentRationaleSustainabilityReject =>
+      'رفض حرج: تتطلب معايير ISSB S2 مقاييس البصمة الكربونية لهذه المعاملة الخاصة بالصناعة.';
+
+  @override
+  String agentRationaleSustainabilitySuccess(Object count) {
+    return 'تم بنجاح دمج $count من مقاييس الاستدامة المتوافقة.';
+  }
+
+  @override
+  String get agentRationaleSustainabilityNotRequired =>
+      'تقييم الاستدامة: لا توجد إفصاحات محددة من ISSB مطلوبة لهذه الفئة من العمليات.';
+
+  @override
+  String agentRationaleForensicTimeAnomaly(Object time) {
+    return 'تحذير: تم تسجيل العملية في ساعات غير قياسية ($time). تم تطبيق وزن تدقيق جنائي أعلى.';
+  }
+
+  @override
+  String agentRationaleForensicSequenceGap(Object current, Object last) {
+    return 'ملاحظة: تم اكتشاف فجوة في تسلسل المراجع. الأخير: $last، الحالي: $current.';
+  }
+
+  @override
+  String get agentRationaleForensicZatcaIdentityMissing =>
+      'ملاحظة: الهوية التشفيرية لـ ZATCA (UUID/Hash) مفقودة لهذه الفاتورة.';
+
+  @override
+  String get auditTrailTitle => 'سجل المراجعة';
+
+  @override
+  String get auditTrailSubtitle => 'سجلات النظام الداخلية وتجاوزات الإجماع';
+
+  @override
+  String get auditTrailSectionForensic => 'سجلات النزاهة الجنائية';
+
+  @override
+  String get auditTrailNoLogs =>
+      'لم يتم العثور على سجلات مراجعة للفترة المختارة.';
 }

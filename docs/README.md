@@ -1,379 +1,89 @@
-# 📚 وثائق نظام بصير المحاسبي
+# 📚 Basir Accounting Documentation Hub
 
-**المشروع:** نظام بصير المحاسبي - منصة محاسبية متكاملة من الجيل الجديد  
-**الإصدار:** 1.0.0+1  
-**آخر تحديث:** 10 يناير 2026  
-**الحالة:** 💎 Diamond Purity Achieved
-
----
-
-## 🎯 نظرة عامة على النظام
-
-نظام بصير هو منصة محاسبية متكاملة تنافس الحلول العالمية مثل **Oracle NetSuite** و**SAP** و**Sage**، مع تركيز خاص على:
-
-- **🧮 المحاسبة الكاملة:** دفتر عام، قيود يومية، ميزانية عمومية، قوائم دخل
-- **💰 إدارة الخزانة:** تدفقات نقدية، تسويات بنكية، تعدد العملات
-- **📄 الفوترة الإلكترونية:** امتثال كامل لـ ZATCA Phase 2 (QR، توقيع رقمي، XML)
-- **🤝 الذمم المدينة والدائنة:** إدارة العملاء والموردين بشكل متكامل
-- **📦 إدارة المخزون:** تتبع المنتجات، تقييم، جرد
-- **🏗️ الأصول الثابتة:** إهلاك، صيانة، دورة الحياة
-- **📊 التقارير المالية:** لوحات معلومات، KPIs، تحليلات
+**Project:** Basir Accounting System - Professional High-Fidelity FinTech Infrastructure  
+**Revision:** 1.1.0  
+**Status:** 💎 Diamond Purity Verified (100% Technical English)
 
 ---
 
-## 🚀 البداية السريعة (Quick Start)
+## 🎯 Platform Archetype
 
-### للمطورين الجدد
+The **Basir Accounting System** is an institutional-grade, local-first financial orchestration platform designed to rival international ERP solutions (Oracle NetSuite, SAP, Sage). It is engineered for the MENA region with native Arabic ergonomics and global accounting precision.
 
-1. **ابدأ هنا:** [`Core/01_Product_Charter.md`](./Core/01_Product_Charter.md) - فهم المشروع
-2. **البنية التقنية:** [`Core/02_Technical_Design_Document.md`](./Core/02_Technical_Design_Document.md) - Flutter/Dart/Rust
-3. **المتطلبات:** [`Core/03_Product_Requirements_Document.md`](./Core/03_Product_Requirements_Document.md) - الميزات
-4. **التصميم:** [`Core/04_Design_System.md`](./Core/04_Design_System.md) - UI/UX
+### Strategic Capabilities
 
-### للمديرين والمحللين
-
-1. **الاستراتيجية:** [`Core/00_Strategic_Master_Blueprint.md`](./Core/00_Strategic_Master_Blueprint.md) - الرؤية الشاملة
-2. **حالة المشروع:** [`reports/project-status/`](./reports/project-status/) - التقارير الحديثة
-3. **التحليلات:** [`reports/analysis/`](./reports/analysis/) - تحليلات الأداء
-
-### لاستكشاف الأخطاء
-
-1. **دليل الأخطاء:** [`guides/troubleshooting/ERROR_TRACKING_GUIDE.md`](./guides/troubleshooting/ERROR_TRACKING_GUIDE.md)
-2. **تقارير الإصلاحات:** [`reports/fixes/`](./reports/fixes/)
+- **🧮 Pure Accounting**: General Ledger (GL), Journal Entries, IFRS 18 Compliance, Balance Sheets, and P&L.
+- **💰 Treasury Management**: High-precision Cash Flow, Multi-Currency support, and Bank Reconciliation.
+- **📄 Electronic Invoicing**: Native ZATCA Phase 2 compliance (QR, Cryptographic Signing, XML/UBL 2.1).
+- **🤝 Ledger Core**: Integrated Accounts Receivable (AR) and Accounts Payable (AP).
+- **📦 Inventory & Assets**: Itemized tracking, Depreciation, and Lifecycle management.
+- **📊 Cognitive Analytics**: Real-time financial KPIs and multi-agent AI diagnostics.
 
 ---
 
-## 📁 هيكل التوثيق (Documentation Structure)
+## 🚀 Rapid Onboarding
 
-### 🏛️ الوثائق الأساسية (Core Documents)
+### Engineering Entry Node
 
-**المسار:** [`Core/`](./Core/)
+1. **Mission Alignment**: [`Core/01_Product_Charter.md`](./Core/01_Product_Charter.md).
+2. **Architectural Blueprint**: [`Core/02_Technical_Design_Document.md`](./Core/02_Technical_Design_Document.md) (Flutter/Dart/Rust Stack).
+3. **Engineering Standard**: [`Core/CODING_STANDARDS.md`](./Core/CODING_STANDARDS.md) (SOLID & Clean Architecture).
 
-| الملف                                 | الوصف                              | الجمهور   |
-| :------------------------------------ | :--------------------------------- | :-------- |
-| `00_Strategic_Master_Blueprint.md`    | الرؤية الاستراتيجية الشاملة        | القيادة   |
-| `01_Product_Charter.md`               | ميثاق المنتج ونطاق MVP             | الجميع    |
-| `02_Technical_Design_Document.md`     | البنية التقنية والقرارات المعمارية | المطورين  |
-| `03_Product_Requirements_Document.md` | المتطلبات الوظيفية                 | المختبرين |
-| `04_Design_System.md`                 | نظام التصميم والمكونات             | المصممين  |
+### Management & Insight
 
-### 📊 التقارير (Reports)
-
-**المسار:** [`reports/`](./reports/)
-
-تقارير شاملة مصنفة حسب المجال:
-
-#### 🔧 التقارير الهندسية
-
-**المسار:** [`reports/engineering/`](./reports/engineering/)
-
-- تقارير المراجعة الهندسية والتحليل التقني
-- تقارير بيئة التطوير والأدوات
-- تقارير التدقيق الهندسي
-
-#### 📈 تقارير حالة المشروع
-
-**المسار:** [`reports/project-status/`](./reports/project-status/)
-
-- تقارير التقدم والإنجازات
-- تحليلات المراحل والمعالم
-- تقارير النشر والإطلاق
-
-#### ⚙️ تقارير سير العمل
-
-**المسار:** [`reports/workflows/`](./reports/workflows/)
-
-- تحليل العمليات والإجراءات
-- تقارير الأتمتة والتحسين
-- تقارير حالة الأنظمة
-
-#### 🔄 تقارير Git/GitHub
-
-**المسار:** [`reports/git-github/`](./reports/git-github/)
-
-- تقارير إدارة الكود والإصدارات
-- تحليل التزامن والتكامل
-- إرشادات Git والعمليات
-
-#### 🎨 تقارير UI/UX
-
-**المسار:** [`reports/ui-ux/`](./reports/ui-ux/)
-
-- تقارير التصميم والهوية البصرية
-- تكامل Figma والأدوات
-- تحسينات تجربة المستخدم
-
-#### 🧹 تقارير التنظيف
-
-**المسار:** [`reports/cleanup/`](./reports/cleanup/)
-
-- تقارير إعادة التنظيم والتحسين
-- تنظيف الكود والبنية
-- تحسينات الأداء
-
-### 📖 الأدلة والإرشادات (Guides)
-
-**المسار:** [`guides/`](./guides/)
-
-#### 🔍 أدلة استكشاف الأخطاء
-
-**المسار:** [`guides/troubleshooting/`](./guides/troubleshooting/)
-
-- [`ERROR_TRACKING_GUIDE.md`](./guides/troubleshooting/ERROR_TRACKING_GUIDE.md) - دليل شامل لتتبع الأخطاء
-- [`ERROR_RESOLUTION_LOG.md`](./guides/troubleshooting/ERROR_RESOLUTION_LOG.md) - سجل حلول الأخطاء
-- [`ERROR_TRACKING_SYSTEM_REVIEW.md`](./guides/troubleshooting/ERROR_TRACKING_SYSTEM_REVIEW.md) - مراجعة النظام
-
-### 📝 ملخصات الجلسات (Sessions)
-
-**المسار:** [`sessions/`](sessions/)
-
-#### 🎯 الجلسات الشاملة
-
-**المسار:** [`sessions/comprehensive/`](sessions/comprehensive/)
-
-- ملخصات الجلسات الاستراتيجية والشاملة
-- الإجابات النهائية والقرارات المهمة
-
-#### 🎨 جلسات UI/UX
-
-**المسار:** [`sessions/ui-ux/`](sessions/ui-ux/)
-
-- جلسات التصميم والتطوير
-- مراحل تطوير واجهة المستخدم
-
-#### 🔬 التحليلات المتخصصة
-
-**المسار:** [`sessions/specialized/`](sessions/specialized/)
-
-- تحليلات التوافق والمطابقة
-- دراسات التناقضات والحلول
-- تحليلات المواصفات
-
-### ✅ عناصر العمل (Action Items)
-
-**المسار:** [`action-items/`](action-items/)
-
-#### 📋 المكتملة
-
-**المسار:** [`action-items/completed/`](action-items/completed/)
-
-- تقارير تحديث التوثيق المكتملة
-- المهام المنجزة والمؤكدة
-
-### 🗄️ الأرشيف (Archive)
-
-**المسار:** [`Archive/`](Archive/)
-
-#### 📅 أرشيف 2025
-
-**المسار:** [`Archive/2025/december/duplicates/`](Archive/2025/december/duplicates/)
-
-- الملفات المكررة المؤرشفة بأمان
-- النسخ القديمة والمحفوظات
+1. **Strategic Intent**: [`Core/00_Strategic_Master_Blueprint.md`](./Core/00_Strategic_Master_Blueprint.md) (Vision & Roadmap).
+2. **Status Pulse**: [`reports/project-status/`](./reports/project-status/) (Latest Implementation Metrics).
+3. **Audit Trail**: [`Archive/2026/01/99_FORENSIC_FILES_LIST.md`](./Archive/2026/01/99_FORENSIC_FILES_LIST.md) (Logic verification).
 
 ---
 
-## 🎯 دليل الاستخدام حسب الدور
+## 📁 Repository Documentation Matrix
 
-### 👨‍💻 للمطورين (Developers)
+### 🏛️ Foundational Blueprints (Core/)
 
-#### البداية السريعة:
+| Blueprint                             | Objective                          | Complexity |
+| :------------------------------------ | :--------------------------------- | :--------- |
+| `00_Strategic_Master_Blueprint.md`    | Long-term evolution and scaling.   | Level 5    |
+| `01_Product_Charter.md`               | MVP boundaries and mission.        | Level 3    |
+| `02_Technical_Design_Document.md`     | Technical stack (Isar, Riverpod).  | Level 5    |
+| `03_Product_Requirements_Document.md` | Functional stories and acceptance. | Level 4    |
+| `04_Design_System.md`                 | Visual tokens and RTL ergonomics.  | Level 4    |
+| `ARCHITECTURE.md`                     | Clean Architecture implementation. | Level 5    |
 
-1. [`Core/01_Product_Charter.md`](./Core/01_Product_Charter.md) - فهم المشروع والنطاق
-2. [`Core/02_Technical_Design_Document.md`](./Core/02_Technical_Design_Document.md) - البنية والتقنيات
-3. [`Core/03_Product_Requirements_Document.md`](./Core/03_Product_Requirements_Document.md) - المتطلبات والميزات
+### 📊 Advanced Reporting (reports/)
 
-#### للعمل اليومي:
-
-- [`guides/troubleshooting/`](./guides/troubleshooting/) - حل المشاكل التقنية
-- [`reports/engineering/`](./reports/engineering/) - التقارير التقنية
-- [`Core/04_Design_System.md`](./Core/04_Design_System.md) - معايير UI
-
-#### للمراجعة والتحسين:
-
-- [`reports/workflows/`](./reports/workflows/) - تحسين العمليات
-- [`reports/git-github/`](./reports/git-github/) - إدارة الكود
-
-### 👨‍💼 لمديري المنتج (Product Managers)
-
-#### الاستراتيجية والتخطيط:
-
-1. [`Core/00_Strategic_Master_Blueprint.md`](./Core/00_Strategic_Master_Blueprint.md) - الرؤية الشاملة
-2. [`Core/01_Product_Charter.md`](./Core/01_Product_Charter.md) - ميثاق المنتج
-3. [`reports/project-status/`](./reports/project-status/) - حالة التقدم
-
-#### المتابعة والتقييم:
-
-- [`sessions/comprehensive/`](sessions/comprehensive/) - القرارات المهمة
-- [`reports/analysis/`](./reports/analysis/) - تحليلات الأداء
-- [`action-items/completed/`](action-items/completed/) - الإنجازات
-
-### 🎨 للمصممين (Designers)
-
-#### التصميم والمعايير:
-
-1. [`Core/04_Design_System.md`](./Core/04_Design_System.md) - نظام التصميم
-2. [`Core/05_UI_Wireframes_Description.md`](./Core/05_UI_Wireframes_Description.md) - الإطارات السلكية
-3. [`reports/ui-ux/`](./reports/ui-ux/) - تقارير التصميم
-
-#### الأدوات والتكامل:
-
-- [`reports/ui-ux/FIGMA_INTEGRATION_GUIDE.md`](./reports/ui-ux/FIGMA_INTEGRATION_GUIDE.md) - دليل Figma
-- [`sessions/ui-ux/`](sessions/ui-ux/) - جلسات التصميم
-
-### 🧪 للمختبرين (QA Engineers)
-
-#### المتطلبات والاختبار:
-
-1. [`Core/03_Product_Requirements_Document.md`](./Core/03_Product_Requirements_Document.md) - معايير القبول
-2. [`guides/troubleshooting/`](./guides/troubleshooting/) - استكشاف الأخطاء
-3. [`reports/fixes/`](./reports/fixes/) - تقارير الإصلاحات
+- **Engineering Context**: [`reports/engineering/`](./reports/engineering/) - Deep logic reviews.
+- **Workflow Optimization**: [`reports/workflows/`](./reports/workflows/) - Process analysis.
+- **Git & CI/CD**: [`reports/git-github/`](./reports/git-github/) - Governance and automation.
+- **UI/UX Audit**: [`reports/ui-ux/`](./reports/ui-ux/) - Brand fidelity and identity.
 
 ---
 
-## 🔍 البحث والعثور على المعلومات
+## 🔧 Engineering Standards
 
-### 🔎 البحث السريع
+### 1. Architectural Integrity
 
-#### حسب النوع:
+We adhere to **Clean Architecture**. The `lib/` directory must reflect the strict separation of `Presentation`, `Domain`, and `Data` layers. No direct dependencies are permitted from Data/Domain to Presentation.
 
-- **الاستراتيجية:** [`Core/00_Strategic_Master_Blueprint.md`](./Core/00_Strategic_Master_Blueprint.md)
-- **التقنية:** [`Core/02_Technical_Design_Document.md`](./Core/02_Technical_Design_Document.md) + [`reports/engineering/`](./reports/engineering/)
-- **التصميم:** [`Core/04_Design_System.md`](./Core/04_Design_System.md) + [`reports/ui-ux/`](./reports/ui-ux/)
-- **المشاكل:** [`guides/troubleshooting/`](./guides/troubleshooting/)
+### 2. Localization Purity
 
-#### حسب التاريخ:
+The application is **Arabic-First** but documented **English-First**. All technical specifications, comments, and project metadata MUST be in professional technical English to ensure global maintainability.
 
-- **الأحدث:** [`reports/project-status/`](./reports/project-status/)
-- **الجلسات:** [`sessions/`](sessions/) (مرتبة زمنياً)
-- **الأرشيف:** [`Archive/2025/`](Archive/2025/)
+### 3. Continuous Verification
 
-### 📋 فهرس المواضيع الرئيسية
-
-| الموضوع          | المسار الأساسي                                                                                       | المسارات الإضافية                                |
-| ---------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| **Flutter/Dart** | [`Core/02_Technical_Design_Document.md`](./Core/02_Technical_Design_Document.md)                     | [`reports/engineering/`](./reports/engineering/) |
-| **UI/UX Design** | [`Core/04_Design_System.md`](./Core/04_Design_System.md)                                             | [`reports/ui-ux/`](./reports/ui-ux/)             |
-| **المتطلبات**    | [`Core/03_Product_Requirements_Document.md`](./Core/03_Product_Requirements_Document.md)             | [`sessions/specialized/`](sessions/specialized/) |
-| **Git/GitHub**   | [`guides/troubleshooting/`](./guides/troubleshooting/)                                               | [`reports/git-github/`](./reports/git-github/)   |
-| **الأخطاء**      | [`guides/troubleshooting/ERROR_TRACKING_GUIDE.md`](./guides/troubleshooting/ERROR_TRACKING_GUIDE.md) | [`reports/fixes/`](./reports/fixes/)             |
-| **الأداء**       | [`reports/analysis/`](./reports/analysis/)                                                           | [`reports/workflows/`](./reports/workflows/)     |
+- **Static Analysis**: Zero tolerance for `flutter analyze` warnings.
+- **Test Density**: Targeting >80% coverage for core accounting services.
+- **Security**: Hardware-anchored secure storage for all sensitive credentials.
 
 ---
 
-## 🔄 صيانة وتحديث التوثيق
+## 🔍 Navigation Support
 
-### 📅 جدول الصيانة الدورية
-
-#### يومياً:
-
-- ✅ تحديث [`action-items/`](action-items/) بالمهام الجديدة
-- ✅ إضافة تقارير جديدة في [`reports/`](./reports/)
-
-#### أسبوعياً:
-
-- 📊 مراجعة [`reports/project-status/`](./reports/project-status/)
-- 🔍 تحديث [`guides/troubleshooting/`](./guides/troubleshooting/)
-
-#### شهرياً:
-
-- 📋 مراجعة [`Core/`](./Core/) للتحديثات الاستراتيجية
-- 🗄️ أرشفة الملفات القديمة في [`Archive/`](Archive/)
-
-#### ربع سنوياً:
-
-- 🎯 مراجعة شاملة لـ [`Core/00_Strategic_Master_Blueprint.md`](./Core/00_Strategic_Master_Blueprint.md)
-- 📈 تقييم فعالية هيكل التوثيق
-
-### ✏️ إرشادات التحديث
-
-#### عند إضافة وثيقة جديدة:
-
-1. **حدد التصنيف المناسب** (Core, reports, guides, sessions, action-items)
-2. **اختر المجلد الفرعي الصحيح**
-3. **استخدم تنسيق الأسماء المعياري**
-4. **أضف وصف في README.md المناسب**
-5. **حدث هذا الفهرس الرئيسي**
-
-#### معايير التسمية:
-
-- **التقارير:** `REPORT_NAME_YYYY-MM-DD.md`
-- **الأدلة:** `GUIDE_NAME.md`
-- **الجلسات:** `SESSION_SUMMARY_TOPIC_YYYY-MM-DD.md`
-- **الأساسية:** `NN_Document_Name.md` (مرقمة)
+Utilize the **[`INDEX.md`](./INDEX.md)** for a granular, searchable registry of all project documentation. It includes categorical tagging and persona-based routing to accelerate information retrieval.
 
 ---
 
-## 🛠️ أدوات مساعدة
-
-### 🔗 فحص الروابط
-
-```bash
-# تشغيل فحص الروابط التلقائي من داخل مجلد Documentation
-./check_links.sh
-
-# أو من المجلد الرئيسي للمشروع
-./docs/check_links.sh
-```
-
-### 📊 إحصائيات التوثيق
-
-- **إجمالي الوثائق:** 50+ وثيقة
-- **التصنيفات الرئيسية:** 6 مجلدات
-- **التصنيفات الفرعية:** 13 مجلد فرعي
-- **معدل التحديث:** يومي للتقارير، أسبوعي للأدلة
-
----
-
-## 📞 الدعم والمساعدة
-
-### 🆘 عند الحاجة للمساعدة:
-
-1. **ابحث في الفهرس أولاً** - استخدم جدول المواضيع أعلاه
-2. **راجع الأدلة ذات الصلة** - [`guides/troubleshooting/`](./guides/troubleshooting/)
-3. **تحقق من التقارير الحديثة** - [`reports/project-status/`](./reports/project-status/)
-4. **اسأل الفريق** - استخدم قنوات التواصل المحددة
-
-### 📧 جهات الاتصال:
-
-- **المسؤول التقني:** فريق وكلاء تطوير مشروع بصير
-- **إدارة التوثيق:** نفس الفريق
-- **الدعم الفني:** [`guides/troubleshooting/ERROR_TRACKING_GUIDE.md`](./guides/troubleshooting/ERROR_TRACKING_GUIDE.md)
-
----
-
-## 📈 مؤشرات الجودة
-
-### ✅ معايير النجاح المحققة:
-
-- 🎯 **التنظيم:** 97.7% تقليل في فوضى الملفات (من 43 إلى 1 في الجذر)
-- 🔗 **الروابط:** 100% من الروابط الحرجة تعمل بشكل صحيح
-- 📚 **التغطية:** جميع جوانب المشروع موثقة ومصنفة
-- 🔄 **الصيانة:** نظام صيانة دوري مطبق ومفعل
-
-### 📊 إحصائيات الاستخدام:
-
-- **الوثائق الأكثر استخداماً:** Core Documents (يومياً)
-- **التقارير الأكثر مراجعة:** Project Status (أسبوعياً)
-- **الأدلة الأكثر فائدة:** Troubleshooting Guides (عند الحاجة)
-
----
-
-## 🎉 الخلاصة
-
-هذا النظام الجديد للتوثيق يوفر:
-
-- ✅ **وصول سريع** للمعلومات المطلوبة
-- ✅ **تنظيم منطقي** حسب النوع والجمهور
-- ✅ **صيانة سهلة** مع إرشادات واضحة
-- ✅ **نمو مستدام** مع إمكانية التوسع
-- ✅ **جودة عالية** مع معايير محددة
-
-**🚀 ابدأ رحلتك من [البداية السريعة](#-البداية-السريعة-quick-start) أعلاه!**
-
----
-
-**تم إنشاء هذا الفهرس بواسطة:** فريق وكلاء تطوير مشروع بصير  
-**تاريخ آخر تحديث:** 10 يناير 2026  
-**إصدار التوثيق:** 3.0 (Diamond Purity Release)  
-**الحالة:** 💎 Diamond Purity Achieved
+**Stewardship:** Basir Project Agentic Development Team  
+**Deployment Date:** January 11, 2026  
+**Certification:** 💎 Diamond Purity Achieved  
+**Health Check:** `flutter analyze` -> ✅ Clean

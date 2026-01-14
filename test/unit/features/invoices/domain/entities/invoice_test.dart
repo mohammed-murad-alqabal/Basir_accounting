@@ -8,6 +8,8 @@ void main() {
     test('should create InvoiceItem with all properties', () {
       // Arrange & Act
       final item = InvoiceItem(
+        taxRate: Decimal.parse('0.15'),
+        taxCategory: 'S',
         id: 'item-1',
         name: 'خدمة استشارية',
         quantity: Decimal.fromInt(2),
@@ -28,6 +30,8 @@ void main() {
     test('should hold correct total', () {
       // Arrange
       final item = InvoiceItem(
+        taxRate: Decimal.parse('0.15'),
+        taxCategory: 'S',
         id: 'item-1',
         name: 'خدمة',
         quantity: Decimal.fromInt(3),
@@ -59,6 +63,8 @@ void main() {
         customerName: 'أحمد محمد',
         items: [
           InvoiceItem(
+            taxRate: Decimal.parse('0.15'),
+            taxCategory: 'S',
             id: 'item-1',
             name: 'خدمة',
             quantity: Decimal.fromInt(2),
@@ -100,6 +106,8 @@ void main() {
         customerName: 'أحمد',
         items: [
           InvoiceItem(
+            taxRate: Decimal.parse('0.15'),
+            taxCategory: 'S',
             id: 'item-1',
             name: 'خدمة',
             quantity: Decimal.fromInt(2),
@@ -135,6 +143,8 @@ void main() {
         customerName: 'أحمد',
         items: [
           InvoiceItem(
+            taxRate: Decimal.parse('0.15'),
+            taxCategory: 'S',
             id: 'item-1',
             name: 'خدمة',
             quantity: Decimal.fromInt(2),
@@ -170,6 +180,8 @@ void main() {
         customerName: 'أحمد',
         items: [
           InvoiceItem(
+            taxRate: Decimal.parse('0.15'),
+            taxCategory: 'S',
             id: 'item-1',
             name: 'خدمة',
             quantity: Decimal.fromInt(2),
@@ -205,6 +217,8 @@ void main() {
         customerName: 'أحمد',
         items: [
           InvoiceItem(
+            taxRate: Decimal.parse('0.15'),
+            taxCategory: 'S',
             id: 'item-1',
             name: 'خدمة',
             quantity: Decimal.one,
@@ -241,6 +255,8 @@ void main() {
         customerName: 'أحمد',
         items: [
           InvoiceItem(
+            taxRate: Decimal.parse('0.15'),
+            taxCategory: 'S',
             id: 'item-1',
             name: 'خدمة',
             quantity: Decimal.one,

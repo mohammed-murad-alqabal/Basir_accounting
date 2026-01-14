@@ -173,6 +173,8 @@ void main() {
           status: InvoiceStatus.sent,
           items: [
             InvoiceItem(
+              taxRate: Decimal.parse('0.15'),
+              taxCategory: 'S',
               id: 'item-1',
               name: 'Service',
               quantity: Decimal.one,

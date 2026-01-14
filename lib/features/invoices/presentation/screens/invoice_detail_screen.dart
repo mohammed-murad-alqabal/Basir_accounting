@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/extensions/invoice_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
@@ -81,6 +82,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
             _buildTotalsCard(context),
             const SizedBox(height: Spacing.xl),
             _buildQrCodeSection(context),
+            const SizedBox(height: Spacing.lg),
+            _buildComplianceSection(context),
           ],
         ),
       ),
@@ -246,7 +249,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
                           ),
                           Text(
                             '${FormatHelpers.formatNumber(item.quantity)} × '
-                            '${FormatHelpers.formatCurrency(item.price)}',
+                            '${FormatHelpers.formatCurrency(item.price)} '
+                            '(${ctx.l10n.labelVatRate}: ${FormatHelpers.formatNumber(item.taxRate * Decimal.fromInt(100))}%)',
                             style: AppTextStyles.bodySmall.copyWith(
                               color: AppColors.textSecondary,
                             ),
@@ -274,10 +278,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
           children: [
             _buildTotalRow(ctx.l10n.labelSubtotal, invoice.subtotalAmount),
             _buildTotalRow(
-              '${ctx.l10n.labelTax}: '
-              '${FormatHelpers.formatNumber(
-                invoice.taxRate * Decimal.fromInt(100),
-              )}%',
+              ctx.l10n.labelTaxTotal,
               invoice.taxAmount,
             ),
             if (invoice.discountAmount > Decimal.zero)
@@ -352,6 +353,76 @@ class InvoiceDetailScreen extends ConsumerWidget {
       ),
     );
   }
+
+  Widget _buildComplianceSection(BuildContext ctx) {
+    if (invoice.zatcaUuid == null && invoice.zatcaHash == null) {
+      return const SizedBox.shrink();
+    }
+
+    return AppCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.security, size: 20, color: AppColors.primary),
+              const SizedBox(width: Spacing.sm),
+              Text(
+                ctx.l10n.zatcaComplianceText,
+                style: AppTextStyles.titleSmall.copyWith(
+                  fontWeight: FontWeights.bold,
+                ),
+              ),
+            ],
+          ),
+          const Divider(height: Spacing.lg),
+          if (invoice.zatcaUuid != null)
+            _buildMetadataRow(
+              ctx,
+              ctx.l10n.labelZatcaUuid,
+              invoice.zatcaUuid!,
+            ),
+          if (invoice.zatcaHash != null)
+            _buildMetadataRow(
+              ctx,
+              ctx.l10n.labelZatcaHash,
+              invoice.zatcaHash!,
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMetadataRow(BuildContext ctx, String label, String value) =>
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: Spacing.xs),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.labelSmall.copyWith(
+                color: AppColors.textSecondary,
+              ),
+            ),
+            const SizedBox(height: 4),
+            InkWell(
+              onLongPress: () {
+                // TODO(zatca): Logic for copy to clipboard if needed
+              },
+              child: Text(
+                value,
+                style: AppTextStyles.bodySmall.copyWith(
+                  fontFamily: 'monospace',
+                  color: AppColors.textPrimary,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      );
 
   Future<void> _editInvoice(BuildContext context) async {
     await Navigator.of(context).push(

@@ -3,7 +3,7 @@
 **Document ID:** BASIR-PROG-001  
 **Date:** January 11, 2026  
 **Status:** ✅ In Progress  
-**Prepared by:** فريق وكلاء تطوير مشروع بصير
+**Prepared by:** Basir Project Agentic Development Team
 
 ---
 
@@ -174,7 +174,7 @@ critical compilation errors and establishing the multi-currency architecture.
 ---
 
 **Next Review:** January 18, 2026  
-**Document Control:** فريق وكلاء تطوير مشروع بصير  
+**Document Control:** Basir Project Agentic Development Team  
 **Classification:** Strategic - Implementation Progress
 
 ---

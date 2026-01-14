@@ -69,10 +69,12 @@ class MockData {
     Decimal? price,
     Decimal? quantity,
     Decimal? taxRate,
+    String? taxCategory,
   }) {
     final qty = quantity ?? Decimal.one;
     final prc = price ?? Decimal.fromInt(1000);
     final rate = taxRate ?? Decimal.parse('0.15');
+    final category = taxCategory ?? (rate.toDouble() > 0 ? 'S' : 'E');
     final total = qty * prc;
     final tax = total * rate;
 
@@ -83,6 +85,8 @@ class MockData {
       quantity: qty,
       total: total,
       taxAmount: tax,
+      taxRate: rate,
+      taxCategory: category,
     );
   }
 
