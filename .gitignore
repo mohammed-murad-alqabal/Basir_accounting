@@ -187,6 +187,8 @@ libisar.so
 *.db
 *.db-shm
 *.db-wal
+*.isar
+*.isar.lock
 sqlite_mcp_server.db
 
 # Git backup files

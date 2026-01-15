@@ -239,9 +239,7 @@ class PdfGenerationService extends _$PdfGenerationService {
                         style: pw.TextStyle(
                           fontSize: 14,
                           fontWeight: pw.FontWeight.bold,
-                          color: res.isAllowed
-                              ? PdfColors.green900
-                              : PdfColors.red900,
+                          color: res.isAllowed ? PdfColors.green900 : PdfColors.red900,
                         ),
                       ),
                       pw.Text(
@@ -332,8 +330,7 @@ class PdfGenerationService extends _$PdfGenerationService {
       );
 
   /// Internal helper to build the table for financial reports.
-  pw.Widget _buildReportTable(FinancialReportDto report) =>
-      pw.Table.fromTextArray(
+  pw.Widget _buildReportTable(FinancialReportDto report) => pw.TableHelper.fromTextArray(
         headerStyle: pw.TextStyle(
           fontWeight: pw.FontWeight.bold,
           color: PdfColors.white,
