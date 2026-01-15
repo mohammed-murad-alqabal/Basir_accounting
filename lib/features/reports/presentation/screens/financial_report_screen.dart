@@ -219,8 +219,10 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
                     children: insights
                         .map(
                           (agentResult) => ListTile(
-                            leading: const Icon(Icons.psychology,
-                                color: Colors.purple),
+                            leading: const Icon(
+                              Icons.psychology,
+                              color: Colors.purple,
+                            ),
                             title: Text(agentResult.agentId),
                             subtitle: Text(agentResult.rationale),
                             dense: true,
@@ -229,8 +231,10 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
                                     Icons.check_circle,
                                     color: Colors.green,
                                   )
-                                : const Icon(Icons.warning,
-                                    color: Colors.orange),
+                                : const Icon(
+                                    Icons.warning,
+                                    color: Colors.orange,
+                                  ),
                           ),
                         )
                         .toList(),

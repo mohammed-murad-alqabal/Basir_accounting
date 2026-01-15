@@ -308,7 +308,8 @@ class ForensicAuditService extends _$ForensicAuditService
       for (var i = 1; i < numbers.length; i++) {
         if (numbers[i] - numbers[i - 1] > 1) {
           issues.add(
-              'Gap detected in $prefix sequence: ${numbers[i - 1]} to ${numbers[i]}');
+            'Gap detected in $prefix sequence: ${numbers[i - 1]} to ${numbers[i]}',
+          );
         }
       }
     });

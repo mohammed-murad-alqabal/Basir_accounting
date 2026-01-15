@@ -58,8 +58,9 @@ class GlassCard extends StatelessWidget {
         ),
         gradient: LinearGradient(
           colors: [
-            glassTheme.glassColor
-                .withValues(alpha: opacity ?? glassTheme.surfaceOpacity),
+            glassTheme.glassColor.withValues(
+              alpha: opacity ?? glassTheme.surfaceOpacity,
+            ),
             glassTheme.glassColor.withValues(
               alpha: (opacity ?? glassTheme.surfaceOpacity) * 0.8,
             ),
@@ -108,7 +109,7 @@ class GlassCard extends StatelessWidget {
     return cardContent;
   }
 
-  // Helper for scale animation (placeholder for now, would typically use a stateful widget or hook)
+  // Helper for scale animation (placeholder for now)
   void _animateScale(BuildContext context, double target) {
     // In a stateless widget, we can't easily trigger the tween rebuild
     // without context management.

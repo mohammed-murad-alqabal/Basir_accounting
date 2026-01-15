@@ -42,6 +42,11 @@ class ProductionReadyService extends _$ProductionReadyService {
     // 3. Environment Variables
     // We could check for sensitive keys here if they were injected.
 
+    // 3. Profile Mode Check
+    if (kProfileMode) {
+      issues.add('WARNING: Application is running in PROFILE mode.');
+    }
+
     return issues;
   }
 
