@@ -7,7 +7,7 @@ import '../api.dart';
 import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-// These functions are ignored because they are not marked as `pub`: `map_dto_to_entity`, `map_entity_to_dto`
+// These functions are ignored because they are not marked as `pub`: `map_entity_to_dto`
 
 /// Validate a journal entry (CP-001, CP-002, CP-010)
 Future<void> validateJournalEntry({required EntryDto dto}) =>
@@ -56,6 +56,12 @@ Future<String?> getAgentConsensus({required String entryId}) =>
 /// List all audit records for a specific entity
 Future<List<AuditRecordDto>> listAuditLogs({required String entityId}) =>
     RustLib.instance.api.crateApiLedgerListAuditLogs(entityId: entityId);
+
+Future<JournalEntry> mapDtoToEntity({required EntryDto dto}) =>
+    RustLib.instance.api.crateApiLedgerMapDtoToEntity(dto: dto);
+
+// Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<JournalEntry>>
+abstract class JournalEntry implements RustOpaqueInterface {}
 
 class EntryDto {
   final String? entryId;

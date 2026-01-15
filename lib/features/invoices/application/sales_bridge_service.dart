@@ -1,9 +1,10 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
-import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart'
+    as domain_inv;
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_accounting_system/src/rust/api.dart';
-import 'package:basir_accounting_system/src/rust/api/sales.dart';
+import 'package:basir_accounting_system/src/rust/api.dart' as rust_api;
+import 'package:basir_accounting_system/src/rust/api/sales.dart' as rust_sales;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -22,7 +23,8 @@ class SalesBridgeService {
 
   /// Synchronizes an invoice with the Rust core and performs ZATCA
   /// compliance steps.
-  Future<Invoice> finalizeInvoiceWithZatca(Invoice invoice) async {
+  Future<domain_inv.Invoice> finalizeInvoiceWithZatca(
+      domain_inv.Invoice invoice) async {
     final user = ref.read(basirUserProvider);
 
     // Dynamic metadata retrieval
@@ -37,27 +39,27 @@ class SalesBridgeService {
 
     final packageInfo = await PackageInfo.fromPlatform();
 
-    final metadata = AuditMetadataDto(
-      who: WhoDto(
+    final metadata = rust_api.AuditMetadataDto(
+      who: rust_api.WhoDto(
         userId: user?.id ?? 'anonymous',
         userName: user?.displayName ?? 'Anonymous',
         role: user?.isGuest ?? false ? 'guest' : 'user',
         sessionId: const Uuid().v4(),
       ),
-      where: WhereDto(
+      where: rust_api.WhereDto(
         systemId: 'Basir-Mobile',
         deviceId: deviceId,
         appVersion: packageInfo.version,
       ),
-      why: const WhyDto(
+      why: const rust_api.WhyDto(
         justification: 'ZATCA Phase 2 Compliance Finalization',
       ),
-      how: const HowDto(
+      how: const rust_api.HowDto(
         method: 'SalesBridgeService.finalizeInvoiceWithZatca',
       ),
     );
 
-    final salesDto = SalesInvoiceDto(
+    final salesDto = rust_sales.SalesInvoiceDto(
       id: invoice.id,
       invoiceNumber: invoice.invoiceNumber,
       customerId: invoice.customerId,
@@ -73,7 +75,7 @@ class SalesBridgeService {
 
     final lines = invoice.items
         .map(
-          (item) => SalesInvoiceLineDto(
+          (domain_inv.InvoiceItem item) => rust_sales.SalesInvoiceLineDto(
             productId: item.id,
             description: item.name,
             quantity: item.quantity.toString(),
@@ -85,19 +87,18 @@ class SalesBridgeService {
         .toList();
 
     // 1. Create/Update in Rust core
-    await createInvoice(invoice: salesDto, lines: lines, metadata: metadata);
+    await rust_sales.createInvoice(
+        invoice: salesDto, lines: lines, metadata: metadata);
 
     // 2. Post and perform ZATCA compliance checks
     if (invoice.status != InvoiceStatus.draft) {
-      await postInvoice(id: invoice.id, metadata: metadata);
+      await rust_sales.postInvoice(id: invoice.id, metadata: metadata);
 
       // 3. Retrieve updated invoice with compliance data (QR Code, Hash, etc.)
-      final updatedDto = await getInvoiceById(id: invoice.id);
+      final updatedDto = await rust_sales.getInvoiceById(id: invoice.id);
       if (updatedDto != null) {
         return invoice.copyWith(
           qrCode: updatedDto.qrCodeData,
-          // Note: In a real scenario, we'd also sync the XML content and Hash
-          // if we add them to the DTO and the domain entity.
         );
       }
     }

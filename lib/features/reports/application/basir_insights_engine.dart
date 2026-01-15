@@ -26,8 +26,8 @@ class BasirInsightsEngine extends _$BasirInsightsEngine {
             source: AgentSource.strategist,
             riskLevel: InsightRiskLevel.high,
             title: 'انخفاض السيولة النقدية',
-            description:
-                'نسبة التداول الحالية (${kpi.value}) أقل من المعدل الآمن (1.5). '
+            description: 'نسبة التداول الحالية (${kpi.value}) '
+                'أقل من المعدل الآمن (1.5). '
                 'يوصى بتأجيل المدفوعات غير الضرورية.',
             timestamp: now,
             actionLabel: 'تحليل التدفق النقدي',
@@ -43,8 +43,8 @@ class BasirInsightsEngine extends _$BasirInsightsEngine {
             source: AgentSource.strategist,
             riskLevel: InsightRiskLevel.medium,
             title: 'تسارع في معدل الاستنزاف',
-            description:
-                'معدل الاستنزاف النقدي زاد بنسبة ${(kpi.trend * 100).toStringAsFixed(0)}%. '
+            description: 'معدل الاستنزاف النقدي زاد بنسبة '
+                '${(kpi.trend * 100).toStringAsFixed(0)}%. '
                 'يجب مراجعة المصاريف التشغيلية فوراً.',
             timestamp: now,
             actionLabel: 'مراجعة الميزانية',

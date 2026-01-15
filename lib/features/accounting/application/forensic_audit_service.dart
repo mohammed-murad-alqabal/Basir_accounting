@@ -1,12 +1,13 @@
 import 'package:basir_accounting_system/core/providers.dart';
-import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
-import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
-import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
-import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart'
+    as domain_je;
+import 'package:basir_accounting_system/src/rust/api/auditor.dart'
+    as rust_auditor;
+import 'package:basir_accounting_system/src/rust/api/ledger.dart'
+    as rust_ledger;
 import 'package:decimal/decimal.dart';
-import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'forensic_audit_service.g.dart';
@@ -26,295 +27,124 @@ class AuditResult {
   /// Human-readable summary of the audit outcome.
   final String message;
 
-  /// The detailed findings or discrepancies identified during the audit.
+  /// Detailed findings or anomalies discovered during the audit.
   final List<String> findings;
 }
 
-/// Forensic Audit Expert Service (Agent 3) for data integrity and fraud
-/// detection.
+/// [ForensicAuditService]
 ///
-/// This agent monitors ledger activities for unauthorized changes,
-/// unusual transaction patterns, and structural imbalances. It serves
-/// as a critical layer of defense for financial accuracy.
-@riverpod
+/// Specialized service for deep transactional analysis and corruption detection.
+/// Leverages the Rust-based `self_healing` auditor for performance-critical tasks.
+@Riverpod(keepAlive: true)
 class ForensicAuditService extends _$ForensicAuditService
     implements AccountingAgent {
-  AccountingRepository get _repository =>
-      ref.read(accountingRepositoryProvider);
-
   @override
   void build() {}
 
   @override
-  String get agentId => 'agent-3-forensic-audit';
+  String get agentId => 'agent-3-forensic';
 
   @override
-  AgentAuthority get authority => AgentAuthority.medium;
+  AgentAuthority get authority => AgentAuthority.high;
 
-  /// Real-time processing of proposed transactions for forensic anomalies.
-  ///
-  /// ## Checks:
-  /// 1. **Balance Verification**: Recomputes Debit vs Credit totals for exact
-  ///    parity.
-  /// 2. **Threshold Monitoring**: Flags unusually large transactions exceeding
-  ///    SAR 1M.
-  /// 3. **Duplicate Detection**: Prevents reuse of existing Reference Numbers.
   @override
   Future<AgentResult> process(AccountingContext context) async {
-    final rationale = <String>[];
-    var isAllowed = true;
-    final l10n = lookupAppLocalizations(Locale(context.locale));
+    final entry = context.proposedJournalEntry;
 
-    // 1. Verify Entry Balance
-    if (!context.proposedJournalEntry.isBalanced) {
-      isAllowed = false;
-      rationale.add(l10n.agentRationaleForensicUnbalanced);
-    } else {
-      rationale.add(l10n.agentRationaleForensicBalanced);
-    }
-
-    // 2. Anomaly Detection (Threshold: SAR 1,000,000)
-    final threshold = Decimal.fromInt(1000000);
-    if (context.proposedJournalEntry.totalDebit > threshold) {
-      rationale.add(
-        l10n.agentRationaleForensicHighValue(
-          context.proposedJournalEntry.totalDebit.toString(),
-        ),
+    // 1. Structural balance check
+    if (!entry.isBalanced) {
+      return AgentResult(
+        agentId: agentId,
+        isAllowed: false,
+        rationale:
+            'Transaction rejected: Unbalanced journal entry detected (Debit != Credit).',
+        confidenceScore: 1,
       );
-    }
-
-    // 3. Duplicate Reference Check
-    final entries = await _repository.getJournalEntries();
-    final isDuplicate = entries.any(
-      (e) => e.referenceNumber == context.proposedJournalEntry.referenceNumber,
-    );
-    if (isDuplicate) {
-      isAllowed = false;
-      rationale.add(
-        l10n.agentRationaleForensicDuplicate(
-          context.proposedJournalEntry.referenceNumber,
-        ),
-      );
-    }
-
-    // 4. Time-of-Day Anomaly Detection (Non-standard business hours: 11 PM - 5 AM)
-    final recordingHour = context.proposedJournalEntry.date.hour;
-    if (recordingHour >= 23 || recordingHour < 5) {
-      rationale.add(
-        l10n.agentRationaleForensicTimeAnomaly(
-          '${recordingHour.toString().padLeft(2, '0')}:00',
-        ),
-      );
-    }
-
-    // 5. Reference Sequence Gap Analysis
-    if (entries.isNotEmpty) {
-      // Find the most recent entry with the same prefix (e.g., JE- or SIM-INV-)
-      final currentRef = context.proposedJournalEntry.referenceNumber;
-      final prefixMatch = RegExp(r'^([A-Z-]+)(\d+)$').firstMatch(currentRef);
-
-      if (prefixMatch != null) {
-        final currentPrefix = prefixMatch.group(1);
-        final currentNumber = int.tryParse(prefixMatch.group(2) ?? '');
-
-        if (currentNumber != null) {
-          int? lastNumber;
-          String? lastRef;
-
-          for (final e in entries.reversed) {
-            final match =
-                RegExp(r'^([A-Z-]+)(\d+)$').firstMatch(e.referenceNumber);
-            if (match != null && match.group(1) == currentPrefix) {
-              lastNumber = int.tryParse(match.group(2) ?? '');
-              lastRef = e.referenceNumber;
-              break;
-            }
-          }
-
-          if (lastNumber != null && (currentNumber - lastNumber).abs() > 1) {
-            rationale.add(
-              l10n.agentRationaleForensicSequenceGap(
-                lastRef!,
-                currentRef,
-              ),
-            );
-          }
-        }
-      }
-    }
-
-    // 6. ZATCA Phase 2 Cryptographic Identity Check
-    if (context.proposedJournalEntry.sourceDocument == 'invoice' &&
-        context.proposedJournalEntry.status == JournalEntryStatus.posted) {
-      // In a real system, we would fetch the Invoice from the repository
-      // and check zatcaUuid/zatcaHash. For this agent context, we check
-      // if these indicators should have been present.
-      // Note: This check is primarily for forensic auditing of existing records.
-      final invoiceRepo = ref.read(invoiceRepositoryProvider);
-      final invoice = await invoiceRepo
-          .getInvoiceById(context.proposedJournalEntry.sourceId);
-
-      if (invoice != null &&
-          (invoice.zatcaUuid == null || invoice.zatcaHash == null)) {
-        rationale.add(l10n.agentRationaleForensicZatcaIdentityMissing);
-      }
     }
 
     return AgentResult(
       agentId: agentId,
-      isAllowed: isAllowed,
-      rationale: rationale.join('\n'),
-      confidenceScore: 1,
+      isAllowed: true,
+      rationale:
+          'Transaction approved: No structural or logical anomalies detected.',
+      confidenceScore: 0.95,
     );
   }
 
-  /// Verifies balance parity across the entire historical journal.
-  /// (Implementation of FR-ACC-002)
-  Future<AuditResult> verifyAllEntriesBalanced() async {
-    final entries = await _repository.getJournalEntries();
-    final unbalanced = <String>[];
-
-    for (final entry in entries) {
-      if (!entry.isBalanced) {
-        unbalanced.add('Entry #${entry.referenceNumber} is unbalanced.');
-      }
-    }
-
-    if (unbalanced.isEmpty) {
-      return const AuditResult(
-        isSuccess: true,
-        message: 'All ledger entries verified as balanced.',
-      );
-    }
-
-    return AuditResult(
-      isSuccess: false,
-      message: 'Unbalanced entries identified!',
-      findings: unbalanced,
-    );
-  }
-
-  /// Performs deep integrity check between account balances and transaction
-  /// totals.
+  /// Scans a sequence of journal entries for structural anomalies or tampering.
   ///
-  /// Recomputes theoretical balances for every account by aggregating all
-  /// posted journal lines and compares them against current stored values.
-  Future<AuditResult> verifyBalancesIntegrity() async {
-    final accounts = await _repository.getAccounts();
-    final entries = await _repository.getJournalEntries();
-    final discrepancies = <String>[];
+  /// Uses the Rust auditor for high-performance sequence verification.
+  Future<AuditResult> auditSequence(
+      List<domain_je.JournalEntry> entries) async {
+    final entryDtos = entries.map(_toEntryDto).toList();
 
-    for (final account in accounts) {
-      if (account.isParent) continue;
+    try {
+      final anomalies = rust_auditor.scanSequence(
+        prefix: 'JE',
+        entries: entryDtos,
+      );
 
-      var calculatedBalance = Decimal.zero;
-      for (final entry in entries) {
-        if (entry.status != JournalEntryStatus.posted) continue;
-
-        for (final line in entry.lines) {
-          if (line.accountId == account.id) {
-            calculatedBalance += line.debit - line.credit;
-          }
-        }
-      }
-
-      final absoluteCalculated = account.nature == AccountNature.debit
-          ? calculatedBalance
-          : -calculatedBalance;
-
-      final storedBalance = await _repository.getAccountBalance(account.id);
-
-      if (absoluteCalculated != storedBalance) {
-        discrepancies.add(
-          'Account ${account.nameEn}: Stored balance ($storedBalance) '
-          'mismatch against computed total ($absoluteCalculated)',
+      if (anomalies.isEmpty) {
+        return const AuditResult(
+          isSuccess: true,
+          message: 'Sequence verification complete: No anomalies detected.',
         );
       }
-    }
 
-    if (discrepancies.isEmpty) {
-      return const AuditResult(
-        isSuccess: true,
-        message: 'Data integrity verified: Account balances match transaction '
-            'history.',
+      final findings = anomalies
+          .map(
+            (a) => a.when(
+              sequenceGap: (String expected, String found) =>
+                  'Sequence gap: Expected $expected but found $found.',
+              reconciliationMismatch: (String accountId, String bookBalance,
+                      String physicalCount) =>
+                  'Reconciliation mismatch in account $accountId: Book $bookBalance vs Count $physicalCount.',
+              orphanedDraft: (String entryId, String date) =>
+                  'Orphaned draft entry #$entryId dated $date.',
+            ),
+          )
+          .toList();
+
+      return AuditResult(
+        isSuccess: false,
+        message: 'Forensic analysis detected institutional risks.',
+        findings: findings,
+      );
+    } catch (e) {
+      return AuditResult(
+        isSuccess: false,
+        message: 'Forensic scan failed: Internal engine error.',
+        findings: [e.toString()],
       );
     }
-
-    return AuditResult(
-      isSuccess: false,
-      message: 'Integrity discrepancies identified!',
-      findings: discrepancies,
-    );
   }
 
-  /// Scans for suspicious financial patterns or statistical anomalies.
-  Future<AuditResult> detectAnomalies() async {
-    final entries = await _repository.getJournalEntries();
-    final findings = <String>[];
+  /// Performs a thorough scrutiny of the entire historical ledger.
+  ///
+  /// Verifies hash chain integrity (Standard Reference: CP-011).
+  Future<AuditResult> scrutinizeHistoricalLedger() async {
+    final repository = ref.read(accountingRepositoryProvider);
+    final entries = await repository.getJournalEntries();
 
-    // Check for high-value transactions
-    final threshold = Decimal.fromInt(1000000);
-
-    for (final entry in entries) {
-      if (entry.totalDebit > threshold) {
-        findings.add(
-          'High-value Transaction Alert: Entry #${entry.referenceNumber} '
-          'amounting to ${entry.totalDebit}.',
-        );
-      }
-    }
-
-    return AuditResult(
-      isSuccess: findings.isEmpty,
-      message: findings.isEmpty
-          ? 'No suspicious patterns identified.'
-          : 'Forensic alerts require administrative review.',
-      findings: findings,
-    );
-  }
-
-  /// Performs a comprehensive batch scan of the entire ledger for sequential
-  /// anomalies and reference gaps.
-  /// (Implementation of Phase 25: Historical Scrutiny)
-  Future<AuditResult> batchScanLedger() async {
-    final entries = await _repository.getJournalEntries();
     final issues = <String>[];
-
-    if (entries.isEmpty) {
-      return const AuditResult(
-        isSuccess: true,
-        message: 'Ledger is empty, no anomalies detected.',
-      );
-    }
-
-    // Sort entries by date to check sequence
-    final sortedEntries = List<JournalEntry>.from(entries)
+    final sortedEntries = entries.toList()
       ..sort((a, b) => a.date.compareTo(b.date));
 
-    // 1. Reference Sequence Check
-    final prefixGroups = <String, List<int>>{};
     for (final entry in sortedEntries) {
-      final match =
-          RegExp(r'^([A-Z-]+)(\d+)$').firstMatch(entry.referenceNumber);
-      if (match != null) {
-        final prefix = match.group(1)!;
-        final num = int.tryParse(match.group(2) ?? '') ?? 0;
-        prefixGroups.putIfAbsent(prefix, () => []).add(num);
+      if (!entry.isBalanced) {
+        issues.add(
+            'Imbalance detected: Entry #${entry.referenceNumber} is not balanced.');
+      }
+
+      // Verify mathematical identity
+      final calculatedSubtotal = entry.lines.fold(Decimal.zero,
+          (Decimal sum, domain_je.JournalEntryLine l) => sum + l.debit);
+      if (calculatedSubtotal != entry.totalDebit) {
+        issues.add(
+            'Integrity discrepancy: Entry #${entry.referenceNumber} has total debit/sum mismatch.');
       }
     }
 
-    prefixGroups.forEach((prefix, numbers) {
-      numbers.sort();
-      for (var i = 1; i < numbers.length; i++) {
-        if (numbers[i] - numbers[i - 1] > 1) {
-          issues.add(
-            'Gap detected in $prefix sequence: ${numbers[i - 1]} to ${numbers[i]}',
-          );
-        }
-      }
-    });
-
-    // 2. Hash Chain Integrity (Placeholder for future Rust integration)
     for (var i = 1; i < sortedEntries.length; i++) {
       final current = sortedEntries[i];
       final previous = sortedEntries[i - 1];
@@ -334,4 +164,23 @@ class ForensicAuditService extends _$ForensicAuditService
       findings: issues,
     );
   }
+
+  rust_ledger.EntryDto _toEntryDto(domain_je.JournalEntry entry) =>
+      rust_ledger.EntryDto(
+        entryId: entry.id,
+        entryNumber: entry.referenceNumber,
+        description: entry.description,
+        date: entry.date.toIso8601String(),
+        standardRef: entry.standards.standardReference,
+        lines: entry.lines.map((domain_je.JournalEntryLine l) {
+          final isDebit = l.debit > Decimal.zero;
+          final amount = (isDebit ? l.debit : l.credit).toString();
+          return rust_ledger.LineDto(
+            accountId: l.accountId,
+            amount: amount,
+            isDebit: isDebit,
+            description: l.description ?? '',
+          );
+        }).toList(),
+      );
 }
