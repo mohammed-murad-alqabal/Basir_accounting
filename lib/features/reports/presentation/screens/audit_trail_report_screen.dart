@@ -97,8 +97,9 @@ class AuditTrailReportScreen extends ConsumerWidget {
                         title: context.l10n.auditTrailSectionForensic,
                       ),
                       const SizedBox(height: Spacing.sm),
-                      ...entry.auditLogs.map((domain.AuditLogEntry log) =>
-                          _AuditLogItem(log: log)),
+                      ...entry.auditLogs.map(
+                        (log) => _AuditLogItem(log: log),
+                      ),
                     ],
                   ),
                 ),

@@ -9,6 +9,7 @@ pub mod purchasing;
 pub mod reports;
 pub mod sales;
 pub mod standards;
+pub mod zatca;
 
 // Specific re-exports for API functions and DTOs
 pub use accounts::{create_account, get_account_by_id, list_accounts, AccountDto};
@@ -41,6 +42,10 @@ pub use sales::{
     CustomerPaymentDto, SalesInvoiceDto, SalesInvoiceLineDto,
 };
 pub use standards::{get_standard_info, search_standards, StandardDto};
+pub use zatca::{
+    generate_zatca_csr, generate_zatca_key_pair, generate_zatca_signed_xml, ZatcaCsrInputDto,
+    ZatcaInvoiceInputDto, ZatcaInvoiceLineDto, ZatcaPartyDto,
+};
 
 use flutter_rust_bridge::frb;
 use sqlx::PgPool;

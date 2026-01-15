@@ -38,7 +38,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_auto_opaque = RustAutoOpaqueMoi,
 );
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.11.1";
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -346317649;
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -172084469;
 
 // Section: executor
 
@@ -687,6 +687,122 @@ fn wire__crate__api__reports__generate_zakah_statement_impl(
                         let output_ok = crate::api::reports::generate_zakah_statement(
                             api_as_of_date,
                             api_calendar,
+                        )
+                        .await?;
+                        Ok(output_ok)
+                    })()
+                    .await,
+                )
+            }
+        },
+    )
+}
+fn wire__crate__api__zatca__generate_zatca_csr_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_async::<flutter_rust_bridge::for_generated::SseCodec, _, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "generate_zatca_csr",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_input = <crate::api::zatca::ZatcaCsrInputDto>::sse_decode(&mut deserializer);
+            let api_key_pair_pem = <String>::sse_decode(&mut deserializer);
+            deserializer.end();
+            move |context| async move {
+                transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
+                    (move || async move {
+                        let output_ok =
+                            crate::api::zatca::generate_zatca_csr(api_input, api_key_pair_pem)
+                                .await?;
+                        Ok(output_ok)
+                    })()
+                    .await,
+                )
+            }
+        },
+    )
+}
+fn wire__crate__api__zatca__generate_zatca_key_pair_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::SseCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "generate_zatca_key_pair",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            deserializer.end();
+            move |context| {
+                transform_result_sse::<_, ()>((move || {
+                    let output_ok =
+                        Result::<_, ()>::Ok(crate::api::zatca::generate_zatca_key_pair())?;
+                    Ok(output_ok)
+                })())
+            }
+        },
+    )
+}
+fn wire__crate__api__zatca__generate_zatca_signed_xml_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_async::<flutter_rust_bridge::for_generated::SseCodec, _, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "generate_zatca_signed_xml",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_input =
+                <crate::api::zatca::ZatcaInvoiceInputDto>::sse_decode(&mut deserializer);
+            let api_certificate_pem = <String>::sse_decode(&mut deserializer);
+            let api_private_key_pem = <String>::sse_decode(&mut deserializer);
+            deserializer.end();
+            move |context| async move {
+                transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
+                    (move || async move {
+                        let output_ok = crate::api::zatca::generate_zatca_signed_xml(
+                            api_input,
+                            api_certificate_pem,
+                            api_private_key_pem,
                         )
                         .await?;
                         Ok(output_ok)
@@ -3582,6 +3698,20 @@ impl SseDecode for Vec<crate::api::purchasing::VendorDto> {
     }
 }
 
+impl SseDecode for Vec<crate::api::zatca::ZatcaInvoiceLineDto> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = vec![];
+        for idx_ in 0..len_ {
+            ans_.push(<crate::api::zatca::ZatcaInvoiceLineDto>::sse_decode(
+                deserializer,
+            ));
+        }
+        return ans_;
+    }
+}
+
 impl SseDecode for Option<std::collections::HashMap<String, String>> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -3901,6 +4031,13 @@ impl SseDecode for u32 {
     }
 }
 
+impl SseDecode for u64 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        deserializer.cursor.read_u64::<NativeEndian>().unwrap()
+    }
+}
+
 impl SseDecode for u8 {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -4038,6 +4175,88 @@ impl SseDecode for crate::api::reports::ZakahCalendarDto {
     }
 }
 
+impl SseDecode for crate::api::zatca::ZatcaCsrInputDto {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_commonName = <String>::sse_decode(deserializer);
+        let mut var_organizationUnit = <String>::sse_decode(deserializer);
+        let mut var_organization = <String>::sse_decode(deserializer);
+        let mut var_country = <String>::sse_decode(deserializer);
+        let mut var_serialNumber = <String>::sse_decode(deserializer);
+        let mut var_vatNumber = <String>::sse_decode(deserializer);
+        let mut var_businessCategory = <String>::sse_decode(deserializer);
+        let mut var_registeredAddress = <String>::sse_decode(deserializer);
+        return crate::api::zatca::ZatcaCsrInputDto {
+            common_name: var_commonName,
+            organization_unit: var_organizationUnit,
+            organization: var_organization,
+            country: var_country,
+            serial_number: var_serialNumber,
+            vat_number: var_vatNumber,
+            business_category: var_businessCategory,
+            registered_address: var_registeredAddress,
+        };
+    }
+}
+
+impl SseDecode for crate::api::zatca::ZatcaInvoiceInputDto {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_id = <String>::sse_decode(deserializer);
+        let mut var_uuid = <String>::sse_decode(deserializer);
+        let mut var_issueDate = <String>::sse_decode(deserializer);
+        let mut var_issueTime = <String>::sse_decode(deserializer);
+        let mut var_invoiceTypeCode = <String>::sse_decode(deserializer);
+        let mut var_invoiceCounterValue = <u64>::sse_decode(deserializer);
+        let mut var_previousInvoiceHash = <String>::sse_decode(deserializer);
+        let mut var_sellerParty = <crate::api::zatca::ZatcaPartyDto>::sse_decode(deserializer);
+        let mut var_buyerParty = <crate::api::zatca::ZatcaPartyDto>::sse_decode(deserializer);
+        let mut var_lines = <Vec<crate::api::zatca::ZatcaInvoiceLineDto>>::sse_decode(deserializer);
+        return crate::api::zatca::ZatcaInvoiceInputDto {
+            id: var_id,
+            uuid: var_uuid,
+            issue_date: var_issueDate,
+            issue_time: var_issueTime,
+            invoice_type_code: var_invoiceTypeCode,
+            invoice_counter_value: var_invoiceCounterValue,
+            previous_invoice_hash: var_previousInvoiceHash,
+            seller_party: var_sellerParty,
+            buyer_party: var_buyerParty,
+            lines: var_lines,
+        };
+    }
+}
+
+impl SseDecode for crate::api::zatca::ZatcaInvoiceLineDto {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_id = <String>::sse_decode(deserializer);
+        let mut var_quantity = <String>::sse_decode(deserializer);
+        let mut var_unitPrice = <String>::sse_decode(deserializer);
+        let mut var_taxCategory = <String>::sse_decode(deserializer);
+        let mut var_itemName = <String>::sse_decode(deserializer);
+        return crate::api::zatca::ZatcaInvoiceLineDto {
+            id: var_id,
+            quantity: var_quantity,
+            unit_price: var_unitPrice,
+            tax_category: var_taxCategory,
+            item_name: var_itemName,
+        };
+    }
+}
+
+impl SseDecode for crate::api::zatca::ZatcaPartyDto {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_partyId = <String>::sse_decode(deserializer);
+        let mut var_partyIdScheme = <String>::sse_decode(deserializer);
+        return crate::api::zatca::ZatcaPartyDto {
+            party_id: var_partyId,
+            party_id_scheme: var_partyIdScheme,
+        };
+    }
+}
+
 fn pde_ffi_dispatcher_primary_impl(
     func_id: i32,
     port: flutter_rust_bridge::for_generated::MessagePort,
@@ -4095,112 +4314,122 @@ fn pde_ffi_dispatcher_primary_impl(
             rust_vec_len,
             data_len,
         ),
-        18 => wire__crate__api__accounts__get_account_by_id_impl(port, ptr, rust_vec_len, data_len),
+        18 => wire__crate__api__zatca__generate_zatca_csr_impl(port, ptr, rust_vec_len, data_len),
         19 => {
-            wire__crate__api__reports__get_account_entries_impl(port, ptr, rust_vec_len, data_len)
+            wire__crate__api__zatca__generate_zatca_key_pair_impl(port, ptr, rust_vec_len, data_len)
         }
-        20 => wire__crate__api__ledger__get_agent_consensus_impl(port, ptr, rust_vec_len, data_len),
-        21 => wire__crate__api__assets__get_asset_by_id_impl(port, ptr, rust_vec_len, data_len),
-        22 => wire__crate__api__currency__get_exchange_rate_impl(port, ptr, rust_vec_len, data_len),
-        23 => wire__crate__api__sales__get_invoice_by_id_impl(port, ptr, rust_vec_len, data_len),
-        24 => wire__crate__api__inventory__get_item_by_id_impl(port, ptr, rust_vec_len, data_len),
-        25 => wire__crate__api__reports__get_payables_aging_impl(port, ptr, rust_vec_len, data_len),
-        26 => {
-            wire__crate__api__calendar__get_period_by_date_impl(port, ptr, rust_vec_len, data_len)
-        }
-        27 => wire__crate__api__purchasing__get_purchase_bill_by_id_impl(
+        20 => wire__crate__api__zatca__generate_zatca_signed_xml_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        28 => {
-            wire__crate__api__reports__get_receivables_aging_impl(port, ptr, rust_vec_len, data_len)
+        21 => wire__crate__api__accounts__get_account_by_id_impl(port, ptr, rust_vec_len, data_len),
+        22 => {
+            wire__crate__api__reports__get_account_entries_impl(port, ptr, rust_vec_len, data_len)
         }
+        23 => wire__crate__api__ledger__get_agent_consensus_impl(port, ptr, rust_vec_len, data_len),
+        24 => wire__crate__api__assets__get_asset_by_id_impl(port, ptr, rust_vec_len, data_len),
+        25 => wire__crate__api__currency__get_exchange_rate_impl(port, ptr, rust_vec_len, data_len),
+        26 => wire__crate__api__sales__get_invoice_by_id_impl(port, ptr, rust_vec_len, data_len),
+        27 => wire__crate__api__inventory__get_item_by_id_impl(port, ptr, rust_vec_len, data_len),
+        28 => wire__crate__api__reports__get_payables_aging_impl(port, ptr, rust_vec_len, data_len),
         29 => {
-            wire__crate__api__standards__get_standard_info_impl(port, ptr, rust_vec_len, data_len)
+            wire__crate__api__calendar__get_period_by_date_impl(port, ptr, rust_vec_len, data_len)
         }
-        30 => wire__crate__api__inventory__get_valuation_report_impl(
+        30 => wire__crate__api__purchasing__get_purchase_bill_by_id_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
         31 => {
+            wire__crate__api__reports__get_receivables_aging_impl(port, ptr, rust_vec_len, data_len)
+        }
+        32 => {
+            wire__crate__api__standards__get_standard_info_impl(port, ptr, rust_vec_len, data_len)
+        }
+        33 => wire__crate__api__inventory__get_valuation_report_impl(
+            port,
+            ptr,
+            rust_vec_len,
+            data_len,
+        ),
+        34 => {
             wire__crate__api__purchasing__get_vendor_by_id_impl(port, ptr, rust_vec_len, data_len)
         }
-        32 => wire__crate__api__init_api_impl(port, ptr, rust_vec_len, data_len),
-        33 => wire__crate__api__accounts__list_accounts_impl(port, ptr, rust_vec_len, data_len),
-        34 => wire__crate__api__assets__list_assets_impl(port, ptr, rust_vec_len, data_len),
-        35 => wire__crate__api__ledger__list_audit_logs_impl(port, ptr, rust_vec_len, data_len),
-        36 => wire__crate__api__assets__list_categories_impl(port, ptr, rust_vec_len, data_len),
-        37 => wire__crate__api__sales__list_customers_impl(port, ptr, rust_vec_len, data_len),
-        38 => {
+        35 => wire__crate__api__init_api_impl(port, ptr, rust_vec_len, data_len),
+        36 => wire__crate__api__accounts__list_accounts_impl(port, ptr, rust_vec_len, data_len),
+        37 => wire__crate__api__assets__list_assets_impl(port, ptr, rust_vec_len, data_len),
+        38 => wire__crate__api__ledger__list_audit_logs_impl(port, ptr, rust_vec_len, data_len),
+        39 => wire__crate__api__assets__list_categories_impl(port, ptr, rust_vec_len, data_len),
+        40 => wire__crate__api__sales__list_customers_impl(port, ptr, rust_vec_len, data_len),
+        41 => {
             wire__crate__api__currency__list_exchange_rates_impl(port, ptr, rust_vec_len, data_len)
         }
-        39 => wire__crate__api__sales__list_invoices_impl(port, ptr, rust_vec_len, data_len),
-        40 => wire__crate__api__inventory__list_items_impl(port, ptr, rust_vec_len, data_len),
-        41 => {
+        42 => wire__crate__api__sales__list_invoices_impl(port, ptr, rust_vec_len, data_len),
+        43 => wire__crate__api__inventory__list_items_impl(port, ptr, rust_vec_len, data_len),
+        44 => {
             wire__crate__api__ledger__list_journal_entries_impl(port, ptr, rust_vec_len, data_len)
         }
-        42 => wire__crate__api__inventory__list_movements_impl(port, ptr, rust_vec_len, data_len),
-        43 => wire__crate__api__calendar__list_periods_impl(port, ptr, rust_vec_len, data_len),
-        44 => wire__crate__api__purchasing__list_purchase_bills_impl(
+        45 => wire__crate__api__inventory__list_movements_impl(port, ptr, rust_vec_len, data_len),
+        46 => wire__crate__api__calendar__list_periods_impl(port, ptr, rust_vec_len, data_len),
+        47 => wire__crate__api__purchasing__list_purchase_bills_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        45 => wire__crate__api__purchasing__list_vendors_impl(port, ptr, rust_vec_len, data_len),
-        46 => wire__crate__api__ledger__log_agent_consensus_impl(port, ptr, rust_vec_len, data_len),
-        47 => wire__crate__api__ledger__map_dto_to_entity_impl(port, ptr, rust_vec_len, data_len),
-        48 => {
+        48 => wire__crate__api__purchasing__list_vendors_impl(port, ptr, rust_vec_len, data_len),
+        49 => wire__crate__api__ledger__log_agent_consensus_impl(port, ptr, rust_vec_len, data_len),
+        50 => wire__crate__api__ledger__map_dto_to_entity_impl(port, ptr, rust_vec_len, data_len),
+        51 => {
             wire__crate__api__currency__perform_revaluation_impl(port, ptr, rust_vec_len, data_len)
         }
-        49 => wire__crate__api__sales__post_invoice_impl(port, ptr, rust_vec_len, data_len),
-        50 => wire__crate__api__ledger__post_journal_entry_impl(port, ptr, rust_vec_len, data_len),
-        51 => wire__crate__api__purchasing__record_bill_payment_impl(
+        52 => wire__crate__api__sales__post_invoice_impl(port, ptr, rust_vec_len, data_len),
+        53 => wire__crate__api__ledger__post_journal_entry_impl(port, ptr, rust_vec_len, data_len),
+        54 => wire__crate__api__purchasing__record_bill_payment_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        52 => {
+        55 => {
             wire__crate__api__sales__record_customer_payment_impl(port, ptr, rust_vec_len, data_len)
         }
-        53 => {
+        56 => {
             wire__crate__api__inventory__record_impairment_impl(port, ptr, rust_vec_len, data_len)
         }
-        54 => wire__crate__api__inventory__record_movement_impl(port, ptr, rust_vec_len, data_len),
-        55 => wire__crate__api__inventory__record_purchase_impl(port, ptr, rust_vec_len, data_len),
-        56 => wire__crate__api__inventory__record_sale_impl(port, ptr, rust_vec_len, data_len),
-        57 => wire__crate__api__assets__register_asset_impl(port, ptr, rust_vec_len, data_len),
-        58 => wire__crate__api__assets__register_category_impl(port, ptr, rust_vec_len, data_len),
-        59 => {
+        57 => wire__crate__api__inventory__record_movement_impl(port, ptr, rust_vec_len, data_len),
+        58 => wire__crate__api__inventory__record_purchase_impl(port, ptr, rust_vec_len, data_len),
+        59 => wire__crate__api__inventory__record_sale_impl(port, ptr, rust_vec_len, data_len),
+        60 => wire__crate__api__assets__register_asset_impl(port, ptr, rust_vec_len, data_len),
+        61 => wire__crate__api__assets__register_category_impl(port, ptr, rust_vec_len, data_len),
+        62 => {
             wire__crate__api__ledger__reverse_journal_entry_impl(port, ptr, rust_vec_len, data_len)
         }
-        60 => {
+        63 => {
             wire__crate__api__assets__run_depreciation_cycle_impl(port, ptr, rust_vec_len, data_len)
         }
-        61 => {
+        64 => {
             wire__crate__api__currency__save_exchange_rate_impl(port, ptr, rust_vec_len, data_len)
         }
-        62 => wire__crate__api__inventory__save_item_impl(port, ptr, rust_vec_len, data_len),
-        63 => wire__crate__api__calendar__save_period_impl(port, ptr, rust_vec_len, data_len),
-        65 => wire__crate__api__standards__search_standards_impl(port, ptr, rust_vec_len, data_len),
-        66 => wire__crate__api__accounts__update_account_impl(port, ptr, rust_vec_len, data_len),
-        67 => wire__crate__api__accounts__update_account_category_impl(
+        65 => wire__crate__api__inventory__save_item_impl(port, ptr, rust_vec_len, data_len),
+        66 => wire__crate__api__calendar__save_period_impl(port, ptr, rust_vec_len, data_len),
+        68 => wire__crate__api__standards__search_standards_impl(port, ptr, rust_vec_len, data_len),
+        69 => wire__crate__api__accounts__update_account_impl(port, ptr, rust_vec_len, data_len),
+        70 => wire__crate__api__accounts__update_account_category_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        68 => wire__crate__api__sales__update_customer_impl(port, ptr, rust_vec_len, data_len),
-        69 => wire__crate__api__purchasing__update_vendor_impl(port, ptr, rust_vec_len, data_len),
-        70 => {
+        71 => wire__crate__api__sales__update_customer_impl(port, ptr, rust_vec_len, data_len),
+        72 => wire__crate__api__purchasing__update_vendor_impl(port, ptr, rust_vec_len, data_len),
+        73 => {
             wire__crate__api__ledger__validate_journal_entry_impl(port, ptr, rust_vec_len, data_len)
         }
-        71 => wire__crate__api__inventory__verify_inventory_chain_impl(
+        74 => wire__crate__api__inventory__verify_inventory_chain_impl(
             port,
             ptr,
             rust_vec_len,
@@ -4219,7 +4448,7 @@ fn pde_ffi_dispatcher_sync_impl(
     // Codec=Pde (Serialization + dispatch), see doc to use other codecs
     match func_id {
         1 => wire__crate__api__check_health_impl(ptr, rust_vec_len, data_len),
-        64 => wire__crate__api__auditor__scan_sequence_impl(ptr, rust_vec_len, data_len),
+        67 => wire__crate__api__auditor__scan_sequence_impl(ptr, rust_vec_len, data_len),
         _ => unreachable!(),
     }
 }
@@ -5097,6 +5326,107 @@ impl flutter_rust_bridge::IntoIntoDart<crate::api::reports::ZakahCalendarDto>
         self
     }
 }
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::zatca::ZatcaCsrInputDto {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.common_name.into_into_dart().into_dart(),
+            self.organization_unit.into_into_dart().into_dart(),
+            self.organization.into_into_dart().into_dart(),
+            self.country.into_into_dart().into_dart(),
+            self.serial_number.into_into_dart().into_dart(),
+            self.vat_number.into_into_dart().into_dart(),
+            self.business_category.into_into_dart().into_dart(),
+            self.registered_address.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::zatca::ZatcaCsrInputDto
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::zatca::ZatcaCsrInputDto>
+    for crate::api::zatca::ZatcaCsrInputDto
+{
+    fn into_into_dart(self) -> crate::api::zatca::ZatcaCsrInputDto {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::zatca::ZatcaInvoiceInputDto {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.id.into_into_dart().into_dart(),
+            self.uuid.into_into_dart().into_dart(),
+            self.issue_date.into_into_dart().into_dart(),
+            self.issue_time.into_into_dart().into_dart(),
+            self.invoice_type_code.into_into_dart().into_dart(),
+            self.invoice_counter_value.into_into_dart().into_dart(),
+            self.previous_invoice_hash.into_into_dart().into_dart(),
+            self.seller_party.into_into_dart().into_dart(),
+            self.buyer_party.into_into_dart().into_dart(),
+            self.lines.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::zatca::ZatcaInvoiceInputDto
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::zatca::ZatcaInvoiceInputDto>
+    for crate::api::zatca::ZatcaInvoiceInputDto
+{
+    fn into_into_dart(self) -> crate::api::zatca::ZatcaInvoiceInputDto {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::zatca::ZatcaInvoiceLineDto {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.id.into_into_dart().into_dart(),
+            self.quantity.into_into_dart().into_dart(),
+            self.unit_price.into_into_dart().into_dart(),
+            self.tax_category.into_into_dart().into_dart(),
+            self.item_name.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::zatca::ZatcaInvoiceLineDto
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::zatca::ZatcaInvoiceLineDto>
+    for crate::api::zatca::ZatcaInvoiceLineDto
+{
+    fn into_into_dart(self) -> crate::api::zatca::ZatcaInvoiceLineDto {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::zatca::ZatcaPartyDto {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.party_id.into_into_dart().into_dart(),
+            self.party_id_scheme.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::zatca::ZatcaPartyDto
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::zatca::ZatcaPartyDto>
+    for crate::api::zatca::ZatcaPartyDto
+{
+    fn into_into_dart(self) -> crate::api::zatca::ZatcaPartyDto {
+        self
+    }
+}
 
 impl SseEncode for flutter_rust_bridge::for_generated::anyhow::Error {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -5669,6 +5999,16 @@ impl SseEncode for Vec<crate::api::purchasing::VendorDto> {
     }
 }
 
+impl SseEncode for Vec<crate::api::zatca::ZatcaInvoiceLineDto> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::api::zatca::ZatcaInvoiceLineDto>::sse_encode(item, serializer);
+        }
+    }
+}
+
 impl SseEncode for Option<std::collections::HashMap<String, String>> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -5890,6 +6230,13 @@ impl SseEncode for u32 {
     }
 }
 
+impl SseEncode for u64 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        serializer.cursor.write_u64::<NativeEndian>(self).unwrap();
+    }
+}
+
 impl SseEncode for u8 {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -5990,6 +6337,55 @@ impl SseEncode for crate::api::reports::ZakahCalendarDto {
             },
             serializer,
         );
+    }
+}
+
+impl SseEncode for crate::api::zatca::ZatcaCsrInputDto {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.common_name, serializer);
+        <String>::sse_encode(self.organization_unit, serializer);
+        <String>::sse_encode(self.organization, serializer);
+        <String>::sse_encode(self.country, serializer);
+        <String>::sse_encode(self.serial_number, serializer);
+        <String>::sse_encode(self.vat_number, serializer);
+        <String>::sse_encode(self.business_category, serializer);
+        <String>::sse_encode(self.registered_address, serializer);
+    }
+}
+
+impl SseEncode for crate::api::zatca::ZatcaInvoiceInputDto {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.id, serializer);
+        <String>::sse_encode(self.uuid, serializer);
+        <String>::sse_encode(self.issue_date, serializer);
+        <String>::sse_encode(self.issue_time, serializer);
+        <String>::sse_encode(self.invoice_type_code, serializer);
+        <u64>::sse_encode(self.invoice_counter_value, serializer);
+        <String>::sse_encode(self.previous_invoice_hash, serializer);
+        <crate::api::zatca::ZatcaPartyDto>::sse_encode(self.seller_party, serializer);
+        <crate::api::zatca::ZatcaPartyDto>::sse_encode(self.buyer_party, serializer);
+        <Vec<crate::api::zatca::ZatcaInvoiceLineDto>>::sse_encode(self.lines, serializer);
+    }
+}
+
+impl SseEncode for crate::api::zatca::ZatcaInvoiceLineDto {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.id, serializer);
+        <String>::sse_encode(self.quantity, serializer);
+        <String>::sse_encode(self.unit_price, serializer);
+        <String>::sse_encode(self.tax_category, serializer);
+        <String>::sse_encode(self.item_name, serializer);
+    }
+}
+
+impl SseEncode for crate::api::zatca::ZatcaPartyDto {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.party_id, serializer);
+        <String>::sse_encode(self.party_id_scheme, serializer);
     }
 }
 
