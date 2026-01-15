@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 
 /// شاشة تقرير الضريبة الذكي (Smart Tax Report)
 class SmartTaxReportScreen extends ConsumerWidget {
+  /// Standard constructor for the smart tax report screen.
   const SmartTaxReportScreen({super.key});
 
   @override
@@ -76,7 +77,7 @@ class SmartTaxReportScreen extends ConsumerWidget {
                         await ref
                             .read(reportPdfServiceProvider.notifier)
                             .shareVatReturnPdf(returnData);
-                      } catch (e) {
+                      } on Exception catch (e) {
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Error exporting PDF: $e')),
@@ -109,14 +110,18 @@ class SmartTaxReportScreen extends ConsumerWidget {
         leading: const Icon(Icons.calendar_today, size: 32),
         title: const Text('الفترة الضريبية'),
         subtitle: Text(
-          '${dateFormat.format(data.periodStart)}  إلى  ${dateFormat.format(data.periodEnd)}',
+          '${dateFormat.format(data.periodStart)}  إلى  '
+          '${dateFormat.format(data.periodEnd)}',
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
     );
   }
 
-  Widget _buildSummaryCard(BuildContext context, VatReturnStatement data) =>
+  Widget _buildSummaryCard(
+    BuildContext context,
+    VatReturnStatement data,
+  ) =>
       Card(
         color: Theme.of(context).colorScheme.primaryContainer,
         child: Padding(

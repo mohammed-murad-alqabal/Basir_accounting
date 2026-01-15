@@ -194,7 +194,9 @@ class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
       RadioListTile<String>(
         title: Text(title),
         value: value,
+        // ignore: deprecated_member_use
         groupValue: groupValue,
+        // ignore: deprecated_member_use
         onChanged: onChanged,
         activeColor: Theme.of(context).colorScheme.primary,
       );
@@ -229,7 +231,11 @@ class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
         ],
       );
 
-  Widget _buildCounter(String label, int value, ValueChanged<int> onChanged) =>
+  Widget _buildCounter(
+    String label,
+    int value,
+    ValueChanged<int> onChanged,
+  ) =>
       Padding(
         padding: const EdgeInsets.symmetric(vertical: Spacing.xs),
         child: Row(
