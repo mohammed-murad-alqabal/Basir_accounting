@@ -167,6 +167,7 @@ void main() {
           taxAmount: Decimal.fromInt(150),
           discountAmount: Decimal.zero,
           discountRate: Decimal.zero,
+          exchangeRate: Decimal.one,
           totalAmount: Decimal.fromInt(1150),
           paidAmount: Decimal.zero,
           taxRate: Decimal.parse('0.15'),
@@ -174,7 +175,6 @@ void main() {
           items: [
             InvoiceItem(
               taxRate: Decimal.parse('0.15'),
-              taxCategory: 'S',
               id: 'item-1',
               name: 'Service',
               quantity: Decimal.one,

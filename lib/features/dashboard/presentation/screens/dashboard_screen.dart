@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/extensions/invoice_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/glass_theme.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/core/utils/format_helpers.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/chart_of_accounts_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/financial_calculator_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entries_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/widgets/financial_summary_card.dart';
 import 'package:basir_accounting_system/features/analytics/domain/entities/analytics_event.dart';
@@ -15,6 +17,7 @@ import 'package:basir_accounting_system/features/dashboard/domain/entities/dashb
 import 'package:basir_accounting_system/features/dashboard/presentation/providers/dashboard_controller.dart';
 import 'package:basir_accounting_system/features/dashboard/presentation/widgets/dashboard_charts.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/screens/warehouse_transfer_screen.dart';
+import 'package:basir_accounting_system/features/onboarding/presentation/widgets/cognitive_overlay.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,28 +44,48 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final analytics = ref.read(analyticsServiceProvider);
       unawaited(analytics?.logEvent(AnalyticsEventType.sessionStart));
+
+      // Phase 9: Cognitive Guidance - Institutional Onboarding
+      // Skip cognitive overlay in test environment (GlassTheme not available)
+      if (mounted &&
+          Overlay.maybeOf(context) != null &&
+          Theme.of(context).extension<GlassTheme>() != null) {
+        showCognitiveHint(
+          context,
+          context.l10n.dashboardBasirSystemTitle,
+          title: context.l10n.dashboardWelcomeMessage,
+        );
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final dashboardAsync = ref.watch(dashboardControllerProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppSimpleAppBar(
-        title: context.l10n.dashboardTitle,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              unawaited(
-                ref.read(dashboardControllerProvider.notifier).refresh(),
-              );
-            },
+    return GlassScaffold(
+      title: context.l10n.dashboardTitle,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (context) => const FinancialCalculatorScreen(),
           ),
-        ],
+        ),
+        backgroundColor: theme.colorScheme.primary,
+        child: const Icon(Icons.calculate_outlined, color: Colors.white),
       ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.refresh),
+          onPressed: () {
+            unawaited(
+              ref.read(dashboardControllerProvider.notifier).refresh(),
+            );
+          },
+        ),
+      ],
       body: dashboardAsync.when(
         data: (data) => _buildContent(context, ref, data),
         loading: () => const _DashboardSkeleton(),
@@ -309,6 +332,39 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               ),
             ],
           ),
+        ),
+        const SizedBox(height: Spacing.md),
+        PermissionGuard(
+          permission: Permission.viewFinancials,
+          child: AppEnhancedButton(
+            label: context.l10n.titleTreasuryVault,
+            onPressed: () {
+              unawaited(
+                analytics?.logEvent(
+                  AnalyticsEventType.featureUsed,
+                  metadata: {'feature': 'treasury_vault'},
+                ),
+              );
+              unawaited(Navigator.of(context).pushNamed('/treasury-dashboard'));
+            },
+            icon: Icons.account_balance,
+            type: AppEnhancedButtonType.outlined,
+          ),
+        ),
+        const SizedBox(height: Spacing.md),
+        AppEnhancedButton(
+          label: context.l10n.labelReturnsAndDamages,
+          onPressed: () {
+            unawaited(
+              analytics?.logEvent(
+                AnalyticsEventType.featureUsed,
+                metadata: {'feature': 'returns_and_damages'},
+              ),
+            );
+            unawaited(Navigator.of(context).pushNamed('/returns-and-damages'));
+          },
+          icon: Icons.assignment_return_outlined,
+          type: AppEnhancedButtonType.secondary,
         ),
       ],
     );

@@ -76,91 +76,88 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
   Widget build(BuildContext context) {
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(Spacing.lg),
-          child: Column(
-            children: [
-              // رأس الشاشة
-              _buildHeader(),
-              const SizedBox(height: Spacing.xl),
+    return GlassScaffold(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(Spacing.lg),
+        child: Column(
+          children: [
+            // رأس الشاشة
+            _buildHeader(),
+            const SizedBox(height: Spacing.xl),
 
-              // نموذج الإعداد
-              Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // حقل اسم المستخدم
-                    AppTextField(
-                      label: context.l10n.labelUsername,
-                      hint: context.l10n.hintEnterUsername,
-                      controller: _usernameController,
-                      prefixIcon: Icon(appIcons.person, size: IconSizes.sm),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return context.l10n.errEmptyField;
-                        }
-                        if (value.length < 3) {
-                          return context.l10n.errUsernameShort;
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: Spacing.lg),
+            // نموذج الإعداد
+            Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // حقل اسم المستخدم
+                  AppTextField(
+                    label: context.l10n.labelUsername,
+                    hint: context.l10n.hintEnterUsername,
+                    controller: _usernameController,
+                    prefixIcon: Icon(appIcons.person, size: IconSizes.sm),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return context.l10n.errEmptyField;
+                      }
+                      if (value.length < 3) {
+                        return context.l10n.errUsernameShort;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: Spacing.lg),
 
-                    // حقل كلمة المرور
-                    AppTextField(
-                      label: context.l10n.labelPassword,
-                      hint: context.l10n.hintEnterPassword,
-                      controller: _passwordController,
-                      obscureText: true,
-                      prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return context.l10n.errEmptyField;
-                        }
-                        if (value.length < 6) {
-                          return context.l10n.errPasswordShort;
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: Spacing.lg),
+                  // حقل كلمة المرور
+                  AppTextField(
+                    label: context.l10n.labelPassword,
+                    hint: context.l10n.hintEnterPassword,
+                    controller: _passwordController,
+                    obscureText: true,
+                    prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return context.l10n.errEmptyField;
+                      }
+                      if (value.length < 6) {
+                        return context.l10n.errPasswordShort;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: Spacing.lg),
 
-                    // حقل تأكيد كلمة المرور
-                    AppTextField(
-                      label: context.l10n.labelConfirmPassword,
-                      hint: context.l10n.hintConfirmPassword,
-                      controller: _confirmPasswordController,
-                      obscureText: true,
-                      prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return context.l10n.errEmptyField;
-                        }
-                        if (value != _passwordController.text) {
-                          return context.l10n.errPasswordsDoNotMatch;
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: Spacing.xl),
+                  // حقل تأكيد كلمة المرور
+                  AppTextField(
+                    label: context.l10n.labelConfirmPassword,
+                    hint: context.l10n.hintConfirmPassword,
+                    controller: _confirmPasswordController,
+                    obscureText: true,
+                    prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return context.l10n.errEmptyField;
+                      }
+                      if (value != _passwordController.text) {
+                        return context.l10n.errPasswordsDoNotMatch;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: Spacing.xl),
 
-                    // زر الإنشاء
-                    AppEnhancedButton(
-                      label: context.l10n.btnCreateAccount,
-                      onPressed: _handleSetup,
-                      isLoading: _isLoading,
-                      icon: appIcons.userAdd,
-                    ),
-                  ],
-                ),
+                  // زر الإنشاء
+                  AppEnhancedButton(
+                    label: context.l10n.btnCreateAccount,
+                    onPressed: _handleSetup,
+                    isLoading: _isLoading,
+                    icon: appIcons.userAdd,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -25,6 +25,8 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
   late TextEditingController _nameEnController;
   late TextEditingController _emailController;
   late TextEditingController _phoneController;
+  late TextEditingController _vatController;
+  late TextEditingController _registrationController;
 
   @override
   void initState() {
@@ -37,6 +39,11 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
     );
     _emailController = TextEditingController(text: widget.vendor?.email ?? '');
     _phoneController = TextEditingController(text: widget.vendor?.phone ?? '');
+    _vatController =
+        TextEditingController(text: widget.vendor?.vatNumber ?? '');
+    _registrationController = TextEditingController(
+      text: widget.vendor?.registrationNumber ?? '',
+    );
   }
 
   @override
@@ -45,6 +52,8 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
     _nameEnController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
+    _vatController.dispose();
+    _registrationController.dispose();
     super.dispose();
   }
 
@@ -102,6 +111,26 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
               keyboardType: TextInputType.phone,
               prefixIcon: const Icon(Icons.phone),
             ),
+            const SizedBox(height: Spacing.md),
+
+            // الرقم الضريبي
+            AppTextField(
+              controller: _vatController,
+              label: context.l10n.labelVatNumber,
+              hint: '3xxxxxxxxxxxxxx',
+              keyboardType: TextInputType.number,
+              prefixIcon: const Icon(Icons.description),
+            ),
+            const SizedBox(height: Spacing.md),
+
+            // رقم السجل التجاري
+            AppTextField(
+              controller: _registrationController,
+              label: context.l10n.labelRegistrationNumber,
+              hint: '10xxxxxxxx',
+              keyboardType: TextInputType.number,
+              prefixIcon: const Icon(Icons.app_registration),
+            ),
             const SizedBox(height: Spacing.xl),
 
             // زر الحفظ
@@ -120,6 +149,8 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
           nameEn: _nameEnController.text,
           email: _emailController.text,
           phone: _phoneController.text,
+          vatNumber: _vatController.text,
+          registrationNumber: _registrationController.text,
           updatedAt: DateTime.now(),
         ) ??
         Vendor(
@@ -128,6 +159,8 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
           nameEn: _nameEnController.text,
           email: _emailController.text,
           phone: _phoneController.text,
+          vatNumber: _vatController.text,
+          registrationNumber: _registrationController.text,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         );

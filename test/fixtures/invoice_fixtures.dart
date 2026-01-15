@@ -22,8 +22,6 @@ class InvoiceFixtures {
     status: InvoiceStatus.draft,
     items: [
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-1',
         name: 'خدمة استشارية',
         quantity: Decimal.one,
@@ -42,6 +40,7 @@ class InvoiceFixtures {
     discountRate: Decimal.zero,
     createdAt: DateTime(2025, 11),
     updatedAt: DateTime(2025, 11),
+    exchangeRate: Decimal.one,
   );
 
   /// فاتورة 2: فاتورة مرسلة مع عدة بنود
@@ -55,8 +54,6 @@ class InvoiceFixtures {
     status: InvoiceStatus.sent,
     items: [
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-2-1',
         name: 'منتج أ',
         quantity: Decimal.parse('2'),
@@ -66,8 +63,6 @@ class InvoiceFixtures {
         taxRate: Decimal.parse('0.15'),
       ),
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-2-2',
         name: 'منتج ب',
         quantity: Decimal.parse('3'),
@@ -77,8 +72,6 @@ class InvoiceFixtures {
         taxRate: Decimal.parse('0.15'),
       ),
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-2-3',
         name: 'خدمة التوصيل',
         quantity: Decimal.one,
@@ -97,6 +90,7 @@ class InvoiceFixtures {
     discountRate: Decimal.zero,
     createdAt: DateTime(2025, 11, 5),
     updatedAt: DateTime(2025, 11, 5),
+    exchangeRate: Decimal.one,
   );
 
   /// فاتورة 3: فاتورة مدفوعة
@@ -110,8 +104,6 @@ class InvoiceFixtures {
     status: InvoiceStatus.paid,
     items: [
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-3',
         name: 'اشتراك شهري',
         quantity: Decimal.one,
@@ -130,6 +122,7 @@ class InvoiceFixtures {
     discountRate: Decimal.zero,
     createdAt: DateTime(2025, 10, 15),
     updatedAt: DateTime(2025, 11, 16),
+    exchangeRate: Decimal.one,
   );
 
   /// فاتورة 4: فاتورة متأخرة
@@ -143,8 +136,6 @@ class InvoiceFixtures {
     status: InvoiceStatus.overdue,
     items: [
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-4',
         name: 'خدمة صيانة',
         quantity: Decimal.one,
@@ -163,6 +154,7 @@ class InvoiceFixtures {
     discountRate: Decimal.zero,
     createdAt: DateTime(2025, 9),
     updatedAt: DateTime(2025, 10, 2),
+    exchangeRate: Decimal.one,
   );
 
   /// فاتورة 5: فاتورة ملغاة
@@ -176,8 +168,6 @@ class InvoiceFixtures {
     status: InvoiceStatus.cancelled,
     items: [
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-5',
         name: 'طلب ملغي',
         quantity: Decimal.one,
@@ -196,6 +186,7 @@ class InvoiceFixtures {
     discountRate: Decimal.zero,
     createdAt: DateTime(2025, 11, 10),
     updatedAt: DateTime(2025, 11, 11),
+    exchangeRate: Decimal.one,
   );
 
   /// فاتورة 6: فاتورة مع بنود متعددة
@@ -209,8 +200,6 @@ class InvoiceFixtures {
     status: InvoiceStatus.draft,
     items: [
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-6-1',
         name: 'منتج 1',
         quantity: Decimal.parse('5'),
@@ -220,8 +209,6 @@ class InvoiceFixtures {
         taxRate: Decimal.parse('0.15'),
       ),
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-6-2',
         name: 'منتج 2',
         quantity: Decimal.parse('3'),
@@ -231,8 +218,6 @@ class InvoiceFixtures {
         taxRate: Decimal.parse('0.15'),
       ),
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-6-3',
         name: 'منتج 3',
         quantity: Decimal.parse('2'),
@@ -242,8 +227,6 @@ class InvoiceFixtures {
         taxRate: Decimal.parse('0.15'),
       ),
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-6-4',
         name: 'منتج 4',
         quantity: Decimal.one,
@@ -253,8 +236,6 @@ class InvoiceFixtures {
         taxRate: Decimal.parse('0.15'),
       ),
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-6-5',
         name: 'منتج 5',
         quantity: Decimal.parse('4'),
@@ -264,8 +245,6 @@ class InvoiceFixtures {
         taxRate: Decimal.parse('0.15'),
       ),
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-6-6',
         name: 'خدمة التركيب',
         quantity: Decimal.one,
@@ -275,8 +254,6 @@ class InvoiceFixtures {
         taxRate: Decimal.parse('0.15'),
       ),
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-6-7',
         name: 'خدمة الضمان',
         quantity: Decimal.one,
@@ -295,6 +272,7 @@ class InvoiceFixtures {
     discountRate: Decimal.zero,
     createdAt: DateTime(2025, 11, 20),
     updatedAt: DateTime(2025, 11, 20),
+    exchangeRate: Decimal.one,
   );
 
   /// فاتورة 7: فاتورة بدون ضريبة
@@ -308,8 +286,6 @@ class InvoiceFixtures {
     status: InvoiceStatus.draft,
     items: [
       InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-7',
         name: 'خدمة معفاة من الضريبة',
         quantity: Decimal.one,
@@ -329,6 +305,7 @@ class InvoiceFixtures {
     discountRate: Decimal.zero,
     createdAt: DateTime(2025, 11, 25),
     updatedAt: DateTime(2025, 11, 25),
+    exchangeRate: Decimal.one,
   );
 
   /// قائمة جميع الفواتير
@@ -370,8 +347,6 @@ class InvoiceFixtures {
       status: status ?? InvoiceStatus.draft,
       items: [
         InvoiceItem(
-          taxRate: Decimal.parse('0.15'),
-          taxCategory: 'S',
           id: 'item-$index',
           name: 'منتج رقم $index',
           quantity: Decimal.one,
@@ -390,6 +365,7 @@ class InvoiceFixtures {
       discountRate: Decimal.zero,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
+      exchangeRate: Decimal.one,
     );
   }
 

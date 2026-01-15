@@ -1,4 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:flutter/widgets.dart';
@@ -6,8 +5,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'financial_strategy_service.g.dart';
 
-/// Financial Strategy Agent (Agent 5) for long-term planning and liquidity
-/// analysis.
+/// Financial Strategy Agent (Agent 5) for long-term planning
+/// and liquidity analysis.
 ///
 /// Responsible for assessing the strategic impact of transactions on
 /// cash flow, investment capacity, and overall financial health.
@@ -26,8 +25,9 @@ class FinancialStrategyService extends _$FinancialStrategyService
   /// Evaluates the strategic impact of the proposed transaction.
   ///
   /// ## Strategy Analysis:
-  /// 1. **Liquidity Impact**: Monitors Cash/Bank accounts (acc-11 branch) for
-  ///    significant outflows and warns if future obligations might be at risk.
+  /// 1. **Liquidity Impact**: Monitors Cash/Bank accounts (acc-11 branch)
+  ///    for significant outflows and warns if future obligations
+  ///    might be at risk.
   /// 2. **Profitability Trend**: Analyzes how sales or expense transactions
   ///    influence key metrics like ROA (Return on Assets).
   @override

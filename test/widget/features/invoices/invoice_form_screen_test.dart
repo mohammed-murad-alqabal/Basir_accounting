@@ -30,7 +30,6 @@ void main() {
               email: 'test@example.com',
               displayName: 'Test User',
               role: UserRole.admin,
-              
             ),
           ),
           customerRepositoryProvider.overrideWithValue(mockCustomerRepository),
@@ -100,7 +99,6 @@ void main() {
                   email: 'test@example.com',
                   displayName: 'Test User',
                   role: UserRole.admin,
-                  
                 ),
               ),
               calendarProvider.overrideWith(

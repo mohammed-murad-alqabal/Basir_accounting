@@ -64,6 +64,7 @@ void main() {
               : Decimal.zero,
           discountAmount: Decimal.zero,
           discountRate: Decimal.zero,
+          exchangeRate: Decimal.one,
         );
 
     Customer createTestCustomer(String id, String name, DateTime now) =>

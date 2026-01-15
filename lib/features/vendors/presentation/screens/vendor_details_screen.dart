@@ -108,6 +108,26 @@ class VendorDetailsScreen extends ConsumerWidget {
                     vendor.address!,
                   ),
                 ],
+                if (vendor.vatNumber != null &&
+                    vendor.vatNumber!.isNotEmpty) ...[
+                  const Divider(),
+                  _buildInfoRow(
+                    context,
+                    Icons.description,
+                    context.l10n.labelVatNumber,
+                    vendor.vatNumber!,
+                  ),
+                ],
+                if (vendor.registrationNumber != null &&
+                    vendor.registrationNumber!.isNotEmpty) ...[
+                  const Divider(),
+                  _buildInfoRow(
+                    context,
+                    Icons.app_registration,
+                    context.l10n.labelRegistrationNumber,
+                    vendor.registrationNumber!,
+                  ),
+                ],
               ],
             ),
           ),

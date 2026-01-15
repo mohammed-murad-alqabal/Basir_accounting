@@ -1,6 +1,10 @@
 import 'package:basir_accounting_system/core/theme/glass_theme.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/navigation/presentation/providers/omnibar_provider.dart';
 import 'package:basir_accounting_system/shared/widgets/glass_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Shows the Omnibar overlay.
 Future<T?> showOmnibar<T>(BuildContext context) => showGeneralDialog<T>(
@@ -24,14 +28,14 @@ Future<T?> showOmnibar<T>(BuildContext context) => showGeneralDialog<T>(
       ),
     );
 
-class Omnibar extends StatefulWidget {
+class Omnibar extends ConsumerStatefulWidget {
   const Omnibar({super.key});
 
   @override
-  State<Omnibar> createState() => _OmnibarState();
+  ConsumerState<Omnibar> createState() => _OmnibarState();
 }
 
-class _OmnibarState extends State<Omnibar> {
+class _OmnibarState extends ConsumerState<Omnibar> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   String _query = '';
@@ -57,6 +61,7 @@ class _OmnibarState extends State<Omnibar> {
     final glassTheme =
         Theme.of(context).extension<GlassTheme>() ?? GlassTheme.light();
     final size = MediaQuery.of(context).size;
+    final searchResults = ref.watch(omnibarSearchProvider(_query));
 
     return Center(
       child: Material(
@@ -75,11 +80,13 @@ class _OmnibarState extends State<Omnibar> {
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      Icon(Icons.search,
-                          color: glassTheme.glassColor == Colors.white
-                              ? Colors.grey[800]
-                              : Colors.white70,
-                          size: 28),
+                      Icon(
+                        Icons.search,
+                        color: glassTheme.glassColor == Colors.white
+                            ? Colors.grey[800]
+                            : Colors.white70,
+                        size: 28,
+                      ),
                       const SizedBox(width: 16),
                       Expanded(
                         child: TextField(
@@ -104,22 +111,29 @@ class _OmnibarState extends State<Omnibar> {
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           border: Border.all(
-                              color: Colors.grey.withValues(alpha: 0.5)),
+                            color: Colors.grey.withValues(alpha: 0.5),
+                          ),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text('ESC',
-                            style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.bold)),
+                        child: const Text(
+                          'ESC',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
                 const Divider(height: 1),
 
-                // Results Area (Mocked for UI visualization)
+                // Results Area
                 Flexible(
                   child: ListView(
                     shrinkWrap: true,
@@ -127,17 +141,45 @@ class _OmnibarState extends State<Omnibar> {
                     children: [
                       if (_query.isEmpty) ...[
                         _buildSectionHeader('Suggestions'),
-                        _buildActionItem(Icons.add, 'New Invoice',
-                            'Create a new sales invoice'),
-                        _buildActionItem(Icons.person_add, 'New Customer',
-                            'Register a new client'),
-                        _buildActionItem(Icons.inventory_2, 'Inventory Check',
-                            'View stock levels'),
+                        _buildActionItem(
+                          Icons.add,
+                          'New Invoice',
+                          'Create a new sales invoice',
+                          onTap: () =>
+                              Navigator.of(context).pushNamed('/invoice-form'),
+                        ),
+                        _buildActionItem(
+                          Icons.person_add,
+                          'New Customer',
+                          'Register a new client',
+                          onTap: () =>
+                              Navigator.of(context).pushNamed('/customer-form'),
+                        ),
+                        _buildActionItem(
+                          Icons.assignment_return_outlined,
+                          'Returns & Damages',
+                          'Process returns or damaged items',
+                          onTap: () => Navigator.of(context)
+                              .pushNamed('/returns-and-damages'),
+                        ),
                       ] else ...[
                         _buildSectionHeader('Results for "$_query"'),
-                        _buildActionItem(Icons.history, 'Invoice #1023',
-                            'Yesterday • Mohammad Alqabal'),
-                        // Dynamic results would go here
+                        ...searchResults.map(
+                          (result) => _buildActionItem(
+                            _getIconForResult(result.type),
+                            result.title,
+                            result.subtitle,
+                            onTap: () => _handleResult(result),
+                          ),
+                        ),
+                        if (searchResults.isEmpty)
+                          const Padding(
+                            padding: EdgeInsets.all(16),
+                            child: Text(
+                              'No results found',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                       ],
                     ],
                   ),
@@ -150,8 +192,10 @@ class _OmnibarState extends State<Omnibar> {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text('Basir "Diamond" Omnibar',
-                          style: TextStyle(fontSize: 10, color: Colors.grey)),
+                      Text(
+                        'Basir "Diamond" Omnibar',
+                        style: TextStyle(fontSize: 10, color: Colors.grey),
+                      ),
                     ],
                   ),
                 ),
@@ -161,6 +205,45 @@ class _OmnibarState extends State<Omnibar> {
         ),
       ),
     );
+  }
+
+  IconData _getIconForResult(OmnibarResultType type) {
+    switch (type) {
+      case OmnibarResultType.invoice:
+        return Icons.receipt_long;
+      case OmnibarResultType.customer:
+        return Icons.person;
+      case OmnibarResultType.item:
+        return Icons.inventory_2;
+      case OmnibarResultType.action:
+        return Icons.bolt;
+    }
+  }
+
+  void _handleResult(OmnibarResult result) {
+    Navigator.pop(context);
+    switch (result.type) {
+      case OmnibarResultType.invoice:
+        Navigator.of(context).pushNamed(
+          '/invoice-detail',
+          arguments: result.data as Invoice,
+        );
+      case OmnibarResultType.customer:
+        Navigator.of(context).pushNamed(
+          '/customer-detail',
+          arguments: result.data as Customer,
+        );
+      case OmnibarResultType.item:
+        // Navigate to item form in view/edit mode since detail screen doesn't exist yet
+        Navigator.of(context).pushNamed(
+          '/inventory-form',
+          arguments: result.data,
+        );
+      case OmnibarResultType.action:
+        if (result.data is String) {
+          Navigator.of(context).pushNamed(result.data as String);
+        }
+    }
   }
 
   Widget _buildSectionHeader(String title) => Padding(
@@ -176,7 +259,12 @@ class _OmnibarState extends State<Omnibar> {
         ),
       );
 
-  Widget _buildActionItem(IconData icon, String title, String subtitle) =>
+  Widget _buildActionItem(
+    IconData icon,
+    String title,
+    String subtitle, {
+    VoidCallback? onTap,
+  }) =>
       ListTile(
         leading: Icon(icon, size: 20),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
@@ -184,8 +272,10 @@ class _OmnibarState extends State<Omnibar> {
         hoverColor: Colors.black.withValues(alpha: 0.05),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         onTap: () {
-          // Handle action
-          Navigator.pop(context);
+          if (onTap != null) {
+            Navigator.pop(context);
+            onTap();
+          }
         },
       );
 }

@@ -18,9 +18,15 @@
   "sectionAgingAnalysis": "تحليل السداد وأعمار الديون",
   "receivablesAgingTitle": "أعمار العملاء",
   "payablesAgingTitle": "أعمار الموردين",
+  "labelGeneralLedger": "دفتر الأستاذ",
+  "labelPeriod": "الفترة",
+  "msgNoTransactionsFound": "لا توجد حركات",
   "msgExportComingSoon": "سيتم تفعيل التصدير قريباً",
   "labelTermsAndConditions": "الشروط والأحكام",
   "labelPaidDate": "تاريخ الدفع",
+  "calculatorTitle": "الحاسبة المالية",
+  "convertToCurrencies": "التحويل للعملات",
+  "clear": "مسح",
   "labelDiscountAmount": "قيمة الخصم",
   "labelZatcaQrCode": "رمز الاستجابة السريعة (زاتكا)",
   "labelZatcaUuid": "المعرف الفريد (UUID)",
@@ -43,12 +49,6 @@
   "labelInventoryValuation": "تقييم المخزون (IAS 2)",
   "aboutAppSubtitle": "الإصدار 1.0.0",
   "aboutAppTitle": "حول التطبيق",
-  "aboutDescription": "تطبيق بصير هو نظام متكامل لإدارة الفواتير والعملاء، مصمم خصيصاً للأعمال الصغيرة والمتوسطة.",
-  "aboutFeature1": "• إدارة الفواتير بسهولة",
-  "aboutFeature2": "• إدارة العملاء",
-  "aboutFeature3": "• تصدير الفواتير كـ PDF",
-  "aboutFeature4": "• تخزين آمن للبيانات",
-  "aboutFeature5": "• دعم كامل للغة العربية",
   "aboutFeaturesTitle": "الميزات الرئيسية:",
   "accountTitle": "الحساب",
   "actionAddCustomer": "إضافة عميل",
@@ -103,6 +103,28 @@
   "actionExportPdf": "تصدير PDF",
   "actionUpgradeAccount": "ترقية الحساب",
   "appColor": "لون التطبيق",
+  "taxConfigTitle": "الضريبة والفلترة الإلكترونية",
+  "zatcaPhase2Title": "الفوترة الإلكترونية (المرحلة الثانية - زاتكا)",
+  "zatcaPhase2Description": "تكوين الإعدادات الخاصة بك للامتثال للمرحلة الثانية من هيئة الزكاة والضريبة والجمارك السعودية.",
+  "enableTax": "تمكين الضريبة على الفواتير",
+  "priceIncludesTax": "السعر يشمل الضريبة افتراضياً",
+  "vatNumber": "الرقم الضريبي",
+  "defaultTaxRate": "قيمة الضريبة الافتراضية (%)",
+  "b2cSimplifiedLabel": "تسمية فاتورة B2C المبسطة",
+  "b2bStandardLabel": "تسمية فاتورة B2B القياسية",
+  "taxName": "اسم الضريبة",
+  "taxPercentage": "النسبة (%)",
+  "taxShow": "إظهار",
+  "taxDefault": "افتراضي",
+  "printSettingsTitle": "الطباعة والقوالب",
+  "printSettingsSubtitle": "إدارة تنسيقات الطباعة والقوالب الخاصة بك",
+  "templateSelection": "اختيار القالب",
+  "paperSize": "حجم الورق",
+  "fontSize": "حجم الخط",
+  "paddingBottom": "خطوط فارغة في النهاية",
+  "printCopies": "عدد النسخ",
+  "printItemUnit": "إظهار وحدة الصنف في الطباعة",
+  "saveSettings": "حفظ الإعدادات",
   "appCopyright": "© 2026 فريق وكلاء تطوير مشروع بصير",
   "appName": "بصير",
   "appTitle": "بصير",
@@ -136,13 +158,6 @@
   "customersScreenTitle": "العملاء",
   "customersSearchHint": "ابحث عن عميل...",
   "customersTitle": "العملاء",
-  "dashboardBasirSystemTitle": "نظام بصير المحاسبي",
-  "dashboardMotto": "دقة وموثوقية في كل معاملة",
-  "dashboardQuickActionsTitle": "الإجراءات المالية السريعة",
-  "dashboardRecentActivityTitle": "سجل العمليات الأحدث",
-  "dashboardStatsTitle": "تحليلات الأداء المالي",
-  "dashboardTitle": "لوحة التحكم",
-  "dashboardWelcomeMessage": "مرحباً بك في بصير",
   "dialogAddItemTitle": "إضافة بند",
   "dialogCancel": "إلغاء",
   "dialogOk": "حسناً",
@@ -210,6 +225,7 @@
   "iconMaterial": "Material Design",
   "iconSettingsTitle": "نمط الأيقونات",
   "invoiceFormTitleAdd": "إضافة فاتورة جديدة",
+  "invoiceFormTitleAddPurchase": "إضافة فاتورة مشتريات",
   "invoiceFormTitleEdit": "تعديل الفاتورة",
   "invoiceTitle": "فاتورة رقم {id}",
   "invoicesTitle": "الفواتير",
@@ -275,6 +291,13 @@
   "msgAccountCreated": "تم إنشاء الحساب بنجاح",
   "msgAccountUpdated": "تم تحديث بيانات الحساب بنجاح",
   "msgConfirmDeleteCustomer": "هل أنت متأكد من حذف العميل {name}؟",
+  "@msgConfirmDeleteCustomer": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "msgConfirmDeleteInvoice": "هل أنت متأكد من حذف هذه الفاتورة؟",
   "msgConfirmLogout": "هل أنت متأكد من رغبتك في تسجيل الخروج؟",
   "msgCustomerAdded": "تم إضافة العميل بنجاح",
@@ -476,6 +499,17 @@
   "labelDescription": "الوصف",
   "errorExportingReport": "خطأ أثناء تصدير التقرير",
   "labelExchangeRate": "سعر الصرف",
+  "labelBaseCurrencyEquivalent": "المقابل بالعملة الأساسية",
+  "titleTreasuryVault": "الخزنة (إدارة النقد)",
+  "labelTotalLiquidity": "إجمالي السيولة",
+  "labelAvailableCashBank": "إجمالي النقد والبنوك المتاح",
+  "labelAccounts": "الحسابات",
+  "labelForecast30Days": "نظرة مستقبلية (30 يوم)",
+  "labelExpectedInflow": "التدفق الداخل المتوقع",
+  "labelExpectedOutflow": "التدفق الخارج المتوقع",
+  "labelNetChange": "التغير الصافي",
+  "msgNoCashAccounts": "لا توجد حسابات نقدية",
+  "msgInitCoa": "قم بتهيئة دليل الحسابات أو أضف حسابات نقدية.",
   "labelAmount": "المبلغ",
   "labelDate": "التاريخ",
   "labelType": "النوع",
@@ -500,38 +534,189 @@
   "receiptFooterThanks": "شكراً لزيارتكم",
   "receiptFooterBrand": "بصير - Basir Accounting",
   "labelDiscount": "الخصم",
-  "errPermissionDenied": "ليس لديك صلاحية للقيام بهذا الإجراء",
   "labelItemName": "اسم الصنف",
   "labelIssuedDate": "تاريخ الإصدار",
   "msgInvoiceReversed": "تم عكس الفاتورة بنجاح",
   "agentRationaleStandardsPassed": "تحقق الامتثال: القيد يوافق معايير (IFRS/SOCPA).",
   "agentRationaleStandardsManualReview": "تنبيه: نوع العملية ({type}) يتطلب مراجعة بشرية للتحقق من الامتثال.",
+  "@agentRationaleStandardsManualReview": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleTaxNoId": "تنبيه: لم يتم تقديم رقم ضريبي لهذه العملية.",
   "agentRationaleTaxZatcaReject": "رفض: العمليات التي تتجاوز 10,000 ريال تتطلب رقماً ضريبياً صالحاً للامتثال للمرحلة الثانية من (ZATCA).",
   "agentRationaleTaxValidated": "تم التحقق من الرقم الضريبي: {id}",
+  "@agentRationaleTaxValidated": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleTaxAnalyzing": "تحليل الضريبة لحساب {account}",
+  "@agentRationaleTaxAnalyzing": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleTaxRateMismatch": "تنبيه: معدل الضريبة المحسوب ({rate}) يختلف عن المعدل الإقليمي الافتراضي (15%).",
+  "@agentRationaleTaxRateMismatch": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleTaxRateMatch": "تأكيد: معدل الضريبة (15%) يطابق المتطلبات التنظيمية المحلية.",
   "agentRationaleTaxNoVatWarning": "تنبيه: تم رصد عملية تجارية بدون بنود ضريبة القيمة المضافة.",
   "agentRationaleForensicBalanced": "فحص ناجح: القيد المحاسبي متزن.",
   "agentRationaleForensicUnbalanced": "رفض: القيد المحاسبي المقترح غير متزن.",
   "agentRationaleForensicHighValue": "تنبيه: تم رصد مبلغ عملية مرتفع بشكل غير معتاد ({amount}). نوصي بالمراجعة الإدارية.",
+  "@agentRationaleForensicHighValue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleForensicDuplicate": "رفض: تم رصد رقم مرجع مكرر ({ref}) في السجلات السابقة.",
+  "@agentRationaleForensicDuplicate": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleOperationalSufficient": "تحليل النقدية: رصيد {account} كافٍ ({balance}) للعملية.",
+  "@agentRationaleOperationalSufficient": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      },
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleOperationalInsufficient": "رفض: رصيد {account} غير كافٍ ({balance}) لهذه العملية.",
+  "@agentRationaleOperationalInsufficient": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      },
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleStrategyOutflow": "تحليل استراتيجي: يمثل هذا القيد تدفقاً نقدياً خارجاً بقيمة {amount}.",
+  "@agentRationaleStrategyOutflow": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleStrategyRecommendation": "توصية: راجع توقعات التدفق النقدي للأسبوع القادم لضمان السيولة الكافية للالتزامات الأخرى.",
   "agentRationaleStrategyInflow": "تحليل استراتيجي: تعزيز السيولة بقيمة {amount} يدعم القدرة الاستثمارية قصيرة الأجل.",
+  "@agentRationaleStrategyInflow": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleStrategyProfitability": "رؤية استراتيجية: زيادة حجم المبيعات تؤثر إيجابياً على العائد على الأصول (ROA) وأهداف الهامش الصافي.",
   "agentRationaleSustainabilityFlagged": "تحليل ISSB: تم وضع علامة على هذه المعاملة للإفصاح البيئي/الاجتماعي الإلزامي.",
   "agentRationaleSustainabilityReject": "رفض حرج: تتطلب معايير ISSB S2 مقاييس البصمة الكربونية لهذه المعاملة الخاصة بالصناعة.",
   "agentRationaleSustainabilitySuccess": "تم بنجاح دمج {count} من مقاييس الاستدامة المتوافقة.",
+  "@agentRationaleSustainabilitySuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "agentRationaleSustainabilityNotRequired": "تقييم الاستدامة: لا توجد إفصاحات محددة من ISSB مطلوبة لهذه الفئة من العمليات.",
   "agentRationaleForensicTimeAnomaly": "تحذير: تم تسجيل العملية في ساعات غير قياسية ({time}). تم تطبيق وزن تدقيق جنائي أعلى.",
+  "@agentRationaleForensicTimeAnomaly": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleForensicSequenceGap": "ملاحظة: تم اكتشاف فجوة في تسلسل المراجع. الأخير: {last}، الحالي: {current}.",
+  "@agentRationaleForensicSequenceGap": {
+    "placeholders": {
+      "last": {
+        "type": "String"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleForensicZatcaIdentityMissing": "ملاحظة: الهوية التشفيرية لـ ZATCA (UUID/Hash) مفقودة لهذه الفاتورة.",
   "auditTrailTitle": "سجل المراجعة",
   "auditTrailSubtitle": "سجلات النظام الداخلية وتجاوزات الإجماع",
   "auditTrailSectionForensic": "سجلات النزاهة الجنائية",
-  "auditTrailNoLogs": "لم يتم العثور على سجلات مراجعة للفترة المختارة."
+  "auditTrailNoLogs": "لم يتم العثور على سجلات مراجعة للفترة المختارة.",
+  "msgInvoiceCognitiveHint": "استخدم هذه الشاشة لإنشاء أو تعديل الفواتير. تأكد من الدقة المتناهية في معدلات الضرائب واختيار العناصر.",
+  "titleInvoiceCognitiveHint": "إتقان الفواتير",
+  "labelReturnsAndDamages": "المرتجعات والتوالف",
+  "labelSalesReturn": "مرتجع مبيعات",
+  "descSalesReturn": "إرجاع أصناف مباعة إلى المخزون",
+  "labelPurchaseReturn": "مرتجع مشتريات",
+  "descPurchaseReturn": "إرجاع أصناف مشتراة للمورد",
+  "labelDamageInvoice": "فاتورة تالف",
+  "descDamageInvoice": "تسجيل أصناف تالفة أو مفقودة",
+  "dashboardBasirSystemTitle": "نظام بصير المحاسبي",
+  "forgotPassword": "نسيت كلمة المرور",
+  "dashboardTitle": "لوحة التحكم",
+  "dashboardStatsTitle": "الإحصائيات",
+  "dashboardQuickActionsTitle": "الإجراءات السريعة",
+  "dashboardRecentActivityTitle": "النشاط الأخير",
+  "dashboardMotto": "المحاسبة الاحترافية بكل بساطة",
+  "saveLabels": "حفظ التسميات",
+  "errInvalidResetLink": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية",
+  "errInvalidResetToken": "رمز إعادة التعيين غير صالح أو منتهي الصلاحية",
+  "msgPasswordResetSuccess": "تم إعادة تعيين كلمة المرور بنجاح",
+  "errPasswordResetFailed": "فشل في إعادة تعيين كلمة المرور",
+  "errPasswordRequired": "كلمة المرور مطلوبة",
+  "errPasswordTooShort": "كلمة المرور قصيرة جداً",
+  "errPasswordNeedsUppercase": "كلمة المرور تحتاج حرف كبير",
+  "errPasswordNeedsLowercase": "كلمة المرور تحتاج حرف صغير",
+  "errPasswordNeedsNumber": "كلمة المرور تحتاج رقم",
+  "errConfirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
+  "resetPasswordTitle": "إعادة تعيين كلمة المرور",
+  "resetPasswordSubtitle": "أدخل كلمة المرور الجديدة لـ {email}",
+  "@resetPasswordSubtitle": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "newPassword": "كلمة المرور الجديدة",
+  "passwordHint": "أدخل كلمة المرور الجديدة",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "confirmPasswordHint": "أعد إدخال كلمة المرور",
+  "passwordRequirements": "متطلبات كلمة المرور:",
+  "passwordRequirementsList": "• 8 أحرف على الأقل\n• حرف كبير واحد\n• حرف صغير واحد\n• رقم واحد",
+  "resetPassword": "إعادة تعيين كلمة المرور",
+  "backToLogin": "العودة لتسجيل الدخول",
+  "labelVatNumber": "الرقم الضريبي",
+  "labelRegistrationNumber": "رقم السجل التجاري",
+  "labelTotalPayables": "إجمالي الالتزامات للموردين",
+  "msgValueCopiedToClipboard": "تم نسخ القيمة إلى الحافظة",
+  "labelSourceDocument": "المستند المصدر",
+  "btnViewSource": "عرض المصدر",
+  "msgLoadingSource": "جاري تحميل المستند المصدر...",
+  "errSourceNotFound": "المستند المصدر غير موجود"
 }

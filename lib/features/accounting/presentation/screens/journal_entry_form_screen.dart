@@ -115,12 +115,10 @@ class _JournalEntryFormScreenState
   Widget build(BuildContext context) {
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: widget.entry == null
-            ? context.l10n.journalEntryFormTitleAdd
-            : context.l10n.journalEntryFormTitleEdit,
-      ),
+    return GlassScaffold(
+      title: widget.entry == null
+          ? context.l10n.journalEntryFormTitleAdd
+          : context.l10n.journalEntryFormTitleEdit,
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -168,7 +166,7 @@ class _JournalEntryFormScreenState
   }
 
   /// Builds the metadata header (Date, Description, Standards).
-  Widget _buildHeader(AppIcons appIcons) => AppCard(
+  Widget _buildHeader(AppIcons appIcons) => GlassCard(
         child: Column(
           children: [
             Row(
@@ -269,7 +267,7 @@ class _JournalEntryFormScreenState
   /// Renders a single journal line editor with account and currency support.
   Widget _buildLineItem(int index, AppIcons appIcons) {
     final line = _lines[index];
-    return AppCard(
+    return GlassCard(
       margin: const EdgeInsets.only(bottom: Spacing.sm),
       padding: const EdgeInsets.all(Spacing.sm),
       child: Column(
@@ -415,10 +413,7 @@ class _JournalEntryFormScreenState
   }
 
   /// Displays the mathematical summary and balance validation.
-  Widget _buildSummary() => AppCard(
-        backgroundColor: _isBalanced
-            ? AppColors.primary.withValues(alpha: 0.05)
-            : AppColors.error.withValues(alpha: 0.05),
+  Widget _buildSummary() => GlassCard(
         child: Column(
           children: [
             _buildSummaryRow(context.l10n.labelDebit, _totalDebit),

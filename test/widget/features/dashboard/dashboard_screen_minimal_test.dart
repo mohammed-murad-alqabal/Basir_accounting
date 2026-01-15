@@ -202,7 +202,6 @@ void main() {
           items: [
             InvoiceItem(
               taxRate: Decimal.parse('0.15'),
-              taxCategory: 'S',
               id: 'i1',
               name: 'Test Item',
               quantity: Decimal.one,
@@ -223,6 +222,7 @@ void main() {
           paidAmount: Decimal.fromInt(1500),
           discountAmount: Decimal.zero,
           discountRate: Decimal.zero,
+          exchangeRate: Decimal.one,
         ),
         Invoice(
           id: '#002',
@@ -232,7 +232,6 @@ void main() {
           items: [
             InvoiceItem(
               taxRate: Decimal.parse('0.15'),
-              taxCategory: 'S',
               id: 'i2',
               name: 'Test Item 2',
               quantity: Decimal.one,
@@ -253,6 +252,7 @@ void main() {
           paidAmount: Decimal.zero,
           discountAmount: Decimal.zero,
           discountRate: Decimal.zero,
+          exchangeRate: Decimal.one,
         ),
       ];
 

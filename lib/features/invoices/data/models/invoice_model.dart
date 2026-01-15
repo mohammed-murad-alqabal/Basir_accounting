@@ -1,6 +1,7 @@
 import 'package:basir_accounting_system/core/models/sync_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
 import 'package:decimal/decimal.dart';
 import 'package:isar/isar.dart';
 
@@ -112,6 +113,8 @@ class InvoiceModel {
     ..warehouseId = invoice.warehouseId
     ..syncStatus = invoice.syncStatus
     ..serverUpdatedAt = invoice.serverUpdatedAt
+    ..exchangeRate = invoice.exchangeRate.toDouble()
+    ..type = invoice.type
     ..isDeleted = invoice.isDeleted;
 
   /// Isar primary key.
@@ -179,6 +182,13 @@ class InvoiceModel {
 
   /// Institutional currency.
   late String currency;
+
+  /// Exchange rate to base currency.
+  late double exchangeRate;
+
+  /// Transaction type.
+  @Enumerated(EnumType.name)
+  late InvoiceType type;
 
   /// Institutional notes.
   String? notes;
@@ -255,6 +265,8 @@ class InvoiceModel {
         warehouseId: warehouseId,
         syncStatus: syncStatus,
         serverUpdatedAt: serverUpdatedAt,
+        exchangeRate: Decimal.parse(exchangeRate.toString()),
+        type: type,
         isDeleted: isDeleted,
       );
 }

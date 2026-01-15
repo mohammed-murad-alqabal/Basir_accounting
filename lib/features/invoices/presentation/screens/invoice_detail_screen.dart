@@ -12,6 +12,7 @@ import 'package:basir_accounting_system/features/invoices/presentation/screens/i
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Invoice Detail Screen displaying ZATCA-compliant QR and metadata.
@@ -123,6 +124,30 @@ class InvoiceDetailScreen extends ConsumerWidget {
                 ),
             ],
           ),
+          if (invoice.currency != 'SAR') ...[
+            const SizedBox(height: Spacing.md),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  ctx.l10n.labelBaseCurrencyEquivalent,
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    fontWeight: FontWeights.medium,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+                Text(
+                  FormatHelpers.formatCurrency(
+                    invoice.totalAmountBaseCurrency,
+                  ),
+                  style: AppTextStyles.titleMedium.copyWith(
+                    fontWeight: FontWeights.bold,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );
@@ -159,63 +184,174 @@ class InvoiceDetailScreen extends ConsumerWidget {
     BuildContext ctx,
     AppIcons icons,
     CalendarType cal,
-  ) =>
-      Row(
+  ) {
+    if (invoice.currency != 'SAR') {
+      return Column(
         children: [
-          Expanded(
-            child: AppCard(
-              padding: Spacing.paddingSm,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    ctx.l10n.labelIssuedDate,
-                    style: AppTextStyles.labelSmall,
+          Row(
+            children: [
+              Expanded(
+                child: AppCard(
+                  padding: Spacing.paddingSm,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        ctx.l10n.labelIssuedDate,
+                        style: AppTextStyles.labelSmall,
+                      ),
+                      const SizedBox(height: Spacing.xs),
+                      Text(
+                        FormatHelpers.formatDate(
+                          invoice.issuedDate,
+                          locale: ctx.l10n.localeName,
+                          calendarType: cal,
+                        ),
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          fontWeight: FontWeights.medium,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: Spacing.xs),
-                  Text(
-                    FormatHelpers.formatDate(
-                      invoice.issuedDate,
-                      locale: ctx.l10n.localeName,
-                      calendarType: cal,
-                    ),
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      fontWeight: FontWeights.medium,
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+              const SizedBox(width: Spacing.md),
+              Expanded(
+                child: AppCard(
+                  padding: Spacing.paddingSm,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        ctx.l10n.labelDueDate,
+                        style: AppTextStyles.labelSmall,
+                      ),
+                      const SizedBox(height: Spacing.xs),
+                      Text(
+                        FormatHelpers.formatDate(
+                          invoice.dueDate,
+                          locale: ctx.l10n.localeName,
+                          calendarType: cal,
+                        ),
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          fontWeight: FontWeights.medium,
+                          color: invoice.isOverdue ? AppColors.error : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: Spacing.md),
-          Expanded(
-            child: AppCard(
-              padding: Spacing.paddingSm,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    ctx.l10n.labelDueDate,
-                    style: AppTextStyles.labelSmall,
+          const SizedBox(height: Spacing.md),
+          Row(
+            children: [
+              Expanded(
+                child: AppCard(
+                  padding: Spacing.paddingSm,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        ctx.l10n.labelCurrency,
+                        style: AppTextStyles.labelSmall,
+                      ),
+                      const SizedBox(height: Spacing.xs),
+                      Text(
+                        invoice.currency,
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          fontWeight: FontWeights.medium,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: Spacing.xs),
-                  Text(
-                    FormatHelpers.formatDate(
-                      invoice.dueDate,
-                      locale: ctx.l10n.localeName,
-                      calendarType: cal,
-                    ),
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      fontWeight: FontWeights.medium,
-                      color: invoice.isOverdue ? AppColors.error : null,
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+              const SizedBox(width: Spacing.md),
+              Expanded(
+                child: AppCard(
+                  padding: Spacing.paddingSm,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        ctx.l10n.labelExchangeRate,
+                        style: AppTextStyles.labelSmall,
+                      ),
+                      const SizedBox(height: Spacing.xs),
+                      Text(
+                        FormatHelpers.formatNumber(invoice.exchangeRate),
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          fontWeight: FontWeights.medium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       );
+    }
+    return Row(
+      children: [
+        Expanded(
+          child: AppCard(
+            padding: Spacing.paddingSm,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  ctx.l10n.labelIssuedDate,
+                  style: AppTextStyles.labelSmall,
+                ),
+                const SizedBox(height: Spacing.xs),
+                Text(
+                  FormatHelpers.formatDate(
+                    invoice.issuedDate,
+                    locale: ctx.l10n.localeName,
+                    calendarType: cal,
+                  ),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    fontWeight: FontWeights.medium,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: Spacing.md),
+        Expanded(
+          child: AppCard(
+            padding: Spacing.paddingSm,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  ctx.l10n.labelDueDate,
+                  style: AppTextStyles.labelSmall,
+                ),
+                const SizedBox(height: Spacing.xs),
+                Text(
+                  FormatHelpers.formatDate(
+                    invoice.dueDate,
+                    locale: ctx.l10n.localeName,
+                    calendarType: cal,
+                  ),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    fontWeight: FontWeights.medium,
+                    color: invoice.isOverdue ? AppColors.error : null,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   Widget _buildItemsCard(BuildContext ctx) => AppCard(
         child: Column(
@@ -308,6 +444,30 @@ class InvoiceDetailScreen extends ConsumerWidget {
                 ),
               ],
             ),
+            if (invoice.currency != 'SAR') ...[
+              const SizedBox(height: Spacing.md),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    ctx.l10n.labelBaseCurrencyEquivalent,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      fontWeight: FontWeights.medium,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                  Text(
+                    FormatHelpers.formatCurrency(
+                      invoice.totalAmountBaseCurrency,
+                    ),
+                    style: AppTextStyles.titleMedium.copyWith(
+                      fontWeight: FontWeights.bold,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ],
         ),
       );
@@ -407,8 +567,16 @@ class InvoiceDetailScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 4),
             InkWell(
-              onLongPress: () {
-                // TODO(zatca): Logic for copy to clipboard if needed
+              onTap: () async {
+                await Clipboard.setData(ClipboardData(text: value));
+                if (ctx.mounted) {
+                  ScaffoldMessenger.of(ctx).showSnackBar(
+                    SnackBar(
+                      content: Text(ctx.l10n.msgValueCopiedToClipboard),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                }
               },
               child: Text(
                 value,

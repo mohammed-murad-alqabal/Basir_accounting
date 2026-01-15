@@ -29,7 +29,7 @@ final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
     if (invoice.status == InvoiceStatus.sent ||
         invoice.status == InvoiceStatus.paid) {
       final accountingService = ref.read(accountingServiceProvider.notifier);
-      await accountingService.postSalesInvoice(invoice);
+      await accountingService.postInvoice(invoice);
     }
     ref.invalidate(invoicesProvider);
     return true;
@@ -57,7 +57,7 @@ final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
     if (invoice.status == InvoiceStatus.sent ||
         invoice.status == InvoiceStatus.paid) {
       final accountingService = ref.read(accountingServiceProvider.notifier);
-      await accountingService.postSalesInvoice(invoice);
+      await accountingService.postInvoice(invoice);
     }
     ref.invalidate(invoicesProvider);
     return true;
@@ -149,7 +149,7 @@ final totalSalesProvider = Provider<AsyncValue<Decimal>>((ref) {
   return invoicesAsync.whenData(
     (invoices) => invoices.fold<Decimal>(
       Decimal.zero,
-      (sum, invoice) => sum + invoice.totalAmount,
+      (sum, invoice) => sum + invoice.totalAmountBaseCurrency,
     ),
   );
 });
@@ -237,7 +237,7 @@ final invoiceStatisticsProvider = Provider<AsyncValue<InvoiceStatistics>>((
           .length, // ignore: lines_longer_than_80_chars
       totalAmount: invoices.fold<Decimal>(
         Decimal.zero,
-        (sum, i) => sum + i.totalAmount,
+        (sum, i) => sum + i.totalAmountBaseCurrency,
       ),
     ),
   );
@@ -277,7 +277,7 @@ final markInvoiceAsPaidProvider = FutureProvider.family<bool, String>((
 
     // ترحيل القيد المحاسبي تلقائياً عند الدفع (إذا لم يرحل عند الإرسال)
     final accountingService = ref.read(accountingServiceProvider.notifier);
-    await accountingService.postSalesInvoice(updatedInvoice);
+    await accountingService.postInvoice(updatedInvoice);
 
     ref.invalidate(invoicesProvider);
     return true;
@@ -308,7 +308,7 @@ final sendInvoiceProvider = FutureProvider.family<bool, String>((
 
     // ترحيل القيد المحاسبي عند الانتقال لحالة 'مرسلة'
     final accountingService = ref.read(accountingServiceProvider.notifier);
-    await accountingService.postSalesInvoice(updatedInvoice);
+    await accountingService.postInvoice(updatedInvoice);
 
     ref.invalidate(invoicesProvider);
     return true;

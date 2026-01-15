@@ -26,7 +26,6 @@ void main() {
               email: 'test@example.com',
               displayName: 'Test User',
               role: UserRole.admin,
-              
             ),
           ),
           companySettingsProvider.overrideWith(
