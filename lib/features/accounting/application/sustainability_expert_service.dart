@@ -11,8 +11,7 @@ part 'sustainability_expert_service.g.dart';
 /// or social disclosures comply with International Sustainability Standards
 /// Board (ISSB) S1 and S2 mandates.
 @Riverpod(keepAlive: true)
-class SustainabilityExpertService extends _$SustainabilityExpertService
-    implements AccountingAgent {
+class SustainabilityExpertService extends _$SustainabilityExpertService implements AccountingAgent {
   @override
   FutureOr<void> build() {}
 
@@ -36,7 +35,8 @@ class SustainabilityExpertService extends _$SustainabilityExpertService
       Locale(context.locale),
     );
 
-    // Active Detection Logic: Check if account names trigger sustainability review
+    // Active Detection Logic: Check if account names trigger
+    // sustainability review
     final sustainabilityKeywords = [
       'Fuel',
       'Electricity',
@@ -67,8 +67,7 @@ class SustainabilityExpertService extends _$SustainabilityExpertService
       }
       rationale.add(l10n.agentRationaleSustainabilityFlagged);
 
-      if (context.sustainabilityMetrics == null ||
-          context.sustainabilityMetrics!.isEmpty) {
+      if (context.sustainabilityMetrics == null || context.sustainabilityMetrics!.isEmpty) {
         isAllowed = false;
         rationale.add(l10n.agentRationaleSustainabilityReject);
       } else {

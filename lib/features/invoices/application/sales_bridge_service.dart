@@ -24,7 +24,8 @@ class SalesBridgeService {
   /// Synchronizes an invoice with the Rust core and performs ZATCA
   /// compliance steps.
   Future<domain_inv.Invoice> finalizeInvoiceWithZatca(
-      domain_inv.Invoice invoice) async {
+    domain_inv.Invoice invoice,
+  ) async {
     final user = ref.read(basirUserProvider);
 
     // Dynamic metadata retrieval
@@ -75,7 +76,7 @@ class SalesBridgeService {
 
     final lines = invoice.items
         .map(
-          (domain_inv.InvoiceItem item) => rust_sales.SalesInvoiceLineDto(
+          (item) => rust_sales.SalesInvoiceLineDto(
             productId: item.id,
             description: item.name,
             quantity: item.quantity.toString(),
@@ -88,7 +89,10 @@ class SalesBridgeService {
 
     // 1. Create/Update in Rust core
     await rust_sales.createInvoice(
-        invoice: salesDto, lines: lines, metadata: metadata);
+      invoice: salesDto,
+      lines: lines,
+      metadata: metadata,
+    );
 
     // 2. Post and perform ZATCA compliance checks
     if (invoice.status != InvoiceStatus.draft) {

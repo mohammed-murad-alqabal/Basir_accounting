@@ -35,27 +35,23 @@ The specs directory has been successfully cleaned and organized.
 1. `ui-ux-improvements/` - UI/UX enhancements (In Progress)
 2. `widget-tests-phase3/` - Current testing work (In Progress)
 
-### **archived/** - Archived Specs (36)
+### **archived/** - Archived Specs (36+)
 
 **Organized by category:**
 
-- `2025-completed/` (19 specs) - Completed work from 2025
+- `2025-completed/` (23 specs) - All completed work from 2025
 - `meta-work/` (10 specs) - Process improvement specs
-- `superseded/` (4 items) - Replaced/obsolete documents
+- `superseded/` (6 items) - Replaced/obsolete documents
 - `cleanup-reports/` (8 reports) - Historical cleanup documentation
-- `comprehensive-steering-quality-overhaul/` - Old quality work
-- `context-optimization-closure/` - Old optimization work
-- `critical-fixes/` - Old fixes
-- `steering-optimization/` - Old steering work
+- `analysis-reports-2025/` (10 reports) - Analysis reports from 2025
 
-### **planning/** - Planning & Future Work
+### **planning/** - Planning & Future Work (6 folders)
 
 - `strategic-decisions/` - Strategic decisions
-- `analysis-reports/` - Analysis reports
-- `local-analytics/` - Local analytics (planning)
 - `accounting-core/` - Accounting core (planning)
 - `beta-testing-program/` - Beta testing (moved from active)
 - `enhanced-onboarding/` - Enhanced onboarding (moved from active)
+- `local-analytics/` - Local analytics (planning)
 - `onboarding-tutorial/` - Onboarding tutorial (moved from active)
 
 ### **completed/** - Recently Completed Specs (2)
@@ -69,22 +65,23 @@ The specs directory has been successfully cleaned and organized.
 
 ## 📊 Statistics
 
-### Current Status (After Phase 1 Cleanup - January 15, 2026)
+### Current Status (After Phase 2 Cleanup - January 15, 2026)
 
 - **Active Specs:** 2 ✅✅ (Target: ≤5) - Excellent!
 - **Completed Specs:** 2 (Pending archival after 30 days)
-- **Archived Specs:** 36 (organized)
-- **Total Files:** 276 markdown files (-50%)
+- **Archived Specs:** 57 (highly organized)
+- **Total Files:** 277 markdown files (-50%)
 - **Directory Size:** 4.4 MB (-49%)
 - **Status:** ✅ Clean & Highly Organized
 
-### Cleanup Results (Phase 1)
+### Cleanup Results (Phase 1 + Phase 2)
 
 - **Size Reduction:** 8.7 MB → 4.4 MB (-49%)
-- **File Reduction:** 551 → 276 files (-50%)
+- **File Reduction:** 551 → 277 files (-50%)
 - **Active Specs:** 4 → 2 (-50%)
-- **Root Files:** 11 → 4 (-64%)
+- **Root Files:** 11 → 5 (-55%)
 - **Backups Removed:** 2 → 0 (-100%)
+- **Archive Organization:** Improved (5 clear categories)
 - **Data Loss:** None (everything preserved or archived)
 
 ---

@@ -6,6 +6,7 @@ part 'liquidity_forecast.freezed.dart';
 /// Represents a liquidity forecast for a specific duration.
 @freezed
 class LiquidityForecast with _$LiquidityForecast {
+  /// Creates a [LiquidityForecast].
   const factory LiquidityForecast({
     /// Start date of the forecast period.
     required DateTime startDate,
@@ -27,11 +28,18 @@ class LiquidityForecast with _$LiquidityForecast {
   }) = _LiquidityForecast;
 }
 
+/// Represents the cash flow for a single day.
 @freezed
 class DailyCashFlow with _$DailyCashFlow {
+  /// Creates a [DailyCashFlow].
   const factory DailyCashFlow({
+    /// The date of the cash flow.
     required DateTime date,
+
+    /// Cash inflow for the day.
     required Decimal inflow,
+
+    /// Cash outflow for the day.
     required Decimal outflow,
   }) = _DailyCashFlow;
 }
