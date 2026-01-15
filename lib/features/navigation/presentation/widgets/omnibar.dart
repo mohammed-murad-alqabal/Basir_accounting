@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basir_accounting_system/core/theme/glass_theme.dart';
 import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
@@ -29,6 +31,7 @@ Future<T?> showOmnibar<T>(BuildContext context) => showGeneralDialog<T>(
     );
 
 class Omnibar extends ConsumerStatefulWidget {
+  /// Creates an [Omnibar].
   const Omnibar({super.key});
 
   @override
@@ -58,6 +61,7 @@ class _OmnibarState extends ConsumerState<Omnibar> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: lines_longer_than_80_chars
     final glassTheme =
         Theme.of(context).extension<GlassTheme>() ?? GlassTheme.light();
     final size = MediaQuery.of(context).size;
@@ -224,24 +228,32 @@ class _OmnibarState extends ConsumerState<Omnibar> {
     Navigator.pop(context);
     switch (result.type) {
       case OmnibarResultType.invoice:
-        Navigator.of(context).pushNamed(
-          '/invoice-detail',
-          arguments: result.data as Invoice,
+        unawaited(
+          Navigator.of(context).pushNamed(
+            '/invoice-detail',
+            arguments: result.data as Invoice,
+          ),
         );
       case OmnibarResultType.customer:
-        Navigator.of(context).pushNamed(
-          '/customer-detail',
-          arguments: result.data as Customer,
+        unawaited(
+          Navigator.of(context).pushNamed(
+            '/customer-detail',
+            arguments: result.data as Customer,
+          ),
         );
       case OmnibarResultType.item:
-        // Navigate to item form in view/edit mode since detail screen doesn't exist yet
-        Navigator.of(context).pushNamed(
-          '/inventory-form',
-          arguments: result.data,
+        // Navigate to item form in view/edit mode
+        unawaited(
+          Navigator.of(context).pushNamed(
+            '/inventory-form',
+            arguments: result.data,
+          ),
         );
       case OmnibarResultType.action:
         if (result.data is String) {
-          Navigator.of(context).pushNamed(result.data as String);
+          unawaited(
+            Navigator.of(context).pushNamed(result.data as String),
+          );
         }
     }
   }

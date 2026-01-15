@@ -1143,12 +1143,14 @@ class _SuccessDialogState extends State<_SuccessDialog>
       curve: Curves.elasticOut,
     );
 
-    _controller.forward();
+    unawaited(_controller.forward());
 
     // Auto close after 2 seconds
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) Navigator.of(context).pop();
-    });
+    unawaited(
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) Navigator.of(context).pop();
+      }),
+    );
   }
 
   @override

@@ -78,8 +78,12 @@ void showCognitiveHint(BuildContext context, String message, {String? title}) {
   });
 }
 
+/// An overlay widget that displays cognitive feedback.
 class CognitiveOverlay extends StatelessWidget {
+  /// Creates a [CognitiveOverlay].
   const CognitiveOverlay({required this.child, super.key});
+
+  /// The child widget to display below the overlay.
   final Widget child;
 
   @override

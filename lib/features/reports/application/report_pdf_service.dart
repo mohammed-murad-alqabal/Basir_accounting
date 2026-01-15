@@ -65,7 +65,9 @@ class ReportPdfService extends _$ReportPdfService {
   /// Shares the generated VAT Return PDF.
   Future<void> shareVatReturnPdf(VatReturnStatement data) async {
     final bytes = await generateVatReturnPdf(data);
-    final filename = 'vat_return_${intl.DateFormat('yyyyMMdd').format(data.periodEnd)}.pdf';
+    // ignore: lines_longer_than_80_chars
+    final filename =
+        'vat_return_${intl.DateFormat('yyyyMMdd').format(data.periodEnd)}.pdf';
     await Printing.sharePdf(bytes: bytes, filename: filename);
   }
 
@@ -84,7 +86,8 @@ class ReportPdfService extends _$ReportPdfService {
         ),
         pw.SizedBox(height: 10),
         pw.Text(
-          'الفترة: ${dateFormat.format(data.periodStart)} إلى ${dateFormat.format(data.periodEnd)}',
+          'الفترة: ${dateFormat.format(data.periodStart)} '
+          'إلى ${dateFormat.format(data.periodEnd)}',
           style: const pw.TextStyle(fontSize: 12),
         ),
       ],
@@ -127,7 +130,9 @@ class ReportPdfService extends _$ReportPdfService {
         ],
       );
 
-  pw.Widget _buildPurchasesSection(VatReturnStatement data) => _buildSectionTable(
+  // ignore: lines_longer_than_80_chars
+  pw.Widget _buildPurchasesSection(VatReturnStatement data) =>
+      _buildSectionTable(
         title: 'ضريبة القيمة المضافة على المشتريات (Input Tax)',
         rows: [
           [

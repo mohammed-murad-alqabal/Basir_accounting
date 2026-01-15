@@ -11,7 +11,8 @@ import 'package:basir_accounting_system/features/accounting/domain/exceptions/co
 import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
 import 'package:basir_accounting_system/features/customers/domain/repositories/customer_repository.dart';
 import 'package:basir_accounting_system/features/invoices/application/sales_bridge_service.dart';
-import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart'
+    as domain_inv;
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
@@ -203,7 +204,7 @@ class AccountingService extends _$AccountingService {
   /// Unified entry point for posting any invoice type to the ledger.
   /// Dispatches to specialized methods based on [InvoiceType].
   Future<void> postInvoice(
-    Invoice invoice, {
+    domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
     switch (invoice.type) {
@@ -225,16 +226,16 @@ class AccountingService extends _$AccountingService {
   ///
   /// Transforms an invoice into a balanced [JournalEntry] with the following
   /// impact:
-  /// - **Debit**: Accounts Receivable (Total Invoice Amount)
+  /// - **Debit**: Accounts Receivable (Total domain_inv.Invoice Amount)
   /// - **Credit**: Revenue (Subtotal Amount)
   /// - **Credit**: Tax Liability (Tax Amount)
   ///
   /// ## Parameters
-  /// - [invoice]: The [Invoice] entity to post.
+  /// - [invoice]: The [domain_inv.Invoice] entity to post.
   ///
   ///   invalid.
   Future<void> postSalesInvoice(
-    Invoice invoice, {
+    domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
     final isPeriodOpen =
@@ -264,7 +265,7 @@ class AccountingService extends _$AccountingService {
       JournalEntryLine(
         accountId: receivableAccountId,
         accountName: 'Receivable - ${invoice.customerName}',
-        description: 'Sales Invoice #${invoice.invoiceNumber}',
+        description: 'Sales domain_inv.Invoice #${invoice.invoiceNumber}',
         debit: invoice.totalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
@@ -286,7 +287,7 @@ class AccountingService extends _$AccountingService {
       credit: invoice.subtotalAmountBaseCurrency,
       debit: Decimal.zero,
       accountName: revenueAccount.nameEn,
-      description: 'Revenue for Invoice #${invoice.invoiceNumber}',
+      description: 'Revenue for domain_inv.Invoice #${invoice.invoiceNumber}',
       originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
       originalAmount: invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
       exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
@@ -312,7 +313,7 @@ class AccountingService extends _$AccountingService {
         JournalEntryLine(
           accountId: taxAccount.id,
           accountName: taxAccount.nameEn,
-          description: 'VAT for Invoice #${invoice.invoiceNumber}',
+          description: 'VAT for domain_inv.Invoice #${invoice.invoiceNumber}',
           credit: invoice.taxAmountBaseCurrency,
           debit: Decimal.zero,
           originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
@@ -390,9 +391,9 @@ class AccountingService extends _$AccountingService {
   /// Typical impact:
   /// - **Debit**: Inventory or Expense (Subtotal Amount)
   /// - **Debit**: Input VAT (Tax Amount)
-  /// - **Credit**: Accounts Payable (Total Invoice Amount)
+  /// - **Credit**: Accounts Payable (Total domain_inv.Invoice Amount)
   Future<void> _postPurchaseInvoice(
-    Invoice invoice, {
+    domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
     final isPeriodOpen =
@@ -415,7 +416,7 @@ class AccountingService extends _$AccountingService {
       JournalEntryLine(
         accountId: payableAccountId,
         accountName: 'Payable - ${invoice.customerName}',
-        description: 'Purchase Invoice #${invoice.invoiceNumber}',
+        description: 'Purchase domain_inv.Invoice #${invoice.invoiceNumber}',
         debit: Decimal.zero,
         credit: invoice.totalAmountBaseCurrency,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
@@ -478,7 +479,7 @@ class AccountingService extends _$AccountingService {
   }
 
   Future<void> _postSalesReturn(
-    Invoice invoice, {
+    domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
     final isPeriodOpen =
@@ -500,7 +501,8 @@ class AccountingService extends _$AccountingService {
       JournalEntryLine(
         accountId: revenueAccount.id,
         accountName: revenueAccount.nameEn,
-        description: 'Sales Return for Invoice #${invoice.invoiceNumber}',
+        description:
+            'Sales Return for domain_inv.Invoice #${invoice.invoiceNumber}',
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
@@ -558,7 +560,7 @@ class AccountingService extends _$AccountingService {
   }
 
   Future<void> _postPurchaseReturn(
-    Invoice invoice, {
+    domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
     final isPeriodOpen =
@@ -642,7 +644,7 @@ class AccountingService extends _$AccountingService {
   }
 
   Future<void> _postDamageInvoice(
-    Invoice invoice, {
+    domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
     final isPeriodOpen =
@@ -703,7 +705,7 @@ class AccountingService extends _$AccountingService {
   }
 
   Future<void> _finalizeAndPostInvoiceEntry(
-    Invoice invoice,
+    domain_inv.Invoice invoice,
     List<JournalEntryLine> lines,
     String sourceDocument,
     bool bypassCognitive,
@@ -922,14 +924,14 @@ class AccountingService extends _$AccountingService {
 
   /// Reverses an invoice by cancelling it and creating a reverse journal entry.
   /// (Implementation of FR-SLS-018)
-  Future<void> reverseInvoice(Invoice invoice) async {
+  Future<void> reverseInvoice(domain_inv.Invoice invoice) async {
     if (invoice.status == InvoiceStatus.cancelled) {
-      throw Exception('Invoice is already cancelled');
+      throw Exception('domain_inv.Invoice is already cancelled');
     }
 
     final invoiceRepo = ref.read(invoiceRepositoryProvider);
 
-    // 1. Update Invoice Status
+    // 1. Update domain_inv.Invoice Status
     final cancelledInvoice = invoice.copyWith(
       status: InvoiceStatus.cancelled,
       updatedAt: DateTime.now(),
