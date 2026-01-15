@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// Screen for the Treasury Hub (The Vault).
 /// Displays real-time liquidity status (Cash & Bank).
 class TreasuryDashboardScreen extends ConsumerWidget {
+  /// Creates the [TreasuryDashboardScreen].
   const TreasuryDashboardScreen({super.key});
 
   @override
@@ -35,11 +36,14 @@ class TreasuryDashboardScreen extends ConsumerWidget {
 
           final allAccounts = snapshot.data ?? [];
           // Filter for Liquid assets: Cash and Bank
-          // Strategy: Look for subType 'cash', 'bank' or code starting with 1101
+          // Strategy: Look for subType 'cash', 'bank' or code starting
+          // with 1101
           final treasuryAccounts = allAccounts.where((a) {
             final isCashType = a.subType == 'cash' || a.subType == 'bank';
             final isCashCode = a.code.startsWith('1101');
-            // Ensure we don't include the parent "Cash and Cash Equivalents" header if it has no balance itself (usually headers are 0 or sum of children)
+            // Ensure we don't include the parent "Cash and Cash
+            // Equivalents" header if it has no balance itself
+            // (usually headers are 0 or sum of children)
             // But if it's a parent, we might want to just show leaf nodes?
             // For now, let's show all leaf nodes that match.
             return (isCashType || isCashCode) && !a.isParent;
@@ -76,8 +80,7 @@ class TreasuryDashboardScreen extends ConsumerWidget {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: treasuryAccounts.length,
-                    separatorBuilder: (_, __) =>
-                        const SizedBox(height: Spacing.sm),
+                    separatorBuilder: (_, __) => const SizedBox(height: Spacing.sm),
                     itemBuilder: (context, index) {
                       final account = treasuryAccounts[index];
                       return _buildAccountRow(context, account);
@@ -122,8 +125,7 @@ class TreasuryDashboardScreen extends ConsumerWidget {
 
   Widget _buildForecastSection(BuildContext context, WidgetRef ref) {
     // 30-day forecast by default
-    final forecastFuture =
-        ref.watch(accountingServiceProvider.notifier).getLiquidityForecast();
+    final forecastFuture = ref.watch(accountingServiceProvider.notifier).getLiquidityForecast();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,8 +207,7 @@ class TreasuryDashboardScreen extends ConsumerWidget {
                 const SizedBox(width: Spacing.xs),
                 Text(
                   label,
-                  style: AppTextStyles.labelMedium
-                      .copyWith(color: AppColors.textSecondary),
+                  style: AppTextStyles.labelMedium.copyWith(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -224,8 +225,7 @@ class TreasuryDashboardScreen extends ConsumerWidget {
 
   Widget _buildAccountRow(BuildContext context, Account account) {
     // Determine icon based on name or subtype
-    final isBank = account.nameEn.toLowerCase().contains('bank') ||
-        account.subType == 'bank';
+    final isBank = account.nameEn.toLowerCase().contains('bank') || account.subType == 'bank';
     final icon = isBank ? Icons.account_balance : Icons.attach_money;
 
     return AppCard(
@@ -267,9 +267,7 @@ class TreasuryDashboardScreen extends ConsumerWidget {
             FormatHelpers.formatCurrency(account.balance),
             style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeights.bold,
-              color: account.balance < Decimal.zero
-                  ? AppColors.error
-                  : AppColors.success,
+              color: account.balance < Decimal.zero ? AppColors.error : AppColors.success,
             ),
           ),
         ],

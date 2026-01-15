@@ -35,7 +35,7 @@ class JournalEntryDetailScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.print),
             onPressed: () {
-              // TODO: Implement JE Printing
+              // TODO(m): Implement JE Printing
             },
           ),
         ],
@@ -71,10 +71,7 @@ class JournalEntryDetailScreen extends ConsumerWidget {
     final l10n = context.l10n;
     return Card(
       elevation: 0,
-      color: Theme.of(context)
-          .colorScheme
-          .surfaceContainerHighest
-          .withValues(alpha: 0.3),
+      color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -83,8 +80,7 @@ class JournalEntryDetailScreen extends ConsumerWidget {
             _HeaderRow(
               label: l10n.labelDate,
               value:
-                  DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
-                      .format(entry.date),
+                  DateFormat.yMMMd(Localizations.localeOf(context).languageCode).format(entry.date),
             ),
             const Divider(),
             _HeaderRow(
@@ -97,8 +93,7 @@ class JournalEntryDetailScreen extends ConsumerWidget {
               label: l10n.labelDescription,
               value: entry.description,
             ),
-            if (entry.sourceId.isNotEmpty &&
-                entry.sourceDocument.isNotEmpty) ...[
+            if (entry.sourceId.isNotEmpty && entry.sourceDocument.isNotEmpty) ...[
               const Divider(),
               _HeaderRow(
                 label: l10n.labelSourceDocument,
@@ -171,8 +166,7 @@ class JournalEntryDetailScreen extends ConsumerWidget {
         },
       );
 
-  Widget _buildForensicSection(BuildContext context) =>
-      ConsensusVisualizationWidget(
+  Widget _buildForensicSection(BuildContext context) => ConsensusVisualizationWidget(
         isConsensusAchieved: entry.status == JournalEntryStatus.posted,
         agentResults: const <AgentResult>[], // Explicit type
       );
@@ -189,8 +183,7 @@ class JournalEntryDetailScreen extends ConsumerWidget {
           const SizedBox(height: 12),
           _AuditItem(
             label: 'Temporal Justification',
-            value:
-                'Effective: ${DateFormat.yMd().format(entry.temporal.effectiveDate)}\n'
+            value: 'Effective: ${DateFormat.yMd().format(entry.temporal.effectiveDate)}\n'
                 'Recorded: ${DateFormat.yMd().format(entry.temporal.recordingDate)}',
             icon: Icons.history_edu,
           ),
@@ -215,8 +208,7 @@ class JournalEntryDetailScreen extends ConsumerWidget {
     );
 
     try {
-      if (entry.sourceDocument == 'sales_invoice' ||
-          entry.sourceDocument == 'invoice') {
+      if (entry.sourceDocument == 'sales_invoice' || entry.sourceDocument == 'invoice') {
         final repository = ref.read(invoiceRepositoryProvider);
         final invoice = await repository.getInvoiceById(entry.sourceId);
 
@@ -298,13 +290,10 @@ class _HeaderRow extends StatelessWidget {
                         value,
                         textAlign: TextAlign.end,
                         style: context.textTheme.bodyMedium?.copyWith(
-                          color: valueColor ??
-                              (onTap != null
-                                  ? Theme.of(context).primaryColor
-                                  : null),
-                          fontWeight: (valueColor != null || onTap != null)
-                              ? FontWeight.bold
-                              : null,
+                          color:
+                              valueColor ?? (onTap != null ? Theme.of(context).primaryColor : null),
+                          fontWeight:
+                              (valueColor != null || onTap != null) ? FontWeight.bold : null,
                         ),
                       ),
                     ),
@@ -347,13 +336,11 @@ class _AuditItem extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: context.textTheme.labelMedium
-                      ?.copyWith(fontWeight: FontWeight.bold),
+                  style: context.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
                   value,
-                  style: context.textTheme.bodySmall
-                      ?.copyWith(color: Colors.grey[700]),
+                  style: context.textTheme.bodySmall?.copyWith(color: Colors.grey[700]),
                 ),
               ],
             ),

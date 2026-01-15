@@ -13,8 +13,7 @@ class FinancialCalculatorScreen extends StatefulWidget {
   const FinancialCalculatorScreen({super.key});
 
   @override
-  State<FinancialCalculatorScreen> createState() =>
-      _FinancialCalculatorScreenState();
+  State<FinancialCalculatorScreen> createState() => _FinancialCalculatorScreenState();
 }
 
 class _FinancialCalculatorScreenState extends State<FinancialCalculatorScreen> {
@@ -47,14 +46,12 @@ class _FinancialCalculatorScreenState extends State<FinancialCalculatorScreen> {
     try {
       final p = GrammarParser();
       final exp = p.parse(_display.replaceAll('X', '*'));
-      final cm = ContextModel();
-      final eval = exp.evaluate(EvaluationType.REAL, cm);
+      final eval = RealEvaluator().evaluate(exp);
 
       var finalResult = eval.toString();
       if (_useCurrencies) {
-        final usdVal = (eval as num).toDouble() / _usdRate;
-        finalResult =
-            '${eval.toStringAsFixed(2)} SAR ≈ ${usdVal.toStringAsFixed(2)} USD';
+        final usdVal = eval / _usdRate;
+        finalResult = '${eval.toStringAsFixed(2)} SAR ≈ ${usdVal.toStringAsFixed(2)} USD';
       }
 
       setState(() {
@@ -126,14 +123,13 @@ class _FinancialCalculatorScreenState extends State<FinancialCalculatorScreen> {
                   const Spacer(),
                   Text(
                     _display,
-                    style: theme.textTheme.headlineMedium
-                        ?.copyWith(color: theme.colorScheme.outline),
+                    style:
+                        theme.textTheme.headlineMedium?.copyWith(color: theme.colorScheme.outline),
                   ),
                   const SizedBox(height: Spacing.md),
                   Text(
                     _result,
-                    style: theme.textTheme.displaySmall
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                    style: theme.textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),

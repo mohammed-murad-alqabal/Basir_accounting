@@ -75,7 +75,8 @@ class ForensicAuditService extends _$ForensicAuditService
   ///
   /// Uses the Rust auditor for high-performance sequence verification.
   Future<AuditResult> auditSequence(
-      List<domain_je.JournalEntry> entries) async {
+    List<domain_je.JournalEntry> entries,
+  ) async {
     final entryDtos = entries.map(_toEntryDto).toList();
 
     try {
@@ -94,12 +95,15 @@ class ForensicAuditService extends _$ForensicAuditService
       final findings = anomalies
           .map(
             (a) => a.when(
-              sequenceGap: (String expected, String found) =>
+              sequenceGap: (expected, found) =>
                   'Sequence gap: Expected $expected but found $found.',
-              reconciliationMismatch: (String accountId, String bookBalance,
-                      String physicalCount) =>
+              reconciliationMismatch: (
+                accountId,
+                bookBalance,
+                physicalCount,
+              ) =>
                   'Reconciliation mismatch in account $accountId: Book $bookBalance vs Count $physicalCount.',
-              orphanedDraft: (String entryId, String date) =>
+              orphanedDraft: (entryId, date) =>
                   'Orphaned draft entry #$entryId dated $date.',
             ),
           )
@@ -110,7 +114,7 @@ class ForensicAuditService extends _$ForensicAuditService
         message: 'Forensic analysis detected institutional risks.',
         findings: findings,
       );
-    } catch (e) {
+    } on Exception catch (e) {
       return AuditResult(
         isSuccess: false,
         message: 'Forensic scan failed: Internal engine error.',
@@ -133,15 +137,19 @@ class ForensicAuditService extends _$ForensicAuditService
     for (final entry in sortedEntries) {
       if (!entry.isBalanced) {
         issues.add(
-            'Imbalance detected: Entry #${entry.referenceNumber} is not balanced.');
+          'Imbalance detected: Entry #${entry.referenceNumber} is not balanced.',
+        );
       }
 
       // Verify mathematical identity
-      final calculatedSubtotal = entry.lines.fold(Decimal.zero,
-          (Decimal sum, domain_je.JournalEntryLine l) => sum + l.debit);
+      final calculatedSubtotal = entry.lines.fold(
+        Decimal.zero,
+        (sum, l) => sum + l.debit,
+      );
       if (calculatedSubtotal != entry.totalDebit) {
         issues.add(
-            'Integrity discrepancy: Entry #${entry.referenceNumber} has total debit/sum mismatch.');
+          'Integrity discrepancy: Entry #${entry.referenceNumber} has total debit/sum mismatch.',
+        );
       }
     }
 
@@ -172,7 +180,7 @@ class ForensicAuditService extends _$ForensicAuditService
         description: entry.description,
         date: entry.date.toIso8601String(),
         standardRef: entry.standards.standardReference,
-        lines: entry.lines.map((domain_je.JournalEntryLine l) {
+        lines: entry.lines.map((l) {
           final isDebit = l.debit > Decimal.zero;
           final amount = (isDebit ? l.debit : l.credit).toString();
           return rust_ledger.LineDto(
