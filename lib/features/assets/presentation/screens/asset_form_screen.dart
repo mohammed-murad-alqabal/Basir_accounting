@@ -69,12 +69,8 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
     final isEdit = widget.asset != null;
     final actionState = ref.watch(assetActionProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppAppBar(
-        title:
-            isEdit ? context.l10n.titleEditAsset : context.l10n.titleAddAsset,
-      ),
+    return GlassScaffold(
+      title: isEdit ? context.l10n.titleEditAsset : context.l10n.titleAddAsset,
       body: actionState.when(
         data: (_) => _buildForm(),
         loading: () => const Center(child: AppLoadingIndicator()),

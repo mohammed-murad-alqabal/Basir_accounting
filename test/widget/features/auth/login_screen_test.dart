@@ -106,7 +106,9 @@ void main() {
         await tester.pump();
 
         final loginButton = find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
         );
         await tester.ensureVisible(loginButton);
         await tester.tap(loginButton);
@@ -132,7 +134,9 @@ void main() {
         await setUpWidgets(tester);
 
         final guestButton = find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.secondary,
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.secondary,
         );
         await tester.ensureVisible(guestButton);
         await tester.tap(guestButton);
@@ -172,7 +176,9 @@ void main() {
         await tester.pump();
 
         final loginButton = find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
         );
         await tester.ensureVisible(loginButton);
         await tester.tap(loginButton);

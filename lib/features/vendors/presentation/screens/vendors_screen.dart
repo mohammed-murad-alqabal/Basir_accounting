@@ -2,6 +2,7 @@ import 'package:basir_accounting_system/core/assets/app_illustrations.dart';
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/onboarding/presentation/widgets/cognitive_overlay.dart';
 import 'package:basir_accounting_system/features/vendors/domain/entities/vendor.dart';
 import 'package:basir_accounting_system/features/vendors/presentation/providers/vendor_provider.dart';
 import 'package:basir_accounting_system/features/vendors/presentation/screens/vendor_details_screen.dart';
@@ -33,20 +34,33 @@ class _VendorsScreenState extends ConsumerState<VendorsScreen> {
     final vendorsAsync = ref.watch(filteredVendorsProvider);
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppAppBar(
-        title: context.l10n.vendorsScreenTitle,
-        actions: [
-          IconButton(
-            icon: Icon(appIcons.add, size: 26),
-            tooltip: context.l10n.tooltipAddVendor,
-            onPressed: _addVendor,
-          ),
-        ],
-      ),
+    // التحقق من الحاجة لإظهار تلميح معرفي
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (vendorsAsync.hasValue &&
+          vendorsAsync.value!.isEmpty &&
+          _searchController.text.isEmpty) {
+        showCognitiveHint(
+          context,
+          'أضف مورديك لتسجيل فواتير المشتريات وتتبع الالتزامات المالية بدقة.',
+          title: 'إدارة الموردين',
+        );
+      }
+    });
+
+    return GlassScaffold(
+      title: context.l10n.vendorsScreenTitle,
+      actions: [
+        IconButton(
+          icon: Icon(appIcons.add, size: 26),
+          tooltip: context.l10n.tooltipAddVendor,
+          onPressed: _addVendor,
+        ),
+      ],
       body: Column(
         children: [
+          // ملخص الخزينة (Treasury Highlights)
+          _buildTreasurySummary(ref),
+
           // حقل البحث
           Padding(
             padding: const EdgeInsets.all(Spacing.lg),
@@ -72,6 +86,52 @@ class _VendorsScreenState extends ConsumerState<VendorsScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTreasurySummary(WidgetRef ref) {
+    final totalBalance = ref.watch(totalVendorsBalanceProvider);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(Spacing.lg, Spacing.lg, Spacing.lg, 0),
+      child: GlassCard(
+        padding: const EdgeInsets.all(Spacing.lg),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(Spacing.md),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.account_balance_wallet_outlined,
+                color: AppColors.primary,
+                size: 32,
+              ),
+            ),
+            const SizedBox(width: Spacing.lg),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  ref.context.l10n.labelTotalPayables,
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+                Text(
+                  '${totalBalance.toStringAsFixed(2)} SAR',
+                  style: AppTextStyles.headlineSmall.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

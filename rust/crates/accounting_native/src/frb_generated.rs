@@ -37,7 +37,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_auto_opaque = RustAutoOpaqueMoi,
 );
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.11.1";
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = 1763526417;
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = 79653184;
 
 // Section: executor
 
@@ -2413,6 +2413,39 @@ fn wire__crate__api__calendar__save_period_impl(
         },
     )
 }
+fn wire__crate__api__auditor__scan_sequence_impl(
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) -> flutter_rust_bridge::for_generated::WireSyncRust2DartSse {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync::<flutter_rust_bridge::for_generated::SseCodec, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "scan_sequence",
+            port: None,
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Sync,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_prefix = <String>::sse_decode(&mut deserializer);
+            let api_entries = <Vec<crate::api::ledger::EntryDto>>::sse_decode(&mut deserializer);
+            deserializer.end();
+            transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
+                (move || {
+                    let output_ok = crate::api::auditor::scan_sequence(api_prefix, api_entries)?;
+                    Ok(output_ok)
+                })(),
+            )
+        },
+    )
+}
 fn wire__crate__api__standards__search_standards_impl(
     port_: flutter_rust_bridge::for_generated::MessagePort,
     ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
@@ -2751,6 +2784,44 @@ impl SseDecode for crate::api::reports::AgingReportLineDto {
             period_over_90: var_periodOver90,
             total_amount: var_totalAmount,
         };
+    }
+}
+
+impl SseDecode for crate::api::auditor::AnomalyDto {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut tag_ = <i32>::sse_decode(deserializer);
+        match tag_ {
+            0 => {
+                let mut var_expected = <String>::sse_decode(deserializer);
+                let mut var_found = <String>::sse_decode(deserializer);
+                return crate::api::auditor::AnomalyDto::SequenceGap {
+                    expected: var_expected,
+                    found: var_found,
+                };
+            }
+            1 => {
+                let mut var_accountId = <String>::sse_decode(deserializer);
+                let mut var_bookBalance = <String>::sse_decode(deserializer);
+                let mut var_physicalCount = <String>::sse_decode(deserializer);
+                return crate::api::auditor::AnomalyDto::ReconciliationMismatch {
+                    account_id: var_accountId,
+                    book_balance: var_bookBalance,
+                    physical_count: var_physicalCount,
+                };
+            }
+            2 => {
+                let mut var_entryId = <String>::sse_decode(deserializer);
+                let mut var_date = <String>::sse_decode(deserializer);
+                return crate::api::auditor::AnomalyDto::OrphanedDraft {
+                    entry_id: var_entryId,
+                    date: var_date,
+                };
+            }
+            _ => {
+                unimplemented!("");
+            }
+        }
     }
 }
 
@@ -3154,6 +3225,18 @@ impl SseDecode for Vec<crate::api::reports::AgingReportLineDto> {
             ans_.push(<crate::api::reports::AgingReportLineDto>::sse_decode(
                 deserializer,
             ));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for Vec<crate::api::auditor::AnomalyDto> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = vec![];
+        for idx_ in 0..len_ {
+            ans_.push(<crate::api::auditor::AnomalyDto>::sse_decode(deserializer));
         }
         return ans_;
     }
@@ -4034,20 +4117,20 @@ fn pde_ffi_dispatcher_primary_impl(
         }
         61 => wire__crate__api__inventory__save_item_impl(port, ptr, rust_vec_len, data_len),
         62 => wire__crate__api__calendar__save_period_impl(port, ptr, rust_vec_len, data_len),
-        63 => wire__crate__api__standards__search_standards_impl(port, ptr, rust_vec_len, data_len),
-        64 => wire__crate__api__accounts__update_account_impl(port, ptr, rust_vec_len, data_len),
-        65 => wire__crate__api__accounts__update_account_category_impl(
+        64 => wire__crate__api__standards__search_standards_impl(port, ptr, rust_vec_len, data_len),
+        65 => wire__crate__api__accounts__update_account_impl(port, ptr, rust_vec_len, data_len),
+        66 => wire__crate__api__accounts__update_account_category_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        66 => wire__crate__api__sales__update_customer_impl(port, ptr, rust_vec_len, data_len),
-        67 => wire__crate__api__purchasing__update_vendor_impl(port, ptr, rust_vec_len, data_len),
-        68 => {
+        67 => wire__crate__api__sales__update_customer_impl(port, ptr, rust_vec_len, data_len),
+        68 => wire__crate__api__purchasing__update_vendor_impl(port, ptr, rust_vec_len, data_len),
+        69 => {
             wire__crate__api__ledger__validate_journal_entry_impl(port, ptr, rust_vec_len, data_len)
         }
-        69 => wire__crate__api__inventory__verify_inventory_chain_impl(
+        70 => wire__crate__api__inventory__verify_inventory_chain_impl(
             port,
             ptr,
             rust_vec_len,
@@ -4066,6 +4149,7 @@ fn pde_ffi_dispatcher_sync_impl(
     // Codec=Pde (Serialization + dispatch), see doc to use other codecs
     match func_id {
         1 => wire__crate__api__check_health_impl(ptr, rust_vec_len, data_len),
+        63 => wire__crate__api__auditor__scan_sequence_impl(ptr, rust_vec_len, data_len),
         _ => unreachable!(),
     }
 }
@@ -4125,6 +4209,50 @@ impl flutter_rust_bridge::IntoIntoDart<crate::api::reports::AgingReportLineDto>
     for crate::api::reports::AgingReportLineDto
 {
     fn into_into_dart(self) -> crate::api::reports::AgingReportLineDto {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::auditor::AnomalyDto {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        match self {
+            crate::api::auditor::AnomalyDto::SequenceGap { expected, found } => [
+                0.into_dart(),
+                expected.into_into_dart().into_dart(),
+                found.into_into_dart().into_dart(),
+            ]
+            .into_dart(),
+            crate::api::auditor::AnomalyDto::ReconciliationMismatch {
+                account_id,
+                book_balance,
+                physical_count,
+            } => [
+                1.into_dart(),
+                account_id.into_into_dart().into_dart(),
+                book_balance.into_into_dart().into_dart(),
+                physical_count.into_into_dart().into_dart(),
+            ]
+            .into_dart(),
+            crate::api::auditor::AnomalyDto::OrphanedDraft { entry_id, date } => [
+                2.into_dart(),
+                entry_id.into_into_dart().into_dart(),
+                date.into_into_dart().into_dart(),
+            ]
+            .into_dart(),
+            _ => {
+                unimplemented!("");
+            }
+        }
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::auditor::AnomalyDto
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::auditor::AnomalyDto>
+    for crate::api::auditor::AnomalyDto
+{
+    fn into_into_dart(self) -> crate::api::auditor::AnomalyDto {
         self
     }
 }
@@ -4936,6 +5064,37 @@ impl SseEncode for crate::api::reports::AgingReportLineDto {
     }
 }
 
+impl SseEncode for crate::api::auditor::AnomalyDto {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        match self {
+            crate::api::auditor::AnomalyDto::SequenceGap { expected, found } => {
+                <i32>::sse_encode(0, serializer);
+                <String>::sse_encode(expected, serializer);
+                <String>::sse_encode(found, serializer);
+            }
+            crate::api::auditor::AnomalyDto::ReconciliationMismatch {
+                account_id,
+                book_balance,
+                physical_count,
+            } => {
+                <i32>::sse_encode(1, serializer);
+                <String>::sse_encode(account_id, serializer);
+                <String>::sse_encode(book_balance, serializer);
+                <String>::sse_encode(physical_count, serializer);
+            }
+            crate::api::auditor::AnomalyDto::OrphanedDraft { entry_id, date } => {
+                <i32>::sse_encode(2, serializer);
+                <String>::sse_encode(entry_id, serializer);
+                <String>::sse_encode(date, serializer);
+            }
+            _ => {
+                unimplemented!("");
+            }
+        }
+    }
+}
+
 impl SseEncode for crate::api::assets::AssetCategoryDto {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -5183,6 +5342,16 @@ impl SseEncode for Vec<crate::api::reports::AgingReportLineDto> {
         <i32>::sse_encode(self.len() as _, serializer);
         for item in self {
             <crate::api::reports::AgingReportLineDto>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for Vec<crate::api::auditor::AnomalyDto> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::api::auditor::AnomalyDto>::sse_encode(item, serializer);
         }
     }
 }

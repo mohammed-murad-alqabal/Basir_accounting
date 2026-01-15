@@ -129,23 +129,38 @@ class TreasuryOverviewScreen extends ConsumerWidget {
       );
 
   /// Renders shortcut buttons for issuing new Receipts or Payments.
-  Widget _buildQuickActions(BuildContext context) => Row(
+  Widget _buildQuickActions(BuildContext context) => Column(
         children: [
-          Expanded(
-            child: AppEnhancedButton(
-              label: context.l10n.receiptVoucherAction,
-              icon: Icons.call_received,
-              onPressed: () => _createNewVoucher(context, VoucherType.receipt),
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: AppEnhancedButton(
+                  label: context.l10n.receiptVoucherAction,
+                  icon: Icons.call_received,
+                  onPressed: () =>
+                      _createNewVoucher(context, VoucherType.receipt),
+                ),
+              ),
+              const SizedBox(width: Spacing.md),
+              Expanded(
+                child: AppEnhancedButton(
+                  label: context.l10n.paymentVoucherAction,
+                  type: AppEnhancedButtonType.secondary,
+                  icon: Icons.call_made,
+                  onPressed: () =>
+                      _createNewVoucher(context, VoucherType.payment),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: Spacing.md),
-          Expanded(
-            child: AppEnhancedButton(
-              label: context.l10n.paymentVoucherAction,
-              type: AppEnhancedButtonType.secondary,
-              icon: Icons.call_made,
-              onPressed: () => _createNewVoucher(context, VoucherType.payment),
-            ),
+          const SizedBox(height: Spacing.md),
+          AppEnhancedButton(
+            label: 'تسوية النقدية (Liquid Verification)',
+            type: AppEnhancedButtonType.outlined,
+            icon: Icons.account_balance_wallet_outlined,
+            onPressed: () {
+              unawaited(Navigator.pushNamed(context, '/cash-reconciliation'));
+            },
           ),
         ],
       );

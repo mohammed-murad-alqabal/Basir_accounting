@@ -60,6 +60,7 @@ void main() {
         paidAmount: Decimal.zero,
         discountRate: Decimal.zero,
         taxRate: Decimal.fromInt(15),
+        exchangeRate: Decimal.one,
       );
 
       expect(
@@ -77,7 +78,6 @@ void main() {
         items: [
           InvoiceItem(
             taxRate: Decimal.parse('0.15'),
-            taxCategory: 'S',
             id: 'item-1',
             name: 'Service',
             quantity: Decimal.one,
@@ -98,6 +98,7 @@ void main() {
         paidAmount: Decimal.zero,
         discountRate: Decimal.zero,
         taxRate: Decimal.fromInt(15),
+        exchangeRate: Decimal.one,
       );
 
       // Should not throw

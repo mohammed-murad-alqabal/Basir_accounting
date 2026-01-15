@@ -39,6 +39,12 @@ class Vendor with _$Vendor {
     /// معرف حساب المورد في دليل الحسابات (AP Account)
     String? payableAccountId,
 
+    /// رقم التسجيل الضريبي (VAT Number)
+    String? vatNumber,
+
+    /// رقم السجل التجاري (Commercial Registration Number)
+    String? registrationNumber,
+
     /// الرصيد الحالي للمورد
     @Default(0.0) double balance,
 

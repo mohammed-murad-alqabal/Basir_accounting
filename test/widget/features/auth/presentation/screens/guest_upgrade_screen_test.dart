@@ -28,7 +28,6 @@ void main() {
               email: 'test@example.com',
               displayName: 'Test User',
               role: UserRole.admin,
-              
             ),
           ),
           authServiceProvider.overrideWithValue(mockAuthService),
@@ -75,7 +74,9 @@ void main() {
       final l10n = AppLocalizations.of(context);
       final buttonFinder = find.descendant(
         of: find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
         ),
         matching: find.text(l10n.actionUpgradeAccount),
       );
@@ -98,7 +99,9 @@ void main() {
       final l10n = AppLocalizations.of(context);
       final buttonFinder = find.descendant(
         of: find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
         ),
         matching: find.text(l10n.actionUpgradeAccount),
       );

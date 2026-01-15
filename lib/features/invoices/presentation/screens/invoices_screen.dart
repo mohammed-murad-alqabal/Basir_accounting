@@ -11,6 +11,7 @@ import 'package:basir_accounting_system/features/invoices/domain/entities/invoic
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
+import 'package:basir_accounting_system/features/onboarding/presentation/widgets/cognitive_overlay.dart';
 import 'package:basir_accounting_system/features/reports/application/pdf_invoice_service.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
@@ -37,21 +38,37 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     final calendarType =
         ref.watch(calendarProvider).value ?? CalendarType.gregorian;
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.invoicesTitle,
-        actions: [
-          IconButton(
-            icon: Icon(appIcons.add),
-            onPressed: _createNewInvoice,
-            tooltip: context.l10n.tooltipAddInvoice,
-          ),
-          IconButton(
-            icon: Icon(appIcons.pdf),
-            onPressed: _exportInvoice,
-            tooltip: context.l10n.tooltipExportAll,
-          ),
-        ],
+    // Trigger Cognitive Hint on first load
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (invoicesAsync.hasValue &&
+          invoicesAsync.value!.isEmpty &&
+          _selectedFilter == 'all') {
+        showCognitiveHint(
+          context,
+          'هنا يمكنك متابعة جميع فواتيرك. ابدأ بإنشاء فاتورة جديدة بالضغط على زر الإضافة (+).',
+          title: 'إدارة الفواتير',
+        );
+      }
+    });
+
+    return GlassScaffold(
+      title: context.l10n.invoicesTitle,
+      actions: [
+        IconButton(
+          icon: Icon(appIcons.add),
+          onPressed: _createNewInvoice,
+          tooltip: context.l10n.tooltipAddInvoice,
+        ),
+        IconButton(
+          icon: Icon(appIcons.pdf),
+          onPressed: _exportInvoice,
+          tooltip: context.l10n.tooltipExportAll,
+        ),
+      ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: _createNewInvoice,
+        backgroundColor: AppColors.primary,
+        child: Icon(appIcons.add, color: Colors.white),
       ),
       body: Column(
         children: [
@@ -98,11 +115,6 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _createNewInvoice,
-        backgroundColor: AppColors.primary,
-        child: Icon(appIcons.add, color: Colors.white),
       ),
     );
   }

@@ -177,10 +177,10 @@ void main() {
         paidAmount: Decimal.zero,
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
         items: [
           InvoiceItem(
             taxRate: Decimal.parse('0.15'),
-            taxCategory: 'S',
             id: 'item-1',
             name: 'Elite Consulting',
             quantity: Decimal.one,

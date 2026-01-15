@@ -1,6 +1,8 @@
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/orchestrator_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
@@ -17,6 +19,17 @@ import '../helpers/mock_customer_repository.dart';
 import '../helpers/mock_financial_year_repository.dart';
 import '../helpers/mock_sales_bridge_service.dart';
 import '../helpers/rust_lib_test_helper.dart';
+
+class FakeOrchestratorService extends OrchestratorService {
+  @override
+  Future<AgentConsensus> orchestrate(AccountingContext context) async =>
+      AgentConsensus(
+        isApproved: true,
+        explanation: 'Fake approval',
+        agentResults: [],
+        orchestrationTimestamp: DateTime.now(),
+      );
+}
 
 void main() {
   group('Invoice Posting Integration', () {
@@ -62,6 +75,33 @@ void main() {
           lines: [],
         ),
       );
+      registerFallbackValue(
+        AccountingContext(
+          proposedJournalEntry: JournalEntry(
+            id: 'fallback',
+            referenceNumber: '',
+            date: DateTime.now(),
+            temporal: TemporalJustification(
+              transactionDate: DateTime.now(),
+              effectiveDate: DateTime.now(),
+              recordingDate: DateTime.now(),
+            ),
+            standards: const StandardsJustification(
+              standardReference: '',
+              recognitionBasis: '',
+            ),
+            description: '',
+            status: JournalEntryStatus.draft,
+            sourceDocument: '',
+            sourceId: '',
+            createdBy: '',
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
+            lines: [],
+          ),
+          transactionType: '',
+        ),
+      );
 
       container = ProviderContainer(
         overrides: [
@@ -69,11 +109,12 @@ void main() {
           financialYearRepositoryProvider.overrideWithValue(mockFyRepo),
           customerRepositoryProvider.overrideWithValue(mockCustomerRepo),
           salesBridgeServiceProvider.overrideWithValue(mockSalesBridge),
+          orchestratorServiceProvider.overrideWith(FakeOrchestratorService.new),
           basirUserProvider.overrideWith((ref) => null),
         ],
       );
 
-      // Default behaviors
+      // 1. Open Financial Year
       // 1. Open Financial Year
       when(() => mockFyRepo.getFinancialYearByDate(any())).thenAnswer(
         (_) async => FinancialYear(
@@ -146,8 +187,8 @@ void main() {
         invoiceNumber: 'INV-100',
         customerId: 'cust-1',
         customerName: 'Client A',
-        issuedDate: DateTime.now(),
-        dueDate: DateTime.now().add(const Duration(days: 30)),
+        issuedDate: DateTime(2025, 5, 20),
+        dueDate: DateTime(2025, 6, 20),
         subtotalAmount: Decimal.fromInt(1000),
         taxAmount: Decimal.fromInt(150),
         discountAmount: Decimal.zero,
@@ -156,8 +197,9 @@ void main() {
         paidAmount: Decimal.zero,
         taxRate: Decimal.fromInt(15),
         status: InvoiceStatus.sent,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
+        createdAt: DateTime(2025, 5, 20),
+        updatedAt: DateTime(2025, 5, 20),
+        exchangeRate: Decimal.one,
         items: [],
       );
 
@@ -218,6 +260,7 @@ void main() {
         status: InvoiceStatus.sent,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
+        exchangeRate: Decimal.one,
         items: [],
       );
 

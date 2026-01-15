@@ -1,6 +1,14 @@
 {
   "ar": [
+    "aboutDescription",
+    "aboutFeature1",
+    "aboutFeature2",
+    "aboutFeature3",
+    "aboutFeature4",
+    "aboutFeature5",
+    "dashboardWelcomeMessage",
     "exchangeRate",
-    "originalAmount"
+    "originalAmount",
+    "errPermissionDenied"
   ]
 }

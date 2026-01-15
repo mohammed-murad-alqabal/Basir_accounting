@@ -130,123 +130,136 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      backgroundColor: colorScheme.surface,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(Spacing.lg),
-          child: Column(
-            children: [
-              // رأس الشاشة (Header)
-              _buildHeader(colorScheme),
-              const SizedBox(height: Spacing.xl),
+    return GlassScaffold(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(Spacing.lg),
+        child: Column(
+          children: [
+            // رأس الشاشة (Header)
+            _buildHeader(colorScheme),
+            const SizedBox(height: Spacing.xl),
 
-              // نموذج تسجيل الدخول
-              Form(
-                key: <credential-fixture>,
-                autovalidateMode: _autovalidateMode,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // حقل اسم المستخدم
-                    AppTextField(
-                      label: context.l10n.labelUsername,
-                      hint: context.l10n.hintEnterUsername,
-                      controller: _usernameController,
-                      prefixIcon: Icon(appIcons.person, size: IconSizes.sm),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return context.l10n.errEmptyField;
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: Spacing.lg),
+            // نموذج تسجيل الدخول
+            Form(
+              key: <credential-fixture>,
+              autovalidateMode: _autovalidateMode,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // حقل اسم المستخدم
+                  AppTextField(
+                    label: context.l10n.labelUsername,
+                    hint: context.l10n.hintEnterUsername,
+                    controller: _usernameController,
+                    prefixIcon: Icon(appIcons.person, size: IconSizes.sm),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return context.l10n.errEmptyField;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: Spacing.lg),
 
-                    // حقل كلمة المرور
-                    AppTextField(
-                      label: context.l10n.labelPassword,
-                      hint: context.l10n.hintEnterPassword,
-                      controller: _passwordController,
-                      obscureText: true,
-                      prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return context.l10n.errEmptyField;
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: Spacing.md),
+                  // حقل كلمة المرور
+                  AppTextField(
+                    label: context.l10n.labelPassword,
+                    hint: context.l10n.hintEnterPassword,
+                    controller: _passwordController,
+                    obscureText: true,
+                    prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return context.l10n.errEmptyField;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: Spacing.md),
 
-                    // خيار تذكرني
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: _keepLoggedIn,
-                          activeColor: colorScheme.primary,
-                          onChanged: (value) {
-                            setState(() => _keepLoggedIn = value ?? true);
-                          },
+                  // خيار تذكرني
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: _keepLoggedIn,
+                        activeColor: colorScheme.primary,
+                        onChanged: (value) {
+                          setState(() => _keepLoggedIn = value ?? true);
+                        },
+                      ),
+                      Text(
+                        context.l10n.labelRememberMe,
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: colorScheme.onSurface,
                         ),
-                        Text(
-                          context.l10n.labelRememberMe,
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: colorScheme.onSurface,
+                      ),
+                      const Spacer(),
+                      // رابط نسيت كلمة المرور
+                      TextButton(
+                        onPressed: _isLoading
+                            ? null
+                            : () => Navigator.of(context).pushNamed(
+                                  '/forgot-password',
+                                ),
+                        child: Text(
+                          context.l10n.forgotPassword,
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: colorScheme.primary,
+                            fontWeight: FontWeight.w500,
                           ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: Spacing.md),
+
+                  // أزرار الإجراءات
+                  // أزرار الإجراءات
+                  AppEnhancedButton(
+                    width: double.infinity,
+                    label: context.l10n.loginTitle,
+                    onPressed: _handleLogin,
+                    isLoading: _isLoading,
+                    icon: appIcons.login,
+                  ),
+                  const SizedBox(height: Spacing.md),
+
+                  AppEnhancedButton(
+                    type: AppEnhancedButtonType.secondary,
+                    width: double.infinity,
+                    label: context.l10n.loginGuest,
+                    onPressed: _isLoading ? null : _handleGuestLogin,
+                    isLoading: _isLoading,
+                    icon: appIcons.person,
+                  ),
+                  const SizedBox(height: Spacing.xl),
+
+                  // إنشاء حساب جديد
+                  Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          context.l10n.msgNoAccount,
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                        AppEnhancedButton(
+                          type: AppEnhancedButtonType.text,
+                          label: context.l10n.btnCreateAccount,
+                          onPressed: () {
+                            unawaited(
+                              Navigator.of(context).pushNamed('/setup'),
+                            );
+                          },
                         ),
                       ],
                     ),
-                    const SizedBox(height: Spacing.md),
-
-                    // أزرار الإجراءات
-                    // أزرار الإجراءات
-                    AppEnhancedButton(
-                      width: double.infinity,
-                      label: context.l10n.loginTitle,
-                      onPressed: _handleLogin,
-                      isLoading: _isLoading,
-                      icon: appIcons.login,
-                    ),
-                    const SizedBox(height: Spacing.md),
-
-                    AppEnhancedButton(
-                      type: AppEnhancedButtonType.secondary,
-                      width: double.infinity,
-                      label: context.l10n.loginGuest,
-                      onPressed: _isLoading ? null : _handleGuestLogin,
-                      isLoading: _isLoading,
-                      icon: appIcons.person,
-                    ),
-                    const SizedBox(height: Spacing.xl),
-
-                    // إنشاء حساب جديد
-                    Center(
-                      child: Column(
-                        children: [
-                          Text(
-                            context.l10n.msgNoAccount,
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              color: colorScheme.onSurfaceVariant,
-                            ),
-                          ),
-                          AppEnhancedButton(
-                            type: AppEnhancedButtonType.text,
-                            label: context.l10n.btnCreateAccount,
-                            onPressed: () {
-                              unawaited(
-                                Navigator.of(context).pushNamed('/setup'),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

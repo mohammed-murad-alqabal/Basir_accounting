@@ -114,14 +114,22 @@ class _AgingReportScreenState extends ConsumerState<AgingReportScreen> {
               columns: [
                 DataColumn(label: Text(context.l10n.labelPartner)),
                 DataColumn(
-                    label: Text(context.l10n.periodCurrent), numeric: true),
+                  label: Text(context.l10n.periodCurrent),
+                  numeric: true,
+                ),
                 DataColumn(label: Text(context.l10n.period1_30), numeric: true),
                 DataColumn(
-                    label: Text(context.l10n.period31_60), numeric: true),
+                  label: Text(context.l10n.period31_60),
+                  numeric: true,
+                ),
                 DataColumn(
-                    label: Text(context.l10n.period61_90), numeric: true),
+                  label: Text(context.l10n.period61_90),
+                  numeric: true,
+                ),
                 DataColumn(
-                    label: Text(context.l10n.periodOver90), numeric: true),
+                  label: Text(context.l10n.periodOver90),
+                  numeric: true,
+                ),
                 DataColumn(label: Text(context.l10n.labelTotal), numeric: true),
               ],
               rows: lines

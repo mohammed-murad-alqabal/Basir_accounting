@@ -32,18 +32,15 @@ class _AssetsScreenState extends ConsumerState<AssetsScreen> {
     final assetsAsync = ref.watch(filteredAssetsProvider);
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppAppBar(
-        title: context.l10n.assetsScreenTitle,
-        actions: [
-          IconButton(
-            icon: Icon(appIcons.add, size: 26),
-            tooltip: context.isArabic ? 'إضافة أصل جديد' : 'Add New Asset',
-            onPressed: _addAsset,
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: context.l10n.assetsScreenTitle,
+      actions: [
+        IconButton(
+          icon: Icon(appIcons.add, size: 26),
+          tooltip: context.isArabic ? 'إضافة أصل جديد' : 'Add New Asset',
+          onPressed: _addAsset,
+        ),
+      ],
       body: Column(
         children: [
           // حقل البحث

@@ -58,6 +58,7 @@ export '../features/accounting/data/repositories/accounting_repository_impl.dart
 export '../features/analytics/application/analytics_service.dart';
 // تصدير مزودات المصادقة من مكانها الجديد
 export '../features/auth/presentation/providers/auth_provider.dart';
+export '../features/reports/application/pdf_generation_service.dart';
 export '../features/reports/services/reporting_service.dart';
 // تصدير المزودات الأساسية
 export 'providers/calendar_provider.dart';

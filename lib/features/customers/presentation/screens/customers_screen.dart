@@ -6,6 +6,7 @@ import 'package:basir_accounting_system/features/customers/domain/entities/custo
 import 'package:basir_accounting_system/features/customers/presentation/providers/customer_provider.dart';
 import 'package:basir_accounting_system/features/customers/presentation/screens/customer_details_screen.dart';
 import 'package:basir_accounting_system/features/customers/presentation/screens/customer_form_screen.dart';
+import 'package:basir_accounting_system/features/onboarding/presentation/widgets/cognitive_overlay.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,18 +34,28 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
     final customersAsync = ref.watch(filteredCustomersProvider);
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppAppBar(
-        title: context.l10n.customersScreenTitle,
-        actions: [
-          IconButton(
-            icon: Icon(appIcons.add, size: 26),
-            tooltip: context.l10n.customersAddTooltip,
-            onPressed: _addCustomer,
-          ),
-        ],
-      ),
+    // Trigger Cognitive Hint on first load
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (customersAsync.hasValue &&
+          customersAsync.value!.isEmpty &&
+          _searchController.text.isEmpty) {
+        showCognitiveHint(
+          context,
+          'ابدأ بإضافة عملائك لتتمكن من إصدار الفواتير لهم بسهولة. يمكنك استيرادهم من جهات الاتصال أيضاً.',
+          title: 'إدارة العملاء',
+        );
+      }
+    });
+
+    return GlassScaffold(
+      title: context.l10n.customersScreenTitle,
+      actions: [
+        IconButton(
+          icon: Icon(appIcons.add, size: 26),
+          tooltip: context.l10n.customersAddTooltip,
+          onPressed: _addCustomer,
+        ),
+      ],
       body: Column(
         children: [
           // حقل البحث

@@ -7,20 +7,37 @@ import 'package:basir_accounting_system/features/accounting/presentation/screens
 import 'package:basir_accounting_system/features/accounting/presentation/screens/cash_flow_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/income_statement_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/trial_balance_screen.dart';
+import 'package:basir_accounting_system/features/onboarding/presentation/widgets/cognitive_overlay.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Central hub for accessing statutory and management financial reports.
-///
-/// Provides a unified gateway to core statements including Trial Balance,
-/// Income Statement (IFRS 18), Balance Sheet, and Cash Flow (Direct Method).
-class ReportingOverviewScreen extends ConsumerWidget {
+class ReportingOverviewScreen extends ConsumerStatefulWidget {
   /// Creates the reporting overview screen.
   const ReportingOverviewScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
+  ConsumerState<ReportingOverviewScreen> createState() =>
+      _ReportingOverviewScreenState();
+}
+
+class _ReportingOverviewScreenState
+    extends ConsumerState<ReportingOverviewScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showCognitiveHint(
+        context,
+        'Use these reports to maintain absolute financial oversight and ensure IFRS 18 compliance.',
+        title: 'Financial Strategy',
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
         appBar: AppAppBar(title: context.l10n.reportingOverviewTitle),
         body: ListView(
           padding: const EdgeInsets.all(Spacing.md),

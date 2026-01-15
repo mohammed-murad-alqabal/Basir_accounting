@@ -1,6 +1,8 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/application/orchestrator_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/features/reports/presentation/widgets/report_filter_widget.dart';
 import 'package:basir_accounting_system/features/reports/presentation/widgets/report_line_item.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
@@ -8,6 +10,7 @@ import 'package:basir_accounting_system/src/rust/api/reports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:printing/printing.dart';
 
 /// Available financial report types.
 enum FinancialReportType {
@@ -77,20 +80,26 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
       ),
     );
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: _getTitle(context),
-        actions: [
+    return GlassScaffold(
+      title: _getTitle(context),
+      actions: [
+        if (reportAsync.hasValue)
           IconButton(
             icon: const Icon(Icons.share),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(context.l10n.msgExportComingSoon)),
+            tooltip: context.l10n.actionShare,
+            onPressed: () async {
+              final pdfService =
+                  ref.read(pdfGenerationServiceProvider.notifier);
+              final pdfBytes =
+                  await pdfService.generateReportPdf(reportAsync.value!);
+
+              await Printing.sharePdf(
+                bytes: pdfBytes,
+                filename: '${reportAsync.value!.title}.pdf',
               );
             },
           ),
-        ],
-      ),
+      ],
       body: Column(
         children: [
           ReportFilterWidget(
@@ -139,7 +148,7 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
   Widget _buildReportContent(FinancialReportDto report) =>
       SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: AppCard(
+        child: GlassCard(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,6 +181,62 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
               const Divider(height: 24),
               // Lines
               ...report.lines.map((line) => ReportLineItem(line: line)),
+
+              const SizedBox(height: 32),
+              const Divider(),
+              const SizedBox(height: 16),
+
+              // Cognitive Insights Section
+              Text(
+                'Cognitive Hexagon Insights',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor,
+                    ),
+              ),
+              const SizedBox(height: 8),
+              FutureBuilder<List<AgentResult>>(
+                future: ref
+                    .read(orchestratorServiceProvider.notifier)
+                    .getPeriodInsights(_fromDate, _toDate),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Center(child: LinearProgressIndicator()),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return Text('Error loading insights: ${snapshot.error}');
+                  }
+
+                  final insights = snapshot.data ?? [];
+                  if (insights.isEmpty) {
+                    return const Text('No insights available for this period.');
+                  }
+
+                  return Column(
+                    children: insights
+                        .map(
+                          (agentResult) => ListTile(
+                            leading: const Icon(Icons.psychology,
+                                color: Colors.purple),
+                            title: Text(agentResult.agentId),
+                            subtitle: Text(agentResult.rationale),
+                            dense: true,
+                            trailing: agentResult.isAllowed
+                                ? const Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green,
+                                  )
+                                : const Icon(Icons.warning,
+                                    color: Colors.orange),
+                          ),
+                        )
+                        .toList(),
+                  );
+                },
+              ),
             ],
           ),
         ),

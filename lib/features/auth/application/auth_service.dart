@@ -36,6 +36,48 @@ class AuthService {
   /// دفق التغييرات في حالة المصادقة (يرجع اسم المستخدم أو null)
   Stream<String?> get onAuthStateChange => _authStateController.stream;
 
+  /// Changes password without requiring old password verification
+  ///
+  /// Used for password reset operations where the user has been
+  /// authenticated through a secure token. Updates the stored
+  /// password hash and maintains user session.
+  ///
+  /// Parameters:
+  /// - [username]: Username for password change
+  /// - [newPassword]: New password to set
+  ///
+  /// Throws: [Exception] if user not found or password invalid
+  Future<void> changePasswordWithoutOldPassword(
+    String username,
+    String newPassword,
+  ) async {
+    // Validate new password
+    if (newPassword.length < 6) {
+      throw Exception('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+    }
+
+    try {
+      // Check if user exists
+      final storedUsername = await secureStorage.read(key: '<credential-fixture>');
+      if (storedUsername != username) {
+        throw Exception('المستخدم غير موجود');
+      }
+
+      // Generate new salt and hash
+      final userSalt = _generateUserSalt();
+      final hashedPassword = _hashPassword(newPassword, userSalt);
+
+      // Update stored password and salt
+      await secureStorage.write(key: '<credential-fixture>', value: hashedPassword);
+      await secureStorage.write(key: '<credential-fixture>', value: userSalt);
+
+      debugPrint('🔐 [AUTH] Password changed successfully for $username');
+    } catch (e) {
+      debugPrint('⚠️ [AUTH] Password change failed: $e');
+      rethrow;
+    }
+  }
+
   /// تنظيف البيانات التالفة أو القديمة (Industrial-Grade Robustness)
   ///
   /// يتحقق مما إذا كان هذا هو التشغيل الأول بعد إعادة التثبيت.

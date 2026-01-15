@@ -24,7 +24,6 @@ void main() {
                 email: 'test@example.com',
                 displayName: 'Test User',
                 role: UserRole.admin,
-                
               ),
             ),
           ],
@@ -54,7 +53,6 @@ void main() {
                   email: 'test@example.com',
                   displayName: 'Test User',
                   role: UserRole.admin,
-                  
                 ),
               ),
             ],

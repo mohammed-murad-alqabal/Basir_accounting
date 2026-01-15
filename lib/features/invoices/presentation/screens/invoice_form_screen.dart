@@ -14,7 +14,9 @@ import 'package:basir_accounting_system/features/inventory/domain/entities/inven
 import 'package:basir_accounting_system/features/inventory/presentation/providers/inventory_provider.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:basir_accounting_system/features/onboarding/presentation/widgets/cognitive_overlay.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +35,13 @@ import 'package:uuid/uuid.dart';
 /// ***
 class InvoiceFormScreen extends ConsumerStatefulWidget {
   /// Creates an invoice form screen with an optional existing invoice to edit.
-  const InvoiceFormScreen({super.key, this.invoice});
+  const InvoiceFormScreen({super.key, this.invoice, this.type});
 
   /// The invoice to edit; if null, a new invoice will be created.
   final Invoice? invoice;
+
+  /// The type of invoice to create (used when [invoice] is null).
+  final InvoiceType? type;
 
   @override
   ConsumerState<InvoiceFormScreen> createState() => _InvoiceFormScreenState();
@@ -52,7 +57,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   DateTime _dueDate = DateTime.now().add(const Duration(days: 30));
   Decimal _taxRate = Decimal.parse('0.15');
   InvoiceStatus _status = InvoiceStatus.draft;
+  InvoiceType _type = InvoiceType.sales;
   List<InvoiceItem> _items = [];
+  String _currency = 'SAR';
+  late TextEditingController _exchangeRateController;
 
   @override
   void initState() {
@@ -63,13 +71,24 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       _dueDate = widget.invoice!.dueDate;
       _taxRate = widget.invoice!.taxRate;
       _status = widget.invoice!.status;
+      _type = widget.invoice!.type;
       _items = List.from(widget.invoice!.items);
+      _currency = widget.invoice!.currency;
+      _exchangeRateController = TextEditingController(
+        text: widget.invoice!.exchangeRate.toString(),
+      );
+    } else {
+      if (widget.type != null) {
+        _type = widget.type!;
+      }
+      _exchangeRateController = TextEditingController(text: '1.0');
     }
   }
 
   @override
   void dispose() {
     _notesController.dispose();
+    _exchangeRateController.dispose();
     super.dispose();
   }
 
@@ -91,13 +110,19 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       } on Object catch (_) {}
     }
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppAppBar(
-        title: isEditing
-            ? context.l10n.invoiceFormTitleEdit
-            : context.l10n.invoiceFormTitleAdd,
-      ),
+    // Trigger Cognitive Hint on first load
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!isEditing && _items.isEmpty) {
+        showCognitiveHint(
+          context,
+          context.l10n.msgInvoiceCognitiveHint,
+          title: context.l10n.titleInvoiceCognitiveHint,
+        );
+      }
+    });
+
+    return GlassScaffold(
+      title: _getLocalizedTitle(context, isEditing),
       body: Form(
         key: <credential-fixture>,
         child: SingleChildScrollView(
@@ -105,7 +130,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              AppCard(
+              GlassCard(
                 child: customersAsync.when(
                   data: _buildCustomerSelector,
                   loading: () => const Center(
@@ -118,7 +143,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 ),
               ),
               const SizedBox(height: Spacing.md),
-              AppCard(
+              GlassCard(
                 child: _buildDateField(
                   label: context.l10n.labelIssuedDate,
                   date: _issuedDate,
@@ -128,7 +153,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 ),
               ),
               const SizedBox(height: Spacing.md),
-              AppCard(
+              GlassCard(
                 child: _buildDateField(
                   label: context.l10n.labelDueDate,
                   date: _dueDate,
@@ -138,9 +163,11 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 ),
               ),
               const SizedBox(height: Spacing.md),
-              AppCard(child: _buildTaxRateField(appIcons)),
+              GlassCard(child: _buildTaxRateField(appIcons)),
               const SizedBox(height: Spacing.md),
-              AppCard(child: _buildStatusSelector()),
+              GlassCard(child: _buildStatusSelector()),
+              const SizedBox(height: Spacing.md),
+              GlassCard(child: _buildCurrencySelector(appIcons)),
               const SizedBox(height: Spacing.md),
               _buildItemsSection(appIcons),
               const SizedBox(height: Spacing.md),
@@ -177,6 +204,25 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ),
       ),
     );
+  }
+
+  String _getLocalizedTitle(BuildContext context, bool isEditing) {
+    if (isEditing) {
+      return context.l10n.invoiceFormTitleEdit;
+    }
+
+    switch (_type) {
+      case InvoiceType.sales:
+        return context.l10n.invoiceFormTitleAdd;
+      case InvoiceType.purchase:
+        return context.l10n.invoiceFormTitleAddPurchase;
+      case InvoiceType.salesReturn:
+        return context.l10n.labelSalesReturn;
+      case InvoiceType.purchaseReturn:
+        return context.l10n.labelPurchaseReturn;
+      case InvoiceType.damage:
+        return context.l10n.labelDamageInvoice;
+    }
   }
 
   Widget _buildCustomerSelector(List<Customer> customers) => Column(
@@ -218,6 +264,65 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               return null;
             },
           ),
+        ],
+      );
+
+  Widget _buildCurrencySelector(AppIcons appIcons) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(appIcons.currencyExchange, color: AppColors.primary),
+              const SizedBox(width: Spacing.md),
+              Text(
+                context.l10n.labelCurrency,
+                style: const TextStyle(
+                  fontSize: AppTypography.bodyLarge,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: Spacing.sm),
+          DropdownButtonFormField<String>(
+            initialValue: _currency,
+            items: ['SAR', 'USD', 'EUR']
+                .map(
+                  (c) => DropdownMenuItem(
+                    value: c,
+                    child: Text(c),
+                  ),
+                )
+                .toList(),
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  _currency = value;
+                  if (value == 'SAR') {
+                    _exchangeRateController.text = '1.0';
+                  } else if (value == 'USD') {
+                    _exchangeRateController.text = '3.75';
+                  } else if (value == 'EUR') {
+                    _exchangeRateController.text = '4.10';
+                  }
+                });
+              }
+            },
+            decoration: const InputDecoration(border: OutlineInputBorder()),
+          ),
+          if (_currency != 'SAR') ...[
+            const SizedBox(height: Spacing.md),
+            AppTextField(
+              controller: _exchangeRateController,
+              label: context.l10n.labelExchangeRate,
+              hint: '1.0',
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              prefixIcon: Icon(appIcons.numbers),
+              onChanged: (value) => setState(() {}),
+            ),
+          ],
         ],
       );
 
@@ -852,33 +957,30 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         (sum, item) => sum + item.taxAmount,
       );
       final grandTotal = subtotal + taxTotal;
-      final isNew = widget.invoice == null;
-      final invoiceId = isNew ? const Uuid().v4() : widget.invoice!.id;
-      final invoiceNumber = isNew
-          ? 'INV-${DateTime.now().millisecondsSinceEpoch}'
-          : widget.invoice!.invoiceNumber;
 
       final invoice = Invoice(
-        id: invoiceId,
-        invoiceNumber: invoiceNumber,
+        id: widget.invoice?.id ?? const Uuid().v4(),
+        invoiceNumber: widget.invoice?.invoiceNumber ??
+            'INV-${DateTime.now().millisecondsSinceEpoch}',
         customerId: _selectedCustomer!.id,
-        customerName: _selectedCustomer!.nameAr,
+        customerName: _selectedCustomer!.name(isArabic: context.isArabic),
         items: _items,
         issuedDate: _issuedDate,
         dueDate: _dueDate,
-        taxRate: _taxRate,
-        status: _status,
-        subtotalAmount: subtotal,
-        taxAmount: taxTotal,
-        totalAmount: grandTotal,
-        paidAmount: isNew ? Decimal.zero : widget.invoice!.paidAmount,
-        discountAmount: Decimal.zero,
-        discountRate: Decimal.zero,
-        notes: _notesController.text.trim().isEmpty
-            ? null
-            : _notesController.text.trim(),
         createdAt: widget.invoice?.createdAt ?? DateTime.now(),
         updatedAt: DateTime.now(),
+        status: _status,
+        type: _type,
+        currency: _currency,
+        exchangeRate: Decimal.parse(_exchangeRateController.text),
+        subtotalAmount: subtotal,
+        taxAmount: taxTotal,
+        discountAmount: Decimal.zero,
+        totalAmount: grandTotal,
+        paidAmount: _status == InvoiceStatus.paid ? grandTotal : Decimal.zero,
+        taxRate: _taxRate,
+        discountRate: Decimal.zero,
+        notes: _notesController.text,
       );
 
       final isEditing = widget.invoice != null;
@@ -1068,7 +1170,7 @@ class _SuccessDialogState extends State<_SuccessDialog>
               borderRadius: BorderRadius.circular(Radii.lg),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
@@ -1080,7 +1182,7 @@ class _SuccessDialogState extends State<_SuccessDialog>
                 Container(
                   padding: const EdgeInsets.all(Spacing.lg),
                   decoration: BoxDecoration(
-                    color: AppColors.success.withOpacity(0.1),
+                    color: AppColors.success.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(

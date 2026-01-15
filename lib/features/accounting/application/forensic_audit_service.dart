@@ -26,7 +26,7 @@ class AuditResult {
   /// Human-readable summary of the audit outcome.
   final String message;
 
-  /// Detailed findings or discrepancies identified during the audit.
+  /// The detailed findings or discrepancies identified during the audit.
   final List<String> findings;
 }
 
@@ -226,8 +226,8 @@ class ForensicAuditService extends _$ForensicAuditService
 
       if (absoluteCalculated != storedBalance) {
         discrepancies.add(
-          'Account ${account.nameEn}: Stored balance ($storedBalance) mismatch '
-          'against computed total ($absoluteCalculated)',
+          'Account ${account.nameEn}: Stored balance ($storedBalance) '
+          'mismatch against computed total ($absoluteCalculated)',
         );
       }
     }
@@ -270,6 +270,67 @@ class ForensicAuditService extends _$ForensicAuditService
           ? 'No suspicious patterns identified.'
           : 'Forensic alerts require administrative review.',
       findings: findings,
+    );
+  }
+
+  /// Performs a comprehensive batch scan of the entire ledger for sequential
+  /// anomalies and reference gaps.
+  /// (Implementation of Phase 25: Historical Scrutiny)
+  Future<AuditResult> batchScanLedger() async {
+    final entries = await _repository.getJournalEntries();
+    final issues = <String>[];
+
+    if (entries.isEmpty) {
+      return const AuditResult(
+        isSuccess: true,
+        message: 'Ledger is empty, no anomalies detected.',
+      );
+    }
+
+    // Sort entries by date to check sequence
+    final sortedEntries = List<JournalEntry>.from(entries)
+      ..sort((a, b) => a.date.compareTo(b.date));
+
+    // 1. Reference Sequence Check
+    final prefixGroups = <String, List<int>>{};
+    for (final entry in sortedEntries) {
+      final match =
+          RegExp(r'^([A-Z-]+)(\d+)$').firstMatch(entry.referenceNumber);
+      if (match != null) {
+        final prefix = match.group(1)!;
+        final num = int.tryParse(match.group(2) ?? '') ?? 0;
+        prefixGroups.putIfAbsent(prefix, () => []).add(num);
+      }
+    }
+
+    prefixGroups.forEach((prefix, numbers) {
+      numbers.sort();
+      for (var i = 1; i < numbers.length; i++) {
+        if (numbers[i] - numbers[i - 1] > 1) {
+          issues.add(
+              'Gap detected in $prefix sequence: ${numbers[i - 1]} to ${numbers[i]}');
+        }
+      }
+    });
+
+    // 2. Hash Chain Integrity (Placeholder for future Rust integration)
+    for (var i = 1; i < sortedEntries.length; i++) {
+      final current = sortedEntries[i];
+      final previous = sortedEntries[i - 1];
+      if (current.previousHash != null &&
+          current.previousHash != previous.hash) {
+        issues.add(
+          'Integrity Breach: Hash chain broken between #${previous.referenceNumber} and #${current.referenceNumber}',
+        );
+      }
+    }
+
+    return AuditResult(
+      isSuccess: issues.isEmpty,
+      message: issues.isEmpty
+          ? 'Historical ledger scrutiny complete: No anomalies found.'
+          : 'Forensic anomalies detected in historical ledger.',
+      findings: issues,
     );
   }
 }

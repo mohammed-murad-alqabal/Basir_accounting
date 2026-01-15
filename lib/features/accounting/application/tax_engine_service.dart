@@ -33,6 +33,8 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
   /// 3. **Missing Tax Detection**: Identifies sales/purchase documents without
   ///    proper VAT lines.
   @override
+
+  /// Validates tax IDs and calculates VAT statements.
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];
     var isAllowed = true;
@@ -116,8 +118,9 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
   }
 }
 
-/// A simplified representation of a VAT return statement.
+/// Model representing a simulated VAT Return Statement.
 class VatReturnStatement {
+  /// Standard constructor for the VAT return statement.
   const VatReturnStatement({
     required this.periodStart,
     required this.periodEnd,
@@ -130,23 +133,36 @@ class VatReturnStatement {
     required this.netVatDue,
   });
 
+  /// Beginning of the audit period.
   final DateTime periodStart;
+
+  /// End of the audit period.
   final DateTime periodEnd;
 
-  // Output Tax (Sales)
+  /// Aggregate amount of sales subject to standard VAT.
   final Decimal standardSalesBase;
+
+  /// Total VAT collected on standard sales.
   final Decimal standardSalesTax;
+
+  /// Total sales taxed at 0%.
   final Decimal zeroRatedSales;
+
+  /// Total sales exempt from VAT.
   final Decimal exemptSales;
 
-  // Input Tax (Purchases)
+  /// Aggregate amount of purchases subject to standard VAT.
   final Decimal standardPurchasesBase;
+
+  /// Total VAT paid on standard purchases.
   final Decimal standardPurchasesTax;
 
-  // Net
+  /// Final net amount due to or refundable by the tax authority.
   final Decimal netVatDue;
 
+  /// Total institutional sales (standard + zero + exempt).
   Decimal get totalSales => standardSalesBase + zeroRatedSales + exemptSales;
 
+  /// Total institutional purchases.
   Decimal get totalPurchases => standardPurchasesBase;
 }

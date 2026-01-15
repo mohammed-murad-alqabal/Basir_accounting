@@ -9,6 +9,9 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
+  String get appTitle => 'بصير';
+
+  @override
   String get labelStandard => 'المعيار المحاسبي';
 
   @override
@@ -63,7 +66,304 @@ class AppLocalizationsAr extends AppLocalizations {
   String get payablesAgingTitle => 'أعمار الموردين';
 
   @override
+  String get labelGeneralLedger => 'دفتر الأستاذ';
+
+  @override
+  String get labelPeriod => 'الفترة';
+
+  @override
+  String get msgNoTransactionsFound => 'لا توجد حركات';
+
+  @override
   String get msgExportComingSoon => 'سيتم تفعيل التصدير قريباً';
+
+  @override
+  String get appearanceTitle => 'المظهر والتخصيص';
+
+  @override
+  String get companySettingsTitle => 'إعدادات الشركة والفواتير';
+
+  @override
+  String errContactAccess(String error) {
+    return 'خطأ في الوصول لجهات الاتصال: $error';
+  }
+
+  @override
+  String get errCustomerAdd => 'فشل إضافة العميل';
+
+  @override
+  String get errCustomerDelete => 'فشل حذف العميل';
+
+  @override
+  String get errCustomerNameLength => 'الاسم يجب أن يحتوي على حرفين على الأقل';
+
+  @override
+  String get errCustomerNameRequired => 'اسم العميل مطلوب';
+
+  @override
+  String get errCustomerUpdate => 'فشل تحديث بيانات العميل';
+
+  @override
+  String get errEmptyField => 'هذا الحقل مطلوب';
+
+  @override
+  String errGeneric(String error) {
+    return 'حدث خطأ: $error';
+  }
+
+  @override
+  String get errInvalidEmail => 'البريد الإلكتروني غير صحيح';
+
+  @override
+  String get errInvalidNumber => 'الرجاء إدخال رقم صحيح';
+
+  @override
+  String get errInvoiceAdd => 'فشل إضافة الفاتورة';
+
+  @override
+  String get errInvoiceUpdate => 'فشل تحديث الفاتورة';
+
+  @override
+  String errLoadCustomers(String error) {
+    return 'خطأ في تحميل العملاء: $error';
+  }
+
+  @override
+  String get errLoginFailed => 'فشل تسجيل الدخول. يرجى التحقق من البيانات.';
+
+  @override
+  String get errNoItems => 'يرجى إضافة بند واحد على الأقل';
+
+  @override
+  String get errPasswordShort => 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+
+  @override
+  String get errPasswordsDoNotMatch => 'كلمات المرور غير متطابقة';
+
+  @override
+  String get errPhoneLength => 'رقم الهاتف يجب أن يتكون من 10 أرقام';
+
+  @override
+  String get errPhoneStart05 => 'رقم الهاتف يجب أن يبدأ بـ 05';
+
+  @override
+  String get errSelectCustomer => 'يرجى اختيار العميل';
+
+  @override
+  String get errUsernameShort => 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل';
+
+  @override
+  String get errorCustomerNotFound => 'تعذر العثور على بيانات العميل';
+
+  @override
+  String get errorCustomerPhone => 'رقم هاتف العميل غير متوفر';
+
+  @override
+  String get errorLoadingInvoices => 'حدث خطأ أثناء تحميل الفواتير';
+
+  @override
+  String get errorLoadingSettings => 'خطأ في تحميل الإعدادات';
+
+  @override
+  String errorScreenNotFound(String name) {
+    return 'الشاشة غير موجودة: $name';
+  }
+
+  @override
+  String errorSharePdf(String error) {
+    return 'خطأ في مشاركة PDF: $error';
+  }
+
+  @override
+  String errorShareWhatsapp(String error) {
+    return 'خطأ في المشاركة عبر الواتساب: $error';
+  }
+
+  @override
+  String get filterAll => 'الكل';
+
+  @override
+  String get filterDraft => 'مسودة';
+
+  @override
+  String get filterIssued => 'مُصدرة';
+
+  @override
+  String get filterOverdue => 'مستحقة';
+
+  @override
+  String get filterPaid => 'مدفوعة';
+
+  @override
+  String get fontCairo => 'Cairo (الافتراضي)';
+
+  @override
+  String get fontRoboto => 'Roboto';
+
+  @override
+  String get fontSettingsTitle => 'نوع الخط';
+
+  @override
+  String get fontSizeLabel => 'حجم النص';
+
+  @override
+  String get taxConfigTitle => 'الضريبة والفلترة الإلكترونية';
+
+  @override
+  String get zatcaPhase2Title =>
+      'الفوترة الإلكترونية (المرحلة الثانية - زاتكا)';
+
+  @override
+  String get zatcaPhase2Description =>
+      'تكوين الإعدادات الخاصة بك للامتثال للمرحلة الثانية من هيئة الزكاة والضريبة والجمارك السعودية.';
+
+  @override
+  String get enableTax => 'تمكين الضريبة على الفواتير';
+
+  @override
+  String get priceIncludesTax => 'السعر يشمل الضريبة افتراضياً';
+
+  @override
+  String get vatNumber => 'الرقم الضريبي';
+
+  @override
+  String get defaultTaxRate => 'قيمة الضريبة الافتراضية (%)';
+
+  @override
+  String get b2cSimplifiedLabel => 'تسمية فاتورة B2C المبسطة';
+
+  @override
+  String get b2bStandardLabel => 'تسمية فاتورة B2B القياسية';
+
+  @override
+  String get taxName => 'اسم الضريبة';
+
+  @override
+  String get taxPercentage => 'النسبة (%)';
+
+  @override
+  String get taxShow => 'إظهار';
+
+  @override
+  String get taxDefault => 'افتراضي';
+
+  @override
+  String get printSettingsTitle => 'الطباعة والقوالب';
+
+  @override
+  String get printSettingsSubtitle =>
+      'إدارة تنسيقات الطباعة والقوالب الخاصة بك';
+
+  @override
+  String get templateSelection => 'اختيار القالب';
+
+  @override
+  String get paperSize => 'حجم الورق';
+
+  @override
+  String get fontSize => 'حجم الخط';
+
+  @override
+  String get paddingBottom => 'خطوط فارغة في النهاية';
+
+  @override
+  String get printCopies => 'عدد النسخ';
+
+  @override
+  String get printItemUnit => 'إظهار وحدة الصنف في الطباعة';
+
+  @override
+  String get saveSettings => 'حفظ الإعدادات';
+
+  @override
+  String get guestUpgradeDescription =>
+      'قم بتحويل حساب الضيف الخاص بك إلى حساب دائم لحفظ بياناتك بشكل آمن.';
+
+  @override
+  String get helpTitle => 'المساعدة والدعم';
+
+  @override
+  String get highContrast => 'تباين عالي';
+
+  @override
+  String get highContrastSubtitle => 'زيادة ووضوح النصوص والعناصر';
+
+  @override
+  String get hintAddress => 'أدخل عنوان العميل';
+
+  @override
+  String get hintCompanyName => 'أدخل اسم شركتك';
+
+  @override
+  String get hintConfirmPassword => 'أعد إدخال كلمة المرور';
+
+  @override
+  String get hintCurrencySymbol => 'ر.س';
+
+  @override
+  String get hintCustomerName => 'أدخل اسم العميل';
+
+  @override
+  String get hintCustomerNotes => 'أضف ملاحظات عن العميل';
+
+  @override
+  String get hintEnterNewPassword => 'أدخل كلمة المرور الجديدة';
+
+  @override
+  String get hintEnterNewUsername => 'أدخل اسم المستخدم الجديد';
+
+  @override
+  String get hintEnterPassword => 'يرجى إدخال كلمة المرور';
+
+  @override
+  String get hintEnterUsername => 'يرجى إدخال اسم المستخدم';
+
+  @override
+  String get hintNotes => 'أضف ملاحظات عن الفاتورة';
+
+  @override
+  String get hintSelectCustomer => 'اختر العميل';
+
+  @override
+  String get hintTaxNumber => 'أدخل الرقم الضريبي (اختياري)';
+
+  @override
+  String get iconCupertino => 'Cupertino (iOS)';
+
+  @override
+  String get iconMaterial => 'Material Design';
+
+  @override
+  String get iconSettingsTitle => 'نمط الأيقونات';
+
+  @override
+  String get journalEntryFormTitleAdd => 'إضافة قيد يدوي';
+
+  @override
+  String get journalEntryFormTitleEdit => 'تعديل قيد يدوي';
+
+  @override
+  String get invoiceFormTitleAdd => 'إضافة فاتورة جديدة';
+
+  @override
+  String get invoiceFormTitleAddPurchase => 'إضافة فاتورة مشتريات';
+
+  @override
+  String get invoiceFormTitleEdit => 'تعديل الفاتورة';
+
+  @override
+  String invoiceTitle(String id) {
+    return 'فاتورة رقم $id';
+  }
+
+  @override
+  String get calculatorTitle => 'الحاسبة المالية';
+
+  @override
+  String get convertToCurrencies => 'التحويل للعملات';
+
+  @override
+  String get clear => 'مسح';
 
   @override
   String get labelTermsAndConditions => 'الشروط والأحكام';
@@ -116,12 +416,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tooltipUpdateReport => 'تحديث التقرير';
 
   @override
-  String get journalEntryFormTitleAdd => 'إضافة قيد يدوي';
-
-  @override
-  String get journalEntryFormTitleEdit => 'تعديل قيد يدوي';
-
-  @override
   String get labelCogsAccountId => 'حساب تكلفة البضاعة (COGS)';
 
   @override
@@ -134,26 +428,69 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelInventoryValuation => 'تقييم المخزون (IAS 2)';
 
   @override
+  String get logoutLabel => 'تسجيل الخروج';
+
+  @override
+  String msgInvoiceShare(String name, String id, String total, String symbol) {
+    return 'مرحباً $name، إليك تفاصيل فاتورة رقم $id:\nالإجمالي: $total $symbol\nشكراً لتعاملك معنا.';
+  }
+
+  @override
+  String msgSaveError(String error) {
+    return 'خطأ في الحفظ: $error';
+  }
+
+  @override
+  String get navHome => 'الرئيسية';
+
+  @override
+  String get navInvoices => 'الفواتير';
+
+  @override
+  String get navSettings => 'الإعدادات';
+
+  @override
+  String get notificationsTitle => 'الإشعارات';
+
+  @override
+  String pdfShareSubject(String id) {
+    return 'فاتورة رقم $id';
+  }
+
+  @override
+  String pdfShareText(String customerName) {
+    return 'إليك تفاصيل الفاتورة الخاصة بـ $customerName';
+  }
+
+  @override
+  String placeholderComingSoon(String title) {
+    return 'قريبًا: $title';
+  }
+
+  @override
+  String get settingsTitle => 'الإعدادات';
+
+  @override
   String get aboutAppTitle => 'حول التطبيق';
 
   @override
   String get aboutDescription =>
-      'تطبيق بصير هو نظام متكامل لإدارة الفواتير والعملاء، مصمم خصيصاً للأعمال الصغيرة والمتوسطة.';
+      'Basir app is a complete system for managing invoices and customers, designed specifically for small and medium businesses.';
 
   @override
-  String get aboutFeature1 => '• إدارة الفواتير بسهولة';
+  String get aboutFeature1 => '• Manage invoices easily';
 
   @override
-  String get aboutFeature2 => '• إدارة العملاء';
+  String get aboutFeature2 => '• Customer management';
 
   @override
-  String get aboutFeature3 => '• تصدير الفواتير كـ PDF';
+  String get aboutFeature3 => '• Export invoices as PDF';
 
   @override
-  String get aboutFeature4 => '• تخزين آمن للبيانات';
+  String get aboutFeature4 => '• Secure data storage';
 
   @override
-  String get aboutFeature5 => '• دعم كامل للغة العربية';
+  String get aboutFeature5 => '• Full Arabic language support';
 
   @override
   String get aboutFeaturesTitle => 'الميزات الرئيسية:';
@@ -298,9 +635,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appName => 'بصير';
 
   @override
-  String get appTitle => 'بصير';
-
-  @override
   String get appVersion => '1.0.0';
 
   @override
@@ -309,9 +643,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get appearanceSettingsTitle => 'إعدادات المظهر';
-
-  @override
-  String get appearanceTitle => 'المظهر والتخصيص';
 
   @override
   String get btnAdd => 'إضافة';
@@ -368,9 +699,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get companySettingsDialogTitle => 'إعدادات الشركة والفواتير';
 
   @override
-  String get companySettingsTitle => 'إعدادات الشركة والفواتير';
-
-  @override
   String get customerDetailsTitle => 'تفاصيل العميل';
 
   @override
@@ -392,25 +720,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get customersTitle => 'العملاء';
 
   @override
-  String get dashboardBasirSystemTitle => 'نظام بصير المحاسبي';
-
-  @override
-  String get dashboardMotto => 'دقة وموثوقية في كل معاملة';
-
-  @override
-  String get dashboardQuickActionsTitle => 'الإجراءات المالية السريعة';
-
-  @override
-  String get dashboardRecentActivityTitle => 'سجل العمليات الأحدث';
-
-  @override
-  String get dashboardStatsTitle => 'تحليلات الأداء المالي';
-
-  @override
-  String get dashboardTitle => 'لوحة التحكم';
-
-  @override
-  String get dashboardWelcomeMessage => 'مرحباً بك في بصير';
+  String get dashboardWelcomeMessage => 'Welcome to your Insightful Dashboard';
 
   @override
   String get dialogAddItemTitle => 'إضافة بند';
@@ -441,205 +751,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get editAccountTitle => 'تعديل بيانات الحساب';
 
   @override
-  String errContactAccess(String error) {
-    return 'خطأ في الوصول لجهات الاتصال: $error';
-  }
-
-  @override
-  String get errCustomerAdd => 'فشل إضافة العميل';
-
-  @override
-  String get errCustomerDelete => 'فشل حذف العميل';
-
-  @override
-  String get errCustomerNameLength => 'الاسم يجب أن يحتوي على حرفين على الأقل';
-
-  @override
-  String get errCustomerNameRequired => 'اسم العميل مطلوب';
-
-  @override
-  String get errCustomerUpdate => 'فشل تحديث بيانات العميل';
-
-  @override
-  String get errEmptyField => 'هذا الحقل مطلوب';
-
-  @override
-  String errGeneric(String error) {
-    return 'حدث خطأ: $error';
-  }
-
-  @override
-  String get errInvalidEmail => 'البريد الإلكتروني غير صحيح';
-
-  @override
-  String get errInvalidNumber => 'الرجاء إدخال رقم صحيح';
-
-  @override
-  String get errInvoiceAdd => 'فشل إضافة الفاتورة';
-
-  @override
-  String get errInvoiceUpdate => 'فشل تحديث الفاتورة';
-
-  @override
-  String errLoadCustomers(String error) {
-    return 'خطأ في تحميل العملاء: $error';
-  }
-
-  @override
-  String get errLoginFailed => 'فشل تسجيل الدخول. يرجى التحقق من البيانات.';
-
-  @override
-  String get errNoItems => 'يرجى إضافة بند واحد على الأقل';
-
-  @override
-  String get errPasswordShort => 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
-
-  @override
-  String get errPasswordsDoNotMatch => 'كلمات المرور غير متطابقة';
-
-  @override
-  String get errPhoneLength => 'رقم الهاتف يجب أن يتكون من 10 أرقام';
-
-  @override
-  String get errPhoneStart05 => 'رقم الهاتف يجب أن يبدأ بـ 05';
-
-  @override
-  String get errSelectCustomer => 'يرجى اختيار العميل';
-
-  @override
-  String get errUsernameShort => 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل';
-
-  @override
-  String get errorCustomerNotFound => 'تعذر العثور على بيانات العميل';
-
-  @override
-  String get errorCustomerPhone => 'رقم هاتف العميل غير متوفر';
-
-  @override
-  String get errorLoadingInvoices => 'حدث خطأ أثناء تحميل الفواتير';
-
-  @override
-  String get errorLoadingSettings => 'خطأ في تحميل الإعدادات';
-
-  @override
-  String errorScreenNotFound(String name) {
-    return 'الشاشة غير موجودة: $name';
-  }
-
-  @override
-  String errorSharePdf(String error) {
-    return 'خطأ في مشاركة PDF: $error';
-  }
-
-  @override
-  String errorShareWhatsapp(String error) {
-    return 'خطأ في المشاركة عبر الواتساب: $error';
-  }
-
-  @override
-  String get filterAll => 'الكل';
-
-  @override
-  String get filterDraft => 'مسودة';
-
-  @override
-  String get filterIssued => 'مُصدرة';
-
-  @override
-  String get filterOverdue => 'مستحقة';
-
-  @override
-  String get filterPaid => 'مدفوعة';
-
-  @override
-  String get fontCairo => 'Cairo (الافتراضي)';
-
-  @override
-  String get fontRoboto => 'Roboto';
-
-  @override
-  String get fontSettingsTitle => 'نوع الخط';
-
-  @override
-  String get fontSizeLabel => 'حجم النص';
-
-  @override
-  String get guestUpgradeDescription =>
-      'قم بتحويل حساب الضيف الخاص بك إلى حساب دائم لحفظ بياناتك بشكل آمن.';
-
-  @override
-  String get helpTitle => 'المساعدة والدعم';
-
-  @override
-  String get highContrast => 'تباين عالي';
-
-  @override
-  String get highContrastSubtitle => 'زيادة ووضوح النصوص والعناصر';
-
-  @override
-  String get hintAddress => 'أدخل عنوان العميل';
-
-  @override
-  String get hintCompanyName => 'أدخل اسم شركتك';
-
-  @override
-  String get hintConfirmPassword => 'أعد إدخال كلمة المرور';
-
-  @override
-  String get hintCurrencySymbol => 'ر.س';
-
-  @override
-  String get hintCustomerName => 'أدخل اسم العميل';
-
-  @override
-  String get hintCustomerNotes => 'أضف ملاحظات عن العميل';
-
-  @override
-  String get hintEnterNewPassword => 'أدخل كلمة المرور الجديدة';
-
-  @override
-  String get hintEnterNewUsername => 'أدخل اسم المستخدم الجديد';
-
-  @override
-  String get hintEnterPassword => 'يرجى إدخال كلمة المرور';
-
-  @override
-  String get hintEnterUsername => 'يرجى إدخال اسم المستخدم';
-
-  @override
-  String get hintNotes => 'أضف ملاحظات عن الفاتورة';
-
-  @override
-  String get hintSelectCustomer => 'اختر العميل';
-
-  @override
-  String get hintTaxNumber => 'أدخل الرقم الضريبي (اختياري)';
-
-  @override
-  String get iconCupertino => 'Cupertino (iOS)';
-
-  @override
-  String get iconMaterial => 'Material Design';
-
-  @override
-  String get iconSettingsTitle => 'نمط الأيقونات';
-
-  @override
-  String get invoiceFormTitleAdd => 'إضافة فاتورة جديدة';
-
-  @override
-  String get invoiceFormTitleEdit => 'تعديل الفاتورة';
-
-  @override
-  String invoiceTitle(String id) {
-    return 'فاتورة رقم $id';
-  }
-
-  @override
   String get labelAddress => 'العنوان';
-
-  @override
-  String get labelAddressOptional => 'العنوان (اختياري)';
 
   @override
   String get labelCompanyName => 'اسم الشركة';
@@ -672,9 +784,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelEmail => 'البريد الإلكتروني';
 
   @override
-  String get labelEmailOptional => 'البريد الإلكتروني (اختياري)';
-
-  @override
   String get labelGrandTotal => 'الإجمالي الكلي:';
 
   @override
@@ -699,9 +808,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelNotes => 'ملاحظات (اختياري)';
 
   @override
-  String get labelNotesOptional => 'ملاحظات (اختياري)';
-
-  @override
   String get labelPassword => 'كلمة المرور';
 
   @override
@@ -709,9 +815,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get labelPhone => 'رقم الهاتف';
-
-  @override
-  String get labelPhoneOptional => 'رقم الهاتف (اختياري)';
 
   @override
   String get labelSourceWarehouse => 'مستودع المصدر';
@@ -783,9 +886,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get loginTitle => 'تسجيل الدخول';
 
   @override
-  String get logoutLabel => 'تسجيل الخروج';
-
-  @override
   String get modeDark => 'داكن';
 
   @override
@@ -799,14 +899,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get msgAccountUpdated => 'تم تحديث بيانات الحساب بنجاح';
-
-  @override
-  String msgConfirmDeleteCustomer(String name) {
-    return 'هل أنت متأكد من حذف العميل $name؟';
-  }
-
-  @override
-  String get msgConfirmDeleteInvoice => 'هل أنت متأكد من حذف هذه الفاتورة؟';
 
   @override
   String get msgConfirmLogout => 'هل أنت متأكد من رغبتك في تسجيل الخروج؟';
@@ -827,11 +919,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get msgInvoiceAdded => 'تم إضافة الفاتورة بنجاح';
 
   @override
-  String msgInvoiceShare(String name, String id, String total, String symbol) {
-    return 'مرحباً $name، إليك تفاصيل فاتورة رقم $id:\nالإجمالي: $total $symbol\nشكراً لتعاملك معنا.';
-  }
-
-  @override
   String get msgInvoiceUpdated => 'تم تحديث الفاتورة بنجاح';
 
   @override
@@ -850,48 +937,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get msgNoItems => 'لا توجد بنود. اضغط + لإضافة بند';
 
   @override
-  String msgSaveError(String error) {
-    return 'خطأ في الحفظ: $error';
-  }
-
-  @override
   String get msgSettingsSaved => 'تم حفظ الإعدادات بنجاح';
 
   @override
   String get navCustomers => 'العملاء';
 
   @override
-  String get navHome => 'الرئيسية';
-
-  @override
-  String get navInvoices => 'الفواتير';
-
-  @override
-  String get navSettings => 'الإعدادات';
-
-  @override
   String get notificationsEnable => 'تفعيل الإشعارات';
 
   @override
   String get notificationsSubtitle => 'استقبل إشعارات الفواتير المتأخرة';
-
-  @override
-  String get notificationsTitle => 'الإشعارات';
-
-  @override
-  String pdfShareSubject(String id) {
-    return 'فاتورة رقم $id';
-  }
-
-  @override
-  String pdfShareText(String customerName) {
-    return 'إليك تفاصيل الفاتورة الخاصة بـ $customerName';
-  }
-
-  @override
-  String placeholderComingSoon(String title) {
-    return 'قريبًا: $title';
-  }
 
   @override
   String get privacyFooter =>
@@ -947,9 +1002,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sectionStyle => 'النمط';
-
-  @override
-  String get settingsTitle => 'الإعدادات';
 
   @override
   String get setupSubtitle => 'أنشئ حسابك للبدء في إدارة فواتيرك';
@@ -1517,6 +1569,39 @@ class AppLocalizationsAr extends AppLocalizations {
   String get exchangeRate => 'Exchange Rate';
 
   @override
+  String get labelBaseCurrencyEquivalent => 'المقابل بالعملة الأساسية';
+
+  @override
+  String get titleTreasuryVault => 'الخزنة (إدارة النقد)';
+
+  @override
+  String get labelTotalLiquidity => 'إجمالي السيولة';
+
+  @override
+  String get labelAvailableCashBank => 'إجمالي النقد والبنوك المتاح';
+
+  @override
+  String get labelAccounts => 'الحسابات';
+
+  @override
+  String get labelForecast30Days => 'نظرة مستقبلية (30 يوم)';
+
+  @override
+  String get labelExpectedInflow => 'التدفق الداخل المتوقع';
+
+  @override
+  String get labelExpectedOutflow => 'التدفق الخارج المتوقع';
+
+  @override
+  String get labelNetChange => 'التغير الصافي';
+
+  @override
+  String get msgNoCashAccounts => 'لا توجد حسابات نقدية';
+
+  @override
+  String get msgInitCoa => 'قم بتهيئة دليل الحسابات أو أضف حسابات نقدية.';
+
+  @override
   String get originalAmount => 'Original Amount';
 
   @override
@@ -1579,14 +1664,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelIssuedDate => 'تاريخ الإصدار';
 
   @override
-  String get errPermissionDenied => 'ليس لديك صلاحية للقيام بهذا الإجراء';
+  String get errPermissionDenied =>
+      'You do not have permission to perform this action';
 
   @override
   String get agentRationaleStandardsPassed =>
       'تحقق الامتثال: القيد يوافق معايير (IFRS/SOCPA).';
 
   @override
-  String agentRationaleStandardsManualReview(Object type) {
+  String agentRationaleStandardsManualReview(String type) {
     return 'تنبيه: نوع العملية ($type) يتطلب مراجعة بشرية للتحقق من الامتثال.';
   }
 
@@ -1599,17 +1685,17 @@ class AppLocalizationsAr extends AppLocalizations {
       'رفض: العمليات التي تتجاوز 10,000 ريال تتطلب رقماً ضريبياً صالحاً للامتثال للمرحلة الثانية من (ZATCA).';
 
   @override
-  String agentRationaleTaxValidated(Object id) {
+  String agentRationaleTaxValidated(String id) {
     return 'تم التحقق من الرقم الضريبي: $id';
   }
 
   @override
-  String agentRationaleTaxAnalyzing(Object account) {
+  String agentRationaleTaxAnalyzing(String account) {
     return 'تحليل الضريبة لحساب $account';
   }
 
   @override
-  String agentRationaleTaxRateMismatch(Object rate) {
+  String agentRationaleTaxRateMismatch(String rate) {
     return 'تنبيه: معدل الضريبة المحسوب ($rate) يختلف عن المعدل الإقليمي الافتراضي (15%).';
   }
 
@@ -1629,27 +1715,27 @@ class AppLocalizationsAr extends AppLocalizations {
       'رفض: القيد المحاسبي المقترح غير متزن.';
 
   @override
-  String agentRationaleForensicHighValue(Object amount) {
+  String agentRationaleForensicHighValue(String amount) {
     return 'تنبيه: تم رصد مبلغ عملية مرتفع بشكل غير معتاد ($amount). نوصي بالمراجعة الإدارية.';
   }
 
   @override
-  String agentRationaleForensicDuplicate(Object ref) {
+  String agentRationaleForensicDuplicate(String ref) {
     return 'رفض: تم رصد رقم مرجع مكرر ($ref) في السجلات السابقة.';
   }
 
   @override
-  String agentRationaleOperationalSufficient(Object account, Object balance) {
+  String agentRationaleOperationalSufficient(String account, String balance) {
     return 'تحليل النقدية: رصيد $account كافٍ ($balance) للعملية.';
   }
 
   @override
-  String agentRationaleOperationalInsufficient(Object account, Object balance) {
+  String agentRationaleOperationalInsufficient(String account, String balance) {
     return 'رفض: رصيد $account غير كافٍ ($balance) لهذه العملية.';
   }
 
   @override
-  String agentRationaleStrategyOutflow(Object amount) {
+  String agentRationaleStrategyOutflow(String amount) {
     return 'تحليل استراتيجي: يمثل هذا القيد تدفقاً نقدياً خارجاً بقيمة $amount.';
   }
 
@@ -1658,7 +1744,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'توصية: راجع توقعات التدفق النقدي للأسبوع القادم لضمان السيولة الكافية للالتزامات الأخرى.';
 
   @override
-  String agentRationaleStrategyInflow(Object amount) {
+  String agentRationaleStrategyInflow(String amount) {
     return 'تحليل استراتيجي: تعزيز السيولة بقيمة $amount يدعم القدرة الاستثمارية قصيرة الأجل.';
   }
 
@@ -1675,7 +1761,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'رفض حرج: تتطلب معايير ISSB S2 مقاييس البصمة الكربونية لهذه المعاملة الخاصة بالصناعة.';
 
   @override
-  String agentRationaleSustainabilitySuccess(Object count) {
+  String agentRationaleSustainabilitySuccess(int count) {
     return 'تم بنجاح دمج $count من مقاييس الاستدامة المتوافقة.';
   }
 
@@ -1684,12 +1770,12 @@ class AppLocalizationsAr extends AppLocalizations {
       'تقييم الاستدامة: لا توجد إفصاحات محددة من ISSB مطلوبة لهذه الفئة من العمليات.';
 
   @override
-  String agentRationaleForensicTimeAnomaly(Object time) {
+  String agentRationaleForensicTimeAnomaly(String time) {
     return 'تحذير: تم تسجيل العملية في ساعات غير قياسية ($time). تم تطبيق وزن تدقيق جنائي أعلى.';
   }
 
   @override
-  String agentRationaleForensicSequenceGap(Object current, Object last) {
+  String agentRationaleForensicSequenceGap(String last, String current) {
     return 'ملاحظة: تم اكتشاف فجوة في تسلسل المراجع. الأخير: $last، الحالي: $current.';
   }
 
@@ -1709,4 +1795,165 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get auditTrailNoLogs =>
       'لم يتم العثور على سجلات مراجعة للفترة المختارة.';
+
+  @override
+  String get msgInvoiceCognitiveHint =>
+      'استخدم هذه الشاشة لإنشاء أو تعديل الفواتير. تأكد من الدقة المتناهية في معدلات الضرائب واختيار العناصر.';
+
+  @override
+  String get titleInvoiceCognitiveHint => 'إتقان الفواتير';
+
+  @override
+  String get labelReturnsAndDamages => 'المرتجعات والتوالف';
+
+  @override
+  String get labelSalesReturn => 'مرتجع مبيعات';
+
+  @override
+  String get descSalesReturn => 'إرجاع أصناف مباعة إلى المخزون';
+
+  @override
+  String get labelPurchaseReturn => 'مرتجع مشتريات';
+
+  @override
+  String get descPurchaseReturn => 'إرجاع أصناف مشتراة للمورد';
+
+  @override
+  String get labelDamageInvoice => 'فاتورة تالف';
+
+  @override
+  String get descDamageInvoice => 'تسجيل أصناف تالفة أو مفقودة';
+
+  @override
+  String get labelEmailOptional => 'البريد الإلكتروني (اختياري)';
+
+  @override
+  String get labelPhoneOptional => 'رقم الهاتف (اختياري)';
+
+  @override
+  String get labelAddressOptional => 'العنوان (اختياري)';
+
+  @override
+  String get labelNotesOptional => 'ملاحظات (اختياري)';
+
+  @override
+  String msgConfirmDeleteCustomer(String name) {
+    return 'هل أنت متأكد من حذف العميل $name؟';
+  }
+
+  @override
+  String get msgConfirmDeleteInvoice => 'هل أنت متأكد من حذف هذه الفاتورة؟';
+
+  @override
+  String get dashboardBasirSystemTitle => 'نظام بصير المحاسبي';
+
+  @override
+  String get forgotPassword => 'نسيت كلمة المرور';
+
+  @override
+  String get dashboardTitle => 'لوحة التحكم';
+
+  @override
+  String get dashboardStatsTitle => 'الإحصائيات';
+
+  @override
+  String get dashboardQuickActionsTitle => 'الإجراءات السريعة';
+
+  @override
+  String get dashboardRecentActivityTitle => 'النشاط الأخير';
+
+  @override
+  String get dashboardMotto => 'المحاسبة الاحترافية بكل بساطة';
+
+  @override
+  String get saveLabels => 'حفظ التسميات';
+
+  @override
+  String get errInvalidResetLink =>
+      'رابط إعادة التعيين غير صالح أو منتهي الصلاحية';
+
+  @override
+  String get errInvalidResetToken =>
+      'رمز إعادة التعيين غير صالح أو منتهي الصلاحية';
+
+  @override
+  String get msgPasswordResetSuccess => 'تم إعادة تعيين كلمة المرور بنجاح';
+
+  @override
+  String get errPasswordResetFailed => 'فشل في إعادة تعيين كلمة المرور';
+
+  @override
+  String get errPasswordRequired => 'كلمة المرور مطلوبة';
+
+  @override
+  String get errPasswordTooShort => 'كلمة المرور قصيرة جداً';
+
+  @override
+  String get errPasswordNeedsUppercase => 'كلمة المرور تحتاج حرف كبير';
+
+  @override
+  String get errPasswordNeedsLowercase => 'كلمة المرور تحتاج حرف صغير';
+
+  @override
+  String get errPasswordNeedsNumber => 'كلمة المرور تحتاج رقم';
+
+  @override
+  String get errConfirmPasswordRequired => 'تأكيد كلمة المرور مطلوب';
+
+  @override
+  String get resetPasswordTitle => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String resetPasswordSubtitle(String email) {
+    return 'أدخل كلمة المرور الجديدة لـ $email';
+  }
+
+  @override
+  String get newPassword => 'كلمة المرور الجديدة';
+
+  @override
+  String get passwordHint => 'أدخل كلمة المرور الجديدة';
+
+  @override
+  String get confirmPassword => 'تأكيد كلمة المرور';
+
+  @override
+  String get confirmPasswordHint => 'أعد إدخال كلمة المرور';
+
+  @override
+  String get passwordRequirements => 'متطلبات كلمة المرور:';
+
+  @override
+  String get passwordRequirementsList =>
+      '• 8 أحرف على الأقل\n• حرف كبير واحد\n• حرف صغير واحد\n• رقم واحد';
+
+  @override
+  String get resetPassword => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get backToLogin => 'العودة لتسجيل الدخول';
+
+  @override
+  String get labelVatNumber => 'الرقم الضريبي';
+
+  @override
+  String get labelRegistrationNumber => 'رقم السجل التجاري';
+
+  @override
+  String get labelTotalPayables => 'إجمالي الالتزامات للموردين';
+
+  @override
+  String get msgValueCopiedToClipboard => 'تم نسخ القيمة إلى الحافظة';
+
+  @override
+  String get labelSourceDocument => 'المستند المصدر';
+
+  @override
+  String get btnViewSource => 'عرض المصدر';
+
+  @override
+  String get msgLoadingSource => 'جاري تحميل المستند المصدر...';
+
+  @override
+  String get errSourceNotFound => 'المستند المصدر غير موجود';
 }

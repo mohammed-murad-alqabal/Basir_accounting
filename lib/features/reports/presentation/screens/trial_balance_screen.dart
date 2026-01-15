@@ -39,10 +39,8 @@ class _TrialBalanceScreenState extends ConsumerState<TrialBalanceScreen> {
       ),
     );
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.trialBalanceTitle,
-      ),
+    return GlassScaffold(
+      title: context.l10n.trialBalanceTitle,
       body: Column(
         children: [
           ReportFilterWidget(
@@ -77,7 +75,7 @@ class _TrialBalanceScreenState extends ConsumerState<TrialBalanceScreen> {
   Widget _buildReportContent(BuildContext context, TrialBalanceDto report) =>
       SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: AppCard(
+        child: GlassCard(
           child: Column(
             children: [
               // Status Header
