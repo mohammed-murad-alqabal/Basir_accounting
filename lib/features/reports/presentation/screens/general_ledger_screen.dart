@@ -17,9 +17,16 @@ class GeneralLedgerScreen extends ConsumerStatefulWidget {
     super.key,
   });
 
+  /// The account ID to filter by.
   final String accountId;
+
+  /// The name of the account.
   final String accountName;
+
+  /// The start date of the filtering period.
   final DateTime fromDate;
+
+  /// The end date of the filtering period.
   final DateTime toDate;
 
   @override
@@ -91,7 +98,8 @@ class _GeneralLedgerScreenState extends ConsumerState<GeneralLedgerScreen> {
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                   Text(
-                    '${dateFormat.format(widget.fromDate)} - ${dateFormat.format(widget.toDate)}',
+                    '${dateFormat.format(widget.fromDate)} - '
+                    '${dateFormat.format(widget.toDate)}',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
