@@ -127,8 +127,9 @@ class _GeneralLedgerScreenState extends ConsumerState<GeneralLedgerScreen> {
     final amount = isDebit ? line.debit : line.credit;
 
     return GlassCard(
-      onTap: () {
-        Navigator.pushNamed(
+      // ignore: discarded_futures
+      onTap: () async {
+        await Navigator.pushNamed(
           context,
           '/journal-entry-detail',
           arguments: entry,
@@ -171,13 +172,12 @@ class _GeneralLedgerScreenState extends ConsumerState<GeneralLedgerScreen> {
     );
   }
 
-  List<JournalEntry> _filterAndSortEntries(List<JournalEntry> allEntries) {
-    return allEntries.where((e) {
-      if (e.date.isBefore(widget.fromDate) || e.date.isAfter(widget.toDate)) {
-        return false;
-      }
-      return e.lines.any((l) => l.accountId == widget.accountId);
-    }).toList()
-      ..sort((a, b) => b.date.compareTo(a.date)); // Newest first
-  }
+  List<JournalEntry> _filterAndSortEntries(List<JournalEntry> allEntries) =>
+      allEntries.where((e) {
+        if (e.date.isBefore(widget.fromDate) || e.date.isAfter(widget.toDate)) {
+          return false;
+        }
+        return e.lines.any((l) => l.accountId == widget.accountId);
+      }).toList()
+        ..sort((a, b) => b.date.compareTo(a.date));
 }
