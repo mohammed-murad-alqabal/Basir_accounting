@@ -24,14 +24,6 @@ class OrchestratorService extends _$OrchestratorService {
   ///
   /// Sequentially invokes all six cognitive agents to build a final report.
   ///
-  /// ## The Cognitive Hexagon Agents:
-  /// 1. **Standards Engine**: IFRS/ISSB global compliance.
-  /// 2. **Tax Engine**: ZATCA/FTA local regulatory compliance.
-  /// 3. **Forensic Audit**: Data integrity and anomaly detection.
-  /// 4. **Operational Intel**: Business impact and process efficiency.
-  /// 5. **Financial Strategy**: Cash flow and portfolio optimization.
-  /// 6. **Sustainability Expert**: ESG and environmental metric tracking.
-  ///
   /// ## Returns
   /// An [AgentConsensus] representing the collective decision of all agents.
   Future<AgentConsensus> orchestrate(AccountingContext context) async {
@@ -45,7 +37,7 @@ class OrchestratorService extends _$OrchestratorService {
       ref.read(sustainabilityExpertServiceProvider.notifier).process(context),
     ];
 
-    final results = await Future.wait(agentFutures);
+    final results = await Future.wait<AgentResult>(agentFutures);
 
     // Aggregation Logic: All agents must allow for overall approval
     final overallAllowed = results.every((r) => r.isAllowed);
@@ -89,9 +81,6 @@ class OrchestratorService extends _$OrchestratorService {
 
   /// Generates a period-level analysis ("Cognitive Insights")
   /// for financial reports.
-  ///
-  /// This aggregates high-level feedback from all agents regarding the
-  /// financial health and compliance status of the period [from] - [to].
   Future<List<AgentResult>> getPeriodInsights(
     DateTime from,
     DateTime to,
@@ -113,22 +102,18 @@ class OrchestratorService extends _$OrchestratorService {
         const AgentResult(
           agentId: 'Standards Engine',
           isAllowed: true,
-          rationale: 'No transactions recorded in this period. '
-              'Compliance baseline maintained.',
+          rationale: 'No transactions recorded in this period.',
           confidenceScore: 1,
         ),
         const AgentResult(
           agentId: 'Forensic Audit',
           isAllowed: true,
-          rationale: 'Quiescent ledger. '
-              'Zero anomaly baseline confirmed.',
+          rationale: 'Quiescent ledger.',
           confidenceScore: 1,
         ),
       ];
     }
 
-    // Modern implementation: provide a "Period Context" to agents (simulated)
-    // We use the most representative entry (or first) to trigger agent logic
     final context = AccountingContext(
       proposedJournalEntry: periodEntries.first,
       transactionType: 'period_audit',
@@ -144,7 +129,7 @@ class OrchestratorService extends _$OrchestratorService {
       ref.read(sustainabilityExpertServiceProvider.notifier).process(context),
     ];
 
-    return Future.wait(agentFutures);
+    return Future.wait<AgentResult>(agentFutures);
   }
 }
 
