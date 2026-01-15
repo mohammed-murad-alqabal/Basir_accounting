@@ -23,6 +23,7 @@ void main() {
         paidAmount: Decimal.zero,
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
         createdAt: now,
         updatedAt: now,
       );
@@ -38,18 +39,14 @@ void main() {
       final now = DateTime.now();
       final item1 = InvoiceItem(
         taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: '1',
         name: 'خدمة استشارة',
         quantity: Decimal.fromInt(2),
         price: Decimal.fromInt(500),
         total: Decimal.fromInt(1000),
         taxAmount: Decimal.fromInt(150),
-        taxRate: Decimal.parse('0.15'),
       );
       final item2 = InvoiceItem(
-        taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: '2',
         name: 'خدمة تطوير',
         quantity: Decimal.one,
@@ -75,6 +72,7 @@ void main() {
         paidAmount: Decimal.zero,
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
         createdAt: now,
         updatedAt: now,
       );
@@ -87,14 +85,12 @@ void main() {
     test('InvoiceItem total verification', () {
       final item = InvoiceItem(
         taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: '1',
         name: 'خدمة',
         quantity: Decimal.fromInt(3),
         price: Decimal.fromInt(100),
         total: Decimal.fromInt(300),
         taxAmount: Decimal.fromInt(45),
-        taxRate: Decimal.parse('0.15'),
       );
 
       expect(item.total, equals(Decimal.fromInt(300)));
@@ -118,6 +114,7 @@ void main() {
         paidAmount: Decimal.zero,
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
         createdAt: now,
         updatedAt: now,
       );
@@ -137,6 +134,7 @@ void main() {
         paidAmount: Decimal.zero,
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
         createdAt: now,
         updatedAt: now,
       );

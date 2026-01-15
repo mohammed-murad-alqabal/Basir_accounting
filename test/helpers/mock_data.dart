@@ -166,6 +166,7 @@ class MockData {
       paidAmount: status == InvoiceStatus.paid ? total : Decimal.zero,
       discountAmount: Decimal.zero,
       discountRate: Decimal.zero,
+      exchangeRate: Decimal.one,
       userId: userId,
     );
   }

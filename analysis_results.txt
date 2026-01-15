@@ -1,0 +1,193 @@
+Analyzing basir_accounting_system...                            
+
+   info • The line length exceeds the 80-character limit • lib/core/router.dart:78:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:6:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:14:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:26:22 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:41:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:42:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:43:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:44:24 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:45:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:79:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:80:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:81:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:82:25 • public_member_api_docs
+   info • Missing documentation for a public member • lib/core/theme/glass_theme.dart:83:22 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/accounting/application/orchestrator_service.dart:90:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/application/orchestrator_service.dart:115:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:121:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:133:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:134:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:137:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:138:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:139:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:140:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:143:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:144:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:147:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:149:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/application/tax_engine_service.dart:151:15 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/domain/entities/liquidity_forecast.dart:9:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/domain/entities/liquidity_forecast.dart:31:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/domain/entities/liquidity_forecast.dart:32:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/presentation/screens/cash_reconciliation_screen.dart:11:9 • public_member_api_docs
+   info • 'Parser' is deprecated and shouldn't be used. Use [GrammarParser] or [ShuntingYardParser] • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:46:17 • deprecated_member_use
+   info • 'evaluate' is deprecated and shouldn't be used. Use [RealEvaluator], [IntervalEvaluator], or [VectorEvaluator] • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:49:24 • deprecated_member_use
+   info • Method invocation or property access on a 'dynamic' target • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:53:24 • avoid_dynamic_calls
+   info • Method invocation or property access on a 'dynamic' target • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:55:16 • avoid_dynamic_calls
+   info • Method invocation or property access on a 'dynamic' target • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:55:49 • avoid_dynamic_calls
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:63:7 • avoid_catches_without_on_clauses
+   info • Missing a required trailing comma • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:95:55 • require_trailing_commas
+   info • Missing a required trailing comma • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:104:75 • require_trailing_commas
+   info • Missing a required trailing comma • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:110:67 • require_trailing_commas
+   info • Missing a required trailing comma • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:169:57 • require_trailing_commas
+   info • Missing a required trailing comma • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:191:46 • require_trailing_commas
+   info • Statements in an if should be enclosed in a block • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:195:7 • curly_braces_in_flow_control_structures
+   info • 'Future'-returning calls in a non-'async' function • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:200:5 • discarded_futures
+   info • To-do comment doesn't follow the Flutter style • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:38:15 • flutter_style_todos
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:74:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:83:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:96:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:115:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:167:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:184:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:185:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:209:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:232:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:292:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:294:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:337:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:341:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/reports_screen.dart:33:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/accounting/presentation/screens/treasury_dashboard_screen.dart:16:9 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/treasury_dashboard_screen.dart:38:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/treasury_dashboard_screen.dart:42:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/widgets/consensus_visualization_widget.dart:57:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/widgets/consensus_visualization_widget.dart:86:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/widgets/consensus_visualization_widget.dart:108:81 • lines_longer_than_80_chars
+   info • Missing a required trailing comma • lib/features/auth/application/password_recovery_service.dart:113:58 • require_trailing_commas
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:118:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:140:7 • avoid_catches_without_on_clauses
+   info • Missing a required trailing comma • lib/features/auth/application/password_recovery_service.dart:152:23 • require_trailing_commas
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:167:7 • avoid_catches_without_on_clauses
+   info • Method invocation or property access on a 'dynamic' target • lib/features/auth/application/password_recovery_service.dart:288:27 • avoid_dynamic_calls
+   info • Method invocation or property access on a 'dynamic' target • lib/features/auth/application/password_recovery_service.dart:289:30 • avoid_dynamic_calls
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:307:7 • avoid_catches_without_on_clauses
+   info • Missing a required trailing comma • lib/features/auth/application/password_recovery_service.dart:326:53 • require_trailing_commas
+   info • Method invocation or property access on a 'dynamic' target • lib/features/auth/application/password_recovery_service.dart:377:36 • avoid_dynamic_calls
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:382:13 • avoid_catches_without_on_clauses
+   info • Missing a required trailing comma • lib/features/auth/application/password_recovery_service.dart:402:62 • require_trailing_commas
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:404:13 • avoid_catches_without_on_clauses
+   info • Missing a required trailing comma • lib/features/auth/application/password_recovery_service.dart:414:78 • require_trailing_commas
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:416:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:444:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/providers/password_recovery_provider.dart:57:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/providers/password_recovery_provider.dart:73:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/providers/password_recovery_provider.dart:98:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/providers/password_recovery_provider.dart:110:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/providers/password_recovery_provider.dart:121:7 • avoid_catches_without_on_clauses
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/forgot_password_screen.dart:111:81 • lines_longer_than_80_chars
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/auth/presentation/screens/forgot_password_screen.dart:172:56 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/auth/presentation/screens/forgot_password_screen.dart:175:58 • deprecated_member_use
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/forgot_password_screen.dart:188:81 • lines_longer_than_80_chars
+   info • 'Future'-returning calls in a non-'async' function • lib/features/auth/presentation/screens/reset_password_screen.dart:59:5 • discarded_futures
+   info • 'Future'-returning calls in a non-'async' function • lib/features/auth/presentation/screens/reset_password_screen.dart:91:35 • discarded_futures
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/screens/reset_password_screen.dart:100:7 • avoid_catches_without_on_clauses
+   info • Don't use 'BuildContext's across async gaps • lib/features/auth/presentation/screens/reset_password_screen.dart:143:36 • use_build_context_synchronously
+   info • Don't use 'BuildContext's across async gaps • lib/features/auth/presentation/screens/reset_password_screen.dart:146:31 • use_build_context_synchronously
+   info • Missing an 'await' for the 'Future' computed by this expression • lib/features/auth/presentation/screens/reset_password_screen.dart:155:31 • unawaited_futures
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/screens/reset_password_screen.dart:167:7 • avoid_catches_without_on_clauses
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/auth/presentation/screens/reset_password_screen.dart:357:52 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/auth/presentation/screens/reset_password_screen.dart:360:54 • deprecated_member_use
+   info • The line length exceeds the 80-character limit • lib/features/customers/presentation/screens/customers_screen.dart:44:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/presentation/screens/inventory_items_screen.dart:44:81 • lines_longer_than_80_chars
+   info • 'Future'-returning calls in a non-'async' function • lib/features/invoices/presentation/screens/invoice_form_screen.dart:1146:17 • discarded_futures
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:48:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/invoices/presentation/screens/returns_and_damages_screen.dart:11:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/providers/omnibar_provider.dart:8:3 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/providers/omnibar_provider.dart:14:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/providers/omnibar_provider.dart:15:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/providers/omnibar_provider.dart:16:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/providers/omnibar_provider.dart:17:27 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/providers/omnibar_provider.dart:20:6 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/providers/omnibar_provider.dart:20:26 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/providers/omnibar_provider.dart:20:35 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/providers/omnibar_provider.dart:20:45 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/providers/omnibar_provider.dart:20:51 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/widgets/omnibar.dart:31:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/widgets/omnibar.dart:32:9 • public_member_api_docs
+   info • 'Future'-returning calls in a non-'async' function • lib/features/navigation/presentation/widgets/omnibar.dart:227:31 • discarded_futures
+   info • 'Future'-returning calls in a non-'async' function • lib/features/navigation/presentation/widgets/omnibar.dart:232:31 • discarded_futures
+   info • 'Future'-returning calls in a non-'async' function • lib/features/navigation/presentation/widgets/omnibar.dart:238:31 • discarded_futures
+   info • 'Future'-returning calls in a non-'async' function • lib/features/navigation/presentation/widgets/omnibar.dart:244:33 • discarded_futures
+   info • Missing documentation for a public member • lib/features/onboarding/presentation/widgets/cognitive_overlay.dart:81:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/onboarding/presentation/widgets/cognitive_overlay.dart:82:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/onboarding/presentation/widgets/cognitive_overlay.dart:83:16 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/basir_insights_engine.dart:30:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/basir_insights_engine.dart:47:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/reports/application/pdf_generation_service.dart:13:7 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/pdf_generation_service.dart:162:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/pdf_generation_service.dart:206:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/pdf_generation_service.dart:207:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/pdf_generation_service.dart:239:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/pdf_generation_service.dart:243:81 • lines_longer_than_80_chars
+   info • 'Table.fromTextArray' is deprecated and shouldn't be used. Use TableHelper.fromTextArray() instead • lib/features/reports/application/pdf_generation_service.dart:330:61 • deprecated_member_use
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/pdf_generation_service.dart:330:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/reports/application/report_pdf_service.dart:15:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/reports/application/report_pdf_service.dart:21:21 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/reports/application/report_pdf_service.dart:63:16 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:85:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:103:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/reports/domain/entities/financial_kpi.dart:59:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/reports/domain/entities/financial_kpi.dart:71:24 • public_member_api_docs
+   info • Missing a required trailing comma • lib/features/reports/presentation/screens/financial_report_screen.dart:223:53 • require_trailing_commas
+   info • Missing a required trailing comma • lib/features/reports/presentation/screens/financial_report_screen.dart:233:57 • require_trailing_commas
+   info • Missing documentation for a public member • lib/features/reports/presentation/screens/general_ledger_screen.dart:12:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/reports/presentation/screens/general_ledger_screen.dart:20:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/reports/presentation/screens/general_ledger_screen.dart:21:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/reports/presentation/screens/general_ledger_screen.dart:22:18 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/reports/presentation/screens/general_ledger_screen.dart:23:18 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/general_ledger_screen.dart:26:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/general_ledger_screen.dart:33:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/general_ledger_screen.dart:34:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/general_ledger_screen.dart:75:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/general_ledger_screen.dart:92:81 • lines_longer_than_80_chars
+   info • 'Future'-returning calls in a non-'async' function • lib/features/reports/presentation/screens/general_ledger_screen.dart:128:19 • discarded_futures
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/general_ledger_screen.dart:137:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/general_ledger_screen.dart:146:81 • lines_longer_than_80_chars
+   info • Unnecessary use of a block function body • lib/features/reports/presentation/screens/general_ledger_screen.dart:169:75 • prefer_expression_function_bodies
+   info • Missing documentation for a public member • lib/features/reports/presentation/screens/smart_tax_report_screen.dart:11:9 • public_member_api_docs
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/reports/presentation/screens/smart_tax_report_screen.dart:79:25 • avoid_catches_without_on_clauses
+   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/smart_tax_report_screen.dart:112:81 • lines_longer_than_80_chars
+   info • 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre • lib/features/settings/presentation/screens/print_settings_screen.dart:197:9 • deprecated_member_use
+   info • 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre • lib/features/settings/presentation/screens/print_settings_screen.dart:198:9 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/presentation/screens/tax_config_screen.dart:149:31 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/presentation/screens/tax_config_screen.dart:151:50 • deprecated_member_use
+   info • Missing documentation for a public member • lib/shared/utils/spring_route.dart:6:3 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/shared/utils/spring_route.dart:11:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/shared/utils/spring_route.dart:42:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_card.dart:8:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_card.dart:20:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_card.dart:21:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_card.dart:22:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_card.dart:23:29 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_card.dart:24:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_card.dart:25:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_card.dart:26:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_card.dart:27:17 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/shared/widgets/glass_card.dart:95:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/shared/widgets/glass_card.dart:97:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/shared/widgets/glass_scaffold.dart:11:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_scaffold.dart:20:16 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_scaffold.dart:21:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_scaffold.dart:22:23 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_scaffold.dart:23:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/shared/widgets/glass_scaffold.dart:24:17 • public_member_api_docs
+   info • Dependencies not sorted alphabetically • pubspec.yaml:96:3 • sort_pub_dependencies
+   info • Don't invoke 'print' in production code • test/benchmark/load_simulation_benchmark_test.dart:96:7 • avoid_print
+   info • The line length exceeds the 80-character limit • test/benchmark/load_simulation_benchmark_test.dart:97:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • test/benchmark/load_simulation_benchmark_test.dart:99:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • test/benchmark/load_simulation_benchmark_test.dart:108:81 • lines_longer_than_80_chars
+   info • Don't invoke 'print' in production code • test/benchmark/load_simulation_benchmark_test.dart:111:7 • avoid_print
+

@@ -1,5 +1,6 @@
 pub mod accounts;
 pub mod assets;
+pub mod auditor;
 pub mod calendar;
 pub mod currency;
 pub mod inventory;
@@ -12,6 +13,7 @@ pub mod standards;
 // Specific re-exports for API functions and DTOs
 pub use accounts::{create_account, get_account_by_id, list_accounts, AccountDto};
 pub use assets::{get_asset_by_id, list_assets, register_asset, run_depreciation_cycle, AssetDto};
+pub use auditor::{scan_sequence, AnomalyDto};
 pub use calendar::{close_period, get_period_by_date, save_period, PeriodDto};
 pub use currency::{get_exchange_rate, save_exchange_rate, ExchangeRateDto};
 pub use inventory::{

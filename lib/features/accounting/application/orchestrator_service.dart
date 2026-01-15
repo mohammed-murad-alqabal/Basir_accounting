@@ -1,3 +1,4 @@
+import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/financial_strategy_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/forensic_audit_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/operational_intel_service.dart';
@@ -34,35 +35,17 @@ class OrchestratorService extends _$OrchestratorService {
   /// ## Returns
   /// An [AgentConsensus] representing the collective decision of all agents.
   Future<AgentConsensus> orchestrate(AccountingContext context) async {
-    final results = <AgentResult>[];
+    // Stage: Concurrent Multi-Agent Consensus
+    final agentFutures = [
+      ref.read(standardsEngineServiceProvider.notifier).process(context),
+      ref.read(taxEngineServiceProvider.notifier).process(context),
+      ref.read(forensicAuditServiceProvider.notifier).process(context),
+      ref.read(operationalIntelServiceProvider.notifier).process(context),
+      ref.read(financialStrategyServiceProvider.notifier).process(context),
+      ref.read(sustainabilityExpertServiceProvider.notifier).process(context),
+    ];
 
-    // Stage 1: Compliance Cluster
-    results.add(
-      await ref.read(standardsEngineServiceProvider.notifier).process(context),
-    );
-    results.add(
-      await ref.read(taxEngineServiceProvider.notifier).process(context),
-    );
-
-    // Stage 2: Integrity & Intel Cluster
-    results.add(
-      await ref.read(forensicAuditServiceProvider.notifier).process(context),
-    );
-    results.add(
-      await ref.read(operationalIntelServiceProvider.notifier).process(context),
-    );
-
-    // Stage 3: Strategy & Sustainability Cluster
-    results.add(
-      await ref
-          .read(financialStrategyServiceProvider.notifier)
-          .process(context),
-    );
-    results.add(
-      await ref
-          .read(sustainabilityExpertServiceProvider.notifier)
-          .process(context),
-    );
+    final results = await Future.wait(agentFutures);
 
     // Aggregation Logic: All agents must allow for overall approval
     final overallAllowed = results.every((r) => r.isAllowed);
@@ -102,6 +85,66 @@ class OrchestratorService extends _$OrchestratorService {
       agentResults: results,
       orchestrationTimestamp: DateTime.now(),
     );
+  }
+
+  /// Generates a period-level analysis ("Cognitive Insights")
+  /// for financial reports.
+  ///
+  /// This aggregates high-level feedback from all agents regarding the
+  /// financial health and compliance status of the period [from] - [to].
+  Future<List<AgentResult>> getPeriodInsights(
+    DateTime from,
+    DateTime to,
+  ) async {
+    final repository = ref.read(accountingRepositoryProvider);
+    final entries = await repository.getJournalEntries();
+
+    // Filter by period
+    final periodEntries = entries
+        .where(
+          (e) =>
+              e.date.isAfter(from.subtract(const Duration(days: 1))) &&
+              e.date.isBefore(to.add(const Duration(days: 1))),
+        )
+        .toList();
+
+    if (periodEntries.isEmpty) {
+      return [
+        const AgentResult(
+          agentId: 'Standards Engine',
+          isAllowed: true,
+          rationale: 'No transactions recorded in this period. '
+              'Compliance baseline maintained.',
+          confidenceScore: 1,
+        ),
+        const AgentResult(
+          agentId: 'Forensic Audit',
+          isAllowed: true,
+          rationale: 'Quiescent ledger. '
+              'Zero anomaly baseline confirmed.',
+          confidenceScore: 1,
+        ),
+      ];
+    }
+
+    // Modern implementation: provide a "Period Context" to agents (simulated)
+    // We use the most representative entry (or first) to trigger agent logic
+    final context = AccountingContext(
+      proposedJournalEntry: periodEntries.first,
+      transactionType: 'period_audit',
+      locale: 'en',
+    );
+
+    final agentFutures = [
+      ref.read(standardsEngineServiceProvider.notifier).process(context),
+      ref.read(taxEngineServiceProvider.notifier).process(context),
+      ref.read(forensicAuditServiceProvider.notifier).process(context),
+      ref.read(operationalIntelServiceProvider.notifier).process(context),
+      ref.read(financialStrategyServiceProvider.notifier).process(context),
+      ref.read(sustainabilityExpertServiceProvider.notifier).process(context),
+    ];
+
+    return Future.wait(agentFutures);
   }
 }
 

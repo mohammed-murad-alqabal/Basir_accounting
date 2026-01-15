@@ -91,7 +91,6 @@ void main() {
           items: [
             InvoiceItem(
               taxRate: Decimal.parse('0.15'),
-              taxCategory: 'S',
               id: 'item-1',
               name: 'خدمة استشارية',
               quantity: Decimal.fromInt(2),
@@ -109,6 +108,7 @@ void main() {
           paidAmount: Decimal.zero,
           discountAmount: Decimal.zero,
           discountRate: Decimal.zero,
+          exchangeRate: Decimal.one,
         );
 
         // Act
@@ -357,7 +357,6 @@ void main() {
           items: [
             InvoiceItem(
               taxRate: Decimal.parse('0.15'),
-              taxCategory: 'S',
               id: 'item-1',
               name: 'خدمة',
               quantity: Decimal.one,
@@ -375,6 +374,7 @@ void main() {
           paidAmount: Decimal.zero,
           discountAmount: Decimal.zero,
           discountRate: Decimal.zero,
+          exchangeRate: Decimal.one,
         );
         await repository.addInvoice(invoice);
 
@@ -467,7 +467,6 @@ void main() {
           items: [
             InvoiceItem(
               taxRate: Decimal.parse('0.15'),
-              taxCategory: 'S',
               id: 'item-1',
               name: 'خدمة',
               quantity: Decimal.one,
@@ -485,6 +484,7 @@ void main() {
           paidAmount: Decimal.fromInt(1150),
           discountAmount: Decimal.zero,
           discountRate: Decimal.zero,
+          exchangeRate: Decimal.one,
         );
 
         final invoice2 = Invoice(
@@ -499,7 +499,6 @@ void main() {
           items: [
             InvoiceItem(
               taxRate: Decimal.parse('0.15'),
-              taxCategory: 'S',
               id: 'item-2',
               name: 'خدمة',
               quantity: Decimal.one,
@@ -517,6 +516,7 @@ void main() {
           paidAmount: Decimal.zero,
           discountAmount: Decimal.zero,
           discountRate: Decimal.zero,
+          exchangeRate: Decimal.one,
         );
 
         await repository.addInvoice(invoice1);

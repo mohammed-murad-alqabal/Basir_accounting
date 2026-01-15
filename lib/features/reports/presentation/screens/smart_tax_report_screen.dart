@@ -162,18 +162,24 @@ class SmartTaxReportScreen extends ConsumerWidget {
             children: const [
               Padding(
                 padding: EdgeInsets.all(8),
-                child: Text('الوصف',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text(
+                  'الوصف',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.all(8),
-                child: Text('المبلغ',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text(
+                  'المبلغ',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.all(8),
-                child: Text('الضريبة',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text(
+                  'الضريبة',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ],
           ),

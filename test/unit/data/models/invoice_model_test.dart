@@ -33,7 +33,6 @@ void main() {
         final newItems = [
           InvoiceItem(
             taxRate: Decimal.parse('0.15'),
-            taxCategory: 'S',
             id: 'new-1',
             name: 'منتج جديد',
             quantity: Decimal.fromInt(1),
@@ -110,7 +109,6 @@ void main() {
         // Arrange
         final item = InvoiceItem(
           taxRate: Decimal.parse('0.15'),
-          taxCategory: 'S',
           id: 'item-1',
           name: 'منتج اختبار',
           quantity: Decimal.fromInt(3),
@@ -128,7 +126,6 @@ void main() {
         // Arrange
         final original = InvoiceItem(
           taxRate: Decimal.parse('0.15'),
-          taxCategory: 'S',
           id: 'item-1',
           name: 'منتج',
           quantity: Decimal.one,

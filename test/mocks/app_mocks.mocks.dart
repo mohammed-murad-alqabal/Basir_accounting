@@ -113,6 +113,23 @@ class MockAuthService extends _i1.Mock implements _i6.AuthService {
       ) as _i7.Stream<String?>);
 
   @override
+  _i7.Future<void> changePasswordWithoutOldPassword(
+    String? username,
+    String? newPassword,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #changePasswordWithoutOldPassword,
+          [
+            username,
+            newPassword,
+          ],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
   _i7.Future<void> initialize() => (super.noSuchMethod(
         Invocation.method(
           #initialize,

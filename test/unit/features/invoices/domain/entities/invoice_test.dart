@@ -9,7 +9,6 @@ void main() {
       // Arrange & Act
       final item = InvoiceItem(
         taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-1',
         name: 'خدمة استشارية',
         quantity: Decimal.fromInt(2),
@@ -31,7 +30,6 @@ void main() {
       // Arrange
       final item = InvoiceItem(
         taxRate: Decimal.parse('0.15'),
-        taxCategory: 'S',
         id: 'item-1',
         name: 'خدمة',
         quantity: Decimal.fromInt(3),
@@ -64,7 +62,6 @@ void main() {
         items: [
           InvoiceItem(
             taxRate: Decimal.parse('0.15'),
-            taxCategory: 'S',
             id: 'item-1',
             name: 'خدمة',
             quantity: Decimal.fromInt(2),
@@ -85,6 +82,7 @@ void main() {
         paidAmount: Decimal.zero,
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
       );
 
       // Assert
@@ -107,7 +105,6 @@ void main() {
         items: [
           InvoiceItem(
             taxRate: Decimal.parse('0.15'),
-            taxCategory: 'S',
             id: 'item-1',
             name: 'خدمة',
             quantity: Decimal.fromInt(2),
@@ -128,6 +125,7 @@ void main() {
         paidAmount: Decimal.zero,
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
       );
 
       // Assert
@@ -144,7 +142,6 @@ void main() {
         items: [
           InvoiceItem(
             taxRate: Decimal.parse('0.15'),
-            taxCategory: 'S',
             id: 'item-1',
             name: 'خدمة',
             quantity: Decimal.fromInt(2),
@@ -165,6 +162,7 @@ void main() {
         paidAmount: Decimal.zero,
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
       );
 
       // Assert
@@ -181,7 +179,6 @@ void main() {
         items: [
           InvoiceItem(
             taxRate: Decimal.parse('0.15'),
-            taxCategory: 'S',
             id: 'item-1',
             name: 'خدمة',
             quantity: Decimal.fromInt(2),
@@ -202,6 +199,7 @@ void main() {
         paidAmount: Decimal.zero,
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
       );
 
       // Assert
@@ -218,7 +216,6 @@ void main() {
         items: [
           InvoiceItem(
             taxRate: Decimal.parse('0.15'),
-            taxCategory: 'S',
             id: 'item-1',
             name: 'خدمة',
             quantity: Decimal.one,
@@ -239,6 +236,7 @@ void main() {
         paidAmount: Decimal.zero,
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
         notes: 'شروط الدفع: 30 يوم',
       );
 
@@ -256,7 +254,6 @@ void main() {
         items: [
           InvoiceItem(
             taxRate: Decimal.parse('0.15'),
-            taxCategory: 'S',
             id: 'item-1',
             name: 'خدمة',
             quantity: Decimal.one,
@@ -277,6 +274,7 @@ void main() {
         paidAmount: Decimal.zero,
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
       );
 
       // Act

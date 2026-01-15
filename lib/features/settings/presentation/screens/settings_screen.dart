@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/financial_calculator_screen.dart';
 import 'package:basir_accounting_system/features/analytics/presentation/screens/privacy_analytics_screen.dart';
 import 'package:basir_accounting_system/features/settings/presentation/providers/settings_controller.dart';
 import 'package:basir_accounting_system/features/settings/presentation/screens/appearance_settings_screen.dart';
+import 'package:basir_accounting_system/features/settings/presentation/screens/print_settings_screen.dart';
+import 'package:basir_accounting_system/features/settings/presentation/screens/tax_config_screen.dart';
 import 'package:basir_accounting_system/features/settings/presentation/widgets/help_settings_group.dart';
 import 'package:basir_accounting_system/features/settings/presentation/widgets/settings_shared_widgets.dart';
 import 'package:basir_accounting_system/features/settings/presentation/widgets/settings_tiles.dart';
@@ -25,8 +28,8 @@ class SettingsScreen extends ConsumerWidget {
     final appIcons = ref.watch(appIconsProvider);
     final controller = ref.read(settingsControllerProvider.notifier);
 
-    return Scaffold(
-      appBar: AppAppBar(title: context.l10n.settingsTitle),
+    return GlassScaffold(
+      title: context.l10n.settingsTitle,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(Spacing.lg),
         child: Column(
@@ -37,6 +40,26 @@ class SettingsScreen extends ConsumerWidget {
               icon: appIcons.business,
             ),
             const SettingsGroupCard(children: [CompanySettingsTile()]),
+            const SizedBox(height: Spacing.md),
+            SettingsGroupCard(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.account_balance_outlined,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: Text(context.l10n.taxConfigTitle),
+                  subtitle: Text(context.l10n.zatcaPhase2Title),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const TaxConfigScreen(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: Spacing.xl),
 
             // 👤 قسم الحساب والأمن
@@ -82,6 +105,38 @@ class SettingsScreen extends ConsumerWidget {
                       MaterialPageRoute<void>(
                         builder: (context) => const AppearanceSettingsScreen(),
                       ),
+                    ),
+                  ),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: Icon(
+                    Icons.print_outlined,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: Text(context.l10n.printSettingsTitle),
+                  subtitle: Text(context.l10n.printSettingsSubtitle),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const PrintSettingsScreen(),
+                    ),
+                  ),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: Icon(
+                    Icons.calculate_outlined,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: Text(context.l10n.calculatorTitle),
+                  subtitle: Text(context.l10n.convertToCurrencies),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const FinancialCalculatorScreen(),
                     ),
                   ),
                 ),

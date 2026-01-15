@@ -63,17 +63,15 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         ? context.l10n.voucherReceiptTitle
         : context.l10n.voucherPaymentTitle;
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: title,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.document_scanner),
-            onPressed: _scanReceipt,
-            tooltip: 'مسح إيصال (OCR)',
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: title,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.document_scanner),
+          onPressed: _scanReceipt,
+          tooltip: 'مسح إيصال (OCR)',
+        ),
+      ],
       body: _isLoading
           ? const Center(child: AppLoadingIndicator())
           : SingleChildScrollView(
@@ -110,7 +108,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
   }
 
   /// Amount field with integrated currency conversion support.
-  Widget _buildAmountField() => AppCard(
+  Widget _buildAmountField() => GlassCard(
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Column(
@@ -213,7 +211,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
       );
 
   /// Integrated currency picker and exchange rate manager.
-  Widget _buildCurrencySelector() => AppCard(
+  Widget _buildCurrencySelector() => GlassCard(
         child: ListTile(
           leading: const Icon(Icons.language),
           title: Text(context.l10n.labelCurrency),
@@ -272,7 +270,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
     }
   }
 
-  Widget _buildDescriptionField() => AppCard(
+  Widget _buildDescriptionField() => GlassCard(
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: TextFormField(
@@ -293,7 +291,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         ),
       );
 
-  Widget _buildDatePicker() => AppCard(
+  Widget _buildDatePicker() => GlassCard(
         onTap: () async {
           final val = await showDatePicker(
             context: context,

@@ -102,10 +102,14 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   @override
   Future<void> addInvoice(Invoice invoice) async {
     try {
+      // Self-Healing: Correct any discrepancies before persisting.
+      final invoiceToSave =
+          invoice.hasTotalDiscrepancy ? invoice.healedCopy : invoice;
+
       final model = InvoiceModel.fromEntity(
-        invoice.copyWith(
+        invoiceToSave.copyWith(
           userId: userId,
-          warehouseId: invoice.warehouseId ?? warehouseId,
+          warehouseId: invoiceToSave.warehouseId ?? warehouseId,
         ),
       );
       await isar.writeTxn(() async {
@@ -119,11 +123,15 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   @override
   Future<void> updateInvoice(Invoice invoice) async {
     try {
+      // Self-Healing: Correct any discrepancies before persisting.
+      final invoiceToSave =
+          invoice.hasTotalDiscrepancy ? invoice.healedCopy : invoice;
+
       await isar.writeTxn(() async {
         // البحث عن الفاتورة الموجودة
         final existingModel = await isar.invoiceModels
             .filter()
-            .invoiceIdEqualTo(invoice.id)
+            .invoiceIdEqualTo(invoiceToSave.id)
             .and()
             .userIdEqualTo(userId)
             .and()
@@ -138,9 +146,9 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
 
         // تحديث الفاتورة مع الاحتفاظ بنفس id
         final updatedModel = InvoiceModel.fromEntity(
-          invoice.copyWith(
+          invoiceToSave.copyWith(
             userId: userId,
-            warehouseId: invoice.warehouseId ?? warehouseId,
+            warehouseId: invoiceToSave.warehouseId ?? warehouseId,
           ),
         )..id = existingModel.id;
         await isar.invoiceModels.put(updatedModel);

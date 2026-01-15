@@ -10,6 +10,7 @@ analyzer:
     - "**/*.freezed.dart"
     - "**/*.mocks.dart"
     - "lib/src/rust/**"
+    - "tmp_rust/**"
     - "build/**"
     - ".dart_tool/**"
     - "coverage/**"

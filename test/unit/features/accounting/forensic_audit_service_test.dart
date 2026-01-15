@@ -307,7 +307,9 @@ void main() {
       final result = await service.process(context);
 
       expect(
-          result.rationale, contains('ZATCA Phase 2 cryptographic identity'));
+        result.rationale,
+        contains('ZATCA Phase 2 cryptographic identity'),
+      );
     });
 
     test('should NOT flag if ZATCA identity is present', () async {
@@ -352,8 +354,10 @@ void main() {
 
       final result = await service.process(context);
 
-      expect(result.rationale,
-          isNot(contains('ZATCA Phase 2 cryptographic identity')));
+      expect(
+        result.rationale,
+        isNot(contains('ZATCA Phase 2 cryptographic identity')),
+      );
     });
   });
 }

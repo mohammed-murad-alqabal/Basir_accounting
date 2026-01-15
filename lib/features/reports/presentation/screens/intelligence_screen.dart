@@ -97,7 +97,9 @@ class IntelligenceScreen extends ConsumerWidget {
   }
 
   Widget _buildInsightsSection(
-          BuildContext context, List<AgentInsight> insights) =>
+    BuildContext context,
+    List<AgentInsight> insights,
+  ) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -229,7 +231,6 @@ class IntelligenceScreen extends ConsumerWidget {
       case InsightRiskLevel.low:
         return Colors.amber;
       case InsightRiskLevel.info:
-      default:
         return Colors.blue;
     }
   }

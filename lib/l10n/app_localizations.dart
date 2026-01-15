@@ -98,6 +98,12 @@ abstract class AppLocalizations {
     Locale('en')
   ];
 
+  /// The main application title
+  ///
+  /// In en, this message translates to:
+  /// **'Basir'**
+  String get appTitle;
+
   /// No description provided for @labelStandard.
   ///
   /// In en, this message translates to:
@@ -206,11 +212,569 @@ abstract class AppLocalizations {
   /// **'Payables Aging'**
   String get payablesAgingTitle;
 
+  /// No description provided for @labelGeneralLedger.
+  ///
+  /// In en, this message translates to:
+  /// **'General Ledger'**
+  String get labelGeneralLedger;
+
+  /// No description provided for @labelPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get labelPeriod;
+
+  /// No description provided for @msgNoTransactionsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions found'**
+  String get msgNoTransactionsFound;
+
   /// No description provided for @msgExportComingSoon.
   ///
   /// In en, this message translates to:
   /// **'Export feature coming soon'**
   String get msgExportComingSoon;
+
+  /// Title for appearance section
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance & Customization'**
+  String get appearanceTitle;
+
+  /// Title for company settings section
+  ///
+  /// In en, this message translates to:
+  /// **'Company & Billing Settings'**
+  String get companySettingsTitle;
+
+  /// No description provided for @errContactAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact access error: {error}'**
+  String errContactAccess(String error);
+
+  /// No description provided for @errCustomerAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add customer'**
+  String get errCustomerAdd;
+
+  /// No description provided for @errCustomerDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete customer'**
+  String get errCustomerDelete;
+
+  /// No description provided for @errCustomerNameLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 2 characters'**
+  String get errCustomerNameLength;
+
+  /// No description provided for @errCustomerNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer name is required'**
+  String get errCustomerNameRequired;
+
+  /// No description provided for @errCustomerUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update customer'**
+  String get errCustomerUpdate;
+
+  /// No description provided for @errEmptyField.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get errEmptyField;
+
+  /// No description provided for @errGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Error occurred: {error}'**
+  String errGeneric(String error);
+
+  /// No description provided for @errInvalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email address'**
+  String get errInvalidEmail;
+
+  /// No description provided for @errInvalidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid number'**
+  String get errInvalidNumber;
+
+  /// No description provided for @errInvoiceAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add invoice'**
+  String get errInvoiceAdd;
+
+  /// No description provided for @errInvoiceUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update invoice'**
+  String get errInvoiceUpdate;
+
+  /// No description provided for @errLoadCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading customers: {error}'**
+  String errLoadCustomers(String error);
+
+  /// No description provided for @errLoginFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed. Please check your credentials.'**
+  String get errLoginFailed;
+
+  /// No description provided for @errNoItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add at least one item'**
+  String get errNoItems;
+
+  /// No description provided for @errPasswordShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get errPasswordShort;
+
+  /// No description provided for @errPasswordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get errPasswordsDoNotMatch;
+
+  /// No description provided for @errPhoneLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone must be 10 digits'**
+  String get errPhoneLength;
+
+  /// No description provided for @errPhoneStart05.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone must start with 05'**
+  String get errPhoneStart05;
+
+  /// No description provided for @errSelectCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a customer'**
+  String get errSelectCustomer;
+
+  /// No description provided for @errUsernameShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Username must be at least 3 characters'**
+  String get errUsernameShort;
+
+  /// No description provided for @errorCustomerNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer data not found'**
+  String get errorCustomerNotFound;
+
+  /// No description provided for @errorCustomerPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer phone not available'**
+  String get errorCustomerPhone;
+
+  /// No description provided for @errorLoadingInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading invoices'**
+  String get errorLoadingInvoices;
+
+  /// No description provided for @errorLoadingSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading settings'**
+  String get errorLoadingSettings;
+
+  /// No description provided for @errorScreenNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen not found: {name}'**
+  String errorScreenNotFound(String name);
+
+  /// No description provided for @errorSharePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Error sharing PDF: {error}'**
+  String errorSharePdf(String error);
+
+  /// No description provided for @errorShareWhatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'Error sharing via WhatsApp: {error}'**
+  String errorShareWhatsapp(String error);
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @filterDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get filterDraft;
+
+  /// No description provided for @filterIssued.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued'**
+  String get filterIssued;
+
+  /// No description provided for @filterOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get filterOverdue;
+
+  /// No description provided for @filterPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get filterPaid;
+
+  /// No description provided for @fontCairo.
+  ///
+  /// In en, this message translates to:
+  /// **'Cairo (Default)'**
+  String get fontCairo;
+
+  /// No description provided for @fontRoboto.
+  ///
+  /// In en, this message translates to:
+  /// **'Roboto'**
+  String get fontRoboto;
+
+  /// No description provided for @fontSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Font Type'**
+  String get fontSettingsTitle;
+
+  /// No description provided for @fontSizeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Text Size'**
+  String get fontSizeLabel;
+
+  /// No description provided for @taxConfigTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax & E-Invoicing'**
+  String get taxConfigTitle;
+
+  /// No description provided for @zatcaPhase2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'ZATCA E-Invoicing (Phase 2)'**
+  String get zatcaPhase2Title;
+
+  /// No description provided for @zatcaPhase2Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure your settings for compliance with Saudi ZATCA Phase 2 (Integration Phase).'**
+  String get zatcaPhase2Description;
+
+  /// No description provided for @enableTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Tax on Invoices'**
+  String get enableTax;
+
+  /// No description provided for @priceIncludesTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Price includes tax by default'**
+  String get priceIncludesTax;
+
+  /// No description provided for @vatNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax ID / VAT Number'**
+  String get vatNumber;
+
+  /// No description provided for @defaultTaxRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Default Tax Value (%)'**
+  String get defaultTaxRate;
+
+  /// No description provided for @b2cSimplifiedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'B2C Simplified Invoice Label'**
+  String get b2cSimplifiedLabel;
+
+  /// No description provided for @b2bStandardLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'B2B Standard Invoice Label'**
+  String get b2bStandardLabel;
+
+  /// No description provided for @taxName.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Name'**
+  String get taxName;
+
+  /// No description provided for @taxPercentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Percentage (%)'**
+  String get taxPercentage;
+
+  /// No description provided for @taxShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show'**
+  String get taxShow;
+
+  /// No description provided for @taxDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get taxDefault;
+
+  /// No description provided for @printSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Printing & Templates'**
+  String get printSettingsTitle;
+
+  /// No description provided for @printSettingsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your printing formats and templates'**
+  String get printSettingsSubtitle;
+
+  /// No description provided for @templateSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Template Selection'**
+  String get templateSelection;
+
+  /// No description provided for @paperSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Paper Size'**
+  String get paperSize;
+
+  /// No description provided for @fontSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Font Size'**
+  String get fontSize;
+
+  /// No description provided for @paddingBottom.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty lines at end'**
+  String get paddingBottom;
+
+  /// No description provided for @printCopies.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of copies'**
+  String get printCopies;
+
+  /// No description provided for @printItemUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Show item unit in print'**
+  String get printItemUnit;
+
+  /// No description provided for @saveSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Settings'**
+  String get saveSettings;
+
+  /// No description provided for @guestUpgradeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Convert your guest account to a permanent account to save your data securely.'**
+  String get guestUpgradeDescription;
+
+  /// No description provided for @helpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help & Support'**
+  String get helpTitle;
+
+  /// No description provided for @highContrast.
+  ///
+  /// In en, this message translates to:
+  /// **'High Contrast'**
+  String get highContrast;
+
+  /// No description provided for @highContrastSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase text and element clarity'**
+  String get highContrastSubtitle;
+
+  /// No description provided for @hintAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter customer address'**
+  String get hintAddress;
+
+  /// No description provided for @hintCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your company name'**
+  String get hintCompanyName;
+
+  /// No description provided for @hintConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-enter password'**
+  String get hintConfirmPassword;
+
+  /// No description provided for @hintCurrencySymbol.
+  ///
+  /// In en, this message translates to:
+  /// **'SAR'**
+  String get hintCurrencySymbol;
+
+  /// No description provided for @hintCustomerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter customer name'**
+  String get hintCustomerName;
+
+  /// No description provided for @hintCustomerNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Add customer notes'**
+  String get hintCustomerNotes;
+
+  /// No description provided for @hintEnterNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new password'**
+  String get hintEnterNewPassword;
+
+  /// No description provided for @hintEnterNewUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new username'**
+  String get hintEnterNewUsername;
+
+  /// No description provided for @hintEnterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter password'**
+  String get hintEnterPassword;
+
+  /// No description provided for @hintEnterUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter username'**
+  String get hintEnterUsername;
+
+  /// No description provided for @hintNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Add invoice notes'**
+  String get hintNotes;
+
+  /// No description provided for @hintSelectCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Customer'**
+  String get hintSelectCustomer;
+
+  /// No description provided for @hintTaxNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter tax number (optional)'**
+  String get hintTaxNumber;
+
+  /// No description provided for @iconCupertino.
+  ///
+  /// In en, this message translates to:
+  /// **'Cupertino (iOS)'**
+  String get iconCupertino;
+
+  /// No description provided for @iconMaterial.
+  ///
+  /// In en, this message translates to:
+  /// **'Material Design'**
+  String get iconMaterial;
+
+  /// No description provided for @iconSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon Style'**
+  String get iconSettingsTitle;
+
+  /// No description provided for @journalEntryFormTitleAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Journal Entry'**
+  String get journalEntryFormTitleAdd;
+
+  /// No description provided for @journalEntryFormTitleEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Journal Entry'**
+  String get journalEntryFormTitleEdit;
+
+  /// No description provided for @invoiceFormTitleAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Invoice'**
+  String get invoiceFormTitleAdd;
+
+  /// No description provided for @invoiceFormTitleAddPurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Purchase Invoice'**
+  String get invoiceFormTitleAddPurchase;
+
+  /// No description provided for @invoiceFormTitleEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Invoice'**
+  String get invoiceFormTitleEdit;
+
+  /// No description provided for @invoiceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {id}'**
+  String invoiceTitle(String id);
+
+  /// No description provided for @calculatorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial Calculator'**
+  String get calculatorTitle;
+
+  /// No description provided for @convertToCurrencies.
+  ///
+  /// In en, this message translates to:
+  /// **'Convert to currencies'**
+  String get convertToCurrencies;
+
+  /// No description provided for @clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clear;
 
   /// No description provided for @labelTermsAndConditions.
   ///
@@ -308,18 +872,6 @@ abstract class AppLocalizations {
   /// **'Update Report'**
   String get tooltipUpdateReport;
 
-  /// No description provided for @journalEntryFormTitleAdd.
-  ///
-  /// In en, this message translates to:
-  /// **'Add Journal Entry'**
-  String get journalEntryFormTitleAdd;
-
-  /// No description provided for @journalEntryFormTitleEdit.
-  ///
-  /// In en, this message translates to:
-  /// **'Edit Journal Entry'**
-  String get journalEntryFormTitleEdit;
-
   /// No description provided for @labelCogsAccountId.
   ///
   /// In en, this message translates to:
@@ -343,6 +895,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Inventory Valuation (IAS 2)'**
   String get labelInventoryValuation;
+
+  /// No description provided for @logoutLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logoutLabel;
+
+  /// No description provided for @msgInvoiceShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello {name}, here is invoice #{id}:\nTotal: {total} {symbol}\nThank you.'**
+  String msgInvoiceShare(String name, String id, String total, String symbol);
+
+  /// No description provided for @msgSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error saving: {error}'**
+  String msgSaveError(String error);
+
+  /// No description provided for @navHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navHome;
+
+  /// No description provided for @navInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get navInvoices;
+
+  /// No description provided for @navSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get navSettings;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTitle;
+
+  /// No description provided for @pdfShareSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {id}'**
+  String pdfShareSubject(String id);
+
+  /// No description provided for @pdfShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'Here is the invoice for {customerName}'**
+  String pdfShareText(String customerName);
+
+  /// No description provided for @placeholderComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon: {title}'**
+  String placeholderComingSoon(String title);
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
 
   /// No description provided for @aboutAppTitle.
   ///
@@ -662,12 +1280,6 @@ abstract class AppLocalizations {
   /// **'Basir'**
   String get appName;
 
-  /// The main application title
-  ///
-  /// In en, this message translates to:
-  /// **'Basir'**
-  String get appTitle;
-
   /// No description provided for @appVersion.
   ///
   /// In en, this message translates to:
@@ -685,12 +1297,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Appearance Settings'**
   String get appearanceSettingsTitle;
-
-  /// Title for appearance section
-  ///
-  /// In en, this message translates to:
-  /// **'Appearance & Customization'**
-  String get appearanceTitle;
 
   /// No description provided for @btnAdd.
   ///
@@ -800,12 +1406,6 @@ abstract class AppLocalizations {
   /// **'Company & Billing Settings'**
   String get companySettingsDialogTitle;
 
-  /// Title for company settings section
-  ///
-  /// In en, this message translates to:
-  /// **'Company & Billing Settings'**
-  String get companySettingsTitle;
-
   /// No description provided for @customerDetailsTitle.
   ///
   /// In en, this message translates to:
@@ -848,46 +1448,10 @@ abstract class AppLocalizations {
   /// **'Customers'**
   String get customersTitle;
 
-  /// No description provided for @dashboardBasirSystemTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Basir Accounting System'**
-  String get dashboardBasirSystemTitle;
-
-  /// No description provided for @dashboardMotto.
-  ///
-  /// In en, this message translates to:
-  /// **'Accuracy and Reliability in Every Transaction'**
-  String get dashboardMotto;
-
-  /// No description provided for @dashboardQuickActionsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Quick Financial Actions'**
-  String get dashboardQuickActionsTitle;
-
-  /// No description provided for @dashboardRecentActivityTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Recent Operations Log'**
-  String get dashboardRecentActivityTitle;
-
-  /// No description provided for @dashboardStatsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Financial Performance Analytics'**
-  String get dashboardStatsTitle;
-
-  /// No description provided for @dashboardTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Dashboard'**
-  String get dashboardTitle;
-
   /// No description provided for @dashboardWelcomeMessage.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Basir'**
+  /// **'Welcome to your Insightful Dashboard'**
   String get dashboardWelcomeMessage;
 
   /// No description provided for @dialogAddItemTitle.
@@ -944,377 +1508,11 @@ abstract class AppLocalizations {
   /// **'Edit Account Details'**
   String get editAccountTitle;
 
-  /// No description provided for @errContactAccess.
-  ///
-  /// In en, this message translates to:
-  /// **'Contact access error: {error}'**
-  String errContactAccess(String error);
-
-  /// No description provided for @errCustomerAdd.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to add customer'**
-  String get errCustomerAdd;
-
-  /// No description provided for @errCustomerDelete.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to delete customer'**
-  String get errCustomerDelete;
-
-  /// No description provided for @errCustomerNameLength.
-  ///
-  /// In en, this message translates to:
-  /// **'Name must be at least 2 characters'**
-  String get errCustomerNameLength;
-
-  /// No description provided for @errCustomerNameRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'Customer name is required'**
-  String get errCustomerNameRequired;
-
-  /// No description provided for @errCustomerUpdate.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to update customer'**
-  String get errCustomerUpdate;
-
-  /// No description provided for @errEmptyField.
-  ///
-  /// In en, this message translates to:
-  /// **'This field is required'**
-  String get errEmptyField;
-
-  /// No description provided for @errGeneric.
-  ///
-  /// In en, this message translates to:
-  /// **'Error occurred: {error}'**
-  String errGeneric(String error);
-
-  /// No description provided for @errInvalidEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid email address'**
-  String get errInvalidEmail;
-
-  /// No description provided for @errInvalidNumber.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter a valid number'**
-  String get errInvalidNumber;
-
-  /// No description provided for @errInvoiceAdd.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to add invoice'**
-  String get errInvoiceAdd;
-
-  /// No description provided for @errInvoiceUpdate.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to update invoice'**
-  String get errInvoiceUpdate;
-
-  /// No description provided for @errLoadCustomers.
-  ///
-  /// In en, this message translates to:
-  /// **'Error loading customers: {error}'**
-  String errLoadCustomers(String error);
-
-  /// Error message when login fails
-  ///
-  /// In en, this message translates to:
-  /// **'Login failed. Please check your credentials.'**
-  String get errLoginFailed;
-
-  /// No description provided for @errNoItems.
-  ///
-  /// In en, this message translates to:
-  /// **'Please add at least one item'**
-  String get errNoItems;
-
-  /// No description provided for @errPasswordShort.
-  ///
-  /// In en, this message translates to:
-  /// **'Password must be at least 6 characters'**
-  String get errPasswordShort;
-
-  /// No description provided for @errPasswordsDoNotMatch.
-  ///
-  /// In en, this message translates to:
-  /// **'Passwords do not match'**
-  String get errPasswordsDoNotMatch;
-
-  /// No description provided for @errPhoneLength.
-  ///
-  /// In en, this message translates to:
-  /// **'Phone must be 10 digits'**
-  String get errPhoneLength;
-
-  /// No description provided for @errPhoneStart05.
-  ///
-  /// In en, this message translates to:
-  /// **'Phone must start with 05'**
-  String get errPhoneStart05;
-
-  /// No description provided for @errSelectCustomer.
-  ///
-  /// In en, this message translates to:
-  /// **'Please select a customer'**
-  String get errSelectCustomer;
-
-  /// No description provided for @errUsernameShort.
-  ///
-  /// In en, this message translates to:
-  /// **'Username must be at least 3 characters'**
-  String get errUsernameShort;
-
-  /// No description provided for @errorCustomerNotFound.
-  ///
-  /// In en, this message translates to:
-  /// **'Customer data not found'**
-  String get errorCustomerNotFound;
-
-  /// No description provided for @errorCustomerPhone.
-  ///
-  /// In en, this message translates to:
-  /// **'Customer phone not available'**
-  String get errorCustomerPhone;
-
-  /// No description provided for @errorLoadingInvoices.
-  ///
-  /// In en, this message translates to:
-  /// **'Error loading invoices'**
-  String get errorLoadingInvoices;
-
-  /// No description provided for @errorLoadingSettings.
-  ///
-  /// In en, this message translates to:
-  /// **'Error loading settings'**
-  String get errorLoadingSettings;
-
-  /// No description provided for @errorScreenNotFound.
-  ///
-  /// In en, this message translates to:
-  /// **'Screen not found: {name}'**
-  String errorScreenNotFound(String name);
-
-  /// No description provided for @errorSharePdf.
-  ///
-  /// In en, this message translates to:
-  /// **'Error sharing PDF: {error}'**
-  String errorSharePdf(String error);
-
-  /// No description provided for @errorShareWhatsapp.
-  ///
-  /// In en, this message translates to:
-  /// **'Error sharing via WhatsApp: {error}'**
-  String errorShareWhatsapp(String error);
-
-  /// No description provided for @filterAll.
-  ///
-  /// In en, this message translates to:
-  /// **'All'**
-  String get filterAll;
-
-  /// No description provided for @filterDraft.
-  ///
-  /// In en, this message translates to:
-  /// **'Draft'**
-  String get filterDraft;
-
-  /// No description provided for @filterIssued.
-  ///
-  /// In en, this message translates to:
-  /// **'Issued'**
-  String get filterIssued;
-
-  /// No description provided for @filterOverdue.
-  ///
-  /// In en, this message translates to:
-  /// **'Overdue'**
-  String get filterOverdue;
-
-  /// No description provided for @filterPaid.
-  ///
-  /// In en, this message translates to:
-  /// **'Paid'**
-  String get filterPaid;
-
-  /// No description provided for @fontCairo.
-  ///
-  /// In en, this message translates to:
-  /// **'Cairo (Default)'**
-  String get fontCairo;
-
-  /// No description provided for @fontRoboto.
-  ///
-  /// In en, this message translates to:
-  /// **'Roboto'**
-  String get fontRoboto;
-
-  /// No description provided for @fontSettingsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Font Type'**
-  String get fontSettingsTitle;
-
-  /// No description provided for @fontSizeLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Text Size'**
-  String get fontSizeLabel;
-
-  /// No description provided for @guestUpgradeDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Convert your guest account to a permanent account to save your data securely.'**
-  String get guestUpgradeDescription;
-
-  /// Title for help section
-  ///
-  /// In en, this message translates to:
-  /// **'Help & Support'**
-  String get helpTitle;
-
-  /// No description provided for @highContrast.
-  ///
-  /// In en, this message translates to:
-  /// **'High Contrast'**
-  String get highContrast;
-
-  /// No description provided for @highContrastSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Increase text and element clarity'**
-  String get highContrastSubtitle;
-
-  /// No description provided for @hintAddress.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter customer address'**
-  String get hintAddress;
-
-  /// No description provided for @hintCompanyName.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your company name'**
-  String get hintCompanyName;
-
-  /// No description provided for @hintConfirmPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Re-enter password'**
-  String get hintConfirmPassword;
-
-  /// No description provided for @hintCurrencySymbol.
-  ///
-  /// In en, this message translates to:
-  /// **'SAR'**
-  String get hintCurrencySymbol;
-
-  /// No description provided for @hintCustomerName.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter customer name'**
-  String get hintCustomerName;
-
-  /// No description provided for @hintCustomerNotes.
-  ///
-  /// In en, this message translates to:
-  /// **'Add customer notes'**
-  String get hintCustomerNotes;
-
-  /// No description provided for @hintEnterNewPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter new password'**
-  String get hintEnterNewPassword;
-
-  /// No description provided for @hintEnterNewUsername.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter new username'**
-  String get hintEnterNewUsername;
-
-  /// No description provided for @hintEnterPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter password'**
-  String get hintEnterPassword;
-
-  /// No description provided for @hintEnterUsername.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter username'**
-  String get hintEnterUsername;
-
-  /// No description provided for @hintNotes.
-  ///
-  /// In en, this message translates to:
-  /// **'Add invoice notes'**
-  String get hintNotes;
-
-  /// No description provided for @hintSelectCustomer.
-  ///
-  /// In en, this message translates to:
-  /// **'Select Customer'**
-  String get hintSelectCustomer;
-
-  /// No description provided for @hintTaxNumber.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter tax number (optional)'**
-  String get hintTaxNumber;
-
-  /// No description provided for @iconCupertino.
-  ///
-  /// In en, this message translates to:
-  /// **'Cupertino (iOS)'**
-  String get iconCupertino;
-
-  /// No description provided for @iconMaterial.
-  ///
-  /// In en, this message translates to:
-  /// **'Material Design'**
-  String get iconMaterial;
-
-  /// No description provided for @iconSettingsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Icon Style'**
-  String get iconSettingsTitle;
-
-  /// No description provided for @invoiceFormTitleAdd.
-  ///
-  /// In en, this message translates to:
-  /// **'Add New Invoice'**
-  String get invoiceFormTitleAdd;
-
-  /// No description provided for @invoiceFormTitleEdit.
-  ///
-  /// In en, this message translates to:
-  /// **'Edit Invoice'**
-  String get invoiceFormTitleEdit;
-
-  /// No description provided for @invoiceTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Invoice {id}'**
-  String invoiceTitle(String id);
-
   /// No description provided for @labelAddress.
   ///
   /// In en, this message translates to:
   /// **'Address'**
   String get labelAddress;
-
-  /// No description provided for @labelAddressOptional.
-  ///
-  /// In en, this message translates to:
-  /// **'Address (Optional)'**
-  String get labelAddressOptional;
 
   /// No description provided for @labelCompanyName.
   ///
@@ -1376,12 +1574,6 @@ abstract class AppLocalizations {
   /// **'Email'**
   String get labelEmail;
 
-  /// No description provided for @labelEmailOptional.
-  ///
-  /// In en, this message translates to:
-  /// **'Email (Optional)'**
-  String get labelEmailOptional;
-
   /// No description provided for @labelGrandTotal.
   ///
   /// In en, this message translates to:
@@ -1430,12 +1622,6 @@ abstract class AppLocalizations {
   /// **'Notes (Optional)'**
   String get labelNotes;
 
-  /// No description provided for @labelNotesOptional.
-  ///
-  /// In en, this message translates to:
-  /// **'Notes (Optional)'**
-  String get labelNotesOptional;
-
   /// No description provided for @labelPassword.
   ///
   /// In en, this message translates to:
@@ -1453,12 +1639,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phone'**
   String get labelPhone;
-
-  /// No description provided for @labelPhoneOptional.
-  ///
-  /// In en, this message translates to:
-  /// **'Phone (Optional)'**
-  String get labelPhoneOptional;
 
   /// No description provided for @labelSourceWarehouse.
   ///
@@ -1568,7 +1748,7 @@ abstract class AppLocalizations {
   /// **'English'**
   String get langEnglish;
 
-  /// Title for language settings
+  /// No description provided for @languageTitle.
   ///
   /// In en, this message translates to:
   /// **'Language'**
@@ -1591,12 +1771,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Login'**
   String get loginTitle;
-
-  /// Label for logout button
-  ///
-  /// In en, this message translates to:
-  /// **'Logout'**
-  String get logoutLabel;
 
   /// No description provided for @modeDark.
   ///
@@ -1627,18 +1801,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Account details updated successfully'**
   String get msgAccountUpdated;
-
-  /// No description provided for @msgConfirmDeleteCustomer.
-  ///
-  /// In en, this message translates to:
-  /// **'Are you sure you want to delete customer {name}?'**
-  String msgConfirmDeleteCustomer(String name);
-
-  /// No description provided for @msgConfirmDeleteInvoice.
-  ///
-  /// In en, this message translates to:
-  /// **'Are you sure you want to delete this invoice?'**
-  String get msgConfirmDeleteInvoice;
 
   /// No description provided for @msgConfirmLogout.
   ///
@@ -1676,12 +1838,6 @@ abstract class AppLocalizations {
   /// **'Invoice added successfully'**
   String get msgInvoiceAdded;
 
-  /// No description provided for @msgInvoiceShare.
-  ///
-  /// In en, this message translates to:
-  /// **'Hello {name}, here is invoice #{id}:\nTotal: {total} {symbol}\nThank you.'**
-  String msgInvoiceShare(String name, String id, String total, String symbol);
-
   /// No description provided for @msgInvoiceUpdated.
   ///
   /// In en, this message translates to:
@@ -1718,12 +1874,6 @@ abstract class AppLocalizations {
   /// **'No items. Press + to add.'**
   String get msgNoItems;
 
-  /// No description provided for @msgSaveError.
-  ///
-  /// In en, this message translates to:
-  /// **'Error saving: {error}'**
-  String msgSaveError(String error);
-
   /// No description provided for @msgSettingsSaved.
   ///
   /// In en, this message translates to:
@@ -1736,24 +1886,6 @@ abstract class AppLocalizations {
   /// **'Customers'**
   String get navCustomers;
 
-  /// No description provided for @navHome.
-  ///
-  /// In en, this message translates to:
-  /// **'Home'**
-  String get navHome;
-
-  /// No description provided for @navInvoices.
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get navInvoices;
-
-  /// No description provided for @navSettings.
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get navSettings;
-
   /// No description provided for @notificationsEnable.
   ///
   /// In en, this message translates to:
@@ -1765,30 +1897,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Receive notifications for overdue invoices'**
   String get notificationsSubtitle;
-
-  /// Title for notifications section
-  ///
-  /// In en, this message translates to:
-  /// **'Notifications'**
-  String get notificationsTitle;
-
-  /// No description provided for @pdfShareSubject.
-  ///
-  /// In en, this message translates to:
-  /// **'Invoice {id}'**
-  String pdfShareSubject(String id);
-
-  /// No description provided for @pdfShareText.
-  ///
-  /// In en, this message translates to:
-  /// **'Here is the invoice for {customerName}'**
-  String pdfShareText(String customerName);
-
-  /// No description provided for @placeholderComingSoon.
-  ///
-  /// In en, this message translates to:
-  /// **'Coming soon: {title}'**
-  String placeholderComingSoon(String title);
 
   /// No description provided for @privacyFooter.
   ///
@@ -1897,12 +2005,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Style'**
   String get sectionStyle;
-
-  /// Title of the settings screen
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get settingsTitle;
 
   /// No description provided for @setupSubtitle.
   ///
@@ -3008,6 +3110,72 @@ abstract class AppLocalizations {
   /// **'Exchange Rate'**
   String get exchangeRate;
 
+  /// No description provided for @labelBaseCurrencyEquivalent.
+  ///
+  /// In en, this message translates to:
+  /// **'Base Currency Equivalent'**
+  String get labelBaseCurrencyEquivalent;
+
+  /// No description provided for @titleTreasuryVault.
+  ///
+  /// In en, this message translates to:
+  /// **'The Vault (Treasury)'**
+  String get titleTreasuryVault;
+
+  /// No description provided for @labelTotalLiquidity.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Liquidity'**
+  String get labelTotalLiquidity;
+
+  /// No description provided for @labelAvailableCashBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Available Cash & Bank'**
+  String get labelAvailableCashBank;
+
+  /// No description provided for @labelAccounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts'**
+  String get labelAccounts;
+
+  /// No description provided for @labelForecast30Days.
+  ///
+  /// In en, this message translates to:
+  /// **'30-Day Outlook'**
+  String get labelForecast30Days;
+
+  /// No description provided for @labelExpectedInflow.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected Inflow'**
+  String get labelExpectedInflow;
+
+  /// No description provided for @labelExpectedOutflow.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected Outflow'**
+  String get labelExpectedOutflow;
+
+  /// No description provided for @labelNetChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Net Change'**
+  String get labelNetChange;
+
+  /// No description provided for @msgNoCashAccounts.
+  ///
+  /// In en, this message translates to:
+  /// **'No cash accounts found'**
+  String get msgNoCashAccounts;
+
+  /// No description provided for @msgInitCoa.
+  ///
+  /// In en, this message translates to:
+  /// **'Initialize your COA or add cash accounts.'**
+  String get msgInitCoa;
+
   /// No description provided for @originalAmount.
   ///
   /// In en, this message translates to:
@@ -3144,7 +3312,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Warning: Transaction type ({type}) requires manual review for standards compliance.'**
-  String agentRationaleStandardsManualReview(Object type);
+  String agentRationaleStandardsManualReview(String type);
 
   /// No description provided for @agentRationaleTaxNoId.
   ///
@@ -3162,19 +3330,19 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Validated Tax ID: {id}'**
-  String agentRationaleTaxValidated(Object id);
+  String agentRationaleTaxValidated(String id);
 
   /// No description provided for @agentRationaleTaxAnalyzing.
   ///
   /// In en, this message translates to:
   /// **'Analyzing VAT for {account}'**
-  String agentRationaleTaxAnalyzing(Object account);
+  String agentRationaleTaxAnalyzing(String account);
 
   /// No description provided for @agentRationaleTaxRateMismatch.
   ///
   /// In en, this message translates to:
   /// **'ALERT: Calculated VAT rate ({rate}) deviates from the regional standard (15%).'**
-  String agentRationaleTaxRateMismatch(Object rate);
+  String agentRationaleTaxRateMismatch(String rate);
 
   /// No description provided for @agentRationaleTaxRateMatch.
   ///
@@ -3204,31 +3372,31 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'WARNING: Unusually high transaction amount detected ({amount}). Administrative review recommended.'**
-  String agentRationaleForensicHighValue(Object amount);
+  String agentRationaleForensicHighValue(String amount);
 
   /// No description provided for @agentRationaleForensicDuplicate.
   ///
   /// In en, this message translates to:
   /// **'REJECTION: Duplicate reference number ({ref}) detected in history.'**
-  String agentRationaleForensicDuplicate(Object ref);
+  String agentRationaleForensicDuplicate(String ref);
 
   /// No description provided for @agentRationaleOperationalSufficient.
   ///
   /// In en, this message translates to:
   /// **'Liquidity Analysis: {account} balance is sufficient ({balance}) for this operation.'**
-  String agentRationaleOperationalSufficient(Object account, Object balance);
+  String agentRationaleOperationalSufficient(String account, String balance);
 
   /// No description provided for @agentRationaleOperationalInsufficient.
   ///
   /// In en, this message translates to:
   /// **'REJECTION: {account} balance is insufficient ({balance}) for this operation.'**
-  String agentRationaleOperationalInsufficient(Object account, Object balance);
+  String agentRationaleOperationalInsufficient(String account, String balance);
 
   /// No description provided for @agentRationaleStrategyOutflow.
   ///
   /// In en, this message translates to:
   /// **'Strategy Analysis: This entry represents a cash outflow of {amount}.'**
-  String agentRationaleStrategyOutflow(Object amount);
+  String agentRationaleStrategyOutflow(String amount);
 
   /// No description provided for @agentRationaleStrategyRecommendation.
   ///
@@ -3240,7 +3408,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Strategy Analysis: Liquidity enhancement of {amount} supports short-term investment capacity.'**
-  String agentRationaleStrategyInflow(Object amount);
+  String agentRationaleStrategyInflow(String amount);
 
   /// No description provided for @agentRationaleStrategyProfitability.
   ///
@@ -3264,7 +3432,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'SUCCESS: Integrated {count} compliant sustainability metrics.'**
-  String agentRationaleSustainabilitySuccess(Object count);
+  String agentRationaleSustainabilitySuccess(int count);
 
   /// No description provided for @agentRationaleSustainabilityNotRequired.
   ///
@@ -3276,13 +3444,13 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'WARNING: Transaction recorded during non-standard hours ({time}). Higher forensic weighting applied.'**
-  String agentRationaleForensicTimeAnomaly(Object time);
+  String agentRationaleForensicTimeAnomaly(String time);
 
   /// No description provided for @agentRationaleForensicSequenceGap.
   ///
   /// In en, this message translates to:
   /// **'NOTICE: Gap detected in reference sequence. Last: {last}, Current: {current}.'**
-  String agentRationaleForensicSequenceGap(Object current, Object last);
+  String agentRationaleForensicSequenceGap(String last, String current);
 
   /// No description provided for @agentRationaleForensicZatcaIdentityMissing.
   ///
@@ -3313,6 +3481,312 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No audit logs found for the selected period.'**
   String get auditTrailNoLogs;
+
+  /// No description provided for @msgInvoiceCognitiveHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this screen to create or edit invoices. Ensure meticulous accuracy with tax rates and item selection.'**
+  String get msgInvoiceCognitiveHint;
+
+  /// No description provided for @titleInvoiceCognitiveHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Mastery'**
+  String get titleInvoiceCognitiveHint;
+
+  /// No description provided for @labelReturnsAndDamages.
+  ///
+  /// In en, this message translates to:
+  /// **'Returns & Damages'**
+  String get labelReturnsAndDamages;
+
+  /// No description provided for @labelSalesReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales Return'**
+  String get labelSalesReturn;
+
+  /// No description provided for @descSalesReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Return sold items to inventory'**
+  String get descSalesReturn;
+
+  /// No description provided for @labelPurchaseReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Return'**
+  String get labelPurchaseReturn;
+
+  /// No description provided for @descPurchaseReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Return purchased items to vendor'**
+  String get descPurchaseReturn;
+
+  /// No description provided for @labelDamageInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Damage Invoice'**
+  String get labelDamageInvoice;
+
+  /// No description provided for @descDamageInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Record damaged or missing items'**
+  String get descDamageInvoice;
+
+  /// No description provided for @labelEmailOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Email (Optional)'**
+  String get labelEmailOptional;
+
+  /// No description provided for @labelPhoneOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone (Optional)'**
+  String get labelPhoneOptional;
+
+  /// No description provided for @labelAddressOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Address (Optional)'**
+  String get labelAddressOptional;
+
+  /// No description provided for @labelNotesOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes (Optional)'**
+  String get labelNotesOptional;
+
+  /// No description provided for @msgConfirmDeleteCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete customer {name}?'**
+  String msgConfirmDeleteCustomer(String name);
+
+  /// No description provided for @msgConfirmDeleteInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this invoice?'**
+  String get msgConfirmDeleteInvoice;
+
+  /// No description provided for @dashboardBasirSystemTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Basir Accounting System'**
+  String get dashboardBasirSystemTitle;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password'**
+  String get forgotPassword;
+
+  /// No description provided for @dashboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get dashboardTitle;
+
+  /// No description provided for @dashboardStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics'**
+  String get dashboardStatsTitle;
+
+  /// No description provided for @dashboardQuickActionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get dashboardQuickActionsTitle;
+
+  /// No description provided for @dashboardRecentActivityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Activity'**
+  String get dashboardRecentActivityTitle;
+
+  /// No description provided for @dashboardMotto.
+  ///
+  /// In en, this message translates to:
+  /// **'Professional Accounting Made Simple'**
+  String get dashboardMotto;
+
+  /// No description provided for @saveLabels.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Labels'**
+  String get saveLabels;
+
+  /// No description provided for @errInvalidResetLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid or expired reset link'**
+  String get errInvalidResetLink;
+
+  /// No description provided for @errInvalidResetToken.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid or expired reset token'**
+  String get errInvalidResetToken;
+
+  /// No description provided for @msgPasswordResetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset successfully'**
+  String get msgPasswordResetSuccess;
+
+  /// No description provided for @errPasswordResetFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset failed'**
+  String get errPasswordResetFailed;
+
+  /// No description provided for @errPasswordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get errPasswordRequired;
+
+  /// No description provided for @errPasswordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too short'**
+  String get errPasswordTooShort;
+
+  /// No description provided for @errPasswordNeedsUppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'Password needs uppercase letter'**
+  String get errPasswordNeedsUppercase;
+
+  /// No description provided for @errPasswordNeedsLowercase.
+  ///
+  /// In en, this message translates to:
+  /// **'Password needs lowercase letter'**
+  String get errPasswordNeedsLowercase;
+
+  /// No description provided for @errPasswordNeedsNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Password needs a number'**
+  String get errPasswordNeedsNumber;
+
+  /// No description provided for @errConfirmPasswordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password is required'**
+  String get errConfirmPasswordRequired;
+
+  /// No description provided for @resetPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPasswordTitle;
+
+  /// No description provided for @resetPasswordSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your new password for {email}'**
+  String resetPasswordSubtitle(String email);
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @passwordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your new password'**
+  String get passwordHint;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @confirmPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-enter your password'**
+  String get confirmPasswordHint;
+
+  /// No description provided for @passwordRequirements.
+  ///
+  /// In en, this message translates to:
+  /// **'Password Requirements:'**
+  String get passwordRequirements;
+
+  /// No description provided for @passwordRequirementsList.
+  ///
+  /// In en, this message translates to:
+  /// **'• At least 8 characters\n• One uppercase letter\n• One lowercase letter\n• One number'**
+  String get passwordRequirementsList;
+
+  /// No description provided for @resetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPassword;
+
+  /// No description provided for @backToLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Login'**
+  String get backToLogin;
+
+  /// No description provided for @labelVatNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT Number'**
+  String get labelVatNumber;
+
+  /// No description provided for @labelRegistrationNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Number (CR)'**
+  String get labelRegistrationNumber;
+
+  /// No description provided for @labelTotalPayables.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Payables to Vendors'**
+  String get labelTotalPayables;
+
+  /// No description provided for @msgValueCopiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Value copied to clipboard'**
+  String get msgValueCopiedToClipboard;
+
+  /// No description provided for @labelSourceDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Source Document'**
+  String get labelSourceDocument;
+
+  /// No description provided for @btnViewSource.
+  ///
+  /// In en, this message translates to:
+  /// **'View Source'**
+  String get btnViewSource;
+
+  /// No description provided for @msgLoadingSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading source document...'**
+  String get msgLoadingSource;
+
+  /// No description provided for @errSourceNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Source document not found'**
+  String get errSourceNotFound;
 }
 
 class _AppLocalizationsDelegate

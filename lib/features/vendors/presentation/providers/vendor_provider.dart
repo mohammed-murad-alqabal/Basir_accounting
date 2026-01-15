@@ -62,3 +62,13 @@ final filteredVendorsProvider = Provider<AsyncValue<List<Vendor>>>((ref) {
     }).toList();
   });
 });
+
+/// Provider لإجمالي أرصدة الموردين
+final totalVendorsBalanceProvider = Provider<double>((ref) {
+  final vendorsAsync = ref.watch(vendorsProvider);
+  return vendorsAsync.when(
+    data: (vendors) => vendors.fold(0, (sum, v) => sum + v.balance),
+    loading: () => 0.0,
+    error: (_, __) => 0.0,
+  );
+});

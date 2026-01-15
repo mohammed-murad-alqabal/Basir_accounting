@@ -45,7 +45,6 @@ void main() {
           items: [
             InvoiceItem(
               taxRate: Decimal.parse('0.15'),
-              taxCategory: 'S',
               id: 'i1',
               name: 'Test Item',
               quantity: Decimal.one,
@@ -70,6 +69,7 @@ void main() {
               : Decimal.zero,
           discountAmount: Decimal.zero,
           discountRate: Decimal.zero,
+          exchangeRate: Decimal.one,
         );
 
     Customer createTestCustomer(String id, String name, DateTime now) =>
@@ -88,7 +88,12 @@ void main() {
         createTestInvoice('#001', 'أحمد محمد', InvoiceStatus.paid, 1500, now),
         createTestInvoice('#002', 'سارة علي', InvoiceStatus.sent, 2300, now),
         createTestInvoice(
-            '#003', 'محمود حسن', InvoiceStatus.overdue, 1800, now),
+          '#003',
+          'محمود حسن',
+          InvoiceStatus.overdue,
+          1800,
+          now,
+        ),
       ];
 
       testCustomers = [

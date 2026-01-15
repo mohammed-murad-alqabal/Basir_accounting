@@ -30,13 +30,18 @@ void showCognitiveHint(BuildContext context, String message, {String? title}) {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.lightbulb_outline,
-                              color: Colors.amber, size: 20),
+                          const Icon(
+                            Icons.lightbulb_outline,
+                            color: Colors.amber,
+                            size: 20,
+                          ),
                           const SizedBox(width: 8),
                           Text(
                             title ?? 'Cognitive Hint',
                             style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 12),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
                           ),
                           const Spacer(),
                           IconButton(

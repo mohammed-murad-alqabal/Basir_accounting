@@ -1,4 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:flutter/widgets.dart';
@@ -37,7 +36,35 @@ class SustainabilityExpertService extends _$SustainabilityExpertService
       Locale(context.locale),
     );
 
-    if (context.isSustainabilityRequired) {
+    // Active Detection Logic: Check if account names trigger sustainability review
+    final sustainabilityKeywords = [
+      'Fuel',
+      'Electricity',
+      'Water',
+      'Waste',
+      'Energy',
+      'Gasoline',
+      'Diesel',
+      'بنزين',
+      'ديزل',
+      'وقود',
+      'كهرباء',
+      'مياه',
+    ];
+
+    final hasRelevantAccount = context.proposedJournalEntry.lines.any(
+      (line) => sustainabilityKeywords.any(
+        (kw) => line.accountName.toLowerCase().contains(kw.toLowerCase()),
+      ),
+    );
+
+    if (context.isSustainabilityRequired || hasRelevantAccount) {
+      if (hasRelevantAccount && !context.isSustainabilityRequired) {
+        rationale.add(
+          'Automated environmental impact detection triggered: '
+          'Account names align with ISSB S2 disclosure requirements.',
+        );
+      }
       rationale.add(l10n.agentRationaleSustainabilityFlagged);
 
       if (context.sustainabilityMetrics == null ||
