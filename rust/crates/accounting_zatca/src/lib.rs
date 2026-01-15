@@ -1,4 +1,5 @@
 pub mod crypto;
+pub mod csr;
 pub mod qr;
 pub mod service;
 pub mod xades;
@@ -97,5 +98,29 @@ mod tests {
 
         // Zero (Z)
         assert!(xml.contains("<cbc:ID>Z</cbc:ID>"));
+    }
+
+    #[test]
+    fn test_zatca_csr_generation() {
+        use crate::csr::{generate_csr, ZatcaCsrInput};
+
+        let (priv_pem, _) = generate_key_pair();
+        let input = ZatcaCsrInput {
+            common_name: "TST-DEVICE-001".to_string(),
+            organization_unit: "IT Department".to_string(),
+            organization: "Basir Solutions".to_string(),
+            country: "SA".to_string(),
+            serial_number: "1-Basir|2-MVP|3-001".to_string(),
+            vat_number: "310122393500003".to_string(),
+            business_category: "Retail".to_string(),
+            registered_address: "Riyadh, Saudi Arabia".to_string(),
+        };
+
+        let result = generate_csr(input, &priv_pem);
+        assert!(result.is_ok());
+
+        let csr_pem = result.unwrap();
+        assert!(csr_pem.contains("-----BEGIN CERTIFICATE REQUEST-----"));
+        assert!(csr_pem.contains("-----END CERTIFICATE REQUEST-----"));
     }
 }

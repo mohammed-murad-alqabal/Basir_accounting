@@ -16,3 +16,4 @@ anyhow = "1.0"
 hex = "0.4"
 rand = "0.8.5"
 rust_decimal.workspace = true
+rcgen = "0.14.6"

@@ -226,7 +226,7 @@ class AccountingService extends _$AccountingService {
   ///
   /// Transforms an invoice into a balanced [JournalEntry] with the following
   /// impact:
-  /// - **Debit**: Accounts Receivable (Total domain_inv.Invoice Amount)
+  /// - **Debit**: Accounts Receivable (Total Invoice Amount)
   /// - **Credit**: Revenue (Subtotal Amount)
   /// - **Credit**: Tax Liability (Tax Amount)
   ///
@@ -265,7 +265,7 @@ class AccountingService extends _$AccountingService {
       JournalEntryLine(
         accountId: receivableAccountId,
         accountName: 'Receivable - ${invoice.customerName}',
-        description: 'Sales domain_inv.Invoice #${invoice.invoiceNumber}',
+        description: 'Sales Invoice #${invoice.invoiceNumber}',
         debit: invoice.totalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
@@ -287,7 +287,7 @@ class AccountingService extends _$AccountingService {
       credit: invoice.subtotalAmountBaseCurrency,
       debit: Decimal.zero,
       accountName: revenueAccount.nameEn,
-      description: 'Revenue for domain_inv.Invoice #${invoice.invoiceNumber}',
+      description: 'Revenue for Invoice #${invoice.invoiceNumber}',
       originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
       originalAmount: invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
       exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
@@ -313,7 +313,7 @@ class AccountingService extends _$AccountingService {
         JournalEntryLine(
           accountId: taxAccount.id,
           accountName: taxAccount.nameEn,
-          description: 'VAT for domain_inv.Invoice #${invoice.invoiceNumber}',
+          description: 'VAT for Invoice #${invoice.invoiceNumber}',
           credit: invoice.taxAmountBaseCurrency,
           debit: Decimal.zero,
           originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
@@ -391,7 +391,7 @@ class AccountingService extends _$AccountingService {
   /// Typical impact:
   /// - **Debit**: Inventory or Expense (Subtotal Amount)
   /// - **Debit**: Input VAT (Tax Amount)
-  /// - **Credit**: Accounts Payable (Total domain_inv.Invoice Amount)
+  /// - **Credit**: Accounts Payable (Total Invoice Amount)
   Future<void> _postPurchaseInvoice(
     domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
@@ -416,7 +416,7 @@ class AccountingService extends _$AccountingService {
       JournalEntryLine(
         accountId: payableAccountId,
         accountName: 'Payable - ${invoice.customerName}',
-        description: 'Purchase domain_inv.Invoice #${invoice.invoiceNumber}',
+        description: 'Purchase Invoice #${invoice.invoiceNumber}',
         debit: Decimal.zero,
         credit: invoice.totalAmountBaseCurrency,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
@@ -501,8 +501,7 @@ class AccountingService extends _$AccountingService {
       JournalEntryLine(
         accountId: revenueAccount.id,
         accountName: revenueAccount.nameEn,
-        description:
-            'Sales Return for domain_inv.Invoice #${invoice.invoiceNumber}',
+        description: 'Sales Return for Invoice #${invoice.invoiceNumber}',
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
@@ -926,12 +925,12 @@ class AccountingService extends _$AccountingService {
   /// (Implementation of FR-SLS-018)
   Future<void> reverseInvoice(domain_inv.Invoice invoice) async {
     if (invoice.status == InvoiceStatus.cancelled) {
-      throw Exception('domain_inv.Invoice is already cancelled');
+      throw Exception('Invoice is already cancelled');
     }
 
     final invoiceRepo = ref.read(invoiceRepositoryProvider);
 
-    // 1. Update domain_inv.Invoice Status
+    // 1. Update Invoice Status
     final cancelledInvoice = invoice.copyWith(
       status: InvoiceStatus.cancelled,
       updatedAt: DateTime.now(),
