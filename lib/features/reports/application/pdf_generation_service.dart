@@ -205,7 +205,9 @@ class PdfGenerationService extends _$PdfGenerationService {
                 pw.Text(
                   'Analysis Period: ${from.toString().split(' ')[0]} to ${to.toString().split(' ')[0]}',
                   style: const pw.TextStyle(
-                      fontSize: 12, color: PdfColors.grey700),
+                    fontSize: 12,
+                    color: PdfColors.grey700,
+                  ),
                 ),
                 pw.Divider(thickness: 2, color: PdfColors.blue900),
               ],

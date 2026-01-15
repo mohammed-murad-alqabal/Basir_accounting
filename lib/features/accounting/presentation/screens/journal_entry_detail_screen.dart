@@ -118,7 +118,8 @@ class JournalEntryDetailScreen extends ConsumerWidget {
           color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-              color: Theme.of(context).primaryColor.withValues(alpha: 0.2)),
+            color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

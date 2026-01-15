@@ -177,8 +177,11 @@ class _FinancialCalculatorScreenState extends State<FinancialCalculatorScreen> {
     );
   }
 
-  Widget _buildRow(List<String> buttons,
-          {bool isSpecial = false, bool isAction = false}) =>
+  Widget _buildRow(
+    List<String> buttons, {
+    bool isSpecial = false,
+    bool isAction = false,
+  }) =>
       Expanded(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -200,11 +203,15 @@ class _FinancialCalculatorScreenState extends State<FinancialCalculatorScreen> {
       );
 
   AppEnhancedButtonType _getButtonType(
-      String b, bool isSpecial, bool isAction) {
+    String b,
+    bool isSpecial,
+    bool isAction,
+  ) {
     if (b == 'C') return AppEnhancedButtonType.danger;
     if (b == '=') return AppEnhancedButtonType.primary;
-    if (['/', 'X', '-', '+', '(', ')'].contains(b))
+    if (['/', 'X', '-', '+', '(', ')'].contains(b)) {
       return AppEnhancedButtonType.secondary;
+    }
     return AppEnhancedButtonType.outlined;
   }
 
