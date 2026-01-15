@@ -1,5 +1,9 @@
 {
   "@@locale": "en",
+  "appTitle": "Basir",
+  "@appTitle": {
+    "description": "The main application title"
+  },
   "labelStandard": "Accounting Standard",
   "labelRecognitionBasis": "Recognition Basis",
   "labelMeasurementBasis": "Measurement Basis",
@@ -18,16 +22,19 @@
   "sectionAgingAnalysis": "Aging Analysis",
   "receivablesAgingTitle": "Receivables Aging",
   "payablesAgingTitle": "Payables Aging",
+  "labelGeneralLedger": "General Ledger",
+  "labelPeriod": "Period",
+  "msgNoTransactionsFound": "No transactions found",
   "msgExportComingSoon": "Export feature coming soon",
-  "@appTitle": {
-    "description": "The main application title"
-  },
+  "appearanceTitle": "Appearance & Customization",
   "@appearanceTitle": {
     "description": "Title for appearance section"
   },
+  "companySettingsTitle": "Company & Billing Settings",
   "@companySettingsTitle": {
     "description": "Title for company settings section"
   },
+  "errContactAccess": "Contact access error: {error}",
   "@errContactAccess": {
     "placeholders": {
       "error": {
@@ -35,12 +42,13 @@
       }
     }
   },
-  "@errCustomerAdd": {},
-  "@errCustomerDelete": {},
-  "@errCustomerNameLength": {},
-  "@errCustomerNameRequired": {},
-  "@errCustomerUpdate": {},
-  "@errEmptyField": {},
+  "errCustomerAdd": "Failed to add customer",
+  "errCustomerDelete": "Failed to delete customer",
+  "errCustomerNameLength": "Name must be at least 2 characters",
+  "errCustomerNameRequired": "Customer name is required",
+  "errCustomerUpdate": "Failed to update customer",
+  "errEmptyField": "This field is required",
+  "errGeneric": "Error occurred: {error}",
   "@errGeneric": {
     "placeholders": {
       "error": {
@@ -48,10 +56,11 @@
       }
     }
   },
-  "@errInvalidEmail": {},
-  "@errInvalidNumber": {},
-  "@errInvoiceAdd": {},
-  "@errInvoiceUpdate": {},
+  "errInvalidEmail": "Invalid email address",
+  "errInvalidNumber": "Please enter a valid number",
+  "errInvoiceAdd": "Failed to add invoice",
+  "errInvoiceUpdate": "Failed to update invoice",
+  "errLoadCustomers": "Error loading customers: {error}",
   "@errLoadCustomers": {
     "placeholders": {
       "error": {
@@ -59,20 +68,19 @@
       }
     }
   },
-  "@errLoginFailed": {
-    "description": "Error message when login fails"
-  },
-  "@errNoItems": {},
-  "@errPasswordShort": {},
-  "@errPasswordsDoNotMatch": {},
-  "@errPhoneLength": {},
-  "@errPhoneStart05": {},
-  "@errSelectCustomer": {},
-  "@errUsernameShort": {},
-  "@errorCustomerNotFound": {},
-  "@errorCustomerPhone": {},
-  "@errorLoadingInvoices": {},
-  "@errorLoadingSettings": {},
+  "errLoginFailed": "Login failed. Please check your credentials.",
+  "errNoItems": "Please add at least one item",
+  "errPasswordShort": "Password must be at least 6 characters",
+  "errPasswordsDoNotMatch": "Passwords do not match",
+  "errPhoneLength": "Phone must be 10 digits",
+  "errPhoneStart05": "Phone must start with 05",
+  "errSelectCustomer": "Please select a customer",
+  "errUsernameShort": "Username must be at least 3 characters",
+  "errorCustomerNotFound": "Customer data not found",
+  "errorCustomerPhone": "Customer phone not available",
+  "errorLoadingInvoices": "Error loading invoices",
+  "errorLoadingSettings": "Error loading settings",
+  "errorScreenNotFound": "Screen not found: {name}",
   "@errorScreenNotFound": {
     "placeholders": {
       "name": {
@@ -80,6 +88,7 @@
       }
     }
   },
+  "errorSharePdf": "Error sharing PDF: {error}",
   "@errorSharePdf": {
     "placeholders": {
       "error": {
@@ -87,6 +96,7 @@
       }
     }
   },
+  "errorShareWhatsapp": "Error sharing via WhatsApp: {error}",
   "@errorShareWhatsapp": {
     "placeholders": {
       "error": {
@@ -94,41 +104,63 @@
       }
     }
   },
-  "@filterAll": {},
-  "@filterDraft": {},
-  "@filterIssued": {},
-  "@filterOverdue": {},
-  "@filterPaid": {},
-  "@fontCairo": {},
-  "@fontRoboto": {},
-  "@fontSettingsTitle": {},
-  "@fontSizeLabel": {},
-  "@guestUpgradeDescription": {},
-  "@helpTitle": {
-    "description": "Title for help section"
-  },
-  "@highContrast": {},
-  "@highContrastSubtitle": {},
-  "@hintAddress": {},
-  "@hintCompanyName": {},
-  "@hintConfirmPassword": {},
-  "@hintCurrencySymbol": {},
-  "@hintCustomerName": {},
-  "@hintCustomerNotes": {},
-  "@hintEnterNewPassword": {},
-  "@hintEnterNewUsername": {},
-  "@hintEnterPassword": {},
-  "@hintEnterUsername": {},
-  "@hintNotes": {},
-  "@hintSelectCustomer": {},
-  "@hintTaxNumber": {},
-  "@iconCupertino": {},
-  "@iconMaterial": {},
-  "@iconSettingsTitle": {},
-  "@journalEntryFormTitleAdd": {},
-  "@journalEntryFormTitleEdit": {},
-  "@invoiceFormTitleAdd": {},
-  "@invoiceFormTitleEdit": {},
+  "filterAll": "All",
+  "filterDraft": "Draft",
+  "filterIssued": "Issued",
+  "filterOverdue": "Overdue",
+  "filterPaid": "Paid",
+  "fontCairo": "Cairo (Default)",
+  "fontRoboto": "Roboto",
+  "fontSettingsTitle": "Font Type",
+  "fontSizeLabel": "Text Size",
+  "taxConfigTitle": "Tax & E-Invoicing",
+  "zatcaPhase2Title": "ZATCA E-Invoicing (Phase 2)",
+  "zatcaPhase2Description": "Configure your settings for compliance with Saudi ZATCA Phase 2 (Integration Phase).",
+  "enableTax": "Enable Tax on Invoices",
+  "priceIncludesTax": "Price includes tax by default",
+  "vatNumber": "Tax ID / VAT Number",
+  "defaultTaxRate": "Default Tax Value (%)",
+  "b2cSimplifiedLabel": "B2C Simplified Invoice Label",
+  "b2bStandardLabel": "B2B Standard Invoice Label",
+  "taxName": "Tax Name",
+  "taxPercentage": "Percentage (%)",
+  "taxShow": "Show",
+  "taxDefault": "Default",
+  "printSettingsTitle": "Printing & Templates",
+  "printSettingsSubtitle": "Manage your printing formats and templates",
+  "templateSelection": "Template Selection",
+  "paperSize": "Paper Size",
+  "fontSize": "Font Size",
+  "paddingBottom": "Empty lines at end",
+  "printCopies": "Number of copies",
+  "printItemUnit": "Show item unit in print",
+  "saveSettings": "Save Settings",
+  "guestUpgradeDescription": "Convert your guest account to a permanent account to save your data securely.",
+  "helpTitle": "Help & Support",
+  "highContrast": "High Contrast",
+  "highContrastSubtitle": "Increase text and element clarity",
+  "hintAddress": "Enter customer address",
+  "hintCompanyName": "Enter your company name",
+  "hintConfirmPassword": "Re-enter password",
+  "hintCurrencySymbol": "SAR",
+  "hintCustomerName": "Enter customer name",
+  "hintCustomerNotes": "Add customer notes",
+  "hintEnterNewPassword": "Enter new password",
+  "hintEnterNewUsername": "Enter new username",
+  "hintEnterPassword": "Please enter password",
+  "hintEnterUsername": "Please enter username",
+  "hintNotes": "Add invoice notes",
+  "hintSelectCustomer": "Select Customer",
+  "hintTaxNumber": "Enter tax number (optional)",
+  "iconCupertino": "Cupertino (iOS)",
+  "iconMaterial": "Material Design",
+  "iconSettingsTitle": "Icon Style",
+  "journalEntryFormTitleAdd": "Add Journal Entry",
+  "journalEntryFormTitleEdit": "Edit Journal Entry",
+  "invoiceFormTitleAdd": "Add New Invoice",
+  "invoiceFormTitleAddPurchase": "Add Purchase Invoice",
+  "invoiceFormTitleEdit": "Edit Invoice",
+  "invoiceTitle": "Invoice {id}",
   "@invoiceTitle": {
     "placeholders": {
       "id": {
@@ -137,6 +169,9 @@
       }
     }
   },
+  "calculatorTitle": "Financial Calculator",
+  "convertToCurrencies": "Convert to currencies",
+  "clear": "Clear",
   "labelTermsAndConditions": "Terms and Conditions",
   "labelPaidDate": "Paid Date",
   "labelDiscountAmount": "Discount Amount",
@@ -153,102 +188,12 @@
   "labelToDate": "To Date",
   "labelAsOfDate": "As of Date",
   "tooltipUpdateReport": "Update Report",
-  "journalEntryFormTitleAdd": "Add Journal Entry",
-  "journalEntryFormTitleEdit": "Edit Journal Entry",
-  "@labelAddress": {},
-  "@labelAddressOptional": {},
-  "@labelCompanyName": {},
-  "@labelNameAr": {},
-  "@labelNameEn": {},
-  "@labelConfirmPassword": {},
-  "@labelCountryCode": {},
-  "@labelCreatedDate": {},
-  "@labelCreditLimit": {},
-  "@labelCurrencySymbol": {},
-  "@labelCustomer": {},
-  "@labelCustomerName": {},
-  "@labelDueDate": {},
-  "@labelEmail": {},
-  "@labelEmailOptional": {},
-  "@labelGrandTotal": {},
-  "@labelInvoiceItems": {},
-  "@labelInvoiceNo": {},
-  "@labelInvoiceStatus": {},
-  "@labelInvoiceStyle": {},
-  "@labelIssuedDate": {},
-  "@labelItemName": {},
-  "@labelLastUpdated": {},
-  "@labelNewPassword": {},
-  "@labelNotes": {},
-  "@labelNotesOptional": {},
-  "@labelPassword": {},
-  "@labelPercentage": {},
-  "@labelPhone": {},
-  "@labelPhoneOptional": {},
-  "@labelPrice": {},
-  "@labelQuantity": {},
-  "@labelRememberMe": {},
-  "@labelSubtotal": {},
-  "@labelTax": {
-    "placeholders": {
-      "rate": {
-        "type": "String"
-      }
-    }
-  },
-  "@labelAssetAccountId": {},
   "labelCogsAccountId": "COGS Account",
   "labelRevenueAccountId": "Revenue Account",
   "labelValuationMethod": "Valuation Method",
   "labelInventoryValuation": "Inventory Valuation (IAS 2)",
-  "@labelTaxNumber": {},
-  "@labelTaxRate": {},
-  "@labelTaxRateWithExample": {},
-  "@labelUsername": {},
-  "@langArabic": {},
-  "@langEnglish": {},
-  "@languageTitle": {
-    "description": "Title for language settings"
-  },
-  "@loginGuest": {},
-  "@loginSubtitle": {},
-  "@loginTitle": {},
-  "@logoutLabel": {
-    "description": "Label for logout button"
-  },
-  "@modeDark": {},
-  "@modeLight": {},
-  "@modeSystem": {},
-  "@msgAccountCreated": {},
-  "@msgAccountUpdated": {},
-  "@msgConfirmDeleteCustomer": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@msgConfirmDeleteVendor": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@msgConfirmDeleteInvoice": {},
-  "@msgConfirmDeleteItem": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@msgConfirmLogout": {},
-  "@msgCustomerAdded": {},
-  "@msgCustomerDeleted": {},
-  "@msgCustomerUpdated": {},
-  "@msgGuestWelcome": {},
-  "@msgInvoiceAdded": {},
+  "logoutLabel": "Logout",
+  "msgInvoiceShare": "Hello {name}, here is invoice #{id}:\nTotal: {total} {symbol}\nThank you.",
   "@msgInvoiceShare": {
     "placeholders": {
       "name": {
@@ -265,12 +210,7 @@
       }
     }
   },
-  "@msgInvoiceUpdated": {},
-  "@msgLoginSuccess": {},
-  "@msgLogoutSuccess": {},
-  "@msgNoAccount": {},
-  "@msgNoContactsFound": {},
-  "@msgNoItems": {},
+  "msgSaveError": "Error saving: {error}",
   "@msgSaveError": {
     "placeholders": {
       "error": {
@@ -279,15 +219,11 @@
       }
     }
   },
-  "@msgSettingsSaved": {},
-  "@navHome": {},
-  "@navInvoices": {},
-  "@navSettings": {},
-  "@notificationsEnable": {},
-  "@notificationsSubtitle": {},
-  "@notificationsTitle": {
-    "description": "Title for notifications section"
-  },
+  "navHome": "Home",
+  "navInvoices": "Invoices",
+  "navSettings": "Settings",
+  "notificationsTitle": "Notifications",
+  "pdfShareSubject": "Invoice {id}",
   "@pdfShareSubject": {
     "placeholders": {
       "id": {
@@ -295,6 +231,7 @@
       }
     }
   },
+  "pdfShareText": "Here is the invoice for {customerName}",
   "@pdfShareText": {
     "placeholders": {
       "customerName": {
@@ -302,6 +239,7 @@
       }
     }
   },
+  "placeholderComingSoon": "Coming soon: {title}",
   "@placeholderComingSoon": {
     "placeholders": {
       "title": {
@@ -309,68 +247,7 @@
       }
     }
   },
-  "@privacyFooter": {},
-  "@privacyHeader": {},
-  "@privacyPoint1": {},
-  "@privacyPoint2": {},
-  "@privacyPoint3": {},
-  "@privacyPoint4": {},
-  "@privacyPoint5": {},
-  "@privacyPolicySubtitle": {},
-  "@privacyPolicyTitle": {},
-  "@reduceMotion": {},
-  "@reduceMotionSubtitle": {},
-  "@retryLabel": {},
-  "@sectionAccessibility": {},
-  "@sectionAdditionalInfo": {},
-  "@sectionCalendar": {},
-  "@sectionContactInfo": {},
-  "@sectionMode": {},
-  "@sectionStyle": {},
-  "@settingsTitle": {
-    "description": "Title of the settings screen"
-  },
-  "@setupSubtitle": {},
-  "@setupTitle": {},
-  "@splashCriticalError": {},
-  "@splashInitializing": {},
-  "@statActiveCustomers": {},
-  "@statOverdue": {},
-  "@statOverdueInvoices": {},
-  "@statPaid": {},
-  "@statTotal": {},
-  "@statTotalInvoices": {},
-  "@statTotalSales": {},
-  "@statusCancelled": {},
-  "@statusOverdue": {},
-  "@labelAsOfDate": {},
-  "@labelFromDate": {},
-  "@labelToDate": {},
-  "@tooltipUpdateReport": {},
-  "@statusPaid": {},
-  "@statusPending": {},
-  "@statusRefunded": {},
-  "@styleCompact": {},
-  "@styleModern": {},
-  "@styleStandard": {},
-  "@termsFooter": {},
-  "@termsHeader": {},
-  "@termsOfServiceSubtitle": {},
-  "@termsOfServiceTitle": {},
-  "@termsPoint1": {},
-  "@termsPoint2": {},
-  "@termsPoint3": {},
-  "@termsPoint4": {},
-  "@termsPoint5": {},
-  "@themeColorPickerTitle": {},
-  "@tooltipAddInvoice": {},
-  "@tooltipAddInventoryItem": {},
-  "@tooltipAddItem": {},
-  "@tooltipBack": {},
-  "@tooltipDeleteItem": {},
-  "@tooltipEditCustomer": {},
-  "@tooltipEditTaxRate": {},
-  "@tooltipExportAll": {},
+  "settingsTitle": "Settings",
   "aboutAppTitle": "About App",
   "aboutDescription": "Basir app is a complete system for managing invoices and customers, designed specifically for small and medium businesses.",
   "aboutFeature1": "• Manage invoices easily",
@@ -390,7 +267,21 @@
   "labelNameEn": "Name (English)",
   "tooltipAddVendor": "Add New Vendor",
   "msgConfirmDeleteVendor": "Are you sure you want to delete vendor {name}?",
+  "@msgConfirmDeleteVendor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "msgConfirmDeleteItem": "Are you sure you want to delete item {name}?",
+  "@msgConfirmDeleteItem": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "dialogDelete": "Delete",
   "inventoryItemsScreenTitle": "Inventory",
   "assetsScreenTitle": "Fixed Assets",
@@ -424,11 +315,9 @@
   "appColor": "App Color",
   "appCopyright": "© 2025 Basir Development Agents Team",
   "appName": "Basir",
-  "appTitle": "Basir",
   "appVersion": "1.0.0",
   "appearanceSettingsSubtitle": "Dark mode, colors, fonts, and icons",
   "appearanceSettingsTitle": "Appearance Settings",
-  "appearanceTitle": "Appearance & Customization",
   "btnAdd": "Add",
   "btnAddCustomer": "Add Customer",
   "btnCreateAccount": "Create New Account",
@@ -447,7 +336,6 @@
   "colorCustomized": "Custom Color",
   "colorDefault": "Default Color",
   "companySettingsDialogTitle": "Company & Billing Settings",
-  "companySettingsTitle": "Company & Billing Settings",
   "customerDetailsTitle": "Customer Details",
   "customerFormTitleAdd": "Add New Customer",
   "customerFormTitleEdit": "Edit Customer",
@@ -455,13 +343,7 @@
   "customersScreenTitle": "Customers",
   "customersSearchHint": "Search for a customer...",
   "customersTitle": "Customers",
-  "dashboardBasirSystemTitle": "Basir Accounting System",
-  "dashboardMotto": "Accuracy and Reliability in Every Transaction",
-  "dashboardQuickActionsTitle": "Quick Financial Actions",
-  "dashboardRecentActivityTitle": "Recent Operations Log",
-  "dashboardStatsTitle": "Financial Performance Analytics",
-  "dashboardTitle": "Dashboard",
-  "dashboardWelcomeMessage": "Welcome to Basir",
+  "dashboardWelcomeMessage": "Welcome to your Insightful Dashboard",
   "dialogAddItemTitle": "Add Item",
   "dialogCancel": "Cancel",
   "dialogOk": "OK",
@@ -471,68 +353,7 @@
   "dialogTaxTitle": "Tax Rate",
   "editAccountSubtitle": "Change username and password",
   "editAccountTitle": "Edit Account Details",
-  "errContactAccess": "Contact access error: {error}",
-  "errCustomerAdd": "Failed to add customer",
-  "errCustomerDelete": "Failed to delete customer",
-  "errCustomerNameLength": "Name must be at least 2 characters",
-  "errCustomerNameRequired": "Customer name is required",
-  "errCustomerUpdate": "Failed to update customer",
-  "errEmptyField": "This field is required",
-  "errGeneric": "Error occurred: {error}",
-  "errInvalidEmail": "Invalid email address",
-  "errInvalidNumber": "Please enter a valid number",
-  "errInvoiceAdd": "Failed to add invoice",
-  "errInvoiceUpdate": "Failed to update invoice",
-  "errLoadCustomers": "Error loading customers: {error}",
-  "errLoginFailed": "Login failed. Please check your credentials.",
-  "errNoItems": "Please add at least one item",
-  "errPasswordShort": "Password must be at least 6 characters",
-  "errPasswordsDoNotMatch": "Passwords do not match",
-  "errPhoneLength": "Phone must be 10 digits",
-  "errPhoneStart05": "Phone must start with 05",
-  "errSelectCustomer": "Please select a customer",
-  "errUsernameShort": "Username must be at least 3 characters",
-  "errorCustomerNotFound": "Customer data not found",
-  "errorCustomerPhone": "Customer phone not available",
-  "errorLoadingInvoices": "Error loading invoices",
-  "errorLoadingSettings": "Error loading settings",
-  "errorScreenNotFound": "Screen not found: {name}",
-  "errorSharePdf": "Error sharing PDF: {error}",
-  "errorShareWhatsapp": "Error sharing via WhatsApp: {error}",
-  "filterAll": "All",
-  "filterDraft": "Draft",
-  "filterIssued": "Issued",
-  "filterOverdue": "Overdue",
-  "filterPaid": "Paid",
-  "fontCairo": "Cairo (Default)",
-  "fontRoboto": "Roboto",
-  "fontSettingsTitle": "Font Type",
-  "fontSizeLabel": "Text Size",
-  "guestUpgradeDescription": "Convert your guest account to a permanent account to save your data securely.",
-  "helpTitle": "Help & Support",
-  "highContrast": "High Contrast",
-  "highContrastSubtitle": "Increase text and element clarity",
-  "hintAddress": "Enter customer address",
-  "hintCompanyName": "Enter your company name",
-  "hintConfirmPassword": "Re-enter password",
-  "hintCurrencySymbol": "SAR",
-  "hintCustomerName": "Enter customer name",
-  "hintCustomerNotes": "Add customer notes",
-  "hintEnterNewPassword": "Enter new password",
-  "hintEnterNewUsername": "Enter new username",
-  "hintEnterPassword": "Please enter password",
-  "hintEnterUsername": "Please enter username",
-  "hintNotes": "Add invoice notes",
-  "hintSelectCustomer": "Select Customer",
-  "hintTaxNumber": "Enter tax number (optional)",
-  "iconCupertino": "Cupertino (iOS)",
-  "iconMaterial": "Material Design",
-  "iconSettingsTitle": "Icon Style",
-  "invoiceFormTitleAdd": "Add New Invoice",
-  "invoiceFormTitleEdit": "Edit Invoice",
-  "invoiceTitle": "Invoice {id}",
   "labelAddress": "Address",
-  "labelAddressOptional": "Address (Optional)",
   "labelCompanyName": "Company Name",
   "labelConfirmPassword": "Confirm Password",
   "labelCountryCode": "Country Code",
@@ -543,7 +364,6 @@
   "labelCustomerName": "Customer Name",
   "labelDueDate": "Due Date",
   "labelEmail": "Email",
-  "labelEmailOptional": "Email (Optional)",
   "labelGrandTotal": "Grand Total:",
   "labelInvoiceItems": "Invoice Items",
   "labelInvoiceNo": "Invoice No",
@@ -552,11 +372,9 @@
   "labelLastUpdated": "Last Updated",
   "labelNewPassword": "New Password",
   "labelNotes": "Notes (Optional)",
-  "labelNotesOptional": "Notes (Optional)",
   "labelPassword": "Password",
   "labelPercentage": "Percentage",
   "labelPhone": "Phone",
-  "labelPhoneOptional": "Phone (Optional)",
   "labelSourceWarehouse": "Source Warehouse",
   "labelDestinationWarehouse": "Destination Warehouse",
   "errSameWarehouse": "Source and destination warehouses cannot be the same",
@@ -569,6 +387,13 @@
   "labelRememberMe": "Remember me",
   "labelSubtotal": "Subtotal:",
   "labelTax": "Tax ({rate}):",
+  "@labelTax": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "labelTaxNumber": "Tax Number",
   "labelTaxRate": "Tax Rate",
   "labelTaxRateWithExample": "Tax Rate (e.g. 0.15)",
@@ -579,39 +404,27 @@
   "loginGuest": "Login as Guest",
   "loginSubtitle": "Welcome back! Login to continue",
   "loginTitle": "Login",
-  "logoutLabel": "Logout",
   "modeDark": "Dark",
   "modeLight": "Light",
   "modeSystem": "System",
   "msgAccountCreated": "Account created successfully",
   "msgAccountUpdated": "Account details updated successfully",
-  "msgConfirmDeleteCustomer": "Are you sure you want to delete customer {name}?",
-  "msgConfirmDeleteInvoice": "Are you sure you want to delete this invoice?",
   "msgConfirmLogout": "Are you sure you want to logout?",
   "msgCustomerAdded": "Customer added successfully",
   "msgCustomerDeleted": "Customer deleted successfully",
   "msgCustomerUpdated": "Customer updated successfully",
   "msgGuestWelcome": "Welcome as Guest! You can create an account later",
   "msgInvoiceAdded": "Invoice added successfully",
-  "msgInvoiceShare": "Hello {name}, here is invoice #{id}:\nTotal: {total} {symbol}\nThank you.",
   "msgInvoiceUpdated": "Invoice updated successfully",
   "msgLoginSuccess": "Login successful",
   "msgLogoutSuccess": "Logged out successfully",
   "msgNoAccount": "Don't have an account?",
   "msgNoContactsFound": "No contacts available",
   "msgNoItems": "No items. Press + to add.",
-  "msgSaveError": "Error saving: {error}",
   "msgSettingsSaved": "Settings saved successfully",
   "navCustomers": "Customers",
-  "navHome": "Home",
-  "navInvoices": "Invoices",
-  "navSettings": "Settings",
   "notificationsEnable": "Enable Notifications",
   "notificationsSubtitle": "Receive notifications for overdue invoices",
-  "notificationsTitle": "Notifications",
-  "pdfShareSubject": "Invoice {id}",
-  "pdfShareText": "Here is the invoice for {customerName}",
-  "placeholderComingSoon": "Coming soon: {title}",
   "privacyFooter": "For more information, please visit our website.",
   "privacyHeader": "We respect your privacy",
   "privacyPoint1": "1. All your data is stored locally on your device",
@@ -630,7 +443,6 @@
   "sectionContactInfo": "Contact Information",
   "sectionMode": "Mode",
   "sectionStyle": "Style",
-  "settingsTitle": "Settings",
   "setupSubtitle": "Create your account to start managing invoices",
   "setupTitle": "Create New Account",
   "splashCriticalError": "Critical initialization error",
@@ -822,6 +634,17 @@
   "labelJournalEntries": "Journal Entries",
   "labelExchangeRate": "Exchange Rate",
   "exchangeRate": "Exchange Rate",
+  "labelBaseCurrencyEquivalent": "Base Currency Equivalent",
+  "titleTreasuryVault": "The Vault (Treasury)",
+  "labelTotalLiquidity": "Total Liquidity",
+  "labelAvailableCashBank": "Total Available Cash & Bank",
+  "labelAccounts": "Accounts",
+  "labelForecast30Days": "30-Day Outlook",
+  "labelExpectedInflow": "Expected Inflow",
+  "labelExpectedOutflow": "Expected Outflow",
+  "labelNetChange": "Net Change",
+  "msgNoCashAccounts": "No cash accounts found",
+  "msgInitCoa": "Initialize your COA or add cash accounts.",
   "originalAmount": "Original Amount",
   "labelInventoryItem": "Inventory Item",
   "hintSelectInventoryItem": "Select an inventory item to auto-fill",
@@ -845,32 +668,197 @@
   "errPermissionDenied": "You do not have permission to perform this action",
   "agentRationaleStandardsPassed": "Compliance verified: Journal entry adheres to (IFRS/SOCPA) standards.",
   "agentRationaleStandardsManualReview": "Warning: Transaction type ({type}) requires manual review for standards compliance.",
+  "@agentRationaleStandardsManualReview": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleTaxNoId": "Warning: No Tax ID provided for this transaction.",
   "agentRationaleTaxZatcaReject": "REJECT: Transactions exceeding 10,000 SAR require a valid Tax ID for ZATCA Phase 2 compliance.",
   "agentRationaleTaxValidated": "Validated Tax ID: {id}",
+  "@agentRationaleTaxValidated": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleTaxAnalyzing": "Analyzing VAT for {account}",
+  "@agentRationaleTaxAnalyzing": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleTaxRateMismatch": "ALERT: Calculated VAT rate ({rate}) deviates from the regional standard (15%).",
+  "@agentRationaleTaxRateMismatch": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleTaxRateMatch": "CONFIRM: VAT rate (15%) matches local regulatory requirements.",
   "agentRationaleTaxNoVatWarning": "WARNING: Commercial transaction detected without VAT lines.",
   "agentRationaleForensicBalanced": "Check PASSED: Journal entry is balanced.",
   "agentRationaleForensicUnbalanced": "REJECTION: Proposed journal entry is not balanced.",
   "agentRationaleForensicHighValue": "WARNING: Unusually high transaction amount detected ({amount}). Administrative review recommended.",
+  "@agentRationaleForensicHighValue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleForensicDuplicate": "REJECTION: Duplicate reference number ({ref}) detected in history.",
+  "@agentRationaleForensicDuplicate": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleOperationalSufficient": "Liquidity Analysis: {account} balance is sufficient ({balance}) for this operation.",
+  "@agentRationaleOperationalSufficient": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      },
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleOperationalInsufficient": "REJECTION: {account} balance is insufficient ({balance}) for this operation.",
+  "@agentRationaleOperationalInsufficient": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      },
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleStrategyOutflow": "Strategy Analysis: This entry represents a cash outflow of {amount}.",
+  "@agentRationaleStrategyOutflow": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleStrategyRecommendation": "Recommendation: Review cash flow projections for the coming week to ensure sufficient liquidity for other obligations.",
   "agentRationaleStrategyInflow": "Strategy Analysis: Liquidity enhancement of {amount} supports short-term investment capacity.",
+  "@agentRationaleStrategyInflow": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleStrategyProfitability": "Strategic Insight: Increased sales volume positively impacts Return on Assets (ROA) and net margin targets.",
   "agentRationaleSustainabilityFlagged": "ISSB Analysis: This transaction is flagged for mandatory environmental/social disclosure.",
   "agentRationaleSustainabilityReject": "CRITICAL REJECTION: ISSB S2 standards require carbon footprint metrics for this industry-specific transaction.",
   "agentRationaleSustainabilitySuccess": "SUCCESS: Integrated {count} compliant sustainability metrics.",
+  "@agentRationaleSustainabilitySuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "agentRationaleSustainabilityNotRequired": "Sustainability Assessment: No specific ISSB disclosures required for this transaction tier.",
   "agentRationaleForensicTimeAnomaly": "WARNING: Transaction recorded during non-standard hours ({time}). Higher forensic weighting applied.",
+  "@agentRationaleForensicTimeAnomaly": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleForensicSequenceGap": "NOTICE: Gap detected in reference sequence. Last: {last}, Current: {current}.",
+  "@agentRationaleForensicSequenceGap": {
+    "placeholders": {
+      "last": {
+        "type": "String"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
   "agentRationaleForensicZatcaIdentityMissing": "NOTICE: ZATCA Phase 2 cryptographic identity (UUID/Hash) is missing for this invoice.",
   "auditTrailTitle": "Audit Trail",
   "auditTrailSubtitle": "Internal system logs and consensus bypasses",
   "auditTrailSectionForensic": "Forensic Integrity Logs",
-  "auditTrailNoLogs": "No audit logs found for the selected period."
+  "auditTrailNoLogs": "No audit logs found for the selected period.",
+  "msgInvoiceCognitiveHint": "Use this screen to create or edit invoices. Ensure meticulous accuracy with tax rates and item selection.",
+  "titleInvoiceCognitiveHint": "Invoice Mastery",
+  "labelReturnsAndDamages": "Returns & Damages",
+  "labelSalesReturn": "Sales Return",
+  "descSalesReturn": "Return sold items to inventory",
+  "labelPurchaseReturn": "Purchase Return",
+  "descPurchaseReturn": "Return purchased items to vendor",
+  "labelDamageInvoice": "Damage Invoice",
+  "descDamageInvoice": "Record damaged or missing items",
+  "labelEmailOptional": "Email (Optional)",
+  "labelPhoneOptional": "Phone (Optional)",
+  "labelAddressOptional": "Address (Optional)",
+  "labelNotesOptional": "Notes (Optional)",
+  "msgConfirmDeleteCustomer": "Are you sure you want to delete customer {name}?",
+  "@msgConfirmDeleteCustomer": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgConfirmDeleteInvoice": "Are you sure you want to delete this invoice?",
+  "dashboardBasirSystemTitle": "Basir Accounting System",
+  "forgotPassword": "Forgot Password",
+  "dashboardTitle": "Dashboard",
+  "dashboardStatsTitle": "Statistics",
+  "dashboardQuickActionsTitle": "Quick Actions",
+  "dashboardRecentActivityTitle": "Recent Activity",
+  "dashboardMotto": "Professional Accounting Made Simple",
+  "saveLabels": "Save Labels",
+  "errInvalidResetLink": "Invalid or expired reset link",
+  "errInvalidResetToken": "Invalid or expired reset token",
+  "msgPasswordResetSuccess": "Password reset successfully",
+  "errPasswordResetFailed": "Password reset failed",
+  "errPasswordRequired": "Password is required",
+  "errPasswordTooShort": "Password is too short",
+  "errPasswordNeedsUppercase": "Password needs uppercase letter",
+  "errPasswordNeedsLowercase": "Password needs lowercase letter",
+  "errPasswordNeedsNumber": "Password needs a number",
+  "errConfirmPasswordRequired": "Confirm password is required",
+  "resetPasswordTitle": "Reset Password",
+  "resetPasswordSubtitle": "Enter your new password for {email}",
+  "@resetPasswordSubtitle": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "newPassword": "New Password",
+  "passwordHint": "Enter your new password",
+  "confirmPassword": "Confirm Password",
+  "confirmPasswordHint": "Re-enter your password",
+  "passwordRequirements": "Password Requirements:",
+  "passwordRequirementsList": "• At least 8 characters\n• One uppercase letter\n• One lowercase letter\n• One number",
+  "resetPassword": "Reset Password",
+  "backToLogin": "Back to Login",
+  "labelVatNumber": "VAT Number",
+  "labelRegistrationNumber": "Registration Number (CR)",
+  "labelTotalPayables": "Total Payables to Vendors",
+  "msgValueCopiedToClipboard": "Value copied to clipboard",
+  "labelSourceDocument": "Source Document",
+  "btnViewSource": "View Source",
+  "msgLoadingSource": "Loading source document...",
+  "errSourceNotFound": "Source document not found"
 }

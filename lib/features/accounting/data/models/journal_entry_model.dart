@@ -51,6 +51,7 @@ class JournalEntryModel {
   late String referenceNumber;
 
   /// تاريخ القيد.
+  @Index()
   late DateTime date;
 
   /// التبرير الزمني.
@@ -63,6 +64,7 @@ class JournalEntryModel {
   late String description;
 
   /// حالة القيد.
+  @Index()
   @enumerated
   late JournalEntryStatus status;
 

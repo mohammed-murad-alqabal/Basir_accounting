@@ -82,6 +82,7 @@ class FinancialSimulationService extends _$FinancialSimulationService {
 
         final invoice = Invoice(
           id: uuid.v4(),
+          exchangeRate: Decimal.one,
           invoiceNumber: 'SIM-INV-${1000 + i}',
           customerId: customerIds[random.nextInt(customerIds.length)],
           customerName: names[random.nextInt(names.length)],

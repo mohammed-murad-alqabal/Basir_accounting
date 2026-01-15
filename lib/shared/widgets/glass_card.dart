@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 /// A premium glassmorphism card with spring-physics interaction.
 class GlassCard extends StatelessWidget {
+  /// Standard constructor for the glass card.
   const GlassCard({
     required this.child,
     super.key,
@@ -17,13 +18,28 @@ class GlassCard extends StatelessWidget {
     this.opacity,
   });
 
+  /// The widget to be displayed inside the card.
   final Widget child;
+
+  /// Callback when the card is pressed.
   final VoidCallback? onTap;
+
+  /// Interior padding for the card content.
   final EdgeInsetsGeometry? padding;
+
+  /// Exterior margin around the card.
   final EdgeInsetsGeometry? margin;
+
+  /// Explicit width for the card.
   final double? width;
+
+  /// Explicit height for the card.
   final double? height;
+
+  /// Custom border radius override.
   final double? borderRadius;
+
+  /// Custom opacity override for the glass surface.
   final double? opacity;
 
   @override
@@ -45,7 +61,8 @@ class GlassCard extends StatelessWidget {
             glassTheme.glassColor
                 .withValues(alpha: opacity ?? glassTheme.surfaceOpacity),
             glassTheme.glassColor.withValues(
-                alpha: (opacity ?? glassTheme.surfaceOpacity) * 0.8),
+              alpha: (opacity ?? glassTheme.surfaceOpacity) * 0.8,
+            ),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -93,7 +110,8 @@ class GlassCard extends StatelessWidget {
 
   // Helper for scale animation (placeholder for now, would typically use a stateful widget or hook)
   void _animateScale(BuildContext context, double target) {
-    // In a stateless widget, we can't easily trigger the tween rebuild without context management.
+    // In a stateless widget, we can't easily trigger the tween rebuild
+    // without context management.
     // For MVP/Verification, we will rely on standard InkWell ripple if needed,
     // but Glassmorphism prefers scale/opacity shifts.
     // Ideally this widget should be Stateful or use Riverpod Hook.

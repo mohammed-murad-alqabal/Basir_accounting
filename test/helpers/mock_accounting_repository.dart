@@ -16,4 +16,5 @@ class FakeJournalEntry extends Fake implements JournalEntry {}
 void setUpAccountingMocks() {
   registerFallbackValue(FakeAccount());
   registerFallbackValue(FakeJournalEntry());
+  registerFallbackValue(DateTime.now());
 }

@@ -119,8 +119,10 @@ void main() {
       expect(capturedEntry.auditLogs, isNotEmpty);
       expect(capturedEntry.auditLogs.first.action, equals('COGNITIVE_BYPASS'));
       expect(capturedEntry.auditLogs.first.actor, equals('system'));
-      expect(capturedEntry.auditLogs.first.rationale,
-          contains('Consensus bypassed'));
+      expect(
+        capturedEntry.auditLogs.first.rationale,
+        contains('Consensus bypassed'),
+      );
     });
   });
 }

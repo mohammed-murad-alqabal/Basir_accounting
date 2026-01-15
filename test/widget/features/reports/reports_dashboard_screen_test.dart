@@ -31,7 +31,8 @@ void main() {
               permissions: Permission.viewFinancials,
             ),
           ),
-          nativeReportingServiceProvider.overrideWithValue(mockReportingService),
+          nativeReportingServiceProvider
+              .overrideWithValue(mockReportingService),
         ],
         child: const MaterialApp(
           localizationsDelegates: [

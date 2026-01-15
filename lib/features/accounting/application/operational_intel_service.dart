@@ -1,4 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
@@ -7,8 +6,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'operational_intel_service.g.dart';
 
-/// Operational Intelligence Agent (Agent 4) bridging ledger data with business
-/// reality.
+/// Operational Intelligence Agent (Agent 4) bridging ledger data
+/// with business reality.
 ///
 /// Monitors the alignment between financial entries and operational
 /// statuses such as inventory levels and process urgency.
@@ -29,8 +28,8 @@ class OperationalIntelService extends _$OperationalIntelService
   /// ## Operational Checks:
   /// 1. **Sales-Inventory Alignment**: Verifies material availability for
   ///    sales invoices.
-  /// 2. **Priority Monitoring**: Adjusts confidence levels and processing speed
-  ///    based on operational urgency (high-priority flags).
+  /// 2. **Priority Monitoring**: Adjusts confidence levels and processing
+  ///    speed based on operational urgency (high-priority flags).
   @override
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];

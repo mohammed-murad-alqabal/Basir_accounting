@@ -93,7 +93,8 @@ class AuditTrailReportScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: Spacing.md),
                       _SectionHeader(
-                          title: context.l10n.auditTrailSectionForensic),
+                        title: context.l10n.auditTrailSectionForensic,
+                      ),
                       const SizedBox(height: Spacing.sm),
                       ...entry.auditLogs.map((log) => _AuditLogItem(log: log)),
                     ],
@@ -115,8 +116,11 @@ class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
         children: [
-          const Icon(Icons.gpp_maybe_outlined,
-              size: 16, color: AppColors.error),
+          const Icon(
+            Icons.gpp_maybe_outlined,
+            size: 16,
+            color: AppColors.error,
+          ),
           const SizedBox(width: 8),
           Text(
             title,

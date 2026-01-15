@@ -9,6 +9,9 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get appTitle => 'Basir';
+
+  @override
   String get labelStandard => 'Accounting Standard';
 
   @override
@@ -64,7 +67,303 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payablesAgingTitle => 'Payables Aging';
 
   @override
+  String get labelGeneralLedger => 'General Ledger';
+
+  @override
+  String get labelPeriod => 'Period';
+
+  @override
+  String get msgNoTransactionsFound => 'No transactions found';
+
+  @override
   String get msgExportComingSoon => 'Export feature coming soon';
+
+  @override
+  String get appearanceTitle => 'Appearance & Customization';
+
+  @override
+  String get companySettingsTitle => 'Company & Billing Settings';
+
+  @override
+  String errContactAccess(String error) {
+    return 'Contact access error: $error';
+  }
+
+  @override
+  String get errCustomerAdd => 'Failed to add customer';
+
+  @override
+  String get errCustomerDelete => 'Failed to delete customer';
+
+  @override
+  String get errCustomerNameLength => 'Name must be at least 2 characters';
+
+  @override
+  String get errCustomerNameRequired => 'Customer name is required';
+
+  @override
+  String get errCustomerUpdate => 'Failed to update customer';
+
+  @override
+  String get errEmptyField => 'This field is required';
+
+  @override
+  String errGeneric(String error) {
+    return 'Error occurred: $error';
+  }
+
+  @override
+  String get errInvalidEmail => 'Invalid email address';
+
+  @override
+  String get errInvalidNumber => 'Please enter a valid number';
+
+  @override
+  String get errInvoiceAdd => 'Failed to add invoice';
+
+  @override
+  String get errInvoiceUpdate => 'Failed to update invoice';
+
+  @override
+  String errLoadCustomers(String error) {
+    return 'Error loading customers: $error';
+  }
+
+  @override
+  String get errLoginFailed => 'Login failed. Please check your credentials.';
+
+  @override
+  String get errNoItems => 'Please add at least one item';
+
+  @override
+  String get errPasswordShort => 'Password must be at least 6 characters';
+
+  @override
+  String get errPasswordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get errPhoneLength => 'Phone must be 10 digits';
+
+  @override
+  String get errPhoneStart05 => 'Phone must start with 05';
+
+  @override
+  String get errSelectCustomer => 'Please select a customer';
+
+  @override
+  String get errUsernameShort => 'Username must be at least 3 characters';
+
+  @override
+  String get errorCustomerNotFound => 'Customer data not found';
+
+  @override
+  String get errorCustomerPhone => 'Customer phone not available';
+
+  @override
+  String get errorLoadingInvoices => 'Error loading invoices';
+
+  @override
+  String get errorLoadingSettings => 'Error loading settings';
+
+  @override
+  String errorScreenNotFound(String name) {
+    return 'Screen not found: $name';
+  }
+
+  @override
+  String errorSharePdf(String error) {
+    return 'Error sharing PDF: $error';
+  }
+
+  @override
+  String errorShareWhatsapp(String error) {
+    return 'Error sharing via WhatsApp: $error';
+  }
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get filterDraft => 'Draft';
+
+  @override
+  String get filterIssued => 'Issued';
+
+  @override
+  String get filterOverdue => 'Overdue';
+
+  @override
+  String get filterPaid => 'Paid';
+
+  @override
+  String get fontCairo => 'Cairo (Default)';
+
+  @override
+  String get fontRoboto => 'Roboto';
+
+  @override
+  String get fontSettingsTitle => 'Font Type';
+
+  @override
+  String get fontSizeLabel => 'Text Size';
+
+  @override
+  String get taxConfigTitle => 'Tax & E-Invoicing';
+
+  @override
+  String get zatcaPhase2Title => 'ZATCA E-Invoicing (Phase 2)';
+
+  @override
+  String get zatcaPhase2Description =>
+      'Configure your settings for compliance with Saudi ZATCA Phase 2 (Integration Phase).';
+
+  @override
+  String get enableTax => 'Enable Tax on Invoices';
+
+  @override
+  String get priceIncludesTax => 'Price includes tax by default';
+
+  @override
+  String get vatNumber => 'Tax ID / VAT Number';
+
+  @override
+  String get defaultTaxRate => 'Default Tax Value (%)';
+
+  @override
+  String get b2cSimplifiedLabel => 'B2C Simplified Invoice Label';
+
+  @override
+  String get b2bStandardLabel => 'B2B Standard Invoice Label';
+
+  @override
+  String get taxName => 'Tax Name';
+
+  @override
+  String get taxPercentage => 'Percentage (%)';
+
+  @override
+  String get taxShow => 'Show';
+
+  @override
+  String get taxDefault => 'Default';
+
+  @override
+  String get printSettingsTitle => 'Printing & Templates';
+
+  @override
+  String get printSettingsSubtitle =>
+      'Manage your printing formats and templates';
+
+  @override
+  String get templateSelection => 'Template Selection';
+
+  @override
+  String get paperSize => 'Paper Size';
+
+  @override
+  String get fontSize => 'Font Size';
+
+  @override
+  String get paddingBottom => 'Empty lines at end';
+
+  @override
+  String get printCopies => 'Number of copies';
+
+  @override
+  String get printItemUnit => 'Show item unit in print';
+
+  @override
+  String get saveSettings => 'Save Settings';
+
+  @override
+  String get guestUpgradeDescription =>
+      'Convert your guest account to a permanent account to save your data securely.';
+
+  @override
+  String get helpTitle => 'Help & Support';
+
+  @override
+  String get highContrast => 'High Contrast';
+
+  @override
+  String get highContrastSubtitle => 'Increase text and element clarity';
+
+  @override
+  String get hintAddress => 'Enter customer address';
+
+  @override
+  String get hintCompanyName => 'Enter your company name';
+
+  @override
+  String get hintConfirmPassword => 'Re-enter password';
+
+  @override
+  String get hintCurrencySymbol => 'SAR';
+
+  @override
+  String get hintCustomerName => 'Enter customer name';
+
+  @override
+  String get hintCustomerNotes => 'Add customer notes';
+
+  @override
+  String get hintEnterNewPassword => 'Enter new password';
+
+  @override
+  String get hintEnterNewUsername => 'Enter new username';
+
+  @override
+  String get hintEnterPassword => 'Please enter password';
+
+  @override
+  String get hintEnterUsername => 'Please enter username';
+
+  @override
+  String get hintNotes => 'Add invoice notes';
+
+  @override
+  String get hintSelectCustomer => 'Select Customer';
+
+  @override
+  String get hintTaxNumber => 'Enter tax number (optional)';
+
+  @override
+  String get iconCupertino => 'Cupertino (iOS)';
+
+  @override
+  String get iconMaterial => 'Material Design';
+
+  @override
+  String get iconSettingsTitle => 'Icon Style';
+
+  @override
+  String get journalEntryFormTitleAdd => 'Add Journal Entry';
+
+  @override
+  String get journalEntryFormTitleEdit => 'Edit Journal Entry';
+
+  @override
+  String get invoiceFormTitleAdd => 'Add New Invoice';
+
+  @override
+  String get invoiceFormTitleAddPurchase => 'Add Purchase Invoice';
+
+  @override
+  String get invoiceFormTitleEdit => 'Edit Invoice';
+
+  @override
+  String invoiceTitle(String id) {
+    return 'Invoice $id';
+  }
+
+  @override
+  String get calculatorTitle => 'Financial Calculator';
+
+  @override
+  String get convertToCurrencies => 'Convert to currencies';
+
+  @override
+  String get clear => 'Clear';
 
   @override
   String get labelTermsAndConditions => 'Terms and Conditions';
@@ -117,12 +416,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tooltipUpdateReport => 'Update Report';
 
   @override
-  String get journalEntryFormTitleAdd => 'Add Journal Entry';
-
-  @override
-  String get journalEntryFormTitleEdit => 'Edit Journal Entry';
-
-  @override
   String get labelCogsAccountId => 'COGS Account';
 
   @override
@@ -133,6 +426,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelInventoryValuation => 'Inventory Valuation (IAS 2)';
+
+  @override
+  String get logoutLabel => 'Logout';
+
+  @override
+  String msgInvoiceShare(String name, String id, String total, String symbol) {
+    return 'Hello $name, here is invoice #$id:\nTotal: $total $symbol\nThank you.';
+  }
+
+  @override
+  String msgSaveError(String error) {
+    return 'Error saving: $error';
+  }
+
+  @override
+  String get navHome => 'Home';
+
+  @override
+  String get navInvoices => 'Invoices';
+
+  @override
+  String get navSettings => 'Settings';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String pdfShareSubject(String id) {
+    return 'Invoice $id';
+  }
+
+  @override
+  String pdfShareText(String customerName) {
+    return 'Here is the invoice for $customerName';
+  }
+
+  @override
+  String placeholderComingSoon(String title) {
+    return 'Coming soon: $title';
+  }
+
+  @override
+  String get settingsTitle => 'Settings';
 
   @override
   String get aboutAppTitle => 'About App';
@@ -300,9 +636,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'Basir';
 
   @override
-  String get appTitle => 'Basir';
-
-  @override
   String get appVersion => '1.0.0';
 
   @override
@@ -311,9 +644,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appearanceSettingsTitle => 'Appearance Settings';
-
-  @override
-  String get appearanceTitle => 'Appearance & Customization';
 
   @override
   String get btnAdd => 'Add';
@@ -370,9 +700,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get companySettingsDialogTitle => 'Company & Billing Settings';
 
   @override
-  String get companySettingsTitle => 'Company & Billing Settings';
-
-  @override
   String get customerDetailsTitle => 'Customer Details';
 
   @override
@@ -394,25 +721,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get customersTitle => 'Customers';
 
   @override
-  String get dashboardBasirSystemTitle => 'Basir Accounting System';
-
-  @override
-  String get dashboardMotto => 'Accuracy and Reliability in Every Transaction';
-
-  @override
-  String get dashboardQuickActionsTitle => 'Quick Financial Actions';
-
-  @override
-  String get dashboardRecentActivityTitle => 'Recent Operations Log';
-
-  @override
-  String get dashboardStatsTitle => 'Financial Performance Analytics';
-
-  @override
-  String get dashboardTitle => 'Dashboard';
-
-  @override
-  String get dashboardWelcomeMessage => 'Welcome to Basir';
+  String get dashboardWelcomeMessage => 'Welcome to your Insightful Dashboard';
 
   @override
   String get dialogAddItemTitle => 'Add Item';
@@ -443,205 +752,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editAccountTitle => 'Edit Account Details';
 
   @override
-  String errContactAccess(String error) {
-    return 'Contact access error: $error';
-  }
-
-  @override
-  String get errCustomerAdd => 'Failed to add customer';
-
-  @override
-  String get errCustomerDelete => 'Failed to delete customer';
-
-  @override
-  String get errCustomerNameLength => 'Name must be at least 2 characters';
-
-  @override
-  String get errCustomerNameRequired => 'Customer name is required';
-
-  @override
-  String get errCustomerUpdate => 'Failed to update customer';
-
-  @override
-  String get errEmptyField => 'This field is required';
-
-  @override
-  String errGeneric(String error) {
-    return 'Error occurred: $error';
-  }
-
-  @override
-  String get errInvalidEmail => 'Invalid email address';
-
-  @override
-  String get errInvalidNumber => 'Please enter a valid number';
-
-  @override
-  String get errInvoiceAdd => 'Failed to add invoice';
-
-  @override
-  String get errInvoiceUpdate => 'Failed to update invoice';
-
-  @override
-  String errLoadCustomers(String error) {
-    return 'Error loading customers: $error';
-  }
-
-  @override
-  String get errLoginFailed => 'Login failed. Please check your credentials.';
-
-  @override
-  String get errNoItems => 'Please add at least one item';
-
-  @override
-  String get errPasswordShort => 'Password must be at least 6 characters';
-
-  @override
-  String get errPasswordsDoNotMatch => 'Passwords do not match';
-
-  @override
-  String get errPhoneLength => 'Phone must be 10 digits';
-
-  @override
-  String get errPhoneStart05 => 'Phone must start with 05';
-
-  @override
-  String get errSelectCustomer => 'Please select a customer';
-
-  @override
-  String get errUsernameShort => 'Username must be at least 3 characters';
-
-  @override
-  String get errorCustomerNotFound => 'Customer data not found';
-
-  @override
-  String get errorCustomerPhone => 'Customer phone not available';
-
-  @override
-  String get errorLoadingInvoices => 'Error loading invoices';
-
-  @override
-  String get errorLoadingSettings => 'Error loading settings';
-
-  @override
-  String errorScreenNotFound(String name) {
-    return 'Screen not found: $name';
-  }
-
-  @override
-  String errorSharePdf(String error) {
-    return 'Error sharing PDF: $error';
-  }
-
-  @override
-  String errorShareWhatsapp(String error) {
-    return 'Error sharing via WhatsApp: $error';
-  }
-
-  @override
-  String get filterAll => 'All';
-
-  @override
-  String get filterDraft => 'Draft';
-
-  @override
-  String get filterIssued => 'Issued';
-
-  @override
-  String get filterOverdue => 'Overdue';
-
-  @override
-  String get filterPaid => 'Paid';
-
-  @override
-  String get fontCairo => 'Cairo (Default)';
-
-  @override
-  String get fontRoboto => 'Roboto';
-
-  @override
-  String get fontSettingsTitle => 'Font Type';
-
-  @override
-  String get fontSizeLabel => 'Text Size';
-
-  @override
-  String get guestUpgradeDescription =>
-      'Convert your guest account to a permanent account to save your data securely.';
-
-  @override
-  String get helpTitle => 'Help & Support';
-
-  @override
-  String get highContrast => 'High Contrast';
-
-  @override
-  String get highContrastSubtitle => 'Increase text and element clarity';
-
-  @override
-  String get hintAddress => 'Enter customer address';
-
-  @override
-  String get hintCompanyName => 'Enter your company name';
-
-  @override
-  String get hintConfirmPassword => 'Re-enter password';
-
-  @override
-  String get hintCurrencySymbol => 'SAR';
-
-  @override
-  String get hintCustomerName => 'Enter customer name';
-
-  @override
-  String get hintCustomerNotes => 'Add customer notes';
-
-  @override
-  String get hintEnterNewPassword => 'Enter new password';
-
-  @override
-  String get hintEnterNewUsername => 'Enter new username';
-
-  @override
-  String get hintEnterPassword => 'Please enter password';
-
-  @override
-  String get hintEnterUsername => 'Please enter username';
-
-  @override
-  String get hintNotes => 'Add invoice notes';
-
-  @override
-  String get hintSelectCustomer => 'Select Customer';
-
-  @override
-  String get hintTaxNumber => 'Enter tax number (optional)';
-
-  @override
-  String get iconCupertino => 'Cupertino (iOS)';
-
-  @override
-  String get iconMaterial => 'Material Design';
-
-  @override
-  String get iconSettingsTitle => 'Icon Style';
-
-  @override
-  String get invoiceFormTitleAdd => 'Add New Invoice';
-
-  @override
-  String get invoiceFormTitleEdit => 'Edit Invoice';
-
-  @override
-  String invoiceTitle(String id) {
-    return 'Invoice $id';
-  }
-
-  @override
   String get labelAddress => 'Address';
-
-  @override
-  String get labelAddressOptional => 'Address (Optional)';
 
   @override
   String get labelCompanyName => 'Company Name';
@@ -674,9 +785,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelEmail => 'Email';
 
   @override
-  String get labelEmailOptional => 'Email (Optional)';
-
-  @override
   String get labelGrandTotal => 'Grand Total:';
 
   @override
@@ -701,9 +809,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelNotes => 'Notes (Optional)';
 
   @override
-  String get labelNotesOptional => 'Notes (Optional)';
-
-  @override
   String get labelPassword => 'Password';
 
   @override
@@ -711,9 +816,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelPhone => 'Phone';
-
-  @override
-  String get labelPhoneOptional => 'Phone (Optional)';
 
   @override
   String get labelSourceWarehouse => 'Source Warehouse';
@@ -786,9 +888,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginTitle => 'Login';
 
   @override
-  String get logoutLabel => 'Logout';
-
-  @override
   String get modeDark => 'Dark';
 
   @override
@@ -802,15 +901,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get msgAccountUpdated => 'Account details updated successfully';
-
-  @override
-  String msgConfirmDeleteCustomer(String name) {
-    return 'Are you sure you want to delete customer $name?';
-  }
-
-  @override
-  String get msgConfirmDeleteInvoice =>
-      'Are you sure you want to delete this invoice?';
 
   @override
   String get msgConfirmLogout => 'Are you sure you want to logout?';
@@ -832,11 +922,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get msgInvoiceAdded => 'Invoice added successfully';
 
   @override
-  String msgInvoiceShare(String name, String id, String total, String symbol) {
-    return 'Hello $name, here is invoice #$id:\nTotal: $total $symbol\nThank you.';
-  }
-
-  @override
   String get msgInvoiceUpdated => 'Invoice updated successfully';
 
   @override
@@ -855,24 +940,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get msgNoItems => 'No items. Press + to add.';
 
   @override
-  String msgSaveError(String error) {
-    return 'Error saving: $error';
-  }
-
-  @override
   String get msgSettingsSaved => 'Settings saved successfully';
 
   @override
   String get navCustomers => 'Customers';
-
-  @override
-  String get navHome => 'Home';
-
-  @override
-  String get navInvoices => 'Invoices';
-
-  @override
-  String get navSettings => 'Settings';
 
   @override
   String get notificationsEnable => 'Enable Notifications';
@@ -880,24 +951,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notificationsSubtitle =>
       'Receive notifications for overdue invoices';
-
-  @override
-  String get notificationsTitle => 'Notifications';
-
-  @override
-  String pdfShareSubject(String id) {
-    return 'Invoice $id';
-  }
-
-  @override
-  String pdfShareText(String customerName) {
-    return 'Here is the invoice for $customerName';
-  }
-
-  @override
-  String placeholderComingSoon(String title) {
-    return 'Coming soon: $title';
-  }
 
   @override
   String get privacyFooter => 'For more information, please visit our website.';
@@ -955,9 +1008,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sectionStyle => 'Style';
-
-  @override
-  String get settingsTitle => 'Settings';
 
   @override
   String get setupSubtitle => 'Create your account to start managing invoices';
@@ -1530,6 +1580,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exchangeRate => 'Exchange Rate';
 
   @override
+  String get labelBaseCurrencyEquivalent => 'Base Currency Equivalent';
+
+  @override
+  String get titleTreasuryVault => 'The Vault (Treasury)';
+
+  @override
+  String get labelTotalLiquidity => 'Total Liquidity';
+
+  @override
+  String get labelAvailableCashBank => 'Total Available Cash & Bank';
+
+  @override
+  String get labelAccounts => 'Accounts';
+
+  @override
+  String get labelForecast30Days => '30-Day Outlook';
+
+  @override
+  String get labelExpectedInflow => 'Expected Inflow';
+
+  @override
+  String get labelExpectedOutflow => 'Expected Outflow';
+
+  @override
+  String get labelNetChange => 'Net Change';
+
+  @override
+  String get msgNoCashAccounts => 'No cash accounts found';
+
+  @override
+  String get msgInitCoa => 'Initialize your COA or add cash accounts.';
+
+  @override
   String get originalAmount => 'Original Amount';
 
   @override
@@ -1599,7 +1682,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Compliance verified: Journal entry adheres to (IFRS/SOCPA) standards.';
 
   @override
-  String agentRationaleStandardsManualReview(Object type) {
+  String agentRationaleStandardsManualReview(String type) {
     return 'Warning: Transaction type ($type) requires manual review for standards compliance.';
   }
 
@@ -1612,17 +1695,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'REJECT: Transactions exceeding 10,000 SAR require a valid Tax ID for ZATCA Phase 2 compliance.';
 
   @override
-  String agentRationaleTaxValidated(Object id) {
+  String agentRationaleTaxValidated(String id) {
     return 'Validated Tax ID: $id';
   }
 
   @override
-  String agentRationaleTaxAnalyzing(Object account) {
+  String agentRationaleTaxAnalyzing(String account) {
     return 'Analyzing VAT for $account';
   }
 
   @override
-  String agentRationaleTaxRateMismatch(Object rate) {
+  String agentRationaleTaxRateMismatch(String rate) {
     return 'ALERT: Calculated VAT rate ($rate) deviates from the regional standard (15%).';
   }
 
@@ -1643,27 +1726,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'REJECTION: Proposed journal entry is not balanced.';
 
   @override
-  String agentRationaleForensicHighValue(Object amount) {
+  String agentRationaleForensicHighValue(String amount) {
     return 'WARNING: Unusually high transaction amount detected ($amount). Administrative review recommended.';
   }
 
   @override
-  String agentRationaleForensicDuplicate(Object ref) {
+  String agentRationaleForensicDuplicate(String ref) {
     return 'REJECTION: Duplicate reference number ($ref) detected in history.';
   }
 
   @override
-  String agentRationaleOperationalSufficient(Object account, Object balance) {
+  String agentRationaleOperationalSufficient(String account, String balance) {
     return 'Liquidity Analysis: $account balance is sufficient ($balance) for this operation.';
   }
 
   @override
-  String agentRationaleOperationalInsufficient(Object account, Object balance) {
+  String agentRationaleOperationalInsufficient(String account, String balance) {
     return 'REJECTION: $account balance is insufficient ($balance) for this operation.';
   }
 
   @override
-  String agentRationaleStrategyOutflow(Object amount) {
+  String agentRationaleStrategyOutflow(String amount) {
     return 'Strategy Analysis: This entry represents a cash outflow of $amount.';
   }
 
@@ -1672,7 +1755,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Recommendation: Review cash flow projections for the coming week to ensure sufficient liquidity for other obligations.';
 
   @override
-  String agentRationaleStrategyInflow(Object amount) {
+  String agentRationaleStrategyInflow(String amount) {
     return 'Strategy Analysis: Liquidity enhancement of $amount supports short-term investment capacity.';
   }
 
@@ -1689,7 +1772,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'CRITICAL REJECTION: ISSB S2 standards require carbon footprint metrics for this industry-specific transaction.';
 
   @override
-  String agentRationaleSustainabilitySuccess(Object count) {
+  String agentRationaleSustainabilitySuccess(int count) {
     return 'SUCCESS: Integrated $count compliant sustainability metrics.';
   }
 
@@ -1698,12 +1781,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'Sustainability Assessment: No specific ISSB disclosures required for this transaction tier.';
 
   @override
-  String agentRationaleForensicTimeAnomaly(Object time) {
+  String agentRationaleForensicTimeAnomaly(String time) {
     return 'WARNING: Transaction recorded during non-standard hours ($time). Higher forensic weighting applied.';
   }
 
   @override
-  String agentRationaleForensicSequenceGap(Object current, Object last) {
+  String agentRationaleForensicSequenceGap(String last, String current) {
     return 'NOTICE: Gap detected in reference sequence. Last: $last, Current: $current.';
   }
 
@@ -1723,4 +1806,164 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get auditTrailNoLogs => 'No audit logs found for the selected period.';
+
+  @override
+  String get msgInvoiceCognitiveHint =>
+      'Use this screen to create or edit invoices. Ensure meticulous accuracy with tax rates and item selection.';
+
+  @override
+  String get titleInvoiceCognitiveHint => 'Invoice Mastery';
+
+  @override
+  String get labelReturnsAndDamages => 'Returns & Damages';
+
+  @override
+  String get labelSalesReturn => 'Sales Return';
+
+  @override
+  String get descSalesReturn => 'Return sold items to inventory';
+
+  @override
+  String get labelPurchaseReturn => 'Purchase Return';
+
+  @override
+  String get descPurchaseReturn => 'Return purchased items to vendor';
+
+  @override
+  String get labelDamageInvoice => 'Damage Invoice';
+
+  @override
+  String get descDamageInvoice => 'Record damaged or missing items';
+
+  @override
+  String get labelEmailOptional => 'Email (Optional)';
+
+  @override
+  String get labelPhoneOptional => 'Phone (Optional)';
+
+  @override
+  String get labelAddressOptional => 'Address (Optional)';
+
+  @override
+  String get labelNotesOptional => 'Notes (Optional)';
+
+  @override
+  String msgConfirmDeleteCustomer(String name) {
+    return 'Are you sure you want to delete customer $name?';
+  }
+
+  @override
+  String get msgConfirmDeleteInvoice =>
+      'Are you sure you want to delete this invoice?';
+
+  @override
+  String get dashboardBasirSystemTitle => 'Basir Accounting System';
+
+  @override
+  String get forgotPassword => 'Forgot Password';
+
+  @override
+  String get dashboardTitle => 'Dashboard';
+
+  @override
+  String get dashboardStatsTitle => 'Statistics';
+
+  @override
+  String get dashboardQuickActionsTitle => 'Quick Actions';
+
+  @override
+  String get dashboardRecentActivityTitle => 'Recent Activity';
+
+  @override
+  String get dashboardMotto => 'Professional Accounting Made Simple';
+
+  @override
+  String get saveLabels => 'Save Labels';
+
+  @override
+  String get errInvalidResetLink => 'Invalid or expired reset link';
+
+  @override
+  String get errInvalidResetToken => 'Invalid or expired reset token';
+
+  @override
+  String get msgPasswordResetSuccess => 'Password reset successfully';
+
+  @override
+  String get errPasswordResetFailed => 'Password reset failed';
+
+  @override
+  String get errPasswordRequired => 'Password is required';
+
+  @override
+  String get errPasswordTooShort => 'Password is too short';
+
+  @override
+  String get errPasswordNeedsUppercase => 'Password needs uppercase letter';
+
+  @override
+  String get errPasswordNeedsLowercase => 'Password needs lowercase letter';
+
+  @override
+  String get errPasswordNeedsNumber => 'Password needs a number';
+
+  @override
+  String get errConfirmPasswordRequired => 'Confirm password is required';
+
+  @override
+  String get resetPasswordTitle => 'Reset Password';
+
+  @override
+  String resetPasswordSubtitle(String email) {
+    return 'Enter your new password for $email';
+  }
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get passwordHint => 'Enter your new password';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get confirmPasswordHint => 'Re-enter your password';
+
+  @override
+  String get passwordRequirements => 'Password Requirements:';
+
+  @override
+  String get passwordRequirementsList =>
+      '• At least 8 characters\n• One uppercase letter\n• One lowercase letter\n• One number';
+
+  @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get backToLogin => 'Back to Login';
+
+  @override
+  String get labelVatNumber => 'VAT Number';
+
+  @override
+  String get labelRegistrationNumber => 'Registration Number (CR)';
+
+  @override
+  String get labelTotalPayables => 'Total Payables to Vendors';
+
+  @override
+  String get msgValueCopiedToClipboard => 'Value copied to clipboard';
+
+  @override
+  String get labelSourceDocument => 'Source Document';
+
+  @override
+  String get btnViewSource => 'View Source';
+
+  @override
+  String get msgLoadingSource => 'Loading source document...';
+
+  @override
+  String get errSourceNotFound => 'Source document not found';
 }

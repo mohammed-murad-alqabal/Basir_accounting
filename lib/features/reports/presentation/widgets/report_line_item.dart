@@ -35,30 +35,66 @@ class ReportLineItem extends StatelessWidget {
     // Don't show amount for pure headers if it is zero
     final showAmount = !isHeader || amount != 0.0;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: isTotal
-          ? const BoxDecoration(
-              border: Border(
-                top: BorderSide(color: Colors.grey),
-                bottom: BorderSide(color: Colors.grey, width: 2),
-              ),
-            )
+    // Pro-grade Heuristic: Try to extract a code if it looks like "1101 - Cash"
+    final codeMatch = RegExp(r'^(\d{4,})\s-\s').firstMatch(line.label);
+    final probableAccountId = codeMatch?.group(1);
+
+    return InkWell(
+      onTap: probableAccountId != null && !isTotal && !isHeader
+          ? () async {
+              // Navigate to General Ledger
+              // We infer accountId from the code
+              // (assuming they match for now, or use mapped ID)
+              // For now, passing the code as ID for demonstration of the flow
+              await Navigator.pushNamed(
+                context,
+                '/general-ledger',
+                arguments: {
+                  'accountId': probableAccountId,
+                  'accountName': line.label.substring(codeMatch!.end),
+                  'fromDate': DateTime(2025), // TODO(m): Get from parent
+                  'toDate': DateTime.now(),
+                },
+              );
+            }
           : null,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Padding(
-              padding: EdgeInsetsDirectional.only(
-                start: line.indentLevel * 24.0, // Indentation per level
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        decoration: isTotal
+            ? const BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: Colors.grey),
+                  bottom: BorderSide(color: Colors.grey, width: 2),
+                ),
+              )
+            : null,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsetsDirectional.only(
+                  start: line.indentLevel * 24.0, // Indentation per level
+                ),
+                child: Row(
+                  children: [
+                    Text(line.label, style: labelStyle),
+                    if (probableAccountId != null) ...[
+                      const SizedBox(width: 8),
+                      Icon(
+                        Icons.open_in_new,
+                        size: 12,
+                        color: Colors.blue.withValues(alpha: 0.5),
+                      ),
+                    ],
+                  ],
+                ),
               ),
-              child: Text(line.label, style: labelStyle),
             ),
-          ),
-          if (showAmount)
-            Text(FormatHelpers.formatCurrency(amount), style: amountStyle),
-        ],
+            if (showAmount)
+              Text(FormatHelpers.formatCurrency(amount), style: amountStyle),
+          ],
+        ),
       ),
     );
   }

@@ -30,8 +30,8 @@ class AppearanceSettingsScreen extends ConsumerWidget {
     final customColor = ref.watch(colorCustomizationProvider).value;
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      appBar: AppAppBar(title: context.l10n.appearanceSettingsTitle),
+    return GlassScaffold(
+      title: context.l10n.appearanceSettingsTitle,
       body: ListView(
         padding: const EdgeInsets.all(Spacing.lg),
         children: [

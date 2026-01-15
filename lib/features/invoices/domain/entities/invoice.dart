@@ -11,6 +11,7 @@ library;
 
 import 'package:basir_accounting_system/core/models/sync_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -95,6 +96,12 @@ class Invoice with _$Invoice {
     /// Rates and adjustments.
     required Decimal taxRate,
     required Decimal discountRate,
+
+    /// Exchange rate to base currency (SAR).
+    required Decimal exchangeRate,
+
+    /// Granular transaction categorization (Sales, Return, etc.)
+    @Default(InvoiceType.sales) InvoiceType type,
     DateTime? paidDate,
 
     /// Multi-currency support (Default: SAR).
@@ -137,6 +144,18 @@ class Invoice with _$Invoice {
   /// Calculates the outstanding liability.
   Decimal get remainingAmount => totalAmount - paidAmount;
 
+  /// Total amount in base currency (SAR).
+  Decimal get totalAmountBaseCurrency => totalAmount * exchangeRate;
+
+  /// Subtotal amount in base currency (SAR).
+  Decimal get subtotalAmountBaseCurrency => subtotalAmount * exchangeRate;
+
+  /// Tax amount in base currency (SAR).
+  Decimal get taxAmountBaseCurrency => taxAmount * exchangeRate;
+
+  /// Discount amount in base currency (SAR).
+  Decimal get discountAmountBaseCurrency => discountAmount * exchangeRate;
+
   /// Validates the settlement status against temporal constraints.
   bool get isOverdue {
     if (status == InvoiceStatus.paid || status == InvoiceStatus.cancelled) {
@@ -144,4 +163,45 @@ class Invoice with _$Invoice {
     }
     return DateTime.now().isAfter(dueDate);
   }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Self-Healing Validation (Phase 6 - Critical Logic Alignment)
+  // ─────────────────────────────────────────────────────────────────────────
+
+  /// Calculates the expected subtotal from line items.
+  Decimal get calculatedSubtotal => items.fold<Decimal>(
+        Decimal.zero,
+        (sum, item) => sum + item.total,
+      );
+
+  /// Calculates the expected tax from line items.
+  Decimal get calculatedTax => items.fold<Decimal>(
+        Decimal.zero,
+        (sum, item) => sum + item.taxAmount,
+      );
+
+  /// Calculates the expected grand total.
+  Decimal get calculatedTotal =>
+      calculatedSubtotal + calculatedTax - discountAmount;
+
+  /// Detects if there is a discrepancy between stored and calculated totals.
+  /// A tolerance of 0.01 is used for rounding edge cases.
+  bool get hasTotalDiscrepancy {
+    final tolerance = Decimal.parse('0.01');
+    final subtotalDiff = (subtotalAmount - calculatedSubtotal).abs();
+    final taxDiff = (taxAmount - calculatedTax).abs();
+    final totalDiff = (totalAmount - calculatedTotal).abs();
+    return subtotalDiff > tolerance ||
+        taxDiff > tolerance ||
+        totalDiff > tolerance;
+  }
+
+  /// Returns a corrected copy of this invoice with recalculated totals.
+  /// This is the "Self-Healing" mechanism.
+  Invoice get healedCopy => copyWith(
+        subtotalAmount: calculatedSubtotal,
+        taxAmount: calculatedTax,
+        totalAmount: calculatedTotal,
+        updatedAt: DateTime.now(),
+      );
 }

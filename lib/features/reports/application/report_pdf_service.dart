@@ -100,7 +100,8 @@ class ReportPdfService extends _$ReportPdfService {
           children: [
             pw.Text('العملة: ريال سعودي (SAR)'),
             pw.Text(
-                'تاريخ التقرير: ${intl.DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now())}'),
+              'تاريخ التقرير: ${intl.DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now())}',
+            ),
           ],
         ),
       );
@@ -111,7 +112,7 @@ class ReportPdfService extends _$ReportPdfService {
           [
             'المبيعات الخاضعة للنسبة الأساسية',
             data.standardSalesBase,
-            data.standardSalesTax
+            data.standardSalesTax,
           ],
           [
             'المبيعات للمواطنين (الخدمات الصحية/التعليمية)',
@@ -137,8 +138,10 @@ class ReportPdfService extends _$ReportPdfService {
         ],
       );
 
-  pw.Widget _buildSectionTable(
-          {required String title, required List<List<dynamic>> rows}) =>
+  pw.Widget _buildSectionTable({
+    required String title,
+    required List<List<dynamic>> rows,
+  }) =>
       pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
@@ -159,12 +162,21 @@ class ReportPdfService extends _$ReportPdfService {
                 decoration: const pw.BoxDecoration(color: PdfColors.grey100),
                 children: [
                   _buildTableCell('الوصف', isHeader: true),
-                  _buildTableCell('المبلغ (SAR)',
-                      isHeader: true, alignRight: true),
-                  _buildTableCell('مبلغ التعديل',
-                      isHeader: true, alignRight: true),
-                  _buildTableCell('مبلغ الضريبة',
-                      isHeader: true, alignRight: true),
+                  _buildTableCell(
+                    'المبلغ (SAR)',
+                    isHeader: true,
+                    alignRight: true,
+                  ),
+                  _buildTableCell(
+                    'مبلغ التعديل',
+                    isHeader: true,
+                    alignRight: true,
+                  ),
+                  _buildTableCell(
+                    'مبلغ الضريبة',
+                    isHeader: true,
+                    alignRight: true,
+                  ),
                 ],
               ),
               // Rows
@@ -175,12 +187,18 @@ class ReportPdfService extends _$ReportPdfService {
                 return pw.TableRow(
                   children: [
                     _buildTableCell(label),
-                    _buildTableCell(FormatHelpers.formatNumber(amount),
-                        alignRight: true),
-                    _buildTableCell('0.00',
-                        alignRight: true), // Adjustment placeholder
-                    _buildTableCell(FormatHelpers.formatNumber(tax),
-                        alignRight: true),
+                    _buildTableCell(
+                      FormatHelpers.formatNumber(amount),
+                      alignRight: true,
+                    ),
+                    _buildTableCell(
+                      '0.00',
+                      alignRight: true,
+                    ), // Adjustment placeholder
+                    _buildTableCell(
+                      FormatHelpers.formatNumber(tax),
+                      alignRight: true,
+                    ),
                   ],
                 );
               }),
@@ -189,8 +207,11 @@ class ReportPdfService extends _$ReportPdfService {
         ],
       );
 
-  pw.Widget _buildTableCell(String text,
-          {bool isHeader = false, bool alignRight = false}) =>
+  pw.Widget _buildTableCell(
+    String text, {
+    bool isHeader = false,
+    bool alignRight = false,
+  }) =>
       pw.Padding(
         padding: const pw.EdgeInsets.all(5),
         child: pw.Text(

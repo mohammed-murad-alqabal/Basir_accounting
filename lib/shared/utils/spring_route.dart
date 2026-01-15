@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 /// A custom route that uses "Spring" physics for transitions.
 /// Designed to make the app feel "Alive" and "Responsive".
 class SpringRoute<T> extends PageRouteBuilder<T> {
+  /// Standard constructor for the spring route.
   SpringRoute({required this.page})
       : super(
           pageBuilder: (context, animation, secondaryAnimation) => page,
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             // "Alive" Spring Curve
-            // Using easeOutQuart for a snappy yet smooth finish, approximating a critical damp spring.
+            // Using easeOutQuart for snappy yet smooth finish,
+            // approximating a critical damp spring.
             const curve = Curves.easeOutQuart;
 
             final tween = Tween(
@@ -39,5 +41,7 @@ class SpringRoute<T> extends PageRouteBuilder<T> {
           transitionDuration: const Duration(milliseconds: 600),
           reverseTransitionDuration: const Duration(milliseconds: 400),
         );
+
+  /// The page to navigate to.
   final Widget page;
 }

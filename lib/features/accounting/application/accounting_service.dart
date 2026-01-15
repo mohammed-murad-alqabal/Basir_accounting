@@ -6,14 +6,14 @@ import 'package:basir_accounting_system/features/accounting/application/orchestr
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/liquidity_forecast.dart';
 import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
 import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
 import 'package:basir_accounting_system/features/customers/domain/repositories/customer_repository.dart';
 import 'package:basir_accounting_system/features/invoices/application/sales_bridge_service.dart';
-import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart'
-    show Invoice;
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/foundation.dart';
@@ -51,6 +51,99 @@ class AccountingService extends _$AccountingService {
 
   @override
   FutureOr<List<JournalEntry>> build() => _repository.getJournalEntries();
+
+  /// Generates a liquidity forecast for the next [days].
+  /// (Implementation of Treasury Hub Forecasting)
+  ///
+  /// Aggregates expected inflows (Receivables) and outflows (Payables)
+  /// based on invoice due dates.
+  Future<LiquidityForecast> getLiquidityForecast({int days = 30}) async {
+    final now = DateTime.now();
+    final startDate = DateTime(now.year, now.month, now.day);
+    final endDate = startDate.add(Duration(days: days));
+
+    // Fetch all invoices (this should be optimized with a specialized query in the future)
+    // currently performing in-memory filtering as per Phase 1 implementation.
+    final invoices = await ref.read(invoiceRepositoryProvider).getAllInvoices();
+
+    var totalInflow = Decimal.zero;
+    var totalOutflow = Decimal.zero;
+    final dailyMap = <DateTime, DailyCashFlow>{};
+
+    // Initialize map for all days in range
+    for (var i = 0; i <= days; i++) {
+      final date = startDate.add(Duration(days: i));
+      dailyMap[date] = DailyCashFlow(
+        date: date,
+        inflow: Decimal.zero,
+        outflow: Decimal.zero,
+      );
+    }
+
+    for (final invoice in invoices) {
+      // 1. Filter: Only Unpaid (Sent or Overdue)
+      if (invoice.status != InvoiceStatus.sent &&
+          invoice.status != InvoiceStatus.overdue) {
+        continue;
+      }
+
+      // 2. Filter: Determine Balance
+      final balance = invoice.totalAmount - invoice.paidAmount;
+      if (balance <= Decimal.zero) continue;
+
+      // 3. Filter: Date Range
+      // Normalize due date to midnight
+      final due = DateTime(
+        invoice.dueDate.year,
+        invoice.dueDate.month,
+        invoice.dueDate.day,
+      );
+
+      // Handle overdue items as "Due Today" (startDate) for immediate liquidity view
+      // or keep their original date?
+      // Decision: Determine effective date. If overdue, set to startDate.
+      final effectiveDate = due.isBefore(startDate) ? startDate : due;
+
+      if (effectiveDate.isAfter(endDate)) continue;
+
+      // 4. Aggregate
+      final isReceivable = invoice.type == InvoiceType.sales ||
+          invoice.type == InvoiceType.purchaseReturn; // We get money
+
+      final isPayable = invoice.type == InvoiceType.purchase ||
+          invoice.type == InvoiceType.salesReturn; // We pay money
+
+      // Get existing daily flow or create (if mapped to startDate due to overdue)
+      var daily = dailyMap[effectiveDate] ??
+          DailyCashFlow(
+            date: effectiveDate,
+            inflow: Decimal.zero,
+            outflow: Decimal.zero,
+          );
+
+      if (isReceivable) {
+        totalInflow += balance;
+        daily = daily.copyWith(inflow: daily.inflow + balance);
+      } else if (isPayable) {
+        totalOutflow += balance;
+        daily = daily.copyWith(outflow: daily.outflow + balance);
+      }
+
+      dailyMap[effectiveDate] = daily;
+    }
+
+    final dailyBreakdown = dailyMap.values.toList()
+      ..sort((a, b) => a.date.compareTo(b.date));
+
+    return LiquidityForecast(
+      startDate: startDate,
+      endDate: endDate,
+      totalInflow: totalInflow,
+      totalOutflow: totalOutflow,
+      netChange: totalInflow - totalOutflow,
+      dailyBreakdown: dailyBreakdown,
+    );
+  }
 
   /// Generates and seeds the default Chart of Accounts for a specific country.
   /// (Implementation of FR-ACC-009)
@@ -107,6 +200,26 @@ class AccountingService extends _$AccountingService {
     await _repository.addAccount(account);
   }
 
+  /// Unified entry point for posting any invoice type to the ledger.
+  /// Dispatches to specialized methods based on [InvoiceType].
+  Future<void> postInvoice(
+    Invoice invoice, {
+    bool bypassCognitive = false,
+  }) async {
+    switch (invoice.type) {
+      case InvoiceType.sales:
+        return postSalesInvoice(invoice, bypassCognitive: bypassCognitive);
+      case InvoiceType.purchase:
+        return _postPurchaseInvoice(invoice, bypassCognitive: bypassCognitive);
+      case InvoiceType.salesReturn:
+        return _postSalesReturn(invoice, bypassCognitive: bypassCognitive);
+      case InvoiceType.purchaseReturn:
+        return _postPurchaseReturn(invoice, bypassCognitive: bypassCognitive);
+      case InvoiceType.damage:
+        return _postDamageInvoice(invoice, bypassCognitive: bypassCognitive);
+    }
+  }
+
   /// Posts a sales invoice to the ledger using double-entry logic.
   /// (Implementation of FR-ACC-001)
   ///
@@ -119,8 +232,6 @@ class AccountingService extends _$AccountingService {
   /// ## Parameters
   /// - [invoice]: The [Invoice] entity to post.
   ///
-  /// ## Throws
-  /// - [Exception] if the financial period is closed or invoice status is
   ///   invalid.
   Future<void> postSalesInvoice(
     Invoice invoice, {
@@ -154,11 +265,11 @@ class AccountingService extends _$AccountingService {
         accountId: receivableAccountId,
         accountName: 'Receivable - ${invoice.customerName}',
         description: 'Sales Invoice #${invoice.invoiceNumber}',
-        debit: invoice.totalAmount,
+        debit: invoice.totalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
         originalAmount: invoice.currency != 'SAR' ? invoice.totalAmount : null,
-        exchangeRate: invoice.currency != 'SAR' ? Decimal.one : null,
+        exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
 
@@ -172,13 +283,13 @@ class AccountingService extends _$AccountingService {
 
     final revenueLine = JournalEntryLine(
       accountId: revenueAccount.id,
-      credit: invoice.subtotalAmount,
+      credit: invoice.subtotalAmountBaseCurrency,
       debit: Decimal.zero,
       accountName: revenueAccount.nameEn,
       description: 'Revenue for Invoice #${invoice.invoiceNumber}',
       originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
       originalAmount: invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
-      exchangeRate: invoice.currency != 'SAR' ? Decimal.one : null,
+      exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
     );
     lines.add(revenueLine);
 
@@ -202,11 +313,11 @@ class AccountingService extends _$AccountingService {
           accountId: taxAccount.id,
           accountName: taxAccount.nameEn,
           description: 'VAT for Invoice #${invoice.invoiceNumber}',
-          credit: invoice.taxAmount,
+          credit: invoice.taxAmountBaseCurrency,
           debit: Decimal.zero,
           originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
           originalAmount: invoice.currency != 'SAR' ? invoice.taxAmount : null,
-          exchangeRate: invoice.currency != 'SAR' ? Decimal.one : null,
+          exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
         ),
       );
     }
@@ -272,6 +383,374 @@ class AccountingService extends _$AccountingService {
     }
 
     ref.invalidateSelf();
+  }
+
+  /// Posts a purchase invoice to the ledger.
+  ///
+  /// Typical impact:
+  /// - **Debit**: Inventory or Expense (Subtotal Amount)
+  /// - **Debit**: Input VAT (Tax Amount)
+  /// - **Credit**: Accounts Payable (Total Invoice Amount)
+  Future<void> _postPurchaseInvoice(
+    Invoice invoice, {
+    bool bypassCognitive = false,
+  }) async {
+    final isPeriodOpen =
+        await _financialYearService.canPostToDate(invoice.issuedDate);
+    if (!isPeriodOpen) {
+      throw Exception('Financial period is closed or locked');
+    }
+
+    final lines = <JournalEntryLine>[];
+
+    // Credit: Accounts Payable
+    var payableAccountId = 'acc-2101'; // Default AP
+    final vendor =
+        await _customerRepository.getCustomerById(invoice.customerId);
+    if (vendor != null && vendor.receivableAccountId != null) {
+      payableAccountId = vendor.receivableAccountId!;
+    }
+
+    lines.add(
+      JournalEntryLine(
+        accountId: payableAccountId,
+        accountName: 'Payable - ${invoice.customerName}',
+        description: 'Purchase Invoice #${invoice.invoiceNumber}',
+        debit: Decimal.zero,
+        credit: invoice.totalAmountBaseCurrency,
+        originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+        originalAmount: invoice.currency != 'SAR' ? invoice.totalAmount : null,
+        exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+      ),
+    );
+
+    // Debit: Expense / Inventory
+    final allAccounts = await _repository.getAccounts();
+    final expenseAccount = allAccounts.firstWhere(
+      (a) => a.code == '5101' || a.type == AccountType.expense,
+      orElse: () =>
+          allAccounts.firstWhere((a) => a.type == AccountType.expense),
+    );
+
+    lines.add(
+      JournalEntryLine(
+        accountId: expenseAccount.id,
+        accountName: expenseAccount.nameEn,
+        description: 'Expense for Purchase #${invoice.invoiceNumber}',
+        debit: invoice.subtotalAmountBaseCurrency,
+        credit: Decimal.zero,
+        originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+        originalAmount:
+            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+      ),
+    );
+
+    // Debit: Input VAT
+    if (invoice.taxAmount > Decimal.zero) {
+      final taxAccount = allAccounts.firstWhere(
+        (a) => a.code == '1105' || a.nameEn.contains('Input VAT'),
+        orElse: () => allAccounts.firstWhere(
+          (a) => a.code == '2105' || a.nameEn.contains('VAT'),
+        ),
+      );
+
+      lines.add(
+        JournalEntryLine(
+          accountId: taxAccount.id,
+          accountName: taxAccount.nameEn,
+          description: 'Input VAT for Purchase #${invoice.invoiceNumber}',
+          debit: invoice.taxAmountBaseCurrency,
+          credit: Decimal.zero,
+          originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+          originalAmount: invoice.currency != 'SAR' ? invoice.taxAmount : null,
+          exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+        ),
+      );
+    }
+
+    await _finalizeAndPostInvoiceEntry(
+      invoice,
+      lines,
+      'purchase_invoice',
+      bypassCognitive,
+    );
+  }
+
+  Future<void> _postSalesReturn(
+    Invoice invoice, {
+    bool bypassCognitive = false,
+  }) async {
+    final isPeriodOpen =
+        await _financialYearService.canPostToDate(invoice.issuedDate);
+    if (!isPeriodOpen) {
+      throw Exception('Financial period is closed or locked');
+    }
+
+    final lines = <JournalEntryLine>[];
+
+    final allAccounts = await _repository.getAccounts();
+    final revenueAccount = allAccounts.firstWhere(
+      (a) => a.code == '4101' || a.subType == 'revenue',
+      orElse: () =>
+          allAccounts.firstWhere((a) => a.type == AccountType.revenue),
+    );
+
+    lines.add(
+      JournalEntryLine(
+        accountId: revenueAccount.id,
+        accountName: revenueAccount.nameEn,
+        description: 'Sales Return for Invoice #${invoice.invoiceNumber}',
+        debit: invoice.subtotalAmountBaseCurrency,
+        credit: Decimal.zero,
+        originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+        originalAmount:
+            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+      ),
+    );
+
+    if (invoice.taxAmount > Decimal.zero) {
+      final taxAccount = allAccounts.firstWhere(
+        (a) => a.code == '2105' || a.nameEn.contains('VAT'),
+      );
+
+      lines.add(
+        JournalEntryLine(
+          accountId: taxAccount.id,
+          accountName: taxAccount.nameEn,
+          description: 'VAT Reversal for Return #${invoice.invoiceNumber}',
+          debit: invoice.taxAmountBaseCurrency,
+          credit: Decimal.zero,
+          originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+          originalAmount: invoice.currency != 'SAR' ? invoice.taxAmount : null,
+          exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+        ),
+      );
+    }
+
+    var receivableAccountId = 'acc-1201';
+    final customer =
+        await _customerRepository.getCustomerById(invoice.customerId);
+    if (customer != null && customer.receivableAccountId != null) {
+      receivableAccountId = customer.receivableAccountId!;
+    }
+
+    lines.add(
+      JournalEntryLine(
+        accountId: receivableAccountId,
+        accountName: 'Receivable - ${invoice.customerName}',
+        description: 'Sales Return #${invoice.invoiceNumber}',
+        debit: Decimal.zero,
+        credit: invoice.totalAmountBaseCurrency,
+        originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+        originalAmount: invoice.currency != 'SAR' ? invoice.totalAmount : null,
+        exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+      ),
+    );
+
+    await _finalizeAndPostInvoiceEntry(
+      invoice,
+      lines,
+      'sales_return',
+      bypassCognitive,
+    );
+  }
+
+  Future<void> _postPurchaseReturn(
+    Invoice invoice, {
+    bool bypassCognitive = false,
+  }) async {
+    final isPeriodOpen =
+        await _financialYearService.canPostToDate(invoice.issuedDate);
+    if (!isPeriodOpen) {
+      throw Exception('Financial period is closed or locked');
+    }
+
+    final lines = <JournalEntryLine>[];
+
+    var payableAccountId = 'acc-2101';
+    final vendor =
+        await _customerRepository.getCustomerById(invoice.customerId);
+    if (vendor != null && vendor.receivableAccountId != null) {
+      payableAccountId = vendor.receivableAccountId!;
+    }
+
+    lines.add(
+      JournalEntryLine(
+        accountId: payableAccountId,
+        accountName: 'Payable - ${invoice.customerName}',
+        description: 'Purchase Return #${invoice.invoiceNumber}',
+        debit: invoice.totalAmountBaseCurrency,
+        credit: Decimal.zero,
+        originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+        originalAmount: invoice.currency != 'SAR' ? invoice.totalAmount : null,
+        exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+      ),
+    );
+
+    final allAccounts = await _repository.getAccounts();
+    final expenseAccount = allAccounts.firstWhere(
+      (a) => a.code == '5101' || a.type == AccountType.expense,
+      orElse: () =>
+          allAccounts.firstWhere((a) => a.type == AccountType.expense),
+    );
+
+    lines.add(
+      JournalEntryLine(
+        accountId: expenseAccount.id,
+        accountName: expenseAccount.nameEn,
+        description: 'Expense Reversal for Return #${invoice.invoiceNumber}',
+        credit: invoice.subtotalAmountBaseCurrency,
+        debit: Decimal.zero,
+        originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+        originalAmount:
+            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+      ),
+    );
+
+    if (invoice.taxAmount > Decimal.zero) {
+      final taxAccount = allAccounts.firstWhere(
+        (a) => a.code == '1105' || a.nameEn.contains('Input VAT'),
+        orElse: () => allAccounts.firstWhere(
+          (a) => a.code == '2105' || a.nameEn.contains('VAT'),
+        ),
+      );
+
+      lines.add(
+        JournalEntryLine(
+          accountId: taxAccount.id,
+          accountName: taxAccount.nameEn,
+          description:
+              'Input VAT Reversal for Return #${invoice.invoiceNumber}',
+          credit: invoice.taxAmountBaseCurrency,
+          debit: Decimal.zero,
+          originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+          originalAmount: invoice.currency != 'SAR' ? invoice.taxAmount : null,
+          exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+        ),
+      );
+    }
+
+    await _finalizeAndPostInvoiceEntry(
+      invoice,
+      lines,
+      'purchase_return',
+      bypassCognitive,
+    );
+  }
+
+  Future<void> _postDamageInvoice(
+    Invoice invoice, {
+    bool bypassCognitive = false,
+  }) async {
+    final isPeriodOpen =
+        await _financialYearService.canPostToDate(invoice.issuedDate);
+    if (!isPeriodOpen) {
+      throw Exception('Financial period is closed or locked');
+    }
+
+    final lines = <JournalEntryLine>[];
+
+    final allAccounts = await _repository.getAccounts();
+    final lossAccount = allAccounts.firstWhere(
+      (a) => a.nameEn.contains('Loss') || a.type == AccountType.expense,
+      orElse: () =>
+          allAccounts.firstWhere((a) => a.type == AccountType.expense),
+    );
+
+    lines.add(
+      JournalEntryLine(
+        accountId: lossAccount.id,
+        accountName: lossAccount.nameEn,
+        description: 'Loss from Damages #${invoice.invoiceNumber}',
+        debit: invoice.subtotalAmountBaseCurrency,
+        credit: Decimal.zero,
+        originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+        originalAmount:
+            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+      ),
+    );
+
+    final inventoryAccount = allAccounts.firstWhere(
+      (a) => a.code == '1301' || a.nameEn.contains('Inventory'),
+      orElse: () => allAccounts.firstWhere((a) => a.type == AccountType.asset),
+    );
+
+    lines.add(
+      JournalEntryLine(
+        accountId: inventoryAccount.id,
+        accountName: inventoryAccount.nameEn,
+        description:
+            'Inventory Reduction for Damages #${invoice.invoiceNumber}',
+        credit: invoice.subtotalAmountBaseCurrency,
+        debit: Decimal.zero,
+        originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+        originalAmount:
+            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+      ),
+    );
+
+    await _finalizeAndPostInvoiceEntry(
+      invoice,
+      lines,
+      'damage_invoice',
+      bypassCognitive,
+    );
+  }
+
+  Future<void> _finalizeAndPostInvoiceEntry(
+    Invoice invoice,
+    List<JournalEntryLine> lines,
+    String sourceDocument,
+    bool bypassCognitive,
+  ) async {
+    final journalEntryId = 'je-inv-${invoice.id}';
+    final now = DateTime.now();
+    final user = ref.read(basirUserProvider);
+
+    final existingEntries = await _repository.getJournalEntries();
+    if (existingEntries.any((e) => e.id == journalEntryId)) {
+      return;
+    }
+
+    final entry = JournalEntry(
+      id: journalEntryId,
+      referenceNumber: 'JE-${invoice.id}',
+      date: invoice.issuedDate,
+      temporal: TemporalJustification(
+        transactionDate: invoice.issuedDate,
+        effectiveDate: invoice.issuedDate,
+        recordingDate: now,
+      ),
+      standards: StandardsJustification(
+        standardReference:
+            sourceDocument == 'purchase_invoice' ? 'IAS 2' : 'IFRS 15',
+        recognitionBasis: 'Accrual',
+        measurementBasis: 'Transaction Price',
+      ),
+      description: 'Posting $sourceDocument ${invoice.id}',
+      status: JournalEntryStatus.posted,
+      lines: lines,
+      sourceDocument: sourceDocument,
+      sourceId: invoice.id,
+      createdAt: now,
+      createdBy: user?.id ?? 'system',
+      updatedAt: now,
+      postedAt: now,
+    );
+
+    if (!entry.isBalanced) {
+      throw Exception(
+        'Journal Entry is unbalanced! Difference: '
+        '${entry.totalDebit - entry.totalCredit}',
+      );
+    }
+
+    await postJournalEntry(entry, bypassCognitive: bypassCognitive);
   }
 
   /// Calculates the hierarchical balance of an account, including all
