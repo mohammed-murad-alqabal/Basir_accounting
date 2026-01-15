@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
@@ -63,10 +65,6 @@ class _FinancialCalculatorScreenState extends State<FinancialCalculatorScreen> {
         }
       });
     } on Exception {
-      setState(() {
-        _result = 'Error';
-      });
-    } catch (e) {
       setState(() {
         _result = 'Error';
       });
@@ -216,38 +214,42 @@ class _FinancialCalculatorScreenState extends State<FinancialCalculatorScreen> {
   }
 
   void _showHistory(BuildContext context) {
-    showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) => GlassCard(
-        margin: const EdgeInsets.all(Spacing.md),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(Spacing.md),
-              child: Text(
-                context.l10n.auditTrailTitle,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _history.length,
-                itemBuilder: (context, index) => ListTile(
-                  title: Text(_history[index]),
-                  onTap: () {
-                    final parts = _history[index].split(' = ');
-                    setState(() {
-                      _display = parts[0];
-                      _result = parts[1];
-                    });
-                    Navigator.pop(context);
-                  },
+    unawaited(
+      showModalBottomSheet<void>(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) => GlassCard(
+          margin: const EdgeInsets.all(Spacing.md),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(Spacing.md),
+                child: Text(
+                  context.l10n.auditTrailTitle,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _history.length,
+                  itemBuilder: (context, index) => ListTile(
+                    title: Text(_history[index]),
+                    onTap: () {
+                      final parts = _history[index].split(' = ');
+                      setState(() {
+                        _display = parts[0];
+                        _result = parts[1];
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

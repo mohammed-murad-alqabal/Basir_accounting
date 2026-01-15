@@ -9,6 +9,7 @@
 import 'api.dart';
 import 'api/accounts.dart';
 import 'api/assets.dart';
+import 'api/auditor.dart';
 import 'api/calendar.dart';
 import 'api/currency.dart';
 import 'api/inventory.dart';
@@ -30,11 +31,25 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
     required super.portManager,
   });
 
+  CrossPlatformFinalizerArg
+      get rust_arc_decrement_strong_count_JournalEntryPtr => wire
+          .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry;
+
   @protected
   AnyhowException dco_decode_AnyhowException(dynamic raw);
 
   @protected
+  JournalEntry
+      dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+          dynamic raw);
+
+  @protected
   Map<String, String> dco_decode_Map_String_String_None(dynamic raw);
+
+  @protected
+  JournalEntry
+      dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+          dynamic raw);
 
   @protected
   String dco_decode_String(dynamic raw);
@@ -44,6 +59,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   AgingReportLineDto dco_decode_aging_report_line_dto(dynamic raw);
+
+  @protected
+  AnomalyDto dco_decode_anomaly_dto(dynamic raw);
 
   @protected
   AssetCategoryDto dco_decode_asset_category_dto(dynamic raw);
@@ -153,6 +171,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   List<AgingReportLineDto> dco_decode_list_aging_report_line_dto(dynamic raw);
+
+  @protected
+  List<AnomalyDto> dco_decode_list_anomaly_dto(dynamic raw);
 
   @protected
   List<AssetCategoryDto> dco_decode_list_asset_category_dto(dynamic raw);
@@ -285,6 +306,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void dco_decode_unit(dynamic raw);
 
   @protected
+  BigInt dco_decode_usize(dynamic raw);
+
+  @protected
   ValuationItemDto dco_decode_valuation_item_dto(dynamic raw);
 
   @protected
@@ -309,8 +333,18 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer);
 
   @protected
+  JournalEntry
+      sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+          SseDeserializer deserializer);
+
+  @protected
   Map<String, String> sse_decode_Map_String_String_None(
       SseDeserializer deserializer);
+
+  @protected
+  JournalEntry
+      sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+          SseDeserializer deserializer);
 
   @protected
   String sse_decode_String(SseDeserializer deserializer);
@@ -321,6 +355,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   AgingReportLineDto sse_decode_aging_report_line_dto(
       SseDeserializer deserializer);
+
+  @protected
+  AnomalyDto sse_decode_anomaly_dto(SseDeserializer deserializer);
 
   @protected
   AssetCategoryDto sse_decode_asset_category_dto(SseDeserializer deserializer);
@@ -444,6 +481,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   List<AgingReportLineDto> sse_decode_list_aging_report_line_dto(
       SseDeserializer deserializer);
+
+  @protected
+  List<AnomalyDto> sse_decode_list_anomaly_dto(SseDeserializer deserializer);
 
   @protected
   List<AssetCategoryDto> sse_decode_list_asset_category_dto(
@@ -599,6 +639,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_decode_unit(SseDeserializer deserializer);
 
   @protected
+  BigInt sse_decode_usize(SseDeserializer deserializer);
+
+  @protected
   ValuationItemDto sse_decode_valuation_item_dto(SseDeserializer deserializer);
 
   @protected
@@ -624,8 +667,18 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       AnyhowException self, SseSerializer serializer);
 
   @protected
+  void
+      sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+          JournalEntry self, SseSerializer serializer);
+
+  @protected
   void sse_encode_Map_String_String_None(
       Map<String, String> self, SseSerializer serializer);
+
+  @protected
+  void
+      sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+          JournalEntry self, SseSerializer serializer);
 
   @protected
   void sse_encode_String(String self, SseSerializer serializer);
@@ -636,6 +689,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_aging_report_line_dto(
       AgingReportLineDto self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_anomaly_dto(AnomalyDto self, SseSerializer serializer);
 
   @protected
   void sse_encode_asset_category_dto(
@@ -772,6 +828,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_list_aging_report_line_dto(
       List<AgingReportLineDto> self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_list_anomaly_dto(
+      List<AnomalyDto> self, SseSerializer serializer);
 
   @protected
   void sse_encode_list_asset_category_dto(
@@ -937,6 +997,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_unit(void self, SseSerializer serializer);
 
   @protected
+  void sse_encode_usize(BigInt self, SseSerializer serializer);
+
+  @protected
   void sse_encode_valuation_item_dto(
       ValuationItemDto self, SseSerializer serializer);
 
@@ -964,6 +1027,18 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
 class RustLibWire implements BaseWire {
   RustLibWire.fromExternalLibrary(ExternalLibrary lib);
+
+  void rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+          int ptr) =>
+      wasmModule
+          .rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+              ptr);
+
+  void rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+          int ptr) =>
+      wasmModule
+          .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+              ptr);
 }
 
 @JS('wasm_bindgen')
@@ -971,4 +1046,12 @@ external RustLibWasmModule get wasmModule;
 
 @JS()
 @anonymous
-extension type RustLibWasmModule._(JSObject _) implements JSObject {}
+extension type RustLibWasmModule._(JSObject _) implements JSObject {
+  external void
+      rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+          int ptr);
+
+  external void
+      rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+          int ptr);
+}

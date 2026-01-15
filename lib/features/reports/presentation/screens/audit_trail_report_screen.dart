@@ -2,7 +2,8 @@
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
-import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart'
+    as domain;
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -96,7 +97,8 @@ class AuditTrailReportScreen extends ConsumerWidget {
                         title: context.l10n.auditTrailSectionForensic,
                       ),
                       const SizedBox(height: Spacing.sm),
-                      ...entry.auditLogs.map((log) => _AuditLogItem(log: log)),
+                      ...entry.auditLogs.map((domain.AuditLogEntry log) =>
+                          _AuditLogItem(log: log)),
                     ],
                   ),
                 ),
@@ -136,7 +138,7 @@ class _SectionHeader extends StatelessWidget {
 
 class _AuditLogItem extends StatelessWidget {
   const _AuditLogItem({required this.log});
-  final AuditLogEntry log;
+  final domain.AuditLogEntry log;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -158,24 +160,7 @@ class _AuditLogItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.error.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(Radii.xs),
-                  ),
-                  child: Text(
-                    log.action,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10,
-                      color: AppColors.error,
-                    ),
-                  ),
-                ),
+                _ActionChip(action: log.action),
                 Text(
                   intl.DateFormat('HH:mm:ss').format(log.timestamp),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -205,6 +190,31 @@ class _AuditLogItem extends StatelessWidget {
               ],
             ),
           ],
+        ),
+      );
+}
+
+class _ActionChip extends StatelessWidget {
+  const _ActionChip({required this.action});
+  final String action;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 6,
+          vertical: 2,
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.error.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(Radii.xs),
+        ),
+        child: Text(
+          action,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 10,
+            color: AppColors.error,
+          ),
         ),
       );
 }

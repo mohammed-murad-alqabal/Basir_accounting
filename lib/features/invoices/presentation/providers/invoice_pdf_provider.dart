@@ -10,13 +10,15 @@ import 'package:printing/printing.dart';
 /// مزود خدمة إنشاء PDF
 final invoicePdfServiceProvider = Provider((ref) {
   final settings = ref.watch(settingsServiceProvider);
-  return InvoicePdfService(settings);
+  final pdfGen = ref.watch(pdfGenerationServiceProvider.notifier);
+  return InvoicePdfService(settings, pdfGen);
 });
 
 /// مزود خدمة الطباعة الحرارية
 final invoicePrintServiceProvider = Provider((ref) {
   final settings = ref.watch(settingsServiceProvider);
-  return InvoicePrintService(settings);
+  final pdfGen = ref.watch(pdfGenerationServiceProvider.notifier);
+  return InvoicePrintService(settings, pdfGen);
 });
 
 /// Provider لتصدير الفاتورة كملف PDF

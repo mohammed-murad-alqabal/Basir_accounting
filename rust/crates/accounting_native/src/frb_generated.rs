@@ -25,6 +25,7 @@
 
 // Section: imports
 
+use crate::api::ledger::*;
 use flutter_rust_bridge::for_generated::byteorder::{NativeEndian, ReadBytesExt, WriteBytesExt};
 use flutter_rust_bridge::for_generated::{transform_result_dco, Lifetimeable, Lockable};
 use flutter_rust_bridge::{Handler, IntoIntoDart};
@@ -37,7 +38,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_auto_opaque = RustAutoOpaqueMoi,
 );
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.11.1";
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = 79653184;
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -346317649;
 
 // Section: executor
 
@@ -1768,6 +1769,41 @@ fn wire__crate__api__ledger__log_agent_consensus_impl(
         },
     )
 }
+fn wire__crate__api__ledger__map_dto_to_entity_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::SseCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "map_dto_to_entity",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_dto = <crate::api::ledger::EntryDto>::sse_decode(&mut deserializer);
+            deserializer.end();
+            move |context| {
+                transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
+                    (move || {
+                        let output_ok = crate::api::ledger::map_dto_to_entity(api_dto)?;
+                        Ok(output_ok)
+                    })(),
+                )
+            }
+        },
+    )
+}
 fn wire__crate__api__currency__perform_revaluation_impl(
     port_: flutter_rust_bridge::for_generated::MessagePort,
     ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
@@ -2709,6 +2745,12 @@ fn wire__crate__api__inventory__verify_inventory_chain_impl(
     )
 }
 
+// Section: related_funcs
+
+flutter_rust_bridge::frb_generated_moi_arc_impl_value!(
+    flutter_rust_bridge::for_generated::RustAutoOpaqueInner<JournalEntry>
+);
+
 // Section: dart2rust
 
 impl SseDecode for flutter_rust_bridge::for_generated::anyhow::Error {
@@ -2719,11 +2761,31 @@ impl SseDecode for flutter_rust_bridge::for_generated::anyhow::Error {
     }
 }
 
+impl SseDecode for JournalEntry {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <RustOpaqueMoi<
+            flutter_rust_bridge::for_generated::RustAutoOpaqueInner<JournalEntry>,
+        >>::sse_decode(deserializer);
+        return flutter_rust_bridge::for_generated::rust_auto_opaque_decode_owned(inner);
+    }
+}
+
 impl SseDecode for std::collections::HashMap<String, String> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         let mut inner = <Vec<(String, String)>>::sse_decode(deserializer);
         return inner.into_iter().collect();
+    }
+}
+
+impl SseDecode
+    for RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<JournalEntry>>
+{
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <usize>::sse_decode(deserializer);
+        return decode_rust_opaque_moi(inner);
     }
 }
 
@@ -3851,6 +3913,13 @@ impl SseDecode for () {
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {}
 }
 
+impl SseDecode for usize {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        deserializer.cursor.read_u64::<NativeEndian>().unwrap() as _
+    }
+}
+
 impl SseDecode for crate::api::inventory::ValuationItemDto {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -4084,53 +4153,54 @@ fn pde_ffi_dispatcher_primary_impl(
         ),
         45 => wire__crate__api__purchasing__list_vendors_impl(port, ptr, rust_vec_len, data_len),
         46 => wire__crate__api__ledger__log_agent_consensus_impl(port, ptr, rust_vec_len, data_len),
-        47 => {
+        47 => wire__crate__api__ledger__map_dto_to_entity_impl(port, ptr, rust_vec_len, data_len),
+        48 => {
             wire__crate__api__currency__perform_revaluation_impl(port, ptr, rust_vec_len, data_len)
         }
-        48 => wire__crate__api__sales__post_invoice_impl(port, ptr, rust_vec_len, data_len),
-        49 => wire__crate__api__ledger__post_journal_entry_impl(port, ptr, rust_vec_len, data_len),
-        50 => wire__crate__api__purchasing__record_bill_payment_impl(
+        49 => wire__crate__api__sales__post_invoice_impl(port, ptr, rust_vec_len, data_len),
+        50 => wire__crate__api__ledger__post_journal_entry_impl(port, ptr, rust_vec_len, data_len),
+        51 => wire__crate__api__purchasing__record_bill_payment_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        51 => {
+        52 => {
             wire__crate__api__sales__record_customer_payment_impl(port, ptr, rust_vec_len, data_len)
         }
-        52 => {
+        53 => {
             wire__crate__api__inventory__record_impairment_impl(port, ptr, rust_vec_len, data_len)
         }
-        53 => wire__crate__api__inventory__record_movement_impl(port, ptr, rust_vec_len, data_len),
-        54 => wire__crate__api__inventory__record_purchase_impl(port, ptr, rust_vec_len, data_len),
-        55 => wire__crate__api__inventory__record_sale_impl(port, ptr, rust_vec_len, data_len),
-        56 => wire__crate__api__assets__register_asset_impl(port, ptr, rust_vec_len, data_len),
-        57 => wire__crate__api__assets__register_category_impl(port, ptr, rust_vec_len, data_len),
-        58 => {
+        54 => wire__crate__api__inventory__record_movement_impl(port, ptr, rust_vec_len, data_len),
+        55 => wire__crate__api__inventory__record_purchase_impl(port, ptr, rust_vec_len, data_len),
+        56 => wire__crate__api__inventory__record_sale_impl(port, ptr, rust_vec_len, data_len),
+        57 => wire__crate__api__assets__register_asset_impl(port, ptr, rust_vec_len, data_len),
+        58 => wire__crate__api__assets__register_category_impl(port, ptr, rust_vec_len, data_len),
+        59 => {
             wire__crate__api__ledger__reverse_journal_entry_impl(port, ptr, rust_vec_len, data_len)
         }
-        59 => {
+        60 => {
             wire__crate__api__assets__run_depreciation_cycle_impl(port, ptr, rust_vec_len, data_len)
         }
-        60 => {
+        61 => {
             wire__crate__api__currency__save_exchange_rate_impl(port, ptr, rust_vec_len, data_len)
         }
-        61 => wire__crate__api__inventory__save_item_impl(port, ptr, rust_vec_len, data_len),
-        62 => wire__crate__api__calendar__save_period_impl(port, ptr, rust_vec_len, data_len),
-        64 => wire__crate__api__standards__search_standards_impl(port, ptr, rust_vec_len, data_len),
-        65 => wire__crate__api__accounts__update_account_impl(port, ptr, rust_vec_len, data_len),
-        66 => wire__crate__api__accounts__update_account_category_impl(
+        62 => wire__crate__api__inventory__save_item_impl(port, ptr, rust_vec_len, data_len),
+        63 => wire__crate__api__calendar__save_period_impl(port, ptr, rust_vec_len, data_len),
+        65 => wire__crate__api__standards__search_standards_impl(port, ptr, rust_vec_len, data_len),
+        66 => wire__crate__api__accounts__update_account_impl(port, ptr, rust_vec_len, data_len),
+        67 => wire__crate__api__accounts__update_account_category_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        67 => wire__crate__api__sales__update_customer_impl(port, ptr, rust_vec_len, data_len),
-        68 => wire__crate__api__purchasing__update_vendor_impl(port, ptr, rust_vec_len, data_len),
-        69 => {
+        68 => wire__crate__api__sales__update_customer_impl(port, ptr, rust_vec_len, data_len),
+        69 => wire__crate__api__purchasing__update_vendor_impl(port, ptr, rust_vec_len, data_len),
+        70 => {
             wire__crate__api__ledger__validate_journal_entry_impl(port, ptr, rust_vec_len, data_len)
         }
-        70 => wire__crate__api__inventory__verify_inventory_chain_impl(
+        71 => wire__crate__api__inventory__verify_inventory_chain_impl(
             port,
             ptr,
             rust_vec_len,
@@ -4149,12 +4219,27 @@ fn pde_ffi_dispatcher_sync_impl(
     // Codec=Pde (Serialization + dispatch), see doc to use other codecs
     match func_id {
         1 => wire__crate__api__check_health_impl(ptr, rust_vec_len, data_len),
-        63 => wire__crate__api__auditor__scan_sequence_impl(ptr, rust_vec_len, data_len),
+        64 => wire__crate__api__auditor__scan_sequence_impl(ptr, rust_vec_len, data_len),
         _ => unreachable!(),
     }
 }
 
 // Section: rust2dart
+
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for FrbWrapper<JournalEntry> {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        flutter_rust_bridge::for_generated::rust_auto_opaque_encode::<_, MoiArc<_>>(self.0)
+            .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive for FrbWrapper<JournalEntry> {}
+
+impl flutter_rust_bridge::IntoIntoDart<FrbWrapper<JournalEntry>> for JournalEntry {
+    fn into_into_dart(self) -> FrbWrapper<JournalEntry> {
+        self.into()
+    }
+}
 
 // Codec=Dco (DartCObject based), see doc to use other codecs
 impl flutter_rust_bridge::IntoDart for crate::api::accounts::AccountDto {
@@ -5020,10 +5105,28 @@ impl SseEncode for flutter_rust_bridge::for_generated::anyhow::Error {
     }
 }
 
+impl SseEncode for JournalEntry {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<JournalEntry>>>::sse_encode(flutter_rust_bridge::for_generated::rust_auto_opaque_encode::<_, MoiArc<_>>(self), serializer);
+    }
+}
+
 impl SseEncode for std::collections::HashMap<String, String> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <Vec<(String, String)>>::sse_encode(self.into_iter().collect(), serializer);
+    }
+}
+
+impl SseEncode
+    for RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<JournalEntry>>
+{
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        let (ptr, size) = self.sse_encode_raw();
+        <usize>::sse_encode(ptr, serializer);
+        <i32>::sse_encode(size, serializer);
     }
 }
 
@@ -5799,6 +5902,16 @@ impl SseEncode for () {
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {}
 }
 
+impl SseEncode for usize {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        serializer
+            .cursor
+            .write_u64::<NativeEndian>(self as _)
+            .unwrap();
+    }
+}
+
 impl SseEncode for crate::api::inventory::ValuationItemDto {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -5888,6 +6001,7 @@ mod io {
     // Section: imports
 
     use super::*;
+    use crate::api::ledger::*;
     use flutter_rust_bridge::for_generated::byteorder::{
         NativeEndian, ReadBytesExt, WriteBytesExt,
     };
@@ -5897,6 +6011,20 @@ mod io {
     // Section: boilerplate
 
     flutter_rust_bridge::frb_generated_boilerplate_io!();
+
+    #[unsafe(no_mangle)]
+    pub extern "C" fn frbgen_basir_accounting_system_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+        ptr: *const std::ffi::c_void,
+    ) {
+        MoiArc::<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<JournalEntry>>::increment_strong_count(ptr as _);
+    }
+
+    #[unsafe(no_mangle)]
+    pub extern "C" fn frbgen_basir_accounting_system_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+        ptr: *const std::ffi::c_void,
+    ) {
+        MoiArc::<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<JournalEntry>>::decrement_strong_count(ptr as _);
+    }
 }
 #[cfg(not(target_family = "wasm"))]
 pub use io::*;
@@ -5910,6 +6038,7 @@ mod web {
     // Section: imports
 
     use super::*;
+    use crate::api::ledger::*;
     use flutter_rust_bridge::for_generated::byteorder::{
         NativeEndian, ReadBytesExt, WriteBytesExt,
     };
@@ -5921,6 +6050,20 @@ mod web {
     // Section: boilerplate
 
     flutter_rust_bridge::frb_generated_boilerplate_web!();
+
+    #[wasm_bindgen]
+    pub fn rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+        ptr: *const std::ffi::c_void,
+    ) {
+        MoiArc::<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<JournalEntry>>::increment_strong_count(ptr as _);
+    }
+
+    #[wasm_bindgen]
+    pub fn rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
+        ptr: *const std::ffi::c_void,
+    ) {
+        MoiArc::<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<JournalEntry>>::decrement_strong_count(ptr as _);
+    }
 }
 #[cfg(target_family = "wasm")]
 pub use web::*;
