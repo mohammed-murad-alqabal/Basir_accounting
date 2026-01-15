@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 /// Screen to display the General Ledger for a specific account.
 /// Allows drill-down into individual Journal Entries.
 class GeneralLedgerScreen extends ConsumerStatefulWidget {
+  /// Creates a new General Ledger screen instance.
   const GeneralLedgerScreen({
     required this.accountId,
     required this.accountName,
@@ -38,9 +39,10 @@ class _GeneralLedgerScreenState extends ConsumerState<GeneralLedgerScreen> {
   @override
   Widget build(BuildContext context) {
     // Determine the relevant journal entries for this account and period.
-    // In a real implementation, this would likely be a specific repository method
-    // (e.g., getLedgerForAccount) to ensure efficient fetching and running balance calculation.
-    // For now, we filter the all-entries stream.
+    // In a real implementation, this would likely be a specific
+    // repository method (e.g., getLedgerForAccount) to ensure efficient
+    // fetching and running balance calculation. For now, we filter the
+    // all-entries stream.
     final entriesAsync = ref.watch(accountingServiceProvider);
 
     return GlassScaffold(

@@ -11,6 +11,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'report_pdf_service.g.dart';
 
+/// Service for generating PDF reports for tax returns.
 @riverpod
 class ReportPdfService extends _$ReportPdfService {
   @override
@@ -18,6 +19,7 @@ class ReportPdfService extends _$ReportPdfService {
     return;
   }
 
+  /// Generates the VAT Return PDF binary data.
   Future<Uint8List> generateVatReturnPdf(VatReturnStatement data) async {
     final pdf = pw.Document(
       title: 'VAT Return Report',
@@ -60,10 +62,10 @@ class ReportPdfService extends _$ReportPdfService {
     return pdf.save();
   }
 
+  /// Shares the generated VAT Return PDF.
   Future<void> shareVatReturnPdf(VatReturnStatement data) async {
     final bytes = await generateVatReturnPdf(data);
-    final filename =
-        'vat_return_${intl.DateFormat('yyyyMMdd').format(data.periodEnd)}.pdf';
+    final filename = 'vat_return_${intl.DateFormat('yyyyMMdd').format(data.periodEnd)}.pdf';
     await Printing.sharePdf(bytes: bytes, filename: filename);
   }
 
@@ -100,7 +102,8 @@ class ReportPdfService extends _$ReportPdfService {
           children: [
             pw.Text('العملة: ريال سعودي (SAR)'),
             pw.Text(
-              'تاريخ التقرير: ${intl.DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now())}',
+              'تاريخ التقرير: '
+              '${intl.DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now())}',
             ),
           ],
         ),
@@ -124,8 +127,7 @@ class ReportPdfService extends _$ReportPdfService {
         ],
       );
 
-  pw.Widget _buildPurchasesSection(VatReturnStatement data) =>
-      _buildSectionTable(
+  pw.Widget _buildPurchasesSection(VatReturnStatement data) => _buildSectionTable(
         title: 'ضريبة القيمة المضافة على المشتريات (Input Tax)',
         rows: [
           [

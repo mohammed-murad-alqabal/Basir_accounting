@@ -56,6 +56,7 @@ enum InsightRiskLevel {
 /// رؤية ذكية من وكيل (Agent Insight)
 @freezed
 class AgentInsight with _$AgentInsight {
+  /// إنشاء رؤية جديدة من وكيل ذكي
   const factory AgentInsight({
     required String id,
     required AgentSource source,
@@ -68,6 +69,7 @@ class AgentInsight with _$AgentInsight {
     String? actionRoute,
   }) = _AgentInsight;
 
+  /// إنشاء رؤية من JSON
   factory AgentInsight.fromJson(Map<String, dynamic> json) =>
       _$AgentInsightFromJson(json);
 }
