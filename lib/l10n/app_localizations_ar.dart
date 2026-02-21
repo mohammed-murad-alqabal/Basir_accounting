@@ -1956,4 +1956,137 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get errSourceNotFound => 'المستند المصدر غير موجود';
+
+  @override
+  String get agentSuggestionIfrs18Category => 'اقتراح تصنيف IFRS 18';
+
+  @override
+  String get agentSuggestionIfrs18CategoryReason =>
+      'يتطلب المعيار الدولي للتقارير المالية 18 تصنيفاً محدداً لعمولات المبيعات.';
+
+  @override
+  String get agentSuggestionVatCorrection => 'تصحيح معدل الضريبة';
+
+  @override
+  String get agentSuggestionMissingVatLine => 'بند ضريبة مفقود';
+
+  @override
+  String get agentSuggestionMissingVatLineReason =>
+      'تتطلب عمليات المبيعات عادةً ضريبة قيمة مضافة بنسبة 15% حسب متطلبات زاتكا.';
+
+  @override
+  String get agentSuggestionWarehouseOptimization => 'تحسين مستودعي';
+
+  @override
+  String get agentSuggestionWarehouseOptimizationReason =>
+      'تحقق من \"المركز الرئيسي\" أو \"فرع الرياض\" لطلب تحويل مخزني.';
+
+  @override
+  String get agentSuggestionStrategicDiscount => 'خصم استراتيجي';
+
+  @override
+  String get agentSuggestionStrategicDiscountReason =>
+      'قدم خصماً بنسبة 2% للسداد خلال 10 أيام لتعظيم السيولة النقدية.';
+
+  @override
+  String get agentSuggestionIssbMetrics => 'إفصاح ISSB';
+
+  @override
+  String get agentSuggestionIssbMetricsReason =>
+      'يرجى إرفاق مقاييس استخدام الموارد (لتر/كيلوواط ساعة) للامتثال للمعايير.';
+
+  @override
+  String get labelAiSmartSuggestions => 'اقتراحات الذكاء الاصطناعي';
+
+  @override
+  String get labelTarget => 'المستهدف:';
+
+  @override
+  String get msgForensicSequenceClean =>
+      'اكتمل التحقق من التسلسل: لم يتم الكشف عن أي حالات شاذة.';
+
+  @override
+  String get msgForensicRisksDetected => 'كشف التحليل الجنائي عن مخاطر مؤسسية.';
+
+  @override
+  String get msgForensicEngineError =>
+      'فشل الفحص الجنائي: خطأ في المحرك الداخلي.';
+
+  @override
+  String get msgForensicLedgerClean =>
+      'اكتمل فحص السجل التاريخي: لم يتم العثور على حالات شاذة.';
+
+  @override
+  String get msgForensicLedgerAnomalies =>
+      'تم الكشف عن حالات جنائية شاذة في السجل التاريخي.';
+
+  @override
+  String errForensicImbalance(Object id) {
+    return 'تم اكتشاف عدم اتزان: القيد رقم $id غير متزن.';
+  }
+
+  @override
+  String errForensicDiscrepancy(Object id) {
+    return 'تفاوت في السلامة: يوجد تعارض في إجمالي المدين/المجموع للقيد رقم $id.';
+  }
+
+  @override
+  String errForensicHashBreach(Object curr, Object prev) {
+    return 'خرق للسلامة: سلسلة التجزئة (Hash) مكسورة بين القيد رقم $prev والقيد رقم $curr';
+  }
+
+  @override
+  String get titleForensicPortal => 'بوابة النزاهة الجنائية';
+
+  @override
+  String get labelIntegrityPulse => 'نبض النزاهة';
+
+  @override
+  String get labelLastVerified => 'آخر تحقق:';
+
+  @override
+  String get labelBlocksScanned => 'الكتل المفحوصة:';
+
+  @override
+  String get labelHealth => 'الصحة:';
+
+  @override
+  String get labelLedgerMutationTimeline => 'جدول زمن طفرات السجل';
+
+  @override
+  String get labelHashChain => 'سلسلة التجزئة غير القابلة للتغيير';
+
+  @override
+  String get labelVerifiedBy => 'تم التحقق بواسطة:';
+
+  @override
+  String get titleStrategicOutlook => 'التوقعات الاستراتيجية والتنبؤ';
+
+  @override
+  String get labelPredictivePnL => 'تحليل الأرباح والخسائر التوقعي';
+
+  @override
+  String get labelCashFlowProjection => 'توقعات التدفق النقدي';
+
+  @override
+  String get labelStrategicInsights => 'رؤى الذكاء الاصطناعي الاستراتيجية';
+
+  @override
+  String get labelProjectedRevenue => 'الإيرادات المتوقعة';
+
+  @override
+  String get labelProjectedExpense => 'المصروفات المتوقعة';
+
+  @override
+  String get labelProjectedNetIncome => 'صافي الدخل المتوقع';
+
+  @override
+  String get labelConfidenceScore => 'درجة ثقة الذكاء الاصطناعي';
+
+  @override
+  String get msgNoStrategicData =>
+      'بيانات تاريخية غير كافية للتنبؤ الدقيق. يرجى ترحيل المزيد من المعاملات.';
+
+  @override
+  String get actionEmailInvoice => 'إرسال الفاتورة بالبريد';
 }

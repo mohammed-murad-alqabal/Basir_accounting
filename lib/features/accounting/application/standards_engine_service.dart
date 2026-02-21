@@ -30,9 +30,25 @@ class StandardsEngineService extends _$StandardsEngineService
     final rationale = <String>[];
     var isAllowed = true;
     final l10n = lookupAppLocalizations(Locale(context.locale));
+    final suggestedAdjustments = <String, dynamic>{};
 
-    // IFRS 18 Category Validation
+    // IFRS 18 Category Validation & Smart Adjustments
     for (final line in context.proposedJournalEntry.lines) {
+      final name = line.accountName.toLowerCase();
+      // Example: "Commission" in generic "Operating Expense" (acc-51)
+      if (name.contains('commission') && line.accountId.startsWith('acc-51')) {
+        suggestedAdjustments['ifrs18_category_suggestion'] = {
+          'accountId': line.accountId,
+          'accountName': line.accountName,
+          'suggestedCategory': 'Selling and Distribution Expenses',
+          'reason': l10n.agentSuggestionIfrs18CategoryReason,
+          'title': l10n.agentSuggestionIfrs18Category,
+        };
+        rationale.add(
+          '${l10n.agentSuggestionIfrs18Category}: ${line.accountName}',
+        );
+      }
+
       final id = line.accountId;
       if (id.startsWith('acc-4') || id.startsWith('acc-5')) {
         rationale.add(
@@ -62,6 +78,8 @@ class StandardsEngineService extends _$StandardsEngineService
       isAllowed: isAllowed,
       rationale: rationale.join('\n'),
       confidenceScore: 0.98,
+      suggestedAdjustments:
+          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
     );
   }
 }

@@ -58,6 +58,40 @@ class SettingsScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: Icon(
+                    Icons.import_export_outlined,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: const Text('استيراد من Excel'),
+                  subtitle: const Text('ترحيل الأرصدة الافتتاحية'),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () => Navigator.pushNamed(context, '/excel-import'),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: Icon(
+                    Icons.cloud_sync_outlined,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: const Text('النسخ الاحتياطي السحابي'),
+                  subtitle: const Text('مزامنة مع Google Drive'),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () => Navigator.pushNamed(context, '/cloud-backup'),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: Icon(
+                    appIcons.barcodeReader,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: const Text('إعدادات الباركود'),
+                  subtitle: const Text('تكوين قياسات وطباعة الملصقات'),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () =>
+                      Navigator.pushNamed(context, '/barcode-settings'),
+                ),
               ],
             ),
             const SizedBox(height: Spacing.xl),
@@ -67,7 +101,13 @@ class SettingsScreen extends ConsumerWidget {
               title: context.l10n.accountTitle,
               icon: appIcons.security,
             ),
-            const SettingsGroupCard(children: [AccountSettingsTile()]),
+            const SettingsGroupCard(
+              children: [
+                AccountSettingsTile(),
+                Divider(height: 1),
+                _UsersSettingsTile(),
+              ],
+            ),
             const SizedBox(height: Spacing.xl),
 
             // 🔔 قسم التنبيهات
@@ -217,4 +257,20 @@ class SettingsScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+class _UsersSettingsTile extends StatelessWidget {
+  const _UsersSettingsTile();
+
+  @override
+  Widget build(BuildContext context) => ListTile(
+        leading: Icon(
+          Icons.group_outlined,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        title: const Text('إدارة المستخدمين'),
+        subtitle: const Text('الصلاحيات والحسابات'),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => Navigator.pushNamed(context, '/users'),
+      );
 }

@@ -17,6 +17,7 @@ import 'package:mocktail/mocktail.dart';
 import '../helpers/mock_accounting_repository.dart';
 import '../helpers/mock_customer_repository.dart';
 import '../helpers/mock_financial_year_repository.dart';
+import '../helpers/mock_invoice_repository.dart';
 import '../helpers/mock_sales_bridge_service.dart';
 import '../helpers/rust_lib_test_helper.dart';
 
@@ -38,6 +39,7 @@ void main() {
     late MockFinancialYearRepository mockFyRepo;
     late MockCustomerRepository mockCustomerRepo;
     late MockSalesBridgeService mockSalesBridge;
+    late MockInvoiceRepository mockInvoiceRepo;
 
     setUp(() {
       // Initialize mock RustLib to prevent initialization errors
@@ -47,8 +49,10 @@ void main() {
       mockFyRepo = MockFinancialYearRepository();
       mockCustomerRepo = MockCustomerRepository();
       mockSalesBridge = MockSalesBridgeService();
+      mockInvoiceRepo = MockInvoiceRepository();
 
       setUpAccountingMocks(); // Register fallback values if any
+      setUpInvoiceMocks();
 
       // Fallback for Invoice/JournalEntry logic
       registerFallbackValue(
@@ -109,6 +113,7 @@ void main() {
           financialYearRepositoryProvider.overrideWithValue(mockFyRepo),
           customerRepositoryProvider.overrideWithValue(mockCustomerRepo),
           salesBridgeServiceProvider.overrideWithValue(mockSalesBridge),
+          invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepo),
           orchestratorServiceProvider.overrideWith(FakeOrchestratorService.new),
           basirUserProvider.overrideWith((ref) => null),
         ],
@@ -180,6 +185,10 @@ void main() {
       when(
         () => mockCustomerRepo.getCustomerById('cust-1'),
       ).thenAnswer((_) async => customer);
+
+      when(
+        () => mockInvoiceRepo.updateInvoice(any()),
+      ).thenAnswer((_) async {});
 
       // Create Invoice
       final invoice = Invoice(

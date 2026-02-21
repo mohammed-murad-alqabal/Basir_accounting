@@ -22,6 +22,9 @@ class FinancialReportLine with _$FinancialReportLine {
 
     /// Visual depth level for hierarchical presentation (0 = root).
     @Default(0) int indentLevel,
+
+    /// Optional reference to the underlying account for drill-down.
+    String? accountId,
   }) = _FinancialReportLine;
 }
 

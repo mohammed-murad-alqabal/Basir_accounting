@@ -30,7 +30,8 @@ class _ReportingOverviewScreenState
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showCognitiveHint(
         context,
-        'Use these reports to maintain absolute financial oversight and ensure IFRS 18 compliance.',
+        'Use these reports to maintain absolute financial oversight '
+        'and ensure IFRS 18 compliance.',
         title: 'Financial Strategy',
       );
     });

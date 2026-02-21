@@ -30,6 +30,7 @@ Future<T?> showOmnibar<T>(BuildContext context) => showGeneralDialog<T>(
       ),
     );
 
+/// Global command and search overlay.
 class Omnibar extends ConsumerStatefulWidget {
   /// Creates an [Omnibar].
   const Omnibar({super.key});

@@ -88,17 +88,19 @@ class DocumentationTemplate {
       );
 
   /// قالب للخصائص
-  factory DocumentationTemplate.propertyTemplate() =>
-      const DocumentationTemplate(
-        type: ElementType.property,
-        arabicTemplate: '''
+  // ignore: prefer_expression_function_bodies
+  factory DocumentationTemplate.propertyTemplate() {
+    return const DocumentationTemplate(
+      type: ElementType.property,
+      arabicTemplate: '''
 /// {description}
 ''',
-        englishTemplate: '''
+      englishTemplate: '''
 /// {description}
 ''',
-        requiredSections: ['description'],
-      );
+      requiredSections: ['description'],
+    );
+  }
 
   /// نوع العنصر
   final ElementType type;
@@ -119,7 +121,7 @@ class DocumentationTemplate {
   ///
   /// Returns: نص التوثيق المولد
   String generate(Map<String, dynamic> context) {
-    // TODO(dev): تنفيذ توليد التوثيق
+    // TODO(basir): تنفيذ توليد التوثيق
     throw UnimplementedError('generate not implemented yet');
   }
 }

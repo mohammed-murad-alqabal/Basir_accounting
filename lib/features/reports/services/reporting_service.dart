@@ -69,8 +69,9 @@ class NativeReportingApi {
 /// خدمة جلب التقارير المالية من المحرك الأساسي (Rust).
 class ReportingService {
   /// Creates a reporting service.
-  ReportingService({NativeReportingApi? api})
-      : _api = api ?? NativeReportingApi();
+  ReportingService({
+    NativeReportingApi? api,
+  }) : _api = api ?? NativeReportingApi();
 
   final NativeReportingApi _api;
 
@@ -85,7 +86,7 @@ class ReportingService {
         periodStart: periodStart,
       );
     } catch (e) {
-      // TODO(m): improvements on error handling (e.g. converting to domain)
+      // TODO(basir): improvements on error handling (e.g. converting to domain)
       rethrow;
     }
   }

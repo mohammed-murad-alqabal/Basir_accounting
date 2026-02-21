@@ -41,7 +41,8 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
           _searchController.text.isEmpty) {
         showCognitiveHint(
           context,
-          'قم بإضافة أصناف المخزون هنا لتتمكن من تتبع الكميات والتكاليف بدقة. يمكنك البدء بإضافة صنف يدويًا.',
+          'قم بإضافة أصناف المخزون هنا لتتمكن من تتبع الكميات والتكاليف بدقة. '
+          'يمكنك البدء بإضافة صنف يدويًا.',
           title: 'إدارة المخزون',
         );
       }
@@ -51,8 +52,12 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
       title: context.l10n.inventoryItemsScreenTitle,
       actions: [
         IconButton(
+          icon: Icon(appIcons.barcodeReader, size: 26),
+          tooltip: 'محرك الباركود',
+          onPressed: _openBarcodeEngine,
+        ),
+        IconButton(
           icon: Icon(appIcons.add, size: 26),
-          tooltip: context.l10n.tooltipAddInventoryItem,
           onPressed: _addItem,
         ),
       ],
@@ -142,5 +147,9 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
       ),
     );
     if (result ?? false) ref.invalidate(inventoryItemsProvider);
+  }
+
+  Future<void> _openBarcodeEngine() async {
+    await Navigator.pushNamed(context, '/barcode-creation');
   }
 }

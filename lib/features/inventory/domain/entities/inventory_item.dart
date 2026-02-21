@@ -104,16 +104,18 @@ class InventoryItem with _$InventoryItem {
     /// معرف المستودع (لعزل البيانات)
     String? warehouseId,
 
+    /// باركود الصنف
+    String? barcode,
+
     /// فئة الضريبة الافتراضية (S=Standard, Z=Zero, etc)
     @Default('S') String taxCategory,
   }) = _InventoryItem;
 
-  /// إنشاء صنف مخزون من JSON.
-  // ignore: lines_longer_than_80_chars
-  factory InventoryItem.fromJson(Map<String, dynamic> json) =>
-      _$InventoryItemFromJson(json);
-
   const InventoryItem._();
+
+  /// إنشاء صنف مخزون من JSON.
+  factory InventoryItem.fromJson(Map<String, dynamic> json) =>
+      _$InventoryItemFromJson(json); // force-split
 
   /// الحصول على الاسم حسب اللغة
   String name({required bool isArabic}) => isArabic ? nameAr : nameEn;

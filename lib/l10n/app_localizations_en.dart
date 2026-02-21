@@ -1966,4 +1966,138 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errSourceNotFound => 'Source document not found';
+
+  @override
+  String get agentSuggestionIfrs18Category => 'IFRS 18 Category Suggestion';
+
+  @override
+  String get agentSuggestionIfrs18CategoryReason =>
+      'IFRS 18 requires specific classification for sales commissions.';
+
+  @override
+  String get agentSuggestionVatCorrection => 'VAT Rate Correction';
+
+  @override
+  String get agentSuggestionMissingVatLine => 'Missing VAT Line';
+
+  @override
+  String get agentSuggestionMissingVatLineReason =>
+      'Sales transaction usually requires 15% VAT per ZATCA/IFRS.';
+
+  @override
+  String get agentSuggestionWarehouseOptimization => 'Warehouse Optimization';
+
+  @override
+  String get agentSuggestionWarehouseOptimizationReason =>
+      'Check \"Central Hub\" or \"Riyadh Branch\" for stock transfer.';
+
+  @override
+  String get agentSuggestionStrategicDiscount => 'Strategic Discount';
+
+  @override
+  String get agentSuggestionStrategicDiscountReason =>
+      'Offer a 2% discount for payments within 10 days to maximize liquidity.';
+
+  @override
+  String get agentSuggestionIssbMetrics => 'ISSB Disclosure';
+
+  @override
+  String get agentSuggestionIssbMetricsReason =>
+      'Attach quantitative resource usage metrics (liters/kWh) for compliance.';
+
+  @override
+  String get labelAiSmartSuggestions => 'AI Smart Suggestions';
+
+  @override
+  String get labelTarget => 'Target:';
+
+  @override
+  String get msgForensicSequenceClean =>
+      'Sequence verification complete: No anomalies detected.';
+
+  @override
+  String get msgForensicRisksDetected =>
+      'Forensic analysis detected institutional risks.';
+
+  @override
+  String get msgForensicEngineError =>
+      'Forensic scan failed: Internal engine error.';
+
+  @override
+  String get msgForensicLedgerClean =>
+      'Historical ledger scrutiny complete: No anomalies found.';
+
+  @override
+  String get msgForensicLedgerAnomalies =>
+      'Forensic anomalies detected in historical ledger.';
+
+  @override
+  String errForensicImbalance(Object id) {
+    return 'Imbalance detected: Entry #$id is not balanced.';
+  }
+
+  @override
+  String errForensicDiscrepancy(Object id) {
+    return 'Integrity discrepancy: Entry #$id has total debit/sum mismatch.';
+  }
+
+  @override
+  String errForensicHashBreach(Object curr, Object prev) {
+    return 'Integrity Breach: Hash chain broken between #$prev and #$curr';
+  }
+
+  @override
+  String get titleForensicPortal => 'Forensic Integrity Portal';
+
+  @override
+  String get labelIntegrityPulse => 'Integrity Pulse';
+
+  @override
+  String get labelLastVerified => 'Last verified:';
+
+  @override
+  String get labelBlocksScanned => 'Blocks Scanned:';
+
+  @override
+  String get labelHealth => 'Health:';
+
+  @override
+  String get labelLedgerMutationTimeline => 'Ledger Mutation Timeline';
+
+  @override
+  String get labelHashChain => 'Immutable Hash Chain';
+
+  @override
+  String get labelVerifiedBy => 'Verified by:';
+
+  @override
+  String get titleStrategicOutlook => 'Strategic Outlook & Forecasting';
+
+  @override
+  String get labelPredictivePnL => 'Predictive P&L Analysis';
+
+  @override
+  String get labelCashFlowProjection => 'Cash Flow Projection';
+
+  @override
+  String get labelStrategicInsights => 'Strategic AI Insights';
+
+  @override
+  String get labelProjectedRevenue => 'Projected Revenue';
+
+  @override
+  String get labelProjectedExpense => 'Projected Expenses';
+
+  @override
+  String get labelProjectedNetIncome => 'Projected Net Income';
+
+  @override
+  String get labelConfidenceScore => 'AI Confidence Score';
+
+  @override
+  String get msgNoStrategicData =>
+      'Insufficient historical data for accurate forecasting. Please post more transactions.';
+
+  @override
+  String get actionEmailInvoice => 'Email Invoice';
 }

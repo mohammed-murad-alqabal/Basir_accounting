@@ -41,7 +41,8 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
           _searchController.text.isEmpty) {
         showCognitiveHint(
           context,
-          'ابدأ بإضافة عملائك لتتمكن من إصدار الفواتير لهم بسهولة. يمكنك استيرادهم من جهات الاتصال أيضاً.',
+          'ابدأ بإضافة عملائك لتتمكن من إصدار الفواتير لهم بسهولة. '
+          'يمكنك استيرادهم من جهات الاتصال أيضاً.',
           title: 'إدارة العملاء',
         );
       }

@@ -11,7 +11,8 @@ part 'sustainability_expert_service.g.dart';
 /// or social disclosures comply with International Sustainability Standards
 /// Board (ISSB) S1 and S2 mandates.
 @Riverpod(keepAlive: true)
-class SustainabilityExpertService extends _$SustainabilityExpertService implements AccountingAgent {
+class SustainabilityExpertService extends _$SustainabilityExpertService
+    implements AccountingAgent {
   @override
   FutureOr<void> build() {}
 
@@ -23,17 +24,12 @@ class SustainabilityExpertService extends _$SustainabilityExpertService implemen
 
   /// Validates the presence of sustainability metrics for mandatory
   /// disclosures.
-  ///
-  /// ## Compliance Checks:
-  /// - **ISSB S2 Readiness**: For high-impact industries, verifies that carbon
-  ///   emission or resource usage metrics are attached to the financial record.
   @override
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];
     var isAllowed = true;
-    final l10n = lookupAppLocalizations(
-      Locale(context.locale),
-    );
+    final l10n = lookupAppLocalizations(Locale(context.locale));
+    final suggestedAdjustments = <String, dynamic>{};
 
     // Active Detection Logic: Check if account names trigger
     // sustainability review
@@ -61,13 +57,29 @@ class SustainabilityExpertService extends _$SustainabilityExpertService implemen
     if (context.isSustainabilityRequired || hasRelevantAccount) {
       if (hasRelevantAccount && !context.isSustainabilityRequired) {
         rationale.add(
-          'Automated environmental impact detection triggered: '
+          '${l10n.agentSuggestionIssbMetrics}: '
           'Account names align with ISSB S2 disclosure requirements.',
         );
+
+        // Smart Adjustment: Suggest attaching metrics
+        suggestedAdjustments['required_issb_metrics'] = {
+          'type': l10n.agentSuggestionIssbMetrics,
+          'suggestion': l10n.agentSuggestionIssbMetricsReason,
+          'title': l10n.agentSuggestionIssbMetrics,
+          'detectedKeywords': sustainabilityKeywords
+              .where(
+                (kw) => context.proposedJournalEntry.lines.any(
+                  (line) =>
+                      line.accountName.toLowerCase().contains(kw.toLowerCase()),
+                ),
+              )
+              .toList(),
+        };
       }
       rationale.add(l10n.agentRationaleSustainabilityFlagged);
 
-      if (context.sustainabilityMetrics == null || context.sustainabilityMetrics!.isEmpty) {
+      if (context.sustainabilityMetrics == null ||
+          context.sustainabilityMetrics!.isEmpty) {
         isAllowed = false;
         rationale.add(l10n.agentRationaleSustainabilityReject);
       } else {
@@ -86,6 +98,8 @@ class SustainabilityExpertService extends _$SustainabilityExpertService implemen
       isAllowed: isAllowed,
       rationale: rationale.join('\n'),
       confidenceScore: 0.96,
+      suggestedAdjustments:
+          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
     );
   }
 }
