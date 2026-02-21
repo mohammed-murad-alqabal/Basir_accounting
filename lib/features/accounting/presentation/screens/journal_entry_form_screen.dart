@@ -3,9 +3,12 @@ import 'package:basir_accounting_system/core/extensions/context_extensions.dart'
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/orchestrator_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/widgets/consensus_report_overlay.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
@@ -342,17 +345,7 @@ class _JournalEntryFormScreenState
                         setState(() {
                           line.originalAmount =
                               Decimal.tryParse(v) ?? Decimal.zero;
-                          if (line.exchangeRate != null) {
-                            final lcAmount =
-                                line.originalAmount! * line.exchangeRate!;
-                            if (line.debit > Decimal.zero ||
-                                (line.debit == Decimal.zero &&
-                                    line.credit == Decimal.zero)) {
-                              line.debit = lcAmount;
-                            } else {
-                              line.credit = lcAmount;
-                            }
-                          }
+                          _updateLineFromCurrency(line);
                         });
                       },
                     ),
@@ -369,17 +362,7 @@ class _JournalEntryFormScreenState
                         setState(() {
                           line.exchangeRate =
                               Decimal.tryParse(v) ?? Decimal.one;
-                          if (line.originalAmount != null) {
-                            final lcAmount =
-                                line.originalAmount! * line.exchangeRate!;
-                            if (line.debit > Decimal.zero ||
-                                (line.debit == Decimal.zero &&
-                                    line.credit == Decimal.zero)) {
-                              line.debit = lcAmount;
-                            } else {
-                              line.credit = lcAmount;
-                            }
-                          }
+                          _updateLineFromCurrency(line);
                         });
                       },
                     ),
@@ -410,6 +393,18 @@ class _JournalEntryFormScreenState
         ],
       ),
     );
+  }
+
+  void _updateLineFromCurrency(_JournalLineDraft line) {
+    if (line.originalAmount != null && line.exchangeRate != null) {
+      final lcAmount = line.originalAmount! * line.exchangeRate!;
+      if (line.debit > Decimal.zero ||
+          (line.debit == Decimal.zero && line.credit == Decimal.zero)) {
+        line.debit = lcAmount;
+      } else {
+        line.credit = lcAmount;
+      }
+    }
   }
 
   /// Displays the mathematical summary and balance validation.
@@ -525,9 +520,44 @@ class _JournalEntryFormScreenState
             .toList(),
       );
 
-      await ref
-          .read(accountingServiceProvider.notifier)
-          .postJournalEntry(entry);
+      if (status == JournalEntryStatus.posted) {
+        // Pre-orchestrate for Consensus Report
+        final orchestrator = ref.read(orchestratorServiceProvider.notifier);
+        final currentLocale = Localizations.localeOf(context).languageCode;
+        final contextObj = AccountingContext(
+          proposedJournalEntry: entry,
+          transactionType: 'manual',
+          locale: currentLocale,
+        );
+
+        final consensus = await orchestrator.orchestrate(contextObj);
+
+        if (!mounted) return;
+
+        final confirmed = await showGeneralDialog<bool>(
+          context: context,
+          transitionDuration: const Duration(milliseconds: 400),
+          pageBuilder: (ctx, anim1, anim2) => ConsensusReportOverlay(
+            consensus: consensus,
+            onConfirm: () => Navigator.pop(ctx, true),
+            onCancel: () => Navigator.pop(ctx, false),
+          ),
+        );
+
+        if (confirmed != true) {
+          setState(() => _isLoading = false);
+          return;
+        }
+
+        // Proceed with bypass as we already reached consensus/override
+        await ref
+            .read(accountingServiceProvider.notifier)
+            .postJournalEntry(entry, bypassCognitive: true);
+      } else {
+        await ref
+            .read(accountingServiceProvider.notifier)
+            .postJournalEntry(entry);
+      }
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

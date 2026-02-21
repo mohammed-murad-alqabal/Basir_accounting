@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:basir_accounting_system/core/providers.dart';
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart'
     as domain_je;
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/src/rust/api/auditor.dart'
     as rust_auditor;
 import 'package:basir_accounting_system/src/rust/api/ledger.dart'
@@ -51,23 +54,52 @@ class ForensicAuditService extends _$ForensicAuditService
   Future<AgentResult> process(AccountingContext context) async {
     final entry = context.proposedJournalEntry;
 
-    // 1. Structural balance check
+    // 1. Structural balance check (CP-001)
     if (!entry.isBalanced) {
       return AgentResult(
         agentId: agentId,
         isAllowed: false,
-        rationale:
-            'Transaction rejected: Unbalanced journal entry detected (Debit != Credit).',
+        rationale: 'agentRationaleForensicUnbalanced',
         confidenceScore: 1,
       );
     }
 
+    // 2. High-value transaction detection (CP-009)
+    // Threshold: 100,000 SAR for high forensic scrutiny
+    if (entry.totalDebit > Decimal.fromInt(100000)) {
+      return AgentResult(
+        agentId: agentId,
+        isAllowed: true,
+        rationale: 'agentRationaleForensicHighValue',
+        confidenceScore: 0.85,
+      );
+    }
+
+    final suggestedAdjustments = <String, dynamic>{};
+
+    // 3. Sharia Compliance Guard (CP-012)
+    // Flags transactions with explicit prohibited terms (Riba/Usury)
+    final prohibitedTerms = ['interest', 'riba', 'usury', 'fayda'];
+    final descriptionLower = entry.description.toLowerCase();
+    if (prohibitedTerms.any(descriptionLower.contains)) {
+      return AgentResult(
+        agentId: agentId,
+        isAllowed: false,
+        rationale: 'agentRationaleForensicShariaViolation',
+        confidenceScore: 0.99,
+      );
+    }
+
+    // 4. Sequence Integrity Check (Placeholder for Smart Correction)
+    // In a real scenario, this would call auditSequence and map anomalies to adjustments.
+
     return AgentResult(
       agentId: agentId,
       isAllowed: true,
-      rationale:
-          'Transaction approved: No structural or logical anomalies detected.',
+      rationale: 'agentRationaleForensicBalanced',
       confidenceScore: 0.95,
+      suggestedAdjustments:
+          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
     );
   }
 
@@ -75,8 +107,10 @@ class ForensicAuditService extends _$ForensicAuditService
   ///
   /// Uses the Rust auditor for high-performance sequence verification.
   Future<AuditResult> auditSequence(
-    List<domain_je.JournalEntry> entries,
-  ) async {
+    List<domain_je.JournalEntry> entries, {
+    String locale = 'en',
+  }) async {
+    final l10n = lookupAppLocalizations(Locale(locale));
     final entryDtos = entries.map(_toEntryDto).toList();
 
     try {
@@ -86,9 +120,9 @@ class ForensicAuditService extends _$ForensicAuditService
       );
 
       if (anomalies.isEmpty) {
-        return const AuditResult(
+        return AuditResult(
           isSuccess: true,
-          message: 'Sequence verification complete: No anomalies detected.',
+          message: l10n.msgForensicSequenceClean,
         );
       }
 
@@ -111,13 +145,13 @@ class ForensicAuditService extends _$ForensicAuditService
 
       return AuditResult(
         isSuccess: false,
-        message: 'Forensic analysis detected institutional risks.',
+        message: l10n.msgForensicRisksDetected,
         findings: findings,
       );
     } on Exception catch (e) {
       return AuditResult(
         isSuccess: false,
-        message: 'Forensic scan failed: Internal engine error.',
+        message: l10n.msgForensicEngineError,
         findings: [e.toString()],
       );
     }
@@ -126,7 +160,10 @@ class ForensicAuditService extends _$ForensicAuditService
   /// Performs a thorough scrutiny of the entire historical ledger.
   ///
   /// Verifies hash chain integrity (Standard Reference: CP-011).
-  Future<AuditResult> scrutinizeHistoricalLedger() async {
+  Future<AuditResult> scrutinizeHistoricalLedger({
+    String locale = 'en',
+  }) async {
+    final l10n = lookupAppLocalizations(Locale(locale));
     final repository = ref.read(accountingRepositoryProvider);
     final entries = await repository.getJournalEntries();
 
@@ -137,7 +174,7 @@ class ForensicAuditService extends _$ForensicAuditService
     for (final entry in sortedEntries) {
       if (!entry.isBalanced) {
         issues.add(
-          'Imbalance detected: Entry #${entry.referenceNumber} is not balanced.',
+          l10n.errForensicImbalance(entry.referenceNumber),
         );
       }
 
@@ -148,7 +185,7 @@ class ForensicAuditService extends _$ForensicAuditService
       );
       if (calculatedSubtotal != entry.totalDebit) {
         issues.add(
-          'Integrity discrepancy: Entry #${entry.referenceNumber} has total debit/sum mismatch.',
+          l10n.errForensicDiscrepancy(entry.referenceNumber),
         );
       }
     }
@@ -159,7 +196,10 @@ class ForensicAuditService extends _$ForensicAuditService
       if (current.previousHash != null &&
           current.previousHash != previous.hash) {
         issues.add(
-          'Integrity Breach: Hash chain broken between #${previous.referenceNumber} and #${current.referenceNumber}',
+          l10n.errForensicHashBreach(
+            previous.referenceNumber,
+            current.referenceNumber,
+          ),
         );
       }
     }
@@ -167,8 +207,8 @@ class ForensicAuditService extends _$ForensicAuditService
     return AuditResult(
       isSuccess: issues.isEmpty,
       message: issues.isEmpty
-          ? 'Historical ledger scrutiny complete: No anomalies found.'
-          : 'Forensic anomalies detected in historical ledger.',
+          ? l10n.msgForensicLedgerClean
+          : l10n.msgForensicLedgerAnomalies,
       findings: issues,
     );
   }

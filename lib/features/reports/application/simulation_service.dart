@@ -138,7 +138,7 @@ class FinancialSimulationService extends _$FinancialSimulationService {
     String description,
   ) async {
     final accountingService = ref.read(accountingServiceProvider.notifier);
-    final accounts = await accountingService.getAccounts();
+    final accounts = (await accountingService.getAccounts()).cast<Account>();
 
     // Identify expense and cash accounts
     final expenseAccount = accounts.firstWhere(

@@ -8,7 +8,8 @@ import 'package:flutter/services.dart';
 /// High-fidelity PDF generation engine for institutional invoices.
 /// Delegates rendering to [PdfGenerationService].
 class InvoicePdfService {
-  /// Creating the [InvoicePdfService] with [SettingsService] and [PdfGenerationService].
+  /// Creating the [InvoicePdfService] with [SettingsService]
+  /// and [PdfGenerationService].
   InvoicePdfService(this._settingsService, this._pdfService);
 
   final SettingsService _settingsService;

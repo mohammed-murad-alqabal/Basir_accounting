@@ -12,6 +12,7 @@ library;
 import 'package:basir_accounting_system/core/models/sync_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
+import 'package:basir_accounting_system/features/zatca/domain/zatca_types.dart';
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -117,6 +118,8 @@ class Invoice with _$Invoice {
     String? qrCode,
     String? xmlContent,
     String? zatcaDeviceId,
+    @Default(ZatcaSubmissionStatus.notReported)
+    ZatcaSubmissionStatus zatcaStatus,
     @Default(0) int zatcaCounter,
 
     /// Data isolation handle.

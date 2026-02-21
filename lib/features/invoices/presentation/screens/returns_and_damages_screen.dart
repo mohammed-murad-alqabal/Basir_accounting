@@ -7,7 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// شاشة المرتجعات والتوالف (Returns and Damages Screen)
 /// نقطة وصول مركزية لمرتجعات المبيعات والمشتريات وتوالف المخزون.
 /// (Phase 9 - Institutional Deepening - Atlas Image 010)
+/// Screen for returns and damages operations.
 class ReturnsAndDamagesScreen extends ConsumerWidget {
+  /// Creates a [ReturnsAndDamagesScreen].
   const ReturnsAndDamagesScreen({super.key});
 
   @override

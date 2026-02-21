@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/features/inventory/domain/entities/stock_movement.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/warehouse_transfer.dart';
 import 'package:basir_accounting_system/features/inventory/domain/repositories/inventory_repository.dart';

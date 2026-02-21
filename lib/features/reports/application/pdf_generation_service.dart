@@ -1,4 +1,5 @@
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart'
     as domain_inv;
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
@@ -40,7 +41,11 @@ class PdfGenerationService extends _$PdfGenerationService {
           bold: ttfBold,
         ),
         textDirection: pw.TextDirection.rtl,
-        header: (context) => _buildInvoiceHeader(invoice, companyName, taxNumber),
+        header: (context) => _buildInvoiceHeader(
+          invoice,
+          companyName,
+          taxNumber,
+        ),
         footer: (context) => _buildInvoiceFooter(invoice, companyName),
         build: (context) => [
           _buildCustomerSection(invoice),
@@ -54,6 +59,233 @@ class PdfGenerationService extends _$PdfGenerationService {
 
     return pdf.save();
   }
+
+  /// Generates a professional PDF for a Journal Entry.
+  Future<Uint8List> generateJournalEntryPdf(
+    JournalEntry entry, {
+    Map<String, String?>? companySettings,
+  }) async {
+    final pdf = pw.Document();
+
+    final fontData = await rootBundle.load('assets/fonts/Cairo-Regular.ttf');
+    final fontBoldData = await rootBundle.load('assets/fonts/Cairo-Bold.ttf');
+    final ttf = pw.Font.ttf(fontData);
+    final ttfBold = pw.Font.ttf(fontBoldData);
+
+    final companyName = companySettings?['companyName'] ?? 'Basir Accounting';
+    final taxNumber = companySettings?['taxNumber'] ?? '';
+
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        theme: pw.ThemeData.withFont(
+          base: ttf,
+          bold: ttfBold,
+        ),
+        textDirection: pw.TextDirection.rtl,
+        header: (context) => _buildJeHeader(entry, companyName, taxNumber),
+        footer: (context) => _buildJeFooter(entry),
+        build: (context) => [
+          _buildJeInfoSection(entry),
+          pw.SizedBox(height: 20),
+          _buildJeLinesTable(entry),
+          pw.SizedBox(height: 20),
+          _buildJeTotalsSection(entry),
+        ],
+      ),
+    );
+
+    return pdf.save();
+  }
+
+  pw.Widget _buildJeHeader(
+    JournalEntry entry,
+    String companyName,
+    String taxNumber,
+  ) =>
+      pw.Column(
+        children: [
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Text(
+                    companyName,
+                    style: pw.TextStyle(
+                      fontSize: 18,
+                      fontWeight: pw.FontWeight.bold,
+                      color: PdfColors.blue900,
+                    ),
+                  ),
+                  if (taxNumber.isNotEmpty)
+                    pw.Text(
+                      'الرقم الضريبي: $taxNumber',
+                      style: const pw.TextStyle(fontSize: 9),
+                    ),
+                ],
+              ),
+              pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.end,
+                children: [
+                  pw.Text(
+                    'قيد يومية / JOURNAL ENTRY',
+                    style: pw.TextStyle(
+                      fontSize: 16,
+                      fontWeight: pw.FontWeight.bold,
+                      color: PdfColors.blue800,
+                    ),
+                  ),
+                  pw.Text(
+                    'المرجع: ${entry.referenceNumber}',
+                    style: const pw.TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          pw.Divider(thickness: 1, color: PdfColors.grey400),
+        ],
+      );
+
+  pw.Widget _buildJeInfoSection(JournalEntry entry) => pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+        children: [
+          pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              pw.Text(
+                'التاريخ: ${entry.date.toString().split(' ')[0]}',
+                style: const pw.TextStyle(fontSize: 10),
+              ),
+              pw.Text(
+                'البيان: ${entry.description}',
+                style: const pw.TextStyle(fontSize: 11),
+              ),
+            ],
+          ),
+          pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.end,
+            children: [
+              pw.Text(
+                'الحالة: ${entry.status.name.toUpperCase()}',
+                style: pw.TextStyle(
+                  fontSize: 10,
+                  fontWeight: pw.FontWeight.bold,
+                  color: entry.status == JournalEntryStatus.posted
+                      ? PdfColors.green800
+                      : PdfColors.orange800,
+                ),
+              ),
+              pw.Text(
+                'المصدر: ${entry.sourceDocument}',
+                style: const pw.TextStyle(fontSize: 10),
+              ),
+            ],
+          ),
+        ],
+      );
+
+  pw.Widget _buildJeLinesTable(JournalEntry entry) =>
+      pw.TableHelper.fromTextArray(
+        headers: [
+          'الحساب / Account',
+          'مدين / Debit',
+          'دائن / Credit',
+          'شرح السطر / Memo',
+        ],
+        data: entry.lines
+            .map(
+              (line) => [
+                line.accountName,
+                if (line.debit > Decimal.zero)
+                  line.debit.toStringAsFixed(2)
+                else
+                  '',
+                if (line.credit > Decimal.zero)
+                  line.credit.toStringAsFixed(2)
+                else
+                  '',
+                line.description ?? '',
+              ],
+            )
+            .toList(),
+        headerStyle: pw.TextStyle(
+          fontWeight: pw.FontWeight.bold,
+          color: PdfColors.white,
+        ),
+        headerDecoration: const pw.BoxDecoration(color: PdfColors.blueGrey800),
+        cellAlignment: pw.Alignment.centerLeft,
+        columnWidths: {
+          0: const pw.FlexColumnWidth(3),
+          1: const pw.FlexColumnWidth(1.5),
+          2: const pw.FlexColumnWidth(1.5),
+          3: const pw.FlexColumnWidth(3),
+        },
+      );
+
+  pw.Widget _buildJeTotalsSection(JournalEntry entry) => pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.end,
+        children: [
+          pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.end,
+            children: [
+              pw.Row(
+                children: [
+                  pw.Text(
+                    'إجمالي المدين:',
+                    style: const pw.TextStyle(fontSize: 10),
+                  ),
+                  pw.SizedBox(width: 10),
+                  pw.Text(
+                    entry.totalDebit.toStringAsFixed(2),
+                    style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                  ),
+                ],
+              ),
+              pw.Row(
+                children: [
+                  pw.Text(
+                    'إجمالي الدائن:',
+                    style: const pw.TextStyle(fontSize: 10),
+                  ),
+                  pw.SizedBox(width: 10),
+                  pw.Text(
+                    entry.totalCredit.toStringAsFixed(2),
+                    style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      );
+
+  pw.Widget _buildJeFooter(JournalEntry entry) => pw.Column(
+        children: [
+          pw.Divider(thickness: 0.5),
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Text(
+                'مدخل القيد: ${entry.createdBy}',
+                style: const pw.TextStyle(
+                  fontSize: 8,
+                  color: PdfColors.grey700,
+                ),
+              ),
+              pw.Text(
+                'Basir Accounting | Diamond Purity Certified',
+                style: const pw.TextStyle(
+                  fontSize: 8,
+                  color: PdfColors.grey600,
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
 
   pw.Widget _buildInvoiceHeader(
     domain_inv.Invoice invoice,
@@ -140,7 +372,8 @@ class PdfGenerationService extends _$PdfGenerationService {
         ],
       );
 
-  pw.Widget _buildInvoiceItemsTable(domain_inv.Invoice invoice) => pw.TableHelper.fromTextArray(
+  pw.Widget _buildInvoiceItemsTable(domain_inv.Invoice invoice) =>
+      pw.TableHelper.fromTextArray(
         headers: [
           'الوصف / Description',
           'الكمية / Qty',
@@ -187,7 +420,8 @@ class PdfGenerationService extends _$PdfGenerationService {
             height: 100,
             child: pw.BarcodeWidget(
               barcode: pw.Barcode.qrCode(),
-              data: invoice.qrCode ?? 'ZATCA:$companyName:$taxNumber:${invoice.totalAmount}',
+              data: invoice.qrCode ??
+                  'ZATCA:$companyName:$taxNumber:${invoice.totalAmount}',
             ),
           ),
           pw.Spacer(),
@@ -245,7 +479,10 @@ class PdfGenerationService extends _$PdfGenerationService {
               pw.Text(
                 'Generated by Basir Intelligent Systems'
                 ' | Diamond Purity Certified',
-                style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey600),
+                style: const pw.TextStyle(
+                  fontSize: 8,
+                  color: PdfColors.grey600,
+                ),
               ),
             ],
           ),
@@ -607,7 +844,9 @@ class PdfGenerationService extends _$PdfGenerationService {
                         style: pw.TextStyle(
                           fontSize: 14,
                           fontWeight: pw.FontWeight.bold,
-                          color: res.isAllowed ? PdfColors.green900 : PdfColors.red900,
+                          color: res.isAllowed
+                              ? PdfColors.green900
+                              : PdfColors.red900,
                         ),
                       ),
                       pw.Text(
@@ -663,7 +902,8 @@ class PdfGenerationService extends _$PdfGenerationService {
             ),
           ),
           pw.Text(
-            'From: ${report.fromDate} To: ${report.toDate}',
+            'From: ${report.fromDate} '
+            'To: ${report.toDate}',
             style: const pw.TextStyle(
               fontSize: 12,
               color: PdfColors.grey700,
@@ -673,7 +913,8 @@ class PdfGenerationService extends _$PdfGenerationService {
       );
 
   /// Internal helper to build the table for financial reports.
-  pw.Widget _buildReportTable(FinancialReportDto report) => pw.TableHelper.fromTextArray(
+  pw.Widget _buildReportTable(FinancialReportDto report) =>
+      pw.TableHelper.fromTextArray(
         headerStyle: pw.TextStyle(
           fontWeight: pw.FontWeight.bold,
           color: PdfColors.white,

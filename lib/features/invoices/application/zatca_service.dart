@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 /// ***
 /// Cognitive Foundation: ZatcaService
 ///
@@ -13,6 +14,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/src/rust/api/zatca.dart';
 import 'package:decimal/decimal.dart';
 
 /// [ZatcaService]
@@ -64,6 +66,54 @@ class ZatcaService {
       throw Exception('Customer name is required for ZATCA compliance');
     }
   }
+
+  /// Generates a signed UBL 2.1 XML for the given invoice using the Rust bridge.
+  Future<(String, String)> generateSignedXml({
+    required Invoice invoice,
+    required String certificatePem,
+    required String privateKeyPem,
+    required String sellerVatNumber,
+    required String sellerPartyId,
+  }) async {
+    final input = ZatcaInvoiceInputDto(
+      id: invoice.invoiceNumber,
+      uuid: invoice.id,
+      issueDate: invoice.issuedDate.toIso8601String().split('T')[0],
+      issueTime:
+          invoice.issuedDate.toIso8601String().split('T')[1].split('.')[0],
+      invoiceTypeCode: _getInvoiceTypeCode(invoice),
+      invoiceCounterValue: BigInt.from(invoice.zatcaCounter),
+      previousInvoiceHash: invoice.zatcaHash ??
+          'NWZlY2ViOTZmOTYyNDY4MTI5YmQ2YmFmNWYwN2IxNzk=', // Initial hash if none
+      sellerParty: ZatcaPartyDto(
+        partyId: sellerVatNumber,
+        partyIdScheme: 'STR', // VAT
+      ),
+      buyerParty: ZatcaPartyDto(
+        partyId: invoice.customerId,
+        partyIdScheme: 'NAT', // Defaulting to National ID for now
+      ),
+      lines: invoice.items
+          .map(
+            (item) => ZatcaInvoiceLineDto(
+              id: item.id,
+              quantity: item.quantity.toString(),
+              unitPrice: item.price.toString(),
+              taxCategory: item.taxCategory,
+              itemName: item.name,
+            ),
+          )
+          .toList(),
+    );
+
+    return generateZatcaSignedXml(
+      input: input,
+      certificatePem: certificatePem,
+      privateKeyPem: <credential-fixture>,
+    );
+  }
+
+  String _getInvoiceTypeCode(Invoice invoice) => '388';
 
   static void _addTag(BytesBuilder builder, int tag, String value) {
     final valueBytes = utf8.encode(value);

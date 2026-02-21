@@ -161,7 +161,7 @@ pub async fn list_audit_logs(entity_id: String) -> anyhow::Result<Vec<crate::api
 }
 
 // Helper to map DTO to Core Entity
-pub fn map_dto_to_entity(dto: EntryDto) -> anyhow::Result<JournalEntry> {
+pub(crate) fn map_dto_to_entity(dto: EntryDto) -> anyhow::Result<JournalEntry> {
     let date = chrono::DateTime::parse_from_rfc3339(&dto.date)?.with_timezone(&chrono::Utc);
 
     let entry_id = match dto.entry_id {

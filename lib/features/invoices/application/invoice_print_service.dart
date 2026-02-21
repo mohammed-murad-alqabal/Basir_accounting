@@ -11,7 +11,8 @@ import 'package:pdf/pdf.dart';
 /// Optimized for Roll 80mm and Roll 58mm formats.
 /// Delegates high-fidelity rendering to [PdfGenerationService].
 class InvoicePrintService {
-  /// Creating the [InvoicePrintService] with [SettingsService] and [PdfGenerationService].
+  /// Creating the [InvoicePrintService] with [SettingsService]
+  /// and [PdfGenerationService].
   InvoicePrintService(this._settingsService, this._pdfService);
 
   final SettingsService _settingsService;
