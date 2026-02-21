@@ -120,6 +120,16 @@ class MultiStandardCoaEngine {
           isParent: true,
         ),
         _createAccount(
+          id: 'acc-3101',
+          code: '3101',
+          nameAr: 'الأرباح المحتجزة',
+          nameEn: 'Retained Earnings',
+          type: AccountType.equity,
+          nature: AccountNature.credit,
+          parentId: 'acc-3',
+          subType: 'retained_earnings',
+        ),
+        _createAccount(
           id: 'acc-4',
           code: '4',
           nameAr: 'الإيرادات',

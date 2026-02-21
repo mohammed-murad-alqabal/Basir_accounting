@@ -6,6 +6,7 @@ import 'package:basir_accounting_system/core/theme/tokens/color_tokens.dart';
 import 'package:basir_accounting_system/core/theme/tokens/spacing_tokens.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/providers/journal_entry_providers.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entry_form_screen.dart';
 import 'package:basir_accounting_system/features/reports/application/report_export_service.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
@@ -22,11 +23,16 @@ import 'package:intl/intl.dart' as intl;
 /// (Draft -> Posted).
 class JournalEntriesScreen extends ConsumerWidget {
   /// Creates the Journal Entries screen.
-  const JournalEntriesScreen({super.key});
+  const JournalEntriesScreen({super.key, this.accountId});
+
+  /// Unique account identifier to filter entries (for drill-down).
+  final String? accountId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final entriesAsync = ref.watch(accountingServiceProvider);
+    final entriesAsync = ref.watch(
+      filteredJournalEntriesProvider(accountId: accountId),
+    );
 
     return Scaffold(
       appBar: AppAppBar(

@@ -1,3 +1,4 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'dart:typed_data';
 
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
@@ -186,6 +187,15 @@ class _ReceivableAgingTab extends ConsumerWidget {
             return AppCard(
               margin: const EdgeInsets.only(bottom: 12),
               padding: const EdgeInsets.all(16),
+              onTap: () => Navigator.pushNamed(
+                context,
+                '/entity-transactions',
+                arguments: {
+                  'entityId': report.customerId,
+                  'entityName': report.name(isArabic: context.isArabic),
+                  'isCustomer': true,
+                },
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -278,6 +288,15 @@ class _PayableAgingTab extends ConsumerWidget {
             return AppCard(
               margin: const EdgeInsets.only(bottom: 12),
               padding: const EdgeInsets.all(16),
+              onTap: () => Navigator.pushNamed(
+                context,
+                '/entity-transactions',
+                arguments: {
+                  'entityId': report.supplierId,
+                  'entityName': report.name(isArabic: context.isArabic),
+                  'isCustomer': false,
+                },
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

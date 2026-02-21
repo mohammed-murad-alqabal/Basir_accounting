@@ -68,8 +68,11 @@ class AuthService {
       final hashedPassword = _hashPassword(newPassword, userSalt);
 
       // Update stored password and salt
-      await secureStorage.write(key: 'password_hash', value: hashedPassword);
-      await secureStorage.write(key: 'user_salt', value: userSalt);
+      await secureStorage.write(
+        key: StorageKeys.passwordHash,
+        value: hashedPassword,
+      );
+      await secureStorage.write(key: '${username}_salt', value: userSalt);
 
       debugPrint('🔐 [AUTH] Password changed successfully for $username');
     } catch (e) {
@@ -233,7 +236,7 @@ class AuthService {
         key: StorageKeys.passwordHash,
       );
       final userSalt = await secureStorage.read(
-        key: '${StorageKeys.username}_salt',
+        key: '${username}_salt',
       );
 
       if (storedUsername == null || storedPasswordHash == null) {
@@ -366,7 +369,7 @@ class AuthService {
         value: passwordHash,
       );
       await secureStorage.write(
-        key: '${StorageKeys.username}_salt',
+        key: '${username}_salt',
         value: userSalt,
       );
 

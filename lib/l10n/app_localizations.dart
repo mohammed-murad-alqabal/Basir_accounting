@@ -3787,6 +3787,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Source document not found'**
   String get errSourceNotFound;
+
+  /// No description provided for @agentSuggestionIfrs18Category.
+  ///
+  /// In en, this message translates to:
+  /// **'IFRS 18 Category Suggestion'**
+  String get agentSuggestionIfrs18Category;
+
+  /// No description provided for @agentSuggestionIfrs18CategoryReason.
+  ///
+  /// In en, this message translates to:
+  /// **'IFRS 18 requires specific classification for sales commissions.'**
+  String get agentSuggestionIfrs18CategoryReason;
+
+  /// No description provided for @agentSuggestionVatCorrection.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT Rate Correction'**
+  String get agentSuggestionVatCorrection;
+
+  /// No description provided for @agentSuggestionMissingVatLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing VAT Line'**
+  String get agentSuggestionMissingVatLine;
+
+  /// No description provided for @agentSuggestionMissingVatLineReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales transaction usually requires 15% VAT per ZATCA/IFRS.'**
+  String get agentSuggestionMissingVatLineReason;
+
+  /// No description provided for @agentSuggestionWarehouseOptimization.
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouse Optimization'**
+  String get agentSuggestionWarehouseOptimization;
+
+  /// No description provided for @agentSuggestionWarehouseOptimizationReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Check \"Central Hub\" or \"Riyadh Branch\" for stock transfer.'**
+  String get agentSuggestionWarehouseOptimizationReason;
+
+  /// No description provided for @agentSuggestionStrategicDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Strategic Discount'**
+  String get agentSuggestionStrategicDiscount;
+
+  /// No description provided for @agentSuggestionStrategicDiscountReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer a 2% discount for payments within 10 days to maximize liquidity.'**
+  String get agentSuggestionStrategicDiscountReason;
+
+  /// No description provided for @agentSuggestionIssbMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'ISSB Disclosure'**
+  String get agentSuggestionIssbMetrics;
+
+  /// No description provided for @agentSuggestionIssbMetricsReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach quantitative resource usage metrics (liters/kWh) for compliance.'**
+  String get agentSuggestionIssbMetricsReason;
+
+  /// No description provided for @labelAiSmartSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Smart Suggestions'**
+  String get labelAiSmartSuggestions;
+
+  /// No description provided for @labelTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Target:'**
+  String get labelTarget;
+
+  /// No description provided for @msgForensicSequenceClean.
+  ///
+  /// In en, this message translates to:
+  /// **'Sequence verification complete: No anomalies detected.'**
+  String get msgForensicSequenceClean;
+
+  /// No description provided for @msgForensicRisksDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'Forensic analysis detected institutional risks.'**
+  String get msgForensicRisksDetected;
+
+  /// No description provided for @msgForensicEngineError.
+  ///
+  /// In en, this message translates to:
+  /// **'Forensic scan failed: Internal engine error.'**
+  String get msgForensicEngineError;
+
+  /// No description provided for @msgForensicLedgerClean.
+  ///
+  /// In en, this message translates to:
+  /// **'Historical ledger scrutiny complete: No anomalies found.'**
+  String get msgForensicLedgerClean;
+
+  /// No description provided for @msgForensicLedgerAnomalies.
+  ///
+  /// In en, this message translates to:
+  /// **'Forensic anomalies detected in historical ledger.'**
+  String get msgForensicLedgerAnomalies;
+
+  /// No description provided for @errForensicImbalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Imbalance detected: Entry #{id} is not balanced.'**
+  String errForensicImbalance(Object id);
+
+  /// No description provided for @errForensicDiscrepancy.
+  ///
+  /// In en, this message translates to:
+  /// **'Integrity discrepancy: Entry #{id} has total debit/sum mismatch.'**
+  String errForensicDiscrepancy(Object id);
+
+  /// No description provided for @errForensicHashBreach.
+  ///
+  /// In en, this message translates to:
+  /// **'Integrity Breach: Hash chain broken between #{prev} and #{curr}'**
+  String errForensicHashBreach(Object curr, Object prev);
+
+  /// No description provided for @titleForensicPortal.
+  ///
+  /// In en, this message translates to:
+  /// **'Forensic Integrity Portal'**
+  String get titleForensicPortal;
+
+  /// No description provided for @labelIntegrityPulse.
+  ///
+  /// In en, this message translates to:
+  /// **'Integrity Pulse'**
+  String get labelIntegrityPulse;
+
+  /// No description provided for @labelLastVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Last verified:'**
+  String get labelLastVerified;
+
+  /// No description provided for @labelBlocksScanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocks Scanned:'**
+  String get labelBlocksScanned;
+
+  /// No description provided for @labelHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Health:'**
+  String get labelHealth;
+
+  /// No description provided for @labelLedgerMutationTimeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Ledger Mutation Timeline'**
+  String get labelLedgerMutationTimeline;
+
+  /// No description provided for @labelHashChain.
+  ///
+  /// In en, this message translates to:
+  /// **'Immutable Hash Chain'**
+  String get labelHashChain;
+
+  /// No description provided for @labelVerifiedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified by:'**
+  String get labelVerifiedBy;
+
+  /// No description provided for @titleStrategicOutlook.
+  ///
+  /// In en, this message translates to:
+  /// **'Strategic Outlook & Forecasting'**
+  String get titleStrategicOutlook;
+
+  /// No description provided for @labelPredictivePnL.
+  ///
+  /// In en, this message translates to:
+  /// **'Predictive P&L Analysis'**
+  String get labelPredictivePnL;
+
+  /// No description provided for @labelCashFlowProjection.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash Flow Projection'**
+  String get labelCashFlowProjection;
+
+  /// No description provided for @labelStrategicInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Strategic AI Insights'**
+  String get labelStrategicInsights;
+
+  /// No description provided for @labelProjectedRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Projected Revenue'**
+  String get labelProjectedRevenue;
+
+  /// No description provided for @labelProjectedExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Projected Expenses'**
+  String get labelProjectedExpense;
+
+  /// No description provided for @labelProjectedNetIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Projected Net Income'**
+  String get labelProjectedNetIncome;
+
+  /// No description provided for @labelConfidenceScore.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Confidence Score'**
+  String get labelConfidenceScore;
+
+  /// No description provided for @msgNoStrategicData.
+  ///
+  /// In en, this message translates to:
+  /// **'Insufficient historical data for accurate forecasting. Please post more transactions.'**
+  String get msgNoStrategicData;
+
+  /// No description provided for @actionEmailInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Invoice'**
+  String get actionEmailInvoice;
 }
 
 class _AppLocalizationsDelegate

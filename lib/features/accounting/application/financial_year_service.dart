@@ -1,8 +1,12 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/domain/repositories/financial_year_repository.dart';
+import 'package:decimal/decimal.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 part 'financial_year_service.g.dart';
 
@@ -61,11 +65,11 @@ class FinancialYearService extends _$FinancialYearService {
   /// Locks a specific monthly period within a financial year.
   ///
   /// Prevents any further modifications or postings to the specified month.
-  Future<void> lockMonthlyPeriod(String yearId, int month, int year) async {
+  Future<void> lockMonthlyPeriod(String yearId, DateTime date) async {
     final fy = await _repository.getAllFinancialYears();
     final targetYear = fy.firstWhere((y) => y.id == yearId);
 
-    final periodId = '$year-${month.toString().padLeft(2, '0')}';
+    final periodId = _getPeriodId(date);
     if (targetYear.lockedPeriodIds.contains(periodId)) return;
 
     final updatedYear = targetYear.copyWith(
@@ -74,6 +78,147 @@ class FinancialYearService extends _$FinancialYearService {
 
     await _repository.saveFinancialYear(updatedYear);
   }
+
+  /// Unlocks a specific monthly period within a financial year.
+  Future<void> unlockMonthlyPeriod(String yearId, DateTime date) async {
+    final fy = await _repository.getAllFinancialYears();
+    final targetYear = fy.firstWhere((y) => y.id == yearId);
+
+    final periodId = _getPeriodId(date);
+    if (!targetYear.lockedPeriodIds.contains(periodId)) return;
+
+    final updatedYear = targetYear.copyWith(
+      lockedPeriodIds:
+          targetYear.lockedPeriodIds.where((id) => id != periodId).toList(),
+    );
+
+    await _repository.saveFinancialYear(updatedYear);
+  }
+
+  /// Retrieves the list of locked periods for a given year.
+  Future<List<String>> getLockedPeriods(String yearId) async {
+    final fy = await _repository.getAllFinancialYears();
+    final targetYear = fy.firstWhere((y) => y.id == yearId);
+    return targetYear.lockedPeriodIds;
+  }
+
+  /// Executes a year-end rollover procedure.
+  ///
+  /// 1. Verifies the next year exists.
+  /// 2. Calculates closing balances of all leaf accounts.
+  /// 3. Closes Nominal accounts (P&L) into Retained Earnings.
+  /// 4. Creates a balanced Opening Entry in the next fiscal year.
+  Future<void> rolloverBalances(String currentYearId, String nextYearId) async {
+    final user = ref.read(basirUserProvider);
+    if (user == null) throw Exception('User not authenticated.');
+
+    final fy = await _repository.getAllFinancialYears();
+    final currentYear = fy.firstWhere((y) => y.id == currentYearId);
+    final nextYear = fy.firstWhere((y) => y.id == nextYearId);
+
+    if (currentYear.isClosed) {
+      throw Exception('Current year is already closed.');
+    }
+
+    final accountingRepo = ref.read(accountingRepositoryProvider);
+    final allAccounts = await accountingRepo.getAccounts();
+    final leafAccounts = allAccounts.where((a) => !a.isParent).toList();
+
+    final openingLines = <JournalEntryLine>[];
+    var netIncome = Decimal.zero;
+
+    // 1. Process all accounts for balance rollover
+    for (final account in leafAccounts) {
+      final balance = await accountingRepo.getAccountBalance(account.id);
+
+      if (account.type == AccountType.revenue ||
+          account.type == AccountType.expense) {
+        // P&L accounts: aggregate into Net Income
+        // Revenue (Credit nature) - Expense (Debit nature)
+        if (account.type == AccountType.revenue) {
+          netIncome += balance;
+        } else {
+          netIncome -= balance;
+        }
+      } else {
+        // Balance Sheet accounts: carry forward
+        if (balance == Decimal.zero) continue;
+
+        openingLines.add(
+          JournalEntryLine(
+            accountId: account.id,
+            accountName: account.nameEn,
+            debit:
+                account.nature == AccountNature.debit ? balance : Decimal.zero,
+            credit:
+                account.nature == AccountNature.credit ? balance : Decimal.zero,
+            description:
+                'Opening Balance: Fiscal Year ${nextYear.startDate.year}',
+          ),
+        );
+      }
+    }
+
+    // 2. Identify Retained Earnings account
+    final reAccount = allAccounts.firstWhere(
+      (a) => a.subType == 'retained_earnings' || a.id == 'acc-3101',
+      orElse: () => throw Exception('Retained Earnings account not found.'),
+    );
+
+    // 3. Add Net Income to Retained Earnings in the opening entry
+    if (netIncome != Decimal.zero) {
+      openingLines.add(
+        JournalEntryLine(
+          accountId: reAccount.id,
+          accountName: reAccount.nameEn,
+          debit: netIncome < Decimal.zero ? netIncome.abs() : Decimal.zero,
+          credit: netIncome > Decimal.zero ? netIncome : Decimal.zero,
+          description: 'Net Income Rollover from ${currentYear.name}',
+        ),
+      );
+    }
+
+    // 4. Create and post the Opening Entry
+    final openingEntry = JournalEntry(
+      id: const Uuid().v4(),
+      referenceNumber: 'OB-${nextYear.startDate.year}-001',
+      date: nextYear.startDate,
+      temporal: TemporalJustification(
+        transactionDate: nextYear.startDate,
+        effectiveDate: nextYear.startDate,
+        recordingDate: DateTime.now(),
+      ),
+      standards: const StandardsJustification(
+        standardReference: 'IAS 1: Financial Statement Presentation',
+        recognitionBasis: 'Opening Balances',
+      ),
+      description:
+          'Opening Balance Rollover from Year ${currentYear.startDate.year}',
+      status: JournalEntryStatus.posted,
+      lines: openingLines,
+      sourceDocument: 'YEAR_END_ROLLOVER',
+      sourceId: currentYearId,
+      createdBy: user.id,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      postedAt: DateTime.now(),
+      userId: user.id,
+    );
+
+    if (!openingEntry.isBalanced) {
+      throw Exception(
+        'Critical Error: Opening entry is unbalanced. Diff: ${openingEntry.totalDebit - openingEntry.totalCredit}',
+      );
+    }
+
+    await accountingRepo.addJournalEntry(openingEntry);
+
+    // 5. Finally, close the current year
+    await closeYear(currentYearId, user.id);
+  }
+
+  String _getPeriodId(DateTime date) =>
+      '${date.year}-${date.month.toString().padLeft(2, '0')}';
 
   /// Permanently closes a financial year after performing integrity checks.
   ///

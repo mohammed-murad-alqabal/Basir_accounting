@@ -30,25 +30,11 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
     required super.portManager,
   });
 
-  CrossPlatformFinalizerArg
-      get rust_arc_decrement_strong_count_JournalEntryPtr => wire
-          ._rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntryPtr;
-
   @protected
   AnyhowException dco_decode_AnyhowException(dynamic raw);
 
   @protected
-  JournalEntry
-      dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
-          dynamic raw);
-
-  @protected
   Map<String, String> dco_decode_Map_String_String_None(dynamic raw);
-
-  @protected
-  JournalEntry
-      dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
-          dynamic raw);
 
   @protected
   String dco_decode_String(dynamic raw);
@@ -318,9 +304,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void dco_decode_unit(dynamic raw);
 
   @protected
-  BigInt dco_decode_usize(dynamic raw);
-
-  @protected
   ValuationItemDto dco_decode_valuation_item_dto(dynamic raw);
 
   @protected
@@ -357,18 +340,8 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer);
 
   @protected
-  JournalEntry
-      sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
-          SseDeserializer deserializer);
-
-  @protected
   Map<String, String> sse_decode_Map_String_String_None(
       SseDeserializer deserializer);
-
-  @protected
-  JournalEntry
-      sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
-          SseDeserializer deserializer);
 
   @protected
   String sse_decode_String(SseDeserializer deserializer);
@@ -678,9 +651,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_decode_unit(SseDeserializer deserializer);
 
   @protected
-  BigInt sse_decode_usize(SseDeserializer deserializer);
-
-  @protected
   ValuationItemDto sse_decode_valuation_item_dto(SseDeserializer deserializer);
 
   @protected
@@ -720,18 +690,8 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       AnyhowException self, SseSerializer serializer);
 
   @protected
-  void
-      sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
-          JournalEntry self, SseSerializer serializer);
-
-  @protected
   void sse_encode_Map_String_String_None(
       Map<String, String> self, SseSerializer serializer);
-
-  @protected
-  void
-      sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
-          JournalEntry self, SseSerializer serializer);
 
   @protected
   void sse_encode_String(String self, SseSerializer serializer);
@@ -1065,9 +1025,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_unit(void self, SseSerializer serializer);
 
   @protected
-  void sse_encode_usize(BigInt self, SseSerializer serializer);
-
-  @protected
   void sse_encode_valuation_item_dto(
       ValuationItemDto self, SseSerializer serializer);
 
@@ -1119,36 +1076,4 @@ class RustLibWire implements BaseWire {
   /// The symbols are looked up in [dynamicLibrary].
   RustLibWire(ffi.DynamicLibrary dynamicLibrary)
       : _lookup = dynamicLibrary.lookup;
-
-  void
-      rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
-    ffi.Pointer<ffi.Void> ptr,
-  ) {
-    return _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
-      ptr,
-    );
-  }
-
-  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntryPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
-          'frbgen_basir_accounting_system_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry');
-  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry =
-      _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntryPtr
-          .asFunction<void Function(ffi.Pointer<ffi.Void>)>();
-
-  void
-      rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
-    ffi.Pointer<ffi.Void> ptr,
-  ) {
-    return _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry(
-      ptr,
-    );
-  }
-
-  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntryPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
-          'frbgen_basir_accounting_system_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry');
-  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntry =
-      _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerJournalEntryPtr
-          .asFunction<void Function(ffi.Pointer<ffi.Void>)>();
 }

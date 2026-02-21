@@ -71,10 +71,19 @@ class OrchestratorService extends _$OrchestratorService {
       aggregateRationale.writeln('---');
     }
 
+    final aggregatedAdjustments = <String, dynamic>{};
+    for (final res in results) {
+      if (res.suggestedAdjustments != null) {
+        aggregatedAdjustments.addAll(res.suggestedAdjustments!);
+      }
+    }
+
     return AgentConsensus(
       isApproved: overallAllowed,
       explanation: aggregateRationale.toString(),
       agentResults: results,
+      suggestedAdjustments:
+          aggregatedAdjustments.isNotEmpty ? aggregatedAdjustments : null,
       orchestrationTimestamp: DateTime.now(),
     );
   }
@@ -141,6 +150,7 @@ class AgentConsensus {
     required this.explanation,
     required this.agentResults,
     required this.orchestrationTimestamp,
+    this.suggestedAdjustments,
   });
 
   /// Indicates if the transaction was approved by all participating agents.
@@ -151,6 +161,10 @@ class AgentConsensus {
 
   /// Collection of individual agent results for granular auditing.
   final List<AgentResult> agentResults;
+
+  /// Aggregated AI-driven modifications to improve entry accuracy or
+  /// compliance.
+  final Map<String, dynamic>? suggestedAdjustments;
 
   /// Precise moment the orchestration was finalized.
   final DateTime orchestrationTimestamp;

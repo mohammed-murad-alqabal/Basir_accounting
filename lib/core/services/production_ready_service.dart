@@ -16,7 +16,8 @@ class ProductionReadyService extends _$ProductionReadyService {
 
   /// Executes a comprehensive audit of the system's readiness.
   /// Returns a report containing status and recommended actions.
-  Future<ProductionReadinessReport> checkReadiness() async => const ProductionReadinessReport(
+  Future<ProductionReadinessReport> checkReadiness() async =>
+      const ProductionReadinessReport(
         isReady: true,
         issues: [],
         recommendations: [],

@@ -45,7 +45,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           _selectedFilter == 'all') {
         showCognitiveHint(
           context,
-          'هنا يمكنك متابعة جميع فواتيرك. ابدأ بإنشاء فاتورة جديدة بالضغط على زر الإضافة (+).',
+          'هنا يمكنك متابعة جميع فواتيرك. ابدأ بإنشاء فاتورة جديدة '
+          'بالضغط على زر الإضافة (+).',
           title: 'إدارة الفواتير',
         );
       }

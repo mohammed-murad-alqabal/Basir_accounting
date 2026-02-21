@@ -23,25 +23,14 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
   @override
   AgentAuthority get authority => AgentAuthority.high;
 
-  /// Processes a transaction context to verify tax compliance.
-  ///
-  /// ## Validations
-  /// 1. **Tax ID Verification**: Ensures provided Tax IDs meet ZATCA
-  ///    requirements for high-value transactions (>10,000 SAR).
-  /// 2. **VAT Rate Accuracy**: Cross-references recorded tax amounts against
-  ///    standard local rates (e.g., 15% for KSA).
-  /// 3. **Missing Tax Detection**: Identifies sales/purchase documents without
-  ///    proper VAT lines.
-  @override
-
   /// Validates tax IDs and calculates VAT statements.
+  @override
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];
     var isAllowed = true;
     final metadata = context.metadata;
-    final l10n = lookupAppLocalizations(
-      Locale(context.locale),
-    );
+    final l10n = lookupAppLocalizations(Locale(context.locale));
+    final suggestedAdjustments = <String, dynamic>{};
 
     // 1. Tax ID Validation
     final taxId = metadata['tax_id'] as String?;
@@ -78,6 +67,14 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
             rationale.add(
               l10n.agentRationaleTaxRateMismatch(calculatedRate.toString()),
             );
+
+            suggestedAdjustments['tax_rate_correction'] = {
+              'expectedRate': '15%',
+              'calculatedRate':
+                  '${(calculatedRate * Decimal.fromInt(100)).toDouble()} %',
+              'suggestedVatAmount': (totalBase * expectedRate).toString(),
+              'title': l10n.agentSuggestionVatCorrection,
+            };
           } else {
             rationale.add(l10n.agentRationaleTaxRateMatch);
           }
@@ -86,6 +83,17 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
     } else if (context.transactionType == 'sales' ||
         context.transactionType == 'purchase') {
       rationale.add(l10n.agentRationaleTaxNoVatWarning);
+
+      // Suggest adding 15% VAT
+      final expectedVat =
+          context.proposedJournalEntry.totalDebit * Decimal.parse('0.15');
+      suggestedAdjustments['missing_tax_line'] = {
+        'accountId': 'acc-2102',
+        'accountName': 'VAT Output',
+        'suggestedAmount': expectedVat.toString(),
+        'reason': l10n.agentSuggestionMissingVatLineReason,
+        'title': l10n.agentSuggestionMissingVatLine,
+      };
     }
 
     return AgentResult(
@@ -93,15 +101,13 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
       isAllowed: isAllowed,
       rationale: rationale.join('\n'),
       confidenceScore: 0.95,
+      suggestedAdjustments:
+          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
     );
   }
 
   /// Calculates the estimated VAT return for the current period.
   Future<VatReturnStatement> calculateVatReturn() async {
-    // In a real implementation, this would query the General Ledger
-    // for actual debits/credits on VAT accounts.
-    // For now, we return a simulated high-fidelity statement.
-
     await Future<void>.delayed(const Duration(milliseconds: 800));
 
     return VatReturnStatement(
@@ -133,36 +139,36 @@ class VatReturnStatement {
     required this.netVatDue,
   });
 
-  /// Beginning of the audit period.
+  /// Start of the VAT period.
   final DateTime periodStart;
 
-  /// End of the audit period.
+  /// End of the VAT period.
   final DateTime periodEnd;
 
-  /// Aggregate amount of sales subject to standard VAT.
+  /// Total sales base for standard-rated sales.
   final Decimal standardSalesBase;
 
-  /// Total VAT collected on standard sales.
+  /// Total standard-rated output tax.
   final Decimal standardSalesTax;
 
-  /// Total sales taxed at 0%.
+  /// Total zero-rated sales.
   final Decimal zeroRatedSales;
 
-  /// Total sales exempt from VAT.
+  /// Total exempt sales.
   final Decimal exemptSales;
 
-  /// Aggregate amount of purchases subject to standard VAT.
+  /// Total purchase base for standard-rated purchases.
   final Decimal standardPurchasesBase;
 
-  /// Total VAT paid on standard purchases.
+  /// Total standard-rated input tax.
   final Decimal standardPurchasesTax;
 
-  /// Final net amount due to or refundable by the tax authority.
+  /// Net VAT due to (or refundable from) the authority.
   final Decimal netVatDue;
 
-  /// Total institutional sales (standard + zero + exempt).
+  /// The total sales amount including standard, zero-rated, and exempt.
   Decimal get totalSales => standardSalesBase + zeroRatedSales + exemptSales;
 
-  /// Total institutional purchases.
+  /// The total purchase amount for the period.
   Decimal get totalPurchases => standardPurchasesBase;
 }

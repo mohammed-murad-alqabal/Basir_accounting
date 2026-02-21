@@ -90,7 +90,7 @@ class FormatHelpers {
     final now = DateTime.now();
     final difference = now.difference(date);
 
-    // TODO(m): يمكن تحسين هذا باستخدام مكتبات متخصصة مثل timeago
+    // TODO(basir): يمكن تحسين هذا باستخدام مكتبات متخصصة مثل timeago
     // حالياً نستخدم تنفيذ بسيط للعربية والإنجليزية
 
     if (locale.startsWith('ar')) {

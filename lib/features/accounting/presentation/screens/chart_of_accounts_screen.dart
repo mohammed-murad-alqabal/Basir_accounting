@@ -106,6 +106,11 @@ class ChartOfAccountsScreen extends ConsumerWidget {
           );
         },
       ),
+      floatingActionButton: AppEnhancedButton(
+        label: context.l10n.btnCreateAccount,
+        icon: Icons.add,
+        onPressed: () => Navigator.pushNamed(context, '/account-form'),
+      ),
     );
   }
 
@@ -359,6 +364,32 @@ class _AccountTreeItem extends StatelessWidget {
                         : AppColors.success,
                   ),
                 ),
+                const SizedBox(width: Spacing.sm),
+                IconButton(
+                  icon: const Icon(Icons.edit_outlined, size: 18),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  onPressed: () => Navigator.pushNamed(
+                    context,
+                    '/account-form',
+                    arguments: {'account': account},
+                  ),
+                  tooltip: context.l10n.btnEdit,
+                ),
+                if (account.isParent) ...[
+                  const SizedBox(width: Spacing.xs),
+                  IconButton(
+                    icon: const Icon(Icons.add_circle_outline, size: 18),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    onPressed: () => Navigator.pushNamed(
+                      context,
+                      '/account-form',
+                      arguments: {'parentId': account.id},
+                    ),
+                    tooltip: 'إضافة حساب تابع',
+                  ),
+                ],
               ],
             ),
           ),

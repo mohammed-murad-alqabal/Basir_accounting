@@ -31,6 +31,19 @@ final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
       final accountingService = ref.read(accountingServiceProvider.notifier);
       await accountingService.postInvoice(invoice);
     }
+
+    // Schedule notification for due date
+    if (invoice.status != InvoiceStatus.paid) {
+      final notificationService = ref.read(notificationServiceProvider);
+      await notificationService.initialize();
+      await notificationService.scheduleNotification(
+        id: invoice.id.hashCode,
+        title: 'Invoice Due: ${invoice.invoiceNumber}',
+        body: 'Invoice for ${invoice.customerName} is due today.',
+        scheduledDate: invoice.dueDate,
+      );
+    }
+
     ref.invalidate(invoicesProvider);
     return true;
   } on CognitiveConsensusException {
@@ -59,6 +72,25 @@ final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
       final accountingService = ref.read(accountingServiceProvider.notifier);
       await accountingService.postInvoice(invoice);
     }
+
+    // Update notification
+    final notificationService = ref.read(notificationServiceProvider);
+    await notificationService.initialize();
+
+    // Cancel existing notification
+    await notificationService.cancelNotification(invoice.id.hashCode);
+
+    // Schedule new one if applicable
+    if (invoice.status != InvoiceStatus.paid &&
+        invoice.status != InvoiceStatus.cancelled) {
+      await notificationService.scheduleNotification(
+        id: invoice.id.hashCode,
+        title: 'Invoice Due: ${invoice.invoiceNumber}',
+        body: 'Invoice for ${invoice.customerName} is due today.',
+        scheduledDate: invoice.dueDate,
+      );
+    }
+
     ref.invalidate(invoicesProvider);
     return true;
   } on CognitiveConsensusException {
@@ -79,6 +111,12 @@ final deleteInvoiceProvider = FutureProvider.family<bool, String>((
 
   try {
     await repository.deleteInvoice(invoiceId);
+
+    // Cancel notification
+    final notificationService = ref.read(notificationServiceProvider);
+    await notificationService.initialize();
+    await notificationService.cancelNotification(invoiceId.hashCode);
+
     ref.invalidate(invoicesProvider);
     return true;
   } on CognitiveConsensusException {
@@ -279,6 +317,11 @@ final markInvoiceAsPaidProvider = FutureProvider.family<bool, String>((
     final accountingService = ref.read(accountingServiceProvider.notifier);
     await accountingService.postInvoice(updatedInvoice);
 
+    // Cancel notification
+    final notificationService = ref.read(notificationServiceProvider);
+    await notificationService.initialize();
+    await notificationService.cancelNotification(invoiceId.hashCode);
+
     ref.invalidate(invoicesProvider);
     return true;
   } on CognitiveConsensusException {
@@ -336,6 +379,12 @@ final cancelInvoiceProvider = FutureProvider.family<bool, String>((
     );
 
     await repository.updateInvoice(updatedInvoice);
+
+    // Cancel notification
+    final notificationService = ref.read(notificationServiceProvider);
+    await notificationService.initialize();
+    await notificationService.cancelNotification(invoiceId.hashCode);
+
     ref.invalidate(invoicesProvider);
     return true;
   } on CognitiveConsensusException {
