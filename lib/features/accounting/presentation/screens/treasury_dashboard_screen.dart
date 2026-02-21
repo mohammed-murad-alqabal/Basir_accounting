@@ -1,160 +1,257 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
-import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/core/utils/format_helpers.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/treasury_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/liquidity_forecast.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/voucher_form_screen.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Screen for the Treasury Hub (The Vault).
-/// Displays real-time liquidity status (Cash & Bank).
+/// Provides an institutional overview of liquidity and access to fund management.
 class TreasuryDashboardScreen extends ConsumerWidget {
   /// Creates the [TreasuryDashboardScreen].
   const TreasuryDashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountsAsync = ref.watch(accountingRepositoryProvider).getAccounts();
+    final accountsAsyncValue = ref.watch(accountingServiceProvider);
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.titleTreasuryVault,
-      ),
-      body: FutureBuilder<List<Account>>(
-        future: accountsAsync,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
+    return GlassScaffold(
+      title: context.l10n.titleTreasuryVault,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.history),
+          onPressed: () => Navigator.pushNamed(context, '/voucher-list'),
+          tooltip: context.l10n.recentVouchersTitle,
+        ),
+      ],
+      body: accountsAsyncValue.when(
+        data: (_) => FutureBuilder<List<Account>>(
+          future: ref.read(accountingServiceProvider.notifier).getAccounts(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: AppLoadingIndicator());
+            }
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
 
-          final allAccounts = snapshot.data ?? [];
-          // Filter for Liquid assets: Cash and Bank
-          // Strategy: Look for subType 'cash', 'bank' or code starting
-          // with 1101
-          final treasuryAccounts = allAccounts.where((a) {
-            final isCashType = a.subType == 'cash' || a.subType == 'bank';
-            final isCashCode = a.code.startsWith('1101');
-            // Ensure we don't include the parent "Cash and Cash
-            // Equivalents" header if it has no balance itself
-            // (usually headers are 0 or sum of children)
-            // But if it's a parent, we might want to just show leaf nodes?
-            // For now, let's show all leaf nodes that match.
-            return (isCashType || isCashCode) && !a.isParent;
-          }).toList();
+            final allAccounts = snapshot.data ?? [];
+            final treasuryAccounts = allAccounts.where((a) {
+              final isCashType = a.subType == 'cash' || a.subType == 'bank';
+              final isCashCode =
+                  a.code.startsWith('1101') || a.code.startsWith('1102');
+              return (isCashType || isCashCode) && !a.isParent;
+            }).toList();
 
-          final totalLiquidity = treasuryAccounts.fold<Decimal>(
-            Decimal.zero,
-            (sum, account) => sum + account.balance,
-          );
+            final totalLiquidity = treasuryAccounts.fold<Decimal>(
+              Decimal.zero,
+              (sum, account) => sum + account.balance,
+            );
 
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(Spacing.lg),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildLiquidityCard(context, totalLiquidity),
-                const SizedBox(height: Spacing.lg),
-                _buildForecastSection(context, ref),
-                const SizedBox(height: Spacing.lg),
-                Text(
-                  context.l10n.labelAccounts,
-                  style: AppTextStyles.titleMedium.copyWith(
-                    fontWeight: FontWeights.bold,
-                  ),
+            return RefreshIndicator(
+              onRefresh: () async {
+                ref.invalidate(accountingServiceProvider);
+                ref.invalidate(getVouchersProvider);
+              },
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(Spacing.lg),
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildLiquidityCard(context, totalLiquidity),
+                    const SizedBox(height: Spacing.xl),
+                    Text(
+                      context.l10n.dashboardQuickActionsTitle,
+                      style: AppTextStyles.titleMedium
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: Spacing.md),
+                    _buildQuickActions(context),
+                    const SizedBox(height: Spacing.xl),
+                    _buildForecastSection(context, ref),
+                    const SizedBox(height: Spacing.xl),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          context.l10n.labelAccounts,
+                          style: AppTextStyles.titleMedium
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pushNamed(
+                            context,
+                            '/chart-of-accounts',
+                          ),
+                          child: const Text('المزيد'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: Spacing.md),
+                    if (treasuryAccounts.isEmpty)
+                      AppEmptyState(
+                        title: context.l10n.msgNoCashAccounts,
+                        description: context.l10n.msgInitCoa,
+                      )
+                    else
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: treasuryAccounts.length,
+                        separatorBuilder: (_, __) =>
+                            const SizedBox(height: Spacing.sm),
+                        itemBuilder: (context, index) {
+                          final account = treasuryAccounts[index];
+                          return _buildAccountRow(context, account);
+                        },
+                      ),
+                    const SizedBox(height: Spacing.xl),
+                    _buildAdministrativeTools(context),
+                  ],
                 ),
-                const SizedBox(height: Spacing.md),
-                if (treasuryAccounts.isEmpty)
-                  AppEmptyState(
-                    title: context.l10n.msgNoCashAccounts,
-                    description: context.l10n.msgInitCoa,
-                  )
-                else
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: treasuryAccounts.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: Spacing.sm),
-                    itemBuilder: (context, index) {
-                      final account = treasuryAccounts[index];
-                      return _buildAccountRow(context, account);
-                    },
-                  ),
-              ],
-            ),
-          );
-        },
+              ),
+            );
+          },
+        ),
+        loading: () => const Center(child: AppLoadingIndicator()),
+        error: (e, _) => Center(child: Text('Error: $e')),
       ),
     );
   }
 
-  Widget _buildLiquidityCard(BuildContext context, Decimal total) => AppCard(
-        backgroundColor: AppColors.primary,
+  Widget _buildLiquidityCard(BuildContext context, Decimal total) => GlassCard(
+        opacity: 0.2,
+        padding: const EdgeInsets.all(Spacing.xl),
         child: Column(
           children: [
             Text(
               context.l10n.labelTotalLiquidity,
-              style: AppTextStyles.labelMedium.copyWith(
-                color: Colors.white.withValues(alpha: 0.8),
-              ),
+              style: AppTextStyles.labelLarge
+                  .copyWith(color: AppColors.textSecondary),
             ),
             const SizedBox(height: Spacing.sm),
             Text(
               FormatHelpers.formatCurrency(total),
               style: AppTextStyles.headlineLarge.copyWith(
-                color: Colors.white,
+                color: AppColors.primary,
                 fontWeight: FontWeights.extraBold,
               ),
             ),
             const SizedBox(height: Spacing.xs),
             Text(
               context.l10n.labelAvailableCashBank,
-              style: AppTextStyles.bodySmall.copyWith(
-                color: Colors.white.withValues(alpha: 0.7),
-              ),
+              style: AppTextStyles.bodySmall
+                  .copyWith(color: AppColors.textSecondary),
             ),
           ],
         ),
       );
 
+  Widget _buildQuickActions(BuildContext context) => Row(
+        children: [
+          Expanded(
+            child: AppEnhancedButton(
+              label: context.l10n.receiptVoucherAction,
+              icon: Icons.add_circle_outline,
+              onPressed: () async {
+                await _issueVoucher(context, VoucherType.receipt);
+              },
+            ),
+          ),
+          const SizedBox(width: Spacing.md),
+          Expanded(
+            child: AppEnhancedButton(
+              label: context.l10n.paymentVoucherAction,
+              icon: Icons.remove_circle_outline,
+              type: AppEnhancedButtonType.secondary,
+              onPressed: () async {
+                await _issueVoucher(context, VoucherType.payment);
+              },
+            ),
+          ),
+        ],
+      );
+
+  Widget _buildAdministrativeTools(BuildContext context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'أدوات التدقيق والرقابة',
+            style:
+                AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: Spacing.md),
+          Row(
+            children: [
+              Expanded(
+                child: AppEnhancedButton(
+                  label: context.l10n.titleForensicPortal,
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/forensic-portal');
+                  },
+                  icon: Icons.verified_user_outlined,
+                  type: AppEnhancedButtonType.outlined,
+                ),
+              ),
+              const SizedBox(width: Spacing.md),
+              Expanded(
+                child: AppEnhancedButton(
+                  label: context.l10n.titleStrategicOutlook,
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/strategic-outlook');
+                  },
+                  icon: Icons.insights_outlined,
+                  type: AppEnhancedButtonType.outlined,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: Spacing.md),
+          AppEnhancedButton(
+            label: 'إدارة الفترات المالية',
+            icon: Icons.calendar_month_outlined,
+            type: AppEnhancedButtonType.outlined,
+            onPressed: () async {
+              await Navigator.pushNamed(context, '/fiscal-control-center');
+            },
+          ),
+        ],
+      );
+
   Widget _buildForecastSection(BuildContext context, WidgetRef ref) {
-    // 30-day forecast by default
-    final forecastFuture = ref.watch(accountingServiceProvider.notifier).getLiquidityForecast();
+    final forecastAsync =
+        ref.watch(accountingServiceProvider.notifier).getLiquidityForecast();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
-          child: Text(
-            context.l10n.labelForecast30Days,
-            style: AppTextStyles.titleMedium,
-          ),
+        Text(
+          context.l10n.labelForecast30Days,
+          style:
+              AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: Spacing.sm),
+        const SizedBox(height: Spacing.md),
         FutureBuilder<LiquidityForecast>(
-          future: forecastFuture,
+          future: forecastAsync,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            if (!snapshot.hasData) {
-              return const SizedBox.shrink();
-            }
+            if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+            if (!snapshot.hasData) return const SizedBox.shrink();
 
             final forecast = snapshot.data!;
             return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
               child: Row(
                 children: [
                   _buildSummaryCard(
@@ -196,8 +293,8 @@ class TreasuryDashboardScreen extends ConsumerWidget {
     required Color color,
     required IconData icon,
   }) =>
-      AppCard(
-        padding: Spacing.paddingMd,
+      GlassCard(
+        padding: const EdgeInsets.all(Spacing.md),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -207,7 +304,8 @@ class TreasuryDashboardScreen extends ConsumerWidget {
                 const SizedBox(width: Spacing.xs),
                 Text(
                   label,
-                  style: AppTextStyles.labelMedium.copyWith(color: AppColors.textSecondary),
+                  style: AppTextStyles.labelMedium
+                      .copyWith(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -224,12 +322,13 @@ class TreasuryDashboardScreen extends ConsumerWidget {
       );
 
   Widget _buildAccountRow(BuildContext context, Account account) {
-    // Determine icon based on name or subtype
-    final isBank = account.nameEn.toLowerCase().contains('bank') || account.subType == 'bank';
-    final icon = isBank ? Icons.account_balance : Icons.attach_money;
+    final isBank = account.nameEn.toLowerCase().contains('bank') ||
+        account.subType == 'bank';
+    final icon =
+        isBank ? Icons.account_balance_outlined : Icons.attach_money_outlined;
 
-    return AppCard(
-      padding: Spacing.paddingMd,
+    return GlassCard(
+      padding: const EdgeInsets.all(Spacing.md),
       child: Row(
         children: [
           Container(
@@ -238,27 +337,22 @@ class TreasuryDashboardScreen extends ConsumerWidget {
               color: AppColors.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(Radii.full),
             ),
-            child: Icon(icon, color: AppColors.primary),
+            child: Icon(icon, color: AppColors.primary, size: 20),
           ),
-          const SizedBox(width: Spacing.md),
-          // ... (rest of row)
-
           const SizedBox(width: Spacing.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  account.name(isArabic: context.l10n.localeName == 'ar'),
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    fontWeight: FontWeights.bold,
-                  ),
+                  account.name(isArabic: context.isArabic),
+                  style: AppTextStyles.bodyMedium
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
                   account.code,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppTextStyles.bodySmall
+                      .copyWith(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -266,12 +360,21 @@ class TreasuryDashboardScreen extends ConsumerWidget {
           Text(
             FormatHelpers.formatCurrency(account.balance),
             style: AppTextStyles.bodyLarge.copyWith(
-              fontWeight: FontWeights.bold,
-              color: account.balance < Decimal.zero ? AppColors.error : AppColors.success,
+              fontWeight: FontWeight.bold,
+              color: account.balance < Decimal.zero
+                  ? AppColors.error
+                  : AppColors.success,
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _issueVoucher(BuildContext context, VoucherType type) async {
+    await Navigator.push<void>(
+      context,
+      MaterialPageRoute<void>(builder: (_) => VoucherFormScreen(type: type)),
     );
   }
 }

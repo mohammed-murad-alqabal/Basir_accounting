@@ -1,19 +1,13 @@
-import 'dart:ui';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
-/// Local notification service for push notification management.
+/// Service for managing local notifications.
 ///
-/// Handles initialization and display of local notifications using
-/// [FlutterLocalNotificationsPlugin]. Supports theme-aware accent colors
-/// and customizable notification content.
-///
-/// ## Features
-/// - Cross-platform support (Android, iOS)
-/// - Theme-aware accent colors
-/// - BigText style for long messages
-/// - Attachment support via payload
+/// Handles initialization, scheduling, and cancellation of local notifications.
+/// Wraps [FlutterLocalNotificationsPlugin] to provide a simplified API for
+/// other layers.
 ///
 /// ## Usage
 /// ```dart
@@ -38,65 +32,89 @@ class NotificationService {
   Future<void> initialize() async {
     if (_isInitialized) return;
 
-    const androidSettings = AndroidInitializationSettings(
-      '@mipmap/ic_launcher',
-    );
-    const iosSettings = DarwinInitializationSettings();
+    tz.initializeTimeZones();
 
-    const initSettings = InitializationSettings(
-      android: androidSettings,
-      iOS: iosSettings,
-    );
-
-    await _notificationsPlugin.initialize(
-      initSettings,
-      onDidReceiveNotificationResponse: (response) {
-        // Notification tap handling can be added here
-      },
+    const initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const initializationSettingsDarwin = DarwinInitializationSettings();
+    const initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsDarwin,
+      macOS: initializationSettingsDarwin,
     );
 
+    await _notificationsPlugin.initialize(initializationSettings);
     _isInitialized = true;
   }
 
-  /// Displays a local notification.
-  ///
-  /// ## Parameters
-  /// - [id]: Unique notification identifier (used for updates/cancellation).
-  /// - [title]: Notification title text.
-  /// - [body]: Notification body content.
-  /// - [accentColor]: Optional theme accent color for Android.
-  /// - [payload]: Optional data payload for tap handling.
+  /// Shows an instant notification.
   Future<void> showNotification({
     required int id,
     required String title,
     required String body,
-    Color? accentColor,
-    String? payload,
   }) async {
-    final androidDetails = AndroidNotificationDetails(
-      'basir_default_channel',
-      'Basir Notifications',
-      channelDescription: 'Primary notification channel for Basir app',
+    const androidDetails = AndroidNotificationDetails(
+      'main_channel',
+      'Main Channel',
+      channelDescription: 'Main notification channel',
       importance: Importance.max,
       priority: Priority.high,
-      color: accentColor,
-      styleInformation: BigTextStyleInformation(body),
     );
-
-    const iosDetails = DarwinNotificationDetails();
-
-    final details = NotificationDetails(
+    const notificationDetails = NotificationDetails(
       android: androidDetails,
-      iOS: iosDetails,
+      iOS: DarwinNotificationDetails(),
+      macOS: DarwinNotificationDetails(),
     );
 
-    await _notificationsPlugin.show(id, title, body, details, payload: payload);
+    await _notificationsPlugin.show(
+      id,
+      title,
+      body,
+      notificationDetails,
+    );
+  }
+
+  /// Schedules a notification for a future date.
+  Future<void> scheduleNotification({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime scheduledDate,
+  }) async {
+    const androidDetails = AndroidNotificationDetails(
+      'scheduled_channel',
+      'Scheduled Channel',
+      channelDescription: 'Channel for scheduled notifications',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    const notificationDetails = NotificationDetails(
+      android: androidDetails,
+      iOS: DarwinNotificationDetails(),
+      macOS: DarwinNotificationDetails(),
+    );
+
+    await _notificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      tz.TZDateTime.from(scheduledDate, tz.local),
+      notificationDetails,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    );
+  }
+
+  /// Cancels a specific notification by ID.
+  Future<void> cancelNotification(int id) async {
+    await _notificationsPlugin.cancel(id);
+  }
+
+  /// Cancels all pending notifications.
+  Future<void> cancelAll() async {
+    await _notificationsPlugin.cancelAll();
   }
 }
 
-/// Notification service provider.
-///
-/// Provides a singleton [NotificationService] instance.
-final notificationServiceProvider = Provider<NotificationService>(
-  (ref) => NotificationService(),
-);
+/// Provider for the [NotificationService].
+final notificationServiceProvider =
+    Provider<NotificationService>((ref) => NotificationService());

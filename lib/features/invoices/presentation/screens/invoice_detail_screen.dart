@@ -9,6 +9,7 @@ import 'package:basir_accounting_system/features/invoices/domain/entities/invoic
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_pdf_provider.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
+import 'package:basir_accounting_system/features/zatca/presentation/widgets/zatca_status_badge.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,11 @@ class InvoiceDetailScreen extends ConsumerWidget {
             icon: Icon(appIcons.share),
             tooltip: context.l10n.actionShare,
             onPressed: () => ref.refresh(shareInvoicePdfProvider(invoice)),
+          ),
+          IconButton(
+            icon: const Icon(Icons.email_outlined),
+            tooltip: context.l10n.actionEmailInvoice,
+            onPressed: () => ref.refresh(emailInvoiceProvider(invoice)),
           ),
           IconButton(
             icon: Icon(appIcons.pdf),
@@ -112,6 +118,8 @@ class InvoiceDetailScreen extends ConsumerWidget {
                   fontWeight: FontWeights.bold,
                 ),
               ),
+              const SizedBox(height: Spacing.xs),
+              ZatcaStatusBadge(status: invoice.zatcaStatus),
               if (isPaid && invoice.paidDate != null)
                 Text(
                   '${ctx.l10n.labelPaidDate}: '

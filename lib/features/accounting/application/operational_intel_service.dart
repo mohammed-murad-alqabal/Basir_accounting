@@ -24,18 +24,13 @@ class OperationalIntelService extends _$OperationalIntelService
   AgentAuthority get authority => AgentAuthority.medium;
 
   /// Validates the operational feasibility and impact of the transaction.
-  ///
-  /// ## Operational Checks:
-  /// 1. **Sales-Inventory Alignment**: Verifies material availability for
-  ///    sales invoices.
-  /// 2. **Priority Monitoring**: Adjusts confidence levels and processing
-  ///    speed based on operational urgency (high-priority flags).
   @override
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];
     var confidenceScore = 0.92;
     var isAllowed = true;
     final l10n = lookupAppLocalizations(Locale(context.locale));
+    final suggestedAdjustments = <String, dynamic>{};
 
     // 1. Transaction Type Operational Analysis
     if (context.transactionType == 'sales') {
@@ -70,6 +65,16 @@ class OperationalIntelService extends _$OperationalIntelService
                 ),
               );
               confidenceScore = 0.75;
+
+              // Smart Adjustment: Suggest alternative warehouse if available
+              suggestedAdjustments['warehouse_optimization'] = {
+                'itemId': itemId,
+                'currentWarehouse': warehouseId ?? 'Primary',
+                'required': quantity,
+                'available': stock,
+                'suggestion': l10n.agentSuggestionWarehouseOptimizationReason,
+                'title': l10n.agentSuggestionWarehouseOptimization,
+              };
             } else {
               rationale.add(
                 l10n.agentRationaleOperationalSufficient(
@@ -108,6 +113,8 @@ class OperationalIntelService extends _$OperationalIntelService
       isAllowed: isAllowed,
       rationale: rationale.join('\n'),
       confidenceScore: confidenceScore,
+      suggestedAdjustments:
+          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
     );
   }
 }

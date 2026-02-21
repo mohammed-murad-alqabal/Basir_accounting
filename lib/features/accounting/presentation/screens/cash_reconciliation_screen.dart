@@ -7,7 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// تتيح للمستخدم مطابقة الرصيد الدفتري مع الرصيد الفعلي في الصندوق.
 /// (Phase 9 - Institutional Deepening - ATLAS Image 011)
 /// شاشة تسوية النقدية (Cash Reconciliation Screen)
+/// Screen for performing manual cash reconciliation.
 class CashReconciliationScreen extends ConsumerStatefulWidget {
+  /// Creates a [CashReconciliationScreen].
   const CashReconciliationScreen({super.key});
 
   @override

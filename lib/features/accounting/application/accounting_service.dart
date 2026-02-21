@@ -377,7 +377,7 @@ class AccountingService extends _$AccountingService {
       if (updatedInvoice.qrCode != null) {
         final invoiceRepo = ref.read(invoiceRepositoryProvider);
         await invoiceRepo.updateInvoice(updatedInvoice);
-        ref.invalidate(invoicesProvider);
+        // ref.invalidate(invoicesProvider); // Removed to break circular dependency
       }
     } on Exception catch (e) {
       debugPrint('❌ [ZATCA] Rust bridge finalization failed: $e');
@@ -783,6 +783,12 @@ class AccountingService extends _$AccountingService {
   /// Retrieves the complete list of accounts.
   Future<List<Account>> getAccounts() async => _repository.getAccounts();
 
+  /// Updates an existing account.
+  Future<void> updateAccount(Account account) async {
+    await _repository.updateAccount(account);
+    ref.invalidateSelf(); // Refresh the provider state
+  }
+
   /// Retrieves a specific account by identifier.
 
   Future<Account?> getAccountById(String id) async =>
@@ -808,7 +814,9 @@ class AccountingService extends _$AccountingService {
 
     final isPeriodOpen = await _financialYearService.canPostToDate(entry.date);
     if (!isPeriodOpen) {
-      throw Exception('Financial period is closed or locked');
+      throw Exception(
+        'Financial period is closed or locked for date: ${entry.date}',
+      );
     }
 
     var finalEntry = entry;

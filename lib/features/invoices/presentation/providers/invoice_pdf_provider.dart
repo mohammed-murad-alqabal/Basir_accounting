@@ -49,6 +49,27 @@ final shareInvoicePdfProvider = FutureProvider.family<void, Invoice>((
   );
 });
 
+/// Provider لإرسال الفاتورة عبر البريد الإلكتروني (עם موضوع ونص جاهز)
+final emailInvoiceProvider = FutureProvider.family<void, Invoice>((
+  ref,
+  invoice,
+) async {
+  final pdfService = ref.read(invoicePdfServiceProvider);
+  final pdfBytes = await pdfService.generateInvoicePdf(invoice);
+
+  // TODO(basir): Get company name from settings
+  const companyName = 'Basir Accounting';
+
+  await Printing.sharePdf(
+    bytes: pdfBytes,
+    filename: 'invoice_${invoice.invoiceNumber}.pdf',
+    subject: 'Invoice #${invoice.invoiceNumber} from $companyName',
+    body: 'Dear Customer,\n\n'
+        'Please find attached invoice #${invoice.invoiceNumber}.\n\n'
+        'Best regards,\n$companyName',
+  );
+});
+
 /// Provider لطباعة إيصال حراري (POS Receipt)
 final printReceiptProvider =
     FutureProvider.family<void, ({Invoice invoice, AppLocalizations l10n})>((

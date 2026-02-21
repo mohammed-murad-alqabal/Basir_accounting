@@ -115,6 +115,7 @@ class FinancialStatementService extends _$FinancialStatementService {
               label: account.nameEn,
               amount: adjustedBalance,
               indentLevel: 1,
+              accountId: account.id,
             ),
           );
           sectionTotal += adjustedBalance;
@@ -176,6 +177,7 @@ class FinancialStatementService extends _$FinancialStatementService {
             label: account.nameEn,
             amount: balance,
             indentLevel: 1,
+            accountId: account.id,
           ),
         );
         totalAssets += balance;
@@ -210,6 +212,7 @@ class FinancialStatementService extends _$FinancialStatementService {
               label: account.nameEn,
               amount: balance,
               indentLevel: 1,
+              accountId: account.id,
             ),
           );
           totalLiabilitiesEquity += balance;
