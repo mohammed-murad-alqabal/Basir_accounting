@@ -97,7 +97,7 @@ make report        # إنشاء تقرير جودة شامل
 ## 🏗️ البنية التقنية
 
 ```text
-basir_accounting_system/
+Basir_accounting/
 ├── lib/                    # Flutter/Dart Application
 │   ├── core/               # المكونات الأساسية
 │   ├── features/           # الوحدات المحاسبية
