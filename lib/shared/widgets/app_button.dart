@@ -89,8 +89,8 @@ class _AppButtonState extends State<AppButton> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final bool isEnabled = widget.onPressed != null && !widget.isLoading;
-    final Color bgColor = widget.color ?? _getDefaultBgColor(isEnabled);
     final Color fgColor = _getDefaultFgColor(isEnabled);
+    final Color bgColor = widget.color ?? _getDefaultBgColor(isEnabled);
 
     return GestureDetector(
       onTapDown: (_) => isEnabled ? _scaleController.forward() : null,
@@ -108,16 +108,13 @@ class _AppButtonState extends State<AppButton> with SingleTickerProviderStateMix
             border: widget.type == AppButtonType.outlined 
                 ? Border.all(color: AppColors.primary, width: 2) 
                 : null,
-            boxShadow: isEnabled && widget.type != AppButtonType.text && widget.type != AppButtonType.outlined
-                ? [BoxShadow(color: bgColor.withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 4))]
-                : null,
           ),
           child: Center(
             child: widget.isLoading
-                ? SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: fgColor),
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                   )
                 : Row(
                     mainAxisSize: MainAxisSize.min,
@@ -143,7 +140,7 @@ class _AppButtonState extends State<AppButton> with SingleTickerProviderStateMix
   }
 
   Color _getDefaultBgColor(bool isEnabled) {
-    if (!isEnabled) return Colors.grey.shade300;
+    if (!isEnabled) return Colors.grey;
     return switch (widget.type) {
       AppButtonType.primary => AppColors.primary,
       AppButtonType.secondary => AppColors.secondary,
@@ -153,7 +150,7 @@ class _AppButtonState extends State<AppButton> with SingleTickerProviderStateMix
   }
 
   Color _getDefaultFgColor(bool isEnabled) {
-    if (!isEnabled) return Colors.grey.shade600;
+    if (!isEnabled) return Colors.white70;
     if (widget.type == AppButtonType.outlined || widget.type == AppButtonType.text) {
       return AppColors.primary;
     }
@@ -169,7 +166,6 @@ class _AppButtonState extends State<AppButton> with SingleTickerProviderStateMix
   }
 }
 
-/// مكون متوافق مع AppPrimaryButton
 class AppPrimaryButton extends StatelessWidget {
   const AppPrimaryButton({
     required this.label,
@@ -202,7 +198,6 @@ class AppPrimaryButton extends StatelessWidget {
   }
 }
 
-/// مكون متوافق مع AppSecondaryButton
 class AppSecondaryButton extends StatelessWidget {
   const AppSecondaryButton({
     required this.label,
@@ -235,7 +230,6 @@ class AppSecondaryButton extends StatelessWidget {
   }
 }
 
-/// مكون متوافق مع AppTextButton
 class AppTextButton extends StatelessWidget {
   const AppTextButton({
     required this.label,
