@@ -36,11 +36,11 @@ dependencies:
   fl_chart: ^1.1.1
   flex_color_picker: ^3.7.2
   flutter:
-    sdk: flutter
+    sdk: ^3.5.0
   flutter_contacts: ^1.1.9+2
   flutter_local_notifications: ^19.5.0
   flutter_localizations:
-    sdk: flutter
+    sdk: ^3.5.0
   flutter_riverpod: ^2.6.1
   flutter_rust_bridge: 2.11.1
   flutter_secure_storage: ^9.0.0
@@ -76,10 +76,10 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_native_splash: ^2.3.5
   flutter_test:
-    sdk: flutter
+    sdk: ^3.5.0
   freezed: ^2.5.2
   integration_test:
-    sdk: flutter
+    sdk: ^3.5.0
   isar_generator: ^3.1.0+1
   json_serializable: ^6.8.0
   mockito: ^5.4.4
