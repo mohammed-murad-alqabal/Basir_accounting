@@ -596,3 +596,16 @@ proptest = "1"
 **Effective Date:** January 3, 2026
 **Scope:** MVP Phase 1 Only
 **Technology:** Rust + PostgreSQL + proptest
+
+---
+## Phase 2: Advanced Compliance & Islamic Finance (AAOIFI)
+- [ ] 22. Implement Islamic Finance Core Models (AAOIFI)
+  - [x] 22.1 Define IslamicFinanceContract enum (Murabaha, Mudaraba, etc.)
+  - [x] 22.2 Define ShariaComplianceStatus structure
+  - [ ] 22.3 Implement Sharia validation logic for Murabaha contracts
+  - _Requirements: 1.1, 10.4 (AAOIFI Compliance)_
+- [ ] 23. Enhance Automated Compliance Verification
+  - [x] 23.1 Implement CP-001 (Double-Entry Balance) Unit Tests in Rust
+  - [ ] 23.2 Implement CP-002 (Standards Reference) Verification Tests
+  - [ ] 23.3 Implement CP-005 (IAS 21 Currency Arithmetic) Verification Tests
+  - _Requirements: 2.1, 2.3, 5.1 (Correctness Properties)_
