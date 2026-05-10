@@ -43,6 +43,7 @@ pub fn default_chart_of_accounts() -> Vec<Account> {
     .with_parent(ca_id)
     .with_ifrs_tag("ifrs-full:CashAndCashEquivalents");
     cash.id = stable_id("1110");
+    cash.is_monetary = true;
     accounts.push(cash);
 
     // 1120 Trade Receivables
@@ -56,6 +57,7 @@ pub fn default_chart_of_accounts() -> Vec<Account> {
     .with_ifrs_tag("ifrs-full:TradeAndOtherReceivables");
     ar.id = stable_id("1120");
     ar.requires_partner = true;
+    ar.is_monetary = true;
     accounts.push(ar);
 
     // 1200 Non-Current Assets
@@ -115,6 +117,7 @@ pub fn default_chart_of_accounts() -> Vec<Account> {
     .with_ifrs_tag("ifrs-full:TradeAndOtherPayables");
     ap.id = stable_id("2110");
     ap.requires_partner = true;
+    ap.is_monetary = true;
     accounts.push(ap);
 
     // ==========================================

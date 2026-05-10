@@ -63,3 +63,14 @@ impl ExchangeRateService {
         self.registry.read().await.is_functional(code)
     }
 }
+
+/// Result of a currency revaluation for a specific account.
+#[derive(Debug, Clone)]
+pub struct RevaluationResult {
+    pub account_id: uuid::Uuid,
+    pub currency_code: String,
+    pub balance_fc: Decimal,
+    pub old_balance_lc: Decimal,
+    pub new_balance_lc: Decimal,
+    pub gain_loss: Decimal,
+}

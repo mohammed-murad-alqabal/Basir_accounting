@@ -926,7 +926,54 @@ pub fn load_all_standards() -> Vec<StandardEntry> {
     all.extend(load_ias_8());
     all.extend(load_ias_10());
     all.extend(load_ifrs_15());
-    all.extend(load_ifrs_18());
+    all.extend(load_ias_21());
+    all
+}
+
+/// Load IAS 21: The Effects of Changes in Foreign Exchange Rates.
+pub fn load_ias_21() -> Vec<StandardEntry> {
+    let effective_date = NaiveDate::from_ymd_opt(2005, 1, 1).unwrap();
+
+    vec![
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IAS, "21", "21"),
+            title: "Initial Recognition".to_string(),
+            full_text: "A foreign currency transaction shall be recorded, on initial recognition \
+                       in the functional currency, by applying to the foreign currency amount \
+                       the spot exchange rate between the functional currency and the foreign \
+                       currency at the date of the transaction.".to_string(),
+            effective_date,
+            supersedes: vec![],
+            superseded_by: None,
+        },
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IAS, "21", "23"),
+            title: "Reporting at End of Subsequent Periods".to_string(),
+            full_text: "At the end of each reporting period: (a) foreign currency monetary items \
+                       shall be translated using the closing rate; (b) non-monetary items that \
+                       are measured in terms of historical cost in a foreign currency shall be \
+                       translated using the exchange rate at the date of the transaction; and \
+                       (c) non-monetary items that are measured at fair value in a foreign \
+                       currency shall be translated using the exchange rates at the date when \
+                       the fair value was measured.".to_string(),
+            effective_date,
+            supersedes: vec![],
+            superseded_by: None,
+        },
+        StandardEntry {
+            reference: StandardReference::new(StandardBody::IAS, "21", "28"),
+            title: "Recognition of Exchange Differences".to_string(),
+            full_text: "Exchange differences arising on the settlement of monetary items or on \
+                       translating monetary items at rates different from those at which they \
+                       were translated on initial recognition during the period or in previous \
+                       financial statements shall be recognised in profit or loss in the period \
+                       in which they arise.".to_string(),
+            effective_date,
+            supersedes: vec![],
+            superseded_by: None,
+        },
+    ]
+}xtend(load_ifrs_18());
     all.extend(load_isa_500());
     all.extend(load_sox_404());
     all.extend(load_coso_framework());

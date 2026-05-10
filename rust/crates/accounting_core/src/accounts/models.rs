@@ -104,6 +104,9 @@ pub struct Account {
     pub description: Option<String>,
     /// Does this account require a partner_id in journal lines? (CP-010)
     pub requires_partner: bool,
+    /// Is this a monetary item? (IAS 21)
+    /// Monetary items are units of currency held and assets and liabilities to be received or paid in a fixed or determinable number of units of currency.
+    pub is_monetary: bool,
     /// Is this a posting account? (Leaf node)
     pub is_active: bool,
 }
@@ -129,6 +132,7 @@ impl Account {
             currency: None,
             description: None,
             requires_partner: false,
+            is_monetary: false,
             is_active: true,
         }
     }

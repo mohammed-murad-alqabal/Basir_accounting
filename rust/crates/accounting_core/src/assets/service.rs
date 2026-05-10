@@ -53,8 +53,20 @@ impl AssetService {
                 original_amount: None,
                 partner_id: None,
             },
-            // Credit Payment Source
-            JournalEntryLine::credit(credit_account_id, asset.cost, &description),
+            // Credit Payment Source (e.g., Accounts Payable or Cash)
+            JournalEntryLine {
+                line_id: Uuid::new_v4(),
+                line_number: 2,
+                account_id: credit_account_id,
+                debit_amount: Decimal::ZERO,
+                credit_amount: asset.cost,
+                description: description.clone(),
+                source_document_ref: Some(asset.code.clone()),
+                original_currency: None,
+                exchange_rate: None,
+                original_amount: None,
+                partner_id: None, // Could be linked to a vendor if credit_account is AP
+            },
         ];
 
         let entry = JournalEntry {

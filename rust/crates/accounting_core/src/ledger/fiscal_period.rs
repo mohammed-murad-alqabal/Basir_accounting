@@ -57,4 +57,37 @@ pub enum PeriodError {
     NoOpenPeriodFound(NaiveDate),
     #[error("Fiscal period {0} is {1:?}")]
     PeriodNotOpen(String, PeriodStatus),
+    #[error("Cannot close period: {0}")]
+    ClosingCheckFailed(String),
+}
+
+/// Checklist for closing a fiscal period.
+/// Implements internal controls (SOX 404 / COSO).
+#[derive(Debug, Clone, Default)]
+pub struct PeriodClosingChecklist {
+    /// No entries in Draft or PendingApproval status
+    pub no_unposted_entries: bool,
+    /// All sales invoices are finalized or cancelled
+    pub no_draft_invoices: bool,
+    /// All purchase bills are finalized or cancelled
+    pub no_draft_bills: bool,
+    /// Bank reconciliation is complete
+    pub bank_reconciliation_done: bool,
+    /// Inventory valuation is updated
+    pub inventory_valuation_done: bool,
+}
+
+impl PeriodClosingChecklist {
+    pub fn is_ready_to_close(&self) -> Result<(), String> {
+        if !self.no_unposted_entries {
+            return Err("There are unposted journal entries".to_string());
+        }
+        if !self.no_draft_invoices {
+            return Err("There are draft sales invoices".to_string());
+        }
+        if !self.no_draft_bills {
+            return Err("There are draft purchase bills".to_string());
+        }
+        Ok(())
+    }
 }

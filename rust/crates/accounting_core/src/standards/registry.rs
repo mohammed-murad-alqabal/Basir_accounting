@@ -179,18 +179,6 @@ impl StandardsRegistry {
             registry.register(entry);
         }
 
-        // Keep legacy IAS 21 entry for compatibility
-        registry.register(StandardEntry {
-            reference: StandardReference::new(StandardBody::IAS, "21", "23"),
-            title: "Reporting at End of Subsequent Periods".to_string(),
-            full_text: "At the end of each reporting period: (a) foreign \
-                       currency monetary items shall be translated using the \
-                       closing rate...".to_string(),
-            effective_date: NaiveDate::from_ymd_opt(2005, 1, 1).unwrap(),
-            supersedes: vec![],
-            superseded_by: None,
-        });
-
         registry
     }
 }

@@ -144,4 +144,74 @@ impl SalesService {
             },
         }
     }
+
+    /// Generates a Journal Entry for a sales invoice according to IFRS 15.
+    /// Dr Accounts Receivable
+    /// Cr Revenue
+    pub fn generate_gl_entry(
+        invoice: &SalesInvoice,
+        created_by: uuid::Uuid,
+    ) -> crate::ledger::models::JournalEntry {
+        use crate::ledger::models::{
+            EntryStatus, EntryType, JournalEntry, JournalEntryLine, StandardsJustification,
+            TemporalJustification,
+        };
+        use rust_decimal::Decimal;
+
+        let entry_id = uuid::Uuid::new_v4();
+        let lines = vec![
+            // Debit Accounts Receivable
+            JournalEntryLine {
+                line_id: uuid::Uuid::new_v4(),
+                line_number: 1,
+                account_id: invoice.ar_account_id,
+                debit_amount: invoice.total_amount,
+                credit_amount: Decimal::ZERO,
+                description: format!("Accounts Receivable - {}", invoice.invoice_number),
+                source_document_ref: Some(invoice.id.to_string()),
+                original_currency: None,
+                exchange_rate: None,
+                original_amount: None,
+                partner_id: Some(invoice.customer_id),
+            },
+            // Credit Revenue
+            JournalEntryLine {
+                line_id: uuid::Uuid::new_v4(),
+                line_number: 2,
+                account_id: invoice.income_account_id,
+                debit_amount: Decimal::ZERO,
+                credit_amount: invoice.total_amount,
+                description: format!("Revenue Recognition - {}", invoice.invoice_number),
+                source_document_ref: Some(invoice.id.to_string()),
+                original_currency: None,
+                exchange_rate: None,
+                original_amount: None,
+                partner_id: Some(invoice.customer_id),
+            },
+        ];
+
+        JournalEntry {
+            entry_id,
+            entry_number: format!("SINV-{}", invoice.invoice_number),
+            description: format!("Sales Invoice {}", invoice.invoice_number),
+            entry_type: EntryType::Standard,
+            status: EntryStatus::Draft,
+            linked_entry_id: None,
+            adjustment_reason: None,
+            temporal: TemporalJustification::new(
+                invoice.invoice_date.date_naive(),
+                invoice.invoice_date.date_naive(),
+            ),
+            standards: StandardsJustification::simple("IFRS 15"),
+            lines,
+            created_by,
+            created_at: chrono::Utc::now(),
+            approved_by: None,
+            approved_at: None,
+            posted_by: None,
+            posted_at: None,
+            hash: String::new(),
+            previous_hash: String::new(),
+        }
+    }
 }
