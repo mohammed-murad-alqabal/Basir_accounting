@@ -19,8 +19,7 @@ class FinancialYearService extends _$FinancialYearService {
   @override
   FutureOr<void> build() {}
 
-  FinancialYearRepository get _repository =>
-      ref.read(financialYearRepositoryProvider);
+  FinancialYearRepository get _repository => ref.read(financialYearRepositoryProvider);
 
   /// Initializes the default financial year if none exists in the system.
   /// (Implementation of FR-ACC-015)
@@ -88,8 +87,7 @@ class FinancialYearService extends _$FinancialYearService {
     if (!targetYear.lockedPeriodIds.contains(periodId)) return;
 
     final updatedYear = targetYear.copyWith(
-      lockedPeriodIds:
-          targetYear.lockedPeriodIds.where((id) => id != periodId).toList(),
+      lockedPeriodIds: targetYear.lockedPeriodIds.where((id) => id != periodId).toList(),
     );
 
     await _repository.saveFinancialYear(updatedYear);
@@ -131,8 +129,7 @@ class FinancialYearService extends _$FinancialYearService {
     for (final account in leafAccounts) {
       final balance = await accountingRepo.getAccountBalance(account.id);
 
-      if (account.type == AccountType.revenue ||
-          account.type == AccountType.expense) {
+      if (account.type == AccountType.revenue || account.type == AccountType.expense) {
         // P&L accounts: aggregate into Net Income
         // Revenue (Credit nature) - Expense (Debit nature)
         if (account.type == AccountType.revenue) {
@@ -148,12 +145,9 @@ class FinancialYearService extends _$FinancialYearService {
           JournalEntryLine(
             accountId: account.id,
             accountName: account.nameEn,
-            debit:
-                account.nature == AccountNature.debit ? balance : Decimal.zero,
-            credit:
-                account.nature == AccountNature.credit ? balance : Decimal.zero,
-            description:
-                'Opening Balance: Fiscal Year ${nextYear.startDate.year}',
+            debit: account.nature == AccountNature.debit ? balance : Decimal.zero,
+            credit: account.nature == AccountNature.credit ? balance : Decimal.zero,
+            description: 'Opening Balance: Fiscal Year ${nextYear.startDate.year}',
           ),
         );
       }
@@ -192,8 +186,7 @@ class FinancialYearService extends _$FinancialYearService {
         standardReference: 'IAS 1: Financial Statement Presentation',
         recognitionBasis: 'Opening Balances',
       ),
-      description:
-          'Opening Balance Rollover from Year ${currentYear.startDate.year}',
+      description: 'Opening Balance Rollover from Year ${currentYear.startDate.year}',
       status: JournalEntryStatus.posted,
       lines: openingLines,
       sourceDocument: 'YEAR_END_ROLLOVER',
@@ -217,8 +210,7 @@ class FinancialYearService extends _$FinancialYearService {
     await closeYear(currentYearId, user.id);
   }
 
-  String _getPeriodId(DateTime date) =>
-      '${date.year}-${date.month.toString().padLeft(2, '0')}';
+  String _getPeriodId(DateTime date) => '${date.year}-${date.month.toString().padLeft(2, '0')}';
 
   /// Permanently closes a financial year after performing integrity checks.
   ///
@@ -241,9 +233,7 @@ class FinancialYearService extends _$FinancialYearService {
     final entries = await accountingRepo.getJournalEntries();
 
     final pendingDrafts = entries.where(
-      (e) =>
-          e.status == JournalEntryStatus.draft &&
-          targetYear.containsDate(e.date),
+      (e) => e.status == JournalEntryStatus.draft && targetYear.containsDate(e.date),
     );
 
     if (pendingDrafts.isNotEmpty) {
