@@ -97,6 +97,5 @@ class FinancialVoucher with _$FinancialVoucher {
   }) = _FinancialVoucher;
 
   /// deserialization from JSON format.
-  factory FinancialVoucher.fromJson(Map<String, dynamic> json) =>
-      _$FinancialVoucherFromJson(json);
+  factory FinancialVoucher.fromJson(Map<String, dynamic> json) => _$FinancialVoucherFromJson(json);
 }
