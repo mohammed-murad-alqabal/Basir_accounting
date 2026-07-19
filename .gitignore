@@ -188,6 +188,8 @@ libisar.so
 *.db-shm
 *.db-wal
 *.isar
+*.isar-shm
+*.isar-wal
 *.isar.lock
 sqlite_mcp_server.db
 
