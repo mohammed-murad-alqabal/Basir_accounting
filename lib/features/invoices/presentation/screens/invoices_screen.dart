@@ -67,6 +67,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
         ),
       ],
       floatingActionButton: FloatingActionButton(
+        heroTag: 'invoices_add_fab',
         onPressed: _createNewInvoice,
         backgroundColor: AppColors.primary,
         child: Icon(appIcons.add, color: Colors.white),

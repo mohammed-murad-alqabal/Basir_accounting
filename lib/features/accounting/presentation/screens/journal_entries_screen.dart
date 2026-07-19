@@ -135,6 +135,7 @@ class JournalEntriesScreen extends ConsumerWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'journal_entries_add_fab',
         onPressed: () async {
           final result = await Navigator.push<bool>(
             context,

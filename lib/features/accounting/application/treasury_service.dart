@@ -47,7 +47,8 @@ class TreasuryService extends _$TreasuryService {
   /// ## Throws
   /// - [Exception] if the voucher is not a receipt or period is closed.
   Future<String> issueReceipt(FinancialVoucher voucher) async {
-    final financialYearService = ref.read(financialYearServiceProvider.notifier);
+    final financialYearService =
+        ref.read(financialYearServiceProvider.notifier);
     final voucherRepo = ref.read(financialVoucherRepositoryProvider);
     if (voucher.type != VoucherType.receipt) {
       throw Exception('Voucher must be a receipt');
@@ -112,7 +113,8 @@ class TreasuryService extends _$TreasuryService {
     final accountingService = ref.read(accountingServiceProvider.notifier);
     await accountingService.postJournalEntry(entry);
 
-    final postedVoucher = voucher.copyWith(isPosted: true, journalEntryId: entry.id);
+    final postedVoucher =
+        voucher.copyWith(isPosted: true, journalEntryId: entry.id);
     await voucherRepo.addVoucher(postedVoucher);
     return entry.id;
   }
@@ -129,7 +131,8 @@ class TreasuryService extends _$TreasuryService {
   /// ## Throws
   /// - [Exception] if the voucher is not a payment or period is closed.
   Future<String> issuePayment(FinancialVoucher voucher) async {
-    final financialYearService = ref.read(financialYearServiceProvider.notifier);
+    final financialYearService =
+        ref.read(financialYearServiceProvider.notifier);
     final voucherRepo = ref.read(financialVoucherRepositoryProvider);
     if (voucher.type != VoucherType.payment) {
       throw Exception('Voucher must be a payment');
@@ -194,7 +197,8 @@ class TreasuryService extends _$TreasuryService {
     final accountingService = ref.read(accountingServiceProvider.notifier);
     await accountingService.postJournalEntry(entry);
 
-    final postedVoucher = voucher.copyWith(isPosted: true, journalEntryId: entry.id);
+    final postedVoucher =
+        voucher.copyWith(isPosted: true, journalEntryId: entry.id);
     await voucherRepo.addVoucher(postedVoucher);
     return entry.id;
   }
