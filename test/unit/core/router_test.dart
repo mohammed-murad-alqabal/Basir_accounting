@@ -1,7 +1,9 @@
 /// اختبارات AppRouter
 library;
 
+import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/router.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
 import 'package:basir_accounting_system/features/auth/presentation/screens/login_screen.dart';
 import 'package:basir_accounting_system/features/auth/presentation/screens/setup_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
@@ -24,8 +26,11 @@ void main() {
 
       // Build a simple MaterialApp first
       await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
             home: Scaffold(),
             localizationsDelegates: [
               AppLocalizations.delegate,
@@ -46,6 +51,9 @@ void main() {
       // Pump the actual widget
       await tester.pumpWidget(
         ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
           child: MaterialApp(
             home: widget,
             localizationsDelegates: const [
@@ -76,8 +84,11 @@ void main() {
 
       // Build a simple MaterialApp first
       await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
             home: Scaffold(),
             localizationsDelegates: [
               AppLocalizations.delegate,
@@ -98,6 +109,9 @@ void main() {
       // Pump the actual widget
       await tester.pumpWidget(
         ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
           child: MaterialApp(
             home: widget,
             localizationsDelegates: const [
@@ -232,6 +246,9 @@ void main() {
 
         await tester.pumpWidget(
           ProviderScope(
+            overrides: [
+              appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+            ],
             child: MaterialApp(
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
