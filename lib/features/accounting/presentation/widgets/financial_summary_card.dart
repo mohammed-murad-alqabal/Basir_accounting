@@ -85,9 +85,8 @@ class FinancialSummaryCard extends ConsumerWidget {
   }
 
   /// Calculates the flat sum of balances for a specific [AccountType].
-  double _sumByType(List<Account> accounts, AccountType type) => accounts
-      .where((a) => a.type == type)
-      .fold(0, (sum, a) => sum + a.balance.toDouble());
+  double _sumByType(List<Account> accounts, AccountType type) =>
+      accounts.where((a) => a.type == type).fold(0, (sum, a) => sum + a.balance.toDouble());
 
   /// Builds a vertical metric indicator with thematic coloring.
   Widget _buildStatItem(
