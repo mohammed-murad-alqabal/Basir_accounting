@@ -94,10 +94,12 @@ class AppEnhancedButton extends StatefulWidget {
 }
 
 // ignore: lines_longer_than_80_chars
-class _AppEnhancedButtonState extends State<AppEnhancedButton>
-    with SingleTickerProviderStateMixin {
+class _AppEnhancedButtonState extends State<AppEnhancedButton> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scale;
+
+  bool _isHovered = false;
+  bool _isFocused = false;
 
   @override
   void initState() {
@@ -151,74 +153,127 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
       fontWeight: FontWeights.bold,
     );
 
+    final mouseCursor = isEnabled ? SystemMouseCursors.click : SystemMouseCursors.forbidden;
+
     return OverflowDetector(
       name: 'AppEnhancedButton(${widget.label})',
-      child: GestureDetector(
-        onTapDown: _onTapDown,
-        onTapUp: _onTapUp,
-        onTapCancel: _onTapCancel,
-        onTap: isEnabled ? widget.onPressed : null,
-        child: ScaleTransition(
-          scale: _scale,
-          child: Container(
-            width: widget.width ?? double.infinity,
-            constraints: BoxConstraints(minHeight: widget.height),
-            padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
-            decoration: BoxDecoration(
-              color: gradient == null ? bgColor : null,
-              gradient: gradient,
-              borderRadius: widget.borderRadius ?? Radii.borderRadiusMd,
-              border: widget.type == AppEnhancedButtonType.outlined
-                  ? Border.all(color: fgColor, width: 1.5)
-                  : null,
-              boxShadow: isEnabled && elevation > 0
-                  ? [
-                      BoxShadow(
-                        color: shadowColor,
-                        blurRadius: elevation * 2,
-                        offset: Offset(0, elevation),
-                      ),
-                    ]
-                  : null,
-            ),
-            child: Center(
-              child: widget.isLoading
-                  ? SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(fgColor),
-                      ),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(vertical: Spacing.xs),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (widget.icon != null) ...[
-                            Icon(widget.icon, color: fgColor, size: 22),
-                            const SizedBox(width: Spacing.sm),
-                          ],
-                          Expanded(
-                            child: Text(
-                              widget.label,
-                              style: textStyle,
-                              textAlign: widget.textAlign,
-                              maxLines: widget.maxLines,
-                              overflow: TextOverflow.ellipsis,
-                              textDirection: TextDirection.rtl,
-                            ),
+      child: Focus(
+        onFocusChange: (focused) => setState(() => _isFocused = focused),
+        child: MouseRegion(
+          onEnter: (_) => setState(() => _isHovered = true),
+          onExit: (_) => setState(() => _isHovered = false),
+          cursor: mouseCursor,
+          child: GestureDetector(
+            onTapDown: _onTapDown,
+            onTapUp: _onTapUp,
+            onTapCancel: _onTapCancel,
+            onTap: isEnabled ? widget.onPressed : null,
+            child: ScaleTransition(
+              scale: _scale,
+              child: Container(
+                width: widget.width ?? double.infinity,
+                constraints: BoxConstraints(minHeight: widget.height),
+                padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
+                decoration: BoxDecoration(
+                  color: gradient == null
+                      ? _isHovered && isEnabled
+                          ? bgColor.withValues(alpha: 0.9)
+                          : bgColor
+                      : null,
+                  gradient: gradient == null
+                      ? null
+                      : _isHovered && isEnabled
+                          ? _darkenGradient(gradient)
+                          : gradient,
+                  borderRadius: widget.borderRadius ?? Radii.borderRadiusMd,
+                  border: widget.type == AppEnhancedButtonType.outlined
+                      ? Border.all(
+                          color: _isFocused ? AppColors.primaryDark : fgColor,
+                          width: _isFocused ? 2.0 : 1.5,
+                        )
+                      : _isFocused
+                          ? Border.all(color: AppColors.primaryDark, width: 2)
+                          : null,
+                  boxShadow: isEnabled && elevation > 0
+                      ? [
+                          BoxShadow(
+                            color: shadowColor,
+                            blurRadius: elevation * 2,
+                            offset: Offset(0, elevation),
                           ),
-                        ],
-                      ),
+                        ]
+                      : null,
+                ),
+                child: Material(
+                  type: MaterialType.transparency,
+                  borderRadius: widget.borderRadius ?? Radii.borderRadiusMd,
+                  child: InkWell(
+                    onTap: isEnabled ? widget.onPressed : null,
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: widget.borderRadius ?? Radii.borderRadiusMd,
                     ),
+                    child: Center(
+                      child: widget.isLoading
+                          ? SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  fgColor,
+                                ),
+                              ),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: Spacing.xs,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (widget.icon != null) ...[
+                                    Icon(
+                                      widget.icon,
+                                      color: fgColor,
+                                      size: 22,
+                                    ),
+                                    const SizedBox(width: Spacing.sm),
+                                  ],
+                                  Flexible(
+                                    child: Text(
+                                      widget.label,
+                                      style: textStyle,
+                                      textAlign: widget.textAlign,
+                                      maxLines: widget.maxLines,
+                                      textDirection: TextDirection.rtl,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  Gradient _darkenGradient(Gradient original) {
+    if (original is LinearGradient) {
+      final originalColors = original.colors;
+      final modifiedColors = originalColors.map((color) => color.withValues(alpha: 0.9)).toList();
+      return LinearGradient(
+        colors: modifiedColors,
+        begin: original.begin,
+        end: original.end,
+      );
+    }
+    return original;
   }
 
   Gradient? _getDefaultGradient(bool isEnabled) {
@@ -230,7 +285,7 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
   }
 
   Color _getDefaultBgColor(bool isEnabled) {
-    if (!isEnabled) return AppColors.disabled;
+    if (!isEnabled) return AppColors.disabled.withValues(alpha: 0.6);
     return switch (widget.type) {
       AppEnhancedButtonType.primary => AppColors.primary,
       AppEnhancedButtonType.secondary => AppColors.secondary,
@@ -241,7 +296,7 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
   }
 
   Color _getDefaultFgColor(bool isEnabled) {
-    if (!isEnabled) return Colors.white;
+    if (!isEnabled) return AppColors.textDisabled;
     return switch (widget.type) {
       AppEnhancedButtonType.outlined => AppColors.primary,
       AppEnhancedButtonType.text => AppColors.primary,
