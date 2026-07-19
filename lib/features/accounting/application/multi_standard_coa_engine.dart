@@ -1,25 +1,32 @@
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/domain/entities/ifrs18_ontology.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/ifrs18_ontology.dart';
 import 'package:decimal/decimal.dart';
 
-/// الدول المدعومة في دليل الحسابات.
+/// Supported jurisdictions for standard Chart of Accounts generation.
 enum AccountingCountry {
-  /// المعايير العالمية (IFRS)
+  /// International Financial Reporting Standards (IFRS) - Global Baseline.
   global,
 
-  /// المملكة العربية السعودية (ZATCA compliant)
+  /// Kingdom of Saudi Arabia (ZATCA Phase 2 compliant).
   saudiArabia,
 
-  /// دولة الإمارات العربية المتحدة (FTA compliant)
+  /// United Arab Emirates (FTA / UAE VAT compliant).
   uae,
 
-  /// جمهورية مصر العربية (نظام محاسبي موحد)
+  /// Egypt (Unified Accounting System compliant).
   egypt,
 }
 
-/// محرك توليد دليل الحسابات متعدد المعايير.
+/// Multi-Standard Chart of Accounts (COA) Engine.
+///
+/// Orchestrates the generation of localized account trees tailored to
+/// specific regional financial regulations and accounting standards.
 class MultiStandardCoaEngine {
-  /// توليد شجرة الحسابات بناءً على الدولة المحددة
+  /// Generates a standardized account tree for a specific target country.
+  ///
+  /// ## Parameters
+  /// - [country]: The jurisdiction defining the COA structure and naming
+  ///   conventions.
   static List<Account> generateCoa(AccountingCountry country) {
     switch (country) {
       case AccountingCountry.saudiArabia:
@@ -33,7 +40,8 @@ class MultiStandardCoaEngine {
     }
   }
 
-  /// توليد شجرة الحسابات الافتراضية للمعايير العالمية (IFRS).
+  /// Generates the Global Baseline COA following standard IFRS naming and
+  /// grouping.
   static List<Account> _generateGlobalIfrsCoa() => [
         _createAccount(
           id: 'acc-1',
@@ -112,6 +120,16 @@ class MultiStandardCoaEngine {
           isParent: true,
         ),
         _createAccount(
+          id: 'acc-3101',
+          code: '3101',
+          nameAr: 'الأرباح المحتجزة',
+          nameEn: 'Retained Earnings',
+          type: AccountType.equity,
+          nature: AccountNature.credit,
+          parentId: 'acc-3',
+          subType: 'retained_earnings',
+        ),
+        _createAccount(
           id: 'acc-4',
           code: '4',
           nameAr: 'الإيرادات',
@@ -144,7 +162,7 @@ class MultiStandardCoaEngine {
         ),
       ];
 
-  /// توليد شجرة الحسابات وفقاً للمعايير السعودية (ZATCA compliant).
+  /// Generates a Saudi-specific COA with ZATCA regulatory compliance mapping.
   static List<Account> _generateSaudiCoa() {
     final base = _generateGlobalIfrsCoa();
     return [
@@ -161,7 +179,7 @@ class MultiStandardCoaEngine {
     ];
   }
 
-  /// توليد شجرة الحسابات وفقاً لمعايير دولة الإمارات (FTA compliant).
+  /// Generates a UAE-specific COA with FTA VAT compliance mapping.
   static List<Account> _generateUaeCoa() {
     final base = _generateGlobalIfrsCoa();
     return [
@@ -178,7 +196,8 @@ class MultiStandardCoaEngine {
     ];
   }
 
-  /// توليد شجرة الحسابات وفقاً للنظام المحاسبي المصري الموحد.
+  /// Generates an Egyptian COA following the Unified Accounting System
+  /// structure.
   static List<Account> _generateEgyptCoa() => [
         _createAccount(
           id: 'eg-1',
@@ -198,10 +217,9 @@ class MultiStandardCoaEngine {
           nature: AccountNature.debit,
           isParent: true,
         ),
-        // المزيد من التفاصيل حسب النظام المحاسبي المصري الموحد
       ];
 
-  /// دالة مساعدة لإنشاء كائن حساب جديد.
+  /// Factory helper for creating standardized account instances.
   static Account _createAccount({
     required String id,
     required String code,

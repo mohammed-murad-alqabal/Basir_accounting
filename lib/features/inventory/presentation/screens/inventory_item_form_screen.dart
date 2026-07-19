@@ -1,10 +1,10 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/presentation/providers/accounts_provider.dart';
-import 'package:basir_app/features/inventory/domain/entities/inventory_item.dart';
-import 'package:basir_app/features/inventory/presentation/providers/inventory_provider.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/providers/accounts_provider.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
+import 'package:basir_accounting_system/features/inventory/presentation/providers/inventory_provider.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -226,9 +226,7 @@ class _InventoryItemFormScreenState
                 .map(
                   (v) => DropdownMenuItem(
                     value: v,
-                    child: Text(
-                      v.localizedName(isArabic: context.isArabic),
-                    ),
+                    child: Text(v.localizedName(isArabic: context.isArabic)),
                   ),
                 )
                 .toList(),
@@ -289,9 +287,8 @@ class _InventoryItemFormScreenState
             .map(
               (a) => DropdownMenuItem(
                 value: a.id,
-                child: Text(
-                  '${a.code} - ${a.name(isArabic: context.isArabic)}',
-                ),
+                child:
+                    Text('${a.code} - ${a.name(isArabic: context.isArabic)}'),
               ),
             )
             .toList(),

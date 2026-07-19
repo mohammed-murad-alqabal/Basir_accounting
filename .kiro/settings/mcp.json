@@ -2,7 +2,11 @@
   "mcpServers": {
     "git": {
       "command": "uvx",
-      "args": ["mcp-server-git@latest", "--repository", "."],
+      "args": [
+        "mcp-server-git@latest",
+        "--repository",
+        "."
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
@@ -25,16 +29,22 @@
     },
     "fetch": {
       "command": "uvx",
-      "args": ["mcp-server-fetch@latest"],
+      "args": [
+        "mcp-server-fetch@latest"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": true,
-      "autoApprove": ["fetch"]
+      "autoApprove": [
+        "fetch"
+      ]
     },
     "sqlite": {
       "command": "uvx",
-      "args": ["mcp-server-sqlite@latest"],
+      "args": [
+        "mcp-server-sqlite@latest"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
@@ -50,16 +60,25 @@
     },
     "time": {
       "command": "uvx",
-      "args": ["mcp-server-time@latest"],
+      "args": [
+        "mcp-server-time@latest"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
-      "autoApprove": ["get_current_time", "convert_time"]
+      "autoApprove": [
+        "get_current_time",
+        "convert_time"
+      ]
     },
     "filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "."
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
@@ -69,12 +88,15 @@
         "list_directory",
         "read_multiple_files",
         "create_directory",
-        "directory_tree"
+        "directory_tree",
+        "search_files"
       ]
     },
     "github": {
       "command": "uvx",
-      "args": ["mcp-server-github@latest"],
+      "args": [
+        "mcp-server-github@latest"
+      ],
       "env": {
         "GITHUB_TOKEN": "${GITHUB_TOKEN}",
         "FASTMCP_LOG_LEVEL": "DEBUG"
@@ -106,18 +128,27 @@
     },
     "aws-docs": {
       "command": "uvx",
-      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "args": [
+        "awslabs.aws-documentation-mcp-server@latest"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
       "timeout": 30000,
       "retries": 2,
-      "autoApprove": ["search_documentation", "read_documentation", "recommend"]
+      "autoApprove": [
+        "search_documentation",
+        "read_documentation",
+        "recommend"
+      ]
     },
     "context7": {
       "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
@@ -126,7 +157,10 @@
     },
     "memory": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
@@ -142,26 +176,40 @@
     },
     "brave-search": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
       "env": {
         "BRAVE_API_KEY": "${BRAVE_API_KEY}",
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": true,
-      "autoApprove": ["brave_web_search", "brave_local_search"]
+      "autoApprove": [
+        "brave_web_search",
+        "brave_local_search"
+      ]
     },
     "sequential-thinking": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
-      "autoApprove": ["sequentialthinking"]
+      "autoApprove": [
+        "sequentialthinking"
+      ]
     },
     "puppeteer": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },

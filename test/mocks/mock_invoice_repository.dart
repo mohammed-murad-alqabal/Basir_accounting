@@ -3,9 +3,10 @@
 /// يوفر تطبيق وهمي لـ InvoiceRepository للاستخدام في الاختبارات
 library;
 
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/features/invoices/domain/repositories/invoice_repository.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/repositories/invoice_repository.dart';
+import 'package:decimal/decimal.dart';
 
 /// Mock implementation لـ InvoiceRepository
 ///
@@ -88,13 +89,15 @@ class MockInvoiceRepository implements InvoiceRepository {
         _invoices.where((i) => i.status == InvoiceStatus.paid).length;
     final overdueInvoices =
         _invoices.where((i) => i.status == InvoiceStatus.overdue).length;
-    final totalRevenue = _invoices.fold<double>(
-      0,
+    final totalRevenue = _invoices.fold<Decimal>(
+      Decimal.zero,
       (sum, invoice) => sum + invoice.totalAmount,
     );
-    final paidRevenue = _invoices
-        .where((i) => i.status == InvoiceStatus.paid)
-        .fold<double>(0, (sum, invoice) => sum + invoice.totalAmount);
+    final paidRevenue =
+        _invoices.where((i) => i.status == InvoiceStatus.paid).fold<Decimal>(
+              Decimal.zero,
+              (sum, invoice) => sum + invoice.totalAmount,
+            );
 
     return InvoiceStatistics(
       totalInvoices: totalInvoices,

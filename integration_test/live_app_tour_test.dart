@@ -1,5 +1,5 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/main.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

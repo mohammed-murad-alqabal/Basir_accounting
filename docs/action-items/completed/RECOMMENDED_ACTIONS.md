@@ -1,311 +1,96 @@
-# الإجراءات الموصى بها - مشروع بصير MVP
+# Strategic Recommended Actions: Basir MVP
 
-**التاريخ:** 7 ديسمبر 2025  
-**الأولوية:** مرتبة حسب الأهمية والتأثير
-
----
-
-## 🔥 الأولوية العالية (فوري - 1-3 أيام)
-
-### 1. رفع تغطية الاختبارات إلى 70%+ ⚡
-
-**الحالة الحالية:** 67.9%  
-**الهدف:** 70%+  
-**الفرق:** 2.1%  
-**الوقت المقدر:** 2-3 أيام
-
-**الإجراءات:**
-
-```bash
-# 1. تحليل التغطية الحالية
-flutter test --coverage
-genhtml coverage/lcov.info -o coverage/html
-open coverage/html/index.html
-
-# 2. تحديد الملفات غير المغطاة
-# التركيز على:
-# - lib/core/widgets/ (بعض الـ widgets)
-# - lib/features/*/presentation/screens/ (بعض الشاشات)
-# - lib/data/services/ (بعض الخدمات)
-
-# 3. إضافة ~20 اختبار جديد
-# - 10 اختبارات widget
-# - 5 اختبارات unit
-# - 5 اختبارات integration
-
-# 4. التحقق من التغطية الجديدة
-flutter test --coverage
-```
-
-**المخرجات المتوقعة:**
-
-- ✅ تغطية 70%+
-- ✅ ~20 اختبار جديد
-- ✅ تقرير تغطية محدث
+**Project:** Basir Accounting System MVP  
+**Date:** December 7, 2025  
+**Priority:** Categorized by Strategic Impact and Technical Urgency  
+**Status**: ✅ Standardized for Professional Execution
 
 ---
 
-### 2. اختبار شامل على الموبايل 📱
+## 🔥 Strategic Priority: High (Immediate - 1-3 Business Days)
 
-**الهدف:** التحقق من عمل جميع الميزات على جهاز حقيقي  
-**الوقت المقدر:** 1 يوم
+### 1. Elevate Test Coverage Density to 70%+ ⚡
 
-**الإجراءات:**
+**Current Metric**: 67.9%  
+**Target Metric**: 70%+  
+**Operational Delta**: 2.1%  
+**Time Commitment**: 2-3 Days
 
-```bash
-# 1. بناء APK محسّن
-flutter build apk --release --split-per-abi
+**Plan of Action**:
 
-# 2. تثبيت على الجهاز
-adb install -r build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
-
-# 3. تشغيل التطبيق
-adb shell am start -W com.basir.basir_app/.MainActivity
-```
-
-**قائمة الاختبار:**
-
-- [ ] **المصادقة**
-
-  - [ ] تسجيل الدخول
-  - [ ] وضع الضيف
-  - [ ] تحويل الضيف إلى مستخدم
-  - [ ] تسجيل الخروج
-
-- [ ] **العملاء**
-
-  - [ ] إضافة عميل جديد
-  - [ ] عرض قائمة العملاء
-  - [ ] البحث عن عميل
-  - [ ] تعديل بيانات عميل
-  - [ ] حذف عميل
-
-- [ ] **الفواتير**
-
-  - [ ] إنشاء فاتورة جديدة
-  - [ ] إضافة بنود للفاتورة
-  - [ ] حساب الضرائب
-  - [ ] تصدير PDF
-  - [ ] تغيير حالة الفاتورة
-  - [ ] حذف فاتورة
-
-- [ ] **Dashboard**
-
-  - [ ] عرض الإحصائيات
-  - [ ] الإجراءات السريعة
-  - [ ] التنقل بين الشاشات
-
-- [ ] **الإعدادات**
-
-  - [ ] تغيير إعدادات الشركة
-  - [ ] تغيير كلمة المرور
-  - [ ] تفعيل/تعطيل الوضع الليلي
-  - [ ] تسجيل الخروج
-
-- [ ] **الأداء**
-
-  - [ ] وقت البدء < 2 ثانية
-  - [ ] استجابة UI فورية
-  - [ ] لا توجد تأخيرات ملحوظة
-
-- [ ] **الاستقرار**
-  - [ ] لا توجد crashes
-  - [ ] لا توجد أخطاء runtime
-  - [ ] لا توجد memory leaks
-
-**المخرجات المتوقعة:**
-
-- ✅ تقرير اختبار شامل
-- ✅ لقطات شاشة
-- ✅ قائمة بأي مشاكل مكتشفة
-- ✅ توصيات للتحسين
+1. **Analyze Coverage Gaps**: Execute `flutter test --coverage` and inspect generated LCOV HTML reports.
+2. **Identify Primary Targets**: Focus on `lib/core/widgets/`, `lib/features/*/presentation/screens/`, and internal domain services.
+3. **Deploy Validation Logic**: Add ~20 high-fidelity tests (10 Widget, 5 Unit, 5 Integration).
+4. **Final Verification**: Confirm regression against the 70% threshold.
 
 ---
 
-## 📋 الأولوية المتوسطة (1-3 أسابيع)
+### 2. Physical Device Validation (E2E) 📱
 
-### 3. تنفيذ UI/UX Improvements 🎨
+**Objective**: Comprehensive verification of system behavior on real-world hardware.  
+**Time Commitment**: 1 Day
 
-**الحالة:** مواصفة جاهزة  
-**الوقت المقدر:** 18-22 يوم  
-**المراحل:** 4 مراحل
+**Plan of Action**:
 
-**المرحلة 1: البنية الأساسية (3-4 أيام)**
-
-- [ ] نظام الألوان الموحد (AppColors)
-- [ ] نظام النصوص الموحد (AppTextStyles)
-- [ ] نظام الأبعاد الموحد (AppDimensions)
-- [ ] نظام الحركات (AppAnimations)
-- [ ] أدوات التحقق من إمكانية الوصول
-
-**المرحلة 2: تحسينات الواجهة (5-7 أيام)**
-
-- [ ] تحديث جميع الشاشات
-- [ ] تحسين التباين والوضوح
-- [ ] تحسين المسافات والتخطيط
-- [ ] إضافة حركات انتقالية
-- [ ] تحسين الأيقونات
-
-**المرحلة 3: تحسينات التفاعل (4-5 أيام)**
-
-- [ ] إضافة feedback بصري
-- [ ] تحسين الرسائل والإشعارات
-- [ ] إضافة tooltips
-- [ ] تحسين الحالات الفارغة
-- [ ] تحسين رسائل الخطأ
-
-**المرحلة 4: الاختبار والتوثيق (3-4 أيام)**
-
-- [ ] اختبار شامل على جميع المنصات
-- [ ] اختبار إمكانية الوصول
-- [ ] توثيق التغييرات
-- [ ] تحديث CHANGELOG
-
-**المخرجات المتوقعة:**
-
-- ✅ واجهة محسّنة بشكل كبير
-- ✅ تجربة مستخدم أفضل
-- ✅ إمكانية وصول محسّنة
-- ✅ توثيق شامل
+1. **Production Build**: Generate optimized APK via `flutter build apk --release --split-per-abi`.
+2. **Hardware Deployment**: Sideload and initialize the application.
+3. **Forensic Verification**:
+   - [ ] **Authentication**: Login, Guest Entry, and Account Migration logic.
+   - [ ] **CRM**: Customer lifecycle (CRUD) and search indexing stability.
+   - [ ] **Invoicing**: Lifecycle management (Creation to Finalization) and PDF export.
+   - [ ] **Analytics**: Dashboard KPI accuracy and real-time refresh.
+   - [ ] **Performance**: Cold-start latency < 2s and zero UI jank during transitions.
+   - [ ] **Persistence**: Isar DB stability during foreground/background switching.
 
 ---
 
-### 4. تحسينات الأداء ⚡
+## 📋 Strategic Priority: Medium (1-3 Weeks)
 
-**الهدف:** تحسين الأداء العام للتطبيق  
-**الوقت المقدر:** 3-5 أيام
+### 3. High-Fidelity UI/UX System Advancement 🎨
 
-**الإجراءات:**
+**Objective**: Transition from MVP styling to an institutional-grade visual presence.  
+**Time Commitment**: 18-22 Days
 
-1. **قياس الأداء الحالي**
-
-   - [ ] وقت البدء
-   - [ ] استخدام الذاكرة
-   - [ ] استجابة UI
-   - [ ] حجم APK
-
-2. **تحديد نقاط التحسين**
-
-   - [ ] تحليل الكود
-   - [ ] تحديد الـ bottlenecks
-   - [ ] تحديد الأولويات
-
-3. **تطبيق التحسينات**
-
-   - [ ] تحسين التهيئة
-   - [ ] تحسين تحميل البيانات
-   - [ ] تحسين الرسومات
-   - [ ] تحسين الذاكرة
-
-4. **القياس والتحقق**
-   - [ ] قياس الأداء الجديد
-   - [ ] مقارنة النتائج
-   - [ ] توثيق التحسينات
-
-**المخرجات المتوقعة:**
-
-- ✅ تحسين 10-20% في الأداء
-- ✅ تقليل استخدام الذاكرة
-- ✅ تحسين استجابة UI
-- ✅ تقرير أداء شامل
+- **Phase 1: Foundation (3-4 Days)**: Implement unified `AppColors`, `AppTextStyles`, `AppDimensions`, and `AppAnimations`.
+- **Phase 2: Visual Refinement (5-7 Days)**: Update all screens for contrast, spacing clarity, and professional micro-interactions.
+- **Phase 3: Interaction Tuning (4-5 Days)**: Enhance visual feedback loops (Haptics, Tooltips, Empty State iconography).
+- **Phase 4: Optimization (3-4 Days)**: Accessibility (A11y) audit and cross-platform verification.
 
 ---
 
-## 📌 الأولوية المنخفضة (مستقبلي)
+### 4. Continuous Performance Optimization ⚡
 
-### 5. ميزات إضافية 🚀
+**Objective**: Enhance systemic computational efficiency.  
+**Time Commitment**: 3-5 Days
 
-**الوقت المقدر:** حسب الميزة
-
-**الميزات المقترحة:**
-
-1. **تكامل مع ZATCA** (5-7 أيام)
-
-   - [ ] دراسة متطلبات ZATCA
-   - [ ] تصميم التكامل
-   - [ ] تطبيق التكامل
-   - [ ] اختبار شامل
-
-2. **نظام الإشعارات** (3-4 أيام)
-
-   - [ ] تصميم نظام الإشعارات
-   - [ ] تطبيق الإشعارات المحلية
-   - [ ] اختبار على جميع المنصات
-
-3. **تصدير Excel** (2-3 أيام)
-
-   - [ ] إضافة مكتبة Excel
-   - [ ] تطبيق التصدير
-   - [ ] اختبار التصدير
-
-4. **نسخ احتياطي سحابي** (7-10 أيام)
-   - [ ] اختيار خدمة سحابية
-   - [ ] تصميم نظام المزامنة
-   - [ ] تطبيق التشفير
-   - [ ] اختبار شامل
+1. **Benchmarking**: Profile memory usage, frame-drop metrics, and APK binary size.
+2. **Optimization**: Implement `RepaintBoundary` nodes, optimize Isar query indexing, and refine initialization sequences.
+3. **Validation**: Document 10-20% gain in frame rate and lifecycle efficiency.
 
 ---
 
-## 📊 جدول زمني مقترح
+## 📌 Strategic Priority: Low (Long-term Evolution)
 
-### الأسبوع 1 (7-13 ديسمبر)
+### 5. Advanced Feature Roadmap 🚀
 
-- **الأيام 1-3:** رفع تغطية الاختبارات إلى 70%+
-- **اليوم 4:** اختبار شامل على الموبايل
-- **الأيام 5-7:** بداية UI/UX Improvements (المرحلة 1)
-
-### الأسبوع 2 (14-20 ديسمبر)
-
-- **الأيام 1-4:** إكمال UI/UX Improvements (المرحلة 1)
-- **الأيام 5-7:** بداية UI/UX Improvements (المرحلة 2)
-
-### الأسبوع 3 (21-27 ديسمبر)
-
-- **الأيام 1-5:** إكمال UI/UX Improvements (المرحلة 2)
-- **الأيام 6-7:** بداية UI/UX Improvements (المرحلة 3)
-
-### الأسبوع 4 (28 ديسمبر - 3 يناير)
-
-- **الأيام 1-3:** إكمال UI/UX Improvements (المرحلة 3)
-- **الأيام 4-7:** UI/UX Improvements (المرحلة 4) + الاختبار
+- **ZATCA Phase 2 Integration**: Cryptographic signing and XML generation.
+- **Push Notification Infrastructure**: Local and server-synchronized alerts.
+- **Analytical Export**: Excel/CSV multi-format reporting.
+- **Cloud Synchronization**: Encrypted off-device backup and restoration.
 
 ---
 
-## 🎯 معايير النجاح
+## 🎯 Canonical Success Metrics
 
-### للأولوية العالية
-
-- ✅ تغطية الاختبارات ≥ 70%
-- ✅ جميع الميزات تعمل على الموبايل
-- ✅ 0 أخطاء حرجة
-- ✅ تقارير شاملة موثقة
-
-### للأولوية المتوسطة
-
-- ✅ UI/UX محسّن بشكل ملحوظ
-- ✅ تحسين 10-20% في الأداء
-- ✅ إمكانية وصول محسّنة
-- ✅ رضا المستخدمين
+| Category             | Evaluation Criteria           | Status |
+| :------------------- | :---------------------------- | :----- |
+| **Logic Integrity**  | Test Coverage ≥ 70%           | ⏳     |
+| **Device Stability** | 0 Critical Runtime Exceptions | ✅     |
+| **App Ergonomics**   | < 2s Initial Script Execution | ✅     |
+| **Visual Fidelity**  | 100% Design System Adherence  | ✅     |
 
 ---
 
-## 📞 الخلاصة
-
-### الإجراء الموصى به الآن
-
-**ابدأ بالأولوية العالية:**
-
-1. ✅ رفع تغطية الاختبارات (2-3 أيام)
-2. ✅ اختبار شامل على الموبايل (1 يوم)
-
-**ثم انتقل إلى:**
-
-3. 📋 UI/UX Improvements (18-22 يوم)
-4. ⚡ تحسينات الأداء (3-5 أيام)
-
-**المشروع في حالة ممتازة ومستعد للمرحلة التالية!** 🚀
-
----
-
-**تم إعداده بواسطة:** فريق وكلاء تطوير مشروع بصير  
-**التاريخ:** 7 ديسمبر 2025
+**Prepared by:** Basir Project Agentic Development Team  
+**Operational Review:** December 7, 2025  
+**Final Status:** ✅ Strategic Roadmap Verified

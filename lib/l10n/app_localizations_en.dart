@@ -9,379 +9,80 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get labelTermsAndConditions => 'Terms and Conditions';
-
-  @override
-  String get labelPaidDate => 'Paid Date';
-
-  @override
-  String get labelDiscountAmount => 'Discount Amount';
-
-  @override
-  String get labelZatcaQrCode => 'QR Code (ZATCA)';
-
-  @override
-  String get zatcaComplianceText =>
-      'This invoice is compliant with ZATCA electronic invoicing requirements.';
-
-  @override
-  String get actionCreateFirstInvoice => 'Create Your First Invoice';
-
-  @override
-  String get noInvoicesTitle => 'No Invoices Found';
-
-  @override
-  String get noInvoicesDescription =>
-      'Start by adding your first invoice to manage your sales professionally.';
-
-  @override
-  String get journalEntryFormTitleAdd => 'Add Journal Entry';
-
-  @override
-  String get journalEntryFormTitleEdit => 'Edit Journal Entry';
-
-  @override
-  String get labelCogsAccountId => 'COGS Account';
-
-  @override
-  String get labelRevenueAccountId => 'Revenue Account';
-
-  @override
-  String get labelValuationMethod => 'Valuation Method';
-
-  @override
-  String get labelInventoryValuation => 'Inventory Valuation (IAS 2)';
-
-  @override
-  String get aboutAppSubtitle => 'Version 1.0.0';
-
-  @override
-  String get aboutAppTitle => 'About App';
-
-  @override
-  String get aboutDescription =>
-      'Basir app is a complete system for managing invoices and customers, designed specifically for small and medium businesses.';
-
-  @override
-  String get aboutFeature1 => '• Manage invoices easily';
-
-  @override
-  String get aboutFeature2 => '• Customer management';
-
-  @override
-  String get aboutFeature3 => '• Export invoices as PDF';
-
-  @override
-  String get aboutFeature4 => '• Secure data storage';
-
-  @override
-  String get aboutFeature5 => '• Full Arabic language support';
-
-  @override
-  String get aboutFeaturesTitle => 'Key Features:';
-
-  @override
-  String get accountTitle => 'Account';
-
-  @override
-  String get actionAddCustomer => 'Add Customer';
-
-  @override
-  String get actionAddVendor => 'Add Vendor';
-
-  @override
-  String get actionAddInventoryItem => 'Add Item';
-
-  @override
-  String get actionAddInvoice => 'Add Invoice';
-
-  @override
-  String get actionDeleteCustomer => 'Delete Customer';
-
-  @override
-  String get actionDeleteVendor => 'Delete Vendor';
-
-  @override
-  String get actionDeleteInvoice => 'Delete Invoice';
-
-  @override
-  String get titleAddVendor => 'Add New Vendor';
-
-  @override
-  String get titleEditVendor => 'Edit Vendor Details';
-
-  @override
-  String get titleAddInventoryItem => 'Add New Item';
-
-  @override
-  String get titleEditInventoryItem => 'Edit Item Details';
-
-  @override
-  String get assetsScreenTitle => 'Fixed Assets';
-
-  @override
-  String get assetsSearchHint => 'Search assets...';
-
-  @override
-  String get actionAddAsset => 'Add Asset';
-
-  @override
-  String get tooltipAddAsset => 'Add New Asset';
-
-  @override
-  String get titleAddAsset => 'Add New Asset';
-
-  @override
-  String get titleEditAsset => 'Edit Asset Details';
-
-  @override
-  String get vendorsScreenTitle => 'Vendors';
-
-  @override
-  String get vendorsSearchHint => 'Search vendors...';
-
-  @override
-  String get navVendors => 'Vendors';
-
-  @override
-  String get navInventory => 'Inventory';
-
-  @override
-  String get navAssets => 'Assets';
-
-  @override
-  String get labelNameAr => 'Name (Arabic)';
-
-  @override
-  String get labelNameEn => 'Name (English)';
-
-  @override
-  String get tooltipAddVendor => 'Add New Vendor';
-
-  @override
-  String msgConfirmDeleteVendor(String name) {
-    return 'Are you sure you want to delete vendor $name?';
-  }
-
-  @override
-  String msgConfirmDeleteItem(String name) {
-    return 'Are you sure you want to delete item $name?';
-  }
-
-  @override
-  String get dialogDelete => 'Delete';
-
-  @override
-  String get inventoryItemsScreenTitle => 'Inventory';
-
-  @override
-  String get inventoryItemsSearchHint => 'Search inventory...';
-
-  @override
-  String get labelSKU => 'SKU';
-
-  @override
-  String get labelPurchasePrice => 'Purchase Price';
-
-  @override
-  String get labelSalePrice => 'Sale Price';
-
-  @override
-  String get labelCode => 'Asset Code';
-
-  @override
-  String get labelPurchaseDate => 'Purchase Date';
-
-  @override
-  String get labelCost => 'Purchase Cost';
-
-  @override
-  String get labelSalvageValue => 'Salvage Value';
-
-  @override
-  String get labelUsefulLife => 'Useful Life (Years)';
-
-  @override
-  String get labelDepreciationMethod => 'Depreciation Method';
-
-  @override
-  String get labelDepreciationAccountId => 'Depreciation Expense Account';
-
-  @override
-  String get labelAccumDepreciationAccountId =>
-      'Accumulated Depreciation Account';
-
-  @override
-  String get labelAssetAccountId => 'Inventory Account (Assets)';
-
-  @override
-  String get labelUnit => 'Unit';
-
-  @override
-  String get labelCategoryId => 'Category';
-
-  @override
-  String get tooltipAddInventoryItem => 'Add New Item';
-
-  @override
-  String get actionSharePdf => 'Share PDF';
-
-  @override
-  String get actionShareWhatsappPdf => 'Share via WhatsApp (PDF)';
-
-  @override
-  String get actionShareWhatsappText => 'Share via WhatsApp (Text)';
-
-  @override
-  String get actionShare => 'Share';
-
-  @override
-  String get actionExportPdf => 'Export PDF';
-
-  @override
-  String get actionUpgradeAccount => 'Upgrade Account';
-
-  @override
-  String get appColor => 'App Color';
-
-  @override
-  String get appCopyright => '© 2025 Basir Development Agents Team';
-
-  @override
-  String get appName => 'Basir';
-
-  @override
   String get appTitle => 'Basir';
 
   @override
-  String get appVersion => '1.0.0';
+  String get labelStandard => 'Accounting Standard';
 
   @override
-  String get appearanceSettingsSubtitle =>
-      'Dark mode, colors, fonts, and icons';
+  String get labelRecognitionBasis => 'Recognition Basis';
 
   @override
-  String get appearanceSettingsTitle => 'Appearance Settings';
+  String get labelMeasurementBasis => 'Measurement Basis';
+
+  @override
+  String get labelCurrency => 'Currency';
+
+  @override
+  String get labelAddCurrency => 'Add Currency';
+
+  @override
+  String get labelPartner => 'Partner';
+
+  @override
+  String get labelAccountCode => 'Account Code';
+
+  @override
+  String get labelAccountName => 'Account Name';
+
+  @override
+  String get labelFairValueAdjustment => 'Fair Value Adjustment (IFRS 13)';
+
+  @override
+  String get subtitleFairValueAdjustment =>
+      'Use latest market prices for inventory';
+
+  @override
+  String get labelTotalAmount => 'Total Amount';
+
+  @override
+  String get msgBalanceBalancedTB => 'Balance is balanced (Balanced)';
+
+  @override
+  String get msgBalanceUnbalancedTB => 'Balance is unbalanced! Please review.';
+
+  @override
+  String get sectionBasicReports => 'Basic Reports';
+
+  @override
+  String get sectionFinancialStatements => 'Financial Statements (IAS 1/IFRS)';
+
+  @override
+  String get sectionAgingAnalysis => 'Aging Analysis';
+
+  @override
+  String get receivablesAgingTitle => 'Receivables Aging';
+
+  @override
+  String get payablesAgingTitle => 'Payables Aging';
+
+  @override
+  String get labelGeneralLedger => 'General Ledger';
+
+  @override
+  String get labelPeriod => 'Period';
+
+  @override
+  String get msgNoTransactionsFound => 'No transactions found';
+
+  @override
+  String get msgExportComingSoon => 'Export feature coming soon';
 
   @override
   String get appearanceTitle => 'Appearance & Customization';
 
   @override
-  String get btnAdd => 'Add';
-
-  @override
-  String get btnAddCustomer => 'Add Customer';
-
-  @override
-  String get btnCreateAccount => 'Create New Account';
-
-  @override
-  String get btnDelete => 'Delete';
-
-  @override
-  String get btnDone => 'Done';
-
-  @override
-  String get btnRestoreDefault => 'Restore Default';
-
-  @override
-  String get btnSave => 'Save';
-
-  @override
-  String get btnSaveChanges => 'Save Changes';
-
-  @override
-  String get btnSaveInvoice => 'Add Invoice';
-
-  @override
-  String get btnSelectFromContacts => 'Select from Contacts';
-
-  @override
-  String get btnUpdateInvoice => 'Save Changes';
-
-  @override
-  String get calendarGregorian => 'Gregorian';
-
-  @override
-  String get calendarHijri => 'Hijri';
-
-  @override
-  String get calendarSelection => 'Choose your preferred calendar system';
-
-  @override
-  String get colorCustomized => 'Custom Color';
-
-  @override
-  String get colorDefault => 'Default Color';
-
-  @override
-  String get companySettingsDialogTitle => 'Company & Billing Settings';
-
-  @override
   String get companySettingsTitle => 'Company & Billing Settings';
-
-  @override
-  String get customerDetailsTitle => 'Customer Details';
-
-  @override
-  String get customerFormTitleAdd => 'Add New Customer';
-
-  @override
-  String get customerFormTitleEdit => 'Edit Customer';
-
-  @override
-  String get customersAddTooltip => 'Add New Customer';
-
-  @override
-  String get customersScreenTitle => 'Customers';
-
-  @override
-  String get customersSearchHint => 'Search for a customer...';
-
-  @override
-  String get customersTitle => 'Customers';
-
-  @override
-  String get dashboardBasirSystemTitle => 'Basir Accounting System';
-
-  @override
-  String get dashboardMotto => 'Accuracy and Reliability in Every Transaction';
-
-  @override
-  String get dashboardQuickActionsTitle => 'Quick Financial Actions';
-
-  @override
-  String get dashboardRecentActivityTitle => 'Recent Operations Log';
-
-  @override
-  String get dashboardStatsTitle => 'Financial Performance Analytics';
-
-  @override
-  String get dashboardTitle => 'Dashboard';
-
-  @override
-  String get dashboardWelcomeMessage => 'Welcome to Basir';
-
-  @override
-  String get dialogAddItemTitle => 'Add Item';
-
-  @override
-  String get dialogCancel => 'Cancel';
-
-  @override
-  String get dialogOk => 'OK';
-
-  @override
-  String get dialogSave => 'Save';
-
-  @override
-  String get dialogTaxTitle => 'Tax Rate';
-
-  @override
-  String get editAccountSubtitle => 'Change username and password';
-
-  @override
-  String get editAccountTitle => 'Edit Account Details';
 
   @override
   String errContactAccess(String error) {
@@ -507,6 +208,74 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fontSizeLabel => 'Text Size';
 
   @override
+  String get taxConfigTitle => 'Tax & E-Invoicing';
+
+  @override
+  String get zatcaPhase2Title => 'ZATCA E-Invoicing (Phase 2)';
+
+  @override
+  String get zatcaPhase2Description =>
+      'Configure your settings for compliance with Saudi ZATCA Phase 2 (Integration Phase).';
+
+  @override
+  String get enableTax => 'Enable Tax on Invoices';
+
+  @override
+  String get priceIncludesTax => 'Price includes tax by default';
+
+  @override
+  String get vatNumber => 'Tax ID / VAT Number';
+
+  @override
+  String get defaultTaxRate => 'Default Tax Value (%)';
+
+  @override
+  String get b2cSimplifiedLabel => 'B2C Simplified Invoice Label';
+
+  @override
+  String get b2bStandardLabel => 'B2B Standard Invoice Label';
+
+  @override
+  String get taxName => 'Tax Name';
+
+  @override
+  String get taxPercentage => 'Percentage (%)';
+
+  @override
+  String get taxShow => 'Show';
+
+  @override
+  String get taxDefault => 'Default';
+
+  @override
+  String get printSettingsTitle => 'Printing & Templates';
+
+  @override
+  String get printSettingsSubtitle =>
+      'Manage your printing formats and templates';
+
+  @override
+  String get templateSelection => 'Template Selection';
+
+  @override
+  String get paperSize => 'Paper Size';
+
+  @override
+  String get fontSize => 'Font Size';
+
+  @override
+  String get paddingBottom => 'Empty lines at end';
+
+  @override
+  String get printCopies => 'Number of copies';
+
+  @override
+  String get printItemUnit => 'Show item unit in print';
+
+  @override
+  String get saveSettings => 'Save Settings';
+
+  @override
   String get guestUpgradeDescription =>
       'Convert your guest account to a permanent account to save your data securely.';
 
@@ -568,7 +337,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get iconSettingsTitle => 'Icon Style';
 
   @override
+  String get journalEntryFormTitleAdd => 'Add Journal Entry';
+
+  @override
+  String get journalEntryFormTitleEdit => 'Edit Journal Entry';
+
+  @override
   String get invoiceFormTitleAdd => 'Add New Invoice';
+
+  @override
+  String get invoiceFormTitleAddPurchase => 'Add Purchase Invoice';
 
   @override
   String get invoiceFormTitleEdit => 'Edit Invoice';
@@ -579,13 +357,402 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get invoicesTitle => 'Invoices';
+  String get calculatorTitle => 'Financial Calculator';
+
+  @override
+  String get convertToCurrencies => 'Convert to currencies';
+
+  @override
+  String get clear => 'Clear';
+
+  @override
+  String get labelTermsAndConditions => 'Terms and Conditions';
+
+  @override
+  String get labelPaidDate => 'Paid Date';
+
+  @override
+  String get labelDiscountAmount => 'Discount Amount';
+
+  @override
+  String get labelZatcaQrCode => 'QR Code (ZATCA)';
+
+  @override
+  String get labelZatcaUuid => 'ZATCA UUID';
+
+  @override
+  String get labelZatcaHash => 'Invoice Hash';
+
+  @override
+  String get labelTaxTotal => 'Total Tax';
+
+  @override
+  String get labelVatRate => 'VAT Rate';
+
+  @override
+  String get zatcaComplianceText =>
+      'This invoice is compliant with ZATCA electronic invoicing requirements.';
+
+  @override
+  String get actionCreateFirstInvoice => 'Create Your First Invoice';
+
+  @override
+  String get noInvoicesTitle => 'No Invoices Found';
+
+  @override
+  String get noInvoicesDescription =>
+      'Start by adding your first invoice to manage your sales professionally.';
+
+  @override
+  String get labelFromDate => 'From Date';
+
+  @override
+  String get labelToDate => 'To Date';
+
+  @override
+  String get labelAsOfDate => 'As of Date';
+
+  @override
+  String get tooltipUpdateReport => 'Update Report';
+
+  @override
+  String get labelCogsAccountId => 'COGS Account';
+
+  @override
+  String get labelRevenueAccountId => 'Revenue Account';
+
+  @override
+  String get labelValuationMethod => 'Valuation Method';
+
+  @override
+  String get labelInventoryValuation => 'Inventory Valuation (IAS 2)';
+
+  @override
+  String get logoutLabel => 'Logout';
+
+  @override
+  String msgInvoiceShare(String name, String id, String total, String symbol) {
+    return 'Hello $name, here is invoice #$id:\nTotal: $total $symbol\nThank you.';
+  }
+
+  @override
+  String msgSaveError(String error) {
+    return 'Error saving: $error';
+  }
+
+  @override
+  String get navHome => 'Home';
+
+  @override
+  String get navInvoices => 'Invoices';
+
+  @override
+  String get navSettings => 'Settings';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String pdfShareSubject(String id) {
+    return 'Invoice $id';
+  }
+
+  @override
+  String pdfShareText(String customerName) {
+    return 'Here is the invoice for $customerName';
+  }
+
+  @override
+  String placeholderComingSoon(String title) {
+    return 'Coming soon: $title';
+  }
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get aboutAppTitle => 'About App';
+
+  @override
+  String get aboutDescription =>
+      'Basir app is a complete system for managing invoices and customers, designed specifically for small and medium businesses.';
+
+  @override
+  String get aboutFeature1 => '• Manage invoices easily';
+
+  @override
+  String get aboutFeature2 => '• Customer management';
+
+  @override
+  String get aboutFeature3 => '• Export invoices as PDF';
+
+  @override
+  String get aboutFeature4 => '• Secure data storage';
+
+  @override
+  String get aboutFeature5 => '• Full Arabic language support';
+
+  @override
+  String get aboutFeaturesTitle => 'Key Features:';
+
+  @override
+  String get titleAddInventoryItem => 'Add New Item';
+
+  @override
+  String get titleEditInventoryItem => 'Edit Item Details';
+
+  @override
+  String get vendorsScreenTitle => 'Vendors';
+
+  @override
+  String get vendorsSearchHint => 'Search vendors...';
+
+  @override
+  String get navVendors => 'Vendors';
+
+  @override
+  String get navInventory => 'Inventory';
+
+  @override
+  String get navAssets => 'Assets';
+
+  @override
+  String get labelNameAr => 'Name (Arabic)';
+
+  @override
+  String get labelNameEn => 'Name (English)';
+
+  @override
+  String get tooltipAddVendor => 'Add New Vendor';
+
+  @override
+  String msgConfirmDeleteVendor(String name) {
+    return 'Are you sure you want to delete vendor $name?';
+  }
+
+  @override
+  String msgConfirmDeleteItem(String name) {
+    return 'Are you sure you want to delete item $name?';
+  }
+
+  @override
+  String get dialogDelete => 'Delete';
+
+  @override
+  String get inventoryItemsScreenTitle => 'Inventory';
+
+  @override
+  String get assetsScreenTitle => 'Fixed Assets';
+
+  @override
+  String get assetsSearchHint => 'Search assets...';
+
+  @override
+  String get actionAddAsset => 'Add Asset';
+
+  @override
+  String get tooltipAddAsset => 'Add New Asset';
+
+  @override
+  String get titleAddAsset => 'Add New Asset';
+
+  @override
+  String get titleEditAsset => 'Edit Asset Details';
+
+  @override
+  String get labelCode => 'Asset Code';
+
+  @override
+  String get labelPurchaseDate => 'Purchase Date';
+
+  @override
+  String get labelCost => 'Purchase Cost';
+
+  @override
+  String get labelSalvageValue => 'Salvage Value';
+
+  @override
+  String get labelUsefulLife => 'Useful Life (Years)';
+
+  @override
+  String get labelDepreciationMethod => 'Depreciation Method';
+
+  @override
+  String get labelDepreciationAccountId => 'Depreciation Expense Account';
+
+  @override
+  String get labelAccumDepreciationAccountId =>
+      'Accumulated Depreciation Account';
+
+  @override
+  String get labelAssetAccountId => 'Inventory Account (Assets)';
+
+  @override
+  String get inventoryItemsSearchHint => 'Search inventory...';
+
+  @override
+  String get labelSKU => 'SKU';
+
+  @override
+  String get labelPurchasePrice => 'Purchase Price';
+
+  @override
+  String get labelSalePrice => 'Sale Price';
+
+  @override
+  String get labelUnit => 'Unit';
+
+  @override
+  String get labelCategoryId => 'Category';
+
+  @override
+  String get tooltipAddInventoryItem => 'Add New Item';
+
+  @override
+  String get actionSharePdf => 'Share PDF';
+
+  @override
+  String get actionShareWhatsappPdf => 'Share via WhatsApp (PDF)';
+
+  @override
+  String get actionShareWhatsappText => 'Share via WhatsApp (Text)';
+
+  @override
+  String get actionShare => 'Share';
+
+  @override
+  String get actionExportPdf => 'Export PDF';
+
+  @override
+  String get actionUpgradeAccount => 'Upgrade Account';
+
+  @override
+  String get appColor => 'App Color';
+
+  @override
+  String get appCopyright => '© 2025 Basir Development Agents Team';
+
+  @override
+  String get appName => 'Basir';
+
+  @override
+  String get appVersion => '1.0.0';
+
+  @override
+  String get appearanceSettingsSubtitle =>
+      'Dark mode, colors, fonts, and icons';
+
+  @override
+  String get appearanceSettingsTitle => 'Appearance Settings';
+
+  @override
+  String get btnAdd => 'Add';
+
+  @override
+  String get btnAddCustomer => 'Add Customer';
+
+  @override
+  String get btnCreateAccount => 'Create New Account';
+
+  @override
+  String get btnDelete => 'Delete';
+
+  @override
+  String get btnEdit => 'Edit';
+
+  @override
+  String get btnDone => 'Done';
+
+  @override
+  String get btnRestoreDefault => 'Restore Default';
+
+  @override
+  String get btnSave => 'Save';
+
+  @override
+  String get btnSaveChanges => 'Save Changes';
+
+  @override
+  String get btnSaveInvoice => 'Add Invoice';
+
+  @override
+  String get btnSelectFromContacts => 'Select from Contacts';
+
+  @override
+  String get btnUpdateInvoice => 'Save Changes';
+
+  @override
+  String get calendarGregorian => 'Gregorian';
+
+  @override
+  String get calendarHijri => 'Hijri';
+
+  @override
+  String get calendarSelection => 'Choose your preferred calendar system';
+
+  @override
+  String get colorCustomized => 'Custom Color';
+
+  @override
+  String get colorDefault => 'Default Color';
+
+  @override
+  String get companySettingsDialogTitle => 'Company & Billing Settings';
+
+  @override
+  String get customerDetailsTitle => 'Customer Details';
+
+  @override
+  String get customerFormTitleAdd => 'Add New Customer';
+
+  @override
+  String get customerFormTitleEdit => 'Edit Customer';
+
+  @override
+  String get customersAddTooltip => 'Add New Customer';
+
+  @override
+  String get customersScreenTitle => 'Customers';
+
+  @override
+  String get customersSearchHint => 'Search for a customer...';
+
+  @override
+  String get customersTitle => 'Customers';
+
+  @override
+  String get dashboardWelcomeMessage => 'Welcome to your Insightful Dashboard';
+
+  @override
+  String get dialogAddItemTitle => 'Add Item';
+
+  @override
+  String get dialogCancel => 'Cancel';
+
+  @override
+  String get dialogOk => 'OK';
+
+  @override
+  String get dialogCognitiveRejectionTitle => 'Transaction Rejected';
+
+  @override
+  String get dialogCognitiveRejectionMessage =>
+      'The Cognitive Hexagon has rejected this transaction. Review the agent consensus below:';
+
+  @override
+  String get dialogSave => 'Save';
+
+  @override
+  String get dialogTaxTitle => 'Tax Rate';
+
+  @override
+  String get editAccountSubtitle => 'Change username and password';
+
+  @override
+  String get editAccountTitle => 'Edit Account Details';
 
   @override
   String get labelAddress => 'Address';
-
-  @override
-  String get labelAddressOptional => 'Address (Optional)';
 
   @override
   String get labelCompanyName => 'Company Name';
@@ -618,9 +785,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelEmail => 'Email';
 
   @override
-  String get labelEmailOptional => 'Email (Optional)';
-
-  @override
   String get labelGrandTotal => 'Grand Total:';
 
   @override
@@ -636,12 +800,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelInvoiceStyle => 'Invoice Style';
 
   @override
-  String get labelIssuedDate => 'Issued Date';
-
-  @override
-  String get labelItemName => 'Item Name';
-
-  @override
   String get labelLastUpdated => 'Last Updated';
 
   @override
@@ -649,9 +807,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelNotes => 'Notes (Optional)';
-
-  @override
-  String get labelNotesOptional => 'Notes (Optional)';
 
   @override
   String get labelPassword => 'Password';
@@ -663,7 +818,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelPhone => 'Phone';
 
   @override
-  String get labelPhoneOptional => 'Phone (Optional)';
+  String get labelSourceWarehouse => 'Source Warehouse';
+
+  @override
+  String get labelDestinationWarehouse => 'Destination Warehouse';
+
+  @override
+  String get errSameWarehouse =>
+      'Source and destination warehouses cannot be the same';
+
+  @override
+  String get errSelectSourceWarehouse => 'Please select source warehouse';
+
+  @override
+  String get errSelectDestinationWarehouse =>
+      'Please select destination warehouse';
+
+  @override
+  String get btnSaveTransfer => 'Save Transfer';
+
+  @override
+  String get warehouseTransferTitleAdd => 'New Warehouse Transfer';
 
   @override
   String get labelPrice => 'Price';
@@ -692,28 +867,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelTaxRateWithExample => 'Tax Rate (e.g. 0.15)';
 
   @override
-  String get privacyAnalyticsTitle => 'Privacy & Analytics';
-
-  @override
-  String get privacyAnalyticsSubtitle => 'Manage local usage data and privacy';
-
-  @override
-  String get analyticsEnableTracking => 'Enable Local Analytics';
-
-  @override
-  String get analyticsPrivacyNotice =>
-      'We respect your privacy. All analytics are stored locally on your device and we do not collect any personal or financial data. This data helps us improve the user experience and understand most used features.';
-
-  @override
-  String get analyticsClearData => 'Clear Analytics Data';
-
-  @override
-  String get analyticsDataCleared => 'Analytics data cleared successfully';
-
-  @override
-  String get lastSyncLabel => 'Last Sync';
-
-  @override
   String get labelUsername => 'Username';
 
   @override
@@ -735,9 +888,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginTitle => 'Login';
 
   @override
-  String get logoutLabel => 'Logout';
-
-  @override
   String get modeDark => 'Dark';
 
   @override
@@ -751,15 +901,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get msgAccountUpdated => 'Account details updated successfully';
-
-  @override
-  String msgConfirmDeleteCustomer(String name) {
-    return 'Are you sure you want to delete customer $name?';
-  }
-
-  @override
-  String get msgConfirmDeleteInvoice =>
-      'Are you sure you want to delete this invoice?';
 
   @override
   String get msgConfirmLogout => 'Are you sure you want to logout?';
@@ -781,11 +922,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get msgInvoiceAdded => 'Invoice added successfully';
 
   @override
-  String msgInvoiceShare(String name, String id, String total, String symbol) {
-    return 'Hello $name, here is invoice #$id:\nTotal: $total $symbol\nThank you.';
-  }
-
-  @override
   String get msgInvoiceUpdated => 'Invoice updated successfully';
 
   @override
@@ -804,24 +940,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get msgNoItems => 'No items. Press + to add.';
 
   @override
-  String msgSaveError(String error) {
-    return 'Error saving: $error';
-  }
-
-  @override
   String get msgSettingsSaved => 'Settings saved successfully';
 
   @override
   String get navCustomers => 'Customers';
-
-  @override
-  String get navHome => 'Home';
-
-  @override
-  String get navInvoices => 'Invoices';
-
-  @override
-  String get navSettings => 'Settings';
 
   @override
   String get notificationsEnable => 'Enable Notifications';
@@ -829,24 +951,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notificationsSubtitle =>
       'Receive notifications for overdue invoices';
-
-  @override
-  String get notificationsTitle => 'Notifications';
-
-  @override
-  String pdfShareSubject(String id) {
-    return 'Invoice $id';
-  }
-
-  @override
-  String pdfShareText(String customerName) {
-    return 'Here is the invoice for $customerName';
-  }
-
-  @override
-  String placeholderComingSoon(String title) {
-    return 'Coming soon: $title';
-  }
 
   @override
   String get privacyFooter => 'For more information, please visit our website.';
@@ -906,9 +1010,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sectionStyle => 'Style';
 
   @override
-  String get settingsTitle => 'Settings';
-
-  @override
   String get setupSubtitle => 'Create your account to start managing invoices';
 
   @override
@@ -952,6 +1053,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statusPending => 'Pending';
+
+  @override
+  String get statusRefunded => 'Refunded';
 
   @override
   String get styleCompact => 'Compact';
@@ -1075,16 +1179,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelCurrencySAR => 'SAR';
 
   @override
-  String get msgNoActivity => 'No recent activity yet.';
-
-  @override
   String get labelAccounting => 'Accounting';
 
   @override
   String get labelChartOfAccounts => 'Chart of Accounts';
-
-  @override
-  String get labelJournalEntries => 'Journal Entries';
 
   @override
   String get financialSummaryTitle => 'Financial Summary (Beta)';
@@ -1213,11 +1311,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get trialBalanceSubtitle => 'Verify balance of debits and credits';
 
   @override
-  String get incomeStatementSubtitle =>
-      'Summary of revenue and expenses by IFRS 18';
+  String get incomeStatementSubtitle => 'Summary of revenues and profitability';
 
   @override
-  String get balanceSheetSubtitle => 'State of assets, liabilities, and equity';
+  String get balanceSheetSubtitle =>
+      'Assets, liabilities, and equity (Fair Value supported)';
 
   @override
   String get cashFlowSubtitle =>
@@ -1225,7 +1323,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get agingReportsSubtitle =>
-      'Analyze age of customer and supplier balances';
+      'Analyze age of customer and vendor balances';
 
   @override
   String get agingReportsTitle => 'Aging Reports';
@@ -1388,24 +1486,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorExportingReport => 'Error exporting report';
 
   @override
-  String get labelStandard => 'المعيار المحاسبي';
-
-  @override
-  String get labelRecognitionBasis => 'أساس الاعتراف';
-
-  @override
-  String get labelMeasurementBasis => 'أساس القياس';
-
-  @override
-  String get labelExchangeRate => 'Exchange Rate';
-
-  @override
-  String get labelAddCurrency => 'إضافة عملة';
-
-  @override
-  String get labelCurrency => 'العملة';
-
-  @override
   String get labelAmount => 'Amount';
 
   @override
@@ -1425,4 +1505,599 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get labelNetProfit => 'Net Profit / Loss';
+
+  @override
+  String get msgOperationSuccess => 'Operation completed successfully';
+
+  @override
+  String get aboutAppSubtitle => 'Version 1.0.0';
+
+  @override
+  String get accountTitle => 'Account';
+
+  @override
+  String get actionAddCustomer => 'Add Customer';
+
+  @override
+  String get actionAddVendor => 'Add Vendor';
+
+  @override
+  String get actionAddInventoryItem => 'Add Item';
+
+  @override
+  String get actionAddInvoice => 'Add Invoice';
+
+  @override
+  String get actionDeleteCustomer => 'Delete Customer';
+
+  @override
+  String get actionDeleteVendor => 'Delete Vendor';
+
+  @override
+  String get actionDeleteInvoice => 'Delete Invoice';
+
+  @override
+  String get titleAddVendor => 'Add New Vendor';
+
+  @override
+  String get titleEditVendor => 'Edit Vendor Details';
+
+  @override
+  String get invoicesTitle => 'Invoices';
+
+  @override
+  String get privacyAnalyticsTitle => 'Privacy & Analytics';
+
+  @override
+  String get privacyAnalyticsSubtitle => 'Manage local usage data and privacy';
+
+  @override
+  String get analyticsEnableTracking => 'Enable Local Analytics';
+
+  @override
+  String get analyticsPrivacyNotice =>
+      'We respect your privacy. All analytics are stored locally on your device and we do not collect any personal or financial data. This data helps us improve the user experience and understand most used features.';
+
+  @override
+  String get analyticsClearData => 'Clear Analytics Data';
+
+  @override
+  String get analyticsDataCleared => 'Analytics data cleared successfully';
+
+  @override
+  String get lastSyncLabel => 'Last Sync';
+
+  @override
+  String get msgNoActivity => 'No recent activity yet.';
+
+  @override
+  String get labelJournalEntries => 'Journal Entries';
+
+  @override
+  String get labelExchangeRate => 'Exchange Rate';
+
+  @override
+  String get exchangeRate => 'Exchange Rate';
+
+  @override
+  String get labelBaseCurrencyEquivalent => 'Base Currency Equivalent';
+
+  @override
+  String get titleTreasuryVault => 'The Vault (Treasury)';
+
+  @override
+  String get labelTotalLiquidity => 'Total Liquidity';
+
+  @override
+  String get labelAvailableCashBank => 'Total Available Cash & Bank';
+
+  @override
+  String get labelAccounts => 'Accounts';
+
+  @override
+  String get labelForecast30Days => '30-Day Outlook';
+
+  @override
+  String get labelExpectedInflow => 'Expected Inflow';
+
+  @override
+  String get labelExpectedOutflow => 'Expected Outflow';
+
+  @override
+  String get labelNetChange => 'Net Change';
+
+  @override
+  String get msgNoCashAccounts => 'No cash accounts found';
+
+  @override
+  String get msgInitCoa => 'Initialize your COA or add cash accounts.';
+
+  @override
+  String get originalAmount => 'Original Amount';
+
+  @override
+  String get labelInventoryItem => 'Inventory Item';
+
+  @override
+  String get hintSelectInventoryItem => 'Select an inventory item to auto-fill';
+
+  @override
+  String get labelTaxCategory => 'Tax Category';
+
+  @override
+  String get labelSearchSku => 'Search Barcode / SKU';
+
+  @override
+  String get hintSearchSku => 'Enter code and press Enter';
+
+  @override
+  String get msgItemNotFound => 'Item not found';
+
+  @override
+  String get tooltipPrintReceipt => 'Print Receipt';
+
+  @override
+  String get tooltipReverseInvoice => 'Cancel/Reverse';
+
+  @override
+  String get titleReverseInvoice => 'Reverse Invoice';
+
+  @override
+  String get msgConfirmReverseInvoice =>
+      'Are you sure you want to reverse this invoice? A reversing journal entry will be created.';
+
+  @override
+  String get btnConfirmReverse => 'Yes, Reverse Invoice';
+
+  @override
+  String get msgInvoiceReversed => 'Invoice reversed successfully';
+
+  @override
+  String get receiptTitleTaxInvoice => 'Tax Invoice';
+
+  @override
+  String get receiptTitleSimplified => 'Simplified Tax Invoice';
+
+  @override
+  String get receiptFooterThanks => 'Thanks for visiting';
+
+  @override
+  String get receiptFooterBrand => 'Basir - Basir Accounting';
+
+  @override
+  String get labelDiscount => 'Discount';
+
+  @override
+  String get labelItemName => 'Item Name';
+
+  @override
+  String get labelIssuedDate => 'Issued Date';
+
+  @override
+  String get errPermissionDenied =>
+      'You do not have permission to perform this action';
+
+  @override
+  String get agentRationaleStandardsPassed =>
+      'Compliance verified: Journal entry adheres to (IFRS/SOCPA) standards.';
+
+  @override
+  String agentRationaleStandardsManualReview(String type) {
+    return 'Warning: Transaction type ($type) requires manual review for standards compliance.';
+  }
+
+  @override
+  String get agentRationaleTaxNoId =>
+      'Warning: No Tax ID provided for this transaction.';
+
+  @override
+  String get agentRationaleTaxZatcaReject =>
+      'REJECT: Transactions exceeding 10,000 SAR require a valid Tax ID for ZATCA Phase 2 compliance.';
+
+  @override
+  String agentRationaleTaxValidated(String id) {
+    return 'Validated Tax ID: $id';
+  }
+
+  @override
+  String agentRationaleTaxAnalyzing(String account) {
+    return 'Analyzing VAT for $account';
+  }
+
+  @override
+  String agentRationaleTaxRateMismatch(String rate) {
+    return 'ALERT: Calculated VAT rate ($rate) deviates from the regional standard (15%).';
+  }
+
+  @override
+  String get agentRationaleTaxRateMatch =>
+      'CONFIRM: VAT rate (15%) matches local regulatory requirements.';
+
+  @override
+  String get agentRationaleTaxNoVatWarning =>
+      'WARNING: Commercial transaction detected without VAT lines.';
+
+  @override
+  String get agentRationaleForensicBalanced =>
+      'Check PASSED: Journal entry is balanced.';
+
+  @override
+  String get agentRationaleForensicUnbalanced =>
+      'REJECTION: Proposed journal entry is not balanced.';
+
+  @override
+  String agentRationaleForensicHighValue(String amount) {
+    return 'WARNING: Unusually high transaction amount detected ($amount). Administrative review recommended.';
+  }
+
+  @override
+  String agentRationaleForensicDuplicate(String ref) {
+    return 'REJECTION: Duplicate reference number ($ref) detected in history.';
+  }
+
+  @override
+  String agentRationaleOperationalSufficient(String account, String balance) {
+    return 'Liquidity Analysis: $account balance is sufficient ($balance) for this operation.';
+  }
+
+  @override
+  String agentRationaleOperationalInsufficient(String account, String balance) {
+    return 'REJECTION: $account balance is insufficient ($balance) for this operation.';
+  }
+
+  @override
+  String agentRationaleStrategyOutflow(String amount) {
+    return 'Strategy Analysis: This entry represents a cash outflow of $amount.';
+  }
+
+  @override
+  String get agentRationaleStrategyRecommendation =>
+      'Recommendation: Review cash flow projections for the coming week to ensure sufficient liquidity for other obligations.';
+
+  @override
+  String agentRationaleStrategyInflow(String amount) {
+    return 'Strategy Analysis: Liquidity enhancement of $amount supports short-term investment capacity.';
+  }
+
+  @override
+  String get agentRationaleStrategyProfitability =>
+      'Strategic Insight: Increased sales volume positively impacts Return on Assets (ROA) and net margin targets.';
+
+  @override
+  String get agentRationaleSustainabilityFlagged =>
+      'ISSB Analysis: This transaction is flagged for mandatory environmental/social disclosure.';
+
+  @override
+  String get agentRationaleSustainabilityReject =>
+      'CRITICAL REJECTION: ISSB S2 standards require carbon footprint metrics for this industry-specific transaction.';
+
+  @override
+  String agentRationaleSustainabilitySuccess(int count) {
+    return 'SUCCESS: Integrated $count compliant sustainability metrics.';
+  }
+
+  @override
+  String get agentRationaleSustainabilityNotRequired =>
+      'Sustainability Assessment: No specific ISSB disclosures required for this transaction tier.';
+
+  @override
+  String agentRationaleForensicTimeAnomaly(String time) {
+    return 'WARNING: Transaction recorded during non-standard hours ($time). Higher forensic weighting applied.';
+  }
+
+  @override
+  String agentRationaleForensicSequenceGap(String last, String current) {
+    return 'NOTICE: Gap detected in reference sequence. Last: $last, Current: $current.';
+  }
+
+  @override
+  String get agentRationaleForensicZatcaIdentityMissing =>
+      'NOTICE: ZATCA Phase 2 cryptographic identity (UUID/Hash) is missing for this invoice.';
+
+  @override
+  String get auditTrailTitle => 'Audit Trail';
+
+  @override
+  String get auditTrailSubtitle =>
+      'Internal system logs and consensus bypasses';
+
+  @override
+  String get auditTrailSectionForensic => 'Forensic Integrity Logs';
+
+  @override
+  String get auditTrailNoLogs => 'No audit logs found for the selected period.';
+
+  @override
+  String get msgInvoiceCognitiveHint =>
+      'Use this screen to create or edit invoices. Ensure meticulous accuracy with tax rates and item selection.';
+
+  @override
+  String get titleInvoiceCognitiveHint => 'Invoice Mastery';
+
+  @override
+  String get labelReturnsAndDamages => 'Returns & Damages';
+
+  @override
+  String get labelSalesReturn => 'Sales Return';
+
+  @override
+  String get descSalesReturn => 'Return sold items to inventory';
+
+  @override
+  String get labelPurchaseReturn => 'Purchase Return';
+
+  @override
+  String get descPurchaseReturn => 'Return purchased items to vendor';
+
+  @override
+  String get labelDamageInvoice => 'Damage Invoice';
+
+  @override
+  String get descDamageInvoice => 'Record damaged or missing items';
+
+  @override
+  String get labelEmailOptional => 'Email (Optional)';
+
+  @override
+  String get labelPhoneOptional => 'Phone (Optional)';
+
+  @override
+  String get labelAddressOptional => 'Address (Optional)';
+
+  @override
+  String get labelNotesOptional => 'Notes (Optional)';
+
+  @override
+  String msgConfirmDeleteCustomer(String name) {
+    return 'Are you sure you want to delete customer $name?';
+  }
+
+  @override
+  String get msgConfirmDeleteInvoice =>
+      'Are you sure you want to delete this invoice?';
+
+  @override
+  String get dashboardBasirSystemTitle => 'Basir Accounting System';
+
+  @override
+  String get forgotPassword => 'Forgot Password';
+
+  @override
+  String get dashboardTitle => 'Dashboard';
+
+  @override
+  String get dashboardStatsTitle => 'Statistics';
+
+  @override
+  String get dashboardQuickActionsTitle => 'Quick Actions';
+
+  @override
+  String get dashboardRecentActivityTitle => 'Recent Activity';
+
+  @override
+  String get dashboardMotto => 'Professional Accounting Made Simple';
+
+  @override
+  String get saveLabels => 'Save Labels';
+
+  @override
+  String get errInvalidResetLink => 'Invalid or expired reset link';
+
+  @override
+  String get errInvalidResetToken => 'Invalid or expired reset token';
+
+  @override
+  String get msgPasswordResetSuccess => 'Password reset successfully';
+
+  @override
+  String get errPasswordResetFailed => 'Password reset failed';
+
+  @override
+  String get errPasswordRequired => 'Password is required';
+
+  @override
+  String get errPasswordTooShort => 'Password is too short';
+
+  @override
+  String get errPasswordNeedsUppercase => 'Password needs uppercase letter';
+
+  @override
+  String get errPasswordNeedsLowercase => 'Password needs lowercase letter';
+
+  @override
+  String get errPasswordNeedsNumber => 'Password needs a number';
+
+  @override
+  String get errConfirmPasswordRequired => 'Confirm password is required';
+
+  @override
+  String get resetPasswordTitle => 'Reset Password';
+
+  @override
+  String resetPasswordSubtitle(String email) {
+    return 'Enter your new password for $email';
+  }
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get passwordHint => 'Enter your new password';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get confirmPasswordHint => 'Re-enter your password';
+
+  @override
+  String get passwordRequirements => 'Password Requirements:';
+
+  @override
+  String get passwordRequirementsList =>
+      '• At least 8 characters\n• One uppercase letter\n• One lowercase letter\n• One number';
+
+  @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get backToLogin => 'Back to Login';
+
+  @override
+  String get labelVatNumber => 'VAT Number';
+
+  @override
+  String get labelRegistrationNumber => 'Registration Number (CR)';
+
+  @override
+  String get labelTotalPayables => 'Total Payables to Vendors';
+
+  @override
+  String get msgValueCopiedToClipboard => 'Value copied to clipboard';
+
+  @override
+  String get labelSourceDocument => 'Source Document';
+
+  @override
+  String get btnViewSource => 'View Source';
+
+  @override
+  String get msgLoadingSource => 'Loading source document...';
+
+  @override
+  String get errSourceNotFound => 'Source document not found';
+
+  @override
+  String get agentSuggestionIfrs18Category => 'IFRS 18 Category Suggestion';
+
+  @override
+  String get agentSuggestionIfrs18CategoryReason =>
+      'IFRS 18 requires specific classification for sales commissions.';
+
+  @override
+  String get agentSuggestionVatCorrection => 'VAT Rate Correction';
+
+  @override
+  String get agentSuggestionMissingVatLine => 'Missing VAT Line';
+
+  @override
+  String get agentSuggestionMissingVatLineReason =>
+      'Sales transaction usually requires 15% VAT per ZATCA/IFRS.';
+
+  @override
+  String get agentSuggestionWarehouseOptimization => 'Warehouse Optimization';
+
+  @override
+  String get agentSuggestionWarehouseOptimizationReason =>
+      'Check \"Central Hub\" or \"Riyadh Branch\" for stock transfer.';
+
+  @override
+  String get agentSuggestionStrategicDiscount => 'Strategic Discount';
+
+  @override
+  String get agentSuggestionStrategicDiscountReason =>
+      'Offer a 2% discount for payments within 10 days to maximize liquidity.';
+
+  @override
+  String get agentSuggestionIssbMetrics => 'ISSB Disclosure';
+
+  @override
+  String get agentSuggestionIssbMetricsReason =>
+      'Attach quantitative resource usage metrics (liters/kWh) for compliance.';
+
+  @override
+  String get labelAiSmartSuggestions => 'AI Smart Suggestions';
+
+  @override
+  String get labelTarget => 'Target:';
+
+  @override
+  String get msgForensicSequenceClean =>
+      'Sequence verification complete: No anomalies detected.';
+
+  @override
+  String get msgForensicRisksDetected =>
+      'Forensic analysis detected institutional risks.';
+
+  @override
+  String get msgForensicEngineError =>
+      'Forensic scan failed: Internal engine error.';
+
+  @override
+  String get msgForensicLedgerClean =>
+      'Historical ledger scrutiny complete: No anomalies found.';
+
+  @override
+  String get msgForensicLedgerAnomalies =>
+      'Forensic anomalies detected in historical ledger.';
+
+  @override
+  String errForensicImbalance(Object id) {
+    return 'Imbalance detected: Entry #$id is not balanced.';
+  }
+
+  @override
+  String errForensicDiscrepancy(Object id) {
+    return 'Integrity discrepancy: Entry #$id has total debit/sum mismatch.';
+  }
+
+  @override
+  String errForensicHashBreach(Object curr, Object prev) {
+    return 'Integrity Breach: Hash chain broken between #$prev and #$curr';
+  }
+
+  @override
+  String get titleForensicPortal => 'Forensic Integrity Portal';
+
+  @override
+  String get labelIntegrityPulse => 'Integrity Pulse';
+
+  @override
+  String get labelLastVerified => 'Last verified:';
+
+  @override
+  String get labelBlocksScanned => 'Blocks Scanned:';
+
+  @override
+  String get labelHealth => 'Health:';
+
+  @override
+  String get labelLedgerMutationTimeline => 'Ledger Mutation Timeline';
+
+  @override
+  String get labelHashChain => 'Immutable Hash Chain';
+
+  @override
+  String get labelVerifiedBy => 'Verified by:';
+
+  @override
+  String get titleStrategicOutlook => 'Strategic Outlook & Forecasting';
+
+  @override
+  String get labelPredictivePnL => 'Predictive P&L Analysis';
+
+  @override
+  String get labelCashFlowProjection => 'Cash Flow Projection';
+
+  @override
+  String get labelStrategicInsights => 'Strategic AI Insights';
+
+  @override
+  String get labelProjectedRevenue => 'Projected Revenue';
+
+  @override
+  String get labelProjectedExpense => 'Projected Expenses';
+
+  @override
+  String get labelProjectedNetIncome => 'Projected Net Income';
+
+  @override
+  String get labelConfidenceScore => 'AI Confidence Score';
+
+  @override
+  String get msgNoStrategicData =>
+      'Insufficient historical data for accurate forecasting. Please post more transactions.';
+
+  @override
+  String get actionEmailInvoice => 'Email Invoice';
 }

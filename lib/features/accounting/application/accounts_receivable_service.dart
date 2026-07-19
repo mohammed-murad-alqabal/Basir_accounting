@@ -1,14 +1,16 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:decimal/decimal.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'accounts_receivable_service.g.dart';
 
-/// بيانات تعمير ديون العميل (Customer Aging Data)
-/// تحتوي على تفاصيل الديون المستحقة على العميل مقسمة حسب الفترات الزمنية.
+/// Data model for Customer Debt Aging analysis.
+///
+/// Categorizes outstanding customer balances into time-based buckets
+/// to assess credit risk and collection performance.
 class CustomerAging {
-  /// إنشاء بيانات تعمير ديون العميل.
+  /// Creates a report entry for a specific customer.
   CustomerAging({
     required this.customerId,
     required this.customerNameAr,
@@ -21,46 +23,51 @@ class CustomerAging {
     required this.totalBalance,
   });
 
-  /// معرف العميل.
+  /// Unique customer identifier.
   final String customerId;
 
-  /// اسم العميل بالعربية.
+  /// Customer name in Arabic.
   final String customerNameAr;
 
-  /// اسم العميل بالإنجليزية.
+  /// Customer name in English.
   final String customerNameEn;
 
-  /// الديون الحالية (لم تستحق بعد).
+  /// Current balance not yet due.
   final Decimal current;
 
-  /// الديون المتأخرة من 1 إلى 30 يوم.
+  /// Past due balance (1-30 days).
   final Decimal period1_30;
 
-  /// الديون المتأخرة من 31 إلى 60 يوم.
+  /// Past due balance (31-60 days).
   final Decimal period31_60;
 
-  /// الديون المتأخرة من 61 إلى 90 يوم.
+  /// Past due balance (61-90 days).
   final Decimal period61_90;
 
-  /// الديون المتأخرة لأكثر من 90 يوم.
+  /// Long-term past due balance (>90 days).
   final Decimal periodOver90;
 
-  /// إجمالي رصيد الديون المستحقة على العميل.
+  /// Aggregated outstanding balance across all periods.
   final Decimal totalBalance;
 
-  /// الحصول على الاسم المناسب حسب اللغة
+  /// Returns the localized customer name based on the system locale.
   String name({required bool isArabic}) =>
       isArabic ? customerNameAr : customerNameEn;
 }
 
-/// خدمة حسابات العملاء (Accounts Receivable Service)
-/// تدير عمليات الفوترة والتحصيل والديون المستحقة.
+/// Accounts Receivable (AR) Service for managing customer billing and debt.
+///
+/// Implements logic for credit management, collection tracking, and
+/// detailed aging analysis for accounts receivable.
 @riverpod
 class AccountsReceivableService extends _$AccountsReceivableService {
   @override
   FutureOr<void> build() {}
 
-  /// الحصول على رصيد عميل محدد
+  /// Retrieves the current outstanding balance for a specific customer.
+  ///
+  /// Analyzes all posted journal entries against the customer's dedicated
+  /// receivable account.
   Future<Decimal> getCustomerBalance(String customerId) async {
     final repository = ref.read(accountingRepositoryProvider);
     final customerRepo = ref.read(customerRepositoryProvider);
@@ -83,7 +90,10 @@ class AccountsReceivableService extends _$AccountsReceivableService {
     return balance;
   }
 
-  /// تقرير تعمير الديون بالتفصيل لكل عميل (Detailed Aging Report)
+  /// Generates a comprehensive aging report for all receivables.
+  ///
+  /// Buckets outstanding balances into 30/60/90 day periods based on
+  /// transaction dates from posted journal entries.
   Future<List<CustomerAging>> getReceivablesAging() async {
     final accountingRepo = ref.read(accountingRepositoryProvider);
     final customerRepo = ref.read(customerRepositoryProvider);
@@ -148,7 +158,9 @@ class AccountsReceivableService extends _$AccountsReceivableService {
     return result;
   }
 
-  /// كشف حساب عميل (Detailed Ledger)
+  /// Retrieves a detailed general ledger for a specific customer.
+  ///
+  /// Returns all journal entries impacting the customer's receivable account.
   Future<List<JournalEntry>> getCustomerLedger(String customerId) async {
     final repository = ref.read(accountingRepositoryProvider);
     final customerRepo = ref.read(customerRepositoryProvider);

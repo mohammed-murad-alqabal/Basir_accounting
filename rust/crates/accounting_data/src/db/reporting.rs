@@ -1,7 +1,6 @@
-use accounting_core::reporting::models::{
-    FinancialReport, FinancialReportLine, TrialBalance, TrialBalanceLine,
-};
-use chrono::{NaiveDate, Utc};
+use accounting_core::reporting::models::{FinancialReport, TrialBalance, TrialBalanceLine};
+use anyhow::Result;
+use chrono::NaiveDate;
 use rust_decimal::Decimal;
 use sqlx::PgPool;
 use uuid::Uuid;
@@ -330,13 +329,24 @@ impl PgReportingRepository {
         &self,
         as_of_date: NaiveDate,
     ) -> Result<FinancialReport, anyhow::Error> {
-        // ... (existing logic or refactor to use generator if desired later)
-        // For now, I'll keep it as is or refactor it to use the generator too.
-        // Actually, let's keep it simple for now and focus on Cash Flow.
+        self.generate_balance_sheet_with_updates(as_of_date, None)
+            .await
+    }
+
+    /// Generate a Balance Sheet with optional fair valuation overrides.
+    pub async fn generate_balance_sheet_with_updates(
+        &self,
+        as_of_date: NaiveDate,
+        fair_valuation_updates: Option<&std::collections::HashMap<Uuid, Decimal>>,
+    ) -> Result<FinancialReport, anyhow::Error> {
+        use accounting_core::accounts::models::{Account, AccountClassification, AccountKind};
+        use accounting_core::reporting::generator::FinancialReportGenerator;
 
         let rows = sqlx::query!(
             r#"
             SELECT 
+                a.id,
+                a.code,
                 a.name_ar as account_name_ar,
                 a.name_en as account_name_en,
                 a.type as "account_type!",
@@ -349,81 +359,47 @@ impl PgReportingRepository {
             WHERE a.is_leaf = true
               AND (a.type = 'Asset' OR a.type = 'Liability' OR a.type = 'Equity')
               AND e.effective_date <= $1
-            GROUP BY a.id, a.name_ar, a.name_en, a.type, a.classification
+            GROUP BY a.id, a.code, a.name_ar, a.name_en, a.type, a.classification
             "#,
             as_of_date
         )
         .fetch_all(&self.pool)
         .await?;
 
-        let mut lines = Vec::new();
+        let accounts_with_balances: Vec<(Account, Decimal)> = rows
+            .into_iter()
+            .map(|row| {
+                let kind = match row.account_type.as_str() {
+                    "Asset" => AccountKind::Asset,
+                    "Liability" => AccountKind::Liability,
+                    "Equity" => AccountKind::Equity,
+                    _ => AccountKind::Asset,
+                };
 
-        // Assets
-        lines.push(FinancialReportLine {
-            label: "الأصول (Assets)".to_string(),
-            amount: Decimal::ZERO,
-            is_title: true,
-            is_total: false,
-            indent_level: 0,
-        });
-        let mut total_assets = Decimal::ZERO;
-        for row in rows.iter().filter(|r| r.account_type == "Asset") {
-            let balance = row.total_debits - row.total_credits;
-            lines.push(FinancialReportLine {
-                label: row.account_name_ar.clone(),
-                amount: balance,
-                is_title: false,
-                is_total: false,
-                indent_level: 1,
-            });
-            total_assets += balance;
-        }
-        lines.push(FinancialReportLine {
-            label: "إجمالي الأصول".to_string(),
-            amount: total_assets,
-            is_title: false,
-            is_total: true,
-            indent_level: 0,
-        });
+                let mut acc =
+                    Account::new(row.code, row.account_name_ar, row.account_name_en, kind);
+                acc.id = row.id;
+                acc.classification = row.account_classification.and_then(|c| match c.as_str() {
+                    "Current" => Some(AccountClassification::Current),
+                    "NonCurrent" => Some(AccountClassification::NonCurrent),
+                    "Operating" => Some(AccountClassification::Operating),
+                    "Investing" => Some(AccountClassification::Investing),
+                    "Financing" => Some(AccountClassification::Financing),
+                    _ => None,
+                });
 
-        // Liabilities & Equity
-        lines.push(FinancialReportLine {
-            label: "الالتزامات وحقوق الملكية (Liabilities & Equity)".to_string(),
-            amount: Decimal::ZERO,
-            is_title: true,
-            is_total: false,
-            indent_level: 0,
-        });
-        let mut total_le = Decimal::ZERO;
-        for row in rows
-            .iter()
-            .filter(|r| r.account_type == "Liability" || r.account_type == "Equity")
-        {
-            let balance = row.total_credits - row.total_debits;
-            lines.push(FinancialReportLine {
-                label: row.account_name_ar.clone(),
-                amount: balance,
-                is_title: false,
-                is_total: false,
-                indent_level: 1,
-            });
-            total_le += balance;
-        }
-        lines.push(FinancialReportLine {
-            label: "إجمالي الالتزامات وحقوق الملكية".to_string(),
-            amount: total_le,
-            is_title: false,
-            is_total: true,
-            indent_level: 0,
-        });
+                // Balance for BS: Assets (D-C), Liab/Eq (C-D) handled by generator
+                let balance = row.total_debits - row.total_credits;
 
-        Ok(FinancialReport {
-            title: "قائمة المركز المالي (Balance Sheet)".to_string(),
-            from_date: as_of_date,
-            to_date: as_of_date,
-            lines,
-            generated_at: Utc::now().naive_utc().date(),
-        })
+                (acc, balance)
+            })
+            .collect();
+
+        Ok(FinancialReportGenerator::synthesize_balance_sheet(
+            as_of_date,
+            &accounts_with_balances,
+            fair_valuation_updates,
+        ))
     }
 
     /// Generate an IAS 7 Statement of Cash Flows (Indirect Method).

@@ -1,6 +1,6 @@
-import 'package:basir_app/features/accounting/data/models/financial_year_model.dart';
-import 'package:basir_app/features/accounting/domain/entities/financial_year.dart';
-import 'package:basir_app/features/accounting/domain/repositories/financial_year_repository.dart';
+import 'package:basir_accounting_system/features/accounting/data/models/financial_year_model.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
+import 'package:basir_accounting_system/features/accounting/domain/repositories/financial_year_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تنفيذ مستودع بيانات السنوات المالية باستخدام Isar.

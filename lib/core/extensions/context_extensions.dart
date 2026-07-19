@@ -1,5 +1,5 @@
-import 'package:basir_app/l10n/app_localizations.dart';
-import 'package:flutter/widgets.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
 
 /// امتدادات للسياق (BuildContext Extensions)
 extension ContextExtensions on BuildContext {
@@ -8,4 +8,10 @@ extension ContextExtensions on BuildContext {
 
   /// هل اللغة الحالية هي العربية؟
   bool get isArabic => Localizations.localeOf(this).languageCode == 'ar';
+
+  /// الوصول السريع للسمات النصية
+  TextTheme get textTheme => Theme.of(this).textTheme;
+
+  /// الوصول السريع لمخطط الألوان
+  ColorScheme get colorScheme => Theme.of(this).colorScheme;
 }

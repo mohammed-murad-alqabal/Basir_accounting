@@ -1,6 +1,6 @@
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/analytics/application/analytics_service.dart';
-import 'package:basir_app/features/analytics/domain/entities/analytics_event.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/analytics/application/analytics_service.dart';
+import 'package:basir_accounting_system/features/analytics/domain/entities/analytics_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -59,8 +59,9 @@ class GrowthDashboard extends ConsumerWidget {
               ),
               _MetricCard(
                 title: 'جلسات العمل',
-                future:
-                    analytics.getEventCount(AnalyticsEventType.sessionStart),
+                future: analytics.getEventCount(
+                  AnalyticsEventType.sessionStart,
+                ),
                 icon: Icons.ads_click,
                 color: theme.colorScheme.tertiary,
               ),
@@ -79,8 +80,9 @@ class GrowthDashboard extends ConsumerWidget {
           Container(
             height: 200,
             decoration: BoxDecoration(
-              color: theme.colorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.3),
+              color: theme.colorScheme.surfaceContainerHighest.withValues(
+                alpha: 0.3,
+              ),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: theme.colorScheme.outlineVariant),
             ),

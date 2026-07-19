@@ -1,14 +1,19 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/domain/entities/financial_report.dart';
-import 'package:basir_app/features/accounting/domain/entities/ifrs18_ontology.dart';
-import 'package:basir_app/features/accounting/domain/repositories/accounting_repository.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_report.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/ifrs18_ontology.dart';
+import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
 import 'package:decimal/decimal.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'financial_statement_service.g.dart';
 
-/// مزود خدمة القوائم المالية
+/// Financial Statement Service for generating core balance
+/// and performance reports.
+///
+/// Implements logic for Trial Balance, IFRS 18 Income Statements,
+/// and Balance Sheets, incorporating hierarchical account
+/// groupings and net income calculations.
 @riverpod
 class FinancialStatementService extends _$FinancialStatementService {
   AccountingRepository get _repository =>
@@ -17,7 +22,10 @@ class FinancialStatementService extends _$FinancialStatementService {
   @override
   void build() {}
 
-  /// توليد ميزان المراجعة (Trial Balance)
+  /// Generates a standardized Trial Balance report.
+  ///
+  /// Extracts current balances for all leaf-level accounts and categorizes
+  /// them into Debit and Credit columns based on account nature.
   Future<TrialBalance> generateTrialBalance(DateTime date) async {
     final accounts = await _repository.getAccounts();
     final lines = <TrialBalanceLine>[];
@@ -38,7 +46,7 @@ class FinancialStatementService extends _$FinancialStatementService {
         lines.add(
           TrialBalanceLine(
             accountCode: account.code,
-            accountName: account.nameAr,
+            accountName: account.nameEn,
             debitBalance: debit,
             creditBalance: credit,
           ),
@@ -56,7 +64,14 @@ class FinancialStatementService extends _$FinancialStatementService {
     );
   }
 
-  /// توليد قائمة الدخل (Income Statement) حسب IFRS 18
+  /// Generates an Income Statement (P&L) structured by IFRS 18 categories.
+  ///
+  /// Segments performance into Operating, Investing, and Financing activities.
+  ///
+  /// ## IFRS 18 Sections:
+  /// - **Operating**: Core business performance.
+  /// - **Investing**: ROIs and asset-related activities.
+  /// - **Financing**: Cost of capital and debt servicing.
   Future<FinancialReport> generateIncomeStatement(
     DateTime from,
     DateTime to,
@@ -64,11 +79,10 @@ class FinancialStatementService extends _$FinancialStatementService {
     final accounts = await _repository.getAccounts();
     final lines = <FinancialReportLine>[];
 
-    // تصنيفات IFRS 18
     final sections = {
-      Ifrs18Category.operating: 'النشاط التشغيلي (Operating)',
-      Ifrs18Category.investing: 'النشاط الاستثماري (Investing)',
-      Ifrs18Category.financing: 'النشاط التمويلي (Financing)',
+      Ifrs18Category.operating: 'Operating Activities',
+      Ifrs18Category.investing: 'Investing Activities',
+      Ifrs18Category.financing: 'Financing Activities',
     };
 
     var netProfit = Decimal.zero;
@@ -83,23 +97,25 @@ class FinancialStatementService extends _$FinancialStatementService {
       );
 
       var sectionTotal = Decimal.zero;
-      final sectionAccounts =
-          accounts.where((a) => a.ifrs18Category == entry.key);
+      final sectionAccounts = accounts.where(
+        (a) => a.ifrs18Category == entry.key,
+      );
 
       for (final account in sectionAccounts) {
         if (account.isParent) continue;
         final balance = await _repository.getAccountBalance(account.id);
 
-        // في قائمة الدخل: الإيرادات موجبة والمصروفات سالبة
+        // Revenue increases profit (+ve), Expenses decrease profit (-ve)
         final adjustedBalance =
             account.type == AccountType.revenue ? balance : -balance;
 
         if (adjustedBalance != Decimal.zero) {
           lines.add(
             FinancialReportLine(
-              label: account.nameAr,
+              label: account.nameEn,
               amount: adjustedBalance,
               indentLevel: 1,
+              accountId: account.id,
             ),
           );
           sectionTotal += adjustedBalance;
@@ -108,7 +124,7 @@ class FinancialStatementService extends _$FinancialStatementService {
 
       lines.add(
         FinancialReportLine(
-          label: 'إجمالي ${entry.value}',
+          label: 'Total ${entry.value}',
           amount: sectionTotal,
           isTotal: true,
         ),
@@ -118,7 +134,7 @@ class FinancialStatementService extends _$FinancialStatementService {
 
     lines.add(
       FinancialReportLine(
-        label: 'صافي الربح أو الخسارة (Net Profit/Loss)',
+        label: 'Net Profit / (Loss)',
         amount: netProfit,
         isTotal: true,
         isTitle: true,
@@ -126,7 +142,7 @@ class FinancialStatementService extends _$FinancialStatementService {
     );
 
     return FinancialReport(
-      title: 'قائمة الأرباح أو الخسائر',
+      title: 'Income Statement (Statement of Profit or Loss)',
       fromDate: from,
       toDate: to,
       lines: lines,
@@ -134,29 +150,34 @@ class FinancialStatementService extends _$FinancialStatementService {
     );
   }
 
-  /// توليد الميزانية العمومية (Balance Sheet)
+  /// Generates a Balance Sheet (Statement of Financial Position).
+  ///
+  /// Presents the fundamental accounting identity:
+  /// Assets = Liabilities + Equity.
   Future<FinancialReport> generateBalanceSheet(DateTime date) async {
     final accounts = await _repository.getAccounts();
     final lines = <FinancialReportLine>[];
 
-    // الأصول
+    // --- Assets Section ---
     lines.add(
       FinancialReportLine(
-        label: 'الأصول (Assets)',
+        label: 'Assets',
         amount: Decimal.zero,
         isTitle: true,
       ),
     );
     var totalAssets = Decimal.zero;
-    for (final account
-        in accounts.where((a) => a.type == AccountType.asset && !a.isParent)) {
+    for (final account in accounts.where(
+      (a) => a.type == AccountType.asset && !a.isParent,
+    )) {
       final balance = await _repository.getAccountBalance(account.id);
       if (balance != Decimal.zero) {
         lines.add(
           FinancialReportLine(
-            label: account.nameAr,
+            label: account.nameEn,
             amount: balance,
             indentLevel: 1,
+            accountId: account.id,
           ),
         );
         totalAssets += balance;
@@ -164,16 +185,16 @@ class FinancialStatementService extends _$FinancialStatementService {
     }
     lines.add(
       FinancialReportLine(
-        label: 'إجمالي الأصول',
+        label: 'Total Assets',
         amount: totalAssets,
         isTotal: true,
       ),
     );
 
-    // الخصوم وحقوق الملكية
+    // --- Liabilities and Equity Section ---
     lines.add(
       FinancialReportLine(
-        label: 'الخصوم وحقوق الملكية (Liabilities & Equity)',
+        label: 'Liabilities and Equity',
         amount: Decimal.zero,
         isTitle: true,
       ),
@@ -181,15 +202,17 @@ class FinancialStatementService extends _$FinancialStatementService {
     var totalLiabilitiesEquity = Decimal.zero;
 
     for (final type in [AccountType.liability, AccountType.equity]) {
-      for (final account
-          in accounts.where((a) => a.type == type && !a.isParent)) {
+      for (final account in accounts.where(
+        (a) => a.type == type && !a.isParent,
+      )) {
         final balance = await _repository.getAccountBalance(account.id);
         if (balance != Decimal.zero) {
           lines.add(
             FinancialReportLine(
-              label: account.nameAr,
+              label: account.nameEn,
               amount: balance,
               indentLevel: 1,
+              accountId: account.id,
             ),
           );
           totalLiabilitiesEquity += balance;
@@ -198,15 +221,15 @@ class FinancialStatementService extends _$FinancialStatementService {
     }
     lines.add(
       FinancialReportLine(
-        label: 'إجمالي الخصوم وحقوق الملكية',
+        label: 'Total Liabilities and Equity',
         amount: totalLiabilitiesEquity,
         isTotal: true,
       ),
     );
 
     return FinancialReport(
-      title: 'الميزانية العمومية',
-      fromDate: date, // استخدام نفس التاريخ للبداية والنهاية في الميزانية
+      title: 'Balance Sheet (Statement of Financial Position)',
+      fromDate: date,
       toDate: date,
       lines: lines,
       generatedAt: DateTime.now(),

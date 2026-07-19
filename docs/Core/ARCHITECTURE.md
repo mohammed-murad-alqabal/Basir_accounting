@@ -1,247 +1,142 @@
-# البنية المعمارية لتطبيق بصير
+# Technical Architecture: Basir Accounting System
 
-## مقدمة
+## Introduction
 
-تطبيق بصير يستخدم **Clean Architecture** لضمان فصل الاهتمامات وسهولة الصيانة والاختبار. تم تقسيم التطبيق إلى ثلاث طبقات رئيسية:
+The Basir Accounting System utilizes **Clean Architecture** to ensure strict separation of concerns, scalability, and high testability. The application is logically partitioned into three primary architectural layers:
 
-1. **طبقة العرض (Presentation Layer)**
-2. **طبقة المجال (Domain Layer)**
-3. **طبقة البيانات (Data Layer)**
+1.  **Presentation Layer**
+2.  **Domain Layer**
+3.  **Data Layer**
 
-## الطبقات الثلاث
+## Architectural Layers
 
-### 1. طبقة العرض (Presentation Layer)
+### 1. Presentation Layer (UI & State)
 
-تحتوي على جميع واجهات المستخدم والشاشات. كل ميزة لها مجلد خاص بها يحتوي على:
+Contains all user interface components and state management logic. Each feature is encapsulated in a dedicated directory containing:
 
-- **Screens**: الشاشات الرئيسية
-- **Widgets**: المكونات المعاد استخدامها
-- **Providers**: مزودو Riverpod لإدارة الحالة
+- **Screens**: Primary page-level widgets.
+- **Widgets**: Atomic, reusable UI components.
+- **Providers**: Riverpod state management and dependency injection.
 
-**الملفات الرئيسية:**
+**Critical Artifacts:**
 
-- `setup_screen.dart`: شاشة الإعداد الأولي
-- `login_screen.dart`: شاشة تسجيل الدخول
-- `dashboard_screen.dart`: لوحة التحكم
-- `customers_screen.dart`: إدارة العملاء
-- `invoices_screen.dart`: إدارة الفواتير
-- `settings_screen.dart`: الإعدادات
+- `setup_screen.dart`: Initial system initialization.
+- `login_screen.dart`: Local authentication layer.
+- `dashboard_screen.dart`: Primary financial overview.
+- `customers_screen.dart`: Customer relationship management.
+- `invoices_screen.dart`: Ledger transaction management.
+- `settings_screen.dart`: Technical and business configuration.
 
-### 2. طبقة المجال (Domain Layer)
+### 2. Domain Layer (Pure Business Logic)
 
-تحتوي على منطق الأعمال والقواعد الأساسية. كل ميزة لها مجلد يحتوي على:
+The core of the system, containing business rules and abstract definitions. This layer is independent of any external framework or database.
 
-- **Entities**: كائنات المجال (مثل Customer و Invoice)
-- **Repositories**: واجهات المستودعات (العقود)
-- **Use Cases**: حالات الاستخدام (اختياري في MVP)
+- **Entities**: Pure Dart objects representing business models (e.g., `Customer`, `Invoice`).
+- **Repositories (Abstract)**: Interface definitions (contracts) for data operations.
+- **Use Cases**: Specific business orchestration logic.
 
-**الملفات الرئيسية:**
+**Critical Artifacts:**
 
-- `customer.dart`: كيان العميل
-- `invoice.dart`: كيان الفاتورة
-- `customer_repository.dart`: واجهة مستودع العملاء
-- `invoice_repository.dart`: واجهة مستودع الفواتير
+- `customer.dart`: Customer business entity.
+- `invoice.dart`: Invoice business entity.
+- `customer_repository.dart`: Abstract customer data contract.
+- `invoice_repository.dart`: Abstract invoice data contract.
 
-### 3. طبقة البيانات (Data Layer)
+### 3. Data Layer (Implementation & Persistence)
 
-تحتوي على التطبيقات الفعلية للمستودعات والنماذج. كل ميزة لها مجلد يحتوي على:
+Handles the physical data operations and external integrations.
 
-- **Models**: نماذج البيانات (Isar Models)
-- **Repositories**: تطبيقات المستودعات
-- **Services**: الخدمات المساعدة
+- **Models**: Data transfer objects (DTOs) and database schemas (e.g., Isar Collections).
+- **Repositories (Implementation)**: Concrete implementation of Domain Layer contracts.
+- **Services**: Low-level drivers (storage, network, security).
 
-**الملفات الرئيسية:**
+**Critical Artifacts:**
 
-- `customer_model.dart`: نموذج العميل لـ Isar
-- `invoice_model.dart`: نموذج الفاتورة لـ Isar
-- `customer_repository_impl.dart`: تطبيق مستودع العملاء
-- `invoice_repository_impl.dart`: تطبيق مستودع الفواتير
-
-## تدفق البيانات
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    طبقة العرض (UI)                          │
-│  (Screens, Widgets, Providers)                              │
-└──────────────────────┬──────────────────────────────────────┘
-                       │
-                       ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   طبقة المجال (Domain)                       │
-│  (Entities, Repository Interfaces, Use Cases)               │
-└──────────────────────┬──────────────────────────────────────┘
-                       │
-                       ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   طبقة البيانات (Data)                       │
-│  (Models, Repository Implementations, Services)             │
-└──────────────────────┬──────────────────────────────────────┘
-                       │
-                       ▼
-┌─────────────────────────────────────────────────────────────┐
-│              قاعدة البيانات المحلية (Isar)                   │
-│              والتخزين الآمن (Secure Storage)                 │
-└─────────────────────────────────────────────────────────────┘
-```
-
-## هيكل المشروع
-
-```
-lib/
-├── core/
-│   ├── constants.dart              # الثوابت والألوان والرسائل
-│   ├── providers.dart              # مزودو Riverpod
-│   └── router.dart                 # نظام التوجيه
-├── features/
-│   ├── auth/
-│   │   ├── data/
-│   │   │   └── services/
-│   │   │       └── auth_service.dart
-│   │   └── presentation/
-│   │       └── screens/
-│   │           ├── setup_screen.dart
-│   │           └── login_screen.dart
-│   ├── customers/
-│   │   ├── data/
-│   │   │   ├── models/
-│   │   │   │   └── customer_model.dart
-│   │   │   └── repositories/
-│   │   │       └── customer_repository_impl.dart
-│   │   ├── domain/
-│   │   │   ├── entities/
-│   │   │   │   └── customer.dart
-│   │   │   └── repositories/
-│   │   │       └── customer_repository.dart
-│   │   └── presentation/
-│   │       └── screens/
-│   │           └── customers_screen.dart
-│   ├── invoices/
-│   │   ├── data/
-│   │   │   ├── models/
-│   │   │   │   └── invoice_model.dart
-│   │   │   └── repositories/
-│   │   │       └── invoice_repository_impl.dart
-│   │   ├── domain/
-│   │   │   ├── entities/
-│   │   │   │   └── invoice.dart
-│   │   │   └── repositories/
-│   │   │       └── invoice_repository.dart
-│   │   └── presentation/
-│   │       └── screens/
-│   │           └── invoices_screen.dart
-│   ├── dashboard/
-│   │   └── presentation/
-│   │       └── screens/
-│   │           └── dashboard_screen.dart
-│   └── settings/
-│       └── presentation/
-│           └── screens/
-│               └── settings_screen.dart
-├── services/
-│   └── settings_service.dart       # خدمة الإعدادات
-└── main.dart                       # نقطة الدخول الرئيسية
-```
-
-## مثال على تدفق البيانات
-
-### إضافة عميل جديد
-
-1. **المستخدم يدخل البيانات في الشاشة (Presentation Layer)**
-
-   - يملأ نموذج إضافة عميل جديد
-
-2. **استدعاء المستودع (Domain Layer)**
-
-   - `customerRepository.addCustomer(customer)`
-
-3. **تطبيق المستودع (Data Layer)**
-
-   - تحويل الـ Entity إلى Model
-   - حفظ في قاعدة البيانات (Isar)
-
-4. **إرجاع النتيجة**
-   - عرض رسالة نجاح للمستخدم
-
-## إدارة الحالة (State Management)
-
-يستخدم التطبيق **Flutter Riverpod** لإدارة الحالة:
-
-- **Providers**: توفير الخدمات والبيانات
-- **StateNotifier**: إدارة الحالة المتغيرة
-- **FutureProvider**: للعمليات غير المتزامنة
-
-## التخزين المحلي
-
-### Isar Database
-
-- تخزين العملاء والفواتير
-- أداء عالي جدًا
-- دعم الاستعلامات المعقدة
-
-### Flutter Secure Storage
-
-- تخزين بيانات الاعتماد (اسم المستخدم، كلمة المرور)
-- تخزين إعدادات الشركة
-- تشفير آمن
-
-## أفضل الممارسات
-
-### 1. الفصل بين الطبقات
-
-- لا تستورد من طبقة أعلى إلى طبقة أقل
-- استخدم الواجهات (Interfaces) للتواصل بين الطبقات
-
-### 2. معالجة الأخطاء
-
-- استخدم `try-catch` في كل عملية
-- وفر رسائل خطأ واضحة للمستخدم
-- سجل الأخطاء للتصحيح
-
-### 3. إعادة الاستخدام
-
-- أنشئ Widgets قابلة لإعادة الاستخدام
-- استخدم Providers لمشاركة الحالة
-- تجنب تكرار الكود
-
-### 4. الأداء
-
-- استخدم `const` للـ Widgets الثابتة
-- تجنب إعادة البناء غير الضرورية
-- استخدم Lazy Loading عند الحاجة
-
-## الاختبار
-
-### اختبارات الوحدة
-
-- اختبر كل دالة بشكل منفصل
-- استخدم Mock Objects للتبعيات
-
-### اختبارات التكامل
-
-- اختبر تدفق البيانات الكامل
-- تحقق من التفاعل بين الطبقات
-
-### اختبارات الواجهة
-
-- اختبر الشاشات والمكونات
-- تحقق من سلوك المستخدم
-
-## الخطوات التالية
-
-### التحسينات المستقبلية
-
-- إضافة Use Cases لكل ميزة
-- تطبيق اختبارات إضافية
-- تحسين الأداء المستمر
-- إضافة ميزات متقدمة
-
-### التوسع والتكامل
-
-- تطوير واجهة برمجية (API)
-- المزامنة السحابية (اختياري)
-- دعم المدفوعات الإلكترونية
-- تكامل مع أنظمة خارجية
+- `customer_model.dart`: Isar schema for customers.
+- `invoice_model.dart`: Isar schema for invoices.
+- `customer_repository_impl.dart`: Isar implementation of the customer repository.
+- `invoice_repository_impl.dart`: Isar implementation of the invoice repository.
 
 ---
 
-**ملاحظة**: هذا الملف يشرح البنية الحالية ويمكن تحديثه مع تطور المشروع.
+## Data Flow Orchestration
+
+```mermaid
+graph TD
+    subgraph "Presentation Layer (UI)"
+        P[Screens, Widgets, Providers]
+    end
+
+    subgraph "Domain Layer (Pure Logic)"
+        D[Entities, Abstract Repositories, Use Cases]
+    end
+
+    subgraph "Data Layer (Implementation)"
+        DL[Models, Repository Impl, Storage Services]
+    end
+
+    subgraph "Storage Layer"
+        S1[Isar Database]
+        S2[Secure Storage]
+    end
+
+    P --> D
+    D --> DL
+    DL --> S1
+    DL --> S2
+```
+
+## Directory Structure
+
+```text
+lib/
+├── core/
+│   ├── constants.dart              # Global constants and message indices.
+│   ├── providers.dart              # Global Riverpod providers.
+│   └── router.dart                 # GoRouter navigation engine.
+├── features/
+│   ├── auth/                       # Authentication and security.
+│   ├── customers/                  # Customer management module.
+│   ├── invoices/                   # Invoice/Ledger management module.
+│   ├── dashboard/                  # Analytical overview module.
+│   └── settings/                   # System configuration module.
+├── services/                       # Cross-cutting support services.
+└── main.dart                       # Primary system entry point.
+```
+
+---
+
+## State Management Standard
+
+The system utilizes **Flutter Riverpod** for state orchestration:
+
+- **Providers**: For service discovery and data access.
+- **StateNotifier**: For managing mutable UI state with predictable transitions.
+- **FutureProvider**: For asynchronous IO and data fetching.
+
+## Persistence Strategy
+
+### Isar Database
+
+- Primary storage for transactional data (Customers, Invoices).
+- Selected for high-performance indexing and complex query support.
+
+### Flutter Secure Storage
+
+- Encrypted storage for sensitive credentials (Master Password).
+- Persistence for critical business and technical settings.
+
+---
+
+## Engineering Best Practices
+
+1.  **Strict Layer Decoupling**: Upward dependencies are strictly prohibited. Communication between layers occurs through abstract interfaces.
+2.  **Robust Error Handling**: Every IO operational node must implement `try-catch` logic with standardized error propagation.
+3.  **Atomic UI Design**: UI must be decomposed into atomic, reusable widgets; `build` methods are limited to 50 lines for clarity.
+4.  **Performance Optimization**: Extensive use of `const` widgets and selective rebuild patterns to maximize frame rates.
+
+---
+
+**Prepared by:** Basir Project Agentic Development Team  
+**Architecture Version:** 1.0  
+**Status:** ✅ Active and Validated

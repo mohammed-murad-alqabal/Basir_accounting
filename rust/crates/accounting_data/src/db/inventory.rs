@@ -29,6 +29,7 @@ struct InventoryItemRow {
     name_en: String,
     description: Option<String>,
     unit: String,
+    min_stock_level: Option<Decimal>,
     valuation_method: String,
     purchase_price: Option<Decimal>,
     sale_price: Option<Decimal>,
@@ -48,17 +49,18 @@ impl PgInventoryRepository {
         sqlx::query(
             r#"
             INSERT INTO inventory_items (
-                id, code, name_ar, name_en, description, unit, valuation_method, 
+                id, code, name_ar, name_en, description, unit, min_stock_level, valuation_method, 
                 purchase_price, sale_price, asset_account_id, cogs_account_id, revenue_account_id,
                 created_at, updated_at
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
             ON CONFLICT (id) DO UPDATE SET
                 code = EXCLUDED.code,
                 name_ar = EXCLUDED.name_ar,
                 name_en = EXCLUDED.name_en,
                 description = EXCLUDED.description,
                 unit = EXCLUDED.unit,
+                min_stock_level = EXCLUDED.min_stock_level,
                 valuation_method = EXCLUDED.valuation_method,
                 purchase_price = EXCLUDED.purchase_price,
                 sale_price = EXCLUDED.sale_price,
@@ -74,6 +76,7 @@ impl PgInventoryRepository {
         .bind(&item.name_en)
         .bind(item.description.as_ref())
         .bind(&item.unit)
+        .bind(item.min_stock_level)
         .bind(format!("{:?}", item.valuation_method))
         .bind(item.purchase_price)
         .bind(item.sale_price)
@@ -88,18 +91,17 @@ impl PgInventoryRepository {
     }
 
     pub async fn get_item(&self, id: Uuid) -> anyhow::Result<Option<InventoryItem>> {
-        let row = sqlx::query_as!(
-            InventoryItemRow,
+        let row = sqlx::query_as::<_, InventoryItemRow>(
             r#"
             SELECT 
-                id, code, name_ar, name_en, description, unit, valuation_method,
+                id, code, name_ar, name_en, description, unit, min_stock_level, valuation_method,
                 purchase_price, sale_price, asset_account_id, cogs_account_id, revenue_account_id,
                 created_at, updated_at
             FROM inventory_items
             WHERE id = $1
             "#,
-            id
         )
+        .bind(id)
         .fetch_optional(&self.pool)
         .await?;
 
@@ -116,6 +118,7 @@ impl PgInventoryRepository {
                 name_en: r.name_en,
                 description: r.description,
                 unit: r.unit,
+                min_stock_level: r.min_stock_level,
                 valuation_method,
                 purchase_price: r.purchase_price,
                 sale_price: r.sale_price,
@@ -212,16 +215,15 @@ impl PgInventoryRepository {
     }
 
     pub async fn get_all_items(&self) -> anyhow::Result<Vec<InventoryItem>> {
-        let rows = sqlx::query_as!(
-            InventoryItemRow,
+        let rows: Vec<InventoryItemRow> = sqlx::query_as(
             r#"
             SELECT 
-                id, code, name_ar, name_en, description, unit, valuation_method,
+                id, code, name_ar, name_en, description, unit, min_stock_level, valuation_method,
                 purchase_price, sale_price, asset_account_id, cogs_account_id, revenue_account_id,
                 created_at, updated_at
             FROM inventory_items
             ORDER BY code ASC
-            "#
+            "#,
         )
         .fetch_all(&self.pool)
         .await?;
@@ -241,6 +243,7 @@ impl PgInventoryRepository {
                     name_en: r.name_en,
                     description: r.description,
                     unit: r.unit,
+                    min_stock_level: r.min_stock_level,
                     valuation_method,
                     purchase_price: r.purchase_price,
                     sale_price: r.sale_price,

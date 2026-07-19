@@ -1,4 +1,4 @@
-import 'package:basir_app/features/settings/domain/entities/profile.dart';
+import 'package:basir_accounting_system/features/settings/domain/entities/profile.dart';
 
 /// مستودع بيانات الملف الشخصي
 abstract class ProfileRepository {

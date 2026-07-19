@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/theme/services/font_customization_service.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/services/font_customization_service.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -50,9 +50,9 @@ class FontSettingsTile extends ConsumerWidget {
             selected: {currentFont},
             onSelectionChanged: (newSelection) {
               unawaited(
-                ref.read(fontCustomizationProvider.notifier).setFontFamily(
-                      newSelection.first,
-                    ),
+                ref
+                    .read(fontCustomizationProvider.notifier)
+                    .setFontFamily(newSelection.first),
               );
             },
             showSelectedIcon: false,
@@ -118,9 +118,7 @@ class FontSettingsTile extends ConsumerWidget {
               alpha: 0.3,
             ),
             borderRadius: BorderRadius.circular(Radii.lg),
-            border: Border.all(
-              color: theme.colorScheme.outlineVariant,
-            ),
+            border: Border.all(color: theme.colorScheme.outlineVariant),
           ),
           child: Column(
             children: [

@@ -171,8 +171,10 @@ class GuidelinesValidator {
         final content = await entity.readAsString();
 
         for (final keyword in flutterKeywords) {
-          totalFlutterReferences +=
-              RegExp(keyword, caseSensitive: false).allMatches(content).length;
+          totalFlutterReferences += RegExp(
+            keyword,
+            caseSensitive: false,
+          ).allMatches(content).length;
         }
       }
     }

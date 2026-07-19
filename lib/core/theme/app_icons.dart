@@ -56,6 +56,9 @@ abstract final class AppIcons {
   /// أكثر (أفقي)
   static const IconData moreHorizontal = Icons.more_horiz_outlined;
 
+  /// سهم لليمين (للقوائم)
+  static const IconData chevronRight = Icons.chevron_right_outlined;
+
   // ═══════════════════════════════════════════════════════════════════════════
   // Action Icons - أيقونات الإجراءات
   // ═══════════════════════════════════════════════════════════════════════════
@@ -378,6 +381,9 @@ abstract final class AppIcons {
   /// باركود
   static const IconData barcode = Icons.qr_code_2_outlined;
 
+  /// قارئ باركود
+  static const IconData barcodeReader = Icons.qr_code_scanner;
+
   // ═══════════════════════════════════════════════════════════════════════════
   // Direction Icons - أيقونات الاتجاهات
   // ═══════════════════════════════════════════════════════════════════════════
@@ -410,28 +416,27 @@ abstract final class AppIcons {
   /// ```dart
   /// Icon(AppIcons.getStatusIcon('success'))
   /// ```
-  static IconData getStatusIcon(String status) =>
-      switch (status.toLowerCase()) {
-        'success' || 'completed' || 'paid' => success,
-        'error' || 'failed' || 'cancelled' => error,
-        'warning' || 'pending' => warning,
-        'info' || 'draft' => info,
-        _ => info,
-      };
+  static IconData getStatusIcon(String status) {
+    final lower = status.toLowerCase();
+    return switch (lower) {
+      'success' || 'completed' || 'paid' => success,
+      'error' || 'failed' || 'cancelled' => error,
+      'warning' || 'pending' => warning,
+      'info' || 'draft' => info,
+      _ => info,
+    };
+  }
 
   /// الحصول على أيقونة حسب نوع الملف
-  ///
-  /// Example:
-  /// ```dart
-  /// Icon(AppIcons.getFileIcon('pdf'))
-  /// ```
-  static IconData getFileIcon(String fileType) =>
-      switch (fileType.toLowerCase()) {
-        'pdf' || 'doc' || 'docx' => document,
-        'jpg' || 'jpeg' || 'png' || 'gif' => image,
-        'zip' || 'rar' => folder,
-        _ => file,
-      };
+  static IconData getFileIcon(String fileType) {
+    final lower = fileType.toLowerCase();
+    return switch (lower) {
+      'pdf' || 'doc' || 'docx' => document,
+      'jpg' || 'jpeg' || 'png' || 'gif' => image,
+      'zip' || 'rar' => folder,
+      _ => file,
+    };
+  }
 
   /// الحصول على أيقونة اتجاه الترتيب
   ///
@@ -439,7 +444,9 @@ abstract final class AppIcons {
   /// ```dart
   /// Icon(AppIcons.getSortIcon(ascending: true))
   /// ```
-  static IconData getSortIcon({required bool ascending}) =>
+  static IconData getSortIcon({
+    required bool ascending,
+  }) =>
       ascending ? arrowUp : arrowDown;
 
   /// الحصول على أيقونة الرؤية

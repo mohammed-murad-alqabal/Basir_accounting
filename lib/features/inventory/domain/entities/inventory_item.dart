@@ -1,4 +1,4 @@
-import 'package:basir_app/core/models/sync_status.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'inventory_item.freezed.dart';
@@ -100,14 +100,22 @@ class InventoryItem with _$InventoryItem {
 
     /// معرف المستخدم
     String? userId,
+
+    /// معرف المستودع (لعزل البيانات)
+    String? warehouseId,
+
+    /// باركود الصنف
+    String? barcode,
+
+    /// فئة الضريبة الافتراضية (S=Standard, Z=Zero, etc)
+    @Default('S') String taxCategory,
   }) = _InventoryItem;
 
-  /// إنشاء صنف مخزون من JSON.
-  // ignore: lines_longer_than_80_chars
-  factory InventoryItem.fromJson(Map<String, dynamic> json) =>
-      _$InventoryItemFromJson(json);
-
   const InventoryItem._();
+
+  /// إنشاء صنف مخزون من JSON.
+  factory InventoryItem.fromJson(Map<String, dynamic> json) =>
+      _$InventoryItemFromJson(json); // force-split
 
   /// الحصول على الاسم حسب اللغة
   String name({required bool isArabic}) => isArabic ? nameAr : nameEn;

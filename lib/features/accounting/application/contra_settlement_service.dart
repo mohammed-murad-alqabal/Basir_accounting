@@ -1,20 +1,32 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:decimal/decimal.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 part 'contra_settlement_service.g.dart';
 
-/// خدمة تسوية الأرصدة المتقابلة (Contra-Settlement Service)
-/// مسؤولة عن إجراء مقاصة بين أرصدة العملاء والموردين لنفس الكيان.
+/// Contra-Settlement Service for balancing mutual AR/AP positions.
+///
+/// Responsible for automating the netting process between a Customer
+/// and a Vendor when they represent the same legal entity, reducing
+/// both Receivable and Payable balances simultaneously.
 @riverpod
 class ContraSettlementService extends _$ContraSettlementService {
   @override
   FutureOr<void> build() {}
 
-  /// إجراء تسوية متقابلة (Contra Settlement)
-  /// تقوم هذه العملية بإنقاص رصيد العميل مقابل إنقاص رصيد المورد.
+  /// Executes a Contra Settlement (Netting) transaction.
+  ///
+  /// Simultaneously reduces the vendor liability and the customer asset
+  /// to settle mutual debts without cash exchange.
+  ///
+  /// ## Entry Logic:
+  /// - **Debit**: Accounts Payable (Liability decrease).
+  /// - **Credit**: Accounts Receivable (Asset decrease).
+  ///
+  /// ## Compliance:
+  /// Maps to IFRS 9 / IFRS 15 principles regarding financial instrument settlement.
   Future<String> performContraSettlement({
     required String customerId,
     required String vendorId,
@@ -27,29 +39,27 @@ class ContraSettlementService extends _$ContraSettlementService {
     final user = ref.read(basirUserProvider);
     final now = DateTime.now();
 
-    // التحقق من صحة المبلغ
+    // Validate settlement amount
     if (amount <= Decimal.zero) {
       throw Exception('Settlement amount must be greater than zero');
     }
 
     final lines = [
-      // إنقاص رصيد المورد (مدين)
-      // Debit the Payable account (Decrease Liability)
+      // Decrease Supplier Balance (Debit)
       JournalEntryLine(
         accountId: payableAccountId,
-        accountName: 'تسوية مورد - $vendorId',
+        accountName: 'Contra Settlement - Vendor $vendorId',
         debit: amount,
         credit: Decimal.zero,
-        description: 'مقاصة: $description',
+        description: 'Netting Settlement: $description',
       ),
-      // إنقاص رصيد العميل (دائن)
-      // Credit the Receivable account (Decrease Asset)
+      // Decrease Customer Balance (Credit)
       JournalEntryLine(
         accountId: receivableAccountId,
-        accountName: 'تسوية عميل - $customerId',
+        accountName: 'Contra Settlement - Customer $customerId',
         credit: amount,
         debit: Decimal.zero,
-        description: 'مقاصة: $description',
+        description: 'Netting Settlement: $description',
       ),
     ];
 
@@ -64,10 +74,10 @@ class ContraSettlementService extends _$ContraSettlementService {
       ),
       standards: const StandardsJustification(
         standardReference: 'IFRS 9 / IFRS 15',
-        recognitionBasis: 'Settlement',
+        recognitionBasis: 'Settlement through Netting',
         measurementBasis: 'Amortized Cost',
       ),
-      description: 'تسوية أرصدة متقابلة: $description',
+      description: 'Contra-Settlement: $description',
       status: JournalEntryStatus.posted,
       lines: lines,
       sourceDocument: 'contra_settlement',

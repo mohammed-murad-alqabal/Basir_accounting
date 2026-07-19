@@ -11,8 +11,12 @@ targets:
             - lib/src/rust/**
       freezed:
         generate_for:
-          exclude:
+          include:
             - lib/src/rust/**
+            - lib/features/**
+            - lib/core/**
+          exclude:
+            - lib/src/rust/frb_generated*
       riverpod_generator:
         generate_for:
           exclude:

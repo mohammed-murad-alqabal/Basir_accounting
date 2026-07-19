@@ -1,51 +1,174 @@
-# 🗺️ مشروع بصير - دليل هيكلة النظام (STRUCTURE.md)
+# 🗺️ مشروع بصير - دليل هيكلة النظام
 
-**المشروع:** بصير MVP  
-**الحالة:** ✅ مكتمل (Optimized)  
-**آخر تحديث:** 29 ديسمبر 2025
+**المشروع:** نظام بصير المحاسبي (Basir Accounting System)  
+**الحالة:** 💎 Diamond Purity Achieved  
+**الإصدار:** 1.0.0+1  
+**آخر تحديث:** 10 يناير 2026
 
 ---
 
 ## 📋 نظرة عامة
 
-هذا الملف هو المرجع الأساسي لهيكل المشروع وتنظيمه. تم تصميم الهيكل ليكون نظيفاً، احترافياً، وقابلاً للتوسع، مع الالتزام بمبادئ Clean Architecture و Separation of Concerns.
+نظام بصير هو منصة محاسبية متكاملة من الجيل الجديد تنافس الحلول العالمية مثل Oracle NetSuite وSAP وSage. يجمع بين قوة **Rust** للحسابات ومرونة **Flutter** للواجهات، مع امتثال كامل لـ **ZATCA Phase 2**.
+
+### المبادئ المعمارية
+
+| المبدأ                 | التطبيق                                |
+| :--------------------- | :------------------------------------- |
+| **Clean Architecture** | فصل صارم بين Domain/Data/Presentation  |
+| **Feature-First**      | كل وحدة محاسبية مستقلة بذاتها          |
+| **Offline-First**      | تشغيل كامل بدون إنترنت مع مزامنة لاحقة |
+| **Security-First**     | تشفير البيانات في الراحة والنقل        |
 
 ---
 
-## 🏗️ هيكل المجلدات الرئيسي
+## 🏮 مركز الأتمتة (Makefile Hub)
 
-| المجلد       | الوصف                   | المكونات الأساسية                                                                                  |
-| :----------- | :---------------------- | :------------------------------------------------------------------------------------------------- |
-| **lib/**     | كود التطبيق (Flutter)   | الوجدات (Widgets)، النماذج (Models)، الخدمات (Services)                                            |
-| **docs/**    | التوثيق الموحد          | [Project Status](docs/reports/project-status/FINAL_PROJECT_STATUS.md), أرشيف الجلسات، لقطات الشاشة |
-| **.kiro/**   | نظام التوجيه والمواصفات | المواصفات النشطة (specs/), ملفات التوجيه (steering/)                                               |
-| **test/**    | الاختبارات              | اختبارات الوحدات (Unit Tests), اختبارات الوجدات (Widget Tests)                                     |
-| **tools/**   | الأدوات البرمجية        | أدوات التشخيص (diagnostics/), التنظيف (cleanup/), والأتمتة                                         |
-| **scripts/** | سكريبتات مساعدة         | سكريبتات CI/CD، Hooks، وإدارة البيئة                                                               |
-| **assets/**  | الأصول الثابتة          | الصور، الخطوط، أيقونات التطبيق                                                                     |
-| **logs/**    | السجلات                 | أرشيف السجلات، سجلات العمليات والتشخيص                                                             |
+```bash
+# الإعداد
+make setup           # إعداد كامل للبيئة
+make gen             # توليد الأكواد (Freezed, Riverpod)
 
----
+# التطوير
+make run             # تشغيل التطبيق
+make rust-build      # بناء محرك Rust
 
-## 🎯 المواصفات النشطة (Active Specs)
-
-يمكنك تتبع تقدم التطوير من خلال المواصفات في [.kiro/specs/active/]:
-
-1. **[git-merge-automation](.kiro/specs/active/git-merge-automation/)**: أتمتة عمليات الدمج وضمان الجودة (مكتمل).
-2. **[guest-mode-upgrade-ui](.kiro/specs/active/guest-mode-upgrade-ui/)**: تنفيذ واجهة ترقية وضع الضيف (قيد التنفيذ).
-3. **[brand-visual-identity](.kiro/specs/active/brand-visual-identity/)**: الهوية البصرية ونظام التصميم (مكتمل).
+# الجودة
+make analyze         # تحليل الكود الثابت
+make test            # تشغيل جميع الاختبارات
+make purity-check    # فحص النقاء الماسي 💎
+make report          # تقرير جودة شامل
+```
 
 ---
 
-## 🛡️ معايير الجودة والتوافق
+## 📁 هيكل المشروع الرئيسي
 
-- **Architecture**: Clean Architecture with Riverpod & Isar.
-- **I18n**: دعم كامل للغتين العربية والإنجليزية (RTL/LTR).
-- **Testing**: التزام بنسبة تغطية عالية للاختبارات (100% Pass Rate).
-- **Automation**: استخدام Git Hooks و GitHub Actions لضمان الجودة.
+```text
+basir_accounting_system/
+│
+├── 📂 lib/                          # كود Flutter/Dart
+│   ├── core/                        # المكونات الأساسية المشتركة
+│   │   ├── assets/                  # الشعارات والأيقونات
+│   │   ├── config/                  # إعدادات التطبيق
+│   │   ├── l10n/                    # الترجمة (عربي/إنجليزي)
+│   │   ├── models/                  # النماذج الأساسية
+│   │   ├── providers/               # Riverpod Providers
+│   │   ├── router/                  # GoRouter Navigation
+│   │   ├── services/                # الخدمات العامة
+│   │   ├── theme/                   # نظام التصميم (Design Tokens)
+│   │   └── utils/                   # أدوات مساعدة
+│   │
+│   ├── features/                    # الوحدات المحاسبية
+│   │   ├── accounting/              # 🧮 الدفتر العام
+│   │   ├── invoices/                # 📄 الفوترة وZATCA
+│   │   ├── customers/               # 👥 الذمم المدينة
+│   │   ├── vendors/                 # 🏢 الذمم الدائنة
+│   │   ├── inventory/               # 📦 المخزون
+│   │   ├── assets/                  # 🏗️ الأصول الثابتة
+│   │   ├── reports/                 # 📊 التقارير المالية
+│   │   ├── dashboard/               # 📈 لوحة التحكم
+│   │   ├── auth/                    # 🔐 المصادقة
+│   │   └── settings/                # ⚙️ الإعدادات
+│   │
+│   └── shared/                      # المكونات المشتركة
+│       └── widgets/                 # Widgets قابلة لإعادة الاستخدام
+│
+├── 🦀 rust/                         # محرك الحسابات (Rust)
+│   └── crates/
+│       ├── accounting_core/         # منطق الحسابات والقيود
+│       ├── accounting_zatca/        # محرك ZATCA (QR, XML, Signing)
+│       └── accounting_native/       # FFI Bridge مع Flutter
+│
+├── 🧪 test/                         # الاختبارات الشاملة
+│   ├── unit/                        # اختبارات الوحدات
+│   ├── widget/                      # اختبارات الواجهات
+│   ├── integration/                 # اختبارات التكامل
+│   └── property/                    # اختبارات الخصائص
+│
+├── 📜 scripts/                      # سكريبتات الأتمتة
+│   ├── verify_branding.sh           # تدقيق الهوية
+│   ├── generate_quality_report.sh   # تقرير الجودة
+│   └── archive/                     # سكريبتات مؤرشفة
+│
+├── 🔧 tools/                        # أدوات التشخيص
+│   ├── diagnostics/                 # أدوات تحليل الأخطاء
+│   └── metrics/                     # قياس الأداء
+│
+├── 📚 docs/                         # التوثيق الشامل
+│   ├── Core/                        # الوثائق الأساسية
+│   ├── guides/                      # أدلة الاستخدام
+│   └── reports/                     # التقارير
+│
+└── 🔒 .kiro/                        # نظام Kiro للتوجيه
+    ├── specs/active/                # المواصفات النشطة
+    └── steering/                    # قواعد التوجيه
+```
 
 ---
 
-## 📞 الدعم والمساهمة
+## 🧩 هيكل الوحدة المحاسبية (Feature Structure)
 
-يرجى الرجوع إلى [CONTRIBUTING.md](CONTRIBUTING.md) لفهم معايير كتابة الكود والتوثيق.
+كل وحدة محاسبية تتبع **Clean Architecture**:
+
+```text
+features/[module]/
+├── domain/              # 🧠 منطق العمل
+│   ├── entities/        # الكيانات (Business Objects)
+│   └── repositories/    # واجهات المستودعات
+│
+├── data/                # 💾 التنفيذ
+│   ├── models/          # نماذج البيانات (JSON/Isar)
+│   └── repositories/    # تنفيذ المستودعات
+│
+├── application/         # ⚙️ الخدمات
+│   └── *_service.dart   # Business Logic Services
+│
+└── presentation/        # 🎨 واجهة المستخدم
+    ├── screens/         # الشاشات الرئيسية
+    ├── widgets/         # Widgets خاصة
+    └── providers/       # Riverpod State
+```
+
+---
+
+## 🎯 الوحدات المحاسبية التفصيلية
+
+| الوحدة            | المسار                 | الوظائف الرئيسية                |
+| :---------------- | :--------------------- | :------------------------------ |
+| **الدفتر العام**  | `features/accounting/` | دليل حسابات، قيود، ميزان مراجعة |
+| **الفوترة**       | `features/invoices/`   | ZATCA، QR، توقيع رقمي           |
+| **الذمم المدينة** | `features/customers/`  | عملاء، تقادم، تحصيل             |
+| **الذمم الدائنة** | `features/vendors/`    | موردين، مشتريات، سداد           |
+| **المخزون**       | `features/inventory/`  | منتجات، تقييم، جرد              |
+| **الأصول**        | `features/assets/`     | إهلاك، صيانة، استبعاد           |
+| **التقارير**      | `features/reports/`    | قوائم مالية، KPIs               |
+
+---
+
+## 🛡️ معايير الجودة
+
+| المعيار         | الحالة               |
+| :-------------- | :------------------- |
+| Flutter Analyze | ✅ No issues         |
+| Dart Format     | ✅ 0 changes         |
+| Test Pass Rate  | ✅ 100% (822+ tests) |
+| Branding Check  | ✅ Clean             |
+| Diamond Purity  | 💎 Achieved          |
+
+---
+
+## 📚 الملفات الجذرية
+
+| الملف                   | الغرض            |
+| :---------------------- | :--------------- |
+| `README.md`             | الواجهة الرئيسية |
+| `STRUCTURE.md`          | هذا الملف        |
+| `Makefile`              | مركز الأتمتة     |
+| `pubspec.yaml`          | تكوين Flutter    |
+| `analysis_options.yaml` | قواعد التحليل    |
+| `CONTRIBUTING.md`       | دليل المساهمة    |
+
+---
+
+💎 **Diamond Purity Framework** | نظام بصير المحاسبي

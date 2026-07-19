@@ -127,15 +127,8 @@ class LogEntry {
   }
 
   @override
-  int get hashCode => Object.hash(
-        id,
-        timestamp,
-        type,
-        level,
-        message,
-        filePath,
-        lineNumber,
-      );
+  int get hashCode =>
+      Object.hash(id, timestamp, type, level, message, filePath, lineNumber);
 }
 
 /// أنواع السجلات المختلفة.

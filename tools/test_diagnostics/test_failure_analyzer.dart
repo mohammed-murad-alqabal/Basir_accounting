@@ -19,7 +19,7 @@ enum TestFailureType {
   unit,
   timeout,
   compilation,
-  unknown
+  unknown,
 }
 
 /// Priority levels for test failures
@@ -157,25 +157,21 @@ class TestFailureAnalyzer {
         currentFailure = _parseGoldenTestFailure(line, lines, i);
         if (currentFailure != null) _failures.add(currentFailure);
       }
-
       // Detect timeout failures
       else if (line.contains('pumpAndSettle timed out')) {
         currentFailure = _parseTimeoutFailure(line, lines, i);
         if (currentFailure != null) _failures.add(currentFailure);
       }
-
       // Detect UI overflow failures
       else if (line.contains('overflow') || line.contains('RenderFlex')) {
         currentFailure = _parseUIOverflowFailure(line, lines, i);
         if (currentFailure != null) _failures.add(currentFailure);
       }
-
       // Detect integration test failures
       else if (line.contains('integration') && line.contains('failed')) {
         currentFailure = _parseIntegrationFailure(line, lines, i);
         if (currentFailure != null) _failures.add(currentFailure);
       }
-
       // Detect general test failures
       else if (line.contains('[E]') || line.contains('FAILED')) {
         currentFailure = _parseGeneralFailure(line, lines, i);

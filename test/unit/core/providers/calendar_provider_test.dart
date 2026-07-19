@@ -1,4 +1,4 @@
-import 'package:basir_app/core/providers/calendar_provider.dart';
+import 'package:basir_accounting_system/core/providers/calendar_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,9 +60,7 @@ void main() {
     });
 
     test('should load persisted value from SharedPreferences', () async {
-      SharedPreferences.setMockInitialValues({
-        'app_calendar_type': 'hijri',
-      });
+      SharedPreferences.setMockInitialValues({'app_calendar_type': 'hijri'});
 
       // Create new container after setting mock values
       final newContainer = ProviderContainer();
