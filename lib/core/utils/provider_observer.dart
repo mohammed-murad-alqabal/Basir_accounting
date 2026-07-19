@@ -33,7 +33,7 @@ class BasirProviderObserver extends ProviderObserver {
     debugPrint('Error: $error');
     debugPrint('StackTrace: $stackTrace');
 
-    // TODO(team): Add external error logging service like Sentry or Firebase
+    // TODO(basir): Add external error logging service like Sentry or Firebase
   }
 
   @override

@@ -1,5 +1,5 @@
-import 'package:basir_app/core/models/sync_status.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:decimal/decimal.dart';
 import 'package:isar/isar.dart';
 
@@ -33,6 +33,7 @@ class JournalEntryModel {
     updatedAt = entity.updatedAt;
     postedAt = entity.postedAt;
     userId = entity.userId;
+    warehouseId = entity.warehouseId;
     syncStatus = entity.syncStatus;
     serverUpdatedAt = entity.serverUpdatedAt;
     isDeleted = entity.isDeleted;
@@ -50,6 +51,7 @@ class JournalEntryModel {
   late String referenceNumber;
 
   /// تاريخ القيد.
+  @Index()
   late DateTime date;
 
   /// التبرير الزمني.
@@ -62,6 +64,7 @@ class JournalEntryModel {
   late String description;
 
   /// حالة القيد.
+  @Index()
   @enumerated
   late JournalEntryStatus status;
 
@@ -96,6 +99,10 @@ class JournalEntryModel {
   @Index()
   String? userId;
 
+  /// معرف المستودع.
+  @Index()
+  String? warehouseId;
+
   /// حالة المزامنة
   @enumerated
   late SyncStatus syncStatus;
@@ -125,6 +132,7 @@ class JournalEntryModel {
         updatedAt: updatedAt,
         postedAt: postedAt,
         userId: userId,
+        warehouseId: warehouseId,
         syncStatus: syncStatus,
         serverUpdatedAt: serverUpdatedAt,
         isDeleted: isDeleted,

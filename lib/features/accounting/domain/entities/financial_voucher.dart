@@ -1,98 +1,102 @@
-import 'package:basir_app/core/models/sync_status.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'financial_voucher.freezed.dart';
 part 'financial_voucher.g.dart';
 
-/// أنواع السندات المالية (قبض/صرف).
+/// Fundamental financial voucher types for cash flow direction.
 enum VoucherType {
-  /// سند قبض (Receipt)
+  /// Incoming funds from a payer.
   receipt,
 
-  /// سند صرف (Payment)
+  /// Outgoing funds to a beneficiary.
   payment,
 }
 
-/// طرق الدفع المتاحة.
+/// Supported payment instruments for financial settlements.
 enum PaymentMethod {
-  /// نقدي
+  /// Physical currency settlement.
   cash,
 
-  /// بنكي / تحويل
+  /// Wire transfer or digital bank settlement.
   bank,
 
-  /// شيك
+  /// Negotiable instrument / Cheque.
   check,
 }
 
-/// وثيقة مالية تمثل سند صرف أو قبض.
+/// Primary financial document representing a cash or bank transaction.
+///
+/// Serves as the pre-posting source for cash-driven [JournalEntry] records.
 @freezed
 class FinancialVoucher with _$FinancialVoucher {
-  /// إنشاء سند مالي جديد.
+  /// Creates a financial voucher entity.
   const factory FinancialVoucher({
-    /// معرف فريد للسند.
+    /// Unique internal identifier.
     required String id,
 
-    /// رقم مرجعي للسند (مثال: PV-2024-001).
+    /// External reference number (e.g., "PV-2024-001").
     required String referenceNumber,
 
-    /// تاريخ الصرف أو القبض.
+    /// Date the payment or receipt was executed.
     required DateTime date,
 
-    /// نوع السند (قبض أو صرف).
+    /// Direction of fund flow (Receipt/Payment).
     required VoucherType type,
 
-    /// وسيلة الدفع (نقد، بنك، شيك).
+    /// Settlement instrument (Cash/Bank/Check).
     required PaymentMethod paymentMethod,
 
-    /// مبلغ السند.
+    /// Face value of the transaction as [Decimal].
     required Decimal amount,
 
-    /// الحساب المتأثر (مثال: حساب العميل أو المورد).
+    /// The offset account ID (e.g., Customer AR or Vendor AP).
     required String accountId,
 
-    /// الحساب النقدي المتأثر (الخزينة أو البنك).
+    /// The liquid asset account ID (e.g., Cash Office or Bank Account).
     required String treasuryAccountId,
 
-    /// شرح السند.
+    /// Detailed description or memo of the transaction purpose.
     required String description,
 
-    /// تاريخ الإنشاء في النظام.
+    /// Initial system recording timestamp.
     required DateTime createdAt,
 
-    /// الاسم المرتبط (اسم الدافع أو المستفيد).
+    /// Name of the paying person or receiving entity (Manual/Denormalized).
     String? personName,
 
-    /// حالة الترحيل للمحاسبة.
+    /// Migration status: if true, the voucher has been posted to the General
+    /// Ledger.
     @Default(false) bool isPosted,
 
-    /// معرف القيد المحاسبي المرتبط (بعد الترحيل).
+    /// Link to the resulting [JournalEntry] ID after posting.
     String? journalEntryId,
 
-    /// معرف المستخدم صاحب السند (لعزل البيانات)
+    /// Tenant/Owner identifier.
     String? userId,
 
-    /// العملة الأصلية (للمعاملات متعددة العملات)
+    /// Original transaction currency (ISO code).
     String? originalCurrency,
 
-    /// سعر الصرف وقت العملية
+    /// Conversion rate used for local currency recording.
     Decimal? exchangeRate,
 
-    /// المبلغ بالعملة الأصلية
+    /// Face value in [originalCurrency].
     Decimal? originalAmount,
 
-    /// حالة المزامنة
+    /// Local-to-Remote synchronization state.
     @Default(SyncStatus.synced) SyncStatus syncStatus,
 
-    /// تاريخ آخر تحديث من السيرفر
+    /// Most recent synchronization timestamp from the server.
     DateTime? serverUpdatedAt,
 
-    /// هل السجل محذوف (حذف ناعم)
+    /// Soft-deletion flag.
     @Default(false) bool isDeleted,
   }) = _FinancialVoucher;
 
-  /// التحويل من JSON
+  /// deserialization from JSON format.
   factory FinancialVoucher.fromJson(Map<String, dynamic> json) =>
       _$FinancialVoucherFromJson(json);
 }

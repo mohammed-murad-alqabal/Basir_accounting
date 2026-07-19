@@ -1,0 +1,201 @@
+# Compliance Engines Specification
+
+**Version:** 2.0 (Sovereign Edition)
+**Basis:** Screens 034, 097, 099 & Regulatory Standards (ZATCA, SOCPA)
+**Scope:** Tax Calculation, E-Invoicing, Zakat, IFRS 18
+
+---
+
+## 1. VAT Engine (Value Added Tax)
+
+### 1.1 Overview
+
+The VAT engine calculates, applies, and reports tax on invoices according to KSA ZATCA guidelines.
+
+| Parameter     | Default Value | Source                  |
+| ------------- | ------------- | ----------------------- |
+| Standard Rate | 15%           | KSA VAT Law             |
+| Zero Rate     | 0%            | Exports, specific goods |
+| Exempt        | N/A           | Healthcare, education   |
+
+### 1.2 Tax Calculation Flow
+
+```mermaid
+sequenceDiagram
+    participant InvoiceLine
+    participant TaxEngine
+    participant Invoice
+
+    InvoiceLine->>TaxEngine: Calculate tax for line
+    TaxEngine->>TaxEngine: Apply taxRate (15%)
+    TaxEngine-->>InvoiceLine: taxAmount = lineTotal * 0.15
+    InvoiceLine-->>Invoice: Aggregate all taxAmounts
+    Invoice->>Invoice: totalTax = SUM(line.taxAmount)
+```
+
+### 1.3 Tax Configuration (Screen 097)
+
+| Setting          | Type    | Notes                        |
+| ---------------- | ------- | ---------------------------- |
+| `isVatEnabled`   | bool    | Global toggle                |
+| `defaultVatRate` | Decimal | Default for all items        |
+| `vatNumber`      | String  | Company VAT registration     |
+| `vatAccountId`   | String  | GL account for VAT Liability |
+
+---
+
+## 2. ZATCA E-Invoicing (Phase 2 - Integration)
+
+### 2.1 Overview
+
+ZATCA (Zakat, Tax and Customs Authority) mandates electronic invoicing for all businesses in Saudi Arabia, progressing through:
+
+| Phase   | Name        | Requirement                                |
+| ------- | ----------- | ------------------------------------------ |
+| Phase 1 | Generation  | Generate compliant XML (complete)          |
+| Phase 2 | Integration | Report invoices to ZATCA in near real-time |
+
+### 2.2 Onboarding Flow (Screen 034)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant ZatcaOnboardingScreen
+    participant ZatcaService
+
+    User->>ZatcaOnboardingScreen: Enter OTP
+    ZatcaOnboardingScreen->>ZatcaService: generateCSR()
+    ZatcaService-->>ZatcaOnboardingScreen: CSR generated
+    ZatcaOnboardingScreen->>ZatcaService: requestCCSID(csr, otp)
+    ZatcaService-->>ZatcaOnboardingScreen: CCSID (Compliance Certificate)
+    ZatcaOnboardingScreen->>ZatcaService: requestPCSID(ccsid)
+    ZatcaService-->>ZatcaOnboardingScreen: PCSID (Production Certificate)
+    ZatcaOnboardingScreen-->>User: Onboarding Complete
+```
+
+### 2.3 Invoice Reporting Flow
+
+```mermaid
+sequenceDiagram
+    participant InvoiceService
+    participant ZatcaService
+    participant ZATCA_API (Simulated)
+
+    InvoiceService->>ZatcaService: reportInvoice(invoice)
+    ZatcaService->>ZatcaService: Generate UBL 2.1 XML
+    ZatcaService->>ZatcaService: Sign XML with PCSID
+    ZatcaService->>ZATCA_API (Simulated): Submit signed XML
+    ZATCA_API (Simulated)-->>ZatcaService: {status: 'REPORTED', uuid: '...'}
+    ZatcaService-->>InvoiceService: Update invoice.zatcaStatus
+```
+
+### 2.4 ZATCA Status Badge (Screen 096)
+
+| Status     | Color  | Meaning                 |
+| ---------- | ------ | ----------------------- |
+| `Pending`  | Yellow | Awaiting submission     |
+| `Reported` | Green  | Successfully submitted  |
+| `Rejected` | Red    | ZATCA validation failed |
+| `Warn`     | Orange | Submitted with warnings |
+
+---
+
+## 3. Zakat Engine (Sharia Compliance)
+
+### 3.1 Overview
+
+Zakat is the Islamic wealth tax, calculated annually at 2.5% on net assets.
+
+### 3.2 Zakat Base Calculation (Net Working Capital Method)
+
+| Component           | Formula                              |
+| ------------------- | ------------------------------------ |
+| Current Assets      | Cash + Receivables + Inventory       |
+| Current Liabilities | Payables + Short-term Debt           |
+| **Zakatable Base**  | Current Assets - Current Liabilities |
+| **Zakat Payable**   | Zakatable Base \* 0.025              |
+
+### 3.3 Implementation (`ZakatIntelligenceService`)
+
+```dart
+Future<ZakatCalculation> calculateZakat(DateTime asOfDate) async {
+  final bs = await financialStatementService.generateBalanceSheet(asOfDate);
+  final currentAssets = bs.currentAssets; // From 1XXX accounts
+  final currentLiabilities = bs.currentLiabilities; // From 2XXX accounts
+  final zakatableBase = currentAssets - currentLiabilities;
+  final zakatPayable = zakatableBase * Decimal.parse('0.025');
+  return ZakatCalculation(base: zakatableBase, payable: zakatPayable);
+}
+```
+
+### 3.4 Sharia Guard (Riba Detection)
+
+The `ForensicAuditService` includes a Sharia checkpoint that flags transactions containing prohibited terms in their descriptions:
+
+| Flagged Terms (Case-Insensitive) |
+| -------------------------------- |
+| Interest                         |
+| Riba                             |
+| Usury                            |
+| Commission (context-dependent)   |
+
+---
+
+## 4. IFRS 18 Compliance (Financial Reporting)
+
+### 4.1 Overview
+
+IFRS 18 (Presentation and Disclosure in Financial Statements) requires classification of cash flows into three categories.
+
+### 4.2 Account Classification
+
+Every `Account` must have an `ifrs18Category`:
+
+| Category    | Description                    | Example Accounts      |
+| ----------- | ------------------------------ | --------------------- |
+| `Operating` | Day-to-day business activities | Sales, COGS, Salaries |
+| `Investing` | Long-term asset transactions   | Fixed Asset Purchases |
+| `Financing` | Capital and debt transactions  | Loans, Owner's Equity |
+
+### 4.3 Statement of Cash Flows
+
+The `FinancialStatementService.generateCashFlowStatement(...)` automatically groups transactions by their `ifrs18Category`, enabling compliant cash flow reporting.
+
+---
+
+## 5. GOSI (Social Insurance) Integration
+
+### 5.1 Overview
+
+For businesses with employees, GOSI contributions are calculated based on tiers.
+
+| Tier            | Contribution Rate (Employer) |
+| --------------- | ---------------------------- |
+| Saudi Nationals | 12% of basic salary          |
+| Non-Saudis      | 2% of basic salary           |
+
+_(Note: Employee contribution also applies but is deducted from salary.)_
+
+### 5.2 Future Implementation
+
+A payroll module will integrate GOSI calculations, generating journal entries:
+
+- **Debit:** `6201 Salary Expense`
+- **Credit:** `2301 GOSI Payable`
+- **Credit:** `1101 Cash` (Net salary)
+
+---
+
+## 6. Compliance Verification Checklist
+
+- [x] VAT is correctly calculated at 15% per line.
+- [x] ZATCA-compliant XML can be generated.
+- [x] Invoice hashing meets ZATCA PIH requirements.
+- [x] Zakat base is calculable from CoA.
+- [x] Sharia Guard flags prohibited terms.
+- [x] IFRS 18 categories are mandatory on accounts.
+- [ ] GOSI integration (planned for payroll module).
+
+---
+
+_This specification ensures Basir meets all KSA regulatory requirements for taxation, e-invoicing, and Sharia compliance._

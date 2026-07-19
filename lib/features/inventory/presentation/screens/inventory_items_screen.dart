@@ -1,11 +1,12 @@
-import 'package:basir_app/core/assets/app_illustrations.dart';
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/inventory/domain/entities/inventory_item.dart';
-import 'package:basir_app/features/inventory/presentation/providers/inventory_provider.dart';
-import 'package:basir_app/features/inventory/presentation/screens/inventory_item_form_screen.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/assets/app_illustrations.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
+import 'package:basir_accounting_system/features/inventory/presentation/providers/inventory_provider.dart';
+import 'package:basir_accounting_system/features/inventory/presentation/screens/inventory_item_form_screen.dart';
+import 'package:basir_accounting_system/features/onboarding/presentation/widgets/cognitive_overlay.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,18 +34,33 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
     final itemsAsync = ref.watch(filteredInventoryItemsProvider);
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppAppBar(
-        title: context.l10n.inventoryItemsScreenTitle,
-        actions: [
-          IconButton(
-            icon: Icon(appIcons.add, size: 26),
-            tooltip: context.l10n.tooltipAddInventoryItem,
-            onPressed: _addItem,
-          ),
-        ],
-      ),
+    // Trigger Cognitive Hint on first load
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (itemsAsync.hasValue &&
+          itemsAsync.value!.isEmpty &&
+          _searchController.text.isEmpty) {
+        showCognitiveHint(
+          context,
+          'قم بإضافة أصناف المخزون هنا لتتمكن من تتبع الكميات والتكاليف بدقة. '
+          'يمكنك البدء بإضافة صنف يدويًا.',
+          title: 'إدارة المخزون',
+        );
+      }
+    });
+
+    return GlassScaffold(
+      title: context.l10n.inventoryItemsScreenTitle,
+      actions: [
+        IconButton(
+          icon: Icon(appIcons.barcodeReader, size: 26),
+          tooltip: 'محرك الباركود',
+          onPressed: _openBarcodeEngine,
+        ),
+        IconButton(
+          icon: Icon(appIcons.add, size: 26),
+          onPressed: _addItem,
+        ),
+      ],
       body: Column(
         children: [
           // حقل البحث
@@ -68,9 +84,7 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
             child: itemsAsync.when(
               data: _buildItemsList,
               loading: () => const Center(child: AppLoadingIndicator()),
-              error: (error, stack) => Center(
-                child: Text(error.toString()),
-              ),
+              error: (error, stack) => Center(child: Text(error.toString())),
             ),
           ),
         ],
@@ -80,9 +94,7 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
 
   Widget _buildItemsList(List<InventoryItem> items) {
     if (items.isEmpty) {
-      return const Center(
-        child: EmptyStateIllustration(),
-      );
+      return const Center(child: EmptyStateIllustration());
     }
 
     return ListView.builder(
@@ -135,5 +147,9 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
       ),
     );
     if (result ?? false) ref.invalidate(inventoryItemsProvider);
+  }
+
+  Future<void> _openBarcodeEngine() async {
+    await Navigator.pushNamed(context, '/barcode-creation');
   }
 }

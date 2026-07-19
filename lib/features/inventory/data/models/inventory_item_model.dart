@@ -1,5 +1,5 @@
-import 'package:basir_app/core/models/sync_status.dart';
-import 'package:basir_app/features/inventory/domain/entities/inventory_item.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
 import 'package:isar/isar.dart';
 
 part 'inventory_item_model.g.dart';
@@ -11,7 +11,9 @@ class InventoryItemModel {
   InventoryItemModel();
 
   /// إنشاء نموذج صنف مخزون من كيان
-  factory InventoryItemModel.fromEntity(InventoryItem item) =>
+  factory InventoryItemModel.fromEntity(
+    InventoryItem item,
+  ) =>
       InventoryItemModel()
         ..id = item.id
         ..nameAr = item.nameAr
@@ -33,7 +35,9 @@ class InventoryItemModel {
         ..isDeleted = item.isDeleted
         ..createdAt = item.createdAt
         ..updatedAt = item.updatedAt
-        ..userId = item.userId;
+        ..userId = item.userId
+        ..warehouseId = item.warehouseId
+        ..taxCategory = item.taxCategory;
 
   /// معرف Isar التلقائي
   Id? isarId;
@@ -106,6 +110,13 @@ class InventoryItemModel {
   /// معرف المستخدم
   String? userId;
 
+  /// معرف المستودع
+  @Index()
+  String? warehouseId;
+
+  /// فئة الضريبة
+  late String taxCategory;
+
   /// تحويل النموذج إلى كيان
   InventoryItem toEntity() => InventoryItem(
         id: id ?? '',
@@ -129,5 +140,7 @@ class InventoryItemModel {
         createdAt: createdAt,
         updatedAt: updatedAt,
         userId: userId,
+        warehouseId: warehouseId,
+        taxCategory: taxCategory,
       );
 }

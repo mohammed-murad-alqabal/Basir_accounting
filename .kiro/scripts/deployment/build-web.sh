@@ -2,9 +2,9 @@
 
 # Enhanced Web Build Script v2.0
 # Implements: COLLABORATION FIRST, KISS, Security First, Quality First, ENGLISH FOR CODE
-# Project: Basir MVP
-# Author: Basir Development Agents Team
-# Date: December 8, 2025
+# Project: basir_accounting_system
+# Author: Basir Accounting System Development Agents Team
+# Date: January 11, 2026
 
 set -e
 

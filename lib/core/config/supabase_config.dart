@@ -11,10 +11,7 @@ class SupabaseConfig {
 
   /// تهيئة Supabase
   static Future<void> initialize() async {
-    await Supabase.initialize(
-      url: supabaseUrl,
-      anonKey: anonKey,
-    );
+    await Supabase.initialize(url: supabaseUrl, anonKey: anonKey);
   }
 
   /// الحصول على العميل النشط

@@ -14,7 +14,7 @@
 
 | Attribute           | Value                                   |
 | ------------------- | --------------------------------------- |
-| **Project Name**    | بصير (Basir) MVP                       |
+| **Project Name**    | بصير (Basir) MVP                        |
 | **Current Version** | 1.0.0+1                                 |
 | **SDK**             | Flutter 3.5+ / Dart 3.5+                |
 | **Platform Focus**  | Mobile-First (iOS, Android)             |
@@ -40,25 +40,25 @@
 
 ### Features In Progress 🔄
 
-| Feature                   | Progress | Notes                       |
-| ------------------------- | -------- | --------------------------- |
-| **Brand Visual Identity** | 66%      | Customization UI needed     |
-| **Receipt OCR**           | 0%       | Planned                     |
-| **ZATCA Integration**     | 0%       | Planned (Saudi e-invoicing) |
-| **Cloud Sync**            | 0%       | Requires backend            |
-| **Multi-Device**          | 0%       | Requires backend            |
+| Feature                   | Progress | Notes                                         |
+| ------------------------- | -------- | --------------------------------------------- |
+| **Brand Visual Identity** | 66%      | Customization UI needed                       |
+| **Receipt OCR**           | 0%       | Planned                                       |
+| **ZATCA Integration**     | 95%      | ✅ Rust engine complete, Flutter bridge ready |
+| **Cloud Sync**            | 0%       | Requires backend                              |
+| **Multi-Device**          | 0%       | Requires backend                              |
 
 ### Features Planned 📋
 
-| Feature                 | Priority | Dependency           |
-| ----------------------- | -------- | -------------------- |
-| Go Backend              | P0       | None                 |
-| PostgreSQL Database     | P0       | Backend              |
-| User Authentication API | P0       | Backend              |
-| Data Sync               | P1       | Backend              |
-| ZATCA Certification     | P1       | Backend + Compliance |
-| Receipt Scanning (OCR)  | P2       | Google ML Kit        |
-| Advanced Analytics      | P2       | Backend              |
+| Feature                 | Priority | Dependency                 |
+| ----------------------- | -------- | -------------------------- |
+| Go Backend (Optional)   | P2       | None                       |
+| PostgreSQL Database     | ✅ Done  | Rust SQLx                  |
+| User Authentication API | P1       | Backend                    |
+| Data Sync               | P1       | Backend                    |
+| ZATCA Certification     | P0       | ✅ Ready for certification |
+| Receipt Scanning (OCR)  | P2       | Google ML Kit              |
+| Advanced Analytics      | P2       | Backend                    |
 
 ---
 

@@ -1,27 +1,35 @@
-/// أنواع مقاييس الاستدامة حسب معايير ISSB (IFRS S1 & S2).
+/// Sustainability Metric Classifications per ISSB (IFRS S1 & S2) standards.
+///
+/// This ontology supports the disclosure of non-financial risks and
+/// opportunities related to climate and sustainability.
 enum SustainabilityMetricType {
-  /// انبعاثات الغازات الدفيئة المباشرة.
+  /// Direct greenhouse gas emissions from sources owned or controlled (e.g.,
+  /// boilers, vehicles).
   emissionsScope1,
 
-  /// انبعاثات الغازات الدفيئة غير المباشرة من الكهرباء المشتراة، إلخ.
+  /// Indirect GHG emissions from the generation of purchased electricity or
+  /// energy.
   emissionsScope2,
 
-  /// انبعاثات الغازات الدفيئة غير المباشرة الأخرى في سلسلة القيمة.
+  /// All other indirect emissions in the organization's value chain.
   emissionsScope3,
 
-  /// المخاطر الفيزيائية المتعلقة بالمناخ.
+  /// Risks to operations arising from extreme weather events or rising sea
+  /// levels.
   physicalClimateRisk,
 
-  /// مخاطر الانتقال المتعلقة بالمناخ.
+  /// Risks related to moving towards a lower-carbon economy (e.g., policy
+  /// changes).
   transitionClimateRisk,
 
-  /// مقاييس الموارد الطبيعية والتنوع البيولوجي.
+  /// Metrics tracking the usage of biodiversity, water, and circular economy
+  /// resources.
   naturalResources,
 }
 
-/// يمثل قياساً محدداً للاستدامة مرتبطاً بفترة مالية.
+/// Represents a quantitative non-financial disclosure tied to a fiscal period.
 class SustainabilityMetric {
-  /// إنشاء مقياس استدامة.
+  /// Creates a sustainability metric measurement.
   const SustainabilityMetric({
     required this.type,
     required this.value,
@@ -30,18 +38,19 @@ class SustainabilityMetric {
     required this.methodology,
   });
 
-  /// نوع المقياس.
+  /// The ISSB-aligned classification of the metric.
   final SustainabilityMetricType type;
 
-  /// القيمة الرقمية للقياس.
+  /// The scalar value of the measurement.
   final double value;
 
-  /// وحدة القياس (مثال: طن من ثاني أكسيد الكربون).
+  /// The standard unit of measurement (e.g., "tCO2e", "m3").
   final String unit;
 
-  /// تاريخ ووقت القياس.
+  /// Precise point in time the measurement was recorded.
   final DateTime measuredAt;
 
-  /// المنهجية المستخدمة في القياس.
+  /// Scientific or regulatory methodology used for calculation (e.g., "GHG
+  /// Protocol").
   final String methodology;
 }

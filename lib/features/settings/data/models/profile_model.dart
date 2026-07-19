@@ -1,5 +1,5 @@
-import 'package:basir_app/core/models/sync_status.dart';
-import 'package:basir_app/features/settings/domain/entities/profile.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
+import 'package:basir_accounting_system/features/settings/domain/entities/profile.dart';
 import 'package:isar/isar.dart';
 
 part 'profile_model.g.dart';

@@ -1,11 +1,11 @@
-import 'package:basir_app/core/assets/app_illustrations.dart';
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/assets/domain/entities/fixed_asset.dart';
-import 'package:basir_app/features/assets/presentation/providers/asset_provider.dart';
-import 'package:basir_app/features/assets/presentation/screens/asset_form_screen.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/assets/app_illustrations.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/assets/domain/entities/fixed_asset.dart';
+import 'package:basir_accounting_system/features/assets/presentation/providers/asset_provider.dart';
+import 'package:basir_accounting_system/features/assets/presentation/screens/asset_form_screen.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -32,18 +32,15 @@ class _AssetsScreenState extends ConsumerState<AssetsScreen> {
     final assetsAsync = ref.watch(filteredAssetsProvider);
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppAppBar(
-        title: context.l10n.assetsScreenTitle,
-        actions: [
-          IconButton(
-            icon: Icon(appIcons.add, size: 26),
-            tooltip: context.isArabic ? 'إضافة أصل جديد' : 'Add New Asset',
-            onPressed: _addAsset,
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: context.l10n.assetsScreenTitle,
+      actions: [
+        IconButton(
+          icon: Icon(appIcons.add, size: 26),
+          tooltip: context.isArabic ? 'إضافة أصل جديد' : 'Add New Asset',
+          onPressed: _addAsset,
+        ),
+      ],
       body: Column(
         children: [
           // حقل البحث
@@ -67,9 +64,7 @@ class _AssetsScreenState extends ConsumerState<AssetsScreen> {
             child: assetsAsync.when(
               data: _buildAssetsList,
               loading: () => const Center(child: AppLoadingIndicator()),
-              error: (error, stack) => Center(
-                child: Text(error.toString()),
-              ),
+              error: (error, stack) => Center(child: Text(error.toString())),
             ),
           ),
         ],
@@ -79,9 +74,7 @@ class _AssetsScreenState extends ConsumerState<AssetsScreen> {
 
   Widget _buildAssetsList(List<FixedAsset> assets) {
     if (assets.isEmpty) {
-      return const Center(
-        child: EmptyStateIllustration(),
-      );
+      return const Center(child: EmptyStateIllustration());
     }
 
     return ListView.builder(

@@ -2,10 +2,10 @@
 //!
 //! Implements IFRS 15 (Revenue Recognition) and IFRS 9 (Financial Assets).
 
+use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-use chrono::{DateTime, Utc};
 
 /// Status of a sales invoice.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -46,7 +46,7 @@ pub struct SalesInvoice {
     /// Reference to the General Ledger entry.
     pub gl_entry_id: Option<Uuid>,
     pub description: Option<String>,
-    
+
     // ZATCA Compliance
     pub zatca_uuid: Option<Uuid>,
     pub zatca_hash: Option<String>,
@@ -65,6 +65,7 @@ pub struct SalesInvoiceLine {
     pub quantity: Decimal,
     pub unit_price: Decimal,
     pub tax_amount: Decimal,
+    pub tax_category: String, // "S", "Z", "E", "O"
     pub total_amount: Decimal,
 }
 

@@ -1,10 +1,10 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/theme/services/icon_customization_service.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
-import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
-import 'package:basir_app/features/customers/presentation/screens/customer_form_screen.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/services/icon_customization_service.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_accounting_system/features/customers/presentation/screens/customer_form_screen.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
@@ -210,10 +210,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
 
     if (!context.mounted) return;
     if (result ?? false) {
-      Navigator.pop(
-        context,
-        true,
-      );
+      Navigator.pop(context, true);
     }
   }
 
@@ -248,9 +245,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
     if (confirmed != true || !context.mounted) return;
 
     try {
-      final result = await ref.read(
-        deleteCustomerProvider(customer.id).future,
-      );
+      final result = await ref.read(deleteCustomerProvider(customer.id).future);
 
       if (!context.mounted) return;
 
@@ -261,10 +256,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
             backgroundColor: AppColors.secondary,
           ),
         );
-        Navigator.pop(
-          context,
-          true,
-        );
+        Navigator.pop(context, true);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

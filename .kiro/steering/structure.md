@@ -1,4 +1,4 @@
-# Basir MVP - Project Structure
+# basir_accounting_system - Project Structure
 
 ## 📂 Root Directory
 

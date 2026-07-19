@@ -1,4 +1,4 @@
-import 'package:basir_app/shared/widgets/responsive_text.dart';
+import 'package:basir_accounting_system/shared/widgets/responsive_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -106,10 +106,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: ResponsiveText(
-              'نص تجريبي',
-              textDirection: TextDirection.rtl,
-            ),
+            body: ResponsiveText('نص تجريبي', textDirection: TextDirection.rtl),
           ),
         ),
       );

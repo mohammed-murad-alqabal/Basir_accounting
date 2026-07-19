@@ -1,18 +1,25 @@
 import 'package:flutter/foundation.dart';
 
-/// واجهة خدمة البريد الإلكتروني (Mailer Service Interface)
+/// Email service abstraction interface.
 ///
-/// توفر تجريداً (Abstraction) لإرسال رسائل البريد الإلكتروني
-/// تسمح بتبديل مزود الخدمة (مثل SendGrid, Mailgun) بسهولة
+/// Provides a contract for email sending operations, allowing easy
+/// substitution of email providers (SendGrid, Mailgun, etc.).
+///
+/// ## Implementation Notes
+/// Implement this interface for production email services.
+/// Use [LogMailer] for development and testing.
 // ignore: one_member_abstracts
 abstract class MailerService {
-  /// إرسال بريد إلكتروني
+  /// Sends an email message.
   ///
-  /// Parameters:
-  /// - [to]: البريد الإلكتروني للمستلم
-  /// - [subject]: عنوان الرسالة
-  /// - [body]: نص الرسالة
-  /// - [attachmentPath]: مسار مرفق اختياري (مثل فاتورة PDF)
+  /// ## Parameters
+  /// - [to]: Recipient email address.
+  /// - [subject]: Email subject line.
+  /// - [body]: Email body content.
+  /// - [attachmentPath]: Optional file path for attachment (e.g., invoice PDF).
+  ///
+  /// ## Returns
+  /// `true` if the email was sent successfully, `false` otherwise.
   Future<bool> sendEmail({
     required String to,
     required String subject,
@@ -21,10 +28,21 @@ abstract class MailerService {
   });
 }
 
-/// تطبيق محاكاة لخدمة البريد (Logging Mailer)
+/// Debug logging implementation of [MailerService].
 ///
-/// يقوم بتسجيل محاولات الإرسال في السجل بدلاً من الإرسال الفعلي
-/// مفيد لأغراض التطوير والاختبار
+/// Logs email attempts to the debug console instead of actual sending.
+/// Useful for development and testing environments.
+///
+/// ## Usage
+/// ```dart
+/// final mailer = LogMailer();
+/// await mailer.sendEmail(
+///   to: 'customer@example.com',
+///   subject: 'Invoice #12345',
+///   body: 'Please find attached...',
+///   attachmentPath: '/path/to/invoice.pdf',
+/// );
+/// ```
 class LogMailer implements MailerService {
   @override
   Future<bool> sendEmail({
@@ -33,7 +51,7 @@ class LogMailer implements MailerService {
     required String body,
     String? attachmentPath,
   }) async {
-    // محاكاة تأخير الشبكة
+    // Simulate network latency
     await Future<void>.delayed(const Duration(milliseconds: 500));
 
     debugPrint('📧 [MAILER] Sending email to: $to');

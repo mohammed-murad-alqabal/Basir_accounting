@@ -1,6 +1,6 @@
-# Architectural Mapping: Basir MVP
+# Architectural Mapping: Basir Accounting System
 
-This document maps the **Kiro Advanced Agentic Framework** concepts to the physical structure of the **Basir Intelligent Financial System** codebase.
+This document maps the **Kiro Advanced Agentic Framework** concepts to the physical structure of the **Basir Intelligent Accounting System** codebase.
 
 ## 1. Structural Overview
 
@@ -20,7 +20,7 @@ The project follows a **Feature-First Clean Architecture** approach, ensuring se
 ### L2: Decision Layer (Domain)
 
 - **Entities**: Found in `lib/features/[feature]/domain/entities/`. These are the pure business objects (e.g., `Customer`, `Invoice`).
-- **Use Cases**: Encapsulated in Riverpod providers located in `lib/features/[feature]/presentation/providers/` (acting as simplified bridge for MVP logic).
+- **Use Cases**: Encapsulated in Riverpod providers located in `lib/features/[feature]/presentation/providers/` (acting as a simplified bridge for MVP logic).
 
 ### L3: Execution Layer (Presentation)
 
@@ -46,6 +46,6 @@ The project follows a **Feature-First Clean Architecture** approach, ensuring se
 
 ## 4. Brand Purity Standards
 
-- **Project Identity**: All references strictly use "Basir" (بصير).
-- **Team Identity**: "Basir Development Agents Team" (فريق وكلاء تطوير مشروع بصير).
+- **Project Identity**: All references strictly use "Basir Accounting System".
+- **Team Identity**: "Basir Accounting System Development Agents Team".
 - **Line Length**: Strictly enforced 80-character limit for all steering documentation.

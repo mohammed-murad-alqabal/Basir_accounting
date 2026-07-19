@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:basir_app/core/assets/app_logo.dart';
+import 'package:basir_accounting_system/core/assets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,8 +11,9 @@ import 'package:path_provider/path_provider.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Generate Basir 2.0 PNG Assets to External Storage',
-      (tester) async {
+  testWidgets('Generate Basir 2.0 PNG Assets to External Storage', (
+    tester,
+  ) async {
     final exports = [
       {'name': 'app_icon.png', 'size': 1024.0, 'bg': Colors.white},
       {

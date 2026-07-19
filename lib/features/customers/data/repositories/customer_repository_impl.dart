@@ -1,6 +1,6 @@
-import 'package:basir_app/features/customers/data/models/customer_model.dart';
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
-import 'package:basir_app/features/customers/domain/repositories/customer_repository.dart';
+import 'package:basir_accounting_system/features/customers/data/models/customer_model.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/customers/domain/repositories/customer_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع العملاء (Customer Repository Implementation)
@@ -71,9 +71,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
           await isar.customerModels.filter().userIdEqualTo(userId).findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في جلب العملاء: $e',
-      );
+      throw Exception('خطأ في جلب العملاء: $e');
     }
   }
 
@@ -96,9 +94,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
           .findFirst();
       return model?.toEntity();
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في جلب العميل: $e',
-      );
+      throw Exception('خطأ في جلب العميل: $e');
     }
   }
 
@@ -127,9 +123,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
           .findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في البحث عن العملاء: $e',
-      );
+      throw Exception('خطأ في البحث عن العملاء: $e');
     }
   }
 
@@ -144,18 +138,12 @@ class CustomerRepositoryImpl implements CustomerRepository {
   @override
   Future<void> addCustomer(Customer customer) async {
     try {
-      final model = CustomerModel.fromEntity(
-        customer.copyWith(userId: userId),
-      );
+      final model = CustomerModel.fromEntity(customer.copyWith(userId: userId));
       await isar.writeTxn(() async {
-        await isar.customerModels.put(
-          model,
-        );
+        await isar.customerModels.put(model);
       });
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في إضافة العميل: $e',
-      );
+      throw Exception('خطأ في إضافة العميل: $e');
     }
   }
 
@@ -180,9 +168,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
             .findFirst();
 
         if (existingModel == null) {
-          throw Exception(
-            'العميل غير موجود: ${customer.id}',
-          );
+          throw Exception('العميل غير موجود: ${customer.id}');
         }
 
         // تحديث الحقول
@@ -196,14 +182,10 @@ class CustomerRepositoryImpl implements CustomerRepository {
           ..userId = userId;
 
         // حفظ التحديثات
-        await isar.customerModels.put(
-          existingModel,
-        );
+        await isar.customerModels.put(existingModel);
       });
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في تحديث العميل: $e',
-      );
+      throw Exception('خطأ في تحديث العميل: $e');
     }
   }
 
@@ -226,15 +208,11 @@ class CustomerRepositoryImpl implements CustomerRepository {
             .userIdEqualTo(userId)
             .findFirst();
         if (model != null) {
-          await isar.customerModels.delete(
-            model.id,
-          );
+          await isar.customerModels.delete(model.id);
         }
       });
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حذف العميل: $e',
-      );
+      throw Exception('خطأ في حذف العميل: $e');
     }
   }
 
@@ -255,9 +233,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
         await isar.customerModels.filter().userIdEqualTo(userId).deleteAll();
       });
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حذف جميع العملاء: $e',
-      );
+      throw Exception('خطأ في حذف جميع العملاء: $e');
     }
   }
 }

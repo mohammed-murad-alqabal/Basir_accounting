@@ -44,10 +44,7 @@ class InputValidator {
       issues.add('اسم المستخدم محظور، يرجى اختيار اسم آخر');
     }
 
-    return ValidationResult(
-      isValid: issues.isEmpty,
-      issues: issues,
-    );
+    return ValidationResult(isValid: issues.isEmpty, issues: issues);
   }
 
   /// التحقق من صحة كلمة المرور
@@ -104,8 +101,9 @@ class InputValidator {
     }
 
     // فحص الرموز الخاصة
-    final hasSpecialChars =
-        password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    final hasSpecialChars = password.contains(
+      RegExp(r'[!@#$%^&*(),.?":{}|<>]'),
+    );
     if (strictMode && !hasSpecialChars) {
       issues.add(r'يجب أن تحتوي على رمز خاص واحد على الأقل (!@#$%^&*)');
     } else if (hasSpecialChars) {
@@ -172,10 +170,7 @@ class InputValidator {
       issues.add('البريد الإلكتروني طويل جداً');
     }
 
-    return ValidationResult(
-      isValid: issues.isEmpty,
-      issues: issues,
-    );
+    return ValidationResult(isValid: issues.isEmpty, issues: issues);
   }
 
   /// تنظيف النص من المحتوى الضار
@@ -241,10 +236,7 @@ class InputValidator {
       issues.add('رقم الهاتف يجب أن يكون رقم سعودي صحيح (05xxxxxxxx)');
     }
 
-    return ValidationResult(
-      isValid: issues.isEmpty,
-      issues: issues,
-    );
+    return ValidationResult(isValid: issues.isEmpty, issues: issues);
   }
 
   /// التحقق من صحة الرقم الضريبي السعودي
@@ -264,10 +256,7 @@ class InputValidator {
       issues.add('الرقم الضريبي يجب أن يكون 15 رقم');
     }
 
-    return ValidationResult(
-      isValid: issues.isEmpty,
-      issues: issues,
-    );
+    return ValidationResult(isValid: issues.isEmpty, issues: issues);
   }
 
   /// فحص المدخلات للحماية من الهجمات
@@ -340,10 +329,7 @@ class InputValidator {
 /// نتيجة التحقق من صحة المدخلات
 class ValidationResult {
   /// إنشاء نتيجة التحقق
-  const ValidationResult({
-    required this.isValid,
-    required this.issues,
-  });
+  const ValidationResult({required this.isValid, required this.issues});
 
   /// هل المدخل صحيح؟
   final bool isValid;

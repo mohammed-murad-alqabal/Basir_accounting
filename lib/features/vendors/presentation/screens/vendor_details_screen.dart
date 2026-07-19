@@ -1,9 +1,9 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/vendors/domain/entities/vendor.dart';
-import 'package:basir_app/features/vendors/presentation/providers/vendor_provider.dart';
-import 'package:basir_app/features/vendors/presentation/screens/vendor_form_screen.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/vendors/domain/entities/vendor.dart';
+import 'package:basir_accounting_system/features/vendors/presentation/providers/vendor_provider.dart';
+import 'package:basir_accounting_system/features/vendors/presentation/screens/vendor_form_screen.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -64,9 +64,7 @@ class VendorDetailsScreen extends ConsumerWidget {
                   const SizedBox(height: Spacing.xs),
                   Text(
                     vendor.email!,
-                    style: const TextStyle(
-                      color: AppColors.textSecondary,
-                    ),
+                    style: const TextStyle(color: AppColors.textSecondary),
                   ),
                 ],
               ],
@@ -108,6 +106,26 @@ class VendorDetailsScreen extends ConsumerWidget {
                     Icons.location_on,
                     context.l10n.labelAddress,
                     vendor.address!,
+                  ),
+                ],
+                if (vendor.vatNumber != null &&
+                    vendor.vatNumber!.isNotEmpty) ...[
+                  const Divider(),
+                  _buildInfoRow(
+                    context,
+                    Icons.description,
+                    context.l10n.labelVatNumber,
+                    vendor.vatNumber!,
+                  ),
+                ],
+                if (vendor.registrationNumber != null &&
+                    vendor.registrationNumber!.isNotEmpty) ...[
+                  const Divider(),
+                  _buildInfoRow(
+                    context,
+                    Icons.app_registration,
+                    context.l10n.labelRegistrationNumber,
+                    vendor.registrationNumber!,
                   ),
                 ],
               ],
@@ -170,8 +188,9 @@ class VendorDetailsScreen extends ConsumerWidget {
       builder: (context) => AlertDialog(
         title: Text(context.l10n.actionDeleteVendor),
         content: Text(
-          context.l10n
-              .msgConfirmDeleteVendor(vendor.name(isArabic: context.isArabic)),
+          context.l10n.msgConfirmDeleteVendor(
+            vendor.name(isArabic: context.isArabic),
+          ),
         ),
         actions: [
           AppEnhancedButton(

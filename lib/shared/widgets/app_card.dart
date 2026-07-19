@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/shared/widgets/responsive_text.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/shared/widgets/responsive_text.dart';
 import 'package:flutter/material.dart' hide Durations;
 import 'package:flutter/services.dart';
 
@@ -155,10 +155,7 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
       ),
       child: ClipRRect(
         borderRadius: effectiveBorderRadius,
-        child: Padding(
-          padding: effectivePadding,
-          child: widget.child,
-        ),
+        child: Padding(padding: effectivePadding, child: widget.child),
       ),
     );
 
@@ -182,10 +179,7 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
       );
     }
 
-    return Semantics(
-      container: true,
-      child: card,
-    );
+    return Semantics(container: true, child: card);
   }
 }
 

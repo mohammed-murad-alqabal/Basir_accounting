@@ -194,6 +194,7 @@ class SalesInvoiceLineDto {
   final String quantity;
   final String unitPrice;
   final String taxAmount;
+  final String taxCategory;
 
   const SalesInvoiceLineDto({
     this.productId,
@@ -201,6 +202,7 @@ class SalesInvoiceLineDto {
     required this.quantity,
     required this.unitPrice,
     required this.taxAmount,
+    required this.taxCategory,
   });
 
   @override
@@ -209,7 +211,8 @@ class SalesInvoiceLineDto {
       description.hashCode ^
       quantity.hashCode ^
       unitPrice.hashCode ^
-      taxAmount.hashCode;
+      taxAmount.hashCode ^
+      taxCategory.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -220,5 +223,6 @@ class SalesInvoiceLineDto {
           description == other.description &&
           quantity == other.quantity &&
           unitPrice == other.unitPrice &&
-          taxAmount == other.taxAmount;
+          taxAmount == other.taxAmount &&
+          taxCategory == other.taxCategory;
 }

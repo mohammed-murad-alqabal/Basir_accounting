@@ -1,4 +1,4 @@
-import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 
 /// رسم توضيحي للحالة الفارغة بنظام Professional 2.0
@@ -185,10 +185,7 @@ class _Professional2IllustrationPainter extends CustomPainter {
     // 2. الهالة المحيطة (Professional Aura)
     final auraPaint = Paint()
       ..shader = RadialGradient(
-        colors: [
-          themeColor.withValues(alpha: 0.1),
-          Colors.transparent,
-        ],
+        colors: [themeColor.withValues(alpha: 0.1), Colors.transparent],
       ).createShader(Rect.fromCircle(center: center, radius: size.width / 2));
     canvas.drawCircle(center, size.width / 2, auraPaint);
 
@@ -336,8 +333,9 @@ class _Professional2IllustrationPainter extends CustomPainter {
           ..style = PaintingStyle.stroke
           ..strokeWidth = 10
           ..strokeCap = StrokeCap.round
-          ..shader = LinearGradient(colors: [themeColor, Colors.white])
-              .createShader(Rect.fromCircle(center: center, radius: radius)),
+          ..shader = LinearGradient(
+            colors: [themeColor, Colors.white],
+          ).createShader(Rect.fromCircle(center: center, radius: radius)),
       );
     }
   }

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 
 /// شعار بصير (Basir Logo)
@@ -8,11 +8,7 @@ import 'package:flutter/material.dart';
 /// يعرض شعار التطبيق المعتمد (صورة + نص اختياري).
 class BasirLogo extends StatelessWidget {
   /// إنشاء الشعار
-  const BasirLogo({
-    super.key,
-    this.size = 120,
-    this.useText = false,
-  });
+  const BasirLogo({super.key, this.size = 120, this.useText = false});
 
   /// حجم الشعار
   final double size;

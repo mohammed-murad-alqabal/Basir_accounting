@@ -25,11 +25,11 @@ class MockSecureStorage extends FlutterSecureStorage {
   Future<void> write({
     required String key,
     required String? value,
-    IOSOptions? iOptions,
+    AppleOptions? iOptions,
     AndroidOptions? aOptions,
     LinuxOptions? lOptions,
     WebOptions? webOptions,
-    MacOsOptions? mOptions,
+    AppleOptions? mOptions,
     WindowsOptions? wOptions,
   }) async {
     if (shouldThrowOnWrite) {
@@ -46,11 +46,11 @@ class MockSecureStorage extends FlutterSecureStorage {
   @override
   Future<String?> read({
     required String key,
-    IOSOptions? iOptions,
+    AppleOptions? iOptions,
     AndroidOptions? aOptions,
     LinuxOptions? lOptions,
     WebOptions? webOptions,
-    MacOsOptions? mOptions,
+    AppleOptions? mOptions,
     WindowsOptions? wOptions,
   }) async {
     if (shouldThrowOnRead) {
@@ -63,11 +63,11 @@ class MockSecureStorage extends FlutterSecureStorage {
   @override
   Future<void> delete({
     required String key,
-    IOSOptions? iOptions,
+    AppleOptions? iOptions,
     AndroidOptions? aOptions,
     LinuxOptions? lOptions,
     WebOptions? webOptions,
-    MacOsOptions? mOptions,
+    AppleOptions? mOptions,
     WindowsOptions? wOptions,
   }) async {
     _storage.remove(key);
@@ -76,11 +76,11 @@ class MockSecureStorage extends FlutterSecureStorage {
   /// حذف جميع القيم من التخزين
   @override
   Future<void> deleteAll({
-    IOSOptions? iOptions,
+    AppleOptions? iOptions,
     AndroidOptions? aOptions,
     LinuxOptions? lOptions,
     WebOptions? webOptions,
-    MacOsOptions? mOptions,
+    AppleOptions? mOptions,
     WindowsOptions? wOptions,
   }) async {
     _storage.clear();
@@ -90,11 +90,11 @@ class MockSecureStorage extends FlutterSecureStorage {
   @override
   Future<bool> containsKey({
     required String key,
-    IOSOptions? iOptions,
+    AppleOptions? iOptions,
     AndroidOptions? aOptions,
     LinuxOptions? lOptions,
     WebOptions? webOptions,
-    MacOsOptions? mOptions,
+    AppleOptions? mOptions,
     WindowsOptions? wOptions,
   }) async =>
       _storage.containsKey(key);
@@ -102,11 +102,11 @@ class MockSecureStorage extends FlutterSecureStorage {
   /// قراءة جميع القيم من التخزين
   @override
   Future<Map<String, String>> readAll({
-    IOSOptions? iOptions,
+    AppleOptions? iOptions,
     AndroidOptions? aOptions,
     LinuxOptions? lOptions,
     WebOptions? webOptions,
-    MacOsOptions? mOptions,
+    AppleOptions? mOptions,
     WindowsOptions? wOptions,
   }) async =>
       Map.from(_storage);

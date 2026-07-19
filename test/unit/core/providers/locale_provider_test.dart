@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:basir_app/core/providers/locale_provider.dart';
+import 'package:basir_accounting_system/core/providers/locale_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

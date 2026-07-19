@@ -1,70 +1,86 @@
-import 'package:basir_app/core/models/sync_status.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
+import 'package:decimal/decimal.dart';
 import 'package:isar/isar.dart';
 
 part 'invoice_model.g.dart';
 
-/// نموذج بند الفاتورة (Invoice Item Model)
+/// ***
+/// Cognitive Foundation: InvoiceModel
 ///
-/// يستخدم لتخزين تفاصيل بنود الفاتورة في قاعدة بيانات Isar.
+/// Data Transfer Object (DTO) for the Invoices module, backed by Isar.
+/// Facilitates high-fidelity serialization and hydration for local persistence.
+///
+/// Maps [Decimal] domain fields to [double] for Isar compatibility while
+/// ensuring precision during hydration.
+/// ***
 @embedded
 class InvoiceItemModel {
-  /// إنشاء نموذج بند فاتورة فارغ (مطلوب لـ Isar)
+  /// Standard constructor for Isar.
   InvoiceItemModel();
 
-  /// إنشاء نموذج بند من كيان المجال
+  /// Mapping handle from Domain Entity.
   factory InvoiceItemModel.fromEntity(InvoiceItem item) => InvoiceItemModel()
     ..id = item.id
     ..name = item.name
     ..description = item.description
-    ..quantity = item.quantity
-    ..price = item.price
-    ..total = item.total
-    ..taxAmount = item.taxAmount;
+    ..quantity = item.quantity.toDouble()
+    ..price = item.price.toDouble()
+    ..total = item.total.toDouble()
+    ..taxAmount = item.taxAmount.toDouble()
+    ..taxRate = item.taxRate.toDouble()
+    ..taxCategory = item.taxCategory;
 
-  /// المعرف الفريد للبند
+  /// Unique item identifier.
   late String id;
 
-  /// اسم المنتج أو الخدمة
+  /// Product or service name.
   late String name;
 
-  /// وصف تفصيلي للبند (اختياري)
+  /// Institutional description.
   String? description;
 
-  /// الكمية
+  /// Precise quantity.
   late double quantity;
 
-  /// سعر الوحدة
+  /// Unit price.
   late double price;
 
-  /// الإجمالي (الكمية * السعر)
+  /// Line total.
   late double total;
 
-  /// مبلغ الضريبة لهذا البند
+  /// Tax component.
   late double taxAmount;
 
-  /// تحويل النموذج إلى كيان مجال
+  /// Tax rate.
+  late double taxRate;
+
+  /// VAT category.
+  late String taxCategory;
+
+  /// Hydrates the domain entity from the model.
   InvoiceItem toEntity() => InvoiceItem(
         id: id,
         name: name,
         description: description,
-        quantity: quantity,
-        price: price,
-        total: total,
-        taxAmount: taxAmount,
+        quantity: Decimal.parse(quantity.toString()),
+        price: Decimal.parse(price.toString()),
+        total: Decimal.parse(total.toString()),
+        taxAmount: Decimal.parse(taxAmount.toString()),
+        taxRate: Decimal.parse(taxRate.toString()),
+        taxCategory: taxCategory,
       );
 }
 
-/// نموذج الفاتورة (Invoice Model)
-///
-/// يمثل جدول الفواتير في قاعدة بيانات Isar.
+/// [InvoiceModel]
 @collection
 class InvoiceModel {
-  /// إنشاء نموذج فاتورة فارغ (مطلوب لـ Isar)
+  /// Standard constructor for Isar.
   InvoiceModel();
 
-  /// إنشاء نموذج فاتورة من كيان المجال
+  /// Mapping handle from Domain Entity.
   factory InvoiceModel.fromEntity(Invoice invoice) => InvoiceModel()
     ..invoiceId = invoice.id
     ..invoiceNumber = invoice.invoiceNumber
@@ -76,14 +92,14 @@ class InvoiceModel {
     ..paidDate = invoice.paidDate
     ..createdAt = invoice.createdAt
     ..updatedAt = invoice.updatedAt
-    ..status = invoice.status // Isar handles Enum with @enumerated
-    ..subtotalAmount = invoice.subtotalAmount
-    ..taxAmount = invoice.taxAmount
-    ..discountAmount = invoice.discountAmount
-    ..totalAmount = invoice.totalAmount
-    ..paidAmount = invoice.paidAmount
-    ..taxRate = invoice.taxRate
-    ..discountRate = invoice.discountRate
+    ..status = invoice.status
+    ..subtotalAmount = invoice.subtotalAmount.toDouble()
+    ..taxAmount = invoice.taxAmount.toDouble()
+    ..discountAmount = invoice.discountAmount.toDouble()
+    ..totalAmount = invoice.totalAmount.toDouble()
+    ..paidAmount = invoice.paidAmount.toDouble()
+    ..taxRate = invoice.taxRate.toDouble()
+    ..discountRate = invoice.discountRate.toDouble()
     ..currency = invoice.currency
     ..notes = invoice.notes
     ..terms = invoice.terms
@@ -94,119 +110,129 @@ class InvoiceModel {
     ..zatcaDeviceId = invoice.zatcaDeviceId
     ..zatcaCounter = invoice.zatcaCounter
     ..userId = invoice.userId
+    ..warehouseId = invoice.warehouseId
     ..syncStatus = invoice.syncStatus
     ..serverUpdatedAt = invoice.serverUpdatedAt
+    ..exchangeRate = invoice.exchangeRate.toDouble()
+    ..type = invoice.type
     ..isDeleted = invoice.isDeleted;
 
-  /// المعرف الداخلي لـ Isar (تلقائي)
+  /// Isar primary key.
   Id id = Isar.autoIncrement;
 
-  /// المعرف الفريد للفاتورة (UUID)
+  /// Institutional invoice UUID.
   @Index(unique: true)
   late String invoiceId;
 
-  /// رقم الفاتورة التسلسلي (مثال: INV-2023-001)
+  /// Serial invoice number.
   @Index()
   late String invoiceNumber;
 
-  /// معرف العميل صاحب الفاتورة
+  /// Associated customer ID.
   @Index()
   late String customerId;
 
-  /// اسم العميل (للتخزين المؤقت والعرض السريع)
+  /// Cached customer name.
   late String customerName;
 
-  /// قائمة بنود الفاتورة
+  /// Line items.
   List<InvoiceItemModel>? items;
 
-  /// تاريخ إصدار الفاتورة
+  /// Issuance timestamp.
   @Index()
   late DateTime issuedDate;
 
-  /// تاريخ استحقاق الفاتورة
+  /// Maturity timestamp.
   late DateTime dueDate;
 
-  /// تاريخ السداد (إن وجد)
+  /// Payment timestamp.
   DateTime? paidDate;
 
-  /// تاريخ إنشاء السجل
+  /// Record creation timestamp.
   @Index()
   late DateTime createdAt;
 
-  /// تاريخ آخر تحديث للسجل
+  /// Record modification timestamp.
   late DateTime updatedAt;
 
-  /// حالة الفاتورة (مسودة، مرسلة، مدفوعة، إلخ)
+  /// Transactional status.
   @Enumerated(EnumType.name)
   late InvoiceStatus status;
 
-  // Amounts
-
-  /// المجموع الفرعي (قبل الضريبة والخصم)
+  /// Financial subtotal.
   late double subtotalAmount;
 
-  /// إجمالي مبلغ الضريبة
+  /// Aggregate tax.
   late double taxAmount;
 
-  /// إجمالي مبلغ الخصم
+  /// Aggregate discount.
   late double discountAmount;
 
-  /// المبلغ الإجمالي النهائي (المستحق)
+  /// Aggregate total.
   late double totalAmount;
 
-  /// المبلغ المدفوع حتى الآن
+  /// Total amount discharged.
   late double paidAmount;
 
-  /// نسبة الضريبة المطبقة
+  /// Applied tax rate.
   late double taxRate;
 
-  /// نسبة الخصم المطبقة
+  /// Applied discount rate.
   late double discountRate;
 
-  /// رمز العملة (مثال: SAR)
+  /// Institutional currency.
   late String currency;
 
-  /// ملاحظات إضافية على الفاتورة
+  /// Exchange rate to base currency.
+  late double exchangeRate;
+
+  /// Transaction type.
+  @Enumerated(EnumType.name)
+  late InvoiceType type;
+
+  /// Institutional notes.
   String? notes;
 
-  /// الشروط والأحكام الخاصة بالفاتورة
+  /// Standard terms.
   String? terms;
 
-  // ZATCA
-
-  /// المعرف الفريد للفاتورة الإلكترونية (UUID)
+  /// ZATCA UUID.
   String? zatcaUuid;
 
-  /// التوقيع الرقمي (Hash) للفاتورة
+  /// ZATCA Hash.
   String? zatcaHash;
 
-  /// رمز الاستجابة السريعة (QR Code) المشفر
+  /// ZATCA QR Payload.
   String? qrCode;
 
-  /// محتوى الفاتورة بصيغة XML (المطلوب من ZATCA)
+  /// ZATCA XML Manifest.
   String? xmlContent;
 
-  /// معرف الجهاز (ZATCA Device ID)
+  /// Registered Device ID.
   String? zatcaDeviceId;
 
-  /// عداد الفواتير (Invoice Counter)
+  /// Monotonic counter for ZATCA sequence.
   late int zatcaCounter;
 
-  /// معرف المستخدم (لعزل البيانات).
+  /// Operator identity.
   @Index()
   String? userId;
 
-  /// حالة المزامنة
+  /// Warehouse identity.
+  @Index()
+  String? warehouseId;
+
+  /// Synchronization state.
   @enumerated
   late SyncStatus syncStatus;
 
-  /// تاريخ آخر تحديث من السيرفر
+  /// Server-side ground truth timestamp.
   DateTime? serverUpdatedAt;
 
-  /// هل السجل محذوف
+  /// Deletion marker.
   late bool isDeleted;
 
-  /// تحويل النموذج إلى كيان مجال
+  /// Hydrates the domain entity from the model.
   Invoice toEntity() => Invoice(
         id: invoiceId,
         invoiceNumber: invoiceNumber,
@@ -219,13 +245,13 @@ class InvoiceModel {
         createdAt: createdAt,
         updatedAt: updatedAt,
         status: status,
-        subtotalAmount: subtotalAmount,
-        taxAmount: taxAmount,
-        discountAmount: discountAmount,
-        totalAmount: totalAmount,
-        paidAmount: paidAmount,
-        taxRate: taxRate,
-        discountRate: discountRate,
+        subtotalAmount: Decimal.parse(subtotalAmount.toString()),
+        taxAmount: Decimal.parse(taxAmount.toString()),
+        discountAmount: Decimal.parse(discountAmount.toString()),
+        totalAmount: Decimal.parse(totalAmount.toString()),
+        paidAmount: Decimal.parse(paidAmount.toString()),
+        taxRate: Decimal.parse(taxRate.toString()),
+        discountRate: Decimal.parse(discountRate.toString()),
         currency: currency,
         notes: notes,
         terms: terms,
@@ -236,8 +262,11 @@ class InvoiceModel {
         zatcaDeviceId: zatcaDeviceId,
         zatcaCounter: zatcaCounter,
         userId: userId,
+        warehouseId: warehouseId,
         syncStatus: syncStatus,
         serverUpdatedAt: serverUpdatedAt,
+        exchangeRate: Decimal.parse(exchangeRate.toString()),
+        type: type,
         isDeleted: isDeleted,
       );
 }

@@ -1,57 +1,54 @@
-# عناصر العمل والتوصيات
+# Action Items Management: Basir Accounting System
 
-## نظرة عامة
-
-هذا المجلد يحتوي على عناصر العمل والتوصيات والإجراءات المطلوبة لمشروع بصير MVP.
-
-## المجلدات الفرعية
-
-### ⏳ **current/**
-العناصر الحالية تشمل:
-- المهام قيد التنفيذ
-- التوصيات المعلقة
-- الإجراءات المطلوبة فوراً
-
-### ✅ **completed/**
-العناصر المكتملة تشمل:
-- المهام المنجزة
-- التحديثات المطبقة
-- الإجراءات المنفذة
-
-## كيفية الاستخدام
-
-### للمطورين
-1. راجع `current/` للمهام المطلوبة
-2. حدث الحالة عند الإنجاز
-3. انقل العناصر المكتملة إلى `completed/`
-
-### للمدراء
-1. تتبع التقدم في `current/`
-2. راجع الإنجازات في `completed/`
-3. خطط للمهام الجديدة
-
-### لإدارة المشروع
-1. أولوية العناصر في `current/`
-2. تقييم الأداء من `completed/`
-3. تحديث الخطط بناءً على التقدم
-
-## تصنيف العناصر
-
-### حسب الأولوية
-- 🔴 **عاجل**: يتطلب إجراء فوري
-- 🟡 **مهم**: يتطلب إجراء خلال أسبوع
-- 🟢 **عادي**: يمكن تأجيله
-
-### حسب النوع
-- **تقني**: مهام برمجية وتقنية
-- **تصميم**: مهام واجهة وتجربة مستخدم
-- **إداري**: مهام إدارية وتنظيمية
-- **توثيق**: مهام توثيق وكتابة
-
-## آخر تحديث
-
-12 ديسمبر 2025
+**Objective**: Systematic tracking of atomic tasks, milestones, and high-impact interventions.  
+**Strategy**: Organize work into actionable items with clear criteria for successful completion.
 
 ---
 
-[العودة للفهرس الرئيسي](../README.md)
+## 📁 Structural Logic
+
+- **[`current/`](./current/)**: Active tasks and in-progress technical implementation items.
+- **[`completed/`](./completed/)**: Successfully verified and finalized architectural or functional items.
+- **[`Archive/`](./Archive/)**: Historical task logs preserved for forensic reference.
+
+---
+
+## 🎯 Role-Specific Navigation
+
+### For Developers
+
+1. Pull atomic tasks from the `current/` queue.
+2. Execute implementation according to the technical specs in `Core/`.
+3. Move verified items to the `completed/` directory with a dated report.
+
+### For Product Managers (PM)
+
+1. Track velocity and progress via the `current/` registry.
+2. Review achievements and verification proofs in the `completed/` registry.
+3. Define and prioritize new roadmap items.
+
+---
+
+## 🏷️ Item Classification (Priority Matrix)
+
+| Priority | Level      | Definition                                       |
+| :------- | :--------- | :----------------------------------------------- |
+| 🔴       | **Urgent** | Requires immediate technical intervention.       |
+| 🟡       | **High**   | Targeted for resolution within the current week. |
+| 🟢       | **Normal** | Scheduled for regular roadmap execution.         |
+
+---
+
+## 🔍 Verification Standards
+
+An action item is only classified as **✅ Completed** when:
+
+1. All sub-tasks are implemented.
+2. `flutter analyze` returns zero warnings.
+3. Associated tests (Unit/Widget) pass with 100% success.
+4. Professional documentation or a completion report is added.
+
+---
+
+**Stewardship Entity:** Basir Project Agentic Development Team  
+**Operational Status:** ✅ Verified and Optimized

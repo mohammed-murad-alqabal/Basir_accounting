@@ -1,8 +1,0 @@
-Analyzing basir_accounting_system...                            
-
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:159:81 • lines_longer_than_80_chars
-  error • The method '_$InventoryItemFromJson' isn't defined for the type 'InventoryItem' • lib/features/inventory/domain/entities/inventory_item.dart:109:12 • undefined_method
-   info • Unnecessary use of a block function body • lib/features/reports/application/analytics_service.dart:15:49 • prefer_expression_function_bodies
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:141:81 • lines_longer_than_80_chars
-
-4 issues found. (ran in 10.5s)

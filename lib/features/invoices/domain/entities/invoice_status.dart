@@ -4,7 +4,7 @@
 /// تتوافق مع معايير ZATCA والفواتير الضريبية.
 library;
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -54,7 +54,7 @@ enum InvoiceStatus {
       case InvoiceStatus.cancelled:
         return context.l10n.statusCancelled;
       case InvoiceStatus.refunded:
-        return 'مرتجعة'; // TODO(User): add to l10n
+        return context.l10n.statusRefunded;
     }
   }
 }

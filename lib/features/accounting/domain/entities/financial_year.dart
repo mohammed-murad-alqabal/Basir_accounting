@@ -1,61 +1,64 @@
-import 'package:basir_app/core/models/sync_status.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'financial_year.freezed.dart';
 part 'financial_year.g.dart';
 
-/// تمثل السنة المالية وفتراتها المحاسبية.
+/// Represents a Fiscal Year cycle and its constituent accounting periods.
+///
+/// Encapsulates the start, end, and closing state of the primary financial\n/// reporting cycle.
 @freezed
 class FinancialYear with _$FinancialYear {
-  /// إنشاء سنة مالية جديدة.
+  /// Creates a financial year record.
   const factory FinancialYear({
-    /// معرف فريد للسنة.
+    /// Unique internal identifier for the fiscal year.
     required String id,
 
-    /// اسم السنة المالية (مثال: "السنة المالية 2024").
+    /// Narrative name (e.g., "Fiscal Year 2024 - Saudi Operations").
     required String name,
 
-    /// تاريخ بداية السنة.
+    /// First day of the fiscal cycle (Inclusive).
     required DateTime startDate,
 
-    /// تاريخ نهاية السنة.
+    /// Last day of the fiscal cycle (Inclusive).
     required DateTime endDate,
 
-    /// هل تم إغلاق السنة نهائياً؟
+    /// Immutable flag indicating the year has been finalized and audited.
     @Default(false) bool isClosed,
 
-    /// تاريخ الإغلاق.
+    /// Timestamp of the final year-end closing procedure.
     DateTime? closedAt,
 
-    /// معرف المستخدم الذي قام بالإغلاق.
+    /// User ID of the authorized personnel who executed the closing.
     String? closedBy,
 
-    /// الفترات الشهرية المغلقة داخل هذه السنة.
+    /// Collection of specific sub-period IDs (e.g., Quarters/Months) that are locked.
     @Default([]) List<String> lockedPeriodIds,
 
-    /// معرف المستخدم صاحب السنة (لعزل البيانات)
+    /// Tenant identifier for data isolation.
     String? userId,
 
-    /// حالة المزامنة
+    /// Local-to-Remote synchronization state.
     @Default(SyncStatus.synced) SyncStatus syncStatus,
 
-    /// تاريخ آخر تحديث من السيرفر
+    /// Most recent synchronization timestamp from the server.
     DateTime? serverUpdatedAt,
 
-    /// هل السجل محذوف (حذف ناعم)
+    /// Soft-deletion flag.
     @Default(false) bool isDeleted,
   }) = _FinancialYear;
 
-  /// التحويل من JSON
+  /// deserialization from JSON format.
   factory FinancialYear.fromJson(Map<String, dynamic> json) =>
       _$FinancialYearFromJson(json);
+
   const FinancialYear._();
 
-  /// التحقق من أن تاريخ معين يقع ضمن هذه السنة المالية
+  /// Verifies if a given timestamp falls within this year's temporal range.
   bool containsDate(DateTime date) =>
       (date.isAfter(startDate) || date.isAtSameMomentAs(startDate)) &&
       (date.isBefore(endDate) || date.isAtSameMomentAs(endDate));
 
-  /// التحقق من صحة تواريخ السنة
+  /// Logical validation of the cycle (Start must precede End).
   bool get isValid => endDate.isAfter(startDate);
 }

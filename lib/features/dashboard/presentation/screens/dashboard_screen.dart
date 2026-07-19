@@ -1,21 +1,27 @@
 import 'dart:async';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/extensions/invoice_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/utils/format_helpers.dart';
-import 'package:basir_app/features/accounting/presentation/screens/chart_of_accounts_screen.dart';
-import 'package:basir_app/features/accounting/presentation/screens/journal_entries_screen.dart';
-import 'package:basir_app/features/accounting/presentation/widgets/financial_summary_card.dart';
-import 'package:basir_app/features/analytics/application/analytics_service.dart';
-import 'package:basir_app/features/analytics/domain/entities/analytics_event.dart';
-import 'package:basir_app/features/dashboard/domain/entities/dashboard_data.dart';
-import 'package:basir_app/features/dashboard/presentation/providers/dashboard_controller.dart';
-import 'package:basir_app/features/dashboard/presentation/widgets/dashboard_charts.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/extensions/invoice_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/glass_theme.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/utils/format_helpers.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/chart_of_accounts_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/financial_calculator_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entries_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/widgets/financial_summary_card.dart';
+import 'package:basir_accounting_system/features/analytics/domain/entities/analytics_event.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
+import 'package:basir_accounting_system/features/auth/presentation/widgets/permission_guard.dart';
+import 'package:basir_accounting_system/features/dashboard/domain/entities/dashboard_data.dart';
+import 'package:basir_accounting_system/features/dashboard/presentation/providers/dashboard_controller.dart';
+import 'package:basir_accounting_system/features/dashboard/presentation/widgets/dashboard_charts.dart';
+import 'package:basir_accounting_system/features/inventory/presentation/screens/warehouse_transfer_screen.dart';
+import 'package:basir_accounting_system/features/onboarding/presentation/widgets/cognitive_overlay.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 
 /// شاشة لوحة التحكم (Dashboard Screen)
 /// تعرض ملخص الإحصائيات والعمليات الحقيقية بنظام Basir
@@ -38,40 +44,56 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final analytics = ref.read(analyticsServiceProvider);
       unawaited(analytics?.logEvent(AnalyticsEventType.sessionStart));
+
+      // Phase 9: Cognitive Guidance - Institutional Onboarding
+      // Skip cognitive overlay in test environment (GlassTheme not available)
+      if (mounted &&
+          Overlay.maybeOf(context) != null &&
+          Theme.of(context).extension<GlassTheme>() != null) {
+        showCognitiveHint(
+          context,
+          context.l10n.dashboardBasirSystemTitle,
+          title: context.l10n.dashboardWelcomeMessage,
+        );
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final dashboardAsync = ref.watch(dashboardControllerProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppSimpleAppBar(
-        title: context.l10n.dashboardTitle,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              unawaited(
-                ref.read(dashboardControllerProvider.notifier).refresh(),
-              );
-            },
+    return GlassScaffold(
+      title: context.l10n.dashboardTitle,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (context) => const FinancialCalculatorScreen(),
           ),
-        ],
+        ),
+        backgroundColor: theme.colorScheme.primary,
+        child: const Icon(Icons.calculate_outlined, color: Colors.white),
       ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.refresh),
+          onPressed: () {
+            unawaited(
+              ref.read(dashboardControllerProvider.notifier).refresh(),
+            );
+          },
+        ),
+      ],
       body: dashboardAsync.when(
         data: (data) => _buildContent(context, ref, data),
-        loading: () => const AppLoadingScreen(),
+        loading: () => const _DashboardSkeleton(),
         error: (e, st) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.error_outline,
-                size: 48,
-                color: AppColors.error,
-              ),
+              const Icon(Icons.error_outline, size: 48, color: AppColors.error),
               const SizedBox(height: Spacing.md),
               Text(context.l10n.errorLoadingSettings),
               TextButton(
@@ -91,6 +113,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     DashboardData data,
   ) {
     final appIcons = ref.watch(appIconsProvider);
+    final analytics = ref.watch(analyticsServiceProvider);
 
     return RefreshIndicator(
       onRefresh: () => ref.read(dashboardControllerProvider.notifier).refresh(),
@@ -116,11 +139,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             const SizedBox(height: Spacing.xl),
 
             // الإجراءات السريعة
-            _buildQuickActions(context, ref, appIcons),
+            _buildQuickActions(context, ref, appIcons, analytics),
             const SizedBox(height: Spacing.xl),
 
             // الأنشطة الأخيرة (حقيقية)
-            _buildRecentActivity(context, ref, data),
+            _buildRecentActivity(context, ref, data, analytics),
             const SizedBox(height: Spacing.xxl),
           ],
         ),
@@ -195,8 +218,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     BuildContext context,
     WidgetRef ref,
     AppIcons appIcons,
+    AnalyticsService? analytics,
   ) {
-    final analytics = ref.read(analyticsServiceProvider);
     final isGuestAsync = ref.watch(isGuestProvider);
     final isGuest = isGuestAsync.value ?? false;
 
@@ -215,9 +238,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               unawaited(
                 analytics?.logEvent(
                   AnalyticsEventType.featureUsed,
-                  metadata: {
-                    'feature': 'guest_upgrade_click',
-                  },
+                  metadata: {'feature': 'guest_upgrade_click'},
                 ),
               );
               unawaited(Navigator.of(context).pushNamed('/guest-upgrade'));
@@ -260,54 +281,90 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
         const SizedBox(height: Spacing.md),
         // أدوات المحاسبة السريعة
-        Row(
-          children: [
-            Expanded(
-              child: AppEnhancedButton(
-                label: context.l10n.labelChartOfAccounts,
-                onPressed: () {
-                  unawaited(
-                    analytics?.logEvent(
-                      AnalyticsEventType.featureUsed,
-                      metadata: {'feature': 'chart_of_accounts'},
-                    ),
-                  );
-                  unawaited(
-                    Navigator.of(context).push<void>(
-                      MaterialPageRoute<void>(
-                        builder: (_) => const ChartOfAccountsScreen(),
+        PermissionGuard(
+          permission: Permission.viewFinancials,
+          child: Row(
+            children: [
+              Expanded(
+                child: AppEnhancedButton(
+                  label: context.l10n.labelChartOfAccounts,
+                  onPressed: () {
+                    unawaited(
+                      analytics?.logEvent(
+                        AnalyticsEventType.featureUsed,
+                        metadata: {'feature': 'chart_of_accounts'},
                       ),
-                    ),
-                  );
-                },
-                icon: appIcons.accounting,
-                type: AppEnhancedButtonType.outlined,
-              ),
-            ),
-            const SizedBox(width: Spacing.md),
-            Expanded(
-              child: AppEnhancedButton(
-                label: context.l10n.labelJournalEntries,
-                onPressed: () {
-                  unawaited(
-                    analytics?.logEvent(
-                      AnalyticsEventType.featureUsed,
-                      metadata: {'feature': 'journal_entries'},
-                    ),
-                  );
-                  unawaited(
-                    Navigator.of(context).push<void>(
-                      MaterialPageRoute<void>(
-                        builder: (_) => const JournalEntriesScreen(),
+                    );
+                    unawaited(
+                      Navigator.of(context).push<void>(
+                        MaterialPageRoute<void>(
+                          builder: (_) => const ChartOfAccountsScreen(),
+                        ),
                       ),
-                    ),
-                  );
-                },
-                icon: appIcons.list,
-                type: AppEnhancedButtonType.outlined,
+                    );
+                  },
+                  icon: appIcons.accounting,
+                  type: AppEnhancedButtonType.outlined,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(width: Spacing.md),
+              Expanded(
+                child: AppEnhancedButton(
+                  label: context.l10n.labelJournalEntries,
+                  onPressed: () {
+                    unawaited(
+                      analytics?.logEvent(
+                        AnalyticsEventType.featureUsed,
+                        metadata: {'feature': 'journal_entries'},
+                      ),
+                    );
+                    unawaited(
+                      Navigator.of(context).push<void>(
+                        MaterialPageRoute<void>(
+                          builder: (_) => const JournalEntriesScreen(),
+                        ),
+                      ),
+                    );
+                  },
+                  icon: appIcons.list,
+                  type: AppEnhancedButtonType.outlined,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: Spacing.md),
+        PermissionGuard(
+          permission: Permission.viewFinancials,
+          child: AppEnhancedButton(
+            label: context.l10n.titleTreasuryVault,
+            onPressed: () {
+              unawaited(
+                analytics?.logEvent(
+                  AnalyticsEventType.featureUsed,
+                  metadata: {'feature': 'treasury_vault'},
+                ),
+              );
+              unawaited(Navigator.of(context).pushNamed('/treasury-dashboard'));
+            },
+            icon: Icons.account_balance,
+            type: AppEnhancedButtonType.outlined,
+          ),
+        ),
+        const SizedBox(height: Spacing.md),
+        AppEnhancedButton(
+          label: context.l10n.labelReturnsAndDamages,
+          onPressed: () {
+            unawaited(
+              analytics?.logEvent(
+                AnalyticsEventType.featureUsed,
+                metadata: {'feature': 'returns_and_damages'},
+              ),
+            );
+            unawaited(Navigator.of(context).pushNamed('/returns-and-damages'));
+          },
+          icon: Icons.assignment_return_outlined,
+          type: AppEnhancedButtonType.secondary,
         ),
       ],
     );
@@ -317,6 +374,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     BuildContext context,
     WidgetRef ref,
     DashboardData data,
+    AnalyticsService? analytics,
   ) {
     final appIcons = ref.read(appIconsProvider);
     final locale = context.l10n.localeName;
@@ -356,7 +414,89 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               onTap: () => Navigator.of(context).pushNamed('/invoices'),
             ),
           ),
+        const SizedBox(height: Spacing.md),
+        Row(
+          children: [
+            Expanded(
+              child: AppEnhancedButton(
+                label: context.l10n.warehouseTransferTitleAdd,
+                onPressed: () {
+                  unawaited(
+                    analytics?.logEvent(
+                      AnalyticsEventType.featureUsed,
+                      metadata: {'feature': 'warehouse_transfer'},
+                    ),
+                  );
+                  unawaited(
+                    Navigator.of(context).push<void>(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const WarehouseTransferScreen(),
+                      ),
+                    ),
+                  );
+                },
+                icon: Icons.transfer_within_a_station,
+                type: AppEnhancedButtonType.outlined,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
+}
+
+class _DashboardSkeleton extends StatelessWidget {
+  const _DashboardSkeleton();
+
+  @override
+  Widget build(BuildContext context) => Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(Spacing.lg),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header Skeleton
+              Container(
+                width: 200,
+                height: 24,
+                color: Colors.white,
+              ),
+              const SizedBox(height: Spacing.xl),
+
+              // Financial Summary Skeleton
+              Container(
+                width: double.infinity,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(Radii.md),
+                ),
+              ),
+              const SizedBox(height: Spacing.md),
+
+              // Stats Grid Skeleton
+              GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisSpacing: Spacing.md,
+                mainAxisSpacing: Spacing.md,
+                childAspectRatio: 1.2,
+                children: List.generate(
+                  4,
+                  (index) => Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(Radii.md),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
 }

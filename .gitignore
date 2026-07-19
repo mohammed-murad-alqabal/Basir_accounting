@@ -86,6 +86,9 @@ firebase_options.dart
 **/api-key*
 **/*password*
 **/*token*
+!**/*_guide.md
+!**/*_manual.md
+!**/*_spec.md
 **/*secret*
 **/*credentials*
 **/.aws/
@@ -149,6 +152,7 @@ logs/.processing_*
 # Temporary reports (keep in docs/ instead)
 # Note: Root level temporary reports only, not in .kiro/docs/reports/
 /*_REPORT.md
+!/ENGINEERING_AUDIT_REPORT.md
 /*_SUMMARY.md
 /*_STATUS.md
 /*_GUIDE.md
@@ -183,6 +187,10 @@ libisar.so
 *.db
 *.db-shm
 *.db-wal
+*.isar
+*.isar-shm
+*.isar-wal
+*.isar.lock
 sqlite_mcp_server.db
 
 # Git backup files

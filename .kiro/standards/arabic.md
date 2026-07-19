@@ -1,97 +1,97 @@
-# معايير اللغة العربية
+# Arabic Language Standards
 
-**المشروع:** بصير MVP  
-**الحالة:** ✅ نشط
-
----
-
-## المصطلحات الأساسية
-
-| English  | العربية        | ملاحظات          |
-| :------- | :------------- | :--------------- |
-| Customer | عميل           | ليس "زبون"       |
-| Invoice  | فاتورة         | ليس "إيصال"      |
-| Item     | بند            | في سياق الفاتورة |
-| Total    | الإجمالي       | ليس "المجموع"    |
-| Subtotal | المجموع الفرعي | قبل الضريبة      |
-| Tax      | الضريبة        | ليس "الرسوم"     |
-| Discount | الخصم          | ليس "التخفيض"    |
-| Payment  | الدفع          | ليس "السداد"     |
+**Project:** Basir MVP  
+**Status:** ✅ Active
 
 ---
 
-## حالات الفاتورة
+## Core Terminology
 
-| English   | العربية |
-| :-------- | :------ |
-| Draft     | مسودة   |
-| Sent      | مرسلة   |
-| Paid      | مدفوعة  |
-| Overdue   | متأخرة  |
-| Cancelled | ملغاة   |
-
----
-
-## الإجراءات
-
-| English | العربية |
-| :------ | :------ |
-| Add     | إضافة   |
-| Edit    | تعديل   |
-| Delete  | حذف     |
-| Save    | حفظ     |
-| Cancel  | إلغاء   |
-| Search  | بحث     |
-| Filter  | تصفية   |
-| Export  | تصدير   |
-| Print   | طباعة   |
+| English  | Arabic         | Notes                            |
+| :------- | :------------- | :------------------------------- |
+| Customer | عميل           | Avoid "زبون"                     |
+| Invoice  | فاتورة         | Avoid "إيصال"                    |
+| Item     | بند            | Within the context of an invoice |
+| Total    | الإجمالي       | Avoid "المجموع"                  |
+| Subtotal | المجموع الفرعي | Before tax                       |
+| Tax      | الضريبة        | Avoid "الرسوم"                   |
+| Discount | الخصم          | Avoid "التخفيض"                  |
+| Payment  | الدفع          | Avoid "السداد"                   |
 
 ---
 
-## علامات الترقيم
+## Invoice Statuses
 
-### القواعد
-
-- الفاصلة العربية: (،) ليس (,)
-- علامة الاستفهام: (؟) ليس (?)
-- النقطة: (.) في نهاية الجمل
-
-### الأرقام
-
-- **الموصى به:** الأرقام الهندية (123)
-- الفاصلة (،) لفصل الآلاف
-- النقطة (.) للكسور العشرية
+| English   | Arabic |
+| :-------- | :----- |
+| Draft     | مسودة  |
+| Sent      | مرسلة  |
+| Paid      | مدفوعة |
+| Overdue   | متأخرة |
+| Cancelled | ملغاة  |
 
 ---
 
-## رسائل المستخدم
+## Actions
 
-### رسائل التأكيد
+| English | Arabic |
+| :------ | :----- |
+| Add     | إضافة  |
+| Edit    | تعديل  |
+| Delete  | حذف    |
+| Save    | حفظ    |
+| Cancel  | إلغاء  |
+| Search  | بحث    |
+| Filter  | تصفية  |
+| Export  | تصدير  |
+| Print   | طباعة  |
+
+---
+
+## Punctuation
+
+### Rules
+
+- Arabic Comma: (،) not (,)
+- Question Mark: (؟) not (?)
+- Full Stop: (.) at the end of sentences
+
+### Numerals
+
+- **Recommended:** Hindu-Arabic numerals (123)
+- Comma (،) as thousands separator
+- Decimal point (.) for fractions
+
+---
+
+## User Messages
+
+### Confirmation Messages
 
 ```
-'هل أنت متأكد من حذف هذا العميل؟'
-'هل تريد حفظ التغييرات؟'
+'Are you sure you want to delete this customer?' -> 'هل أنت متأكد من حذف هذا العميل؟'
+'Do you want to save changes?' -> 'هل تريد حفظ التغييرات؟'
 ```
 
-### رسائل الخطأ
+### Error Messages
 
 ```
-'رقم الهاتف يجب أن يبدأ بـ 05'
-'البريد الإلكتروني غير صحيح'
+'Phone number must start with 05' -> 'رقم الهاتف يجب أن يبدأ بـ 05'
+'Invalid email address' -> 'البريد الإلكتروني غير صحيح'
 ```
 
-### رسائل النجاح
+### Success Messages
 
 ```
-'تم إضافة العميل بنجاح'
-'تم حفظ الفاتورة بنجاح'
+'Customer added successfully' -> 'تم إضافة العميل بنجاح'
+'Invoice saved successfully' -> 'تم حفظ الفاتورة بنجاح'
 ```
 
 ---
 
-## الأخطاء الشائعة
+## Common Errors
 
-| ❌ خطأ       | ✅ صحيح       |
+| ❌ Incorrect | ✅ Correct    |
 | :----------- | :------------ |
 | إضافه        | إضافة         |
 | إستخدام      | استخدام       |
@@ -100,4 +100,4 @@
 
 ---
 
-**للقاموس الكامل:** `.kiro/steering/reference/arabic-dictionary.md`
+**For the full dictionary, refer to:** `.kiro/steering/reference/arabic-dictionary.md`

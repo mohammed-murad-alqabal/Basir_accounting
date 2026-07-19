@@ -1,9 +1,9 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/analytics/presentation/widgets/expense_composition_chart.dart';
-import 'package:basir_app/features/analytics/presentation/widgets/revenue_trend_chart.dart';
-import 'package:basir_app/features/dashboard/domain/entities/dashboard_data.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/analytics/presentation/widgets/expense_composition_chart.dart';
+import 'package:basir_accounting_system/features/analytics/presentation/widgets/revenue_trend_chart.dart';
+import 'package:basir_accounting_system/features/dashboard/domain/entities/dashboard_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -74,10 +74,7 @@ class DashboardCharts extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: Spacing.xl),
-              const SizedBox(
-                height: 200,
-                child: RevenueTrendChart(),
-              ),
+              const SizedBox(height: 200, child: RevenueTrendChart()),
             ],
           ),
         ),
@@ -103,10 +100,7 @@ class DashboardCharts extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: Spacing.xl),
-              const SizedBox(
-                height: 200,
-                child: ExpenseCompositionChart(),
-              ),
+              const SizedBox(height: 200, child: ExpenseCompositionChart()),
             ],
           ),
         ),

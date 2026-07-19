@@ -1,40 +1,71 @@
-# Code Owners
-# This file defines who is responsible for code in this repository
-# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+# CODEOWNERS for Basir ERP Development
+# This file defines code ownership for different parts of the system
+# Each line is a file pattern followed by one or more owners
 
-# Default owners for everything in the repo
-* @team
+# Global fallback - Senior developers review everything by default
+* @basir-dev-team
 
-# Core architecture and infrastructure
-/lib/core/ @team @architects
-/.github/ @team @devops
-/scripts/ @team @devops
+# Core system files - Require tech lead approval
+/.github/ @tech-lead @senior-architect
+/.kiro/ @tech-lead @senior-architect
+/pubspec.yaml @tech-lead @senior-architect
+/analysis_options.yaml @tech-lead @senior-architect
 
-# Features
-/lib/features/auth/ @team @security-team
-/lib/features/customers/ @team @backend-team
-/lib/features/invoices/ @team @backend-team
-/lib/features/dashboard/ @team @frontend-team
-/lib/features/settings/ @team @frontend-team
+# ERP Core Modules - Require domain experts
+/lib/core/ @senior-architect @core-systems-expert
+/lib/features/accounting/ @accounting-expert @senior-developer
+/lib/features/invoices/ @accounting-expert @zatca-compliance-expert
+/lib/features/customers/ @crm-expert @senior-developer
+/lib/features/vendors/ @procurement-expert @senior-developer
+/lib/features/inventory/ @inventory-expert @senior-developer
+/lib/features/reports/ @reporting-expert @senior-developer
 
-# Data layer
-/lib/data/ @team @database-team
+# HR and Payroll - Specialized domain knowledge required
+/lib/features/hr/ @hr-systems-expert @payroll-expert
+/lib/features/payroll/ @payroll-expert @accounting-expert
 
-# Tests
-/test/ @team @qa-team
+# Financial compliance and regulations
+/lib/features/zatca/ @zatca-compliance-expert @accounting-expert
+/lib/features/tax/ @tax-expert @accounting-expert
 
-# Documentation
-/docs/ @team @docs-team
-*.md @team @docs-team
+# UI/UX and Design System
+/lib/core/theme/ @ui-ux-expert @senior-developer
+/lib/core/widgets/ @ui-ux-expert @senior-developer
+/lib/l10n/ @localization-expert @ui-ux-expert
+
+# Database and Data Layer
+/lib/core/database/ @database-expert @senior-architect
+/lib/core/services/ @backend-expert @senior-architect
+
+# Security and Authentication
+/lib/core/auth/ @security-expert @senior-architect
+/lib/core/security/ @security-expert @senior-architect
+
+# Testing - Quality assurance experts
+/test/ @qa-lead @senior-developer
+/integration_test/ @qa-lead @automation-expert
+
+# Documentation - Technical writers and domain experts
+/docs/ @tech-writer @senior-architect
+/README.md @tech-writer @tech-lead
+/CHANGELOG.md @tech-writer @tech-lead
+
+# Build and deployment
+/android/ @mobile-expert @devops-expert
+/ios/ @mobile-expert @devops-expert
+/web/ @web-expert @devops-expert
+/linux/ @desktop-expert @devops-expert
+/windows/ @desktop-expert @devops-expert
+/macos/ @desktop-expert @devops-expert
+
+# Scripts and automation
+/scripts/ @devops-expert @senior-architect
+/tools/ @devops-expert @senior-architect
 
 # Configuration files
-pubspec.yaml @team @architects
-analysis_options.yaml @team @architects
-.gitignore @team @devops
+*.yaml @devops-expert @senior-architect
+*.json @devops-expert @senior-architect
+Makefile @devops-expert @senior-architect
 
-# CI/CD
-/.github/workflows/ @team @devops @architects
-
-# Security-sensitive files
-/lib/data/services/auth_service.dart @team @security-team
-flutter_secure_storage @team @security-team
+# Sensitive configuration
+.env* @security-expert @tech-lead

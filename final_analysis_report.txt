@@ -1,74 +1,95 @@
 Analyzing basir_accounting_system...                            
 
-   info • The line length exceeds the 80-character limit • lib/features/accounting/application/financial_year_service.dart:16:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/application/financial_year_service.dart:76:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:48:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:51:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:87:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:99:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:129:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:139:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:237:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:275:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:277:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:289:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:291:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:313:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:316:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:318:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:320:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:335:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:338:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:340:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:342:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:360:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:391:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:453:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:489:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:551:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_form_screen.dart:574:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:117:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:123:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:131:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:154:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:162:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:165:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:184:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:187:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:243:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:244:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:246:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:344:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:349:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/voucher_form_screen.dart:442:81 • lines_longer_than_80_chars
-  error • The method '_$InventoryItemFromJson' isn't defined for the type 'InventoryItem' • lib/features/inventory/domain/entities/inventory_item.dart:109:12 • undefined_method
-   info • The line length exceeds the 80-character limit • lib/features/invoices/application/invoice_pdf_service.dart:69:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/invoices/application/invoice_pdf_service.dart:78:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/invoices/application/invoice_pdf_service.dart:100:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/invoices/application/invoice_pdf_service.dart:186:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/invoices/application/invoice_pdf_service.dart:187:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/invoices/application/ocr_service.dart:31:81 • lines_longer_than_80_chars
-   info • Unnecessary use of a block function body • lib/features/reports/application/analytics_service.dart:15:49 • prefer_expression_function_bodies
-   info • The line length exceeds the 80-character limit • lib/features/reports/domain/entities/financial_kpi.dart:43:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:17:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:34:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:54:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:56:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:100:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:133:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:173:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/intelligence_screen.dart:200:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/trial_balance_screen.dart:32:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/trial_balance_screen.dart:72:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/screens/trial_balance_screen.dart:213:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/widgets/report_filter_widget.dart:101:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/presentation/widgets/report_line_item.dart:33:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/services/reporting_service.dart:68:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • lib/features/reports/services/reporting_service.dart:156:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • test/widget/features/reports/aging_report_screen_test.dart:23:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • test/widget/features/reports/aging_report_screen_test.dart:38:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • test/widget/features/reports/aging_report_screen_test.dart:51:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • test/widget/features/reports/reports_dashboard_screen_test.dart:23:81 • lines_longer_than_80_chars
-   info • The line length exceeds the 80-character limit • test/widget/features/reports/reports_dashboard_screen_test.dart:38:81 • lines_longer_than_80_chars
+   info • Don't cast a nullable value to a non-nullable type • lib/core/router.dart:242:22 • cast_nullable_to_non_nullable
+   info • The line length exceeds the 80-character limit • lib/core/services/notification_service.dart:23:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/services/notification_service.dart:117:81 • lines_longer_than_80_chars
+   info • The constant name 'barcode_reader' isn't a lowerCamelCase identifier • lib/core/theme/app_icons.dart:385:25 • constant_identifier_names
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_icons.dart:419:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_icons.dart:433:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_icons.dart:446:81 • lines_longer_than_80_chars
+   info • The variable name 'barcode_reader' isn't a lowerCamelCase identifier • lib/core/theme/tokens/app_icons.dart:436:17 • non_constant_identifier_names
+   info • The variable name 'barcode_reader' isn't a lowerCamelCase identifier • lib/core/theme/tokens/app_icons.dart:754:17 • non_constant_identifier_names
+   info • The variable name 'barcode_reader' isn't a lowerCamelCase identifier • lib/core/theme/tokens/app_icons.dart:1072:17 • non_constant_identifier_names
+   info • The line length exceeds the 80-character limit • lib/core/theme/tokens/app_icons.dart:1097:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/tokens/app_icons.dart:1100:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/providers/journal_entry_providers.dart:20:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/providers/journal_entry_providers.dart:48:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/providers/journal_entry_providers.dart:49:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/chart_of_accounts_screen.dart:49:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/chart_of_accounts_screen.dart:339:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/chart_of_accounts_screen.dart:358:81 • lines_longer_than_80_chars
+   info • Unnecessary use of a block function body • lib/features/accounting/presentation/screens/fiscal_control_center_screen.dart:179:5 • prefer_expression_function_bodies
+   info • Static method should be a constructor • lib/features/budget/data/models/budget_model.dart:65:22 • prefer_constructors_over_static_methods
+   info • Invalid use of 'default' member in a switch • lib/features/budget/presentation/screens/budget_dashboard_screen.dart:245:7 • no_default_cases
+   info • Invalid use of 'default' member in a switch • lib/features/budget/presentation/screens/budget_dashboard_screen.dart:271:7 • no_default_cases
+   info • Invalid use of 'default' member in a switch • lib/features/budget/presentation/screens/budget_form_screen.dart:209:7 • no_default_cases
+   info • The line length exceeds the 80-character limit • lib/features/expenses/application/expense_service.dart:17:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/expenses/application/expense_service.dart:109:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/expenses/application/expense_service.dart:115:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/expenses/data/repositories/expense_repository_impl.dart:44:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/expenses/data/repositories/expense_repository_impl.dart:52:81 • lines_longer_than_80_chars
+   info • The type 'StateError' should not be caught because it is a subclass of 'Error' • lib/features/expenses/data/repositories/expense_repository_impl.dart:73:7 • avoid_catching_errors
+   info • The line length exceeds the 80-character limit • lib/features/expenses/data/repositories/expense_repository_impl.dart:149:81 • lines_longer_than_80_chars
+   info • To-do comment doesn't follow the Flutter style • lib/features/expenses/data/repositories/expense_repository_impl.dart:185:5 • flutter_style_todos
+   info • The line length exceeds the 80-character limit • lib/features/expenses/domain/entities/expense.dart:69:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/expenses/domain/entities/expense.dart:106:81 • lines_longer_than_80_chars
+   info • The method is used to change a property • lib/features/expenses/presentation/providers/expense_provider.dart:108:8 • use_setters_to_change_properties
+   info • The line length exceeds the 80-character limit • lib/features/expenses/presentation/screens/expenses_dashboard_screen.dart:89:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/expenses/presentation/screens/expenses_dashboard_screen.dart:248:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/expenses/presentation/screens/expenses_dashboard_screen.dart:258:81 • lines_longer_than_80_chars
+   info • The type 'StateError' should not be caught because it is a subclass of 'Error' • lib/features/forensics/application/ledger_integrity_service.dart:163:7 • avoid_catching_errors
+   info • The line length exceeds the 80-character limit • lib/features/forensics/domain/entities/integrity_status.dart:11:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/forensics/presentation/screens/forensic_portal_screen.dart:52:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/forensics/presentation/screens/forensic_portal_screen.dart:53:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/forensics/presentation/screens/forensic_portal_screen.dart:120:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/goals/application/goal_service.dart:41:81 • lines_longer_than_80_chars
+   info • Static method should be a constructor • lib/features/goals/data/models/goal_model.dart:47:20 • prefer_constructors_over_static_methods
+   info • The line length exceeds the 80-character limit • lib/features/goals/data/repositories/isar_goal_repository.dart:21:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/goals/data/repositories/isar_goal_repository.dart:40:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/goals/presentation/screens/goal_dashboard_screen.dart:22:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/goals/presentation/screens/goal_dashboard_screen.dart:32:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/goals/presentation/screens/goal_dashboard_screen.dart:127:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/goals/presentation/screens/goal_dashboard_screen.dart:133:81 • lines_longer_than_80_chars
+   info • Invalid use of 'default' member in a switch • lib/features/goals/presentation/screens/goal_dashboard_screen.dart:209:7 • no_default_cases
+   info • The line length exceeds the 80-character limit • lib/features/inventory/application/barcode_service.dart:35:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/presentation/screens/inventory_items_screen.dart:19:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/presentation/screens/inventory_items_screen.dart:38:81 • lines_longer_than_80_chars
+   info • Unnecessary use of a block function body • lib/features/invoices/application/zatca_service.dart:115:47 • prefer_expression_function_bodies
+   info • The line length exceeds the 80-character limit • lib/features/invoices/domain/entities/invoice.dart:51:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/domain/entities/invoice.dart:120:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/domain/entities/invoice.dart:140:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/domain/entities/invoice.dart:184:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/domain/entities/invoice.dart:193:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/providers/invoice_pdf_provider.dart:68:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/providers/invoice_provider.dart:82:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/forensic_export_service.dart:41:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/forensic_export_service.dart:96:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/forensic_export_service.dart:97:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/forensic_export_service.dart:113:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/forensic_export_service.dart:116:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/forensic_export_service.dart:166:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/forensic_export_service.dart:167:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/forensic_export_service.dart:168:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/forensic_export_service.dart:180:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/simulation_service.dart:190:81 • lines_longer_than_80_chars
+   info • To-do comment doesn't follow the Flutter style • lib/features/settings/application/cloud_backup_service.dart:18:3 • flutter_style_todos
+   info • Use of an async 'dart:io' method • lib/features/settings/application/cloud_backup_service.dart:57:17 • avoid_slow_async_io
+   info • Missing an 'await' for the 'Future' computed by this expression • lib/features/settings/application/cloud_backup_service.dart:69:15 • unawaited_futures
+   info • The line length exceeds the 80-character limit • lib/features/settings/data/models/barcode_config_model.dart:13:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/data/repositories/isar_barcode_config_repository.dart:16:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/domain/entities/barcode_config.dart:46:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/barcode_settings_screen.dart:15:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/barcode_settings_screen.dart:147:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/barcode_settings_screen.dart:155:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/cloud_backup_screen.dart:115:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/excel_import_screen.dart:40:81 • lines_longer_than_80_chars
+   info • Unnecessary 'const' keyword • lib/features/settings/presentation/screens/excel_import_screen.dart:79:26 • unnecessary_const
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/excel_import_screen.dart:142:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/users/presentation/screens/users_dashboard_screen.dart:79:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/zatca/presentation/screens/zatca_onboarding_screen.dart:22:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/zatca/presentation/screens/zatca_onboarding_screen.dart:206:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • test/features/expenses/presentation/screens/expenses_dashboard_screen_test.dart:81:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • test/features/users/data/repositories/user_repository_test.dart:47:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • test/features/users/presentation/screens/user_form_screen_test.dart:100:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • test/integration/invoice_posting_test.dart:26:81 • lines_longer_than_80_chars
 
-70 issues found. (ran in 10.2s)

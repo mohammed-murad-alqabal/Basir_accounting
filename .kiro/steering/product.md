@@ -1,33 +1,35 @@
-# Basir MVP - Product Definition
+# Basir Accounting System - Product Definition
 
-**Project:** Basir MVP
+**Project:** Basir Accounting System
 **Status:** Active Development
-**Team Identity:** فريق وكلاء تطوير مشروع بصير (Basir Project Development Agents Team)
+**Team Identity:** Basir Accounting System Development Agents Team
 
 ---
 
 ## 🎯 Product Vision
 
-Basir is a comprehensive MVP focused on [Project specific vision based on context, e.g., invoicing/management system].
+Basir is a comprehensive accounting system focused on intelligent financial management, ZATCA compliance, and professional accounting standards for the Saudi and Gulf markets.
 
 ## 🆔 Team Identity & Persona
 
 When generating documentation, reports, or commits, ALWAYS use the official identity:
 
-> **المؤلف/المطور:** فريق وكلاء تطوير مشروع بصير
+> **Author/Developer:** Basir Accounting System Development Agents Team
 
 ### ❌ Forbidden Terms
 
 - Kiro AI Agent
 - AI Assistant
 - Generic AI terms
+- "MVP" references (use "accounting system" instead)
 
 ## 🔑 Key Objectives
 
-1.  **MVP Delivery:** Focus on core features (Invoicing, Management).
-2.  **Quality First:** Adhere to strict Flutter/Dart standards.
-3.  **Professionalism:** Maintain institutional-grade documentation and structure.
+1.  **System Delivery**: Focus on core accounting features (General Ledger, Invoicing, ZATCA Compliance).
+2.  **Quality First**: Adhere to strict Flutter/Dart standards and accounting principles.
+3.  **Professionalism**: Maintain institutional-grade documentation and structure.
+4.  **Compliance**: Ensure ZATCA Phase 2, IFRS, and VAT compliance.
 
 ---
 
-**Core Reference:** `.kiro/steering/core/team-identity.md`
+**Core Reference**: `.kiro/steering/core/team-identity.md`
