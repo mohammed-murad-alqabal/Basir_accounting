@@ -40,6 +40,7 @@ class ExpensesDashboardScreen extends ConsumerWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'expenses_add_fab',
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute<void>(
             builder: (context) => const ExpenseFormScreen(),

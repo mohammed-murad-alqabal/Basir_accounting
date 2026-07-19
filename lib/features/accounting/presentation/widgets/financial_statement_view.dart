@@ -62,7 +62,9 @@ class _FinancialReportLineTile extends StatelessWidget {
     final isBold = line.isTitle || line.isTotal;
 
     return Container(
-      color: line.isTitle ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3) : null,
+      color: line.isTitle
+          ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3)
+          : null,
       child: Padding(
         padding: EdgeInsetsDirectional.only(
           start: 16.0 + (line.indentLevel * 24.0),
