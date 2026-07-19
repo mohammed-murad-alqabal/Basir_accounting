@@ -44,8 +44,8 @@ class GlassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final glassTheme = Theme.of(context).extension<GlassTheme>() ??
-        GlassTheme.light();
+    final glassTheme =
+        Theme.of(context).extension<GlassTheme>() ?? GlassTheme.light();
     final radius = borderRadius ?? GlassMetrics.borderRadius;
 
     Widget cardContent = Container(
