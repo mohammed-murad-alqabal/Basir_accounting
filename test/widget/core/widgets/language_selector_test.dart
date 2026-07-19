@@ -1,3 +1,5 @@
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/language_selector.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +14,11 @@ void main() {
 
     setUp(() {
       SharedPreferences.setMockInitialValues({});
-      container = ProviderContainer();
-      // Wait, localeProvider is an AsyncNotifier. I need to mock
-      // SharedPreferences for it to work, or override the provider.
+      container = ProviderContainer(
+        overrides: [
+          appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+        ],
+      );
     });
 
     tearDown(() {
