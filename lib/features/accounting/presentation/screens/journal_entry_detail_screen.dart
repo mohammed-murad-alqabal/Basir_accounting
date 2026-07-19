@@ -36,7 +36,8 @@ class JournalEntryDetailScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.print),
             onPressed: () async {
-              final pdfService = ref.read(pdfGenerationServiceProvider.notifier);
+              final pdfService =
+                  ref.read(pdfGenerationServiceProvider.notifier);
               final pdfBytes = await pdfService.generateJournalEntryPdf(entry);
               await Printing.layoutPdf(
                 onLayout: (format) => pdfBytes,
@@ -310,7 +311,9 @@ class _HeaderRow extends StatelessWidget {
                         textAlign: TextAlign.end,
                         style: context.textTheme.bodyMedium?.copyWith(
                           color: valueColor ?? //
-                              (onTap != null ? Theme.of(context).primaryColor : null),
+                              (onTap != null
+                                  ? Theme.of(context).primaryColor
+                                  : null),
                           fontWeight: (valueColor != null || onTap != null) //
                               ? FontWeight.bold
                               : null,

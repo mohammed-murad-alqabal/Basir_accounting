@@ -28,7 +28,8 @@ SupabaseAuthService supabaseAuth(SupabaseAuthRef ref) =>
 /// });
 /// ```
 @Riverpod(keepAlive: true)
-Stream<AuthState> authState(AuthStateRef ref) => ref.watch(supabaseAuthProvider).onAuthStateChange;
+Stream<AuthState> authState(AuthStateRef ref) =>
+    ref.watch(supabaseAuthProvider).onAuthStateChange;
 
 /// Current authenticated user provider.
 ///
@@ -37,5 +38,6 @@ Stream<AuthState> authState(AuthStateRef ref) => ref.watch(supabaseAuthProvider)
 @Riverpod(keepAlive: true)
 User? currentUser(CurrentUserRef ref) {
   final authState = <credential-fixture>(authStateProvider).value;
-  return authState?.session?.user ?? ref.watch(supabaseAuthProvider).currentUser;
+  return authState?.session?.user ??
+      ref.watch(supabaseAuthProvider).currentUser;
 }

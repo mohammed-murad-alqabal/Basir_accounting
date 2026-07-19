@@ -67,6 +67,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     return GlassScaffold(
       title: context.l10n.dashboardTitle,
       floatingActionButton: FloatingActionButton(
+        heroTag: 'dashboard_calculator_fab',
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute<void>(
