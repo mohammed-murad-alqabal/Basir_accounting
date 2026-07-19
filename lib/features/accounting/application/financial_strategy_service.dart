@@ -1,13 +1,19 @@
-import 'package:basir_app/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'financial_strategy_service.g.dart';
 
-/// يمثل الوكيل الخامس (Agent 5) المسؤول عن التخطيط المالي بعيد المدى
-/// وتحليل السيولة.
+/// Financial Strategy Agent (Agent 5) for long-term planning
+/// and liquidity analysis.
+///
+/// Responsible for assessing the strategic impact of transactions on
+/// cash flow, investment capacity, and overall financial health.
 @Riverpod(keepAlive: true)
-class FinancialStrategyService extends _$FinancialStrategyService
-    implements AccountingAgent {
+class FinancialStrategyService extends _$FinancialStrategyService //
+    implements
+        AccountingAgent {
   @override
   FutureOr<void> build() {}
 
@@ -17,49 +23,58 @@ class FinancialStrategyService extends _$FinancialStrategyService
   @override
   AgentAuthority get authority => AgentAuthority.medium;
 
+  /// Evaluates the strategic impact of the proposed transaction.
   @override
   Future<AgentResult> process(AccountingContext context) async {
     final rationale = <String>[];
+    final l10n = lookupAppLocalizations(Locale(context.locale));
+    final suggestedAdjustments = <String, dynamic>{};
 
-    // 1. تحليل تأثير السيولة (Liquidity Impact)
-    // نبحث عن حركات الصندوق أو البنك (acc-11 branch)
+    // 1. Liquidity Impact Analysis
     final cashImpactLines = context.proposedJournalEntry.lines.where(
-      (l) => l.accountId.startsWith('acc-11'),
+      (l) => l.accountId.startsWith('acc-11'), // Assuming 'acc-11' is Cash/Bank
     );
 
     if (cashImpactLines.isNotEmpty) {
       for (final line in cashImpactLines) {
         if (line.credit > line.debit) {
           rationale.add(
-            'تحليل الاستراتيجية: هذا القيد يمثل خروج سيولة نقدية بقيمة '
-            '${line.credit}.',
+            l10n.agentRationaleStrategyOutflow(line.credit.toString()),
           );
-          rationale.add(
-            'توصية: يرجى مراجعة تدفقاتك النقدية للأسبوع القادم لضمان '
-            'تغطية الالتزامات الأخرى.',
-          );
+          rationale.add(l10n.agentRationaleStrategyRecommendation);
         } else {
           rationale.add(
-            'تحليل الاستراتيجية: تعزيز السيولة بقيمة ${line.debit} يدعم '
-            'الخطط الاستثمارية قصيرة الأجل.',
+            l10n.agentRationaleStrategyInflow(line.debit.toString()),
           );
         }
       }
     }
 
-    // 2. تحليل الأثر على الربحية
+    // 2. Profitability & Business Type Analysis
     if (context.transactionType == 'sales') {
-      rationale.add(
-        'استراتيجية: زيادة المبيعات تساهم في تحسين نسبة العائد '
-        'على الأصول (ROA).',
-      );
+      rationale.add(l10n.agentRationaleStrategyProfitability);
+
+      // Smart Adjustment: Suggest early payment discount if customer is
+      // high-value
+      final total = context.proposedJournalEntry.totalDebit.toDouble();
+      if (total > 50000) {
+        suggestedAdjustments['strategic_discount'] = {
+          'type': l10n.agentSuggestionStrategicDiscount,
+          'suggestion': l10n.agentSuggestionStrategicDiscountReason,
+          'impact': 'Estimated cash acceleration: ${total * 0.98}',
+          'title': l10n.agentSuggestionStrategicDiscount,
+        };
+      }
     }
 
     return AgentResult(
       agentId: agentId,
-      isAllowed: true,
+      isAllowed: true, // Strategy agent usually advises rather than blocks
       rationale: rationale.join('\n'),
       confidenceScore: 0.88,
+      suggestedAdjustments: suggestedAdjustments.isNotEmpty //
+          ? suggestedAdjustments
+          : null,
     );
   }
 }

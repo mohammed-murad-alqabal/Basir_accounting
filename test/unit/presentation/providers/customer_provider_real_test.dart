@@ -4,9 +4,9 @@
 /// لتحسين التغطية من 3% إلى 70%+
 library;
 
-import 'package:basir_app/core/providers.dart' as core_providers;
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
-import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_accounting_system/core/providers.dart' as core_providers;
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/customers/presentation/providers/customer_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -117,8 +117,10 @@ void main() {
       final customer = MockData.createTestCustomer();
       await mockRepository.addCustomer(customer);
 
-      final updatedCustomer =
-          customer.copyWith(nameEn: 'اسم محدث', nameAr: 'اسم محدث');
+      final updatedCustomer = customer.copyWith(
+        nameEn: 'اسم محدث',
+        nameAr: 'اسم محدث',
+      );
 
       // Act
       final result = await container.read(
@@ -150,8 +152,10 @@ void main() {
       final customer = MockData.createTestCustomer();
       await mockRepository.addCustomer(customer);
 
-      final updatedCustomer =
-          customer.copyWith(nameEn: 'اسم جديد', nameAr: 'اسم جديد');
+      final updatedCustomer = customer.copyWith(
+        nameEn: 'اسم جديد',
+        nameAr: 'اسم جديد',
+      );
 
       // Act
       await container.read(updateCustomerProvider(updatedCustomer).future);

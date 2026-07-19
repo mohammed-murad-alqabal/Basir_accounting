@@ -142,14 +142,15 @@ pub async fn post_invoice(id: String, metadata: AuditMetadataDto) -> anyhow::Res
 
     // D. Generate QR Code
     let qr_payload = qr::ZatcaQrPayload {
-        seller_name: "Basir MVP Supplier".to_string(), // TODO: Get from Config
-        vat_number: "300000000000003".to_string(),     // TODO: Get from Config
+        seller_name: "Basir Accounting System Supplier".to_string(), // TODO: Get from Config
+        vat_number: "300000000000003".to_string(),                   // TODO: Get from Config
         timestamp: invoice.invoice_date.to_rfc3339(),
         total_amount: invoice.total_amount.to_string(),
         vat_amount: invoice.total_amount.to_string(), // Placeholder calculation
         hash: hash.clone(),
         signature: signature.clone(),
-        public_key,
+        public_key: public_key.clone(),
+        certificate_signature: String::new(), // TODO: Get from ZATCA CSR response
     };
     let qr_code = qr_payload.to_base64()?;
 
@@ -225,6 +226,7 @@ pub struct SalesInvoiceLineDto {
     pub quantity: String,
     pub unit_price: String,
     pub tax_amount: String,
+    pub tax_category: String,
 }
 
 pub struct CustomerPaymentDto {
@@ -311,6 +313,7 @@ impl TryFrom<SalesInvoiceLineDto> for SalesInvoiceLine {
             quantity: qty,
             unit_price: price,
             tax_amount: tax,
+            tax_category: dto.tax_category,
             total_amount: (qty * price) + tax,
         })
     }

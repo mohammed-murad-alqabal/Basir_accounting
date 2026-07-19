@@ -1,4 +1,4 @@
-import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -16,10 +16,8 @@ class AppSkeleton extends StatelessWidget {
   });
 
   /// إنشاء هيكل عظمي دائري
-  const AppSkeleton.circle({
-    super.key,
-    double? size,
-  })  : width = size,
+  const AppSkeleton.circle({super.key, double? size})
+      : width = size,
         height = size,
         borderRadius = null,
         shape = BoxShape.circle;

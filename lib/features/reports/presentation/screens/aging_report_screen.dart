@@ -1,8 +1,10 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/utils/format_helpers.dart';
-import 'package:basir_app/features/reports/presentation/widgets/report_filter_widget.dart';
-import 'package:basir_app/shared/widgets/index.dart';
-import 'package:basir_app/src/rust/api/reports.dart';
+// ignore_for_file: lines_longer_than_80_chars
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/utils/format_helpers.dart';
+import 'package:basir_accounting_system/features/reports/presentation/widgets/report_filter_widget.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
+import 'package:basir_accounting_system/src/rust/api/reports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -19,10 +21,7 @@ enum AgingReportType {
 /// Screen to display aging analysis for receivables or payables.
 class AgingReportScreen extends ConsumerStatefulWidget {
   /// Creates an aging report screen.
-  const AgingReportScreen({
-    required this.reportType,
-    super.key,
-  });
+  const AgingReportScreen({required this.reportType, super.key});
 
   /// The category of accounts to analyze.
   final AgingReportType reportType;
@@ -34,9 +33,10 @@ class AgingReportScreen extends ConsumerStatefulWidget {
 class _AgingReportScreenState extends ConsumerState<AgingReportScreen> {
   DateTime _asOfDate = DateTime.now();
 
-  String get _title => widget.reportType == AgingReportType.receivables
-      ? 'أعمار ذمم العملاء'
-      : 'أعمار ذمم الموردين';
+  String _getTitle(BuildContext context) =>
+      widget.reportType == AgingReportType.receivables
+          ? context.l10n.receivablesAgingTitle
+          : context.l10n.payablesAgingTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +51,13 @@ class _AgingReportScreenState extends ConsumerState<AgingReportScreen> {
 
     return Scaffold(
       appBar: AppAppBar(
-        title: _title,
+        title: _getTitle(context),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: () {
-              // TODO(m): Export aging report
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('سيتم تفعيل التصدير قريباً')),
+                SnackBar(content: Text(context.l10n.msgExportComingSoon)),
               );
             },
           ),
@@ -100,7 +99,7 @@ class _AgingReportScreenState extends ConsumerState<AgingReportScreen> {
     List<AgingReportLineDto> lines,
   ) {
     if (lines.isEmpty) {
-      return const Center(child: Text('لا توجد بيانات لهذه الفترة'));
+      return Center(child: Text(context.l10n.noDataMessage));
     }
 
     return SingleChildScrollView(
@@ -112,14 +111,26 @@ class _AgingReportScreenState extends ConsumerState<AgingReportScreen> {
             padding: EdgeInsets.zero,
             child: DataTable(
               headingRowColor: WidgetStateProperty.all(Colors.grey.shade100),
-              columns: const [
-                DataColumn(label: Text('الطرف')),
-                DataColumn(label: Text('الحالي'), numeric: true),
-                DataColumn(label: Text('1-30'), numeric: true),
-                DataColumn(label: Text('31-60'), numeric: true),
-                DataColumn(label: Text('61-90'), numeric: true),
-                DataColumn(label: Text('> 90'), numeric: true),
-                DataColumn(label: Text('الإجمالي'), numeric: true),
+              columns: [
+                DataColumn(label: Text(context.l10n.labelPartner)),
+                DataColumn(
+                  label: Text(context.l10n.periodCurrent),
+                  numeric: true,
+                ),
+                DataColumn(label: Text(context.l10n.period1_30), numeric: true),
+                DataColumn(
+                  label: Text(context.l10n.period31_60),
+                  numeric: true,
+                ),
+                DataColumn(
+                  label: Text(context.l10n.period61_90),
+                  numeric: true,
+                ),
+                DataColumn(
+                  label: Text(context.l10n.periodOver90),
+                  numeric: true,
+                ),
+                DataColumn(label: Text(context.l10n.labelTotal), numeric: true),
               ],
               rows: lines
                   .map(
@@ -154,13 +165,12 @@ class _AgingReportScreenState extends ConsumerState<AgingReportScreen> {
 
 // Internal provider for aging data
 final _agingReportProvider = FutureProvider.autoDispose.family<
-    List<AgingReportLineDto>, ({AgingReportType type, String asOfDate})>(
-  (ref, params) {
-    final service = ref.watch(nativeReportingServiceProvider);
-    if (params.type == AgingReportType.receivables) {
-      return service.getReceivablesAging(asOfDate: params.asOfDate);
-    } else {
-      return service.getPayablesAging(asOfDate: params.asOfDate);
-    }
-  },
-);
+    List<AgingReportLineDto>,
+    ({AgingReportType type, String asOfDate})>((ref, params) {
+  final service = ref.watch(nativeReportingServiceProvider);
+  if (params.type == AgingReportType.receivables) {
+    return service.getReceivablesAging(asOfDate: params.asOfDate);
+  } else {
+    return service.getPayablesAging(asOfDate: params.asOfDate);
+  }
+});

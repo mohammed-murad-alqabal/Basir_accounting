@@ -30,7 +30,7 @@ enum ReportFormat {
   csv,
 
   /// Plain text format for simple output
-  text
+  text,
 }
 
 /// Report types
@@ -48,7 +48,7 @@ enum ReportType {
   technical,
 
   /// Historical report with trends
-  historical
+  historical,
 }
 
 /// Main test reporting system
@@ -144,9 +144,7 @@ class TestReporter {
     buffer.writeln();
     final timestamp =
         data['timestamp']?.toString() ?? DateTime.now().toIso8601String();
-    buffer.writeln(
-      '**التاريخ:** ${DateTime.parse(timestamp).toLocal()}',
-    );
+    buffer.writeln('**التاريخ:** ${DateTime.parse(timestamp).toLocal()}');
     buffer.writeln('**المشروع:** بصير MVP');
     buffer.writeln('**المؤلف:** فريق وكلاء تطوير مشروع بصير');
     buffer.writeln();
@@ -157,8 +155,9 @@ class TestReporter {
     buffer.writeln('| المؤشر | القيمة | الحالة |');
     buffer.writeln('|---------|--------|---------|');
     buffer.writeln('| إجمالي الاختبارات | ${metrics['totalTests'] ?? 0} | - |');
-    buffer
-        .writeln('| الاختبارات الناجحة | ${metrics['passedTests'] ?? 0} | ✅ |');
+    buffer.writeln(
+      '| الاختبارات الناجحة | ${metrics['passedTests'] ?? 0} | ✅ |',
+    );
     final failedTests = metrics['failedTests'] as int? ?? 0;
     buffer.writeln(
       '| الاختبارات الفاشلة | $failedTests | '
@@ -428,9 +427,7 @@ class TestReporter {
     buffer.writeln('=' * 60);
     final timestamp =
         data['timestamp'] as String? ?? DateTime.now().toIso8601String();
-    buffer.writeln(
-      'التاريخ: ${DateTime.parse(timestamp).toLocal()}',
-    );
+    buffer.writeln('التاريخ: ${DateTime.parse(timestamp).toLocal()}');
     buffer.writeln('المشروع: بصير MVP');
     buffer.writeln();
 
@@ -440,9 +437,7 @@ class TestReporter {
     buffer.writeln('الناجحة: ${metrics['passedTests'] ?? 0}');
     buffer.writeln('الفاشلة: ${metrics['failedTests'] ?? 0}');
     final successRate = metrics['successRate'] as double? ?? 0.0;
-    buffer.writeln(
-      'معدل النجاح: ${successRate.toStringAsFixed(1)}%',
-    );
+    buffer.writeln('معدل النجاح: ${successRate.toStringAsFixed(1)}%');
     buffer.writeln();
 
     if (failures.isNotEmpty) {

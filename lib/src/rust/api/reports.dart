@@ -29,9 +29,11 @@ Future<FinancialReportDto> generateIncomeStatement(
         fromDate: fromDate, toDate: toDate);
 
 /// Generate a Balance Sheet (Task 16.2 extension)
-Future<FinancialReportDto> generateBalanceSheet({required String asOfDate}) =>
-    RustLib.instance.api
-        .crateApiReportsGenerateBalanceSheet(asOfDate: asOfDate);
+Future<FinancialReportDto> generateBalanceSheet(
+        {required String asOfDate,
+        Map<String, String>? fairValuationUpdates}) =>
+    RustLib.instance.api.crateApiReportsGenerateBalanceSheet(
+        asOfDate: asOfDate, fairValuationUpdates: fairValuationUpdates);
 
 /// Generate a Statement of Cash Flows (Task 14.2)
 Future<FinancialReportDto> generateCashFlowStatement(

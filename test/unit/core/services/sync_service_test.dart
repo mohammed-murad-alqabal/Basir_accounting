@@ -1,6 +1,6 @@
-import 'package:basir_app/core/services/sync_service.dart';
-import 'package:basir_app/features/settings/domain/repositories/business_settings_repository.dart';
-import 'package:basir_app/features/settings/domain/repositories/profile_repository.dart';
+import 'package:basir_accounting_system/core/services/sync_service.dart';
+import 'package:basir_accounting_system/features/settings/domain/repositories/business_settings_repository.dart';
+import 'package:basir_accounting_system/features/settings/domain/repositories/profile_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
 import 'package:mockito/annotations.dart';

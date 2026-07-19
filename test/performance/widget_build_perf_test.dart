@@ -1,8 +1,8 @@
-import 'package:basir_app/core/providers/supabase_auth_provider.dart';
-import 'package:basir_app/core/theme/app_theme.dart';
-import 'package:basir_app/features/auth/presentation/screens/login_screen.dart';
-import 'package:basir_app/features/settings/presentation/screens/settings_screen.dart';
-import 'package:basir_app/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/core/providers/supabase_auth_provider.dart';
+import 'package:basir_accounting_system/core/theme/app_theme.dart';
+import 'package:basir_accounting_system/features/auth/presentation/screens/login_screen.dart';
+import 'package:basir_accounting_system/features/settings/presentation/screens/settings_screen.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,9 +21,7 @@ void main() {
         for (var i = 0; i < iterations; i++) {
           await tester.pumpWidget(
             ProviderScope(
-              overrides: [
-                currentUserProvider.overrideWith((ref) => null),
-              ],
+              overrides: [currentUserProvider.overrideWith((ref) => null)],
               child: MaterialApp(
                 theme: AppTheme.lightTheme,
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -60,9 +58,7 @@ void main() {
       // Pump the widget
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [
-            currentUserProvider.overrideWith((ref) => null),
-          ],
+          overrides: [currentUserProvider.overrideWith((ref) => null)],
           child: MaterialApp(
             theme: AppTheme.lightTheme,
             localizationsDelegates: AppLocalizations.localizationsDelegates,

@@ -1,40 +1,40 @@
-# معايير التوثيق
+# Documentation Standards
 
-**المشروع:** بصير MVP  
-**الحالة:** ✅ نشط
+**Project:** Basir MVP  
+**Status:** ✅ Active
 
 ---
 
-## الهوية الموحدة
+## Unified Identity
 
-**استخدم دائماً:**
+**Always use:**
 
 ```
-فريق وكلاء تطوير مشروع بصير
+Basir Project Agentic Development Team
 ```
 
-**راجع:** `.kiro/steering/core/team-identity.md`
+**Refer to:** `.kiro/steering/core/team-identity.md`
 
 ---
 
 ## DartDoc
 
-### الإلزامي
+### Mandatory Requirements
 
-- توثيق جميع public APIs
-- شرح المعاملات والقيم المرجعة
-- إضافة أمثلة
+- Document all public APIs (classes, methods, variables).
+- Explain parameters and return values using brackets `[parameter]`.
+- Include practical usage examples.
 
-### الصيغة
+### Format Example
 
 ````dart
-/// يضيف عميل جديد إلى قاعدة البيانات.
+/// Adds a new customer to the database.
 ///
-/// [customer] العميل المراد إضافته.
+/// [customer] The customer entity to be added.
 ///
-/// Throws [ValidationException] إذا كانت البيانات غير صحيحة.
+/// Throws [ValidationException] if the customer data violates business rules.
 ///
-/// مثال:
+/// Example:
 /// ```dart
 /// await repository.addCustomer(customer);
 /// ```
@@ -43,53 +43,55 @@ Future<void> addCustomer(Customer customer);
 
 ---
 
-## التعليقات
+## Comments
 
 ### TODO Comments
 
+Standardized format for tracking pending work:
+
 ```dart
-// TODO(developer): إضافة validation لرقم الهاتف
+// TODO(developer): Add phone number validation logic.
 ```
 
-### التعليقات الداخلية
+### Internal Implementation Comments
 
-- استخدام `//` للتعليقات القصيرة
-- استخدام `/* */` للتعليقات الطويلة
-- شرح "لماذا" وليس "ماذا"
+- Use `//` for short, single-line comments.
+- Use `/* */` for multi-line block comments.
+- Focus on explaining the **"Why"** (intent/rationale) rather than the "What" (the code itself).
 
 ---
 
-## بنية الوثائق
+## Documentation Structure
 
-### القالب الأساسي
+### Standard Markdown Template
 
 ```markdown
-# [العنوان]
+# [Title]
 
-**المشروع:** بصير MVP  
-**التاريخ:** [التاريخ]  
-**المؤلف:** فريق وكلاء تطوير مشروع بصير  
-**الحالة:** [الحالة]
+**Project:** Basir MVP  
+**Date:** [Date]  
+**Author:** Basir Project Agentic Development Team  
+**Status:** [Status]
 
-## المحتوى
+## Content
 
 [...]
 
 ---
 
-**تم إعداده بواسطة:** فريق وكلاء تطوير مشروع بصير
+**Prepared by:** Basir Project Agentic Development Team
 ```
 
 ---
 
-## اللغة
+## Language Policy
 
-### القواعد
+### Unified Language
 
-- **العربية**: للنصوص الموجهة للمستخدم
-- **الإنجليزية**: للمصطلحات التقنية
-- **الفصحى**: تجنب العامية
+- **English**: Mandatory for all technical documentation, source code comments, and internal communication.
+- **Arabic**: Exclusively for end-user facing content (localizations via `.arb` files).
+- **Formal Tone**: Avoid slang and maintain high technical standards.
 
 ---
 
-**للتفاصيل:** `.kiro/steering/reference/documentation-examples.md`
+**For more details, refer to:** `.kiro/steering/reference/documentation-examples.md`

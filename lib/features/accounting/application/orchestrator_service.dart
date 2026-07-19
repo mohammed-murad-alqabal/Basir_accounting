@@ -1,70 +1,56 @@
-import 'package:basir_app/features/accounting/application/financial_strategy_service.dart';
-import 'package:basir_app/features/accounting/application/forensic_audit_service.dart';
-import 'package:basir_app/features/accounting/application/operational_intel_service.dart';
-import 'package:basir_app/features/accounting/application/standards_engine_service.dart';
-import 'package:basir_app/features/accounting/application/sustainability_expert_service.dart';
-import 'package:basir_app/features/accounting/application/tax_engine_service.dart';
-import 'package:basir_app/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/application/financial_strategy_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/forensic_audit_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/operational_intel_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/standards_engine_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/sustainability_expert_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/tax_engine_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'orchestrator_service.g.dart';
 
-/// خدمة التنسيق (Orchestrator Service)
-/// تدير تدفق العمل المعتمد على "سداسية بصير الإدراكية" (The Cognitive Hexagon).
+/// Central Orchestrator Service managing the multi-agent consensus workflow.
+///
+/// Implements "The Cognitive Hexagon" architecture, where six specialized
+/// AI agents must reach a consensus on the validity and impact of
+/// every financial transaction.
 @Riverpod(keepAlive: true)
 class OrchestratorService extends _$OrchestratorService {
   @override
   FutureOr<void> build() {}
 
-  /// نقطة الدخول الرئيسية لتدفق التنسيق المتعدد الوكلاء.
-  /// يتم استدعاء الوكلاء الستة للوصول إلى إجماع إدراكي حول كل عملية مالية.
+  /// Primary entry point for the Multi-Agent Orchestration Flow.
+  ///
+  /// Sequentially invokes all six cognitive agents to build a final report.
+  ///
+  /// ## Returns
+  /// An [AgentConsensus] representing the collective decision of all agents.
   Future<AgentConsensus> orchestrate(AccountingContext context) async {
-    final results = <AgentResult>[];
+    // Stage: Concurrent Multi-Agent Consensus
+    final agentFutures = [
+      ref.read(standardsEngineServiceProvider.notifier).process(context),
+      ref.read(taxEngineServiceProvider.notifier).process(context),
+      ref.read(forensicAuditServiceProvider.notifier).process(context),
+      ref.read(operationalIntelServiceProvider.notifier).process(context),
+      ref.read(financialStrategyServiceProvider.notifier).process(context),
+      ref.read(sustainabilityExpertServiceProvider.notifier).process(context),
+    ];
 
-    // 1. استدعاء محرك المعايير (Standards - IFRS/ISSB)
-    results.add(
-      await ref.read(standardsEngineServiceProvider.notifier).process(context),
-    );
+    final results = await Future.wait<AgentResult>(agentFutures);
 
-    // 2. استدعاء محرك الضرائب (Tax - ZATCA/FTA)
-    results.add(
-      await ref.read(taxEngineServiceProvider.notifier).process(context),
-    );
-
-    // 3. استدعاء وكيل التدقيق الجنائي (Forensic Audit)
-    results.add(
-      await ref.read(forensicAuditServiceProvider.notifier).process(context),
-    );
-
-    // 4. استدعاء وكيل الذكاء التشغيلي (Operational Intel)
-    results.add(
-      await ref.read(operationalIntelServiceProvider.notifier).process(context),
-    );
-
-    // 5. استدعاء وكيل الاستراتيجية المالية (Financial Strategy)
-    results.add(
-      await ref
-          .read(financialStrategyServiceProvider.notifier)
-          .process(context),
-    );
-
-    // 6. استدعاء وكيل خبير الاستدامة (Sustainability Expert)
-    results.add(
-      await ref
-          .read(sustainabilityExpertServiceProvider.notifier)
-          .process(context),
-    );
-
-    // تجميع النتائج: هل العملية مسموح بها من الجميع؟
+    // Aggregation Logic: All agents must allow for overall approval
     final overallAllowed = results.every((r) => r.isAllowed);
 
     final aggregateRationale = StringBuffer();
-    aggregateRationale
-        .writeln('--- Basir Cognitive Hexagon: Final Consensus Report ---');
-    aggregateRationale
-        .writeln('Decision: ${overallAllowed ? "APPROVED ✅" : "REJECTED ❌"}');
+    aggregateRationale.writeln(
+      '--- Basir Cognitive Hexagon: Final Consensus Report ---',
+    );
+    aggregateRationale.writeln(
+      'Decision: ${overallAllowed ? "APPROVED ✅" : "REJECTED ❌"}',
+    );
 
-    // حساب متوسط درجة الثقة بشكل صحيح
+    // Compute aggregate confidence score
     final totalConfidence = results.fold<double>(
       0,
       (sum, res) => sum + res.confidenceScore,
@@ -85,34 +71,101 @@ class OrchestratorService extends _$OrchestratorService {
       aggregateRationale.writeln('---');
     }
 
+    final aggregatedAdjustments = <String, dynamic>{};
+    for (final res in results) {
+      if (res.suggestedAdjustments != null) {
+        aggregatedAdjustments.addAll(res.suggestedAdjustments!);
+      }
+    }
+
     return AgentConsensus(
       isApproved: overallAllowed,
       explanation: aggregateRationale.toString(),
       agentResults: results,
+      suggestedAdjustments:
+          aggregatedAdjustments.isNotEmpty ? aggregatedAdjustments : null,
       orchestrationTimestamp: DateTime.now(),
     );
   }
+
+  /// Generates a period-level analysis ("Cognitive Insights")
+  /// for financial reports.
+  Future<List<AgentResult>> getPeriodInsights(
+    DateTime from,
+    DateTime to,
+  ) async {
+    final repository = ref.read(accountingRepositoryProvider);
+    final entries = await repository.getJournalEntries();
+
+    // Filter by period
+    final periodEntries = entries
+        .where(
+          (e) =>
+              e.date.isAfter(from.subtract(const Duration(days: 1))) &&
+              e.date.isBefore(to.add(const Duration(days: 1))),
+        )
+        .toList();
+
+    if (periodEntries.isEmpty) {
+      return [
+        const AgentResult(
+          agentId: 'Standards Engine',
+          isAllowed: true,
+          rationale: 'No transactions recorded in this period.',
+          confidenceScore: 1,
+        ),
+        const AgentResult(
+          agentId: 'Forensic Audit',
+          isAllowed: true,
+          rationale: 'Quiescent ledger.',
+          confidenceScore: 1,
+        ),
+      ];
+    }
+
+    final context = AccountingContext(
+      proposedJournalEntry: periodEntries.first,
+      transactionType: 'period_audit',
+      locale: 'en',
+    );
+
+    final agentFutures = [
+      ref.read(standardsEngineServiceProvider.notifier).process(context),
+      ref.read(taxEngineServiceProvider.notifier).process(context),
+      ref.read(forensicAuditServiceProvider.notifier).process(context),
+      ref.read(operationalIntelServiceProvider.notifier).process(context),
+      ref.read(financialStrategyServiceProvider.notifier).process(context),
+      ref.read(sustainabilityExpertServiceProvider.notifier).process(context),
+    ];
+
+    return Future.wait<AgentResult>(agentFutures);
+  }
 }
 
-/// يمثل إجماع الوكلاء على عملية معينة.
+/// Represents the final consensus reached by the multi-agent system.
 class AgentConsensus {
-  /// إنشاء إجماع الوكلاء.
+  /// Creates a finalized consensus report.
   AgentConsensus({
     required this.isApproved,
     required this.explanation,
     required this.agentResults,
     required this.orchestrationTimestamp,
+    this.suggestedAdjustments,
   });
 
-  /// هل تمت الموافقة من جميع الوكلاء؟
+  /// Indicates if the transaction was approved by all participating agents.
   final bool isApproved;
 
-  /// التفسير المجمع للقرار.
+  /// Aggregated rationale and explanation from all agents.
   final String explanation;
 
-  /// قائمة بنتائج كل وكيل على حدة.
+  /// Collection of individual agent results for granular auditing.
   final List<AgentResult> agentResults;
 
-  /// طابع زمني لعملية التنسيق.
+  /// Aggregated AI-driven modifications to improve entry accuracy or
+  /// compliance.
+  final Map<String, dynamic>? suggestedAdjustments;
+
+  /// Precise moment the orchestration was finalized.
   final DateTime orchestrationTimestamp;
 }

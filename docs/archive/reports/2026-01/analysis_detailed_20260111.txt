@@ -1,0 +1,57 @@
+Analyzing basir_accounting_system...                            
+
+   info • The line length exceeds the 80-character limit • lib/core/providers/calendar_provider.dart:67:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/providers/theme_provider.dart:58:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/providers/theme_provider.dart:93:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/chart_of_accounts_screen.dart:49:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/chart_of_accounts_screen.dart:334:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/chart_of_accounts_screen.dart:353:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/assets/presentation/providers/asset_provider.dart:45:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/assets/presentation/providers/asset_provider.dart:111:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/presentation/providers/inventory_provider.dart:12:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/presentation/providers/inventory_provider.dart:21:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/presentation/providers/inventory_provider.dart:89:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/presentation/providers/warehouse_provider.dart:14:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/presentation/providers/warehouse_provider.dart:45:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/providers/invoice_provider.dart:27:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/providers/invoice_provider.dart:51:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/providers/invoice_provider.dart:221:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/providers/invoice_provider.dart:222:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:78:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:80:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:91:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:103:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:156:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:482:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:549:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:582:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:608:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:629:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:717:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:794:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:812:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:828:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoice_form_screen.dart:838:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:37:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:61:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:108:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:256:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:269:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:288:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:393:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:421:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:437:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/providers/settings_controller.dart:108:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/providers/settings_controller.dart:159:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:28:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:71:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:106:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:149:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:161:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:193:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:234:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:235:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:236:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/presentation/screens/appearance_settings_screen.dart:237:81 • lines_longer_than_80_chars
+
+53 issues found. (ran in 7.7s)

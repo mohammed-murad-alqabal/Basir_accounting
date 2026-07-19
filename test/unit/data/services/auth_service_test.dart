@@ -3,7 +3,7 @@
 /// يختبر جميع عمليات المصادقة والأمان
 library;
 
-import 'package:basir_app/features/auth/application/auth_service.dart';
+import 'package:basir_accounting_system/features/auth/application/auth_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../mocks/mock_secure_storage.dart';
@@ -354,17 +354,19 @@ void main() {
       expect(result, false);
     });
 
-    test('should handle storage errors gracefully for keep logged in',
-        () async {
-      // Arrange
-      mockStorage.shouldThrowOnRead = true;
+    test(
+      'should handle storage errors gracefully for keep logged in',
+      () async {
+        // Arrange
+        mockStorage.shouldThrowOnRead = true;
 
-      // Act
-      final result = await authService.shouldKeepLoggedIn();
+        // Act
+        final result = await authService.shouldKeepLoggedIn();
 
-      // Assert
-      expect(result, false);
-    });
+        // Assert
+        expect(result, false);
+      },
+    );
   });
 
   group('AuthService - Guest Mode', () {

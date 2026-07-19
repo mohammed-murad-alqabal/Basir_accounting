@@ -1,5 +1,7 @@
-import 'package:basir_app/core/utils/format_helpers.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+// ignore_for_file: lines_longer_than_80_chars
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/utils/format_helpers.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 
 /// ودجيت لتصفية التقارير المالية حسب التاريخ أو الفترة.
@@ -31,10 +33,10 @@ class ReportFilterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(Basir): Localization
-    const labelFrom = 'من تاريخ';
-    const labelTo = 'إلى تاريخ';
-    const labelAsOf = 'كما في تاريخ';
+    final l10n = context.l10n;
+    final labelFrom = l10n.labelFromDate;
+    final labelTo = l10n.labelToDate;
+    final labelAsOf = l10n.labelAsOfDate;
 
     return AppCard(
       padding: const EdgeInsets.all(16),
@@ -62,7 +64,7 @@ class ReportFilterWidget extends StatelessWidget {
           IconButton(
             onPressed: () {}, // Handled by parents usually via state updates
             icon: const Icon(Icons.filter_list),
-            tooltip: 'تحديث التقرير', // Update Report
+            tooltip: l10n.tooltipUpdateReport,
           ),
         ],
       ),

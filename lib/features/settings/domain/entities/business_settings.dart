@@ -1,4 +1,4 @@
-import 'package:basir_app/core/models/sync_status.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'business_settings.freezed.dart';

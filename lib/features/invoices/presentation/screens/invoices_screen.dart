@@ -1,18 +1,19 @@
 import 'dart:async';
 
-import 'package:basir_app/core/assets/app_illustrations.dart';
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/extensions/invoice_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/services/color_customization_service.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/core/utils/format_helpers.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
-import 'package:basir_app/features/invoices/presentation/screens/invoice_form_screen.dart';
-import 'package:basir_app/features/reports/application/pdf_invoice_service.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/assets/app_illustrations.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/extensions/invoice_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/services/color_customization_service.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/utils/format_helpers.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
+import 'package:basir_accounting_system/features/onboarding/presentation/widgets/cognitive_overlay.dart';
+import 'package:basir_accounting_system/features/reports/application/pdf_invoice_service.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/pdf.dart';
@@ -35,23 +36,40 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     final statsAsync = ref.watch(invoiceStatisticsProvider);
     final appIcons = ref.watch(appIconsProvider);
     final calendarType =
-        ref.watch(calendarProvider).valueOrNull ?? CalendarType.gregorian;
+        ref.watch(calendarProvider).value ?? CalendarType.gregorian;
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.invoicesTitle,
-        actions: [
-          IconButton(
-            icon: Icon(appIcons.add),
-            onPressed: _createNewInvoice,
-            tooltip: context.l10n.tooltipAddInvoice,
-          ),
-          IconButton(
-            icon: Icon(appIcons.pdf),
-            onPressed: _exportInvoice,
-            tooltip: context.l10n.tooltipExportAll,
-          ),
-        ],
+    // Trigger Cognitive Hint on first load
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (invoicesAsync.hasValue &&
+          invoicesAsync.value!.isEmpty &&
+          _selectedFilter == 'all') {
+        showCognitiveHint(
+          context,
+          'هنا يمكنك متابعة جميع فواتيرك. ابدأ بإنشاء فاتورة جديدة '
+          'بالضغط على زر الإضافة (+).',
+          title: 'إدارة الفواتير',
+        );
+      }
+    });
+
+    return GlassScaffold(
+      title: context.l10n.invoicesTitle,
+      actions: [
+        IconButton(
+          icon: Icon(appIcons.add),
+          onPressed: _createNewInvoice,
+          tooltip: context.l10n.tooltipAddInvoice,
+        ),
+        IconButton(
+          icon: Icon(appIcons.pdf),
+          onPressed: _exportInvoice,
+          tooltip: context.l10n.tooltipExportAll,
+        ),
+      ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: _createNewInvoice,
+        backgroundColor: AppColors.primary,
+        child: Icon(appIcons.add, color: Colors.white),
       ),
       body: Column(
         children: [
@@ -59,11 +77,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           _buildFilterBar(),
           Expanded(
             child: invoicesAsync.when(
-              data: (invoices) => _buildInvoicesList(
-                invoices,
-                appIcons,
-                calendarType,
-              ),
+              data: (invoices) =>
+                  _buildInvoicesList(invoices, appIcons, calendarType),
               loading: () => ListView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
                 itemCount: 5,
@@ -102,17 +117,10 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _createNewInvoice,
-        backgroundColor: AppColors.primary,
-        child: Icon(appIcons.add, color: Colors.white),
-      ),
     );
   }
 
-  Widget _buildStatsHeader(
-    AsyncValue<InvoiceStatistics> statsAsync,
-  ) =>
+  Widget _buildStatsHeader(AsyncValue<InvoiceStatistics> statsAsync) =>
       Container(
         padding: const EdgeInsets.all(Spacing.lg),
         decoration: BoxDecoration(
@@ -296,11 +304,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                 ),
               );
             },
-            onLongPress: () => _showInvoiceActions(
-              invoice,
-              appIcons,
-              calendarType,
-            ),
+            onLongPress: () =>
+                _showInvoiceActions(invoice, appIcons, calendarType),
           ),
         );
       },
@@ -474,6 +479,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           FormatHelpers.formatNumber(
             invoice.totalAmount,
             locale: context.l10n.localeName,
+            // Removed undefined named parameter 'currencySymbol'
           ),
           currencyCode,
         );

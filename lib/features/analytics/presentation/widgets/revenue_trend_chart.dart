@@ -1,4 +1,5 @@
-import 'package:basir_app/features/accounting/application/financial_reporting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/financial_reporting_service.dart';
+import 'package:decimal/decimal.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +15,7 @@ class RevenueTrendChart extends ConsumerStatefulWidget {
 }
 
 class _RevenueTrendChartState extends ConsumerState<RevenueTrendChart> {
-  late Future<Map<DateTime, double>> _trendFuture;
+  late Future<Map<DateTime, Decimal>> _trendFuture;
 
   @override
   void initState() {
@@ -28,7 +29,7 @@ class _RevenueTrendChartState extends ConsumerState<RevenueTrendChart> {
   }
 
   @override
-  Widget build(BuildContext context) => FutureBuilder<Map<DateTime, double>>(
+  Widget build(BuildContext context) => FutureBuilder<Map<DateTime, Decimal>>(
         future: _trendFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -39,7 +40,7 @@ class _RevenueTrendChartState extends ConsumerState<RevenueTrendChart> {
           }
 
           final data = snapshot.data ?? {};
-          if (data.values.every((v) => v == 0)) {
+          if (data.values.every((v) => v == Decimal.zero)) {
             // Show empty state or flat line
             // allowing flat line for now
           }
@@ -50,7 +51,7 @@ class _RevenueTrendChartState extends ConsumerState<RevenueTrendChart> {
 
           for (var i = 0; i < sortedKeys.length; i++) {
             final date = sortedKeys[i];
-            final value = data[date]!;
+            final value = data[date]!.toDouble();
             spots.add(FlSpot(i.toDouble(), value));
             if (value > maxY) maxY = value;
           }
@@ -73,14 +74,10 @@ class _RevenueTrendChartState extends ConsumerState<RevenueTrendChart> {
                   gridData: FlGridData(
                     horizontalInterval: maxY / 5,
                     verticalInterval: 1,
-                    getDrawingHorizontalLine: (value) => const FlLine(
-                      color: Colors.grey,
-                      strokeWidth: 1,
-                    ),
-                    getDrawingVerticalLine: (value) => const FlLine(
-                      color: Colors.grey,
-                      strokeWidth: 1,
-                    ),
+                    getDrawingHorizontalLine: (value) =>
+                        const FlLine(color: Colors.grey, strokeWidth: 1),
+                    getDrawingVerticalLine: (value) =>
+                        const FlLine(color: Colors.grey, strokeWidth: 1),
                   ),
                   titlesData: FlTitlesData(
                     rightTitles: const AxisTitles(),
@@ -123,9 +120,7 @@ class _RevenueTrendChartState extends ConsumerState<RevenueTrendChart> {
                   ),
                   borderData: FlBorderData(
                     show: true,
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                    ),
+                    border: Border.all(color: Theme.of(context).dividerColor),
                   ),
                   minX: 0,
                   maxX: sortedKeys.length.toDouble() - 1,
@@ -140,9 +135,7 @@ class _RevenueTrendChartState extends ConsumerState<RevenueTrendChart> {
                       ),
                       barWidth: 5,
                       isStrokeCapRound: true,
-                      dotData: const FlDotData(
-                        show: false,
-                      ),
+                      dotData: const FlDotData(show: false),
                       belowBarData: BarAreaData(
                         show: true,
                         gradient: LinearGradient(

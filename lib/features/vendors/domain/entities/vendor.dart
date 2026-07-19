@@ -1,4 +1,4 @@
-import 'package:basir_app/core/models/sync_status.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'vendor.freezed.dart';
@@ -38,6 +38,12 @@ class Vendor with _$Vendor {
 
     /// معرف حساب المورد في دليل الحسابات (AP Account)
     String? payableAccountId,
+
+    /// رقم التسجيل الضريبي (VAT Number)
+    String? vatNumber,
+
+    /// رقم السجل التجاري (Commercial Registration Number)
+    String? registrationNumber,
 
     /// الرصيد الحالي للمورد
     @Default(0.0) double balance,

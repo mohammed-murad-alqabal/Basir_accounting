@@ -3,7 +3,7 @@
 /// يختبر جميع عمليات إدارة العملاء في طبقة Presentation
 library;
 
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -344,8 +344,10 @@ void main() {
 
     test('should return empty list when no matches found', () async {
       // Arrange
-      final customer =
-          MockData.createTestCustomer(nameEn: 'أحمد', nameAr: 'أحمد');
+      final customer = MockData.createTestCustomer(
+        nameEn: 'أحمد',
+        nameAr: 'أحمد',
+      );
       await mockRepository.addCustomer(customer);
 
       // Act

@@ -27,6 +27,15 @@ pub struct Invoice {
     #[serde(rename = "cbc:TaxCurrencyCode")]
     pub tax_currency_code: String,
 
+    #[serde(
+        rename = "cac:AdditionalDocumentReference",
+        skip_serializing_if = "Vec::is_empty"
+    )]
+    pub additional_document_references: Vec<AdditionalDocumentReference>,
+
+    #[serde(rename = "cac:Signature", skip_serializing_if = "Vec::is_empty")]
+    pub signatures: Vec<Signature>,
+
     #[serde(rename = "cac:AccountingSupplierParty")]
     pub accounting_supplier_party: AccountingSupplierParty,
     #[serde(rename = "cac:AccountingCustomerParty")]
@@ -40,6 +49,87 @@ pub struct Invoice {
 
     #[serde(rename = "cac:InvoiceLine")]
     pub invoice_lines: Vec<InvoiceLine>,
+    #[serde(rename = "ext:UBLExtensions", skip_serializing_if = "Option::is_none")]
+    pub ubl_extensions: Option<UBLExtensions>,
+}
+
+#[derive(Debug, Serialize, Default)]
+#[serde(rename_all = "PascalCase")]
+pub struct UBLExtensions {
+    #[serde(rename = "ext:UBLExtension")]
+    pub extentions: Vec<UBLExtension>,
+}
+
+#[derive(Debug, Serialize, Default)]
+#[serde(rename_all = "PascalCase")]
+pub struct UBLExtension {
+    #[serde(rename = "ext:ExtensionURI", skip_serializing_if = "Option::is_none")]
+    pub extension_uri: Option<String>,
+    #[serde(rename = "ext:ExtensionContent")]
+    pub extension_content: ExtensionContent,
+}
+
+#[derive(Debug, Serialize, Default)]
+#[serde(rename_all = "PascalCase")]
+pub struct ExtensionContent {
+    #[serde(rename = "sig:UBLDocumentSignatures")]
+    pub ubl_document_signatures: UBLDocumentSignatures,
+}
+
+#[derive(Debug, Serialize, Default)]
+#[serde(rename_all = "PascalCase")]
+pub struct UBLDocumentSignatures {
+    #[serde(rename = "sac:SignatureInformation")]
+    pub signature_information: SignatureInformation,
+}
+
+#[derive(Debug, Serialize, Default)]
+#[serde(rename_all = "PascalCase")]
+pub struct SignatureInformation {
+    #[serde(rename = "cbc:ID")]
+    pub id: String,
+    #[serde(rename = "ds:Signature")]
+    pub signature: Signature,
+}
+
+#[derive(Debug, Serialize, Default)]
+#[serde(rename_all = "PascalCase")]
+pub struct AdditionalDocumentReference {
+    #[serde(rename = "cbc:ID")]
+    pub id: String,
+    #[serde(rename = "cbc:UUID", skip_serializing_if = "Option::is_none")]
+    pub uuid: Option<String>,
+    #[serde(
+        rename = "cbc:DocumentTypeCode",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub document_type_code: Option<String>,
+    #[serde(rename = "cac:Attachment", skip_serializing_if = "Option::is_none")]
+    pub attachment: Option<Attachment>,
+}
+
+#[derive(Debug, Serialize, Default)]
+#[serde(rename_all = "PascalCase")]
+pub struct Attachment {
+    #[serde(rename = "cbc:EmbeddedDocumentBinaryObject")]
+    pub embedded_document_binary_object: EmbeddedDocumentBinaryObject,
+}
+
+#[derive(Debug, Serialize, Default)]
+pub struct EmbeddedDocumentBinaryObject {
+    #[serde(rename = "@mimeCode")]
+    pub mime_code: String,
+    #[serde(rename = "$value")]
+    pub value: String,
+}
+
+#[derive(Debug, Serialize, Default)]
+#[serde(rename_all = "PascalCase")]
+pub struct Signature {
+    #[serde(rename = "cbc:ID")]
+    pub id: String,
+    #[serde(rename = "cbc:SignatureMethod")]
+    pub signature_method: String,
 }
 
 #[derive(Debug, Serialize, Default)]
@@ -142,15 +232,53 @@ pub struct TaxSubtotal {
     pub tax_category: TaxCategory,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum TaxCategoryCode {
+    Standard,   // S: 15%
+    ZeroRated,  // Z: 0%
+    Exempt,     // E: Exempt
+    OutOfScope, // O: Not subject to VAT
+}
+
+impl TaxCategoryCode {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            TaxCategoryCode::Standard => "S",
+            TaxCategoryCode::ZeroRated => "Z",
+            TaxCategoryCode::Exempt => "E",
+            TaxCategoryCode::OutOfScope => "O",
+        }
+    }
+
+    pub fn rate(&self) -> &'static str {
+        match self {
+            TaxCategoryCode::Standard => "15.00",
+            _ => "0.00",
+        }
+    }
+}
+
 #[derive(Debug, Serialize, Default)]
 #[serde(rename_all = "PascalCase")]
 pub struct TaxCategory {
     #[serde(rename = "cbc:ID")]
     pub id: String,
-    #[serde(rename = "cbc:Percent")]
-    pub percent: String,
+    #[serde(rename = "cbc:Percent", skip_serializing_if = "Option::is_none")]
+    pub percent: Option<String>,
     #[serde(rename = "cac:TaxScheme")]
     pub tax_scheme: TaxScheme,
+}
+
+impl TaxCategory {
+    pub fn new(code: TaxCategoryCode) -> Self {
+        Self {
+            id: code.as_str().to_string(),
+            percent: Some(code.rate().to_string()),
+            tax_scheme: TaxScheme {
+                id: "VAT".to_string(),
+            },
+        }
+    }
 }
 
 #[derive(Debug, Serialize, Default)]
@@ -163,11 +291,18 @@ pub struct LegalMonetaryTotal {
     #[serde(rename = "cbc:TaxInclusiveAmount")]
     pub tax_inclusive_amount: Amount,
     #[serde(
-        rename = "cbc:allowanceTotalAmount",
+        rename = "cbc:AllowanceTotalAmount",
         skip_serializing_if = "Option::is_none"
     )]
     pub allowance_total_amount: Option<Amount>,
-    #[serde(rename = "cbc:payableAmount")]
+    #[serde(
+        rename = "cbc:ChargeTotalAmount",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub charge_total_amount: Option<Amount>,
+    #[serde(rename = "cbc:PrepaidAmount", skip_serializing_if = "Option::is_none")]
+    pub prepaid_amount: Option<Amount>,
+    #[serde(rename = "cbc:PayableAmount")]
     pub payable_amount: Amount,
 }
 

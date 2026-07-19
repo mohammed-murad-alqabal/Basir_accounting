@@ -10,12 +10,12 @@ void main() {
   }
 
   final replacements = {
-    "import 'package:basir_app/core/theme.dart';":
-        "import 'package:basir_app/core/theme/tokens/index.dart';",
-    'import "package:basir_app/core/theme.dart";':
-        'import "package:basir_app/core/theme/tokens/index.dart";',
-    "import 'package:basir_app/core/theme_dark.dart';": '',
-    'import "package:basir_app/core/theme_dark.dart";': '',
+    "import 'package:basir_accounting_system/core/theme.dart';":
+        "import 'package:basir_accounting_system/core/theme/tokens/index.dart';",
+    'import "package:basir_accounting_system/core/theme.dart";':
+        'import "package:basir_accounting_system/core/theme/tokens/index.dart";',
+    "import 'package:basir_accounting_system/core/theme_dark.dart';": '',
+    'import "package:basir_accounting_system/core/theme_dark.dart";': '',
     'AppColors.': 'AppColors.',
     'Spacing.': 'Spacing.',
     'AppBorderRadius.': 'Radii.',
@@ -42,9 +42,7 @@ void main() {
       // full migration
       if (entity.path.contains('core/theme.dart') ||
           entity.path.contains('core/theme_dark.dart') ||
-          entity.path.contains(
-            'core/theme/app_colors.dart',
-          )) {
+          entity.path.contains('core/theme/app_colors.dart')) {
         return;
       }
 

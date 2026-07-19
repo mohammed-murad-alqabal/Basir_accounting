@@ -1,14 +1,14 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/application/accounting_service.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Provider لقائمة جميع الفواتير
 final invoicesProvider = FutureProvider<List<Invoice>>((ref) async {
-  final repository = ref.watch(
-    invoiceRepositoryProvider,
-  );
+  final repository = ref.watch(invoiceRepositoryProvider);
   return repository.getAllInvoices();
 });
 
@@ -22,20 +22,32 @@ final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
   );
 
   try {
-    await repository.addInvoice(
-      invoice,
-    );
+    await repository.addInvoice(invoice);
 
     // ترحيل القيد المحاسبي تلقائياً (نظام القيد المزدوج)
+    // ignore: lines_longer_than_80_chars
     if (invoice.status == InvoiceStatus.sent ||
         invoice.status == InvoiceStatus.paid) {
       final accountingService = ref.read(accountingServiceProvider.notifier);
-      await accountingService.postSalesInvoice(invoice);
+      await accountingService.postInvoice(invoice);
     }
-    ref.invalidate(
-      invoicesProvider,
-    );
+
+    // Schedule notification for due date
+    if (invoice.status != InvoiceStatus.paid) {
+      final notificationService = ref.read(notificationServiceProvider);
+      await notificationService.initialize();
+      await notificationService.scheduleNotification(
+        id: invoice.id.hashCode,
+        title: 'Invoice Due: ${invoice.invoiceNumber}',
+        body: 'Invoice for ${invoice.customerName} is due today.',
+        scheduledDate: invoice.dueDate,
+      );
+    }
+
+    ref.invalidate(invoicesProvider);
     return true;
+  } on CognitiveConsensusException {
+    rethrow;
   } on Exception {
     return false;
   }
@@ -51,20 +63,38 @@ final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
   );
 
   try {
-    await repository.updateInvoice(
-      invoice,
-    );
+    await repository.updateInvoice(invoice);
 
     // ترحيل أو تحديث القيد المحاسبي (نظام القيد المزدوج)
+    // ignore: lines_longer_than_80_chars
     if (invoice.status == InvoiceStatus.sent ||
         invoice.status == InvoiceStatus.paid) {
       final accountingService = ref.read(accountingServiceProvider.notifier);
-      await accountingService.postSalesInvoice(invoice);
+      await accountingService.postInvoice(invoice);
     }
-    ref.invalidate(
-      invoicesProvider,
-    );
+
+    // Update notification
+    final notificationService = ref.read(notificationServiceProvider);
+    await notificationService.initialize();
+
+    // Cancel existing notification
+    await notificationService.cancelNotification(invoice.id.hashCode);
+
+    // Schedule new one if applicable
+    if (invoice.status != InvoiceStatus.paid &&
+        invoice.status != InvoiceStatus.cancelled) {
+      await notificationService.scheduleNotification(
+        id: invoice.id.hashCode,
+        title: 'Invoice Due: ${invoice.invoiceNumber}',
+        body: 'Invoice for ${invoice.customerName} is due today.',
+        scheduledDate: invoice.dueDate,
+      );
+    }
+
+    ref.invalidate(invoicesProvider);
     return true;
+  } on CognitiveConsensusException {
+    rethrow;
   } on Exception {
     return false;
   }
@@ -80,39 +110,35 @@ final deleteInvoiceProvider = FutureProvider.family<bool, String>((
   );
 
   try {
-    await repository.deleteInvoice(
-      invoiceId,
-    );
-    ref.invalidate(
-      invoicesProvider,
-    );
+    await repository.deleteInvoice(invoiceId);
+
+    // Cancel notification
+    final notificationService = ref.read(notificationServiceProvider);
+    await notificationService.initialize();
+    await notificationService.cancelNotification(invoiceId.hashCode);
+
+    ref.invalidate(invoicesProvider);
     return true;
+  } on CognitiveConsensusException {
+    rethrow;
   } on Exception {
     return false;
   }
 });
 
 /// State Provider لحالة البحث
-final invoiceSearchProvider = StateProvider<String>(
-  (ref) => '',
-);
+final invoiceSearchProvider = StateProvider<String>((ref) => '');
 
 /// State Provider لحالة الفلتر
-final invoiceFilterProvider = StateProvider<String>(
-  (ref) => 'all',
-);
+final invoiceFilterProvider = StateProvider<String>((ref) => 'all');
 
 /// Provider لقائمة الفواتير المفلترة حسب البحث والحالة
 final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
-  final searchQuery = ref.watch(
-    invoiceSearchProvider.select((value) => value),
-  );
+  final searchQuery = ref.watch(invoiceSearchProvider.select((value) => value));
   final filterStatus = ref.watch(
     invoiceFilterProvider.select((value) => value),
   );
-  final invoicesAsync = ref.watch(
-    invoicesProvider,
-  );
+  final invoicesAsync = ref.watch(invoicesProvider);
 
   return invoicesAsync.whenData((invoices) {
     var filtered = invoices;
@@ -155,28 +181,26 @@ final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
 });
 
 /// Provider لحساب إجمالي المبيعات
-final totalSalesProvider = Provider<AsyncValue<double>>((ref) {
-  final invoicesAsync = ref.watch(
-    invoicesProvider,
-  );
+final totalSalesProvider = Provider<AsyncValue<Decimal>>((ref) {
+  final invoicesAsync = ref.watch(invoicesProvider);
 
   return invoicesAsync.whenData(
-    (invoices) => invoices.fold<double>(
-      0,
-      (sum, invoice) => sum + invoice.totalAmount,
+    (invoices) => invoices.fold<Decimal>(
+      Decimal.zero,
+      (sum, invoice) => sum + invoice.totalAmountBaseCurrency,
     ),
   );
 });
 
 /// Provider لحساب عدد الفواتير المتأخرة
 final overdueInvoicesCountProvider = Provider<AsyncValue<int>>((ref) {
-  final invoicesAsync = ref.watch(
-    invoicesProvider,
-  );
+  final invoicesAsync = ref.watch(invoicesProvider);
 
   return invoicesAsync.whenData(
     (invoices) => invoices
-        .where((invoice) => invoice.status == InvoiceStatus.overdue)
+        .where(
+          (invoice) => invoice.status == InvoiceStatus.overdue,
+        )
         .length,
   );
 });
@@ -204,8 +228,9 @@ final invoicesCountProvider = Provider<AsyncValue<int>>(
 final hasInvoicesProvider = Provider<AsyncValue<bool>>(
   (ref) => ref.watch(
     invoicesProvider.select(
-      (asyncInvoices) =>
-          asyncInvoices.whenData((invoices) => invoices.isNotEmpty),
+      (asyncInvoices) => asyncInvoices.whenData(
+        (invoices) => invoices.isNotEmpty,
+      ),
     ),
   ),
 );
@@ -230,29 +255,37 @@ class InvoiceStatistics {
   final int overdueInvoices;
 
   /// إجمالي المبلغ
-  final double totalAmount;
+  final Decimal totalAmount;
 }
 
 /// Provider لإحصائيات الفواتير
-final invoiceStatisticsProvider =
-    Provider<AsyncValue<InvoiceStatistics>>((ref) {
+final invoiceStatisticsProvider = Provider<AsyncValue<InvoiceStatistics>>((
+  ref,
+) {
   final invoicesAsync = ref.watch(invoicesProvider);
 
   return invoicesAsync.whenData(
     (invoices) => InvoiceStatistics(
       totalInvoices: invoices.length,
-      paidInvoices:
-          invoices.where((i) => i.status == InvoiceStatus.paid).length,
-      overdueInvoices:
-          invoices.where((i) => i.status == InvoiceStatus.overdue).length,
-      totalAmount: invoices.fold(0, (sum, i) => sum + i.totalAmount),
+      paidInvoices: invoices
+          .where((i) => i.status == InvoiceStatus.paid)
+          .length, // ignore: lines_longer_than_80_chars
+      overdueInvoices: invoices
+          .where((i) => i.status == InvoiceStatus.overdue)
+          .length, // ignore: lines_longer_than_80_chars
+      totalAmount: invoices.fold<Decimal>(
+        Decimal.zero,
+        (sum, i) => sum + i.totalAmountBaseCurrency,
+      ),
     ),
   );
 });
 
 /// Provider لمضاعفة فاتورة (Logic from Go backend)
-final duplicateInvoiceProvider =
-    FutureProvider.family<Invoice, String>((ref, invoiceId) async {
+final duplicateInvoiceProvider = FutureProvider.family<Invoice, String>((
+  ref,
+  invoiceId,
+) async {
   final repository = ref.watch(invoiceRepositoryProvider);
   final duplicated = await repository.duplicateInvoice(invoiceId);
   ref.invalidate(invoicesProvider);
@@ -260,8 +293,10 @@ final duplicateInvoiceProvider =
 });
 
 /// Provider لتحديد فاتورة كمدفوعة (Logic from Go backend)
-final markInvoiceAsPaidProvider =
-    FutureProvider.family<bool, String>((ref, invoiceId) async {
+final markInvoiceAsPaidProvider = FutureProvider.family<bool, String>((
+  ref,
+  invoiceId,
+) async {
   final repository = ref.watch(invoiceRepositoryProvider);
 
   try {
@@ -280,18 +315,27 @@ final markInvoiceAsPaidProvider =
 
     // ترحيل القيد المحاسبي تلقائياً عند الدفع (إذا لم يرحل عند الإرسال)
     final accountingService = ref.read(accountingServiceProvider.notifier);
-    await accountingService.postSalesInvoice(updatedInvoice);
+    await accountingService.postInvoice(updatedInvoice);
+
+    // Cancel notification
+    final notificationService = ref.read(notificationServiceProvider);
+    await notificationService.initialize();
+    await notificationService.cancelNotification(invoiceId.hashCode);
 
     ref.invalidate(invoicesProvider);
     return true;
+  } on CognitiveConsensusException {
+    rethrow;
   } on Exception {
     return false;
   }
 });
 
 /// Provider لإرسال الفاتورة (تغيير الحالة)
-final sendInvoiceProvider =
-    FutureProvider.family<bool, String>((ref, invoiceId) async {
+final sendInvoiceProvider = FutureProvider.family<bool, String>((
+  ref,
+  invoiceId,
+) async {
   final repository = ref.watch(invoiceRepositoryProvider);
 
   try {
@@ -307,18 +351,22 @@ final sendInvoiceProvider =
 
     // ترحيل القيد المحاسبي عند الانتقال لحالة 'مرسلة'
     final accountingService = ref.read(accountingServiceProvider.notifier);
-    await accountingService.postSalesInvoice(updatedInvoice);
+    await accountingService.postInvoice(updatedInvoice);
 
     ref.invalidate(invoicesProvider);
     return true;
+  } on CognitiveConsensusException {
+    rethrow;
   } on Exception {
     return false;
   }
 });
 
 /// Provider لإلغاء الفاتورة
-final cancelInvoiceProvider =
-    FutureProvider.family<bool, String>((ref, invoiceId) async {
+final cancelInvoiceProvider = FutureProvider.family<bool, String>((
+  ref,
+  invoiceId,
+) async {
   final repository = ref.watch(invoiceRepositoryProvider);
 
   try {
@@ -331,8 +379,16 @@ final cancelInvoiceProvider =
     );
 
     await repository.updateInvoice(updatedInvoice);
+
+    // Cancel notification
+    final notificationService = ref.read(notificationServiceProvider);
+    await notificationService.initialize();
+    await notificationService.cancelNotification(invoiceId.hashCode);
+
     ref.invalidate(invoicesProvider);
     return true;
+  } on CognitiveConsensusException {
+    rethrow;
   } on Exception {
     return false;
   }

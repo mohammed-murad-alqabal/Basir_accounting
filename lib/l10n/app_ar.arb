@@ -1,448 +1,54 @@
 {
   "@@locale": "ar",
-  "@aboutAppSubtitle": {},
-  "@aboutAppTitle": {},
-  "@aboutDescription": {},
-  "@aboutFeature1": {},
-  "@aboutFeature2": {},
-  "@aboutFeature3": {},
-  "@aboutFeature4": {},
-  "@aboutFeature5": {},
-  "@aboutFeaturesTitle": {},
-  "@accountTitle": {
-    "description": "عنوان قسم الحساب"
-  },
-  "@actionAddVendor": {},
-  "@actionAddInvoice": {},
-  "@actionShare": {},
-  "@actionExportPdf": {},
-  "@actionDeleteCustomer": {},
-  "@actionDeleteVendor": {},
-  "@actionDeleteInvoice": {},
-  "@actionSharePdf": {},
-  "@actionShareWhatsappPdf": {},
-  "@actionShareWhatsappText": {},
-  "@actionUpgradeAccount": {},
-  "@appColor": {},
-  "@appCopyright": {},
-  "@appName": {},
-  "@appTitle": {
-    "description": "اسم التطبيق الرئيسي"
-  },
-  "@appVersion": {},
-  "@appearanceSettingsSubtitle": {},
-  "@appearanceSettingsTitle": {},
-  "@appearanceTitle": {
-    "description": "عنوان قسم المظهر"
-  },
-  "@btnAdd": {},
-  "@btnAddCustomer": {},
-  "@btnCreateAccount": {},
-  "@btnDelete": {},
-  "@btnDone": {},
-  "@btnRestoreDefault": {},
-  "@btnSave": {},
-  "@btnSaveChanges": {},
-  "@btnSaveInvoice": {},
-  "@btnSelectFromContacts": {},
-  "@btnUpdateInvoice": {},
-  "@calendarGregorian": {},
-  "@calendarHijri": {},
-  "@calendarSelection": {},
-  "@colorCustomized": {},
-  "@colorDefault": {},
-  "@companySettingsDialogTitle": {},
-  "@companySettingsTitle": {
-    "description": "عنوان قسم إعدادات الشركة"
-  },
-  "@customerDetailsTitle": {},
-  "@customerFormTitleAdd": {},
-  "@customerFormTitleEdit": {},
-  "@customersAddTooltip": {},
-  "@customersScreenTitle": {},
-  "@customersSearchHint": {},
-  "@customersTitle": {},
-  "@vendorsSearchHint": {},
-  "@dashboardBasirSystemTitle": {},
-  "@dashboardMotto": {},
-  "@dashboardQuickActionsTitle": {},
-  "@dashboardRecentActivityTitle": {},
-  "@dashboardStatsTitle": {},
-  "@dashboardTitle": {},
-  "@privacyAnalyticsTitle": {
-    "description": "عنوان شاشة الخصوصية والتحليلات"
-  },
-  "@privacyAnalyticsSubtitle": {
-    "description": "وصف شاشة الخصوصية والتحليلات"
-  },
-  "@analyticsEnableTracking": {
-    "description": "تفعيل التتبع المحلي"
-  },
-  "@analyticsPrivacyNotice": {
-    "description": "تنبيه الخصوصية للتحليلات"
-  },
-  "@analyticsClearData": {
-    "description": "مسح جميع بيانات التحليلات"
-  },
-  "@analyticsDataCleared": {
-    "description": "تم مسح البيانات"
-  },
-  "@dashboardWelcomeMessage": {},
-  "@dialogAddItemTitle": {},
-  "@dialogCancel": {},
-  "@dialogOk": {},
-  "@dialogSave": {},
-  "@dialogTaxTitle": {},
-  "@editAccountSubtitle": {},
-  "@editAccountTitle": {},
-  "@errContactAccess": {
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "@errCustomerAdd": {},
-  "@errCustomerDelete": {},
-  "@errCustomerNameLength": {},
-  "@errCustomerNameRequired": {},
-  "@errCustomerUpdate": {},
-  "@errEmptyField": {},
-  "@errGeneric": {
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "@errInvalidEmail": {},
-  "@errInvalidNumber": {},
-  "@errInvoiceAdd": {},
-  "@errInvoiceUpdate": {},
-  "@errLoadCustomers": {
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "@errLoginFailed": {},
-  "@errNoItems": {},
-  "@errPasswordShort": {},
-  "@errPasswordsDoNotMatch": {},
-  "@errPhoneLength": {},
-  "@errPhoneStart05": {},
-  "@errSelectCustomer": {},
-  "@errUsernameShort": {},
-  "@errorCustomerNotFound": {},
-  "@errorCustomerPhone": {},
-  "@errorLoadingInvoices": {},
-  "@errorLoadingSettings": {},
-  "@errorScreenNotFound": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@errorSharePdf": {
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "@errorShareWhatsapp": {
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "@filterAll": {},
-  "@filterDraft": {},
-  "@filterIssued": {},
-  "@filterOverdue": {},
-  "@filterPaid": {},
-  "@fontCairo": {},
-  "@fontRoboto": {},
-  "@fontSettingsTitle": {},
-  "@fontSizeLabel": {},
-  "@guestUpgradeDescription": {},
-  "@helpTitle": {
-    "description": "عنوان قسم المساعدة"
-  },
-  "@highContrast": {},
-  "@highContrastSubtitle": {},
-  "@hintAddress": {},
-  "@hintCompanyName": {},
-  "@hintConfirmPassword": {},
-  "@hintCurrencySymbol": {},
-  "@hintCustomerName": {},
-  "@hintCustomerNotes": {},
-  "@hintEnterNewPassword": {},
-  "@hintEnterNewUsername": {},
-  "@hintEnterPassword": {},
-  "@hintEnterUsername": {},
-  "@hintNotes": {},
-  "@hintSelectCustomer": {},
-  "@hintTaxNumber": {},
-  "@iconCupertino": {},
-  "@iconMaterial": {},
-  "@iconSettingsTitle": {},
-  "@invoiceFormTitleEdit": {},
-  "@invoiceTitle": {
-    "placeholders": {
-      "id": {
-        "type": "String",
-        "example": "INV-001"
-      }
-    }
-  },
+  "labelStandard": "المعيار المحاسبي",
+  "labelRecognitionBasis": "أساس الاعتراف",
+  "labelMeasurementBasis": "أساس القياس",
+  "labelCurrency": "العملة",
+  "labelAddCurrency": "إضافة عملة",
+  "labelPartner": "الطرف",
+  "labelAccountCode": "رقم الحساب",
+  "labelAccountName": "اسم الحساب",
+  "labelFairValueAdjustment": "التقييم بالقيمة العادلة (IFRS 13)",
+  "subtitleFairValueAdjustment": "استخدام أحدث أسعار السوق للمخزون",
+  "labelTotalAmount": "الإجمالي",
+  "msgBalanceBalancedTB": "الميزان متزن (Balanced)",
+  "msgBalanceUnbalancedTB": "الميزان غير متزن! يرجى المراجعة.",
+  "sectionBasicReports": "التقارير الأساسية",
+  "sectionFinancialStatements": "القوائم المالية (IAS 1/IFRS)",
+  "sectionAgingAnalysis": "تحليل السداد وأعمار الديون",
+  "receivablesAgingTitle": "أعمار العملاء",
+  "payablesAgingTitle": "أعمار الموردين",
+  "labelGeneralLedger": "دفتر الأستاذ",
+  "labelPeriod": "الفترة",
+  "msgNoTransactionsFound": "لا توجد حركات",
+  "msgExportComingSoon": "سيتم تفعيل التصدير قريباً",
   "labelTermsAndConditions": "الشروط والأحكام",
   "labelPaidDate": "تاريخ الدفع",
+  "calculatorTitle": "الحاسبة المالية",
+  "convertToCurrencies": "التحويل للعملات",
+  "clear": "مسح",
   "labelDiscountAmount": "قيمة الخصم",
-  "labelZatcaQrCode": "رمز الاستجابة السريعة (ZATCA)",
+  "labelZatcaQrCode": "رمز الاستجابة السريعة (زاتكا)",
+  "labelZatcaUuid": "المعرف الفريد (UUID)",
+  "labelZatcaHash": "بصمة الفاتورة (Hash)",
+  "labelTaxTotal": "إجمالي الضريبة",
+  "labelVatRate": "نسبة الضريبة",
   "zatcaComplianceText": "هذه الفاتورة متوافقة مع متطلبات هيئة الزكاة والضريبة والجمارك",
   "actionCreateFirstInvoice": "إنشاء أول فاتورة",
   "noInvoicesTitle": "لا توجد فواتير",
   "noInvoicesDescription": "ابدأ بإضافة فاتورتك الأولى لإدارة مبيعاتك بشكل احترافي.",
+  "labelFromDate": "من تاريخ",
+  "labelToDate": "إلى تاريخ",
+  "labelAsOfDate": "كما في تاريخ",
+  "tooltipUpdateReport": "تحديث التقرير",
   "journalEntryFormTitleAdd": "إضافة قيد يدوي",
   "journalEntryFormTitleEdit": "تعديل قيد يدوي",
-  "@labelAddress": {},
-  "@labelAddressOptional": {},
-  "@labelCompanyName": {},
-  "@labelNameAr": {},
-  "@labelNameEn": {},
-  "@labelConfirmPassword": {},
-  "@labelCountryCode": {},
-  "@labelCreatedDate": {},
-  "@labelCreditLimit": {},
-  "@labelCurrencySymbol": {},
-  "@labelCustomer": {},
-  "@labelCustomerName": {},
-  "@labelDueDate": {},
-  "@labelEmail": {},
-  "@labelEmailOptional": {},
-  "@labelGrandTotal": {},
-  "@labelInvoiceItems": {},
-  "@labelInvoiceNo": {},
-  "@labelInvoiceStatus": {},
-  "@labelInvoiceStyle": {},
-  "@labelIssuedDate": {},
-  "@labelItemName": {},
-  "@labelLastUpdated": {},
-  "@labelNewPassword": {},
-  "@labelNotes": {},
-  "@labelNotesOptional": {},
-  "@labelPassword": {},
-  "@labelPercentage": {},
-  "@labelPhone": {},
-  "@labelPhoneOptional": {},
-  "@labelPrice": {},
-  "@labelQuantity": {},
-  "@labelRememberMe": {},
-  "@labelSubtotal": {},
-  "@labelTax": {
-    "placeholders": {
-      "rate": {
-        "type": "String"
-      }
-    }
-  },
-  "@labelSKU": {},
-  "@labelPurchasePrice": {},
-  "@labelSalePrice": {},
-  "@labelUnit": {},
-  "@labelCategoryId": {},
-  "@labelCode": {},
-  "@labelPurchaseDate": {},
-  "@labelCost": {},
-  "@labelSalvageValue": {},
-  "@labelUsefulLife": {},
-  "@labelDepreciationMethod": {},
-  "@labelDepreciationAccountId": {},
-  "@labelAccumDepreciationAccountId": {},
-  "@labelAssetAccountId": {},
   "labelCogsAccountId": "حساب تكلفة البضاعة (COGS)",
-  "@labelCogsAccountId": {},
   "labelRevenueAccountId": "حساب إيرادات المبيعات",
-  "@labelRevenueAccountId": {},
   "labelValuationMethod": "طريقة تقييم المخزون",
-  "@labelValuationMethod": {},
   "labelInventoryValuation": "تقييم المخزون (IAS 2)",
-  "@labelInventoryValuation": {},
-  "@labelTaxNumber": {},
-  "@labelTaxRate": {},
-  "@labelTaxRateWithExample": {},
-  "@labelUsername": {},
-  "@langArabic": {},
-  "@langEnglish": {},
-  "@languageTitle": {
-    "description": "عنوان إعدادات اللغة"
-  },
-  "@loginGuest": {},
-  "@loginSubtitle": {},
-  "@loginTitle": {},
-  "@logoutLabel": {
-    "description": "نص زر تسجيل الخروج"
-  },
-  "@modeDark": {},
-  "@modeLight": {},
-  "@modeSystem": {},
-  "@msgAccountCreated": {},
-  "@msgAccountUpdated": {},
-  "@msgConfirmDeleteCustomer": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@msgConfirmDeleteVendor": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@msgConfirmDeleteInvoice": {},
-  "@msgConfirmDeleteItem": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "@msgConfirmLogout": {},
-  "@msgCustomerAdded": {},
-  "@msgCustomerDeleted": {},
-  "@msgCustomerUpdated": {},
-  "@msgGuestWelcome": {},
-  "@msgInvoiceAdded": {},
-  "@msgInvoiceShare": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      },
-      "id": {
-        "type": "String"
-      },
-      "total": {
-        "type": "String"
-      },
-      "symbol": {
-        "type": "String"
-      }
-    }
-  },
-  "@msgInvoiceUpdated": {},
-  "@msgLoginSuccess": {},
-  "@msgLogoutSuccess": {},
-  "@msgNoAccount": {},
-  "@msgNoContactsFound": {},
-  "@msgNoItems": {},
-  "@msgSaveError": {
-    "placeholders": {
-      "error": {
-        "type": "String",
-        "example": "Network error"
-      }
-    }
-  },
-  "@msgSettingsSaved": {},
-  "@navSettings": {},
-  "@notificationsEnable": {},
-  "@notificationsSubtitle": {},
-  "@notificationsTitle": {
-    "description": "عنوان قسم الإشعارات"
-  },
-  "@pdfShareSubject": {
-    "placeholders": {
-      "id": {
-        "type": "String"
-      }
-    }
-  },
-  "@pdfShareText": {
-    "placeholders": {
-      "customerName": {
-        "type": "String"
-      }
-    }
-  },
-  "@placeholderComingSoon": {
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  },
-  "@privacyFooter": {},
-  "@privacyHeader": {},
-  "@privacyPoint1": {},
-  "@privacyPoint2": {},
-  "@privacyPoint3": {},
-  "@privacyPoint4": {},
-  "@privacyPoint5": {},
-  "@privacyPolicySubtitle": {},
-  "@privacyPolicyTitle": {},
-  "@reduceMotion": {},
-  "@reduceMotionSubtitle": {},
-  "@retryLabel": {},
-  "@sectionAccessibility": {},
-  "@sectionAdditionalInfo": {},
-  "@sectionCalendar": {},
-  "@sectionContactInfo": {},
-  "@sectionMode": {},
-  "@sectionStyle": {},
-  "@settingsTitle": {
-    "description": "عنوان شاشة الإعدادات"
-  },
-  "@setupSubtitle": {},
-  "@setupTitle": {},
-  "@splashCriticalError": {},
-  "@splashInitializing": {},
-  "@statActiveCustomers": {},
-  "@statOverdue": {},
-  "@statOverdueInvoices": {},
-  "@statPaid": {},
-  "@statTotal": {},
-  "@statTotalInvoices": {},
-  "@statTotalSales": {},
-  "@statusCancelled": {},
-  "@statusOverdue": {},
-  "@statusPaid": {},
-  "@statusPending": {},
-  "@styleCompact": {},
-  "@styleModern": {},
-  "@styleStandard": {},
-  "@termsFooter": {},
-  "@termsHeader": {},
-  "@termsOfServiceSubtitle": {},
-  "@termsOfServiceTitle": {},
-  "@termsPoint1": {},
-  "@termsPoint2": {},
-  "@termsPoint3": {},
-  "@termsPoint4": {},
-  "@termsPoint5": {},
-  "@themeColorPickerTitle": {},
-  "@tooltipAddInvoice": {},
-  "@tooltipAddInventoryItem": {},
-  "@tooltipAddItem": {},
-  "@tooltipBack": {},
-  "@tooltipDeleteItem": {},
-  "@tooltipEditCustomer": {},
-  "@tooltipEditTaxRate": {},
-  "@tooltipExportAll": {},
   "aboutAppSubtitle": "الإصدار 1.0.0",
   "aboutAppTitle": "حول التطبيق",
-  "aboutDescription": "تطبيق بصير هو نظام متكامل لإدارة الفواتير والعملاء، مصمم خصيصاً للأعمال الصغيرة والمتوسطة.",
-  "aboutFeature1": "• إدارة الفواتير بسهولة",
-  "aboutFeature2": "• إدارة العملاء",
-  "aboutFeature3": "• تصدير الفواتير كـ PDF",
-  "aboutFeature4": "• تخزين آمن للبيانات",
-  "aboutFeature5": "• دعم كامل للغة العربية",
   "aboutFeaturesTitle": "الميزات الرئيسية:",
   "accountTitle": "الحساب",
   "actionAddCustomer": "إضافة عميل",
@@ -497,6 +103,28 @@
   "actionExportPdf": "تصدير PDF",
   "actionUpgradeAccount": "ترقية الحساب",
   "appColor": "لون التطبيق",
+  "taxConfigTitle": "الضريبة والفلترة الإلكترونية",
+  "zatcaPhase2Title": "الفوترة الإلكترونية (المرحلة الثانية - زاتكا)",
+  "zatcaPhase2Description": "تكوين الإعدادات الخاصة بك للامتثال للمرحلة الثانية من هيئة الزكاة والضريبة والجمارك السعودية.",
+  "enableTax": "تمكين الضريبة على الفواتير",
+  "priceIncludesTax": "السعر يشمل الضريبة افتراضياً",
+  "vatNumber": "الرقم الضريبي",
+  "defaultTaxRate": "قيمة الضريبة الافتراضية (%)",
+  "b2cSimplifiedLabel": "تسمية فاتورة B2C المبسطة",
+  "b2bStandardLabel": "تسمية فاتورة B2B القياسية",
+  "taxName": "اسم الضريبة",
+  "taxPercentage": "النسبة (%)",
+  "taxShow": "إظهار",
+  "taxDefault": "افتراضي",
+  "printSettingsTitle": "الطباعة والقوالب",
+  "printSettingsSubtitle": "إدارة تنسيقات الطباعة والقوالب الخاصة بك",
+  "templateSelection": "اختيار القالب",
+  "paperSize": "حجم الورق",
+  "fontSize": "حجم الخط",
+  "paddingBottom": "خطوط فارغة في النهاية",
+  "printCopies": "عدد النسخ",
+  "printItemUnit": "إظهار وحدة الصنف في الطباعة",
+  "saveSettings": "حفظ الإعدادات",
   "appCopyright": "© 2026 فريق وكلاء تطوير مشروع بصير",
   "appName": "بصير",
   "appTitle": "بصير",
@@ -508,6 +136,7 @@
   "btnAddCustomer": "إضافة العميل",
   "btnCreateAccount": "إنشاء حساب جديد",
   "btnDelete": "حذف",
+  "btnEdit": "تعديل",
   "btnDone": "تم",
   "btnRestoreDefault": "استعادة الافتراضي",
   "btnSave": "حفظ",
@@ -529,16 +158,11 @@
   "customersScreenTitle": "العملاء",
   "customersSearchHint": "ابحث عن عميل...",
   "customersTitle": "العملاء",
-  "dashboardBasirSystemTitle": "نظام بصير المحاسبي",
-  "dashboardMotto": "دقة وموثوقية في كل معاملة",
-  "dashboardQuickActionsTitle": "الإجراءات المالية السريعة",
-  "dashboardRecentActivityTitle": "سجل العمليات الأحدث",
-  "dashboardStatsTitle": "تحليلات الأداء المالي",
-  "dashboardTitle": "لوحة التحكم",
-  "dashboardWelcomeMessage": "مرحباً بك في بصير",
   "dialogAddItemTitle": "إضافة بند",
   "dialogCancel": "إلغاء",
   "dialogOk": "حسناً",
+  "dialogCognitiveRejectionTitle": "تم رفض العملية",
+  "dialogCognitiveRejectionMessage": "تم رفض هذه العملية من قبل النظام المعرفي. راجع توافق الوكلاء أدناه:",
   "dialogSave": "حفظ",
   "dialogTaxTitle": "نسبة الضريبة",
   "editAccountSubtitle": "غيّر اسم المستخدم وكلمة المرور",
@@ -601,6 +225,7 @@
   "iconMaterial": "Material Design",
   "iconSettingsTitle": "نمط الأيقونات",
   "invoiceFormTitleAdd": "إضافة فاتورة جديدة",
+  "invoiceFormTitleAddPurchase": "إضافة فاتورة مشتريات",
   "invoiceFormTitleEdit": "تعديل الفاتورة",
   "invoiceTitle": "فاتورة رقم {id}",
   "invoicesTitle": "الفواتير",
@@ -622,8 +247,6 @@
   "labelInvoiceNo": "فاتورة رقم",
   "labelInvoiceStatus": "حالة الفاتورة",
   "labelInvoiceStyle": "شكل الفاتورة",
-  "labelIssuedDate": "تاريخ الإصدار",
-  "labelItemName": "اسم المنتج/الخدمة",
   "labelLastUpdated": "آخر تحديث",
   "labelNewPassword": "كلمة المرور الجديدة",
   "labelNotes": "ملاحظات (اختياري)",
@@ -632,6 +255,13 @@
   "labelPercentage": "النسبة المئوية",
   "labelPhone": "رقم الهاتف",
   "labelPhoneOptional": "رقم الهاتف (اختياري)",
+  "labelSourceWarehouse": "مستودع المصدر",
+  "labelDestinationWarehouse": "مستودع الوجهة",
+  "errSameWarehouse": "لا يمكن أن يكون مستودع المصدر والوجهة متطابقين",
+  "errSelectSourceWarehouse": "يرجى اختيار المستودع المصدر",
+  "errSelectDestinationWarehouse": "يرجى اختيار المستودع الوجهة",
+  "btnSaveTransfer": "حفظ التحويل",
+  "warehouseTransferTitleAdd": "تحويل مخزني جديد",
   "labelPrice": "السعر",
   "labelQuantity": "الكمية",
   "labelRememberMe": "تذكرني",
@@ -661,6 +291,13 @@
   "msgAccountCreated": "تم إنشاء الحساب بنجاح",
   "msgAccountUpdated": "تم تحديث بيانات الحساب بنجاح",
   "msgConfirmDeleteCustomer": "هل أنت متأكد من حذف العميل {name}؟",
+  "@msgConfirmDeleteCustomer": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "msgConfirmDeleteInvoice": "هل أنت متأكد من حذف هذه الفاتورة؟",
   "msgConfirmLogout": "هل أنت متأكد من رغبتك في تسجيل الخروج؟",
   "msgCustomerAdded": "تم إضافة العميل بنجاح",
@@ -721,6 +358,7 @@
   "statusOverdue": "متأخرة",
   "statusPaid": "مدفوعة",
   "statusPending": "قيد الانتظار",
+  "statusRefunded": "مرتجعة",
   "styleCompact": "مختصر",
   "styleModern": "عصري",
   "styleStandard": "قياسي",
@@ -804,10 +442,10 @@
   "labelNetCashFlow": "صافي التدفق النقدي",
   "reportingOverviewTitle": "التقارير المالية",
   "trialBalanceSubtitle": "تحقق من توازن الحسابات المدينة والدائنة",
-  "incomeStatementSubtitle": "ملخص الإيرادات والمصروفات حسب IFRS 18",
-  "balanceSheetSubtitle": "حالة الأصول والالتزامات وحقوق الملكية",
-  "cashFlowSubtitle": "حركة النقدية (الأنشطة التشغيلية، الاستثمارية، التمويلية)",
-  "agingReportsSubtitle": "تحليل أعمار أرصدة العملاء والموردين",
+  "incomeStatementSubtitle": "قائمة الدخل: الأداء المالي والربحية",
+  "balanceSheetSubtitle": "المركز المالي: الأصول، الالتزامات، وحقوق الملكية",
+  "cashFlowSubtitle": "حركة النقدية (تشغيلي، استثماري، تمويلي)",
+  "agingReportsSubtitle": "تحليل أعمار ذمم العملاء والموردين",
   "agingReportsTitle": "تقارير تعمير الديون",
   "receivablesAgingLabel": "ذمم مدينة (عملاء)",
   "payablesAgingLabel": "ذمم دائنة (موردون)",
@@ -824,13 +462,6 @@
   "labelTotalLiabilitiesAndEquity": "إجمالي الالتزامات وحقوق الملكية",
   "msgBalanceBalanced": "الميزانية متزنة: الأصول تساوي الالتزامات وحقوق الملكية.",
   "msgBalanceUnbalanced": "تنبيه: الميزانية غير متزنة! الفرق: {diff}",
-  "@msgBalanceUnbalanced": {
-    "placeholders": {
-      "diff": {
-        "type": "String"
-      }
-    }
-  },
   "treasuryTitle": "الخزينة والنقدية",
   "cashBalancesTitle": "أرصدة النقدية والبنوك",
   "recentVouchersTitle": "أحدث السندات",
@@ -867,17 +498,264 @@
   "labelStatus": "الحالة",
   "labelDescription": "الوصف",
   "errorExportingReport": "خطأ أثناء تصدير التقرير",
-  "labelStandard": "المعيار المحاسبي",
-  "labelRecognitionBasis": "أساس الاعتراف",
-  "labelMeasurementBasis": "أساس القياس",
   "labelExchangeRate": "سعر الصرف",
-  "labelAddCurrency": "إضافة عملة",
-  "labelCurrency": "العملة",
+  "labelBaseCurrencyEquivalent": "المقابل بالعملة الأساسية",
+  "titleTreasuryVault": "الخزنة (إدارة النقد)",
+  "labelTotalLiquidity": "إجمالي السيولة",
+  "labelAvailableCashBank": "إجمالي النقد والبنوك المتاح",
+  "labelAccounts": "الحسابات",
+  "labelForecast30Days": "نظرة مستقبلية (30 يوم)",
+  "labelExpectedInflow": "التدفق الداخل المتوقع",
+  "labelExpectedOutflow": "التدفق الخارج المتوقع",
+  "labelNetChange": "التغير الصافي",
+  "msgNoCashAccounts": "لا توجد حسابات نقدية",
+  "msgInitCoa": "قم بتهيئة دليل الحسابات أو أضف حسابات نقدية.",
   "labelAmount": "المبلغ",
   "labelDate": "التاريخ",
   "labelType": "النوع",
   "labelRevenue": "الإيرادات",
   "labelExpenses": "المصروفات",
   "labelIncomeTax": "ضريبة الدخل",
-  "labelNetProfit": "صافي الربح / الخسارة"
+  "labelNetProfit": "صافي الربح / الخساارة",
+  "msgOperationSuccess": "تمت العملية بنجاح",
+  "labelInventoryItem": "صنف من المخزون",
+  "hintSelectInventoryItem": "اختر صنفاً من المخزون لملء البيانات تلقائياً",
+  "labelTaxCategory": "فئة الضريبة",
+  "labelSearchSku": "بحث بالباركود / SKU",
+  "hintSearchSku": "أدخل الكود واضغط Enter",
+  "msgItemNotFound": "الصنف غير موجود",
+  "tooltipPrintReceipt": "طباعة إيصال",
+  "tooltipReverseInvoice": "إلغاء/عكس",
+  "titleReverseInvoice": "عكس الفاتورة",
+  "msgConfirmReverseInvoice": "هل أنت متأكد من رغبتك في عكس هذه الفاتورة؟ سيتم إنشاء قيد عكسي في المحاسبة.",
+  "btnConfirmReverse": "نعم، عكس الفاتورة",
+  "receiptTitleTaxInvoice": "فاتورة ضريبية",
+  "receiptTitleSimplified": "فاتورة ضريبية مبسطة",
+  "receiptFooterThanks": "شكراً لزيارتكم",
+  "receiptFooterBrand": "بصير - Basir Accounting",
+  "labelDiscount": "الخصم",
+  "labelItemName": "اسم الصنف",
+  "labelIssuedDate": "تاريخ الإصدار",
+  "msgInvoiceReversed": "تم عكس الفاتورة بنجاح",
+  "agentRationaleStandardsPassed": "تحقق الامتثال: القيد يوافق معايير (IFRS/SOCPA).",
+  "agentRationaleStandardsManualReview": "تنبيه: نوع العملية ({type}) يتطلب مراجعة بشرية للتحقق من الامتثال.",
+  "@agentRationaleStandardsManualReview": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "agentRationaleTaxNoId": "تنبيه: لم يتم تقديم رقم ضريبي لهذه العملية.",
+  "agentRationaleTaxZatcaReject": "رفض: العمليات التي تتجاوز 10,000 ريال تتطلب رقماً ضريبياً صالحاً للامتثال للمرحلة الثانية من (ZATCA).",
+  "agentRationaleTaxValidated": "تم التحقق من الرقم الضريبي: {id}",
+  "@agentRationaleTaxValidated": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "agentRationaleTaxAnalyzing": "تحليل الضريبة لحساب {account}",
+  "@agentRationaleTaxAnalyzing": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "agentRationaleTaxRateMismatch": "تنبيه: معدل الضريبة المحسوب ({rate}) يختلف عن المعدل الإقليمي الافتراضي (15%).",
+  "@agentRationaleTaxRateMismatch": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "agentRationaleTaxRateMatch": "تأكيد: معدل الضريبة (15%) يطابق المتطلبات التنظيمية المحلية.",
+  "agentRationaleTaxNoVatWarning": "تنبيه: تم رصد عملية تجارية بدون بنود ضريبة القيمة المضافة.",
+  "agentRationaleForensicBalanced": "فحص ناجح: القيد المحاسبي متزن.",
+  "agentRationaleForensicUnbalanced": "رفض: القيد المحاسبي المقترح غير متزن.",
+  "agentRationaleForensicHighValue": "تنبيه: تم رصد مبلغ عملية مرتفع بشكل غير معتاد ({amount}). نوصي بالمراجعة الإدارية.",
+  "@agentRationaleForensicHighValue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "agentRationaleForensicDuplicate": "رفض: تم رصد رقم مرجع مكرر ({ref}) في السجلات السابقة.",
+  "@agentRationaleForensicDuplicate": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "agentRationaleOperationalSufficient": "تحليل النقدية: رصيد {account} كافٍ ({balance}) للعملية.",
+  "@agentRationaleOperationalSufficient": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      },
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "agentRationaleOperationalInsufficient": "رفض: رصيد {account} غير كافٍ ({balance}) لهذه العملية.",
+  "@agentRationaleOperationalInsufficient": {
+    "placeholders": {
+      "account": {
+        "type": "String"
+      },
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "agentRationaleStrategyOutflow": "تحليل استراتيجي: يمثل هذا القيد تدفقاً نقدياً خارجاً بقيمة {amount}.",
+  "@agentRationaleStrategyOutflow": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "agentRationaleStrategyRecommendation": "توصية: راجع توقعات التدفق النقدي للأسبوع القادم لضمان السيولة الكافية للالتزامات الأخرى.",
+  "agentRationaleStrategyInflow": "تحليل استراتيجي: تعزيز السيولة بقيمة {amount} يدعم القدرة الاستثمارية قصيرة الأجل.",
+  "@agentRationaleStrategyInflow": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "agentRationaleStrategyProfitability": "رؤية استراتيجية: زيادة حجم المبيعات تؤثر إيجابياً على العائد على الأصول (ROA) وأهداف الهامش الصافي.",
+  "agentRationaleSustainabilityFlagged": "تحليل ISSB: تم وضع علامة على هذه المعاملة للإفصاح البيئي/الاجتماعي الإلزامي.",
+  "agentRationaleSustainabilityReject": "رفض حرج: تتطلب معايير ISSB S2 مقاييس البصمة الكربونية لهذه المعاملة الخاصة بالصناعة.",
+  "agentRationaleSustainabilitySuccess": "تم بنجاح دمج {count} من مقاييس الاستدامة المتوافقة.",
+  "@agentRationaleSustainabilitySuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "agentRationaleSustainabilityNotRequired": "تقييم الاستدامة: لا توجد إفصاحات محددة من ISSB مطلوبة لهذه الفئة من العمليات.",
+  "agentRationaleForensicTimeAnomaly": "تحذير: تم تسجيل العملية في ساعات غير قياسية ({time}). تم تطبيق وزن تدقيق جنائي أعلى.",
+  "@agentRationaleForensicTimeAnomaly": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "agentRationaleForensicSequenceGap": "ملاحظة: تم اكتشاف فجوة في تسلسل المراجع. الأخير: {last}، الحالي: {current}.",
+  "@agentRationaleForensicSequenceGap": {
+    "placeholders": {
+      "last": {
+        "type": "String"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
+  "agentRationaleForensicZatcaIdentityMissing": "ملاحظة: الهوية التشفيرية لـ ZATCA (UUID/Hash) مفقودة لهذه الفاتورة.",
+  "auditTrailTitle": "سجل المراجعة",
+  "auditTrailSubtitle": "سجلات النظام الداخلية وتجاوزات الإجماع",
+  "auditTrailSectionForensic": "سجلات النزاهة الجنائية",
+  "auditTrailNoLogs": "لم يتم العثور على سجلات مراجعة للفترة المختارة.",
+  "msgInvoiceCognitiveHint": "استخدم هذه الشاشة لإنشاء أو تعديل الفواتير. تأكد من الدقة المتناهية في معدلات الضرائب واختيار العناصر.",
+  "titleInvoiceCognitiveHint": "إتقان الفواتير",
+  "labelReturnsAndDamages": "المرتجعات والتوالف",
+  "labelSalesReturn": "مرتجع مبيعات",
+  "descSalesReturn": "إرجاع أصناف مباعة إلى المخزون",
+  "labelPurchaseReturn": "مرتجع مشتريات",
+  "descPurchaseReturn": "إرجاع أصناف مشتراة للمورد",
+  "labelDamageInvoice": "فاتورة تالف",
+  "descDamageInvoice": "تسجيل أصناف تالفة أو مفقودة",
+  "dashboardBasirSystemTitle": "نظام بصير المحاسبي",
+  "forgotPassword": "نسيت كلمة المرور",
+  "dashboardTitle": "لوحة التحكم",
+  "dashboardStatsTitle": "الإحصائيات",
+  "dashboardQuickActionsTitle": "الإجراءات السريعة",
+  "dashboardRecentActivityTitle": "النشاط الأخير",
+  "dashboardMotto": "المحاسبة الاحترافية بكل بساطة",
+  "saveLabels": "حفظ التسميات",
+  "errInvalidResetLink": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية",
+  "errInvalidResetToken": "رمز إعادة التعيين غير صالح أو منتهي الصلاحية",
+  "msgPasswordResetSuccess": "تم إعادة تعيين كلمة المرور بنجاح",
+  "errPasswordResetFailed": "فشل في إعادة تعيين كلمة المرور",
+  "errPasswordRequired": "كلمة المرور مطلوبة",
+  "errPasswordTooShort": "كلمة المرور قصيرة جداً",
+  "errPasswordNeedsUppercase": "كلمة المرور تحتاج حرف كبير",
+  "errPasswordNeedsLowercase": "كلمة المرور تحتاج حرف صغير",
+  "errPasswordNeedsNumber": "كلمة المرور تحتاج رقم",
+  "errConfirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
+  "resetPasswordTitle": "إعادة تعيين كلمة المرور",
+  "resetPasswordSubtitle": "أدخل كلمة المرور الجديدة لـ {email}",
+  "@resetPasswordSubtitle": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "newPassword": "كلمة المرور الجديدة",
+  "passwordHint": "أدخل كلمة المرور الجديدة",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "confirmPasswordHint": "أعد إدخال كلمة المرور",
+  "passwordRequirements": "متطلبات كلمة المرور:",
+  "passwordRequirementsList": "• 8 أحرف على الأقل\n• حرف كبير واحد\n• حرف صغير واحد\n• رقم واحد",
+  "resetPassword": "إعادة تعيين كلمة المرور",
+  "backToLogin": "العودة لتسجيل الدخول",
+  "labelVatNumber": "الرقم الضريبي",
+  "labelRegistrationNumber": "رقم السجل التجاري",
+  "labelTotalPayables": "إجمالي الالتزامات للموردين",
+  "msgValueCopiedToClipboard": "تم نسخ القيمة إلى الحافظة",
+  "labelSourceDocument": "المستند المصدر",
+  "btnViewSource": "عرض المصدر",
+  "msgLoadingSource": "جاري تحميل المستند المصدر...",
+  "errSourceNotFound": "المستند المصدر غير موجود",
+  "agentSuggestionIfrs18Category": "اقتراح تصنيف IFRS 18",
+  "agentSuggestionIfrs18CategoryReason": "يتطلب المعيار الدولي للتقارير المالية 18 تصنيفاً محدداً لعمولات المبيعات.",
+  "agentSuggestionVatCorrection": "تصحيح معدل الضريبة",
+  "agentSuggestionMissingVatLine": "بند ضريبة مفقود",
+  "agentSuggestionMissingVatLineReason": "تتطلب عمليات المبيعات عادةً ضريبة قيمة مضافة بنسبة 15% حسب متطلبات زاتكا.",
+  "agentSuggestionWarehouseOptimization": "تحسين مستودعي",
+  "agentSuggestionWarehouseOptimizationReason": "تحقق من \"المركز الرئيسي\" أو \"فرع الرياض\" لطلب تحويل مخزني.",
+  "agentSuggestionStrategicDiscount": "خصم استراتيجي",
+  "agentSuggestionStrategicDiscountReason": "قدم خصماً بنسبة 2% للسداد خلال 10 أيام لتعظيم السيولة النقدية.",
+  "agentSuggestionIssbMetrics": "إفصاح ISSB",
+  "agentSuggestionIssbMetricsReason": "يرجى إرفاق مقاييس استخدام الموارد (لتر/كيلوواط ساعة) للامتثال للمعايير.",
+  "labelAiSmartSuggestions": "اقتراحات الذكاء الاصطناعي",
+  "labelTarget": "المستهدف:",
+  "msgForensicSequenceClean": "اكتمل التحقق من التسلسل: لم يتم الكشف عن أي حالات شاذة.",
+  "msgForensicRisksDetected": "كشف التحليل الجنائي عن مخاطر مؤسسية.",
+  "msgForensicEngineError": "فشل الفحص الجنائي: خطأ في المحرك الداخلي.",
+  "msgForensicLedgerClean": "اكتمل فحص السجل التاريخي: لم يتم العثور على حالات شاذة.",
+  "msgForensicLedgerAnomalies": "تم الكشف عن حالات جنائية شاذة في السجل التاريخي.",
+  "errForensicImbalance": "تم اكتشاف عدم اتزان: القيد رقم {id} غير متزن.",
+  "errForensicDiscrepancy": "تفاوت في السلامة: يوجد تعارض في إجمالي المدين/المجموع للقيد رقم {id}.",
+  "errForensicHashBreach": "خرق للسلامة: سلسلة التجزئة (Hash) مكسورة بين القيد رقم {prev} والقيد رقم {curr}",
+  "titleForensicPortal": "بوابة النزاهة الجنائية",
+  "labelIntegrityPulse": "نبض النزاهة",
+  "labelLastVerified": "آخر تحقق:",
+  "labelBlocksScanned": "الكتل المفحوصة:",
+  "labelHealth": "الصحة:",
+  "labelLedgerMutationTimeline": "جدول زمن طفرات السجل",
+  "labelHashChain": "سلسلة التجزئة غير القابلة للتغيير",
+  "labelVerifiedBy": "تم التحقق بواسطة:",
+  "titleStrategicOutlook": "التوقعات الاستراتيجية والتنبؤ",
+  "labelPredictivePnL": "تحليل الأرباح والخسائر التوقعي",
+  "labelCashFlowProjection": "توقعات التدفق النقدي",
+  "labelStrategicInsights": "رؤى الذكاء الاصطناعي الاستراتيجية",
+  "labelProjectedRevenue": "الإيرادات المتوقعة",
+  "labelProjectedExpense": "المصروفات المتوقعة",
+  "labelProjectedNetIncome": "صافي الدخل المتوقع",
+  "labelConfidenceScore": "درجة ثقة الذكاء الاصطناعي",
+  "msgNoStrategicData": "بيانات تاريخية غير كافية للتنبؤ الدقيق. يرجى ترحيل المزيد من المعاملات.",
+  "actionEmailInvoice": "إرسال الفاتورة بالبريد"
 }

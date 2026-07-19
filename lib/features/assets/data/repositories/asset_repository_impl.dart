@@ -1,8 +1,8 @@
-import 'package:basir_app/features/assets/data/models/asset_category_model.dart';
-import 'package:basir_app/features/assets/data/models/fixed_asset_model.dart';
-import 'package:basir_app/features/assets/domain/entities/asset_category.dart';
-import 'package:basir_app/features/assets/domain/entities/fixed_asset.dart';
-import 'package:basir_app/features/assets/domain/repositories/asset_repository.dart';
+import 'package:basir_accounting_system/features/assets/data/models/asset_category_model.dart';
+import 'package:basir_accounting_system/features/assets/data/models/fixed_asset_model.dart';
+import 'package:basir_accounting_system/features/assets/domain/entities/asset_category.dart';
+import 'package:basir_accounting_system/features/assets/domain/entities/fixed_asset.dart';
+import 'package:basir_accounting_system/features/assets/domain/repositories/asset_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع الأصول (Asset Repository Implementation)

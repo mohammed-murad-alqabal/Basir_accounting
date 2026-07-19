@@ -1,330 +1,330 @@
-# معايير تنظيم الملفات
+# File Organization Standards
 
-**المشروع:** بصير MVP  
-**التاريخ:** 9 ديسمبر 2025  
-**الحالة:** ✅ نشط ومعتمد
-
----
-
-## 🎯 الهدف
-
-ضمان تنظيم ممتاز ومستدام للملفات في المشروع، مع منع تراكم الفوضى.
+**Project:** Basir MVP  
+**Date:** December 9, 2025  
+**Status:** ✅ Active and Approved
 
 ---
 
-## 📁 البنية الأساسية
+## 🎯 Objective
 
-### 1. الجذر (Root) - نظيف دائماً
+Ensure excellent and sustainable file organization throughout the project while preventing the accumulation of technical mess/clutter.
 
-**القاعدة الذهبية:** فقط الملفات الضرورية والمعيارية
+---
 
-#### ✅ الملفات المسموحة
+## 📁 Core Structure
 
-```
-README.md              # وصف المشروع
-LICENSE                # الترخيص
-CHANGELOG.md           # سجل التغييرات
-CONTRIBUTING.md        # دليل المساهمة
-SECURITY.md            # سياسة الأمان
-ARCHITECTURE.md        # البنية المعمارية
-TESTING.md             # دليل الاختبارات
-```
+### 1. Root Directory - Always Clean
 
-#### ❌ الملفات الممنوعة
+**Golden Rule:** Only essential and standard configuration files are permitted in the root.
+
+#### ✅ Allowed Files
 
 ```
-*.log                  # السجلات → logs/
-*.tmp                  # الملفات المؤقتة → /tmp/
-*.bak                  # النسخ الاحتياطية → backups/
-*.db                   # قواعد البيانات → .kiro/data/
-*_REPORT.md            # التقارير → docs/ أو .kiro/docs/
-*_STATUS.md            # الحالة → .kiro/docs/reports/
+README.md              # Project overview
+LICENSE                # License information
+CHANGELOG.md           # History of changes
+CONTRIBUTING.md        # Contribution guidelines
+SECURITY.md            # Security policy
+ARCHITECTURE.md        # Architectural overview
+TESTING.md             # Testing guide
+```
+
+#### ❌ Forbidden Files
+
+```
+*.log                  # Logs → Move to logs/
+*.tmp                  # Temporary files → Move to /tmp/ or ignore
+*.bak                  # Backups → Move to backups/
+*.db                   # Databases → Move to .kiro/data/
+*_REPORT.md            # Reports → Move to docs/ or .kiro/docs/
+*_STATUS.md            # Status reports → Move to .kiro/docs/reports/
 ```
 
 ---
 
-### 2. docs/ - التوثيق الرسمي
+### 2. docs/ - Official Documentation
 
-**الغرض:** التوثيق الرسمي للمشروع والتقارير الهامة طويلة المدى
+**Purpose:** Official external-facing project documentation and critical long-term reports.
 
-#### البنية
+#### Structure
 
 ```
 docs/
-├── api/               # توثيق API
-├── Archive/           # أرشيف الوثائق القديمة
-├── Core/              # الوثائق الأساسية
-├── guides/            # الأدلة الشاملة
+├── api/               # API documentation
+├── Archive/           # Archived legacy documents
+├── Core/              # Fundamental strategic documents
+├── guides/            # Comprehensive guides
 │   ├── deployment/
 │   └── development/
-├── reports/           # التقارير الهامة
+├── reports/           # High-impact reports
 │   ├── analysis/
 │   └── fixes/
-└── sessions/          # تقارير الجلسات
+└── sessions/          # Session logs (high-level)
 ```
 
-#### القواعد
+#### Rules
 
-- ✅ التوثيق الرسمي فقط
-- ✅ التقارير الهامة طويلة المدى
-- ✅ الأدلة الشاملة
-- ❌ لا تقارير مؤقتة
-- ❌ لا ملفات تجريبية
+- ✅ Official documentation only.
+- ✅ Critical long-term reports.
+- ✅ Comprehensive technical guides.
+- ❌ No temporary reports.
+- ❌ No experimental or "scratch" files.
 
-#### الأرشفة
+#### Archiving Policy
 
-- الملفات القديمة (> 90 يوم) → `Archive/`
-- الأرشيف المضغوط → `.kiro/archives/`
+- Files older than 90 days → `Archive/`
+- Compressed archives → `.kiro/archives/`
 
 ---
 
-### 3. .kiro/docs/ - التوثيق الداخلي
+### 3. .kiro/docs/ - Internal Documentation
 
-**الغرض:** التقارير الداخلية، الخطط، والمواصفات
+**Purpose:** Internal reports, action plans, and technical specifications.
 
-#### البنية
+#### Structure
 
 ```
 .kiro/docs/
-├── plans/             # خطط العمل
-├── reports/           # التقارير الداخلية
-│   ├── kiro/         # تقارير Kiro
-│   ├── phases/       # تقارير المراحل
-│   ├── components/   # تقارير المكونات
-│   ├── sessions/     # تقارير الجلسات
-│   ├── enhancements/ # تقارير التحسينات
-│   ├── status/       # تقارير الحالة
-│   ├── quality/      # تقارير الجودة
-│   └── reorganization/ # تقارير إعادة التنظيم
-└── [ملفات أخرى]
+├── plans/             # Action and implementation plans
+├── reports/           # Internal technical reports
+│   ├── kiro/         # Kiro Workflow reports
+│   ├── phases/       # Phase-specific reports
+│   ├── components/   # Component-specific reports
+│   ├── sessions/     # Session-specific reports
+│   ├── enhancements/ # Feature enhancement reports
+│   ├── status/       # Status tracking reports
+│   ├── quality/      # Quality and audit reports
+│   └── reorganization/ # Maintenance and reorganization reports
+└── [Other internal files]
 ```
 
-#### القواعد
+#### Rules
 
-- ✅ التقارير الداخلية
-- ✅ الخطط والمواصفات
-- ✅ التوثيق التقني
-- ❌ لا ملفات \*\_TEMP.md
-- ❌ لا ملفات \*\_OLD.md
+- ✅ Internal technical reports.
+- ✅ Action plans and technical specs.
+- ✅ Low-level technical documentation.
+- ❌ No `*_TEMP.md` files.
+- ❌ No `*_OLD.md` files.
 
-#### الأرشفة
+#### Archiving Policy
 
-- التقارير القديمة (> 3 أشهر) → أرشيف مضغوط
-- الاحتفاظ بالتقارير المهمة فقط
+- Legacy reports (> 3 months) → Compressed archive.
+- Retain only high-value reports.
 
 ---
 
-### 4. scripts/ - السكريبتات
+### 4. scripts/ - Automation & Utilities
 
-**الغرض:** جميع السكريبتات منظمة حسب الفئة
+**Purpose:** All shell and automation scripts organized by category.
 
-#### البنية
+#### Structure
 
 ```
 scripts/
-├── archive/           # سكريبتات مؤرشفة
-├── hooks/             # Git hooks
-├── maintenance/       # سكريبتات الصيانة
-├── utils/             # أدوات مساعدة
-└── [سكريبتات رئيسية]
+├── archive/           # Deprecated/Archived scripts
+├── hooks/             # Git hooks (pre-commit, etc.)
+├── maintenance/       # Maintenance and cleanup scripts
+├── utils/             # Helper tools and utilities
+└── [Core scripts]
 ```
 
-#### القواعد
+#### Rules
 
-- ✅ تنظيم حسب الفئة
-- ✅ أسماء واضحة ووصفية
-- ✅ توثيق داخل السكريبت
-- ✅ صلاحيات تنفيذ مناسبة
+- ✅ Categorized organization.
+- ✅ Clear, descriptive naming.
+- ✅ Inline documentation/comments.
+- ✅ Proper execution permissions (`chmod +x`).
 
-#### أمثلة
+#### Examples
 
 ```bash
-# ✅ صحيح
+# ✅ Correct
 scripts/maintenance/cleanup_project.sh
 scripts/utils/compress.sh
 scripts/hooks/pre-commit
 
-# ❌ خطأ
-cleanup.sh                    # في الجذر
-scripts/script1.sh            # اسم غير واضح
-scripts/temp_fix.sh           # مؤقت
+# ❌ Incorrect
+cleanup.sh                    # Should not be in Root
+scripts/script1.sh            # Ambiguous naming
+scripts/temp_fix.sh           # Temporary/Non-standard
 ```
 
 ---
 
-### 5. logs/ - السجلات
+### 5. logs/ - Logs
 
-**الغرض:** جميع السجلات منظمة حسب النوع
+**Purpose:** All logs organized by source/type.
 
-#### البنية
+#### Structure
 
 ```
 logs/
-├── errors/            # سجلات الأخطاء
-├── flutter/           # سجلات Flutter
-├── git/               # سجلات Git
-└── .gitignore         # تجاهل السجلات المؤقتة
+├── errors/            # Error logs
+├── flutter/           # Flutter build/run logs
+├── git/               # Git operation logs
+└── .gitignore         # Ensure temporary logs are not committed
 ```
 
-#### القواعد
+#### Rules
 
-- ✅ تنظيم حسب النوع
-- ✅ تسمية واضحة مع التاريخ
-- ✅ أرشفة دورية
-- ❌ لا سجلات في الجذر
+- ✅ Categorized by source.
+- ✅ Clear naming including timestamp.
+- ✅ Periodic rotation/archiving.
+- ❌ No logs in project root.
 
-#### التسمية
+#### Naming Convention
 
 ```bash
-# ✅ صحيح
+# ✅ Correct
 logs/errors/error_2025-12-09.log
 logs/flutter/flutter_build_2025-12-09.log
 
-# ❌ خطأ
-error.log                     # في الجذر
-logs/log1.log                 # اسم غير واضح
+# ❌ Incorrect
+error.log                     # Should not be in Root
+logs/log1.log                 # Ambiguous naming
 ```
 
 ---
 
-### 6. .kiro/data/ - البيانات الداخلية
+### 6. .kiro/data/ - Internal Data Storage
 
-**الغرض:** قواعد البيانات والبيانات الداخلية لـ Kiro
+**Purpose:** Local databases and internal configuration data for agentic workflows.
 
-#### القواعد
+#### Rules
 
-- ✅ قواعد بيانات MCP
-- ✅ ملفات التكوين
-- ✅ البيانات المؤقتة
-- ❌ لا بيانات حساسة
+- ✅ MCP-specific databases.
+- ✅ Internal configuration files.
+- ✅ Temporary data storage.
+- ❌ Do not store sensitive/private credentials here.
 
 ---
 
-## 🚫 الممنوعات
+## 🚫 Forbidden Patterns
 
-### في الجذر
+### Forbidden in Root
 
 ```bash
 ❌ *.log                # → logs/
 ❌ *.tmp                # → /tmp/
 ❌ *.bak                # → backups/
 ❌ *.db                 # → .kiro/data/
-❌ *.so, *.dll          # مُولدة تلقائياً
-❌ *_REPORT.md          # → docs/ أو .kiro/docs/
+❌ *.so, *.dll          # Automatically generated binaries
+❌ *_REPORT.md          # → docs/ or .kiro/docs/
 ❌ *_STATUS.md          # → .kiro/docs/reports/
 ❌ *_SUMMARY.md         # → .kiro/docs/reports/
 ❌ CHECKPOINT_*.md      # → .kiro/docs/reports/
 ```
 
-### في أي مكان
+### Forbidden Anywhere
 
 ```bash
-❌ *_TEMP.md            # ملفات مؤقتة
-❌ *_OLD.md             # ملفات قديمة
-❌ test_*.txt           # ملفات اختبار
-❌ backup_*             # نسخ احتياطية غير منظمة
+❌ *_TEMP.md            # Use temporary folders, do not commit
+❌ *_OLD.md             # Use Git for history, don't rename files to "OLD"
+❌ test_*.txt           # Use the test/ directory for test data
+❌ backup_*             # Unorganized backup files
 ```
 
 ---
 
-## ✅ أمثلة عملية
+## ✅ Practical Examples
 
-### مثال 1: إضافة تقرير جديد
+### Example 1: Adding a New Report
 
 ```bash
-# ❌ خطأ
-echo "تقرير" > NEW_REPORT.md
+# ❌ Incorrect
+echo "content" > NEW_REPORT.md
 
-# ✅ صحيح - تقرير رسمي
-echo "تقرير" > docs/reports/analysis/feature_analysis.md
+# ✅ Correct - Official Report
+echo "content" > docs/reports/analysis/feature_analysis.md
 
-# ✅ صحيح - تقرير داخلي
-echo "تقرير" > .kiro/docs/reports/sessions/session_report.md
+# ✅ Correct - Internal Report
+echo "content" > .kiro/docs/reports/sessions/session_report.md
 ```
 
-### مثال 2: إضافة سكريبت جديد
+### Example 2: Adding a New Script
 
 ```bash
-# ❌ خطأ
+# ❌ Incorrect
 echo "#!/bin/bash" > cleanup.sh
 
-# ✅ صحيح
+# ✅ Correct
 echo "#!/bin/bash" > scripts/maintenance/cleanup_database.sh
 chmod +x scripts/maintenance/cleanup_database.sh
 ```
 
-### مثال 3: إضافة سجل
+### Example 3: Adding a Log Entry
 
 ```bash
-# ❌ خطأ
+# ❌ Incorrect
 echo "error" > error.log
 
-# ✅ صحيح
+# ✅ Correct
 echo "error" > logs/errors/error_$(date +%Y-%m-%d).log
 ```
 
 ---
 
-## 🔍 التحقق
+## 🔍 Validation
 
-### قبل Commit
+### Pre-Commit Check
 
 ```bash
-# التحقق من عدم وجود ملفات غير مرغوبة في الجذر
+# Check for forbidden files in the root
 ls -1 *.log *.tmp *.bak *_REPORT.md 2>/dev/null
 
-# يجب أن يكون الناتج فارغاً
+# Output should be empty.
 ```
 
-### دوري (شهرياً)
+### Monthly Maintenance
 
 ```bash
-# التحقق من حجم المجلدات
-du -sh Documentation .kiro/docs scripts logs
+# Monitor directory sizes
+du -sh docs .kiro/docs scripts logs
 
-# أرشفة الملفات القديمة
+# Identify old reports for archiving
 find docs/Archive -mtime +90 -type f
 ```
 
 ---
 
-## 📋 قائمة التحقق
+## 📋 Checklist
 
-### عند إضافة ملف جديد
+### When adding a new file:
 
-- [ ] هل الملف في المكان الصحيح؟
-- [ ] هل الاسم واضح ووصفي؟
-- [ ] هل يتبع معايير التسمية؟
-- [ ] هل هو في .gitignore إذا كان مؤقتاً؟
+- [ ] Is the file in the correct category/directory?
+- [ ] is the name clear and descriptive?
+- [ ] Does it follow naming standards?
+- [ ] Is it added to `.gitignore` if it's a temporary file?
 
-### عند إنشاء مجلد جديد
+### When creating a new directory:
 
-- [ ] هل المجلد ضروري؟
-- [ ] هل الموقع منطقي؟
-- [ ] هل يحتوي على README.md؟
-- [ ] هل البنية واضحة؟
+- [ ] Is the directory absolutely necessary?
+- [ ] is the hierarchical location logical?
+- [ ] Does it contain a `README.md`?
+- [ ] Is the internal structure clear?
 
 ---
 
-## 🛠️ الأدوات المساعدة
+## 🛠️ Utilities
 
 ### Git Hook
 
-استخدم `.githooks/pre-commit-file-check` للتحقق التلقائي
+Utilize `.githooks/pre-commit-file-check` for automatic validation.
 
-### سكريبتات الصيانة
+### Maintenance Scripts
 
 ```bash
-# مراقبة الحجم
+# Monitor directory usage
 scripts/maintenance/check_size.sh
 
-# أرشفة التقارير القديمة
+# Archive legacy reports
 scripts/maintenance/archive_old_reports.sh
 ```
 
 ---
 
-## 📚 المراجع
+## 📚 References
 
 - **Git Guide:** `.kiro/guides/git-guide.md`
 - **Quick Reference:** `.kiro/steering/core/quick-reference.md`
@@ -332,6 +332,6 @@ scripts/maintenance/archive_old_reports.sh
 
 ---
 
-**تم إعداده بواسطة:** فريق وكلاء تطوير مشروع بصير  
-**التاريخ:** 9 ديسمبر 2025  
-**الحالة:** ✅ نشط ومعتمد
+**Prepared by:** Basir Project Agentic Development Team  
+**Date:** December 9, 2025  
+**Status:** ✅ Active and Approved

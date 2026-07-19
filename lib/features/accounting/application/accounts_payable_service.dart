@@ -1,14 +1,16 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:decimal/decimal.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'accounts_payable_service.g.dart';
 
-/// بيانات تعمير ديون المورد (Supplier Aging Data)
-/// تحتوي على تفاصيل الديون المستحقة مقسمة حسب الفترات الزمنية.
+/// Data model for Supplier Debt Aging analysis.
+///
+/// Categorizes outstanding liabilities to suppliers into time-based buckets
+/// to manage accounts payable, cash flow requirements, and credit terms.
 class SupplierAging {
-  /// إنشاء بيانات تعمير ديون المورد.
+  /// Creates a new [SupplierAging] instance.
   SupplierAging({
     required this.supplierId,
     required this.supplierNameAr,
@@ -20,43 +22,52 @@ class SupplierAging {
     required this.totalBalance,
   });
 
-  /// معرف المورد.
+  /// Unique supplier identifier.
   final String supplierId;
 
-  /// اسم المورد بالعربية.
+  /// Supplier name in Arabic.
   final String supplierNameAr;
 
-  /// اسم المورد بالإنجليزية.
+  /// Supplier name in English.
   final String supplierNameEn;
 
-  /// الديون الحالية (لم تستحق بعد).
+  /// Current liabilities not yet due.
   final Decimal current;
 
-  /// الديون المتأخرة من 1 إلى 30 يوم.
+  /// Past due liabilities (1-30 days).
   final Decimal period1_30;
 
-  /// الديون المتأخرة من 31 إلى 60 يوم.
+  /// Past due liabilities (31-60 days).
   final Decimal period31_60;
 
-  /// الديون المتأخرة لأكثر من 90 يوم.
+  /// Long-term past due liabilities (>90 days).
   final Decimal periodOver90;
 
-  /// إجمالي رصيد الديون المستحقة للمورد.
+  /// Aggregated outstanding balance owed to the supplier.
   final Decimal totalBalance;
 
-  /// الحصول على الاسم المناسب حسب اللغة
+  /// Returns the localized supplier name based on the system locale.
   String name({required bool isArabic}) =>
       isArabic ? supplierNameAr : supplierNameEn;
 }
 
-/// خدمة حسابات الموردين (Accounts Payable Service)
-/// تدير الالتزامات المالية والديون المستحقة للموردين.
+/// Accounts Payable (AP) Service for managing supplier liabilities and
+/// obligations.
+///
+/// Implements logic for debt tracking, supplier ledger analysis, and
+/// detailed aging for financial obligations.
 @riverpod
 class AccountsPayableService extends _$AccountsPayableService {
   @override
   FutureOr<void> build() {}
 
-  /// الحصول على رصيد مورد محدد
+  /// Retrieves the current outstanding balance for a specific supplier.
+  ///
+  /// Analyzes posted journal entries against the supplier's dedicated
+  /// payable account.
+  ///
+  /// Note: In liabilities (CR nature), Credit increases balance and Debit
+  /// decreases it.
   Future<Decimal> getSupplierBalance(String supplierId) async {
     final repository = ref.read(accountingRepositoryProvider);
     final vendorRepo = ref.read(vendorRepositoryProvider);
@@ -72,7 +83,6 @@ class AccountsPayableService extends _$AccountsPayableService {
         if (line.accountId == targetAccountId ||
             (targetAccountId == 'acc-2101' &&
                 line.accountName.contains(supplierId))) {
-          // في الخصوم: الدائن يزيد الرصيد والمدين ينقصه
           balance += line.credit - line.debit;
         }
       }
@@ -80,7 +90,10 @@ class AccountsPayableService extends _$AccountsPayableService {
     return balance;
   }
 
-  /// تقرير تعمير الديون بالتفصيل لكل مورد (Detailed Aging Report)
+  /// Generates a comprehensive aging report for all payables.
+  ///
+  /// Categorizes outstanding balances into 30/60/90+ day buckets based on
+  /// transaction dates from posted journal entries.
   Future<List<SupplierAging>> getPayablesAging() async {
     final accountingRepo = ref.read(accountingRepositoryProvider);
     final vendorRepo = ref.read(vendorRepositoryProvider);
@@ -141,7 +154,9 @@ class AccountsPayableService extends _$AccountsPayableService {
     return result;
   }
 
-  /// كشف حساب مورد (Detailed Ledger)
+  /// Retrieves a detailed general ledger for a specific supplier.
+  ///
+  /// Returns all journal entries impacting the supplier's payable account.
   Future<List<JournalEntry>> getSupplierLedger(String supplierId) async {
     final repository = ref.read(accountingRepositoryProvider);
     final vendorRepo = ref.read(vendorRepositoryProvider);

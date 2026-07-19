@@ -1,5 +1,6 @@
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -11,16 +12,18 @@ void main() {
         invoiceNumber: 'INV-001',
         customerId: 'cust_1',
         customerName: 'أحمد محمد',
-        items: const [],
+        items: [],
         issuedDate: now,
         dueDate: now.add(const Duration(days: 30)),
-        taxRate: 0.15,
+        taxRate: Decimal.parse('0.15'),
         status: InvoiceStatus.draft,
-        subtotalAmount: 0,
-        taxAmount: 0,
-        totalAmount: 0,
-        paidAmount: 0,
-        discountAmount: 0,
+        subtotalAmount: Decimal.zero,
+        taxAmount: Decimal.zero,
+        totalAmount: Decimal.zero,
+        paidAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
         createdAt: now,
         updatedAt: now,
       );
@@ -34,21 +37,23 @@ void main() {
 
     test('Invoice fields verification', () {
       final now = DateTime.now();
-      const item1 = InvoiceItem(
+      final item1 = InvoiceItem(
+        taxRate: Decimal.parse('0.15'),
         id: '1',
         name: 'خدمة استشارة',
-        quantity: 2,
-        price: 500,
-        total: 1000,
-        taxAmount: 150,
+        quantity: Decimal.fromInt(2),
+        price: Decimal.fromInt(500),
+        total: Decimal.fromInt(1000),
+        taxAmount: Decimal.fromInt(150),
       );
-      const item2 = InvoiceItem(
+      final item2 = InvoiceItem(
         id: '2',
         name: 'خدمة تطوير',
-        quantity: 1,
-        price: 500,
-        total: 500,
-        taxAmount: 75,
+        quantity: Decimal.one,
+        price: Decimal.fromInt(500),
+        total: Decimal.fromInt(500),
+        taxAmount: Decimal.fromInt(75),
+        taxRate: Decimal.parse('0.15'),
       );
 
       final invoice = Invoice(
@@ -56,35 +61,39 @@ void main() {
         invoiceNumber: 'INV-001',
         customerId: 'cust_1',
         customerName: 'أحمد محمد',
-        items: const [item1, item2],
+        items: [item1, item2],
         issuedDate: now,
         dueDate: now.add(const Duration(days: 30)),
-        taxRate: 0.15,
+        taxRate: Decimal.parse('0.15'),
         status: InvoiceStatus.sent,
-        subtotalAmount: 1500,
-        taxAmount: 225,
-        totalAmount: 1725,
-        paidAmount: 0,
-        discountAmount: 0,
+        subtotalAmount: Decimal.parse('1500'),
+        taxAmount: Decimal.parse('225'),
+        totalAmount: Decimal.parse('1725'),
+        paidAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
         createdAt: now,
         updatedAt: now,
       );
 
-      expect(invoice.subtotalAmount, equals(1500.0));
-      expect(invoice.taxAmount, equals(225.0));
-      expect(invoice.totalAmount, equals(1725.0));
+      expect(invoice.subtotalAmount, equals(Decimal.parse('1500')));
+      expect(invoice.taxAmount, equals(Decimal.parse('225')));
+      expect(invoice.totalAmount, equals(Decimal.parse('1725')));
     });
 
     test('InvoiceItem total verification', () {
-      const item = InvoiceItem(
+      final item = InvoiceItem(
+        taxRate: Decimal.parse('0.15'),
         id: '1',
         name: 'خدمة',
-        quantity: 3,
-        price: 100,
-        total: 300,
+        quantity: Decimal.fromInt(3),
+        price: Decimal.fromInt(100),
+        total: Decimal.fromInt(300),
+        taxAmount: Decimal.fromInt(45),
       );
 
-      expect(item.total, equals(300.0));
+      expect(item.total, equals(Decimal.fromInt(300)));
     });
 
     test('Invoice equality', () {
@@ -94,16 +103,18 @@ void main() {
         invoiceNumber: 'INV-001',
         customerId: 'cust_1',
         customerName: 'أحمد',
-        items: const [],
+        items: [],
         issuedDate: now,
         dueDate: now.add(const Duration(days: 30)),
-        taxRate: 0.15,
+        taxRate: Decimal.parse('0.15'),
         status: InvoiceStatus.draft,
-        subtotalAmount: 0,
-        taxAmount: 0,
-        totalAmount: 0,
-        paidAmount: 0,
-        discountAmount: 0,
+        subtotalAmount: Decimal.zero,
+        taxAmount: Decimal.zero,
+        totalAmount: Decimal.zero,
+        paidAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
         createdAt: now,
         updatedAt: now,
       );
@@ -112,16 +123,18 @@ void main() {
         invoiceNumber: 'INV-001',
         customerId: 'cust_1',
         customerName: 'أحمد',
-        items: const [],
+        items: [],
         issuedDate: now,
         dueDate: now.add(const Duration(days: 30)),
-        taxRate: 0.15,
+        taxRate: Decimal.parse('0.15'),
         status: InvoiceStatus.draft,
-        subtotalAmount: 0,
-        taxAmount: 0,
-        totalAmount: 0,
-        paidAmount: 0,
-        discountAmount: 0,
+        subtotalAmount: Decimal.zero,
+        taxAmount: Decimal.zero,
+        totalAmount: Decimal.zero,
+        paidAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
         createdAt: now,
         updatedAt: now,
       );

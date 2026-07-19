@@ -1,5 +1,6 @@
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:decimal/decimal.dart';
 
 /// واجهة مستودع الفواتير (Invoice Repository Interface)
 ///
@@ -50,9 +51,7 @@ abstract class InvoiceRepository {
   ///   debugPrint('الفاتورة: ${invoice.id}',);
   /// }
   /// ```
-  Future<Invoice?> getInvoiceById(
-    String id,
-  );
+  Future<Invoice?> getInvoiceById(String id);
 
   /// الحصول على فواتير عميل معين
   ///
@@ -68,9 +67,7 @@ abstract class InvoiceRepository {
   /// final invoices = await repository.getInvoicesByCustomerId('customer-1',);
   /// debugPrint('عدد فواتير العميل: ${invoices.length}',);
   /// ```
-  Future<List<Invoice>> getInvoicesByCustomerId(
-    String customerId,
-  );
+  Future<List<Invoice>> getInvoicesByCustomerId(String customerId);
 
   /// الحصول على فواتير حسب الحالة
   ///
@@ -88,9 +85,7 @@ abstract class InvoiceRepository {
   /// );
   /// debugPrint('الفواتير المدفوعة: ${paidInvoices.length}',);
   /// ```
-  Future<List<Invoice>> getInvoicesByStatus(
-    InvoiceStatus status,
-  );
+  Future<List<Invoice>> getInvoicesByStatus(InvoiceStatus status);
 
   /// إضافة فاتورة جديدة
   ///
@@ -106,9 +101,7 @@ abstract class InvoiceRepository {
   /// final invoice = Invoice(...,);
   /// await repository.addInvoice(invoice,);
   /// ```
-  Future<void> addInvoice(
-    Invoice invoice,
-  );
+  Future<void> addInvoice(Invoice invoice);
 
   /// تحديث بيانات فاتورة
   ///
@@ -124,9 +117,7 @@ abstract class InvoiceRepository {
   /// final updatedInvoice = invoice.copyWith(status: 'paid',);
   /// await repository.updateInvoice(updatedInvoice,);
   /// ```
-  Future<void> updateInvoice(
-    Invoice invoice,
-  );
+  Future<void> updateInvoice(Invoice invoice);
 
   /// حذف فاتورة
   ///
@@ -141,9 +132,7 @@ abstract class InvoiceRepository {
   /// ```dart
   /// await repository.deleteInvoice('inv-001',);
   /// ```
-  Future<void> deleteInvoice(
-    String id,
-  );
+  Future<void> deleteInvoice(String id);
 
   /// حذف جميع الفواتير
   ///
@@ -176,31 +165,8 @@ abstract class InvoiceRepository {
 /// إحصائيات الفواتير (Invoice Statistics)
 ///
 /// كائن يحتوي على إحصائيات شاملة عن جميع الفواتير في النظام.
-///
-/// **الإحصائيات المتوفرة:**
-/// - عدد الفواتير (الإجمالي، المدفوعة، المتأخرة)
-/// - الإيرادات (الإجمالية، المدفوعة)
-///
-/// **مثال:**
-/// ```dart
-/// final stats = InvoiceStatistics(
-///   totalInvoices: 100,
-///   paidInvoices: 75,
-///   overdueInvoices: 10,
-///   totalRevenue: 50000.0,
-///   paidRevenue: 37500.0,
-///,);
-/// debugPrint('نسبة الدفع: ${(stats.paidInvoices / stats.totalInvoices) * 100}%',);
-/// ```
 class InvoiceStatistics {
   /// إنشاء كائن إحصائيات الفواتير
-  ///
-  /// **Parameters:**
-  /// - [totalInvoices]: إجمالي عدد الفواتير
-  /// - [paidInvoices]: عدد الفواتير المدفوعة
-  /// - [overdueInvoices]: عدد الفواتير المتأخرة
-  /// - [totalRevenue]: إجمالي الإيرادات (جميع الفواتير)
-  /// - [paidRevenue]: الإيرادات المدفوعة فعلياً
   const InvoiceStatistics({
     required this.totalInvoices,
     required this.paidInvoices,
@@ -219,12 +185,8 @@ class InvoiceStatistics {
   final int overdueInvoices;
 
   /// إجمالي الإيرادات من جميع الفواتير
-  ///
-  /// يشمل جميع الفواتير بغض النظر عن حالتها.
-  final double totalRevenue;
+  final Decimal totalRevenue;
 
   /// الإيرادات المدفوعة فعلياً
-  ///
-  /// يشمل فقط الفواتير ذات حالة 'paid'.
-  final double paidRevenue;
+  final Decimal paidRevenue;
 }

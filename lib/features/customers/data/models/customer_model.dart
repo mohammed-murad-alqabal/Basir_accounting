@@ -1,5 +1,5 @@
-import 'package:basir_app/core/models/sync_status.dart';
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
 import 'package:isar/isar.dart';
 
 part 'customer_model.g.dart';

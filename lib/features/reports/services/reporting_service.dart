@@ -1,4 +1,4 @@
-import 'package:basir_app/src/rust/api/reports.dart' as rust;
+import 'package:basir_accounting_system/src/rust/api/reports.dart' as rust;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Wrapper for native reporting functions to allow mocking.
@@ -32,8 +32,12 @@ class NativeReportingApi {
   /// Generate a Balance Sheet.
   Future<rust.FinancialReportDto> generateBalanceSheet({
     required String asOfDate,
+    Map<String, String>? fairValuationUpdates,
   }) =>
-      rust.generateBalanceSheet(asOfDate: asOfDate);
+      rust.generateBalanceSheet(
+        asOfDate: asOfDate,
+        fairValuationUpdates: fairValuationUpdates,
+      );
 
   /// Generate a Statement of Cash Flows.
   Future<rust.FinancialReportDto> generateCashFlowStatement({
@@ -65,8 +69,9 @@ class NativeReportingApi {
 /// خدمة جلب التقارير المالية من المحرك الأساسي (Rust).
 class ReportingService {
   /// Creates a reporting service.
-  ReportingService({NativeReportingApi? api})
-      : _api = api ?? NativeReportingApi();
+  ReportingService({
+    NativeReportingApi? api,
+  }) : _api = api ?? NativeReportingApi();
 
   final NativeReportingApi _api;
 
@@ -81,7 +86,7 @@ class ReportingService {
         periodStart: periodStart,
       );
     } catch (e) {
-      // TODO(m): improvements on error handling (e.g. converting to domain)
+      // TODO(basir): improvements on error handling (e.g. converting to domain)
       rethrow;
     }
   }
@@ -103,17 +108,16 @@ class ReportingService {
     required String fromDate,
     required String toDate,
   }) async =>
-      _api.generateIncomeStatement(
-        fromDate: fromDate,
-        toDate: toDate,
-      );
+      _api.generateIncomeStatement(fromDate: fromDate, toDate: toDate);
 
   /// Generate a Balance Sheet.
   Future<rust.FinancialReportDto> generateBalanceSheet({
     required String asOfDate,
+    Map<String, String>? fairValuationUpdates,
   }) async =>
       _api.generateBalanceSheet(
         asOfDate: asOfDate,
+        fairValuationUpdates: fairValuationUpdates,
       );
 
   /// Generate a Statement of Cash Flows.
@@ -121,38 +125,29 @@ class ReportingService {
     required String fromDate,
     required String toDate,
   }) async =>
-      _api.generateCashFlowStatement(
-        fromDate: fromDate,
-        toDate: toDate,
-      );
+      _api.generateCashFlowStatement(fromDate: fromDate, toDate: toDate);
 
   /// Generate Accounts Receivable Aging Report.
   Future<List<rust.AgingReportLineDto>> getReceivablesAging({
     required String asOfDate,
   }) async =>
-      _api.getReceivablesAging(
-        asOfDate: asOfDate,
-      );
+      _api.getReceivablesAging(asOfDate: asOfDate);
 
   /// Generate Accounts Payable Aging Report.
   Future<List<rust.AgingReportLineDto>> getPayablesAging({
     required String asOfDate,
   }) async =>
-      _api.getPayablesAging(
-        asOfDate: asOfDate,
-      );
+      _api.getPayablesAging(asOfDate: asOfDate);
 
   /// Generate Zakah Statement.
   Future<rust.FinancialReportDto> generateZakahStatement({
     required String asOfDate,
     required rust.ZakahCalendarDto calendar,
   }) async =>
-      _api.generateZakahStatement(
-        asOfDate: asOfDate,
-        calendar: calendar,
-      );
+      _api.generateZakahStatement(asOfDate: asOfDate, calendar: calendar);
 }
 
 /// Provider for the [ReportingService].
-final nativeReportingServiceProvider =
-    Provider<ReportingService>((ref) => ReportingService());
+final nativeReportingServiceProvider = Provider<ReportingService>(
+  (ref) => ReportingService(),
+);

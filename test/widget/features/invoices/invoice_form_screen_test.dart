@@ -1,7 +1,9 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/presentation/screens/invoice_form_screen.dart';
-import 'package:basir_app/l10n/app_localizations.dart'; // Fixed import
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart'; // Fixed import
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,6 +23,15 @@ void main() {
 
   Widget createTestWidget({Invoice? invoice}) => ProviderScope(
         overrides: [
+          appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          currentUserProfileProvider.overrideWith(
+            (ref) => const BasirUser(
+              id: 'test-user',
+              email: 'test@example.com',
+              displayName: 'Test User',
+              role: UserRole.admin,
+            ),
+          ),
           customerRepositoryProvider.overrideWithValue(mockCustomerRepository),
           invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepository),
         ],
@@ -73,33 +84,47 @@ void main() {
     });
 
     testWidgets(
-        'should display date in Hijri when calendar preference is Hijri',
-        (tester) async {
-      final date = DateTime(2023, 10, 27);
-      final invoice = InvoiceFixtures.invoice1.copyWith(issuedDate: date);
+      'should display date in Hijri when calendar preference is Hijri',
+      (tester) async {
+        final date = DateTime(2023, 10, 27);
+        final invoice = InvoiceFixtures.invoice1.copyWith(issuedDate: date);
 
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            calendarProvider
-                .overrideWith(() => _MockCalendarNotifier(CalendarType.hijri)),
-            customerRepositoryProvider
-                .overrideWithValue(mockCustomerRepository),
-            invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepository),
-          ],
-          child: MaterialApp(
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            locale: const Locale('ar'),
-            home: InvoiceFormScreen(invoice: invoice),
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+              currentUserProfileProvider.overrideWith(
+                (ref) => const BasirUser(
+                  id: 'test-user',
+                  email: 'test@example.com',
+                  displayName: 'Test User',
+                  role: UserRole.admin,
+                ),
+              ),
+              calendarProvider.overrideWith(
+                () => _MockCalendarNotifier(CalendarType.hijri),
+              ),
+              customerRepositoryProvider.overrideWithValue(
+                mockCustomerRepository,
+              ),
+              invoiceRepositoryProvider.overrideWithValue(
+                mockInvoiceRepository,
+              ),
+            ],
+            child: MaterialApp(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              locale: const Locale('ar'),
+              home: InvoiceFormScreen(invoice: invoice),
+            ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
+        );
+        await tester.pumpAndSettle();
 
-      // Check for Hijri year "١٤٤٥"
-      expect(find.textContaining('١٤٤٥'), findsOneWidget);
-    });
+        // Check for Hijri year "١٤٤٥"
+        expect(find.textContaining('١٤٤٥'), findsOneWidget);
+      },
+    );
   });
 }
 

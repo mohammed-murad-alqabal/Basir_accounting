@@ -1,24 +1,24 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/providers/supabase_auth_provider.dart';
-import 'package:basir_app/features/accounting/application/accounting_service.dart';
-import 'package:basir_app/features/accounting/application/accounts_payable_service.dart';
-import 'package:basir_app/features/accounting/application/accounts_receivable_service.dart';
-import 'package:basir_app/features/accounting/application/financial_reporting_service.dart';
-import 'package:basir_app/features/accounting/application/treasury_service.dart';
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/domain/entities/financial_voucher.dart';
-import 'package:basir_app/features/accounting/domain/entities/financial_year.dart';
-import 'package:basir_app/features/accounting/domain/entities/ifrs18_ontology.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
-import 'package:basir_app/features/accounting/domain/repositories/accounting_repository.dart';
-import 'package:basir_app/features/accounting/domain/repositories/financial_voucher_repository.dart';
-import 'package:basir_app/features/accounting/domain/repositories/financial_year_repository.dart';
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
-import 'package:basir_app/features/customers/domain/repositories/customer_repository.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/features/vendors/domain/entities/vendor.dart';
-import 'package:basir_app/features/vendors/domain/repositories/vendor_repository.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/providers/supabase_auth_provider.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounts_payable_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounts_receivable_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/financial_reporting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/treasury_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/ifrs18_ontology.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
+import 'package:basir_accounting_system/features/accounting/domain/repositories/financial_voucher_repository.dart';
+import 'package:basir_accounting_system/features/accounting/domain/repositories/financial_year_repository.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/customers/domain/repositories/customer_repository.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/vendors/domain/entities/vendor.dart';
+import 'package:basir_accounting_system/features/vendors/domain/repositories/vendor_repository.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -48,9 +48,7 @@ class InMemoryCustomerRepository implements CustomerRepository {
   @override
   Future<List<Customer>> searchCustomers(String query) async =>
       _customers.values
-          .where(
-            (c) => c.nameAr.contains(query) || c.nameEn.contains(query),
-          )
+          .where((c) => c.nameAr.contains(query) || c.nameEn.contains(query))
           .toList();
 
   @override
@@ -79,9 +77,7 @@ class InMemoryVendorRepository implements VendorRepository {
 
   @override
   Future<List<Vendor>> searchVendors(String query) async => _vendors.values
-      .where(
-        (v) => v.nameAr.contains(query) || v.nameEn.contains(query),
-      )
+      .where((v) => v.nameAr.contains(query) || v.nameEn.contains(query))
       .toList();
 }
 
@@ -141,10 +137,12 @@ void main() {
     test(
         'Verification 1: Accounting Equation Integrity '
         '(Assets = Liabilities + Equity)', () async {
-      final accountingService =
-          container.read(accountingServiceProvider.notifier);
-      final reportingService =
-          container.read(financialReportingServiceProvider.notifier);
+      final accountingService = container.read(
+        accountingServiceProvider.notifier,
+      );
+      final reportingService = container.read(
+        financialReportingServiceProvider.notifier,
+      );
       final fyRepository = container.read(financialYearRepositoryProvider);
 
       // Step 0: Seed a financial year
@@ -169,23 +167,26 @@ void main() {
         customerName: 'Global Client',
         issuedDate: DateTime.now(),
         dueDate: DateTime.now().add(const Duration(days: 30)),
-        taxRate: 0.15,
+        taxRate: Decimal.parse('0.15'),
         status: InvoiceStatus.sent,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
-        subtotalAmount: 1000,
-        taxAmount: 150,
-        totalAmount: 1150,
-        paidAmount: 0,
-        discountAmount: 0,
+        subtotalAmount: Decimal.fromInt(1000),
+        taxAmount: Decimal.fromInt(150),
+        totalAmount: Decimal.fromInt(1150),
+        paidAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        exchangeRate: Decimal.one,
         items: [
-          const InvoiceItem(
+          InvoiceItem(
+            taxRate: Decimal.parse('0.15'),
             id: 'item-1',
             name: 'Elite Consulting',
-            quantity: 1,
-            price: 1000,
-            total: 1000,
-            taxAmount: 150,
+            quantity: Decimal.one,
+            price: Decimal.fromInt(1000),
+            total: Decimal.fromInt(1000),
+            taxAmount: Decimal.fromInt(150),
           ),
         ],
       );
@@ -195,8 +196,8 @@ void main() {
       // Step 3: Verify Trial Balance sums
       final trialBalance = await reportingService.getTrialBalance();
 
-      var totalDebit = 0.0;
-      var totalCredit = 0.0;
+      var totalDebit = Decimal.zero;
+      var totalCredit = Decimal.zero;
 
       for (final report in trialBalance) {
         totalDebit += report.debit;
@@ -206,15 +207,16 @@ void main() {
       expect(totalDebit, totalCredit, reason: 'Trial Balance must be equal');
       expect(
         totalDebit,
-        1150.0,
+        Decimal.fromInt(1150),
         reason: 'Total movement should be 1150 (sum of debits) or '
             '1150 (sum of credits)',
       );
     });
 
     test('Verification 2: Decimal Precision (No Rounding Errors)', () async {
-      final accountingService =
-          container.read(accountingServiceProvider.notifier);
+      final accountingService = container.read(
+        accountingServiceProvider.notifier,
+      );
 
       await accountingService.seedDefaultAccounts();
 
@@ -236,10 +238,12 @@ void main() {
     });
 
     test('Verification 3: AR Aging Logic (Institutional Buckets)', () async {
-      final arService =
-          container.read(accountsReceivableServiceProvider.notifier);
-      final accountingService =
-          container.read(accountingServiceProvider.notifier);
+      final arService = container.read(
+        accountsReceivableServiceProvider.notifier,
+      );
+      final accountingService = container.read(
+        accountingServiceProvider.notifier,
+      );
 
       await accountingService.seedDefaultAccounts();
 
@@ -248,76 +252,87 @@ void main() {
       expect(report.isEmpty, true);
     });
 
-    test('Verification 4: Treasury Service (Receipt & Payment Vouchers)',
-        () async {
-      final treasuryService = container.read(treasuryServiceProvider.notifier);
-      final accountingService =
-          container.read(accountingServiceProvider.notifier);
-      final fyRepository = container.read(financialYearRepositoryProvider);
-      final reportingService =
-          container.read(financialReportingServiceProvider.notifier);
+    test(
+      'Verification 4: Treasury Service (Receipt & Payment Vouchers)',
+      () async {
+        final treasuryService = container.read(
+          treasuryServiceProvider.notifier,
+        );
+        final accountingService = container.read(
+          accountingServiceProvider.notifier,
+        );
+        final fyRepository = container.read(financialYearRepositoryProvider);
+        final reportingService = container.read(
+          financialReportingServiceProvider.notifier,
+        );
 
-      // Setup
-      final now = DateTime.now();
-      await fyRepository.saveFinancialYear(
-        FinancialYear(
-          id: 'fy-2025',
-          name: 'FY 2025',
-          startDate: DateTime(now.year),
-          endDate: DateTime(now.year, 12, 31),
-        ),
-      );
-      await accountingService.seedDefaultAccounts();
+        // Setup
+        final now = DateTime.now();
+        await fyRepository.saveFinancialYear(
+          FinancialYear(
+            id: 'fy-2025',
+            name: 'FY 2025',
+            startDate: DateTime(now.year),
+            endDate: DateTime(now.year, 12, 31),
+          ),
+        );
+        await accountingService.seedDefaultAccounts();
 
-      // 1. Issue Receipt (Dr Cash, Cr Account)
-      final receipt = FinancialVoucher(
-        id: 'rv-001',
-        referenceNumber: 'RV-2025-001',
-        date: now,
-        type: VoucherType.receipt,
-        paymentMethod: PaymentMethod.cash,
-        amount: Decimal.parse('500'),
-        accountId: 'acc-1201', // AR
-        treasuryAccountId: 'acc-1101', // Cash
-        description: 'Test Receipt',
-        createdAt: now,
-      );
-      await treasuryService.issueReceipt(receipt);
+        // 1. Issue Receipt (Dr Cash, Cr Account)
+        final receipt = FinancialVoucher(
+          id: 'rv-001',
+          referenceNumber: 'RV-2025-001',
+          date: now,
+          type: VoucherType.receipt,
+          paymentMethod: PaymentMethod.cash,
+          amount: Decimal.parse('500'),
+          accountId: 'acc-1201', // AR
+          treasuryAccountId: 'acc-1101', // Cash
+          description: 'Test Receipt',
+          createdAt: now,
+        );
+        await treasuryService.issueReceipt(receipt);
 
-      final balance = await reportingService.getTrialBalance();
-      final cashAcc = balance.firstWhere((b) => b.account.id == 'acc-1101');
-      expect(cashAcc.balance, 500.0, reason: 'Cash should increase by 500');
+        final balance = await reportingService.getTrialBalance();
+        final cashAcc = balance.firstWhere((b) => b.account.id == 'acc-1101');
+        expect(
+          cashAcc.balance,
+          Decimal.fromInt(500),
+          reason: 'Cash should increase by 500',
+        );
 
-      // 2. Issue Payment (Dr Account, Cr Cash)
-      final payment = FinancialVoucher(
-        id: 'pv-001',
-        referenceNumber: 'PV-2025-001',
-        date: now,
-        type: VoucherType.payment,
-        paymentMethod: PaymentMethod.cash,
-        amount: Decimal.parse('200'),
-        accountId: 'acc-5', // Expenses
-        treasuryAccountId: 'acc-1101',
-        description: 'Test Expense',
-        createdAt: now,
-      );
-      await treasuryService.issuePayment(payment);
+        // 2. Issue Payment (Dr Account, Cr Cash)
+        final payment = FinancialVoucher(
+          id: 'pv-001',
+          referenceNumber: 'PV-2025-001',
+          date: now,
+          type: VoucherType.payment,
+          paymentMethod: PaymentMethod.cash,
+          amount: Decimal.parse('200'),
+          accountId: 'acc-5', // Expenses
+          treasuryAccountId: 'acc-1101',
+          description: 'Test Expense',
+          createdAt: now,
+        );
+        await treasuryService.issuePayment(payment);
 
-      final updatedBalance = await reportingService.getTrialBalance();
-      final cashAccUpdated = updatedBalance.firstWhere(
-        (b) => b.account.id == 'acc-1101',
-      );
-      expect(
-        cashAccUpdated.balance,
-        300.0,
-        reason: 'Cash should decrease to 300 (500-200)',
-      );
-    });
+        final updatedBalance = await reportingService.getTrialBalance();
+        final cashAccUpdated = updatedBalance.firstWhere(
+          (b) => b.account.id == 'acc-1101',
+        );
+        expect(
+          cashAccUpdated.balance,
+          Decimal.fromInt(300),
+          reason: 'Cash should decrease to 300 (500-200)',
+        );
+      },
+    );
 
     test('Verification 5: Accounts Payable (AP) Logic', () async {
       final apService = container.read(accountsPayableServiceProvider.notifier);
-      final accountingService =
-          container.read(accountingServiceProvider.notifier);
+      final accountingService = container.read(
+        accountingServiceProvider.notifier,
+      );
       final repository = container.read(accountingRepositoryProvider);
 
       await accountingService.seedDefaultAccounts();
@@ -378,10 +393,12 @@ void main() {
     });
 
     test('Verification 6: IFRS 18 Categorization Integrity', () async {
-      final reportingService =
-          container.read(financialReportingServiceProvider.notifier);
-      final accountingService =
-          container.read(accountingServiceProvider.notifier);
+      final reportingService = container.read(
+        financialReportingServiceProvider.notifier,
+      );
+      final accountingService = container.read(
+        accountingServiceProvider.notifier,
+      );
 
       await accountingService.seedDefaultAccounts();
 

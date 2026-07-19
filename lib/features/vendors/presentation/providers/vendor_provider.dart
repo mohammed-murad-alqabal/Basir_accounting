@@ -1,5 +1,5 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/vendors/domain/entities/vendor.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/vendors/domain/entities/vendor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -49,18 +49,26 @@ final filteredVendorsProvider = Provider<AsyncValue<List<Vendor>>>((ref) {
 
   return vendorsAsync.whenData((vendors) {
     if (searchQuery.isEmpty) return vendors;
-    return vendors.where(
-      (v) {
-        final nameAr = v.nameAr.toLowerCase();
-        final nameEn = v.nameEn.toLowerCase();
-        final email = (v.email ?? '').toLowerCase();
-        final phone = (v.phone ?? '').toLowerCase();
+    return vendors.where((v) {
+      final nameAr = v.nameAr.toLowerCase();
+      final nameEn = v.nameEn.toLowerCase();
+      final email = (v.email ?? '').toLowerCase();
+      final phone = (v.phone ?? '').toLowerCase();
 
-        return nameAr.contains(searchQuery) ||
-            nameEn.contains(searchQuery) ||
-            email.contains(searchQuery) ||
-            phone.contains(searchQuery);
-      },
-    ).toList();
+      return nameAr.contains(searchQuery) ||
+          nameEn.contains(searchQuery) ||
+          email.contains(searchQuery) ||
+          phone.contains(searchQuery);
+    }).toList();
   });
+});
+
+/// Provider لإجمالي أرصدة الموردين
+final totalVendorsBalanceProvider = Provider<double>((ref) {
+  final vendorsAsync = ref.watch(vendorsProvider);
+  return vendorsAsync.when(
+    data: (vendors) => vendors.fold(0, (sum, v) => sum + v.balance),
+    loading: () => 0.0,
+    error: (_, __) => 0.0,
+  );
 });

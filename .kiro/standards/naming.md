@@ -1,71 +1,71 @@
-# معايير التسمية
+# Naming Standards
 
-**المشروع:** بصير MVP  
-**الحالة:** ✅ نشط
+**Project:** Basir MVP  
+**Status:** ✅ Active
 
 ---
 
-## القواعد الأساسية
+## Core Rules
 
-### الملفات والمجلدات
+### Files and Directories
 
-- **الصيغة:** `snake_case`
-- **مثال:** `customer_repository.dart`, `invoice_model.dart`
+- **Format:** `snake_case`
+- **Example:** `customer_repository.dart`, `invoice_model.dart`
 
-### Classes و Enums
+### Classes and Enums
 
-- **الصيغة:** `PascalCase`
-- **مثال:** `CustomerRepository`, `InvoiceStatus`
+- **Format:** `PascalCase`
+- **Example:** `CustomerRepository`, `InvoiceStatus`
 
-### Functions و Methods
+### Functions and Methods
 
-- **الصيغة:** `camelCase`
-- **مثال:** `getAllCustomers()`, `validateEmail()`
+- **Format:** `camelCase`
+- **Example:** `getAllCustomers()`, `validateEmail()`
 
-### Variables و Properties
+### Variables and Properties
 
-- **الصيغة:** `camelCase`
-- **مثال:** `customerName`, `invoiceCount`
+- **Format:** `camelCase`
+- **Example:** `customerName`, `invoiceCount`
 
 ### Constants
 
-- **الصيغة:** `lowerCamelCase`
-- **مثال:** `maxRetries`, `apiTimeout`
+- **Format:** `lowerCamelCase` (following official Dart style for most cases)
+- **Example:** `maxRetries`, `apiTimeout`
 
 ### Private Members
 
-- **الصيغة:** `_prefix`
-- **مثال:** `_privateToken`, `_validateInput()`
+- **Format:** `_prefix` (underscore prefix)
+- **Example:** `_privateToken`, `_validateInput()`
 
 ---
 
-## الأخطاء الشائعة
+## Common Corrections
 
-| ❌ خطأ                    | ✅ صحيح                      |
-| :------------------------ | :--------------------------- |
-| `CustomerRepository.dart` | `customer_repository.dart`   |
-| `customer_repository`     | `CustomerRepository` (class) |
-| `GetAllCustomers()`       | `getAllCustomers()`          |
-| `MAX_RETRIES`             | `maxRetries`                 |
+| ❌ Incorrect              | ✅ Correct                      |
+| :------------------------ | :------------------------------ |
+| `CustomerRepository.dart` | `customer_repository.dart`      |
+| `customer_repository`     | `CustomerRepository` (as class) |
+| `GetAllCustomers()`       | `getAllCustomers()`             |
+| `MAX_RETRIES`             | `maxRetries`                    |
 
 ---
 
-## قواعد إضافية
+## Additional Guidelines
 
-### Widget Names
+### Widget Naming
 
-- استخدام prefixes واضحة: `AppButton`, `CustomerCard`
-- تجنب أسماء عامة: ❌ `Button`, ✅ `AppButton`
+- Use clear and descriptive prefixes: `AppButton`, `CustomerCard`.
+- Avoid generic names that may conflict: ❌ `Button`, ✅ `AppButton`.
 
-### Provider Names
+### Provider Naming
 
-- استخدام suffixes مناسبة: `customersProvider`, `authNotifier`
+- Use appropriate suffixes for clarity: `customersProvider`, `authNotifier`.
 
 ### Test Files
 
-- نفس اسم الملف + `.test.dart`
-- مثال: `customer_repository.dart` → `customer_repository.test.dart`
+- File naming follows the source file name + `.test.dart` or `_test.dart` (following Flutter convention).
+- Example: `customer_repository.dart` → `customer_repository_test.dart`.
 
 ---
 
-**للأمثلة التفصيلية:** `.kiro/steering/reference/naming-examples.md`
+**For detailed examples, refer to:** `.kiro/steering/reference/naming-examples.md`
