@@ -41,7 +41,7 @@ class AnalyticsService extends _$AnalyticsService {
           (a.code.startsWith('21') || a.subType == 'ap' || a.subType == 'tax'),
     );
 
-    var currentRatio = 0;
+    var currentRatio = 0.0;
     if (currentLiabilities > Decimal.zero) {
       currentRatio = (currentAssets / currentLiabilities).toDouble();
     }
@@ -57,7 +57,7 @@ class AnalyticsService extends _$AnalyticsService {
     );
     final netIncome = totalRevenue - totalExpenses;
 
-    var profitMargin = 0;
+    var profitMargin = 0.0;
     if (totalRevenue > Decimal.zero) {
       profitMargin = (netIncome / totalRevenue).toDouble() * 100;
     }
