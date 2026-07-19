@@ -1,3 +1,4 @@
+import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/app_app_bar.dart';
@@ -13,8 +14,11 @@ void main() {
 
       // Act
       await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(appBar: AppAppBar(title: title)),
@@ -29,8 +33,11 @@ void main() {
     testWidgets('should show back button by default', (tester) async {
       // Arrange & Act
       await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(appBar: AppAppBar(title: 'Test')),
@@ -47,8 +54,11 @@ void main() {
     ) async {
       // Arrange & Act
       await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(
@@ -70,6 +80,9 @@ void main() {
 
       await tester.pumpWidget(
         ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
           child: MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
@@ -120,6 +133,9 @@ void main() {
       // Act
       await tester.pumpWidget(
         ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
           child: MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
@@ -158,8 +174,11 @@ void main() {
 
       // Act
       await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(
@@ -182,8 +201,11 @@ void main() {
     testWidgets('should use default colors when not provided', (tester) async {
       // Arrange & Act
       await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(appBar: AppAppBar(title: 'Test')),
@@ -200,8 +222,11 @@ void main() {
     testWidgets('should have elevation of 0', (tester) async {
       // Arrange & Act
       await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(appBar: AppAppBar(title: 'Test')),
@@ -217,8 +242,11 @@ void main() {
     testWidgets('should center title', (tester) async {
       // Arrange & Act
       await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(appBar: AppAppBar(title: 'Test')),

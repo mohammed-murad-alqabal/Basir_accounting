@@ -17,9 +17,9 @@ void showCognitiveHint(BuildContext context, String message, {String? title}) {
           tween: Tween(begin: 0, end: 1),
           curve: Curves.easeOutBack,
           builder: (context, val, child) => Transform.scale(
-            scale: val,
+            scale: val.clamp(0.0, 1.0),
             child: Opacity(
-              opacity: val,
+              opacity: val.clamp(0.0, 1.0),
               child: SizedBox(
                 width: 300,
                 child: GlassCard(
