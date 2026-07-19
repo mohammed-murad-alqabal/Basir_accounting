@@ -1,9 +1,9 @@
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart'
-    as domain;
+    as acct;
 import 'package:basir_accounting_system/features/accounting/domain/entities/ifrs18_ontology.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart'
-    as domain;
+    as je;
 import 'package:decimal/decimal.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -61,7 +61,7 @@ class ReportingService extends _$ReportingService {
       );
 
       if (balance != Decimal.zero) {
-        if (account.nature == domain.AccountNature.debit) {
+        if (account.nature == acct.AccountNature.debit) {
           rows.add(
             TrialBalanceRow(
               accountId: account.id,
@@ -104,8 +104,8 @@ class ReportingService extends _$ReportingService {
     };
 
     for (final account in accounts) {
-      if (account.type == domain.AccountType.revenue ||
-          account.type == domain.AccountType.expense) {
+      if (account.type == acct.AccountType.revenue ||
+          account.type == acct.AccountType.expense) {
         final category = _detectIfrs18Category(account);
 
         final balance = await accountingService.getHierarchicalBalance(
@@ -114,7 +114,7 @@ class ReportingService extends _$ReportingService {
 
         // Performance Logic: Revenue (CR) adds to profit,
         // Expense (DR) subtracts
-        if (account.type == domain.AccountType.revenue) {
+        if (account.type == acct.AccountType.revenue) {
           result[category] = (result[category] ?? Decimal.zero) + balance;
         } else {
           result[category] = (result[category] ?? Decimal.zero) - balance;
@@ -143,11 +143,11 @@ class ReportingService extends _$ReportingService {
           account.id,
         );
 
-        if (account.type == domain.AccountType.asset) {
+        if (account.type == acct.AccountType.asset) {
           assets += balance;
-        } else if (account.type == domain.AccountType.liability) {
+        } else if (account.type == acct.AccountType.liability) {
           liabilities += balance;
-        } else if (account.type == domain.AccountType.equity) {
+        } else if (account.type == acct.AccountType.equity) {
           equity += balance;
         }
       }
@@ -170,7 +170,7 @@ class ReportingService extends _$ReportingService {
     var financingFlow = Decimal.zero;
 
     for (final entry in entries) {
-      if (entry.status == domain.JournalEntryStatus.posted) {
+      if (entry.status == je.JournalEntryStatus.posted) {
         for (final line in entry.lines) {
           if (await _isCashAccount(line.accountId)) {
             final amount = line.debit - line.credit;
@@ -247,7 +247,7 @@ class ReportingService extends _$ReportingService {
   }
 
   /// Internal heuristic for IFRS 18 category detection.
-  Ifrs18Category _detectIfrs18Category(domain.Account account) {
+  Ifrs18Category _detectIfrs18Category(acct.Account account) {
     if (account.nameEn.toLowerCase().contains('tax')) {
       return Ifrs18Category.incomeTax;
     }
@@ -279,10 +279,10 @@ class ReportingService extends _$ReportingService {
     if (account == null) return 'operating';
 
     if (account.code.startsWith('12') &&
-        account.type == domain.AccountType.asset) {
+        account.type == acct.AccountType.asset) {
       return 'investing';
     }
-    if (account.type == domain.AccountType.equity ||
+    if (account.type == acct.AccountType.equity ||
         account.code.startsWith('22')) {
       return 'financing';
     }

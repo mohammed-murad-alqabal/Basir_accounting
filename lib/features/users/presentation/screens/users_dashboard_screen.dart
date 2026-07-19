@@ -92,6 +92,7 @@ class UsersDashboardScreen extends ConsumerWidget {
         error: (err, st) => Center(child: Text('خطأ: $err')),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'users_add_fab',
         onPressed: () {
           unawaited(
             Navigator.push(
