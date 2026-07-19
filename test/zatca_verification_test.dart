@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:basir_app/features/invoices/application/zatca_service.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/application/zatca_service.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
