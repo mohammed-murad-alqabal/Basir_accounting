@@ -1,0 +1,53 @@
+Analyzing basir_accounting_system...                            
+
+   info • Unnecessary use of a block function body • lib/core/services/production_ready_service.dart:19:54 • prefer_expression_function_bodies
+   info • The line length exceeds the 80-character limit • lib/features/accounting/application/sustainability_expert_service.dart:39:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/accounting/domain/entities/liquidity_forecast.dart:9:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/domain/entities/liquidity_forecast.dart:31:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/domain/entities/liquidity_forecast.dart:32:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/presentation/screens/cash_reconciliation_screen.dart:11:9 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:16:81 • lines_longer_than_80_chars
+   info • 'evaluate' is deprecated and shouldn't be used. Use [RealEvaluator], [IntervalEvaluator], or [VectorEvaluator] • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:50:24 • deprecated_member_use
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:55:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:128:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:133:81 • lines_longer_than_80_chars
+   info • To-do comment doesn't follow the Flutter style • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:38:15 • flutter_style_todos
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:193:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:194:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:242:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/reports_screen.dart:33:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/accounting/presentation/screens/treasury_dashboard_screen.dart:16:9 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/treasury_dashboard_screen.dart:38:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/treasury_dashboard_screen.dart:42:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/auth/application/password_recovery_service.dart:106:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/auth/application/password_recovery_service.dart:403:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/providers/password_recovery_provider.dart:21:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/providers/password_recovery_provider.dart:140:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/forgot_password_screen.dart:111:81 • lines_longer_than_80_chars
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/auth/presentation/screens/forgot_password_screen.dart:172:56 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/auth/presentation/screens/forgot_password_screen.dart:175:58 • deprecated_member_use
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/forgot_password_screen.dart:188:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/reset_password_screen.dart:44:81 • lines_longer_than_80_chars
+   info • 'Future'-returning calls in a non-'async' function • lib/features/auth/presentation/screens/reset_password_screen.dart:101:37 • discarded_futures
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/reset_password_screen.dart:297:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/reset_password_screen.dart:309:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/reset_password_screen.dart:367:81 • lines_longer_than_80_chars
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/auth/presentation/screens/reset_password_screen.dart:381:52 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/auth/presentation/screens/reset_password_screen.dart:384:54 • deprecated_member_use
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/reset_password_screen.dart:400:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/reset_password_screen.dart:410:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/reset_password_screen.dart:421:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/customers/presentation/screens/customers_screen.dart:44:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/presentation/screens/inventory_items_screen.dart:44:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:48:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/invoices/presentation/screens/returns_and_damages_screen.dart:11:9 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/navigation/presentation/widgets/omnibar.dart:18:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/navigation/presentation/widgets/omnibar.dart:32:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/widgets/omnibar.dart:33:9 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/navigation/presentation/widgets/omnibar.dart:62:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/pdf_generation_service.dart:246:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/pdf_generation_service.dart:338:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:68:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:131:81 • lines_longer_than_80_chars
+
+49 issues found. (ran in 9.3s)

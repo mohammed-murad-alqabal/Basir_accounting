@@ -1,8 +1,8 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/vendors/domain/entities/vendor.dart';
-import 'package:basir_app/features/vendors/presentation/providers/vendor_provider.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/vendors/domain/entities/vendor.dart';
+import 'package:basir_accounting_system/features/vendors/presentation/providers/vendor_provider.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -25,16 +25,25 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
   late TextEditingController _nameEnController;
   late TextEditingController _emailController;
   late TextEditingController _phoneController;
+  late TextEditingController _vatController;
+  late TextEditingController _registrationController;
 
   @override
   void initState() {
     super.initState();
-    _nameArController =
-        TextEditingController(text: widget.vendor?.nameAr ?? '');
-    _nameEnController =
-        TextEditingController(text: widget.vendor?.nameEn ?? '');
+    _nameArController = TextEditingController(
+      text: widget.vendor?.nameAr ?? '',
+    );
+    _nameEnController = TextEditingController(
+      text: widget.vendor?.nameEn ?? '',
+    );
     _emailController = TextEditingController(text: widget.vendor?.email ?? '');
     _phoneController = TextEditingController(text: widget.vendor?.phone ?? '');
+    _vatController =
+        TextEditingController(text: widget.vendor?.vatNumber ?? '');
+    _registrationController = TextEditingController(
+      text: widget.vendor?.registrationNumber ?? '',
+    );
   }
 
   @override
@@ -43,6 +52,8 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
     _nameEnController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
+    _vatController.dispose();
+    _registrationController.dispose();
     super.dispose();
   }
 
@@ -100,13 +111,30 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
               keyboardType: <credential-fixture>,
               prefixIcon: const Icon(Icons.phone),
             ),
+            const SizedBox(height: Spacing.md),
+
+            // الرقم الضريبي
+            AppTextField(
+              controller: _vatController,
+              label: context.l10n.labelVatNumber,
+              hint: '3xxxxxxxxxxxxxx',
+              keyboardType: <credential-fixture>,
+              prefixIcon: const Icon(Icons.description),
+            ),
+            const SizedBox(height: Spacing.md),
+
+            // رقم السجل التجاري
+            AppTextField(
+              controller: _registrationController,
+              label: context.l10n.labelRegistrationNumber,
+              hint: '10xxxxxxxx',
+              keyboardType: <credential-fixture>,
+              prefixIcon: const Icon(Icons.app_registration),
+            ),
             const SizedBox(height: Spacing.xl),
 
             // زر الحفظ
-            AppEnhancedButton(
-              label: context.l10n.btnSave,
-              onPressed: _save,
-            ),
+            AppEnhancedButton(label: context.l10n.btnSave, onPressed: _save),
           ],
         ),
       ),
@@ -121,6 +149,8 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
           nameEn: _nameEnController.text,
           email: _emailController.text,
           phone: _phoneController.text,
+          vatNumber: _vatController.text,
+          registrationNumber: _registrationController.text,
           updatedAt: DateTime.now(),
         ) ??
         Vendor(
@@ -129,6 +159,8 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
           nameEn: _nameEnController.text,
           email: _emailController.text,
           phone: _phoneController.text,
+          vatNumber: _vatController.text,
+          registrationNumber: _registrationController.text,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         );
@@ -142,9 +174,9 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
       if (mounted) Navigator.pop(context, true);
     } on Object catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     }
   }

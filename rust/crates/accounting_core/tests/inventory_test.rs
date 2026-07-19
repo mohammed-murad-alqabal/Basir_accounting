@@ -15,6 +15,7 @@ fn test_fifo_valuation() {
         name_en: "Test Item".to_string(),
         description: None,
         unit: "Pcs".to_string(),
+        min_stock_level: None,
         valuation_method: ValuationMethod::Fifo,
         purchase_price: None,
         sale_price: None,
@@ -88,6 +89,7 @@ fn test_weighted_average_valuation() {
         name_en: "Test Item 2".to_string(),
         description: None,
         unit: "Pcs".to_string(),
+        min_stock_level: None,
         valuation_method: ValuationMethod::WeightedAverage,
         purchase_price: None,
         sale_price: None,
@@ -148,4 +150,54 @@ fn test_weighted_average_valuation() {
     let (qty, val) = InventoryService::calculate_valuation(&item, &movements_with_sale).unwrap();
     assert_eq!(qty, Decimal::new(5, 0));
     assert_eq!(val, Decimal::new(625, 0));
+}
+
+#[test]
+fn test_min_stock_validation() {
+    let item = InventoryItem {
+        id: Uuid::new_v4(),
+        code: "TEST-MIN".to_string(),
+        name_ar: "تجربة حد".to_string(),
+        name_en: "Min Stock Item".to_string(),
+        description: None,
+        unit: "Pcs".to_string(),
+        min_stock_level: Some(Decimal::new(5, 0)), // Min 5
+        valuation_method: ValuationMethod::Fifo,
+        purchase_price: None,
+        sale_price: None,
+        asset_account_id: Uuid::new_v4(),
+        cogs_account_id: Uuid::new_v4(),
+        revenue_account_id: Uuid::new_v4(),
+        created_at: Utc::now(),
+        updated_at: Utc::now(),
+    };
+
+    let movements = vec![StockMovement {
+        id: Uuid::new_v4(),
+        item_id: item.id,
+        movement_type: MovementType::Inbound,
+        quantity: Decimal::new(10, 0),
+        unit_cost: Decimal::new(100, 0),
+        date: Utc::now(),
+        reference_id: None,
+        description: None,
+        hash: String::new(),
+        previous_hash: String::new(),
+    }];
+
+    // Case 1: Sell 2. Remaining 8. > 5. No warning.
+    let res = InventoryService::validate_stock_levels(&item, &movements, Decimal::new(2, 0));
+    assert!(res.is_ok());
+    assert!(res.unwrap().is_none());
+
+    // Case 2: Sell 6. Remaining 4. < 5. Warning.
+    let res = InventoryService::validate_stock_levels(&item, &movements, Decimal::new(6, 0));
+    assert!(res.is_ok());
+    let warning = res.unwrap();
+    assert!(warning.is_some());
+    assert!(warning.unwrap().contains("Warning"));
+
+    // Case 3: Sell 11. Remaining -1. Error.
+    let res = InventoryService::validate_stock_levels(&item, &movements, Decimal::new(11, 0));
+    assert!(res.is_err());
 }

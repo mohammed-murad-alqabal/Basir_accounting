@@ -1,7 +1,7 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/shared/widgets/index.dart';
-import 'package:basir_app/src/rust/api/inventory.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
+import 'package:basir_accounting_system/src/rust/api/inventory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -29,8 +29,9 @@ class _InventoryValuationReportScreenState
 
   void _refreshReport() {
     setState(() {
-      _reportFuture =
-          getValuationReport(asOf: DateTime.now().toIso8601String());
+      _reportFuture = getValuationReport(
+        asOf: DateTime.now().toIso8601String(),
+      );
     });
   }
 

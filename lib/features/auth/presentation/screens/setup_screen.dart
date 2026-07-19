@@ -1,39 +1,19 @@
-import 'package:basir_app/core/assets/app_logo.dart';
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/theme/services/icon_customization_service.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/auth/presentation/providers/auth_provider.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/assets/app_logo.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/services/icon_customization_service.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/auth/presentation/providers/auth_provider.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة الإعداد الأولي
+/// ***
+/// Cognitive Foundation: SetupScreen
 ///
-/// تسمح للمستخدم بإنشاء حساب جديد في التطبيق
-/// للمرة الأولى
-///
-/// Features:
-/// - نموذج إنشاء حساب مع التحقق من الصحة
-/// - حقل اسم المستخدم (3 أحرف على الأقل)
-/// - حقل كلمة المرور (6 أحرف على الأقل)
-/// - حقل تأكيد كلمة المرور
-/// - التحقق من تطابق كلمات المرور
-/// - زر إنشاء الحساب مع حالة تحميل
-/// - رابط للانتقال إلى شاشة تسجيل الدخول
-///
-/// Validation:
-/// - اسم المستخدم: 3 أحرف على الأقل
-/// - كلمة المرور: 6 أحرف على الأقل
-/// - تأكيد كلمة المرور: يجب أن يطابق كلمة المرور
-///
-/// Navigation:
-/// - عند النجاح: ينتقل إلى /dashboard
-/// - رابط إلى: /login (تسجيل الدخول)
-///
-/// Example:
-/// ```dart
-/// Navigator.pushNamed(context, '/setup',);
-/// ```
+/// The orchestration interface for initial institutional identity creation.
+/// Enforces high-entropy credential standards and validates cryptographic
+/// consistency before establishing the local security context.
+/// ***
 class SetupScreen extends ConsumerStatefulWidget {
   /// إنشاء شاشة الإعداد الأولي
   const SetupScreen({super.key});
@@ -62,16 +42,13 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
       return;
     }
 
-    setState(
-      () => _isLoading = true,
-    );
+    setState(() => _isLoading = true);
 
     try {
       // إنشاء الحساب الفعلي باستخدام AuthService
-      await ref.read(authServiceProvider).createAccount(
-            _usernameController.text,
-            _passwordController.text,
-          );
+      await ref
+          .read(authServiceProvider)
+          .createAccount(_usernameController.text, _passwordController.text);
 
       if (!mounted) return;
 
@@ -81,22 +58,16 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
 
       // الانتقال إلى شاشة الإعدادات الإضافية أو لوحة التحكم
       if (!mounted) return;
-      await Navigator.of(context).pushReplacementNamed(
-        '/dashboard',
-      );
+      await Navigator.of(context).pushReplacementNamed('/dashboard');
     } on Exception catch (e) {
       if (!mounted) return;
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.errGeneric(e.toString()))),
       );
     } finally {
       if (mounted) {
-        setState(
-          () => _isLoading = false,
-        );
+        setState(() => _isLoading = false);
       }
     }
   }
@@ -105,100 +76,88 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
   Widget build(BuildContext context) {
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(Spacing.lg),
-          child: Column(
-            children: [
-              // رأس الشاشة
-              _buildHeader(),
-              const SizedBox(height: Spacing.xl),
+    return GlassScaffold(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(Spacing.lg),
+        child: Column(
+          children: [
+            // رأس الشاشة
+            _buildHeader(),
+            const SizedBox(height: Spacing.xl),
 
-              // نموذج الإعداد
-              Form(
-                key: <credential-fixture>,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // حقل اسم المستخدم
-                    AppTextField(
-                      label: context.l10n.labelUsername,
-                      hint: context.l10n.hintEnterUsername,
-                      controller: _usernameController,
-                      prefixIcon: Icon(
-                        appIcons.person,
-                        size: IconSizes.sm,
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return context.l10n.errEmptyField;
-                        }
-                        if (value.length < 3) {
-                          return context.l10n.errUsernameShort;
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: Spacing.lg),
+            // نموذج الإعداد
+            Form(
+              key: <credential-fixture>,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // حقل اسم المستخدم
+                  AppTextField(
+                    label: context.l10n.labelUsername,
+                    hint: context.l10n.hintEnterUsername,
+                    controller: _usernameController,
+                    prefixIcon: Icon(appIcons.person, size: IconSizes.sm),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return context.l10n.errEmptyField;
+                      }
+                      if (value.length < 3) {
+                        return context.l10n.errUsernameShort;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: Spacing.lg),
 
-                    // حقل كلمة المرور
-                    AppTextField(
-                      label: context.l10n.labelPassword,
-                      hint: context.l10n.hintEnterPassword,
-                      controller: _passwordController,
-                      obscureText: true,
-                      prefixIcon: Icon(
-                        appIcons.lock,
-                        size: IconSizes.sm,
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return context.l10n.errEmptyField;
-                        }
-                        if (value.length < 6) {
-                          return context.l10n.errPasswordShort;
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: Spacing.lg),
+                  // حقل كلمة المرور
+                  AppTextField(
+                    label: context.l10n.labelPassword,
+                    hint: context.l10n.hintEnterPassword,
+                    controller: _passwordController,
+                    obscureText: true,
+                    prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return context.l10n.errEmptyField;
+                      }
+                      if (value.length < 6) {
+                        return context.l10n.errPasswordShort;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: Spacing.lg),
 
-                    // حقل تأكيد كلمة المرور
-                    AppTextField(
-                      label: context.l10n.labelConfirmPassword,
-                      hint: context.l10n.hintConfirmPassword,
-                      controller: _confirmPasswordController,
-                      obscureText: true,
-                      prefixIcon: Icon(
-                        appIcons.lock,
-                        size: IconSizes.sm,
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return context.l10n.errEmptyField;
-                        }
-                        if (value != _passwordController.text) {
-                          return context.l10n.errPasswordsDoNotMatch;
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: Spacing.xl),
+                  // حقل تأكيد كلمة المرور
+                  AppTextField(
+                    label: context.l10n.labelConfirmPassword,
+                    hint: context.l10n.hintConfirmPassword,
+                    controller: _confirmPasswordController,
+                    obscureText: true,
+                    prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return context.l10n.errEmptyField;
+                      }
+                      if (value != _passwordController.text) {
+                        return context.l10n.errPasswordsDoNotMatch;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: Spacing.xl),
 
-                    // زر الإنشاء
-                    AppEnhancedButton(
-                      label: context.l10n.btnCreateAccount,
-                      onPressed: _handleSetup,
-                      isLoading: _isLoading,
-                      icon: appIcons.userAdd,
-                    ),
-                  ],
-                ),
+                  // زر الإنشاء
+                  AppEnhancedButton(
+                    label: context.l10n.btnCreateAccount,
+                    onPressed: _handleSetup,
+                    isLoading: _isLoading,
+                    icon: appIcons.userAdd,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

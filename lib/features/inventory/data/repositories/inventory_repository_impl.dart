@@ -1,12 +1,16 @@
-import 'package:basir_app/features/inventory/data/models/inventory_item_model.dart';
-import 'package:basir_app/features/inventory/domain/entities/inventory_item.dart';
-import 'package:basir_app/features/inventory/domain/repositories/inventory_repository.dart';
+import 'package:basir_accounting_system/features/inventory/data/models/inventory_item_model.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
+import 'package:basir_accounting_system/features/inventory/domain/repositories/inventory_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع المخزون (Inventory Repository Implementation)
 class InventoryRepositoryImpl implements InventoryRepository {
   /// إنشاء تطبيق مستودع المخزون
-  InventoryRepositoryImpl({required this.isar, required this.userId});
+  InventoryRepositoryImpl({
+    required this.isar,
+    required this.userId,
+    this.warehouseId,
+  });
 
   /// كائن قاعدة البيانات Isar
   final Isar isar;
@@ -14,12 +18,19 @@ class InventoryRepositoryImpl implements InventoryRepository {
   /// معرف المستخدم الحالي
   final String? userId;
 
+  /// معرف المستودع الحالي (لعزل البيانات)
+  final String? warehouseId;
+
   @override
   Future<List<InventoryItem>> getAllItems() async {
     try {
       final models = await isar.inventoryItemModels
           .filter()
           .userIdEqualTo(userId)
+          .and()
+          .group(
+            (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+          )
           .and()
           .isDeletedEqualTo(false)
           .findAll();
@@ -37,6 +48,10 @@ class InventoryRepositoryImpl implements InventoryRepository {
           .idEqualTo(id)
           .and()
           .userIdEqualTo(userId)
+          .and()
+          .group(
+            (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+          )
           .findFirst();
       return model?.toEntity();
     } on Exception catch (e) {
@@ -50,6 +65,10 @@ class InventoryRepositoryImpl implements InventoryRepository {
       final models = await isar.inventoryItemModels
           .filter()
           .userIdEqualTo(userId)
+          .and()
+          .group(
+            (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+          )
           .and()
           .isDeletedEqualTo(false)
           .and()
@@ -69,10 +88,34 @@ class InventoryRepositoryImpl implements InventoryRepository {
   }
 
   @override
+  Future<InventoryItem?> getItemBySku(String sku) async {
+    try {
+      final model = await isar.inventoryItemModels
+          .filter()
+          .userIdEqualTo(userId)
+          .and()
+          .group(
+            (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+          )
+          .and()
+          .isDeletedEqualTo(false)
+          .and()
+          .skuEqualTo(sku, caseSensitive: false)
+          .findFirst();
+      return model?.toEntity();
+    } on Exception catch (e) {
+      throw Exception('خطأ في جلب صنف المخزون بواسطة الكود: $e');
+    }
+  }
+
+  @override
   Future<void> addItem(InventoryItem item) async {
     try {
       final model = InventoryItemModel.fromEntity(
-        item.copyWith(userId: userId),
+        item.copyWith(
+          userId: userId,
+          warehouseId: item.warehouseId ?? warehouseId,
+        ),
       );
       await isar.writeTxn(() async {
         await isar.inventoryItemModels.put(model);
@@ -91,6 +134,10 @@ class InventoryRepositoryImpl implements InventoryRepository {
             .idEqualTo(item.id)
             .and()
             .userIdEqualTo(userId)
+            .and()
+            .group(
+              (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+            )
             .findFirst();
 
         if (existingModel == null) {
@@ -98,7 +145,10 @@ class InventoryRepositoryImpl implements InventoryRepository {
         }
 
         final model = InventoryItemModel.fromEntity(
-          item.copyWith(userId: userId),
+          item.copyWith(
+            userId: userId,
+            warehouseId: item.warehouseId ?? warehouseId,
+          ),
         )..isarId = existingModel.isarId;
 
         await isar.inventoryItemModels.put(model);
@@ -117,6 +167,10 @@ class InventoryRepositoryImpl implements InventoryRepository {
             .idEqualTo(id)
             .and()
             .userIdEqualTo(userId)
+            .and()
+            .group(
+              (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+            )
             .findFirst();
         if (model != null) {
           await isar.inventoryItemModels.put(

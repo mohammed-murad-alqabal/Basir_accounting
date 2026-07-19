@@ -1,15 +1,18 @@
 import 'dart:async';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/analytics/presentation/screens/privacy_analytics_screen.dart';
-import 'package:basir_app/features/settings/presentation/providers/settings_controller.dart';
-import 'package:basir_app/features/settings/presentation/screens/appearance_settings_screen.dart';
-import 'package:basir_app/features/settings/presentation/widgets/help_settings_group.dart';
-import 'package:basir_app/features/settings/presentation/widgets/settings_shared_widgets.dart';
-import 'package:basir_app/features/settings/presentation/widgets/settings_tiles.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/financial_calculator_screen.dart';
+import 'package:basir_accounting_system/features/analytics/presentation/screens/privacy_analytics_screen.dart';
+import 'package:basir_accounting_system/features/settings/presentation/providers/settings_controller.dart';
+import 'package:basir_accounting_system/features/settings/presentation/screens/appearance_settings_screen.dart';
+import 'package:basir_accounting_system/features/settings/presentation/screens/print_settings_screen.dart';
+import 'package:basir_accounting_system/features/settings/presentation/screens/tax_config_screen.dart';
+import 'package:basir_accounting_system/features/settings/presentation/widgets/help_settings_group.dart';
+import 'package:basir_accounting_system/features/settings/presentation/widgets/settings_shared_widgets.dart';
+import 'package:basir_accounting_system/features/settings/presentation/widgets/settings_tiles.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,10 +28,8 @@ class SettingsScreen extends ConsumerWidget {
     final appIcons = ref.watch(appIconsProvider);
     final controller = ref.read(settingsControllerProvider.notifier);
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.settingsTitle,
-      ),
+    return GlassScaffold(
+      title: context.l10n.settingsTitle,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(Spacing.lg),
         child: Column(
@@ -38,9 +39,59 @@ class SettingsScreen extends ConsumerWidget {
               title: context.l10n.companySettingsTitle,
               icon: appIcons.business,
             ),
-            const SettingsGroupCard(
+            const SettingsGroupCard(children: [CompanySettingsTile()]),
+            const SizedBox(height: Spacing.md),
+            SettingsGroupCard(
               children: [
-                CompanySettingsTile(),
+                ListTile(
+                  leading: Icon(
+                    Icons.account_balance_outlined,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: Text(context.l10n.taxConfigTitle),
+                  subtitle: Text(context.l10n.zatcaPhase2Title),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const TaxConfigScreen(),
+                    ),
+                  ),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: Icon(
+                    Icons.import_export_outlined,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: const Text('استيراد من Excel'),
+                  subtitle: const Text('ترحيل الأرصدة الافتتاحية'),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () => Navigator.pushNamed(context, '/excel-import'),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: Icon(
+                    Icons.cloud_sync_outlined,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: const Text('النسخ الاحتياطي السحابي'),
+                  subtitle: const Text('مزامنة مع Google Drive'),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () => Navigator.pushNamed(context, '/cloud-backup'),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: Icon(
+                    appIcons.barcodeReader,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: const Text('إعدادات الباركود'),
+                  subtitle: const Text('تكوين قياسات وطباعة الملصقات'),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () =>
+                      Navigator.pushNamed(context, '/barcode-settings'),
+                ),
               ],
             ),
             const SizedBox(height: Spacing.xl),
@@ -53,6 +104,8 @@ class SettingsScreen extends ConsumerWidget {
             const SettingsGroupCard(
               children: [
                 AccountSettingsTile(),
+                Divider(height: 1),
+                _UsersSettingsTile(),
               ],
             ),
             const SizedBox(height: Spacing.xl),
@@ -62,11 +115,7 @@ class SettingsScreen extends ConsumerWidget {
               title: context.l10n.notificationsTitle,
               icon: appIcons.notifications,
             ),
-            const SettingsGroupCard(
-              children: [
-                NotificationSettingsTile(),
-              ],
-            ),
+            const SettingsGroupCard(children: [NotificationSettingsTile()]),
             const SizedBox(height: Spacing.xl),
 
             // 🎨 قسم المظهر والتخصيص
@@ -96,6 +145,38 @@ class SettingsScreen extends ConsumerWidget {
                       MaterialPageRoute<void>(
                         builder: (context) => const AppearanceSettingsScreen(),
                       ),
+                    ),
+                  ),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: Icon(
+                    Icons.print_outlined,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: Text(context.l10n.printSettingsTitle),
+                  subtitle: Text(context.l10n.printSettingsSubtitle),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const PrintSettingsScreen(),
+                    ),
+                  ),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: Icon(
+                    Icons.calculate_outlined,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: Text(context.l10n.calculatorTitle),
+                  subtitle: Text(context.l10n.convertToCurrencies),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const FinancialCalculatorScreen(),
                     ),
                   ),
                 ),
@@ -161,8 +242,9 @@ class SettingsScreen extends ConsumerWidget {
               onPressed: () async {
                 await controller.logout();
                 if (context.mounted) {
-                  await Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/login', (route) => false);
+                  await Navigator.of(
+                    context,
+                  ).pushNamedAndRemoveUntil('/login', (route) => false);
                 }
               },
               child: Text(
@@ -175,4 +257,20 @@ class SettingsScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+class _UsersSettingsTile extends StatelessWidget {
+  const _UsersSettingsTile();
+
+  @override
+  Widget build(BuildContext context) => ListTile(
+        leading: Icon(
+          Icons.group_outlined,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        title: const Text('إدارة المستخدمين'),
+        subtitle: const Text('الصلاحيات والحسابات'),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => Navigator.pushNamed(context, '/users'),
+      );
 }

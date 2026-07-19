@@ -1,6 +1,6 @@
-import 'package:basir_app/features/accounting/data/models/financial_voucher_model.dart';
-import 'package:basir_app/features/accounting/domain/entities/financial_voucher.dart';
-import 'package:basir_app/features/accounting/domain/repositories/financial_voucher_repository.dart';
+import 'package:basir_accounting_system/features/accounting/data/models/financial_voucher_model.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
+import 'package:basir_accounting_system/features/accounting/domain/repositories/financial_voucher_repository.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع السندات المالية باستخدام Isar.
@@ -36,8 +36,9 @@ class FinancialVoucherRepositoryImpl implements FinancialVoucherRepository {
 
   @override
   Future<void> addVoucher(FinancialVoucher voucher) async {
-    final model =
-        FinancialVoucherModel.fromEntity(voucher.copyWith(userId: userId));
+    final model = FinancialVoucherModel.fromEntity(
+      voucher.copyWith(userId: userId),
+    );
     await isar.writeTxn(() async {
       await isar.financialVoucherModels.put(model);
     });
@@ -52,9 +53,9 @@ class FinancialVoucherRepositoryImpl implements FinancialVoucherRepository {
         .userIdEqualTo(userId)
         .findFirst();
     if (existingModel != null) {
-      final newModel =
-          FinancialVoucherModel.fromEntity(voucher.copyWith(userId: userId))
-            ..isarId = existingModel.isarId;
+      final newModel = FinancialVoucherModel.fromEntity(
+        voucher.copyWith(userId: userId),
+      )..isarId = existingModel.isarId;
       await isar.writeTxn(() async {
         await isar.financialVoucherModels.put(newModel);
       });

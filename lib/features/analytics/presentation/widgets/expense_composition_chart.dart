@@ -1,5 +1,6 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/features/accounting/application/financial_reporting_service.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/features/accounting/application/financial_reporting_service.dart';
+import 'package:decimal/decimal.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +18,7 @@ class ExpenseCompositionChart extends ConsumerStatefulWidget {
 
 class _ExpenseCompositionChartState
     extends ConsumerState<ExpenseCompositionChart> {
-  late Future<Map<String, double>> _compositionFuture;
+  late Future<Map<String, Decimal>> _compositionFuture;
   int touchedIndex = -1;
 
   @override
@@ -33,7 +34,7 @@ class _ExpenseCompositionChartState
   }
 
   @override
-  Widget build(BuildContext context) => FutureBuilder<Map<String, double>>(
+  Widget build(BuildContext context) => FutureBuilder<Map<String, Decimal>>(
         future: _compositionFuture,
         builder: (context, snapshot) {
           // ... existing builder logic ...
@@ -45,15 +46,13 @@ class _ExpenseCompositionChartState
           }
 
           final data = snapshot.data ?? {};
-          if (data.isEmpty || data.values.every((v) => v == 0)) {
+          if (data.isEmpty || data.values.every((v) => v == Decimal.zero)) {
             return Center(child: Text(context.l10n.noExpenseDataMessage));
           }
 
           return Row(
             children: <Widget>[
-              const SizedBox(
-                height: 18,
-              ),
+              const SizedBox(height: 18),
               Expanded(
                 child: AspectRatio(
                   aspectRatio: 1,
@@ -73,9 +72,7 @@ class _ExpenseCompositionChartState
                           });
                         },
                       ),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
+                      borderData: FlBorderData(show: false),
                       sectionsSpace: 0,
                       centerSpaceRadius: 40,
                       sections: _showingSections(data),
@@ -87,18 +84,17 @@ class _ExpenseCompositionChartState
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
               ),
-              const SizedBox(
-                width: 28,
-              ),
+              const SizedBox(width: 28),
             ],
           );
         },
       );
 
-  List<PieChartSectionData> _showingSections(Map<String, double> data) {
+  List<PieChartSectionData> _showingSections(Map<String, Decimal> data) {
     final sections = <PieChartSectionData>[];
     final keys = <credential-fixture>();
-    final total = data.values.fold<double>(0, (sum, val) => sum + val);
+    final total =
+        data.values.fold<Decimal>(Decimal.zero, (sum, val) => sum + val);
 
     // Color palette
     final colors = [
@@ -117,13 +113,14 @@ class _ExpenseCompositionChartState
       final rawKey = keys[i];
       final key = <credential-fixture> ? context.l10n.otherExpensesLabel : rawKey;
       final value = data[rawKey]!;
-      final percentage = (value / total * 100).toStringAsFixed(1);
+      final percentage =
+          (value.toDouble() * 100 / total.toDouble()).toStringAsFixed(1);
       final color = colors[i % colors.length];
 
       sections.add(
         PieChartSectionData(
           color: color,
-          value: value,
+          value: value.toDouble(),
           title: '$percentage%',
           radius: radius,
           titleStyle: TextStyle(
@@ -132,11 +129,7 @@ class _ExpenseCompositionChartState
             color: Colors.white,
             shadows: const [Shadow(blurRadius: 2)],
           ),
-          badgeWidget: _Badge(
-            key,
-            size: 40,
-            borderColor: color,
-          ),
+          badgeWidget: _Badge(key, size: 40, borderColor: color),
           badgePositionPercentageOffset: .98,
         ),
       );
@@ -146,11 +139,7 @@ class _ExpenseCompositionChartState
 }
 
 class _Badge extends StatelessWidget {
-  const _Badge(
-    this.text, {
-    required this.size,
-    required this.borderColor,
-  });
+  const _Badge(this.text, {required this.size, required this.borderColor});
   final String text;
   final double size;
   final Color borderColor;
@@ -163,10 +152,7 @@ class _Badge extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(size / 2),
-          border: Border.all(
-            color: borderColor,
-            width: 2,
-          ),
+          border: Border.all(color: borderColor, width: 2),
           boxShadow: <BoxShadow>[
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.5),

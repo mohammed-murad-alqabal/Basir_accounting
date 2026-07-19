@@ -9,6 +9,7 @@
 import 'api.dart';
 import 'api/accounts.dart';
 import 'api/assets.dart';
+import 'api/auditor.dart';
 import 'api/calendar.dart';
 import 'api/currency.dart';
 import 'api/inventory.dart';
@@ -17,6 +18,7 @@ import 'api/purchasing.dart';
 import 'api/reports.dart';
 import 'api/sales.dart';
 import 'api/standards.dart';
+import 'api/zatca.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'frb_generated.dart';
@@ -34,6 +36,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   AnyhowException dco_decode_AnyhowException(dynamic raw);
 
   @protected
+  Map<String, String> dco_decode_Map_String_String_None(dynamic raw);
+
+  @protected
   String dco_decode_String(dynamic raw);
 
   @protected
@@ -41,6 +46,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   AgingReportLineDto dco_decode_aging_report_line_dto(dynamic raw);
+
+  @protected
+  AnomalyDto dco_decode_anomaly_dto(dynamic raw);
 
   @protected
   AssetCategoryDto dco_decode_asset_category_dto(dynamic raw);
@@ -106,6 +114,13 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   VendorDto dco_decode_box_autoadd_vendor_dto(dynamic raw);
 
   @protected
+  ZatcaCsrInputDto dco_decode_box_autoadd_zatca_csr_input_dto(dynamic raw);
+
+  @protected
+  ZatcaInvoiceInputDto dco_decode_box_autoadd_zatca_invoice_input_dto(
+      dynamic raw);
+
+  @protected
   CustomerDto dco_decode_customer_dto(dynamic raw);
 
   @protected
@@ -152,6 +167,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   List<AgingReportLineDto> dco_decode_list_aging_report_line_dto(dynamic raw);
 
   @protected
+  List<AnomalyDto> dco_decode_list_anomaly_dto(dynamic raw);
+
+  @protected
   List<AssetCategoryDto> dco_decode_list_asset_category_dto(dynamic raw);
 
   @protected
@@ -192,6 +210,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   List<PurchaseBillDto> dco_decode_list_purchase_bill_dto(dynamic raw);
 
   @protected
+  List<(String, String)> dco_decode_list_record_string_string(dynamic raw);
+
+  @protected
   List<SalesInvoiceDto> dco_decode_list_sales_invoice_dto(dynamic raw);
 
   @protected
@@ -211,6 +232,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   List<VendorDto> dco_decode_list_vendor_dto(dynamic raw);
+
+  @protected
+  List<ZatcaInvoiceLineDto> dco_decode_list_zatca_invoice_line_dto(dynamic raw);
+
+  @protected
+  Map<String, String>? dco_decode_opt_Map_String_String_None(dynamic raw);
 
   @protected
   String? dco_decode_opt_String(dynamic raw);
@@ -246,6 +273,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   PurchaseBillDto dco_decode_purchase_bill_dto(dynamic raw);
 
   @protected
+  (String, String) dco_decode_record_string_string(dynamic raw);
+
+  @protected
   SalesInvoiceDto dco_decode_sales_invoice_dto(dynamic raw);
 
   @protected
@@ -265,6 +295,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   int dco_decode_u_32(dynamic raw);
+
+  @protected
+  BigInt dco_decode_u_64(dynamic raw);
 
   @protected
   int dco_decode_u_8(dynamic raw);
@@ -294,7 +327,23 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   ZakahCalendarDto dco_decode_zakah_calendar_dto(dynamic raw);
 
   @protected
+  ZatcaCsrInputDto dco_decode_zatca_csr_input_dto(dynamic raw);
+
+  @protected
+  ZatcaInvoiceInputDto dco_decode_zatca_invoice_input_dto(dynamic raw);
+
+  @protected
+  ZatcaInvoiceLineDto dco_decode_zatca_invoice_line_dto(dynamic raw);
+
+  @protected
+  ZatcaPartyDto dco_decode_zatca_party_dto(dynamic raw);
+
+  @protected
   AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer);
+
+  @protected
+  Map<String, String> sse_decode_Map_String_String_None(
+      SseDeserializer deserializer);
 
   @protected
   String sse_decode_String(SseDeserializer deserializer);
@@ -305,6 +354,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   AgingReportLineDto sse_decode_aging_report_line_dto(
       SseDeserializer deserializer);
+
+  @protected
+  AnomalyDto sse_decode_anomaly_dto(SseDeserializer deserializer);
 
   @protected
   AssetCategoryDto sse_decode_asset_category_dto(SseDeserializer deserializer);
@@ -379,6 +431,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   VendorDto sse_decode_box_autoadd_vendor_dto(SseDeserializer deserializer);
 
   @protected
+  ZatcaCsrInputDto sse_decode_box_autoadd_zatca_csr_input_dto(
+      SseDeserializer deserializer);
+
+  @protected
+  ZatcaInvoiceInputDto sse_decode_box_autoadd_zatca_invoice_input_dto(
+      SseDeserializer deserializer);
+
+  @protected
   CustomerDto sse_decode_customer_dto(SseDeserializer deserializer);
 
   @protected
@@ -430,6 +490,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       SseDeserializer deserializer);
 
   @protected
+  List<AnomalyDto> sse_decode_list_anomaly_dto(SseDeserializer deserializer);
+
+  @protected
   List<AssetCategoryDto> sse_decode_list_asset_category_dto(
       SseDeserializer deserializer);
 
@@ -476,6 +539,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       SseDeserializer deserializer);
 
   @protected
+  List<(String, String)> sse_decode_list_record_string_string(
+      SseDeserializer deserializer);
+
+  @protected
   List<SalesInvoiceDto> sse_decode_list_sales_invoice_dto(
       SseDeserializer deserializer);
 
@@ -500,6 +567,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   List<VendorDto> sse_decode_list_vendor_dto(SseDeserializer deserializer);
+
+  @protected
+  List<ZatcaInvoiceLineDto> sse_decode_list_zatca_invoice_line_dto(
+      SseDeserializer deserializer);
+
+  @protected
+  Map<String, String>? sse_decode_opt_Map_String_String_None(
+      SseDeserializer deserializer);
 
   @protected
   String? sse_decode_opt_String(SseDeserializer deserializer);
@@ -542,6 +617,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   PurchaseBillDto sse_decode_purchase_bill_dto(SseDeserializer deserializer);
 
   @protected
+  (String, String) sse_decode_record_string_string(
+      SseDeserializer deserializer);
+
+  @protected
   SalesInvoiceDto sse_decode_sales_invoice_dto(SseDeserializer deserializer);
 
   @protected
@@ -563,6 +642,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   int sse_decode_u_32(SseDeserializer deserializer);
+
+  @protected
+  BigInt sse_decode_u_64(SseDeserializer deserializer);
 
   @protected
   int sse_decode_u_8(SseDeserializer deserializer);
@@ -592,8 +674,26 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   ZakahCalendarDto sse_decode_zakah_calendar_dto(SseDeserializer deserializer);
 
   @protected
+  ZatcaCsrInputDto sse_decode_zatca_csr_input_dto(SseDeserializer deserializer);
+
+  @protected
+  ZatcaInvoiceInputDto sse_decode_zatca_invoice_input_dto(
+      SseDeserializer deserializer);
+
+  @protected
+  ZatcaInvoiceLineDto sse_decode_zatca_invoice_line_dto(
+      SseDeserializer deserializer);
+
+  @protected
+  ZatcaPartyDto sse_decode_zatca_party_dto(SseDeserializer deserializer);
+
+  @protected
   void sse_encode_AnyhowException(
       AnyhowException self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_Map_String_String_None(
+      Map<String, String> self, SseSerializer serializer);
 
   @protected
   void sse_encode_String(String self, SseSerializer serializer);
@@ -604,6 +704,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_aging_report_line_dto(
       AgingReportLineDto self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_anomaly_dto(AnomalyDto self, SseSerializer serializer);
 
   @protected
   void sse_encode_asset_category_dto(
@@ -688,6 +791,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       VendorDto self, SseSerializer serializer);
 
   @protected
+  void sse_encode_box_autoadd_zatca_csr_input_dto(
+      ZatcaCsrInputDto self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_box_autoadd_zatca_invoice_input_dto(
+      ZatcaInvoiceInputDto self, SseSerializer serializer);
+
+  @protected
   void sse_encode_customer_dto(CustomerDto self, SseSerializer serializer);
 
   @protected
@@ -742,6 +853,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       List<AgingReportLineDto> self, SseSerializer serializer);
 
   @protected
+  void sse_encode_list_anomaly_dto(
+      List<AnomalyDto> self, SseSerializer serializer);
+
+  @protected
   void sse_encode_list_asset_category_dto(
       List<AssetCategoryDto> self, SseSerializer serializer);
 
@@ -791,6 +906,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       List<PurchaseBillDto> self, SseSerializer serializer);
 
   @protected
+  void sse_encode_list_record_string_string(
+      List<(String, String)> self, SseSerializer serializer);
+
+  @protected
   void sse_encode_list_sales_invoice_dto(
       List<SalesInvoiceDto> self, SseSerializer serializer);
 
@@ -817,6 +936,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_list_vendor_dto(
       List<VendorDto> self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_list_zatca_invoice_line_dto(
+      List<ZatcaInvoiceLineDto> self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_opt_Map_String_String_None(
+      Map<String, String>? self, SseSerializer serializer);
 
   @protected
   void sse_encode_opt_String(String? self, SseSerializer serializer);
@@ -861,6 +988,10 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
       PurchaseBillDto self, SseSerializer serializer);
 
   @protected
+  void sse_encode_record_string_string(
+      (String, String) self, SseSerializer serializer);
+
+  @protected
   void sse_encode_sales_invoice_dto(
       SalesInvoiceDto self, SseSerializer serializer);
 
@@ -885,6 +1016,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_u_32(int self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_u_64(BigInt self, SseSerializer serializer);
 
   @protected
   void sse_encode_u_8(int self, SseSerializer serializer);
@@ -914,6 +1048,21 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_zakah_calendar_dto(
       ZakahCalendarDto self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_zatca_csr_input_dto(
+      ZatcaCsrInputDto self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_zatca_invoice_input_dto(
+      ZatcaInvoiceInputDto self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_zatca_invoice_line_dto(
+      ZatcaInvoiceLineDto self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_zatca_party_dto(ZatcaPartyDto self, SseSerializer serializer);
 }
 
 // Section: wire_class

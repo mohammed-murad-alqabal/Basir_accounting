@@ -1,6 +1,6 @@
-import 'package:basir_app/core/theme/tokens/app_icons.dart';
-import 'package:basir_app/features/settings/presentation/screens/appearance_settings_screen.dart';
-import 'package:basir_app/main.dart' as app;
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/settings/presentation/screens/appearance_settings_screen.dart';
+import 'package:basir_accounting_system/main.dart' as app;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

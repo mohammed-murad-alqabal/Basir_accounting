@@ -1,7 +1,9 @@
-import 'package:basir_app/features/reports/presentation/screens/aging_report_screen.dart';
-import 'package:basir_app/features/reports/presentation/screens/financial_report_screen.dart';
-import 'package:basir_app/features/reports/presentation/screens/trial_balance_screen.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/aging_report_screen.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/audit_trail_report_screen.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/financial_report_screen.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/trial_balance_screen.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 
 /// Dashboard for accessing various financial reports.
@@ -11,17 +13,19 @@ class ReportsDashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: const AppAppBar(title: 'التقارير المالية'), // Financial Reports
+        appBar: AppAppBar(
+          title: context.l10n.reportingOverviewTitle,
+        ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const _SectionTitle(title: 'التقارير الأساسية'), // Basic Reports
+              _SectionTitle(title: context.l10n.sectionBasicReports),
               const SizedBox(height: 16),
               _ReportCard(
-                title: 'ميزان المراجعة', // Trial Balance
-                description: 'أرصدة جميع الحسابات للتحقق من التوازن',
+                title: context.l10n.trialBalanceTitle,
+                description: context.l10n.trialBalanceSubtitle,
                 icon: Icons.balance,
                 onTap: () async {
                   await Navigator.push(
@@ -33,7 +37,7 @@ class ReportsDashboardScreen extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 16),
-              const _SectionTitle(title: 'القوائم المالية (IAS 1/IFRS)'),
+              _SectionTitle(title: context.l10n.sectionFinancialStatements),
               const SizedBox(height: 16),
               GridView.count(
                 shrinkWrap: true,
@@ -44,8 +48,8 @@ class ReportsDashboardScreen extends StatelessWidget {
                 childAspectRatio: 1.3,
                 children: [
                   _ReportCard(
-                    title: 'قائمة الدخل', // Income Statement
-                    description: 'الأداء المالي والربحية',
+                    title: context.l10n.incomeStatementTitle,
+                    description: context.l10n.incomeStatementSubtitle,
                     icon: Icons.show_chart,
                     color: Colors.blue.shade50,
                     onTap: () async {
@@ -60,8 +64,8 @@ class ReportsDashboardScreen extends StatelessWidget {
                     },
                   ),
                   _ReportCard(
-                    title: 'المركز المالي', // Balance Sheet
-                    description: 'الأصول، الالتزامات، وحقوق الملكية',
+                    title: context.l10n.balanceSheetTitle,
+                    description: context.l10n.balanceSheetSubtitle,
                     icon: Icons.account_balance,
                     color: Colors.green.shade50,
                     onTap: () async {
@@ -76,8 +80,8 @@ class ReportsDashboardScreen extends StatelessWidget {
                     },
                   ),
                   _ReportCard(
-                    title: 'التدفقات النقدية', // Cash Flow
-                    description: 'حركة النقدية (تشغيلي، استثماري، تمويلي)',
+                    title: context.l10n.cashFlowTitle,
+                    description: context.l10n.cashFlowSubtitle,
                     icon: Icons.currency_exchange,
                     color: Colors.orange.shade50,
                     onTap: () async {
@@ -95,8 +99,8 @@ class ReportsDashboardScreen extends StatelessWidget {
                   Opacity(
                     opacity: 0.5,
                     child: _ReportCard(
-                      title: 'زكاة الأعمال',
-                      description: 'قريباً...',
+                      title: 'Zakah / زكاة الأعمال',
+                      description: context.l10n.placeholderComingSoon(''),
                       icon: Icons.calculate,
                       onTap: () {},
                     ),
@@ -104,7 +108,7 @@ class ReportsDashboardScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 24),
-              const _SectionTitle(title: 'تحليل السداد وأعمار الديون'),
+              _SectionTitle(title: context.l10n.sectionAgingAnalysis),
               const SizedBox(height: 16),
               GridView.count(
                 shrinkWrap: true,
@@ -115,8 +119,8 @@ class ReportsDashboardScreen extends StatelessWidget {
                 childAspectRatio: 1.3,
                 children: [
                   _ReportCard(
-                    title: 'أعمار العملاء',
-                    description: 'تحليل مستحقات العملاء غير المحصلة',
+                    title: context.l10n.receivablesAgingTitle,
+                    description: context.l10n.receivablesAgingLabel,
                     icon: Icons.people_outline,
                     onTap: () async {
                       await Navigator.push(
@@ -130,8 +134,8 @@ class ReportsDashboardScreen extends StatelessWidget {
                     },
                   ),
                   _ReportCard(
-                    title: 'أعمار الموردين',
-                    description: 'تحليل الالتزامات المستحقة للموردين',
+                    title: context.l10n.payablesAgingTitle,
+                    description: context.l10n.payablesAgingLabel,
                     icon: Icons.local_shipping_outlined,
                     onTap: () async {
                       await Navigator.push(
@@ -146,6 +150,22 @@ class ReportsDashboardScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 24),
+              _SectionTitle(title: context.l10n.auditTrailTitle),
+              const SizedBox(height: 16),
+              _ReportCard(
+                title: context.l10n.auditTrailTitle,
+                description: context.l10n.auditTrailSubtitle,
+                icon: Icons.gpp_maybe,
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const AuditTrailReportScreen(),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -159,9 +179,9 @@ class _SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Text(
         title,
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+        style: Theme.of(
+          context,
+        ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
       );
 }
 

@@ -1,5 +1,5 @@
-import 'package:basir_app/features/accounting/domain/entities/financial_year.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -28,9 +28,7 @@ void main() {
           effectiveDate: DateTime.now(),
           recordingDate: DateTime.now(),
         ),
-        standards: const StandardsJustification(
-          standardReference: 'IFRS 9',
-        ),
+        standards: const StandardsJustification(standardReference: 'IFRS 9'),
         description: 'Precision test',
         status: JournalEntryStatus.posted,
         lines: [line1, line2],

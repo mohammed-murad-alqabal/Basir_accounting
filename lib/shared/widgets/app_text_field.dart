@@ -1,4 +1,4 @@
-import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 
 /// حقل إدخال نصي موحد (Unified App Text Field)
@@ -251,9 +251,8 @@ class _AppSearchFieldState extends State<AppSearchField> {
         style: AppTextStyles.bodyLarge,
         decoration: InputDecoration(
           hintText: widget.hint,
-          hintStyle: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textHint,
-          ),
+          hintStyle:
+              AppTextStyles.bodyMedium.copyWith(color: AppColors.textHint),
           prefixIcon: const Icon(
             Icons.search,
             size: IconSizes.sm,

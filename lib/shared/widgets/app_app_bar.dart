@@ -1,6 +1,6 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/theme/services/icon_customization_service.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/services/icon_customization_service.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -87,9 +87,8 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(
-        kToolbarHeight + (bottom?.preferredSize.height ?? 1.0),
-      );
+  Size get preferredSize =>
+      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 1.0));
 }
 
 /// شريط تطبيق بسيط بدون زر رجوع
@@ -170,7 +169,5 @@ class AppSimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
       );
 
   @override
-  Size get preferredSize => const Size.fromHeight(
-        kToolbarHeight + 1.0,
-      );
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 1.0);
 }

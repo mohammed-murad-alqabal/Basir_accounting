@@ -1,28 +1,38 @@
 import 'dart:typed_data';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/color_tokens.dart';
-import 'package:basir_app/core/theme/tokens/spacing_tokens.dart';
-import 'package:basir_app/features/accounting/application/accounting_service.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
-import 'package:basir_app/features/accounting/presentation/screens/journal_entry_form_screen.dart';
-import 'package:basir_app/features/reports/application/report_export_service.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/color_tokens.dart';
+import 'package:basir_accounting_system/core/theme/tokens/spacing_tokens.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/providers/journal_entry_providers.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entry_form_screen.dart';
+import 'package:basir_accounting_system/features/reports/application/report_export_service.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
 
-/// شاشة قيود اليومية (Journal Entries Screen)
-/// تعرض قائمة بكافة القيود المحاسبية مع إمكانية البحث والتصفية والترحيل.
+/// Primary screen for browsing, filtering, and managing the General Ledger
+/// (Journal Entries).
+///
+/// Provides a detailed view of balanced accounting transactions with
+/// support for reversal of posted entries and state transitions
+/// (Draft -> Posted).
 class JournalEntriesScreen extends ConsumerWidget {
-  /// إنشاء شاشة قيود اليومية.
-  const JournalEntriesScreen({super.key});
+  /// Creates the Journal Entries screen.
+  const JournalEntriesScreen({super.key, this.accountId});
+
+  /// Unique account identifier to filter entries (for drill-down).
+  final String? accountId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final entriesAsync = ref.watch(accountingServiceProvider);
+    final entriesAsync = ref.watch(
+      filteredJournalEntriesProvider(accountId: accountId),
+    );
 
     return Scaffold(
       appBar: AppAppBar(
@@ -55,9 +65,9 @@ class JournalEntriesScreen extends ConsumerWidget {
               return Card(
                 margin: const EdgeInsets.only(bottom: Spacing.md),
                 child: Theme(
-                  data: Theme.of(context).copyWith(
-                    dividerColor: Colors.transparent,
-                  ),
+                  data: Theme.of(
+                    context,
+                  ).copyWith(dividerColor: Colors.transparent),
                   child: ExpansionTile(
                     title: Row(
                       children: [
@@ -142,6 +152,7 @@ class JournalEntriesScreen extends ConsumerWidget {
     );
   }
 
+  /// Contextual action menu based on the entry's lifecycle state.
   Widget _buildActions(
     BuildContext context,
     WidgetRef ref,
@@ -173,19 +184,14 @@ class JournalEntriesScreen extends ConsumerWidget {
           }
         },
         itemBuilder: (context) => [
-          PopupMenuItem(
-            value: 'edit',
-            child: Text(context.l10n.actionEdit),
-          ),
-          PopupMenuItem(
-            value: 'post',
-            child: Text(context.l10n.actionPostNow),
-          ),
+          PopupMenuItem(value: 'edit', child: Text(context.l10n.actionEdit)),
+          PopupMenuItem(value: 'post', child: Text(context.l10n.actionPostNow)),
         ],
       );
     }
   }
 
+  /// Initiates an automated reversal entry workflow for historical corrections.
   Future<void> _handleReverse(
     BuildContext context,
     WidgetRef ref,
@@ -215,9 +221,9 @@ class JournalEntriesScreen extends ConsumerWidget {
             .read(accountingServiceProvider.notifier)
             .reverseJournalEntry(entry.id);
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.l10n.msgReverseSuccess)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.l10n.msgReverseSuccess)));
       } on Exception catch (e) {
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
@@ -230,6 +236,7 @@ class JournalEntriesScreen extends ConsumerWidget {
     }
   }
 
+  /// Navigates to the editor for unposted draft entries.
   Future<void> _handleEdit(BuildContext context, JournalEntry entry) async {
     await Navigator.push<bool>(
       context,
@@ -239,6 +246,7 @@ class JournalEntriesScreen extends ConsumerWidget {
     );
   }
 
+  /// Transitions a Draft entry to a final Posted state in the General Ledger.
   Future<void> _handlePost(
     BuildContext context,
     WidgetRef ref,
@@ -260,14 +268,12 @@ class JournalEntriesScreen extends ConsumerWidget {
     } on Exception catch (e) {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-          backgroundColor: AppColors.error,
-        ),
+        SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error),
       );
     }
   }
 
+  /// Renders a thematic badge for entry status (Draft/Posted).
   Widget _buildStatusBadge(
     BuildContext context,
     String label,
@@ -293,14 +299,13 @@ class JournalEntriesScreen extends ConsumerWidget {
         ),
       );
 
-  Widget _buildEntryLines(
-    BuildContext context,
-    List<JournalEntryLine> lines,
-  ) =>
+  /// Builds the scrollable list of Debit/Credit atomic lines.
+  Widget _buildEntryLines(BuildContext context, List<JournalEntryLine> lines) =>
       Column(
         children: lines.map((line) => _buildLineRow(context, line)).toList(),
       );
 
+  /// Renders a single accounting line with semantic balance colors.
   Widget _buildLineRow(BuildContext context, JournalEntryLine line) => Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: Spacing.md,
@@ -354,10 +359,13 @@ class JournalEntriesScreen extends ConsumerWidget {
         ),
       );
 
-  String _formatCurrency(Decimal value) =>
-      intl.NumberFormat.currency(symbol: '', decimalDigits: 2)
-          .format(value.toDouble());
+  /// Formats currency values for consistency across the UI.
+  String _formatCurrency(Decimal value) => intl.NumberFormat.currency(
+        symbol: '',
+        decimalDigits: 2,
+      ).format(value.toDouble());
 
+  /// Shows export format modal (PDF/CSV).
   Future<void> _showExportOptions(BuildContext context, WidgetRef ref) async {
     await showModalBottomSheet<void>(
       context: context,
@@ -387,6 +395,7 @@ class JournalEntriesScreen extends ConsumerWidget {
     );
   }
 
+  /// Exports the current ledger view in the selected format.
   Future<void> _exportReport(
     BuildContext context,
     WidgetRef ref, {

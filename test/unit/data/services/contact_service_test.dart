@@ -1,4 +1,4 @@
-import 'package:basir_app/features/customers/data/services/contact_service.dart';
+import 'package:basir_accounting_system/features/customers/data/services/contact_service.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -56,7 +56,7 @@ void main() {
               'events': <dynamic>[],
               'notes': <dynamic>[],
               'groups': <dynamic>[],
-            }
+            },
           ];
         }
         return null;
@@ -69,9 +69,7 @@ void main() {
       (methodCall) async {
         if (methodCall.method == 'requestPermissions') {
           final arguments = methodCall.arguments as List<dynamic>;
-          return {
-            arguments[0]: 1,
-          };
+          return {arguments[0]: 1};
         }
         return null;
       },
@@ -92,16 +90,18 @@ void main() {
   });
 
   group('ContactService Tests', () {
-    test('getContacts should return list of contacts when permission granted',
-        () async {
-      // Act
-      final contacts = await contactService.getContacts();
+    test(
+      'getContacts should return list of contacts when permission granted',
+      () async {
+        // Act
+        final contacts = await contactService.getContacts();
 
-      // Assert
-      expect(contacts.length, 2);
-      expect(contacts.first.displayName, 'Ahmed Mohamed');
-      expect(contacts.last.displayName, 'Sara Ali');
-    });
+        // Assert
+        expect(contacts.length, 2);
+        expect(contacts.first.displayName, 'Ahmed Mohamed');
+        expect(contacts.last.displayName, 'Sara Ali');
+      },
+    );
 
     test('searchContacts should filter by name', () async {
       // Act
@@ -129,13 +129,15 @@ void main() {
       expect(results, isEmpty);
     });
 
-    test('searchContacts should return all contacts if query is empty',
-        () async {
-      // Act
-      final results = await contactService.searchContacts('');
+    test(
+      'searchContacts should return all contacts if query is empty',
+      () async {
+        // Act
+        final results = await contactService.searchContacts('');
 
-      // Assert
-      expect(results.length, 2);
-    });
+        // Assert
+        expect(results.length, 2);
+      },
+    );
   });
 }

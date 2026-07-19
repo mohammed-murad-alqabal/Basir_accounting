@@ -2,11 +2,13 @@
 // ignore_for_file: lines_longer_than_80_chars
 library;
 
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/auth/application/auth_service.dart';
-import 'package:basir_app/features/auth/presentation/screens/login_screen.dart';
-import 'package:basir_app/l10n/app_localizations.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/auth/application/auth_service.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
+import 'package:basir_accounting_system/features/auth/presentation/screens/login_screen.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,7 +30,19 @@ void main() {
       NavigatorObserver? observer,
     }) =>
         ProviderScope(
-          overrides: overrides,
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+            currentUserProfileProvider.overrideWith(
+              (ref) => const BasirUser(
+                id: 'test-user',
+                email: 'test@example.com',
+                displayName: 'Test User',
+                role: UserRole.accountant,
+                permissions: Permission.viewFinancials,
+              ),
+            ),
+            ...overrides,
+          ],
           child: MaterialApp(
             localizationsDelegates: const [
               AppLocalizations.delegate,
@@ -51,8 +65,9 @@ void main() {
 
     setUp(() {
       mockAuthService = <credential-fixture>();
-      when(() => mockAuthService.login(any(), any()))
-          .thenAnswer((_) async => true);
+      when(
+        () => mockAuthService.login(any(), any()),
+      ).thenAnswer((_) async => true);
       when(() => mockAuthService.loginAsGuest()).thenAnswer((_) async {});
       when(
         () => mockAuthService.setKeepLoggedIn(
@@ -64,9 +79,7 @@ void main() {
     Future<void> setUpWidgets(WidgetTester tester) async {
       await tester.pumpWidget(
         createTestWidget(
-          overrides: [
-            authServiceProvider.overrideWithValue(mockAuthService),
-          ],
+          overrides: [authServiceProvider.overrideWithValue(mockAuthService)],
         ),
       );
       await tester.pump();
@@ -83,8 +96,9 @@ void main() {
     });
 
     group('Interaction Tests', () {
-      testWidgets('should navigate to dashboard after successful login',
-          (tester) async {
+      testWidgets('should navigate to dashboard after successful login', (
+        tester,
+      ) async {
         await setUpWidgets(tester);
 
         await tester.enterText(find.byType(AppTextField).first, 'testuser');
@@ -130,11 +144,13 @@ void main() {
         // Use a more careful pumping sequence to avoid "Future already
         // completed"
         await tester.pump(); // Start logic
-        await tester
-            .pump(const Duration(milliseconds: 50)); // AuthService completes
+        await tester.pump(
+          const Duration(milliseconds: 50),
+        ); // AuthService completes
         await tester.pump(); // SnackBar shows
-        await tester
-            .pump(const Duration(milliseconds: 50)); // Navigation starts
+        await tester.pump(
+          const Duration(milliseconds: 50),
+        ); // Navigation starts
 
         var navigated = false;
         for (var i = 0; i < 60; i++) {
@@ -150,8 +166,9 @@ void main() {
 
     group('Error Handling', () {
       testWidgets('should show error on login failure', (tester) async {
-        when(() => mockAuthService.login(any(), any()))
-            .thenAnswer((_) async => false);
+        when(
+          () => mockAuthService.login(any(), any()),
+        ).thenAnswer((_) async => false);
         await setUpWidgets(tester);
 
         await tester.enterText(find.byType(AppTextField).first, 'user');

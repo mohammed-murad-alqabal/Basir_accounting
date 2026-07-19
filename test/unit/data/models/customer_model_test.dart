@@ -3,7 +3,7 @@
 /// يختبر تحويل البيانات والتحقق من الصحة لنموذج العميل
 library;
 
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -23,8 +23,10 @@ void main() {
         );
 
         // Act
-        final updated =
-            original.copyWith(nameEn: 'اسم جديد', nameAr: 'اسم جديد');
+        final updated = original.copyWith(
+          nameEn: 'اسم جديد',
+          nameAr: 'اسم جديد',
+        );
 
         // Assert
         expect(updated.id, original.id);
@@ -132,8 +134,10 @@ void main() {
         final originalName = original.name(isArabic: true);
 
         // Act
-        final updated =
-            original.copyWith(nameEn: 'اسم جديد', nameAr: 'اسم جديد');
+        final updated = original.copyWith(
+          nameEn: 'اسم جديد',
+          nameAr: 'اسم جديد',
+        );
 
         // Assert
         expect(original.name(isArabic: true), originalName); // الأصل لم يتغير

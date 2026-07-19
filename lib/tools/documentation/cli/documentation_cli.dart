@@ -2,10 +2,10 @@
 
 import 'dart:io';
 
-import 'package:basir_app/tools/documentation/analysis/analysis_engine.dart';
-import 'package:basir_app/tools/documentation/generation/generation_engine.dart';
-import 'package:basir_app/tools/documentation/repository/documentation_repository.dart';
-import 'package:basir_app/tools/documentation/validation/validation_engine.dart';
+import 'package:basir_accounting_system/tools/documentation/analysis/analysis_engine.dart';
+import 'package:basir_accounting_system/tools/documentation/generation/generation_engine.dart';
+import 'package:basir_accounting_system/tools/documentation/repository/documentation_repository.dart';
+import 'package:basir_accounting_system/tools/documentation/validation/validation_engine.dart';
 
 /// أداة سطر الأوامر لنظام التوثيق
 ///
@@ -117,7 +117,7 @@ class DocumentationCLI {
   Future<int> _runGenerate(List<String> args) async {
     var path = 'lib/';
     var dryRun = false;
-    // var force = false; // TODO(dev): استخدام force في المستقبل
+    // var force = false; // TODO(basir): استخدام force في المستقبل
 
     // معالجة المعاملات
     for (var i = 0; i < args.length; i++) {
@@ -133,7 +133,7 @@ class DocumentationCLI {
           dryRun = true;
         case '--force':
         case '-f':
-          // force = true; // TODO(dev): استخدام force في المستقبل
+          // force = true; // TODO(basir): استخدام force في المستقبل
           break;
       }
     }
@@ -229,7 +229,7 @@ class DocumentationCLI {
     }
 
     try {
-      // TODO(dev): إكمال تنفيذ report command
+      // TODO(basir): إكمال تنفيذ report command
       // تحليل المشروع
       // final analysisResults = await _analysisEngine.analyzeDirectory('lib/');
       // final stats = _analysisEngine.getCoverageStats();

@@ -1,6 +1,7 @@
-import 'package:basir_app/core/assets/app_logo.dart';
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/core/assets/app_logo.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/forensics/presentation/widgets/integrity_pulse_widget.dart';
 import 'package:flutter/material.dart';
 
 /// رأس لوحة التحكم المطور (Basir Premium Header)
@@ -18,10 +19,7 @@ class DashboardBasirHeader extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            primaryColor,
-            primaryColor.withValues(alpha: 0.7),
-          ],
+          colors: [primaryColor, primaryColor.withValues(alpha: 0.7)],
         ),
         borderRadius: BorderRadius.circular(Radii.lg),
         boxShadow: [
@@ -32,42 +30,52 @@ class DashboardBasirHeader extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
+      child: Stack(
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.l10n.dashboardBasirSystemTitle,
-                  style: const TextStyle(
-                    color: Color(0xFFFFD700),
-                    fontSize: AppTypography.labelSmall,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.2,
-                  ),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.l10n.dashboardBasirSystemTitle,
+                      style: const TextStyle(
+                        color: Color(0xFFFFD700),
+                        fontSize: AppTypography.labelSmall,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: Spacing.xs),
+                    Text(
+                      context.l10n.dashboardWelcomeMessage,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: AppTypography.headlineSmall,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: Spacing.xs),
+                    Text(
+                      context.l10n.dashboardMotto,
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: AppTypography.bodySmall,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: Spacing.xs),
-                Text(
-                  context.l10n.dashboardWelcomeMessage,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: AppTypography.headlineSmall,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: Spacing.xs),
-                Text(
-                  context.l10n.dashboardMotto,
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: AppTypography.bodySmall,
-                  ),
-                ),
-              ],
-            ),
+              ),
+              const BasirShimmerLogo(size: 60),
+            ],
           ),
-          const BasirShimmerLogo(size: 60),
+          Positioned(
+            top: 0,
+            right: context.isArabic ? null : 0,
+            left: context.isArabic ? 0 : null,
+            child: const IntegrityPulseWidget(),
+          ),
         ],
       ),
     );
@@ -105,10 +113,7 @@ class GlassStatCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.surface.withValues(alpha: 0.7),
             borderRadius: BorderRadius.circular(Radii.md),
-            border: Border.all(
-              color: color.withValues(alpha: 0.2),
-              width: 1.5,
-            ),
+            border: Border.all(color: color.withValues(alpha: 0.2), width: 1.5),
           ),
           padding: const EdgeInsets.all(Spacing.md),
           child: Column(

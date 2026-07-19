@@ -1,8 +1,9 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/reports/presentation/screens/aging_report_screen.dart';
-import 'package:basir_app/features/reports/services/reporting_service.dart';
-import 'package:basir_app/l10n/app_localizations.dart';
-import 'package:basir_app/src/rust/api/reports.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/aging_report_screen.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/src/rust/api/reports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +21,16 @@ void main() {
 
   Widget createWidgetUnderTest(AgingReportType type) => ProviderScope(
         overrides: [
+          appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          currentUserProfileProvider.overrideWith(
+            (ref) => const BasirUser(
+              id: 'test-user',
+              email: 'test@example.com',
+              displayName: 'Test User',
+              role: UserRole.accountant,
+              permissions: Permission.viewFinancials,
+            ),
+          ),
           nativeReportingServiceProvider
               .overrideWithValue(mockReportingService),
         ],
@@ -36,8 +47,9 @@ void main() {
         ),
       );
 
-  testWidgets('AgingReportScreen shows empty state when no data',
-      (tester) async {
+  testWidgets('AgingReportScreen shows empty state when no data', (
+    tester,
+  ) async {
     when(
       () => mockReportingService.getReceivablesAging(
         asOfDate: any(named: 'asOfDate'),
@@ -50,8 +62,9 @@ void main() {
     expect(find.text('لا توجد بيانات لهذه الفترة'), findsOneWidget);
   });
 
-  testWidgets('AgingReportScreen shows data table when data is present',
-      (tester) async {
+  testWidgets('AgingReportScreen shows data table when data is present', (
+    tester,
+  ) async {
     final mockData = <AgingReportLineDto>[
       const AgingReportLineDto(
         partnerId: '1',

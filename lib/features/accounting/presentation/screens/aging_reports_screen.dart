@@ -1,15 +1,19 @@
+// ignore_for_file: lines_longer_than_80_chars
 import 'dart:typed_data';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/application/accounts_payable_service.dart';
-import 'package:basir_app/features/accounting/application/accounts_receivable_service.dart';
-import 'package:basir_app/features/reports/application/report_export_service.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounts_payable_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounts_receivable_service.dart';
+import 'package:basir_accounting_system/features/reports/application/report_export_service.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة تقارير تعمير الديون (Aging Reports Screen)
+/// Screen for analyzing the age of outstanding debts and liabilities.
+///
+/// Categorizes Accounts Receivable and Accounts Payable into time buckets
+/// (e.g., 1-30 days, 31-60 days) to assess credit risk and liquidity.
 class AgingReportsScreen extends ConsumerWidget {
   /// Creates the aging reports screen.
   const AgingReportsScreen({super.key});
@@ -35,14 +39,12 @@ class AgingReportsScreen extends ConsumerWidget {
             ],
           ),
           body: const TabBarView(
-            children: [
-              _ReceivableAgingTab(),
-              _PayableAgingTab(),
-            ],
+            children: [_ReceivableAgingTab(), _PayableAgingTab()],
           ),
         ),
       );
 
+  /// Displays a modal with data export format options (PDF, CSV).
   Future<void> _showExportOptions(BuildContext context, WidgetRef ref) async {
     await showModalBottomSheet<void>(
       context: context,
@@ -72,6 +74,7 @@ class AgingReportsScreen extends ConsumerWidget {
     );
   }
 
+  /// Triggers the actual export generation and sharing workflow.
   Future<void> _exportReport(
     BuildContext context,
     WidgetRef ref, {
@@ -131,8 +134,10 @@ class AgingReportsScreen extends ConsumerWidget {
           data: data,
         );
       } else {
-        final csv =
-            exportService.generateTableCsv(headers: headers, data: data);
+        final csv = exportService.generateTableCsv(
+          headers: headers,
+          data: data,
+        );
         final sharingService = ref.read(sharingServiceProvider);
         await sharingService.shareFile(
           bytes: Uint8List.fromList(csv.codeUnits),
@@ -142,13 +147,14 @@ class AgingReportsScreen extends ConsumerWidget {
       }
     } on Exception catch (e) {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 }
 
+/// Tab view for Accounts Receivable (AR) aging analysis.
 class _ReceivableAgingTab extends ConsumerWidget {
   const _ReceivableAgingTab();
 
@@ -181,6 +187,15 @@ class _ReceivableAgingTab extends ConsumerWidget {
             return AppCard(
               margin: const EdgeInsets.only(bottom: 12),
               padding: const EdgeInsets.all(16),
+              onTap: () => Navigator.pushNamed(
+                context,
+                '/entity-transactions',
+                arguments: {
+                  'entityId': report.customerId,
+                  'entityName': report.name(isArabic: context.isArabic),
+                  'isCustomer': true,
+                },
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -215,7 +230,12 @@ class _ReceivableAgingTab extends ConsumerWidget {
     );
   }
 
-  Widget _buildAgingRow(String label, dynamic value, {bool isTotal = false}) =>
+  /// Builds a horizontal key-value row for an aging period.
+  Widget _buildAgingRow(
+    String label,
+    dynamic value, {
+    bool isTotal = false,
+  }) =>
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 2),
         child: Row(
@@ -236,6 +256,7 @@ class _ReceivableAgingTab extends ConsumerWidget {
       );
 }
 
+/// Tab view for Accounts Payable (AP) aging analysis.
 class _PayableAgingTab extends ConsumerWidget {
   const _PayableAgingTab();
 
@@ -267,6 +288,15 @@ class _PayableAgingTab extends ConsumerWidget {
             return AppCard(
               margin: const EdgeInsets.only(bottom: 12),
               padding: const EdgeInsets.all(16),
+              onTap: () => Navigator.pushNamed(
+                context,
+                '/entity-transactions',
+                arguments: {
+                  'entityId': report.supplierId,
+                  'entityName': report.name(isArabic: context.isArabic),
+                  'isCustomer': false,
+                },
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -300,7 +330,12 @@ class _PayableAgingTab extends ConsumerWidget {
     );
   }
 
-  Widget _buildAgingRow(String label, dynamic value, {bool isTotal = false}) =>
+  /// Builds a horizontal key-value row for an aging period.
+  Widget _buildAgingRow(
+    String label,
+    dynamic value, {
+    bool isTotal = false,
+  }) =>
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 2),
         child: Row(

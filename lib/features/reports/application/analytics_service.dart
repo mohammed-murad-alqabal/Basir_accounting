@@ -1,7 +1,7 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
-import 'package:basir_app/features/reports/domain/entities/financial_kpi.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/reports/domain/entities/financial_kpi.dart';
 import 'package:decimal/decimal.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -41,7 +41,7 @@ class AnalyticsService extends _$AnalyticsService {
           (a.code.startsWith('21') || a.subType == 'ap' || a.subType == 'tax'),
     );
 
-    double currentRatio = 0.0;
+    var currentRatio = 0.0;
     if (currentLiabilities > Decimal.zero) {
       currentRatio = (currentAssets / currentLiabilities).toDouble();
     }
@@ -57,7 +57,7 @@ class AnalyticsService extends _$AnalyticsService {
     );
     final netIncome = totalRevenue - totalExpenses;
 
-    double profitMargin = 0.0;
+    var profitMargin = 0.0;
     if (totalRevenue > Decimal.zero) {
       profitMargin = (netIncome / totalRevenue).toDouble() * 100;
     }
@@ -71,7 +71,7 @@ class AnalyticsService extends _$AnalyticsService {
         name: 'Current Ratio',
         value: currentRatio,
         unit: 'x',
-        trend: 0.0,
+        trend: 0,
         health: currentRatio >= 1.2
             ? KpiHealth.healthy
             : (currentRatio > 0 ? KpiHealth.warning : KpiHealth.critical),
@@ -81,7 +81,7 @@ class AnalyticsService extends _$AnalyticsService {
         name: 'Burn Rate',
         value: burnRate.toDouble(),
         unit: 'SAR/mo',
-        trend: 0.0,
+        trend: 0,
         health: burnRate > Decimal.zero ? KpiHealth.warning : KpiHealth.healthy,
         description: 'Monthly negative cash flow (Expenses).',
       ),
@@ -89,7 +89,7 @@ class AnalyticsService extends _$AnalyticsService {
         name: 'Profit Margin',
         value: profitMargin,
         unit: '%',
-        trend: 0.0,
+        trend: 0,
         health: profitMargin > 15
             ? KpiHealth.healthy
             : (profitMargin > 0 ? KpiHealth.warning : KpiHealth.critical),
@@ -168,25 +168,25 @@ class AnalyticsService extends _$AnalyticsService {
   List<FinancialKpi> _getEmptyKpis() => [
         const FinancialKpi(
           name: 'Current Ratio',
-          value: 0.0,
+          value: 0,
           unit: 'x',
-          trend: 0.0,
+          trend: 0,
           health: KpiHealth.critical,
           description: 'No data available. Add accounts to start.',
         ),
         const FinancialKpi(
           name: 'Burn Rate',
-          value: 0.0,
+          value: 0,
           unit: 'SAR/mo',
-          trend: 0.0,
+          trend: 0,
           health: KpiHealth.healthy,
           description: 'No transactions recorded.',
         ),
         const FinancialKpi(
           name: 'Profit Margin',
-          value: 0.0,
+          value: 0,
           unit: '%',
-          trend: 0.0,
+          trend: 0,
           health: KpiHealth.critical,
           description: 'No revenue or expenses found.',
         ),

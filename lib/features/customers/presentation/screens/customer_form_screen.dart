@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/customers/domain/entities/customer.dart';
-import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -280,9 +280,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
   }
 
   void _saveCustomer() {
-    unawaited(
-      _saveCustomerAsync(),
-    );
+    unawaited(_saveCustomerAsync());
   }
 
   Future<void> _saveCustomerAsync() async {
@@ -290,9 +288,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       return;
     }
 
-    setState(
-      () => _isLoading = true,
-    );
+    setState(() => _isLoading = true);
 
     try {
       final customer = Customer(
@@ -320,9 +316,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       final isEditing = widget.customer != null;
       final result = isEditing
           ? await ref.read(updateCustomerProvider(customer).future)
-          : await ref.read(
-              addCustomerProvider(customer).future,
-            );
+          : await ref.read(addCustomerProvider(customer).future);
 
       if (!mounted) return;
 
@@ -337,10 +331,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
             backgroundColor: AppColors.secondary,
           ),
         );
-        Navigator.pop(
-          context,
-          true,
-        );
+        Navigator.pop(context, true);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -363,9 +354,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       );
     } finally {
       if (mounted) {
-        setState(
-          () => _isLoading = false,
-        );
+        setState(() => _isLoading = false);
       }
     }
   }

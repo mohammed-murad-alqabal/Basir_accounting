@@ -3,8 +3,8 @@
 /// يختبر محرك توليد التوثيق التلقائي
 library;
 
-import 'package:basir_app/tools/documentation/analysis/analysis_engine.dart';
-import 'package:basir_app/tools/documentation/generation/generation_engine.dart';
+import 'package:basir_accounting_system/tools/documentation/analysis/analysis_engine.dart';
+import 'package:basir_accounting_system/tools/documentation/generation/generation_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -38,10 +38,7 @@ void main() {
       );
 
       // Act & Assert
-      expect(
-        engine.generateDocumentation(element),
-        isA<String>(),
-      );
+      expect(engine.generateDocumentation(element), isA<String>());
     });
 
     test('should handle different element types', () {
@@ -87,10 +84,7 @@ void main() {
       );
 
       // Act & Assert
-      expect(
-        engine.generateDocumentation(element),
-        isA<String>(),
-      );
+      expect(engine.generateDocumentation(element), isA<String>());
     });
   });
 
@@ -363,10 +357,7 @@ void main() {
       );
 
       // Act & Assert - All should throw UnimplementedError
-      expect(
-        engine.generateDocumentation(element),
-        isA<String>(),
-      );
+      expect(engine.generateDocumentation(element), isA<String>());
 
       expect(
         engine.generateFileDocumentation(result),

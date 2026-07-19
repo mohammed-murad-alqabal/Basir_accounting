@@ -1,24 +1,27 @@
-import 'package:basir_app/features/accounting/domain/entities/financial_year.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
 
-/// مستودع السنة المالية (Financial Year Repository).
-/// مسؤول عن تخزين واسترجاع بيانات السنوات والفترات المالية.
+/// Repository interface for fiscal year lifecycle and period management.
+///
+/// Responsible for coordinating fiscal start/end boundaries and locking
+/// finalized accounting periods.
 abstract class FinancialYearRepository {
-  /// الحصول على السنة المالية الحالية (المفتوحة)
+  /// Retrieves the currently active and open fiscal year.
   Future<FinancialYear?> getCurrentFinancialYear();
 
-  /// الحصول على سنة مالية بواسطة التاريخ (لمعرفة السنة التي يتبع لها قيد معين)
+  /// Identifies the fiscal year associated with a specific transaction date.
   Future<FinancialYear?> getFinancialYearByDate(DateTime date);
 
-  /// الحصول على جميع السنوات المالية
+  /// Retrieves a collection of all historical and future fiscal years.
   Future<List<FinancialYear>> getAllFinancialYears();
 
-  /// إضافة أو تحديث سنة مالية
+  /// Commits a financial year configuration to persistent storage.
   Future<void> saveFinancialYear(FinancialYear year);
 
-  /// إغلاق سنة مالية
+  /// Executes the regulatory closing procedure for a fiscal year.
   Future<void> closeFinancialYear(String id, String userId);
 
-  /// التحقق من إمكانية الترحيل لتاريخ معين
-  /// يرجع true إذا كان التاريخ يقع ضمن سنة مفتوحة وفترة غير مغلقة
+  /// Diagnostic check to verify if a specific date allows for data posting.
+  ///
+  /// Returns `true` if the date falls within an open year and an unlocked\n  /// period.
   Future<bool> isPeriodOpen(DateTime date);
 }

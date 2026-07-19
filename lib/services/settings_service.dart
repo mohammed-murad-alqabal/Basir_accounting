@@ -1,8 +1,8 @@
-import 'package:basir_app/core/constants.dart';
-import 'package:basir_app/core/models/sync_status.dart';
-import 'package:basir_app/features/settings/domain/entities/business_settings.dart';
-import 'package:basir_app/features/settings/domain/repositories/business_settings_repository.dart';
-import 'package:basir_app/features/settings/domain/repositories/profile_repository.dart';
+import 'package:basir_accounting_system/core/constants.dart';
+import 'package:basir_accounting_system/core/models/sync_status.dart';
+import 'package:basir_accounting_system/features/settings/domain/entities/business_settings.dart';
+import 'package:basir_accounting_system/features/settings/domain/repositories/business_settings_repository.dart';
+import 'package:basir_accounting_system/features/settings/domain/repositories/profile_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// خدمة الإعدادات (Settings Service)
@@ -107,10 +107,7 @@ class SettingsService {
     final settings = await businessSettingsRepository.getSettings() ??
         const BusinessSettings(id: 'default', companyName: '');
     await businessSettingsRepository.saveSettings(
-      settings.copyWith(
-        currencyCode: code,
-        syncStatus: SyncStatus.pendingPush,
-      ),
+      settings.copyWith(currencyCode: code, syncStatus: SyncStatus.pendingPush),
     );
   }
 
@@ -151,10 +148,7 @@ class SettingsService {
   /// تعيين شكل الفاتورة
   Future<void> setInvoiceStyle(String style) async {
     try {
-      await secureStorage.write(
-        key: <credential-fixture>,
-        value: style,
-      );
+      await secureStorage.write(key: <credential-fixture>, value: style);
     } on Exception catch (e) {
       throw Exception('خطأ في حفظ شكل الفاتورة: $e');
     }
@@ -173,9 +167,7 @@ class SettingsService {
         'invoiceStyle': await getInvoiceStyle(),
       };
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في جلب إعدادات الشركة: $e',
-      );
+      throw Exception('خطأ في جلب إعدادات الشركة: $e');
     }
   }
 

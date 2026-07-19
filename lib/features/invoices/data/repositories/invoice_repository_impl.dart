@@ -1,7 +1,8 @@
-import 'package:basir_app/features/invoices/data/models/invoice_model.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/features/invoices/domain/repositories/invoice_repository.dart';
+import 'package:basir_accounting_system/features/invoices/data/models/invoice_model.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/repositories/invoice_repository.dart';
+import 'package:decimal/decimal.dart';
 import 'package:isar/isar.dart';
 
 /// تطبيق مستودع الفواتير (Invoice Repository Implementation)
@@ -9,7 +10,11 @@ import 'package:isar/isar.dart';
 /// يتعامل مع التخزين المحلي للفواتير باستخدام Isar
 class InvoiceRepositoryImpl implements InvoiceRepository {
   /// إنشاء مستودع الفواتير
-  InvoiceRepositoryImpl({required this.isar, required this.userId});
+  InvoiceRepositoryImpl({
+    required this.isar,
+    required this.userId,
+    this.warehouseId,
+  });
 
   /// قاعدة البيانات المحلية
   final Isar isar;
@@ -17,16 +22,23 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   /// معرف المستخدم لعزل البيانات.
   final String? userId;
 
+  /// معرف المستودع الحالي (لعزل البيانات)
+  final String? warehouseId;
+
   @override
   Future<List<Invoice>> getAllInvoices() async {
     try {
-      final models =
-          await isar.invoiceModels.filter().userIdEqualTo(userId).findAll();
+      final models = await isar.invoiceModels
+          .filter()
+          .userIdEqualTo(userId)
+          .and()
+          .group(
+            (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+          )
+          .findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في جلب الفواتير: $e',
-      );
+      throw Exception('خطأ في جلب الفواتير: $e');
     }
   }
 
@@ -38,12 +50,14 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
           .invoiceIdEqualTo(id)
           .and()
           .userIdEqualTo(userId)
+          .and()
+          .group(
+            (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+          )
           .findFirst();
       return model?.toEntity();
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في جلب الفاتورة: $e',
-      );
+      throw Exception('خطأ في جلب الفاتورة: $e');
     }
   }
 
@@ -55,12 +69,14 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
           .customerIdEqualTo(customerId)
           .and()
           .userIdEqualTo(userId)
+          .and()
+          .group(
+            (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+          )
           .findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في جلب فواتير العميل: $e',
-      );
+      throw Exception('خطأ في جلب فواتير العميل: $e');
     }
   }
 
@@ -72,63 +88,73 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
           .statusEqualTo(status)
           .and()
           .userIdEqualTo(userId)
+          .and()
+          .group(
+            (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+          )
           .findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في جلب الفواتير حسب الحالة: $e',
-      );
+      throw Exception('خطأ في جلب الفواتير حسب الحالة: $e');
     }
   }
 
   @override
   Future<void> addInvoice(Invoice invoice) async {
     try {
+      // Self-Healing: Correct any discrepancies before persisting.
+      final invoiceToSave =
+          invoice.hasTotalDiscrepancy ? invoice.healedCopy : invoice;
+
       final model = InvoiceModel.fromEntity(
-        invoice.copyWith(userId: userId),
+        invoiceToSave.copyWith(
+          userId: userId,
+          warehouseId: invoiceToSave.warehouseId ?? warehouseId,
+        ),
       );
       await isar.writeTxn(() async {
-        await isar.invoiceModels.put(
-          model,
-        );
+        await isar.invoiceModels.put(model);
       });
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في إضافة الفاتورة: $e',
-      );
+      throw Exception('خطأ في إضافة الفاتورة: $e');
     }
   }
 
   @override
   Future<void> updateInvoice(Invoice invoice) async {
     try {
+      // Self-Healing: Correct any discrepancies before persisting.
+      final invoiceToSave =
+          invoice.hasTotalDiscrepancy ? invoice.healedCopy : invoice;
+
       await isar.writeTxn(() async {
         // البحث عن الفاتورة الموجودة
         final existingModel = await isar.invoiceModels
             .filter()
-            .invoiceIdEqualTo(invoice.id)
+            .invoiceIdEqualTo(invoiceToSave.id)
             .and()
             .userIdEqualTo(userId)
+            .and()
+            .group(
+              (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+            )
             .findFirst();
 
         if (existingModel == null) {
-          throw Exception(
-            'الفاتورة غير موجودة',
-          );
+          throw Exception('الفاتورة غير موجودة');
         }
 
         // تحديث الفاتورة مع الاحتفاظ بنفس id
-        final updatedModel =
-            InvoiceModel.fromEntity(invoice.copyWith(userId: userId))
-              ..id = existingModel.id;
-        await isar.invoiceModels.put(
-          updatedModel,
-        );
+        final updatedModel = InvoiceModel.fromEntity(
+          invoiceToSave.copyWith(
+            userId: userId,
+            warehouseId: invoiceToSave.warehouseId ?? warehouseId,
+          ),
+        )..id = existingModel.id;
+        await isar.invoiceModels.put(updatedModel);
       });
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في تحديث الفاتورة: $e',
-      );
+      throw Exception('خطأ في تحديث الفاتورة: $e');
     }
   }
 
@@ -141,17 +167,17 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
             .invoiceIdEqualTo(id)
             .and()
             .userIdEqualTo(userId)
+            .and()
+            .group(
+              (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+            )
             .findFirst();
         if (model != null) {
-          await isar.invoiceModels.delete(
-            model.id,
-          );
+          await isar.invoiceModels.delete(model.id);
         }
       });
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حذف الفاتورة: $e',
-      );
+      throw Exception('خطأ في حذف الفاتورة: $e');
     }
   }
 
@@ -159,12 +185,17 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   Future<void> deleteAllInvoices() async {
     try {
       await isar.writeTxn(() async {
-        await isar.invoiceModels.filter().userIdEqualTo(userId).deleteAll();
+        await isar.invoiceModels
+            .filter()
+            .userIdEqualTo(userId)
+            .and()
+            .group(
+              (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+            )
+            .deleteAll();
       });
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حذف جميع الفواتير: $e',
-      );
+      throw Exception('خطأ في حذف جميع الفواتير: $e');
     }
   }
 
@@ -181,12 +212,12 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
           .where((invoice) => invoice.status == InvoiceStatus.overdue)
           .toList();
 
-      final totalRevenue = allInvoices.fold<double>(
-        0,
+      final totalRevenue = allInvoices.fold<Decimal>(
+        Decimal.zero,
         (sum, invoice) => sum + invoice.totalAmount,
       );
-      final paidRevenue = paidInvoices.fold<double>(
-        0,
+      final paidRevenue = paidInvoices.fold<Decimal>(
+        Decimal.zero,
         (sum, invoice) => sum + invoice.totalAmount,
       );
 
@@ -198,9 +229,7 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
         paidRevenue: paidRevenue,
       );
     } on Exception catch (e) {
-      throw Exception(
-        'خطأ في حساب إحصائيات الفواتير: $e',
-      );
+      throw Exception('خطأ في حساب إحصائيات الفواتير: $e');
     }
   }
 

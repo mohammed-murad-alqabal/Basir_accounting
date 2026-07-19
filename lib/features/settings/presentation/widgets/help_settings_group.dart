@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/settings/presentation/widgets/settings_shared_widgets.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/settings/presentation/widgets/settings_shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -28,8 +28,10 @@ class HelpSettingsGroup extends ConsumerWidget {
         SettingsGroupCard(
           children: [
             ListTile(
-              leading:
-                  Icon(Icons.info_outline, color: theme.colorScheme.primary),
+              leading: Icon(
+                Icons.info_outline,
+                color: theme.colorScheme.primary,
+              ),
               title: Text(context.l10n.aboutAppTitle),
               subtitle: Text(context.l10n.aboutAppSubtitle),
               trailing: const Icon(Icons.chevron_right),
@@ -81,10 +83,7 @@ class HelpSettingsGroup extends ConsumerWidget {
       applicationLegalese: context.l10n.appCopyright,
       children: [
         const SizedBox(height: Spacing.md),
-        Text(
-          context.l10n.aboutDescription,
-          textAlign: TextAlign.center,
-        ),
+        Text(context.l10n.aboutDescription, textAlign: TextAlign.center),
       ],
     );
   }

@@ -1,644 +1,143 @@
-# 📇 فهرس شامل لوثائق مشروع بصير
+# 📇 Master Documentation Index: Basir Accounting System
 
-**المشروع:** بصير MVP - تطبيق إدارة الفواتير الذكي  
-**النوع:** فهرس قابل للبحث والتصفح  
-**آخر تحديث:** 25 ديسمبر 2025  
-**المؤلف:** فريق وكلاء تطوير مشروع بصير
-
----
-
-## 🔍 البحث السريع
-
-### 🏷️ البحث بالعلامات (Tags)
-
-| العلامة       | الوصف                         | عدد الوثائق |
-| ------------- | ----------------------------- | ----------- |
-| `#استراتيجية` | الوثائق الاستراتيجية والتخطيط | 8           |
-| `#تقني`       | الوثائق التقنية والهندسية     | 15          |
-| `#تصميم`      | وثائق UI/UX والتصميم          | 12          |
-| `#تقارير`     | جميع أنواع التقارير           | 25+         |
-| `#أدلة`       | الأدلة والإرشادات             | 8           |
-| `#جلسات`      | ملخصات الجلسات والاجتماعات    | 7           |
-| `#إصلاحات`    | تقارير الإصلاحات والحلول      | 6           |
-| `#أداء`       | تحليلات الأداء والتحسين       | 5           |
-
-### 🎯 البحث بالجمهور المستهدف
-
-| الجمهور        | الوثائق الأساسية                                     | عدد الوثائق |
-| -------------- | ---------------------------------------------------- | ----------- |
-| **مطورين**     | Core/02, guides/troubleshooting, reports/engineering | 20+         |
-| **مديري منتج** | Core/00, Core/01, reports/project-status             | 12+         |
-| **مصممين**     | Core/04, Core/05, reports/ui-ux                      | 10+         |
-| **مختبرين**    | Core/03, guides/troubleshooting, reports/fixes       | 8+          |
-| **قيادة**      | Core/00, sessions/comprehensive, reports/analysis    | 6+          |
+**Project:** Basir Accounting System - Professional High-Fidelity Infrastructure  
+**Format:** Searchable Technical Registry  
+**Last Updated:** December 25, 2025  
+**Author:** Basir Project Agentic Development Team  
+**Status:** ✅ English-First Standardized
 
 ---
 
-## 📚 الفهرس الشامل للوثائق
+## 🔍 Strategic Navigation
 
-### 🏛️ الوثائق الأساسية (Core Documents)
+### 🏷️ Search by Domain (Tags)
 
-#### 📋 الوثائق الاستراتيجية
+| Token             | Description                                         | Count |
+| :---------------- | :-------------------------------------------------- | :---- |
+| **#Strategic**    | High-level roadmaps and multi-phase planning.       | 8     |
+| **#Technical**    | Architectural blueprints and engineering specs.     | 15    |
+| **#Design**       | UI/UX design systems and visual identity.           | 12    |
+| **#Reports**      | Comprehensive analytical and status reports.        | 25+   |
+| **#Guides**       | Standard Operating Procedures and Manuals.          | 8     |
+| **#Sessions**     | Consensus summaries and decision logs.              | 7     |
+| **#Verification** | Test reports, linting audits, and security reviews. | 6     |
+
+### 🎯 Persona-Based Routing
+
+| Target Audience           | Primary Resource Cluster                              | Volume |
+| :------------------------ | :---------------------------------------------------- | :----- |
+| **Software Engineers**    | `Core/02`, `guides/troubleshooting`, `reports/eng/`   | 20+    |
+| **Product Managers (PM)** | `Core/00`, `Core/01`, `reports/project-status/`       | 12+    |
+| **UI/UX Designers**       | `Core/04`, `Core/05`, `reports/ui-ux/`                | 10+    |
+| **QA/Test Engineers**     | `Core/03`, `guides/troubleshooting`, `reports/fixes/` | 8+     |
+| **Leadership/Exec**       | `Core/00`, `sessions/comprehensive/`, `reports/stat/` | 6+     |
+
+---
+
+## 📚 Comprehensive Documentation Registry
+
+### 🏛️ Core Technical Foundations
+
+#### Strategic Blueprints
 
 **[00_Strategic_Master_Blueprint.md](./Core/00_Strategic_Master_Blueprint.md)**
 
-- **النوع:** استراتيجي شامل
-- **الجمهور:** القيادة، مديري المشروع
-- **العلامات:** `#استراتيجية` `#رؤية` `#خطة`
-- **الوصف:** الوثيقة الشاملة للرؤية الاستراتيجية وخارطة الطريق
-- **آخر تحديث:** نوفمبر 2025
-- **الأولوية:** عالية جداً ⭐⭐⭐⭐⭐
+- **Domain**: Comprehensive Strategy
+- **Tags**: `#Strategic` `#Roadmap` `#Phases`
+- **Objective**: Multi-phase evolution of the Basir ecosystem.
+- **Priority**: Critical ⭐⭐⭐⭐⭐
 
 **[01_Product_Charter.md](./Core/01_Product_Charter.md)**
 
-- **النوع:** ميثاق منتج
-- **الجمهور:** جميع أعضاء الفريق
-- **العلامات:** `#ميثاق` `#نطاق` `#MVP`
-- **الوصف:** تحديد رؤية ومهمة ونطاق المنتج
-- **آخر تحديث:** نوفمبر 2025
-- **الأولوية:** عالية جداً ⭐⭐⭐⭐⭐
+- **Domain**: Product Definition
+- **Tags**: `#Mission` `#Vision` `#Scope`
+- **Objective**: Establishing the core purpose and MVP boundaries.
+- **Priority**: Critical ⭐⭐⭐⭐⭐
 
-#### 🔧 الوثائق التقنية
+#### Engineering Infrastructure
 
 **[02_Technical_Design_Document.md](./Core/02_Technical_Design_Document.md)**
 
-- **النوع:** تصميم تقني
-- **الجمهور:** المطورين، المهندسين
-- **العلامات:** `#تقني` `#بنية` `#Flutter` `#Dart`
-- **الوصف:** البنية المعمارية والقرارات التقنية
-- **التقنيات:** Flutter, Dart, Isar, Riverpod
-- **آخر تحديث:** ديسمبر 2025
-- **الأولوية:** عالية جداً ⭐⭐⭐⭐⭐
+- **Domain**: Technical Architecture
+- **Tags**: `#Architecture` `#CleanArchitecture` `#Flutter`
+- **Objective**: High-level engineering decisions and data flow.
+- **Priority**: Critical ⭐⭐⭐⭐⭐
 
 **[03_Product_Requirements_Document.md](./Core/03_Product_Requirements_Document.md)**
 
-- **النوع:** متطلبات منتج
-- **الجمهور:** المطورين، المختبرين، محللي الأعمال
-- **العلامات:** `#متطلبات` `#قصص_مستخدم` `#معايير_قبول`
-- **الوصف:** المتطلبات الوظيفية وغير الوظيفية
-- **آخر تحديث:** نوفمبر 2025
-- **الأولوية:** عالية ⭐⭐⭐⭐
+- **Domain**: Requirements Engineering
+- **Tags**: `#FunctionalDocs` `#UserStories` `#PRD`
+- **Objective**: Feature-set definition and acceptance criteria.
+- **Priority**: High ⭐⭐⭐⭐
 
-#### 🎨 وثائق التصميم
+#### Design and Visuals
 
 **[04_Design_System.md](./Core/04_Design_System.md)**
 
-- **النوع:** نظام تصميم
-- **الجمهور:** المصممين، مطوري UI
-- **العلامات:** `#تصميم` `#UI` `#مكونات` `#ألوان`
-- **الوصف:** نظام التصميم الموحد والمكونات
-- **آخر تحديث:** نوفمبر 2025
-- **الأولوية:** عالية ⭐⭐⭐⭐
+- **Domain**: Visual Governance
+- **Tags**: `#DesignSystem` `#UI` `#Tokens`
+- **Objective**: Standardized UI components and palette logic.
+- **Priority**: High ⭐⭐⭐⭐
 
 **[05_UI_Wireframes_Description.md](./Core/05_UI_Wireframes_Description.md)**
 
-- **النوع:** إطارات سلكية
-- **الجمهور:** المصممين، المطورين
-- **العلامات:** `#wireframes` `#تدفقات` `#UX`
-- **الوصف:** وصف الإطارات السلكية وتدفقات المستخدم
-- **آخر تحديث:** نوفمبر 2025
-- **الأولوية:** متوسطة ⭐⭐⭐
-
-#### 📝 وثائق إضافية في Core
-
-**[CODING_STANDARDS.md](./Core/CODING_STANDARDS.md)**
-
-- **النوع:** معايير برمجة
-- **الجمهور:** المطورين
-- **العلامات:** `#معايير` `#جودة_كود` `#Flutter`
-- **الوصف:** معايير البرمجة وأفضل الممارسات
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[GUEST_MODE_IMPLEMENTATION.md](./Core/GUEST_MODE_IMPLEMENTATION.md)**
-
-- **النوع:** تنفيذ ميزة
-- **الجمهور:** المطورين
-- **العلامات:** `#ميزة` `#ضيف` `#تنفيذ`
-- **الوصف:** تفاصيل تنفيذ وضع الضيف
-- **الأولوية:** متوسطة ⭐⭐⭐
+- **Domain**: UX Interaction
+- **Tags**: `#Wireframes` `#UserFlow` `#UX`
+- **Objective**: Structural mapping of key application screens.
+- **Priority**: Medium ⭐⭐⭐
 
 ---
 
-### 📊 التقارير (Reports)
+### 📊 Professional Reports (reports/)
 
-#### 🔧 التقارير الهندسية (Engineering Reports)
+#### Engineering & QA
 
-**[reports/engineering/COMPREHENSIVE_ENGINEERING_REVIEW.md](./reports/engineering/COMPREHENSIVE_ENGINEERING_REVIEW.md)**
+- **[reports/engineering/COMPREHENSIVE_ENGINEERING_REVIEW.md](./reports/engineering/COMPREHENSIVE_ENGINEERING_REVIEW.md)**: Logic and code quality audit.
+- **[reports/engineering/ENGINEERING_AUDIT_REPORT.md](./reports/engineering/ENGINEERING_AUDIT_REPORT.md)**: Compliance with SOLID/Clean principles.
+- **[reports/fixes/FLUTTER_ANALYZE_FIX.md](./reports/fixes/FLUTTER_ANALYZE_FIX.md)**: Resolution of static analysis warnings.
 
-- **النوع:** مراجعة هندسية شاملة
-- **الجمهور:** المطورين، المهندسين، القيادة التقنية
-- **العلامات:** `#مراجعة` `#هندسة` `#تقييم`
-- **الوصف:** مراجعة شاملة للبنية الهندسية والجودة
-- **الأولوية:** عالية ⭐⭐⭐⭐
+#### Project Pulse & Status
 
-**[reports/engineering/DEV_ENVIRONMENT_ANALYSIS.md](./reports/engineering/DEV_ENVIRONMENT_ANALYSIS.md)**
+- **[reports/project-status/FINAL_DEPLOYMENT_REPORT.md](./reports/project-status/FINAL_DEPLOYMENT_REPORT.md)**: Production readiness verification.
+- **[reports/project-status/FINAL_PROJECT_STATUS.md](./reports/project-status/FINAL_PROJECT_STATUS.md)**: Executive summary of achievements.
+- **[Strategic/Phase_6_Advanced_Accounting/00_Strategy_Overview.md](./Strategic/Phase_6_Advanced_Accounting/00_Strategy_Overview.md)**: Scaling strategy.
 
-- **النوع:** تحليل بيئة تطوير
-- **الجمهور:** المطورين، DevOps
-- **العلامات:** `#بيئة_تطوير` `#أدوات` `#تحليل`
-- **الوصف:** تحليل وتقييم بيئة التطوير والأدوات
-- **الأولوية:** متوسطة ⭐⭐⭐
+#### Tooling & Infrastructure
 
-**[reports/engineering/ENGINEERING_AUDIT_REPORT.md](./reports/engineering/ENGINEERING_AUDIT_REPORT.md)**
-
-- **النوع:** تدقيق هندسي
-- **الجمهور:** المهندسين، مديري التقنية
-- **العلامات:** `#تدقيق` `#جودة` `#امتثال`
-- **الوصف:** تقرير تدقيق شامل للممارسات الهندسية
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[reports/engineering/FLUTTER_ANALYZE_FIX.md](./reports/engineering/FLUTTER_ANALYZE_FIX.md)**
-
-- **النوع:** إصلاح تحليل Flutter
-- **الجمهور:** مطوري Flutter
-- **العلامات:** `#Flutter` `#إصلاح` `#تحليل`
-- **الوصف:** تقرير إصلاح مشاكل تحليل Flutter
-- **الأولوية:** متوسطة ⭐⭐⭐
-
-#### 📈 تقارير حالة المشروع (Project Status Reports)
-
-**[reports/project-status/ANALYSIS_REPORT_PHASE2.md](./reports/project-status/ANALYSIS_REPORT_PHASE2.md)**
-
-- **النوع:** تحليل مرحلة
-- **الجمهور:** مديري المشروع، القيادة
-- **العلامات:** `#تحليل` `#مرحلة2` `#تقدم`
-- **الوصف:** تقرير تحليل شامل للمرحلة الثانية
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[Strategic/Phase_5_Development/03_Accounting_Core_Status.md](./Strategic/Phase_5_Development/03_Accounting_Core_Status.md)**
-
-- **النوع:** تقرير حالة تنفيذ
-- **الجمهور:** الفريق التقني
-- **العلامات:** `#محاسبة` `#أساس`
-- **الوصف:** حالة تنفيذ النواة المحاسبية
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[Strategic/Phase_6_Advanced_Accounting/00_Strategy_Overview.md](./Strategic/Phase_6_Advanced_Accounting/00_Strategy_Overview.md)**
-
-- **النوع:** استراتيجية توسع
-- **الجمهور:** القيادة، المهندسين
-- **العلامات:** `#محاسبة_عالمية` `#استراتيجية` `#مرحلة6`
-- **الوصف:** خطة التحول للنظام المحاسبي العالمي المتقدم
-- **الأولوية:** عالية جداً ⭐⭐⭐⭐⭐
-
-**[reports/project-status/FINAL_DEPLOYMENT_REPORT.md](./reports/project-status/FINAL_DEPLOYMENT_REPORT.md)**
-
-- **النوع:** تقرير نشر نهائي
-- **الجمهور:** جميع أعضاء الفريق
-- **العلامات:** `#نشر` `#إطلاق` `#نهائي`
-- **الوصف:** تقرير شامل عن عملية النشر النهائية
-- **الأولوية:** عالية جداً ⭐⭐⭐⭐⭐
-
-**[reports/project-status/FINAL_PROJECT_STATUS.md](./reports/project-status/FINAL_PROJECT_STATUS.md)**
-
-- **النوع:** حالة مشروع نهائية
-- **الجمهور:** القيادة، مديري المشروع
-- **العلامات:** `#حالة` `#نهائي` `#ملخص`
-- **الوصف:** الحالة النهائية الشاملة للمشروع
-- **الأولوية:** عالية جداً ⭐⭐⭐⭐⭐
-
-**[reports/project-status/PROJECT_STATUS_COMPREHENSIVE_REVIEW.md](./reports/project-status/PROJECT_STATUS_COMPREHENSIVE_REVIEW.md)**
-
-- **النوع:** مراجعة شاملة للحالة
-- **الجمهور:** القيادة، مديري المشروع
-- **العلامات:** `#مراجعة` `#شامل` `#حالة`
-- **الوصف:** مراجعة شاملة ومفصلة لحالة المشروع
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-#### ⚙️ تقارير سير العمل (Workflow Reports)
-
-**[reports/workflows/WORKFLOWS_ANALYSIS_REPORT.md](./reports/workflows/WORKFLOWS_ANALYSIS_REPORT.md)**
-
-- **النوع:** تحليل سير العمل
-- **الجمهور:** مديري العمليات، DevOps
-- **العلامات:** `#سير_عمل` `#تحليل` `#عمليات`
-- **الوصف:** تحليل شامل لسير العمل والعمليات
-- **الأولوية:** متوسطة ⭐⭐⭐
-
-**[reports/workflows/WORKFLOWS_FAILURE_ANALYSIS.md](./reports/workflows/WORKFLOWS_FAILURE_ANALYSIS.md)**
-
-- **النوع:** تحليل فشل سير العمل
-- **الجمهور:** DevOps، المطورين
-- **العلامات:** `#فشل` `#تحليل` `#حلول`
-- **الوصف:** تحليل أسباب فشل سير العمل والحلول
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[reports/workflows/WORKFLOWS_LOCAL_STATUS.md](./reports/workflows/WORKFLOWS_LOCAL_STATUS.md)**
-
-- **النوع:** حالة سير العمل المحلي
-- **الجمهور:** المطورين، DevOps
-- **العلامات:** `#محلي` `#حالة` `#سير_عمل`
-- **الوصف:** تقرير حالة سير العمل في البيئة المحلية
-- **الأولوية:** متوسطة ⭐⭐⭐
-
-#### 🔄 تقارير Git/GitHub (Git/GitHub Reports)
-
-**[reports/git-github/GIT_GITHUB_FINAL_STATUS.md](./reports/git-github/GIT_GITHUB_FINAL_STATUS.md)**
-
-- **النوع:** حالة Git/GitHub نهائية
-- **الجمهور:** المطورين، DevOps
-- **العلامات:** `#Git` `#GitHub` `#حالة_نهائية`
-- **الوصف:** الحالة النهائية لإعداد وتكوين Git/GitHub
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[reports/git-github/GIT_GITHUB_GUIDE.md](./reports/git-github/GIT_GITHUB_GUIDE.md)**
-
-- **النوع:** دليل Git/GitHub
-- **الجمهور:** جميع المطورين
-- **العلامات:** `#دليل` `#Git` `#GitHub` `#إرشادات`
-- **الوصف:** دليل شامل لاستخدام Git و GitHub
-- **الأولوية:** عالية جداً ⭐⭐⭐⭐⭐
-
-**[reports/git-github/GIT_SYNC_ANALYSIS.md](./reports/git-github/GIT_SYNC_ANALYSIS.md)**
-
-- **النوع:** تحليل مزامنة Git
-- **الجمهور:** المطورين، DevOps
-- **العلامات:** `#مزامنة` `#تحليل` `#Git`
-- **الوصف:** تحليل عمليات المزامنة والتكامل
-- **الأولوية:** متوسطة ⭐⭐⭐
-
-**[reports/git-github/GIT_SYNC_SUCCESS_REPORT.md](./reports/git-github/GIT_SYNC_SUCCESS_REPORT.md)**
-
-- **النوع:** تقرير نجاح المزامنة
-- **الجمهور:** المطورين، مديري المشروع
-- **العلامات:** `#نجاح` `#مزامنة` `#تقرير`
-- **الوصف:** تقرير نجاح عمليات المزامنة
-- **الأولوية:** متوسطة ⭐⭐⭐
-
-**[reports/git-github/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md](./reports/git-github/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md)**
-
-- **النوع:** إطار عمل Git شامل
-- **الجمهور:** جميع المطورين
-- **العلامات:** `#إطار_عمل` `#Git` `#شامل`
-- **الوصف:** إطار عمل شامل لسير عمل Git
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-#### 🎨 تقارير UI/UX (UI/UX Reports)
-
-**[reports/ui-ux/BRAND_VISUAL_IDENTITY_SYSTEM.md](./reports/ui-ux/BRAND_VISUAL_IDENTITY_SYSTEM.md)**
-
-- **النوع:** نظام الهوية البصرية
-- **الجمهور:** المصممين، التسويق
-- **العلامات:** `#هوية_بصرية` `#علامة_تجارية` `#تصميم`
-- **الوصف:** نظام شامل للهوية البصرية والعلامة التجارية
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[reports/ui-ux/FIGMA_CLEANUP_REPORT.md](./reports/ui-ux/FIGMA_CLEANUP_REPORT.md)**
-
-- **النوع:** تقرير تنظيف Figma
-- **الجمهور:** المصممين
-- **العلامات:** `#Figma` `#تنظيف` `#تحسين`
-- **الوصف:** تقرير تنظيف وتحسين ملفات Figma
-- **الأولوية:** متوسطة ⭐⭐⭐
-
-**[reports/ui-ux/FIGMA_INTEGRATION_COMPLETION_REPORT.md](./reports/ui-ux/FIGMA_INTEGRATION_COMPLETION_REPORT.md)**
-
-- **النوع:** تقرير إكمال تكامل Figma
-- **الجمهور:** المصممين، المطورين
-- **العلامات:** `#Figma` `#تكامل` `#إكمال`
-- **الوصف:** تقرير إكمال تكامل Figma مع سير العمل
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[reports/ui-ux/FIGMA_INTEGRATION_GUIDE.md](./reports/ui-ux/FIGMA_INTEGRATION_GUIDE.md)**
-
-- **النوع:** دليل تكامل Figma
-- **الجمهور:** المصممين، المطورين
-- **العلامات:** `#دليل` `#Figma` `#تكامل`
-- **الوصف:** دليل شامل لتكامل Figma مع التطوير
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[reports/ui-ux/FIGMA_USAGE_GUIDE.md](./reports/ui-ux/FIGMA_USAGE_GUIDE.md)**
-
-- **النوع:** دليل استخدام Figma
-- **الجمهور:** المصممين
-- **العلامات:** `#دليل` `#Figma` `#استخدام`
-- **الوصف:** دليل استخدام Figma للمشروع
-- **الأولوية:** متوسطة ⭐⭐⭐
-
-**[reports/ui-ux/UI_UX_IMPROVEMENTS_PROGRESS.md](./reports/ui-ux/UI_UX_IMPROVEMENTS_PROGRESS.md)**
-
-- **النوع:** تقدم تحسينات UI/UX
-- **الجمهور:** المصممين، مديري المنتج
-- **العلامات:** `#تحسينات` `#تقدم` `#UI_UX`
-- **الوصف:** تقرير تقدم تحسينات واجهة المستخدم
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-#### 🧹 تقارير التنظيف (Cleanup Reports)
-
-**[reports/cleanup/AWS_BEDROCK_AGENTCORE_CLEANUP_REPORT.md](./reports/cleanup/AWS_BEDROCK_AGENTCORE_CLEANUP_REPORT.md)**
-
-- **النوع:** تقرير تنظيف AWS
-- **الجمهور:** DevOps، المطورين
-- **العلامات:** `#AWS` `#تنظيف` `#Bedrock`
-- **الوصف:** تقرير تنظيف موارد AWS Bedrock
-- **الأولوية:** متوسطة ⭐⭐⭐
-
-**[reports/cleanup/REORGANIZATION_REPORT.md](./reports/cleanup/REORGANIZATION_REPORT.md)**
-
-- **النوع:** تقرير إعادة التنظيم
-- **الجمهور:** جميع أعضاء الفريق
-- **العلامات:** `#إعادة_تنظيم` `#تحسين` `#بنية`
-- **الوصف:** تقرير شامل لإعادة تنظيم المشروع
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[reports/cleanup/REPOSITORY_REORGANIZATION_COMPLETE.md](./reports/cleanup/REPOSITORY_REORGANIZATION_COMPLETE.md)**
-
-- **النوع:** إكمال إعادة تنظيم المستودع
-- **الجمهور:** المطورين، مديري المشروع
-- **العلامات:** `#مستودع` `#إعادة_تنظيم` `#إكمال`
-- **الوصف:** تقرير إكمال إعادة تنظيم المستودع
-- **الأولوية:** عالية ⭐⭐⭐⭐
+- **[reports/git-github/GIT_GITHUB_GUIDE.md](./reports/git-github/GIT_GITHUB_GUIDE.md)**: Version control protocols.
+- **[reports/git-github/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md](./reports/git-github/GIT_WORKFLOW_COMPREHENSIVE_FRAMEWORK.md)**: Branching and CI strategy.
+- **[reports/cleanup/REPOSITORY_REORGANIZATION_COMPLETE.md](./reports/cleanup/REPOSITORY_REORGANIZATION_COMPLETE.md)**: Refactor summary.
 
 ---
 
-### 📖 الأدلة والإرشادات (Guides)
+### 📖 Technical Guides (guides/)
 
-#### 🔍 أدلة استكشاف الأخطاء (Troubleshooting Guides)
+#### Troubleshooting & Forensic
 
-**[guides/troubleshooting/ERROR_TRACKING_GUIDE.md](./guides/troubleshooting/ERROR_TRACKING_GUIDE.md)**
-
-- **النوع:** دليل تتبع الأخطاء
-- **الجمهور:** المطورين، DevOps، المختبرين
-- **العلامات:** `#أخطاء` `#تتبع` `#دليل_شامل`
-- **الوصف:** دليل شامل لنظام تتبع الأخطاء والسجلات
-- **المكونات:** Git Hooks, GitHub Actions, تقارير يومية
-- **الأولوية:** عالية جداً ⭐⭐⭐⭐⭐
-
-**[guides/troubleshooting/ERROR_RESOLUTION_LOG.md](./guides/troubleshooting/ERROR_RESOLUTION_LOG.md)**
-
-- **النوع:** سجل حلول الأخطاء
-- **الجمهور:** المطورين، الدعم التقني
-- **العلامات:** `#حلول` `#سجل` `#أخطاء`
-- **الوصف:** سجل تفصيلي لحلول الأخطاء المختلفة
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[guides/troubleshooting/ERROR_TRACKING_SYSTEM_REVIEW.md](./guides/troubleshooting/ERROR_TRACKING_SYSTEM_REVIEW.md)**
-
-- **النوع:** مراجعة نظام تتبع الأخطاء
-- **الجمهور:** المهندسين، مديري التقنية
-- **العلامات:** `#مراجعة` `#نظام` `#تحسينات`
-- **الوصف:** مراجعة تقنية شاملة لنظام تتبع الأخطاء
-- **التقييم:** 4/5 ⭐⭐⭐⭐
-- **الأولوية:** عالية ⭐⭐⭐⭐
+- **[guides/troubleshooting/ERROR_TRACKING_GUIDE.md](./guides/troubleshooting/ERROR_TRACKING_GUIDE.md)**: Mastering the diagnostic engine.
+- **[guides/troubleshooting/ERROR_RESOLUTION_LOG.md](./guides/troubleshooting/ERROR_RESOLUTION_LOG.md)**: Forensic history of bug fixes.
+- **[Archive/2026/01/99_FORENSIC_FILES_LIST.md](./Archive/2026/01/99_FORENSIC_FILES_LIST.md)**: Map of accounting logic audits.
 
 ---
 
-### 📝 ملخصات الجلسات (Sessions)
+### 📝 Decision Logs (sessions/)
 
-#### 🎯 الجلسات الشاملة (Comprehensive Sessions)
-
-**[sessions/comprehensive/FINAL_ANSWER.md](./sessions/comprehensive/FINAL_ANSWER.md)**
-
-- **النوع:** إجابة نهائية شاملة
-- **الجمهور:** القيادة، جميع أعضاء الفريق
-- **العلامات:** `#نهائي` `#شامل` `#قرارات`
-- **الوصف:** الإجابات والقرارات النهائية للمشروع
-- **الأولوية:** عالية جداً ⭐⭐⭐⭐⭐
-
-**[sessions/comprehensive/SESSION_FINAL_SUMMARY.md](./sessions/comprehensive/SESSION_FINAL_SUMMARY.md)**
-
-- **النوع:** ملخص جلسة نهائي
-- **الجمهور:** جميع أعضاء الفريق
-- **العلامات:** `#ملخص` `#جلسة` `#نهائي`
-- **الوصف:** ملخص شامل للجلسة النهائية
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-#### 🎨 جلسات UI/UX (UI/UX Sessions)
-
-**[sessions/ui-ux/SESSION_SUMMARY_UI_UX_PHASE1.md](./sessions/ui-ux/SESSION_SUMMARY_UI_UX_PHASE1.md)**
-
-- **النوع:** ملخص جلسة UI/UX المرحلة 1
-- **الجمهور:** المصممين، مطوري UI
-- **العلامات:** `#UI_UX` `#مرحلة1` `#جلسة`
-- **الوصف:** ملخص جلسة تطوير UI/UX للمرحلة الأولى
-- **الأولوية:** متوسطة ⭐⭐⭐
-
-**[sessions/ui-ux/SESSION_SUMMARY_UI_UX_PHASE2.md](./sessions/ui-ux/SESSION_SUMMARY_UI_UX_PHASE2.md)**
-
-- **النوع:** ملخص جلسة UI/UX المرحلة 2
-- **الجمهور:** المصممين، مطوري UI
-- **العلامات:** `#UI_UX` `#مرحلة2` `#جلسة`
-- **الوصف:** ملخص جلسة تطوير UI/UX للمرحلة الثانية
-- **الأولوية:** متوسطة ⭐⭐⭐
-
-#### 🔬 التحليلات المتخصصة (Specialized Analysis)
-
-**[sessions/specialized/ALIGNMENT_ANALYSIS_REPORT.md](./sessions/specialized/ALIGNMENT_ANALYSIS_REPORT.md)**
-
-- **النوع:** تقرير تحليل التوافق
-- **الجمهور:** محللي الأعمال، مديري المنتج
-- **العلامات:** `#توافق` `#تحليل` `#مطابقة`
-- **الوصف:** تحليل توافق المتطلبات مع التنفيذ
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[sessions/specialized/CONTRADICTIONS_ANALYSIS.md](./sessions/specialized/CONTRADICTIONS_ANALYSIS.md)**
-
-- **النوع:** تحليل التناقضات
-- **الجمهور:** محللي الأعمال، مديري المنتج
-- **العلامات:** `#تناقضات` `#تحليل` `#حلول`
-- **الوصف:** تحليل وحل التناقضات في المتطلبات
-- **الأولوية:** عالية ⭐⭐⭐⭐
-
-**[sessions/specialized/SPECS_ALIGNMENT_SUMMARY.md](./sessions/specialized/SPECS_ALIGNMENT_SUMMARY.md)**
-
-- **النوع:** ملخص توافق المواصفات
-- **الجمهور:** محللي الأعمال، المطورين
-- **العلامات:** `#مواصفات` `#توافق` `#ملخص`
-- **الوصف:** ملخص توافق المواصفات مع التنفيذ
-- **الأولوية:** عالية ⭐⭐⭐⭐
+- **[sessions/comprehensive/FINAL_ANSWER.md](./sessions/comprehensive/FINAL_ANSWER.md)**: Canonical source for project-wide decisions.
+- **[sessions/specialized/ALIGNMENT_ANALYSIS_REPORT.md](./sessions/specialized/ALIGNMENT_ANALYSIS_REPORT.md)**: Sync report between code and spec.
 
 ---
 
-### ✅ عناصر العمل (Action Items)
+## 🔧 Operational Logic
 
-#### 📋 المكتملة (Completed)
+### Data Integrity
 
-**[action-items/completed/DOCUMENTATION_UPDATE_REPORT.md](./action-items/completed/DOCUMENTATION_UPDATE_REPORT.md)**
+All documentation must be maintained in **Professional Technical English**. Use triple-backticks for code blocks and mermaid syntax for diagrams.
 
-- **النوع:** تقرير تحديث التوثيق
-- **الجمهور:** مديري المشروع، الفريق التقني
-- **العلامات:** `#توثيق` `#تحديث` `#مكتمل`
-- **الوصف:** تقرير تحديث وتحسين التوثيق
-- **الحالة:** ✅ مكتمل
-- **الأولوية:** متوسطة ⭐⭐⭐
+### Repository Stewardship
+
+Enforce **Diamond Purity**: No duplicate files, no archaic drafts in root directories, and 100% path accuracy in all cross-links.
 
 ---
 
-### 🗄️ الأرشيف (Archive)
-
-#### 📅 أرشيف ديسمبر 2025
-
-**[Archive/2025/december/duplicates/](Archive/2025/december/duplicates/)**
-
-- **النوع:** ملفات مكررة مؤرشفة
-- **المحتوى:** 5 ملفات مكررة تم أرشفتها بأمان
-- **العلامات:** `#أرشيف` `#مكررات` `#2025`
-- **الوصف:** الملفات المكررة المؤرشفة من عملية إعادة التنظيم
-- **الحالة:** مؤرشف بأمان
-- **الأولوية:** منخفضة ⭐
-
----
-
-## 🔍 فهارس متخصصة
-
-### 📊 فهرس حسب التاريخ
-
-#### ديسمبر 2025
-
-- **13 ديسمبر:** README.md الجديد، INDEX.md
-- **12 ديسمبر:** إعادة تنظيم شاملة للتوثيق
-- **5 ديسمبر:** تقارير الأداء والاختبارات
-
-#### نوفمبر 2025
-
-- الوثائق الأساسية (Core Documents)
-- تقارير المشروع الرئيسية
-
-### 🏷️ فهرس حسب الحالة
-
-#### ✅ مكتمل ونشط
-
-- جميع الوثائق الأساسية (Core)
-- معظم التقارير الهندسية
-- أدلة استكشاف الأخطاء
-
-#### 🔄 قيد التحديث
-
-- تقارير الأداء
-- تقارير سير العمل
-
-#### 📋 مخطط له
-
-- أدلة جديدة للمطورين
-- تقارير أداء متقدمة
-
-### 🎯 فهرس حسب الأولوية
-
-#### ⭐⭐⭐⭐⭐ أولوية عالية جداً
-
-- Core/00_Strategic_Master_Blueprint.md
-- Core/01_Product_Charter.md
-- Core/02_Technical_Design_Document.md
-- guides/troubleshooting/ERROR_TRACKING_GUIDE.md
-- reports/project-status/FINAL_DEPLOYMENT_REPORT.md
-
-#### ⭐⭐⭐⭐ أولوية عالية
-
-- Core/03_Product_Requirements_Document.md
-- Core/04_Design_System.md
-- reports/engineering/COMPREHENSIVE_ENGINEERING_REVIEW.md
-- reports/git-github/GIT_GITHUB_GUIDE.md
-
-#### ⭐⭐⭐ أولوية متوسطة
-
-- Core/05_UI_Wireframes_Description.md
-- معظم التقارير المتخصصة
-- ملخصات الجلسات
-
----
-
-## 🔧 أدوات البحث والتصفح
-
-### 🔍 البحث النصي
-
-للبحث في محتوى الوثائق:
-
-```bash
-# البحث في جميع الوثائق
-grep -r "كلمة البحث" docs/
-
-# البحث في نوع معين من الوثائق
-grep -r "Flutter" docs/Core/
-grep -r "تقرير" docs/reports/
-
-# البحث بالعلامات
-grep -r "#تقني" docs/
-```
-
-### 📋 قوائم سريعة
-
-#### الوثائق الأكثر استخداماً:
-
-1. Core/01_Product_Charter.md
-2. Core/02_Technical_Design_Document.md
-3. guides/troubleshooting/ERROR_TRACKING_GUIDE.md
-4. reports/git-github/GIT_GITHUB_GUIDE.md
-5. Core/04_Design_System.md
-
-#### الوثائق الأحدث:
-
-1. README.md (13 ديسمبر 2025)
-2. INDEX.md (13 ديسمبر 2025)
-3. تقارير إعادة التنظيم (12 ديسمبر 2025)
-
----
-
-## 📈 إحصائيات التوثيق
-
-### 📊 الأرقام الإجمالية
-
-- **إجمالي الوثائق:** 50+ وثيقة
-- **الوثائق الأساسية:** 8 وثائق
-- **التقارير:** 25+ تقرير
-- **الأدلة:** 8 أدلة
-- **ملخصات الجلسات:** 7 ملخصات
-- **عناصر العمل:** 1+ عنصر
-
-### 📈 التوزيع حسب النوع
-
-- **استراتيجي:** 15%
-- **تقني:** 40%
-- **تصميم:** 20%
-- **تقارير:** 20%
-- **أخرى:** 5%
-
-### 🎯 معدلات التحديث
-
-- **يومي:** تقارير الحالة
-- **أسبوعي:** الأدلة التقنية
-- **شهري:** الوثائق الاستراتيجية
-- **ربع سنوي:** المراجعة الشاملة
-
----
-
-## 🔄 صيانة الفهرس
-
-### 📅 جدول التحديث
-
-- **يومياً:** إضافة الوثائق الجديدة
-- **أسبوعياً:** تحديث الأولويات والحالات
-- **شهرياً:** مراجعة التصنيفات والعلامات
-- **ربع سنوياً:** إعادة تنظيم الفهرس
-
-### ✏️ إرشادات التحديث
-
-1. **إضافة وثيقة جديدة:** أضف إدخال في القسم المناسب
-2. **تحديث وثيقة:** حدث تاريخ آخر تحديث والأولوية
-3. **أرشفة وثيقة:** انقلها لقسم الأرشيف
-4. **تغيير التصنيف:** حدث القسم والعلامات
-
----
-
-**تم إنشاء هذا الفهرس بواسطة:** فريق وكلاء تطوير مشروع بصير  
-**آخر تحديث:** 13 ديسمبر 2025  
-**إصدار الفهرس:** 1.0  
-**الحالة:** ✅ نشط ومحدث
-
----
-
-## 📞 الدعم والمساعدة
-
-### 🆘 للمساعدة في استخدام الفهرس:
-
-1. **ابحث بالعلامات** - استخدم جدول العلامات أعلاه
-2. **تصفح حسب الجمهور** - استخدم جدول الجمهور المستهدف
-3. **استخدم البحث النصي** - للبحث في المحتوى
-4. **راجع الأولويات** - للوثائق الأهم أولاً
-
-### 📧 للاستفسارات:
-
-- **إدارة التوثيق:** فريق وكلاء تطوير مشروع بصير
-- **الدعم التقني:** guides/troubleshooting/ERROR_TRACKING_GUIDE.md
-- **التحديثات:** تابع README.md الرئيسي
-
-**🎯 هذا الفهرس هو بوابتك لجميع وثائق مشروع بصير!**
+**Stewardship Entity:** Basir Project Agentic Development Team  
+**Operational Status:** ✅ Verified and Optimized

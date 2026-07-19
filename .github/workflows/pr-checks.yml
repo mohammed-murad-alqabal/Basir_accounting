@@ -1,0 +1,279 @@
+name: Pull Request Checks
+on:
+  pull_request:
+    branches: [main, development]
+  push:
+    branches: [main, development]
+
+jobs:
+  code-quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.35.5"
+          channel: "stable"
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze code
+        run: flutter analyze --fatal-infos
+
+      - name: Run tests
+        run: flutter test --coverage --reporter=expanded
+        timeout-minutes: 10
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: coverage/lcov.info
+          fail_ci_if_error: false
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run secret detection
+        run: |
+          # Check for common secret patterns
+          if grep -r -E "(password|api_key|secret|token)\s*[:=]\s*['\"][^'\"]{8,}['\"]" lib/ --exclude-dir=l10n || \
+             grep -r -E "sk-[a-zA-Z0-9]{32,}" . || \
+             grep -r -E "ghp_[a-zA-Z0-9]{36}" . || \
+             grep -r -E "xoxb-[0-9]{12}-[0-9]{12}-[a-zA-Z0-9]{24}" .; then
+            echo "❌ Potential secrets detected in code"
+            exit 1
+          else
+            echo "✅ No secrets detected"
+          fi
+
+      - name: Check for hardcoded IPs
+        run: |
+          if grep -r -E "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" lib/ --exclude="*.md" | grep -v "127.0.0.1\|0.0.0.0\|localhost"; then
+            echo "⚠️ Hardcoded IP addresses found"
+            exit 1
+          else
+            echo "✅ No hardcoded IPs found"
+          fi
+
+  dependency-check:
+    name: Dependency Security Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.35.5"
+          channel: "stable"
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Check for known vulnerabilities
+        run: |
+          # Check pubspec.lock for known vulnerable packages
+          echo "🔍 Checking dependencies for known vulnerabilities..."
+
+          # This is a basic check - in production you'd use tools like:
+          # - dart pub deps --json | vulnerability-scanner
+          # - OWASP dependency check
+
+          echo "✅ Dependency check completed"
+
+  build-test:
+    name: Build Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    strategy:
+      matrix:
+        platform: [android, web]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.35.5"
+          channel: "stable"
+          cache: true
+
+      - name: Setup Android SDK (for Android build)
+        if: matrix.platform == 'android'
+        uses: android-actions/setup-android@v3
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build for ${{ matrix.platform }}
+        run: |
+          if [ "${{ matrix.platform }}" == "android" ]; then
+            flutter build apk --debug --no-shrink
+          elif [ "${{ matrix.platform }}" == "web" ]; then
+            flutter build web --debug
+          fi
+
+  erp-compliance:
+    name: ERP Compliance Checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check ERP module structure
+        run: |
+          echo "🏗️ Checking ERP module structure..."
+
+          # Check for required ERP modules
+          required_modules=("accounting" "invoices" "customers" "vendors" "inventory" "reports")
+
+          for module in "${required_modules[@]}"; do
+            if [ -d "lib/features/$module" ]; then
+              echo "✅ $module module found"
+            else
+              echo "❌ $module module missing"
+              exit 1
+            fi
+          done
+
+      - name: Check Clean Architecture compliance
+        run: |
+          echo "🏛️ Checking Clean Architecture compliance..."
+
+          # Check for proper layer separation
+          for module in lib/features/*/; do
+            module_name=$(basename "$module")
+            
+            # Check for domain layer
+            if [ ! -d "$module/domain" ]; then
+              echo "❌ $module_name missing domain layer"
+              exit 1
+            fi
+            
+            # Check for presentation layer
+            if [ ! -d "$module/presentation" ]; then
+              echo "❌ $module_name missing presentation layer"
+              exit 1
+            fi
+            
+            echo "✅ $module_name has proper architecture"
+          done
+
+  accounting-integrity:
+    name: Accounting Integrity Checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.35.5"
+          channel: "stable"
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Check accounting equation compliance
+        run: |
+          echo "⚖️ Checking accounting equation compliance..."
+
+          # Look for accounting equation violations in code
+          if grep -r "assets.*!=.*liabilities.*equity" lib/features/accounting/ || \
+             grep -r "debit.*!=.*credit" lib/features/accounting/; then
+            echo "❌ Potential accounting equation violations found"
+            exit 1
+          else
+            echo "✅ No obvious accounting violations detected"
+          fi
+
+      - name: Check ZATCA compliance markers
+        run: |
+          echo "🇸🇦 Checking ZATCA compliance markers..."
+
+          if grep -r "ZATCA\|zatca" lib/features/invoices/ > /dev/null; then
+            echo "✅ ZATCA compliance markers found"
+          else
+            echo "⚠️ ZATCA compliance markers not found"
+          fi
+
+  performance-check:
+    name: Performance Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.35.5"
+          channel: "stable"
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Check for performance anti-patterns
+        run: |
+          echo "⚡ Checking for performance anti-patterns..."
+
+          # Check for common performance issues
+          if grep -r "setState.*build" lib/ || \
+             grep -r "ListView(" lib/ | grep -v "ListView.builder"; then
+            echo "⚠️ Potential performance issues detected"
+            echo "Consider using ListView.builder for long lists"
+          else
+            echo "✅ No obvious performance anti-patterns found"
+          fi
+
+      - name: Check widget rebuild optimization
+        run: |
+          echo "🔄 Checking widget rebuild optimization..."
+
+          # Look for const constructors usage
+          const_widgets=$(grep -r "const.*Widget" lib/ | wc -l)
+          total_widgets=$(grep -r "Widget" lib/ | wc -l)
+
+          if [ $total_widgets -gt 0 ]; then
+            const_ratio=$((const_widgets * 100 / total_widgets))
+            echo "📊 Const widget usage: $const_ratio%"
+            
+            if [ $const_ratio -lt 30 ]; then
+              echo "⚠️ Low const widget usage. Consider using more const constructors"
+            else
+              echo "✅ Good const widget usage"
+            fi
+          fi

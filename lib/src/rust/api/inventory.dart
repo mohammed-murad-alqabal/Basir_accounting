@@ -76,6 +76,7 @@ class InventoryItemDto {
   final String nameEn;
   final String? description;
   final String unit;
+  final String? minStockLevel;
   final String valuationMethod;
   final String? purchasePrice;
   final String? salePrice;
@@ -92,6 +93,7 @@ class InventoryItemDto {
     required this.nameEn,
     this.description,
     required this.unit,
+    this.minStockLevel,
     required this.valuationMethod,
     this.purchasePrice,
     this.salePrice,
@@ -110,6 +112,7 @@ class InventoryItemDto {
       nameEn.hashCode ^
       description.hashCode ^
       unit.hashCode ^
+      minStockLevel.hashCode ^
       valuationMethod.hashCode ^
       purchasePrice.hashCode ^
       salePrice.hashCode ^
@@ -130,6 +133,7 @@ class InventoryItemDto {
           nameEn == other.nameEn &&
           description == other.description &&
           unit == other.unit &&
+          minStockLevel == other.minStockLevel &&
           valuationMethod == other.valuationMethod &&
           purchasePrice == other.purchasePrice &&
           salePrice == other.salePrice &&

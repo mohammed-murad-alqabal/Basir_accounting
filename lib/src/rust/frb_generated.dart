@@ -6,6 +6,7 @@
 import 'api.dart';
 import 'api/accounts.dart';
 import 'api/assets.dart';
+import 'api/auditor.dart';
 import 'api/calendar.dart';
 import 'api/currency.dart';
 import 'api/inventory.dart';
@@ -14,6 +15,7 @@ import 'api/purchasing.dart';
 import 'api/reports.dart';
 import 'api/sales.dart';
 import 'api/standards.dart';
+import 'api/zatca.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'frb_generated.dart';
@@ -78,7 +80,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.11.1';
 
   @override
-  int get rustContentHash => 1763526417;
+  int get rustContentHash => 1517303534;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -123,7 +125,7 @@ abstract class RustLibApi extends BaseApi {
   Future<void> crateApiPurchasingDeleteVendor({required String id});
 
   Future<FinancialReportDto> crateApiReportsGenerateBalanceSheet(
-      {required String asOfDate});
+      {required String asOfDate, Map<String, String>? fairValuationUpdates});
 
   Future<FinancialReportDto> crateApiReportsGenerateCashFlowStatement(
       {required String fromDate, required String toDate});
@@ -136,6 +138,16 @@ abstract class RustLibApi extends BaseApi {
 
   Future<FinancialReportDto> crateApiReportsGenerateZakahStatement(
       {required String asOfDate, required ZakahCalendarDto calendar});
+
+  Future<String> crateApiZatcaGenerateZatcaCsr(
+      {required ZatcaCsrInputDto input, required String keyPairPem});
+
+  Future<(String, String)> crateApiZatcaGenerateZatcaKeyPair();
+
+  Future<(String, String)> crateApiZatcaGenerateZatcaSignedXml(
+      {required ZatcaInvoiceInputDto input,
+      required String certificatePem,
+      required String privateKeyPem});
 
   Future<AccountDto?> crateApiAccountsGetAccountById({required String id});
 
@@ -276,6 +288,9 @@ abstract class RustLibApi extends BaseApi {
   Future<void> crateApiInventorySaveItem({required InventoryItemDto item});
 
   Future<void> crateApiCalendarSavePeriod({required PeriodDto dto});
+
+  List<AnomalyDto> crateApiAuditorScanSequence(
+      {required String prefix, required List<EntryDto> entries});
 
   Future<List<StandardDto>> crateApiStandardsSearchStandards(
       {required String query});
@@ -618,11 +633,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @override
   Future<FinancialReportDto> crateApiReportsGenerateBalanceSheet(
-      {required String asOfDate}) {
+      {required String asOfDate, Map<String, String>? fairValuationUpdates}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(asOfDate, serializer);
+        sse_encode_opt_Map_String_String_None(fairValuationUpdates, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
             funcId: 13, port: port_);
       },
@@ -631,7 +647,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         decodeErrorData: sse_decode_AnyhowException,
       ),
       constMeta: kCrateApiReportsGenerateBalanceSheetConstMeta,
-      argValues: [asOfDate],
+      argValues: [asOfDate, fairValuationUpdates],
       apiImpl: this,
     ));
   }
@@ -639,7 +655,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kCrateApiReportsGenerateBalanceSheetConstMeta =>
       const TaskConstMeta(
         debugName: "generate_balance_sheet",
-        argNames: ["asOfDate"],
+        argNames: ["asOfDate", "fairValuationUpdates"],
       );
 
   @override
@@ -751,13 +767,94 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
+  Future<String> crateApiZatcaGenerateZatcaCsr(
+      {required ZatcaCsrInputDto input, required String keyPairPem}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        sse_encode_box_autoadd_zatca_csr_input_dto(input, serializer);
+        sse_encode_String(keyPairPem, serializer);
+        pdeCallFfi(generalizedFrbRustBinding, serializer,
+            funcId: 18, port: port_);
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_String,
+        decodeErrorData: sse_decode_AnyhowException,
+      ),
+      constMeta: kCrateApiZatcaGenerateZatcaCsrConstMeta,
+      argValues: [input, keyPairPem],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiZatcaGenerateZatcaCsrConstMeta =>
+      const TaskConstMeta(
+        debugName: "generate_zatca_csr",
+        argNames: ["input", "keyPairPem"],
+      );
+
+  @override
+  Future<(String, String)> crateApiZatcaGenerateZatcaKeyPair() {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        pdeCallFfi(generalizedFrbRustBinding, serializer,
+            funcId: 19, port: port_);
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_record_string_string,
+        decodeErrorData: null,
+      ),
+      constMeta: kCrateApiZatcaGenerateZatcaKeyPairConstMeta,
+      argValues: [],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiZatcaGenerateZatcaKeyPairConstMeta =>
+      const TaskConstMeta(
+        debugName: "generate_zatca_key_pair",
+        argNames: [],
+      );
+
+  @override
+  Future<(String, String)> crateApiZatcaGenerateZatcaSignedXml(
+      {required ZatcaInvoiceInputDto input,
+      required String certificatePem,
+      required String privateKeyPem}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        sse_encode_box_autoadd_zatca_invoice_input_dto(input, serializer);
+        sse_encode_String(certificatePem, serializer);
+        sse_encode_String(privateKeyPem, serializer);
+        pdeCallFfi(generalizedFrbRustBinding, serializer,
+            funcId: 20, port: port_);
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_record_string_string,
+        decodeErrorData: sse_decode_AnyhowException,
+      ),
+      constMeta: kCrateApiZatcaGenerateZatcaSignedXmlConstMeta,
+      argValues: [input, certificatePem, privateKeyPem],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiZatcaGenerateZatcaSignedXmlConstMeta =>
+      const TaskConstMeta(
+        debugName: "generate_zatca_signed_xml",
+        argNames: ["input", "certificatePem", "privateKeyPem"],
+      );
+
+  @override
   Future<AccountDto?> crateApiAccountsGetAccountById({required String id}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(id, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 18, port: port_);
+            funcId: 21, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_opt_box_autoadd_account_dto,
@@ -787,7 +884,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_opt_String(periodStart, serializer);
         sse_encode_String(periodEnd, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 19, port: port_);
+            funcId: 22, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_drill_down_entry_dto,
@@ -812,7 +909,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(entryId, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 20, port: port_);
+            funcId: 23, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_opt_String,
@@ -837,7 +934,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(id, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 21, port: port_);
+            funcId: 24, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_opt_box_autoadd_asset_dto,
@@ -864,7 +961,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_String(target, serializer);
         sse_encode_String(date, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 22, port: port_);
+            funcId: 25, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_opt_box_autoadd_exchange_rate_dto,
@@ -889,7 +986,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(id, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 23, port: port_);
+            funcId: 26, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_opt_box_autoadd_sales_invoice_dto,
@@ -914,7 +1011,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(id, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 24, port: port_);
+            funcId: 27, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_opt_box_autoadd_inventory_item_dto,
@@ -940,7 +1037,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(asOfDate, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 25, port: port_);
+            funcId: 28, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_aging_report_line_dto,
@@ -965,7 +1062,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(date, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 26, port: port_);
+            funcId: 29, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_opt_box_autoadd_period_dto,
@@ -991,7 +1088,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(id, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 27, port: port_);
+            funcId: 30, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_opt_box_autoadd_purchase_bill_dto,
@@ -1017,7 +1114,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(asOfDate, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 28, port: port_);
+            funcId: 31, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_aging_report_line_dto,
@@ -1043,7 +1140,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(reference, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 29, port: port_);
+            funcId: 32, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_standard_dto,
@@ -1069,7 +1166,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(asOf, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 30, port: port_);
+            funcId: 33, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_inventory_valuation_report_dto,
@@ -1094,7 +1191,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(id, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 31, port: port_);
+            funcId: 34, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_opt_box_autoadd_vendor_dto,
@@ -1119,7 +1216,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(databaseUrl, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 32, port: port_);
+            funcId: 35, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -1142,7 +1239,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 33, port: port_);
+            funcId: 36, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_account_dto,
@@ -1166,7 +1263,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 34, port: port_);
+            funcId: 37, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_asset_dto,
@@ -1191,7 +1288,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(entityId, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 35, port: port_);
+            funcId: 38, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_audit_record_dto,
@@ -1215,7 +1312,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 36, port: port_);
+            funcId: 39, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_asset_category_dto,
@@ -1239,7 +1336,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 37, port: port_);
+            funcId: 40, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_customer_dto,
@@ -1265,7 +1362,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_opt_String(base, serializer);
         sse_encode_opt_String(target, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 38, port: port_);
+            funcId: 41, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_exchange_rate_dto,
@@ -1289,7 +1386,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 39, port: port_);
+            funcId: 42, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_sales_invoice_dto,
@@ -1312,7 +1409,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 40, port: port_);
+            funcId: 43, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_inventory_item_dto,
@@ -1345,7 +1442,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_opt_String(toDate, serializer);
         sse_encode_opt_String(accountId, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 41, port: port_);
+            funcId: 44, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_entry_dto,
@@ -1371,7 +1468,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(itemId, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 42, port: port_);
+            funcId: 45, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_stock_movement_dto,
@@ -1395,7 +1492,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 43, port: port_);
+            funcId: 46, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_period_dto,
@@ -1419,7 +1516,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 44, port: port_);
+            funcId: 47, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_purchase_bill_dto,
@@ -1443,7 +1540,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 45, port: port_);
+            funcId: 48, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_vendor_dto,
@@ -1473,7 +1570,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_String(consensusJson, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 46, port: port_);
+            funcId: 49, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -1505,7 +1602,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_String(unrealizedGainLossAccountId, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 47, port: port_);
+            funcId: 50, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -1537,7 +1634,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_String(id, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 48, port: port_);
+            funcId: 51, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -1563,7 +1660,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_box_autoadd_entry_dto(dto, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 49, port: port_);
+            funcId: 52, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -1590,7 +1687,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_box_autoadd_bill_payment_dto(payment, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 50, port: port_);
+            funcId: 53, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -1618,7 +1715,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_box_autoadd_customer_payment_dto(payment, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 51, port: port_);
+            funcId: 54, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -1650,7 +1747,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_opt_String(referenceId, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 52, port: port_);
+            funcId: 55, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -1683,7 +1780,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_box_autoadd_stock_movement_dto(movement, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 53, port: port_);
+            funcId: 56, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -1717,7 +1814,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_opt_String(referenceId, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 54, port: port_);
+            funcId: 57, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -1749,7 +1846,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_opt_String(referenceId, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 55, port: port_);
+            funcId: 58, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -1774,7 +1871,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_box_autoadd_asset_dto(asset, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 56, port: port_);
+            funcId: 59, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -1800,7 +1897,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_box_autoadd_asset_category_dto(category, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 57, port: port_);
+            funcId: 60, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -1830,7 +1927,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_String(reason, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 58, port: port_);
+            funcId: 61, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -1860,7 +1957,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_String(asOf, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 59, port: port_);
+            funcId: 62, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -1886,7 +1983,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_box_autoadd_exchange_rate_dto(dto, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 60, port: port_);
+            funcId: 63, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -1911,7 +2008,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_box_autoadd_inventory_item_dto(item, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 61, port: port_);
+            funcId: 64, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -1935,7 +2032,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_box_autoadd_period_dto(dto, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 62, port: port_);
+            funcId: 65, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -1953,6 +2050,32 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
+  List<AnomalyDto> crateApiAuditorScanSequence(
+      {required String prefix, required List<EntryDto> entries}) {
+    return handler.executeSync(SyncTask(
+      callFfi: () {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        sse_encode_String(prefix, serializer);
+        sse_encode_list_entry_dto(entries, serializer);
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 66)!;
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_list_anomaly_dto,
+        decodeErrorData: sse_decode_AnyhowException,
+      ),
+      constMeta: kCrateApiAuditorScanSequenceConstMeta,
+      argValues: [prefix, entries],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiAuditorScanSequenceConstMeta =>
+      const TaskConstMeta(
+        debugName: "scan_sequence",
+        argNames: ["prefix", "entries"],
+      );
+
+  @override
   Future<List<StandardDto>> crateApiStandardsSearchStandards(
       {required String query}) {
     return handler.executeNormal(NormalTask(
@@ -1960,7 +2083,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(query, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 63, port: port_);
+            funcId: 67, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_list_standard_dto,
@@ -1987,7 +2110,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_box_autoadd_account_dto(dto, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 64, port: port_);
+            funcId: 68, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -2017,7 +2140,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         sse_encode_String(category, serializer);
         sse_encode_box_autoadd_audit_metadata_dto(metadata, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 65, port: port_);
+            funcId: 69, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -2042,7 +2165,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_box_autoadd_customer_dto(customer, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 66, port: port_);
+            funcId: 70, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -2067,7 +2190,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_box_autoadd_vendor_dto(vendor, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 67, port: port_);
+            funcId: 71, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -2092,7 +2215,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_box_autoadd_entry_dto(dto, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 68, port: port_);
+            funcId: 72, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -2117,7 +2240,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(itemId, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 69, port: port_);
+            funcId: 73, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_bool,
@@ -2139,6 +2262,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   AnyhowException dco_decode_AnyhowException(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return AnyhowException(raw as String);
+  }
+
+  @protected
+  Map<String, String> dco_decode_Map_String_String_None(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return Map.fromEntries(dco_decode_list_record_string_string(raw)
+        .map((e) => MapEntry(e.$1, e.$2)));
   }
 
   @protected
@@ -2183,6 +2313,31 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       periodOver90: dco_decode_String(arr[6]),
       totalAmount: dco_decode_String(arr[7]),
     );
+  }
+
+  @protected
+  AnomalyDto dco_decode_anomaly_dto(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    switch (raw[0]) {
+      case 0:
+        return AnomalyDto_SequenceGap(
+          expected: dco_decode_String(raw[1]),
+          found: dco_decode_String(raw[2]),
+        );
+      case 1:
+        return AnomalyDto_ReconciliationMismatch(
+          accountId: dco_decode_String(raw[1]),
+          bookBalance: dco_decode_String(raw[2]),
+          physicalCount: dco_decode_String(raw[3]),
+        );
+      case 2:
+        return AnomalyDto_OrphanedDraft(
+          entryId: dco_decode_String(raw[1]),
+          date: dco_decode_String(raw[2]),
+        );
+      default:
+        throw Exception("unreachable");
+    }
   }
 
   @protected
@@ -2376,6 +2531,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ZatcaCsrInputDto dco_decode_box_autoadd_zatca_csr_input_dto(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_zatca_csr_input_dto(raw);
+  }
+
+  @protected
+  ZatcaInvoiceInputDto dco_decode_box_autoadd_zatca_invoice_input_dto(
+      dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_zatca_invoice_input_dto(raw);
+  }
+
+  @protected
   CustomerDto dco_decode_customer_dto(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
@@ -2516,8 +2684,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   InventoryItemDto dco_decode_inventory_item_dto(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
-    if (arr.length != 14)
-      throw Exception('unexpected arr length: expect 14 but see ${arr.length}');
+    if (arr.length != 15)
+      throw Exception('unexpected arr length: expect 15 but see ${arr.length}');
     return InventoryItemDto(
       id: dco_decode_opt_String(arr[0]),
       code: dco_decode_String(arr[1]),
@@ -2525,14 +2693,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       nameEn: dco_decode_String(arr[3]),
       description: dco_decode_opt_String(arr[4]),
       unit: dco_decode_String(arr[5]),
-      valuationMethod: dco_decode_String(arr[6]),
-      purchasePrice: dco_decode_opt_String(arr[7]),
-      salePrice: dco_decode_opt_String(arr[8]),
-      assetAccountId: dco_decode_String(arr[9]),
-      cogsAccountId: dco_decode_String(arr[10]),
-      revenueAccountId: dco_decode_String(arr[11]),
-      createdAt: dco_decode_String(arr[12]),
-      updatedAt: dco_decode_String(arr[13]),
+      minStockLevel: dco_decode_opt_String(arr[6]),
+      valuationMethod: dco_decode_String(arr[7]),
+      purchasePrice: dco_decode_opt_String(arr[8]),
+      salePrice: dco_decode_opt_String(arr[9]),
+      assetAccountId: dco_decode_String(arr[10]),
+      cogsAccountId: dco_decode_String(arr[11]),
+      revenueAccountId: dco_decode_String(arr[12]),
+      createdAt: dco_decode_String(arr[13]),
+      updatedAt: dco_decode_String(arr[14]),
     );
   }
 
@@ -2579,6 +2748,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     return (raw as List<dynamic>)
         .map(dco_decode_aging_report_line_dto)
         .toList();
+  }
+
+  @protected
+  List<AnomalyDto> dco_decode_list_anomaly_dto(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_anomaly_dto).toList();
   }
 
   @protected
@@ -2663,6 +2838,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  List<(String, String)> dco_decode_list_record_string_string(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_record_string_string).toList();
+  }
+
+  @protected
   List<SalesInvoiceDto> dco_decode_list_sales_invoice_dto(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return (raw as List<dynamic>).map(dco_decode_sales_invoice_dto).toList();
@@ -2708,6 +2889,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   List<VendorDto> dco_decode_list_vendor_dto(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return (raw as List<dynamic>).map(dco_decode_vendor_dto).toList();
+  }
+
+  @protected
+  List<ZatcaInvoiceLineDto> dco_decode_list_zatca_invoice_line_dto(
+      dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>)
+        .map(dco_decode_zatca_invoice_line_dto)
+        .toList();
+  }
+
+  @protected
+  Map<String, String>? dco_decode_opt_Map_String_String_None(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null ? null : dco_decode_Map_String_String_None(raw);
   }
 
   @protected
@@ -2802,6 +2998,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  (String, String) dco_decode_record_string_string(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2) {
+      throw Exception('Expected 2 elements, got ${arr.length}');
+    }
+    return (
+      dco_decode_String(arr[0]),
+      dco_decode_String(arr[1]),
+    );
+  }
+
+  @protected
   SalesInvoiceDto dco_decode_sales_invoice_dto(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
@@ -2827,14 +3036,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   SalesInvoiceLineDto dco_decode_sales_invoice_line_dto(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
-    if (arr.length != 5)
-      throw Exception('unexpected arr length: expect 5 but see ${arr.length}');
+    if (arr.length != 6)
+      throw Exception('unexpected arr length: expect 6 but see ${arr.length}');
     return SalesInvoiceLineDto(
       productId: dco_decode_opt_String(arr[0]),
       description: dco_decode_String(arr[1]),
       quantity: dco_decode_String(arr[2]),
       unitPrice: dco_decode_String(arr[3]),
       taxAmount: dco_decode_String(arr[4]),
+      taxCategory: dco_decode_String(arr[5]),
     );
   }
 
@@ -2905,6 +3115,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   int dco_decode_u_32(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as int;
+  }
+
+  @protected
+  BigInt dco_decode_u_64(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dcoDecodeU64(raw);
   }
 
   @protected
@@ -3015,10 +3231,83 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ZatcaCsrInputDto dco_decode_zatca_csr_input_dto(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 8)
+      throw Exception('unexpected arr length: expect 8 but see ${arr.length}');
+    return ZatcaCsrInputDto(
+      commonName: dco_decode_String(arr[0]),
+      organizationUnit: dco_decode_String(arr[1]),
+      organization: dco_decode_String(arr[2]),
+      country: dco_decode_String(arr[3]),
+      serialNumber: dco_decode_String(arr[4]),
+      vatNumber: dco_decode_String(arr[5]),
+      businessCategory: dco_decode_String(arr[6]),
+      registeredAddress: dco_decode_String(arr[7]),
+    );
+  }
+
+  @protected
+  ZatcaInvoiceInputDto dco_decode_zatca_invoice_input_dto(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 10)
+      throw Exception('unexpected arr length: expect 10 but see ${arr.length}');
+    return ZatcaInvoiceInputDto(
+      id: dco_decode_String(arr[0]),
+      uuid: dco_decode_String(arr[1]),
+      issueDate: dco_decode_String(arr[2]),
+      issueTime: dco_decode_String(arr[3]),
+      invoiceTypeCode: dco_decode_String(arr[4]),
+      invoiceCounterValue: dco_decode_u_64(arr[5]),
+      previousInvoiceHash: dco_decode_String(arr[6]),
+      sellerParty: dco_decode_zatca_party_dto(arr[7]),
+      buyerParty: dco_decode_zatca_party_dto(arr[8]),
+      lines: dco_decode_list_zatca_invoice_line_dto(arr[9]),
+    );
+  }
+
+  @protected
+  ZatcaInvoiceLineDto dco_decode_zatca_invoice_line_dto(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 5)
+      throw Exception('unexpected arr length: expect 5 but see ${arr.length}');
+    return ZatcaInvoiceLineDto(
+      id: dco_decode_String(arr[0]),
+      quantity: dco_decode_String(arr[1]),
+      unitPrice: dco_decode_String(arr[2]),
+      taxCategory: dco_decode_String(arr[3]),
+      itemName: dco_decode_String(arr[4]),
+    );
+  }
+
+  @protected
+  ZatcaPartyDto dco_decode_zatca_party_dto(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return ZatcaPartyDto(
+      partyId: dco_decode_String(arr[0]),
+      partyIdScheme: dco_decode_String(arr[1]),
+    );
+  }
+
+  @protected
   AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var inner = sse_decode_String(deserializer);
     return AnyhowException(inner);
+  }
+
+  @protected
+  Map<String, String> sse_decode_Map_String_String_None(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var inner = sse_decode_list_record_string_string(deserializer);
+    return Map.fromEntries(inner.map((e) => MapEntry(e.$1, e.$2)));
   }
 
   @protected
@@ -3075,6 +3364,33 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         period6190: var_period6190,
         periodOver90: var_periodOver90,
         totalAmount: var_totalAmount);
+  }
+
+  @protected
+  AnomalyDto sse_decode_anomaly_dto(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var tag_ = sse_decode_i_32(deserializer);
+    switch (tag_) {
+      case 0:
+        var var_expected = sse_decode_String(deserializer);
+        var var_found = sse_decode_String(deserializer);
+        return AnomalyDto_SequenceGap(expected: var_expected, found: var_found);
+      case 1:
+        var var_accountId = sse_decode_String(deserializer);
+        var var_bookBalance = sse_decode_String(deserializer);
+        var var_physicalCount = sse_decode_String(deserializer);
+        return AnomalyDto_ReconciliationMismatch(
+            accountId: var_accountId,
+            bookBalance: var_bookBalance,
+            physicalCount: var_physicalCount);
+      case 2:
+        var var_entryId = sse_decode_String(deserializer);
+        var var_date = sse_decode_String(deserializer);
+        return AnomalyDto_OrphanedDraft(entryId: var_entryId, date: var_date);
+      default:
+        throw UnimplementedError('');
+    }
   }
 
   @protected
@@ -3299,6 +3615,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ZatcaCsrInputDto sse_decode_box_autoadd_zatca_csr_input_dto(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_zatca_csr_input_dto(deserializer));
+  }
+
+  @protected
+  ZatcaInvoiceInputDto sse_decode_box_autoadd_zatca_invoice_input_dto(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_zatca_invoice_input_dto(deserializer));
+  }
+
+  @protected
   CustomerDto sse_decode_customer_dto(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var var_id = sse_decode_opt_String(deserializer);
@@ -3461,6 +3791,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var var_nameEn = sse_decode_String(deserializer);
     var var_description = sse_decode_opt_String(deserializer);
     var var_unit = sse_decode_String(deserializer);
+    var var_minStockLevel = sse_decode_opt_String(deserializer);
     var var_valuationMethod = sse_decode_String(deserializer);
     var var_purchasePrice = sse_decode_opt_String(deserializer);
     var var_salePrice = sse_decode_opt_String(deserializer);
@@ -3476,6 +3807,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         nameEn: var_nameEn,
         description: var_description,
         unit: var_unit,
+        minStockLevel: var_minStockLevel,
         valuationMethod: var_valuationMethod,
         purchasePrice: var_purchasePrice,
         salePrice: var_salePrice,
@@ -3538,6 +3870,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var ans_ = <AgingReportLineDto>[];
     for (var idx_ = 0; idx_ < len_; ++idx_) {
       ans_.add(sse_decode_aging_report_line_dto(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  List<AnomalyDto> sse_decode_list_anomaly_dto(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <AnomalyDto>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_anomaly_dto(deserializer));
     }
     return ans_;
   }
@@ -3701,6 +4045,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  List<(String, String)> sse_decode_list_record_string_string(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <(String, String)>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_record_string_string(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
   List<SalesInvoiceDto> sse_decode_list_sales_invoice_dto(
       SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -3787,6 +4144,31 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       ans_.add(sse_decode_vendor_dto(deserializer));
     }
     return ans_;
+  }
+
+  @protected
+  List<ZatcaInvoiceLineDto> sse_decode_list_zatca_invoice_line_dto(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <ZatcaInvoiceLineDto>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_zatca_invoice_line_dto(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  Map<String, String>? sse_decode_opt_Map_String_String_None(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_Map_String_String_None(deserializer));
+    } else {
+      return null;
+    }
   }
 
   @protected
@@ -3942,6 +4324,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  (String, String) sse_decode_record_string_string(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_field0 = sse_decode_String(deserializer);
+    var var_field1 = sse_decode_String(deserializer);
+    return (var_field0, var_field1);
+  }
+
+  @protected
   SalesInvoiceDto sse_decode_sales_invoice_dto(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var var_id = sse_decode_opt_String(deserializer);
@@ -3980,12 +4371,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var var_quantity = sse_decode_String(deserializer);
     var var_unitPrice = sse_decode_String(deserializer);
     var var_taxAmount = sse_decode_String(deserializer);
+    var var_taxCategory = sse_decode_String(deserializer);
     return SalesInvoiceLineDto(
         productId: var_productId,
         description: var_description,
         quantity: var_quantity,
         unitPrice: var_unitPrice,
-        taxAmount: var_taxAmount);
+        taxAmount: var_taxAmount,
+        taxCategory: var_taxCategory);
   }
 
   @protected
@@ -4063,6 +4456,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   int sse_decode_u_32(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return deserializer.buffer.getUint32();
+  }
+
+  @protected
+  BigInt sse_decode_u_64(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return deserializer.buffer.getBigUint64();
   }
 
   @protected
@@ -4178,10 +4577,94 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ZatcaCsrInputDto sse_decode_zatca_csr_input_dto(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_commonName = sse_decode_String(deserializer);
+    var var_organizationUnit = sse_decode_String(deserializer);
+    var var_organization = sse_decode_String(deserializer);
+    var var_country = sse_decode_String(deserializer);
+    var var_serialNumber = sse_decode_String(deserializer);
+    var var_vatNumber = sse_decode_String(deserializer);
+    var var_businessCategory = sse_decode_String(deserializer);
+    var var_registeredAddress = sse_decode_String(deserializer);
+    return ZatcaCsrInputDto(
+        commonName: var_commonName,
+        organizationUnit: var_organizationUnit,
+        organization: var_organization,
+        country: var_country,
+        serialNumber: var_serialNumber,
+        vatNumber: var_vatNumber,
+        businessCategory: var_businessCategory,
+        registeredAddress: var_registeredAddress);
+  }
+
+  @protected
+  ZatcaInvoiceInputDto sse_decode_zatca_invoice_input_dto(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_id = sse_decode_String(deserializer);
+    var var_uuid = sse_decode_String(deserializer);
+    var var_issueDate = sse_decode_String(deserializer);
+    var var_issueTime = sse_decode_String(deserializer);
+    var var_invoiceTypeCode = sse_decode_String(deserializer);
+    var var_invoiceCounterValue = sse_decode_u_64(deserializer);
+    var var_previousInvoiceHash = sse_decode_String(deserializer);
+    var var_sellerParty = sse_decode_zatca_party_dto(deserializer);
+    var var_buyerParty = sse_decode_zatca_party_dto(deserializer);
+    var var_lines = sse_decode_list_zatca_invoice_line_dto(deserializer);
+    return ZatcaInvoiceInputDto(
+        id: var_id,
+        uuid: var_uuid,
+        issueDate: var_issueDate,
+        issueTime: var_issueTime,
+        invoiceTypeCode: var_invoiceTypeCode,
+        invoiceCounterValue: var_invoiceCounterValue,
+        previousInvoiceHash: var_previousInvoiceHash,
+        sellerParty: var_sellerParty,
+        buyerParty: var_buyerParty,
+        lines: var_lines);
+  }
+
+  @protected
+  ZatcaInvoiceLineDto sse_decode_zatca_invoice_line_dto(
+      SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_id = sse_decode_String(deserializer);
+    var var_quantity = sse_decode_String(deserializer);
+    var var_unitPrice = sse_decode_String(deserializer);
+    var var_taxCategory = sse_decode_String(deserializer);
+    var var_itemName = sse_decode_String(deserializer);
+    return ZatcaInvoiceLineDto(
+        id: var_id,
+        quantity: var_quantity,
+        unitPrice: var_unitPrice,
+        taxCategory: var_taxCategory,
+        itemName: var_itemName);
+  }
+
+  @protected
+  ZatcaPartyDto sse_decode_zatca_party_dto(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_partyId = sse_decode_String(deserializer);
+    var var_partyIdScheme = sse_decode_String(deserializer);
+    return ZatcaPartyDto(
+        partyId: var_partyId, partyIdScheme: var_partyIdScheme);
+  }
+
+  @protected
   void sse_encode_AnyhowException(
       AnyhowException self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_String(self.message, serializer);
+  }
+
+  @protected
+  void sse_encode_Map_String_String_None(
+      Map<String, String> self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_list_record_string_string(
+        self.entries.map((e) => (e.key, e.value)).toList(), serializer);
   }
 
   @protected
@@ -4217,6 +4700,30 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_String(self.period6190, serializer);
     sse_encode_String(self.periodOver90, serializer);
     sse_encode_String(self.totalAmount, serializer);
+  }
+
+  @protected
+  void sse_encode_anomaly_dto(AnomalyDto self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    switch (self) {
+      case AnomalyDto_SequenceGap(expected: final expected, found: final found):
+        sse_encode_i_32(0, serializer);
+        sse_encode_String(expected, serializer);
+        sse_encode_String(found, serializer);
+      case AnomalyDto_ReconciliationMismatch(
+          accountId: final accountId,
+          bookBalance: final bookBalance,
+          physicalCount: final physicalCount
+        ):
+        sse_encode_i_32(1, serializer);
+        sse_encode_String(accountId, serializer);
+        sse_encode_String(bookBalance, serializer);
+        sse_encode_String(physicalCount, serializer);
+      case AnomalyDto_OrphanedDraft(entryId: final entryId, date: final date):
+        sse_encode_i_32(2, serializer);
+        sse_encode_String(entryId, serializer);
+        sse_encode_String(date, serializer);
+    }
   }
 
   @protected
@@ -4404,6 +4911,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_box_autoadd_zatca_csr_input_dto(
+      ZatcaCsrInputDto self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_zatca_csr_input_dto(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_zatca_invoice_input_dto(
+      ZatcaInvoiceInputDto self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_zatca_invoice_input_dto(self, serializer);
+  }
+
+  @protected
   void sse_encode_customer_dto(CustomerDto self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_opt_String(self.id, serializer);
@@ -4515,6 +5036,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_String(self.nameEn, serializer);
     sse_encode_opt_String(self.description, serializer);
     sse_encode_String(self.unit, serializer);
+    sse_encode_opt_String(self.minStockLevel, serializer);
     sse_encode_String(self.valuationMethod, serializer);
     sse_encode_opt_String(self.purchasePrice, serializer);
     sse_encode_opt_String(self.salePrice, serializer);
@@ -4563,6 +5085,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_i_32(self.length, serializer);
     for (final item in self) {
       sse_encode_aging_report_line_dto(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_anomaly_dto(
+      List<AnomalyDto> self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_anomaly_dto(item, serializer);
     }
   }
 
@@ -4694,6 +5226,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_list_record_string_string(
+      List<(String, String)> self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_record_string_string(item, serializer);
+    }
+  }
+
+  @protected
   void sse_encode_list_sales_invoice_dto(
       List<SalesInvoiceDto> self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -4760,6 +5302,27 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_i_32(self.length, serializer);
     for (final item in self) {
       sse_encode_vendor_dto(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_zatca_invoice_line_dto(
+      List<ZatcaInvoiceLineDto> self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_zatca_invoice_line_dto(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_opt_Map_String_String_None(
+      Map<String, String>? self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_Map_String_String_None(self, serializer);
     }
   }
 
@@ -4890,6 +5453,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_record_string_string(
+      (String, String) self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.$1, serializer);
+    sse_encode_String(self.$2, serializer);
+  }
+
+  @protected
   void sse_encode_sales_invoice_dto(
       SalesInvoiceDto self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -4916,6 +5487,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_String(self.quantity, serializer);
     sse_encode_String(self.unitPrice, serializer);
     sse_encode_String(self.taxAmount, serializer);
+    sse_encode_String(self.taxCategory, serializer);
   }
 
   @protected
@@ -4968,6 +5540,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   void sse_encode_u_32(int self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putUint32(self);
+  }
+
+  @protected
+  void sse_encode_u_64(BigInt self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putBigUint64(self);
   }
 
   @protected
@@ -5046,5 +5624,54 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       ZakahCalendarDto self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.index, serializer);
+  }
+
+  @protected
+  void sse_encode_zatca_csr_input_dto(
+      ZatcaCsrInputDto self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.commonName, serializer);
+    sse_encode_String(self.organizationUnit, serializer);
+    sse_encode_String(self.organization, serializer);
+    sse_encode_String(self.country, serializer);
+    sse_encode_String(self.serialNumber, serializer);
+    sse_encode_String(self.vatNumber, serializer);
+    sse_encode_String(self.businessCategory, serializer);
+    sse_encode_String(self.registeredAddress, serializer);
+  }
+
+  @protected
+  void sse_encode_zatca_invoice_input_dto(
+      ZatcaInvoiceInputDto self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.id, serializer);
+    sse_encode_String(self.uuid, serializer);
+    sse_encode_String(self.issueDate, serializer);
+    sse_encode_String(self.issueTime, serializer);
+    sse_encode_String(self.invoiceTypeCode, serializer);
+    sse_encode_u_64(self.invoiceCounterValue, serializer);
+    sse_encode_String(self.previousInvoiceHash, serializer);
+    sse_encode_zatca_party_dto(self.sellerParty, serializer);
+    sse_encode_zatca_party_dto(self.buyerParty, serializer);
+    sse_encode_list_zatca_invoice_line_dto(self.lines, serializer);
+  }
+
+  @protected
+  void sse_encode_zatca_invoice_line_dto(
+      ZatcaInvoiceLineDto self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.id, serializer);
+    sse_encode_String(self.quantity, serializer);
+    sse_encode_String(self.unitPrice, serializer);
+    sse_encode_String(self.taxCategory, serializer);
+    sse_encode_String(self.itemName, serializer);
+  }
+
+  @protected
+  void sse_encode_zatca_party_dto(
+      ZatcaPartyDto self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.partyId, serializer);
+    sse_encode_String(self.partyIdScheme, serializer);
   }
 }

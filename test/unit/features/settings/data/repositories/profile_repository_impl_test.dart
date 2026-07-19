@@ -1,5 +1,5 @@
-import 'package:basir_app/features/settings/data/repositories/profile_repository_impl.dart';
-import 'package:basir_app/features/settings/domain/entities/profile.dart';
+import 'package:basir_accounting_system/features/settings/data/repositories/profile_repository_impl.dart';
+import 'package:basir_accounting_system/features/settings/domain/entities/profile.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
 
@@ -79,8 +79,9 @@ void main() {
       await repository.saveProfile(profile);
 
       // Act
-      await repository
-          .saveProfile(profile.copyWith(displayName: 'Updated Name'));
+      await repository.saveProfile(
+        profile.copyWith(displayName: 'Updated Name'),
+      );
       final result = await repository.getProfile();
 
       // Assert

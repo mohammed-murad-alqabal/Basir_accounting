@@ -1,15 +1,19 @@
 import 'dart:async';
 
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة ترقية حساب الضيف (Guest Upgrade Screen)
+/// ***
+/// Cognitive Foundation: GuestUpgradeScreen
 ///
-/// تتيح للمستخدم تحويل حساب الضيف إلى حساب دائم
+/// The transition interface for elevating unverified (Guest) identities to
+/// permanent institutional status. Ensures data continuity while enforcing
+/// strong credential policies during the elevation process.
+/// ***
 class GuestUpgradeScreen extends ConsumerStatefulWidget {
   /// إنشاء شاشة ترقية الحساب
   const GuestUpgradeScreen({super.key});
@@ -90,10 +94,7 @@ class _GuestUpgradeScreenState extends ConsumerState<GuestUpgradeScreen> {
                 controller: _usernameController,
                 label: context.l10n.labelUsername,
                 hint: context.l10n.hintEnterUsername,
-                prefixIcon: Icon(
-                  appIcons.person,
-                  size: IconSizes.sm,
-                ),
+                prefixIcon: Icon(appIcons.person, size: IconSizes.sm),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return context.l10n.errEmptyField;
@@ -109,10 +110,7 @@ class _GuestUpgradeScreenState extends ConsumerState<GuestUpgradeScreen> {
                 controller: _passwordController,
                 label: context.l10n.labelPassword,
                 hint: context.l10n.hintEnterPassword,
-                prefixIcon: Icon(
-                  appIcons.lock,
-                  size: IconSizes.sm,
-                ),
+                prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
                 obscureText: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {

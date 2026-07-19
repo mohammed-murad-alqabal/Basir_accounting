@@ -1,10 +1,10 @@
 /// اختبارات AppRouter
 library;
 
-import 'package:basir_app/core/router.dart';
-import 'package:basir_app/features/auth/presentation/screens/login_screen.dart';
-import 'package:basir_app/features/auth/presentation/screens/setup_screen.dart';
-import 'package:basir_app/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/core/router.dart';
+import 'package:basir_accounting_system/features/auth/presentation/screens/login_screen.dart';
+import 'package:basir_accounting_system/features/auth/presentation/screens/setup_screen.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -224,8 +224,9 @@ void main() {
     });
 
     group('Error Handling', () {
-      testWidgets('should show error message for unknown route',
-          (tester) async {
+      testWidgets('should show error message for unknown route', (
+        tester,
+      ) async {
         const settings = RouteSettings(name: '/unknown-route');
         final route = AppRouter.generateRoute(settings) as MaterialPageRoute;
 
@@ -234,9 +235,7 @@ void main() {
             child: MaterialApp(
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
-              home: Builder(
-                builder: route.builder,
-              ),
+              home: Builder(builder: route.builder),
             ),
           ),
         );

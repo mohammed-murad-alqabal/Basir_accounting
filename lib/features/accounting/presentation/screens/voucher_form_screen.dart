@@ -1,12 +1,15 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/features/accounting/application/accounting_service.dart';
-import 'package:basir_app/features/accounting/application/treasury_service.dart';
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/domain/entities/financial_voucher.dart';
-import 'package:basir_app/features/customers/presentation/providers/customer_provider.dart';
-import 'package:basir_app/features/invoices/application/ocr_service.dart';
-import 'package:basir_app/features/vendors/presentation/providers/vendor_provider.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+// ignore_for_file: lines_longer_than_80_chars
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/treasury_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
+import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
+import 'package:basir_accounting_system/features/customers/presentation/providers/customer_provider.dart';
+import 'package:basir_accounting_system/features/invoices/application/ocr_service.dart';
+import 'package:basir_accounting_system/features/vendors/presentation/providers/vendor_provider.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,15 +17,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:uuid/uuid.dart';
 
-/// شاشة إنشاء سند مالي (Voucher Form)
+/// Screen for issuing Receipt and Payment vouchers.
+///
+/// Automates the creation of specialized journal entries for treasury
+/// operations, supporting OCR-based data entry and multi-currency conversion.
 class VoucherFormScreen extends ConsumerStatefulWidget {
   /// Creates a voucher form screen.
-  const VoucherFormScreen({
-    required this.type,
-    super.key,
-  });
+  const VoucherFormScreen({required this.type, super.key});
 
-  /// The type of voucher to create.
+  /// The classification of the voucher (Receipt vs Payment).
   final VoucherType type;
 
   @override
@@ -60,19 +63,17 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         ? context.l10n.voucherReceiptTitle
         : context.l10n.voucherPaymentTitle;
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: title,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.document_scanner),
-            onPressed: _scanReceipt,
-            tooltip: 'مسح إيصال (OCR)',
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: title,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.document_scanner),
+          onPressed: _scanReceipt,
+          tooltip: 'مسح إيصال (OCR)',
+        ),
+      ],
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: AppLoadingIndicator())
           : SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Form(
@@ -106,7 +107,8 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
     );
   }
 
-  Widget _buildAmountField() => AppCard(
+  /// Amount field with integrated currency conversion support.
+  Widget _buildAmountField() => GlassCard(
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Column(
@@ -114,7 +116,6 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
               TextFormField(
                 controller: _amountController,
                 decoration: InputDecoration(
-                  // ignore: lines_longer_than_80_chars
                   labelText:
                       (_selectedCurrency != null && _selectedCurrency != 'SAR')
                           ? '${context.l10n.labelAmount} (SAR)'
@@ -132,7 +133,6 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                     final sarAmount = Decimal.tryParse(v);
                     if (sarAmount != null) {
                       setState(() {
-                        // ignore: lines_longer_than_80_chars
                         _originalAmount =
                             (sarAmount / (_exchangeRate ?? Decimal.one))
                                 .toDecimal();
@@ -167,12 +167,10 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                         ),
                         onChanged: (v) {
                           _originalAmount = Decimal.tryParse(v);
-                          // ignore: lines_longer_than_80_chars
                           if (_originalAmount != null &&
                               _exchangeRate != null) {
                             setState(() {
                               _amountController.text =
-                                  // ignore: lines_longer_than_80_chars
                                   (_originalAmount! * _exchangeRate!)
                                       .toString();
                             });
@@ -193,12 +191,10 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
                         ),
                         onChanged: (v) {
                           _exchangeRate = Decimal.tryParse(v);
-                          // ignore: lines_longer_than_80_chars
                           if (_originalAmount != null &&
                               _exchangeRate != null) {
                             setState(() {
                               _amountController.text =
-                                  // ignore: lines_longer_than_80_chars
                                   (_originalAmount! * _exchangeRate!)
                                       .toString();
                             });
@@ -214,7 +210,8 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         ),
       );
 
-  Widget _buildCurrencySelector() => AppCard(
+  /// Integrated currency picker and exchange rate manager.
+  Widget _buildCurrencySelector() => GlassCard(
         child: ListTile(
           leading: const Icon(Icons.language),
           title: Text(context.l10n.labelCurrency),
@@ -256,15 +253,12 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
       setState(() {
         _selectedCurrency = result == 'SAR' ? null : result;
         if (_selectedCurrency != null) {
-          // ignore: lines_longer_than_80_chars
           _exchangeRate = (_selectedCurrency == 'USD')
               ? Decimal.parse('3.75')
               : Decimal.one;
-          // ignore: lines_longer_than_80_chars
           final currentAmount =
               Decimal.tryParse(_amountController.text) ?? Decimal.zero;
           if (currentAmount > Decimal.zero) {
-            // ignore: lines_longer_than_80_chars
             _originalAmount =
                 (currentAmount / (_exchangeRate ?? Decimal.one)).toDecimal();
           }
@@ -276,7 +270,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
     }
   }
 
-  Widget _buildDescriptionField() => AppCard(
+  Widget _buildDescriptionField() => GlassCard(
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: TextFormField(
@@ -297,7 +291,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         ),
       );
 
-  Widget _buildDatePicker() => AppCard(
+  Widget _buildDatePicker() => GlassCard(
         onTap: () async {
           final val = await showDatePicker(
             context: context,
@@ -312,12 +306,11 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         child: ListTile(
           leading: const Icon(Icons.calendar_today),
           title: Text(context.l10n.labelDate),
-          trailing: Text(
-            intl.DateFormat('yyyy/MM/dd').format(_selectedDate),
-          ),
+          trailing: Text(intl.DateFormat('yyyy/MM/dd').format(_selectedDate)),
         ),
       );
 
+  /// Selects the payment instrument (Cash/Bank/Check) which filters treasury accounts.
   Widget _buildPaymentMethodSelector() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -355,6 +348,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         ],
       );
 
+  /// Context-aware selector for Treasury and Bank accounts.
   Widget _buildTreasuryAccountSelector() {
     final accountsAsync = ref.watch(accountingServiceProvider);
 
@@ -364,15 +358,12 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const SizedBox();
 
-          // ignore: lines_longer_than_80_chars
           final filterCode =
               (_paymentMethod == PaymentMethod.cash) ? '1101' : '1102';
           final treasuryAccounts = snapshot.data!
               .where(
                 (a) =>
-                    // ignore: lines_longer_than_80_chars
                     a.code.startsWith(filterCode) ||
-                    // ignore: lines_longer_than_80_chars
                     (_paymentMethod == PaymentMethod.cash &&
                         a.subType == 'cash'),
               )
@@ -385,10 +376,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
             ),
             items: treasuryAccounts
                 .map(
-                  (a) => DropdownMenuItem(
-                    value: a.id,
-                    child: Text(a.nameAr),
-                  ),
+                  (a) => DropdownMenuItem(value: a.id, child: Text(a.nameAr)),
                 )
                 .toList(),
             onChanged: (val) {
@@ -403,6 +391,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
     );
   }
 
+  /// Selects the counterpart participant (Customer or Vendor).
   Widget _buildEntitySelector() {
     if (widget.type == VoucherType.receipt) {
       final customersAsync = ref.watch(customersProvider);
@@ -425,7 +414,9 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
             setState(() {
               _selectedEntityId = val;
               _selectedOppositeAccountId = c.receivableAccountId ?? 'acc-1201';
-              _personNameController.text = c.name(isArabic: context.isArabic);
+              _personNameController.text = c.name(
+                isArabic: context.isArabic,
+              );
             });
           },
           validator: (val) => val == null ? context.l10n.errFormFill : null,
@@ -454,7 +445,9 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
             setState(() {
               _selectedEntityId = val;
               _selectedOppositeAccountId = v.payableAccountId ?? 'acc-2101';
-              _personNameController.text = v.name(isArabic: context.isArabic);
+              _personNameController.text = v.name(
+                isArabic: context.isArabic,
+              );
             });
           },
           validator: (val) => val == null ? context.l10n.errFormFill : null,
@@ -465,14 +458,14 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
     }
   }
 
+  /// Validates and saves the financial voucher.
   Future<void> _saveVoucher() async {
     if (!_formKey.currentState!.validate()) return;
-    // ignore: lines_longer_than_80_chars
     if (_selectedTreasuryAccountId == null ||
         _selectedOppositeAccountId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errFormFill)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.l10n.errFormFill)));
       return;
     }
 
@@ -512,6 +505,8 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         );
         Navigator.pop(context);
       }
+    } on CognitiveConsensusException catch (e) {
+      if (mounted) await _showCognitiveRejectionDialog(context, e);
     } on Exception catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -523,6 +518,95 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
     }
   }
 
+  /// Displays a detailed dialog explaining why the Cognitive Hexagon
+  /// rejected the transaction.
+  Future<void> _showCognitiveRejectionDialog(
+    BuildContext context,
+    CognitiveConsensusException exception,
+  ) async {
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.error.withValues(alpha: 0.1),
+        title: Row(
+          children: [
+            const Icon(Icons.gpp_bad, color: AppColors.error),
+            const SizedBox(width: Spacing.sm),
+            Expanded(
+              child: Text(
+                ctx.l10n.dialogCognitiveRejectionTitle,
+                style: const TextStyle(color: AppColors.error),
+              ),
+            ),
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                ctx.l10n.dialogCognitiveRejectionMessage,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: Spacing.md),
+              ...exception.consensus.agentResults.map(
+                (result) => Container(
+                  margin: const EdgeInsets.only(bottom: Spacing.sm),
+                  padding: const EdgeInsets.all(Spacing.sm),
+                  decoration: BoxDecoration(
+                    color: result.isAllowed
+                        ? AppColors.success.withValues(alpha: 0.1)
+                        : AppColors.error.withValues(alpha: 0.1),
+                    borderRadius: Radii.borderRadiusSm,
+                    border: Border.all(
+                      color: result.isAllowed
+                          ? AppColors.success.withValues(alpha: 0.3)
+                          : AppColors.error.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            result.isAllowed ? Icons.check : Icons.close,
+                            size: 16,
+                            color: result.isAllowed
+                                ? AppColors.success
+                                : AppColors.error,
+                          ),
+                          const SizedBox(width: Spacing.xs),
+                          Text(
+                            result.agentId,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: Spacing.xs),
+                      Text(
+                        result.rationale,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          AppEnhancedButton(
+            label: ctx.l10n.btnDone,
+            onPressed: () => Navigator.pop(ctx),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Invokes the intelligent OCR agent to extract data from camera/gallery imagery.
   Future<void> _scanReceipt() async {
     final picker = ImagePicker();
     final image = await picker.pickImage(source: ImageSource.camera);
@@ -549,9 +633,9 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         }
       } on Exception catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('فشل في تحليل الإيصال: $e')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('فشل في تحليل الإيصال: $e')));
         }
       } finally {
         if (mounted) setState(() => _isLoading = false);

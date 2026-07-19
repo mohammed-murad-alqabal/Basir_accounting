@@ -1,4 +1,4 @@
-import 'package:basir_app/shared/widgets/app_enhanced_button.dart';
+import 'package:basir_accounting_system/shared/widgets/app_enhanced_button.dart';
 import 'package:flutter/material.dart';
 
 /// ودجيت عرض الخطأ (Error Widget)
@@ -6,11 +6,7 @@ import 'package:flutter/material.dart';
 /// يعرض رسالة خطأ مع أيقونة وزر اختياري لإعادة المحاولة.
 class AppErrorWidget extends StatelessWidget {
   /// إنشاء ودجيت خطأ جديد.
-  const AppErrorWidget({
-    required this.message,
-    super.key,
-    this.onRetry,
-  });
+  const AppErrorWidget({required this.message, super.key, this.onRetry});
 
   /// رسالة الخطأ المراد عرضها.
   final String message;

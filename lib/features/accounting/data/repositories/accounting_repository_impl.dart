@@ -1,10 +1,11 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/accounting/data/models/account_model.dart';
-import 'package:basir_app/features/accounting/data/models/financial_year_model.dart';
-import 'package:basir_app/features/accounting/data/models/journal_entry_model.dart';
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
-import 'package:basir_app/features/accounting/domain/repositories/accounting_repository.dart';
+// ignore_for_file: lines_longer_than_80_chars
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/data/models/account_model.dart';
+import 'package:basir_accounting_system/features/accounting/data/models/financial_year_model.dart';
+import 'package:basir_accounting_system/features/accounting/data/models/journal_entry_model.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
 import 'package:decimal/decimal.dart';
 import 'package:isar/isar.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,13 +16,20 @@ part 'accounting_repository_impl.g.dart';
 /// (FR-ACC-007: تخزين مؤقت للبيانات لسرعة الوصول)
 class IsarAccountingRepository implements AccountingRepository {
   /// إنشاء نسخة جديدة مع تمرير مثيل Isar ومعرف المستخدم.
-  IsarAccountingRepository({required this.isar, required this.userId});
+  IsarAccountingRepository({
+    required this.isar,
+    required this.userId,
+    this.warehouseId,
+  });
 
   /// مثيل قاعدة بيانات Isar.
   final Isar isar;
 
   /// معرف المستخدم الحالي لعزل البيانات.
   final String? userId;
+
+  /// معرف المستودع الحالي (لعزل البيانات).
+  final String? warehouseId;
 
   @override
   Future<List<Account>> getAccounts() async {
@@ -71,6 +79,10 @@ class IsarAccountingRepository implements AccountingRepository {
     final models = await isar.journalEntryModels
         .filter()
         .userIdEqualTo(userId)
+        .and()
+        .group(
+          (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+        )
         .sortByDateDesc()
         .findAll();
     return models.map((m) => m.toEntity()).toList();
@@ -95,13 +107,18 @@ class IsarAccountingRepository implements AccountingRepository {
       throw Exception('Cannot post to a closed financial year: ${fy.name}');
     }
 
-    final periodId =
-        '${entry.date.year}-${entry.date.month.toString().padLeft(2, '0')}';
+    final periodId = '${entry.date.year}-'
+        '${entry.date.month.toString().padLeft(2, '0')}';
     if (fy.lockedPeriodIds.contains(periodId)) {
       throw Exception('Financial period $periodId is locked');
     }
 
-    final model = JournalEntryModel.fromEntity(entry.copyWith(userId: userId));
+    final model = JournalEntryModel.fromEntity(
+      entry.copyWith(
+        userId: userId,
+        warehouseId: entry.warehouseId ?? warehouseId,
+      ),
+    );
 
     await isar.writeTxn(() async {
       // 1. حفظ القيد
@@ -158,6 +175,11 @@ AccountingRepository accountingRepository(AccountingRepositoryRef ref) {
 
   // جلب معرف المستخدم الحالي للعزل
   final user = ref.watch(basirUserProvider);
+  final warehouseId = user?.warehouseId;
 
-  return IsarAccountingRepository(isar: isar, userId: user?.id);
+  return IsarAccountingRepository(
+    isar: isar,
+    userId: user?.id,
+    warehouseId: warehouseId,
+  );
 }

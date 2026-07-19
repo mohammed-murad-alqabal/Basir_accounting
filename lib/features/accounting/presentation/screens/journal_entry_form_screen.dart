@@ -1,17 +1,22 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/accounting/application/accounting_service.dart';
-import 'package:basir_app/features/accounting/domain/entities/account.dart';
-import 'package:basir_app/features/accounting/domain/entities/journal_entry.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+// ignore_for_file: lines_longer_than_80_chars
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/orchestrator_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/widgets/consensus_report_overlay.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:uuid/uuid.dart';
 
-/// نموذج بيانات لبند القيد في النموذج
+/// Transitory data model for an atomic journal line in the entry form.
 class _JournalLineDraft {
   _JournalLineDraft({
     this.accountId,
@@ -35,12 +40,15 @@ class _JournalLineDraft {
   Decimal? originalAmount;
 }
 
-/// شاشة إضافة قيد يدوي
+/// Advanced form Screen for manual and automated Journal Entry recording.
+///
+/// Ensures compliance with double-entry principles by enforcing balance checks.
+/// Supports multi-currency translations and statutory standard justifications.
 class JournalEntryFormScreen extends ConsumerStatefulWidget {
-  /// إنشاء الشاشة.
+  /// Creates the journal entry form screen.
   const JournalEntryFormScreen({super.key, this.entry});
 
-  /// القيد المحاسبي.
+  /// The optional entry to edit. If null, a new entry is created.
   final JournalEntry? entry;
 
   @override
@@ -96,8 +104,13 @@ class _JournalEntryFormScreenState
     super.dispose();
   }
 
+  /// Total debit summation across all lines.
   Decimal get _totalDebit => _lines.fold(Decimal.zero, (s, l) => s + l.debit);
+
+  /// Total credit summation across all lines.
   Decimal get _totalCredit => _lines.fold(Decimal.zero, (s, l) => s + l.credit);
+
+  /// Validates the fundamental accounting equation: sum(debit) == sum(credit).
   bool get _isBalanced =>
       _totalDebit == _totalCredit && _totalDebit > Decimal.zero;
 
@@ -105,12 +118,10 @@ class _JournalEntryFormScreenState
   Widget build(BuildContext context) {
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: widget.entry == null
-            ? context.l10n.journalEntryFormTitleAdd
-            : context.l10n.journalEntryFormTitleEdit,
-      ),
+    return GlassScaffold(
+      title: widget.entry == null
+          ? context.l10n.journalEntryFormTitleAdd
+          : context.l10n.journalEntryFormTitleEdit,
       body: Form(
         key: <credential-fixture>,
         child: SingleChildScrollView(
@@ -157,7 +168,8 @@ class _JournalEntryFormScreenState
     );
   }
 
-  Widget _buildHeader(AppIcons appIcons) => AppCard(
+  /// Builds the metadata header (Date, Description, Standards).
+  Widget _buildHeader(AppIcons appIcons) => GlassCard(
         child: Column(
           children: [
             Row(
@@ -226,6 +238,7 @@ class _JournalEntryFormScreenState
         ),
       );
 
+  /// Renders the section for managing double-entry atomic lines.
   Widget _buildLinesSection(AppIcons appIcons) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -254,9 +267,10 @@ class _JournalEntryFormScreenState
         ],
       );
 
+  /// Renders a single journal line editor with account and currency support.
   Widget _buildLineItem(int index, AppIcons appIcons) {
     final line = _lines[index];
-    return AppCard(
+    return GlassCard(
       margin: const EdgeInsets.only(bottom: Spacing.sm),
       padding: const EdgeInsets.all(Spacing.sm),
       child: Column(
@@ -283,8 +297,9 @@ class _JournalEntryFormScreenState
                   initialValue:
                       line.debit == Decimal.zero ? '' : line.debit.toString(),
                   label: context.l10n.labelDebit,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
                   onChanged: (v) {
                     setState(() {
                       line.debit = Decimal.tryParse(v) ?? Decimal.zero;
@@ -299,8 +314,9 @@ class _JournalEntryFormScreenState
                   initialValue:
                       line.credit == Decimal.zero ? '' : line.credit.toString(),
                   label: context.l10n.labelCredit,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
                   onChanged: (v) {
                     setState(() {
                       line.credit = Decimal.tryParse(v) ?? Decimal.zero;
@@ -322,23 +338,14 @@ class _JournalEntryFormScreenState
                       initialValue: line.originalAmount?.toString() ?? '',
                       label: '${context.l10n.labelAmount} '
                           '(${line.originalCurrency})',
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                       onChanged: (v) {
                         setState(() {
                           line.originalAmount =
                               Decimal.tryParse(v) ?? Decimal.zero;
-                          if (line.exchangeRate != null) {
-                            final lcAmount =
-                                line.originalAmount! * line.exchangeRate!;
-                            if (line.debit > Decimal.zero ||
-                                (line.debit == Decimal.zero &&
-                                    line.credit == Decimal.zero)) {
-                              line.debit = lcAmount;
-                            } else {
-                              line.credit = lcAmount;
-                            }
-                          }
+                          _updateLineFromCurrency(line);
                         });
                       },
                     ),
@@ -348,23 +355,14 @@ class _JournalEntryFormScreenState
                     child: AppTextField(
                       initialValue: line.exchangeRate?.toString() ?? '',
                       label: context.l10n.labelExchangeRate,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                       onChanged: (v) {
                         setState(() {
                           line.exchangeRate =
                               Decimal.tryParse(v) ?? Decimal.one;
-                          if (line.originalAmount != null) {
-                            final lcAmount =
-                                line.originalAmount! * line.exchangeRate!;
-                            if (line.debit > Decimal.zero ||
-                                (line.debit == Decimal.zero &&
-                                    line.credit == Decimal.zero)) {
-                              line.debit = lcAmount;
-                            } else {
-                              line.credit = lcAmount;
-                            }
-                          }
+                          _updateLineFromCurrency(line);
                         });
                       },
                     ),
@@ -397,10 +395,20 @@ class _JournalEntryFormScreenState
     );
   }
 
-  Widget _buildSummary() => AppCard(
-        backgroundColor: _isBalanced
-            ? AppColors.primary.withValues(alpha: 0.05)
-            : AppColors.error.withValues(alpha: 0.05),
+  void _updateLineFromCurrency(_JournalLineDraft line) {
+    if (line.originalAmount != null && line.exchangeRate != null) {
+      final lcAmount = line.originalAmount! * line.exchangeRate!;
+      if (line.debit > Decimal.zero ||
+          (line.debit == Decimal.zero && line.credit == Decimal.zero)) {
+        line.debit = lcAmount;
+      } else {
+        line.credit = lcAmount;
+      }
+    }
+  }
+
+  /// Displays the mathematical summary and balance validation.
+  Widget _buildSummary() => GlassCard(
         child: Column(
           children: [
             _buildSummaryRow(context.l10n.labelDebit, _totalDebit),
@@ -447,6 +455,7 @@ class _JournalEntryFormScreenState
         ),
       );
 
+  /// Shows the platform-native date picker.
   Future<void> _selectDate(BuildContext context) async {
     final picked = await showDatePicker(
       context: context,
@@ -457,12 +466,13 @@ class _JournalEntryFormScreenState
     if (picked != null) setState(() => _date = picked);
   }
 
+  /// Validates and persists the entry to the General Ledger.
   Future<void> _saveEntry(JournalEntryStatus status) async {
     if (!_formKey.currentState!.validate()) return;
     if (!_isBalanced) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errUnbalancedEntry)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.l10n.errUnbalancedEntry)));
       return;
     }
 
@@ -510,9 +520,44 @@ class _JournalEntryFormScreenState
             .toList(),
       );
 
-      await ref
-          .read(accountingServiceProvider.notifier)
-          .postJournalEntry(entry);
+      if (status == JournalEntryStatus.posted) {
+        // Pre-orchestrate for Consensus Report
+        final orchestrator = ref.read(orchestratorServiceProvider.notifier);
+        final currentLocale = Localizations.localeOf(context).languageCode;
+        final contextObj = AccountingContext(
+          proposedJournalEntry: entry,
+          transactionType: 'manual',
+          locale: currentLocale,
+        );
+
+        final consensus = await orchestrator.orchestrate(contextObj);
+
+        if (!mounted) return;
+
+        final confirmed = await showGeneralDialog<bool>(
+          context: context,
+          transitionDuration: const Duration(milliseconds: 400),
+          pageBuilder: (ctx, anim1, anim2) => ConsensusReportOverlay(
+            consensus: consensus,
+            onConfirm: () => Navigator.pop(ctx, true),
+            onCancel: () => Navigator.pop(ctx, false),
+          ),
+        );
+
+        if (confirmed != true) {
+          setState(() => _isLoading = false);
+          return;
+        }
+
+        // Proceed with bypass as we already reached consensus/override
+        await ref
+            .read(accountingServiceProvider.notifier)
+            .postJournalEntry(entry, bypassCognitive: true);
+      } else {
+        await ref
+            .read(accountingServiceProvider.notifier)
+            .postJournalEntry(entry);
+      }
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -525,6 +570,8 @@ class _JournalEntryFormScreenState
         ),
       );
       Navigator.pop(context, true);
+    } on CognitiveConsensusException catch (e) {
+      if (mounted) await _showCognitiveRejectionDialog(context, e);
     } on Exception catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -535,6 +582,7 @@ class _JournalEntryFormScreenState
     }
   }
 
+  /// Displays the modal for multi-currency selection and exchange rate setup.
   Future<void> _showCurrencyPicker(int index) async {
     final line = _lines[index];
     final result = await showDialog<String>(
@@ -573,7 +621,6 @@ class _JournalEntryFormScreenState
           line.originalAmount = null;
         } else {
           line.originalCurrency = result;
-          // Set some default rates for demo
           line.exchangeRate =
               result == 'USD' ? Decimal.parse('3.75') : Decimal.one;
           if (line.debit > Decimal.zero) {
@@ -585,8 +632,97 @@ class _JournalEntryFormScreenState
       });
     }
   }
+
+  /// Displays a detailed dialog explaining why the Cognitive Hexagon
+  /// rejected the transaction.
+  Future<void> _showCognitiveRejectionDialog(
+    BuildContext context,
+    CognitiveConsensusException exception,
+  ) async {
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.error.withValues(alpha: 0.1),
+        title: Row(
+          children: [
+            const Icon(Icons.gpp_bad, color: AppColors.error),
+            const SizedBox(width: Spacing.sm),
+            Expanded(
+              child: Text(
+                ctx.l10n.dialogCognitiveRejectionTitle,
+                style: const TextStyle(color: AppColors.error),
+              ),
+            ),
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                ctx.l10n.dialogCognitiveRejectionMessage,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: Spacing.md),
+              ...exception.consensus.agentResults.map(
+                (result) => Container(
+                  margin: const EdgeInsets.only(bottom: Spacing.sm),
+                  padding: const EdgeInsets.all(Spacing.sm),
+                  decoration: BoxDecoration(
+                    color: result.isAllowed
+                        ? AppColors.success.withValues(alpha: 0.1)
+                        : AppColors.error.withValues(alpha: 0.1),
+                    borderRadius: Radii.borderRadiusSm,
+                    border: Border.all(
+                      color: result.isAllowed
+                          ? AppColors.success.withValues(alpha: 0.3)
+                          : AppColors.error.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            result.isAllowed ? Icons.check : Icons.close,
+                            size: 16,
+                            color: result.isAllowed
+                                ? AppColors.success
+                                : AppColors.error,
+                          ),
+                          const SizedBox(width: Spacing.xs),
+                          Text(
+                            result.agentId,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: Spacing.xs),
+                      Text(
+                        result.rationale,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          AppEnhancedButton(
+            label: ctx.l10n.btnDone,
+            onPressed: () => Navigator.pop(ctx),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
+/// Specialized internal selector for filtering leaf accounts from the COA.
 class _AccountSelector extends ConsumerWidget {
   const _AccountSelector({
     required this.selectedAccountId,
@@ -606,7 +742,6 @@ class _AccountSelector extends ConsumerWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) return const LinearProgressIndicator();
 
-        // Only show leaf accounts (isParent == false)
         final leafAccounts = snapshot.data!.where((a) => !a.isParent).toList();
 
         return DropdownButtonFormField<String>(
@@ -623,8 +758,10 @@ class _AccountSelector extends ConsumerWidget {
               )
               .toList(),
           onChanged: (id) {
-            final acc = leafAccounts.firstWhere((a) => a.id == id);
-            onSelected(acc);
+            if (id != null) {
+              final acc = leafAccounts.firstWhere((a) => a.id == id);
+              onSelected(acc);
+            }
           },
           validator: (v) => v == null ? context.l10n.labelRequired : null,
         );

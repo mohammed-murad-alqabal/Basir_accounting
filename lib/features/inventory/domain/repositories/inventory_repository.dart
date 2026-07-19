@@ -1,4 +1,4 @@
-import 'package:basir_app/features/inventory/domain/entities/inventory_item.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
 
 /// واجهة مستودع المخزون (Inventory Repository Interface)
 abstract class InventoryRepository {
@@ -19,4 +19,7 @@ abstract class InventoryRepository {
 
   /// البحث عن أصناف.
   Future<List<InventoryItem>> searchItems(String query);
+
+  /// الحصول على صنف بواسطة الكود (SKU/Barcode).
+  Future<InventoryItem?> getItemBySku(String sku);
 }

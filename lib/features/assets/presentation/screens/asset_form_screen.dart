@@ -1,8 +1,8 @@
-import 'package:basir_app/core/extensions/context_extensions.dart';
-import 'package:basir_app/core/theme/tokens/index.dart';
-import 'package:basir_app/features/assets/domain/entities/fixed_asset.dart';
-import 'package:basir_app/features/assets/presentation/providers/asset_provider.dart';
-import 'package:basir_app/shared/widgets/index.dart';
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/assets/domain/entities/fixed_asset.dart';
+import 'package:basir_accounting_system/features/assets/presentation/providers/asset_provider.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -37,8 +37,9 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
     _nameArController = TextEditingController(text: widget.asset?.nameAr ?? '');
     _nameEnController = TextEditingController(text: widget.asset?.nameEn ?? '');
     _codeController = TextEditingController(text: widget.asset?.code ?? '');
-    _costController =
-        TextEditingController(text: widget.asset?.cost.toString() ?? '');
+    _costController = TextEditingController(
+      text: widget.asset?.cost.toString() ?? '',
+    );
     _salvageValueController = TextEditingController(
       text: widget.asset?.residualValue.toString() ?? '0.0',
     );
@@ -68,12 +69,8 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
     final isEdit = widget.asset != null;
     final actionState = ref.watch(assetActionProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppAppBar(
-        title:
-            isEdit ? context.l10n.titleEditAsset : context.l10n.titleAddAsset,
-      ),
+    return GlassScaffold(
+      title: isEdit ? context.l10n.titleEditAsset : context.l10n.titleAddAsset,
       body: actionState.when(
         data: (_) => _buildForm(),
         loading: () => const Center(child: AppLoadingIndicator()),

@@ -1,0 +1,70 @@
+Analyzing basir_accounting_system...                            
+
+   info • Unnecessary use of a block function body • lib/core/services/production_ready_service.dart:19:54 • prefer_expression_function_bodies
+   info • The line length exceeds the 80-character limit • lib/features/accounting/application/sustainability_expert_service.dart:39:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/accounting/domain/entities/liquidity_forecast.dart:9:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/domain/entities/liquidity_forecast.dart:31:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/domain/entities/liquidity_forecast.dart:32:17 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/accounting/presentation/screens/cash_reconciliation_screen.dart:11:9 • public_member_api_docs
+   info • 'evaluate' is deprecated and shouldn't be used. Use [RealEvaluator], [IntervalEvaluator], or [VectorEvaluator] • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:49:24 • deprecated_member_use
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:69:7 • avoid_catches_without_on_clauses
+   info • 'Future'-returning calls in a non-'async' function • lib/features/accounting/presentation/screens/financial_calculator_screen.dart:219:5 • discarded_futures
+   info • To-do comment doesn't follow the Flutter style • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:38:15 • flutter_style_todos
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:193:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:194:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/journal_entry_detail_screen.dart:242:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/reports_screen.dart:33:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/accounting/presentation/screens/treasury_dashboard_screen.dart:16:9 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/treasury_dashboard_screen.dart:38:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/presentation/screens/treasury_dashboard_screen.dart:42:81 • lines_longer_than_80_chars
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:125:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:149:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:181:7 • avoid_catches_without_on_clauses
+   info • Method invocation or property access on a 'dynamic' target • lib/features/auth/application/password_recovery_service.dart:309:27 • avoid_dynamic_calls
+   info • Method invocation or property access on a 'dynamic' target • lib/features/auth/application/password_recovery_service.dart:310:30 • avoid_dynamic_calls
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:335:7 • avoid_catches_without_on_clauses
+   info • Method invocation or property access on a 'dynamic' target • lib/features/auth/application/password_recovery_service.dart:415:36 • avoid_dynamic_calls
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:420:13 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:444:13 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:459:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/application/password_recovery_service.dart:490:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/providers/password_recovery_provider.dart:57:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/providers/password_recovery_provider.dart:73:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/providers/password_recovery_provider.dart:98:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/providers/password_recovery_provider.dart:110:7 • avoid_catches_without_on_clauses
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/providers/password_recovery_provider.dart:121:7 • avoid_catches_without_on_clauses
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/forgot_password_screen.dart:111:81 • lines_longer_than_80_chars
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/auth/presentation/screens/forgot_password_screen.dart:172:56 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/auth/presentation/screens/forgot_password_screen.dart:175:58 • deprecated_member_use
+   info • The line length exceeds the 80-character limit • lib/features/auth/presentation/screens/forgot_password_screen.dart:188:81 • lines_longer_than_80_chars
+   info • 'Future'-returning calls in a non-'async' function • lib/features/auth/presentation/screens/reset_password_screen.dart:61:5 • discarded_futures
+   info • 'Future'-returning calls in a non-'async' function • lib/features/auth/presentation/screens/reset_password_screen.dart:97:35 • discarded_futures
+   info • Don't use 'BuildContext's across async gaps • lib/features/auth/presentation/screens/reset_password_screen.dart:156:32 • use_build_context_synchronously
+   info • Don't use 'BuildContext's across async gaps • lib/features/auth/presentation/screens/reset_password_screen.dart:159:33 • use_build_context_synchronously
+   info • Missing an 'await' for the 'Future' computed by this expression • lib/features/auth/presentation/screens/reset_password_screen.dart:171:31 • unawaited_futures
+   info • Catch clause should use 'on' to specify the type of exception being caught • lib/features/auth/presentation/screens/reset_password_screen.dart:183:7 • avoid_catches_without_on_clauses
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/auth/presentation/screens/reset_password_screen.dart:373:52 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/auth/presentation/screens/reset_password_screen.dart:376:54 • deprecated_member_use
+   info • The line length exceeds the 80-character limit • lib/features/customers/presentation/screens/customers_screen.dart:44:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/presentation/screens/inventory_items_screen.dart:44:81 • lines_longer_than_80_chars
+   info • 'Future'-returning calls in a non-'async' function • lib/features/invoices/presentation/screens/invoice_form_screen.dart:1146:17 • discarded_futures
+   info • The line length exceeds the 80-character limit • lib/features/invoices/presentation/screens/invoices_screen.dart:48:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/invoices/presentation/screens/returns_and_damages_screen.dart:11:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/widgets/omnibar.dart:31:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/navigation/presentation/widgets/omnibar.dart:32:9 • public_member_api_docs
+   info • 'Future'-returning calls in a non-'async' function • lib/features/navigation/presentation/widgets/omnibar.dart:227:31 • discarded_futures
+   info • 'Future'-returning calls in a non-'async' function • lib/features/navigation/presentation/widgets/omnibar.dart:232:31 • discarded_futures
+   info • 'Future'-returning calls in a non-'async' function • lib/features/navigation/presentation/widgets/omnibar.dart:238:31 • discarded_futures
+   info • 'Future'-returning calls in a non-'async' function • lib/features/navigation/presentation/widgets/omnibar.dart:244:33 • discarded_futures
+   info • Missing documentation for a public member • lib/features/onboarding/presentation/widgets/cognitive_overlay.dart:81:7 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/onboarding/presentation/widgets/cognitive_overlay.dart:82:9 • public_member_api_docs
+   info • Missing documentation for a public member • lib/features/onboarding/presentation/widgets/cognitive_overlay.dart:83:16 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/basir_insights_engine.dart:30:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/basir_insights_engine.dart:47:81 • lines_longer_than_80_chars
+   info • Missing documentation for a public member • lib/features/reports/application/pdf_generation_service.dart:13:7 • public_member_api_docs
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/pdf_generation_service.dart:162:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/pdf_generation_service.dart:206:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/pdf_generation_service.dart:248:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/reports/application/report_pdf_service.dart:88:81 • lines_longer_than_80_chars
+
+66 issues found. (ran in 9.2s)

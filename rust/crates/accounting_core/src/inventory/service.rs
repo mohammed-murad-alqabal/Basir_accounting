@@ -20,6 +20,37 @@ impl InventoryService {
         valuator.calculate_cogs(item.id, quantity, movements)
     }
 
+    pub fn validate_stock_levels(
+        item: &InventoryItem,
+        current_movements: &[StockMovement],
+        proposed_outbound_qty: Decimal,
+    ) -> Result<Option<String>, InventoryError> {
+        let (current_qty, _) = Self::calculate_valuation(item, current_movements)?;
+
+        let new_qty = current_qty - proposed_outbound_qty;
+
+        if new_qty < Decimal::ZERO {
+            // Return generic error for now as we don't have specific InsufficientStock variant easily accessible here without item_id
+            // Actually we do have item.id
+            return Err(InventoryError::InsufficientStock(
+                item.id,
+                proposed_outbound_qty,
+                current_qty,
+            ));
+        }
+
+        if let Some(min) = item.min_stock_level {
+            if new_qty < min {
+                return Ok(Some(format!(
+                    "Warning: Stock level will drop to {} which is below minimum {}",
+                    new_qty, min
+                )));
+            }
+        }
+
+        Ok(None)
+    }
+
     pub fn calculate_valuation(
         item: &InventoryItem,
         movements: &[StockMovement],

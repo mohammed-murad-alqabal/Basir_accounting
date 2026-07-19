@@ -1,8 +1,8 @@
 /// اختبارات AppCard
 library;
 
-import 'package:basir_app/core/theme/app_theme.dart';
-import 'package:basir_app/shared/widgets/app_card.dart';
+import 'package:basir_accounting_system/core/theme/app_theme.dart';
+import 'package:basir_accounting_system/shared/widgets/app_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

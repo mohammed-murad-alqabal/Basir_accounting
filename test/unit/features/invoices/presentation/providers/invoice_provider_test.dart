@@ -1,6 +1,7 @@
-import 'package:basir_app/core/providers.dart';
-import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
-import 'package:basir_app/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -55,8 +56,9 @@ void main() {
     group('addInvoiceProvider', () {
       test('should add invoice successfully', () async {
         final newInvoice = MockData.createTestInvoice(id: 'new-inv');
-        final result =
-            await container.read(addInvoiceProvider(newInvoice).future);
+        final result = await container.read(
+          addInvoiceProvider(newInvoice).future,
+        );
         expect(result, isTrue);
         expect(mockRepository.invoices, contains(newInvoice));
       });
@@ -76,17 +78,17 @@ void main() {
           MockData.createTestInvoice(
             id: 'inv-1',
             status: InvoiceStatus.paid,
-            itemPrice: 1000,
+            itemPrice: Decimal.fromInt(1000),
           ),
           MockData.createTestInvoice(
             id: 'inv-2',
             status: InvoiceStatus.overdue,
-            itemPrice: 500,
+            itemPrice: Decimal.fromInt(500),
           ),
           MockData.createTestInvoice(
             id: 'inv-3',
             status: InvoiceStatus.draft,
-            itemPrice: 200,
+            itemPrice: Decimal.fromInt(200),
           ),
         ];
         mockRepository.setInvoices(testInvoices);
@@ -100,7 +102,7 @@ void main() {
           expect(stats.totalInvoices, 3);
           expect(stats.paidInvoices, 1);
           expect(stats.overdueInvoices, 1);
-          expect(stats.totalAmount, greaterThan(1700));
+          expect(stats.totalAmount, greaterThan(Decimal.fromInt(1700)));
         });
       });
 
@@ -112,7 +114,7 @@ void main() {
         statsAsync.whenData((stats) {
           expect(stats.totalInvoices, 0);
           expect(stats.paidInvoices, 0);
-          expect(stats.totalAmount, 0);
+          expect(stats.totalAmount, Decimal.zero);
         });
       });
     });
