@@ -1,5 +1,5 @@
-name: basir_accounting
-description: "بصير - نظام المحاسبة المتقدم (Basir MVP Accounting System)"
+name: basir_accounting_system
+description: "نظام بصير المحاسبي - نظام المحاسبة الذكي المتكامل (Basir Intelligent Accounting System)"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -42,7 +42,7 @@ dependencies:
   fl_chart: ^1.1.1
   flex_color_picker: ^3.7.2
   flutter:
-    sdk: ^3.5.0
+    sdk: flutter
   flutter_contacts: ^1.1.9+2
   flutter_local_notifications: ^19.5.0
   flutter_localizations:
@@ -93,7 +93,7 @@ dev_dependencies:
     sdk: flutter
   freezed: ^2.5.2
   integration_test:
-    sdk: ^3.5.0
+    sdk: flutter
   isar_generator: ^3.1.0+1
   json_serializable: ^6.8.0
   mockito: ">=5.4.4 <5.5.1"
