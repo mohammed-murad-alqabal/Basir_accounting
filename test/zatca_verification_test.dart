@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-import 'package:basir_accounting_system/features/invoices/application/zatca_service.dart';
-import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
-import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
-import 'package:decimal/decimal.dart';
-import 'package:flutter/foundation.dart';
+import 'package:basir_app/features/invoices/application/zatca_service.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_app/features/invoices/domain/entities/invoice_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -13,8 +11,8 @@ void main() {
       const sellerName = 'Basir Tech';
       const taxNumber = '310123456700003';
       final timestamp = DateTime.parse('2025-01-09T18:00:00Z');
-      final totalAmount = Decimal.parse('1150.00');
-      final vatAmount = Decimal.parse('150.00');
+      const totalAmount = 1150.00;
+      const vatAmount = 150.00;
 
       final result = ZatcaService.encodeTlv(
         sellerName: sellerName,
@@ -38,7 +36,7 @@ void main() {
       expect(decodedBytes[offset], 2);
       expect(decodedBytes[offset + 1], taxNumber.length);
 
-      debugPrint('Zatca QR TLV (Base64): $result');
+      print('Zatca QR TLV (Base64): $result');
     });
 
     test('validateInvoice should catch invalid data', () {
@@ -53,14 +51,12 @@ void main() {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         status: InvoiceStatus.draft,
-        subtotalAmount: Decimal.fromInt(-10), // Invalid: Negative
-        taxAmount: Decimal.zero,
-        discountAmount: Decimal.zero,
-        totalAmount: Decimal.fromInt(-10),
-        paidAmount: Decimal.zero,
-        discountRate: Decimal.zero,
-        taxRate: Decimal.fromInt(15),
-        exchangeRate: Decimal.one,
+        subtotalAmount: -10, // Invalid: Negative
+        taxAmount: 0,
+        discountAmount: 0,
+        totalAmount: -10,
+        paidAmount: 0,
+        taxRate: 15,
       );
 
       expect(
@@ -76,14 +72,12 @@ void main() {
         customerId: 'C-001',
         customerName: 'Test Customer',
         items: [
-          InvoiceItem(
-            taxRate: Decimal.parse('0.15'),
+          const InvoiceItem(
             id: 'item-1',
             name: 'Service',
-            quantity: Decimal.one,
-            price: Decimal.fromInt(100),
-            total: Decimal.fromInt(100),
-            taxAmount: Decimal.fromInt(15),
+            quantity: 1,
+            price: 100,
+            total: 100,
           ),
         ],
         issuedDate: DateTime.now(),
@@ -91,14 +85,12 @@ void main() {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         status: InvoiceStatus.sent,
-        subtotalAmount: Decimal.fromInt(100),
-        taxAmount: Decimal.fromInt(15),
-        discountAmount: Decimal.zero,
-        totalAmount: Decimal.fromInt(115),
-        paidAmount: Decimal.zero,
-        discountRate: Decimal.zero,
-        taxRate: Decimal.fromInt(15),
-        exchangeRate: Decimal.one,
+        subtotalAmount: 100,
+        taxAmount: 15,
+        discountAmount: 0,
+        totalAmount: 115,
+        paidAmount: 0,
+        taxRate: 15,
       );
 
       // Should not throw
