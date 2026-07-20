@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basir_accounting_system/core/theme/disabled_state_design.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/shared/widgets/overflow_detector.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,7 @@ class AppEnhancedButton extends StatefulWidget {
     this.elevation,
     this.maxLines = 1,
     this.textAlign = TextAlign.center,
+    this.disabledReason,
   });
 
   /// نص الزر
@@ -89,13 +91,15 @@ class AppEnhancedButton extends StatefulWidget {
   /// محاذاة النص
   final TextAlign textAlign;
 
+  /// سبب تعطيل الزر (عرض في Tooltip)
+  final String? disabledReason;
+
   @override
   State<AppEnhancedButton> createState() => _AppEnhancedButtonState();
 }
 
 // ignore: lines_longer_than_80_chars
-class _AppEnhancedButtonState extends State<AppEnhancedButton>
-    with SingleTickerProviderStateMixin {
+class _AppEnhancedButtonState extends State<AppEnhancedButton> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scale;
 
@@ -154,10 +158,9 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
       fontWeight: FontWeights.bold,
     );
 
-    final mouseCursor =
-        isEnabled ? SystemMouseCursors.click : SystemMouseCursors.forbidden;
+    final mouseCursor = isEnabled ? SystemMouseCursors.click : SystemMouseCursors.forbidden;
 
-    return OverflowDetector(
+    Widget buttonChild = OverflowDetector(
       name: 'AppEnhancedButton(${widget.label})',
       child: Focus(
         onFocusChange: (focused) => setState(() => _isFocused = focused),
@@ -263,13 +266,27 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
         ),
       ),
     );
+
+    if (!isEnabled) {
+      if (widget.disabledReason != null) {
+        buttonChild = DisabledStateDesign.buildDisabledTooltip(
+          message: widget.disabledReason!,
+          child: buttonChild,
+        );
+      } else {
+        buttonChild = DisabledStateDesign.buildDisabledIndicator(
+          child: buttonChild,
+        );
+      }
+    }
+
+    return buttonChild;
   }
 
   Gradient _darkenGradient(Gradient original) {
     if (original is LinearGradient) {
       final originalColors = original.colors;
-      final modifiedColors =
-          originalColors.map((color) => color.withValues(alpha: 0.9)).toList();
+      final modifiedColors = originalColors.map((color) => color.withValues(alpha: 0.9)).toList();
       return LinearGradient(
         colors: modifiedColors,
         begin: original.begin,
