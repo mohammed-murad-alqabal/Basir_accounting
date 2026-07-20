@@ -35,7 +35,9 @@ class StateContrastCalculator {
   /// Darken a color by [percentage] (0.0 to 1.0)
   static Color darken(Color color, double percentage) {
     final hsl = HSLColor.fromColor(color);
-    return hsl.withLightness((hsl.lightness * (1 - percentage)).clamp(0.0, 1.0)).toColor();
+    return hsl
+        .withLightness((hsl.lightness * (1 - percentage)).clamp(0.0, 1.0))
+        .toColor();
   }
 
   /// Lighten a color by [percentage] (0.0 to 1.0)

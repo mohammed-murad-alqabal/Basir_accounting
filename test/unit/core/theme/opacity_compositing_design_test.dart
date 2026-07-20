@@ -44,10 +44,23 @@ void main() {
     });
 
     // Property test: 100 random pairs, calculate composited color without error
-    test('Property: No exceptions for random color pairs and opacity values', () {
+    test('Property: No exceptions for random color pairs and opacity values',
+        () {
       for (var i = 0; i < 100; i++) {
-        const foregrounds = [Colors.red, Colors.green, Colors.blue, Colors.white, Colors.black];
-        const backgrounds = [Colors.yellow, Colors.purple, Colors.orange, Colors.grey, Colors.teal];
+        const foregrounds = [
+          Colors.red,
+          Colors.green,
+          Colors.blue,
+          Colors.white,
+          Colors.black,
+        ];
+        const backgrounds = [
+          Colors.yellow,
+          Colors.purple,
+          Colors.orange,
+          Colors.grey,
+          Colors.teal,
+        ];
         final foreground = foregrounds[i % foregrounds.length];
         final background = backgrounds[i % backgrounds.length];
         final opacity = (i % 10) / 10.0;
