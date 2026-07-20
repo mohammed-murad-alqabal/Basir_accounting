@@ -45,6 +45,7 @@ class JournalEntriesScreen extends ConsumerWidget {
           ),
           IconButton(
             icon: const Icon(Icons.refresh),
+            tooltip: 'تحديث',
             onPressed: () => ref.invalidate(accountingServiceProvider),
           ),
         ],
