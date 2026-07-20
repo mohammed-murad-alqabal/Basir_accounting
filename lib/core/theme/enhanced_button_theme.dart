@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 /// Enhanced button theme with proper state management
 abstract final class EnhancedButtonTheme {
   /// Create primary button style with full state support
-  static ButtonStyle createPrimaryButtonStyle() => ButtonStyle(
+  static ButtonStyle createPrimaryButtonStyle([
+    Brightness brightness = Brightness.light,
+  ]) =>
+      ButtonStyle(
         elevation: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) return 0.0;
           if (states.contains(WidgetState.pressed)) return 2.0;
@@ -16,42 +19,48 @@ abstract final class EnhancedButtonTheme {
           if (states.contains(WidgetState.disabled)) {
             return AppStateColors.getPrimaryBackgroundColor(
               InteractiveState.disabled,
+              brightness,
             );
           } else if (states.contains(WidgetState.pressed)) {
             return AppStateColors.getPrimaryBackgroundColor(
               InteractiveState.pressed,
+              brightness,
             );
           } else if (states.contains(WidgetState.hovered)) {
             return AppStateColors.getPrimaryBackgroundColor(
               InteractiveState.hovered,
+              brightness,
             );
           }
           return AppStateColors.getPrimaryBackgroundColor(
             InteractiveState.normal,
+            brightness,
           );
         }),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
             return AppStateColors.getPrimaryForegroundColor(
               InteractiveState.disabled,
+              brightness,
             );
           }
           return AppStateColors.getPrimaryForegroundColor(
             InteractiveState.normal,
+            brightness,
           );
         }),
         overlayColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.pressed)) {
-            return AppStateColors.pressedOverlay;
+            return AppStateColors.getPressedOverlay(brightness);
           } else if (states.contains(WidgetState.hovered)) {
-            return AppStateColors.hoverOverlay;
+            return AppStateColors.getHoverOverlay(brightness);
           }
           return null;
         }),
         side: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.focused)) {
-            return const BorderSide(
-              color: AppStateColors.focusBorder,
+            return BorderSide(
+              color: AppStateColors.getFocusBorder(brightness),
               width: AppStateColors.focusBorderWidth,
             );
           }
@@ -65,34 +74,39 @@ abstract final class EnhancedButtonTheme {
       );
 
   /// Create secondary button style
-  static ButtonStyle createSecondaryButtonStyle() => ButtonStyle(
+  static ButtonStyle createSecondaryButtonStyle([
+    Brightness brightness = Brightness.light,
+  ]) =>
+      ButtonStyle(
         elevation: WidgetStateProperty.all(0),
         backgroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
-            return AppStateColors.disabledBackground;
+            return AppStateColors.getDisabledBackground(brightness);
           }
           return Colors.transparent;
         }),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
-            return AppStateColors.disabledForeground;
+            return AppStateColors.getDisabledForeground(brightness);
           }
           return AppColors.primary;
         }),
         overlayColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.pressed)) {
-            return AppStateColors.pressedOverlay;
+            return AppStateColors.getPressedOverlay(brightness);
           } else if (states.contains(WidgetState.hovered)) {
-            return AppStateColors.hoverOverlay;
+            return AppStateColors.getHoverOverlay(brightness);
           }
           return null;
         }),
         side: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
-            return const BorderSide(color: AppStateColors.disabledBackground);
+            return BorderSide(
+              color: AppStateColors.getDisabledBackground(brightness),
+            );
           } else if (states.contains(WidgetState.focused)) {
-            return const BorderSide(
-              color: AppStateColors.focusBorder,
+            return BorderSide(
+              color: AppStateColors.getFocusBorder(brightness),
               width: AppStateColors.focusBorderWidth,
             );
           }
@@ -106,27 +120,30 @@ abstract final class EnhancedButtonTheme {
       );
 
   /// Create text button style
-  static ButtonStyle createTextButtonStyle() => ButtonStyle(
+  static ButtonStyle createTextButtonStyle([
+    Brightness brightness = Brightness.light,
+  ]) =>
+      ButtonStyle(
         elevation: WidgetStateProperty.all(0),
         backgroundColor: WidgetStateProperty.all(Colors.transparent),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
-            return AppStateColors.disabledForeground;
+            return AppStateColors.getDisabledForeground(brightness);
           }
           return AppColors.primary;
         }),
         overlayColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.pressed)) {
-            return AppStateColors.pressedOverlay;
+            return AppStateColors.getPressedOverlay(brightness);
           } else if (states.contains(WidgetState.hovered)) {
-            return AppStateColors.hoverOverlay;
+            return AppStateColors.getHoverOverlay(brightness);
           }
           return null;
         }),
         side: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.focused)) {
-            return const BorderSide(
-              color: AppStateColors.focusBorder,
+            return BorderSide(
+              color: AppStateColors.getFocusBorder(brightness),
               width: AppStateColors.focusBorderWidth,
             );
           }
