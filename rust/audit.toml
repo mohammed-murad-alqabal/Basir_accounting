@@ -1,0 +1,6 @@
+# Ignore this security advisory because it only affects MySQL, which we don't use in the project.
+# We exclusively use PostgreSQL.
+[[ignore]]
+id = "RUSTSEC-2023-0071"
+reason = "Unused feature, only PostgreSQL is used, MySQL is not part of our runtime dependencies"
+
