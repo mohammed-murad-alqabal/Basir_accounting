@@ -17,6 +17,7 @@ echo -e "${YELLOW}🔍 Validating branch name: $current_branch${NC}"
 # Define valid branch name patterns for ERP development
 valid_patterns=(
     "^main$"
+    "^develop$"
     "^development$"
     "^feature/hr-[a-z0-9-]+$"
     "^feature/payroll-[a-z0-9-]+$"
