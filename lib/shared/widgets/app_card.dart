@@ -127,6 +127,7 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     final effectiveBackgroundColor =
         widget.backgroundColor ?? CardColors.background;
     final effectiveBorderRadius = widget.borderRadius ?? Radii.borderRadiusMd;
@@ -140,8 +141,9 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
         borderRadius: effectiveBorderRadius,
         border: Border.all(
           color: widget.isSelected
-              ? BorderContrastDesign.borderFocused
-              : (widget.borderColor ?? BorderContrastDesign.borderNormal),
+              ? BorderContrastDesign.getBorderFocused(brightness)
+              : (widget.borderColor ??
+                  BorderContrastDesign.getBorderNormal(brightness)),
           width: widget.isSelected ? BorderWidths.normal : BorderWidths.thin,
         ),
         boxShadow: effectiveElevation > 0
