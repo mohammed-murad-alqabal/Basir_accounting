@@ -99,7 +99,8 @@ class AppEnhancedButton extends StatefulWidget {
 }
 
 // ignore: lines_longer_than_80_chars
-class _AppEnhancedButtonState extends State<AppEnhancedButton> with SingleTickerProviderStateMixin {
+class _AppEnhancedButtonState extends State<AppEnhancedButton>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scale;
 
@@ -158,7 +159,8 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton> with SingleTicker
       fontWeight: FontWeights.bold,
     );
 
-    final mouseCursor = isEnabled ? SystemMouseCursors.click : SystemMouseCursors.forbidden;
+    final mouseCursor =
+        isEnabled ? SystemMouseCursors.click : SystemMouseCursors.forbidden;
 
     Widget buttonChild = OverflowDetector(
       name: 'AppEnhancedButton(${widget.label})',
@@ -286,7 +288,8 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton> with SingleTicker
   Gradient _darkenGradient(Gradient original) {
     if (original is LinearGradient) {
       final originalColors = original.colors;
-      final modifiedColors = originalColors.map((color) => color.withValues(alpha: 0.9)).toList();
+      final modifiedColors =
+          originalColors.map((color) => color.withValues(alpha: 0.9)).toList();
       return LinearGradient(
         colors: modifiedColors,
         begin: original.begin,

@@ -1,7 +1,6 @@
-
-import 'package:flutter/material.dart';
+import 'package:basir_accounting_system/core/theme/accessibility/state_contrast_calculator.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
-import 'accessibility/state_contrast_calculator.dart';
+import 'package:flutter/material.dart';
 
 /// Interactive states for components
 enum InteractiveState {
@@ -28,7 +27,7 @@ abstract final class AppStateColors {
 
   // Focused state
   static const Color focusBorder = AppColors.primary;
-  static const double focusBorderWidth = 2.0;
+  static const double focusBorderWidth = 2;
 
   // Disabled state
   static const Color disabledBackground = Color(0xFFD1D5DB);
@@ -64,6 +63,8 @@ abstract final class AppStateColors {
     switch (state) {
       case InteractiveState.disabled:
         return disabledForeground;
+      case InteractiveState.selected:
+        return selectedForeground;
       default:
         return ButtonColors.primaryForeground;
     }
@@ -98,6 +99,8 @@ abstract final class AppStateColors {
     switch (state) {
       case InteractiveState.disabled:
         return disabledForeground;
+      case InteractiveState.selected:
+        return selectedForeground;
       default:
         return ButtonColors.secondaryForeground;
     }

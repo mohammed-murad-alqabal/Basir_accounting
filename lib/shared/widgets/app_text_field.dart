@@ -111,7 +111,9 @@ class _AppTextFieldState extends State<AppTextField> {
                   widget.label,
                   style: AppTextStyles.labelLarge.copyWith(
                     color: widget.isEnabled
-                        ? (_isFocused ? InputColors.borderFocused : InputColors.label)
+                        ? (_isFocused
+                            ? InputColors.borderFocused
+                            : InputColors.label)
                         : AppColors.textDisabled,
                     fontWeight: FontWeights.semiBold,
                   ),
@@ -132,7 +134,9 @@ class _AppTextFieldState extends State<AppTextField> {
                 textInputAction: widget.textInputAction,
                 enabled: widget.isEnabled,
                 style: AppTextStyles.bodyLarge.copyWith(
-                  color: widget.isEnabled ? InputColors.text : AppColors.textDisabled,
+                  color: widget.isEnabled
+                      ? InputColors.text
+                      : AppColors.textDisabled,
                 ),
                 decoration: InputDecoration(
                   hintText: widget.hint,
@@ -150,11 +154,14 @@ class _AppTextFieldState extends State<AppTextField> {
                   suffixIcon: widget.obscureText
                       ? IconButton(
                           icon: Icon(
-                            _obscureText ? Icons.visibility_off : Icons.visibility,
+                            _obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                             size: IconSizes.sm,
                             color: InputColors.label,
                           ),
-                          onPressed: () => setState(() => _obscureText = !_obscureText),
+                          onPressed: () =>
+                              setState(() => _obscureText = !_obscureText),
                         )
                       : widget.suffixIcon,
                   contentPadding: const EdgeInsets.symmetric(
@@ -162,9 +169,12 @@ class _AppTextFieldState extends State<AppTextField> {
                     vertical: Spacing.md,
                   ),
                   filled: true,
-                  fillColor: widget.isEnabled ? InputColors.background : AppColors.surfaceVariant,
+                  fillColor: widget.isEnabled
+                      ? InputColors.background
+                      : AppColors.surfaceVariant,
                   border: BorderContrastDesign.buildEnhancedInputBorder(),
-                  enabledBorder: BorderContrastDesign.buildEnhancedInputBorder(),
+                  enabledBorder:
+                      BorderContrastDesign.buildEnhancedInputBorder(),
                   focusedBorder: BorderContrastDesign.buildEnhancedInputBorder(
                     color: BorderContrastDesign.borderFocused,
                     width: BorderContrastDesign.borderWidthFocused,
@@ -172,7 +182,8 @@ class _AppTextFieldState extends State<AppTextField> {
                   errorBorder: BorderContrastDesign.buildEnhancedInputBorder(
                     color: BorderContrastDesign.borderError,
                   ),
-                  focusedErrorBorder: BorderContrastDesign.buildEnhancedInputBorder(
+                  focusedErrorBorder:
+                      BorderContrastDesign.buildEnhancedInputBorder(
                     color: BorderContrastDesign.borderError,
                     width: BorderContrastDesign.borderWidthError,
                   ),
@@ -235,7 +246,8 @@ class _AppSearchFieldState extends State<AppSearchField> {
     super.dispose();
   }
 
-  void _onTextChanged() => setState(() => _hasText = _controller.text.isNotEmpty);
+  void _onTextChanged() =>
+      setState(() => _hasText = _controller.text.isNotEmpty);
 
   @override
   Widget build(BuildContext context) => TextField(
@@ -244,7 +256,8 @@ class _AppSearchFieldState extends State<AppSearchField> {
         style: AppTextStyles.bodyLarge,
         decoration: InputDecoration(
           hintText: widget.hint,
-          hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.textHint),
+          hintStyle:
+              AppTextStyles.bodyMedium.copyWith(color: AppColors.textHint),
           prefixIcon: const Icon(
             Icons.search,
             size: IconSizes.sm,
