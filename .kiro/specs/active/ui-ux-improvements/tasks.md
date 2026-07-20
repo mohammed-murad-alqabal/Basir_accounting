@@ -855,11 +855,11 @@
   - ✅ **Property 14: الفرق البصري بين الحالات**
   - **Validates: Requirements 14.5**
 
-- [ ] 29. تطبيق Selected State على المكونات
-  - تحديث `ListTile` لاستخدام `buildSelectedListTile()`
-  - تحديث `BottomNavigationBar` لاستخدام `buildSelectedNavItem()`
-  - إضافة أيقونة checkmark للعناصر المحددة
-  - إضافة حد بسمك 2px للعناصر المحددة
+- [x] 29. تطبيق Selected State على المكونات
+  - ✅ تحديث `ListTile` لاستخدام `buildSelectedListTile()`
+  - ✅ تحديث `BottomNavigationBar` لاستخدام `buildSelectedNavItem()`
+  - ✅ إضافة أيقونة checkmark للعناصر المحددة
+  - ✅ إضافة حد بسمك 2px للعناصر المحددة
   - _Requirements: 14.2, 14.3, 14.4_
 
 - [x]\* 29.1 كتابة اختبارات widget لحالة selected
