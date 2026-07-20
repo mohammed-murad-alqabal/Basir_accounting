@@ -177,5 +177,24 @@ void main() {
 
       expect(tapCount, 3);
     });
+
+    testWidgets('should not call onPressed when disabled', (tester) async {
+      const pressed = false;
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: AppEnhancedButton(
+              label: 'Disabled',
+              onPressed: null,
+            ),
+          ),
+        ),
+      );
+
+      await tester.tap(find.text('Disabled'));
+      await tester.pumpAndSettle();
+
+      expect(pressed, isFalse);
+    });
   });
 }
