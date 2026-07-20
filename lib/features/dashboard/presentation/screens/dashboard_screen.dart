@@ -80,6 +80,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       actions: [
         IconButton(
           icon: const Icon(Icons.refresh),
+          tooltip: context.l10n.tooltipRefresh,
           onPressed: () {
             unawaited(
               ref.read(dashboardControllerProvider.notifier).refresh(),
