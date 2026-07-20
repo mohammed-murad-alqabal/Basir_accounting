@@ -72,7 +72,12 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(AgingReportScreen), findsOneWidget);
-    expect(find.text('أعمار ذمم العملاء'), findsOneWidget);
+
+    // Get l10n
+    final l10n = AppLocalizations.of(
+      tester.element(find.byType(AgingReportScreen)),
+    );
+    expect(find.text(l10n.receivablesAgingTitle), findsOneWidget);
   });
 
   testWidgets('Navigation to Payables Aging works', (tester) async {
@@ -87,6 +92,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(AgingReportScreen), findsOneWidget);
-    expect(find.text('أعمار ذمم الموردين'), findsOneWidget);
+
+    // Get l10n
+    final l10n = AppLocalizations.of(
+      tester.element(find.byType(AgingReportScreen)),
+    );
+    expect(find.text(l10n.payablesAgingTitle), findsOneWidget);
   });
 }

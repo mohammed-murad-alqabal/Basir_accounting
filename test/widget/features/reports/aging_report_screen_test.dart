@@ -59,7 +59,11 @@ void main() {
     await tester.pumpWidget(createWidgetUnderTest(AgingReportType.receivables));
     await tester.pumpAndSettle();
 
-    expect(find.text('لا توجد بيانات لهذه الفترة'), findsOneWidget);
+    // Get l10n
+    final l10n = AppLocalizations.of(
+      tester.element(find.byType(AgingReportScreen)),
+    );
+    expect(find.text(l10n.noDataMessage), findsOneWidget);
   });
 
   testWidgets('AgingReportScreen shows data table when data is present', (
