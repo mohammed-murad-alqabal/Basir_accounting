@@ -2,20 +2,88 @@
 library;
 
 import 'package:basir_accounting_system/core/theme/app_theme.dart';
+import 'package:basir_accounting_system/core/theme/border_contrast_design.dart';
 import 'package:basir_accounting_system/shared/widgets/app_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('AppCard', () {
-    testWidgets('should display child widget', (tester) async {
+    testWidgets('should display child widget (light mode)', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(body: AppCard(child: Text('محتوى البطاقة'))),
+        MaterialApp(
+          theme: AppTheme.lightTheme,
+          home: const Scaffold(body: AppCard(child: Text('محتوى البطاقة'))),
         ),
       );
 
       expect(find.text('محتوى البطاقة'), findsOneWidget);
+    });
+
+    testWidgets('should display child widget (dark mode)', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: AppTheme.darkTheme,
+          home: const Scaffold(body: AppCard(child: Text('محتوى البطاقة'))),
+        ),
+      );
+
+      expect(find.text('محتوى البطاقة'), findsOneWidget);
+    });
+
+    testWidgets('should display isSelected border (light mode)',
+        (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: AppTheme.lightTheme,
+          home: const Scaffold(
+            body: AppCard(
+              isSelected: true,
+              child: Text('محتوى'),
+            ),
+          ),
+        ),
+      );
+
+      final container = tester.widget<Container>(
+        find
+            .descendant(
+              of: find.byType(AppCard),
+              matching: find.byType(Container),
+            )
+            .first,
+      );
+      expect(
+        (container.decoration! as BoxDecoration).border?.top.color,
+        BorderContrastDesign.borderFocusedLight,
+      );
+    });
+
+    testWidgets('should display isSelected border (dark mode)', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: AppTheme.darkTheme,
+          home: const Scaffold(
+            body: AppCard(
+              isSelected: true,
+              child: Text('محتوى'),
+            ),
+          ),
+        ),
+      );
+
+      final container = tester.widget<Container>(
+        find
+            .descendant(
+              of: find.byType(AppCard),
+              matching: find.byType(Container),
+            )
+            .first,
+      );
+      expect(
+        (container.decoration! as BoxDecoration).border?.top.color,
+        BorderContrastDesign.borderFocusedDark,
+      );
     });
 
     testWidgets('should call onTap', (tester) async {
