@@ -16,7 +16,6 @@ void main() {
           foregroundColor,
           backgroundColor,
         );
-        print('State: $state, contrast: $contrast');
         expect(contrast, greaterThanOrEqualTo(3.0));
       }
     });
