@@ -178,7 +178,9 @@ void main() {
       expect(tapCount, 3);
     });
 
-    testWidgets('should not call onPressed when disabled', (tester) async {
+    testWidgets('should not call onPressed when disabled (null onPressed)', (
+      tester,
+    ) async {
       const pressed = false;
       await tester.pumpWidget(
         const MaterialApp(
@@ -195,6 +197,49 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(pressed, isFalse);
+    });
+
+    testWidgets('should render all button types correctly', (tester) async {
+      // Primary (default)
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: AppEnhancedButton(
+              label: 'Primary',
+              onPressed: () {},
+            ),
+          ),
+        ),
+      );
+      expect(find.text('Primary'), findsOneWidget);
+
+      // Secondary (outlined)
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: AppEnhancedButton(
+              label: 'Secondary',
+              type: AppEnhancedButtonType.outlined,
+              onPressed: () {},
+            ),
+          ),
+        ),
+      );
+      expect(find.text('Secondary'), findsOneWidget);
+
+      // Text button
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: AppEnhancedButton(
+              label: 'Text',
+              type: AppEnhancedButtonType.text,
+              onPressed: () {},
+            ),
+          ),
+        ),
+      );
+      expect(find.text('Text'), findsOneWidget);
     });
   });
 }
