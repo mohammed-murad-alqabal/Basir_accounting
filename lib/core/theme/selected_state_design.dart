@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:basir_accounting_system/core/theme/app_state_colors.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:flutter/material.dart';
 
 /// Selected state design utilities
 abstract final class SelectedStateDesign {
@@ -37,5 +37,25 @@ abstract final class SelectedStateDesign {
               : trailing,
           onTap: onTap,
         ),
+      );
+
+  /// Build a selected bottom nav item wrapper
+  static Widget buildSelectedNavItem({
+    required Widget child,
+  }) =>
+      Container(
+        decoration: BoxDecoration(
+          color: AppStateColors.selectedBackground,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: AppStateColors.selectedBorder,
+            width: 2,
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Spacing.sm,
+          vertical: Spacing.xs,
+        ),
+        child: child,
       );
 }
