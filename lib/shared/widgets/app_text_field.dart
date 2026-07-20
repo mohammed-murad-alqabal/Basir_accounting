@@ -1,3 +1,4 @@
+import 'package:basir_accounting_system/core/theme/border_contrast_design.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 
@@ -110,9 +111,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   widget.label,
                   style: AppTextStyles.labelLarge.copyWith(
                     color: widget.isEnabled
-                        ? (_isFocused
-                            ? InputColors.borderFocused
-                            : InputColors.label)
+                        ? (_isFocused ? InputColors.borderFocused : InputColors.label)
                         : AppColors.textDisabled,
                     fontWeight: FontWeights.semiBold,
                   ),
@@ -133,9 +132,7 @@ class _AppTextFieldState extends State<AppTextField> {
                 textInputAction: widget.textInputAction,
                 enabled: widget.isEnabled,
                 style: AppTextStyles.bodyLarge.copyWith(
-                  color: widget.isEnabled
-                      ? InputColors.text
-                      : AppColors.textDisabled,
+                  color: widget.isEnabled ? InputColors.text : AppColors.textDisabled,
                 ),
                 decoration: InputDecoration(
                   hintText: widget.hint,
@@ -153,14 +150,11 @@ class _AppTextFieldState extends State<AppTextField> {
                   suffixIcon: widget.obscureText
                       ? IconButton(
                           icon: Icon(
-                            _obscureText
-                                ? Icons.visibility_off
-                                : Icons.visibility,
+                            _obscureText ? Icons.visibility_off : Icons.visibility,
                             size: IconSizes.sm,
                             color: InputColors.label,
                           ),
-                          onPressed: () =>
-                              setState(() => _obscureText = !_obscureText),
+                          onPressed: () => setState(() => _obscureText = !_obscureText),
                         )
                       : widget.suffixIcon,
                   contentPadding: const EdgeInsets.symmetric(
@@ -168,28 +162,28 @@ class _AppTextFieldState extends State<AppTextField> {
                     vertical: Spacing.md,
                   ),
                   filled: true,
-                  fillColor: widget.isEnabled
-                      ? InputColors.background
-                      : AppColors.surfaceVariant,
-                  border: _getBorder(InputColors.border),
-                  enabledBorder: _getBorder(InputColors.border),
-                  focusedBorder:
-                      _getBorder(InputColors.borderFocused, width: 2),
-                  errorBorder: _getBorder(InputColors.borderError),
-                  focusedErrorBorder:
-                      _getBorder(InputColors.borderError, width: 2),
-                  disabledBorder: _getBorder(AppColors.borderLight),
+                  fillColor: widget.isEnabled ? InputColors.background : AppColors.surfaceVariant,
+                  border: BorderContrastDesign.buildEnhancedInputBorder(),
+                  enabledBorder: BorderContrastDesign.buildEnhancedInputBorder(),
+                  focusedBorder: BorderContrastDesign.buildEnhancedInputBorder(
+                    color: BorderContrastDesign.borderFocused,
+                    width: BorderContrastDesign.borderWidthFocused,
+                  ),
+                  errorBorder: BorderContrastDesign.buildEnhancedInputBorder(
+                    color: BorderContrastDesign.borderError,
+                  ),
+                  focusedErrorBorder: BorderContrastDesign.buildEnhancedInputBorder(
+                    color: BorderContrastDesign.borderError,
+                    width: BorderContrastDesign.borderWidthError,
+                  ),
+                  disabledBorder: BorderContrastDesign.buildEnhancedInputBorder(
+                    color: AppColors.borderLight,
+                  ),
                 ),
               ),
             ),
           ],
         ),
-      );
-
-  OutlineInputBorder _getBorder(Color color, {double width = 1}) =>
-      OutlineInputBorder(
-        borderRadius: Radii.borderRadiusMd,
-        borderSide: BorderSide(color: color, width: width),
       );
 }
 
@@ -241,8 +235,7 @@ class _AppSearchFieldState extends State<AppSearchField> {
     super.dispose();
   }
 
-  void _onTextChanged() =>
-      setState(() => _hasText = _controller.text.isNotEmpty);
+  void _onTextChanged() => setState(() => _hasText = _controller.text.isNotEmpty);
 
   @override
   Widget build(BuildContext context) => TextField(
@@ -251,8 +244,7 @@ class _AppSearchFieldState extends State<AppSearchField> {
         style: AppTextStyles.bodyLarge,
         decoration: InputDecoration(
           hintText: widget.hint,
-          hintStyle:
-              AppTextStyles.bodyMedium.copyWith(color: AppColors.textHint),
+          hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.textHint),
           prefixIcon: const Icon(
             Icons.search,
             size: IconSizes.sm,
@@ -274,21 +266,17 @@ class _AppSearchFieldState extends State<AppSearchField> {
               : null,
           filled: true,
           fillColor: AppColors.surface,
-          border: _getBorder(Radii.borderRadiusFull),
-          enabledBorder: _getBorder(Radii.borderRadiusFull),
-          focusedBorder: _getBorder(Radii.borderRadiusFull, isFocused: true),
-        ),
-      );
-
-  OutlineInputBorder _getBorder(
-    BorderRadius radius, {
-    bool isFocused = false,
-  }) =>
-      OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: BorderSide(
-          color: isFocused ? AppColors.primary : AppColors.border,
-          width: isFocused ? 2 : 1,
+          border: BorderContrastDesign.buildEnhancedInputBorder(
+            radius: Radii.borderRadiusFull,
+          ),
+          enabledBorder: BorderContrastDesign.buildEnhancedInputBorder(
+            radius: Radii.borderRadiusFull,
+          ),
+          focusedBorder: BorderContrastDesign.buildEnhancedInputBorder(
+            color: BorderContrastDesign.borderFocused,
+            width: BorderContrastDesign.borderWidthFocused,
+            radius: Radii.borderRadiusFull,
+          ),
         ),
       );
 }

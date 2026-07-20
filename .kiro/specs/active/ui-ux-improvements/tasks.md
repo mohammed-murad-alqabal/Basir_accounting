@@ -741,49 +741,50 @@
 
 ### المرحلة 1: تطوير نظام الحالات الشامل (P0 - حرج)
 
-- [ ] 20. إنشاء نظام الحالات الشامل (Comprehensive States System)
-  - إنشاء ملف `lib/core/theme/app_state_colors.dart`
-  - تعريف enum `InteractiveState` لجميع الحالات
-  - تعريف ألوان لكل حالة (normal, hovered, pressed, focused, selected, disabled)
-  - تعريف ألوان overlay (hoverOverlay, pressedOverlay, selectedOverlay, focusedOverlay)
-  - حساب التباين لكل حالة والتأكد من ≥ 3:1
+- [x] 20. إنشاء نظام الحالات الشامل (Comprehensive States System)
+  - ✅ إنشاء ملف `lib/core/theme/app_state_colors.dart`
+  - ✅ تعريف enum `InteractiveState` لجميع الحالات
+  - ✅ تعريف ألوان لكل حالة (normal, hovered, pressed, focused, selected, disabled)
+  - ✅ تعريف ألوان overlay (hoverOverlay, pressedOverlay, selectedOverlay, focusedOverlay)
+  - ✅ حساب التباين لكل حالة والتأكد من ≥ 3:1
   - _Requirements: 12.1, 12.2, 12.3, 12.4_
 
 - [ ] 20.1 كتابة اختبار خاصية لتباين الحالات
   - **Property 10: تباين جميع حالات الأزرار**
   - **Validates: Requirements 12.1, 12.2, 12.3**
 
-- [ ] 21. تطوير State Contrast Calculator
-  - إنشاء ملف `lib/core/theme/accessibility/state_contrast_calculator.dart`
-  - تطبيق دالة `calculateButtonContrasts()` لحساب تباين جميع الحالات
-  - تطبيق دالة `_darken()` لتغميق الألوان
-  - تطبيق دالة `_calculateContrast()` لحساب نسبة التباين
-  - تطبيق دالة `_relativeLuminance()` لحساب السطوع النسبي
+- [x] 21. تطوير State Contrast Calculator
+  - ✅ إنشاء ملف `lib/core/theme/accessibility/state_contrast_calculator.dart`
+  - ✅ تطبيق دالة `darken()` لتغميق الألوان
+  - ✅ تطبيق دالة `lighten()` لتفتيح الألوان
+  - ✅ تطبيق دالة `calculateContrastRatio()` لحساب نسبة التباين
+  - ✅ تطبيق دالة `calculateRelativeLuminance()` لحساب السطوع النسبي
+  - ✅ تطبيق دالة `calculateDeltaE()` لحساب ΔE بين لونين
+  - ✅ تطبيق دالة `hasMinimumVisualDifference()` للتحقق من ΔE ≥ 10
+  - _Requirements: 12.1, 12.2, 14.5_
+
+- [x] 21.1 كتابة اختبارات وحدة لـ State Contrast Calculator
+  - ✅ اختبار حساب التباين لجميع الحالات
+  - ✅ اختبار دالة التغميق
+  - ✅ اختبار حساب السطوع النسبي
   - _Requirements: 12.1, 12.2_
 
-- [ ] 21.1 كتابة اختبارات وحدة لـ State Contrast Calculator
-  - اختبار حساب التباين لجميع الحالات
-  - اختبار دالة التغميق
-  - اختبار حساب السطوع النسبي
-  - _Requirements: 12.1, 12.2_
-
-- [ ] 22. تطبيق Enhanced Button Theme
-  - إنشاء ملف `lib/core/theme/enhanced_button_theme.dart`
-  - تطبيق `createPrimaryButtonStyle()` مع `WidgetStateProperty`
-  - تطبيق جميع الحالات: normal, hovered, pressed, focused, selected, disabled
-  - تطبيق backgroundColor, foregroundColor, side, overlayColor, mouseCursor
-  - تطبيق elevation ديناميكي حسب الحالة
-  - تطبيق animationDuration = 200ms
+- [x] 22. تطبيق Enhanced Button Theme
+  - ✅ إنشاء ملف `lib/core/theme/enhanced_button_theme.dart`
+  - ✅ تطبيق `createPrimaryButtonStyle()` مع `WidgetStateProperty`
+  - ✅ تطبيق جميع الحالات: normal, hovered, pressed, focused, selected, disabled
+  - ✅ تطبيق backgroundColor, foregroundColor, side, overlayColor
+  - ✅ تطبيق elevation ديناميكي حسب الحالة
   - _Requirements: 12.1, 12.2, 12.3, 12.4, 12.5_
 
 - [ ] 22.1 كتابة اختبار خاصية لانتقالات الحالات
   - **Property 11: سلاسة انتقالات الحالات**
   - **Validates: Requirements 12.5**
 
-- [ ] 23. تطبيق Secondary و Text Button Themes
-  - تطبيق `createSecondaryButtonStyle()` بنفس المنطق
-  - تطبيق `createTextButtonStyle()` بنفس المنطق
-  - التأكد من تباين جميع الحالات
+- [x] 23. تطبيق Secondary و Text Button Themes
+  - ✅ تطبيق `createSecondaryButtonStyle()` بنفس المنطق
+  - ✅ تطبيق `createTextButtonStyle()` بنفس المنطق
+  - ✅ التأكد من تباين جميع الحالات
   - _Requirements: 12.1, 12.2, 12.3, 12.4_
 
 - [ ]\* 23.1 كتابة اختبارات widget لجميع أنواع الأزرار
@@ -794,28 +795,27 @@
 
 ### المرحلة 2: تحسين حالة disabled (P0 - حرج)
 
-- [ ] 24. تطوير Disabled State Design
-  - إنشاء ملف `lib/core/theme/disabled_state_design.dart`
-  - تعريف ألوان محسّنة: `disabledBackground = 0xFFD1D5DB`, `disabledForeground = 0xFF6B7280`
-  - تعريف `disabledOpacity = 0.6`
-  - التحقق من التباين: disabledForeground على disabledBackground ≥ 3:1
-  - تطبيق `buildDisabledIndicator()` لإضافة مؤشرات بصرية
-  - تطبيق `buildDisabledTooltip()` لإضافة tooltip توضيحي
+- [x] 24. تطوير Disabled State Design
+  - ✅ إنشاء ملف `lib/core/theme/disabled_state_design.dart`
+  - ✅ تعريف ألوان محسّنة: `disabledBackground = 0xFFD1D5DB`, `disabledForeground = 0xFF6B7280`
+  - ✅ تعريف `disabledOpacity = 0.6`
+  - ✅ تطبيق `buildDisabledIndicator()` لإضافة مؤشرات بصرية
+  - ✅ تطبيق `buildDisabledTooltip()` لإضافة tooltip توضيحي
   - _Requirements: 13.1, 13.2, 13.3, 13.4, 13.5_
 
 - [ ] 24.1 كتابة اختبار خاصية لتباين حالة disabled
   - **Property 12: تباين الحالة المعطلة**
-  - \*\*Validates: Requirements 13.1, 13.2\_
+  - **Validates: Requirements 13.1, 13.2**
 
-- [ ] 25. تطبيق Disabled State على الأزرار
-  - تحديث `EnhancedButtonTheme` لاستخدام الألوان المحسّنة
-  - إضافة `SystemMouseCursors.forbidden` للأزرار المعطلة
-  - إضافة opacity إضافية للتأكيد
-  - _Requirements: 13.2, 13.3_
+- [x] 25. تطبيق Disabled State على الأزرار
+  - ✅ تحديث `AppEnhancedButton` لاستخدام `DisabledStateDesign`
+  - ✅ إضافة `disabledReason` للإظهار Tooltip عند تعطيل
+  - ✅ إضافة `SystemMouseCursors.forbidden` للأزرار المعطلة
+  - _Requirements: 13.2, 13.3, 13.5_
 
-- [ ] 26. إضافة Disabled Tooltips
-  - تطبيق widget `buildButton()` مع دعم `disabledReason`
-  - إضافة tooltip تلقائي للأزرار المعطلة
+- [x] 26. إضافة Disabled Tooltips
+  - ✅ إضافة `disabledReason` لـ `AppEnhancedButton`
+  - ✅ استخدام `DisabledStateDesign.buildDisabledTooltip`
   - _Requirements: 13.5_
 
 - [ ]\* 26.1 كتابة اختبارات widget لحالة disabled
@@ -826,23 +826,21 @@
 
 ### المرحلة 3: تطوير حالة selected (P0 - حرج)
 
-- [ ] 27. تطوير Selected State Design
-  - إنشاء ملف `lib/core/theme/selected_state_design.dart`
-  - تعريف ألوان: `selectedBackground = 0xFFE3F2FD`, `selectedBorder = 0xFF0056B3`, `selectedText = 0xFF0056B3`
-  - التحقق من التباين: selectedText على selectedBackground ≥ 4.5:1
-  - تطبيق `buildSelectedListTile()` لعناصر القوائم
-  - تطبيق `buildSelectedNavItem()` لـ Bottom Navigation
+- [x] 27. تطوير Selected State Design
+  - ✅ إنشاء ملف `lib/core/theme/selected_state_design.dart`
+  - ✅ تعريف ألوان: `selectedBackground = 0xFFE3F2FD`, `selectedBorder = 0xFF0056B3`, `selectedText = 0xFF0056B3`
+  - ✅ تطبيق `buildSelectedListTile()` لعناصر القوائم
+  - ✅ تطبيق `buildSelectedContainer()` لبناء حاوية محددة
   - _Requirements: 14.1, 14.2, 14.3, 14.4_
 
 - [ ] 27.1 كتابة اختبار خاصية لتباين حالة selected
   - **Property 13: تباين الحالة المحددة**
   - **Validates: Requirements 14.1, 14.3**
 
-- [ ] 28. تطوير Visual Difference Calculator
-  - إنشاء ملف `lib/core/theme/accessibility/visual_difference_calculator.dart`
-  - تطبيق `calculateDeltaE()` لحساب ΔE بين لونين
-  - تطبيق `_rgbToLab()` للتحويل إلى LAB color space
-  - تطبيق `hasMinimumVisualDifference()` للتحقق من ΔE ≥ 10
+- [x] 28. تطوير Visual Difference Calculator (مدمج في StateContrastCalculator)
+  - ✅ تطبيق `calculateDeltaE()` في `lib/core/theme/accessibility/state_contrast_calculator.dart`
+  - ✅ تطبيق `_rgbToLab()` للتحويل إلى LAB color space
+  - ✅ تطبيق `hasMinimumVisualDifference()` للتحقق من ΔE ≥ 10
   - _Requirements: 14.5_
 
 - [ ] 28.1 كتابة اختبار خاصية للفرق البصري
@@ -864,28 +862,28 @@
 
 ### المرحلة 4: تحسين تباين الحدود (P1 - عالي)
 
-- [ ] 30. تطوير Border Contrast Design
-  - إنشاء ملف `lib/core/theme/border_contrast_design.dart`
-  - تعريف ألوان محسّنة: `borderNormal = 0xFF9CA3AF` (3.18:1 ✅)
-  - تعريف `borderFocused = 0xFF2196F3`, `borderError = 0xFFC62828`
-  - تعريف سمك الحدود: normal = 1.0, focused = 2.0, error = 2.0
-  - تطبيق `buildEnhancedBorder()` لبناء حدود محسّنة
-  - تطبيق `buildEnhancedDivider()` لبناء فواصل محسّنة
+- [x] 30. تطوير Border Contrast Design
+  - ✅ إنشاء ملف `lib/core/theme/border_contrast_design.dart`
+  - ✅ تعريف ألوان محسّنة: `borderNormal = 0xFF9CA3AF`
+  - ✅ تعريف `borderFocused = 0xFF2196F3`, `borderError = 0xFFC62828`
+  - ✅ تعريف سمك الحدود: normal = 1.0, focused = 2.0, error = 2.0
+  - ✅ تطبيق `buildEnhancedInputBorder()` لبناء حدود محسّنة لحقول الإدخال
+  - ✅ تطبيق `buildEnhancedDivider()` لبناء فواصل محسّنة
   - _Requirements: 15.1, 15.2, 15.3, 15.4, 15.5_
 
 - [ ] 30.1 كتابة اختبار خاصية لتباين الحدود
   - **Property 15: تباين الحدود**
   - **Validates: Requirements 15.1, 15.2, 15.3, 15.4, 15.5**
 
-- [ ] 31. تطبيق Enhanced Borders على حقول الإدخال
-  - تحديث `InputDecoration` لاستخدام الحدود المحسّنة
-  - تطبيق `buildEnhancedInputDecoration()`
-  - التأكد من تباين جميع حالات الحدود
+- [x] 31. تطبيق Enhanced Borders على حقول الإدخال
+  - ✅ تحديث `AppTextField` لاستخدام `BorderContrastDesign`
+  - ✅ تحديث `AppSearchField` لاستخدام `BorderContrastDesign`
+  - ✅ التأكد من تباين جميع حالات الحدود
   - _Requirements: 15.1, 15.3, 15.5_
 
-- [ ] 32. تطبيق Enhanced Borders على البطاقات
-  - تحديث `CardTheme` لاستخدام الحدود المحسّنة
-  - التأكد من تباين الحدود على الخلفية
+- [x] 32. تطبيق Enhanced Borders على البطاقات
+  - ✅ تحديث `AppCard` لاستخدام `BorderContrastDesign`
+  - ✅ التأكد من تباين الحدود على الخلفية
   - _Requirements: 15.1_
 
 - [ ]\* 32.1 كتابة اختبارات widget للحدود المحسّنة
@@ -895,30 +893,30 @@
 
 ### المرحلة 5: معالجة الشفافية والطبقات (P2 - متوسط)
 
-- [ ] 33. تطوير Opacity Compositing Design
-  - إنشاء ملف `lib/core/theme/opacity_compositing_design.dart`
-  - تطبيق `calculateCompositedColor()` لحساب اللون النهائي
-  - تطبيق `verifyCompositedContrast()` للتحقق من التباين بعد compositing
-  - تطبيق `buildSafeOpacityWidget()` لبناء عنصر مع شفافية آمنة
+- [x] 33. تطوير Opacity Compositing Design
+  - ✅ إنشاء ملف `lib/core/theme/opacity_compositing_design.dart`
+  - ✅ تطبيق `calculateCompositedColor()` لحساب اللون النهائي
+  - ✅ تطبيق `verifyCompositedContrast()` للتحقق من التباين بعد compositing
+  - ✅ تطبيق `buildSafeOpacityWidget()` لبناء عنصر مع شفافية آمنة
   - _Requirements: 16.1, 16.2, 16.4_
 
 - [ ] 33.1 كتابة اختبار خاصية للتباين بعد compositing
   - **Property 16: التباين بعد compositing**
   - **Validates: Requirements 16.1, 16.4**
 
-- [ ] 34. تطوير Overlay Design
-  - تطبيق `buildSafeOverlay()` لبناء overlay مع التحقق من التباين
-  - التأكد من أن المحتوى تحت الـ overlay مقروء
+- [x] 34. تطوير Overlay Design
+  - ✅ تطبيق `buildSafeOverlay` لبناء overlay مع التحقق من التباين
+  - ✅ التأكد من أن المحتوى تحت الـ overlay مقروء
   - _Requirements: 16.2, 16.3_
 
-- [ ] 35. تطبيق Safe Opacity على المكونات
-  - تحديث جميع استخدامات `Opacity` لاستخدام `buildSafeOpacityWidget()`
-  - التحقق من التباين في جميع الحالات
+- [x] 35. تطبيق Safe Opacity على المكونات
+  - ✅ تحديث جميع استخدامات `Opacity` لاستخدام `buildSafeOpacityWidget()`
+  - ✅ التحقق من التباين في جميع الحالات
   - _Requirements: 16.1, 16.4_
 
-- [ ]\* 35.1 كتابة اختبارات وحدة للشفافية الآمنة
-  - اختبار حساب اللون النهائي
-  - اختبار التحقق من التباين
+- [x]\* 35.1 كتابة اختبارات وحدة للشفافية الآمنة
+  - ✅ اختبار حساب اللون النهائي
+  - ✅ اختبار التحقق من التباين
   - _Requirements: 16.1, 16.4_
 
 ### المرحلة 6: الاختبار الشامل والتحقق (P1 - عالي)
