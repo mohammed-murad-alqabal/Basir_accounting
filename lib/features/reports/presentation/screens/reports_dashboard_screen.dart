@@ -1,4 +1,6 @@
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/opacity_compositing_design.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/reports/presentation/screens/aging_report_screen.dart';
 import 'package:basir_accounting_system/features/reports/presentation/screens/audit_trail_report_screen.dart';
 import 'package:basir_accounting_system/features/reports/presentation/screens/financial_report_screen.dart';
@@ -96,8 +98,10 @@ class ReportsDashboardScreen extends StatelessWidget {
                     },
                   ),
                   // Placeholder for Zakah
-                  Opacity(
+                  OpacityCompositingDesign.buildSafeOpacityWidget(
                     opacity: 0.5,
+                    textColor: AppColors.textPrimary,
+                    background: AppColors.surface,
                     child: _ReportCard(
                       title: 'Zakah / زكاة الأعمال',
                       description: context.l10n.placeholderComingSoon(''),
