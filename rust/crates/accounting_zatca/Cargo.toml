@@ -5,7 +5,7 @@ edition.workspace = true
 authors.workspace = true
 
 [dependencies]
-quick-xml = { version = "0.31", features = ["serialize"] }
+quick-xml = { version = "0.41", features = ["serialize"] }
 base64 = "0.21"
 p256 = { version = "0.13", features = ["ecdsa", "std", "pem"] }
 sha2 = { workspace = true }
