@@ -758,8 +758,8 @@
   - ✅ حساب التباين لكل حالة والتأكد من ≥ 3:1
   - _Requirements: 12.1, 12.2, 12.3, 12.4_
 
-- [ ] 20.1 كتابة اختبار خاصية لتباين الحالات
-  - **Property 10: تباين جميع حالات الأزرار**
+- [x] 20.1 كتابة اختبار خاصية لتباين الحالات
+  - ✅ **Property 10: تباين جميع حالات الأزرار**
   - **Validates: Requirements 12.1, 12.2, 12.3**
 
 - [x] 21. تطوير State Contrast Calculator
@@ -812,8 +812,8 @@
   - ✅ تطبيق `buildDisabledTooltip()` لإضافة tooltip توضيحي
   - _Requirements: 13.1, 13.2, 13.3, 13.4, 13.5_
 
-- [ ] 24.1 كتابة اختبار خاصية لتباين حالة disabled
-  - **Property 12: تباين الحالة المعطلة**
+- [x] 24.1 كتابة اختبار خاصية لتباين حالة disabled
+  - ✅ **Property 12: تباين الحالة المعطلة**
   - **Validates: Requirements 13.1, 13.2**
 
 - [x] 25. تطبيق Disabled State على الأزرار
@@ -841,8 +841,8 @@
   - ✅ تطبيق `buildSelectedContainer()` لبناء حاوية محددة
   - _Requirements: 14.1, 14.2, 14.3, 14.4_
 
-- [ ] 27.1 كتابة اختبار خاصية لتباين حالة selected
-  - **Property 13: تباين الحالة المحددة**
+- [x] 27.1 كتابة اختبار خاصية لتباين حالة selected
+  - ✅ **Property 13: تباين الحالة المحددة**
   - **Validates: Requirements 14.1, 14.3**
 
 - [x] 28. تطوير Visual Difference Calculator (مدمج في StateContrastCalculator)
@@ -851,8 +851,8 @@
   - ✅ تطبيق `hasMinimumVisualDifference()` للتحقق من ΔE ≥ 10
   - _Requirements: 14.5_
 
-- [ ] 28.1 كتابة اختبار خاصية للفرق البصري
-  - **Property 14: الفرق البصري بين الحالات**
+- [x] 28.1 كتابة اختبار خاصية للفرق البصري
+  - ✅ **Property 14: الفرق البصري بين الحالات**
   - **Validates: Requirements 14.5**
 
 - [ ] 29. تطبيق Selected State على المكونات
@@ -878,8 +878,8 @@
   - ✅ تطبيق `buildEnhancedDivider()` لبناء فواصل محسّنة
   - _Requirements: 15.1, 15.2, 15.3, 15.4, 15.5_
 
-- [ ] 30.1 كتابة اختبار خاصية لتباين الحدود
-  - **Property 15: تباين الحدود**
+- [x] 30.1 كتابة اختبار خاصية لتباين الحدود
+  - ✅ **Property 15: تباين الحدود**
   - **Validates: Requirements 15.1, 15.2, 15.3, 15.4, 15.5**
 
 - [x] 31. تطبيق Enhanced Borders على حقول الإدخال
@@ -907,8 +907,8 @@
   - ✅ تطبيق `buildSafeOpacityWidget()` لبناء عنصر مع شفافية آمنة
   - _Requirements: 16.1, 16.2, 16.4_
 
-- [ ] 33.1 كتابة اختبار خاصية للتباين بعد compositing
-  - **Property 16: التباين بعد compositing**
+- [x] 33.1 كتابة اختبار خاصية للتباين بعد compositing
+  - ✅ **Property 16: التباين بعد compositing**
   - **Validates: Requirements 16.1, 16.4**
 
 - [x] 34. تطوير Overlay Design
