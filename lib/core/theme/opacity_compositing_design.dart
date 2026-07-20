@@ -11,9 +11,13 @@ abstract final class OpacityCompositingDesign {
   }) {
     final alpha = (opacity * 255).round();
 
-    final r = ((foreground.red * alpha) + (background.red * (255 - alpha))) ~/ 255;
-    final g = ((foreground.green * alpha) + (background.green * (255 - alpha))) ~/ 255;
-    final b = ((foreground.blue * alpha) + (background.blue * (255 - alpha))) ~/ 255;
+    final r =
+        ((foreground.red * alpha) + (background.red * (255 - alpha))) ~/ 255;
+    final g =
+        ((foreground.green * alpha) + (background.green * (255 - alpha))) ~/
+            255;
+    final b =
+        ((foreground.blue * alpha) + (background.blue * (255 - alpha))) ~/ 255;
 
     return Color.fromARGB(255, r, g, b);
   }
@@ -31,7 +35,8 @@ abstract final class OpacityCompositingDesign {
       background: background,
       opacity: opacity,
     );
-    final contrast = StateContrastCalculator.calculateContrastRatio(textColor, compositedBg);
+    final contrast =
+        StateContrastCalculator.calculateContrastRatio(textColor, compositedBg);
     return contrast >= minContrast;
   }
 
@@ -75,7 +80,7 @@ abstract final class OpacityCompositingDesign {
 
     return Opacity(
       opacity: effectiveOpacity,
-      child: Container(
+      child: ColoredBox(
         color: overlayColor,
         child: child,
       ),

@@ -30,7 +30,9 @@ void main() {
       expect(find.byIcon(Icons.check_circle), findsOneWidget);
     });
 
-    testWidgets('buildSelectedListTile hides checkmark when showCheckmark is false', (tester) async {
+    testWidgets(
+        'buildSelectedListTile hides checkmark when showCheckmark is false',
+        (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(

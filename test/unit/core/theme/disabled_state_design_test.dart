@@ -5,7 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('DisabledStateDesign', () {
-    testWidgets('buildDisabledIndicator shows child with correct opacity', (tester) async {
+    testWidgets('buildDisabledIndicator shows child with correct opacity',
+        (tester) async {
       const testChild = Text('Test');
       await tester.pumpWidget(
         MaterialApp(
