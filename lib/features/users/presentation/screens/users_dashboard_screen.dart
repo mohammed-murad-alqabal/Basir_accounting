@@ -41,6 +41,7 @@ class UsersDashboardScreen extends ConsumerWidget {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.edit, color: Colors.blue),
+                      tooltip: 'تعديل المستخدم',
                       onPressed: () {
                         unawaited(
                           Navigator.push(
@@ -54,6 +55,7 @@ class UsersDashboardScreen extends ConsumerWidget {
                     ),
                     IconButton(
                       icon: const Icon(Icons.delete, color: Colors.red),
+                      tooltip: 'حذف المستخدم',
                       onPressed: () async {
                         final confirm = await showDialog<bool>(
                           context: context,
