@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basir_accounting_system/core/theme/border_contrast_design.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/shared/widgets/responsive_text.dart';
 import 'package:flutter/material.dart' hide Durations;
@@ -139,8 +140,8 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
         borderRadius: effectiveBorderRadius,
         border: Border.all(
           color: widget.isSelected
-              ? CardColors.borderSelected
-              : (widget.borderColor ?? CardColors.border),
+              ? BorderContrastDesign.borderFocused
+              : (widget.borderColor ?? BorderContrastDesign.borderNormal),
           width: widget.isSelected ? BorderWidths.normal : BorderWidths.thin,
         ),
         boxShadow: effectiveElevation > 0
