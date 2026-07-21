@@ -40,7 +40,10 @@ class TreasuryDashboardScreen extends ConsumerWidget {
               return const Center(child: AppLoadingIndicator());
             }
             if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+              return AppErrorWidget(
+                message: snapshot.error.toString(),
+                onRetry: () => ref.invalidate(accountingServiceProvider),
+              );
             }
 
             final allAccounts = snapshot.data ?? [];
@@ -123,7 +126,10 @@ class TreasuryDashboardScreen extends ConsumerWidget {
           },
         ),
         loading: () => const Center(child: AppLoadingIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => AppErrorWidget(
+          message: e.toString(),
+          onRetry: () => ref.invalidate(accountingServiceProvider),
+        ),
       ),
     );
   }
@@ -244,9 +250,14 @@ class TreasuryDashboardScreen extends ConsumerWidget {
           future: forecastAsync,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: AppLoadingIndicator());
             }
-            if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+            if (snapshot.hasError) {
+              return AppErrorWidget(
+                message: snapshot.error.toString(),
+                onRetry: () => ref.invalidate(accountingServiceProvider),
+              );
+            }
             if (!snapshot.hasData) return const SizedBox.shrink();
 
             final forecast = snapshot.data!;
