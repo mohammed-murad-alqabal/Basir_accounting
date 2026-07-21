@@ -526,6 +526,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tooltipAddVendor => 'Add New Vendor';
 
   @override
+  String get tooltipEditVendor => 'Edit Vendor';
+
+  @override
+  String get tooltipDeleteVendor => 'Delete Vendor';
+
+  @override
   String msgConfirmDeleteVendor(String name) {
     return 'Are you sure you want to delete vendor $name?';
   }

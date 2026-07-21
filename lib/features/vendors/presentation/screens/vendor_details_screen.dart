@@ -19,20 +19,20 @@ class VendorDetailsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizedName = vendor.name(isArabic: context.isArabic);
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: localizedName,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () => _editVendor(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () => _confirmDelete(context, ref),
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: localizedName,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.edit),
+          tooltip: context.l10n.tooltipEditVendor,
+          onPressed: () => _editVendor(context),
+        ),
+        IconButton(
+          icon: const Icon(Icons.delete),
+          tooltip: context.l10n.tooltipDeleteVendor,
+          onPressed: () => _confirmDelete(context, ref),
+        ),
+      ],
       body: ListView(
         padding: const EdgeInsets.all(Spacing.lg),
         children: [
@@ -183,31 +183,18 @@ class VendorDetailsScreen extends ConsumerWidget {
   }
 
   Future<void> _confirmDelete(BuildContext context, WidgetRef ref) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.l10n.actionDeleteVendor),
-        content: Text(
-          context.l10n.msgConfirmDeleteVendor(
-            vendor.name(isArabic: context.isArabic),
-          ),
-        ),
-        actions: [
-          AppEnhancedButton(
-            label: context.l10n.dialogCancel,
-            onPressed: () => Navigator.pop(context, false),
-            type: AppEnhancedButtonType.text,
-          ),
-          AppEnhancedButton(
-            label: context.l10n.dialogDelete,
-            onPressed: () => Navigator.pop(context, true),
-            type: AppEnhancedButtonType.danger,
-          ),
-        ],
+    final confirmed = await AppDialog.showConfirmation(
+      context,
+      title: context.l10n.actionDeleteVendor,
+      message: context.l10n.msgConfirmDeleteVendor(
+        vendor.name(isArabic: context.isArabic),
       ),
+      confirmLabel: context.l10n.dialogDelete,
+      cancelLabel: context.l10n.dialogCancel,
+      confirmIsDestructive: true,
     );
 
-    if (confirmed ?? false) {
+    if (confirmed) {
       await ref.read(vendorsProvider.notifier).deleteVendor(vendor.id);
       if (context.mounted) Navigator.pop(context);
     }

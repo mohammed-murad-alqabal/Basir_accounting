@@ -266,6 +266,8 @@
   "labelNameAr": "Name (Arabic)",
   "labelNameEn": "Name (English)",
   "tooltipAddVendor": "Add New Vendor",
+  "tooltipEditVendor": "Edit Vendor",
+  "tooltipDeleteVendor": "Delete Vendor",
   "msgConfirmDeleteVendor": "Are you sure you want to delete vendor {name}?",
   "@msgConfirmDeleteVendor": {
     "placeholders": {
