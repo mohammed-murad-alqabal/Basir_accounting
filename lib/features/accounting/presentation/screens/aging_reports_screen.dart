@@ -1,8 +1,10 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounts_payable_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounts_receivable_service.dart';
 import 'package:basir_accounting_system/features/reports/application/report_export_service.dart';
@@ -22,8 +24,24 @@ class AgingReportsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) => DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: AppAppBar(
-            title: context.l10n.agingReportsTitle,
+          extendBodyBehindAppBar: true,
+          extendBody: true,
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            title: Text(
+              context.l10n.agingReportsTitle,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
+            elevation: 0,
+            flexibleSpace: ClipRRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  color: Colors.white.withValues(alpha: 0.5),
+                ),
+              ),
+            ),
             bottom: TabBar(
               tabs: [
                 Tab(text: context.l10n.receivablesAgingLabel),
@@ -38,8 +56,45 @@ class AgingReportsScreen extends ConsumerWidget {
               ),
             ],
           ),
-          body: const TabBarView(
-            children: [_ReceivableAgingTab(), _PayableAgingTab()],
+          body: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    center: const Alignment(-0.8, -0.8),
+                    radius: 1.5,
+                    colors: [
+                      Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.15),
+                      Theme.of(context).scaffoldBackgroundColor,
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    center: const Alignment(0.8, 0.8),
+                    radius: 1.5,
+                    colors: [
+                      Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withValues(alpha: 0.1),
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
+              ),
+              const SafeArea(
+                bottom: false,
+                child: TabBarView(
+                  children: [_ReceivableAgingTab(), _PayableAgingTab()],
+                ),
+              ),
+            ],
           ),
         ),
       );
@@ -145,11 +200,9 @@ class AgingReportsScreen extends ConsumerWidget {
           subject: context.l10n.agingReportsTitle,
         );
       }
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      AppSnackbar.showError(context, context.l10n.errorExportingReport);
     }
   }
 }
@@ -168,25 +221,31 @@ class _ReceivableAgingTab extends ConsumerWidget {
       future: agingAsync,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: AppLoadingIndicator());
         }
         if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return AppErrorWidget(
+            message: snapshot.error.toString(),
+            onRetry: () => ref.invalidate(accountsReceivableServiceProvider),
+          );
         }
 
         final reports = snapshot.data!;
         if (reports.isEmpty) {
-          return Center(child: Text(context.l10n.noDataMessage));
+          return AppEmptyState(
+            icon: Icons.description_outlined,
+            title: context.l10n.noDataMessage,
+          );
         }
 
         return ListView.builder(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(Spacing.md),
           itemCount: reports.length,
           itemBuilder: (context, index) {
             final report = reports[index];
             return AppCard(
-              margin: const EdgeInsets.only(bottom: 12),
-              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.only(bottom: Spacing.sm),
+              padding: const EdgeInsets.all(Spacing.md),
               onTap: () => Navigator.pushNamed(
                 context,
                 '/entity-transactions',
@@ -269,25 +328,31 @@ class _PayableAgingTab extends ConsumerWidget {
       future: agingAsync,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: AppLoadingIndicator());
         }
         if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return AppErrorWidget(
+            message: snapshot.error.toString(),
+            onRetry: () => ref.invalidate(accountsPayableServiceProvider),
+          );
         }
 
         final reports = snapshot.data!;
         if (reports.isEmpty) {
-          return Center(child: Text(context.l10n.noDataMessage));
+          return AppEmptyState(
+            icon: Icons.description_outlined,
+            title: context.l10n.noDataMessage,
+          );
         }
 
         return ListView.builder(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(Spacing.md),
           itemCount: reports.length,
           itemBuilder: (context, index) {
             final report = reports[index];
             return AppCard(
-              margin: const EdgeInsets.only(bottom: 12),
-              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.only(bottom: Spacing.sm),
+              padding: const EdgeInsets.all(Spacing.md),
               onTap: () => Navigator.pushNamed(
                 context,
                 '/entity-transactions',
