@@ -1,5 +1,8 @@
 // ignore_for_file: lines_longer_than_80_chars
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/expenses/presentation/providers/expense_provider.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,29 +64,21 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
   @override
   Widget build(BuildContext context) {
     final categories = ref.watch(expenseCategoriesProvider);
-    final l10n = Localizations.localeOf(context).languageCode == 'ar';
+    final l10n = context.isArabic;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _isEditing
-              ? (l10n ? 'تعديل المصروف' : 'Edit Expense')
-              : (l10n ? 'إضافة مصروف' : 'Add Expense'),
-        ),
-      ),
+    return GlassScaffold(
+      title: _isEditing
+          ? (l10n ? 'تعديل المصروف' : 'Edit Expense')
+          : (l10n ? 'إضافة مصروف' : 'Add Expense'),
       body: Form(
         key: <credential-fixture>,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(Spacing.lg),
           children: [
-            // Description
-            TextFormField(
+            AppTextField(
               controller: _descriptionController,
-              decoration: InputDecoration(
-                labelText: l10n ? 'الوصف' : 'Description',
-                prefixIcon: const Icon(Icons.description),
-                border: const OutlineInputBorder(),
-              ),
+              label: l10n ? 'الوصف' : 'Description',
+              prefixIcon: const Icon(Icons.description),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return l10n ? 'مطلوب' : 'Required';
@@ -92,16 +87,17 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
               },
               textInputAction: TextInputAction.next,
             ),
-            const SizedBox(height: 16),
-
-            // Amount
-            TextFormField(
+            const SizedBox(height: Spacing.md),
+            AppTextField(
               controller: _amountController,
-              decoration: InputDecoration(
-                labelText: l10n ? 'المبلغ' : 'Amount',
-                prefixIcon: const Icon(Icons.attach_money),
-                suffixText: _currencyCode,
-                border: const OutlineInputBorder(),
+              label: l10n ? 'المبلغ' : 'Amount',
+              prefixIcon: const Icon(Icons.attach_money),
+              suffixIcon: Padding(
+                padding: const EdgeInsetsDirectional.only(end: Spacing.md),
+                child: Center(
+                  widthFactor: 1,
+                  child: Text(_currencyCode),
+                ),
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
@@ -121,32 +117,24 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
               },
               textInputAction: TextInputAction.next,
             ),
-            const SizedBox(height: 16),
-
-            // Date Picker
-            InkWell(
-              onTap: () => _selectDate(context),
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  labelText: l10n ? 'التاريخ' : 'Date',
-                  prefixIcon: const Icon(Icons.calendar_today),
-                  border: const OutlineInputBorder(),
-                ),
-                child: Text(
-                  DateFormat('dd/MM/yyyy').format(_selectedDate),
-                ),
+            const SizedBox(height: Spacing.md),
+            AppCard(
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.calendar_today),
+                title: Text(l10n ? 'التاريخ' : 'Date'),
+                subtitle: Text(DateFormat('dd/MM/yyyy').format(_selectedDate)),
+                trailing: const Icon(Icons.arrow_drop_down),
+                onTap: () => _selectDate(context),
               ),
             ),
-            const SizedBox(height: 16),
-
-            // Category Dropdown
+            const SizedBox(height: Spacing.md),
             categories.when(
               data: (cats) => DropdownButtonFormField<String>(
                 initialValue: _selectedCategoryId,
                 decoration: InputDecoration(
                   labelText: l10n ? 'الفئة' : 'Category',
                   prefixIcon: const Icon(Icons.category),
-                  border: const OutlineInputBorder(),
                 ),
                 items: cats
                     .map(
@@ -158,8 +146,9 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
                               width: 24,
                               height: 24,
                               decoration: BoxDecoration(
-                                color: _getCategoryColor(cat.color)
-                                    .withValues(alpha: 0.2),
+                                color: _getCategoryColor(cat.color).withValues(
+                                  alpha: 0.2,
+                                ),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Icon(
@@ -181,57 +170,40 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
                   }
                 },
               ),
-              loading: () => const LinearProgressIndicator(),
-              error: (e, _) => Text('Error: $e'),
-            ),
-            const SizedBox(height: 16),
-
-            // Vendor
-            TextFormField(
-              controller: _vendorController,
-              decoration: InputDecoration(
-                labelText: l10n ? 'المورد (اختياري)' : 'Vendor (optional)',
-                prefixIcon: const Icon(Icons.business),
-                border: const OutlineInputBorder(),
+              loading: () => const Center(child: AppLoadingIndicator()),
+              error: (e, _) => AppErrorWidget(
+                message: e.toString(),
+                onRetry: () => ref.invalidate(expenseCategoriesProvider),
               ),
+            ),
+            const SizedBox(height: Spacing.md),
+            AppTextField(
+              controller: _vendorController,
+              label: l10n ? 'المورد (اختياري)' : 'Vendor (optional)',
+              prefixIcon: const Icon(Icons.business),
               textInputAction: TextInputAction.next,
             ),
-            const SizedBox(height: 16),
-
-            // Notes
-            TextFormField(
+            const SizedBox(height: Spacing.md),
+            AppTextField(
               controller: _notesController,
-              decoration: InputDecoration(
-                labelText: l10n ? 'ملاحظات (اختياري)' : 'Notes (optional)',
-                prefixIcon: const Icon(Icons.notes),
-                border: const OutlineInputBorder(),
-              ),
+              label: l10n ? 'ملاحظات (اختياري)' : 'Notes (optional)',
+              prefixIcon: const Icon(Icons.notes),
               maxLines: 3,
               textInputAction: TextInputAction.done,
             ),
-            const SizedBox(height: 24),
-
-            // Submit Button
-            SizedBox(
-              height: 50,
-              child: ElevatedButton.icon(
-                onPressed: _isLoading ? null : _submit,
-                icon: _isLoading
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : Icon(_isEditing ? Icons.save : Icons.add),
-                label: Text(
-                  _isEditing
-                      ? (l10n ? 'حفظ التغييرات' : 'Save Changes')
-                      : (l10n ? 'إضافة المصروف' : 'Add Expense'),
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ),
-            ),
+            const SizedBox(height: Spacing.xl),
           ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(Spacing.lg),
+        child: AppEnhancedButton(
+          label: _isEditing
+              ? (l10n ? 'حفظ التغييرات' : 'Save Changes')
+              : (l10n ? 'إضافة المصروف' : 'Add Expense'),
+          icon: _isEditing ? Icons.save : Icons.add,
+          isLoading: _isLoading,
+          onPressed: _isLoading ? null : _submit,
         ),
       ),
     );
@@ -268,25 +240,21 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
           );
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              Localizations.localeOf(context).languageCode == 'ar'
-                  ? 'تم إضافة المصروف بنجاح'
-                  : 'Expense added successfully',
-            ),
-            backgroundColor: Colors.green,
-          ),
+        AppSnackbar.showSuccess(
+          context,
+          context.isArabic
+              ? 'تم حفظ المصروف بنجاح'
+              : 'Expense saved successfully',
         );
         Navigator.of(context).pop();
       }
     } on Exception catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error: $e'),
-            backgroundColor: Colors.red,
-          ),
+        AppSnackbar.showError(
+          context,
+          context.isArabic
+              ? 'تعذر حفظ المصروف: $e'
+              : 'Failed to save expense: $e',
         );
       }
     } finally {
