@@ -1,7 +1,10 @@
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/expenses/domain/entities/expense.dart';
 import 'package:basir_accounting_system/features/expenses/domain/repositories/expense_repository.dart';
 import 'package:basir_accounting_system/features/expenses/presentation/providers/expense_provider.dart';
 import 'package:basir_accounting_system/features/expenses/presentation/screens/expense_form_screen.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -26,29 +29,26 @@ class ExpensesDashboardScreen extends ConsumerWidget {
     final summary = ref.watch(expenseSummaryProvider);
     final categories = ref.watch(expenseCategoriesProvider);
     final theme = Theme.of(context);
-    final l10n = Localizations.localeOf(context).languageCode == 'ar';
+    final l10n = context.isArabic;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n ? 'المصروفات' : 'Expenses'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: () => _showFilterDialog(context, ref),
-            tooltip: l10n ? 'تصفية' : 'Filter',
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        heroTag: 'expenses_add_fab',
-        onPressed: () => Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (context) => const ExpenseFormScreen(),
-          ),
+    return GlassScaffold(
+      title: l10n ? 'المصروفات' : 'Expenses',
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.filter_list),
+          onPressed: () => _showFilterDialog(context, ref),
+          tooltip: l10n ? 'تصفية المصروفات' : 'Filter expenses',
         ),
-        icon: const Icon(Icons.add),
-        label: Text(l10n ? 'إضافة مصروف' : 'Add Expense'),
-      ),
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (context) => const ExpenseFormScreen(),
+            ),
+          ),
+          tooltip: l10n ? 'إضافة مصروف' : 'Add expense',
+        ),
+      ],
       body: RefreshIndicator(
         onRefresh: () => ref.read(expensesNotifierProvider.notifier).refresh(),
         child: CustomScrollView(
@@ -59,11 +59,14 @@ class ExpensesDashboardScreen extends ConsumerWidget {
                 data: (data) => _buildSummaryCards(context, data, l10n),
                 loading: () => const SizedBox(
                   height: 120,
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(child: AppLoadingIndicator()),
                 ),
                 error: (e, _) => Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text('Error: $e'),
+                  padding: const EdgeInsets.all(Spacing.lg),
+                  child: AppErrorWidget(
+                    message: e.toString(),
+                    onRetry: () => ref.invalidate(expenseSummaryProvider),
+                  ),
                 ),
               ),
             ),
@@ -72,9 +75,9 @@ class ExpensesDashboardScreen extends ConsumerWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: Card(
+                child: AppCard(
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(Spacing.lg),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -93,11 +96,25 @@ class ExpensesDashboardScreen extends ConsumerWidget {
                               s,
                               l10n,
                             ),
-                            loading: () => const LinearProgressIndicator(),
-                            error: (e, _) => Text('Error: $e'),
+                            loading: () => const Center(
+                              child: AppLoadingIndicator(),
+                            ),
+                            error: (e, _) => AppErrorWidget(
+                              message: e.toString(),
+                              onRetry: () => ref.invalidate(
+                                expenseSummaryProvider,
+                              ),
+                            ),
                           ),
-                          loading: () => const LinearProgressIndicator(),
-                          error: (e, _) => Text('Error: $e'),
+                          loading: () => const Center(
+                            child: AppLoadingIndicator(),
+                          ),
+                          error: (e, _) => AppErrorWidget(
+                            message: e.toString(),
+                            onRetry: () => ref.invalidate(
+                              expenseCategoriesProvider,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -151,14 +168,17 @@ class ExpensesDashboardScreen extends ConsumerWidget {
                 child: Center(
                   child: Padding(
                     padding: EdgeInsets.all(32),
-                    child: CircularProgressIndicator(),
+                    child: AppLoadingIndicator(),
                   ),
                 ),
               ),
               error: (e, _) => SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text('Error: $e'),
+                  padding: const EdgeInsets.all(Spacing.lg),
+                  child: AppErrorWidget(
+                    message: e.toString(),
+                    onRetry: () => ref.invalidate(expensesNotifierProvider),
+                  ),
                 ),
               ),
             ),
@@ -328,7 +348,7 @@ class ExpensesDashboardScreen extends ConsumerWidget {
       decimalDigits: 2,
     );
 
-    return Card(
+    return AppCard(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: ListTile(
         leading: Container(
@@ -406,30 +426,12 @@ class ExpensesDashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildEmptyState(BuildContext context, bool l10n) => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            children: [
-              Icon(Icons.receipt_long, size: 64, color: Colors.grey[400]),
-              const SizedBox(height: 16),
-              Text(
-                l10n ? 'لا توجد مصروفات' : 'No expenses yet',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey[600],
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                l10n
-                    ? 'اضغط على زر الإضافة لتسجيل مصروف جديد'
-                    : 'Tap the add button to record an expense',
-                style: TextStyle(color: Colors.grey[500]),
-              ),
-            ],
-          ),
-        ),
+  Widget _buildEmptyState(BuildContext context, bool l10n) => AppEmptyState(
+        title: l10n ? 'لا توجد مصروفات' : 'No expenses yet',
+        description: l10n
+            ? 'استخدم زر الإضافة من الأعلى لتسجيل مصروف جديد.'
+            : 'Use the add action above to record a new expense.',
+        icon: Icons.receipt_long,
       );
 
   void _showFilterDialog(BuildContext context, WidgetRef ref) {
