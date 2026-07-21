@@ -1,7 +1,9 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/goals/domain/entities/goal.dart';
 import 'package:basir_accounting_system/features/goals/domain/entities/goal_category.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -71,44 +73,48 @@ class _GoalFormScreenState extends ConsumerState<GoalFormScreen> {
       userId: ref.read(basirUserProvider)?.id,
     );
 
-    await ref.read(goalServiceProvider).saveGoal(goal);
-    if (mounted) Navigator.pop(context);
+    try {
+      await ref.read(goalServiceProvider).saveGoal(goal);
+      if (mounted) {
+        AppSnackbar.showSuccess(context, 'تم حفظ الهدف بنجاح');
+        Navigator.pop(context);
+      }
+    } on Exception {
+      if (mounted) {
+        AppSnackbar.showError(context, 'حدث خطأ أثناء حفظ الهدف');
+      }
+    }
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(widget.goal == null ? 'إضافة هدف مالي' : 'تعديل الهدف'),
-          backgroundColor: Colors.white,
-          elevation: 0,
-        ),
+  Widget build(BuildContext context) => GlassScaffold(
+        title: widget.goal == null ? 'إضافة هدف مالي' : 'تعديل الهدف',
         body: Form(
           key: <credential-fixture>,
           child: ListView(
             padding: const EdgeInsets.all(24),
             children: [
-              TextFormField(
+              AppTextField(
                 controller: _nameController,
-                decoration: _inputDecoration('اسم الهدف', Icons.flag_outlined),
+                label: 'اسم الهدف',
+                prefixIcon: const Icon(Icons.flag_outlined),
                 validator: (v) => v!.isEmpty ? 'يرجى إدخال اسم الهدف' : null,
               ),
               const SizedBox(height: 16),
-              TextFormField(
+              AppTextField(
                 controller: _targetAmountController,
-                decoration:
-                    _inputDecoration('المبلغ المستهدف', Icons.track_changes),
+                label: 'المبلغ المستهدف',
+                prefixIcon: const Icon(Icons.track_changes),
                 keyboardType: <credential-fixture>,
                 validator: (v) => Decimal.tryParse(v ?? '') == null
                     ? 'يرجى إدخال مبلغ صحيح'
                     : null,
               ),
               const SizedBox(height: 16),
-              TextFormField(
+              AppTextField(
                 controller: _currentAmountController,
-                decoration: _inputDecoration(
-                  'المبلغ المتوفر حالياً',
-                  Icons.account_balance_wallet_outlined,
-                ),
+                label: 'المبلغ المتوفر حالياً',
+                prefixIcon: const Icon(Icons.account_balance_wallet_outlined),
                 keyboardType: <credential-fixture>,
                 validator: (v) => Decimal.tryParse(v ?? '') == null
                     ? 'يرجى إدخال مبلغ صحيح'
@@ -130,46 +136,41 @@ class _GoalFormScreenState extends ConsumerState<GoalFormScreen> {
                 onChanged: (v) => setState(() => _category = v!),
               ),
               const SizedBox(height: 24),
-              ListTile(
-                title: const Text('تاريخ الإنجاز المستهدف'),
-                subtitle: Text(
-                  '${_targetDate.year}-${_targetDate.month}-${_targetDate.day}',
+              AppCard(
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('تاريخ الإنجاز المستهدف'),
+                  subtitle: Text(
+                    '${_targetDate.year}-${_targetDate.month}-${_targetDate.day}',
+                  ),
+                  trailing: const Icon(
+                    Icons.calendar_month,
+                    color: AppColors.primary,
+                  ),
+                  onTap: () async {
+                    final picked = await showDatePicker(
+                      context: context,
+                      initialDate: _targetDate,
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2100),
+                    );
+                    if (picked != null) {
+                      setState(() => _targetDate = picked);
+                    }
+                  },
                 ),
-                trailing:
-                    const Icon(Icons.calendar_month, color: Color(0xFF008080)),
-                onTap: () async {
-                  final picked = await showDatePicker(
-                    context: context,
-                    initialDate: _targetDate,
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2100),
-                  );
-                  if (picked != null) setState(() => _targetDate = picked);
-                },
               ),
               const SizedBox(height: 16),
-              TextFormField(
+              AppTextField(
                 controller: _descController,
-                decoration: _inputDecoration(
-                  'وصف (اختياري)',
-                  Icons.description_outlined,
-                ),
+                label: 'وصف (اختياري)',
+                prefixIcon: const Icon(Icons.description_outlined),
                 maxLines: 3,
               ),
               const SizedBox(height: 32),
-              ElevatedButton(
+              AppEnhancedButton(
                 onPressed: _save,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF008080),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                child: const Text(
-                  'حفظ الهدف',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+                label: 'حفظ الهدف',
               ),
             ],
           ),
@@ -179,15 +180,15 @@ class _GoalFormScreenState extends ConsumerState<GoalFormScreen> {
   InputDecoration _inputDecoration(String label, IconData icon) =>
       InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon, color: const Color(0xFF008080)),
+        prefixIcon: Icon(icon, color: AppColors.primary),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: Colors.grey[300]!),
+          borderSide: const BorderSide(color: AppColors.borderLight),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(color: Color(0xFF008080), width: 2),
+          borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
       );
 
