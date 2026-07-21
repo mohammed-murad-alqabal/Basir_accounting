@@ -470,9 +470,7 @@ class _JournalEntryFormScreenState
   Future<void> _saveEntry(JournalEntryStatus status) async {
     if (!_formKey.currentState!.validate()) return;
     if (!_isBalanced) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.l10n.errUnbalancedEntry)));
+      AppSnackbar.showError(context, context.l10n.errUnbalancedEntry);
       return;
     }
 
@@ -560,23 +558,18 @@ class _JournalEntryFormScreenState
       }
 
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            status == JournalEntryStatus.posted
-                ? context.l10n.msgJournalEntryPosted
-                : context.l10n.msgJournalEntryDrafted,
-          ),
-        ),
+      AppSnackbar.showSuccess(
+        context,
+        status == JournalEntryStatus.posted
+            ? context.l10n.msgJournalEntryPosted
+            : context.l10n.msgJournalEntryDrafted,
       );
       Navigator.pop(context, true);
     } on CognitiveConsensusException catch (e) {
       if (mounted) await _showCognitiveRejectionDialog(context, e);
     } on Exception catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error),
-      );
+      AppSnackbar.showError(context, e.toString());
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
