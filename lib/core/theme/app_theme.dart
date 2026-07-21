@@ -340,6 +340,10 @@ abstract final class AppTheme {
         ),
       ),
 
+      // Focus Indicators
+      focusColor: colorScheme.primary,
+      hoverColor: colorScheme.primary.withValues(alpha: 0.08),
+
       // Bottom Navigation
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: colorScheme.brightness == Brightness.dark
