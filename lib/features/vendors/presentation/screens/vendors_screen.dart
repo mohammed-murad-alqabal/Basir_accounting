@@ -82,7 +82,10 @@ class _VendorsScreenState extends ConsumerState<VendorsScreen> {
             child: vendorsAsync.when(
               data: _buildVendorsList,
               loading: () => const Center(child: AppLoadingIndicator()),
-              error: (error, stack) => Center(child: Text(error.toString())),
+              error: (error, stack) => AppErrorWidget(
+                message: error.toString(),
+                onRetry: () => ref.invalidate(vendorsProvider),
+              ),
             ),
           ),
         ],
