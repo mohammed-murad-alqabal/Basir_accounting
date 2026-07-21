@@ -1,8 +1,8 @@
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/accounting/application/strategic_forecast_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/strategic_outlook.dart';
-import 'package:basir_accounting_system/shared/widgets/glass_card.dart';
-import 'package:basir_accounting_system/shared/widgets/glass_scaffold.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -22,32 +22,35 @@ class StrategicOutlookScreen extends ConsumerWidget {
       title: context.l10n.titleStrategicOutlook,
       body: outlookAsync.when(
         data: (outlook) => _buildContent(context, outlook),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        loading: () => const Center(child: AppLoadingIndicator()),
+        error: (e, _) => AppErrorWidget(
+          message: e.toString(),
+          onRetry: () => ref.invalidate(strategicForecastNotifierProvider),
+        ),
       ),
     );
   }
 
   Widget _buildContent(BuildContext context, StrategicOutlook outlook) =>
       SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: Spacing.paddingLg,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildConfidenceBar(context, outlook.confidenceScore),
-            const SizedBox(height: 24),
+            const SizedBox(height: Spacing.xl),
             _buildChartSection(
               context,
               context.l10n.labelPredictivePnL,
-              _buildPnLChart(outlook.pnlForecast),
+              _buildPnLChart(context, outlook.pnlForecast),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: Spacing.xl),
             _buildInsightsSection(context, outlook.insights),
-            const SizedBox(height: 24),
+            const SizedBox(height: Spacing.xl),
             _buildChartSection(
               context,
               context.l10n.labelCashFlowProjection,
-              _buildCashFlowChart(outlook.cashFlowForecast),
+              _buildCashFlowChart(context, outlook.cashFlowForecast),
             ),
           ],
         ),
@@ -55,7 +58,7 @@ class StrategicOutlookScreen extends ConsumerWidget {
 
   Widget _buildConfidenceBar(BuildContext context, double score) => GlassCard(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: Spacing.paddingMd,
           child: Column(
             children: [
               Row(
@@ -63,24 +66,25 @@ class StrategicOutlookScreen extends ConsumerWidget {
                 children: [
                   Text(
                     context.l10n.labelConfidenceScore,
-                    style: const TextStyle(color: Colors.white70, fontSize: 14),
+                    style: AppTextStyles.labelMedium.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                   Text(
                     '${(score * 100).toStringAsFixed(0)}%',
-                    style: const TextStyle(
-                      color: Colors.blueAccent,
+                    style: AppTextStyles.bodyLarge.copyWith(
+                      color: AppColors.primary,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: Spacing.xs),
               LinearProgressIndicator(
                 value: score,
-                backgroundColor: Colors.white10,
+                backgroundColor: AppColors.surface,
                 valueColor:
-                    const AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                    const AlwaysStoppedAnimation<Color>(AppColors.primary),
                 borderRadius: BorderRadius.circular(4),
               ),
             ],
@@ -93,28 +97,37 @@ class StrategicOutlookScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(horizontal: Spacing.xs),
             child: Text(
               title,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+              style: AppTextStyles.titleMedium.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: Spacing.md),
           GlassCard(
             child: Container(
               height: 250,
-              padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
+              padding: const EdgeInsets.fromLTRB(
+                Spacing.md,
+                Spacing.xl,
+                Spacing.md,
+                Spacing.md,
+              ),
               child: chart,
             ),
           ),
         ],
       );
 
-  Widget _buildPnLChart(List<PredictiveMetric> forecast) {
-    if (forecast.isEmpty) return const Center(child: Text('No data'));
+  Widget _buildPnLChart(BuildContext context, List<PredictiveMetric> forecast) {
+    if (forecast.isEmpty) {
+      return AppEmptyState(
+        title: context.l10n.msgNoStrategicData,
+      );
+    }
 
     return LineChart(
       LineChartData(
@@ -131,10 +144,12 @@ class StrategicOutlookScreen extends ConsumerWidget {
                   return const SizedBox.shrink();
                 }
                 return Padding(
-                  padding: const EdgeInsets.only(top: 8),
+                  padding: const EdgeInsets.only(top: Spacing.xs),
                   child: Text(
                     DateFormat.MMM().format(forecast[index].period),
-                    style: const TextStyle(color: Colors.white70, fontSize: 10),
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                 );
               },
@@ -146,20 +161,27 @@ class StrategicOutlookScreen extends ConsumerWidget {
           _generateLine(
             forecast,
             (m) => m.revenue.toDouble(),
-            Colors.greenAccent,
+            AppColors.success,
           ),
           _generateLine(
             forecast,
             (m) => m.expense.toDouble(),
-            Colors.redAccent,
+            AppColors.error,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildCashFlowChart(List<PredictiveMetric> forecast) {
-    if (forecast.isEmpty) return const Center(child: Text('No data'));
+  Widget _buildCashFlowChart(
+    BuildContext context,
+    List<PredictiveMetric> forecast,
+  ) {
+    if (forecast.isEmpty) {
+      return AppEmptyState(
+        title: context.l10n.msgNoStrategicData,
+      );
+    }
 
     return BarChart(
       BarChartData(
@@ -176,10 +198,12 @@ class StrategicOutlookScreen extends ConsumerWidget {
                   return const SizedBox.shrink();
                 }
                 return Padding(
-                  padding: const EdgeInsets.only(top: 8),
+                  padding: const EdgeInsets.only(top: Spacing.xs),
                   child: Text(
                     DateFormat.MMM().format(forecast[index].period),
-                    style: const TextStyle(color: Colors.white70, fontSize: 10),
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                 );
               },
@@ -195,8 +219,8 @@ class StrategicOutlookScreen extends ConsumerWidget {
               BarChartRodData(
                 toY: forecast[i].netIncome.toDouble(),
                 color: forecast[i].netIncome >= Decimal.zero
-                    ? Colors.blueAccent
-                    : Colors.orangeAccent,
+                    ? AppColors.primary
+                    : AppColors.warning,
                 width: 12,
                 borderRadius: BorderRadius.circular(2),
               ),
@@ -236,25 +260,19 @@ class StrategicOutlookScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(horizontal: Spacing.xs),
             child: Text(
               context.l10n.labelStrategicInsights,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+              style: AppTextStyles.titleMedium.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: Spacing.md),
           if (insights.isEmpty)
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Center(
-                child: Text(
-                  context.l10n.msgNoStrategicData,
-                  style: const TextStyle(color: Colors.white54),
-                ),
-              ),
+            AppEmptyState(
+              title: context.l10n.msgNoStrategicData,
             )
           else
             ...insights.map((insight) => _buildInsightCard(context, insight)),
@@ -263,16 +281,16 @@ class StrategicOutlookScreen extends ConsumerWidget {
 
   Widget _buildInsightCard(BuildContext context, StrategicInsight insight) {
     final color = insight.impact == InsightImpact.positive
-        ? Colors.greenAccent
+        ? AppColors.success
         : insight.impact == InsightImpact.negative
-            ? Colors.redAccent
-            : Colors.blueAccent;
+            ? AppColors.error
+            : AppColors.primary;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: Spacing.md),
       child: GlassCard(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: Spacing.paddingMd,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -283,41 +301,45 @@ class StrategicOutlookScreen extends ConsumerWidget {
                         ? Icons.trending_up
                         : Icons.lightbulb_outline,
                     color: color,
-                    size: 20,
+                    size: IconSizes.md,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: Spacing.sm),
                   Text(
                     insight.title,
-                    style: TextStyle(color: color, fontWeight: FontWeight.bold),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: color,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: Spacing.xs),
               Text(
                 insight.observation,
-                style: const TextStyle(color: Colors.white, fontSize: 13),
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: AppColors.textPrimary,
+                ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: Spacing.md),
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: Spacing.paddingSm,
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.05),
+                  color: AppColors.surface,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
                   children: [
                     const Icon(
                       Icons.auto_awesome,
-                      color: Colors.amberAccent,
-                      size: 16,
+                      color: AppColors.warning,
+                      size: IconSizes.sm,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: Spacing.sm),
                     Expanded(
                       child: Text(
                         insight.recommendation,
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 12,
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.textSecondary,
                           fontStyle: FontStyle.italic,
                         ),
                       ),
