@@ -1070,6 +1070,18 @@ abstract class AppLocalizations {
   /// **'Add New Vendor'**
   String get tooltipAddVendor;
 
+  /// No description provided for @tooltipEditVendor.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Vendor'**
+  String get tooltipEditVendor;
+
+  /// No description provided for @tooltipDeleteVendor.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Vendor'**
+  String get tooltipDeleteVendor;
+
   /// No description provided for @msgConfirmDeleteVendor.
   ///
   /// In en, this message translates to:
