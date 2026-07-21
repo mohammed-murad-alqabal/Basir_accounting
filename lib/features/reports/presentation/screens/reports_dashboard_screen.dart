@@ -14,17 +14,15 @@ class ReportsDashboardScreen extends StatelessWidget {
   const ReportsDashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppAppBar(
-          title: context.l10n.reportingOverviewTitle,
-        ),
+  Widget build(BuildContext context) => GlassScaffold(
+        title: context.l10n.reportingOverviewTitle,
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(Spacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _SectionTitle(title: context.l10n.sectionBasicReports),
-              const SizedBox(height: 16),
+              const SizedBox(height: Spacing.md),
               _ReportCard(
                 title: context.l10n.trialBalanceTitle,
                 description: context.l10n.trialBalanceSubtitle,
@@ -38,15 +36,15 @@ class ReportsDashboardScreen extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: Spacing.md),
               _SectionTitle(title: context.l10n.sectionFinancialStatements),
-              const SizedBox(height: 16),
+              const SizedBox(height: Spacing.md),
               GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
+                crossAxisSpacing: Spacing.md,
+                mainAxisSpacing: Spacing.md,
                 childAspectRatio: 1.3,
                 children: [
                   _ReportCard(
@@ -111,15 +109,15 @@ class ReportsDashboardScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: Spacing.xl),
               _SectionTitle(title: context.l10n.sectionAgingAnalysis),
-              const SizedBox(height: 16),
+              const SizedBox(height: Spacing.md),
               GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
+                crossAxisSpacing: Spacing.md,
+                mainAxisSpacing: Spacing.md,
                 childAspectRatio: 1.3,
                 children: [
                   _ReportCard(
@@ -154,9 +152,9 @@ class ReportsDashboardScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: Spacing.xl),
               _SectionTitle(title: context.l10n.auditTrailTitle),
-              const SizedBox(height: 16),
+              const SizedBox(height: Spacing.md),
               _ReportCard(
                 title: context.l10n.auditTrailTitle,
                 description: context.l10n.auditTrailSubtitle,
@@ -208,23 +206,22 @@ class _ReportCard extends StatelessWidget {
         backgroundColor: color,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(12),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(Spacing.lg),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Icon(icon, size: 32, color: Theme.of(context).primaryColor),
-                const SizedBox(height: 16),
+                const SizedBox(height: Spacing.md),
                 Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: AppTypography.bodyLarge,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: Spacing.xs),
                 Text(
                   description,
                   style: Theme.of(context).textTheme.bodySmall,
