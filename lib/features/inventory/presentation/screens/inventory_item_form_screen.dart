@@ -79,93 +79,97 @@ class _InventoryItemFormScreenState
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(inventoryActionProvider).isLoading;
+    final actionState = ref.watch(inventoryActionProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppAppBar(
-        title: widget.item == null
-            ? context.l10n.titleAddInventoryItem
-            : context.l10n.titleEditInventoryItem,
-      ),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(Spacing.lg),
-          children: [
-            AppTextField(
-              controller: _nameArController,
-              label: context.l10n.labelNameAr,
-              validator: (v) =>
-                  v?.isEmpty ?? true ? context.l10n.errEmptyField : null,
-            ),
-            const SizedBox(height: Spacing.md),
-            AppTextField(
-              controller: _nameEnController,
-              label: context.l10n.labelNameEn,
-              validator: (v) =>
-                  v?.isEmpty ?? true ? context.l10n.errEmptyField : null,
-            ),
-            const SizedBox(height: Spacing.md),
-            AppTextField(
-              controller: _skuController,
-              label: context.l10n.labelSKU,
-            ),
-            const SizedBox(height: Spacing.md),
-            Row(
-              children: [
-                Expanded(
-                  child: AppTextField(
-                    controller: _purchasePriceController,
-                    label: context.l10n.labelPurchasePrice,
-                    keyboardType: TextInputType.number,
+    return GlassScaffold(
+      title: widget.item == null
+          ? context.l10n.titleAddInventoryItem
+          : context.l10n.titleEditInventoryItem,
+      body: actionState.when(
+        data: (_) => Form(
+          key: _formKey,
+          child: ListView(
+            padding: const EdgeInsets.all(Spacing.lg),
+            children: [
+              AppTextField(
+                controller: _nameArController,
+                label: context.l10n.labelNameAr,
+                validator: (v) =>
+                    v?.isEmpty ?? true ? context.l10n.errEmptyField : null,
+              ),
+              const SizedBox(height: Spacing.md),
+              AppTextField(
+                controller: _nameEnController,
+                label: context.l10n.labelNameEn,
+                validator: (v) =>
+                    v?.isEmpty ?? true ? context.l10n.errEmptyField : null,
+              ),
+              const SizedBox(height: Spacing.md),
+              AppTextField(
+                controller: _skuController,
+                label: context.l10n.labelSKU,
+              ),
+              const SizedBox(height: Spacing.md),
+              Row(
+                children: [
+                  Expanded(
+                    child: AppTextField(
+                      controller: _purchasePriceController,
+                      label: context.l10n.labelPurchasePrice,
+                      keyboardType: TextInputType.number,
+                    ),
                   ),
-                ),
-                const SizedBox(width: Spacing.md),
-                Expanded(
-                  child: AppTextField(
-                    controller: _salePriceController,
-                    label: context.l10n.labelSalePrice,
-                    keyboardType: TextInputType.number,
+                  const SizedBox(width: Spacing.md),
+                  Expanded(
+                    child: AppTextField(
+                      controller: _salePriceController,
+                      label: context.l10n.labelSalePrice,
+                      keyboardType: TextInputType.number,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: Spacing.md),
-            Row(
-              children: [
-                Expanded(
-                  child: AppTextField(
-                    controller: _unitController,
-                    label: context.l10n.labelUnit,
+                ],
+              ),
+              const SizedBox(height: Spacing.md),
+              Row(
+                children: [
+                  Expanded(
+                    child: AppTextField(
+                      controller: _unitController,
+                      label: context.l10n.labelUnit,
+                    ),
                   ),
-                ),
-                const SizedBox(width: Spacing.md),
-                Expanded(
-                  child: AppTextField(
-                    controller: _quantityController,
-                    label: context.l10n.labelQuantity,
-                    keyboardType: TextInputType.number,
+                  const SizedBox(width: Spacing.md),
+                  Expanded(
+                    child: AppTextField(
+                      controller: _quantityController,
+                      label: context.l10n.labelQuantity,
+                      keyboardType: TextInputType.number,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: Spacing.md),
-            AppTextField(
-              controller: _descriptionController,
-              label: context.l10n.labelDescription,
-              maxLines: 3,
-            ),
-            const SizedBox(height: Spacing.xl),
-            _buildIAS2Section(context),
-            const SizedBox(height: Spacing.xl),
-            const SizedBox(height: Spacing.xl),
-            AppEnhancedButton(
-              label: context.l10n.btnSave,
-              isLoading: isLoading,
-              onPressed: _save,
-            ),
-          ],
+                ],
+              ),
+              const SizedBox(height: Spacing.md),
+              AppTextField(
+                controller: _descriptionController,
+                label: context.l10n.labelDescription,
+                maxLines: 3,
+              ),
+              const SizedBox(height: Spacing.xl),
+              _buildIAS2Section(context),
+              const SizedBox(height: Spacing.xl),
+              const SizedBox(height: Spacing.xl),
+              AppEnhancedButton(
+                label: context.l10n.btnSave,
+                isLoading: actionState.isLoading,
+                onPressed: _save,
+              ),
+            ],
+          ),
+        ),
+        loading: () => const Center(child: AppLoadingIndicator()),
+        error: (error, _) => AppErrorWidget(
+          message: error.toString(),
+          onRetry: () => ref.invalidate(inventoryActionProvider),
         ),
       ),
     );
@@ -200,8 +204,12 @@ class _InventoryItemFormScreenState
       await ref.read(inventoryActionProvider.notifier).updateItem(item);
     }
 
-    if (mounted && !ref.read(inventoryActionProvider).hasError) {
-      Navigator.pop(context, true);
+    if (mounted) {
+      if (ref.read(inventoryActionProvider).hasError) {
+        AppSnackbar.showError(context, context.l10n.errGeneric(''));
+      } else {
+        Navigator.pop(context, true);
+      }
     }
   }
 
@@ -266,8 +274,11 @@ class _InventoryItemFormScreenState
                 ),
               ],
             ),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (e, s) => Text('Error loading accounts: $e'),
+            loading: () => const Center(child: AppLoadingIndicator()),
+            error: (e, s) => AppErrorWidget(
+              message: e.toString(),
+              onRetry: () => ref.invalidate(accountsProvider),
+            ),
           ),
         ],
       ),

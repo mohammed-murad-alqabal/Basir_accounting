@@ -37,7 +37,7 @@ class _AssetsScreenState extends ConsumerState<AssetsScreen> {
       actions: [
         IconButton(
           icon: Icon(appIcons.add, size: 26),
-          tooltip: context.isArabic ? 'إضافة أصل جديد' : 'Add New Asset',
+          tooltip: context.l10n.tooltipAddAsset,
           onPressed: _addAsset,
         ),
       ],
@@ -64,7 +64,10 @@ class _AssetsScreenState extends ConsumerState<AssetsScreen> {
             child: assetsAsync.when(
               data: _buildAssetsList,
               loading: () => const Center(child: AppLoadingIndicator()),
-              error: (error, stack) => Center(child: Text(error.toString())),
+              error: (error, stack) => AppErrorWidget(
+                message: error.toString(),
+                onRetry: () => ref.invalidate(fixedAssetsProvider),
+              ),
             ),
           ),
         ],
