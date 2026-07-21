@@ -208,8 +208,11 @@ class _AccountFormScreenState extends ConsumerState<AccountFormScreen> {
             ],
           );
         },
-        loading: () => const AppLoadingIndicator(),
-        error: (_, __) => const Text('خطأ في تحميل الحسابات'),
+        loading: () => const Center(child: AppLoadingIndicator()),
+        error: (_, __) => AppErrorWidget(
+          message: 'خطأ في تحميل الحسابات',
+          onRetry: () => ref.invalidate(getAccountsProvider),
+        ),
       );
 
   Widget _buildCodeField() => AppTextField(
@@ -286,14 +289,9 @@ class _AccountFormScreenState extends ConsumerState<AccountFormScreen> {
       }
 
       if (mounted) Navigator.pop(context);
-    } on Exception catch (e) {
+    } on Exception {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('خطأ أثناء الحفظ: $e'),
-            backgroundColor: AppColors.error,
-          ),
-        );
+        AppSnackbar.showError(context, 'خطأ أثناء الحفظ');
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
