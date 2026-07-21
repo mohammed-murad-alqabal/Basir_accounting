@@ -400,9 +400,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
 
       if (customer == null) {
         if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.l10n.errorCustomerNotFound)),
-        );
+        AppSnackbar.showError(context, context.l10n.errorCustomerNotFound);
         return;
       }
 
@@ -426,9 +424,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       );
     } on Exception catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errorSharePdf(e.toString()))),
-      );
+      AppSnackbar.showError(context, context.l10n.errorSharePdf(e.toString()));
     }
   }
 
@@ -491,35 +487,21 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       }
     } on Exception catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errorShareWhatsapp(e.toString()))),
-      );
+      AppSnackbar.showError(
+          context, context.l10n.errorShareWhatsapp(e.toString()));
     }
   }
 
   Future<void> _deleteInvoice(Invoice invoice) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.l10n.actionDeleteInvoice),
-        content: Text(context.l10n.msgConfirmDeleteInvoice),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(context.l10n.dialogCancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: Text(
-              context.l10n.btnDelete,
-              style: const TextStyle(color: AppColors.error),
-            ),
-          ),
-        ],
-      ),
+    final confirmed = await AppDialog.showConfirmation(
+      context,
+      title: context.l10n.actionDeleteInvoice,
+      message: context.l10n.msgConfirmDeleteInvoice,
+      confirmLabel: context.l10n.btnDelete,
+      cancelLabel: context.l10n.dialogCancel,
     );
 
-    if (confirmed ?? false) {
+    if (confirmed) {
       await ref.read(deleteInvoiceProvider(invoice.id).future);
     }
   }
