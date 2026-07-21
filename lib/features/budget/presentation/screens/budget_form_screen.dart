@@ -1,7 +1,9 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/budget/domain/entities/budget.dart';
 import 'package:basir_accounting_system/features/budget/domain/entities/budget_category.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,36 +70,36 @@ class _BudgetFormScreenState extends ConsumerState<BudgetFormScreen> {
       userId: ref.read(basirUserProvider)?.id,
     );
 
-    await ref.read(budgetServiceProvider).createOrUpdateBudget(budget);
-    if (mounted) Navigator.pop(context);
+    try {
+      await ref.read(budgetServiceProvider).createOrUpdateBudget(budget);
+      if (mounted) {
+        AppSnackbar.showSuccess(context, 'تم حفظ الميزانية بنجاح');
+        if (mounted) Navigator.pop(context);
+      }
+    } on Exception {
+      if (mounted) AppSnackbar.showError(context, 'حدث خطأ أثناء الحفظ');
+    }
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title:
-              Text(widget.budget == null ? 'إضافة ميزانية' : 'تعديل ميزانية'),
-          backgroundColor: Colors.white,
-          elevation: 0,
-        ),
+  Widget build(BuildContext context) => GlassScaffold(
+        title: widget.budget == null ? 'إضافة ميزانية' : 'تعديل ميزانية',
         body: Form(
           key: _formKey,
           child: ListView(
             padding: const EdgeInsets.all(24),
             children: [
-              TextFormField(
+              AppTextField(
                 controller: _nameController,
-                decoration:
-                    _inputDecoration('اسم الميزانية', Icons.label_outline),
+                label: 'اسم الميزانية',
+                prefixIcon: const Icon(Icons.label_outline),
                 validator: (v) => v!.isEmpty ? 'يرجى إدخال الاسم' : null,
               ),
               const SizedBox(height: 16),
-              TextFormField(
+              AppTextField(
                 controller: _limitController,
-                decoration: _inputDecoration(
-                  'المبلغ المستهدف',
-                  Icons.account_balance_wallet_outlined,
-                ),
+                label: 'المبلغ المستهدف',
+                prefixIcon: const Icon(Icons.account_balance_wallet_outlined),
                 keyboardType: TextInputType.number,
                 validator: (v) => Decimal.tryParse(v ?? '') == null
                     ? 'يرجى إدخال مبلغ صحيح'
@@ -162,23 +164,13 @@ class _BudgetFormScreenState extends ConsumerState<BudgetFormScreen> {
                 title: const Text('ترحيل الفائض (Rollover)'),
                 subtitle: const Text('نقل المبالغ غير المستخدمة للشهر التالي'),
                 value: _isRollover,
-                activeThumbColor: const Color(0xFF008080),
+                activeThumbColor: AppColors.primary,
                 onChanged: (v) => setState(() => _isRollover = v),
               ),
               const SizedBox(height: 32),
-              ElevatedButton(
+              AppEnhancedButton(
                 onPressed: _save,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF008080),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                child: const Text(
-                  'حفظ الميزانية',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+                label: 'حفظ الميزانية',
               ),
             ],
           ),
@@ -188,15 +180,15 @@ class _BudgetFormScreenState extends ConsumerState<BudgetFormScreen> {
   InputDecoration _inputDecoration(String label, IconData icon) =>
       InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon, color: const Color(0xFF008080)),
+        prefixIcon: Icon(icon, color: AppColors.primary),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: Colors.grey[300]!),
+          borderSide: const BorderSide(color: AppColors.borderLight),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(color: Color(0xFF008080), width: 2),
+          borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
       );
 
