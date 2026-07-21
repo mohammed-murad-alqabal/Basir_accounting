@@ -33,26 +33,24 @@ class ChartOfAccountsScreen extends ConsumerWidget {
     final appIcons = ref.watch(appIconsProvider);
     final expandedIds = ref.watch(expandedAccountsProvider);
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.labelChartOfAccounts,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.share),
-            tooltip: context.l10n.btnExport,
-            onPressed: () => _showExportOptions(context, ref),
-          ),
-          IconButton(
-            icon: Icon(appIcons.refresh),
-            tooltip: context.l10n.tooltipRefresh,
-            onPressed: () async {
-              await ref
-                  .read(accountingServiceProvider.notifier)
-                  .seedDefaultAccounts();
-            },
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: context.l10n.labelChartOfAccounts,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.share),
+          tooltip: context.l10n.btnExport,
+          onPressed: () => _showExportOptions(context, ref),
+        ),
+        IconButton(
+          icon: Icon(appIcons.refresh),
+          tooltip: context.l10n.tooltipRefresh,
+          onPressed: () async {
+            await ref
+                .read(accountingServiceProvider.notifier)
+                .seedDefaultAccounts();
+          },
+        ),
+      ],
       body: FutureBuilder<List<Account>>(
         future: repository.getAccounts(),
         builder: (context, snapshot) {
@@ -60,17 +58,18 @@ class ChartOfAccountsScreen extends ConsumerWidget {
             return const Center(child: AppLoadingIndicator());
           }
           if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                '${context.l10n.errorLoadingAccounts}: ${snapshot.error}',
-                style: const TextStyle(color: AppColors.error),
-              ),
+            return AppErrorWidget(
+              message: context.l10n.errorLoadingAccounts,
+              onRetry: () => ref.invalidate(accountingRepositoryProvider),
             );
           }
 
           final allAccounts = snapshot.data ?? [];
           if (allAccounts.isEmpty) {
-            return _buildEmptyState(context);
+            return AppEmptyState(
+              icon: Icons.account_balance_wallet_outlined,
+              title: context.l10n.emptyAccountsMessage,
+            );
           }
 
           final displayList = _buildDisplayList(allAccounts, expandedIds);
@@ -113,18 +112,6 @@ class ChartOfAccountsScreen extends ConsumerWidget {
       ),
     );
   }
-
-  /// Renders a placeholder when No accounts are available.
-  Widget _buildEmptyState(BuildContext context) => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(Spacing.xl),
-          child: Text(
-            context.l10n.emptyAccountsMessage,
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: AppColors.textSecondary),
-          ),
-        ),
-      );
 
   /// Performs a depth-first traversal to flatten the tree for ListView
   /// rendering.
@@ -259,14 +246,9 @@ class ChartOfAccountsScreen extends ConsumerWidget {
           fileName: 'chart_of_accounts.csv',
         );
       }
-    } on Exception catch (e) {
+    } on Exception {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${context.l10n.errorExportingReport}: $e'),
-          backgroundColor: AppColors.error,
-        ),
-      );
+      AppSnackbar.showError(context, context.l10n.errorExportingReport);
     }
   }
 
