@@ -24,6 +24,7 @@ abstract final class AppDialog {
     String confirmLabel = 'تأكيد',
     String cancelLabel = 'إلغاء',
     IconData? icon,
+    bool confirmIsDestructive = false,
   }) =>
       _show(
         context,
@@ -33,6 +34,7 @@ abstract final class AppDialog {
         confirmLabel,
         cancelLabel,
         icon,
+        confirmIsDestructive,
       );
 
   /// عرض حوار معلومات
@@ -51,6 +53,7 @@ abstract final class AppDialog {
         confirmLabel,
         null,
         icon,
+        false,
       );
 
   /// عرض حوار نجاح
@@ -69,6 +72,7 @@ abstract final class AppDialog {
         confirmLabel,
         null,
         icon,
+        false,
       );
 
   /// عرض حوار خطأ
@@ -87,6 +91,7 @@ abstract final class AppDialog {
         confirmLabel,
         null,
         icon,
+        false,
       );
 
   /// عرض حوار تحذير
@@ -106,6 +111,7 @@ abstract final class AppDialog {
         confirmLabel,
         cancelLabel,
         icon,
+        false,
       );
 
   static Future<bool> _show(
@@ -116,6 +122,7 @@ abstract final class AppDialog {
     String confirmLabel,
     String? cancelLabel,
     IconData? icon,
+    bool confirmIsDestructive,
   ) async {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -196,11 +203,13 @@ abstract final class AppDialog {
                   Flexible(
                     child: AppEnhancedButton(
                       label: confirmLabel,
-                      type: type == AppDialogType.error
+                      type: confirmIsDestructive
                           ? AppEnhancedButtonType.danger
-                          : type == AppDialogType.success
-                              ? AppEnhancedButtonType.secondary
-                              : AppEnhancedButtonType.primary,
+                          : type == AppDialogType.error
+                              ? AppEnhancedButtonType.danger
+                              : type == AppDialogType.success
+                                  ? AppEnhancedButtonType.secondary
+                                  : AppEnhancedButtonType.primary,
                       onPressed: () => Navigator.of(context).pop(true),
                     ),
                   ),
