@@ -75,9 +75,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       if (!mounted) return;
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.l10n.msgLoginSuccess)));
+      AppSnackbar.showSuccess(context, context.l10n.msgLoginSuccess);
 
       // الانتقال إلى لوحة التحكم
       if (!mounted) return;
@@ -85,9 +83,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     } on Exception catch (e) {
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errGeneric(e.toString()))),
-      );
+      AppSnackbar.showError(context, context.l10n.errGeneric(e.toString()));
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -105,9 +101,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       if (!mounted) return;
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.l10n.msgGuestWelcome)));
+      AppSnackbar.showSuccess(context, context.l10n.msgGuestWelcome);
 
       // الانتقال إلى لوحة التحكم
       if (!mounted) return;
@@ -115,9 +109,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     } on Exception catch (e) {
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errGeneric(e.toString()))),
-      );
+      AppSnackbar.showError(context, context.l10n.errGeneric(e.toString()));
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);

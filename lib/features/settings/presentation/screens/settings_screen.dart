@@ -208,7 +208,7 @@ class SettingsScreen extends ConsumerWidget {
             // 🚪 منطقة الأوامر النهائية
             AppEnhancedButton(
               label: context.l10n.logoutLabel,
-              onPressed: () => _showLogoutDialog(context, controller),
+              onPressed: () async => _showLogoutDialog(context, controller),
               type: AppEnhancedButtonType.danger,
             ),
             const SizedBox(height: Spacing.xl),
@@ -226,36 +226,24 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showLogoutDialog(BuildContext context, SettingsController controller) {
-    unawaited(
-      showDialog<void>(
-        context: context,
-        builder: (dialogContext) => AlertDialog(
-          title: Text(context.l10n.logoutLabel),
-          content: Text(context.l10n.msgConfirmLogout),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogContext),
-              child: Text(context.l10n.dialogCancel),
-            ),
-            TextButton(
-              onPressed: () async {
-                await controller.logout();
-                if (context.mounted) {
-                  await Navigator.of(
-                    context,
-                  ).pushNamedAndRemoveUntil('/login', (route) => false);
-                }
-              },
-              child: Text(
-                context.l10n.logoutLabel,
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
-              ),
-            ),
-          ],
-        ),
-      ),
+  Future<void> _showLogoutDialog(
+      BuildContext context, SettingsController controller) async {
+    final confirmed = await AppDialog.showConfirmation(
+      context,
+      title: context.l10n.logoutLabel,
+      message: context.l10n.msgConfirmLogout,
+      confirmLabel: context.l10n.logoutLabel,
+      cancelLabel: context.l10n.dialogCancel,
     );
+
+    if (confirmed) {
+      await controller.logout();
+      if (context.mounted) {
+        await Navigator.of(
+          context,
+        ).pushNamedAndRemoveUntil('/login', (route) => false);
+      }
+    }
   }
 }
 
