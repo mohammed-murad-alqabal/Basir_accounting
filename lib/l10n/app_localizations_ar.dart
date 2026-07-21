@@ -526,6 +526,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tooltipAddVendor => 'إضافة مورد جديد';
 
   @override
+  String get tooltipEditVendor => 'تعديل المورد';
+
+  @override
+  String get tooltipDeleteVendor => 'حذف المورد';
+
+  @override
   String msgConfirmDeleteVendor(String name) {
     return 'هل أنت متأكد من حذف المورد $name؟';
   }

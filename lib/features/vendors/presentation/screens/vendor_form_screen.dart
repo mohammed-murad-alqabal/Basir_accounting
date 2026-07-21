@@ -61,11 +61,10 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
   Widget build(BuildContext context) {
     final isEdit = widget.vendor != null;
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title:
-            isEdit ? context.l10n.titleEditVendor : context.l10n.titleAddVendor,
-      ),
+    return GlassScaffold(
+      title:
+          isEdit ? context.l10n.titleEditVendor : context.l10n.titleAddVendor,
+      actions: const [],
       body: Form(
         key: <credential-fixture>,
         child: ListView(
@@ -174,9 +173,7 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
       if (mounted) Navigator.pop(context, true);
     } on Object catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(e.toString())));
+        AppSnackbar.showError(context, e.toString());
       }
     }
   }

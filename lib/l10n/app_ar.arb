@@ -76,6 +76,8 @@
   "labelNameAr": "الاسم بالعربية",
   "labelNameEn": "الاسم بالإنجليزية",
   "tooltipAddVendor": "إضافة مورد جديد",
+  "tooltipEditVendor": "تعديل المورد",
+  "tooltipDeleteVendor": "حذف المورد",
   "msgConfirmDeleteVendor": "هل أنت متأكد من حذف المورد {name}؟",
   "msgConfirmDeleteItem": "هل أنت متأكد من حذف الصنف {name}؟",
   "dialogDelete": "حذف",
