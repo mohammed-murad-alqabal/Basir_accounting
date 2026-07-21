@@ -23,23 +23,20 @@ class CustomerDetailsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppAppBar(
-        title: context.l10n.customerDetailsTitle,
-        actions: [
-          IconButton(
-            icon: Icon(appIcons.edit),
-            tooltip: context.l10n.tooltipEditCustomer,
-            onPressed: () => _editCustomer(context),
-          ),
-          IconButton(
-            icon: Icon(appIcons.delete, color: AppColors.error),
-            tooltip: context.l10n.actionDeleteCustomer,
-            onPressed: () => _deleteCustomer(context, ref),
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: context.l10n.customerDetailsTitle,
+      actions: [
+        IconButton(
+          icon: Icon(appIcons.edit),
+          tooltip: context.l10n.tooltipEditCustomer,
+          onPressed: () => _editCustomer(context),
+        ),
+        IconButton(
+          icon: Icon(appIcons.delete, color: AppColors.error),
+          tooltip: context.l10n.actionDeleteCustomer,
+          onPressed: () => _deleteCustomer(context, ref),
+        ),
+      ],
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(Spacing.lg),
         child: Column(
@@ -215,34 +212,18 @@ class CustomerDetailsScreen extends ConsumerWidget {
   }
 
   Future<void> _deleteCustomer(BuildContext context, WidgetRef ref) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.l10n.actionDeleteCustomer),
-        content: Text(
-          context.l10n.msgConfirmDeleteCustomer(
-            customer.name(isArabic: context.isArabic),
-          ),
-        ),
-        actions: [
-          AppEnhancedButton(
-            label: context.l10n.dialogCancel,
-            onPressed: () => Navigator.pop(context, false),
-            type: AppEnhancedButtonType.text,
-            height: 36,
-          ),
-          AppEnhancedButton(
-            label: context.l10n.btnDelete,
-            onPressed: () => Navigator.pop(context, true),
-            type: AppEnhancedButtonType.text,
-            height: 36,
-            foregroundColor: AppColors.error,
-          ),
-        ],
+    final confirmed = await AppDialog.showConfirmation(
+      context,
+      title: context.l10n.actionDeleteCustomer,
+      message: context.l10n.msgConfirmDeleteCustomer(
+        customer.name(isArabic: context.isArabic),
       ),
+      confirmLabel: context.l10n.btnDelete,
+      cancelLabel: context.l10n.dialogCancel,
+      confirmIsDestructive: true,
     );
 
-    if (confirmed != true || !context.mounted) return;
+    if (!confirmed || !context.mounted) return;
 
     try {
       final result = await ref.read(deleteCustomerProvider(customer.id).future);
@@ -250,29 +231,14 @@ class CustomerDetailsScreen extends ConsumerWidget {
       if (!context.mounted) return;
 
       if (result) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(context.l10n.msgCustomerDeleted),
-            backgroundColor: AppColors.secondary,
-          ),
-        );
+        AppSnackbar.showSuccess(context, context.l10n.msgCustomerDeleted);
         Navigator.pop(context, true);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(context.l10n.errCustomerDelete),
-            backgroundColor: AppColors.error,
-          ),
-        );
+        AppSnackbar.showError(context, context.l10n.errCustomerDelete);
       }
     } on Exception catch (e) {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.l10n.errGeneric(e.toString())),
-          backgroundColor: AppColors.error,
-        ),
-      );
+      AppSnackbar.showError(context, context.l10n.errGeneric(e.toString()));
     }
   }
 }
