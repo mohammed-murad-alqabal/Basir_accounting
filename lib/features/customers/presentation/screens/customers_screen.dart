@@ -80,8 +80,9 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
             child: customersAsync.when(
               data: _buildCustomersList,
               loading: () => const Center(child: AppLoadingIndicator()),
-              error: (error, stack) => Center(
-                child: Text(context.l10n.errLoadCustomers(error.toString())),
+              error: (error, stack) => AppErrorWidget(
+                message: context.l10n.errLoadCustomers(error.toString()),
+                onRetry: () => ref.invalidate(customersProvider),
               ),
             ),
           ),
