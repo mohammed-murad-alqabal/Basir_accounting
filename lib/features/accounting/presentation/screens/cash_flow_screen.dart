@@ -25,17 +25,15 @@ class CashFlowScreen extends ConsumerWidget {
     final cashFlowAsync =
         ref.watch(reportingServiceProvider.notifier).getCashFlowStatement();
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.cashFlowTitle,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () => _showExportOptions(context, ref),
-            tooltip: context.l10n.btnExport,
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: context.l10n.cashFlowTitle,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.share),
+          onPressed: () => _showExportOptions(context, ref),
+          tooltip: context.l10n.btnExport,
+        ),
+      ],
       body: FutureBuilder<Map<String, Decimal>>(
         future: cashFlowAsync,
         builder: (context, snapshot) {
@@ -43,7 +41,10 @@ class CashFlowScreen extends ConsumerWidget {
             return const Center(child: AppLoadingIndicator());
           }
           if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return AppErrorWidget(
+              message: snapshot.error.toString(),
+              onRetry: () => ref.invalidate(reportingServiceProvider),
+            );
           }
 
           final data = snapshot.data!;
@@ -156,11 +157,9 @@ class CashFlowScreen extends ConsumerWidget {
           subject: context.l10n.cashFlowTitle,
         );
       }
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      AppSnackbar.showError(context, context.l10n.errorExportingReport);
     }
   }
 

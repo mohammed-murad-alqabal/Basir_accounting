@@ -36,17 +36,15 @@ class BalanceSheetScreen extends ConsumerWidget {
       decimalDigits: 2,
     );
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.balanceSheetTitle,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () => _exportReport(context, ref),
-            tooltip: context.l10n.actionShare,
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: context.l10n.balanceSheetTitle,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.share),
+          onPressed: () => _exportReport(context, ref),
+          tooltip: context.l10n.actionShare,
+        ),
+      ],
       body: FutureBuilder<FinancialReport>(
         future: balanceSheetAsync,
         builder: (context, snapshot) {
@@ -55,7 +53,10 @@ class BalanceSheetScreen extends ConsumerWidget {
           }
 
           if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return AppErrorWidget(
+              message: snapshot.error.toString(),
+              onRetry: () => ref.invalidate(financialStatementServiceProvider),
+            );
           }
 
           final report = snapshot.data;
@@ -203,11 +204,9 @@ class BalanceSheetScreen extends ConsumerWidget {
         filename:
             'Balance_Sheet_${intl.DateFormat('yyyyMMdd').format(DateTime.now())}.pdf',
       );
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Export Failed: $e')),
-        );
+        AppSnackbar.showError(context, context.l10n.errorExportingReport);
       }
     }
   }
@@ -238,11 +237,9 @@ class BalanceSheetScreen extends ConsumerWidget {
               box != null ? box.localToGlobal(Offset.zero) & box.size : null,
         );
       }
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Export Failed: $e')),
-        );
+        AppSnackbar.showError(context, context.l10n.errorExportingReport);
       }
     }
   }
