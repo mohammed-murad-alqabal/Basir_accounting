@@ -68,13 +68,11 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
     final isEditing = widget.customer != null;
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppAppBar(
-        title: isEditing
-            ? context.l10n.customerFormTitleEdit
-            : context.l10n.customerFormTitleAdd,
-      ),
+    return GlassScaffold(
+      title: isEditing
+          ? context.l10n.customerFormTitleEdit
+          : context.l10n.customerFormTitleAdd,
+      actions: const [],
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -228,9 +226,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       final contacts = await contactService.getContacts();
       if (contacts.isEmpty) {
         if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.l10n.msgNoContactsFound)),
-        );
+        AppSnackbar.showInfo(context, context.l10n.msgNoContactsFound);
         return;
       }
 
@@ -273,9 +269,8 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       }
     } on Exception catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errContactAccess(e.toString()))),
-      );
+      AppSnackbar.showError(
+          context, context.l10n.errContactAccess(e.toString()));
     }
   }
 
@@ -321,37 +316,24 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       if (!mounted) return;
 
       if (result) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              isEditing
-                  ? context.l10n.msgCustomerUpdated
-                  : context.l10n.msgCustomerAdded,
-            ),
-            backgroundColor: AppColors.secondary,
-          ),
+        AppSnackbar.showSuccess(
+          context,
+          isEditing
+              ? context.l10n.msgCustomerUpdated
+              : context.l10n.msgCustomerAdded,
         );
         Navigator.pop(context, true);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              isEditing
-                  ? context.l10n.errCustomerUpdate
-                  : context.l10n.errCustomerAdd,
-            ),
-            backgroundColor: AppColors.error,
-          ),
+        AppSnackbar.showError(
+          context,
+          isEditing
+              ? context.l10n.errCustomerUpdate
+              : context.l10n.errCustomerAdd,
         );
       }
     } on Exception catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.l10n.errGeneric(e.toString())),
-          backgroundColor: AppColors.error,
-        ),
-      );
+      AppSnackbar.showError(context, context.l10n.errGeneric(e.toString()));
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
