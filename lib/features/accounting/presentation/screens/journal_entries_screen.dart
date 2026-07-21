@@ -34,28 +34,31 @@ class JournalEntriesScreen extends ConsumerWidget {
       filteredJournalEntriesProvider(accountId: accountId),
     );
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.labelJournalEntries,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () => _showExportOptions(context, ref),
-            tooltip: context.l10n.btnExport,
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: 'تحديث',
-            onPressed: () => ref.invalidate(accountingServiceProvider),
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: context.l10n.labelJournalEntries,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.share),
+          onPressed: () => _showExportOptions(context, ref),
+          tooltip: context.l10n.btnExport,
+        ),
+        IconButton(
+          icon: const Icon(Icons.refresh),
+          tooltip: 'تحديث',
+          onPressed: () => ref.invalidate(accountingServiceProvider),
+        ),
+      ],
       body: entriesAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        loading: () => const Center(child: AppLoadingIndicator()),
+        error: (err, stack) => AppErrorWidget(
+          message: err.toString(),
+          onRetry: () => ref.invalidate(accountingServiceProvider),
+        ),
         data: (entries) {
           if (entries.isEmpty) {
-            return Center(child: Text(context.l10n.emptyJournalEntriesMessage));
+            return Center(
+                child: AppEmptyState(
+                    title: context.l10n.emptyJournalEntriesMessage));
           }
 
           return ListView.builder(
@@ -63,7 +66,7 @@ class JournalEntriesScreen extends ConsumerWidget {
             itemCount: entries.length,
             itemBuilder: (context, index) {
               final entry = entries[index];
-              return Card(
+              return AppCard(
                 margin: const EdgeInsets.only(bottom: Spacing.md),
                 child: Theme(
                   data: Theme.of(
@@ -199,41 +202,24 @@ class JournalEntriesScreen extends ConsumerWidget {
     WidgetRef ref,
     JournalEntry entry,
   ) async {
-    final confirm = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.l10n.actionReverse),
-        content: Text(context.l10n.msgConfirmReverse),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(context.l10n.dialogCancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: Text(context.l10n.actionReverse),
-          ),
-        ],
-      ),
+    final confirm = await AppDialog.showConfirmation(
+      context,
+      title: context.l10n.actionReverse,
+      message: context.l10n.msgConfirmReverse,
+      confirmLabel: context.l10n.actionReverse,
+      cancelLabel: context.l10n.dialogCancel,
     );
 
-    if (confirm ?? false) {
+    if (confirm) {
       try {
         await ref
             .read(accountingServiceProvider.notifier)
             .reverseJournalEntry(entry.id);
         if (!context.mounted) return;
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(context.l10n.msgReverseSuccess)));
+        AppSnackbar.showSuccess(context, context.l10n.msgReverseSuccess);
       } on Exception catch (e) {
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.toString()),
-            backgroundColor: AppColors.error,
-          ),
-        );
+        AppSnackbar.showError(context, e.toString());
       }
     }
   }
@@ -264,14 +250,10 @@ class JournalEntriesScreen extends ConsumerWidget {
           .read(accountingServiceProvider.notifier)
           .postJournalEntry(updated);
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.msgJournalEntryPosted)),
-      );
+      AppSnackbar.showSuccess(context, context.l10n.msgJournalEntryPosted);
     } on Exception catch (e) {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error),
-      );
+      AppSnackbar.showError(context, e.toString());
     }
   }
 
@@ -453,12 +435,8 @@ class JournalEntriesScreen extends ConsumerWidget {
       }
     } on Exception catch (e) {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${context.l10n.errorExportingReport}: $e'),
-          backgroundColor: AppColors.error,
-        ),
-      );
+      AppSnackbar.showError(
+          context, '${context.l10n.errorExportingReport}: $e');
     }
   }
 }
