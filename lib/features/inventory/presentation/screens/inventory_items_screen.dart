@@ -58,6 +58,7 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
         ),
         IconButton(
           icon: Icon(appIcons.add, size: 26),
+          tooltip: context.l10n.tooltipAddInventoryItem,
           onPressed: _addItem,
         ),
       ],
@@ -84,7 +85,10 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
             child: itemsAsync.when(
               data: _buildItemsList,
               loading: () => const Center(child: AppLoadingIndicator()),
-              error: (error, stack) => Center(child: Text(error.toString())),
+              error: (error, stack) => AppErrorWidget(
+                message: error.toString(),
+                onRetry: () => ref.invalidate(inventoryItemsProvider),
+              ),
             ),
           ),
         ],
