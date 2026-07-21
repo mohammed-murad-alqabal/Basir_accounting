@@ -27,7 +27,7 @@ abstract final class SelectedStateDesign {
     VoidCallback? onTap,
     Brightness brightness = Brightness.light,
   }) =>
-      Container(
+      DecoratedBox(
         decoration: buildSelectedBoxDecoration(brightness),
         child: ListTile(
           title: title,
