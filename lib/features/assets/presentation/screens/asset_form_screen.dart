@@ -74,7 +74,10 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
       body: actionState.when(
         data: (_) => _buildForm(),
         loading: () => const Center(child: AppLoadingIndicator()),
-        error: (error, _) => Center(child: Text(error.toString())),
+        error: (error, _) => AppErrorWidget(
+          message: error.toString(),
+          onRetry: () => ref.invalidate(assetActionProvider),
+        ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(Spacing.lg),
@@ -176,6 +179,8 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
 
     if (success && mounted) {
       Navigator.pop(context, true);
+    } else if (mounted) {
+      AppSnackbar.showError(context, context.l10n.errGeneric(''));
     }
   }
 }
