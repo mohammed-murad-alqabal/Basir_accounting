@@ -98,104 +98,110 @@ class _AppTextFieldState extends State<AppTextField> {
   }
 
   @override
-  Widget build(BuildContext context) => Focus(
-        onFocusChange: (focused) => setState(() => _isFocused = focused),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ExcludeSemantics(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: Spacing.xs),
-                child: Text(
-                  widget.label,
-                  style: AppTextStyles.labelLarge.copyWith(
-                    color: widget.isEnabled
-                        ? (_isFocused
-                            ? InputColors.borderFocused
-                            : InputColors.label)
-                        : AppColors.textDisabled,
-                    fontWeight: FontWeights.semiBold,
-                  ),
-                ),
-              ),
-            ),
-            Semantics(
-              label: widget.label,
-              child: TextFormField(
-                controller: widget.controller,
-                initialValue: widget.initialValue,
-                validator: widget.validator,
-                keyboardType: <credential-fixture>,
-                obscureText: _obscureText,
-                maxLines: widget.obscureText ? 1 : widget.maxLines,
-                minLines: widget.minLines,
-                onChanged: widget.onChanged,
-                textInputAction: widget.textInputAction,
-                enabled: widget.isEnabled,
-                style: AppTextStyles.bodyLarge.copyWith(
+  Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    return Focus(
+      onFocusChange: (focused) => setState(() => _isFocused = focused),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ExcludeSemantics(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: Spacing.xs),
+              child: Text(
+                widget.label,
+                style: AppTextStyles.labelLarge.copyWith(
                   color: widget.isEnabled
-                      ? InputColors.text
+                      ? (_isFocused
+                          ? BorderContrastDesign.getBorderFocused(brightness)
+                          : InputColors.label)
                       : AppColors.textDisabled,
-                ),
-                decoration: InputDecoration(
-                  hintText: widget.hint,
-                  hintStyle: AppTextStyles.bodyMedium.copyWith(
-                    color: InputColors.placeholder,
-                  ),
-                  prefixIcon: widget.prefixIcon != null
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: Spacing.sm,
-                          ),
-                          child: widget.prefixIcon,
-                        )
-                      : null,
-                  suffixIcon: widget.obscureText
-                      ? IconButton(
-                          icon: Icon(
-                            _obscureText
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            size: IconSizes.sm,
-                            color: InputColors.label,
-                          ),
-                          onPressed: () =>
-                              setState(() => _obscureText = !_obscureText),
-                        )
-                      : widget.suffixIcon,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: Spacing.md,
-                    vertical: Spacing.md,
-                  ),
-                  filled: true,
-                  fillColor: widget.isEnabled
-                      ? InputColors.background
-                      : AppColors.surfaceVariant,
-                  border: BorderContrastDesign.buildEnhancedInputBorder(),
-                  enabledBorder:
-                      BorderContrastDesign.buildEnhancedInputBorder(),
-                  focusedBorder: BorderContrastDesign.buildEnhancedInputBorder(
-                    color: BorderContrastDesign.borderFocused,
-                    width: BorderContrastDesign.borderWidthFocused,
-                  ),
-                  errorBorder: BorderContrastDesign.buildEnhancedInputBorder(
-                    color: BorderContrastDesign.borderError,
-                  ),
-                  focusedErrorBorder:
-                      BorderContrastDesign.buildEnhancedInputBorder(
-                    color: BorderContrastDesign.borderError,
-                    width: BorderContrastDesign.borderWidthError,
-                  ),
-                  disabledBorder: BorderContrastDesign.buildEnhancedInputBorder(
-                    color: AppColors.borderLight,
-                  ),
+                  fontWeight: FontWeights.semiBold,
                 ),
               ),
             ),
-          ],
-        ),
-      );
+          ),
+          Semantics(
+            label: widget.label,
+            child: TextFormField(
+              controller: widget.controller,
+              initialValue: widget.initialValue,
+              validator: widget.validator,
+              keyboardType: <credential-fixture>,
+              obscureText: _obscureText,
+              maxLines: widget.obscureText ? 1 : widget.maxLines,
+              minLines: widget.minLines,
+              onChanged: widget.onChanged,
+              textInputAction: widget.textInputAction,
+              enabled: widget.isEnabled,
+              style: AppTextStyles.bodyLarge.copyWith(
+                color: widget.isEnabled
+                    ? InputColors.text
+                    : AppColors.textDisabled,
+              ),
+              decoration: InputDecoration(
+                hintText: widget.hint,
+                hintStyle: AppTextStyles.bodyMedium.copyWith(
+                  color: InputColors.placeholder,
+                ),
+                prefixIcon: widget.prefixIcon != null
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Spacing.sm,
+                        ),
+                        child: widget.prefixIcon,
+                      )
+                    : null,
+                suffixIcon: widget.obscureText
+                    ? IconButton(
+                        icon: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          size: IconSizes.sm,
+                          color: InputColors.label,
+                        ),
+                        onPressed: () =>
+                            setState(() => _obscureText = !_obscureText),
+                      )
+                    : widget.suffixIcon,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: Spacing.md,
+                  vertical: Spacing.md,
+                ),
+                filled: true,
+                fillColor: widget.isEnabled
+                    ? InputColors.background
+                    : AppColors.surfaceVariant,
+                border: BorderContrastDesign.buildEnhancedInputBorder(
+                  color: BorderContrastDesign.getBorderNormal(brightness),
+                ),
+                enabledBorder: BorderContrastDesign.buildEnhancedInputBorder(
+                  color: BorderContrastDesign.getBorderNormal(brightness),
+                ),
+                focusedBorder: BorderContrastDesign.buildEnhancedInputBorder(
+                  color: BorderContrastDesign.getBorderFocused(brightness),
+                  width: BorderContrastDesign.borderWidthFocused,
+                ),
+                errorBorder: BorderContrastDesign.buildEnhancedInputBorder(
+                  color: BorderContrastDesign.getBorderError(brightness),
+                ),
+                focusedErrorBorder:
+                    BorderContrastDesign.buildEnhancedInputBorder(
+                  color: BorderContrastDesign.getBorderError(brightness),
+                  width: BorderContrastDesign.borderWidthError,
+                ),
+                disabledBorder: BorderContrastDesign.buildEnhancedInputBorder(
+                  color: AppColors.borderLight,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 /// حقل إدخال مخصص للبحث (Unified App Search Field)
@@ -250,46 +256,50 @@ class _AppSearchFieldState extends State<AppSearchField> {
       setState(() => _hasText = _controller.text.isNotEmpty);
 
   @override
-  Widget build(BuildContext context) => TextField(
-        controller: _controller,
-        onChanged: widget.onChanged,
-        style: AppTextStyles.bodyLarge,
-        decoration: InputDecoration(
-          hintText: widget.hint,
-          hintStyle:
-              AppTextStyles.bodyMedium.copyWith(color: AppColors.textHint),
-          prefixIcon: const Icon(
-            Icons.search,
-            size: IconSizes.sm,
-            color: AppColors.textSecondary,
-          ),
-          suffixIcon: _hasText
-              ? IconButton(
-                  icon: const Icon(
-                    Icons.clear,
-                    size: IconSizes.sm,
-                    color: AppColors.textSecondary,
-                  ),
-                  onPressed: () {
-                    _controller.clear();
-                    widget.onClear?.call();
-                    widget.onChanged?.call('');
-                  },
-                )
-              : null,
-          filled: true,
-          fillColor: AppColors.surface,
-          border: BorderContrastDesign.buildEnhancedInputBorder(
-            radius: Radii.borderRadiusFull,
-          ),
-          enabledBorder: BorderContrastDesign.buildEnhancedInputBorder(
-            radius: Radii.borderRadiusFull,
-          ),
-          focusedBorder: BorderContrastDesign.buildEnhancedInputBorder(
-            color: BorderContrastDesign.borderFocused,
-            width: BorderContrastDesign.borderWidthFocused,
-            radius: Radii.borderRadiusFull,
-          ),
+  Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    return TextField(
+      controller: _controller,
+      onChanged: widget.onChanged,
+      style: AppTextStyles.bodyLarge,
+      decoration: InputDecoration(
+        hintText: widget.hint,
+        hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.textHint),
+        prefixIcon: const Icon(
+          Icons.search,
+          size: IconSizes.sm,
+          color: AppColors.textSecondary,
         ),
-      );
+        suffixIcon: _hasText
+            ? IconButton(
+                icon: const Icon(
+                  Icons.clear,
+                  size: IconSizes.sm,
+                  color: AppColors.textSecondary,
+                ),
+                onPressed: () {
+                  _controller.clear();
+                  widget.onClear?.call();
+                  widget.onChanged?.call('');
+                },
+              )
+            : null,
+        filled: true,
+        fillColor: AppColors.surface,
+        border: BorderContrastDesign.buildEnhancedInputBorder(
+          color: BorderContrastDesign.getBorderNormal(brightness),
+          radius: Radii.borderRadiusFull,
+        ),
+        enabledBorder: BorderContrastDesign.buildEnhancedInputBorder(
+          color: BorderContrastDesign.getBorderNormal(brightness),
+          radius: Radii.borderRadiusFull,
+        ),
+        focusedBorder: BorderContrastDesign.buildEnhancedInputBorder(
+          color: BorderContrastDesign.getBorderFocused(brightness),
+          width: BorderContrastDesign.borderWidthFocused,
+          radius: Radii.borderRadiusFull,
+        ),
+      ),
+    );
+  }
 }
