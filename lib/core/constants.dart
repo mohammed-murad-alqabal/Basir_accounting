@@ -89,24 +89,3 @@ class AppConfig {
   /// قالب الفاتورة الافتراضي
   static const String defaultInvoiceStyle = 'classic';
 }
-
-/// حالات الفاتورة
-///
-/// يحتوي على جميع الحالات الممكنة للفاتورة
-/// تُستخدم لتتبع دورة حياة الفاتورة
-class InvoiceStatus {
-  /// حالة المسودة - الفاتورة قيد الإنشاء
-  static const String draft = 'draft';
-
-  /// حالة مُصدرة - الفاتورة تم إصدارها للعميل
-  static const String issued = 'issued';
-
-  /// حالة مدفوعة - الفاتورة تم دفعها بالكامل
-  static const String paid = 'paid';
-
-  /// حالة مستحقة - الفاتورة تجاوزت تاريخ الاستحقاق
-  static const String overdue = 'overdue';
-
-  /// حالة ملغاة - الفاتورة تم إلغاؤها
-  static const String cancelled = 'cancelled';
-}

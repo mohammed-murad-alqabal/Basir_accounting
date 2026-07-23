@@ -34,8 +34,7 @@ class AppSectionHeader extends StatelessWidget {
         ],
         Text(
           title,
-          style: TextStyle(
-            fontSize: AppTypography.titleMedium,
+          style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
             color: color ?? AppColors.textPrimary,
           ),

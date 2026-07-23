@@ -1,10 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
-import 'package:basir_accounting_system/core/theme/tokens/color_tokens.dart';
-import 'package:basir_accounting_system/core/theme/tokens/spacing_tokens.dart';
-import 'package:basir_accounting_system/core/theme/tokens/typography_tokens.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/accounting/application/financial_year_service.dart';
-import 'package:basir_accounting_system/features/accounting/data/models/financial_year_model.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
@@ -21,17 +18,12 @@ class FiscalControlCenterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isar = ref.watch(isarProvider).value;
+    final repo = ref.watch(financialYearRepositoryProvider);
 
     return GlassScaffold(
       title: 'Fiscal Control Center',
-      body: StreamBuilder<List<FinancialYear>>(
-        stream: isar?.financialYearModels.watchLazy().asyncMap(
-                  (_) => ref
-                      .read(financialYearRepositoryProvider)
-                      .getAllFinancialYears(),
-                ) ??
-            Stream.value([]),
+      body: FutureBuilder<List<FinancialYear>>(
+        future: repo.getAllFinancialYears(),
         builder: (context, snapshot) {
           final years = snapshot.data ?? [];
 

@@ -52,9 +52,7 @@ abstract final class AppStateColors {
 
   /// Get selected background color based on brightness
   static Color getSelectedBackground(Brightness brightness) =>
-      brightness == Brightness.dark
-          ? selectedBackgroundDark
-          : selectedBackgroundLight;
+      brightness == Brightness.dark ? selectedBackgroundDark : selectedBackgroundLight;
 
   /// Get selected border color based on brightness
   static Color getSelectedBorder(Brightness brightness) =>
@@ -62,9 +60,7 @@ abstract final class AppStateColors {
 
   /// Get selected foreground color based on brightness
   static Color getSelectedForeground(Brightness brightness) =>
-      brightness == Brightness.dark
-          ? selectedForegroundDark
-          : selectedForegroundLight;
+      brightness == Brightness.dark ? selectedForegroundDark : selectedForegroundLight;
 
   /// Get focus border color based on brightness
   static Color getFocusBorder(Brightness brightness) =>
@@ -72,15 +68,11 @@ abstract final class AppStateColors {
 
   /// Get disabled background color based on brightness
   static Color getDisabledBackground(Brightness brightness) =>
-      brightness == Brightness.dark
-          ? disabledBackgroundDark
-          : disabledBackgroundLight;
+      brightness == Brightness.dark ? disabledBackgroundDark : disabledBackgroundLight;
 
   /// Get disabled foreground color based on brightness
   static Color getDisabledForeground(Brightness brightness) =>
-      brightness == Brightness.dark
-          ? disabledForegroundDark
-          : disabledForegroundLight;
+      brightness == Brightness.dark ? disabledForegroundDark : disabledForegroundLight;
 
   /// Get primary button background color for specific state
   static Color getPrimaryBackgroundColor(
@@ -115,12 +107,15 @@ abstract final class AppStateColors {
     Brightness brightness = Brightness.light,
   ]) {
     switch (state) {
-      case InteractiveState.disabled:
-        return getDisabledForeground(brightness);
+      case InteractiveState.normal:
+      case InteractiveState.hovered:
+      case InteractiveState.pressed:
+      case InteractiveState.focused:
+        return ButtonColors.primaryForeground;
       case InteractiveState.selected:
         return getSelectedForeground(brightness);
-      default:
-        return ButtonColors.primaryForeground;
+      case InteractiveState.disabled:
+        return getDisabledForeground(brightness);
     }
   }
 
@@ -157,12 +152,15 @@ abstract final class AppStateColors {
     Brightness brightness = Brightness.light,
   ]) {
     switch (state) {
-      case InteractiveState.disabled:
-        return getDisabledForeground(brightness);
+      case InteractiveState.normal:
+      case InteractiveState.hovered:
+      case InteractiveState.pressed:
+      case InteractiveState.focused:
+        return ButtonColors.secondaryForeground;
       case InteractiveState.selected:
         return getSelectedForeground(brightness);
-      default:
-        return ButtonColors.secondaryForeground;
+      case InteractiveState.disabled:
+        return getDisabledForeground(brightness);
     }
   }
 }

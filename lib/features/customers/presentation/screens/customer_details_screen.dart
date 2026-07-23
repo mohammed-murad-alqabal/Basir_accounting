@@ -65,8 +65,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
             Center(
               child: Text(
                 customer.name(isArabic: context.isArabic),
-                style: const TextStyle(
-                  fontSize: AppTypography.titleLarge,
+                style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppColors.textPrimary,
                 ),
@@ -112,8 +111,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(Spacing.md),
                   child: Text(
                     customer.notes!,
-                    style: const TextStyle(
-                      fontSize: AppTypography.bodyMedium,
+                    style: AppTextStyles.bodyMedium.copyWith(
                       color: AppColors.textSecondary,
                     ),
                   ),
@@ -144,8 +142,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
 
   Widget _buildSectionTitle(String title) => Text(
         title,
-        style: const TextStyle(
-          fontSize: AppTypography.titleMedium,
+        style: AppTextStyles.titleMedium.copyWith(
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
         ),
@@ -171,16 +168,14 @@ class CustomerDetailsScreen extends ConsumerWidget {
                     children: [
                       Text(
                         label,
-                        style: const TextStyle(
-                          fontSize: AppTypography.bodySmall,
+                        style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         value,
-                        style: const TextStyle(
-                          fontSize: AppTypography.bodyMedium,
+                        style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.textPrimary,
                           fontWeight: FontWeight.w500,
                         ),

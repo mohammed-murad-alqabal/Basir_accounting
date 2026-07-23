@@ -169,7 +169,7 @@ class _JournalEntryFormScreenState
   }
 
   /// Builds the metadata header (Date, Description, Standards).
-  Widget _buildHeader(AppIcons appIcons) => GlassCard(
+  Widget _buildHeader(AppIconsBase appIcons) => GlassCard(
         child: Column(
           children: [
             Row(
@@ -191,8 +191,7 @@ class _JournalEntryFormScreenState
                         ),
                         Text(
                           intl.DateFormat('yyyy-MM-dd').format(_date),
-                          style: const TextStyle(
-                            fontSize: AppTypography.bodyLarge,
+                          style: AppTextStyles.bodyLarge.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -239,7 +238,7 @@ class _JournalEntryFormScreenState
       );
 
   /// Renders the section for managing double-entry atomic lines.
-  Widget _buildLinesSection(AppIcons appIcons) => Column(
+  Widget _buildLinesSection(AppIconsBase appIcons) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -247,8 +246,7 @@ class _JournalEntryFormScreenState
             children: [
               Text(
                 context.l10n.labelJournalEntryLines,
-                style: const TextStyle(
-                  fontSize: AppTypography.titleMedium,
+                style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -268,7 +266,7 @@ class _JournalEntryFormScreenState
       );
 
   /// Renders a single journal line editor with account and currency support.
-  Widget _buildLineItem(int index, AppIcons appIcons) {
+  Widget _buildLineItem(int index, AppIconsBase appIcons) {
     final line = _lines[index];
     return GlassCard(
       margin: const EdgeInsets.only(bottom: Spacing.sm),

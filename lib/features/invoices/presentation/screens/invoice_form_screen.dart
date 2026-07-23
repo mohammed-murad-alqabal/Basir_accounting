@@ -230,8 +230,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         children: [
           Text(
             context.l10n.labelCustomer,
-            style: const TextStyle(
-              fontSize: AppTypography.bodyLarge,
+            style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -267,7 +266,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ],
       );
 
-  Widget _buildCurrencySelector(AppIcons appIcons) => Column(
+  Widget _buildCurrencySelector(AppIconsBase appIcons) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -276,8 +275,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               const SizedBox(width: Spacing.md),
               Text(
                 context.l10n.labelCurrency,
-                style: const TextStyle(
-                  fontSize: AppTypography.bodyLarge,
+                style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
                 ),
@@ -345,8 +343,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 children: [
                   Text(
                     label,
-                    style: const TextStyle(
-                      fontSize: AppTypography.bodyMedium,
+                    style: AppTextStyles.bodyMedium.copyWith(
                       color: AppColors.textSecondary,
                     ),
                   ),
@@ -357,8 +354,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                       locale: context.l10n.localeName,
                       calendarType: calendarType,
                     ),
-                    style: const TextStyle(
-                      fontSize: AppTypography.bodyLarge,
+                    style: AppTextStyles.bodyLarge.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
@@ -370,7 +366,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ),
       );
 
-  Widget _buildTaxRateField(AppIcons appIcons) => Row(
+  Widget _buildTaxRateField(AppIconsBase appIcons) => Row(
         children: [
           Icon(appIcons.percent, color: AppColors.primary),
           const SizedBox(width: Spacing.md),
@@ -380,16 +376,14 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               children: [
                 Text(
                   context.l10n.labelTaxRate,
-                  style: const TextStyle(
-                    fontSize: AppTypography.bodyMedium,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   '${(_taxRate * Decimal.fromInt(100)).toStringAsFixed(0)}%',
-                  style: const TextStyle(
-                    fontSize: AppTypography.bodyLarge,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
@@ -410,8 +404,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         children: [
           Text(
             context.l10n.labelInvoiceStatus,
-            style: const TextStyle(
-              fontSize: AppTypography.bodyLarge,
+            style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
@@ -451,7 +444,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         ],
       );
 
-  Widget _buildItemsSection(AppIcons appIcons) => AppCard(
+  Widget _buildItemsSection(AppIconsBase appIcons) => AppCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -460,8 +453,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               children: [
                 Text(
                   context.l10n.labelInvoiceItems,
-                  style: const TextStyle(
-                    fontSize: AppTypography.bodyLarge,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
@@ -480,9 +472,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   padding: const EdgeInsets.all(Spacing.lg),
                   child: Text(
                     context.l10n.msgNoItems,
-                    style: const TextStyle(
+                    style: AppTextStyles.bodyMedium.copyWith(
                       color: AppColors.textSecondary,
-                      fontSize: AppTypography.bodyMedium,
                     ),
                   ),
                 ),
@@ -593,10 +584,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           children: [
             Text(
               label,
-              style: TextStyle(
-                fontSize: isGrandTotal
-                    ? AppTypography.bodyLarge
-                    : AppTypography.bodyMedium,
+              style: (isGrandTotal
+                      ? AppTextStyles.bodyLarge
+                      : AppTextStyles.bodyMedium)
+                  .copyWith(
                 fontWeight: isGrandTotal ? FontWeight.bold : FontWeight.w500,
                 color: AppColors.textPrimary,
               ),
@@ -1196,8 +1187,7 @@ class _SuccessDialogState extends State<_SuccessDialog>
                 const SizedBox(height: Spacing.lg),
                 Text(
                   context.l10n.msgOperationSuccess,
-                  style: const TextStyle(
-                    fontSize: AppTypography.headlineMedium,
+                  style: AppTextStyles.headlineMedium.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),

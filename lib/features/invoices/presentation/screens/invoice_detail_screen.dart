@@ -97,7 +97,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildStatusCard(BuildContext ctx, AppIcons icons, bool isPaid) {
+  Widget _buildStatusCard(BuildContext ctx, AppIconsBase icons, bool isPaid) {
     final statusColor = invoice.getStatusColor(Theme.of(ctx).colorScheme);
     final statusIcon = invoice.getStatusIcon(icons);
 
@@ -161,7 +161,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildCustomerCard(BuildContext ctx, AppIcons icons) => AppCard(
+  Widget _buildCustomerCard(BuildContext ctx, AppIconsBase icons) => AppCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -190,7 +190,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
 
   Widget _buildInfoCard(
     BuildContext ctx,
-    AppIcons icons,
+    AppIconsBase icons,
     CalendarType cal,
   ) {
     if (invoice.currency != 'SAR') {

@@ -174,8 +174,7 @@ class _WarehouseTransferScreenState
         children: [
           Text(
             label,
-            style: const TextStyle(
-              fontSize: AppTypography.bodyMedium,
+            style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -198,7 +197,7 @@ class _WarehouseTransferScreenState
         ],
       );
 
-  Widget _buildItemsSection(AppIcons appIcons) => AppCard(
+  Widget _buildItemsSection(AppIconsBase appIcons) => AppCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -207,8 +206,7 @@ class _WarehouseTransferScreenState
               children: [
                 Text(
                   context.l10n.labelInvoiceItems,
-                  style: const TextStyle(
-                    fontSize: AppTypography.headlineSmall,
+                  style: AppTextStyles.headlineSmall.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),

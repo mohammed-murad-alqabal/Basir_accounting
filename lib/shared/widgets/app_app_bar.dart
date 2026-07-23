@@ -56,9 +56,7 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         title,
-        style: TextStyle(
-          fontSize: AppTypography.titleLarge,
-          fontWeight: FontWeight.w600,
+        style: AppTextStyles.titleLarge.copyWith(
           color: foregroundColor,
         ),
       ),
@@ -147,9 +145,7 @@ class AppSimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) => AppBar(
         title: Text(
           title,
-          style: TextStyle(
-            fontSize: AppTypography.titleLarge,
-            fontWeight: FontWeight.w600,
+          style: AppTextStyles.titleLarge.copyWith(
             color: foregroundColor,
           ),
         ),

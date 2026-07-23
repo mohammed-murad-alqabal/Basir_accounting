@@ -270,7 +270,9 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
     } on Exception catch (e) {
       if (!mounted) return;
       AppSnackbar.showError(
-          context, context.l10n.errContactAccess(e.toString()));
+        context,
+        context.l10n.errContactAccess(e.toString()),
+      );
     }
   }
 
