@@ -40,9 +40,8 @@ class DashboardBasirHeader extends StatelessWidget {
                   children: [
                     Text(
                       context.l10n.dashboardBasirSystemTitle,
-                      style: const TextStyle(
-                        color: Color(0xFFFFD700),
-                        fontSize: AppTypography.labelSmall,
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: const Color(0xFFFFD700),
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.2,
                       ),
@@ -50,18 +49,16 @@ class DashboardBasirHeader extends StatelessWidget {
                     const SizedBox(height: Spacing.xs),
                     Text(
                       context.l10n.dashboardWelcomeMessage,
-                      style: const TextStyle(
+                      style: AppTextStyles.headlineSmall.copyWith(
                         color: Colors.white,
-                        fontSize: AppTypography.headlineSmall,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: Spacing.xs),
                     Text(
                       context.l10n.dashboardMotto,
-                      style: const TextStyle(
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: Colors.white70,
-                        fontSize: AppTypography.bodySmall,
                       ),
                     ),
                   ],

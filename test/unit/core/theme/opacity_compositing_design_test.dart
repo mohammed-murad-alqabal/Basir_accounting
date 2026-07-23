@@ -12,7 +12,7 @@ void main() {
         background: background,
         opacity: 1,
       );
-      expect(composited.value, equals(foreground.value));
+      expect(composited.toARGB32(), equals(foreground.toARGB32()));
     });
 
     test('calculateCompositedColor with zero opacity uses background', () {
@@ -23,7 +23,7 @@ void main() {
         background: background,
         opacity: 0,
       );
-      expect(composited.value, equals(background.value));
+      expect(composited.toARGB32(), equals(background.toARGB32()));
     });
 
     test('verifyCompositedContrast returns true for high contrast pairs', () {
@@ -44,8 +44,7 @@ void main() {
     });
 
     // Property test: 100 random pairs, calculate composited color without error
-    test('Property: No exceptions for random color pairs and opacity values',
-        () {
+    test('Property: No exceptions for random color pairs and opacity values', () {
       for (var i = 0; i < 100; i++) {
         const foregrounds = [
           Colors.red,

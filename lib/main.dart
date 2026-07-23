@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:basir_accounting_system/core/assets/app_logo.dart';
+import 'package:basir_accounting_system/core/config/app_environment_config.dart';
 import 'package:basir_accounting_system/core/config/supabase_config.dart';
 import 'package:basir_accounting_system/core/constants.dart';
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
@@ -14,8 +15,7 @@ import 'package:basir_accounting_system/core/theme/services/font_customization_s
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/core/utils/provider_observer.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
-import 'package:basir_accounting_system/shared/widgets/error_widget.dart'
-    as basir;
+import 'package:basir_accounting_system/shared/widgets/error_widget.dart' as basir;
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,6 +31,8 @@ void main() {
 
         // Performance Optimization: Parallel initialization of lightweight services
         await Future.wait([
+          // تهيئة Environment Variables (must be first)
+          AppEnvironmentConfig.initialize(),
           // تهيئة Supabase (lightweight)
           SupabaseConfig.initialize(),
           // تهيئة FontManager (lightweight)
@@ -46,8 +48,7 @@ void main() {
 
         // إعداد شاشة الأخطاء العالمية
 
-        ErrorWidget.builder =
-            (details) => basir.GlobalErrorWidget(errorDetails: details);
+        ErrorWidget.builder = (details) => basir.GlobalErrorWidget(errorDetails: details);
 
         // تهيئة الخدمات الأساسية قبل البدء
         final container = ProviderContainer(
@@ -278,8 +279,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
                 Text(
                   AppConfig.appDescription,
-                  style: TextStyle(
-                    fontSize: AppTypography.bodyMedium,
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: const Color(0xFF003D82).withValues(alpha: 0.6),
                     fontFamily: 'Cairo',
                   ),
@@ -302,8 +302,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       const SizedBox(height: Spacing.md),
                       Text(
                         _status,
-                        style: TextStyle(
-                          fontSize: AppTypography.bodySmall,
+                        style: AppTextStyles.bodySmall.copyWith(
                           color: const Color(0xFF003D82).withValues(alpha: 0.5),
                         ),
                       ),

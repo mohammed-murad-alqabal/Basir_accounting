@@ -24,7 +24,7 @@ extension InvoiceUiExtensions on Invoice {
   }
 
   /// الحصول على أيقونة الحالة
-  IconData getStatusIcon(AppIcons appIcons) {
+  IconData getStatusIcon(AppIconsBase appIcons) {
     switch (status) {
       case InvoiceStatus.paid:
         return appIcons.check;

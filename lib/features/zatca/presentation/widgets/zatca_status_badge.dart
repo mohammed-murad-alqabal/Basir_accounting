@@ -1,5 +1,4 @@
-import 'package:basir_accounting_system/core/theme/tokens/color_tokens.dart';
-import 'package:basir_accounting_system/core/theme/tokens/typography_tokens.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/zatca/domain/zatca_types.dart';
 import 'package:flutter/material.dart';
 

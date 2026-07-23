@@ -89,6 +89,8 @@ firebase_options.dart
 !**/*_guide.md
 !**/*_manual.md
 !**/*_spec.md
+!lib/core/theme/tokens
+!lib/core/theme/tokens/*
 **/*secret*
 **/*credentials*
 **/.aws/
