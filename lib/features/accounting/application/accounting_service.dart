@@ -16,6 +16,7 @@ import 'package:basir_accounting_system/features/invoices/domain/entities/invoic
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
+import 'package:basir_accounting_system/features/vendors/domain/repositories/vendor_repository.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -49,6 +50,8 @@ class AccountingService extends _$AccountingService {
 
   CustomerRepository get _customerRepository =>
       ref.read(customerRepositoryProvider);
+
+  VendorRepository get _vendorRepository => ref.read(vendorRepositoryProvider);
 
   @override
   FutureOr<List<JournalEntry>> build() => _repository.getJournalEntries();
@@ -406,10 +409,9 @@ class AccountingService extends _$AccountingService {
 
     // Credit: Accounts Payable
     var payableAccountId = 'acc-2101'; // Default AP
-    final vendor =
-        await _customerRepository.getCustomerById(invoice.customerId);
-    if (vendor != null && vendor.receivableAccountId != null) {
-      payableAccountId = vendor.receivableAccountId!;
+    final vendor = await _vendorRepository.getVendorById(invoice.customerId);
+    if (vendor != null && vendor.payableAccountId != null) {
+      payableAccountId = vendor.payableAccountId!;
     }
 
     lines.add(
@@ -571,10 +573,9 @@ class AccountingService extends _$AccountingService {
     final lines = <JournalEntryLine>[];
 
     var payableAccountId = 'acc-2101';
-    final vendor =
-        await _customerRepository.getCustomerById(invoice.customerId);
-    if (vendor != null && vendor.receivableAccountId != null) {
-      payableAccountId = vendor.receivableAccountId!;
+    final vendor = await _vendorRepository.getVendorById(invoice.customerId);
+    if (vendor != null && vendor.payableAccountId != null) {
+      payableAccountId = vendor.payableAccountId!;
     }
 
     lines.add(

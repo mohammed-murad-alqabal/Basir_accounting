@@ -1,4 +1,5 @@
 import 'package:basir_accounting_system/core/config/app_environment_config.dart';
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// إعدادات Supabase (Supabase Configuration)
@@ -20,7 +21,12 @@ class SupabaseConfig {
 
   /// تهيئة Supabase
   static Future<void> initialize() async {
-    await Supabase.initialize(url: supabaseUrl, anonKey: anonKey);
+    try {
+      await Supabase.initialize(url: supabaseUrl, anonKey: anonKey);
+    } on Exception catch (e) {
+      debugPrint('⚠️ Failed to initialize Supabase: $e');
+      // Continue without Supabase if it fails to initialize
+    }
   }
 
   /// الحصول على العميل النشط
