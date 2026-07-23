@@ -253,8 +253,7 @@ class ButtonTestScreen extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     'اختبار الأزرار المحسنة (AppEnhancedButton)',
-                    style: TextStyle(
-                      fontSize: AppTypography.titleLarge,
+                    style: AppTextStyles.titleLarge.copyWith(
                       fontWeight: FontWeight.bold,
                       color: colorScheme.onPrimaryContainer,
                     ),
@@ -266,8 +265,7 @@ class ButtonTestScreen extends ConsumerWidget {
             Text(
               'تم ترحيل جميع الأزرار إلى AppEnhancedButton الذي يدعم '
               'مرونة النصوص، التدرجات اللونية، وتفادي القص.',
-              style: TextStyle(
-                fontSize: AppTypography.bodyMedium,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: colorScheme.onPrimaryContainer,
               ),
             ),
@@ -293,8 +291,7 @@ class ButtonTestScreen extends ConsumerWidget {
                 const SizedBox(width: Spacing.sm),
                 Text(
                   'ملاحظة',
-                  style: TextStyle(
-                    fontSize: AppTypography.titleMedium,
+                  style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     color: colorScheme.onTertiaryContainer,
                   ),
@@ -305,8 +302,7 @@ class ButtonTestScreen extends ConsumerWidget {
             Text(
               '• تم استبدال AppButton بـ AppEnhancedButton.\n'
               '• AppButton الآن يعتبر Deprecated.',
-              style: TextStyle(
-                fontSize: AppTypography.bodyMedium,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: colorScheme.onTertiaryContainer,
               ),
             ),
@@ -334,8 +330,7 @@ class ButtonTestScreen extends ConsumerWidget {
             Expanded(
               child: Text(
                 title,
-                style: TextStyle(
-                  fontSize: AppTypography.titleLarge,
+                style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.bold,
                   color: colorScheme.primary,
                 ),

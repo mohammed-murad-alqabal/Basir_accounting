@@ -1,6 +1,4 @@
-import 'package:basir_accounting_system/core/theme/tokens/color_tokens.dart';
-import 'package:basir_accounting_system/core/theme/tokens/spacing_tokens.dart';
-import 'package:basir_accounting_system/core/theme/tokens/typography_tokens.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/zatca/application/zatca_simulation_service.dart';
 import 'package:basir_accounting_system/features/zatca/domain/zatca_types.dart';
 import 'package:basir_accounting_system/shared/widgets/glass_card.dart';
@@ -179,7 +177,7 @@ class _ZatcaOnboardingScreenState extends ConsumerState<ZatcaOnboardingScreen> {
               ),
             ),
             const SizedBox(height: Spacing.md),
-            const Text(
+            Text(
               'This simulation device is now ready to report '
               'invoices to ZATCA Phase 2.',
               textAlign: TextAlign.center,
@@ -198,7 +196,7 @@ class _ZatcaOnboardingScreenState extends ConsumerState<ZatcaOnboardingScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'Compliance Status:',
                         style: AppTextStyles.labelMedium,
                       ),
@@ -211,7 +209,7 @@ class _ZatcaOnboardingScreenState extends ConsumerState<ZatcaOnboardingScreen> {
                     ],
                   ),
                   const Divider(),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Mode:', style: AppTextStyles.labelMedium),

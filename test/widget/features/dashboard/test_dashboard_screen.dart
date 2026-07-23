@@ -195,7 +195,7 @@ class _TestDashboardScreenState extends ConsumerState<TestDashboardScreen> {
   Widget _buildQuickActions(
     BuildContext context,
     WidgetRef ref,
-    AppIcons appIcons,
+    AppIconsBase appIcons,
     AnalyticsService? analytics,
   ) {
     final isGuestAsync = ref.watch(isGuestProvider);

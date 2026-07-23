@@ -55,8 +55,7 @@ class GlobalErrorWidget extends StatelessWidget {
                       Text(
                         context.l10n.errorTitle,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: AppTypography.headlineSmall,
+                        style: AppTextStyles.headlineSmall.copyWith(
                           fontWeight: FontWeight.bold,
                           color: AppColors.textPrimary,
                         ),
@@ -65,8 +64,7 @@ class GlobalErrorWidget extends StatelessWidget {
                       Text(
                         context.l10n.errorDescription,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: AppTypography.bodyMedium,
+                        style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),

@@ -23,7 +23,7 @@ part 'customer_model.g.dart';
 ///   name: 'أحمد محمد',
 ///   phone: '0501234567',
 ///   email: 'ahmed@example.com',
-///,);
+/// ,);
 ///
 /// final model = CustomerModel.fromEntity(customer,);
 /// await isar.customerModels.put(model,);
@@ -41,10 +41,10 @@ class CustomerModel {
   /// **الاستخدام:**
   /// ```dart
   /// final customer = Customer(
-  ///   id: 'customer-1',
-  ///   name: 'أحمد محمد',
-  ///   phone: '0501234567',
-  ///,);
+///   id: 'customer-1',
+///   name: 'أحمد محمد',
+///   phone: '0501234567',
+/// ,);
   ///
   /// final model = CustomerModel.fromEntity(customer,);
   /// await isar.customerModels.put(model,);
@@ -62,6 +62,7 @@ class CustomerModel {
     ..phone = customer.phone
     ..email = customer.email
     ..address = customer.address
+    ..notes = customer.notes
     ..createdAt = customer.createdAt
     ..updatedAt = customer.updatedAt
     ..creditLimit = customer.creditLimit
@@ -121,6 +122,9 @@ class CustomerModel {
   /// **مثال:** 'الرياض، حي النخيل، شارع الملك فهد'
   String? address;
 
+  /// ملاحظات عن العميل
+  String? notes;
+
   /// تاريخ إنشاء العميل
   ///
   /// يتم تعيينه تلقائيًا عند إنشاء عميل جديد.
@@ -175,6 +179,7 @@ class CustomerModel {
         phone: phone,
         email: email,
         address: address,
+        notes: notes,
         createdAt: createdAt,
         updatedAt: updatedAt,
         creditLimit: creditLimit,

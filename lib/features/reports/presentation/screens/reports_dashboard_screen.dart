@@ -216,8 +216,7 @@ class _ReportCard extends StatelessWidget {
                 const SizedBox(height: Spacing.md),
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: AppTypography.bodyLarge,
+                  style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),

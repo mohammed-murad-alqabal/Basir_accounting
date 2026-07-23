@@ -26,10 +26,9 @@ class ForensicGuardianScreen extends ConsumerWidget {
             const SizedBox(height: Spacing.lg),
             _buildIntegrityStats(health),
             const SizedBox(height: Spacing.lg),
-            const Text(
+            Text(
               'Hash Chain Sequence',
-              style: TextStyle(
-                fontSize: AppTypography.titleMedium,
+              style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -71,8 +70,7 @@ class ForensicGuardianScreen extends ConsumerWidget {
                 children: [
                   Text(
                     health.status.toString().split('.').last.toUpperCase(),
-                    style: TextStyle(
-                      fontSize: AppTypography.titleLarge,
+                    style: AppTextStyles.titleLarge.copyWith(
                       fontWeight: FontWeight.bold,
                       color: health.color,
                     ),
@@ -176,8 +174,7 @@ class _StatTile extends StatelessWidget {
             const SizedBox(height: Spacing.xs),
             Text(
               value,
-              style: TextStyle(
-                fontSize: AppTypography.titleLarge,
+              style: AppTextStyles.titleLarge.copyWith(
                 fontWeight: FontWeight.bold,
                 color: valueColor,
               ),

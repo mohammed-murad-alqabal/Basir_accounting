@@ -45,8 +45,7 @@ class DashboardCharts extends ConsumerWidget {
           const SizedBox(width: Spacing.xs),
           Text(
             title,
-            style: const TextStyle(
-              fontSize: AppTypography.titleMedium,
+            style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
@@ -68,9 +67,8 @@ class DashboardCharts extends ConsumerWidget {
             children: [
               Text(
                 context.l10n.dashboardStatsTitle,
-                style: const TextStyle(
+                style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: AppTypography.bodyLarge,
                 ),
               ),
               const SizedBox(height: Spacing.xl),
@@ -94,9 +92,8 @@ class DashboardCharts extends ConsumerWidget {
             children: [
               Text(
                 context.l10n.expenseDistributionTitle,
-                style: const TextStyle(
+                style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: AppTypography.bodyLarge,
                 ),
               ),
               const SizedBox(height: Spacing.xl),
