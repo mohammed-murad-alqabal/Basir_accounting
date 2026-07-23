@@ -3,6 +3,7 @@
 /// تهيئة وتحمل متغيرات البيئة من ملف .env
 library;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// بيئة التطبيق
@@ -21,14 +22,26 @@ enum AppEnvironment {
 class AppEnvironmentConfig {
   AppEnvironmentConfig._();
 
+  static bool _isInitialized = false;
+
   /// تهيئة متغيرات البيئة
   static Future<void> initialize() async {
-    await dotenv.load();
+    try {
+      await dotenv.load();
+      _isInitialized = true;
+    } on Exception catch (e) {
+      // If .env fails to load, continue without it (use defaults)
+      debugPrint('⚠️ Failed to load .env file: $e');
+      _isInitialized = false;
+    }
   }
+
+  /// الحصول على قيمة من dotenv.env, safely
+  static Map<String, String> get _safeEnv => _isInitialized ? dotenv.env : {};
 
   /// الحصول على بيئة التطبيق الحالية
   static AppEnvironment get environment {
-    final env = dotenv.env['ENVIRONMENT'] ?? 'development';
+    final env = _safeEnv['ENVIRONMENT'] ?? 'development';
     switch (env) {
       case 'staging':
         return AppEnvironment.staging;
@@ -46,22 +59,22 @@ class AppEnvironmentConfig {
   static bool get isProduction => environment == AppEnvironment.production;
 
   /// هل وضع التصحيح مفعل؟
-  static bool get isDebugMode => dotenv.env['DEBUG_MODE'] == 'true';
+  static bool get isDebugMode => _safeEnv['DEBUG_MODE'] == 'true';
 
   /// الحصول على قيمة من متغير البيئة
   static String? get(String key, [String? defaultValue]) =>
-      dotenv.env[key] ?? defaultValue;
+      _safeEnv[key] ?? defaultValue;
 
   /// الحصول على قيمة رقمية من متغير البيئة
   static int? getInt(String key, [int? defaultValue]) {
-    final value = dotenv.env[key];
+    final value = _safeEnv[key];
     if (value == null) return defaultValue;
     return int.tryParse(value) ?? defaultValue;
   }
 
   /// الحصول على قيمة منطقية من متغير البيئة
   static bool getBool(String key, {bool defaultValue = false}) {
-    final value = dotenv.env[key];
+    final value = _safeEnv[key];
     if (value == null) return defaultValue;
     return value.toLowerCase() == 'true';
   }
