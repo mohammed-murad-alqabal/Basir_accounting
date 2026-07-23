@@ -52,7 +52,9 @@ abstract final class AppStateColors {
 
   /// Get selected background color based on brightness
   static Color getSelectedBackground(Brightness brightness) =>
-      brightness == Brightness.dark ? selectedBackgroundDark : selectedBackgroundLight;
+      brightness == Brightness.dark
+          ? selectedBackgroundDark
+          : selectedBackgroundLight;
 
   /// Get selected border color based on brightness
   static Color getSelectedBorder(Brightness brightness) =>
@@ -60,7 +62,9 @@ abstract final class AppStateColors {
 
   /// Get selected foreground color based on brightness
   static Color getSelectedForeground(Brightness brightness) =>
-      brightness == Brightness.dark ? selectedForegroundDark : selectedForegroundLight;
+      brightness == Brightness.dark
+          ? selectedForegroundDark
+          : selectedForegroundLight;
 
   /// Get focus border color based on brightness
   static Color getFocusBorder(Brightness brightness) =>
@@ -68,11 +72,15 @@ abstract final class AppStateColors {
 
   /// Get disabled background color based on brightness
   static Color getDisabledBackground(Brightness brightness) =>
-      brightness == Brightness.dark ? disabledBackgroundDark : disabledBackgroundLight;
+      brightness == Brightness.dark
+          ? disabledBackgroundDark
+          : disabledBackgroundLight;
 
   /// Get disabled foreground color based on brightness
   static Color getDisabledForeground(Brightness brightness) =>
-      brightness == Brightness.dark ? disabledForegroundDark : disabledForegroundLight;
+      brightness == Brightness.dark
+          ? disabledForegroundDark
+          : disabledForegroundLight;
 
   /// Get primary button background color for specific state
   static Color getPrimaryBackgroundColor(

@@ -35,11 +35,14 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     final invoicesAsync = ref.watch(filteredInvoicesProvider);
     final statsAsync = ref.watch(invoiceStatisticsProvider);
     final appIcons = ref.watch(appIconsProvider);
-    final calendarType = ref.watch(calendarProvider).value ?? CalendarType.gregorian;
+    final calendarType =
+        ref.watch(calendarProvider).value ?? CalendarType.gregorian;
 
     // Trigger Cognitive Hint on first load
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (invoicesAsync.hasValue && invoicesAsync.value!.isEmpty && _selectedFilter == 'all') {
+      if (invoicesAsync.hasValue &&
+          invoicesAsync.value!.isEmpty &&
+          _selectedFilter == 'all') {
         showCognitiveHint(
           context,
           'هنا يمكنك متابعة جميع فواتيرك. ابدأ بإنشاء فاتورة جديدة '
@@ -75,7 +78,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           _buildFilterBar(),
           Expanded(
             child: invoicesAsync.when(
-              data: (invoices) => _buildInvoicesList(invoices, appIcons, calendarType),
+              data: (invoices) =>
+                  _buildInvoicesList(invoices, appIcons, calendarType),
               loading: () => ListView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
                 itemCount: 5,
@@ -116,7 +120,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
     );
   }
 
-  Widget _buildStatsHeader(AsyncValue<InvoiceStatistics> statsAsync) => Container(
+  Widget _buildStatsHeader(AsyncValue<InvoiceStatistics> statsAsync) =>
+      Container(
         padding: const EdgeInsets.all(Spacing.lg),
         decoration: BoxDecoration(
           color: AppColors.surface,
@@ -264,7 +269,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
           invoice.totalAmount,
           locale: context.l10n.localeName,
         );
-        final semanticsLabel = '${context.l10n.invoiceTitle(invoice.invoiceNumber)}, '
+        final semanticsLabel =
+            '${context.l10n.invoiceTitle(invoice.invoiceNumber)}, '
             '${invoice.customerName}, $dateStr, $amountStr, $statusText';
 
         return Semantics(
@@ -277,7 +283,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             leading: Container(
               padding: const EdgeInsets.all(Spacing.sm),
               decoration: BoxDecoration(
-                color: invoice.getStatusColor(Theme.of(context).colorScheme).withValues(alpha: 0.2),
+                color: invoice
+                    .getStatusColor(Theme.of(context).colorScheme)
+                    .withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(Radii.sm),
               ),
               child: Icon(
@@ -296,7 +304,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                 ),
               );
             },
-            onLongPress: () => _showInvoiceActions(invoice, appIcons, calendarType),
+            onLongPress: () =>
+                _showInvoiceActions(invoice, appIcons, calendarType),
           ),
         );
       },
@@ -399,7 +408,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       final pdfBytes = await pdfService.generateInvoice(
         invoice,
         customer,
-        primaryColor: primaryColor != null ? PdfColor.fromInt(primaryColor.toARGB32()) : null,
+        primaryColor: primaryColor != null
+            ? PdfColor.fromInt(primaryColor.toARGB32())
+            : null,
       );
 
       if (!mounted) return;
@@ -428,7 +439,8 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       final customerRepo = ref.read(customerRepositoryProvider);
       final customer = await customerRepo.getCustomerById(invoice.customerId);
 
-      if (customer == null || (customer.phone == null || customer.phone!.isEmpty)) {
+      if (customer == null ||
+          (customer.phone == null || customer.phone!.isEmpty)) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(context.l10n.errorCustomerPhone)),
@@ -444,7 +456,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
         final pdfBytes = await pdfService.generateInvoice(
           invoice,
           customer,
-          primaryColor: primaryColor != null ? PdfColor.fromInt(primaryColor.toARGB32()) : null,
+          primaryColor: primaryColor != null
+              ? PdfColor.fromInt(primaryColor.toARGB32())
+              : null,
         );
         if (!mounted) return;
         await sharingService.sharePdfFile(

@@ -35,12 +35,14 @@ void main() {
     });
 
     // Property 12: Disabled state has sufficient contrast
-    test('Property 12: Disabled state has sufficient contrast (light and dark)', () {
+    test('Property 12: Disabled state has sufficient contrast (light and dark)',
+        () {
       const lightBackground = Colors.white;
       const darkBackground = AppPalette.darkBackground;
       for (final brightness in Brightness.values) {
         final foreground = AppStateColors.getDisabledForeground(brightness);
-        final background = brightness == Brightness.light ? lightBackground : darkBackground;
+        final background =
+            brightness == Brightness.light ? lightBackground : darkBackground;
         final contrast = StateContrastCalculator.calculateContrastRatio(
           foreground,
           background,
@@ -54,7 +56,8 @@ void main() {
     });
 
     // Property 13: Selected state has sufficient contrast
-    test('Property 13: Selected state has sufficient contrast (light and dark)', () {
+    test('Property 13: Selected state has sufficient contrast (light and dark)',
+        () {
       for (final brightness in Brightness.values) {
         final background = AppStateColors.getSelectedBackground(brightness);
         final foreground = AppStateColors.getSelectedForeground(brightness);
@@ -95,8 +98,10 @@ void main() {
       const darkForeground = Colors.white;
 
       for (final brightness in Brightness.values) {
-        final background = brightness == Brightness.light ? lightBackground : darkBackground;
-        final foreground = brightness == Brightness.light ? lightForeground : darkForeground;
+        final background =
+            brightness == Brightness.light ? lightBackground : darkBackground;
+        final foreground =
+            brightness == Brightness.light ? lightForeground : darkForeground;
 
         final composited = OpacityCompositingDesign.calculateCompositedColor(
           foreground: foreground,

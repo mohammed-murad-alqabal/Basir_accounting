@@ -41,10 +41,10 @@ class CustomerModel {
   /// **الاستخدام:**
   /// ```dart
   /// final customer = Customer(
-///   id: 'customer-1',
-///   name: 'أحمد محمد',
-///   phone: '0501234567',
-/// ,);
+  ///   id: 'customer-1',
+  ///   name: 'أحمد محمد',
+  ///   phone: '0501234567',
+  /// ,);
   ///
   /// final model = CustomerModel.fromEntity(customer,);
   /// await isar.customerModels.put(model,);

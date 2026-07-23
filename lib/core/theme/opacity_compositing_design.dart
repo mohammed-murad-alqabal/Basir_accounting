@@ -11,12 +11,9 @@ abstract final class OpacityCompositingDesign {
   }) {
     final alpha = (opacity * 255).round();
 
-    final r =
-        ((foreground.r * alpha) + (background.r * (255 - alpha))) ~/ 255;
-    final g =
-        ((foreground.g * alpha) + (background.g * (255 - alpha))) ~/ 255;
-    final b =
-        ((foreground.b * alpha) + (background.b * (255 - alpha))) ~/ 255;
+    final r = ((foreground.r * alpha) + (background.r * (255 - alpha))) ~/ 255;
+    final g = ((foreground.g * alpha) + (background.g * (255 - alpha))) ~/ 255;
+    final b = ((foreground.b * alpha) + (background.b * (255 - alpha))) ~/ 255;
 
     return Color.fromARGB(255, r, g, b);
   }
