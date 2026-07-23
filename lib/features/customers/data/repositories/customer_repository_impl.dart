@@ -67,7 +67,8 @@ class CustomerRepositoryImpl implements CustomerRepository {
   @override
   Future<List<Customer>> getAllCustomers() async {
     try {
-      final models = await isar.customerModels.filter().userIdEqualTo(userId).findAll();
+      final models =
+          await isar.customerModels.filter().userIdEqualTo(userId).findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
       throw Exception('خطأ في جلب العملاء: $e');

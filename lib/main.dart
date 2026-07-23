@@ -15,7 +15,8 @@ import 'package:basir_accounting_system/core/theme/services/font_customization_s
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/core/utils/provider_observer.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
-import 'package:basir_accounting_system/shared/widgets/error_widget.dart' as basir;
+import 'package:basir_accounting_system/shared/widgets/error_widget.dart'
+    as basir;
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,7 +49,8 @@ void main() {
 
         // إعداد شاشة الأخطاء العالمية
 
-        ErrorWidget.builder = (details) => basir.GlobalErrorWidget(errorDetails: details);
+        ErrorWidget.builder =
+            (details) => basir.GlobalErrorWidget(errorDetails: details);
 
         // تهيئة الخدمات الأساسية قبل البدء
         final container = ProviderContainer(
