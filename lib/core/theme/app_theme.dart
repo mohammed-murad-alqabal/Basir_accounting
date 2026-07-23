@@ -385,7 +385,6 @@ abstract final class AppTheme {
         error: AppColors.error,
         errorContainer: AppColors.errorLight,
         onErrorContainer: AppColors.error,
-        onSurface: AppColors.textPrimary,
         surfaceContainerHighest: AppColors.surfaceVariant,
         onSurfaceVariant: AppColors.textSecondary,
 
@@ -433,7 +432,7 @@ abstract final class AppTheme {
   // TextTheme الموحد
   // ═══════════════════════════════════════════════════════════════════════════
 
-  static TextTheme get _textTheme => const TextTheme(
+  static TextTheme get _textTheme => TextTheme(
         // العناوين الكبيرة
         displayLarge: AppTextStyles.headlineLarge,
         displayMedium: AppTextStyles.headlineMedium,

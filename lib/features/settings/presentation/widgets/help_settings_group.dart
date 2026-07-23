@@ -70,7 +70,7 @@ class HelpSettingsGroup extends ConsumerWidget {
     }
   }
 
-  void _showAboutDialog(BuildContext context, AppIcons appIcons) {
+  void _showAboutDialog(BuildContext context, AppIconsBase appIcons) {
     showAboutDialog(
       context: context,
       applicationName: context.l10n.appName,

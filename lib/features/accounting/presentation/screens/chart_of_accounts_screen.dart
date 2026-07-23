@@ -319,13 +319,13 @@ class _AccountTreeItem extends StatelessWidget {
                     children: [
                       Text(
                         '${account.code} - ${account.nameAr}',
-                        style: TextStyle(
+                        style: (account.isParent
+                                ? AppTextStyles.titleMedium
+                                : AppTextStyles.bodyLarge)
+                            .copyWith(
                           fontWeight: account.isParent
                               ? FontWeight.bold
                               : FontWeight.w600,
-                          fontSize: account.isParent
-                              ? AppTypography.titleMedium
-                              : AppTypography.bodyLarge,
                         ),
                       ),
                       Text(

@@ -14,7 +14,7 @@ class IconCustomizationState {
   final IconPack iconPack;
 
   /// الحصول على بيانات الأيقونات بناءً على الحزمة
-  AppIcons get icons {
+  AppIconsBase get icons {
     switch (iconPack) {
       case IconPack.material:
         return const MaterialAppIcons();
@@ -95,7 +95,7 @@ final iconCustomizationProvider =
 );
 
 /// مزود الأيقونات الحالي لسهولة الوصول
-final appIconsProvider = Provider<AppIcons>((ref) {
+final appIconsProvider = Provider<AppIconsBase>((ref) {
   final state = ref.watch(iconCustomizationProvider).value;
   return state?.icons ?? const MaterialAppIcons();
 });

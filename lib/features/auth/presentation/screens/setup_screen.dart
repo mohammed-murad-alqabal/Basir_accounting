@@ -190,8 +190,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
           const SizedBox(height: Spacing.lg),
           Text(
             context.l10n.setupTitle,
-            style: const TextStyle(
-              fontSize: AppTypography.headlineSmall,
+            style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
@@ -199,8 +198,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
           const SizedBox(height: Spacing.sm),
           Text(
             context.l10n.setupSubtitle,
-            style: const TextStyle(
-              fontSize: AppTypography.bodyMedium,
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary,
             ),
           ),

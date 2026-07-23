@@ -122,7 +122,6 @@ abstract final class AppSnackbar {
           ],
         ),
         backgroundColor: backgroundColor,
-        duration: const Duration(seconds: 4),
         behavior: SnackBarBehavior.floating,
         shape: const RoundedRectangleBorder(
           borderRadius: Radii.borderRadiusMd,

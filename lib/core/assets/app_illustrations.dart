@@ -36,8 +36,7 @@ class EmptyStateIllustration extends StatelessWidget {
               isCustomers
                   ? 'قاعدة بيانات العملاء جاهزة'
                   : 'سجل الفواتير الذكي منظم',
-              style: const TextStyle(
-                fontSize: AppTypography.titleMedium,
+              style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.primary,
               ),
@@ -48,8 +47,7 @@ class EmptyStateIllustration extends StatelessWidget {
               isCustomers
                   ? 'ابدأ بإضافة أول شريك نجاح لك'
                   : 'فاتورتك الأولى بانتظارك',
-              style: const TextStyle(
-                fontSize: AppTypography.bodyMedium,
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,

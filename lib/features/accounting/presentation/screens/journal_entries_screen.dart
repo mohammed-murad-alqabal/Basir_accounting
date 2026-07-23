@@ -2,8 +2,7 @@ import 'dart:typed_data';
 
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
-import 'package:basir_accounting_system/core/theme/tokens/color_tokens.dart';
-import 'package:basir_accounting_system/core/theme/tokens/spacing_tokens.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/providers/journal_entry_providers.dart';
@@ -57,8 +56,10 @@ class JournalEntriesScreen extends ConsumerWidget {
         data: (entries) {
           if (entries.isEmpty) {
             return Center(
-                child: AppEmptyState(
-                    title: context.l10n.emptyJournalEntriesMessage));
+              child: AppEmptyState(
+                title: context.l10n.emptyJournalEntriesMessage,
+              ),
+            );
           }
 
           return ListView.builder(
@@ -436,7 +437,9 @@ class JournalEntriesScreen extends ConsumerWidget {
     } on Exception catch (e) {
       if (!context.mounted) return;
       AppSnackbar.showError(
-          context, '${context.l10n.errorExportingReport}: $e');
+        context,
+        '${context.l10n.errorExportingReport}: $e',
+      );
     }
   }
 }

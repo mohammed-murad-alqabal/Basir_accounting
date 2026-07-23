@@ -227,7 +227,9 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Future<void> _showLogoutDialog(
-      BuildContext context, SettingsController controller) async {
+    BuildContext context,
+    SettingsController controller,
+  ) async {
     final confirmed = await AppDialog.showConfirmation(
       context,
       title: context.l10n.logoutLabel,

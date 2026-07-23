@@ -340,7 +340,6 @@ void main() {
             appBar: AppSimpleAppBar(
               title: 'Test',
               backgroundColor: customBgColor,
-              foregroundColor: customFgColor,
             ),
           ),
         ),

@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 class StateContrastCalculator {
   /// Calculate relative luminance as per WCAG 2.1
   static double calculateRelativeLuminance(Color color) {
-    final r = _linearize(color.red / 255.0);
-    final g = _linearize(color.green / 255.0);
-    final b = _linearize(color.blue / 255.0);
+    final r = _linearize(color.r / 255.0);
+    final g = _linearize(color.g / 255.0);
+    final b = _linearize(color.b / 255.0);
 
     return 0.2126 * r + 0.7152 * g + 0.0722 * b;
   }
@@ -35,9 +35,7 @@ class StateContrastCalculator {
   /// Darken a color by [percentage] (0.0 to 1.0)
   static Color darken(Color color, double percentage) {
     final hsl = HSLColor.fromColor(color);
-    return hsl
-        .withLightness((hsl.lightness * (1 - percentage)).clamp(0.0, 1.0))
-        .toColor();
+    return hsl.withLightness((hsl.lightness * (1 - percentage)).clamp(0.0, 1.0)).toColor();
   }
 
   /// Lighten a color by [percentage] (0.0 to 1.0)
@@ -63,9 +61,9 @@ class StateContrastCalculator {
   }
 
   static _LabColor _rgbToLab(Color color) {
-    var r = color.red / 255.0;
-    var g = color.green / 255.0;
-    var b = color.blue / 255.0;
+    var r = color.r / 255.0;
+    var g = color.g / 255.0;
+    var b = color.b / 255.0;
 
     r = r > 0.04045 ? pow((r + 0.055) / 1.055, 2.4).toDouble() : r / 12.92;
     g = g > 0.04045 ? pow((g + 0.055) / 1.055, 2.4).toDouble() : g / 12.92;

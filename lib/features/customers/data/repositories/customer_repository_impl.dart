@@ -67,8 +67,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
   @override
   Future<List<Customer>> getAllCustomers() async {
     try {
-      final models =
-          await isar.customerModels.filter().userIdEqualTo(userId).findAll();
+      final models = await isar.customerModels.filter().userIdEqualTo(userId).findAll();
       return models.map((model) => model.toEntity()).toList();
     } on Exception catch (e) {
       throw Exception('خطأ في جلب العملاء: $e');
@@ -175,11 +174,19 @@ class CustomerRepositoryImpl implements CustomerRepository {
         existingModel
           ..nameAr = customer.nameAr
           ..nameEn = customer.nameEn
+          ..taxNumber = customer.taxNumber
           ..phone = customer.phone
           ..email = customer.email
           ..address = customer.address
-          ..updatedAt = customer.updatedAt
-          ..userId = userId;
+          ..notes = customer.notes
+          ..creditLimit = customer.creditLimit
+          ..balance = customer.balance
+          ..receivableAccountId = customer.receivableAccountId
+          ..userId = userId
+          ..syncStatus = customer.syncStatus
+          ..serverUpdatedAt = customer.serverUpdatedAt
+          ..isDeleted = customer.isDeleted
+          ..updatedAt = customer.updatedAt;
 
         // حفظ التحديثات
         await isar.customerModels.put(existingModel);

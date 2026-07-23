@@ -89,47 +89,6 @@ void main() {
     });
   });
 
-  group('InvoiceStatus', () {
-    test('all statuses should be defined', () {
-      expect(InvoiceStatus.draft, equals('draft'));
-      expect(InvoiceStatus.issued, equals('issued'));
-      expect(InvoiceStatus.paid, equals('paid'));
-      expect(InvoiceStatus.overdue, equals('overdue'));
-      expect(InvoiceStatus.cancelled, equals('cancelled'));
-    });
-
-    test('all statuses should be non-empty strings', () {
-      expect(InvoiceStatus.draft, isNotEmpty);
-      expect(InvoiceStatus.issued, isNotEmpty);
-      expect(InvoiceStatus.paid, isNotEmpty);
-      expect(InvoiceStatus.overdue, isNotEmpty);
-      expect(InvoiceStatus.cancelled, isNotEmpty);
-    });
-
-    test('all statuses should be unique', () {
-      final statuses = [
-        InvoiceStatus.draft,
-        InvoiceStatus.issued,
-        InvoiceStatus.paid,
-        InvoiceStatus.overdue,
-        InvoiceStatus.cancelled,
-      ];
-      final uniqueStatuses = statuses.toSet();
-      expect(statuses.length, equals(uniqueStatuses.length));
-    });
-
-    test('all statuses should be lowercase', () {
-      expect(InvoiceStatus.draft, equals(InvoiceStatus.draft.toLowerCase()));
-      expect(InvoiceStatus.issued, equals(InvoiceStatus.issued.toLowerCase()));
-      expect(InvoiceStatus.paid, equals(InvoiceStatus.paid.toLowerCase()));
-      expect(
-        InvoiceStatus.overdue,
-        equals(InvoiceStatus.overdue.toLowerCase()),
-      );
-      expect(
-        InvoiceStatus.cancelled,
-        equals(InvoiceStatus.cancelled.toLowerCase()),
-      );
-    });
-  });
+  // Note: InvoiceStatus has been migrated to an enum in features/invoices/domain/entities/invoice_status.dart
+  // Tests for InvoiceStatus should be in invoice_status_test.dart
 }
