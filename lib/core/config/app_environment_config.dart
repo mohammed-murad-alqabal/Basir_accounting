@@ -49,7 +49,8 @@ class AppEnvironmentConfig {
   static bool get isDebugMode => dotenv.env['DEBUG_MODE'] == 'true';
 
   /// الحصول على قيمة من متغير البيئة
-  static String? get(String key, [String? defaultValue]) => dotenv.env[key] ?? defaultValue;
+  static String? get(String key, [String? defaultValue]) =>
+      dotenv.env[key] ?? defaultValue;
 
   /// الحصول على قيمة رقمية من متغير البيئة
   static int? getInt(String key, [int? defaultValue]) {
