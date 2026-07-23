@@ -99,8 +99,7 @@ void main() {
     // Property test: 100 random colors check contrast ratio is positive
     test(
         'Property: Contrast ratio always positive for any color pair '
-        '(100 random runs)',
-        () {
+        '(100 random runs)', () {
       final random = Random();
       for (var i = 0; i < 100; i++) {
         final color1 = Color.fromARGB(

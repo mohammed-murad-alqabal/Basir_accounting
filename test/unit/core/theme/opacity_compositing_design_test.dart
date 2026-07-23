@@ -44,7 +44,8 @@ void main() {
     });
 
     // Property test: 100 random pairs, calculate composited color without error
-    test('Property: No exceptions for random color pairs and opacity values', () {
+    test('Property: No exceptions for random color pairs and opacity values',
+        () {
       for (var i = 0; i < 100; i++) {
         const foregrounds = [
           Colors.red,
