@@ -7,9 +7,6 @@ part 'journal_entry_model.g.dart';
 
 /// نموذج بيانات القيد المحاسبي للتخزين في Isar.
 @collection
-
-/// نموذج بيانات القيد المحاسبي للتخزين في Isar.
-@collection
 class JournalEntryModel {
   /// مُنشئ افتراضي.
   JournalEntryModel();

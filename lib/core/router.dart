@@ -1,16 +1,27 @@
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/account_form_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/aging_reports_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/balance_sheet_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/cash_flow_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/cash_reconciliation_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/chart_of_accounts_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/entity_transactions_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/financial_calculator_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/financial_year_form_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/fiscal_control_center_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/income_statement_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entries_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entry_detail_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entry_form_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/reports_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/strategic_outlook_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/treasury_dashboard_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/trial_balance_screen.dart';
+import 'package:basir_accounting_system/features/accounting/presentation/screens/voucher_form_screen.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/voucher_list_screen.dart';
 import 'package:basir_accounting_system/features/assets/presentation/screens/asset_form_screen.dart';
 import 'package:basir_accounting_system/features/assets/presentation/screens/assets_screen.dart';
@@ -35,6 +46,12 @@ import 'package:basir_accounting_system/features/invoices/presentation/screens/i
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoices_screen.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/returns_and_damages_screen.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/audit_trail_report_screen.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/financial_report_screen.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/general_ledger_screen.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/intelligence_screen.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/reports_dashboard_screen.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/smart_tax_report_screen.dart';
 import 'package:basir_accounting_system/features/settings/presentation/screens/barcode_settings_screen.dart';
 import 'package:basir_accounting_system/features/settings/presentation/screens/cloud_backup_screen.dart';
 import 'package:basir_accounting_system/features/settings/presentation/screens/excel_import_screen.dart';
@@ -238,6 +255,83 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const BarcodeCreationScreen());
       case '/barcode-settings':
         return MaterialPageRoute(builder: (_) => const BarcodeSettingsScreen());
+      case '/chart-of-accounts':
+        return MaterialPageRoute(builder: (_) => const ChartOfAccountsScreen());
+      case '/journal-entries':
+        return MaterialPageRoute(builder: (_) => const JournalEntriesScreen());
+      case '/journal-entry-form':
+        final args = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(
+          builder: (_) => JournalEntryFormScreen(
+            entry: args?['entry'] as JournalEntry?,
+          ),
+        );
+      case '/balance-sheet':
+        return MaterialPageRoute(builder: (_) => const BalanceSheetScreen());
+      case '/income-statement':
+        return MaterialPageRoute(builder: (_) => const IncomeStatementScreen());
+      case '/cash-flow':
+        return MaterialPageRoute(builder: (_) => const CashFlowScreen());
+      case '/trial-balance':
+        return MaterialPageRoute(builder: (_) => const TrialBalanceScreen());
+      case '/aging-reports':
+        return MaterialPageRoute(builder: (_) => const AgingReportsScreen());
+      case '/reports':
+        return MaterialPageRoute(
+          builder: (_) => const ReportingOverviewScreen(),
+        );
+      case '/voucher-form':
+        final args = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(
+          builder: (_) => VoucherFormScreen(
+            type: args?['type'] as VoucherType? ?? VoucherType.receipt,
+          ),
+        );
+      case '/reports-dashboard':
+        return MaterialPageRoute(
+          builder: (_) => const ReportsDashboardScreen(),
+        );
+      case '/general-ledger':
+        final args = settings.arguments as Map<String, dynamic>?;
+        if (args == null ||
+            args['accountId'] == null ||
+            args['accountName'] == null ||
+            args['fromDate'] == null ||
+            args['toDate'] == null) {
+          return MaterialPageRoute(
+            builder: (context) => Scaffold(
+              body: Center(
+                child: Text(
+                  context.l10n.errorScreenNotFound(settings.name ?? ''),
+                ),
+              ),
+            ),
+          );
+        }
+        return MaterialPageRoute(
+          builder: (_) => GeneralLedgerScreen(
+            accountId: args['accountId'] as String,
+            accountName: args['accountName'] as String,
+            fromDate: args['fromDate'] as DateTime,
+            toDate: args['toDate'] as DateTime,
+          ),
+        );
+      case '/financial-report':
+        final args = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(
+          builder: (_) => FinancialReportScreen(
+            reportType: args?['reportType'] as FinancialReportType? ??
+                FinancialReportType.incomeStatement,
+          ),
+        );
+      case '/audit-trail-report':
+        return MaterialPageRoute(
+          builder: (_) => const AuditTrailReportScreen(),
+        );
+      case '/smart-tax-report':
+        return MaterialPageRoute(builder: (_) => const SmartTaxReportScreen());
+      case '/intelligence':
+        return MaterialPageRoute(builder: (_) => const IntelligenceScreen());
       case '/entity-transactions':
         final args = settings.arguments as Map<String, dynamic>?;
         if (args == null) {
