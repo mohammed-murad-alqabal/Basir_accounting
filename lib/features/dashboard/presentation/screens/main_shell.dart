@@ -37,7 +37,8 @@ class MainShell extends ConsumerStatefulWidget {
   ConsumerState<MainShell> createState() => _MainShellState();
 }
 
-class _MainShellState extends ConsumerState<MainShell> with TickerProviderStateMixin {
+class _MainShellState extends ConsumerState<MainShell>
+    with TickerProviderStateMixin {
   late int _selectedIndex;
   late AnimationController _indicatorController;
   late AnimationController _pageTransitionController;
@@ -230,7 +231,9 @@ class _MainShellState extends ConsumerState<MainShell> with TickerProviderStateM
                       curve: AnimationCurves.fastOutSlowIn,
                       padding: EdgeInsets.all(isSelected ? Spacing.xs : 0),
                       decoration: BoxDecoration(
-                        color: isSelected ? AppColors.primaryLight : Colors.transparent,
+                        color: isSelected
+                            ? AppColors.primaryLight
+                            : Colors.transparent,
                         borderRadius: BorderRadius.circular(Radii.sm),
                         boxShadow: isSelected
                             ? [
@@ -247,7 +250,9 @@ class _MainShellState extends ConsumerState<MainShell> with TickerProviderStateM
                       child: Icon(
                         item.icon,
                         size: IconSizes.md,
-                        color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                        color: isSelected
+                            ? AppColors.primary
+                            : AppColors.textSecondary,
                       ),
                     ),
                   ),
@@ -256,8 +261,11 @@ class _MainShellState extends ConsumerState<MainShell> with TickerProviderStateM
                     duration: _indicatorUpdateDuration,
                     curve: AnimationCurves.fastOutSlowIn,
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: isSelected ? AppColors.primary : AppColors.textSecondary,
-                      fontWeight: isSelected ? FontWeights.bold : FontWeights.medium,
+                      color: isSelected
+                          ? AppColors.primary
+                          : AppColors.textSecondary,
+                      fontWeight:
+                          isSelected ? FontWeights.bold : FontWeights.medium,
                     ),
                     child: Text(
                       item.label,

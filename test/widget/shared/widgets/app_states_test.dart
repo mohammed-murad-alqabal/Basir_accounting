@@ -45,7 +45,8 @@ void main() {
       expect(pressed, isTrue);
     });
 
-    testWidgets('AppEmptyState مع أيقونة تعرض الأيقونة بحجم 80px و padding Spacing.xl', (tester) async {
+    testWidgets('AppEmptyState مع أيقونة تعرض الأيقونة بحجم 80px و padding Spacing.xl',
+        (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -57,19 +58,27 @@ void main() {
       final icon = tester.widget<Icon>(find.byIcon(Icons.inbox));
       expect(icon.size, 80);
       final padding = tester.widget<Padding>(
-        find.descendant(of: find.byType(AppEmptyState), matching: find.byType(Padding)).first,
+        find
+            .descendant(
+              of: find.byType(AppEmptyState),
+              matching: find.byType(Padding),
+            )
+            .first,
       );
       expect(padding.padding, const EdgeInsets.all(Spacing.xl));
     });
 
-    testWidgets('AppLoadingIndicator يعرض CircularProgressIndicator بحجم و stroke معطّلين', (tester) async {
+    testWidgets('AppLoadingIndicator يعرض CircularProgressIndicator بحجم و stroke معطّلين',
+        (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(body: AppLoadingIndicator(size: 48, strokeWidth: 4)),
         ),
       );
 
-      final indicator = tester.widget<CircularProgressIndicator>(find.byType(CircularProgressIndicator));
+      final indicator = tester.widget<CircularProgressIndicator>(
+        find.byType(CircularProgressIndicator),
+      );
       expect(indicator.strokeWidth, 4);
       expect(indicator.strokeCap, StrokeCap.round);
       final sized = tester.widget<SizedBox>(find.byType(SizedBox).first);

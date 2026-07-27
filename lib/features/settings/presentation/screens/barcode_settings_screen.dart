@@ -13,7 +13,8 @@ class BarcodeSettingsScreen extends ConsumerStatefulWidget {
   const BarcodeSettingsScreen({super.key});
 
   @override
-  ConsumerState<BarcodeSettingsScreen> createState() => _BarcodeSettingsScreenState();
+  ConsumerState<BarcodeSettingsScreen> createState() =>
+      _BarcodeSettingsScreenState();
 }
 
 class _BarcodeSettingsScreenState extends ConsumerState<BarcodeSettingsScreen> {
@@ -143,7 +144,8 @@ class _BarcodeSettingsScreenState extends ConsumerState<BarcodeSettingsScreen> {
                 child: ChoiceChip(
                   label: const Text('طابعة حرارية'),
                   selected: _printerType == PrinterType.thermal,
-                  onSelected: (val) => setState(() => _printerType = PrinterType.thermal),
+                  onSelected: (val) =>
+                      setState(() => _printerType = PrinterType.thermal),
                 ),
               ),
               const SizedBox(width: Spacing.md),
@@ -151,7 +153,8 @@ class _BarcodeSettingsScreenState extends ConsumerState<BarcodeSettingsScreen> {
                 child: ChoiceChip(
                   label: const Text('ورق A4 عادى'),
                   selected: _printerType == PrinterType.a4,
-                  onSelected: (val) => setState(() => _printerType = PrinterType.a4),
+                  onSelected: (val) =>
+                      setState(() => _printerType = PrinterType.a4),
                 ),
               ),
             ],

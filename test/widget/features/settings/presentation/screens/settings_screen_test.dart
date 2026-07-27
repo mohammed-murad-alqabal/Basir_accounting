@@ -164,7 +164,10 @@ void main() {
         expect(appearanceSemanticsList, isNotEmpty);
 
         final appearanceSemantics = appearanceSemanticsList.first;
-        expect(appearanceSemantics.properties.label, l10n.appearanceSettingsTitle);
+        expect(
+          appearanceSemantics.properties.label,
+          l10n.appearanceSettingsTitle,
+        );
         expect(appearanceSemantics.properties.button, isTrue);
       });
 
