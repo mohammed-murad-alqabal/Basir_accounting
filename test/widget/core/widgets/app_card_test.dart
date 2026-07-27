@@ -32,7 +32,8 @@ void main() {
       expect(find.text('محتوى البطاقة'), findsOneWidget);
     });
 
-    testWidgets('should display isSelected border (light mode)', (tester) async {
+    testWidgets('should display isSelected border (light mode)',
+        (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           theme: AppTheme.lightTheme,
@@ -359,13 +360,16 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (w) => w is Semantics && (w.properties.label?.contains('شارة الحالة') ?? false),
+          (w) =>
+              w is Semantics &&
+              (w.properties.label?.contains('شارة الحالة') ?? false),
         ),
         findsNothing,
       );
     });
 
-    testWidgets('should display badge with custom alignment topStart', (tester) async {
+    testWidgets('should display badge with custom alignment topStart',
+        (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -399,13 +403,15 @@ void main() {
         if (w is! Container) return false;
         final deco = w.decoration;
         if (deco is! BoxDecoration) return false;
-        return deco.color == statusColor && w.constraints?.minWidth == BorderWidths.thick;
+        return deco.color == statusColor &&
+            w.constraints?.minWidth == BorderWidths.thick;
       });
 
       expect(statusBars, findsOneWidget);
     });
 
-    testWidgets('should have Semantics wrapper when onTap provided', (tester) async {
+    testWidgets('should have Semantics wrapper when onTap provided',
+        (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -424,11 +430,13 @@ void main() {
       );
       expect(semanticsWrapper, findsWidgets);
 
-      final semanticsData = tester.getSemantics(find.text('العملاء').hitTestable().first);
+      final semanticsData =
+          tester.getSemantics(find.text('العملاء').hitTestable().first);
       expect(semanticsData.label, contains('بطاقة العملاء'));
     });
 
-    testWidgets('should have default Semantics wrapper without interaction', (tester) async {
+    testWidgets('should have default Semantics wrapper without interaction',
+        (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -446,7 +454,8 @@ void main() {
       expect(semanticsWrapper, findsWidgets);
     });
 
-    testWidgets('should pass semanticLabel to Semantics wrapper', (tester) async {
+    testWidgets('should pass semanticLabel to Semantics wrapper',
+        (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -458,11 +467,13 @@ void main() {
         ),
       );
 
-      final semanticsData = tester.getSemantics(find.text('فاتورة').hitTestable().first);
+      final semanticsData =
+          tester.getSemantics(find.text('فاتورة').hitTestable().first);
       expect(semanticsData.label, contains('فاتورة رقم 123'));
     });
 
-    testWidgets('should not call onTap when disabled (no onTap)', (tester) async {
+    testWidgets('should not call onTap when disabled (no onTap)',
+        (tester) async {
       const tapped = false;
 
       await tester.pumpWidget(
@@ -505,7 +516,8 @@ void main() {
       expect(decoration.borderRadius, customRadius);
     });
 
-    testWidgets('should respect isSelected in Semantics wrapper', (tester) async {
+    testWidgets('should respect isSelected in Semantics wrapper',
+        (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -525,7 +537,8 @@ void main() {
       );
       expect(semanticsWrapper, findsWidgets);
 
-      final semanticsData = tester.getSemantics(find.text('محتوى').hitTestable().first);
+      final semanticsData =
+          tester.getSemantics(find.text('محتوى').hitTestable().first);
       expect(semanticsData.label, contains('بطاقة مختارة'));
     });
   });
@@ -652,7 +665,8 @@ void main() {
       );
     });
 
-    testWidgets('should include title subtitle trailing in semanticLabel', (tester) async {
+    testWidgets('should include title subtitle trailing in semanticLabel',
+        (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -671,7 +685,8 @@ void main() {
       );
       expect(semanticsWrapper, findsWidgets);
 
-      final semanticsData = tester.getSemantics(find.text('أحمد محمد').hitTestable().first);
+      final semanticsData =
+          tester.getSemantics(find.text('أحمد محمد').hitTestable().first);
       final label = semanticsData.label;
       expect(label, contains('أحمد محمد'));
       expect(label, contains('جدة'));
