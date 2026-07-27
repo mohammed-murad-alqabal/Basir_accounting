@@ -524,6 +524,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                                 appIcons.delete,
                                 color: AppColors.error,
                               ),
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
                               tooltip: context.l10n.tooltipDeleteItem,
                               onPressed: () => _removeItem(index),
                             ),

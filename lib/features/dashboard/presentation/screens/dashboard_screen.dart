@@ -75,12 +75,26 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           ),
         ),
         backgroundColor: theme.colorScheme.primary,
-        child: const Icon(Icons.calculate_outlined, color: Colors.white),
+        tooltip: context.l10n.calculatorTitle,
+        child: Semantics(
+          button: true,
+          label: context.l10n.calculatorTitle,
+          child: const Icon(
+            Icons.calculate_outlined,
+            color: Colors.white,
+            size: IconSizes.md,
+          ),
+        ),
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.refresh),
+          icon: const Icon(Icons.refresh, size: IconSizes.md),
           tooltip: context.l10n.tooltipRefresh,
+          constraints: const BoxConstraints(
+            minWidth: TouchTargets.minimum,
+            minHeight: TouchTargets.minimum,
+          ),
+          padding: EdgeInsets.zero,
           onPressed: () {
             unawaited(
               ref.read(dashboardControllerProvider.notifier).refresh(),
@@ -95,12 +109,26 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.error_outline, size: 48, color: AppColors.error),
+              const Icon(
+                Icons.error_outline,
+                size: IconSizes.xl,
+                color: AppColors.error,
+              ),
               const SizedBox(height: Spacing.md),
-              Text(context.l10n.errorLoadingSettings),
+              Text(
+                context.l10n.errorLoadingSettings,
+                style: AppTextStyles.bodyLarge,
+              ),
+              const SizedBox(height: Spacing.sm),
               TextButton(
                 onPressed: () => ref.invalidate(dashboardControllerProvider),
-                child: Text(context.l10n.retryLabel),
+                child: Text(
+                  context.l10n.retryLabel,
+                  style: AppTextStyles.labelLarge.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: FontWeights.semiBold,
+                  ),
+                ),
               ),
             ],
           ),
@@ -395,7 +423,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               padding: const EdgeInsets.symmetric(vertical: Spacing.xl),
               child: Text(
                 context.l10n.msgNoActivity,
-                style: const TextStyle(color: AppColors.textSecondary),
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
             ),
           )
@@ -411,9 +441,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               leading: Icon(
                 invoice.getStatusIcon(appIcons),
                 color: invoice.getStatusColor(Theme.of(context).colorScheme),
-                size: 20,
+                size: IconSizes.md,
               ),
-              onTap: () => Navigator.of(context).pushNamed('/invoices'),
+              onTap: () => Navigator.of(context).pushNamed(
+                '/invoice-detail',
+                arguments: invoice,
+              ),
             ),
           ),
         const SizedBox(height: Spacing.md),

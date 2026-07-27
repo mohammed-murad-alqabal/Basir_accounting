@@ -2,8 +2,9 @@
 // ignore_for_file: lines_longer_than_80_chars
 library;
 
+import 'package:basir_accounting_system/core/assets/app_logo.dart';
 import 'package:basir_accounting_system/core/providers.dart';
-import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/auth/application/auth_service.dart';
 import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:basir_accounting_system/features/auth/presentation/screens/login_screen.dart';
@@ -106,9 +107,7 @@ void main() {
         await tester.pump();
 
         final loginButton = find.byWidgetPredicate(
-          (widget) =>
-              widget is AppEnhancedButton &&
-              widget.type == AppEnhancedButtonType.primary,
+          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
         );
         await tester.ensureVisible(loginButton);
         await tester.tap(loginButton);
@@ -134,9 +133,7 @@ void main() {
         await setUpWidgets(tester);
 
         final guestButton = find.byWidgetPredicate(
-          (widget) =>
-              widget is AppEnhancedButton &&
-              widget.type == AppEnhancedButtonType.secondary,
+          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.secondary,
         );
         await tester.ensureVisible(guestButton);
         await tester.tap(guestButton);
@@ -176,9 +173,7 @@ void main() {
         await tester.pump();
 
         final loginButton = find.byWidgetPredicate(
-          (widget) =>
-              widget is AppEnhancedButton &&
-              widget.type == AppEnhancedButtonType.primary,
+          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
         );
         await tester.ensureVisible(loginButton);
         await tester.tap(loginButton);
@@ -196,6 +191,182 @@ void main() {
           }
         }
         expect(foundError, isTrue);
+      });
+    });
+
+    group('LoginScreen - UI/UX Improvements (Task 17)', () {
+      testWidgets('should use GlassScaffold as root container', (tester) async {
+        await setUpWidgets(tester);
+        final glassScaffoldFinder = find.descendant(
+          of: find.byElementPredicate(
+            (element) => element.widget is LoginScreen,
+          ),
+          matching: find.byType(GlassScaffold),
+        );
+        expect(glassScaffoldFinder, findsOneWidget);
+        expect(find.byType(GlassScaffold), findsOneWidget);
+      });
+
+      testWidgets('should use AppTextField with icons using IconSizes', (
+        tester,
+      ) async {
+        await setUpWidgets(tester);
+        final textFields = find.byType(AppTextField);
+        expect(textFields, findsNWidgets(2));
+
+        for (final textFieldFinder in textFields.evaluate()) {
+          final textFieldWidget = tester.widget<AppTextField>(
+            find.byWidget(textFieldFinder.widget),
+          );
+          expect(textFieldWidget.prefixIcon, isNotNull);
+          final prefixIcon = textFieldWidget.prefixIcon! as Icon;
+          expect(
+            [IconSizes.xs, IconSizes.sm, IconSizes.md, IconSizes.lg, IconSizes.xl]
+                .contains(prefixIcon.size),
+            isTrue,
+            reason: 'Icon size should be one of IconSizes values, got ${prefixIcon.size}',
+          );
+        }
+      });
+
+      testWidgets('should use AppEnhancedButton for login and guest buttons', (
+        tester,
+      ) async {
+        await setUpWidgets(tester);
+        final primaryButtonFinder = find.byWidgetPredicate(
+          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
+        );
+        final secondaryButtonFinder = find.byWidgetPredicate(
+          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.secondary,
+        );
+        expect(primaryButtonFinder, findsOneWidget);
+        expect(secondaryButtonFinder, findsOneWidget);
+
+        final primaryButton = tester.widget<AppEnhancedButton>(
+          primaryButtonFinder,
+        );
+        final secondaryButton = tester.widget<AppEnhancedButton>(
+          secondaryButtonFinder,
+        );
+        expect(primaryButton.label, l10n.loginTitle);
+        expect(secondaryButton.label, l10n.loginGuest);
+      });
+
+      testWidgets('should have Form with GlobalKey for validation', (
+        tester,
+      ) async {
+        await setUpWidgets(tester);
+        final formFinder = find.descendant(
+          of: find.byType(LoginScreen),
+          matching: find.byType(Form),
+        );
+        expect(formFinder, findsOneWidget);
+        final formWidget = tester.widget<Form>(formFinder);
+        expect(formWidget.key, isNotNull);
+        expect(formWidget.key, isA<GlobalKey<FormState>>());
+
+        final loginButton = find.byWidgetPredicate(
+          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
+        );
+        await tester.ensureVisible(loginButton);
+        await tester.tap(loginButton);
+        await tester.pump();
+        expect(find.text(l10n.errEmptyField), findsNWidgets(2));
+      });
+
+      testWidgets('should have Remember Me Checkbox with Text beside it', (
+        tester,
+      ) async {
+        await setUpWidgets(tester);
+        final checkboxFinder = find.descendant(
+          of: find.byType(LoginScreen),
+          matching: find.byType(Checkbox),
+        );
+        expect(checkboxFinder, findsOneWidget);
+
+        final checkbox = tester.widget<Checkbox>(checkboxFinder);
+        expect(checkbox.value, isTrue);
+
+        final rememberMeTextFinder = find.text(l10n.labelRememberMe);
+        expect(rememberMeTextFinder, findsOneWidget);
+
+        final checkboxOffset = tester.getCenter(checkboxFinder);
+        final textOffset = tester.getCenter(rememberMeTextFinder);
+        expect(
+          (checkboxOffset.dy - textOffset.dy).abs() < 50,
+          isTrue,
+          reason: 'Checkbox and RememberMe text should be on the same row',
+        );
+      });
+
+      testWidgets('should have TextButton for Forgot Password', (
+        tester,
+      ) async {
+        await setUpWidgets(tester);
+        final forgotPasswordTextFinder = find.text(l10n.forgotPassword);
+        expect(forgotPasswordTextFinder, findsOneWidget);
+
+        final textButtonFinder = find.ancestor(
+          of: forgotPasswordTextFinder,
+          matching: find.byType(TextButton),
+        );
+        expect(textButtonFinder, findsOneWidget);
+      });
+
+      testWidgets('should have AppLogo (BasirLogo) in screen header', (
+        tester,
+      ) async {
+        await setUpWidgets(tester);
+        final logoFinder = find.descendant(
+          of: find.byType(LoginScreen),
+          matching: find.byType(BasirLogo),
+        );
+        expect(logoFinder, findsOneWidget);
+
+        final loginScreenTop = tester.getTopLeft(find.byType(LoginScreen));
+        final logoTop = tester.getTopLeft(logoFinder);
+        expect(
+          (logoTop.dy - loginScreenTop.dy) < 300,
+          isTrue,
+          reason: 'Logo should be in the header (top portion of the screen)',
+        );
+      });
+
+      testWidgets('should show error messages via AppSnackbar on login failure', (
+        tester,
+      ) async {
+        when(
+          () => mockAuthService.login(any(), any()),
+        ).thenAnswer((_) async => false);
+        await setUpWidgets(tester);
+
+        await tester.enterText(find.byType(AppTextField).first, 'wronguser');
+        await tester.enterText(find.byType(AppTextField).last, 'wrongpass');
+        await tester.pump();
+
+        final loginButton = find.byWidgetPredicate(
+          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
+        );
+        await tester.ensureVisible(loginButton);
+        await tester.tap(loginButton);
+
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 100));
+
+        var foundSnackbar = false;
+        var foundErrorText = false;
+        for (var i = 0; i < 40; i++) {
+          await tester.pump(const Duration(milliseconds: 50));
+          if (find.byType(SnackBar).evaluate().isNotEmpty) {
+            foundSnackbar = true;
+          }
+          if (find.textContaining(l10n.errLoginFailed).evaluate().isNotEmpty) {
+            foundErrorText = true;
+          }
+          if (foundSnackbar && foundErrorText) break;
+        }
+        expect(foundSnackbar, isTrue, reason: 'SnackBar should appear');
+        expect(foundErrorText, isTrue, reason: 'Error message should be shown');
       });
     });
   });

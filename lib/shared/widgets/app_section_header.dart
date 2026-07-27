@@ -26,20 +26,24 @@ class AppSectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeColor = color ?? Theme.of(context).colorScheme.primary;
 
-    return Row(
-      children: [
-        if (icon != null) ...[
-          Icon(icon, size: 20, color: themeColor),
-          const SizedBox(width: Spacing.xs),
-        ],
-        Text(
-          title,
-          style: AppTextStyles.titleMedium.copyWith(
-            fontWeight: FontWeight.bold,
-            color: color ?? AppColors.textPrimary,
+    return Semantics(
+      header: true,
+      label: title,
+      child: Row(
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: IconSizes.md, color: themeColor),
+            const SizedBox(width: Spacing.xs),
+          ],
+          Text(
+            title,
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeights.bold,
+              color: color ?? AppColors.textPrimary,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -136,9 +136,7 @@ class _AppTextFieldState extends State<AppTextField> {
               textInputAction: widget.textInputAction,
               enabled: widget.isEnabled,
               style: AppTextStyles.bodyLarge.copyWith(
-                color: widget.isEnabled
-                    ? InputColors.text
-                    : AppColors.textDisabled,
+                color: widget.isEnabled ? InputColors.text : AppColors.textDisabled,
               ),
               decoration: InputDecoration(
                 hintText: widget.hint,
@@ -156,14 +154,16 @@ class _AppTextFieldState extends State<AppTextField> {
                 suffixIcon: widget.obscureText
                     ? IconButton(
                         icon: Icon(
-                          _obscureText
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          size: IconSizes.sm,
+                          _obscureText ? Icons.visibility_off : Icons.visibility,
+                          size: IconSizes.md,
                           color: InputColors.label,
                         ),
-                        onPressed: () =>
-                            setState(() => _obscureText = !_obscureText),
+                        onPressed: () => setState(() => _obscureText = !_obscureText),
+                        constraints: const BoxConstraints(
+                          minWidth: TouchTargets.minimum,
+                          minHeight: TouchTargets.minimum,
+                        ),
+                        padding: EdgeInsets.zero,
                       )
                     : widget.suffixIcon,
                 contentPadding: const EdgeInsets.symmetric(
@@ -171,9 +171,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   vertical: Spacing.md,
                 ),
                 filled: true,
-                fillColor: widget.isEnabled
-                    ? InputColors.background
-                    : AppColors.surfaceVariant,
+                fillColor: widget.isEnabled ? InputColors.background : AppColors.surfaceVariant,
                 border: BorderContrastDesign.buildEnhancedInputBorder(
                   color: BorderContrastDesign.getBorderNormal(brightness),
                 ),
@@ -187,8 +185,7 @@ class _AppTextFieldState extends State<AppTextField> {
                 errorBorder: BorderContrastDesign.buildEnhancedInputBorder(
                   color: BorderContrastDesign.getBorderError(brightness),
                 ),
-                focusedErrorBorder:
-                    BorderContrastDesign.buildEnhancedInputBorder(
+                focusedErrorBorder: BorderContrastDesign.buildEnhancedInputBorder(
                   color: BorderContrastDesign.getBorderError(brightness),
                   width: BorderContrastDesign.borderWidthError,
                 ),
@@ -252,8 +249,7 @@ class _AppSearchFieldState extends State<AppSearchField> {
     super.dispose();
   }
 
-  void _onTextChanged() =>
-      setState(() => _hasText = _controller.text.isNotEmpty);
+  void _onTextChanged() => setState(() => _hasText = _controller.text.isNotEmpty);
 
   @override
   Widget build(BuildContext context) {
@@ -274,7 +270,7 @@ class _AppSearchFieldState extends State<AppSearchField> {
             ? IconButton(
                 icon: const Icon(
                   Icons.clear,
-                  size: IconSizes.sm,
+                  size: IconSizes.md,
                   color: AppColors.textSecondary,
                 ),
                 onPressed: () {
@@ -282,6 +278,11 @@ class _AppSearchFieldState extends State<AppSearchField> {
                   widget.onClear?.call();
                   widget.onChanged?.call('');
                 },
+                constraints: const BoxConstraints(
+                  minWidth: TouchTargets.minimum,
+                  minHeight: TouchTargets.minimum,
+                ),
+                padding: EdgeInsets.zero,
               )
             : null,
         filled: true,

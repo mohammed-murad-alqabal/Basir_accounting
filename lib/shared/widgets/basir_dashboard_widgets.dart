@@ -2,6 +2,7 @@ import 'package:basir_accounting_system/core/assets/app_logo.dart';
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/forensics/presentation/widgets/integrity_pulse_widget.dart';
+import 'package:basir_accounting_system/shared/widgets/app_card.dart';
 import 'package:flutter/material.dart';
 
 /// رأس لوحة التحكم المطور (Basir Premium Header)
@@ -88,6 +89,7 @@ class GlassStatCard extends StatelessWidget {
     required this.icon,
     required this.color,
     super.key,
+    this.onTap,
   });
 
   /// عنوان الإحصائية
@@ -102,16 +104,18 @@ class GlassStatCard extends StatelessWidget {
   /// لون السمة (Theme Color)
   final Color color;
 
+  /// دالة عند النقر
+  final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) => Semantics(
         container: true,
         label: '$label: $value',
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.surface.withValues(alpha: 0.7),
-            borderRadius: BorderRadius.circular(Radii.md),
-            border: Border.all(color: color.withValues(alpha: 0.2), width: 1.5),
-          ),
+        button: onTap != null,
+        child: AppCard(
+          onTap: onTap,
+          statusColor: color.withValues(alpha: 0.7),
+          backgroundColor: AppColors.surface.withValues(alpha: 0.7),
           padding: const EdgeInsets.all(Spacing.md),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -122,7 +126,7 @@ class GlassStatCard extends StatelessWidget {
                   color: color.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, color: color, size: 20),
+                child: Icon(icon, color: color, size: IconSizes.md),
               ),
               const SizedBox(height: Spacing.xs),
               Flexible(
@@ -130,9 +134,8 @@ class GlassStatCard extends StatelessWidget {
                   fit: BoxFit.scaleDown,
                   child: Text(
                     label,
-                    style: const TextStyle(
+                    style: AppTextStyles.labelSmall.copyWith(
                       color: AppColors.textSecondary,
-                      fontSize: 11,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -144,10 +147,9 @@ class GlassStatCard extends StatelessWidget {
                   fit: BoxFit.scaleDown,
                   child: Text(
                     value,
-                    style: const TextStyle(
+                    style: AppTextStyles.headlineSmall.copyWith(
                       color: AppColors.textPrimary,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeights.bold,
                     ),
                   ),
                 ),

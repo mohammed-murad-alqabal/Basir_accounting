@@ -38,8 +38,8 @@ class _ReportingOverviewScreenState
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppAppBar(title: context.l10n.reportingOverviewTitle),
+  Widget build(BuildContext context) => GlassScaffold(
+        title: context.l10n.reportingOverviewTitle,
         body: ListView(
           padding: const EdgeInsets.all(Spacing.md),
           children: [
