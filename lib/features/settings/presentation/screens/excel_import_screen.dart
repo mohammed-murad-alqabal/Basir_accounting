@@ -35,7 +35,8 @@ class ExcelImportScreen extends ConsumerWidget {
               child: _buildPreviewTable(importState),
             ),
             if (importState.valueOrNull != null)
-              if (importState.value!.isNotEmpty) _buildSaveButton(service, importState),
+              if (importState.value!.isNotEmpty)
+                _buildSaveButton(service, importState),
           ],
         ),
       ),
@@ -137,8 +138,9 @@ class ExcelImportScreen extends ConsumerWidget {
                     '${row.balance} • ${row.nature.name} • '
                     '${row.phone ?? "بدون هاتف"}',
                   ),
-                  trailing:
-                      row.error == null ? null : const Icon(Icons.info_outline, color: Colors.red),
+                  trailing: row.error == null
+                      ? null
+                      : const Icon(Icons.info_outline, color: Colors.red),
                 ),
               );
             },

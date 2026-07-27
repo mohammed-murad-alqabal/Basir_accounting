@@ -13,7 +13,8 @@ class BarcodeCreationScreen extends ConsumerStatefulWidget {
   const BarcodeCreationScreen({super.key});
 
   @override
-  ConsumerState<BarcodeCreationScreen> createState() => _BarcodeCreationScreenState();
+  ConsumerState<BarcodeCreationScreen> createState() =>
+      _BarcodeCreationScreenState();
 }
 
 class _BarcodeCreationScreenState extends ConsumerState<BarcodeCreationScreen> {
@@ -170,12 +171,15 @@ class _BarcodeCreationScreenState extends ConsumerState<BarcodeCreationScreen> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: theme.colorScheme.primary,
                                 foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(Spacing.sm),
+                                  borderRadius:
+                                      BorderRadius.circular(Spacing.sm),
                                 ),
                               ),
-                              child: _isLoading && _barcodeController.text.isNotEmpty
+                              child: _isLoading &&
+                                      _barcodeController.text.isNotEmpty
                                   ? const SizedBox(
                                       height: 20,
                                       width: 20,
@@ -190,13 +194,17 @@ class _BarcodeCreationScreenState extends ConsumerState<BarcodeCreationScreen> {
                           const SizedBox(width: Spacing.md),
                           Expanded(
                             child: OutlinedButton.icon(
-                              onPressed: _selectedItem == null || _isLoading ? null : _handlePrint,
+                              onPressed: _selectedItem == null || _isLoading
+                                  ? null
+                                  : _handlePrint,
                               icon: const Icon(Icons.print_outlined),
                               label: const Text('طباعة'),
                               style: OutlinedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(Spacing.sm),
+                                  borderRadius:
+                                      BorderRadius.circular(Spacing.sm),
                                 ),
                               ),
                             ),
@@ -218,7 +226,8 @@ class _BarcodeCreationScreenState extends ConsumerState<BarcodeCreationScreen> {
     );
   }
 
-  Widget _buildItemPicker(ThemeData theme) => FutureBuilder<List<InventoryItem>>(
+  Widget _buildItemPicker(ThemeData theme) =>
+      FutureBuilder<List<InventoryItem>>(
         future: ref.read(inventoryRepositoryProvider).getAllItems(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const LinearProgressIndicator();

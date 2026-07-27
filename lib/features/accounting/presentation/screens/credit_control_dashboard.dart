@@ -164,7 +164,9 @@ class _CreditControlDashboardState extends ConsumerState<CreditControlDashboard>
                   .map(
                     (customer) => ListTile(
                       leading: CircleAvatar(
-                        child: Text(customer.name(isArabic: context.isArabic).substring(0, 1)),
+                        child: Text(
+                          customer.name(isArabic: context.isArabic).substring(0, 1),
+                        ),
                       ),
                       title: Text(customer.name(isArabic: context.isArabic)),
                       subtitle: Text('Credit Limit: ${customer.creditLimit}'),
@@ -211,7 +213,9 @@ class _CreditControlDashboardState extends ConsumerState<CreditControlDashboard>
                         backgroundColor: _getSeverityColor(breach.severity),
                         child: const Icon(Icons.warning, color: Colors.white),
                       ),
-                      title: Text(breach.customer.name(isArabic: context.isArabic)),
+                      title: Text(
+                        breach.customer.name(isArabic: context.isArabic),
+                      ),
                       subtitle: Text('Over Limit: ${breach.overLimitAmount} SAR'),
                       trailing: Container(
                         padding: const EdgeInsets.symmetric(
@@ -283,16 +287,27 @@ class _CreditControlDashboardState extends ConsumerState<CreditControlDashboard>
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Breach Details - ${breach.customer.name(isArabic: context.isArabic)}'),
+        title: Text(
+          'Breach Details - ${breach.customer.name(isArabic: context.isArabic)}',
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildDetailRow('Customer', breach.customer.name(isArabic: context.isArabic)),
-            _buildDetailRow('Over Limit Amount', '${breach.overLimitAmount} SAR'),
+            _buildDetailRow(
+              'Customer',
+              breach.customer.name(isArabic: context.isArabic),
+            ),
+            _buildDetailRow(
+              'Over Limit Amount',
+              '${breach.overLimitAmount} SAR',
+            ),
             _buildDetailRow('Days Over Limit', breach.daysOverLimit.toString()),
             _buildDetailRow('Severity', _getSeverityLabel(breach.severity)),
-            _buildDetailRow('Breach Date', breach.breachDate.toLocal().toString().split(' ')[0]),
+            _buildDetailRow(
+              'Breach Date',
+              breach.breachDate.toLocal().toString().split(' ')[0],
+            ),
           ],
         ),
         actions: [

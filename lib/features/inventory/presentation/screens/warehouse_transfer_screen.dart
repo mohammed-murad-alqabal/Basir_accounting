@@ -20,10 +20,12 @@ class WarehouseTransferScreen extends ConsumerStatefulWidget {
   const WarehouseTransferScreen({super.key});
 
   @override
-  ConsumerState<WarehouseTransferScreen> createState() => _WarehouseTransferScreenState();
+  ConsumerState<WarehouseTransferScreen> createState() =>
+      _WarehouseTransferScreenState();
 }
 
-class _WarehouseTransferScreenState extends ConsumerState<WarehouseTransferScreen> {
+class _WarehouseTransferScreenState
+    extends ConsumerState<WarehouseTransferScreen> {
   final _formKey = <credential-fixture><FormState>();
   final _remarksController = TextEditingController();
 
@@ -77,7 +79,9 @@ class _WarehouseTransferScreenState extends ConsumerState<WarehouseTransferScree
       updatedAt: DateTime.now(),
     );
 
-    final success = await ref.read(transferActionProvider.notifier).executeTransfer(transfer);
+    final success = await ref
+        .read(transferActionProvider.notifier)
+        .executeTransfer(transfer);
 
     if (mounted) {
       setState(() => _isLoading = false);
@@ -113,19 +117,22 @@ class _WarehouseTransferScreenState extends ConsumerState<WarehouseTransferScree
                       _buildWarehouseSelector(
                         label: context.l10n.labelSourceWarehouse,
                         value: _sourceWarehouse,
-                        onChanged: (val) => setState(() => _sourceWarehouse = val),
+                        onChanged: (val) =>
+                            setState(() => _sourceWarehouse = val),
                         items: warehouses,
                       ),
                       const SizedBox(height: Spacing.md),
                       _buildWarehouseSelector(
                         label: context.l10n.labelDestinationWarehouse,
                         value: _destinationWarehouse,
-                        onChanged: (val) => setState(() => _destinationWarehouse = val),
+                        onChanged: (val) =>
+                            setState(() => _destinationWarehouse = val),
                         items: warehouses,
                       ),
                     ],
                   ),
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
                   error: (e, s) => Text(e.toString()),
                 ),
               ),
@@ -272,7 +279,8 @@ class _WarehouseTransferScreenState extends ConsumerState<WarehouseTransferScree
                     if (i != null) {
                       setDialogState(() {
                         selectedItem = i;
-                        nameController.text = i.name(isArabic: context.l10n.localeName == 'ar');
+                        nameController.text =
+                            i.name(isArabic: context.l10n.localeName == 'ar');
                       });
                     }
                   },

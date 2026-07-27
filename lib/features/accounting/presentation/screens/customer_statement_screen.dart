@@ -207,7 +207,12 @@ class _CustomerStatementScreenState extends ConsumerState<CustomerStatementScree
         ),
       );
 
-  Widget _buildSummaryRow(String label, Decimal amount, {bool isBold = false}) => Padding(
+  Widget _buildSummaryRow(
+    String label,
+    Decimal amount, {
+    bool isBold = false,
+  }) =>
+      Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -243,7 +248,11 @@ class _CustomerStatementScreenState extends ConsumerState<CustomerStatementScree
                 .map(
                   (entry) => DataRow(
                     cells: [
-                      DataCell(Text(entry.entryDate.toLocal().toString().split(' ')[0])),
+                      DataCell(
+                        Text(
+                          entry.entryDate.toLocal().toString().split(' ')[0],
+                        ),
+                      ),
                       DataCell(Text(entry.description)),
                       DataCell(
                         Text(

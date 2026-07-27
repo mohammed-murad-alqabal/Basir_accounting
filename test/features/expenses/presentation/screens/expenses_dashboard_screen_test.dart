@@ -78,7 +78,8 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsAtLeastNWidgets(1));
     });
 
-    testWidgets('renders summary cards and expense list when data loaded', (tester) async {
+    testWidgets('renders summary cards and expense list when data loaded',
+        (tester) async {
       when(mockService.getCurrentMonthExpenses()).thenAnswer(
         (_) async => [testExpense],
       );

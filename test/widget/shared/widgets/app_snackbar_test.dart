@@ -62,7 +62,10 @@ void main() {
             body: Builder(
               builder: (context) {
                 return ElevatedButton(
-                  onPressed: () => AppSnackbar.showWarning(context, 'تحذير: بيانات غير كاملة'),
+                  onPressed: () => AppSnackbar.showWarning(
+                    context,
+                    'تحذير: بيانات غير كاملة',
+                  ),
                   child: const Text('Show'),
                 );
               },

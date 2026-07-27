@@ -221,8 +221,13 @@ void main() {
           expect(textFieldWidget.prefixIcon, isNotNull);
           final prefixIcon = textFieldWidget.prefixIcon! as Icon;
           expect(
-            [IconSizes.xs, IconSizes.sm, IconSizes.md, IconSizes.lg, IconSizes.xl]
-                .contains(prefixIcon.size),
+            [
+              IconSizes.xs,
+              IconSizes.sm,
+              IconSizes.md,
+              IconSizes.lg,
+              IconSizes.xl,
+            ].contains(prefixIcon.size),
             isTrue,
             reason: 'Icon size should be one of IconSizes values, got ${prefixIcon.size}',
           );

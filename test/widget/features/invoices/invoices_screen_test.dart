@@ -316,7 +316,8 @@ void main() {
     });
 
     testWidgets(
-        'action buttons have BoxConstraints minWidth/minHeight = TouchTargets.minimum (48px)', (
+        'action buttons have BoxConstraints minWidth/minHeight = TouchTargets.minimum (48px)',
+        (
       tester,
     ) async {
       await tester.pumpWidget(
@@ -359,7 +360,8 @@ void main() {
       expect(exportButton.constraints?.minHeight, TouchTargets.minimum);
     });
 
-    testWidgets('action buttons use EdgeInsets.zero for padding', (tester) async {
+    testWidgets('action buttons use EdgeInsets.zero for padding',
+        (tester) async {
       await tester.pumpWidget(
         createTestWidget(
           overrides: [

@@ -22,7 +22,7 @@ class SupabaseConfig {
   /// تهيئة Supabase
   static Future<void> initialize() async {
     try {
-      await Supabase.initialize(url: supabaseUrl, anonKey: anonKey);
+      await Supabase.initialize(url: supabaseUrl, publishableKey: anonKey);
     } on Exception catch (e) {
       debugPrint('⚠️ Failed to initialize Supabase: $e');
       // Continue without Supabase if it fails to initialize

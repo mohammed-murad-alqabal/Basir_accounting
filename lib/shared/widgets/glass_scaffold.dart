@@ -34,7 +34,8 @@ class GlassScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final glassTheme = Theme.of(context).extension<GlassTheme>() ?? GlassTheme.light();
+    final glassTheme =
+        Theme.of(context).extension<GlassTheme>() ?? GlassTheme.light();
 
     return CallbackShortcuts(
       bindings: {
@@ -66,7 +67,8 @@ class GlassScaffold extends StatelessWidget {
                     center: const Alignment(-0.8, -0.8),
                     radius: 1.5,
                     colors: [
-                      glassTheme.primaryGradient.colors.first.withValues(alpha: 0.15),
+                      glassTheme.primaryGradient.colors.first
+                          .withValues(alpha: 0.15),
                       Theme.of(context).scaffoldBackgroundColor,
                     ],
                   ),
@@ -78,7 +80,8 @@ class GlassScaffold extends StatelessWidget {
                     center: const Alignment(0.8, 0.8),
                     radius: 1.5,
                     colors: [
-                      glassTheme.primaryGradient.colors.last.withValues(alpha: 0.1),
+                      glassTheme.primaryGradient.colors.last
+                          .withValues(alpha: 0.1),
                       Colors.transparent,
                     ],
                   ),

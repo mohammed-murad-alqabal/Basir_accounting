@@ -1960,8 +1960,14 @@ void main() {
       });
 
       test('Order: tight < normal < relaxed', () {
-        expect(AppTextStyles.lineHeightTight, lessThan(AppTextStyles.lineHeightNormal));
-        expect(AppTextStyles.lineHeightNormal, lessThan(AppTextStyles.lineHeightRelaxed));
+        expect(
+          AppTextStyles.lineHeightTight,
+          lessThan(AppTextStyles.lineHeightNormal),
+        );
+        expect(
+          AppTextStyles.lineHeightNormal,
+          lessThan(AppTextStyles.lineHeightRelaxed),
+        );
       });
 
       testWidgets('Body TextStyles have valid fontSize >= 12px (WCAG)', (tester) async {
@@ -2709,8 +2715,14 @@ void main() {
       });
 
       test('BorderContrastDesign focus borders match AppStateColors tokens', () {
-        expect(BorderContrastDesign.borderFocusedLight, AppStateColors.focusBorderLight);
-        expect(BorderContrastDesign.borderFocusedDark, AppStateColors.focusBorderDark);
+        expect(
+          BorderContrastDesign.borderFocusedLight,
+          AppStateColors.focusBorderLight,
+        );
+        expect(
+          BorderContrastDesign.borderFocusedDark,
+          AppStateColors.focusBorderDark,
+        );
       });
 
       testWidgets(

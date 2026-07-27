@@ -19,7 +19,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 final secureStorageProvider = Provider<FlutterSecureStorage>(
   (ref) => const FlutterSecureStorage(
     aOptions: AndroidOptions(
-      sharedPreferencesName: 'basir_secure_prefs',
+      storageNamespace: 'basir_secure_prefs',
       preferencesKeyPrefix: 'basir_',
     ),
     iOptions: IOSOptions(

@@ -16,7 +16,8 @@ class InventoryItemsScreen extends ConsumerStatefulWidget {
   const InventoryItemsScreen({super.key});
 
   @override
-  ConsumerState<InventoryItemsScreen> createState() => _InventoryItemsScreenState();
+  ConsumerState<InventoryItemsScreen> createState() =>
+      _InventoryItemsScreenState();
 }
 
 class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
@@ -35,7 +36,9 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
 
     // Trigger Cognitive Hint on first load
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (itemsAsync.hasValue && itemsAsync.value!.isEmpty && _searchController.text.isEmpty) {
+      if (itemsAsync.hasValue &&
+          itemsAsync.value!.isEmpty &&
+          _searchController.text.isEmpty) {
         showCognitiveHint(
           context,
           'قم بإضافة أصناف المخزون هنا لتتمكن من تتبع الكميات والتكاليف بدقة. '

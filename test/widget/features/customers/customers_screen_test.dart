@@ -149,7 +149,8 @@ void main() {
       expect(addIcon.size, IconSizes.md);
     });
 
-    testWidgets('add button has BoxConstraints minWidth/minHeight = TouchTargets.minimum (48px)',
+    testWidgets(
+        'add button has BoxConstraints minWidth/minHeight = TouchTargets.minimum (48px)',
         (tester) async {
       await tester.pumpWidget(
         createTestWidget(
