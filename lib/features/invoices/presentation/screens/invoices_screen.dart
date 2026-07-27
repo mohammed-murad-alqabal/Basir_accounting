@@ -56,21 +56,32 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       title: context.l10n.invoicesTitle,
       actions: [
         IconButton(
-          icon: Icon(appIcons.add),
+          icon: Icon(appIcons.add, size: IconSizes.md),
           onPressed: _createNewInvoice,
           tooltip: context.l10n.tooltipAddInvoice,
+          constraints: const BoxConstraints(
+            minWidth: TouchTargets.minimum,
+            minHeight: TouchTargets.minimum,
+          ),
+          padding: EdgeInsets.zero,
         ),
         IconButton(
-          icon: Icon(appIcons.pdf),
+          icon: Icon(appIcons.pdf, size: IconSizes.md),
           onPressed: _exportInvoice,
           tooltip: context.l10n.tooltipExportAll,
+          constraints: const BoxConstraints(
+            minWidth: TouchTargets.minimum,
+            minHeight: TouchTargets.minimum,
+          ),
+          padding: EdgeInsets.zero,
         ),
       ],
       floatingActionButton: FloatingActionButton(
         heroTag: 'invoices_add_fab',
         onPressed: _createNewInvoice,
         backgroundColor: AppColors.primary,
-        child: Icon(appIcons.add, color: Colors.white),
+        tooltip: context.l10n.tooltipAddInvoice,
+        child: Icon(appIcons.add, color: Colors.white, size: IconSizes.md),
       ),
       body: Column(
         children: [
@@ -291,7 +302,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
               child: Icon(
                 invoice.getStatusIcon(appIcons),
                 color: invoice.getStatusColor(Theme.of(context).colorScheme),
-                size: 20,
+                size: IconSizes.md,
               ),
             ),
             onTap: () {

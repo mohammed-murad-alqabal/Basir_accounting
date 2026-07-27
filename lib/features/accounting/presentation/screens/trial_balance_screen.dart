@@ -28,17 +28,15 @@ class TrialBalanceScreen extends ConsumerWidget {
       decimalDigits: 2,
     );
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.trialBalanceTitle,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () => _exportReport(context, ref),
-            tooltip: context.l10n.actionShare,
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: context.l10n.trialBalanceTitle,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.share),
+          onPressed: () => _exportReport(context, ref),
+          tooltip: context.l10n.actionShare,
+        ),
+      ],
       body: FutureBuilder<TrialBalance>(
         future: trialBalanceAsync,
         builder: (context, snapshot) {

@@ -16,8 +16,7 @@ class InventoryItemsScreen extends ConsumerStatefulWidget {
   const InventoryItemsScreen({super.key});
 
   @override
-  ConsumerState<InventoryItemsScreen> createState() =>
-      _InventoryItemsScreenState();
+  ConsumerState<InventoryItemsScreen> createState() => _InventoryItemsScreenState();
 }
 
 class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
@@ -36,9 +35,7 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
 
     // Trigger Cognitive Hint on first load
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (itemsAsync.hasValue &&
-          itemsAsync.value!.isEmpty &&
-          _searchController.text.isEmpty) {
+      if (itemsAsync.hasValue && itemsAsync.value!.isEmpty && _searchController.text.isEmpty) {
         showCognitiveHint(
           context,
           'قم بإضافة أصناف المخزون هنا لتتمكن من تتبع الكميات والتكاليف بدقة. '
@@ -52,13 +49,23 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
       title: context.l10n.inventoryItemsScreenTitle,
       actions: [
         IconButton(
-          icon: Icon(appIcons.barcodeReader, size: 26),
-          tooltip: 'محرك الباركود',
+          icon: Icon(appIcons.barcodeReader, size: IconSizes.md),
+          tooltip: context.l10n.labelSearchSku,
+          constraints: const BoxConstraints(
+            minWidth: TouchTargets.minimum,
+            minHeight: TouchTargets.minimum,
+          ),
+          padding: EdgeInsets.zero,
           onPressed: _openBarcodeEngine,
         ),
         IconButton(
-          icon: Icon(appIcons.add, size: 26),
+          icon: Icon(appIcons.add, size: IconSizes.md),
           tooltip: context.l10n.tooltipAddInventoryItem,
+          constraints: const BoxConstraints(
+            minWidth: TouchTargets.minimum,
+            minHeight: TouchTargets.minimum,
+          ),
+          padding: EdgeInsets.zero,
           onPressed: _addItem,
         ),
       ],

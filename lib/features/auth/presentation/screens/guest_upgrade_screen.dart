@@ -76,8 +76,8 @@ class _GuestUpgradeScreenState extends ConsumerState<GuestUpgradeScreen> {
   Widget build(BuildContext context) {
     final appIcons = ref.watch(appIconsProvider);
 
-    return Scaffold(
-      appBar: AppAppBar(title: context.l10n.actionUpgradeAccount),
+    return GlassScaffold(
+      title: context.l10n.actionUpgradeAccount,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(Spacing.xl),
         child: Form(

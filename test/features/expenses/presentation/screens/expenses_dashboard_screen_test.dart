@@ -78,8 +78,7 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsAtLeastNWidgets(1));
     });
 
-    testWidgets('renders summary cards and expense list when data loaded',
-        (tester) async {
+    testWidgets('renders summary cards and expense list when data loaded', (tester) async {
       when(mockService.getCurrentMonthExpenses()).thenAnswer(
         (_) async => [testExpense],
       );
@@ -125,7 +124,7 @@ void main() {
       await tester.pumpWidget(createSubject());
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byType(FloatingActionButton));
+      await tester.tap(find.byIcon(Icons.add));
       await tester.pumpAndSettle();
 
       expect(find.byType(ExpenseFormScreen), findsOneWidget);

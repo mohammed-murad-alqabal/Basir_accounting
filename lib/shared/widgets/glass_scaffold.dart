@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:basir_accounting_system/core/theme/glass_theme.dart';
 import 'package:basir_accounting_system/features/navigation/presentation/widgets/omnibar.dart';
+import 'package:basir_accounting_system/shared/widgets/app_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -35,8 +34,7 @@ class GlassScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final glassTheme =
-        Theme.of(context).extension<GlassTheme>() ?? GlassTheme.light();
+    final glassTheme = Theme.of(context).extension<GlassTheme>() ?? GlassTheme.light();
 
     return CallbackShortcuts(
       bindings: {
@@ -52,21 +50,11 @@ class GlassScaffold extends StatelessWidget {
           extendBody: true,
           backgroundColor: Colors.transparent,
           appBar: title != null
-              ? AppBar(
-                  title: Text(
-                    title!,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  centerTitle: true,
-                  backgroundColor: glassTheme.glassColor.withValues(alpha: 0.5),
-                  elevation: 0,
-                  flexibleSpace: ClipRRect(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: Container(color: Colors.transparent),
-                    ),
-                  ),
+              ? AppSimpleAppBar(
+                  title: title!,
                   actions: actions,
+                  backgroundColor: glassTheme.glassColor.withValues(alpha: 0.5),
+                  scrolledUnderElevation: 0,
                 )
               : null,
           body: Stack(
@@ -78,8 +66,7 @@ class GlassScaffold extends StatelessWidget {
                     center: const Alignment(-0.8, -0.8),
                     radius: 1.5,
                     colors: [
-                      glassTheme.primaryGradient.colors.first
-                          .withValues(alpha: 0.15),
+                      glassTheme.primaryGradient.colors.first.withValues(alpha: 0.15),
                       Theme.of(context).scaffoldBackgroundColor,
                     ],
                   ),
@@ -91,8 +78,7 @@ class GlassScaffold extends StatelessWidget {
                     center: const Alignment(0.8, 0.8),
                     radius: 1.5,
                     colors: [
-                      glassTheme.primaryGradient.colors.last
-                          .withValues(alpha: 0.1),
+                      glassTheme.primaryGradient.colors.last.withValues(alpha: 0.1),
                       Colors.transparent,
                     ],
                   ),

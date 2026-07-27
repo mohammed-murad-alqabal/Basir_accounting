@@ -18,8 +18,8 @@ class SmartTaxReportScreen extends ConsumerWidget {
     final vatReturnFuture =
         ref.read(taxEngineServiceProvider.notifier).calculateVatReturn();
 
-    return Scaffold(
-      appBar: const AppAppBar(title: 'تقرير الضريبة الذكي (Smart VAT Return)'),
+    return GlassScaffold(
+      title: 'تقرير الضريبة الذكي (Smart VAT Return)',
       body: FutureBuilder<VatReturnStatement>(
         future: vatReturnFuture,
         builder: (context, snapshot) {

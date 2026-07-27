@@ -48,6 +48,8 @@ class UsersDashboardScreen extends ConsumerWidget {
                     children: [
                       IconButton(
                         icon: const Icon(Icons.edit, color: AppColors.primary),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
                         tooltip: 'تعديل المستخدم',
                         onPressed: () {
                           unawaited(
@@ -62,6 +64,8 @@ class UsersDashboardScreen extends ConsumerWidget {
                       ),
                       IconButton(
                         icon: const Icon(Icons.delete, color: AppColors.error),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
                         tooltip: 'حذف المستخدم',
                         onPressed: () async {
                           final confirm = await AppDialog.showConfirmation(

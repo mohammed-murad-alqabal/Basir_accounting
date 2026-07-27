@@ -20,10 +20,8 @@ class AuditTrailReportScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final entriesAsync = ref.watch(accountingServiceProvider);
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.auditTrailTitle,
-      ),
+    return GlassScaffold(
+      title: context.l10n.auditTrailTitle,
       body: entriesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text('Error: $err')),

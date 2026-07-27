@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:basir_accounting_system/features/users/application/user_service.dart';
 import 'package:basir_accounting_system/features/users/domain/entities/user.dart';
 import 'package:basir_accounting_system/features/users/domain/entities/user_role.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -106,10 +107,8 @@ class _UserFormScreenState extends ConsumerState<UserFormScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(widget.user != null ? 'تعديل مستخدم' : 'مستخدم جديد'),
-        ),
+  Widget build(BuildContext context) => GlassScaffold(
+        title: widget.user != null ? 'تعديل مستخدم' : 'مستخدم جديد',
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Form(
