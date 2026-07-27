@@ -1,6 +1,7 @@
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/settings/application/excel_import_service.dart';
 import 'package:basir_accounting_system/features/settings/domain/entities/import_row.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,12 +15,8 @@ class ExcelImportScreen extends ConsumerWidget {
     final importState = ref.watch(excelImportServiceProvider);
     final service = ref.read(excelImportServiceProvider.notifier);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('استيراد البيانات من Excel'),
-        backgroundColor: const Color(0xFF008080), // Teal
-        foregroundColor: Colors.white,
-      ),
+    return GlassScaffold(
+      title: 'استيراد البيانات من Excel',
       body: Padding(
         padding: const EdgeInsets.all(Spacing.md),
         child: Column(
@@ -38,8 +35,7 @@ class ExcelImportScreen extends ConsumerWidget {
               child: _buildPreviewTable(importState),
             ),
             if (importState.valueOrNull != null)
-              if (importState.value!.isNotEmpty)
-                _buildSaveButton(service, importState),
+              if (importState.value!.isNotEmpty) _buildSaveButton(service, importState),
           ],
         ),
       ),
@@ -63,7 +59,7 @@ class ExcelImportScreen extends ConsumerWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
-                  color: Color(0xFF008080),
+                  color: AppColors.secondary,
                 ),
               ),
               const SizedBox(height: Spacing.xs),
@@ -106,8 +102,8 @@ class ExcelImportScreen extends ConsumerWidget {
             : const Icon(Icons.file_upload),
         label: const Text('اختيار ملف Excel'),
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF008080),
-          foregroundColor: Colors.white,
+          backgroundColor: AppColors.secondary,
+          foregroundColor: AppColors.onSecondary,
           padding: const EdgeInsets.symmetric(vertical: Spacing.md),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -141,9 +137,8 @@ class ExcelImportScreen extends ConsumerWidget {
                     '${row.balance} • ${row.nature.name} • '
                     '${row.phone ?? "بدون هاتف"}',
                   ),
-                  trailing: row.error == null
-                      ? null
-                      : const Icon(Icons.info_outline, color: Colors.red),
+                  trailing:
+                      row.error == null ? null : const Icon(Icons.info_outline, color: Colors.red),
                 ),
               );
             },

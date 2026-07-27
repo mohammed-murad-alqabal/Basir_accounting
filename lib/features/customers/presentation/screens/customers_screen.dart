@@ -52,8 +52,13 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
       title: context.l10n.customersScreenTitle,
       actions: [
         IconButton(
-          icon: Icon(appIcons.add, size: 26),
+          icon: Icon(appIcons.add, size: IconSizes.md),
           tooltip: context.l10n.customersAddTooltip,
+          constraints: const BoxConstraints(
+            minWidth: TouchTargets.minimum,
+            minHeight: TouchTargets.minimum,
+          ),
+          padding: EdgeInsets.zero,
           onPressed: _addCustomer,
         ),
       ],

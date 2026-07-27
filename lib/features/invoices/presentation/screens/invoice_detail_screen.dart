@@ -33,46 +33,44 @@ class InvoiceDetailScreen extends ConsumerWidget {
     final isCancelled = invoice.status == InvoiceStatus.cancelled;
     final isPaid = invoice.status == InvoiceStatus.paid;
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: context.l10n.invoiceTitle(invoice.invoiceNumber),
-        actions: [
-          IconButton(
-            icon: Icon(appIcons.share),
-            tooltip: context.l10n.actionShare,
-            onPressed: () => ref.refresh(shareInvoicePdfProvider(invoice)),
+    return GlassScaffold(
+      title: context.l10n.invoiceTitle(invoice.invoiceNumber),
+      actions: [
+        IconButton(
+          icon: Icon(appIcons.share),
+          tooltip: context.l10n.actionShare,
+          onPressed: () => ref.refresh(shareInvoicePdfProvider(invoice)),
+        ),
+        IconButton(
+          icon: const Icon(Icons.email_outlined),
+          tooltip: context.l10n.actionEmailInvoice,
+          onPressed: () => ref.refresh(emailInvoiceProvider(invoice)),
+        ),
+        IconButton(
+          icon: Icon(appIcons.pdf),
+          tooltip: context.l10n.actionExportPdf,
+          onPressed: () => ref.refresh(exportInvoicePdfProvider(invoice)),
+        ),
+        IconButton(
+          icon: Icon(appIcons.print),
+          tooltip: context.l10n.tooltipPrintReceipt,
+          onPressed: () => ref.refresh(
+            printReceiptProvider((invoice: invoice, l10n: context.l10n)),
           ),
+        ),
+        if (isDraft)
           IconButton(
-            icon: const Icon(Icons.email_outlined),
-            tooltip: context.l10n.actionEmailInvoice,
-            onPressed: () => ref.refresh(emailInvoiceProvider(invoice)),
+            icon: Icon(appIcons.edit),
+            tooltip: context.l10n.btnUpdateInvoice,
+            onPressed: () => _editInvoice(context),
           ),
+        if (!isDraft && !isCancelled)
           IconButton(
-            icon: Icon(appIcons.pdf),
-            tooltip: context.l10n.actionExportPdf,
-            onPressed: () => ref.refresh(exportInvoicePdfProvider(invoice)),
+            icon: Icon(appIcons.delete),
+            tooltip: context.l10n.tooltipReverseInvoice,
+            onPressed: () => _reverseInvoice(context, ref),
           ),
-          IconButton(
-            icon: Icon(appIcons.print),
-            tooltip: context.l10n.tooltipPrintReceipt,
-            onPressed: () => ref.refresh(
-              printReceiptProvider((invoice: invoice, l10n: context.l10n)),
-            ),
-          ),
-          if (isDraft)
-            IconButton(
-              icon: Icon(appIcons.edit),
-              tooltip: context.l10n.btnUpdateInvoice,
-              onPressed: () => _editInvoice(context),
-            ),
-          if (!isDraft && !isCancelled)
-            IconButton(
-              icon: Icon(appIcons.delete),
-              tooltip: context.l10n.tooltipReverseInvoice,
-              onPressed: () => _reverseInvoice(context, ref),
-            ),
-        ],
-      ),
+      ],
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(Spacing.lg),
         child: Column(

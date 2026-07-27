@@ -49,20 +49,18 @@ class _AgingReportScreenState extends ConsumerState<AgingReportScreen> {
       ),
     );
 
-    return Scaffold(
-      appBar: AppAppBar(
-        title: _getTitle(context),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(context.l10n.msgExportComingSoon)),
-              );
-            },
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: _getTitle(context),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.share),
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(context.l10n.msgExportComingSoon)),
+            );
+          },
+        ),
+      ],
       body: Column(
         children: [
           ReportFilterWidget(

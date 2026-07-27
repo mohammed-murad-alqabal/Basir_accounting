@@ -30,8 +30,8 @@ class _PrivacyAnalyticsScreenState
     final appIcons = ref.watch(appIconsProvider);
     final analytics = ref.watch(analyticsServiceProvider);
 
-    return Scaffold(
-      appBar: AppAppBar(title: context.l10n.privacyAnalyticsTitle),
+    return GlassScaffold(
+      title: context.l10n.privacyAnalyticsTitle,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(Spacing.lg),
         child: Column(

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/settings/domain/entities/barcode_config.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,8 +13,7 @@ class BarcodeSettingsScreen extends ConsumerStatefulWidget {
   const BarcodeSettingsScreen({super.key});
 
   @override
-  ConsumerState<BarcodeSettingsScreen> createState() =>
-      _BarcodeSettingsScreenState();
+  ConsumerState<BarcodeSettingsScreen> createState() => _BarcodeSettingsScreenState();
 }
 
 class _BarcodeSettingsScreenState extends ConsumerState<BarcodeSettingsScreen> {
@@ -79,16 +79,14 @@ class _BarcodeSettingsScreenState extends ConsumerState<BarcodeSettingsScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('إعدادات محرك الباركود'),
-        actions: [
-          TextButton(
-            onPressed: _isLoading ? null : _saveConfig,
-            child: const Text('حفظ', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: 'إعدادات محرك الباركود',
+      actions: [
+        TextButton(
+          onPressed: _isLoading ? null : _saveConfig,
+          child: const Text('حفظ'),
+        ),
+      ],
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : ListView(
@@ -145,8 +143,7 @@ class _BarcodeSettingsScreenState extends ConsumerState<BarcodeSettingsScreen> {
                 child: ChoiceChip(
                   label: const Text('طابعة حرارية'),
                   selected: _printerType == PrinterType.thermal,
-                  onSelected: (val) =>
-                      setState(() => _printerType = PrinterType.thermal),
+                  onSelected: (val) => setState(() => _printerType = PrinterType.thermal),
                 ),
               ),
               const SizedBox(width: Spacing.md),
@@ -154,8 +151,7 @@ class _BarcodeSettingsScreenState extends ConsumerState<BarcodeSettingsScreen> {
                 child: ChoiceChip(
                   label: const Text('ورق A4 عادى'),
                   selected: _printerType == PrinterType.a4,
-                  onSelected: (val) =>
-                      setState(() => _printerType = PrinterType.a4),
+                  onSelected: (val) => setState(() => _printerType = PrinterType.a4),
                 ),
               ),
             ],

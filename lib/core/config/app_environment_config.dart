@@ -29,8 +29,7 @@ class AppEnvironmentConfig {
     try {
       await dotenv.load();
       _isInitialized = true;
-    } on Exception catch (e) {
-      // If .env fails to load, continue without it (use defaults)
+    } on Object catch (e) {
       debugPrint('⚠️ Failed to load .env file: $e');
       _isInitialized = false;
     }
@@ -62,8 +61,7 @@ class AppEnvironmentConfig {
   static bool get isDebugMode => _safeEnv['DEBUG_MODE'] == 'true';
 
   /// الحصول على قيمة من متغير البيئة
-  static String? get(String key, [String? defaultValue]) =>
-      _safeEnv[key] ?? defaultValue;
+  static String? get(String key, [String? defaultValue]) => _safeEnv[key] ?? defaultValue;
 
   /// الحصول على قيمة رقمية من متغير البيئة
   static int? getInt(String key, [int? defaultValue]) {

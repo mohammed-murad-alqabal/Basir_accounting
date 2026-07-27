@@ -3,6 +3,7 @@ import 'package:basir_accounting_system/features/reports/application/basir_insig
 import 'package:basir_accounting_system/features/reports/application/financial_intelligence_service.dart';
 import 'package:basir_accounting_system/features/reports/application/simulation_service.dart';
 import 'package:basir_accounting_system/features/reports/domain/entities/financial_kpi.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,38 +17,31 @@ class IntelligenceScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final kpisAsync = ref
-        .watch(financialIntelligenceServiceProvider.notifier)
-        .getFinancialKpis();
+    final kpisAsync = ref.watch(financialIntelligenceServiceProvider.notifier).getFinancialKpis();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('الذكاء المالي (Analytics Hub)'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.auto_fix_high),
-            tooltip: 'بذر بيانات تجريبية',
-            onPressed: () async {
-              await showDialog<void>(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) =>
-                    const Center(child: CircularProgressIndicator()),
+    return GlassScaffold(
+      title: 'الذكاء المالي (Analytics Hub)',
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.auto_fix_high),
+          tooltip: 'بذر بيانات تجريبية',
+          onPressed: () async {
+            await showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => const Center(child: CircularProgressIndicator()),
+            );
+            await ref.read(financialSimulationServiceProvider.notifier).seedRealisticData();
+            if (context.mounted) {
+              Navigator.pop(context);
+              ref.invalidate(financialIntelligenceServiceProvider);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('تم بذر البيانات بنجاح')),
               );
-              await ref
-                  .read(financialSimulationServiceProvider.notifier)
-                  .seedRealisticData();
-              if (context.mounted) {
-                Navigator.pop(context);
-                ref.invalidate(financialIntelligenceServiceProvider);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('تم بذر البيانات بنجاح')),
-                );
-              }
-            },
-          ),
-        ],
-      ),
+            }
+          },
+        ),
+      ],
       body: FutureBuilder<List<FinancialKpi>>(
         future: kpisAsync,
         builder: (context, snapshot) {
@@ -59,13 +53,10 @@ class IntelligenceScreen extends ConsumerWidget {
           }
 
           final kpis = snapshot.data ?? [];
-          final insights = ref
-              .read(basirInsightsEngineProvider.notifier)
-              .generateInsights(kpis);
+          final insights = ref.read(basirInsightsEngineProvider.notifier).generateInsights(kpis);
 
           return RefreshIndicator(
-            onRefresh: () async =>
-                ref.refresh(financialIntelligenceServiceProvider),
+            onRefresh: () async => ref.refresh(financialIntelligenceServiceProvider),
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
@@ -74,12 +65,10 @@ class IntelligenceScreen extends ConsumerWidget {
                 _buildKpiGrid(context, kpis),
                 const SizedBox(height: 24),
                 FutureBuilder<List<double>>(
-                  future: ref
-                      .read(financialIntelligenceServiceProvider.notifier)
-                      .getCashFlowTrend(),
+                  future:
+                      ref.read(financialIntelligenceServiceProvider.notifier).getCashFlowTrend(),
                   builder: (context, trendSnapshot) {
-                    if (trendSnapshot.connectionState ==
-                        ConnectionState.waiting) {
+                    if (trendSnapshot.connectionState == ConnectionState.waiting) {
                       return const SizedBox(
                         height: 200,
                         child: Center(child: CircularProgressIndicator()),
@@ -157,10 +146,9 @@ class IntelligenceScreen extends ConsumerWidget {
                     children: [
                       Text(
                         insight.title,
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                       Text(
                         _getAgentName(insight.source),
@@ -173,8 +161,7 @@ class IntelligenceScreen extends ConsumerWidget {
                 ),
                 if (insight.riskLevel != InsightRiskLevel.info)
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: color.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
@@ -201,8 +188,7 @@ class IntelligenceScreen extends ConsumerWidget {
                     // Navigation logic would go here
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content:
-                            Text('Navigating to ${insight.actionRoute}...'),
+                        content: Text('Navigating to ${insight.actionRoute}...'),
                       ),
                     );
                   },
@@ -280,8 +266,7 @@ class IntelligenceScreen extends ConsumerWidget {
     }
   }
 
-  Widget _buildKpiGrid(BuildContext context, List<FinancialKpi> kpis) =>
-      GridView.builder(
+  Widget _buildKpiGrid(BuildContext context, List<FinancialKpi> kpis) => GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
