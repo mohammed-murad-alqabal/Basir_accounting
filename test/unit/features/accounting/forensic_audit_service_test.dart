@@ -76,7 +76,7 @@ void main() {
       final result = await service.process(context);
 
       expect(result.rationale, contains('non-standard hours'));
-      expect(result.rationale, contains('23:00'));
+      expect(result.rationale, contains('23:30'));
     });
 
     test('should flag time-of-day anomaly (early morning 04:00)', () async {

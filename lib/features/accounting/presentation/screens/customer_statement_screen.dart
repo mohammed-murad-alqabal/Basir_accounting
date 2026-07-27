@@ -3,10 +3,13 @@ import 'package:basir_accounting_system/core/extensions/context_extensions.dart'
 import 'package:basir_accounting_system/features/accounting/application/customer_ledger_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/customer_ledger_entry.dart';
 import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/reports/application/report_export_service.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:printing/printing.dart';
 
 /// Customer Statement Screen for viewing customer account history
 class CustomerStatementScreen extends ConsumerStatefulWidget {
@@ -281,10 +284,103 @@ class _CustomerStatementScreenState
         ),
       );
 
-  void _exportToPDF() {
-    // TODO(developer): Implement PDF export
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('PDF export coming soon')),
-    );
+  Future<void> _exportToPDF() async {
+    if (_entries.isEmpty || _selectedCustomer == null) return;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final now = DateTime.now();
+      final fromDate =
+          _dateRange?.start ?? DateTime(now.year - 1, now.month, now.day);
+      final toDate = _dateRange?.end ?? now;
+
+      final dateFormat = DateFormat('dd/MM/yyyy');
+      final customerName = _selectedCustomer!.name(isArabic: context.isArabic);
+
+      final headers = [
+        'التاريخ',
+        'الوصف',
+        'مدين (SAR)',
+        'دائن (SAR)',
+        'الرصيد (SAR)',
+      ];
+
+      final data = _entries
+          .map(
+            (entry) => [
+              dateFormat.format(entry.entryDate.toLocal()),
+              entry.description,
+              if (entry.debit > Decimal.zero)
+                entry.debit.toStringAsFixed(2)
+              else
+                '',
+              if (entry.credit > Decimal.zero)
+                entry.credit.toStringAsFixed(2)
+              else
+                '',
+              entry.balance.toStringAsFixed(2),
+            ],
+          )
+          .toList();
+
+      data.add([
+        '----------',
+        '------------------------',
+        '---------------',
+        '---------------',
+        '---------------',
+      ]);
+      data.add([
+        '',
+        'الإجمالي',
+        _calculateTotalDebits().toStringAsFixed(2),
+        _calculateTotalCredits().toStringAsFixed(2),
+        _calculateClosingBalance().toStringAsFixed(2),
+      ]);
+
+      final subtitle =
+          'العميل: $customerName | من: ${dateFormat.format(fromDate)} إلى: ${dateFormat.format(toDate)}';
+
+      final pdfBytes =
+          await ref.read(reportExportServiceProvider.notifier).generateTablePdf(
+                title: 'كشف حساب العميل',
+                subtitle: subtitle,
+                headers: headers,
+                data: data,
+              );
+
+      await Printing.layoutPdf(
+        onLayout: (_) async => pdfBytes,
+        name:
+            'customer_statement_${_selectedCustomer!.id}_${DateTime.now().millisecondsSinceEpoch}.pdf',
+      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('تم توليد ملف PDF بنجاح'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } on Exception catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('فشل إنشاء ملف PDF: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 }

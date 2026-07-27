@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  network_security_config.xml
+  نظام بصير المحاسبي - إعدادات أمان الشبكة
+
+  المتطلبات:
+  - HTTPS إلزامي للإنتاج
+  - استثناء للتطوير المحلي (optional)
+  - توافق مع Android 7+ (API 24+)
+-->
+<network-security-config>
+    <!-- الإنتاج: HTTPS فقط -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+    </base-config>
+
+    <!-- استثناء: Localhost للتطوير والاختبار -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+    </domain-config>
+
+    <!-- Supabase endpoints -->
+    <domain-config>
+        <domain includeSubdomains="true">supabase.co</domain>
+        <domain includeSubdomains="true">supabase.io</domain>
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+    </domain-config>
+
+    <!-- ZATCA endpoints -->
+    <domain-config>
+        <domain includeSubdomains="true">zatca.gov.sa</domain>
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+    </domain-config>
+</network-security-config>
