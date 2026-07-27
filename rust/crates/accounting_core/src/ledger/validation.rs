@@ -403,3 +403,57 @@ mod tests {
         ));
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::ledger::models::{JournalEntry, JournalItem, EntryStatus};
+    use crate::ledger::validation::{validate_entry, EntryValidationError};
+    use rust_decimal_macros::dec;
+    use chrono::Utc;
+    use uuid::Uuid;
+
+    #[test]
+    fn test_cp001_balance_enforcement() {
+        let balanced_entry = JournalEntry {
+            id: Uuid::new_v4(),
+            status: EntryStatus::Draft,
+            items: vec![
+                JournalItem { 
+                    account_id: Uuid::new_v4(),
+                    debit: dec!(1500.00), 
+                    credit: dec!(0.00), 
+                    ..Default::default() 
+                },
+                JournalItem { 
+                    account_id: Uuid::new_v4(),
+                    debit: dec!(0.00), 
+                    credit: dec!(1500.00), 
+                    ..Default::default() 
+                },
+            ],
+            ..Default::default()
+        };
+        assert!(balanced_entry.is_balanced());
+        
+        let unbalanced_entry = JournalEntry {
+            id: Uuid::new_v4(),
+            status: EntryStatus::Draft,
+            items: vec![
+                JournalItem { 
+                    account_id: Uuid::new_v4(),
+                    debit: dec!(1500.00), 
+                    credit: dec!(0.00), 
+                    ..Default::default() 
+                },
+                JournalItem { 
+                    account_id: Uuid::new_v4(),
+                    debit: dec!(0.00), 
+                    credit: dec!(1400.00), 
+                    ..Default::default() 
+                },
+            ],
+            ..Default::default()
+        };
+        assert!(!unbalanced_entry.is_balanced());
+    }
+}
