@@ -150,8 +150,9 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize =>
-      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? BorderWidths.thin));
+  Size get preferredSize => Size.fromHeight(
+        kToolbarHeight + (bottom?.preferredSize.height ?? BorderWidths.thin),
+      );
 }
 
 /// شريط تطبيق بسيط بدون زر رجوع

@@ -63,7 +63,9 @@ void main() {
         UncontrolledProviderScope(
           container: container,
           child: MaterialApp(
-            theme: mode == ThemeMode.light ? AppTheme.lightTheme : AppTheme.darkTheme,
+            theme: mode == ThemeMode.light
+                ? AppTheme.lightTheme
+                : AppTheme.darkTheme,
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -105,7 +107,8 @@ void main() {
       }
     });
 
-    testWidgets('all nav items should have 48px minimum touch target', (tester) async {
+    testWidgets('all nav items should have 48px minimum touch target',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
@@ -123,12 +126,16 @@ void main() {
       expect(TouchTargets.minimum, 48);
     });
 
-    testWidgets('bottom nav bar should have SizedBox with correct height', (tester) async {
+    testWidgets('bottom nav bar should have SizedBox with correct height',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
       final navBarBox = find.byWidgetPredicate(
-        (w) => w is SizedBox && w.height == kBottomNavigationBarHeight && w.width == null,
+        (w) =>
+            w is SizedBox &&
+            w.height == kBottomNavigationBarHeight &&
+            w.width == null,
       );
       expect(navBarBox, findsWidgets);
       final boxes = find.descendant(
@@ -140,7 +147,8 @@ void main() {
       expect(boxes.evaluate().isNotEmpty, true);
     });
 
-    testWidgets('bottom nav bar should have SafeArea with top: false', (tester) async {
+    testWidgets('bottom nav bar should have SafeArea with top: false',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
@@ -153,7 +161,8 @@ void main() {
       expect(safeArea.top, false);
     });
 
-    testWidgets('bottom nav bar should have top divider border', (tester) async {
+    testWidgets('bottom nav bar should have top divider border',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
@@ -197,7 +206,8 @@ void main() {
       container.dispose();
     });
 
-    Widget createTestWidget({Locale locale = const Locale('ar')}) => UncontrolledProviderScope(
+    Widget createTestWidget({Locale locale = const Locale('ar')}) =>
+        UncontrolledProviderScope(
           container: container,
           child: MaterialApp(
             theme: AppTheme.lightTheme,
@@ -220,11 +230,13 @@ void main() {
       final homeIcon = tester.widget<Icon>(find.byIcon(Icons.home_outlined));
       expect(homeIcon.color, AppColors.primary);
 
-      final invoicesIcon = tester.widget<Icon>(find.byIcon(Icons.receipt_long_outlined));
+      final invoicesIcon =
+          tester.widget<Icon>(find.byIcon(Icons.receipt_long_outlined));
       expect(invoicesIcon.color, AppColors.textSecondary);
     });
 
-    testWidgets('tapping nav item should switch screen content', (tester) async {
+    testWidgets('tapping nav item should switch screen content',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
@@ -236,21 +248,24 @@ void main() {
       expect(find.byKey(const ValueKey('screen-invoices')), findsOneWidget);
     });
 
-    testWidgets('selected item should use primary color for icon', (tester) async {
+    testWidgets('selected item should use primary color for icon',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
       await tester.tap(find.byIcon(Icons.people_outline));
       await tester.pumpAndSettle();
 
-      final customersIcon = tester.widget<Icon>(find.byIcon(Icons.people_outline));
+      final customersIcon =
+          tester.widget<Icon>(find.byIcon(Icons.people_outline));
       expect(customersIcon.color, AppColors.primary);
 
       final homeIcon = tester.widget<Icon>(find.byIcon(Icons.home_outlined));
       expect(homeIcon.color, AppColors.textSecondary);
     });
 
-    testWidgets('selected item should use primary color for label', (tester) async {
+    testWidgets('selected item should use primary color for label',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
@@ -270,7 +285,8 @@ void main() {
       expect(invText.style.fontWeight, FontWeights.bold);
     });
 
-    testWidgets('unselected item should use textSecondary color and medium', (tester) async {
+    testWidgets('unselected item should use textSecondary color and medium',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
@@ -287,7 +303,8 @@ void main() {
       expect(settingsText.style.fontWeight, FontWeights.medium);
     });
 
-    testWidgets('selected item AnimatedContainer should have primaryLight background',
+    testWidgets(
+        'selected item AnimatedContainer should have primaryLight background',
         (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
@@ -296,13 +313,15 @@ void main() {
         of: find.byIcon(Icons.home_outlined),
         matching: find.byType(AnimatedContainer),
       );
-      final animatedContainer = tester.widget<AnimatedContainer>(homeIconAncestors.first);
+      final animatedContainer =
+          tester.widget<AnimatedContainer>(homeIconAncestors.first);
       final deco = animatedContainer.decoration! as BoxDecoration;
       expect(deco.color, AppColors.primaryLight);
       expect(deco.borderRadius, BorderRadius.circular(Radii.sm));
     });
 
-    testWidgets('unselected AnimatedContainer should have transparent color', (tester) async {
+    testWidgets('unselected AnimatedContainer should have transparent color',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
@@ -310,12 +329,14 @@ void main() {
         of: find.byIcon(Icons.settings_outlined),
         matching: find.byType(AnimatedContainer),
       );
-      final animatedContainer = tester.widget<AnimatedContainer>(iconAncestors.first);
+      final animatedContainer =
+          tester.widget<AnimatedContainer>(iconAncestors.first);
       final deco = animatedContainer.decoration! as BoxDecoration;
       expect(deco.color, Colors.transparent);
     });
 
-    testWidgets('tapping already selected item should not reset', (tester) async {
+    testWidgets('tapping already selected item should not reset',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
@@ -326,7 +347,8 @@ void main() {
       expect(homeIcon.color, AppColors.primary);
     });
 
-    testWidgets('should navigate through all 7 screens sequentially', (tester) async {
+    testWidgets('should navigate through all 7 screens sequentially',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
@@ -387,7 +409,8 @@ void main() {
       container.dispose();
     });
 
-    Widget createTestWidget({Locale locale = const Locale('ar')}) => UncontrolledProviderScope(
+    Widget createTestWidget({Locale locale = const Locale('ar')}) =>
+        UncontrolledProviderScope(
           container: container,
           child: MaterialApp(
             theme: AppTheme.lightTheme,
@@ -403,23 +426,28 @@ void main() {
           ),
         );
 
-    testWidgets('home nav item should have correct semantics when selected', (tester) async {
+    testWidgets('home nav item should have correct semantics when selected',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      final semanticsData = tester.getSemantics(find.byIcon(Icons.home_outlined));
+      final semanticsData =
+          tester.getSemantics(find.byIcon(Icons.home_outlined));
       expect(semanticsData.label, contains('الصفحة الرئيسية'));
     });
 
-    testWidgets('settings nav item should have correct semantics label', (tester) async {
+    testWidgets('settings nav item should have correct semantics label',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      final semanticsData = tester.getSemantics(find.byIcon(Icons.settings_outlined));
+      final semanticsData =
+          tester.getSemantics(find.byIcon(Icons.settings_outlined));
       expect(semanticsData.label, contains('الإعدادات'));
     });
 
-    testWidgets('all 7 nav items should have Semantics wrapper', (tester) async {
+    testWidgets('all 7 nav items should have Semantics wrapper',
+        (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 

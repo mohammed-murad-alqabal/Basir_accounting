@@ -206,10 +206,12 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final effectiveBackgroundColor = widget.backgroundColor ?? CardColors.background;
+    final effectiveBackgroundColor =
+        widget.backgroundColor ?? CardColors.background;
     final effectiveBorderRadius = widget.borderRadius ?? Radii.borderRadiusMd;
     final baseElevation = widget.elevation ?? Elevation.sm;
-    final effectiveElevation = _isHovered ? baseElevation + _hoverElevationBoost : baseElevation;
+    final effectiveElevation =
+        _isHovered ? baseElevation + _hoverElevationBoost : baseElevation;
     final effectivePadding = widget.padding ?? Spacing.paddingMd;
 
     Widget cardContent = Padding(
@@ -227,7 +229,11 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
               color: widget.statusColor,
               borderRadius: BorderRadiusDirectional.horizontal(
                 start: Radius.circular(
-                  effectiveBorderRadius.resolve(Directionality.of(context)).topLeft.x - 1,
+                  effectiveBorderRadius
+                          .resolve(Directionality.of(context))
+                          .topLeft
+                          .x -
+                      1,
                 ),
               ),
             ),
@@ -300,7 +306,8 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
         border: Border.all(
           color: widget.isSelected
               ? BorderContrastDesign.getBorderFocused(brightness)
-              : (widget.borderColor ?? BorderContrastDesign.getBorderNormal(brightness)),
+              : (widget.borderColor ??
+                  BorderContrastDesign.getBorderNormal(brightness)),
           width: widget.isSelected ? BorderWidths.normal : BorderWidths.thin,
         ),
         boxShadow: effectiveElevation > 0
@@ -320,10 +327,15 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
           child: InkWell(
             onTap: widget.onTap != null ? _handleTap : null,
             onLongPress: widget.onLongPress != null ? _handleLongPress : null,
-            onTapDown: (widget.onTap != null || widget.onLongPress != null) ? _handleTapDown : null,
-            onTapUp: (widget.onTap != null || widget.onLongPress != null) ? _handleTapUp : null,
-            onTapCancel:
-                (widget.onTap != null || widget.onLongPress != null) ? _handleTapCancel : null,
+            onTapDown: (widget.onTap != null || widget.onLongPress != null)
+                ? _handleTapDown
+                : null,
+            onTapUp: (widget.onTap != null || widget.onLongPress != null)
+                ? _handleTapUp
+                : null,
+            onTapCancel: (widget.onTap != null || widget.onLongPress != null)
+                ? _handleTapCancel
+                : null,
             onHover: (widget.onTap != null || widget.onLongPress != null)
                 ? (hovered) => setState(() => _isHovered = hovered)
                 : null,
@@ -335,7 +347,8 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
     );
 
     final hasInteraction = widget.onTap != null || widget.onLongPress != null;
-    final semanticsLabel = widget.semanticLabel ?? (hasInteraction ? 'بطاقة تفاعلية' : 'بطاقة');
+    final semanticsLabel =
+        widget.semanticLabel ?? (hasInteraction ? 'بطاقة تفاعلية' : 'بطاقة');
 
     if (hasInteraction) {
       return Semantics(
