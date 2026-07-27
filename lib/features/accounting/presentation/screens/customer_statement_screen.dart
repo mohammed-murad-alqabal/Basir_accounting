@@ -15,10 +15,12 @@ class CustomerStatementScreen extends ConsumerStatefulWidget {
   final Customer? initialCustomer;
 
   @override
-  ConsumerState<CustomerStatementScreen> createState() => _CustomerStatementScreenState();
+  ConsumerState<CustomerStatementScreen> createState() =>
+      _CustomerStatementScreenState();
 }
 
-class _CustomerStatementScreenState extends ConsumerState<CustomerStatementScreen> {
+class _CustomerStatementScreenState
+    extends ConsumerState<CustomerStatementScreen> {
   Customer? _selectedCustomer;
   DateTimeRange? _dateRange;
   List<CustomerLedgerEntry> _entries = [];
@@ -41,7 +43,8 @@ class _CustomerStatementScreenState extends ConsumerState<CustomerStatementScree
       final service = ref.read(customerLedgerServiceProvider.notifier);
 
       final now = DateTime.now();
-      final fromDate = _dateRange?.start ?? DateTime(now.year - 1, now.month, now.day);
+      final fromDate =
+          _dateRange?.start ?? DateTime(now.year - 1, now.month, now.day);
       final toDate = _dateRange?.end ?? now;
 
       final statement = await service.getCustomerStatement(
@@ -127,7 +130,8 @@ class _CustomerStatementScreenState extends ConsumerState<CustomerStatementScree
                   border: OutlineInputBorder(),
                 ),
                 child: Text(
-                  _selectedCustomer?.name(isArabic: context.isArabic) ?? 'Select Customer',
+                  _selectedCustomer?.name(isArabic: context.isArabic) ??
+                      'Select Customer',
                 ),
               ),
               const SizedBox(height: 16),
@@ -256,12 +260,16 @@ class _CustomerStatementScreenState extends ConsumerState<CustomerStatementScree
                       DataCell(Text(entry.description)),
                       DataCell(
                         Text(
-                          entry.debit > Decimal.zero ? entry.debit.toString() : '-',
+                          entry.debit > Decimal.zero
+                              ? entry.debit.toString()
+                              : '-',
                         ),
                       ),
                       DataCell(
                         Text(
-                          entry.credit > Decimal.zero ? entry.credit.toString() : '-',
+                          entry.credit > Decimal.zero
+                              ? entry.credit.toString()
+                              : '-',
                         ),
                       ),
                       DataCell(Text(entry.balance.toString())),

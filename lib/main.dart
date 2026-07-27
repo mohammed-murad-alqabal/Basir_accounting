@@ -274,7 +274,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   style: const TextStyle(
                     fontSize: 42,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF003D82), // Basir Blue
+                    color: AppColors.primaryDark,
                     fontFamily: 'Cairo',
                     letterSpacing: 4,
                   ),
@@ -282,7 +282,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 Text(
                   AppConfig.appDescription,
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: const Color(0xFF003D82).withValues(alpha: 0.6),
+                    color: AppColors.primaryDark.withValues(alpha: 0.6),
                     fontFamily: 'Cairo',
                   ),
                   textAlign: TextAlign.center,
@@ -296,7 +296,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                         height: 40,
                         child: CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            Color(0xFF003D82),
+                            AppColors.primaryDark,
                           ),
                           strokeWidth: 2,
                         ),
@@ -305,7 +305,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       Text(
                         _status,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: const Color(0xFF003D82).withValues(alpha: 0.5),
+                          color: AppColors.primaryDark.withValues(alpha: 0.5),
                         ),
                       ),
                     ],

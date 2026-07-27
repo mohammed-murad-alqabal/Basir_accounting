@@ -30,8 +30,8 @@ class _CloudBackupScreenState extends ConsumerState<CloudBackupScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('الأمان والنسخ الاحتياطي'),
-        backgroundColor: const Color(0xFF008080),
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.secondary,
+        foregroundColor: AppColors.onSecondary,
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.white,
@@ -86,8 +86,8 @@ class _CloudBackupScreenState extends ConsumerState<CloudBackupScreen>
               icon: const Icon(Icons.backup),
               label: const Text('إنشاء نسخة احتياطية الآن'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF008080),
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.secondary,
+                foregroundColor: AppColors.onSecondary,
                 padding: const EdgeInsets.symmetric(vertical: Spacing.md),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -179,8 +179,8 @@ class _CloudBackupScreenState extends ConsumerState<CloudBackupScreen>
                   : const Icon(Icons.sync),
               label: const Text('مزامنة الآن إلى Google Drive'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF008080),
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.secondary,
+                foregroundColor: AppColors.onSecondary,
                 padding: const EdgeInsets.symmetric(vertical: Spacing.md),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
