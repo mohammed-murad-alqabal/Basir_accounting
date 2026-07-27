@@ -6,15 +6,26 @@ import 'package:basir_accounting_system/shared/widgets/responsive_text.dart';
 import 'package:flutter/material.dart' hide Durations;
 import 'package:flutter/services.dart';
 
+/// شارة الحالة للبطاقة (Card Status Badge)
+enum CardBadgeStatus {
+  success,
+  error,
+  warning,
+  info,
+  custom,
+}
+
 /// بطاقة تطبيق موحدة (Unified App Card)
 ///
 /// مكون بطاقة محسّن يستخدم جميع Design Tokens
-/// مع دعم haptic feedback وحركات سلسة
+/// مع دعم haptic feedback وحركات سلسة وشارات الحالة
 ///
 /// الميزات:
 /// - استخدام CardColors و Spacing tokens
 /// - دعم haptic feedback
 /// - Scale animation عند الضغط
+/// - دعم شارات الحالة (Badges) في الزوايا
+/// - تغيير بصري واضح عند Hover و Press
 /// - توافق كامل مع WCAG
 ///
 /// Example:
@@ -22,6 +33,8 @@ import 'package:flutter/services.dart';
 /// AppCard(
 ///   child: Text('محتوى البطاقة'),
 ///   onTap: () => print('Tapped'),
+///   badgeText: 'جديد',
+///   badgeStatus: CardBadgeStatus.success,
 /// )
 /// ```
 class AppCard extends StatefulWidget {
@@ -32,12 +45,20 @@ class AppCard extends StatefulWidget {
     this.padding,
     this.margin,
     this.onTap,
+    this.onLongPress,
     this.backgroundColor,
     this.elevation,
     this.borderRadius,
     this.borderColor,
     this.hapticFeedback = true,
     this.isSelected = false,
+    this.badgeText,
+    this.badgeStatus = CardBadgeStatus.info,
+    this.badgeColor,
+    this.badgeTextColor,
+    this.badgeAlignment = AlignmentDirectional.topEnd,
+    this.statusColor,
+    this.semanticLabel,
   });
 
   /// محتوي البطاقة
@@ -51,6 +72,9 @@ class AppCard extends StatefulWidget {
 
   /// دالة عند الضغط
   final VoidCallback? onTap;
+
+  /// دالة عند الضغط المطول
+  final VoidCallback? onLongPress;
 
   /// لون الخلفية (افتراضي: CardColors.background)
   final Color? backgroundColor;
@@ -70,6 +94,27 @@ class AppCard extends StatefulWidget {
   /// حالة التحقق
   final bool isSelected;
 
+  /// نص الشارة (Badge) في الزاوية - اختياري
+  final String? badgeText;
+
+  /// نوع حالة الشارة
+  final CardBadgeStatus badgeStatus;
+
+  /// لون مخصص للشارة (يستخدم إذا كان badgeStatus = CardBadgeStatus.custom)
+  final Color? badgeColor;
+
+  /// لون نص مخصص للشارة
+  final Color? badgeTextColor;
+
+  /// موضع الشارة على البطاقة
+  final AlignmentGeometry badgeAlignment;
+
+  /// لون شريط حالة على الحافة (للحالات المرئية السريعة)
+  final Color? statusColor;
+
+  /// تسمية وصفية لقارئ الشاشات
+  final String? semanticLabel;
+
   @override
   State<AppCard> createState() => _AppCardState();
 }
@@ -77,6 +122,10 @@ class AppCard extends StatefulWidget {
 class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
   late AnimationController _scaleController;
   late Animation<double> _scaleAnimation;
+  bool _isHovered = false;
+
+  static const double _hoverElevationBoost = 2;
+  static const double _hoverScale = 1.01;
 
   @override
   void initState() {
@@ -125,16 +174,125 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
     }
   }
 
+  void _handleLongPress() {
+    if (widget.onLongPress != null) {
+      if (widget.hapticFeedback) {
+        unawaited(HapticFeedback.mediumImpact());
+      }
+      widget.onLongPress!();
+    }
+  }
+
+  Color _getBadgeBackgroundColor() {
+    switch (widget.badgeStatus) {
+      case CardBadgeStatus.success:
+        return AppColors.success;
+      case CardBadgeStatus.error:
+        return AppColors.error;
+      case CardBadgeStatus.warning:
+        return AppColors.warning;
+      case CardBadgeStatus.info:
+        return AppColors.info;
+      case CardBadgeStatus.custom:
+        return widget.badgeColor ?? AppColors.primary;
+    }
+  }
+
+  Color _getBadgeForegroundColor() {
+    if (widget.badgeTextColor != null) return widget.badgeTextColor!;
+    return AppColors.onPrimary;
+  }
+
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final effectiveBackgroundColor =
-        widget.backgroundColor ?? CardColors.background;
+    final effectiveBackgroundColor = widget.backgroundColor ?? CardColors.background;
     final effectiveBorderRadius = widget.borderRadius ?? Radii.borderRadiusMd;
-    final effectiveElevation = widget.elevation ?? Elevation.sm;
+    final baseElevation = widget.elevation ?? Elevation.sm;
+    final effectiveElevation = _isHovered ? baseElevation + _hoverElevationBoost : baseElevation;
     final effectivePadding = widget.padding ?? Spacing.paddingMd;
 
-    final Widget card = Container(
+    Widget cardContent = Padding(
+      padding: effectivePadding,
+      child: widget.child,
+    );
+
+    if (widget.statusColor != null) {
+      cardContent = Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            width: BorderWidths.thick,
+            decoration: BoxDecoration(
+              color: widget.statusColor,
+              borderRadius: BorderRadiusDirectional.horizontal(
+                start: Radius.circular(
+                  effectiveBorderRadius.resolve(Directionality.of(context)).topLeft.x - 1,
+                ),
+              ),
+            ),
+          ),
+          Expanded(child: cardContent),
+        ],
+      );
+    }
+
+    if (widget.badgeText != null && widget.badgeText!.isNotEmpty) {
+      cardContent = Stack(
+        clipBehavior: Clip.none,
+        children: [
+          cardContent,
+          PositionedDirectional(
+            top: widget.badgeAlignment == AlignmentDirectional.topEnd ||
+                    widget.badgeAlignment == AlignmentDirectional.topStart
+                ? -Spacing.sm
+                : null,
+            bottom: widget.badgeAlignment == AlignmentDirectional.bottomEnd ||
+                    widget.badgeAlignment == AlignmentDirectional.bottomStart
+                ? -Spacing.sm
+                : null,
+            end: widget.badgeAlignment == AlignmentDirectional.topEnd ||
+                    widget.badgeAlignment == AlignmentDirectional.bottomEnd
+                ? -Spacing.sm
+                : null,
+            start: widget.badgeAlignment == AlignmentDirectional.topStart ||
+                    widget.badgeAlignment == AlignmentDirectional.bottomStart
+                ? -Spacing.sm
+                : null,
+            child: Semantics(
+              label: 'شارة الحالة: ${widget.badgeText}',
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Spacing.sm,
+                  vertical: Spacing.xs,
+                ),
+                decoration: BoxDecoration(
+                  color: _getBadgeBackgroundColor(),
+                  borderRadius: BorderRadius.circular(Radii.lg),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: AppColors.shadow,
+                      offset: Offset(0, Elevation.sm / 2),
+                    ),
+                  ],
+                ),
+                child: Text(
+                  widget.badgeText!,
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: _getBadgeForegroundColor(),
+                    fontWeight: FontWeights.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    final Widget card = AnimatedContainer(
+      duration: Durations.fast,
+      curve: AnimationCurves.fastOutSlowIn,
       margin: widget.margin ?? EdgeInsets.zero,
       decoration: BoxDecoration(
         color: effectiveBackgroundColor,
@@ -142,8 +300,7 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
         border: Border.all(
           color: widget.isSelected
               ? BorderContrastDesign.getBorderFocused(brightness)
-              : (widget.borderColor ??
-                  BorderContrastDesign.getBorderNormal(brightness)),
+              : (widget.borderColor ?? BorderContrastDesign.getBorderNormal(brightness)),
           width: widget.isSelected ? BorderWidths.normal : BorderWidths.thin,
         ),
         boxShadow: effectiveElevation > 0
@@ -158,31 +315,51 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
       ),
       child: ClipRRect(
         borderRadius: effectiveBorderRadius,
-        child: Padding(padding: effectivePadding, child: widget.child),
+        child: Material(
+          type: MaterialType.transparency,
+          child: InkWell(
+            onTap: widget.onTap != null ? _handleTap : null,
+            onLongPress: widget.onLongPress != null ? _handleLongPress : null,
+            onTapDown: (widget.onTap != null || widget.onLongPress != null) ? _handleTapDown : null,
+            onTapUp: (widget.onTap != null || widget.onLongPress != null) ? _handleTapUp : null,
+            onTapCancel:
+                (widget.onTap != null || widget.onLongPress != null) ? _handleTapCancel : null,
+            onHover: (widget.onTap != null || widget.onLongPress != null)
+                ? (hovered) => setState(() => _isHovered = hovered)
+                : null,
+            borderRadius: effectiveBorderRadius,
+            child: cardContent,
+          ),
+        ),
       ),
     );
 
-    if (widget.onTap != null) {
-      return ScaleTransition(
-        scale: _scaleAnimation,
-        child: Semantics(
-          button: true,
-          enabled: true,
-          label: 'بطاقة تفاعلية',
-          selected: widget.isSelected,
-          child: GestureDetector(
-            onTapDown: _handleTapDown,
-            onTapUp: _handleTapUp,
-            onTapCancel: _handleTapCancel,
-            onTap: _handleTap,
-            behavior: HitTestBehavior.opaque,
+    final hasInteraction = widget.onTap != null || widget.onLongPress != null;
+    final semanticsLabel = widget.semanticLabel ?? (hasInteraction ? 'بطاقة تفاعلية' : 'بطاقة');
+
+    if (hasInteraction) {
+      return Semantics(
+        button: true,
+        enabled: true,
+        label: semanticsLabel,
+        selected: widget.isSelected,
+        child: AnimatedScale(
+          duration: Durations.fast,
+          curve: AnimationCurves.fastOutSlowIn,
+          scale: _isHovered ? _hoverScale : 1.0,
+          child: ScaleTransition(
+            scale: _scaleAnimation,
             child: card,
           ),
         ),
       );
     }
 
-    return Semantics(container: true, child: card);
+    return Semantics(
+      container: true,
+      label: semanticsLabel,
+      child: card,
+    );
   }
 }
 
@@ -242,10 +419,20 @@ class AppListCard extends StatelessWidget {
       trailingWidget = trailing as Widget;
     }
 
-    return GestureDetector(
-      onLongPress: onLongPress,
+    final semanticLabel = [
+      title,
+      if (subtitle != null) subtitle,
+      if (trailing is String) trailing as String,
+    ].join(' - ');
+
+    return Semantics(
+      container: true,
+      button: onTap != null || onLongPress != null,
+      label: semanticLabel,
+      selected: isSelected,
       child: AppCard(
         onTap: onTap,
+        onLongPress: onLongPress,
         backgroundColor: backgroundColor,
         isSelected: isSelected,
         margin: const EdgeInsets.only(bottom: Spacing.sm),

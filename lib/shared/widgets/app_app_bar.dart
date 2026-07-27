@@ -1,10 +1,19 @@
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/theme/border_contrast_design.dart';
 import 'package:basir_accounting_system/core/theme/services/icon_customization_service.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// شريط التطبيق الموحد للمشروع
+///
+/// المتطلبات:
+/// - حجم خط لا يقل عن 20px للعنوان
+/// - تباين لا يقل عن 4.5:1 للعنوان
+/// - حجم 24x24px للأيقونات (IconSizes.md)
+/// - تباين لا يقل عن 3:1 للأيقونات
+/// - مؤشر تركيز واضح مع تباين ≥ 3:1
+/// - خلفية واضحة مع فاصل أو ظل خفيف
 class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
   /// إنشاء شريط تطبيق مخصص
   ///
@@ -15,7 +24,9 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
   /// - [showBackButton]: إظهار زر الرجوع (افتراضي: true)
   /// - [backgroundColor]: لون الخلفية (افتراضي: AppColors.surface)
   /// - [foregroundColor]: لون النص والأيقونات
-  /// (افتراضي: AppColors.textPrimary)
+  ///   (افتراضي: AppColors.textPrimary)
+  /// - [automaticallyImplyLeading]: إذا كان صحيحاً والـ leading يساوي null،
+  ///   فسيُستنتج زر الرجوع تلقائياً
   const AppAppBar({
     required this.title,
     super.key,
@@ -25,6 +36,12 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
     this.backgroundColor = AppColors.surface,
     this.foregroundColor = AppColors.textPrimary,
     this.bottom,
+    this.elevation = 0,
+    this.automaticallyImplyLeading = false,
+    this.toolbarTextStyle,
+    this.titleSemanticLabel,
+    this.centerTitle = true,
+    this.scrolledUnderElevation = 1,
   });
 
   /// عنوان شريط التطبيق
@@ -49,36 +66,84 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
   /// عنصر سفلي إضافي
   final PreferredSizeWidget? bottom;
 
+  /// ارتفاع الظل (Elevation) للشريط
+  final double elevation;
+
+  /// استنتاج زر الرجوع تلقائياً
+  final bool automaticallyImplyLeading;
+
+  /// نمط نص شريط الأدوات
+  final TextStyle? toolbarTextStyle;
+
+  /// تسمية وصفية لعنوان شريط التطبيق لقارئ الشاشات
+  final String? titleSemanticLabel;
+
+  /// مركزية العنوان
+  final bool centerTitle;
+
+  /// الارتفاع عند التمرير (scrolled under)
+  final double scrolledUnderElevation;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appIcons = ref.watch(appIconsProvider);
+    final effectiveForeground = foregroundColor ?? AppColors.textPrimary;
+
+    final titleTextStyle = toolbarTextStyle ??
+        AppTextStyles.titleLarge.copyWith(
+          color: effectiveForeground,
+          fontWeight: FontWeights.semiBold,
+        );
+
+    final iconThemeData = IconThemeData(
+      size: IconSizes.md,
+      color: effectiveForeground,
+    );
 
     return AppBar(
-      title: Text(
-        title,
-        style: AppTextStyles.titleLarge.copyWith(
-          color: foregroundColor,
+      title: Semantics(
+        header: true,
+        label: titleSemanticLabel ?? title,
+        child: Text(
+          title,
+          style: titleTextStyle,
+          semanticsLabel: titleSemanticLabel,
         ),
       ),
       backgroundColor: backgroundColor,
-      foregroundColor: foregroundColor,
-      elevation: 0,
-      centerTitle: true,
-      iconTheme: const IconThemeData(size: 26),
-      leading: showBackButton
+      foregroundColor: effectiveForeground,
+      elevation: elevation,
+      scrolledUnderElevation: scrolledUnderElevation,
+      shadowColor: AppColors.shadow,
+      surfaceTintColor: Colors.transparent,
+      centerTitle: centerTitle,
+      automaticallyImplyLeading: automaticallyImplyLeading,
+      iconTheme: iconThemeData,
+      actionsIconTheme: iconThemeData,
+      toolbarTextStyle: titleTextStyle,
+      titleTextStyle: titleTextStyle,
+      leading: showBackButton && !automaticallyImplyLeading
           ? IconButton(
-              icon: Icon(appIcons.back),
+              icon: Icon(appIcons.back, size: IconSizes.md),
               tooltip: context.l10n.tooltipBack,
-              onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
+              color: effectiveForeground,
+              constraints: const BoxConstraints(
+                minWidth: TouchTargets.minimum,
+                minHeight: TouchTargets.minimum,
+              ),
+              padding: EdgeInsets.zero,
+              onPressed: onBackPressed ?? () => Navigator.of(context).maybePop(),
             )
           : null,
       actions: actions,
       bottom: bottom ??
           PreferredSize(
-            preferredSize: const Size.fromHeight(1),
+            preferredSize: const Size.fromHeight(BorderWidths.thin),
             child: Container(
-              color: AppColors.primary.withValues(alpha: 0.1),
-              height: 1,
+              color: BorderContrastDesign.getBorderNormal(
+                Theme.of(context).brightness,
+              ),
+              height: BorderWidths.thin,
             ),
           ),
     );
@@ -86,7 +151,7 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize =>
-      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 1.0));
+      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? BorderWidths.thin));
 }
 
 /// شريط تطبيق بسيط بدون زر رجوع
@@ -94,11 +159,12 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
 /// شريط تطبيق مبسط للشاشات الرئيسية
 ///
 /// Features:
-/// - عنوان في المنتصف
+/// - عنوان في المنتصف بحجم 22px (≥ 20px مطلوب)
 /// - بدون زر رجوع
 /// - إجراءات في النهاية (اختياري)
-/// - ألوان قابلة للتخصيص
-/// - بدون ظل (elevation: 0)
+/// - حجم الأيقونات 24px (IconSizes.md)
+/// - فاصل سفلي واضح بتباين مناسب
+/// - دعم focus indicator واضح
 ///
 /// Example:
 /// ```dart
@@ -120,13 +186,17 @@ class AppSimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// - [actions]: قائمة الإجراءات في النهاية (اختياري)
   /// - [backgroundColor]: لون الخلفية (افتراضي: AppColors.surface)
   /// - [foregroundColor]: لون النص والأيقونات
-  /// (افتراضي: AppColors.textPrimary)
+  ///   (افتراضي: AppColors.textPrimary)
   const AppSimpleAppBar({
     required this.title,
     super.key,
     this.actions,
     this.backgroundColor = AppColors.surface,
     this.foregroundColor = AppColors.textPrimary,
+    this.elevation = 0,
+    this.scrolledUnderElevation = 1,
+    this.centerTitle = true,
+    this.titleSemanticLabel,
   });
 
   /// عنوان شريط التطبيق
@@ -141,29 +211,67 @@ class AppSimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// لون النص والأيقونات
   final Color? foregroundColor;
 
-  @override
-  Widget build(BuildContext context) => AppBar(
-        title: Text(
-          title,
-          style: AppTextStyles.titleLarge.copyWith(
-            color: foregroundColor,
-          ),
-        ),
-        backgroundColor: backgroundColor,
-        foregroundColor: foregroundColor,
-        elevation: 0,
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        actions: actions,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(
-            color: AppColors.primary.withValues(alpha: 0.1),
-            height: 1,
-          ),
-        ),
-      );
+  /// ارتفاع الظل للشريط
+  final double elevation;
+
+  /// الارتفاع عند التمرير
+  final double scrolledUnderElevation;
+
+  /// مركزية العنوان
+  final bool centerTitle;
+
+  /// تسمية وصفية لعنوان شريط التطبيق
+  final String? titleSemanticLabel;
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 1.0);
+  Widget build(BuildContext context) {
+    final effectiveForeground = foregroundColor ?? AppColors.textPrimary;
+
+    final titleTextStyle = AppTextStyles.titleLarge.copyWith(
+      color: effectiveForeground,
+      fontWeight: FontWeights.semiBold,
+    );
+
+    final iconThemeData = IconThemeData(
+      size: IconSizes.md,
+      color: effectiveForeground,
+    );
+
+    return AppBar(
+      title: Semantics(
+        header: true,
+        label: titleSemanticLabel ?? title,
+        child: Text(
+          title,
+          style: titleTextStyle,
+          semanticsLabel: titleSemanticLabel,
+        ),
+      ),
+      backgroundColor: backgroundColor,
+      foregroundColor: effectiveForeground,
+      elevation: elevation,
+      scrolledUnderElevation: scrolledUnderElevation,
+      shadowColor: AppColors.shadow,
+      surfaceTintColor: Colors.transparent,
+      centerTitle: centerTitle,
+      automaticallyImplyLeading: false,
+      iconTheme: iconThemeData,
+      actionsIconTheme: iconThemeData,
+      toolbarTextStyle: titleTextStyle,
+      titleTextStyle: titleTextStyle,
+      actions: actions,
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(BorderWidths.thin),
+        child: Container(
+          color: BorderContrastDesign.getBorderNormal(
+            Theme.of(context).brightness,
+          ),
+          height: BorderWidths.thin,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + BorderWidths.thin);
 }

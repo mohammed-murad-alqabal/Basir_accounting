@@ -36,17 +36,14 @@ class _InventoryValuationReportScreenState
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: AppColors.background,
-        appBar: AppAppBar(
-          title: 'تقرير تقييم المخزون',
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              onPressed: _refreshReport,
-            ),
-          ],
-        ),
+  Widget build(BuildContext context) => GlassScaffold(
+        title: 'تقرير تقييم المخزون',
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _refreshReport,
+          ),
+        ],
         body: FutureBuilder<InventoryValuationReportDto>(
           future: _reportFuture,
           builder: (context, snapshot) {

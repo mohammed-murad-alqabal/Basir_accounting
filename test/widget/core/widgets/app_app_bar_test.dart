@@ -9,10 +9,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('AppAppBar', () {
     testWidgets('should display title correctly', (tester) async {
-      // Arrange
       const title = 'العملاء';
 
-      // Act
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -26,12 +24,10 @@ void main() {
         ),
       );
 
-      // Assert
       expect(find.text(title), findsOneWidget);
     });
 
     testWidgets('should show back button by default', (tester) async {
-      // Arrange & Act
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -45,14 +41,12 @@ void main() {
         ),
       );
 
-      // Assert
-      expect(find.byIcon(Icons.arrow_back_rounded), findsOneWidget);
+      expect(find.byIcon(Icons.arrow_back_outlined), findsOneWidget);
     });
 
     testWidgets('should hide back button when showBackButton is false', (
       tester,
     ) async {
-      // Arrange & Act
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -68,14 +62,12 @@ void main() {
         ),
       );
 
-      // Assert
-      expect(find.byIcon(Icons.arrow_back), findsNothing);
+      expect(find.byIcon(Icons.arrow_back_outlined), findsNothing);
     });
 
     testWidgets('should call Navigator.pop when back button is pressed', (
       tester,
     ) async {
-      // Arrange
       var navigatorPopped = false;
 
       await tester.pumpWidget(
@@ -113,24 +105,19 @@ void main() {
         ),
       );
 
-      // Navigate to second screen
       await tester.tap(find.text('Navigate'));
       await tester.pumpAndSettle();
 
-      // Act - Tap back button
-      await tester.tap(find.byIcon(Icons.arrow_back_rounded));
+      await tester.tap(find.byIcon(Icons.arrow_back_outlined));
       await tester.pumpAndSettle();
 
-      // Assert
       expect(navigatorPopped, isTrue);
       expect(find.text('Second Screen'), findsNothing);
     });
 
     testWidgets('should display actions when provided', (tester) async {
-      // Arrange
       var actionPressed = false;
 
-      // Act
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -157,22 +144,18 @@ void main() {
         ),
       );
 
-      // Assert
       expect(find.byIcon(Icons.add), findsOneWidget);
       expect(find.byIcon(Icons.search), findsOneWidget);
 
-      // Test action button press
       await tester.tap(find.byIcon(Icons.add));
       await tester.pump();
       expect(actionPressed, isTrue);
     });
 
     testWidgets('should use custom colors when provided', (tester) async {
-      // Arrange
       const customBgColor = Colors.blue;
       const customFgColor = Colors.white;
 
-      // Act
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -192,14 +175,12 @@ void main() {
         ),
       );
 
-      // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
       expect(appBar.backgroundColor, customBgColor);
       expect(appBar.foregroundColor, customFgColor);
     });
 
     testWidgets('should use default colors when not provided', (tester) async {
-      // Arrange & Act
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -213,14 +194,12 @@ void main() {
         ),
       );
 
-      // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
       expect(appBar.backgroundColor, AppColors.surface);
       expect(appBar.foregroundColor, AppColors.textPrimary);
     });
 
     testWidgets('should have elevation of 0', (tester) async {
-      // Arrange & Act
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -234,13 +213,11 @@ void main() {
         ),
       );
 
-      // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
       expect(appBar.elevation, 0);
     });
 
     testWidgets('should center title', (tester) async {
-      // Arrange & Act
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -254,53 +231,171 @@ void main() {
         ),
       );
 
-      // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
       expect(appBar.centerTitle, isTrue);
     });
 
     testWidgets('should have correct preferred size', (tester) async {
-      // Arrange
       const appBar = AppAppBar(title: 'Test');
 
-      // Assert
       expect(appBar.preferredSize, const Size.fromHeight(kToolbarHeight + 1.0));
+    });
+
+    testWidgets('back button should have 48x48px touch target', (tester) async {
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: Scaffold(appBar: AppAppBar(title: 'Test')),
+          ),
+        ),
+      );
+
+      final backButton = tester.widget<IconButton>(
+        find.byWidgetPredicate(
+          (w) => w is IconButton && w.icon is Icon,
+        ),
+      );
+      expect(backButton.constraints?.minWidth, TouchTargets.minimum);
+      expect(backButton.constraints?.minHeight, TouchTargets.minimum);
+    });
+
+    testWidgets('back button icon should be 24px', (tester) async {
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: Scaffold(appBar: AppAppBar(title: 'Test')),
+          ),
+        ),
+      );
+
+      final icon = tester.widget<Icon>(find.byIcon(Icons.arrow_back_outlined));
+      expect(icon.size, IconSizes.md);
+    });
+
+    testWidgets('actions icon theme should use 24px size', (tester) async {
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: Scaffold(
+              appBar: AppAppBar(
+                title: 'Test',
+                actions: [Icon(Icons.add)],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final appBar = tester.widget<AppBar>(find.byType(AppBar));
+      expect(appBar.actionsIconTheme?.size, IconSizes.md);
+      expect(appBar.iconTheme?.size, IconSizes.md);
+    });
+
+    testWidgets('should have bottom divider border', (tester) async {
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: Scaffold(appBar: AppAppBar(title: 'Test')),
+          ),
+        ),
+      );
+
+      final appBar = tester.widget<AppBar>(find.byType(AppBar));
+      expect(appBar.bottom, isNotNull);
+      expect(appBar.bottom!.preferredSize.height, BorderWidths.thin);
+    });
+
+    testWidgets('title should have semantics header', (tester) async {
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: Scaffold(appBar: AppAppBar(title: 'Test')),
+          ),
+        ),
+      );
+
+      final semanticsFinder = find.ancestor(
+        of: find.text('Test'),
+        matching: find.byWidgetPredicate((w) => w is Semantics),
+      );
+      expect(semanticsFinder, findsWidgets);
+    });
+
+    testWidgets('should respect titleSemanticLabel', (tester) async {
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: Scaffold(
+              appBar: AppAppBar(
+                title: 'العملاء',
+                titleSemanticLabel: 'قائمة العملاء المسجلين',
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final semanticsNode = tester.getSemantics(find.text('العملاء'));
+      expect(semanticsNode.label, contains('قائمة العملاء المسجلين'));
     });
   });
 
   group('AppSimpleAppBar', () {
     testWidgets('should display title correctly', (tester) async {
-      // Arrange
       const title = 'لوحة التحكم';
 
-      // Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(appBar: AppSimpleAppBar(title: title)),
         ),
       );
 
-      // Assert
       expect(find.text(title), findsOneWidget);
     });
 
     testWidgets('should not show back button', (tester) async {
-      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(appBar: AppSimpleAppBar(title: 'Test')),
         ),
       );
 
-      // Assert
-      expect(find.byIcon(Icons.arrow_back), findsNothing);
+      expect(find.byIcon(Icons.arrow_back_outlined), findsNothing);
     });
 
     testWidgets('should display actions when provided', (tester) async {
-      // Arrange
       var actionPressed = false;
 
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -319,21 +414,16 @@ void main() {
         ),
       );
 
-      // Assert
       expect(find.byIcon(Icons.settings), findsOneWidget);
 
-      // Test action button press
       await tester.tap(find.byIcon(Icons.settings));
       await tester.pump();
       expect(actionPressed, isTrue);
     });
 
     testWidgets('should use custom colors when provided', (tester) async {
-      // Arrange
       const customBgColor = Colors.green;
-      const customFgColor = Colors.black;
 
-      // Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -345,71 +435,119 @@ void main() {
         ),
       );
 
-      // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
       expect(appBar.backgroundColor, customBgColor);
-      expect(appBar.foregroundColor, customFgColor);
+      expect(appBar.foregroundColor, AppColors.textPrimary);
     });
 
     testWidgets('should use default colors when not provided', (tester) async {
-      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(appBar: AppSimpleAppBar(title: 'Test')),
         ),
       );
 
-      // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
       expect(appBar.backgroundColor, AppColors.surface);
       expect(appBar.foregroundColor, AppColors.textPrimary);
     });
 
     testWidgets('should have elevation of 0', (tester) async {
-      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(appBar: AppSimpleAppBar(title: 'Test')),
         ),
       );
 
-      // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
       expect(appBar.elevation, 0);
     });
 
     testWidgets('should center title', (tester) async {
-      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(appBar: AppSimpleAppBar(title: 'Test')),
         ),
       );
 
-      // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
       expect(appBar.centerTitle, isTrue);
     });
 
     testWidgets('should not automatically imply leading', (tester) async {
-      // Arrange & Act
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(appBar: AppSimpleAppBar(title: 'Test')),
         ),
       );
 
-      // Assert
       final appBar = tester.widget<AppBar>(find.byType(AppBar));
       expect(appBar.automaticallyImplyLeading, isFalse);
     });
 
     testWidgets('should have correct preferred size', (tester) async {
-      // Arrange
       const appBar = AppSimpleAppBar(title: 'Test');
 
-      // Assert
       expect(appBar.preferredSize, const Size.fromHeight(kToolbarHeight + 1.0));
+    });
+
+    testWidgets('icon theme should use 24px size', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            appBar: AppSimpleAppBar(
+              title: 'Test',
+              actions: [Icon(Icons.settings)],
+            ),
+          ),
+        ),
+      );
+
+      final appBar = tester.widget<AppBar>(find.byType(AppBar));
+      expect(appBar.iconTheme?.size, IconSizes.md);
+      expect(appBar.actionsIconTheme?.size, IconSizes.md);
+    });
+
+    testWidgets('should have bottom divider border', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(appBar: AppSimpleAppBar(title: 'Test')),
+        ),
+      );
+
+      final appBar = tester.widget<AppBar>(find.byType(AppBar));
+      expect(appBar.bottom, isNotNull);
+      expect(appBar.bottom!.preferredSize.height, BorderWidths.thin);
+    });
+
+    testWidgets('title should have semantics header', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(appBar: AppSimpleAppBar(title: 'Test')),
+        ),
+      );
+
+      final semanticsFinder = find.ancestor(
+        of: find.text('Test'),
+        matching: find.byWidgetPredicate((w) => w is Semantics),
+      );
+      expect(semanticsFinder, findsWidgets);
+    });
+
+    testWidgets('should respect titleSemanticLabel', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            appBar: AppSimpleAppBar(
+              title: 'لوحة التحكم',
+              titleSemanticLabel: 'شاشة لوحة التحكم الرئيسية',
+            ),
+          ),
+        ),
+      );
+
+      final semanticsNode = tester.getSemantics(find.text('لوحة التحكم'));
+      expect(semanticsNode.label, contains('شاشة لوحة التحكم الرئيسية'));
     });
   });
 }

@@ -3,6 +3,7 @@ import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/widgets/consensus_visualization_widget.dart';
+import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,24 +30,21 @@ class JournalEntryDetailScreen extends ConsumerWidget {
       (sum, line) => sum + line.debit.toDouble(),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(entry.referenceNumber),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.print),
-            onPressed: () async {
-              final pdfService =
-                  ref.read(pdfGenerationServiceProvider.notifier);
-              final pdfBytes = await pdfService.generateJournalEntryPdf(entry);
-              await Printing.layoutPdf(
-                onLayout: (format) => pdfBytes,
-                name: 'JE_${entry.referenceNumber}',
-              );
-            },
-          ),
-        ],
-      ),
+    return GlassScaffold(
+      title: entry.referenceNumber,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.print),
+          onPressed: () async {
+            final pdfService = ref.read(pdfGenerationServiceProvider.notifier);
+            final pdfBytes = await pdfService.generateJournalEntryPdf(entry);
+            await Printing.layoutPdf(
+              onLayout: (format) => pdfBytes,
+              name: 'JE_${entry.referenceNumber}',
+            );
+          },
+        ),
+      ],
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -311,9 +309,7 @@ class _HeaderRow extends StatelessWidget {
                         textAlign: TextAlign.end,
                         style: context.textTheme.bodyMedium?.copyWith(
                           color: valueColor ?? //
-                              (onTap != null
-                                  ? Theme.of(context).primaryColor
-                                  : null),
+                              (onTap != null ? Theme.of(context).primaryColor : null),
                           fontWeight: (valueColor != null || onTap != null) //
                               ? FontWeight.bold
                               : null,
