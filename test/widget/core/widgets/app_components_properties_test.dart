@@ -53,7 +53,8 @@ void main() {
         expect(BorderWidths.thin, 1);
       });
 
-      testWidgets('AppCard should use normal border (1.5px) when isSelected', (tester) async {
+      testWidgets('AppCard should use normal border (1.5px) when isSelected',
+          (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -75,7 +76,8 @@ void main() {
         expect(BorderWidths.normal, 1.5);
       });
 
-      testWidgets('AppCard default borderRadius should be Radii.borderRadiusMd', (tester) async {
+      testWidgets('AppCard default borderRadius should be Radii.borderRadiusMd',
+          (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -195,7 +197,8 @@ void main() {
         expect(Spacing.sm, 8);
       });
 
-      testWidgets('Multiple AppListCards should be separated by 8px vertical', (tester) async {
+      testWidgets('Multiple AppListCards should be separated by 8px vertical',
+          (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -245,7 +248,8 @@ void main() {
     // Property 21: تسلسل هرمي للنصوص في البطاقات (Requirements 6.4)
     // ═══════════════════════════════════════════════════════════════════════
     group('Property 21 - Card Text Hierarchy', () {
-      testWidgets('AppListCard title should use titleSmallSize (14px) > subtitle bodySmall (12px)',
+      testWidgets(
+          'AppListCard title should use titleSmallSize (14px) > subtitle bodySmall (12px)',
           (
         tester,
       ) async {
@@ -306,12 +310,14 @@ void main() {
           ),
         );
 
-        final titleWeight = (titleResp.style?.fontWeight ?? FontWeight.w400).value;
+        final titleWeight =
+            (titleResp.style?.fontWeight ?? FontWeight.w400).value;
         final subWeight = (subResp.style?.fontWeight ?? FontWeight.w400).value;
         expect(titleWeight, greaterThanOrEqualTo(subWeight));
       });
 
-      testWidgets('AppStatCard value has larger font than label', (tester) async {
+      testWidgets('AppStatCard value has larger font than label',
+          (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -431,7 +437,8 @@ void main() {
         expect(boxDeco.color, AppColors.warning);
       });
 
-      testWidgets('Badge info (default) should use AppColors.info background', (tester) async {
+      testWidgets('Badge info (default) should use AppColors.info background',
+          (tester) async {
         await tester.pumpWidget(
           MaterialApp(
             theme: AppTheme.lightTheme,
@@ -511,7 +518,8 @@ void main() {
         expect(statusBarFinder, findsOneWidget);
 
         final statusBar = tester.widget<Container>(statusBarFinder);
-        final resolvedColor = statusBar.color ?? (statusBar.decoration as BoxDecoration?)?.color;
+        final resolvedColor =
+            statusBar.color ?? (statusBar.decoration as BoxDecoration?)?.color;
         expect(resolvedColor, statusColor);
 
         final size = tester.getSize(statusBarFinder);
@@ -524,7 +532,8 @@ void main() {
     // Property 9: حجم الأيقونات الأساسية (Requirements 3.1, 8.3)
     // ═══════════════════════════════════════════════════════════════════════
     group('Property 9 - Core Icon Sizes (24px)', () {
-      testWidgets('AppAppBar back button icon should be 24px (IconSizes.md)', (tester) async {
+      testWidgets('AppAppBar back button icon should be 24px (IconSizes.md)',
+          (tester) async {
         SharedPreferences.setMockInitialValues({});
         final container = ProviderContainer(
           overrides: [
@@ -612,7 +621,8 @@ void main() {
         expect(appBarWidget.iconTheme?.size, IconSizes.md);
       });
 
-      testWidgets('AppSimpleAppBar action icons should be 24px', (tester) async {
+      testWidgets('AppSimpleAppBar action icons should be 24px',
+          (tester) async {
         await tester.pumpWidget(
           MaterialApp(
             theme: AppTheme.lightTheme,
@@ -621,7 +631,8 @@ void main() {
                 title: 'تسجيل الدخول',
                 actions: [
                   IconButton(
-                    icon: const Icon(Icons.settings_outlined, size: IconSizes.md),
+                    icon:
+                        const Icon(Icons.settings_outlined, size: IconSizes.md),
                     onPressed: () {},
                   ),
                 ],
@@ -743,7 +754,8 @@ void main() {
         expect(backButton.tooltip, isNotEmpty);
       });
 
-      testWidgets('AppSimpleAppBar action buttons with tooltip work correctly', (
+      testWidgets('AppSimpleAppBar action buttons with tooltip work correctly',
+          (
         tester,
       ) async {
         await tester.pumpWidget(
@@ -847,13 +859,15 @@ void main() {
     // Property 24: سرعة تحديث مؤشر التنقل (Requirements 8.5)
     // ═══════════════════════════════════════════════════════════════════════
     group('Property 24 - Navigation Indicator Update Speed', () {
-      testWidgets('indicatorUpdateDuration should equal Durations.short = 200ms', (
+      testWidgets(
+          'indicatorUpdateDuration should equal Durations.short = 200ms', (
         tester,
       ) async {
         expect(Durations.short, const Duration(milliseconds: 200));
       });
 
-      testWidgets('AnimatedContainer on MainShell uses Durations.short (~200ms)', (
+      testWidgets(
+          'AnimatedContainer on MainShell uses Durations.short (~200ms)', (
         tester,
       ) async {
         SharedPreferences.setMockInitialValues({});
@@ -1111,7 +1125,8 @@ void main() {
     // Property 16: التغيير البصري واضح عند التفاعل (Scale Animation)
     // ═══════════════════════════════════════════════════════════════════════
     group('Property 16 - Visual State Changes on Interaction', () {
-      testWidgets('AppButton contains ScaleTransition descendant for press effect', (
+      testWidgets(
+          'AppButton contains ScaleTransition descendant for press effect', (
         tester,
       ) async {
         await tester.pumpWidget(
@@ -1187,7 +1202,8 @@ void main() {
     // Property 18: حالة الزر المعطل تمنع النقر وتظهر بوضوح
     // ═══════════════════════════════════════════════════════════════════════
     group('Property 18 - Disabled Button State', () {
-      testWidgets('AppButton with onPressed=null does NOT call callback on tap', (
+      testWidgets('AppButton with onPressed=null does NOT call callback on tap',
+          (
         tester,
       ) async {
         const pressed = false;
@@ -1211,7 +1227,8 @@ void main() {
         expect(pressed, isFalse);
       });
 
-      testWidgets('AppButton disabled: decoration color uses disabled opacity', (
+      testWidgets('AppButton disabled: decoration color uses disabled opacity',
+          (
         tester,
       ) async {
         final enabledKey = UniqueKey();
@@ -1287,7 +1304,8 @@ void main() {
         expect(pressed, isTrue);
       });
 
-      testWidgets('AppButton with isLoading=true prevents tap and shows progress', (
+      testWidgets(
+          'AppButton with isLoading=true prevents tap and shows progress', (
         tester,
       ) async {
         var pressed = false;
@@ -1460,7 +1478,8 @@ void main() {
                 key: formKey,
                 child: AppTextField(
                   label: 'البريد الإلكتروني',
-                  validator: (v) => (v == null || v.isEmpty) ? 'البريد مطلوب' : null,
+                  validator: (v) =>
+                      (v == null || v.isEmpty) ? 'البريد مطلوب' : null,
                   onChanged: (_) {},
                 ),
               ),
@@ -1489,7 +1508,8 @@ void main() {
                 key: formKey,
                 child: AppTextField(
                   label: 'الاسم',
-                  validator: (v) => (v == null || v.length < 2) ? 'اسم قصير جداً' : null,
+                  validator: (v) =>
+                      (v == null || v.length < 2) ? 'اسم قصير جداً' : null,
                   onChanged: (_) {},
                 ),
               ),
@@ -1643,7 +1663,8 @@ void main() {
             matching: find.byType(CircularProgressIndicator),
           ),
         );
-        final animatedColor = indicator.valueColor as AlwaysStoppedAnimation<Color>?;
+        final animatedColor =
+            indicator.valueColor as AlwaysStoppedAnimation<Color>?;
         expect(animatedColor?.value, customColor);
       });
 
@@ -1676,7 +1697,8 @@ void main() {
     // Properties 26-28: الحالات الفارغة (Empty States)
     // ═══════════════════════════════════════════════════════════════════════
     group('Properties 26-28 - Empty State Display', () {
-      testWidgets('Property 26: AppEmptyState shows title with titleMedium style', (
+      testWidgets(
+          'Property 26: AppEmptyState shows title with titleMedium style', (
         tester,
       ) async {
         await tester.pumpWidget(
@@ -1699,7 +1721,8 @@ void main() {
         expect(titleText.style?.fontWeight, FontWeights.bold);
       });
 
-      testWidgets('Property 27: AppEmptyState with description shows secondary text', (
+      testWidgets(
+          'Property 27: AppEmptyState with description shows secondary text', (
         tester,
       ) async {
         await tester.pumpWidget(
@@ -1725,7 +1748,8 @@ void main() {
         expect(descText.style?.color, AppColors.textSecondary);
       });
 
-      testWidgets('Property 27: AppEmptyState action button triggers callback', (
+      testWidgets('Property 27: AppEmptyState action button triggers callback',
+          (
         tester,
       ) async {
         var pressed = false;
@@ -1828,7 +1852,8 @@ void main() {
         expect('Cairo', FontFamilies.arabic);
       });
 
-      testWidgets('AppTextStyles.displayLarge has valid fontFamily & fallbacks', (tester) async {
+      testWidgets('AppTextStyles.displayLarge has valid fontFamily & fallbacks',
+          (tester) async {
         final style = AppTextStyles.displayLarge;
         expect(
           style.fontFamily,
@@ -1839,7 +1864,8 @@ void main() {
         }
       });
 
-      testWidgets('ResponsiveText renders with non-null fontFamily', (tester) async {
+      testWidgets('ResponsiveText renders with non-null fontFamily',
+          (tester) async {
         await tester.pumpWidget(
           MaterialApp(
             theme: AppTheme.lightTheme,
@@ -1884,7 +1910,9 @@ void main() {
     // Property 6: أحجام العناوين (Heading Sizes Scale)
     // ═══════════════════════════════════════════════════════════════════════
     group('Property 6 - Heading Sizes Hierarchy', () {
-      test('Headings maintain descending size order: display > headline > title > body', () {
+      test(
+          'Headings maintain descending size order: display > headline > title > body',
+          () {
         expect(
           AppTextStyles.displayLargeSize,
           greaterThan(AppTextStyles.headlineLargeSize),
@@ -1970,7 +1998,8 @@ void main() {
         );
       });
 
-      testWidgets('Body TextStyles have valid fontSize >= 12px (WCAG)', (tester) async {
+      testWidgets('Body TextStyles have valid fontSize >= 12px (WCAG)',
+          (tester) async {
         final bodySizes = [
           AppTextStyles.bodyLargeSize,
           AppTextStyles.bodyMediumSize,
@@ -2044,9 +2073,13 @@ void main() {
       double relativeLuminance(Color color) {
         double conv(double v01) => v01 <= 0.03928
             ? v01 / 12.92
-            : ((v01 + 0.055) / 1.055) * ((v01 + 0.055) / 1.055) * ((v01 + 0.055) / 1.055);
+            : ((v01 + 0.055) / 1.055) *
+                ((v01 + 0.055) / 1.055) *
+                ((v01 + 0.055) / 1.055);
 
-        return 0.2126 * conv(color.r) + 0.7152 * conv(color.g) + 0.0722 * conv(color.b);
+        return 0.2126 * conv(color.r) +
+            0.7152 * conv(color.g) +
+            0.0722 * conv(color.b);
       }
 
       double contrastRatio(Color a, Color b) {
@@ -2057,7 +2090,9 @@ void main() {
         return (lighter + 0.05) / (darker + 0.05);
       }
 
-      test('AppColors.textPrimary vs surface: contrast >= 4.5:1 (Normal text WCAG)', () {
+      test(
+          'AppColors.textPrimary vs surface: contrast >= 4.5:1 (Normal text WCAG)',
+          () {
         final cr = contrastRatio(AppColors.textPrimary, AppColors.surface);
         expect(cr, greaterThanOrEqualTo(4.5));
       });
@@ -2102,7 +2137,9 @@ void main() {
       double relL(Color color) {
         double f(double v01) => v01 <= 0.03928
             ? v01 / 12.92
-            : ((v01 + 0.055) / 1.055) * ((v01 + 0.055) / 1.055) * ((v01 + 0.055) / 1.055);
+            : ((v01 + 0.055) / 1.055) *
+                ((v01 + 0.055) / 1.055) *
+                ((v01 + 0.055) / 1.055);
 
         return 0.2126 * f(color.r) + 0.7152 * f(color.g) + 0.0722 * f(color.b);
       }
@@ -2151,7 +2188,8 @@ void main() {
         expect(text.style?.color, isNotNull);
       });
 
-      test('TextField placeholder/text vs background color: distinguishable', () {
+      test('TextField placeholder/text vs background color: distinguishable',
+          () {
         const fg = AppColors.textPrimary;
         const bg = InputColors.background;
         final contrast = cr0(fg, bg);
@@ -2173,7 +2211,8 @@ void main() {
               body: SizedBox(
                 width: 300,
                 child: AppEnhancedButton(
-                  label: 'هذا نص طويل جداً لاختبار عدم وجود قص أفقي في الزر المحسن',
+                  label:
+                      'هذا نص طويل جداً لاختبار عدم وجود قص أفقي في الزر المحسن',
                   onPressed: () {},
                   maxLines: 2,
                 ),
@@ -2392,7 +2431,8 @@ void main() {
         }
       });
 
-      testWidgets('AppEnhancedButton textStyle uses titleMedium with line height', (
+      testWidgets(
+          'AppEnhancedButton textStyle uses titleMedium with line height', (
         tester,
       ) async {
         await tester.pumpWidget(
@@ -2561,7 +2601,9 @@ void main() {
           final paddingFinder = find.descendant(
             of: find.byType(AppEnhancedButton),
             matching: find.byWidgetPredicate(
-              (w) => w is Padding && (w.padding as EdgeInsets).vertical >= Spacing.xs * 2,
+              (w) =>
+                  w is Padding &&
+                  (w.padding as EdgeInsets).vertical >= Spacing.xs * 2,
             ),
           );
           expect(paddingFinder, findsWidgets);
@@ -2601,7 +2643,8 @@ void main() {
         expect(deco.gradient, isNotNull);
       });
 
-      testWidgets('Button minHeight and radii tokens do not depend on platform', (
+      testWidgets('Button minHeight and radii tokens do not depend on platform',
+          (
         tester,
       ) async {
         await tester.pumpWidget(
@@ -2692,7 +2735,8 @@ void main() {
         expect(AppStateColors.focusBorderWidth, 2);
       });
 
-      test('Focus border (Light Mode: primary) vs surface: contrast >= 3:1', () {
+      test('Focus border (Light Mode: primary) vs surface: contrast >= 3:1',
+          () {
         const focus = AppStateColors.focusBorderLight;
         final rL = focus.computeLuminance();
         const surface = AppColors.surface;
@@ -2703,7 +2747,9 @@ void main() {
         expect(ratio, greaterThanOrEqualTo(3.0));
       });
 
-      test('Focus border (Dark Mode: blueCorporate) vs dark surface: contrast >= 3:1', () {
+      test(
+          'Focus border (Dark Mode: blueCorporate) vs dark surface: contrast >= 3:1',
+          () {
         const focus = AppStateColors.focusBorderDark;
         const surfaceDark = Color(0xFF111827);
         final rL = focus.computeLuminance();
@@ -2714,7 +2760,8 @@ void main() {
         expect(ratio, greaterThanOrEqualTo(3.0));
       });
 
-      test('BorderContrastDesign focus borders match AppStateColors tokens', () {
+      test('BorderContrastDesign focus borders match AppStateColors tokens',
+          () {
         expect(
           BorderContrastDesign.borderFocusedLight,
           AppStateColors.focusBorderLight,
@@ -2761,7 +2808,8 @@ void main() {
         expect(Durations.short.inMilliseconds, 200);
       });
 
-      test('Durations.medium >= short <= 300ms <= 500 for longer animations', () {
+      test('Durations.medium >= short <= 300ms <= 500 for longer animations',
+          () {
         expect(Durations.medium.inMilliseconds, greaterThanOrEqualTo(250));
         expect(Durations.medium.inMilliseconds, lessThanOrEqualTo(500));
       });

@@ -91,7 +91,8 @@ void main() {
         expect(find.byType(GlassScaffold), findsOneWidget);
       });
 
-      testWidgets('should have settings buttons as ListTile with icons', (tester) async {
+      testWidgets('should have settings buttons as ListTile with icons',
+          (tester) async {
         await setUpWidgets(tester);
 
         final listTileFinder = find.descendant(
@@ -113,7 +114,8 @@ void main() {
         }
       });
 
-      testWidgets('should have logout button as AppEnhancedButton with danger type',
+      testWidgets(
+          'should have logout button as AppEnhancedButton with danger type',
           (tester) async {
         await setUpWidgets(tester);
 
@@ -123,11 +125,13 @@ void main() {
         );
         expect(logoutButtonFinder, findsOneWidget);
 
-        final logoutButton = tester.widget<AppEnhancedButton>(logoutButtonFinder);
+        final logoutButton =
+            tester.widget<AppEnhancedButton>(logoutButtonFinder);
         expect(logoutButton.type, AppEnhancedButtonType.danger);
       });
 
-      testWidgets('should have correct AppBar title using l10n', (tester) async {
+      testWidgets('should have correct AppBar title using l10n',
+          (tester) async {
         await setUpWidgets(tester);
 
         final glassScaffold = tester.widget<GlassScaffold>(
@@ -148,7 +152,8 @@ void main() {
         expect(titleFinder, findsOneWidget);
       });
 
-      testWidgets('should have Semantics elements for important sections', (tester) async {
+      testWidgets('should have Semantics elements for important sections',
+          (tester) async {
         await setUpWidgets(tester);
 
         final semanticsFinder = find.descendant(
@@ -171,7 +176,8 @@ void main() {
         expect(appearanceSemantics.properties.button, isTrue);
       });
 
-      testWidgets('should use AppTextStyles for settings text display', (tester) async {
+      testWidgets('should use AppTextStyles for settings text display',
+          (tester) async {
         await setUpWidgets(tester);
 
         final textFinder = find.descendant(
