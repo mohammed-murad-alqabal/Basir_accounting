@@ -1,15 +1,32 @@
+import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/expenses/domain/entities/expense.dart';
 import 'package:basir_accounting_system/features/expenses/domain/repositories/expense_repository.dart';
 import 'package:uuid/uuid.dart';
+
+/// Typedef لدالة ترحيل المصروف إلى دفتر الأستاذ العام
+///
+/// ترجع معرف القيد المحاسبي (JournalEntry) بعد النشر.
+/// تُستخدم لتفكيك طبقة المستودع عن طبقة المحاسبة مع
+/// الحفاظ على إمكانية اختبار الوحدات (Testable DI).
+typedef LedgerPostCallback = Future<String> Function({
+  required Expense expense,
+  required String journalEntryId,
+  required AccountNature expenseNature,
+});
 
 /// Implementation of ExpenseRepository using Isar local database.
 ///
 /// Follows FORENSIC_ATLAS Screen 066 data access patterns.
 class ExpenseRepositoryImpl implements ExpenseRepository {
   /// Creates the [ExpenseRepositoryImpl].
-  ExpenseRepositoryImpl() {
+  ExpenseRepositoryImpl({this.ledgerPoster}) {
     _initializeDefaultCategories();
   }
+
+  /// إلزامي للتكامل مع دفتر الأستاذ العام.
+  /// عند عدم توفره، ينشئ المستودع قيداً وهمياً في الذاكرة فقط.
+  final LedgerPostCallback? ledgerPoster;
+
   // In-memory storage for now - will be replaced with Isar
   final List<Expense> _expenses = [];
   final List<ExpenseCategory> _categories = [];
@@ -183,8 +200,17 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
       throw Exception('Expense already posted');
     }
 
-    // TODO(basir): Implement proper filtering via LedgerService
     final journalEntryId = _uuid.v4();
+
+    // التكامل الحقيقي مع دفتر الأستاذ عبر LedgerService
+    // عبر المسجّل الذي يُحقَن من طبقة الخدمة الأعلى
+    if (ledgerPoster != null) {
+      await ledgerPoster!(
+        expense: expense,
+        journalEntryId: journalEntryId,
+        expenseNature: AccountNature.debit,
+      );
+    }
 
     final posted = expense.copyWith(
       status: 'posted',

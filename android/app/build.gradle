@@ -5,10 +5,42 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+// ===== إعدادات توقيع إصدار Basir Accounting =====
+// تحميل ملف key.properties إذا وجد، وإلا يعود لوضع التوقيع الافتراضي (Debug)
+// لتجنب كسر البناء لأولئك الذين لم يقوموا بإعداد Keystore بعد.
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+// اختبار سريع لتوفر Keystore حقيقي للتوقيع.
+// نستخدم متغير boolean بسيطاً (لا دالة def لتجنب مشاكل النطاق داخل الكلوزرات)
+boolean releaseSigningReady = keystorePropertiesFile.exists()
+    && keystoreProperties['storePassword'] != null
+    && keystoreProperties['storePassword'] != 'CHANGE_ME_STORE_PASSWORD'
+    && keystoreProperties['keyPassword'] != null
+    && keystoreProperties['keyAlias'] != null
+    && keystoreProperties['storeFile'] != null
+    && new File(keystoreProperties['storeFile']).exists()
+
 android {
     namespace = "com.basir.accounting"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
+
+    // ===== استبعاد ملف GeneratedPluginRegistrant القديم من التجميع =====
+    // file_picker 10.x هو Kotlin-only ولا يحتوي على FilePickerPlugin.java
+    // لذا يستحيل تجميع الملف المولّد. FlutterEmbedding v2 يستخدم Plugin Loaders
+    // التلقائي ولا يحتاج لاستدعاء صريح لهذا الملف.
+    sourceSets {
+        main {
+            java {
+                srcDirs = ['src/main/kotlin', 'src/main/java']
+                exclude 'io/flutter/plugins/GeneratedPluginRegistrant.java'
+            }
+        }
+    }
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -30,13 +62,48 @@ android {
         versionName = flutter.versionName
     }
 
+    // ===== إعدادات توقيع الإصدار =====
+    // - إذا كان ملف key.properties موجود وصالحاً → يُعرَّف signingConfigs.release بالحقائق الفعلية
+    // - وإلا → نغني عن تعريفه منفصل ونستخدم مباشرة signingConfigs.debug في buildTypes
+    signingConfigs {
+        if (releaseSigningReady) {
+            release {
+                storeFile = file(keystoreProperties['storeFile'])
+                storePassword = keystoreProperties['storePassword']
+                keyAlias = keystoreProperties['keyAlias']
+                keyPassword = keystoreProperties['keyPassword']
+                println "✅ [Basir] Using RELEASE signing with store: ${storeFile.getAbsolutePath()}"
+            }
+        } else {
+            println "⚠️  [Basir] key.properties غير مكتمل أو مفتاح Keystore غير موجود."
+            println "   ➜  سيستخدم signingConfigs.debug للتوقيع — استكمل android/key.properties لتوقيع إصدارات حقيقية."
+        }
+    }
+
     buildTypes {
         release {
-            // Signing with debug key for MVP release testing.
-            // Production deployment requires a secure keystore.
-            signingConfig = signingConfigs.debug
-            
+            // ===== اختيار ديناميكي لإعدادات التوقيع =====
+            // إذا تم تعريف signingConfigs.release (توجد Keystore صالحة) نستخدمها
+            // وإلا نعود إلى signingConfigs.debug بدون كسر الـ ABI Split packaging tasks.
+            signingConfig = releaseSigningReady
+                ? signingConfigs.release
+                : signingConfigs.debug
+
+            // ===== إعدادات الضغط والتجريد =====
+            // تم ضبط قواعد ProGuard لحماية جميع فئات Pigeon والإضافات Flutter
+            // مع التسجيل اليدوي عبر BasirPluginRegistrant (Kotlin) بدلاً من
+            // GeneratedPluginRegistrant.java الذي تعطل بسبب file_picker 10.x (Kotlin-only).
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        // ===== نوع إصدار للاختبار على الأجهزة: بدون ضغط، مع توقيع Debug/Release حسب التوفر =====
+        profile {
+            initWith debug
+            signingConfig = releaseSigningReady
+                ? signingConfigs.release
+                : signingConfigs.debug
         }
     }
 }

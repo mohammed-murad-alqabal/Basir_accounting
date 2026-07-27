@@ -4,7 +4,9 @@ import 'package:basir_accounting_system/core/providers.dart';
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart'
-    as domain_je;
+    as domain_je show JournalEntry;
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart'
+    show JournalEntryStatus;
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/src/rust/api/auditor.dart'
     as rust_auditor;
@@ -53,6 +55,7 @@ class ForensicAuditService extends _$ForensicAuditService
   @override
   Future<AgentResult> process(AccountingContext context) async {
     final entry = context.proposedJournalEntry;
+    final findings = <String>[];
 
     // 1. Structural balance check (CP-001)
     if (!entry.isBalanced) {
@@ -90,14 +93,78 @@ class ForensicAuditService extends _$ForensicAuditService
       );
     }
 
-    // 4. Sequence Integrity Check (Placeholder for Smart Correction)
-    // In a real scenario, this would call auditSequence and map anomalies to adjustments.
+    // 4. Time-of-Day Forensic Screening (CP-008: Temporal Justification)
+    final hour = entry.date.hour;
+    final isOutsideBusinessHours = hour < 6 || hour >= 22;
+    if (isOutsideBusinessHours) {
+      final hhmm =
+          '${entry.date.hour.toString().padLeft(2, '0')}:${entry.date.minute.toString().padLeft(2, '0')}';
+      findings.add(
+        'Transaction recorded during non-standard hours ($hhmm, outside 06:00-22:00).',
+      );
+    }
 
+    // 5. Sequence Integrity Check (CP-007: Sequential Numbering)
+    final repository = ref.read(accountingRepositoryProvider);
+    final priorEntries = await repository.getJournalEntries();
+
+    final reference = entry.referenceNumber;
+    final dash = reference.lastIndexOf('-');
+    final prefix = dash > 0 ? reference.substring(0, dash) : '';
+    final currentNum =
+        dash > 0 ? int.tryParse(reference.substring(dash + 1)) : null;
+
+    if (prefix.isNotEmpty && currentNum != null) {
+      final samePrefixEntries = priorEntries
+          .where((e) => e.referenceNumber.startsWith('$prefix-'))
+          .toList()
+        ..sort((a, b) {
+          final aN = int.tryParse(
+            a.referenceNumber.substring(a.referenceNumber.lastIndexOf('-') + 1),
+          );
+          final bN = int.tryParse(
+            b.referenceNumber.substring(b.referenceNumber.lastIndexOf('-') + 1),
+          );
+          return (aN ?? 0).compareTo(bN ?? 0);
+        });
+
+      if (samePrefixEntries.isNotEmpty) {
+        final lastEntry = samePrefixEntries.last;
+        final lastDash = lastEntry.referenceNumber.lastIndexOf('-');
+        final lastNum = int.tryParse(
+          lastEntry.referenceNumber.substring(lastDash + 1),
+        );
+        if (lastNum != null && currentNum > lastNum + 1) {
+          findings.add(
+            'Gap detected in reference sequence for prefix $prefix: '
+            'previous ${lastEntry.referenceNumber}, current $reference.',
+          );
+        }
+      }
+    }
+
+    // 6. ZATCA Phase 2 Cryptographic Identity (CP-014: e-Invoice Integrity)
+    final isInvoicePosted = entry.status == JournalEntryStatus.posted &&
+        entry.sourceDocument == 'invoice';
+    if (isInvoicePosted) {
+      final invoiceRepo = ref.read(invoiceRepositoryProvider);
+      final invoice = await invoiceRepo.getInvoiceById(entry.sourceId);
+      if (invoice != null &&
+          (invoice.zatcaUuid == null || invoice.zatcaHash == null)) {
+        findings.add(
+          'Posted invoice ${entry.sourceId} lacks ZATCA Phase 2 cryptographic identity (UUID/hash).',
+        );
+      }
+    }
+
+    final rationale = findings.isNotEmpty
+        ? findings.join(' ')
+        : 'agentRationaleForensicBalanced';
     return AgentResult(
       agentId: agentId,
       isAllowed: true,
-      rationale: 'agentRationaleForensicBalanced',
-      confidenceScore: 0.95,
+      rationale: rationale,
+      confidenceScore: findings.isEmpty ? 0.95 : 0.72,
       suggestedAdjustments:
           suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
     );

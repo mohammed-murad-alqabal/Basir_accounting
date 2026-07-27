@@ -55,10 +55,10 @@ final emailInvoiceProvider = FutureProvider.family<void, Invoice>((
   invoice,
 ) async {
   final pdfService = ref.read(invoicePdfServiceProvider);
+  final settings = await ref.read(settingsServiceProvider).getCompanySettings();
   final pdfBytes = await pdfService.generateInvoicePdf(invoice);
 
-  // TODO(basir): Get company name from settings
-  const companyName = 'Basir Accounting';
+  final companyName = settings['companyName'] ?? 'Basir Accounting';
 
   await Printing.sharePdf(
     bytes: pdfBytes,

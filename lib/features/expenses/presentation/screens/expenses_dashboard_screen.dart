@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/expenses/domain/entities/expense.dart';
@@ -434,8 +436,240 @@ class ExpensesDashboardScreen extends ConsumerWidget {
         icon: Icons.receipt_long,
       );
 
-  void _showFilterDialog(BuildContext context, WidgetRef ref) {
-    // TODO(basir): Implement filter dialog.
+  Future<void> _showFilterDialog(BuildContext context, WidgetRef ref) async {
+    final theme = Theme.of(context);
+    final l10n = context.isArabic;
+    final dateFormat = DateFormat('dd/MM/yyyy');
+
+    final now = DateTime.now();
+    DateTime? startDate = DateTime(now.year, now.month);
+    DateTime? endDate = DateTime(now.year, now.month + 1, 0, 23, 59, 59);
+    String? categoryId;
+    String? status;
+
+    final categories = await ref.read(expenseCategoriesProvider.future);
+
+    if (!context.mounted) return;
+
+    final result = await showDialog<Map<String, dynamic>?>(
+      context: context,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (statefulContext, setDialogState) => AlertDialog(
+          title: Row(
+            children: [
+              const Icon(Icons.filter_list),
+              const SizedBox(width: 8),
+              Text(l10n ? 'تصفية المصروفات' : 'Filter Expenses'),
+            ],
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // نطاق التواريخ
+                Text(
+                  l10n ? 'نطاق التاريخ' : 'Date Range',
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: () async {
+                          final picked = await showDatePicker(
+                            context: dialogContext,
+                            initialDate: startDate ?? now,
+                            firstDate: DateTime(2020),
+                            lastDate: DateTime(2030),
+                          );
+                          if (picked != null) {
+                            setDialogState(() => startDate = picked);
+                          }
+                        },
+                        icon: const Icon(Icons.date_range, size: 18),
+                        label: Text(
+                          startDate != null
+                              ? dateFormat.format(startDate!)
+                              : (l10n ? 'من تاريخ' : 'From'),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: () async {
+                          final picked = await showDatePicker(
+                            context: dialogContext,
+                            initialDate: endDate ?? now,
+                            firstDate: DateTime(2020),
+                            lastDate: DateTime(2030),
+                          );
+                          if (picked != null) {
+                            setDialogState(() => endDate = picked);
+                          }
+                        },
+                        icon: const Icon(Icons.date_range, size: 18),
+                        label: Text(
+                          endDate != null
+                              ? dateFormat.format(endDate!)
+                              : (l10n ? 'إلى تاريخ' : 'To'),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // اختيار الفئة
+                Text(
+                  l10n ? 'الفئة' : 'Category',
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                DropdownButtonFormField<String>(
+                  initialValue: categoryId,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.category),
+                    border: const OutlineInputBorder(),
+                    hintText: l10n ? 'الكل' : 'All',
+                  ),
+                  items: [
+                    DropdownMenuItem(
+                      child: Text(l10n ? 'كل الفئات' : 'All categories'),
+                    ),
+                    ...categories.map(
+                      (c) => DropdownMenuItem(
+                        value: c.id,
+                        child: Text(l10n ? c.nameAr : c.name),
+                      ),
+                    ),
+                  ],
+                  onChanged: (v) => setDialogState(() => categoryId = v),
+                ),
+                const SizedBox(height: 16),
+
+                // اختيار الحالة
+                Text(
+                  l10n ? 'الحالة' : 'Status',
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                DropdownButtonFormField<String>(
+                  initialValue: status,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.label),
+                    border: const OutlineInputBorder(),
+                    hintText: l10n ? 'الكل' : 'All',
+                  ),
+                  items: [
+                    DropdownMenuItem(
+                      child: Text(l10n ? 'كل الحالات' : 'All statuses'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'pending',
+                      child: Text(l10n ? 'معلق' : 'Pending'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'approved',
+                      child: Text(l10n ? 'موافق' : 'Approved'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'posted',
+                      child: Text(l10n ? 'مُرحّل' : 'Posted'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'rejected',
+                      child: Text(l10n ? 'مرفوض' : 'Rejected'),
+                    ),
+                  ],
+                  onChanged: (v) => setDialogState(() => status = v),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // إعادة ضبط الفلاتر إلى الوضع الافتراضي (الشهر الحالي)
+                unawaited(
+                  ref.read(expensesNotifierProvider.notifier).refresh(),
+                );
+                ref.invalidate(expenseSummaryProvider);
+                Navigator.of(dialogContext).pop();
+              },
+              child: Text(l10n ? 'إعادة ضبط' : 'Reset'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: Text(l10n ? 'إلغاء' : 'Cancel'),
+            ),
+            FilledButton.icon(
+              onPressed: () {
+                final endOfDay = endDate != null
+                    ? DateTime(
+                        endDate!.year,
+                        endDate!.month,
+                        endDate!.day,
+                        23,
+                        59,
+                        59,
+                      )
+                    : null;
+
+                Navigator.of(dialogContext).pop(<String, dynamic>{
+                  'startDate': startDate,
+                  'endDate': endOfDay,
+                  'categoryId': categoryId,
+                  'status': status,
+                });
+              },
+              icon: const Icon(Icons.check, size: 18),
+              label: Text(l10n ? 'تطبيق' : 'Apply'),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if (result == null) return;
+
+    // تطبيق الفلاتر على مزود القائمة والموجز
+    await ref.read(expensesNotifierProvider.notifier).loadExpenses(
+          startDate: result['startDate'] as DateTime?,
+          endDate: result['endDate'] as DateTime?,
+          categoryId: result['categoryId'] as String?,
+          status: result['status'] as String?,
+        );
+
+    // تحديث الموجز أيضاً ليعكس نفس نطاق التواريخ
+    final s = result['startDate'] as DateTime?;
+    final e = result['endDate'] as DateTime?;
+    if (s != null && e != null) {
+      // تجاوز الموجز عبر تحويل المزود إلى AsyncFamily إذا لزم الأمر
+      // أو إعادة تحميله كأولوية لاحقة.
+      ref.invalidate(expenseSummaryProvider);
+    }
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l10n ? 'تم تطبيق الفلاتر' : 'Filters applied'),
+          backgroundColor: theme.colorScheme.primary,
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   Color _getCategoryColor(String? colorHex) {

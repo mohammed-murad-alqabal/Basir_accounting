@@ -85,37 +85,85 @@ class FormatHelpers {
   /// [date]: التاريخ
   /// [locale]: رمز اللغة
   ///
-  /// يعيد نصاً مثل "منذ 3 ساعات" أو "Yesterday"
+  /// يعيد نصاً مثل "منذ 3 ساعات" أو "Yesterday" / "2y 5m"
   static String formatRelativeTime(DateTime date, {String locale = 'ar'}) {
     final now = DateTime.now();
     final difference = now.difference(date);
+    final absSecs = difference.inSeconds.abs();
 
-    // TODO(basir): يمكن تحسين هذا باستخدام مكتبات متخصصة مثل timeago
-    // حالياً نستخدم تنفيذ بسيط للعربية والإنجليزية
+    // تحديد إذا كان التاريخ في المستقبل أم الماضي
+    final isFuture = difference.isNegative;
 
     if (locale.startsWith('ar')) {
-      if (difference.inSeconds < 60) {
-        return 'الآن';
-      } else if (difference.inMinutes < 60) {
-        return 'منذ ${difference.inMinutes} دقيقة';
-      } else if (difference.inHours < 24) {
-        return 'منذ ${difference.inHours} ساعة';
-      } else if (difference.inDays < 7) {
-        return 'منذ ${difference.inDays} يوم';
+      // ===== النسخة العربية: مراعاة التفرد والجمع والمثنى =====
+      String arRelative(
+          int value, String singular, String dual, String plural) {
+        final prefix = isFuture ? 'بعد ' : 'منذ ';
+        if (value == 0) return 'الآن';
+        if (value == 1) return '$prefix$singular';
+        if (value == 2) return '$prefix$dual';
+        if (value <= 10) return '$prefix$value $plural';
+        return '$prefix$value $singular';
+      }
+
+      if (absSecs < 60) {
+        return isFuture ? 'بعد لحظات' : 'الآن';
+      } else if (absSecs < 3600) {
+        return arRelative(
+          difference.inMinutes.abs(),
+          'دقيقة',
+          'دقيقتان',
+          'دقائق',
+        );
+      } else if (absSecs < 86400) {
+        return arRelative(
+          difference.inHours.abs(),
+          'ساعة',
+          'ساعتان',
+          'ساعات',
+        );
+      } else if (absSecs < 604800) {
+        return arRelative(
+          difference.inDays.abs(),
+          'يوم',
+          'يومان',
+          'أيام',
+        );
+      } else if (absSecs < 2592000) {
+        // أقل من 30 يوماً → أسابيع
+        final weeks = (difference.inDays.abs() / 7).floor();
+        return arRelative(weeks, 'أسبوع', 'أسبوعان', 'أسابيع');
+      } else if (absSecs < 31536000) {
+        // أقل من سنة → أشهر
+        final months = (difference.inDays.abs() / 30).floor();
+        return arRelative(months, 'شهر', 'شهران', 'أشهر');
       } else {
-        return formatDate(date, locale: locale);
+        // سنة أو أكثر
+        final years = (difference.inDays.abs() / 365).floor();
+        return arRelative(years, 'سنة', 'سنتان', 'سنوات');
       }
     } else {
-      if (difference.inSeconds < 60) {
-        return 'Just now';
-      } else if (difference.inMinutes < 60) {
-        return '${difference.inMinutes}m ago';
-      } else if (difference.inHours < 24) {
-        return '${difference.inHours}h ago';
-      } else if (difference.inDays < 7) {
-        return '${difference.inDays}d ago';
+      // ===== النسخة الإنجليزية =====
+      if (absSecs < 60) {
+        return isFuture ? 'In a moment' : 'Just now';
+      } else if (absSecs < 3600) {
+        final mins = difference.inMinutes.abs();
+        return isFuture ? 'In ${mins}m' : '${mins}m ago';
+      } else if (absSecs < 86400) {
+        final hrs = difference.inHours.abs();
+        return isFuture ? 'In ${hrs}h' : '${hrs}h ago';
+      } else if (absSecs < 604800) {
+        final days = difference.inDays.abs();
+        return isFuture ? 'In ${days}d' : '${days}d ago';
+      } else if (absSecs < 2592000) {
+        final weeks = (difference.inDays.abs() / 7).floor();
+        return isFuture ? 'In ${weeks}w' : '${weeks}w ago';
+      } else if (absSecs < 31536000) {
+        final months = (difference.inDays.abs() / 30).floor();
+        return isFuture ? 'In ${months}mo' : '${months}mo ago';
       } else {
-        return formatDate(date, locale: locale);
+        final years = (difference.inDays.abs() / 365).floor();
+        return isFuture ? 'In ${years}y' : '${years}y ago';
       }
     }
   }
