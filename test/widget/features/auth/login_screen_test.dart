@@ -107,7 +107,9 @@ void main() {
         await tester.pump();
 
         final loginButton = find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
         );
         await tester.ensureVisible(loginButton);
         await tester.tap(loginButton);
@@ -133,7 +135,9 @@ void main() {
         await setUpWidgets(tester);
 
         final guestButton = find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.secondary,
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.secondary,
         );
         await tester.ensureVisible(guestButton);
         await tester.tap(guestButton);
@@ -173,7 +177,9 @@ void main() {
         await tester.pump();
 
         final loginButton = find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
         );
         await tester.ensureVisible(loginButton);
         await tester.tap(loginButton);
@@ -229,7 +235,8 @@ void main() {
               IconSizes.xl,
             ].contains(prefixIcon.size),
             isTrue,
-            reason: 'Icon size should be one of IconSizes values, got ${prefixIcon.size}',
+            reason:
+                'Icon size should be one of IconSizes values, got ${prefixIcon.size}',
           );
         }
       });
@@ -239,10 +246,14 @@ void main() {
       ) async {
         await setUpWidgets(tester);
         final primaryButtonFinder = find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
         );
         final secondaryButtonFinder = find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.secondary,
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.secondary,
         );
         expect(primaryButtonFinder, findsOneWidget);
         expect(secondaryButtonFinder, findsOneWidget);
@@ -271,7 +282,9 @@ void main() {
         expect(formWidget.key, isA<GlobalKey<FormState>>());
 
         final loginButton = find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
         );
         await tester.ensureVisible(loginButton);
         await tester.tap(loginButton);
@@ -337,7 +350,8 @@ void main() {
         );
       });
 
-      testWidgets('should show error messages via AppSnackbar on login failure', (
+      testWidgets('should show error messages via AppSnackbar on login failure',
+          (
         tester,
       ) async {
         when(
@@ -350,7 +364,9 @@ void main() {
         await tester.pump();
 
         final loginButton = find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.type == AppEnhancedButtonType.primary,
+          (widget) =>
+              widget is AppEnhancedButton &&
+              widget.type == AppEnhancedButtonType.primary,
         );
         await tester.ensureVisible(loginButton);
         await tester.tap(loginButton);

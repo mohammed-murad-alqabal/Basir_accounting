@@ -25,7 +25,9 @@ void main() {
       expect(titleWidget.textAlign, TextAlign.center);
     });
 
-    testWidgets('AppEmptyState يعرض زر الإجراء وعند الضغط يُستدعى onActionPressed', (tester) async {
+    testWidgets(
+        'AppEmptyState يعرض زر الإجراء وعند الضغط يُستدعى onActionPressed',
+        (tester) async {
       var pressed = false;
       await tester.pumpWidget(
         MaterialApp(
@@ -45,7 +47,8 @@ void main() {
       expect(pressed, isTrue);
     });
 
-    testWidgets('AppEmptyState مع أيقونة تعرض الأيقونة بحجم 80px و padding Spacing.xl',
+    testWidgets(
+        'AppEmptyState مع أيقونة تعرض الأيقونة بحجم 80px و padding Spacing.xl',
         (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
@@ -68,7 +71,8 @@ void main() {
       expect(padding.padding, const EdgeInsets.all(Spacing.xl));
     });
 
-    testWidgets('AppLoadingIndicator يعرض CircularProgressIndicator بحجم و stroke معطّلين',
+    testWidgets(
+        'AppLoadingIndicator يعرض CircularProgressIndicator بحجم و stroke معطّلين',
         (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
@@ -86,14 +90,17 @@ void main() {
       expect(sized.height, 48);
     });
 
-    testWidgets('AppLoadingScreen يعرض 40px مؤشر تحميل في Scaffold كامل', (tester) async {
+    testWidgets('AppLoadingScreen يعرض 40px مؤشر تحميل في Scaffold كامل',
+        (tester) async {
       await tester.pumpWidget(const MaterialApp(home: AppLoadingScreen()));
       expect(find.byType(Scaffold), findsOneWidget);
-      final ind = tester.widget<AppLoadingIndicator>(find.byType(AppLoadingIndicator));
+      final ind =
+          tester.widget<AppLoadingIndicator>(find.byType(AppLoadingIndicator));
       expect(ind.size, 40);
     });
 
-    testWidgets('AppErrorWidget يعرض رسالة الخطأ وإعادة المحاولة', (tester) async {
+    testWidgets('AppErrorWidget يعرض رسالة الخطأ وإعادة المحاولة',
+        (tester) async {
       var retried = false;
       await tester.pumpWidget(
         MaterialApp(
@@ -115,7 +122,8 @@ void main() {
       expect(retried, isTrue);
     });
 
-    testWidgets('حالة بحث فارغة - AppEmptyState مع وصف وزر إضافة', (tester) async {
+    testWidgets('حالة بحث فارغة - AppEmptyState مع وصف وزر إضافة',
+        (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(

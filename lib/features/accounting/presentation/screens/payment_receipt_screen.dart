@@ -14,7 +14,8 @@ class PaymentReceiptScreen extends ConsumerStatefulWidget {
   final PaymentReceipt? receipt;
 
   @override
-  ConsumerState<PaymentReceiptScreen> createState() => _PaymentReceiptScreenState();
+  ConsumerState<PaymentReceiptScreen> createState() =>
+      _PaymentReceiptScreenState();
 }
 
 class _PaymentReceiptScreenState extends ConsumerState<PaymentReceiptScreen> {
@@ -38,7 +39,8 @@ class _PaymentReceiptScreenState extends ConsumerState<PaymentReceiptScreen> {
     if (widget.receipt != null) {
       _initializeFromReceipt(widget.receipt!);
     } else {
-      _receiptNumberController.text = 'PR-${DateTime.now().millisecondsSinceEpoch}';
+      _receiptNumberController.text =
+          'PR-${DateTime.now().millisecondsSinceEpoch}';
     }
   }
 
@@ -104,9 +106,12 @@ class _PaymentReceiptScreenState extends ConsumerState<PaymentReceiptScreen> {
         amount: _amount,
         paymentMethod: _selectedMethod,
         accountId: _selectedAccountId!,
-        reference:
-            _referenceController.text.trim().isNotEmpty ? _referenceController.text.trim() : null,
-        notes: _notesController.text.trim().isNotEmpty ? _notesController.text.trim() : null,
+        reference: _referenceController.text.trim().isNotEmpty
+            ? _referenceController.text.trim()
+            : null,
+        notes: _notesController.text.trim().isNotEmpty
+            ? _notesController.text.trim()
+            : null,
       );
 
       if (mounted) {
@@ -126,7 +131,9 @@ class _PaymentReceiptScreenState extends ConsumerState<PaymentReceiptScreen> {
 
   @override
   Widget build(BuildContext context) => GlassScaffold(
-        title: widget.receipt == null ? 'New Payment Receipt' : 'Edit Payment Receipt',
+        title: widget.receipt == null
+            ? 'New Payment Receipt'
+            : 'Edit Payment Receipt',
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
@@ -182,7 +189,8 @@ class _PaymentReceiptScreenState extends ConsumerState<PaymentReceiptScreen> {
                     prefixIcon: Icon(Icons.attach_money),
                     border: OutlineInputBorder(),
                   ),
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(
                       RegExp(r'^\d*\.?\d{0,2}'),

@@ -14,10 +14,12 @@ class CreditControlDashboard extends ConsumerStatefulWidget {
   const CreditControlDashboard({super.key});
 
   @override
-  ConsumerState<CreditControlDashboard> createState() => _CreditControlDashboardState();
+  ConsumerState<CreditControlDashboard> createState() =>
+      _CreditControlDashboardState();
 }
 
-class _CreditControlDashboardState extends ConsumerState<CreditControlDashboard> {
+class _CreditControlDashboardState
+    extends ConsumerState<CreditControlDashboard> {
   List<Customer> _customersNearLimit = [];
   List<CreditBreach> _creditBreaches = [];
   bool _isLoading = true;
@@ -165,7 +167,9 @@ class _CreditControlDashboardState extends ConsumerState<CreditControlDashboard>
                     (customer) => ListTile(
                       leading: CircleAvatar(
                         child: Text(
-                          customer.name(isArabic: context.isArabic).substring(0, 1),
+                          customer
+                              .name(isArabic: context.isArabic)
+                              .substring(0, 1),
                         ),
                       ),
                       title: Text(customer.name(isArabic: context.isArabic)),
@@ -216,7 +220,8 @@ class _CreditControlDashboardState extends ConsumerState<CreditControlDashboard>
                       title: Text(
                         breach.customer.name(isArabic: context.isArabic),
                       ),
-                      subtitle: Text('Over Limit: ${breach.overLimitAmount} SAR'),
+                      subtitle:
+                          Text('Over Limit: ${breach.overLimitAmount} SAR'),
                       trailing: Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8,
