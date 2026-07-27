@@ -132,7 +132,8 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 minHeight: TouchTargets.minimum,
               ),
               padding: EdgeInsets.zero,
-              onPressed: onBackPressed ?? () => Navigator.of(context).maybePop(),
+              onPressed:
+                  onBackPressed ?? () => Navigator.of(context).maybePop(),
             )
           : null,
       actions: actions,
@@ -274,5 +275,6 @@ class AppSimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight + BorderWidths.thin);
+  Size get preferredSize =>
+      const Size.fromHeight(kToolbarHeight + BorderWidths.thin);
 }

@@ -9,13 +9,23 @@ abstract final class OpacityCompositingDesign {
     required Color background,
     required double opacity,
   }) {
-    final alpha = (opacity * 255).round();
+    final fgR = foreground.r;
+    final fgG = foreground.g;
+    final fgB = foreground.b;
+    final bgR = background.r;
+    final bgG = background.g;
+    final bgB = background.b;
 
-    final r = ((foreground.r * alpha) + (background.r * (255 - alpha))) ~/ 255;
-    final g = ((foreground.g * alpha) + (background.g * (255 - alpha))) ~/ 255;
-    final b = ((foreground.b * alpha) + (background.b * (255 - alpha))) ~/ 255;
+    final r = (fgR * opacity + bgR * (1.0 - opacity)).clamp(0.0, 1.0);
+    final g = (fgG * opacity + bgG * (1.0 - opacity)).clamp(0.0, 1.0);
+    final b = (fgB * opacity + bgB * (1.0 - opacity)).clamp(0.0, 1.0);
 
-    return Color.fromARGB(255, r, g, b);
+    return Color.fromARGB(
+      255,
+      (r * 255).round(),
+      (g * 255).round(),
+      (b * 255).round(),
+    );
   }
 
   /// Verify that text on composited background meets contrast requirements
@@ -31,8 +41,7 @@ abstract final class OpacityCompositingDesign {
       background: background,
       opacity: opacity,
     );
-    final contrast =
-        StateContrastCalculator.calculateContrastRatio(textColor, compositedBg);
+    final contrast = StateContrastCalculator.calculateContrastRatio(textColor, compositedBg);
     return contrast >= minContrast;
   }
 

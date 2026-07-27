@@ -14,7 +14,8 @@ void main() {
             body: Builder(
               builder: (context) {
                 return ElevatedButton(
-                  onPressed: () => AppSnackbar.showSuccess(context, 'تم الحفظ بنجاح'),
+                  onPressed: () =>
+                      AppSnackbar.showSuccess(context, 'تم الحفظ بنجاح'),
                   child: const Text('Show'),
                 );
               },
@@ -39,7 +40,8 @@ void main() {
             body: Builder(
               builder: (context) {
                 return ElevatedButton(
-                  onPressed: () => AppSnackbar.showError(context, 'فشل حفظ البيانات'),
+                  onPressed: () =>
+                      AppSnackbar.showError(context, 'فشل حفظ البيانات'),
                   child: const Text('Show'),
                 );
               },
@@ -81,7 +83,8 @@ void main() {
       expect(find.byIcon(Icons.warning), findsOneWidget);
     });
 
-    testWidgets('عرض SnackBar Info مع الإجراء وزر الإجراء يعمل', (tester) async {
+    testWidgets('عرض SnackBar Info مع الإجراء وزر الإجراء يعمل',
+        (tester) async {
       var pressed = false;
       await tester.pumpWidget(
         MaterialApp(
@@ -112,7 +115,8 @@ void main() {
       expect(pressed, isTrue);
     });
 
-    testWidgets('تصميم SnackBar يمتلك: Floating، زوايا Md، elevation Md، IconSizes.md',
+    testWidgets(
+        'تصميم SnackBar يمتلك: Floating، زوايا Md، elevation Md، IconSizes.md',
         (tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -120,7 +124,8 @@ void main() {
             body: Builder(
               builder: (context) {
                 return ElevatedButton(
-                  onPressed: () => AppSnackbar.showSuccess(context, 'Design test'),
+                  onPressed: () =>
+                      AppSnackbar.showSuccess(context, 'Design test'),
                   child: const Text('Show'),
                 );
               },
