@@ -41,7 +41,8 @@ abstract final class OpacityCompositingDesign {
       background: background,
       opacity: opacity,
     );
-    final contrast = StateContrastCalculator.calculateContrastRatio(textColor, compositedBg);
+    final contrast =
+        StateContrastCalculator.calculateContrastRatio(textColor, compositedBg);
     return contrast >= minContrast;
   }
 
