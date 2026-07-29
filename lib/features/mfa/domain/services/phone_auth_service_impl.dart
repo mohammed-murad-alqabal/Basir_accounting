@@ -15,7 +15,8 @@ class PhoneAuthService implements PhoneAuthServiceInterface {
   final FlutterSecureStorage secureStorage;
   final _phoneAuthStateController = StreamController<String?>.broadcast();
 
-  Stream<String?> get onPhoneAuthStateChange => _phoneAuthStateController.stream;
+  Stream<String?> get onPhoneAuthStateChange =>
+      _phoneAuthStateController.stream;
   Session? get currentSession => supabaseClient.auth.currentSession;
   User? get currentUser => supabaseClient.auth.currentUser;
   bool get isPhoneLoggedIn => currentUser != null;
@@ -46,8 +47,10 @@ class PhoneAuthService implements PhoneAuthServiceInterface {
       );
 
       if (response.session != null) {
-        await secureStorage.write(key: StorageKeys.phoneNumber, value: normalizedNumber);
-        await secureStorage.write(key: StorageKeys.phoneVerified, value: 'true');
+        await secureStorage.write(
+            key: StorageKeys.phoneNumber, value: normalizedNumber);
+        await secureStorage.write(
+            key: StorageKeys.phoneVerified, value: 'true');
         _phoneAuthStateController.add(normalizedNumber);
         if (!kReleaseMode) {
           debugPrint('✅ [PHONE_AUTH] OTP verified');
@@ -107,7 +110,8 @@ class PhoneAuthService implements PhoneAuthServiceInterface {
   }
 
   /// Get stored phone number
-  Future<String?> getPhoneNumber() async => secureStorage.read(key: StorageKeys.phoneNumber);
+  Future<String?> getPhoneNumber() async =>
+      secureStorage.read(key: StorageKeys.phoneNumber);
 
   /// Check if phone is verified
   Future<bool> isPhoneVerified() async =>

@@ -118,7 +118,8 @@ class AnalysisEngine {
 
     var coverage = 100.0;
     if (totalElements > 0) {
-      coverage = ((totalElements - undocumented.length) / totalElements) * 100.0;
+      coverage =
+          ((totalElements - undocumented.length) / totalElements) * 100.0;
     }
 
     return AnalysisResult(
@@ -151,7 +152,8 @@ class AnalysisEngine {
         final result = await analyzeFile(entity.path);
         results.add(result);
         _lastTotalElements += result.totalElements;
-        _lastDocumentedElements += result.totalElements - result.undocumentedElements.length;
+        _lastDocumentedElements +=
+            result.totalElements - result.undocumentedElements.length;
         for (final e in result.undocumentedElements) {
           _lastBreakdown[e.type] = (_lastBreakdown[e.type] ?? 0) + 1;
         }

@@ -11,10 +11,12 @@ class PhoneVerificationScreen extends ConsumerStatefulWidget {
   final String? afterRoute;
 
   @override
-  ConsumerState<PhoneVerificationScreen> createState() => _PhoneVerificationScreenState();
+  ConsumerState<PhoneVerificationScreen> createState() =>
+      _PhoneVerificationScreenState();
 }
 
-class _PhoneVerificationScreenState extends ConsumerState<PhoneVerificationScreen> {
+class _PhoneVerificationScreenState
+    extends ConsumerState<PhoneVerificationScreen> {
   final _phoneController = TextEditingController();
   var _isLoading = false;
 
@@ -90,7 +92,8 @@ class _PhoneVerificationScreenState extends ConsumerState<PhoneVerificationScree
               AppEnhancedButton(
                 type: AppEnhancedButtonType.text,
                 label: 'إلغاء',
-                onPressed: _isLoading ? null : () => Navigator.of(context).pop(false),
+                onPressed:
+                    _isLoading ? null : () => Navigator.of(context).pop(false),
               ),
             ],
           ),

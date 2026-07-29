@@ -151,20 +151,19 @@ class DocumentationTemplate {
   String _formatValue(dynamic value, String key) {
     if (value is List) {
       if (key == 'parameters') {
-        return value
-            .map((p) {
-              if (p is Map<String, dynamic>) {
-                final Object? nameValue = p['name'];
-                final Object? descriptionValue = p['description'];
-                final name = nameValue is String ? nameValue : nameValue?.toString() ?? '';
-                final description = descriptionValue is String
-                    ? descriptionValue
-                    : (descriptionValue?.toString() ?? name);
-                return '/// - [$name]: $description';
-              }
-              return '/// - $p';
-            })
-            .join('\n');
+        return value.map((p) {
+          if (p is Map<String, dynamic>) {
+            final Object? nameValue = p['name'];
+            final Object? descriptionValue = p['description'];
+            final name =
+                nameValue is String ? nameValue : nameValue?.toString() ?? '';
+            final description = descriptionValue is String
+                ? descriptionValue
+                : (descriptionValue?.toString() ?? name);
+            return '/// - [$name]: $description';
+          }
+          return '/// - $p';
+        }).join('\n');
       }
       return value.map((e) => '/// $e').join('\n');
     }

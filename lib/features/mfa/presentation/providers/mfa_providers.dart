@@ -1,6 +1,6 @@
 import 'package:basir_accounting_system/core/config/supabase_config.dart';
 import 'package:basir_accounting_system/core/providers/secure_storage_provider.dart';
-import 'package:basir_accounting_system/features/mfa/data/services/phone_auth_service.dart';
+import 'package:basir_accounting_system/features/mfa/domain/services/phone_auth_service_impl.dart';
 import 'package:basir_accounting_system/features/mfa/domain/services/local_auth_service.dart';
 import 'package:basir_accounting_system/features/mfa/domain/services/phone_auth_service_interface.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,13 +12,12 @@ final localAuthServiceProvider = Provider<LocalAuthService>((ref) {
 });
 
 /// PhoneAuthService interface provider
-final phoneAuthServiceInterfaceProvider = Provider<PhoneAuthServiceInterface>((ref) {
+final phoneAuthServiceInterfaceProvider =
+    Provider<PhoneAuthServiceInterface>((ref) {
   final secureStorage = ref.watch(secureStorageProvider);
   final supabaseClient = SupabaseConfig.client;
   return PhoneAuthService(
-    supabaseClient: supabaseClient,
-    secureStorage: secureStorage,
-  );
+      supabaseClient: supabaseClient, secureStorage: secureStorage);
 });
 
 /// Biometric availability provider
@@ -28,7 +27,8 @@ final biometricAvailableProvider = FutureProvider<bool>((ref) async {
 });
 
 /// Biometric enabled state
-final biometricEnabledProvider = StateNotifierProvider<BiometricEnabledNotifier, bool>(
+final biometricEnabledProvider =
+    StateNotifierProvider<BiometricEnabledNotifier, bool>(
   BiometricEnabledNotifier.new,
 );
 
@@ -51,7 +51,8 @@ class BiometricEnabledNotifier extends StateNotifier<bool> {
 }
 
 final appLockEnabledProvider =
-    StateNotifierProvider<AppLockEnabledNotifier, bool>(AppLockEnabledNotifier.new);
+    StateNotifierProvider<AppLockEnabledNotifier, bool>(
+        AppLockEnabledNotifier.new);
 
 class AppLockEnabledNotifier extends StateNotifier<bool> {
   AppLockEnabledNotifier(this.ref) : super(false);
@@ -93,7 +94,8 @@ class LockOnResumeNotifier extends StateNotifier<bool> {
 }
 
 final cloudMfaRequiredProvider =
-    StateNotifierProvider<CloudMfaRequiredNotifier, bool>(CloudMfaRequiredNotifier.new);
+    StateNotifierProvider<CloudMfaRequiredNotifier, bool>(
+        CloudMfaRequiredNotifier.new);
 
 class CloudMfaRequiredNotifier extends StateNotifier<bool> {
   CloudMfaRequiredNotifier(this.ref) : super(false);
@@ -149,7 +151,8 @@ final pinSetupProvider = FutureProvider.family<bool, String>((ref, pin) {
 });
 
 /// Pattern setup provider (النمط الآن عبارة عن مصفوفة من الأرقام 0-8)
-final patternSetupProvider = FutureProvider.family<bool, List<int>>((ref, pattern) {
+final patternSetupProvider =
+    FutureProvider.family<bool, List<int>>((ref, pattern) {
   final localAuth = ref.read(localAuthServiceProvider);
   return localAuth.setPatternLock(pattern).then((_) => true);
 });
@@ -167,7 +170,8 @@ final pinLoginProvider = FutureProvider.family<bool, String>((ref, pin) {
 });
 
 /// Pattern login provider (النمط الآن عبارة عن مصفوفة من الأرقام 0-8)
-final patternLoginProvider = FutureProvider.family<bool, List<int>>((ref, pattern) {
+final patternLoginProvider =
+    FutureProvider.family<bool, List<int>>((ref, pattern) {
   final localAuth = ref.read(localAuthServiceProvider);
   return localAuth.loginWithPattern(pattern);
 });
@@ -179,7 +183,8 @@ final phoneOtpSendProvider = FutureProvider.family<bool, String>((ref, phone) {
 });
 
 /// Phone OTP verify provider
-final phoneOtpVerifyProvider = FutureProvider.family<bool, ({String phone, String otp})>(
+final phoneOtpVerifyProvider =
+    FutureProvider.family<bool, ({String phone, String otp})>(
   (ref, params) {
     final phoneAuth = ref.read(phoneAuthServiceInterfaceProvider);
     return phoneAuth.verifyOtp(params.phone, params.otp);
@@ -187,7 +192,8 @@ final phoneOtpVerifyProvider = FutureProvider.family<bool, ({String phone, Strin
 );
 
 /// Auth method preference
-final authMethodProvider = StateNotifierProvider<AuthMethodNotifier, AuthMethod>(
+final authMethodProvider =
+    StateNotifierProvider<AuthMethodNotifier, AuthMethod>(
   (ref) => AuthMethodNotifier(),
 );
 

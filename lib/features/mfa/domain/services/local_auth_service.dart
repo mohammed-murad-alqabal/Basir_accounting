@@ -94,7 +94,8 @@ class LocalAuthService {
   }
 
   /// Check if PIN is set
-  Future<bool> hasPinCode() async => await secureStorage.read(key: StorageKeys.pinCode) != null;
+  Future<bool> hasPinCode() async =>
+      await secureStorage.read(key: StorageKeys.pinCode) != null;
 
   /// Clear PIN code
   Future<void> clearPinCode() async {
@@ -110,7 +111,8 @@ class LocalAuthService {
     final hash = _hashSecret(patternString, salt);
     await secureStorage.write(key: StorageKeys.patternHash, value: hash);
     await secureStorage.write(key: StorageKeys.patternSalt, value: salt);
-    await secureStorage.write(key: StorageKeys.patternString, value: patternString);
+    await secureStorage.write(
+        key: StorageKeys.patternString, value: patternString);
     debugPrint('Pattern lock set successfully');
   }
 
@@ -129,10 +131,12 @@ class LocalAuthService {
     if (legacy == null) return false;
 
     // تحويل السلسلة النصية إلى مصفوفة
-    final legacyPattern = legacy.split('-').map(int.tryParse).whereType<int>().toList();
+    final legacyPattern =
+        legacy.split('-').map(int.tryParse).whereType<int>().toList();
     if (legacyPattern.isNotEmpty) {
       final ok = legacyPattern.length == pattern.length &&
-          List.generate(legacyPattern.length, (i) => legacyPattern[i] == pattern[i])
+          List.generate(
+                  legacyPattern.length, (i) => legacyPattern[i] == pattern[i])
               .every((v) => v);
       if (ok) {
         // تحديث النمط إلى الإصدار الجديد

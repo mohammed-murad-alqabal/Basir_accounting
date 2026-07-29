@@ -45,7 +45,8 @@ void main() {
       container = ProviderContainer(
         overrides: [
           invoiceRepositoryProvider.overrideWithValue(mockRepository),
-          notificationServiceProvider.overrideWithValue(TestNotificationService()),
+          notificationServiceProvider
+              .overrideWithValue(TestNotificationService()),
         ],
       );
     });

@@ -12,10 +12,12 @@ class MfaSecurityCenterScreen extends ConsumerStatefulWidget {
   const MfaSecurityCenterScreen({super.key});
 
   @override
-  ConsumerState<MfaSecurityCenterScreen> createState() => _MfaSecurityCenterScreenState();
+  ConsumerState<MfaSecurityCenterScreen> createState() =>
+      _MfaSecurityCenterScreenState();
 }
 
-class _MfaSecurityCenterScreenState extends ConsumerState<MfaSecurityCenterScreen> {
+class _MfaSecurityCenterScreenState
+    extends ConsumerState<MfaSecurityCenterScreen> {
   var _initDone = false;
 
   @override
@@ -44,7 +46,8 @@ class _MfaSecurityCenterScreenState extends ConsumerState<MfaSecurityCenterScree
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(Radii.xl)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(Radii.xl)),
               ),
               padding: const EdgeInsets.all(Spacing.lg),
               child: Column(
@@ -148,7 +151,8 @@ class _MfaSecurityCenterScreenState extends ConsumerState<MfaSecurityCenterScree
 
   @override
   Widget build(BuildContext context) {
-    final biometricAvailable = ref.watch(biometricAvailableProvider).value ?? false;
+    final biometricAvailable =
+        ref.watch(biometricAvailableProvider).value ?? false;
     final biometricEnabled = ref.watch(biometricEnabledProvider);
     final appLockEnabled = ref.watch(appLockEnabledProvider);
     final lockOnResume = ref.watch(lockOnResumeProvider);
@@ -168,17 +172,21 @@ class _MfaSecurityCenterScreenState extends ConsumerState<MfaSecurityCenterScree
               children: [
                 SwitchListTile(
                   value: appLockEnabled,
-                  onChanged: (v) async =>
-                      ref.read(appLockEnabledProvider.notifier).toggle(enabled: v),
+                  onChanged: (v) async => ref
+                      .read(appLockEnabledProvider.notifier)
+                      .toggle(enabled: v),
                   title: const Text('قفل التطبيق'),
-                  subtitle: const Text('طلب تحقق إضافي عند الدخول وفتح التطبيق'),
+                  subtitle:
+                      const Text('طلب تحقق إضافي عند الدخول وفتح التطبيق'),
                   secondary: const Icon(Icons.lock_outline),
                 ),
                 const Divider(height: 1),
                 SwitchListTile(
                   value: lockOnResume,
                   onChanged: appLockEnabled
-                      ? (v) async => ref.read(lockOnResumeProvider.notifier).toggle(enabled: v)
+                      ? (v) async => ref
+                          .read(lockOnResumeProvider.notifier)
+                          .toggle(enabled: v)
                       : null,
                   title: const Text('القفل عند الاستئناف'),
                   subtitle: const Text('طلب التحقق عند الرجوع من الخلفية'),
@@ -192,7 +200,9 @@ class _MfaSecurityCenterScreenState extends ConsumerState<MfaSecurityCenterScree
                 SwitchListTile(
                   value: biometricEnabled,
                   onChanged: biometricAvailable
-                      ? (v) async => ref.read(biometricEnabledProvider.notifier).toggle(enabled: v)
+                      ? (v) async => ref
+                          .read(biometricEnabledProvider.notifier)
+                          .toggle(enabled: v)
                       : null,
                   title: const Text('البصمة'),
                   subtitle: Text(
@@ -225,8 +235,9 @@ class _MfaSecurityCenterScreenState extends ConsumerState<MfaSecurityCenterScree
               children: [
                 SwitchListTile(
                   value: cloudRequired,
-                  onChanged: (v) async =>
-                      ref.read(cloudMfaRequiredProvider.notifier).toggle(enabled: v),
+                  onChanged: (v) async => ref
+                      .read(cloudMfaRequiredProvider.notifier)
+                      .toggle(enabled: v),
                   title: const Text('MFA عبر الجوال'),
                   subtitle: const Text('فرض تحقق رقم الجوال كعامل إضافي'),
                   secondary: const Icon(Icons.sms_outlined),
@@ -234,19 +245,25 @@ class _MfaSecurityCenterScreenState extends ConsumerState<MfaSecurityCenterScree
                 const Divider(height: 1),
                 ListTile(
                   leading: Icon(
-                    phoneVerified ? Icons.verified_outlined : Icons.phone_outlined,
+                    phoneVerified
+                        ? Icons.verified_outlined
+                        : Icons.phone_outlined,
                     color: phoneVerified ? AppColors.success : null,
                   ),
                   title: const Text('ربط رقم الجوال'),
                   subtitle: Text(
-                    phoneVerified ? (phoneNumber ?? 'تم التحقق') : 'غير مرتبط بعد',
+                    phoneVerified
+                        ? (phoneNumber ?? 'تم التحقق')
+                        : 'غير مرتبط بعد',
                   ),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () async {
                     final navigator = Navigator.of(context);
                     final ok = await navigator.pushNamed<bool>(
                           MfaRoutes.phoneVerification,
-                          arguments: const {'after': MfaRoutes.mfaSecurityCenter},
+                          arguments: const {
+                            'after': MfaRoutes.mfaSecurityCenter
+                          },
                         ) ??
                         false;
                     if (!context.mounted) return;
@@ -267,7 +284,9 @@ class _MfaSecurityCenterScreenState extends ConsumerState<MfaSecurityCenterScree
                       final navigator = Navigator.of(context);
                       final ok = await navigator.pushNamed<bool>(
                             MfaRoutes.mfaChallenge,
-                            arguments: const {'after': MfaRoutes.mfaSecurityCenter},
+                            arguments: const {
+                              'after': MfaRoutes.mfaSecurityCenter
+                            },
                           ) ??
                           false;
                       if (!context.mounted) return;

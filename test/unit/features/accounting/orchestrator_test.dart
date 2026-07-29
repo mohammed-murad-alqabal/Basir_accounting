@@ -103,7 +103,8 @@ void main() {
       );
       expect(
         result.explanation,
-        contains('Confirmed: Account Sales Revenue correctly mapped to Operating category'),
+        contains(
+            'Confirmed: Account Sales Revenue correctly mapped to Operating category'),
       );
       expect(result.explanation, contains('Validating IFRS 18 Category'));
     });

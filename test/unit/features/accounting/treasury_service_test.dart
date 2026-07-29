@@ -64,7 +64,8 @@ void main() {
       when(
         () => mockAccountingRepo.addJournalEntry(any()),
       ).thenAnswer((_) async {});
-      when(() => mockAccountingRepo.getJournalEntries()).thenAnswer((_) async => []);
+      when(() => mockAccountingRepo.getJournalEntries())
+          .thenAnswer((_) async => []);
 
       // 3. Voucher Repo mocks
       when(() => mockVoucherRepo.addVoucher(any())).thenAnswer((_) async {});

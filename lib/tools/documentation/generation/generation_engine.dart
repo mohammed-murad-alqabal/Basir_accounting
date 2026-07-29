@@ -10,9 +10,11 @@ class GenerationEngine {
     UndocumentedElement element, {
     GenerationOptions options = GenerationOptions.defaults,
   }) {
-    final description = _generateDescription(element, arabic: options.useArabic);
-    final details =
-        options.includeDetails ? _generateDetails(element, arabic: options.useArabic) : null;
+    final description =
+        _generateDescription(element, arabic: options.useArabic);
+    final details = options.includeDetails
+        ? _generateDetails(element, arabic: options.useArabic)
+        : null;
 
     final template = DocumentationTemplate.fromType(element.type);
     final context = <String, dynamic>{
@@ -59,7 +61,8 @@ class GenerationEngine {
       docs[element.name] = generateDocumentation(element, options: options);
     }
     for (final element in result.undocumentedElements) {
-      docs['_sig::${element.signature.trim()}'] = generateDocumentation(element, options: options);
+      docs['_sig::${element.signature.trim()}'] =
+          generateDocumentation(element, options: options);
     }
     return docs;
   }
@@ -95,14 +98,17 @@ class GenerationEngine {
           // ====== تنفيذ force: إزالة الوثائق القديمة ======
           if (forceOverwrite) {
             // نحذف أي أسطر /// تعليق تسبق السطر مباشرة
-            while (newLines.isNotEmpty && newLines.last.trim().startsWith('///')) {
+            while (
+                newLines.isNotEmpty && newLines.last.trim().startsWith('///')) {
               newLines.removeLast();
             }
           }
 
           // Check if already documented in lines[i-1] (simple check)
           var commented = false;
-          if (!forceOverwrite && i > 0 && lines[i - 1].trim().startsWith('///')) {
+          if (!forceOverwrite &&
+              i > 0 &&
+              lines[i - 1].trim().startsWith('///')) {
             commented = true;
           }
 
@@ -124,7 +130,8 @@ class GenerationEngine {
   }
 
   /// توليد وصف تلقائي
-  String _generateDescription(UndocumentedElement element, {bool arabic = true}) {
+  String _generateDescription(UndocumentedElement element,
+      {bool arabic = true}) {
     final name = element.name;
     final readable = _humanizeName(name);
 
@@ -138,11 +145,17 @@ class GenerationEngine {
             ? 'تعداد يحدد أنواع مختلفة من $readable.'
             : 'Enum defining different types of $readable.';
       case ElementType.method:
-        return arabic ? 'دالة تقوم بـ $readable.' : 'Method to perform $readable.';
+        return arabic
+            ? 'دالة تقوم بـ $readable.'
+            : 'Method to perform $readable.';
       case ElementType.property:
-        return arabic ? 'خاصية تخزن قيمة $readable.' : 'Property storing $readable value.';
+        return arabic
+            ? 'خاصية تخزن قيمة $readable.'
+            : 'Property storing $readable value.';
       case ElementType.typedef:
-        return arabic ? 'تعريف نوع لـ $readable.' : 'Type definition for $readable.';
+        return arabic
+            ? 'تعريف نوع لـ $readable.'
+            : 'Type definition for $readable.';
     }
   }
 
@@ -177,7 +190,8 @@ class GenerationEngine {
       final char = name[i];
       if (i == 0) {
         buffer.write(char.toLowerCase());
-      } else if (char == char.toUpperCase() && !char.contains(RegExp('[0-9_]'))) {
+      } else if (char == char.toUpperCase() &&
+          !char.contains(RegExp('[0-9_]'))) {
         buffer.write(' ${char.toLowerCase()}');
       } else if (char == '_') {
         buffer.write(' ');

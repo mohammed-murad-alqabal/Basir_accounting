@@ -112,7 +112,8 @@ void main() {
         ],
       );
 
-      when(() => mockRepository.addJournalEntry(any())).thenAnswer((_) async => {});
+      when(() => mockRepository.addJournalEntry(any()))
+          .thenAnswer((_) async => {});
 
       final service = container.read(accountingServiceProvider.notifier);
 
@@ -120,7 +121,9 @@ void main() {
 
       // Verify repository call captured the modified entry with logs
       final capturedEntry =
-          verify(() => mockRepository.addJournalEntry(captureAny())).captured.first as JournalEntry;
+          verify(() => mockRepository.addJournalEntry(captureAny()))
+              .captured
+              .first as JournalEntry;
 
       expect(capturedEntry.auditLogs, isNotEmpty);
       expect(capturedEntry.auditLogs.first.action, equals('COGNITIVE_BYPASS'));
