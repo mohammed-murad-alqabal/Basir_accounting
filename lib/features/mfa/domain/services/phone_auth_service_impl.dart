@@ -22,6 +22,7 @@ class PhoneAuthService implements PhoneAuthServiceInterface {
   bool get isPhoneLoggedIn => currentUser != null;
 
   /// Send OTP to phone number
+  @override
   Future<void> sendOtp(String phoneNumber) async {
     try {
       final normalizedNumber = _normalizePhone(phoneNumber);
@@ -36,6 +37,7 @@ class PhoneAuthService implements PhoneAuthServiceInterface {
   }
 
   /// Verify OTP code
+  @override
   Future<bool> verifyOtp(String phoneNumber, String otpCode) async {
     try {
       final normalizedNumber = _normalizePhone(phoneNumber);
@@ -110,10 +112,12 @@ class PhoneAuthService implements PhoneAuthServiceInterface {
   }
 
   /// Get stored phone number
+  @override
   Future<String?> getPhoneNumber() async =>
       secureStorage.read(key: StorageKeys.phoneNumber);
 
   /// Check if phone is verified
+  @override
   Future<bool> isPhoneVerified() async =>
       await secureStorage.read(key: StorageKeys.phoneVerified) == 'true';
 
