@@ -119,7 +119,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const MfaGateScreen());
       case '/mfa-security':
         return MaterialPageRoute(
-            builder: (_) => const MfaSecurityCenterScreen());
+          builder: (_) => const MfaSecurityCenterScreen(),
+        );
       case '/mfa-challenge':
         return MaterialPageRoute(builder: (_) => const MfaChallengeScreen());
       case '/phone-verify':
