@@ -18,6 +18,7 @@ import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/error_widget.dart'
     as basir;
 import 'package:basir_accounting_system/shared/widgets/index.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -55,6 +56,12 @@ void main() {
         // تهيئة الخدمات الأساسية قبل البدء
         final container = ProviderContainer(
           observers: [BasirProviderObserver()],
+          overrides: [
+            if (kDebugMode)
+              externalErrorLoggerProvider.overrideWithValue(
+                TraeDebugHttpErrorLogger(),
+              ),
+          ],
         );
 
         // AuthService initialization is handled in SplashScreen for better TTI

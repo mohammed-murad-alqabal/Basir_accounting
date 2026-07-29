@@ -101,6 +101,10 @@ void main() {
         result.explanation,
         contains('Confirmed: Account correctly mapped to Operating category'),
       );
+      expect(
+        result.explanation,
+        contains('Confirmed: Account Sales Revenue correctly mapped to Operating category'),
+      );
       expect(result.explanation, contains('Validating IFRS 18 Category'));
     });
 
@@ -165,10 +169,9 @@ void main() {
       final result = await orchestrator.orchestrate(context);
 
       expect(result.isApproved, isFalse);
-      expect(
-        result.explanation,
-        contains('REJECTION: ISSB compliance requires sustainability metrics'),
-      );
+      expect(result.explanation, contains('Decision: REJECTED'));
+      expect(result.explanation, contains('agent-6-sustainability-expert'));
+      expect(result.explanation, contains('ISSB'));
     });
   });
 }

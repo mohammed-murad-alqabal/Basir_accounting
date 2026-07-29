@@ -243,10 +243,8 @@ class DocumentationCLI {
         timestamp: DateTime.now(),
         analyzedFiles: analysisResults.map((r) => r.filePath).toList(),
         stats: stats,
-        lowCoverageFiles: analysisResults
-            .where((r) => r.coveragePercentage < 70)
-            .map((r) => r.filePath)
-            .toList(),
+        lowCoverageFiles:
+            analysisResults.where((r) => r.coveragePercentage < 70).map((r) => r.filePath).toList(),
       );
 
       try {
@@ -258,19 +256,15 @@ class DocumentationCLI {
       final String content;
       switch (format) {
         case ReportFormat.json:
-          content =
-              _formatJsonReport(analysisResults, report, validationResult);
+          content = _formatJsonReport(analysisResults, report, validationResult);
         case ReportFormat.markdown:
-          content =
-              _formatMarkdownReport(analysisResults, report, validationResult);
+          content = _formatMarkdownReport(analysisResults, report, validationResult);
         case ReportFormat.html:
-          content =
-              _formatHtmlReport(analysisResults, report, validationResult);
+          content = _formatHtmlReport(analysisResults, report, validationResult);
         case ReportFormat.csv:
           content = _formatCsvReport(analysisResults, report, validationResult);
         case ReportFormat.text:
-          content =
-              _formatTextReport(analysisResults, report, validationResult);
+          content = _formatTextReport(analysisResults, report, validationResult);
       }
 
       if (output.isNotEmpty) {
@@ -405,7 +399,8 @@ Examples:
       ..writeln('| Documented | ${report.stats.documentedElements} |')
       ..writeln('| Undocumented | ${report.stats.undocumentedElements} |')
       ..writeln(
-          '| Validation Valid | ${validation.isValid ? "✅ Yes" : "❌ No"} |')
+        '| Validation Valid | ${validation.isValid ? "✅ Yes" : "❌ No"} |',
+      )
       ..writeln(
         '| Validation Score | ${validation.overallScore.rating} (${validation.overallScore.score}) |',
       )
@@ -417,11 +412,8 @@ Examples:
         ..writeln('## Low Coverage Files (Action Required)')
         ..writeln();
       for (final path in report.lowCoverageFiles) {
-        final cov = analysisResults
-                .where((r) => r.filePath == path)
-                .firstOrNull
-                ?.coveragePercentage ??
-            0.0;
+        final cov =
+            analysisResults.where((r) => r.filePath == path).firstOrNull?.coveragePercentage ?? 0.0;
         buf.writeln('- ⚠️  `$path`: ${cov.toStringAsFixed(1)}%');
       }
       buf.writeln();
@@ -494,9 +486,7 @@ Examples:
     return rows
         .map(
           (r) => r.map((cell) {
-            if (cell.contains(',') ||
-                cell.contains('"') ||
-                cell.contains('\n')) {
+            if (cell.contains(',') || cell.contains('"') || cell.contains('\n')) {
               return '"${cell.replaceAll('"', '""')}"';
             }
             return cell;
@@ -512,14 +502,11 @@ Examples:
     ProjectValidationResult validation,
   ) {
     final validClass = validation.isValid ? 'valid' : 'invalid';
-    final coverageColor = report.stats.coveragePercentage >= 70
-        ? 'color: #2ecc71;'
-        : 'color: #e67e22;';
+    final coverageColor =
+        report.stats.coveragePercentage >= 70 ? 'color: #2ecc71;' : 'color: #e67e22;';
 
     final filesRows = analysisResults.map((f) {
-      final badge = f.coveragePercentage >= 70
-          ? '🟢'
-          : (f.coveragePercentage >= 50 ? '🟡' : '🔴');
+      final badge = f.coveragePercentage >= 70 ? '🟢' : (f.coveragePercentage >= 50 ? '🟡' : '🔴');
       final undocumentedRows = f.undocumentedElements.isEmpty
           ? '<tr><td colspan="3" style="color: #2ecc71;">✅ Fully documented</td></tr>'
           : f.undocumentedElements
@@ -618,11 +605,8 @@ Examples:
         ..writeln('LOW COVERAGE FILES')
         ..writeln('------------------');
       for (final path in report.lowCoverageFiles) {
-        final cov = analysisResults
-                .where((r) => r.filePath == path)
-                .firstOrNull
-                ?.coveragePercentage ??
-            0.0;
+        final cov =
+            analysisResults.where((r) => r.filePath == path).firstOrNull?.coveragePercentage ?? 0.0;
         buf.writeln(
           '  ! ${cov.toStringAsFixed(1).padLeft(6)}%  $path',
         );
@@ -634,9 +618,8 @@ Examples:
       ..writeln('PER-FILE BREAKDOWN')
       ..writeln('-------------------');
     for (final f in analysisResults) {
-      final badge = f.coveragePercentage >= 70
-          ? 'OK'
-          : (f.coveragePercentage >= 50 ? 'LOW' : 'BAD');
+      final badge =
+          f.coveragePercentage >= 70 ? 'OK' : (f.coveragePercentage >= 50 ? 'LOW' : 'BAD');
       buf.writeln(
         '[$badge] ${f.coveragePercentage.toStringAsFixed(1).padLeft(6)}%  ${f.filePath}',
       );

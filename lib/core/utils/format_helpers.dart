@@ -97,7 +97,11 @@ class FormatHelpers {
     if (locale.startsWith('ar')) {
       // ===== النسخة العربية: مراعاة التفرد والجمع والمثنى =====
       String arRelative(
-          int value, String singular, String dual, String plural) {
+        int value,
+        String singular,
+        String dual,
+        String plural,
+      ) {
         final prefix = isFuture ? 'بعد ' : 'منذ ';
         if (value == 0) return 'الآن';
         if (value == 1) return '$prefix$singular';

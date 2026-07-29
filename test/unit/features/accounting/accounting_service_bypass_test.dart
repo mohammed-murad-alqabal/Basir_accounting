@@ -1,4 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
+import 'dart:async';
+
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/financial_year_service.dart';
@@ -11,11 +13,20 @@ import 'package:mocktail/mocktail.dart';
 
 class MockAccountingRepository extends Mock implements AccountingRepository {}
 
-class MockFinancialYearService extends Mock implements FinancialYearService {}
+class TestFinancialYearService extends FinancialYearService {
+  TestFinancialYearService({required this.canPost});
+
+  final bool canPost;
+
+  @override
+  FutureOr<void> build() {}
+
+  @override
+  Future<bool> canPostToDate(DateTime date) async => canPost;
+}
 
 void main() {
   late MockAccountingRepository mockRepository;
-  late MockFinancialYearService mockFinancialYearService;
   late ProviderContainer container;
 
   setUpAll(() {
@@ -47,13 +58,13 @@ void main() {
 
   setUp(() {
     mockRepository = MockAccountingRepository();
-    mockFinancialYearService = MockFinancialYearService();
 
     container = ProviderContainer(
       overrides: [
         accountingRepositoryProvider.overrideWithValue(mockRepository),
-        financialYearServiceProvider
-            .overrideWith(() => mockFinancialYearService),
+        financialYearServiceProvider.overrideWith(
+          () => TestFinancialYearService(canPost: true),
+        ),
       ],
     );
   });
@@ -101,10 +112,7 @@ void main() {
         ],
       );
 
-      when(() => mockFinancialYearService.canPostToDate(any()))
-          .thenAnswer((_) async => true);
-      when(() => mockRepository.addJournalEntry(any()))
-          .thenAnswer((_) async => {});
+      when(() => mockRepository.addJournalEntry(any())).thenAnswer((_) async => {});
 
       final service = container.read(accountingServiceProvider.notifier);
 
@@ -112,9 +120,7 @@ void main() {
 
       // Verify repository call captured the modified entry with logs
       final capturedEntry =
-          verify(() => mockRepository.addJournalEntry(captureAny()))
-              .captured
-              .first as JournalEntry;
+          verify(() => mockRepository.addJournalEntry(captureAny())).captured.first as JournalEntry;
 
       expect(capturedEntry.auditLogs, isNotEmpty);
       expect(capturedEntry.auditLogs.first.action, equals('COGNITIVE_BYPASS'));

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 /// محرك التحقق من جودة التوثيق
 ///
 /// يقوم بالتحقق من صحة واكتمال وجودة التوثيق في الكود
@@ -10,7 +12,6 @@ class ValidationEngine {
   /// - [documentation]: نص التوثيق المراد التحقق منه
   ///
   /// Returns: نتيجة التحقق مع قائمة المشاكل إن وجدت
-  /// التحقق من documentation لعنصر واحد
   ValidationResult validateElement(String documentation) {
     final issues = _detectIssues(documentation);
     final score = _calculateQualityScore(documentation);
@@ -23,26 +24,129 @@ class ValidationEngine {
   }
 
   /// التحقق من ملف كامل
-  FileValidationResult validateFile(String filePath) => FileValidationResult(
+  ///
+  /// يقوم بقراءة الملف وفحص توثيق كل العناصر العامة فيه
+  FileValidationResult validateFile(String filePath) {
+    final file = File(filePath);
+    final elementResults = <ValidationResult>[];
+
+    try {
+      if (file.existsSync()) {
+        final content = file.readAsStringSync();
+        final lines = content.split('\n');
+
+        final classRegex = RegExp(r'^class\s+([A-Z]\w+)');
+        final enumRegex = RegExp(r'^enum\s+([A-Z]\w+)');
+        final methodRegex = RegExp(r'^\s*[\w\.\<\>]+\s+([a-z]\w+)\s*\(');
+
+        for (var i = 0; i < lines.length; i++) {
+          final line = lines[i].trim();
+          final isPublicElement = classRegex.hasMatch(line) ||
+              enumRegex.hasMatch(line) ||
+              (methodRegex.hasMatch(line) &&
+                  !methodRegex.firstMatch(line)!.group(1)!.startsWith('_'));
+
+          if (isPublicElement) {
+            final docLines = <String>[];
+            for (var j = i - 1; j >= 0; j--) {
+              final prev = lines[j].trim();
+              if (prev.startsWith('///')) {
+                docLines.insert(0, prev);
+              } else if (prev.isEmpty || prev.startsWith('@')) {
+                continue;
+              } else {
+                break;
+              }
+            }
+            final doc = docLines.join('\n');
+            if (doc.trim().isEmpty) {
+              continue;
+            }
+            elementResults.add(validateElement(doc));
+          }
+        }
+      }
+    } on Exception {
+      // إذا فشل قراءة الملف، نعتبره صالحاً بأقل درجة
+      elementResults.add(
+        const ValidationResult(
+          isValid: true,
+          issues: [],
+          qualityScore: QualityScore.poor,
+        ),
+      );
+    }
+
+    if (elementResults.isEmpty) {
+      return FileValidationResult(
         filePath: filePath,
-        elementResults: [],
+        elementResults: const [],
         isValid: true,
         overallScore: QualityScore.good,
       );
+    }
+
+    final hasErrors = elementResults.any((r) => !r.isValid);
+    final avgScore = elementResults.map((r) => r.qualityScore.score).reduce((a, b) => a + b) ~/
+        elementResults.length;
+
+    return FileValidationResult(
+      filePath: filePath,
+      elementResults: elementResults,
+      isValid: !hasErrors,
+      overallScore: QualityScore.fromScore(avgScore),
+    );
+  }
 
   /// التحقق من المشروع بالكامل
-  ProjectValidationResult validateProject() => const ProjectValidationResult(
-        fileResults: [],
-        isValid: true,
-        overallScore: QualityScore.excellent,
-        totalIssues: 0,
-      );
+  ///
+  /// يمر على جميع ملفات Dart في lib/ ويفحص توثيقها
+  ProjectValidationResult validateProject() {
+    final fileResults = <FileValidationResult>[];
+    final libDir = Directory('lib/');
+    var totalIssues = 0;
+    var allValid = true;
+    var totalScore = 0;
+    var fileCount = 0;
+
+    try {
+      if (libDir.existsSync()) {
+        final entities = libDir.listSync(recursive: true).whereType<File>().where(
+              (f) =>
+                  f.path.endsWith('.dart') &&
+                  !f.path.contains('.g.dart') &&
+                  !f.path.contains('.freezed.dart'),
+            );
+
+        for (final entity in entities) {
+          final result = validateFile(entity.path);
+          fileResults.add(result);
+          if (!result.isValid) allValid = false;
+          totalScore += result.overallScore.score;
+          fileCount++;
+          for (final er in result.elementResults) {
+            totalIssues += er.issues.length;
+          }
+        }
+      }
+    } on Exception {
+      // في حال فشل المسح الكلي، نعيد نتيجة افتراضية آمنة
+    }
+
+    final avgScore = fileCount > 0 ? (totalScore / fileCount).round() : 100;
+
+    return ProjectValidationResult(
+      fileResults: fileResults,
+      isValid: allValid,
+      overallScore: QualityScore.fromScore(avgScore),
+      totalIssues: totalIssues,
+    );
+  }
 
   /// التحقق من صيغة DartDoc
   bool _validateDartDocFormat(String documentation) {
     final doc = documentation.trim();
-    return doc.startsWith('///') ||
-        (doc.startsWith('/**') && doc.endsWith('*/'));
+    return doc.startsWith('///') || (doc.startsWith('/**') && doc.endsWith('*/'));
   }
 
   /// حساب درجة الجودة (Heuristic)

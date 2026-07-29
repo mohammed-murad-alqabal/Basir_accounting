@@ -1,5 +1,6 @@
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/features/inventory/application/inventory_service.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -12,8 +13,7 @@ part 'operational_intel_service.g.dart';
 /// Monitors the alignment between financial entries and operational
 /// statuses such as inventory levels and process urgency.
 @Riverpod(keepAlive: true)
-class OperationalIntelService extends _$OperationalIntelService
-    implements AccountingAgent {
+class OperationalIntelService extends _$OperationalIntelService implements AccountingAgent {
   @override
   FutureOr<void> build() {}
 
@@ -40,10 +40,19 @@ class OperationalIntelService extends _$OperationalIntelService
       );
 
       // Integration with InventoryService
-      final inventoryService = ref.read(inventoryServiceProvider);
+      InventoryService? inventoryService;
+      try {
+        inventoryService = ref.read(inventoryServiceProvider);
+      } on Object catch (_) {
+        inventoryService = null;
+        rationale.add(
+          'Note: Inventory service unavailable; skipped stock verification.',
+        );
+        confidenceScore = 0.6;
+      }
       final items = context.metadata['items'] as List<dynamic>?;
 
-      if (items != null && items.isNotEmpty) {
+      if (inventoryService != null && items != null && items.isNotEmpty) {
         for (final item in items) {
           try {
             final itemMap = item as Map<String, dynamic>;
@@ -103,8 +112,7 @@ class OperationalIntelService extends _$OperationalIntelService
     // 2. Urgency and Priority Validation
     final isUrgent = context.metadata['priority'] == 'high';
     if (isUrgent) {
-      rationale
-          .add('Note: Processed as high operational priority transaction.');
+      rationale.add('Note: Processed as high operational priority transaction.');
       confidenceScore = 0.98;
     }
 
@@ -113,8 +121,7 @@ class OperationalIntelService extends _$OperationalIntelService
       isAllowed: isAllowed,
       rationale: rationale.join('\n'),
       confidenceScore: confidenceScore,
-      suggestedAdjustments:
-          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
+      suggestedAdjustments: suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
     );
   }
 }
