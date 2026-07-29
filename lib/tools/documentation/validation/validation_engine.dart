@@ -87,7 +87,9 @@ class ValidationEngine {
     }
 
     final hasErrors = elementResults.any((r) => !r.isValid);
-    final avgScore = elementResults.map((r) => r.qualityScore.score).reduce((a, b) => a + b) ~/
+    final avgScore = elementResults
+            .map((r) => r.qualityScore.score)
+            .reduce((a, b) => a + b) ~/
         elementResults.length;
 
     return FileValidationResult(
@@ -111,12 +113,13 @@ class ValidationEngine {
 
     try {
       if (libDir.existsSync()) {
-        final entities = libDir.listSync(recursive: true).whereType<File>().where(
-              (f) =>
-                  f.path.endsWith('.dart') &&
-                  !f.path.contains('.g.dart') &&
-                  !f.path.contains('.freezed.dart'),
-            );
+        final entities =
+            libDir.listSync(recursive: true).whereType<File>().where(
+                  (f) =>
+                      f.path.endsWith('.dart') &&
+                      !f.path.contains('.g.dart') &&
+                      !f.path.contains('.freezed.dart'),
+                );
 
         for (final entity in entities) {
           final result = validateFile(entity.path);
@@ -146,7 +149,8 @@ class ValidationEngine {
   /// التحقق من صيغة DartDoc
   bool _validateDartDocFormat(String documentation) {
     final doc = documentation.trim();
-    return doc.startsWith('///') || (doc.startsWith('/**') && doc.endsWith('*/'));
+    return doc.startsWith('///') ||
+        (doc.startsWith('/**') && doc.endsWith('*/'));
   }
 
   /// حساب درجة الجودة (Heuristic)

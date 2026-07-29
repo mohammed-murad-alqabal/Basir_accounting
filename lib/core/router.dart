@@ -118,7 +118,8 @@ class AppRouter {
       case '/mfa-gate':
         return MaterialPageRoute(builder: (_) => const MfaGateScreen());
       case '/mfa-security':
-        return MaterialPageRoute(builder: (_) => const MfaSecurityCenterScreen());
+        return MaterialPageRoute(
+            builder: (_) => const MfaSecurityCenterScreen());
       case '/mfa-challenge':
         return MaterialPageRoute(builder: (_) => const MfaChallengeScreen());
       case '/phone-verify':
@@ -356,8 +357,8 @@ class AppRouter {
         final args = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
           builder: (_) => FinancialReportScreen(
-            reportType:
-                args?['reportType'] as FinancialReportType? ?? FinancialReportType.incomeStatement,
+            reportType: args?['reportType'] as FinancialReportType? ??
+                FinancialReportType.incomeStatement,
           ),
         );
       case '/audit-trail-report':
@@ -374,7 +375,8 @@ class AppRouter {
           return MaterialPageRoute(
             builder: (context) => Scaffold(
               body: Center(
-                child: Text(context.l10n.errorScreenNotFound(settings.name ?? '')),
+                child:
+                    Text(context.l10n.errorScreenNotFound(settings.name ?? '')),
               ),
             ),
           );

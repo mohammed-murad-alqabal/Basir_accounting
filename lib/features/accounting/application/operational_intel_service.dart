@@ -13,7 +13,8 @@ part 'operational_intel_service.g.dart';
 /// Monitors the alignment between financial entries and operational
 /// statuses such as inventory levels and process urgency.
 @Riverpod(keepAlive: true)
-class OperationalIntelService extends _$OperationalIntelService implements AccountingAgent {
+class OperationalIntelService extends _$OperationalIntelService
+    implements AccountingAgent {
   @override
   FutureOr<void> build() {}
 
@@ -112,7 +113,8 @@ class OperationalIntelService extends _$OperationalIntelService implements Accou
     // 2. Urgency and Priority Validation
     final isUrgent = context.metadata['priority'] == 'high';
     if (isUrgent) {
-      rationale.add('Note: Processed as high operational priority transaction.');
+      rationale
+          .add('Note: Processed as high operational priority transaction.');
       confidenceScore = 0.98;
     }
 
@@ -121,7 +123,8 @@ class OperationalIntelService extends _$OperationalIntelService implements Accou
       isAllowed: isAllowed,
       rationale: rationale.join('\n'),
       confidenceScore: confidenceScore,
-      suggestedAdjustments: suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
+      suggestedAdjustments:
+          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
     );
   }
 }

@@ -20,7 +20,8 @@ class InMemoryAccountingRepository implements AccountingRepository {
   final _entries = <String, JournalEntry>{};
 
   @override
-  Future<List<JournalEntry>> getJournalEntries() async => _entries.values.toList();
+  Future<List<JournalEntry>> getJournalEntries() async =>
+      _entries.values.toList();
 
   @override
   Future<List<Account>> getAccounts() async => _accounts.values.toList();
@@ -29,16 +30,19 @@ class InMemoryAccountingRepository implements AccountingRepository {
   Future<Account?> getAccountById(String id) async => _accounts[id];
 
   @override
-  Future<void> addAccount(Account account) async => _accounts[account.id] = account;
+  Future<void> addAccount(Account account) async =>
+      _accounts[account.id] = account;
 
   @override
-  Future<void> updateAccount(Account account) async => _accounts[account.id] = account;
+  Future<void> updateAccount(Account account) async =>
+      _accounts[account.id] = account;
 
   @override
   Future<Decimal> getAccountBalance(String accountId) async => Decimal.zero;
 
   @override
-  Future<void> addJournalEntry(JournalEntry entry) async => _entries[entry.id] = entry;
+  Future<void> addJournalEntry(JournalEntry entry) async =>
+      _entries[entry.id] = entry;
 }
 
 class InMemoryCustomerRepository implements CustomerRepository {
@@ -51,10 +55,12 @@ class InMemoryCustomerRepository implements CustomerRepository {
   Future<Customer?> getCustomerById(String id) async => _customers[id];
 
   @override
-  Future<void> addCustomer(Customer customer) async => _customers[customer.id] = customer;
+  Future<void> addCustomer(Customer customer) async =>
+      _customers[customer.id] = customer;
 
   @override
-  Future<void> updateCustomer(Customer customer) async => _customers[customer.id] = customer;
+  Future<void> updateCustomer(Customer customer) async =>
+      _customers[customer.id] = customer;
 
   @override
   Future<void> deleteCustomer(String id) async => _customers.remove(id);
@@ -64,7 +70,9 @@ class InMemoryCustomerRepository implements CustomerRepository {
 
   @override
   Future<List<Customer>> searchCustomers(String query) async =>
-      _customers.values.where((c) => c.nameAr.contains(query) || c.nameEn.contains(query)).toList();
+      _customers.values
+          .where((c) => c.nameAr.contains(query) || c.nameEn.contains(query))
+          .toList();
 }
 
 class InMemoryVendorRepository implements VendorRepository {
@@ -80,14 +88,16 @@ class InMemoryVendorRepository implements VendorRepository {
   Future<void> addVendor(Vendor vendor) async => _vendors[vendor.id] = vendor;
 
   @override
-  Future<void> updateVendor(Vendor vendor) async => _vendors[vendor.id] = vendor;
+  Future<void> updateVendor(Vendor vendor) async =>
+      _vendors[vendor.id] = vendor;
 
   @override
   Future<void> deleteVendor(String id) async => _vendors.remove(id);
 
   @override
-  Future<List<Vendor>> searchVendors(String query) async =>
-      _vendors.values.where((v) => v.nameAr.contains(query) || v.nameEn.contains(query)).toList();
+  Future<List<Vendor>> searchVendors(String query) async => _vendors.values
+      .where((v) => v.nameAr.contains(query) || v.nameEn.contains(query))
+      .toList();
 }
 
 class InMemoryFinancialYearRepository implements FinancialYearRepository {
@@ -106,7 +116,8 @@ class InMemoryFinancialYearRepository implements FinancialYearRepository {
   }
 
   @override
-  Future<List<FinancialYear>> getAllFinancialYears() async => _years.values.toList();
+  Future<List<FinancialYear>> getAllFinancialYears() async =>
+      _years.values.toList();
 
   @override
   Future<void> saveFinancialYear(FinancialYear year) async {

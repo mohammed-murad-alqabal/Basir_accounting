@@ -106,7 +106,8 @@ void main() {
       await prepareInvoices(5000);
 
       final stopwatch = Stopwatch()..start();
-      final paidInvoices = await isar.invoiceModels.filter().paidAmountGreaterThan(0).findAll();
+      final paidInvoices =
+          await isar.invoiceModels.filter().paidAmountGreaterThan(0).findAll();
       stopwatch.stop();
 
       print(

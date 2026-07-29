@@ -252,7 +252,8 @@ class PatternPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     for (var i = 0; i < points.length; i++) {
-      final isPartOfPattern = currentPattern.contains(i) || completedPattern.contains(i);
+      final isPartOfPattern =
+          currentPattern.contains(i) || completedPattern.contains(i);
 
       // رسم النقطة
       canvas.drawCircle(

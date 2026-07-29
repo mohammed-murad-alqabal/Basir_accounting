@@ -103,7 +103,8 @@ class _MainShellState extends ConsumerState<MainShell>
     if (!lockOnResume) return;
 
     final lastUnlock = await localAuth.getLastMfaUnlockAt();
-    if (lastUnlock != null && DateTime.now().difference(lastUnlock) <= _resumeLockGrace) {
+    if (lastUnlock != null &&
+        DateTime.now().difference(lastUnlock) <= _resumeLockGrace) {
       return;
     }
 
@@ -277,7 +278,9 @@ class _MainShellState extends ConsumerState<MainShell>
                       curve: AnimationCurves.fastOutSlowIn,
                       padding: EdgeInsets.all(isSelected ? Spacing.xs : 0),
                       decoration: BoxDecoration(
-                        color: isSelected ? AppColors.primaryLight : Colors.transparent,
+                        color: isSelected
+                            ? AppColors.primaryLight
+                            : Colors.transparent,
                         borderRadius: BorderRadius.circular(Radii.sm),
                         boxShadow: isSelected
                             ? [
@@ -294,7 +297,9 @@ class _MainShellState extends ConsumerState<MainShell>
                       child: Icon(
                         item.icon,
                         size: IconSizes.md,
-                        color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                        color: isSelected
+                            ? AppColors.primary
+                            : AppColors.textSecondary,
                       ),
                     ),
                   ),
@@ -303,8 +308,11 @@ class _MainShellState extends ConsumerState<MainShell>
                     duration: _indicatorUpdateDuration,
                     curve: AnimationCurves.fastOutSlowIn,
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: isSelected ? AppColors.primary : AppColors.textSecondary,
-                      fontWeight: isSelected ? FontWeights.bold : FontWeights.medium,
+                      color: isSelected
+                          ? AppColors.primary
+                          : AppColors.textSecondary,
+                      fontWeight:
+                          isSelected ? FontWeights.bold : FontWeights.medium,
                     ),
                     child: Text(
                       item.label,

@@ -93,12 +93,14 @@ class _MfaChallengeScreenState extends ConsumerState<MfaChallengeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final biometricAvailable = ref.watch(biometricAvailableProvider).value ?? false;
+    final biometricAvailable =
+        ref.watch(biometricAvailableProvider).value ?? false;
     final biometricEnabled = ref.watch(biometricEnabledProvider);
     final pinSet = ref.watch(pinSetProvider).value ?? false;
     final patternSet = ref.watch(patternSetProvider).value ?? false;
 
-    final hasAnyMethod = (biometricAvailable && biometricEnabled) || pinSet || patternSet;
+    final hasAnyMethod =
+        (biometricAvailable && biometricEnabled) || pinSet || patternSet;
 
     if (!hasAnyMethod) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -170,7 +172,8 @@ class _MfaChallengeScreenState extends ConsumerState<MfaChallengeScreen> {
             AppEnhancedButton(
               type: AppEnhancedButtonType.text,
               label: 'إلغاء',
-              onPressed: _isLoading ? null : () => Navigator.of(context).pop(false),
+              onPressed:
+                  _isLoading ? null : () => Navigator.of(context).pop(false),
             ),
           ],
         ),

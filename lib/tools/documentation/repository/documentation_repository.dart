@@ -96,11 +96,14 @@ class DocumentationRepository {
           ..writeln('| المؤشر | القيمة |')
           ..writeln('|--------|-------|')
           ..writeln('| عدد الملفات المحللة | ${latest.analyzedFiles.length} |')
-          ..writeln('| نسبة التغطية | ${latest.stats.coveragePercentage.toStringAsFixed(1)}% |')
+          ..writeln(
+              '| نسبة التغطية | ${latest.stats.coveragePercentage.toStringAsFixed(1)}% |')
           ..writeln('| إجمالي العناصر | ${latest.stats.totalElements} |')
           ..writeln('| العناصر الموثقة | ${latest.stats.documentedElements} |')
-          ..writeln('| العناصر غير الموثقة | ${latest.stats.undocumentedElements} |')
-          ..writeln('| الملفات ذات التغطية المنخفضة | ${latest.lowCoverageFiles.length} |');
+          ..writeln(
+              '| العناصر غير الموثقة | ${latest.stats.undocumentedElements} |')
+          ..writeln(
+              '| الملفات ذات التغطية المنخفضة | ${latest.lowCoverageFiles.length} |');
         if (latest.lowCoverageFiles.isNotEmpty) {
           buf
             ..writeln()
@@ -214,7 +217,8 @@ class DocumentationRepository {
       return CoverageTrend(
         direction: TrendDirection.stable,
         changePercentage: 0,
-        currentCoverage: history.isNotEmpty ? history.first.stats.coveragePercentage : 0,
+        currentCoverage:
+            history.isNotEmpty ? history.first.stats.coveragePercentage : 0,
         previousCoverage: 0,
         period: period,
       );
@@ -233,7 +237,8 @@ class DocumentationRepository {
     }
     previous ??= history.last;
 
-    final change = current.stats.coveragePercentage - previous.stats.coveragePercentage;
+    final change =
+        current.stats.coveragePercentage - previous.stats.coveragePercentage;
     final direction = change > 0.5
         ? TrendDirection.improving
         : change < -0.5
