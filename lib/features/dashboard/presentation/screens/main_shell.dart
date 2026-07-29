@@ -9,6 +9,7 @@ import 'package:basir_accounting_system/features/customers/presentation/screens/
 import 'package:basir_accounting_system/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/screens/inventory_items_screen.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoices_screen.dart';
+import 'package:basir_accounting_system/features/mfa/presentation/providers/mfa_providers.dart';
 import 'package:basir_accounting_system/features/settings/presentation/screens/settings_screen.dart';
 import 'package:basir_accounting_system/features/vendors/presentation/screens/vendors_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
@@ -38,13 +39,15 @@ class MainShell extends ConsumerStatefulWidget {
 }
 
 class _MainShellState extends ConsumerState<MainShell>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   late int _selectedIndex;
   late AnimationController _indicatorController;
   late AnimationController _pageTransitionController;
+  var _lockShowing = false;
 
   static const Duration _indicatorUpdateDuration = Durations.short;
   static const double _indicatorElevationBoost = 4;
+  static const Duration _resumeLockGrace = Duration(seconds: 20);
 
   static const List<Widget> _defaultScreens = [
     DashboardScreen(),
@@ -59,6 +62,7 @@ class _MainShellState extends ConsumerState<MainShell>
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _selectedIndex = 0;
     _indicatorController = AnimationController(
       vsync: this,
@@ -74,9 +78,51 @@ class _MainShellState extends ConsumerState<MainShell>
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _indicatorController.dispose();
     _pageTransitionController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _maybeLockOnResume();
+    }
+  }
+
+  Future<void> _maybeLockOnResume() async {
+    if (!mounted || _lockShowing) return;
+
+    final navigator = Navigator.of(context);
+    final localAuth = ref.read(localAuthServiceProvider);
+    final enabled = await localAuth.isAppLockEnabled();
+    if (!enabled) return;
+
+    final lockOnResume = await localAuth.isLockOnResume();
+    if (!lockOnResume) return;
+
+    final lastUnlock = await localAuth.getLastMfaUnlockAt();
+    if (lastUnlock != null && DateTime.now().difference(lastUnlock) <= _resumeLockGrace) {
+      return;
+    }
+
+    _lockShowing = true;
+    try {
+      final ok = await navigator.pushNamed<bool>(
+            '/mfa-challenge',
+            arguments: const {'after': '/dashboard'},
+          ) ??
+          false;
+      if (!ok && mounted) {
+        await navigator.pushNamedAndRemoveUntil(
+          '/login',
+          (route) => false,
+        );
+      }
+    } finally {
+      _lockShowing = false;
+    }
   }
 
   void _onItemTapped(int index) {
@@ -231,9 +277,7 @@ class _MainShellState extends ConsumerState<MainShell>
                       curve: AnimationCurves.fastOutSlowIn,
                       padding: EdgeInsets.all(isSelected ? Spacing.xs : 0),
                       decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppColors.primaryLight
-                            : Colors.transparent,
+                        color: isSelected ? AppColors.primaryLight : Colors.transparent,
                         borderRadius: BorderRadius.circular(Radii.sm),
                         boxShadow: isSelected
                             ? [
@@ -250,9 +294,7 @@ class _MainShellState extends ConsumerState<MainShell>
                       child: Icon(
                         item.icon,
                         size: IconSizes.md,
-                        color: isSelected
-                            ? AppColors.primary
-                            : AppColors.textSecondary,
+                        color: isSelected ? AppColors.primary : AppColors.textSecondary,
                       ),
                     ),
                   ),
@@ -261,11 +303,8 @@ class _MainShellState extends ConsumerState<MainShell>
                     duration: _indicatorUpdateDuration,
                     curve: AnimationCurves.fastOutSlowIn,
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: isSelected
-                          ? AppColors.primary
-                          : AppColors.textSecondary,
-                      fontWeight:
-                          isSelected ? FontWeights.bold : FontWeights.medium,
+                      color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                      fontWeight: isSelected ? FontWeights.bold : FontWeights.medium,
                     ),
                     child: Text(
                       item.label,

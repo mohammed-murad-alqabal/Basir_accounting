@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -35,6 +37,55 @@ class _NoopErrorLogger implements ExternalErrorLogger {
 
   @override
   Future<void> dispose() async {}
+}
+
+class TraeDebugHttpErrorLogger implements ExternalErrorLogger {
+  TraeDebugHttpErrorLogger({
+    Dio? dio,
+    this.endpoint = 'http://127.0.0.1:17373/log',
+  }) : _dio = dio ??
+            Dio(
+              BaseOptions(
+                connectTimeout: const Duration(milliseconds: 800),
+                sendTimeout: const Duration(milliseconds: 800),
+                receiveTimeout: const Duration(milliseconds: 1200),
+                headers: const {
+                  'Content-Type': 'application/json',
+                },
+              ),
+            );
+
+  final Dio _dio;
+  final String endpoint;
+
+  @override
+  FutureOr<void> captureException(
+    Object error,
+    StackTrace stackTrace, {
+    Object? context,
+    String? providerName,
+  }) async {
+    // #region debug-point mobile-device-validation-error
+    try {
+      await _dio.post<void>(
+        endpoint,
+        data: jsonEncode({
+          'ts': DateTime.now().toIso8601String(),
+          'type': 'provider_error',
+          'provider': providerName,
+          'error': error.toString(),
+          'stack': stackTrace.toString(),
+          'context': context,
+        }),
+      );
+    } on Object catch (_) {}
+    // #endregion debug-point mobile-device-validation-error
+  }
+
+  @override
+  Future<void> dispose() async {
+    _dio.close(force: true);
+  }
 }
 
 /// مزود قابل للتبديل - يمكن تجاوزه لاحقاً من خلال ProviderScope

@@ -29,19 +29,6 @@ android {
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
-    // ===== استبعاد ملف GeneratedPluginRegistrant القديم من التجميع =====
-    // file_picker 10.x هو Kotlin-only ولا يحتوي على FilePickerPlugin.java
-    // لذا يستحيل تجميع الملف المولّد. FlutterEmbedding v2 يستخدم Plugin Loaders
-    // التلقائي ولا يحتاج لاستدعاء صريح لهذا الملف.
-    sourceSets {
-        main {
-            java {
-                srcDirs = ['src/main/kotlin', 'src/main/java']
-                exclude 'io/flutter/plugins/GeneratedPluginRegistrant.java'
-            }
-        }
-    }
-
     compileOptions {
         coreLibraryDesugaringEnabled true
         sourceCompatibility = JavaVersion.VERSION_17

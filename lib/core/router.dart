@@ -46,6 +46,12 @@ import 'package:basir_accounting_system/features/invoices/presentation/screens/i
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoices_screen.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/returns_and_damages_screen.dart';
+import 'package:basir_accounting_system/features/mfa/presentation/screens/mfa_challenge_screen.dart';
+import 'package:basir_accounting_system/features/mfa/presentation/screens/mfa_gate_screen.dart';
+import 'package:basir_accounting_system/features/mfa/presentation/screens/mfa_security_center_screen.dart';
+import 'package:basir_accounting_system/features/mfa/presentation/screens/pattern_draw_screen.dart';
+import 'package:basir_accounting_system/features/mfa/presentation/screens/phone_otp_screen.dart';
+import 'package:basir_accounting_system/features/mfa/presentation/screens/phone_verification_screen.dart';
 import 'package:basir_accounting_system/features/reports/presentation/screens/audit_trail_report_screen.dart';
 import 'package:basir_accounting_system/features/reports/presentation/screens/financial_report_screen.dart';
 import 'package:basir_accounting_system/features/reports/presentation/screens/general_ledger_screen.dart';
@@ -108,6 +114,36 @@ class AppRouter {
       case '/forgot-password':
         return MaterialPageRoute(
           builder: (_) => const ForgotPasswordScreen(),
+        );
+      case '/mfa-gate':
+        return MaterialPageRoute(builder: (_) => const MfaGateScreen());
+      case '/mfa-security':
+        return MaterialPageRoute(builder: (_) => const MfaSecurityCenterScreen());
+      case '/mfa-challenge':
+        return MaterialPageRoute(builder: (_) => const MfaChallengeScreen());
+      case '/phone-verify':
+        final args = settings.arguments as Map?;
+        return MaterialPageRoute(
+          builder: (_) => PhoneVerificationScreen(
+            afterRoute: args?['after'] as String?,
+          ),
+        );
+      case '/phone-otp':
+        final args = settings.arguments as Map?;
+        final phone = (args?['phone'] as String?) ?? '';
+        return MaterialPageRoute(
+          builder: (_) => PhoneOtpScreen(
+            phone: phone,
+            afterRoute: args?['after'] as String?,
+          ),
+        );
+      case '/pattern-draw':
+        final args = settings.arguments as Map?;
+        final afterRoute = args?['after'] as String?;
+        return MaterialPageRoute(
+          builder: (_) => PatternDrawScreen(
+            afterRoute: afterRoute,
+          ),
         );
       case '/reset-password':
         final args = settings.arguments as Map<String, String>?;
@@ -320,8 +356,8 @@ class AppRouter {
         final args = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
           builder: (_) => FinancialReportScreen(
-            reportType: args?['reportType'] as FinancialReportType? ??
-                FinancialReportType.incomeStatement,
+            reportType:
+                args?['reportType'] as FinancialReportType? ?? FinancialReportType.incomeStatement,
           ),
         );
       case '/audit-trail-report':
@@ -338,8 +374,7 @@ class AppRouter {
           return MaterialPageRoute(
             builder: (context) => Scaffold(
               body: Center(
-                child:
-                    Text(context.l10n.errorScreenNotFound(settings.name ?? '')),
+                child: Text(context.l10n.errorScreenNotFound(settings.name ?? '')),
               ),
             ),
           );

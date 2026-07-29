@@ -54,12 +54,15 @@ void main() {
         ]
         ..subtotalAmount = 1000.0
         ..taxAmount = 150.0
+        ..taxRate = 15.0
         ..totalAmount = 1150.0
         ..paidAmount = random.nextBool() ? 1150.0 : 0.0
         ..status = InvoiceStatus.paid
         ..type = InvoiceType.sales
         ..currency = 'SAR'
         ..exchangeRate = 1.0
+        ..discountAmount = 0.0
+        ..discountRate = 0.0
         ..createdAt = now
         ..updatedAt = now
         ..syncStatus = SyncStatus.synced
@@ -103,8 +106,7 @@ void main() {
       await prepareInvoices(5000);
 
       final stopwatch = Stopwatch()..start();
-      final paidInvoices =
-          await isar.invoiceModels.filter().paidAmountGreaterThan(0).findAll();
+      final paidInvoices = await isar.invoiceModels.filter().paidAmountGreaterThan(0).findAll();
       stopwatch.stop();
 
       print(

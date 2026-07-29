@@ -4,6 +4,18 @@ import 'dart:io';
 ///
 /// يقوم بتحليل ملفات Dart واكتشاف العناصر العامة التي تحتاج documentation
 class AnalysisEngine {
+  /// نتائج آخر تحليل مجلد (للحساب الإحصائيات التراكمية)
+  final List<AnalysisResult> _lastDirResults = [];
+
+  /// إجمالي العناصر المحللة في آخر analyzeDirectory
+  int _lastTotalElements = 0;
+
+  /// إجمالي العناصر الموثقة في آخر analyzeDirectory
+  int _lastDocumentedElements = 0;
+
+  /// تفصيل العناصر حسب النوع
+  final Map<ElementType, int> _lastBreakdown = {};
+
   /// تحليل ملف واحد
   ///
   /// يقوم بفحص الملف المحدد واكتشاف جميع العناصر العامة غير الموثقة
@@ -16,6 +28,7 @@ class AnalysisEngine {
         filePath: filePath,
         undocumentedElements: [],
         coveragePercentage: 100,
+        totalElements: 0,
       );
     }
 
@@ -105,14 +118,14 @@ class AnalysisEngine {
 
     var coverage = 100.0;
     if (totalElements > 0) {
-      coverage =
-          ((totalElements - undocumented.length) / totalElements) * 100.0;
+      coverage = ((totalElements - undocumented.length) / totalElements) * 100.0;
     }
 
     return AnalysisResult(
       filePath: filePath,
       undocumentedElements: undocumented,
       coveragePercentage: coverage,
+      totalElements: totalElements,
     );
   }
 
@@ -124,26 +137,45 @@ class AnalysisEngine {
     if (!await dir.exists()) return [];
 
     final results = <AnalysisResult>[];
+    _lastDirResults.clear();
+    _lastTotalElements = 0;
+    _lastDocumentedElements = 0;
+    _lastBreakdown.clear();
+
     // ignore: avoid_slow_async_io
     await for (final entity in dir.list(recursive: true)) {
       if (entity is File &&
           entity.path.endsWith('.dart') &&
           !entity.path.contains('.g.dart') &&
           !entity.path.contains('.freezed.dart')) {
-        results.add(await analyzeFile(entity.path));
+        final result = await analyzeFile(entity.path);
+        results.add(result);
+        _lastTotalElements += result.totalElements;
+        _lastDocumentedElements += result.totalElements - result.undocumentedElements.length;
+        for (final e in result.undocumentedElements) {
+          _lastBreakdown[e.type] = (_lastBreakdown[e.type] ?? 0) + 1;
+        }
       }
     }
+    _lastDirResults.addAll(results);
     return results;
   }
 
-  /// الحصول على إحصائيات التغطية
-  CoverageStats getCoverageStats() => const CoverageStats(
-        totalElements: 0,
-        documentedElements: 0,
-        undocumentedElements: 0,
-        coveragePercentage: 0,
-        elementBreakdown: {},
-      );
+  /// الحصول على إحصائيات التغطية من آخر عملية تحليل لمجلد
+  CoverageStats getCoverageStats() {
+    final total = _lastTotalElements;
+    final documented = _lastDocumentedElements;
+    final undocumented = total - documented;
+    final coverage = total > 0 ? (documented / total) * 100.0 : 100.0;
+
+    return CoverageStats(
+      totalElements: total,
+      documentedElements: documented,
+      undocumentedElements: undocumented,
+      coveragePercentage: coverage,
+      elementBreakdown: Map<ElementType, int>.unmodifiable(_lastBreakdown),
+    );
+  }
 }
 
 /// نتيجة تحليل ملف
@@ -153,6 +185,7 @@ class AnalysisResult {
     required this.filePath,
     required this.undocumentedElements,
     required this.coveragePercentage,
+    required this.totalElements,
   });
 
   /// مسار الملف
@@ -163,6 +196,9 @@ class AnalysisResult {
 
   /// نسبة التغطية (0-100)
   final double coveragePercentage;
+
+  /// إجمالي عدد العناصر العامة في الملف
+  final int totalElements;
 }
 
 /// عنصر غير موثق

@@ -78,7 +78,85 @@ class DocumentationRepository {
   /// - [format]: صيغة التصدير
   ///
   /// Returns: محتوى التقرير المصدر
-  Future<String> exportReport(ReportFormat format) async => '';
+  Future<String> exportReport(ReportFormat format) async {
+    final latest = await getLatestReport();
+    if (latest == null) return '';
+
+    switch (format) {
+      case ReportFormat.json:
+        return jsonEncode(latest.toJson());
+      case ReportFormat.markdown:
+        final buf = StringBuffer()
+          ..writeln('# تقرير تغطية التوثيق')
+          ..writeln()
+          ..writeln('*تاريخ الإنشاء: ${latest.timestamp.toIso8601String()}*')
+          ..writeln()
+          ..writeln('## ملخص')
+          ..writeln()
+          ..writeln('| المؤشر | القيمة |')
+          ..writeln('|--------|-------|')
+          ..writeln('| عدد الملفات المحللة | ${latest.analyzedFiles.length} |')
+          ..writeln('| نسبة التغطية | ${latest.stats.coveragePercentage.toStringAsFixed(1)}% |')
+          ..writeln('| إجمالي العناصر | ${latest.stats.totalElements} |')
+          ..writeln('| العناصر الموثقة | ${latest.stats.documentedElements} |')
+          ..writeln('| العناصر غير الموثقة | ${latest.stats.undocumentedElements} |')
+          ..writeln('| الملفات ذات التغطية المنخفضة | ${latest.lowCoverageFiles.length} |');
+        if (latest.lowCoverageFiles.isNotEmpty) {
+          buf
+            ..writeln()
+            ..writeln('## الملفات ذات التغطية المنخفضة')
+            ..writeln();
+          for (final f in latest.lowCoverageFiles) {
+            buf.writeln('- ⚠️ $f');
+          }
+        }
+        return buf.toString();
+      case ReportFormat.html:
+        return '''
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><meta charset="UTF-8"><title>تقرير التغطية</title></head>
+<body>
+<h1>تقرير تغطية التوثيق</h1>
+<p>تاريخ الإنشاء: ${latest.timestamp.toIso8601String()}</p>
+<ul>
+<li>عدد الملفات المحللة: ${latest.analyzedFiles.length}</li>
+<li>نسبة التغطية: ${latest.stats.coveragePercentage.toStringAsFixed(1)}%</li>
+<li>إجمالي العناصر: ${latest.stats.totalElements}</li>
+<li>العناصر الموثقة: ${latest.stats.documentedElements}</li>
+<li>العناصر غير الموثقة: ${latest.stats.undocumentedElements}</li>
+<li>الملفات ذات التغطية المنخفضة: ${latest.lowCoverageFiles.length}</li>
+</ul>
+</body>
+</html>
+''';
+      case ReportFormat.csv:
+        return [
+          'timestamp,coverage_pct,total_elements,documented,undocumented,files_count,low_coverage_count',
+          [
+            latest.timestamp.toIso8601String(),
+            latest.stats.coveragePercentage.toStringAsFixed(2),
+            latest.stats.totalElements.toString(),
+            latest.stats.documentedElements.toString(),
+            latest.stats.undocumentedElements.toString(),
+            latest.analyzedFiles.length.toString(),
+            latest.lowCoverageFiles.length.toString(),
+          ].join(','),
+        ].join('\n');
+      case ReportFormat.text:
+        return '''
+=== تقرير تغطية التوثيق ===
+تاريخ الإنشاء: ${latest.timestamp.toIso8601String()}
+
+عدد الملفات المحللة: ${latest.analyzedFiles.length}
+نسبة التغطية: ${latest.stats.coveragePercentage.toStringAsFixed(1)}%
+إجمالي العناصر: ${latest.stats.totalElements}
+العناصر الموثقة: ${latest.stats.documentedElements}
+العناصر غير الموثقة: ${latest.stats.undocumentedElements}
+الملفات ذات التغطية المنخفضة: ${latest.lowCoverageFiles.length}
+''';
+    }
+  }
 
   /// حذف تقارير قديمة
   ///
@@ -123,19 +201,53 @@ class DocumentationRepository {
 
   /// حساب الاتجاه
   ///
-  /// يحسب اتجاه التغطية (تحسن أم تراجع)
+  /// يحسب اتجاه التغطية (تحسن أم تراجع) عبر مقارنة آخر تقرير بتقرير سابق
+  /// ضمن الفترة المحددة
   ///
   /// Parameters:
   /// - [period]: الفترة الزمنية للمقارنة
   ///
   /// Returns: معلومات الاتجاه
-  Future<CoverageTrend> calculateTrend(Duration period) async => CoverageTrend(
+  Future<CoverageTrend> calculateTrend(Duration period) async {
+    final history = await getCoverageHistory();
+    if (history.length < 2) {
+      return CoverageTrend(
         direction: TrendDirection.stable,
         changePercentage: 0,
-        currentCoverage: 0,
+        currentCoverage: history.isNotEmpty ? history.first.stats.coveragePercentage : 0,
         previousCoverage: 0,
         period: period,
       );
+    }
+
+    final now = DateTime.now();
+    final cutoff = now.subtract(period);
+    final current = history.first;
+
+    CoverageReport? previous;
+    for (final r in history.skip(1)) {
+      if (r.timestamp.isBefore(cutoff)) {
+        previous = r;
+        break;
+      }
+    }
+    previous ??= history.last;
+
+    final change = current.stats.coveragePercentage - previous.stats.coveragePercentage;
+    final direction = change > 0.5
+        ? TrendDirection.improving
+        : change < -0.5
+            ? TrendDirection.declining
+            : TrendDirection.stable;
+
+    return CoverageTrend(
+      direction: direction,
+      changePercentage: change,
+      currentCoverage: current.stats.coveragePercentage,
+      previousCoverage: previous.stats.coveragePercentage,
+      period: period,
+    );
+  }
 }
 
 /// تقرير التغطية

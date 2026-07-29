@@ -1,0 +1,6 @@
+Launching lib/main.dart on SM N975U in debug mode...
+Running Gradle task 'assembleDebug'...                          
+✅ [Basir] Using RELEASE signing with store: /home/m/.android/basir-release-key.jks
+Running Gradle task 'assembleDebug'...                              3.4s
+The Dart compiler exited unexpectedly.
+Error: Gradle task assembleDebug failed with exit code 130
