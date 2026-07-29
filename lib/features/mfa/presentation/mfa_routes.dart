@@ -74,7 +74,8 @@ class MfaRoutes {
 
   /// Add MFA routes to existing routes map
   static Map<String, WidgetBuilder> addToRoutes(
-      Map<String, WidgetBuilder> existingRoutes) {
+    Map<String, WidgetBuilder> existingRoutes,
+  ) {
     final mfaRoutes = <String, WidgetBuilder>{
       mfaGate: (_) => const MfaGateScreen(),
       mfaSecurityCenter: (_) => const MfaSecurityCenterScreen(),

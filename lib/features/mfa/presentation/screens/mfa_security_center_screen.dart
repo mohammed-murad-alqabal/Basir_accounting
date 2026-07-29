@@ -262,7 +262,7 @@ class _MfaSecurityCenterScreenState
                     final ok = await navigator.pushNamed<bool>(
                           MfaRoutes.phoneVerification,
                           arguments: const {
-                            'after': MfaRoutes.mfaSecurityCenter
+                            'after': MfaRoutes.mfaSecurityCenter,
                           },
                         ) ??
                         false;
@@ -285,7 +285,7 @@ class _MfaSecurityCenterScreenState
                       final ok = await navigator.pushNamed<bool>(
                             MfaRoutes.mfaChallenge,
                             arguments: const {
-                              'after': MfaRoutes.mfaSecurityCenter
+                              'after': MfaRoutes.mfaSecurityCenter,
                             },
                           ) ??
                           false;

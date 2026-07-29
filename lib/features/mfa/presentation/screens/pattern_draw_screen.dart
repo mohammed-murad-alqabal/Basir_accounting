@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PatternDrawScreen extends ConsumerStatefulWidget {
-  const PatternDrawScreen(
-      {super.key, this.afterRoute, this.title = 'رسم النمط'});
+  const PatternDrawScreen({
+    super.key,
+    this.afterRoute,
+    this.title = 'رسم النمط',
+  });
 
   final String? afterRoute;
   final String title;
