@@ -50,9 +50,13 @@ class PhoneAuthService implements PhoneAuthServiceInterface {
 
       if (response.session != null) {
         await secureStorage.write(
-            key: StorageKeys.phoneNumber, value: normalizedNumber);
+          key: StorageKeys.phoneNumber,
+          value: normalizedNumber,
+        );
         await secureStorage.write(
-            key: StorageKeys.phoneVerified, value: 'true');
+          key: StorageKeys.phoneVerified,
+          value: 'true',
+        );
         _phoneAuthStateController.add(normalizedNumber);
         if (!kReleaseMode) {
           debugPrint('✅ [PHONE_AUTH] OTP verified');

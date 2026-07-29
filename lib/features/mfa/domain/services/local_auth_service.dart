@@ -112,7 +112,9 @@ class LocalAuthService {
     await secureStorage.write(key: StorageKeys.patternHash, value: hash);
     await secureStorage.write(key: StorageKeys.patternSalt, value: salt);
     await secureStorage.write(
-        key: StorageKeys.patternString, value: patternString);
+      key: StorageKeys.patternString,
+      value: patternString,
+    );
     debugPrint('Pattern lock set successfully');
   }
 
@@ -136,8 +138,9 @@ class LocalAuthService {
     if (legacyPattern.isNotEmpty) {
       final ok = legacyPattern.length == pattern.length &&
           List.generate(
-                  legacyPattern.length, (i) => legacyPattern[i] == pattern[i])
-              .every((v) => v);
+            legacyPattern.length,
+            (i) => legacyPattern[i] == pattern[i],
+          ).every((v) => v);
       if (ok) {
         // تحديث النمط إلى الإصدار الجديد
         await setPatternLock(pattern);

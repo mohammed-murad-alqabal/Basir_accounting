@@ -17,7 +17,9 @@ final phoneAuthServiceInterfaceProvider =
   final secureStorage = ref.watch(secureStorageProvider);
   final supabaseClient = SupabaseConfig.client;
   return PhoneAuthService(
-      supabaseClient: supabaseClient, secureStorage: secureStorage);
+    supabaseClient: supabaseClient,
+    secureStorage: secureStorage,
+  );
 });
 
 /// Biometric availability provider
@@ -52,7 +54,8 @@ class BiometricEnabledNotifier extends StateNotifier<bool> {
 
 final appLockEnabledProvider =
     StateNotifierProvider<AppLockEnabledNotifier, bool>(
-        AppLockEnabledNotifier.new);
+  AppLockEnabledNotifier.new,
+);
 
 class AppLockEnabledNotifier extends StateNotifier<bool> {
   AppLockEnabledNotifier(this.ref) : super(false);
@@ -95,7 +98,8 @@ class LockOnResumeNotifier extends StateNotifier<bool> {
 
 final cloudMfaRequiredProvider =
     StateNotifierProvider<CloudMfaRequiredNotifier, bool>(
-        CloudMfaRequiredNotifier.new);
+  CloudMfaRequiredNotifier.new,
+);
 
 class CloudMfaRequiredNotifier extends StateNotifier<bool> {
   CloudMfaRequiredNotifier(this.ref) : super(false);

@@ -97,13 +97,16 @@ class DocumentationRepository {
           ..writeln('|--------|-------|')
           ..writeln('| عدد الملفات المحللة | ${latest.analyzedFiles.length} |')
           ..writeln(
-              '| نسبة التغطية | ${latest.stats.coveragePercentage.toStringAsFixed(1)}% |')
+            '| نسبة التغطية | ${latest.stats.coveragePercentage.toStringAsFixed(1)}% |',
+          )
           ..writeln('| إجمالي العناصر | ${latest.stats.totalElements} |')
           ..writeln('| العناصر الموثقة | ${latest.stats.documentedElements} |')
           ..writeln(
-              '| العناصر غير الموثقة | ${latest.stats.undocumentedElements} |')
+            '| العناصر غير الموثقة | ${latest.stats.undocumentedElements} |',
+          )
           ..writeln(
-              '| الملفات ذات التغطية المنخفضة | ${latest.lowCoverageFiles.length} |');
+            '| الملفات ذات التغطية المنخفضة | ${latest.lowCoverageFiles.length} |',
+          );
         if (latest.lowCoverageFiles.isNotEmpty) {
           buf
             ..writeln()

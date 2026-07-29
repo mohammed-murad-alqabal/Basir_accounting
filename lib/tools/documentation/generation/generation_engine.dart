@@ -130,8 +130,10 @@ class GenerationEngine {
   }
 
   /// توليد وصف تلقائي
-  String _generateDescription(UndocumentedElement element,
-      {bool arabic = true}) {
+  String _generateDescription(
+    UndocumentedElement element, {
+    bool arabic = true,
+  }) {
     final name = element.name;
     final readable = _humanizeName(name);
 
