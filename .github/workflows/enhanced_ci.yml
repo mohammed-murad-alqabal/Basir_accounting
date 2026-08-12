@@ -73,7 +73,7 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
-          cache: true
+          cache: false
 
       - name: 📦 Get dependencies
         run: flutter pub get
@@ -157,7 +157,7 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
-          cache: true
+          cache: false
 
       - name: 📦 Get dependencies
         run: flutter pub get
@@ -234,7 +234,7 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
-          cache: true
+          cache: false
 
       - name: 📦 Get dependencies
         run: flutter pub get
@@ -348,7 +348,7 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
-          cache: true
+          cache: false
 
       - name: 📦 Check dependencies
         run: |
@@ -381,7 +381,7 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
-          cache: true
+          cache: false
 
       - name: ☕ Setup Java
         uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
