@@ -90,6 +90,34 @@ class IsarAccountingRepository implements AccountingRepository {
 
   @override
   Future<void> addJournalEntry(JournalEntry entry) async {
+    if (!entry.isBalanced) {
+      throw ArgumentError('Journal entry must be balanced before persistence.');
+    }
+    if (entry.lines.length < 2) {
+      throw ArgumentError('Journal entry must contain at least two lines.');
+    }
+
+    // A posted entry is immutable. Only an existing draft may be replaced,
+    // and it must retain its Isar identifier so account movements cannot be
+    // applied a second time.
+    final existing = await isar.journalEntryModels
+        .filter()
+        .idEqualTo(entry.id)
+        .and()
+        .userIdEqualTo(userId)
+        .findFirst();
+    if (existing != null) {
+      final isDraftTransition =
+          existing.status == JournalEntryStatus.draft &&
+          (entry.status == JournalEntryStatus.draft ||
+              entry.status == JournalEntryStatus.posted);
+      if (!isDraftTransition) {
+        throw StateError(
+          'Existing journal entries are immutable; create a reversal instead.',
+        );
+      }
+    }
+
     // 1. التحقق من السنة المالية والفترة المغلقة (FR-ACC-016)
     final fy = await isar.financialYearModels
         .filter()
@@ -119,6 +147,9 @@ class IsarAccountingRepository implements AccountingRepository {
         warehouseId: entry.warehouseId ?? warehouseId,
       ),
     );
+    if (existing != null) {
+      model.isarId = existing.isarId;
+    }
 
     await isar.writeTxn(() async {
       // 1. حفظ القيد
