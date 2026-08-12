@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  FLUTTER_VERSION: "3.24.0"
+  FLUTTER_VERSION: "3.44.9"
   CARGO_TERM_COLOR: always
 
 jobs:
