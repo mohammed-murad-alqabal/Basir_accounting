@@ -1,6 +1,7 @@
 # Dependabot Configuration
 # تكوين Dependabot لتحديثات الأمان والإصدارات التلقائية
 
+
 version: 2
 updates:
   # Flutter/Dart dependencies
@@ -38,13 +39,9 @@ updates:
         update-types:
           - "minor"
           - "patch"
-    # تجاهل بعض التحديثات إذا لزم الأمر
-    ignore:
-      # مثال: تجاهل تحديثات major لحزمة معينة
-      # - dependency-name: "package_name"
-      #   update-types: ["version-update:semver-major"]
+    # لا توجد قواعد تجاهل محددة حالياً؛ لذلك لا ندرج مفتاح ignore.
 
-  # Rust/Cargo workspace dependencies
+# Rust/Cargo workspace dependencies
   - package-ecosystem: "cargo"
     directory: "/rust"
     schedule:
@@ -68,44 +65,3 @@ updates:
     groups:
       rust-patch-and-minor:
         patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-
-  # GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
-      timezone: "Asia/Riyadh"
-    open-pull-requests-limit: 3
-    reviewers:
-      - "mohammed-murad-alqabal"
-    assignees:
-      - "mohammed-murad-alqabal"
-    labels:
-      - "dependencies"
-      - "ci/cd"
-      - "automated"
-      - "security"
-    commit-message:
-      prefix: "chore(ci)"
-      include: "scope"
-    # تجميع تحديثات Actions
-    groups:
-      github-actions:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-# ملاحظات:
-# 1. يتم فحص التحديثات كل يوم اثنين الساعة 9 صباحاً (توقيت الرياض)، مع تأخير 15 دقيقة لـCargo.
-# 2. يغطي الملف pub وCargo وGitHub Actions؛ لا تُدمج PRs الآلية دون اجتياز بوابة الجودة ومراجعة بشرية.
-# 3. تُجمع تحديثات minor وpatch، أما تحديثات major فتظل منفصلة لمراجعة توافق صريحة.
-# 4. جميع PRs تُعيّن تلقائياً للمراجعة وتُصنف لتسهيل متابعة المالكين.
-# 5. يجب تفعيل Dependabot alerts وDependabot security updates من إعدادات أمان المستودع.
-
