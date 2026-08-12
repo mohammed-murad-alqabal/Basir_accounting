@@ -135,7 +135,8 @@ class IsarAccountingRepository implements AccountingRepository {
       throw Exception('Cannot post to a closed financial year: ${fy.name}');
     }
 
-    final periodId = '${entry.date.year}-'
+    final periodId =
+        '${entry.date.year}-'
         '${entry.date.month.toString().padLeft(2, '0')}';
     if (fy.lockedPeriodIds.contains(periodId)) {
       throw Exception('Financial period $periodId is locked');

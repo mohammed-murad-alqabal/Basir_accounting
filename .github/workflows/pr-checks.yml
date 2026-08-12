@@ -120,7 +120,22 @@ jobs:
       - name: Build for ${{ matrix.platform }}
         run: |
           if [ "${{ matrix.platform }}" == "android" ]; then
-            flutter build apk --debug --no-shrink
+            # Gradle distribution retrieval can fail transiently on hosted runners.
+            # Retry the complete Android build a bounded number of times without
+            # masking a persistent build failure.
+            for attempt in 1 2 3; do
+              if flutter build apk --debug --no-shrink; then
+                exit 0
+              fi
+
+              if [ "${attempt}" -eq 3 ]; then
+                echo "Android build failed after ${attempt} attempts."
+                exit 1
+              fi
+
+              echo "Android build attempt ${attempt} failed; retrying shortly..."
+              sleep $((attempt * 15))
+            done
           elif [ "${{ matrix.platform }}" == "web" ]; then
             flutter build web --debug
           fi

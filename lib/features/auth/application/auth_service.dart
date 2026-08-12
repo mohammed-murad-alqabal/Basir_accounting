@@ -220,7 +220,8 @@ class AuthService {
         orElse: () => UserRole.viewer,
       );
 
-      final permissions = int.tryParse(permissionsStr ?? '') ??
+      final permissions =
+          int.tryParse(permissionsStr ?? '') ??
           BasirUser.getDefaultPermissions(role);
 
       return BasirUser(
@@ -256,9 +257,7 @@ class AuthService {
       final storedPasswordHash = await secureStorage.read(
         key: StorageKeys.passwordHash,
       );
-      final userSalt = await secureStorage.read(
-        key: '${username}_salt',
-      );
+      final userSalt = await secureStorage.read(key: '${username}_salt');
 
       if (storedUsername == null || storedPasswordHash == null) {
         throw Exception('لا يوجد حساب مسجل');
@@ -406,10 +405,7 @@ class AuthService {
         key: StorageKeys.passwordHash,
         value: passwordHash,
       );
-      await secureStorage.write(
-        key: '${username}_salt',
-        value: userSalt,
-      );
+      await secureStorage.write(key: '${username}_salt', value: userSalt);
 
       // Save RBAC info
       await secureStorage.write(key: 'user_role', value: role.name);
@@ -483,9 +479,7 @@ class AuthService {
         key: StorageKeys.passwordHash,
       );
       final username = await secureStorage.read(key: StorageKeys.username);
-      final userSalt = await secureStorage.read(
-        key: '${username}_salt',
-      );
+      final userSalt = await secureStorage.read(key: '${username}_salt');
 
       if (storedPasswordHash == null) {
         throw Exception('لا يوجد حساب مسجل');
@@ -508,10 +502,7 @@ class AuthService {
         key: StorageKeys.passwordHash,
         value: newPasswordHash,
       );
-      await secureStorage.write(
-        key: '${username}_salt',
-        value: newUserSalt,
-      );
+      await secureStorage.write(key: '${username}_salt', value: newUserSalt);
     } on Exception catch (e) {
       throw Exception('خطأ في تغيير كلمة المرور: $e');
     }
@@ -523,9 +514,8 @@ class AuthService {
     var score = 0;
 
     // فحص الطول
-          if (password.length < 12) {
-        issues.add('كلمة المرور يجب أن تكون 12 حرفًا على الأقل');
-
+    if (password.length < 12) {
+      issues.add('كلمة المرور يجب أن تكون 12 حرفًا على الأقل');
     } else {
       score += 25;
     }
@@ -576,9 +566,7 @@ class AuthService {
       final passwordHash = await secureStorage.read(
         key: StorageKeys.passwordHash,
       );
-      final userSalt = await secureStorage.read(
-        key: '${username}_salt',
-      );
+      final userSalt = await secureStorage.read(key: '${username}_salt');
 
       if (username != null && passwordHash == null) {
         issues.add('اسم المستخدم موجود لكن كلمة المرور مفقودة');

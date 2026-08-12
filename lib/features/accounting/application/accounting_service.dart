@@ -111,14 +111,17 @@ class AccountingService extends _$AccountingService {
       if (effectiveDate.isAfter(endDate)) continue;
 
       // 4. Aggregate
-      final isReceivable = invoice.type == InvoiceType.sales ||
+      final isReceivable =
+          invoice.type == InvoiceType.sales ||
           invoice.type == InvoiceType.purchaseReturn; // We get money
 
-      final isPayable = invoice.type == InvoiceType.purchase ||
+      final isPayable =
+          invoice.type == InvoiceType.purchase ||
           invoice.type == InvoiceType.salesReturn; // We pay money
 
       // Get existing daily flow or create (if mapped to startDate due to overdue)
-      var daily = dailyMap[effectiveDate] ??
+      var daily =
+          dailyMap[effectiveDate] ??
           DailyCashFlow(
             date: effectiveDate,
             inflow: Decimal.zero,
@@ -235,8 +238,9 @@ class AccountingService extends _$AccountingService {
   ///
   ///   invalid.
   Future<void> postSalesInvoice(domain_inv.Invoice invoice) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Cannot post to a closed or undefined financial period');
     }
@@ -252,8 +256,9 @@ class AccountingService extends _$AccountingService {
     // Debit: Accounts Receivable
     var receivableAccountId = 'acc-1201'; // Default AR
 
-    final customer =
-        await _customerRepository.getCustomerById(invoice.customerId);
+    final customer = await _customerRepository.getCustomerById(
+      invoice.customerId,
+    );
     if (customer != null && customer.receivableAccountId != null) {
       receivableAccountId = customer.receivableAccountId!;
     }
@@ -368,8 +373,9 @@ class AccountingService extends _$AccountingService {
     try {
       final salesBridge = ref.read(salesBridgeServiceProvider);
 
-      final updatedInvoice =
-          await salesBridge.finalizeInvoiceWithZatca(invoice);
+      final updatedInvoice = await salesBridge.finalizeInvoiceWithZatca(
+        invoice,
+      );
 
       if (updatedInvoice.qrCode != null) {
         final invoiceRepo = ref.read(invoiceRepositoryProvider);
@@ -390,8 +396,9 @@ class AccountingService extends _$AccountingService {
   /// - **Debit**: Input VAT (Tax Amount)
   /// - **Credit**: Accounts Payable (Total Invoice Amount)
   Future<void> _postPurchaseInvoice(domain_inv.Invoice invoice) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -434,8 +441,9 @@ class AccountingService extends _$AccountingService {
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR'
+            ? invoice.subtotalAmount
+            : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -463,16 +471,13 @@ class AccountingService extends _$AccountingService {
       );
     }
 
-    await _finalizeAndPostInvoiceEntry(
-      invoice,
-      lines,
-      'purchase_invoice',
-    );
+    await _finalizeAndPostInvoiceEntry(invoice, lines, 'purchase_invoice');
   }
 
   Future<void> _postSalesReturn(domain_inv.Invoice invoice) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -494,8 +499,9 @@ class AccountingService extends _$AccountingService {
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR'
+            ? invoice.subtotalAmount
+            : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -520,8 +526,9 @@ class AccountingService extends _$AccountingService {
     }
 
     var receivableAccountId = 'acc-1201';
-    final customer =
-        await _customerRepository.getCustomerById(invoice.customerId);
+    final customer = await _customerRepository.getCustomerById(
+      invoice.customerId,
+    );
     if (customer != null && customer.receivableAccountId != null) {
       receivableAccountId = customer.receivableAccountId!;
     }
@@ -539,16 +546,13 @@ class AccountingService extends _$AccountingService {
       ),
     );
 
-    await _finalizeAndPostInvoiceEntry(
-      invoice,
-      lines,
-      'sales_return',
-    );
+    await _finalizeAndPostInvoiceEntry(invoice, lines, 'sales_return');
   }
 
   Future<void> _postPurchaseReturn(domain_inv.Invoice invoice) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -589,8 +593,9 @@ class AccountingService extends _$AccountingService {
         credit: invoice.subtotalAmountBaseCurrency,
         debit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR'
+            ? invoice.subtotalAmount
+            : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -618,16 +623,13 @@ class AccountingService extends _$AccountingService {
       );
     }
 
-    await _finalizeAndPostInvoiceEntry(
-      invoice,
-      lines,
-      'purchase_return',
-    );
+    await _finalizeAndPostInvoiceEntry(invoice, lines, 'purchase_return');
   }
 
   Future<void> _postDamageInvoice(domain_inv.Invoice invoice) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -649,8 +651,9 @@ class AccountingService extends _$AccountingService {
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR'
+            ? invoice.subtotalAmount
+            : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -669,17 +672,14 @@ class AccountingService extends _$AccountingService {
         credit: invoice.subtotalAmountBaseCurrency,
         debit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR'
+            ? invoice.subtotalAmount
+            : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
 
-    await _finalizeAndPostInvoiceEntry(
-      invoice,
-      lines,
-      'damage_invoice',
-    );
+    await _finalizeAndPostInvoiceEntry(invoice, lines, 'damage_invoice');
   }
 
   Future<void> _finalizeAndPostInvoiceEntry(
@@ -706,8 +706,9 @@ class AccountingService extends _$AccountingService {
         recordingDate: now,
       ),
       standards: StandardsJustification(
-        standardReference:
-            sourceDocument == 'purchase_invoice' ? 'IAS 2' : 'IFRS 15',
+        standardReference: sourceDocument == 'purchase_invoice'
+            ? 'IAS 2'
+            : 'IFRS 15',
         recognitionBasis: 'Accrual',
         measurementBasis: 'Transaction Price',
       ),
@@ -864,10 +865,14 @@ class AccountingService extends _$AccountingService {
     }
     for (final line in entry.lines) {
       if (line.debit < Decimal.zero || line.credit < Decimal.zero) {
-        throw ArgumentError('Journal entry lines cannot contain negative values.');
+        throw ArgumentError(
+          'Journal entry lines cannot contain negative values.',
+        );
       }
       if (line.debit == Decimal.zero && line.credit == Decimal.zero) {
-        throw ArgumentError('Journal entry lines cannot be zero on both sides.');
+        throw ArgumentError(
+          'Journal entry lines cannot be zero on both sides.',
+        );
       }
       if (line.debit > Decimal.zero && line.credit > Decimal.zero) {
         throw ArgumentError(

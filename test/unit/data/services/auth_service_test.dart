@@ -83,17 +83,20 @@ void main() {
       );
     });
 
-    test('should reject an empty password through the password policy', () async {
-      // Arrange
-      const username = 'testuser';
-      const password = '';
+    test(
+      'should reject an empty password through the password policy',
+      () async {
+        // Arrange
+        const username = 'testuser';
+        const password = '';
 
-      // Act & Assert
-      await expectLater(
-        authService.createAccount(username, password),
-        throwsA(isA<ArgumentError>()),
-      );
-    });
+        // Act & Assert
+        await expectLater(
+          authService.createAccount(username, password),
+          throwsA(isA<ArgumentError>()),
+        );
+      },
+    );
 
     test('should store a versioned PBKDF2 password hash', () async {
       // Arrange
@@ -330,8 +333,8 @@ void main() {
       () async {
         // Arrange
         const username = 'testuser';
-      const password = 'redacted';
-      const newPassword = '12345'; // أقل من سياسة كلمة المرور الجديدة
+        const password = 'redacted';
+        const newPassword = '12345'; // أقل من سياسة كلمة المرور الجديدة
         await authService.createAccount(username, password);
 
         // Act & Assert
