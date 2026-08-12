@@ -67,7 +67,7 @@ pub async fn generate_zatca_csr(
         business_category: input.business_category,
         registered_address: input.registered_address,
     };
-    Ok(csr::generate_csr(internal_input, &key_pair_pem)?)
+    csr::generate_csr(internal_input, &key_pair_pem)
 }
 
 pub async fn generate_zatca_signed_xml(
@@ -133,9 +133,5 @@ pub async fn generate_zatca_signed_xml(
             .collect::<anyhow::Result<Vec<_>>>()?,
     };
 
-    Ok(ZatcaService::generate_signed_invoice(
-        internal_input,
-        &cert,
-        &priv_key,
-    )?)
+    ZatcaService::generate_signed_invoice(internal_input, &cert, &priv_key)
 }
