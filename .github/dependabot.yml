@@ -44,6 +44,35 @@ updates:
       # - dependency-name: "package_name"
       #   update-types: ["version-update:semver-major"]
 
+  # Rust/Cargo workspace dependencies
+  - package-ecosystem: "cargo"
+    directory: "/rust"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:15"
+      timezone: "Asia/Riyadh"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "mohammed-murad-alqabal"
+    assignees:
+      - "mohammed-murad-alqabal"
+    labels:
+      - "dependencies"
+      - "rust"
+      - "security"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps-rust)"
+      include: "scope"
+    groups:
+      rust-patch-and-minor:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
   # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -74,9 +103,9 @@ updates:
           - "minor"
           - "patch"
 # ملاحظات:
-# 1. يتم فحص التحديثات كل يوم اثنين الساعة 9 صباحاً (توقيت الرياض)
-# 2. الحد الأقصى لـ PRs المفتوحة: 5 لـ pub، 3 لـ GitHub Actions
-# 3. يتم تجميع التحديثات المتشابهة في PR واحد لتسهيل المراجعة
-# 4. جميع PRs تُعيّن تلقائياً للمراجعة
-# 5. Labels تلقائية لتسهيل التصنيف
+# 1. يتم فحص التحديثات كل يوم اثنين الساعة 9 صباحاً (توقيت الرياض)، مع تأخير 15 دقيقة لـCargo.
+# 2. يغطي الملف pub وCargo وGitHub Actions؛ لا تُدمج PRs الآلية دون اجتياز بوابة الجودة ومراجعة بشرية.
+# 3. تُجمع تحديثات minor وpatch، أما تحديثات major فتظل منفصلة لمراجعة توافق صريحة.
+# 4. جميع PRs تُعيّن تلقائياً للمراجعة وتُصنف لتسهيل متابعة المالكين.
+# 5. يجب تفعيل Dependabot alerts وDependabot security updates من إعدادات أمان المستودع.
 

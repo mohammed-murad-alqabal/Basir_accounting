@@ -1,0 +1,124 @@
+# Basir Accounting Intelligent System
+# Weekly dependency-security monitoring maintained by the Basir Accounting Development Team.
+# This workflow never changes dependencies or publishes artifacts. It detects and reports risk.
+
+name: Scheduled Dependency Security Monitoring
+
+on:
+  schedule:
+    # Monday 08:17 Asia/Riyadh (UTC+3). Scheduled jobs can be delayed by GitHub.
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: read
+
+concurrency:
+  group: basir-dependency-security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  FLUTTER_VERSION: "3.24.0"
+  CARGO_TERM_COLOR: always
+
+jobs:
+  rustsec-advisory-audit:
+    name: RustSec advisory audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout locked dependency manifest
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Cargo Audit from locked dependencies
+        run: cargo install cargo-audit --locked --version 0.21.2
+
+      - name: Audit the locked Rust dependency graph
+        working-directory: rust
+        run: cargo audit --deny warnings
+
+  dependabot-alert-policy:
+    name: Open Dependabot alert policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Enforce zero open high or critical Dependabot alerts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          alerts="$(gh api "/repos/${GITHUB_REPOSITORY}/dependabot/alerts?state=open&per_page=100")"
+          count="$(printf '%s' "$alerts" | jq '[.[] | select(.security_advisory.severity == "high" or .security_advisory.severity == "critical")] | length')"
+          printf 'Open high/critical Dependabot alerts: %s\n' "$count"
+          if [ "$count" -ne 0 ]; then
+            echo "High or critical dependency alerts require a tracked remediation or approved, time-bounded exception."
+            exit 1
+          fi
+
+  flutter-dependency-resolution:
+    name: Flutter dependency resolution state
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout locked dependency manifest
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Resolve packages without changing the lock file
+        run: |
+          set -euo pipefail
+          flutter pub get
+          git diff --exit-code -- pubspec.lock
+
+      - name: Record available Dart and Flutter dependency updates
+        run: flutter pub outdated --no-dev-dependencies
+
+  scheduled-security-gate:
+    name: Required scheduled dependency security gate
+    runs-on: ubuntu-latest
+    needs:
+      - rustsec-advisory-audit
+      - dependabot-alert-policy
+      - flutter-dependency-resolution
+    if: ${{ always() }}
+
+    steps:
+      - name: Fail unless every scheduled security check passed
+        env:
+          RUSTSEC_RESULT: ${{ needs.rustsec-advisory-audit.result }}
+          DEPENDABOT_RESULT: ${{ needs.dependabot-alert-policy.result }}
+          FLUTTER_RESULT: ${{ needs.flutter-dependency-resolution.result }}
+        run: |
+          set -euo pipefail
+          printf '%s\n' \
+            "rustsec-advisory-audit=${RUSTSEC_RESULT}" \
+            "dependabot-alert-policy=${DEPENDABOT_RESULT}" \
+            "flutter-dependency-resolution=${FLUTTER_RESULT}"
+          for result in "$RUSTSEC_RESULT" "$DEPENDABOT_RESULT" "$FLUTTER_RESULT"; do
+            if [ "$result" != "success" ]; then
+              echo "A scheduled dependency-security check did not pass."
+              exit 1
+            fi
+          done
+
+# Repository administrators must enable Dependency graph, Dependabot alerts and
+# Dependabot security updates. This scheduled workflow is an incident signal; it
+# must not be configured as a required pull-request status check.
+# Pin third-party actions to immutable commit SHAs before the production rollout.

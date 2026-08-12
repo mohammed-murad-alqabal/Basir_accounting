@@ -1,0 +1,50 @@
+# مراقبة أمن اعتماديات Basir Accounting
+
+> **مالك الوثيقة:** فريق تطوير مشروع نظام بصير المحاسبي الذكي  
+> **النطاق:** حزم Flutter/Dart (`pub`)، مساحة عمل Rust (`Cargo`)، وإجراءات GitHub Actions.  
+> **المبدأ:** لا يُدمج تحديث أمني آلي ولا يُتجاهل تنبيه أمني من دون دليل اختبار وقرار موثق.
+
+## البنية المعتمدة
+
+تعتمد المراقبة على طبقات متكاملة. يفتح **Dependabot** طلبات تحديث أسبوعية لحزم `pub` و`cargo` وGitHub Actions، وتلتقط **Dependabot alerts** الثغرات المعروفة في الرسم البياني للاعتماديات. أما Workflow المجدول فيعيد فحص ملف `Cargo.lock` عبر `cargo audit`، ويسجل التنبيهات المفتوحة، ويتحقق من أن Flutter يعيد بناء نفس شجرة الاعتماديات المقفلة. تدعم GitHub منظومتي `cargo` و`pub` في Dependabot، كما تدعم Dart/Flutter في قاعدة التنبيهات والرسم البياني للاعتماديات.[1] [2]
+
+| الطبقة | التردد | المخرج | قرار النجاح |
+|---|---:|---|---|
+| بوابة Pull Request | كل تغيير | نتائج الاختبارات، `cargo audit`، ومراجعة الاعتماديات | أي فشل يمنع الدمج |
+| Dependabot | كل اثنين، 09:00/09:15 بتوقيت الرياض | Pull Request لتحديثات Cargo وpub وActions | لا دمج آلي؛ يلزم اجتياز بوابة الجودة والمراجعة البشرية |
+| Workflow مجدول | كل اثنين، 08:17 بتوقيت الرياض | سجلات RustSec والتنبيهات و`pub outdated` | تنبيه فوري إذا فشل الفحص أو وُجدت ثغرة عالية/حرجة مفتوحة |
+| مراجعة شهرية | أول يوم عمل | قائمة الاستثناءات والديون الأمنية | إغلاق الاستثناء أو تجديده مع تاريخ انتهاء ومالك |
+
+## خطوات التفعيل في GitHub
+
+يجب حفظ `dependabot.yml` داخل `.github/` وحفظ Workflow المجدول داخل `.github/workflows/`. بعد دمجهما، يفعّل مسؤول المستودع من **Settings → Security → Advanced Security** الخيارات التالية وفق مستوى الاشتراك المتاح: Dependency graph، Dependabot alerts، وDependabot security updates. يجب كذلك تفعيل GitHub Actions notifications لأعضاء فريق الأمن أو ربط إخفاق الـWorkflow بقناة حوادث محمية. تعتمد الإشعارات على القناة التنظيمية ولا ينبغي أن تُرسل أسرارًا أو مخرجات بناء حساسة.
+
+ينبغي حماية `main` و`develop` بحيث يطلبان مراجعة بشرية واحدة على الأقل، ويمنعان force push، ويُلزمان باجتياز **Required production quality gate** قبل الدمج. لا يُنصح بوضع **Required scheduled dependency security gate** كفحص دمج؛ فهو فحص زمني مستقل، بل يستخدم كإشارة استجابة أمنية وإخطار للحوادث.
+
+## سياسة الاستجابة للثغرات
+
+| الشدة | حد الاستجابة | الإجراء الأدنى | شرط الإغلاق |
+|---|---:|---|---|
+| حرجة | خلال 24 ساعة | إيقاف الإصدار، تحديد التعرّض، تحديث أو تخفيف الضابط | اختبار ناجح، مراجعة أمنية، وتوثيق الأثر |
+| عالية | خلال 72 ساعة | إنشاء PR إصلاح مخصص، تقييم الاستغلال، وإدراجه في أقرب إصدار آمن | اجتياز اختبارات Flutter وRust وبوابة الجودة |
+| متوسطة | خلال 14 يومًا | جدولة التحديث أو توثيق تخفيف مؤقت | PR مدموج أو استثناء مؤرخ وموافق عليه |
+| منخفضة | ضمن دورة الصيانة الشهرية | متابعة Dependabot وتقييم التوافق | تحديث أو قرار موثق |
+
+إذا لم تتوفر نسخة آمنة، يوثّق الفريق **استثناءً مؤقتًا** يحتوي على معرف التنبيه، سبب التعذر، تقييم التعرض، ضابط التخفيف، المالك، وتاريخ انتهاء لا يتجاوز 30 يومًا. لا يُقبل استثناء دائم دون مراجعة معمارية وأمنية.
+
+## قواعد مهمة
+
+لا يعني `flutter pub outdated` وجود ثغرة؛ إنه يسجل فقط المرشحين للتحديث. التقييم الأمني المعتمد لحزم Flutter/Dart يأتي من Dependabot alerts، بينما يقوم `cargo audit` بمقارنة شجرة Cargo المقفلة مع RustSec. يحافظ `flutter pub get` مع فحص `pubspec.lock` على قابلية إعادة الإنتاج ويمنع تغير الشجرة أثناء الفحص.
+
+> **تنبيه تشغيلي:** قد تتأخر مهام GitHub Actions المجدولة تحت ضغط الخدمة. لذلك تعتمد السياسة على الفحص المجدول **وعلى** بوابة Pull Request وDependabot alerts؛ لا تعتمد على وقت cron باعتباره ضمانًا لحظيًا.
+
+## التحقق من التفعيل
+
+بعد الدمج، شغّل Workflow يدويًا من تبويب **Actions** مرة واحدة. يجب أن تظهر الوظائف: `RustSec advisory audit` و`Open Dependabot alert policy` و`Flutter dependency resolution state` و`Required scheduled dependency security gate`. ثم أنشئ Pull Request اختبار بسيط يؤكد أن بوابة الجودة القائمة تعمل وأن إعداد Dependabot يتعرف على مساري `/` و`/rust`.
+
+## المراجع
+
+[1]: https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference "GitHub Docs — Dependabot options reference"
+[2]: https://docs.github.com/en/code-security/reference/supply-chain-security/supported-ecosystems-and-repositories "GitHub Docs — Dependabot supported ecosystems and repositories"
+[3]: https://rustsec.org/ "RustSec Advisory Database"
+[4]: https://dart.dev/blog/partnering-with-github-on-supply-chain-security-for-dart-packages "Dart — GitHub supply-chain security support for Dart packages"
