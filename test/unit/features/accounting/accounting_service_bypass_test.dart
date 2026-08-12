@@ -65,7 +65,7 @@ void main() {
 }
 
 JournalEntry _entry({required JournalEntryStatus status}) {
-  final now = DateTime.utc(2026, 1, 1);
+  final now = DateTime.utc(2026, 1);
   return JournalEntry(
     id: 'test-entry-${status.name}',
     referenceNumber: 'JE-${status.name}',

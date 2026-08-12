@@ -341,7 +341,7 @@ abstract class AppLocalizations {
   /// No description provided for @errPasswordShort.
   ///
   /// In en, this message translates to:
-  /// **'Password must be at least 6 characters'**
+  /// **'Password must be at least 12 characters and include uppercase, lowercase, a number, and a special character'**
   String get errPasswordShort;
 
   /// No description provided for @errPasswordsDoNotMatch.
@@ -827,7 +827,7 @@ abstract class AppLocalizations {
   /// No description provided for @zatcaComplianceText.
   ///
   /// In en, this message translates to:
-  /// **'This invoice is compliant with ZATCA electronic invoicing requirements.'**
+  /// **'ZATCA status is not confirmed until the invoice completes the configured authority integration and validation flow.'**
   String get zatcaComplianceText;
 
   /// No description provided for @actionCreateFirstInvoice.

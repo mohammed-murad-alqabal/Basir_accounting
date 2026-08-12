@@ -107,8 +107,7 @@ class IsarAccountingRepository implements AccountingRepository {
         .userIdEqualTo(userId)
         .findFirst();
     if (existing != null) {
-      final isDraftTransition =
-          existing.status == JournalEntryStatus.draft &&
+      final isDraftTransition = existing.status == JournalEntryStatus.draft &&
           (entry.status == JournalEntryStatus.draft ||
               entry.status == JournalEntryStatus.posted);
       if (!isDraftTransition) {
@@ -135,8 +134,7 @@ class IsarAccountingRepository implements AccountingRepository {
       throw Exception('Cannot post to a closed financial year: ${fy.name}');
     }
 
-    final periodId =
-        '${entry.date.year}-'
+    final periodId = '${entry.date.year}-'
         '${entry.date.month.toString().padLeft(2, '0')}';
     if (fy.lockedPeriodIds.contains(periodId)) {
       throw Exception('Financial period $periodId is locked');

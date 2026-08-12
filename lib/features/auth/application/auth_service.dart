@@ -220,8 +220,7 @@ class AuthService {
         orElse: () => UserRole.viewer,
       );
 
-      final permissions =
-          int.tryParse(permissionsStr ?? '') ??
+      final permissions = int.tryParse(permissionsStr ?? '') ??
           BasirUser.getDefaultPermissions(role);
 
       return BasirUser(
