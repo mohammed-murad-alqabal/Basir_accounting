@@ -2,6 +2,8 @@
 # تكوين Dependabot لتحديثات الأمان والإصدارات التلقائية
 
 
+
+
 version: 2
 updates:
   # Flutter/Dart dependencies
@@ -41,6 +43,7 @@ updates:
           - "patch"
     # لا توجد قواعد تجاهل محددة حالياً؛ لذلك لا ندرج مفتاح ignore.
 
+
 # Rust/Cargo workspace dependencies
   - package-ecosystem: "cargo"
     directory: "/rust"
@@ -65,3 +68,5 @@ updates:
     groups:
       rust-patch-and-minor:
         patterns:
+          - "*"
+
