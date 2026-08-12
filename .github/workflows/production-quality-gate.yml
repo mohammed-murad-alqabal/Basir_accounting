@@ -28,8 +28,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  FLUTTER_VERSION: "3.24.0"
-  FLUTTER_GIT_SHA: "80c2e84975bbd28ecf5f8d4bd4ca5a2490bfc819" # Flutter 3.24.0
+  FLUTTER_VERSION: "3.44.9"
+  FLUTTER_GIT_SHA: "6b182d2c7585eba26d4edce0f97630effd256c33" # Flutter 3.44.9
   JAVA_VERSION: "17"
   MIN_COVERAGE: "70"
   RUST_BACKTRACE: "1"
