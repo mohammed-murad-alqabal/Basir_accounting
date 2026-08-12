@@ -115,7 +115,7 @@ jq --version
 
 ```bash
 # GitHub Personal Access Token
-export GITHUB_TOKEN="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+export GITHUB_TOKEN="<YOUR_GITHUB_PERSONAL_ACCESS_TOKEN>"
 
 # التحقق من وجوده
 echo "Token length: ${#GITHUB_TOKEN}"

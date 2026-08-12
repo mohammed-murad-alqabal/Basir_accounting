@@ -15,11 +15,11 @@ import 'package:uuid/uuid.dart';
 /// The central orchestration layer for localized institutional security.
 /// This service manages the entire lifecycle of operator identities, including:
 /// - Secure persistence of credentials via hardware-backed encryption.
-/// - Cryptographic stretching (SHA-256) and salt-based salting.
+/// - PBKDF2-HMAC-SHA-256 password derivation with a unique salt per account.
 /// - Transient operator (Guest) lifecycle and permanent upgrades.
 /// - Real-time state broadcasting for reactive UI updates.
 ///
-/// Security Standard: AES-256 (via SecureStorage) + SHA-256 Stretching.
+/// Security Standard: secure platform storage + PBKDF2-HMAC-SHA-256.
 /// ***
 class AuthService {
   /// Initializes the localized authentication engine.
@@ -36,49 +36,15 @@ class AuthService {
   /// دفق التغييرات في حالة المصادقة (يرجع اسم المستخدم أو null)
   Stream<String?> get onAuthStateChange => _authStateController.stream;
 
-  /// Changes password without requiring old password verification
-  ///
-  /// Used for password reset operations where the user has been
-  /// authenticated through a secure token. Updates the stored
-  /// password hash and maintains user session.
-  ///
-  /// Parameters:
-  /// - [username]: Username for password change
-  /// - [newPassword]: New password to set
-  ///
-  /// Throws: [Exception] if user not found or password invalid
+  /// Deliberately disabled until a server-verified, single-use recovery-token
+  /// flow is introduced. A client-side username is not proof of authority.
   Future<void> changePasswordWithoutOldPassword(
     String username,
     String newPassword,
-  ) async {
-    // Validate new password
-    if (newPassword.length < 6) {
-      throw Exception('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
-    }
-
-    try {
-      // Check if user exists
-      final storedUsername = await secureStorage.read(key: 'username');
-      if (storedUsername != username) {
-        throw Exception('المستخدم غير موجود');
-      }
-
-      // Generate new salt and hash
-      final userSalt = _generateUserSalt();
-      final hashedPassword = _hashPassword(newPassword, userSalt);
-
-      // Update stored password and salt
-      await secureStorage.write(
-        key: StorageKeys.passwordHash,
-        value: hashedPassword,
-      );
-      await secureStorage.write(key: '${username}_salt', value: userSalt);
-
-      debugPrint('🔐 [AUTH] Password changed successfully for $username');
-    } catch (e) {
-      debugPrint('⚠️ [AUTH] Password change failed: $e');
-      rethrow;
-    }
+  ) {
+    throw UnsupportedError(
+      'Password resets require a verified server-side recovery flow.',
+    );
   }
 
   /// تنظيف البيانات التالفة أو القديمة (Industrial-Grade Robustness)
@@ -115,34 +81,89 @@ class AuthService {
     }
   }
 
-  /// Salt ثابت للتطبيق (في بيئة إنتاج حقيقية، يجب أن يكون فريد لكل مستخدم)
-  static const String _appSalt = 'basir_mvp_2025_secure_salt';
+  static const _passwordHashScheme = 'pbkdf2-sha256';
+  static const _pbkdf2Iterations = 310000;
+  static const _derivedKeyLength = 32;
 
-  /// تشفير كلمة المرور باستخدام SHA-256 مع Salt
-  ///
-  /// يطبق تشفير متعدد المراحل لتحسين الأمان:
-  /// 1. إضافة salt للكلمة المرور
-  /// 2. تطبيق SHA-256 عدة مرات (key stretching)
-  /// 3. إضافة salt إضافي
-  ///
-  /// Parameters:
-  /// - [password]: كلمة المرور المراد تشفيرها
-  /// - [userSalt]: salt خاص بالمستخدم (اختياري)
-  ///
-  /// Returns: كلمة المرور المشفرة كـ hex string
-  String _hashPassword(String password, [String? userSalt]) {
-    // إنشاء salt مركب
-    final combinedSalt = _appSalt + (userSalt ?? '');
+  /// اشتقاق كلمة المرور عبر PBKDF2-HMAC-SHA-256 مع salt فريد لكل حساب.
+  /// يحتفظ تنسيق القيمة بالمعاملات لتسهيل تدويرها لاحقًا دون التباس.
+  String _hashPassword(String password, String userSalt) {
+    final derived = _pbkdf2HmacSha256(
+      password: password,
+      salt: base64Decode(userSalt),
+      iterations: _pbkdf2Iterations,
+      length: _derivedKeyLength,
+    );
+    return '$_passwordHashScheme\$$_pbkdf2Iterations\$${base64Encode(derived)}';
+  }
 
-    // المرحلة الأولى: إضافة salt وتشفير
+  bool _isCurrentPasswordHash(String hash) =>
+      hash.startsWith('$_passwordHashScheme\$');
+
+  bool _verifyPassword(
+    String password,
+    String userSalt,
+    String storedPasswordHash,
+  ) {
+    final candidate = _isCurrentPasswordHash(storedPasswordHash)
+        ? _hashPassword(password, userSalt)
+        : _legacyHashPassword(password, userSalt);
+    return _constantTimeEquals(candidate, storedPasswordHash);
+  }
+
+  bool _constantTimeEquals(String left, String right) {
+    final leftBytes = utf8.encode(left);
+    final rightBytes = utf8.encode(right);
+    if (leftBytes.length != rightBytes.length) return false;
+
+    var mismatch = 0;
+    for (var index = 0; index < leftBytes.length; index++) {
+      mismatch |= leftBytes[index] ^ rightBytes[index];
+    }
+    return mismatch == 0;
+  }
+
+  /// يتحقق من القيم القديمة لمرة واحدة فقط، ثم تُرقّى بعد تسجيل الدخول الناجح.
+  String _legacyHashPassword(String password, String? userSalt) {
+    const legacyAppSalt = 'basir_mvp_2025_secure_salt';
+    final combinedSalt = legacyAppSalt + (userSalt ?? '');
     var hash = sha256.convert(utf8.encode(password + combinedSalt)).toString();
-
-    // Key stretching: تطبيق التشفير 1000 مرة لزيادة الأمان
     for (var i = 0; i < 1000; i++) {
       hash = sha256.convert(utf8.encode(hash + combinedSalt)).toString();
     }
-
     return hash;
+  }
+
+  List<int> _pbkdf2HmacSha256({
+    required String password,
+    required List<int> salt,
+    required int iterations,
+    required int length,
+  }) {
+    final mac = Hmac(sha256, utf8.encode(password));
+    final output = <int>[];
+    for (var blockIndex = 1; output.length < length; blockIndex++) {
+      final block = <int>[...salt, 0, 0, 0, blockIndex];
+      var u = mac.convert(block).bytes;
+      final accumulated = List<int>.from(u);
+      for (var round = 1; round < iterations; round++) {
+        u = mac.convert(u).bytes;
+        for (var index = 0; index < accumulated.length; index++) {
+          accumulated[index] ^= u[index];
+        }
+      }
+      output.addAll(accumulated);
+    }
+    return output.take(length).toList(growable: false);
+  }
+
+  void _validatePasswordPolicy(String password) {
+    final strength = checkPasswordStrength(password);
+    if (password.length < 12 || !strength.isStrong) {
+      throw Exception(
+        'كلمة المرور يجب أن تتكون من 12 حرفًا على الأقل وتحتوي على أحرف كبيرة وصغيرة وأرقام ورمز خاص.',
+      );
+    }
   }
 
   /// إنشاء salt عشوائي للمستخدم
@@ -235,9 +256,7 @@ class AuthService {
       final storedPasswordHash = await secureStorage.read(
         key: StorageKeys.passwordHash,
       );
-      final userSalt = await secureStorage.read(
-        key: '${username}_salt',
-      );
+      final userSalt = await secureStorage.read(key: '${username}_salt');
 
       if (storedUsername == null || storedPasswordHash == null) {
         throw Exception('لا يوجد حساب مسجل');
@@ -247,10 +266,17 @@ class AuthService {
         throw Exception('اسم المستخدم غير صحيح');
       }
 
-      // التحقق من كلمة المرور باستخدام التشفير المحسن
-      final passwordHash = _hashPassword(password, userSalt);
-      if (storedPasswordHash != passwordHash) {
+      if (userSalt == null ||
+          !_verifyPassword(password, userSalt, storedPasswordHash)) {
         throw Exception('كلمة المرور غير صحيحة');
+      }
+
+      // تُرقّى التجزئات القديمة فقط بعد نجاح التحقق، مع الاحتفاظ بالـ salt.
+      if (!_isCurrentPasswordHash(storedPasswordHash)) {
+        await secureStorage.write(
+          key: StorageKeys.passwordHash,
+          value: _hashPassword(password, userSalt),
+        );
       }
 
       // تحديث حالة تسجيل الدخول
@@ -340,7 +366,7 @@ class AuthService {
     }
   }
 
-  /// إنشاء حساب جديد مع الصلاحيات (للمدير فقط أو عند التثبيت)
+  /// إنشاء حساب محلي محدود الصلاحية أثناء الإعداد أو ترقية الضيف.
   Future<void> createAccount(
     String username,
     String password, {
@@ -348,13 +374,23 @@ class AuthService {
     String? warehouseId,
   }) async {
     try {
-      // التحقق من صحة المدخلات
+      // التحقق من صحة المدخلات. لا يسمح هذا المسار المحلي بإنشاء
+      // حساب ذي امتيازات؛ يجب أن تأتي الأدوار المرتفعة من تدفق إداري
+      // موثق على الخادم.
       if (username.isEmpty || username.length < 3) {
         throw Exception('اسم المستخدم يجب أن يكون 3 أحرف على الأقل');
       }
-      if (password.isEmpty || password.length < 6) {
-        throw Exception('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+      if (role != UserRole.viewer) {
+        throw UnsupportedError(
+          'Privileged accounts require an authorised server-side administration flow.',
+        );
       }
+      if (await hasAccount()) {
+        throw StateError(
+          'A local account already exists; account replacement is not permitted.',
+        );
+      }
+      _validatePasswordPolicy(password);
 
       // إنشاء salt فريد للمستخدم
       final userSalt = _generateUserSalt();
@@ -368,10 +404,7 @@ class AuthService {
         key: StorageKeys.passwordHash,
         value: passwordHash,
       );
-      await secureStorage.write(
-        key: '${username}_salt',
-        value: userSalt,
-      );
+      await secureStorage.write(key: '${username}_salt', value: userSalt);
 
       // Save RBAC info
       await secureStorage.write(key: 'user_role', value: role.name);
@@ -397,7 +430,9 @@ class AuthService {
       await secureStorage.write(key: 'user_display_name', value: displayName);
     }
     if (role != null) {
-      await secureStorage.write(key: 'user_role', value: role.name);
+      throw UnsupportedError(
+        'Role changes require an authorised server-side administration flow.',
+      );
     }
     if (warehouseId != null) {
       await secureStorage.write(key: 'user_warehouse_id', value: warehouseId);
@@ -426,6 +461,7 @@ class AuthService {
       final salt = await secureStorage.read(key: '${currentUser.email}_salt');
       if (salt != null) {
         await secureStorage.write(key: '${newUsername}_salt', value: salt);
+        await secureStorage.delete(key: '${currentUser.email}_salt');
       }
 
       // بث حدث التحديث
@@ -442,24 +478,19 @@ class AuthService {
         key: StorageKeys.passwordHash,
       );
       final username = await secureStorage.read(key: StorageKeys.username);
-      final userSalt = await secureStorage.read(
-        key: '${username}_salt',
-      );
+      final userSalt = await secureStorage.read(key: '${username}_salt');
 
       if (storedPasswordHash == null) {
         throw Exception('لا يوجد حساب مسجل');
       }
 
-      // التحقق من كلمة المرور القديمة باستخدام التشفير المحسن
-      final oldPasswordHash = _hashPassword(oldPassword, userSalt);
-      if (storedPasswordHash != oldPasswordHash) {
+      if (username == null ||
+          userSalt == null ||
+          !_verifyPassword(oldPassword, userSalt, storedPasswordHash)) {
         throw Exception('كلمة المرور القديمة غير صحيحة');
       }
 
-      // التحقق من صحة كلمة المرور الجديدة
-      if (newPassword.isEmpty || newPassword.length < 6) {
-        throw Exception('كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل');
-      }
+      _validatePasswordPolicy(newPassword);
 
       // إنشاء salt جديد لكلمة المرور الجديدة (أمان إضافي)
       final newUserSalt = _generateUserSalt();
@@ -470,10 +501,7 @@ class AuthService {
         key: StorageKeys.passwordHash,
         value: newPasswordHash,
       );
-      await secureStorage.write(
-        key: '${username}_salt',
-        value: newUserSalt,
-      );
+      await secureStorage.write(key: '${username}_salt', value: newUserSalt);
     } on Exception catch (e) {
       throw Exception('خطأ في تغيير كلمة المرور: $e');
     }
@@ -485,8 +513,8 @@ class AuthService {
     var score = 0;
 
     // فحص الطول
-    if (password.length < 8) {
-      issues.add('كلمة المرور يجب أن تكون 8 أحرف على الأقل');
+    if (password.length < 12) {
+      issues.add('كلمة المرور يجب أن تكون 12 حرفًا على الأقل');
     } else {
       score += 25;
     }
@@ -537,9 +565,7 @@ class AuthService {
       final passwordHash = await secureStorage.read(
         key: StorageKeys.passwordHash,
       );
-      final userSalt = await secureStorage.read(
-        key: '${username}_salt',
-      );
+      final userSalt = await secureStorage.read(key: '${username}_salt');
 
       if (username != null && passwordHash == null) {
         issues.add('اسم المستخدم موجود لكن كلمة المرور مفقودة');
@@ -551,10 +577,10 @@ class AuthService {
         securityScore -= 30;
       }
 
-      // فحص قوة التشفير
-      if (passwordHash != null && passwordHash.length != 64) {
-        issues.add('تنسيق تشفير كلمة المرور غير صحيح');
-        securityScore -= 40;
+      // فحص تنسيق الاشتقاق المعياري الحالي.
+      if (passwordHash != null && !_isCurrentPasswordHash(passwordHash)) {
+        issues.add('يلزم ترقية تجزئة كلمة المرور عند تسجيل الدخول التالي');
+        securityScore -= 30;
       }
 
       return SecurityAuditResult(

@@ -3,12 +3,9 @@ import 'package:basir_accounting_system/core/extensions/context_extensions.dart'
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
-import 'package:basir_accounting_system/features/accounting/application/orchestrator_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
-import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
-import 'package:basir_accounting_system/features/accounting/presentation/widgets/consensus_report_overlay.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
@@ -517,42 +514,18 @@ class _JournalEntryFormScreenState
       );
 
       if (status == JournalEntryStatus.posted) {
-        // Pre-orchestrate for Consensus Report
-        final orchestrator = ref.read(orchestratorServiceProvider.notifier);
-        final currentLocale = Localizations.localeOf(context).languageCode;
-        final contextObj = AccountingContext(
-          proposedJournalEntry: entry,
-          transactionType: 'manual',
-          locale: currentLocale,
-        );
-
-        final consensus = await orchestrator.orchestrate(contextObj);
-
-        if (!mounted) return;
-
-        final confirmed = await showGeneralDialog<bool>(
-          context: context,
-          transitionDuration: const Duration(milliseconds: 400),
-          pageBuilder: (ctx, anim1, anim2) => ConsensusReportOverlay(
-            consensus: consensus,
-            onConfirm: () => Navigator.pop(ctx, true),
-            onCancel: () => Navigator.pop(ctx, false),
-          ),
-        );
-
-        if (confirmed != true) {
-          setState(() => _isLoading = false);
-          return;
-        }
-
-        // Proceed with bypass as we already reached consensus/override
-        await ref
-            .read(accountingServiceProvider.notifier)
-            .postJournalEntry(entry, bypassCognitive: true);
-      } else {
+        // The application service is the only posting gateway. It performs
+        // mandatory consensus and rejects a non-approved entry; the UI has no
+        // authority to override that decision.
         await ref
             .read(accountingServiceProvider.notifier)
             .postJournalEntry(entry);
+      } else {
+        // Drafts are deliberately stored through a separate path so they do
+        // not enter the posted-ledger workflow or affect account balances.
+        await ref
+            .read(accountingServiceProvider.notifier)
+            .saveJournalEntryDraft(entry);
       }
 
       if (!mounted) return;

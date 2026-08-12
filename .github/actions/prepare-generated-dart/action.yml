@@ -1,0 +1,29 @@
+name: Prepare generated Dart sources
+description: Generate localization and Dart build outputs, then require tracked outputs to be current.
+
+runs:
+  using: composite
+  steps:
+    - name: Provide a non-sensitive CI environment file
+      shell: bash
+      run: |
+        if [ ! -f .env ]; then
+          printf '%s\n' '# CI placeholder. Runtime secrets are supplied outside source control.' > .env
+        fi
+
+    - name: Generate localization sources
+      shell: bash
+      run: flutter gen-l10n
+
+    - name: Generate Dart sources
+      shell: bash
+      run: dart run build_runner build --delete-conflicting-outputs
+
+    - name: Verify tracked generated sources are current
+      shell: bash
+      run: |
+        set -euo pipefail
+        git diff --exit-code -- . \
+          ':!coverage/**' \
+          ':!build/**' \
+          ':!.dart_tool/**'

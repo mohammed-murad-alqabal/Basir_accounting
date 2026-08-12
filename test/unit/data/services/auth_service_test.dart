@@ -4,6 +4,7 @@
 library;
 
 import 'package:basir_accounting_system/features/auth/application/auth_service.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../mocks/mock_secure_storage.dart';
@@ -24,7 +25,7 @@ void main() {
     test('should create account successfully with valid credentials', () async {
       // Arrange
       const username = 'testuser';
-      const password = 'password123';
+      const password = 'Password123!';
 
       // Act
       await authService.createAccount(username, password);
@@ -45,27 +46,27 @@ void main() {
       () async {
         // Arrange
         const username = 'ab'; // أقل من 3 أحرف
-        const password = 'password123';
+        const password = 'Password123!';
 
         // Act & Assert
-        expect(
-          () => authService.createAccount(username, password),
+        await expectLater(
+          authService.createAccount(username, password),
           throwsException,
         );
       },
     );
 
     test(
-      'should throw exception for password less than 6 characters',
+      'should throw exception for passwords that do not meet the 12-character policy',
       () async {
         // Arrange
         const username = 'testuser';
         const password = '12345'; // أقل من 6 أحرف
 
         // Act & Assert
-        expect(
-          () => authService.createAccount(username, password),
-          throwsException,
+        await expectLater(
+          authService.createAccount(username, password),
+          throwsA(isA<ArgumentError>()),
         );
       },
     );
@@ -73,39 +74,71 @@ void main() {
     test('should throw exception for empty username', () async {
       // Arrange
       const username = '';
-      const password = 'password123';
+      const password = 'Password123!';
 
       // Act & Assert
-      expect(
-        () => authService.createAccount(username, password),
+      await expectLater(
+        authService.createAccount(username, password),
         throwsException,
       );
     });
 
-    test('should throw exception for empty password', () async {
+    test(
+      'should reject an empty password through the password policy',
+      () async {
+        // Arrange
+        const username = 'testuser';
+        const password = '';
+
+        // Act & Assert
+        await expectLater(
+          authService.createAccount(username, password),
+          throwsA(isA<ArgumentError>()),
+        );
+      },
+    );
+
+    test('should store a versioned PBKDF2 password hash', () async {
       // Arrange
       const username = 'testuser';
-      const password = '';
-
-      // Act & Assert
-      expect(
-        () => authService.createAccount(username, password),
-        throwsException,
-      );
-    });
-
-    test('should hash password using SHA-256', () async {
-      // Arrange
-      const username = 'testuser';
-      const password = 'password123';
+      const password = 'Password123!';
 
       // Act
       await authService.createAccount(username, password);
 
       // Assert
       final storedPasswordHash = await mockStorage.read(key: 'password_hash');
-      // SHA-256 hash يجب أن يكون 64 حرف (hex)
-      expect(storedPasswordHash?.length, 64);
+      expect(storedPasswordHash, startsWith(r'pbkdf2-sha256$310000$'));
+    });
+
+    test('rejects privileged local account creation', () async {
+      await expectLater(
+        authService.createAccount(
+          'testuser',
+          'Password123!',
+          role: UserRole.admin,
+        ),
+        throwsA(isA<UnsupportedError>()),
+      );
+    });
+
+    test('does not replace an existing local account', () async {
+      await mockStorage.write(key: 'username', value: 'existing-user');
+
+      await expectLater(
+        authService.createAccount('testuser', 'Password123!'),
+        throwsA(isA<StateError>()),
+      );
+    });
+
+    test('rejects password reset without a verified recovery flow', () {
+      expect(
+        () => authService.changePasswordWithoutOldPassword(
+          'testuser',
+          'NewPassword456!',
+        ),
+        throwsA(isA<UnsupportedError>()),
+      );
     });
   });
 
@@ -134,7 +167,7 @@ void main() {
     test('should login successfully with correct credentials', () async {
       // Arrange
       const username = 'testuser';
-      const password = 'password123';
+      const password = 'Password123!';
       await authService.createAccount(username, password);
 
       // Act
@@ -149,7 +182,7 @@ void main() {
     test('should throw exception when no account exists', () async {
       // Arrange
       const username = 'testuser';
-      const password = 'password123';
+      const password = 'Password123!';
 
       // Act & Assert
       expect(() => authService.login(username, password), throwsException);
@@ -158,7 +191,7 @@ void main() {
     test('should throw exception for incorrect username', () async {
       // Arrange
       const username = 'testuser';
-      const password = 'password123';
+      const password = 'Password123!';
       await authService.createAccount(username, password);
 
       // Act & Assert
@@ -168,7 +201,7 @@ void main() {
     test('should throw exception for incorrect password', () async {
       // Arrange
       const username = 'testuser';
-      const password = 'password123';
+      const password = 'Password123!';
       await authService.createAccount(username, password);
 
       // Act & Assert
@@ -181,7 +214,7 @@ void main() {
     test('should logout successfully', () async {
       // Arrange
       const username = 'testuser';
-      const password = 'password123';
+      const password = 'Password123!';
       await authService.createAccount(username, password);
       await authService.login(username, password);
 
@@ -204,7 +237,7 @@ void main() {
     test('isLoggedIn should return true when logged in', () async {
       // Arrange
       const username = 'testuser';
-      const password = 'password123';
+      const password = 'Password123!';
       await authService.createAccount(username, password);
 
       // Act
@@ -217,7 +250,7 @@ void main() {
     test('isLoggedIn should return false when logged out', () async {
       // Arrange
       const username = 'testuser';
-      const password = 'password123';
+      const password = 'Password123!';
       await authService.createAccount(username, password);
       await authService.logout();
 
@@ -241,7 +274,7 @@ void main() {
     test('getCurrentUsername should return username when logged in', () async {
       // Arrange
       const username = 'testuser';
-      const password = 'password123';
+      const password = 'Password123!';
       await authService.createAccount(username, password);
 
       // Act
@@ -265,8 +298,8 @@ void main() {
     test('changePassword should update password successfully', () async {
       // Arrange
       const username = 'testuser';
-      const oldPassword = 'password123';
-      const newPassword = 'newpassword456';
+      const oldPassword = 'Password123!';
+      const newPassword = 'NewPassword456!';
       await authService.createAccount(username, oldPassword);
 
       // Act
@@ -283,8 +316,8 @@ void main() {
       () async {
         // Arrange
         const username = 'testuser';
-        const password = 'password123';
-        const newPassword = 'newpassword456';
+        const password = 'Password123!';
+        const newPassword = 'NewPassword456!';
         await authService.createAccount(username, password);
 
         // Act & Assert
@@ -300,8 +333,8 @@ void main() {
       () async {
         // Arrange
         const username = 'testuser';
-        const password = 'password123';
-        const newPassword = '12345'; // أقل من 6 أحرف
+        const password = 'Password123!';
+        const newPassword = '12345'; // أقل من سياسة كلمة المرور الجديدة
         await authService.createAccount(username, password);
 
         // Act & Assert
@@ -393,7 +426,7 @@ void main() {
       // Arrange
       await authService.loginAsGuest();
       const username = 'converteduser';
-      const password = 'password123';
+      const password = 'Password123!';
 
       // Act
       await authService.convertGuestToUser(username, password);
@@ -409,7 +442,7 @@ void main() {
       // Arrange
       await authService.loginAsGuest();
       const username = 'ab'; // أقل من 3 أحرف
-      const password = 'password123';
+      const password = 'Password123!';
 
       // Act & Assert
       expect(
@@ -443,11 +476,11 @@ void main() {
       // Arrange
       mockStorage.shouldThrowOnWrite = true;
       const username = 'testuser';
-      const password = 'password123';
+      const password = 'Password123!';
 
       // Act & Assert
-      expect(
-        () => authService.createAccount(username, password),
+      await expectLater(
+        authService.createAccount(username, password),
         throwsException,
       );
     });
@@ -456,7 +489,7 @@ void main() {
       // Arrange
       mockStorage.shouldThrowOnRead = true;
       const username = 'testuser';
-      const password = 'password123';
+      const password = 'Password123!';
 
       // Act & Assert
       expect(() => authService.login(username, password), throwsException);

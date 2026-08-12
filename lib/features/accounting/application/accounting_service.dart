@@ -206,21 +206,18 @@ class AccountingService extends _$AccountingService {
 
   /// Unified entry point for posting any invoice type to the ledger.
   /// Dispatches to specialized methods based on [InvoiceType].
-  Future<void> postInvoice(
-    domain_inv.Invoice invoice, {
-    bool bypassCognitive = false,
-  }) async {
+  Future<void> postInvoice(domain_inv.Invoice invoice) async {
     switch (invoice.type) {
       case InvoiceType.sales:
-        return postSalesInvoice(invoice, bypassCognitive: bypassCognitive);
+        return postSalesInvoice(invoice);
       case InvoiceType.purchase:
-        return _postPurchaseInvoice(invoice, bypassCognitive: bypassCognitive);
+        return _postPurchaseInvoice(invoice);
       case InvoiceType.salesReturn:
-        return _postSalesReturn(invoice, bypassCognitive: bypassCognitive);
+        return _postSalesReturn(invoice);
       case InvoiceType.purchaseReturn:
-        return _postPurchaseReturn(invoice, bypassCognitive: bypassCognitive);
+        return _postPurchaseReturn(invoice);
       case InvoiceType.damage:
-        return _postDamageInvoice(invoice, bypassCognitive: bypassCognitive);
+        return _postDamageInvoice(invoice);
     }
   }
 
@@ -237,12 +234,10 @@ class AccountingService extends _$AccountingService {
   /// - [invoice]: The [domain_inv.Invoice] entity to post.
   ///
   ///   invalid.
-  Future<void> postSalesInvoice(
-    domain_inv.Invoice invoice, {
-    bool bypassCognitive = false,
-  }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+  Future<void> postSalesInvoice(domain_inv.Invoice invoice) async {
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Cannot post to a closed or undefined financial period');
     }
@@ -258,8 +253,9 @@ class AccountingService extends _$AccountingService {
     // Debit: Accounts Receivable
     var receivableAccountId = 'acc-1201'; // Default AR
 
-    final customer =
-        await _customerRepository.getCustomerById(invoice.customerId);
+    final customer = await _customerRepository.getCustomerById(
+      invoice.customerId,
+    );
     if (customer != null && customer.receivableAccountId != null) {
       receivableAccountId = customer.receivableAccountId!;
     }
@@ -368,14 +364,15 @@ class AccountingService extends _$AccountingService {
     }
 
     // Use centralized posting mechanism with Hexagon activation
-    await postJournalEntry(entry, bypassCognitive: bypassCognitive);
+    await postJournalEntry(entry);
 
     // ZATCA Integration: Performs compliance steps via Rust bridge.
     try {
       final salesBridge = ref.read(salesBridgeServiceProvider);
 
-      final updatedInvoice =
-          await salesBridge.finalizeInvoiceWithZatca(invoice);
+      final updatedInvoice = await salesBridge.finalizeInvoiceWithZatca(
+        invoice,
+      );
 
       if (updatedInvoice.qrCode != null) {
         final invoiceRepo = ref.read(invoiceRepositoryProvider);
@@ -395,12 +392,10 @@ class AccountingService extends _$AccountingService {
   /// - **Debit**: Inventory or Expense (Subtotal Amount)
   /// - **Debit**: Input VAT (Tax Amount)
   /// - **Credit**: Accounts Payable (Total Invoice Amount)
-  Future<void> _postPurchaseInvoice(
-    domain_inv.Invoice invoice, {
-    bool bypassCognitive = false,
-  }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+  Future<void> _postPurchaseInvoice(domain_inv.Invoice invoice) async {
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -472,20 +467,13 @@ class AccountingService extends _$AccountingService {
       );
     }
 
-    await _finalizeAndPostInvoiceEntry(
-      invoice,
-      lines,
-      'purchase_invoice',
-      bypassCognitive,
-    );
+    await _finalizeAndPostInvoiceEntry(invoice, lines, 'purchase_invoice');
   }
 
-  Future<void> _postSalesReturn(
-    domain_inv.Invoice invoice, {
-    bool bypassCognitive = false,
-  }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+  Future<void> _postSalesReturn(domain_inv.Invoice invoice) async {
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -533,8 +521,9 @@ class AccountingService extends _$AccountingService {
     }
 
     var receivableAccountId = 'acc-1201';
-    final customer =
-        await _customerRepository.getCustomerById(invoice.customerId);
+    final customer = await _customerRepository.getCustomerById(
+      invoice.customerId,
+    );
     if (customer != null && customer.receivableAccountId != null) {
       receivableAccountId = customer.receivableAccountId!;
     }
@@ -552,20 +541,13 @@ class AccountingService extends _$AccountingService {
       ),
     );
 
-    await _finalizeAndPostInvoiceEntry(
-      invoice,
-      lines,
-      'sales_return',
-      bypassCognitive,
-    );
+    await _finalizeAndPostInvoiceEntry(invoice, lines, 'sales_return');
   }
 
-  Future<void> _postPurchaseReturn(
-    domain_inv.Invoice invoice, {
-    bool bypassCognitive = false,
-  }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+  Future<void> _postPurchaseReturn(domain_inv.Invoice invoice) async {
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -635,20 +617,13 @@ class AccountingService extends _$AccountingService {
       );
     }
 
-    await _finalizeAndPostInvoiceEntry(
-      invoice,
-      lines,
-      'purchase_return',
-      bypassCognitive,
-    );
+    await _finalizeAndPostInvoiceEntry(invoice, lines, 'purchase_return');
   }
 
-  Future<void> _postDamageInvoice(
-    domain_inv.Invoice invoice, {
-    bool bypassCognitive = false,
-  }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+  Future<void> _postDamageInvoice(domain_inv.Invoice invoice) async {
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -696,19 +671,13 @@ class AccountingService extends _$AccountingService {
       ),
     );
 
-    await _finalizeAndPostInvoiceEntry(
-      invoice,
-      lines,
-      'damage_invoice',
-      bypassCognitive,
-    );
+    await _finalizeAndPostInvoiceEntry(invoice, lines, 'damage_invoice');
   }
 
   Future<void> _finalizeAndPostInvoiceEntry(
     domain_inv.Invoice invoice,
     List<JournalEntryLine> lines,
     String sourceDocument,
-    bool bypassCognitive,
   ) async {
     final journalEntryId = 'je-inv-${invoice.id}';
     final now = DateTime.now();
@@ -752,7 +721,7 @@ class AccountingService extends _$AccountingService {
       );
     }
 
-    await postJournalEntry(entry, bypassCognitive: bypassCognitive);
+    await postJournalEntry(entry);
   }
 
   /// Calculates the hierarchical balance of an account, including all
@@ -800,18 +769,34 @@ class AccountingService extends _$AccountingService {
   Future<List<JournalEntry>> getJournalEntries() async =>
       _repository.getJournalEntries();
 
-  /// Posts a manual journal entry to the ledger.
-  ///
-  /// Performs balance verification and financial year validation.
-  /// If [bypassCognitive] is false (default), triggers the Cognitive Hexagon
-  /// consensus mechanism.
-  Future<void> postJournalEntry(
-    JournalEntry entry, {
-    bool bypassCognitive = false,
-  }) async {
-    if (!entry.isBalanced) {
-      throw Exception('Journal entry is unbalanced');
+  /// Saves an editable draft without treating it as a posted ledger event.
+  Future<void> saveJournalEntryDraft(JournalEntry entry) async {
+    if (entry.status != JournalEntryStatus.draft) {
+      throw ArgumentError.value(
+        entry.status,
+        'entry.status',
+        'Only draft entries can be saved through the draft path.',
+      );
     }
+    _validateEntryLines(entry);
+    await _repository.addJournalEntry(entry);
+    ref.invalidateSelf();
+  }
+
+  /// Posts a final journal entry to the ledger after mandatory consensus.
+  ///
+  /// There is intentionally no caller-controlled bypass. Any exceptional
+  /// workflow must be implemented as a separately authorised, audited domain
+  /// operation rather than a Boolean parameter on a public posting API.
+  Future<void> postJournalEntry(JournalEntry entry) async {
+    if (entry.status != JournalEntryStatus.posted) {
+      throw ArgumentError.value(
+        entry.status,
+        'entry.status',
+        'Only entries marked as posted can be committed to the ledger.',
+      );
+    }
+    _validateEntryLines(entry);
 
     final isPeriodOpen = await _financialYearService.canPostToDate(entry.date);
     if (!isPeriodOpen) {
@@ -820,51 +805,72 @@ class AccountingService extends _$AccountingService {
       );
     }
 
-    var finalEntry = entry;
-
-    if (!bypassCognitive) {
-      // ----------------------------------------------------------------------
-      // COGNITIVE HEXAGON ACTIVATION (Centralized)
-      // ----------------------------------------------------------------------
-      final orchestrator = ref.read(orchestratorServiceProvider.notifier);
-      // Ensure locale is fetched correctly. Use a direct language code if
-      // provider is unavailable or defaults.
-      final currentLocale =
-          ref.read(localeProvider).value?.languageCode ?? 'ar';
-
-      final context = AccountingContext(
-        proposedJournalEntry: entry,
-        transactionType: entry.sourceDocument,
-        locale: currentLocale,
-        metadata: {
-          'source_id': entry.sourceId,
-          'reference': entry.referenceNumber,
-        },
-      );
-      final consensus = await orchestrator.orchestrate(context);
-
-      if (!consensus.isApproved) {
-        throw CognitiveConsensusException(consensus);
+    final existingEntries = await _repository.getJournalEntries();
+    JournalEntry? existingWithId;
+    for (final existing in existingEntries) {
+      if (existing.id == entry.id) {
+        existingWithId = existing;
+        break;
       }
-      // ----------------------------------------------------------------------
-    } else {
-      // ----------------------------------------------------------------------
-      // INTERNAL AUDIT LOGGING (Bypass Tracking)
-      // ----------------------------------------------------------------------
-      final log = AuditLogEntry(
-        timestamp: DateTime.now(),
-        action: 'COGNITIVE_BYPASS',
-        rationale:
-            'Consensus bypassed by specialized service or system override.',
-        actor: 'system',
-      );
-      finalEntry = entry.copyWith(
-        auditLogs: [...entry.auditLogs, log],
+    }
+    if (existingWithId != null &&
+        existingWithId.status != JournalEntryStatus.draft) {
+      throw StateError('A journal entry with id ${entry.id} already exists.');
+    }
+    if (existingEntries.any(
+      (existing) =>
+          existing.id != entry.id &&
+          existing.referenceNumber == entry.referenceNumber,
+    )) {
+      throw StateError(
+        'A journal entry with reference ${entry.referenceNumber} already exists.',
       );
     }
 
-    await _repository.addJournalEntry(finalEntry);
+    final orchestrator = ref.read(orchestratorServiceProvider.notifier);
+    final currentLocale = ref.read(localeProvider).value?.languageCode ?? 'ar';
+    final context = AccountingContext(
+      proposedJournalEntry: entry,
+      transactionType: entry.sourceDocument,
+      locale: currentLocale,
+      metadata: {
+        'source_id': entry.sourceId,
+        'reference': entry.referenceNumber,
+      },
+    );
+    final consensus = await orchestrator.orchestrate(context);
+    if (!consensus.isApproved) {
+      throw CognitiveConsensusException(consensus);
+    }
+
+    await _repository.addJournalEntry(entry);
     ref.invalidateSelf();
+  }
+
+  void _validateEntryLines(JournalEntry entry) {
+    if (!entry.isBalanced) {
+      throw ArgumentError('Journal entry is unbalanced.');
+    }
+    if (entry.lines.length < 2) {
+      throw ArgumentError('Journal entry must contain at least two lines.');
+    }
+    for (final line in entry.lines) {
+      if (line.debit < Decimal.zero || line.credit < Decimal.zero) {
+        throw ArgumentError(
+          'Journal entry lines cannot contain negative values.',
+        );
+      }
+      if (line.debit == Decimal.zero && line.credit == Decimal.zero) {
+        throw ArgumentError(
+          'Journal entry lines cannot be zero on both sides.',
+        );
+      }
+      if (line.debit > Decimal.zero && line.credit > Decimal.zero) {
+        throw ArgumentError(
+          'A journal entry line cannot be both debit and credit.',
+        );
+      }
+    }
   }
 
   /// Reverses a posted journal entry with a contra-entry.
@@ -939,20 +945,24 @@ class AccountingService extends _$AccountingService {
 
     final invoiceRepo = ref.read(invoiceRepositoryProvider);
 
-    // 1. Update Invoice Status
-    final cancelledInvoice = invoice.copyWith(
-      status: InvoiceStatus.cancelled,
-      updatedAt: DateTime.now(),
-      notes: '${invoice.notes ?? ""}\n[Cancelled on ${DateTime.now()}]'.trim(),
-    );
-    await invoiceRepo.updateInvoice(cancelledInvoice);
-
-    // 2. Reverse Ledger Entry (if it was posted)
+    // 1. Reverse the ledger entry before mutating the source document. If the
+    // reversal is rejected (for example, by a locked period or consensus), the
+    // invoice remains unchanged and the accounting trail stays consistent.
     final journalEntryId = 'je-inv-${invoice.id}';
     final entries = await _repository.getJournalEntries();
     if (entries.any((e) => e.id == journalEntryId)) {
       await reverseJournalEntry(journalEntryId);
     }
+
+    // 2. Cancel the source document only after the corresponding reversal has
+    // been committed successfully.
+    final cancelledAt = DateTime.now();
+    final cancelledInvoice = invoice.copyWith(
+      status: InvoiceStatus.cancelled,
+      updatedAt: cancelledAt,
+      notes: '${invoice.notes ?? ""}\n[Cancelled on $cancelledAt]'.trim(),
+    );
+    await invoiceRepo.updateInvoice(cancelledInvoice);
 
     ref.invalidate(invoicesProvider);
     ref.invalidateSelf();
