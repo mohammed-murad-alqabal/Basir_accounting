@@ -24,8 +24,8 @@ class _JournalLineDraft {
     this.originalCurrency,
     this.exchangeRate,
     this.originalAmount,
-  })  : debit = debit ?? Decimal.zero,
-        credit = credit ?? Decimal.zero;
+  }) : debit = debit ?? Decimal.zero,
+       credit = credit ?? Decimal.zero;
 
   String? accountId;
   String? accountName;
@@ -167,100 +167,99 @@ class _JournalEntryFormScreenState
 
   /// Builds the metadata header (Date, Description, Standards).
   Widget _buildHeader(AppIconsBase appIcons) => GlassCard(
-        child: Column(
+    child: Column(
+      children: [
+        Row(
           children: [
-            Row(
-              children: [
-                Icon(appIcons.calendar, color: AppColors.primary),
-                const SizedBox(width: Spacing.md),
-                Expanded(
-                  child: InkWell(
-                    onTap: () => _selectDate(context),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          context.l10n.labelIssuedDate,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: AppColors.textSecondary,
-                          ),
-                        ),
-                        Text(
-                          intl.DateFormat('yyyy-MM-dd').format(_date),
-                          style: AppTextStyles.bodyLarge.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+            Icon(appIcons.calendar, color: AppColors.primary),
+            const SizedBox(width: Spacing.md),
+            Expanded(
+              child: InkWell(
+                onTap: () => _selectDate(context),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.l10n.labelIssuedDate,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
-                  ),
+                    Text(
+                      intl.DateFormat('yyyy-MM-dd').format(_date),
+                      style: AppTextStyles.bodyLarge.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            const SizedBox(height: Spacing.md),
-            AppTextField(
-              controller: _descriptionController,
-              label: context.l10n.hintJournalDescription,
-              prefixIcon: Icon(appIcons.note),
-            ),
-            const SizedBox(height: Spacing.md),
-            Row(
-              children: [
-                Expanded(
-                  child: AppTextField(
-                    initialValue: _standardReference,
-                    label: context.l10n.labelStandard,
-                    onChanged: (v) => _standardReference = v,
-                  ),
-                ),
-                const SizedBox(width: Spacing.md),
-                Expanded(
-                  child: AppTextField(
-                    initialValue: _recognitionBasis,
-                    label: context.l10n.labelRecognitionBasis,
-                    onChanged: (v) => _recognitionBasis = v,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: Spacing.md),
-            AppTextField(
-              initialValue: _measurementBasis,
-              label: context.l10n.labelMeasurementBasis,
-              onChanged: (v) => _measurementBasis = v,
+              ),
             ),
           ],
         ),
-      );
+        const SizedBox(height: Spacing.md),
+        AppTextField(
+          controller: _descriptionController,
+          label: context.l10n.hintJournalDescription,
+          prefixIcon: Icon(appIcons.note),
+        ),
+        const SizedBox(height: Spacing.md),
+        Row(
+          children: [
+            Expanded(
+              child: AppTextField(
+                initialValue: _standardReference,
+                label: context.l10n.labelStandard,
+                onChanged: (v) => _standardReference = v,
+              ),
+            ),
+            const SizedBox(width: Spacing.md),
+            Expanded(
+              child: AppTextField(
+                initialValue: _recognitionBasis,
+                label: context.l10n.labelRecognitionBasis,
+                onChanged: (v) => _recognitionBasis = v,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: Spacing.md),
+        AppTextField(
+          initialValue: _measurementBasis,
+          label: context.l10n.labelMeasurementBasis,
+          onChanged: (v) => _measurementBasis = v,
+        ),
+      ],
+    ),
+  );
 
   /// Renders the section for managing double-entry atomic lines.
   Widget _buildLinesSection(AppIconsBase appIcons) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                context.l10n.labelJournalEntryLines,
-                style: AppTextStyles.titleMedium.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              IconButton(
-                icon: Icon(appIcons.addCircle, color: AppColors.primary),
-                onPressed: () =>
-                    setState(() => _lines.add(_JournalLineDraft())),
-              ),
-            ],
+          Text(
+            context.l10n.labelJournalEntryLines,
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          const SizedBox(height: Spacing.sm),
-          ...List.generate(
-            _lines.length,
-            (index) => _buildLineItem(index, appIcons),
+          IconButton(
+            icon: Icon(appIcons.addCircle, color: AppColors.primary),
+            onPressed: () => setState(() => _lines.add(_JournalLineDraft())),
           ),
         ],
-      );
+      ),
+      const SizedBox(height: Spacing.sm),
+      ...List.generate(
+        _lines.length,
+        (index) => _buildLineItem(index, appIcons),
+      ),
+    ],
+  );
 
   /// Renders a single journal line editor with account and currency support.
   Widget _buildLineItem(int index, AppIconsBase appIcons) {
@@ -289,8 +288,9 @@ class _JournalEntryFormScreenState
             children: [
               Expanded(
                 child: AppTextField(
-                  initialValue:
-                      line.debit == Decimal.zero ? '' : line.debit.toString(),
+                  initialValue: line.debit == Decimal.zero
+                      ? ''
+                      : line.debit.toString(),
                   label: context.l10n.labelDebit,
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
@@ -306,8 +306,9 @@ class _JournalEntryFormScreenState
               const SizedBox(width: Spacing.md),
               Expanded(
                 child: AppTextField(
-                  initialValue:
-                      line.credit == Decimal.zero ? '' : line.credit.toString(),
+                  initialValue: line.credit == Decimal.zero
+                      ? ''
+                      : line.credit.toString(),
                   label: context.l10n.labelCredit,
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
@@ -331,7 +332,8 @@ class _JournalEntryFormScreenState
                     flex: 2,
                     child: AppTextField(
                       initialValue: line.originalAmount?.toString() ?? '',
-                      label: '${context.l10n.labelAmount} '
+                      label:
+                          '${context.l10n.labelAmount} '
                           '(${line.originalCurrency})',
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
@@ -379,7 +381,7 @@ class _JournalEntryFormScreenState
                   line.originalCurrency == null
                       ? context.l10n.labelAddCurrency
                       : '${context.l10n.labelCurrency}: '
-                          '${line.originalCurrency}',
+                            '${line.originalCurrency}',
                 ),
                 onPressed: () => _showCurrencyPicker(index),
               ),
@@ -404,51 +406,51 @@ class _JournalEntryFormScreenState
 
   /// Displays the mathematical summary and balance validation.
   Widget _buildSummary() => GlassCard(
-        child: Column(
-          children: [
-            _buildSummaryRow(context.l10n.labelDebit, _totalDebit),
-            _buildSummaryRow(context.l10n.labelCredit, _totalCredit),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  _isBalanced
-                      ? context.l10n.labelBalanced
-                      : context.l10n.labelUnbalanced,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: _isBalanced ? AppColors.success : AppColors.error,
-                  ),
-                ),
-                if (!_isBalanced)
-                  Text(
-                    '${context.l10n.labelDiff}: '
-                    '${(_totalDebit - _totalCredit).abs()}',
-                    style: const TextStyle(
-                      color: AppColors.error,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-              ],
-            ),
-          ],
-        ),
-      );
-
-  Widget _buildSummaryRow(String label, Decimal amount) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 2),
-        child: Row(
+    child: Column(
+      children: [
+        _buildSummaryRow(context.l10n.labelDebit, _totalDebit),
+        _buildSummaryRow(context.l10n.labelCredit, _totalCredit),
+        const Divider(),
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(label),
             Text(
-              amount.toString(),
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              _isBalanced
+                  ? context.l10n.labelBalanced
+                  : context.l10n.labelUnbalanced,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: _isBalanced ? AppColors.success : AppColors.error,
+              ),
             ),
+            if (!_isBalanced)
+              Text(
+                '${context.l10n.labelDiff}: '
+                '${(_totalDebit - _totalCredit).abs()}',
+                style: const TextStyle(
+                  color: AppColors.error,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
           ],
         ),
-      );
+      ],
+    ),
+  );
+
+  Widget _buildSummaryRow(String label, Decimal amount) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 2),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label),
+        Text(
+          amount.toString(),
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ],
+    ),
+  );
 
   /// Shows the platform-native date picker.
   Future<void> _selectDate(BuildContext context) async {
@@ -476,7 +478,8 @@ class _JournalEntryFormScreenState
 
       final entry = JournalEntry(
         id: widget.entry?.id ?? const Uuid().v4(),
-        referenceNumber: widget.entry?.referenceNumber ??
+        referenceNumber:
+            widget.entry?.referenceNumber ??
             'JE-${DateTime.now().millisecondsSinceEpoch}',
         date: _date,
         temporal: TemporalJustification(
@@ -517,11 +520,15 @@ class _JournalEntryFormScreenState
         // The application service is the only posting gateway. It performs
         // mandatory consensus and rejects a non-approved entry; the UI has no
         // authority to override that decision.
-        await ref.read(accountingServiceProvider.notifier).postJournalEntry(entry);
+        await ref
+            .read(accountingServiceProvider.notifier)
+            .postJournalEntry(entry);
       } else {
         // Drafts are deliberately stored through a separate path so they do
         // not enter the posted-ledger workflow or affect account balances.
-        await ref.read(accountingServiceProvider.notifier).saveJournalEntryDraft(entry);
+        await ref
+            .read(accountingServiceProvider.notifier)
+            .saveJournalEntryDraft(entry);
       }
 
       if (!mounted) return;
@@ -581,8 +588,9 @@ class _JournalEntryFormScreenState
           line.originalAmount = null;
         } else {
           line.originalCurrency = result;
-          line.exchangeRate =
-              result == 'USD' ? Decimal.parse('3.75') : Decimal.one;
+          line.exchangeRate = result == 'USD'
+              ? Decimal.parse('3.75')
+              : Decimal.one;
           if (line.debit > Decimal.zero) {
             line.originalAmount = line.debit;
           } else if (line.credit > Decimal.zero) {
@@ -694,8 +702,9 @@ class _AccountSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountsAsync =
-        ref.watch(accountingServiceProvider.notifier).getAccounts();
+    final accountsAsync = ref
+        .watch(accountingServiceProvider.notifier)
+        .getAccounts();
 
     return FutureBuilder<List<Account>>(
       future: accountsAsync,
