@@ -2,8 +2,8 @@
 //!
 //! Implements the Net Zakatable Assets method.
 
-use rust_decimal::Decimal;
 use crate::accounts::models::Account;
+use rust_decimal::Decimal;
 
 /// Zakah Calculation Method
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -40,7 +40,11 @@ pub struct ZakahBase {
 impl ZakahBase {
     pub fn net_zakatable_assets(&self) -> Decimal {
         let assets: Decimal = self.zakatable_assets.iter().map(|(_, b)| b.abs()).sum();
-        let liab: Decimal = self.deductible_liabilities.iter().map(|(_, b)| b.abs()).sum();
+        let liab: Decimal = self
+            .deductible_liabilities
+            .iter()
+            .map(|(_, b)| b.abs())
+            .sum();
         assets - liab
     }
 }
@@ -49,15 +53,12 @@ pub struct ZakahCalculator;
 
 impl ZakahCalculator {
     /// Calculate Zakah based on AAOIFI FAS 9.
-    pub fn calculate(
-        base: &ZakahBase,
-        calendar: ZakahCalendarType,
-    ) -> Decimal {
+    pub fn calculate(base: &ZakahBase, calendar: ZakahCalendarType) -> Decimal {
         let net = base.net_zakatable_assets();
         if net <= Decimal::ZERO {
             return Decimal::ZERO;
         }
-        
+
         let zakah = net * calendar.rate();
         zakah.round_dp(2)
     }

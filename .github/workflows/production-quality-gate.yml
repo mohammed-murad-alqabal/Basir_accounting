@@ -29,6 +29,7 @@ concurrency:
 
 env:
   FLUTTER_VERSION: "3.24.0"
+  FLUTTER_GIT_SHA: "80c2e84975bbd28ecf5f8d4bd4ca5a2490bfc819" # Flutter 3.24.0
   JAVA_VERSION: "17"
   MIN_COVERAGE: "70"
   RUST_BACKTRACE: "1"
@@ -53,12 +54,13 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           cache: gradle
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          channel: stable
-          cache: true
+      - name: Install Flutter SDK from immutable revision
+        run: |
+          set -euo pipefail
+          flutter_root="$RUNNER_TEMP/flutter-sdk"
+          git clone --filter=blob:none --no-checkout https://github.com/flutter/flutter.git "$flutter_root"
+          git -C "$flutter_root" checkout --detach "$FLUTTER_GIT_SHA"
+          echo "$flutter_root/bin" >> "$GITHUB_PATH"
 
       - name: Display toolchain versions
         run: |
@@ -294,12 +296,13 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           cache: gradle
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          channel: stable
-          cache: true
+      - name: Install Flutter SDK from immutable revision
+        run: |
+          set -euo pipefail
+          flutter_root="$RUNNER_TEMP/flutter-sdk"
+          git clone --filter=blob:none --no-checkout https://github.com/flutter/flutter.git "$flutter_root"
+          git -C "$flutter_root" checkout --detach "$FLUTTER_GIT_SHA"
+          echo "$flutter_root/bin" >> "$GITHUB_PATH"
 
       - name: Restore Dart packages without changing locked dependencies
         run: |
