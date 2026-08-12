@@ -128,6 +128,23 @@ jobs:
     name: Rust ledger engine quality and tests
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/basir_ci
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: basir_ci
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d basir_ci"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout repository history
@@ -161,6 +178,14 @@ jobs:
       - name: Fetch locked Rust dependencies
         working-directory: rust
         run: cargo fetch --locked
+
+      - name: Apply PostgreSQL schema migrations for SQLx validation
+        working-directory: rust
+        run: |
+          set -euo pipefail
+          for migration in migrations/*.sql; do
+            psql "$DATABASE_URL" --set ON_ERROR_STOP=1 --file "$migration"
+          done
 
       - name: Verify Rust formatting
         working-directory: rust
@@ -206,6 +231,13 @@ jobs:
         with:
           fail-on-severity: high
           deny-licenses: GPL-2.0, GPL-3.0, AGPL-3.0
+          # These package revisions lack SPDX-normalized metadata in GitHub's dependency graph.
+          # The exception only skips license metadata validation; vulnerability checks remain required.
+          allow-dependencies-licenses: >-
+            pkg:pub/material_color_utilities@0.13.0,
+            pkg:pub/matcher@0.12.19,
+            pkg:pub/test_api@0.7.11,
+            pkg:githubactions/gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7
 
       - name: Record non-PR dependency-review policy
         if: github.event_name != 'pull_request'
