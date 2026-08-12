@@ -19,36 +19,12 @@ void main() {
   late ProviderContainer container;
 
   setUpAll(() {
-    registerFallbackValue(
-      JournalEntry(
-        id: '',
-        referenceNumber: '',
-        date: DateTime.now(),
-        temporal: TemporalJustification(
-          transactionDate: DateTime.now(),
-          effectiveDate: DateTime.now(),
-          recordingDate: DateTime.now(),
-        ),
-        standards: const StandardsJustification(
-          standardReference: '',
-          recognitionBasis: '',
-        ),
-        description: '',
-        status: JournalEntryStatus.draft,
-        sourceDocument: '',
-        sourceId: '',
-        createdBy: '',
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        lines: const [],
-      ),
-    );
+    registerFallbackValue(_entry(status: JournalEntryStatus.draft));
   });
 
   setUp(() {
     mockRepository = MockAccountingRepository();
     mockFinancialYearService = MockFinancialYearService();
-
     container = ProviderContainer(
       overrides: [
         accountingRepositoryProvider.overrideWithValue(mockRepository),
@@ -60,69 +36,69 @@ void main() {
 
   tearDown(() => container.dispose());
 
-  group('AccountingService.postJournalEntry Bypass Logging', () {
-    test('should record AuditLogEntry when bypassCognitive is true', () async {
-      final now = DateTime.now();
-      final entry = JournalEntry(
-        id: 'test-bypass',
-        referenceNumber: 'JE-BYPASS',
-        date: now,
-        temporal: TemporalJustification(
-          transactionDate: now,
-          effectiveDate: now,
-          recordingDate: now,
-        ),
-        standards: const StandardsJustification(
-          standardReference: 'IFRS',
-          recognitionBasis: 'Accrual',
-        ),
-        description: 'Bypass test',
-        status: JournalEntryStatus.draft,
-        sourceDocument: 'manual',
-        sourceId: 'test',
-        createdBy: 'test-user',
-        createdAt: now,
-        updatedAt: now,
-        lines: [
-          JournalEntryLine(
-            accountId: 'acc-1',
-            accountName: 'Cash',
-            debit: Decimal.parse('100'),
-            credit: Decimal.zero,
-            description: 'D',
-          ),
-          JournalEntryLine(
-            accountId: 'acc-2',
-            accountName: 'Exp',
-            debit: Decimal.zero,
-            credit: Decimal.parse('100'),
-            description: 'C',
-          ),
-        ],
-      );
-
-      when(() => mockFinancialYearService.canPostToDate(any()))
-          .thenAnswer((_) async => true);
+  group('AccountingService ledger boundaries', () {
+    test('saves a balanced draft through the dedicated draft path', () async {
+      final draft = _entry(status: JournalEntryStatus.draft);
       when(() => mockRepository.addJournalEntry(any()))
-          .thenAnswer((_) async => {});
+          .thenAnswer((_) async {});
 
       final service = container.read(accountingServiceProvider.notifier);
+      await service.saveJournalEntryDraft(draft);
 
-      await service.postJournalEntry(entry, bypassCognitive: true);
+      verify(() => mockRepository.addJournalEntry(draft)).called(1);
+      verifyNever(() => mockFinancialYearService.canPostToDate(any()));
+    });
 
-      // Verify repository call captured the modified entry with logs
-      final capturedEntry =
-          verify(() => mockRepository.addJournalEntry(captureAny()))
-              .captured
-              .first as JournalEntry;
+    test('rejects a draft supplied to the final posting path', () async {
+      final draft = _entry(status: JournalEntryStatus.draft);
+      final service = container.read(accountingServiceProvider.notifier);
 
-      expect(capturedEntry.auditLogs, isNotEmpty);
-      expect(capturedEntry.auditLogs.first.action, equals('COGNITIVE_BYPASS'));
-      expect(capturedEntry.auditLogs.first.actor, equals('system'));
-      expect(
-        capturedEntry.auditLogs.first.rationale,
-        contains('Consensus bypassed'),
+      await expectLater(
+        service.postJournalEntry(draft),
+        throwsA(isA<ArgumentError>()),
       );
+
+      verifyNever(() => mockRepository.addJournalEntry(any()));
+      verifyNever(() => mockFinancialYearService.canPostToDate(any()));
     });
   });
+}
+
+JournalEntry _entry({required JournalEntryStatus status}) {
+  final now = DateTime.utc(2026, 1, 1);
+  return JournalEntry(
+    id: 'test-entry-${status.name}',
+    referenceNumber: 'JE-${status.name}',
+    date: now,
+    temporal: TemporalJustification(
+      transactionDate: now,
+      effectiveDate: now,
+      recordingDate: now,
+    ),
+    standards: const StandardsJustification(
+      standardReference: 'IFRS',
+      recognitionBasis: 'Accrual',
+    ),
+    description: 'Ledger boundary test',
+    status: status,
+    sourceDocument: 'manual',
+    sourceId: 'test',
+    createdBy: 'test-user',
+    createdAt: now,
+    updatedAt: now,
+    lines: [
+      JournalEntryLine(
+        accountId: 'acc-1',
+        accountName: 'Cash',
+        debit: Decimal.parse('100'),
+        credit: Decimal.zero,
+      ),
+      JournalEntryLine(
+        accountId: 'acc-2',
+        accountName: 'Expense',
+        debit: Decimal.zero,
+        credit: Decimal.parse('100'),
+      ),
+    ],
+  );
 }
