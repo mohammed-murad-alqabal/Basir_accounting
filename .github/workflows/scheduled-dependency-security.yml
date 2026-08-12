@@ -79,7 +79,7 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
-          cache: true
+          cache: false
 
       - name: Resolve packages without changing the lock file
         run: |

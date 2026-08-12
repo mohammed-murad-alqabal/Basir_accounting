@@ -26,7 +26,7 @@ jobs:
         with:
           flutter-version: "3.24.0"
           channel: "stable"
-          cache: true
+          cache: false
 
       - name: Setup Java
         uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
@@ -128,7 +128,7 @@ jobs:
         with:
           flutter-version: "3.24.0"
           channel: "stable"
-          cache: true
+          cache: false
 
       - name: Install dependencies
         run: flutter pub get
@@ -171,7 +171,7 @@ jobs:
         with:
           flutter-version: "3.24.0"
           channel: "stable"
-          cache: true
+          cache: false
 
       - name: Install dependencies
         run: flutter pub get
@@ -219,7 +219,7 @@ jobs:
         with:
           flutter-version: "3.24.0"
           channel: "stable"
-          cache: true
+          cache: false
 
       - name: Install dependencies
         run: flutter pub get
