@@ -108,7 +108,7 @@ void main() {
 
       // Assert
       final storedPasswordHash = await mockStorage.read(key: 'password_hash');
-      expect(storedPasswordHash, startsWith('pbkdf2-sha256\$310000\$'));
+      expect(storedPasswordHash, startsWith(r'pbkdf2-sha256$310000$'));
     });
 
     test('rejects privileged local account creation', () async {

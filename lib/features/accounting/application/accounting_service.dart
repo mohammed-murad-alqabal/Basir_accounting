@@ -111,17 +111,14 @@ class AccountingService extends _$AccountingService {
       if (effectiveDate.isAfter(endDate)) continue;
 
       // 4. Aggregate
-      final isReceivable =
-          invoice.type == InvoiceType.sales ||
+      final isReceivable = invoice.type == InvoiceType.sales ||
           invoice.type == InvoiceType.purchaseReturn; // We get money
 
-      final isPayable =
-          invoice.type == InvoiceType.purchase ||
+      final isPayable = invoice.type == InvoiceType.purchase ||
           invoice.type == InvoiceType.salesReturn; // We pay money
 
       // Get existing daily flow or create (if mapped to startDate due to overdue)
-      var daily =
-          dailyMap[effectiveDate] ??
+      var daily = dailyMap[effectiveDate] ??
           DailyCashFlow(
             date: effectiveDate,
             inflow: Decimal.zero,
@@ -441,9 +438,8 @@ class AccountingService extends _$AccountingService {
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount: invoice.currency != 'SAR'
-            ? invoice.subtotalAmount
-            : null,
+        originalAmount:
+            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -499,9 +495,8 @@ class AccountingService extends _$AccountingService {
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount: invoice.currency != 'SAR'
-            ? invoice.subtotalAmount
-            : null,
+        originalAmount:
+            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -593,9 +588,8 @@ class AccountingService extends _$AccountingService {
         credit: invoice.subtotalAmountBaseCurrency,
         debit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount: invoice.currency != 'SAR'
-            ? invoice.subtotalAmount
-            : null,
+        originalAmount:
+            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -651,9 +645,8 @@ class AccountingService extends _$AccountingService {
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount: invoice.currency != 'SAR'
-            ? invoice.subtotalAmount
-            : null,
+        originalAmount:
+            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -672,9 +665,8 @@ class AccountingService extends _$AccountingService {
         credit: invoice.subtotalAmountBaseCurrency,
         debit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount: invoice.currency != 'SAR'
-            ? invoice.subtotalAmount
-            : null,
+        originalAmount:
+            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -706,9 +698,8 @@ class AccountingService extends _$AccountingService {
         recordingDate: now,
       ),
       standards: StandardsJustification(
-        standardReference: sourceDocument == 'purchase_invoice'
-            ? 'IAS 2'
-            : 'IFRS 15',
+        standardReference:
+            sourceDocument == 'purchase_invoice' ? 'IAS 2' : 'IFRS 15',
         recognitionBasis: 'Accrual',
         measurementBasis: 'Transaction Price',
       ),
