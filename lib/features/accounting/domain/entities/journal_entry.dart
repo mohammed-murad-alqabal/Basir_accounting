@@ -90,7 +90,7 @@ class AuditLogEntry with _$AuditLogEntry {
 class JournalEntryLine with _$JournalEntryLine {
   /// Creates a journal entry line.
   const factory JournalEntryLine({
-    /// Reference to the target [Account] ID.
+    /// Identifier of the target account.
     required String accountId,
 
     /// Denormalized account name for high-performance listing and audit.
