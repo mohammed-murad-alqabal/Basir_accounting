@@ -91,7 +91,13 @@ jobs:
           dart format --set-exit-if-changed "${targets[@]}"
 
       - name: Run static analysis
-        run: flutter analyze --fatal-infos
+        run: |
+          set -euo pipefail
+          targets=(lib test)
+          if [ -d integration_test ]; then
+            targets+=(integration_test)
+          fi
+          flutter analyze --fatal-infos "${targets[@]}"
 
       - name: Run Flutter tests with coverage
         run: flutter test --coverage --reporter expanded
