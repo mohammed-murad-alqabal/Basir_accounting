@@ -1,0 +1,83 @@
+version: 1
+mode: advisory
+
+# Metadata is required only for living, authoritative documentation. Historical
+# reports and BKIP audit artifacts remain evidence and are intentionally excluded.
+metadata_paths:
+  - docs/00-governance/
+  - docs/01-product/
+  - docs/02-domain/
+  - docs/03-architecture/
+  - docs/04-data/
+  - docs/05-security/
+  - docs/06-compliance/
+  - docs/07-integrations/
+
+required_metadata:
+  - document_id
+  - status
+  - authority_level
+  - owner
+  - approved_by
+  - effective_from
+  - review_due
+
+excluded_documentation_paths:
+  - docs/audits/
+  - docs/archive/
+  - .kiro/docs/reports/
+
+# A changed path in one of these domains requires a requirement reference in
+# the pull-request body. Architecture-sensitive paths also require an ADR.
+high_impact_domains:
+  accounting:
+    paths:
+      - lib/features/accounting/
+      - rust/crates/accounting_core/
+      - rust/crates/accounting_data/
+    requirement_prefixes:
+      - REQ-ACC-
+    requires_adr: false
+  security:
+    paths:
+      - lib/features/auth/
+      - lib/core/security/
+      - rust/crates/accounting_security/
+    requirement_prefixes:
+      - REQ-SEC-
+    requires_adr: true
+  compliance:
+    paths:
+      - lib/features/zatca/
+      - lib/features/vat/
+      - rust/crates/accounting_zatca/
+    requirement_prefixes:
+      - REQ-COM-
+    requires_adr: true
+  data:
+    paths:
+      - rust/migrations/
+      - lib/features/accounting/data/
+      - lib/core/database/
+    requirement_prefixes:
+      - REQ-DATA-
+    requires_adr: true
+  ux:
+    paths:
+      - lib/core/theme/tokens/
+      - lib/shared/widgets/
+    requirement_prefixes:
+      - REQ-UX-
+    requires_adr: true
+
+governed_claims:
+  - production ready
+  - production-ready
+  - regulatory-evidenced
+  - certified
+  - compliant
+  - 100% complete
+
+# An explicit, time-bound exception is advisory in this phase. It is reported
+# so a reviewer can decide whether it is appropriate.
+exception_marker: "Governance exception:"

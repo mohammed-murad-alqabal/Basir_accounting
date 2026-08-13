@@ -4,6 +4,8 @@ import 'dart:io';
 ///
 /// يقوم بتحليل ملفات Dart واكتشاف العناصر العامة التي تحتاج documentation
 class AnalysisEngine {
+  List<AnalysisResult> _lastResults = const <AnalysisResult>[];
+
   /// تحليل ملف واحد
   ///
   /// يقوم بفحص الملف المحدد واكتشاف جميع العناصر العامة غير الموثقة
@@ -14,7 +16,7 @@ class AnalysisEngine {
     if (!await file.exists()) {
       return AnalysisResult(
         filePath: filePath,
-        undocumentedElements: [],
+        undocumentedElements: const <UndocumentedElement>[],
         coveragePercentage: 100,
       );
     }
@@ -112,6 +114,7 @@ class AnalysisEngine {
     return AnalysisResult(
       filePath: filePath,
       undocumentedElements: undocumented,
+      totalElements: totalElements,
       coveragePercentage: coverage,
     );
   }
@@ -133,17 +136,29 @@ class AnalysisEngine {
         results.add(await analyzeFile(entity.path));
       }
     }
+    _lastResults = results;
     return results;
   }
 
-  /// الحصول على إحصائيات التغطية
-  CoverageStats getCoverageStats() => const CoverageStats(
-        totalElements: 0,
-        documentedElements: 0,
-        undocumentedElements: 0,
-        coveragePercentage: 0,
-        elementBreakdown: {},
-      );
+  /// الحصول على إحصائيات التغطية من آخر تحليل مكتمل.
+  CoverageStats getCoverageStats() {
+    final total = _lastResults.fold<int>(
+      0,
+      (sum, result) => sum + result.totalElements,
+    );
+    final undocumented = _lastResults.fold<int>(
+      0,
+      (sum, result) => sum + result.undocumentedElements.length,
+    );
+    final documented = total - undocumented;
+    return CoverageStats(
+      totalElements: total,
+      documentedElements: documented,
+      undocumentedElements: undocumented,
+      coveragePercentage: CoverageStats.calculateCoverage(documented, total),
+      elementBreakdown: const <ElementType, int>{},
+    );
+  }
 }
 
 /// نتيجة تحليل ملف
@@ -153,6 +168,7 @@ class AnalysisResult {
     required this.filePath,
     required this.undocumentedElements,
     required this.coveragePercentage,
+    this.totalElements = 0,
   });
 
   /// مسار الملف
@@ -160,6 +176,9 @@ class AnalysisResult {
 
   /// قائمة العناصر غير الموثقة
   final List<UndocumentedElement> undocumentedElements;
+
+  /// إجمالي العناصر العامة التي حللها المحرك في الملف.
+  final int totalElements;
 
   /// نسبة التغطية (0-100)
   final double coveragePercentage;
