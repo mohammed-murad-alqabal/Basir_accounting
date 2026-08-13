@@ -15,6 +15,7 @@
 | [appendices/DOCUMENT_CENSUS.csv](appendices/DOCUMENT_CENSUS.csv) | الجرد الكامل القابل للفرز والتحليل لكل أصل توثيقي. |
 | [REQUIREMENTS_TRACEABILITY_MATRIX.md](REQUIREMENTS_TRACEABILITY_MATRIX.md) | حالات المتطلبات/القواعد الحرجة وفجوات التتبّع. |
 | [FINDINGS_REGISTER.md](FINDINGS_REGISTER.md) | سجل BKIP المنظم للتعارضات والفجوات ذات الأولوية وإجراءاتها. |
+| [EXECUTION_ROADMAP.md](EXECUTION_ROADMAP.md) | برنامج العمل المرحلي: الأولويات، المالكين، بوابات القبول، وأتمتة الحوكمة. |
 | [STATUS_AND_DUPLICATION_EVIDENCE.md](STATUS_AND_DUPLICATION_EVIDENCE.md) | سجل ادعاءات الحالة والتكرارات المرشحة دون حذف آلي. |
 | [DOCUMENT_MIGRATION_PLAN.md](DOCUMENT_MIGRATION_PLAN.md) | قرارات KEEP/MERGE/REWRITE/MOVE/ARCHIVE/DELETE/CREATE وخطوات الأمان. |
 | [DOCUMENTATION_GOVERNANCE_POLICY.md](DOCUMENTATION_GOVERNANCE_POLICY.md) | سياسة سلطة، مراجعة، استبدال، وأرشفة ووقاية من الانجراف. |
