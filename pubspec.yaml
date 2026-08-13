@@ -31,6 +31,7 @@ dependencies:
   # Dependencies (sorted alphabetically)
   archive: ^3.6.1
   barcode_widget: ^2.0.4
+  bcrypt: ^1.2.0
   crypto: ^3.0.7
   cupertino_icons: ^1.0.8
   decimal: ^3.2.4

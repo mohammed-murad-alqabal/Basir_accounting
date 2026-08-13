@@ -3,7 +3,11 @@
 /// يختبر جميع عمليات المصادقة والأمان
 library;
 
+import 'dart:convert';
+
+import 'package:basir_accounting_system/core/security/password_hasher.dart';
 import 'package:basir_accounting_system/features/auth/application/auth_service.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../mocks/mock_secure_storage.dart';
@@ -94,18 +98,15 @@ void main() {
       );
     });
 
-    test('should hash password using SHA-256', () async {
-      // Arrange
+    test('should hash password using bcrypt', () async {
       const username = 'testuser';
       const password = 'password123';
 
-      // Act
       await authService.createAccount(username, password);
 
-      // Assert
       final storedPasswordHash = await mockStorage.read(key: 'password_hash');
-      // SHA-256 hash يجب أن يكون 64 حرف (hex)
-      expect(storedPasswordHash?.length, 64);
+      expect(storedPasswordHash, isNotNull);
+      expect(PasswordHasher.isBcryptHash(storedPasswordHash!), isTrue);
     });
   });
 
@@ -176,6 +177,32 @@ void main() {
         () => authService.login(username, 'wrongpassword'),
         throwsException,
       );
+    });
+
+    test('should upgrade a verified legacy salted SHA-256 hash to bcrypt',
+        () async {
+      const username = 'legacyuser';
+      const password = 'password123';
+      const userSalt = 'legacy-salt';
+      const appSalt = 'basir_mvp_2025_secure_salt';
+      const combinedSalt = '$appSalt$userSalt';
+      var legacyHash =
+          sha256.convert(utf8.encode('$password$combinedSalt')).toString();
+      for (var iteration = 0; iteration < 1000; iteration++) {
+        legacyHash =
+            sha256.convert(utf8.encode('$legacyHash$combinedSalt')).toString();
+      }
+      await mockStorage.write(key: 'username', value: username);
+      await mockStorage.write(key: 'password_hash', value: legacyHash);
+      await mockStorage.write(key: '${username}_salt', value: userSalt);
+
+      final result = await authService.login(username, password);
+
+      expect(result, isTrue);
+      final upgradedHash = await mockStorage.read(key: 'password_hash');
+      expect(upgradedHash, isNotNull);
+      expect(PasswordHasher.isBcryptHash(upgradedHash!), isTrue);
+      expect(await mockStorage.read(key: '${username}_salt'), isNull);
     });
 
     test('should logout successfully', () async {
