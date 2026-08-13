@@ -34,6 +34,9 @@ dependencies:
   crypto: ^3.0.7
   cupertino_icons: ^1.0.8
   decimal: ^3.2.4
+  # Additive during the migration spike; Isar remains active until cutover.
+  drift: ^2.26.0
+  drift_flutter: ^0.2.5
   device_info_plus: ^12.3.0
   dio: ^5.9.0
   excel: ^4.0.6
@@ -93,6 +96,7 @@ dev_dependencies:
   flutter_native_splash: ^2.3.5
   flutter_test:
     sdk: flutter
+  drift_dev: ^2.26.0
   freezed: ^2.5.2
   integration_test:
     sdk: flutter
