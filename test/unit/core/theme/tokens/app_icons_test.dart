@@ -152,8 +152,10 @@ void main() {
 
       expect(icons, isNotEmpty);
       expect(icons.every((icon) => icon.codePoint > 0), isTrue);
-      expect(icons.map((icon) => icon.fontFamily).toSet(),
-          contains('MaterialIcons'));
+      expect(
+        icons.map((icon) => icon.fontFamily).toSet(),
+        contains('MaterialIcons'),
+      );
     });
 
     test('يختار رمز الحالة وفق الحالات المحاسبية المدعومة والافتراضية', () {
