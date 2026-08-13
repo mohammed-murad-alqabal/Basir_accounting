@@ -273,6 +273,7 @@ jobs:
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo ""
 
+          ./scripts/ci_prepare_env.sh
           flutter test --coverage --reporter expanded
 
           echo ""
@@ -337,31 +338,27 @@ jobs:
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo ""
 
-          # Check for hardcoded secrets
+          # Detect literal values assigned to secret-bearing names.  A generic
+          # text search for `password` creates false positives in hashed values,
+          # UI labels, and method parameters, so it is not an actionable secret
+          # detector.
           SECRETS_FOUND=0
+          SECRET_ASSIGNMENT_PATTERN='(password|secret|api[_-]?key|token|private[_-]?key)[[:space:]]*[:=][[:space:]]*["'\''][^"'\'']{8,}["'\'']'
 
-          echo "🔍 Checking for hardcoded secrets..."
-          if grep -r -i -E "(password|secret|api_key|token|private_key)" lib/ --include="*.dart" | grep -v "SecureStorage\|// TODO\|// FIXME\|test" | grep "="; then
+          echo "🔍 Checking for hardcoded literal secrets..."
+          if grep -r -n -i -E "$SECRET_ASSIGNMENT_PATTERN" lib/ --include="*.dart" \
+            | grep -v -E '^[^:]+:[0-9]+:[[:space:]]*(//|///|\*)'; then
             echo ""
-            echo "❌ Found potential hardcoded secrets"
-            echo "💡 Security First: Never hardcode secrets"
-            echo "   Use flutter_secure_storage instead"
+            echo "❌ Found a potential hardcoded literal secret"
+            echo "💡 Security First: move credentials to environment-backed secure storage"
             SECRETS_FOUND=1
           else
-            echo "✅ No hardcoded secrets found"
+            echo "✅ No hardcoded literal secrets found"
           fi
 
           echo ""
-
-          # Check for proper password hashing
-          echo "🔍 Checking for password hashing..."
-          if grep -r "password" lib/ --include="*.dart" | grep -v "hash\|Hash\|SHA\|bcrypt\|SecureStorage"; then
-            echo ""
-            echo "⚠️  Found password handling without hashing"
-            echo "💡 Security First: Always hash passwords (SHA-256+)"
-          else
-            echo "✅ Password handling looks secure"
-          fi
+          echo "ℹ️ Password hashing is validated by focused source and test review;"
+          echo "   a line-oriented text search cannot establish that security property."
 
           echo ""
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -432,7 +429,9 @@ jobs:
           popd
           dart run build_runner build --delete-conflicting-outputs
       - name: 🏗️ Build APK
-        run: flutter build apk --release
+        run: |
+          ./scripts/ci_prepare_env.sh
+          flutter build apk --release
 
       - name: 📏 Check APK size
         run: |

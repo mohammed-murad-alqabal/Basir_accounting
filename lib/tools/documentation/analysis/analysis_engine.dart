@@ -4,6 +4,8 @@ import 'dart:io';
 ///
 /// يقوم بتحليل ملفات Dart واكتشاف العناصر العامة التي تحتاج documentation
 class AnalysisEngine {
+  List<AnalysisResult> _latestResults = const [];
+
   /// تحليل ملف واحد
   ///
   /// يقوم بفحص الملف المحدد واكتشاف جميع العناصر العامة غير الموثقة
@@ -111,6 +113,7 @@ class AnalysisEngine {
 
     return AnalysisResult(
       filePath: filePath,
+      totalElements: totalElements,
       undocumentedElements: undocumented,
       coveragePercentage: coverage,
     );
@@ -126,24 +129,54 @@ class AnalysisEngine {
     final results = <AnalysisResult>[];
     // ignore: avoid_slow_async_io
     await for (final entity in dir.list(recursive: true)) {
+      // Flutter Rust Bridge regenerates these bindings; their documentation
+      // belongs to the Rust API source rather than to generated Dart output.
+      final normalizedPath = entity.path.replaceAll(r'\', '/');
       if (entity is File &&
-          entity.path.endsWith('.dart') &&
-          !entity.path.contains('.g.dart') &&
-          !entity.path.contains('.freezed.dart')) {
+          normalizedPath.endsWith('.dart') &&
+          !normalizedPath.contains('.g.dart') &&
+          !normalizedPath.contains('.freezed.dart') &&
+          !normalizedPath.startsWith('lib/src/rust/')) {
         results.add(await analyzeFile(entity.path));
       }
     }
+    _latestResults = List.unmodifiable(results);
     return results;
   }
 
-  /// الحصول على إحصائيات التغطية
-  CoverageStats getCoverageStats() => const CoverageStats(
-        totalElements: 0,
-        documentedElements: 0,
-        undocumentedElements: 0,
-        coveragePercentage: 0,
-        elementBreakdown: {},
-      );
+  /// الحصول على إحصائيات التغطية من آخر تحليل مكتمل.
+  CoverageStats getCoverageStats() {
+    final totalElements = _latestResults.fold<int>(
+      0,
+      (total, result) => total + result.totalElements,
+    );
+    final undocumentedElements = _latestResults.fold<int>(
+      0,
+      (total, result) => total + result.undocumentedElements.length,
+    );
+    final documentedElements = totalElements - undocumentedElements;
+    final elementBreakdown = <ElementType, int>{};
+    for (final result in _latestResults) {
+      for (final element in result.undocumentedElements) {
+        elementBreakdown.update(
+          element.type,
+          (count) => count + 1,
+          ifAbsent: () => 1,
+        );
+      }
+    }
+
+    return CoverageStats(
+      totalElements: totalElements,
+      documentedElements: documentedElements,
+      undocumentedElements: undocumentedElements,
+      coveragePercentage: CoverageStats.calculateCoverage(
+        documentedElements,
+        totalElements,
+      ),
+      elementBreakdown: elementBreakdown,
+    );
+  }
 }
 
 /// نتيجة تحليل ملف
@@ -153,10 +186,14 @@ class AnalysisResult {
     required this.filePath,
     required this.undocumentedElements,
     required this.coveragePercentage,
+    this.totalElements = 0,
   });
 
   /// مسار الملف
   final String filePath;
+
+  /// عدد العناصر العامة المكتشفة في الملف.
+  final int totalElements;
 
   /// قائمة العناصر غير الموثقة
   final List<UndocumentedElement> undocumentedElements;

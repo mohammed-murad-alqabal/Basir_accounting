@@ -75,8 +75,13 @@ jobs:
         run: |
           echo "🔒 Running security audit..."
 
-          # Check for known vulnerabilities
-          flutter pub outdated --mode=null-safety
+          # Check the current pub.dev advisory marker; the legacy null-safety
+          # compatibility mode was removed from recent Flutter SDKs.
+          flutter pub outdated --json > security-outdated.json
+          if grep -q '"isCurrentAffectedByAdvisory": true' security-outdated.json; then
+            echo "❌ A dependency is affected by a published advisory"
+            exit 1
+          fi
 
           # Run static analysis with security focus
           flutter analyze --no-pub

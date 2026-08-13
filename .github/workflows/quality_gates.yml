@@ -89,7 +89,9 @@ jobs:
           popd
           dart run build_runner build --delete-conflicting-outputs
       - name: Run tests with coverage
-        run: flutter test --coverage
+        run: |
+          ./scripts/ci_prepare_env.sh
+          flutter test --coverage
       - name: Check Test Coverage
         run: |
           COVERAGE=$(lcov --summary coverage/lcov.info | grep "lines" | awk '{print $2}' | sed 's/%//')

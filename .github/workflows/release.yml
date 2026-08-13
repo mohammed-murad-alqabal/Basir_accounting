@@ -60,13 +60,19 @@ jobs:
           popd
           dart run build_runner build --delete-conflicting-outputs
       - name: Run tests
-        run: flutter test
+        run: |
+          ./scripts/ci_prepare_env.sh
+          flutter test
 
       - name: Build APK
-        run: flutter build apk --release
+        run: |
+          ./scripts/ci_prepare_env.sh
+          flutter build apk --release
 
       - name: Build App Bundle
-        run: flutter build appbundle --release
+        run: |
+          ./scripts/ci_prepare_env.sh
+          flutter build appbundle --release
 
       - name: Generate API Docs
         run: |

@@ -81,6 +81,7 @@ jobs:
         continue-on-error: true
         run: |
           echo "Running tests..."
+          ./scripts/ci_prepare_env.sh
           flutter test --no-pub --reporter expanded > test_output.txt 2>&1 || true
 
           # استخراج نتائج الاختبارات
