@@ -784,5 +784,19 @@
   "resultsCountZero": "لا توجد نتائج",
   "searchTooltip": "بحث",
   "sortTooltip": "ترتيب الفواتير",
-  "clearSearchTooltip": "مسح البحث"
+  "clearSearchTooltip": "مسح البحث",
+  "shellSearchAll": "البحث الشامل",
+  "shellSearchHint": "ابحث في الفواتير والعملاء والأصناف...",
+  "shellToggleNav": "طي/فتح شريط التنقل",
+  "shellOrgLabel": "المؤسسة",
+  "shellBranchLabel": "الفرع",
+  "shellPeriodLabel": "الفترة",
+  "shellCurrentOrg": "المؤسسة الافتراضية",
+  "shellCurrentBranch": "الفرع الرئيسي",
+  "shellCurrentPeriod": "الفترة المالية الحالية",
+  "shellNotifications": "الإشعارات",
+  "shellSearchResults": "نتائج البحث",
+  "shellNoResults": "لا توجد نتائج",
+  "navReports": "التقارير",
+  "shellCloseSearch": "إغلاق البحث"
 }

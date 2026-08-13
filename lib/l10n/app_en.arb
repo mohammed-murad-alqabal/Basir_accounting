@@ -926,5 +926,19 @@
   "resultsCountZero": "No results",
   "searchTooltip": "Search",
   "sortTooltip": "Sort invoices",
-  "clearSearchTooltip": "Clear search"
+  "clearSearchTooltip": "Clear search",
+  "shellSearchAll": "Search everything",
+  "shellSearchHint": "Search invoices, customers, items...",
+  "shellToggleNav": "Collapse/expand navigation bar",
+  "shellOrgLabel": "Organization",
+  "shellBranchLabel": "Branch",
+  "shellPeriodLabel": "Period",
+  "shellCurrentOrg": "Default Organization",
+  "shellCurrentBranch": "Main Branch",
+  "shellCurrentPeriod": "Current Fiscal Period",
+  "shellNotifications": "Notifications",
+  "shellSearchResults": "Search results",
+  "shellNoResults": "No results found",
+  "navReports": "Reports",
+  "shellCloseSearch": "Close search"
 }
