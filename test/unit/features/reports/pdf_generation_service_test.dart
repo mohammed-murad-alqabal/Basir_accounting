@@ -3,6 +3,7 @@ library;
 
 import 'dart:convert';
 
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
@@ -44,6 +45,44 @@ Invoice _invoice({required InvoiceType type, String? qrCode}) => Invoice(
       ],
     );
 
+JournalEntry _journalEntry() => JournalEntry(
+      id: 'journal-1',
+      referenceNumber: 'JE-2025-001',
+      date: DateTime(2025, 5, 20),
+      temporal: TemporalJustification(
+        transactionDate: DateTime(2025, 5, 20),
+        effectiveDate: DateTime(2025, 5, 20),
+        recordingDate: DateTime(2025, 5, 20),
+      ),
+      standards: const StandardsJustification(
+        standardReference: 'IFRS 15',
+        recognitionBasis: 'Accrual',
+      ),
+      description: 'إثبات إيراد خدمة استشارية',
+      status: JournalEntryStatus.posted,
+      sourceDocument: 'sales_invoice',
+      sourceId: 'invoice-sales',
+      createdBy: 'accountant-1',
+      createdAt: DateTime(2025, 5, 20),
+      updatedAt: DateTime(2025, 5, 20),
+      lines: [
+        JournalEntryLine(
+          accountId: '1100',
+          accountName: 'الذمم المدينة',
+          debit: Decimal.parse('115.00'),
+          credit: Decimal.zero,
+          description: 'رصيد العميل',
+        ),
+        JournalEntryLine(
+          accountId: '4100',
+          accountName: 'إيراد الخدمات',
+          debit: Decimal.zero,
+          credit: Decimal.parse('115.00'),
+          description: 'إثبات الإيراد',
+        ),
+      ],
+    );
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -71,6 +110,22 @@ void main() {
         },
       );
 
+      expect(bytes, isNotEmpty);
+      expect(utf8.decode(bytes.take(4).toList()), '%PDF');
+      expect(bytes.length, greaterThan(1000));
+    });
+
+    test('ينشئ PDF قيد محاسبي متوازن بالمرجع وإجماليات الطرفين', () async {
+      final entry = _journalEntry();
+      final bytes = await PdfGenerationService().generateJournalEntryPdf(
+        entry,
+        companySettings: const {
+          'companyName': 'بصير للاستشارات',
+          'taxNumber': '310000000000003',
+        },
+      );
+
+      expect(entry.isBalanced, isTrue);
       expect(bytes, isNotEmpty);
       expect(utf8.decode(bytes.take(4).toList()), '%PDF');
       expect(bytes.length, greaterThan(1000));
