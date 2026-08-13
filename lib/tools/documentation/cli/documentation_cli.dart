@@ -78,6 +78,8 @@ class DocumentationCLI {
   Future<int> _runAnalyze(List<String> args) async {
     var path = 'lib/';
     var verbose = false;
+    var enforce = false;
+    var threshold = 70.0;
 
     // معالجة المعاملات
     for (var i = 0; i < args.length; i++) {
@@ -91,6 +93,12 @@ class DocumentationCLI {
         case '--verbose':
         case '-v':
           verbose = true;
+        case '--enforce':
+          enforce = true;
+        case '--threshold':
+          if (i + 1 < args.length) {
+            threshold = double.tryParse(args[++i]) ?? threshold;
+          }
       }
     }
 
@@ -114,8 +122,9 @@ class DocumentationCLI {
         }
       }
 
-      // تحديد حالة الخروج بناءً على التغطية
-      return stats.coveragePercentage >= 70 ? 0 : 1;
+      // يعرض التحليل القياس دائمًا. لا يتحول إلى حاجز إلا عند طلب
+      // enforce صراحةً؛ يتيح ذلك رفع artifact وتعليق PR حتى عند فشل الحد.
+      return !enforce || stats.coveragePercentage >= threshold ? 0 : 1;
     } on Exception {
       return 1;
     }
@@ -398,6 +407,8 @@ Options:
   --dry-run, -d           Show what would be generated without applying
   --force, -f             Force generation even if documentation exists
   --strict, -s            Use strict validation rules
+  --enforce                Return non-zero when an applicable check fails
+  --threshold <percent>    Coverage threshold used with analyze --enforce
   --format, -f <format>   Report format (json, html, markdown, csv)
   --output, -o <file>     Output file name
   --base <git-ref>        Base ref for governance changed-file detection
