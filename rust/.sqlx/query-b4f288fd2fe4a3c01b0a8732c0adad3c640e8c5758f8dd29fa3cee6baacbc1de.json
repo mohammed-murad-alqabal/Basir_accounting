@@ -6,47 +6,101 @@
       {
         "ordinal": 0,
         "name": "id",
-        "type_info": "Uuid"
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "asset_categories",
+            "name": "id"
+          }
+        }
       },
       {
         "ordinal": 1,
         "name": "name_ar",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "asset_categories",
+            "name": "name_ar"
+          }
+        }
       },
       {
         "ordinal": 2,
         "name": "name_en",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "asset_categories",
+            "name": "name_en"
+          }
+        }
       },
       {
         "ordinal": 3,
         "name": "description",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "asset_categories",
+            "name": "description"
+          }
+        }
       },
       {
         "ordinal": 4,
         "name": "default_useful_life_years",
-        "type_info": "Int4"
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "asset_categories",
+            "name": "default_useful_life_years"
+          }
+        }
       },
       {
         "ordinal": 5,
         "name": "default_depreciation_method: DepreciationMethod",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "asset_categories",
+            "name": "default_depreciation_method"
+          }
+        }
       },
       {
         "ordinal": 6,
         "name": "asset_account_id",
-        "type_info": "Uuid"
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "asset_categories",
+            "name": "asset_account_id"
+          }
+        }
       },
       {
         "ordinal": 7,
         "name": "depreciation_account_id",
-        "type_info": "Uuid"
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "asset_categories",
+            "name": "depreciation_account_id"
+          }
+        }
       },
       {
         "ordinal": 8,
         "name": "accum_depreciation_account_id",
-        "type_info": "Uuid"
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "asset_categories",
+            "name": "accum_depreciation_account_id"
+          }
+        }
       }
     ],
     "parameters": {
