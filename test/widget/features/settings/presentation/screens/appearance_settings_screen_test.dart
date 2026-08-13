@@ -53,6 +53,15 @@ void main() {
       );
     }
 
+    Future<void> reveal(WidgetTester tester, Finder finder) async {
+      await tester.scrollUntilVisible(
+        finder,
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+    }
+
     testWidgets('يعرض أقسام المظهر وضوابط الوصول', (tester) async {
       final l10n = await pumpScreen(tester);
 
@@ -60,12 +69,22 @@ void main() {
       expect(find.text(l10n.appearanceSettingsTitle), findsOneWidget);
       expect(find.text(l10n.sectionMode), findsOneWidget);
       expect(find.text(l10n.sectionStyle), findsOneWidget);
+      expect(find.byType(SegmentedButton<ThemeMode>), findsOneWidget);
+
+      await reveal(tester, find.text(l10n.sectionAccessibility));
       expect(find.text(l10n.sectionAccessibility), findsOneWidget);
-      expect(find.text(l10n.sectionCalendar), findsOneWidget);
       expect(find.text(l10n.highContrast), findsOneWidget);
       expect(find.text(l10n.reduceMotion), findsOneWidget);
-      expect(find.byType(SegmentedButton<ThemeMode>), findsOneWidget);
+
+      await reveal(tester, find.text(l10n.sectionCalendar));
+      expect(find.text(l10n.sectionCalendar), findsOneWidget);
       expect(find.byType(SegmentedButton<CalendarType>), findsOneWidget);
+
+      await reveal(tester, find.text(l10n.btnRestoreDefault));
+      expect(
+        find.widgetWithText(AppEnhancedButton, l10n.btnRestoreDefault),
+        findsOneWidget,
+      );
     });
 
     testWidgets('يحدّث وضع السمة عند اختيار النمط الداكن', (tester) async {
@@ -80,6 +99,7 @@ void main() {
     testWidgets('يحدّث نوع التقويم عند اختيار التقويم الهجري', (tester) async {
       final l10n = await pumpScreen(tester);
 
+      await reveal(tester, find.text(l10n.calendarHijri));
       await tester.tap(find.text(l10n.calendarHijri));
       await tester.pumpAndSettle();
 
@@ -89,6 +109,7 @@ void main() {
     testWidgets('يحدّث خياري التباين والحركة', (tester) async {
       final l10n = await pumpScreen(tester);
 
+      await reveal(tester, find.text(l10n.highContrast));
       await tester.tap(find.text(l10n.highContrast));
       await tester.tap(find.text(l10n.reduceMotion));
       await tester.pumpAndSettle();
@@ -101,6 +122,7 @@ void main() {
     testWidgets('يعرض حوار تأكيد الاستعادة ويمكن إلغاؤه', (tester) async {
       final l10n = await pumpScreen(tester);
 
+      await reveal(tester, find.text(l10n.btnRestoreDefault));
       await tester.tap(
         find.widgetWithText(AppEnhancedButton, l10n.btnRestoreDefault),
       );
@@ -120,6 +142,7 @@ void main() {
     ) async {
       final l10n = await pumpScreen(tester);
 
+      await reveal(tester, find.text(l10n.highContrast));
       await tester.tap(find.text(l10n.highContrast));
       await tester.tap(find.text(l10n.reduceMotion));
       await tester.pumpAndSettle();
@@ -132,6 +155,7 @@ void main() {
         isTrue,
       );
 
+      await reveal(tester, find.text(l10n.btnRestoreDefault));
       await tester.tap(
         find.widgetWithText(AppEnhancedButton, l10n.btnRestoreDefault),
       );
