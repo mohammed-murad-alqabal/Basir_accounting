@@ -67,7 +67,9 @@ void main() {
         expect(workflow, contains('dart format --set-exit-if-changed'));
         expect(workflow, contains('flutter analyze --fatal-infos'));
         expect(
-            workflow, contains('flutter test --coverage --reporter expanded'));
+          workflow,
+          contains('flutter test --coverage --reporter expanded'),
+        );
         expect(workflow, contains('test -s coverage/lcov.info'));
         expect(workflow, contains('MIN_COVERAGE: "70"'));
         expect(workflow, contains('Coverage %.2f%% is below required'));

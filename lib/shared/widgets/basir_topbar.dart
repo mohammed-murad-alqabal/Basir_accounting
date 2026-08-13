@@ -1,7 +1,7 @@
 import 'package:basir_accounting_system/core/theme/border_contrast_design.dart';
-import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:flutter/material.dart' hide Durations;
 
 /// الشريط العلوي لتطبيق بصير المكتبي
@@ -11,10 +11,10 @@ import 'package:flutter/material.dart' hide Durations;
 class BasirTopBar extends StatelessWidget {
   /// إنشاء الشريط العلوي
   const BasirTopBar({
-    super.key,
     required this.appIcons,
     required this.l10n,
     required this.collapsed,
+    super.key,
     this.orgName,
     this.branchName,
     this.periodName,
@@ -111,67 +111,65 @@ class BasirTopBar extends StatelessWidget {
     required String value,
     required IconData icon,
     required bool showLabel,
-  }) {
-    return Semantics(
-      label: '$label: $value',
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Spacing.sm,
-          vertical: Spacing.xs,
-        ),
-        decoration: BoxDecoration(
-          color: AppColors.surfaceVariant,
-          borderRadius: BorderRadius.circular(Radii.md),
-          border: Border.all(color: AppColors.borderLight),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: IconSizes.sm, color: AppColors.textSecondary),
-            if (showLabel) ...[
-              const SizedBox(width: Spacing.xs),
-              Flexible(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    value,
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeights.medium,
+  }) =>
+      Semantics(
+        label: '$label: $value',
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Spacing.sm,
+            vertical: Spacing.xs,
+          ),
+          decoration: BoxDecoration(
+            color: AppColors.surfaceVariant,
+            borderRadius: BorderRadius.circular(Radii.md),
+            border: Border.all(color: AppColors.borderLight),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: IconSizes.sm, color: AppColors.textSecondary),
+              if (showLabel) ...[
+                const SizedBox(width: Spacing.xs),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      value,
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.textPrimary,
+                        fontWeight: FontWeights.medium,
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ],
-          ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 
   /// زر أيقونة وظيفي (إشعارات/إعدادات)
   Widget _buildIconButton({
     required IconData icon,
     required String semanticsLabel,
-  }) {
-    return Semantics(
-      button: true,
-      label: semanticsLabel,
-      child: SizedBox(
-        width: TouchTargets.minimum,
-        height: TouchTargets.minimum,
-        child: InkWell(
-          onTap: () {},
-          borderRadius: BorderRadius.circular(Radii.full),
-          splashColor: AppColors.primary.withValues(alpha: 0.12),
-          child: Center(
-            child: Icon(icon, color: AppColors.textSecondary),
+  }) =>
+      Semantics(
+        button: true,
+        label: semanticsLabel,
+        child: SizedBox(
+          width: TouchTargets.minimum,
+          height: TouchTargets.minimum,
+          child: InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.circular(Radii.full),
+            splashColor: AppColors.primary.withValues(alpha: 0.12),
+            child: Center(
+              child: Icon(icon, color: AppColors.textSecondary),
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 /// حقل البحث الشامل في الشريط العلوي
@@ -179,7 +177,7 @@ class BasirTopBar extends StatelessWidget {
 /// placeholder جاهز لـ Command Palette الكامل (Phase 5).
 class BasirGlobalSearchField extends StatelessWidget {
   /// إنشاء حقل البحث الشامل
-  const BasirGlobalSearchField({super.key, required this.l10n});
+  const BasirGlobalSearchField({required this.l10n, super.key});
 
   /// الترجمات النشطة
   final AppLocalizations l10n;
@@ -199,7 +197,7 @@ class BasirGlobalSearchField extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.search,
               size: IconSizes.sm,
               color: AppColors.textHint,

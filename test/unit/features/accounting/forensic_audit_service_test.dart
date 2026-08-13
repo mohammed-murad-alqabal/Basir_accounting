@@ -94,7 +94,9 @@ void main() {
 
       final result = await service.process(
         AccountingContext(
-            proposedJournalEntry: entry, transactionType: 'manual'),
+          proposedJournalEntry: entry,
+          transactionType: 'manual',
+        ),
       );
 
       expect(result.isAllowed, false);
@@ -108,7 +110,9 @@ void main() {
 
       final result = await service.process(
         AccountingContext(
-            proposedJournalEntry: entry, transactionType: 'manual'),
+          proposedJournalEntry: entry,
+          transactionType: 'manual',
+        ),
       );
 
       expect(result.isAllowed, false);
@@ -121,7 +125,9 @@ void main() {
 
       final result = await service.process(
         AccountingContext(
-            proposedJournalEntry: entry, transactionType: 'manual'),
+          proposedJournalEntry: entry,
+          transactionType: 'manual',
+        ),
       );
 
       expect(result.isAllowed, false);
@@ -150,7 +156,9 @@ void main() {
 
       final result = await service.process(
         AccountingContext(
-            proposedJournalEntry: entry, transactionType: 'manual'),
+          proposedJournalEntry: entry,
+          transactionType: 'manual',
+        ),
       );
 
       expect(result.isAllowed, true);
@@ -185,7 +193,9 @@ void main() {
 
       final result = await service.process(
         AccountingContext(
-            proposedJournalEntry: entry, transactionType: 'manual'),
+          proposedJournalEntry: entry,
+          transactionType: 'manual',
+        ),
       );
 
       expect(result.isAllowed, true);
