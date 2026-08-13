@@ -2159,4 +2159,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clearSearchTooltip => 'Clear search';
+
+  @override
+  String get shellSearchAll => 'Search everything';
+
+  @override
+  String get shellSearchHint => 'Search invoices, customers, items...';
+
+  @override
+  String get shellToggleNav => 'Collapse/expand navigation bar';
+
+  @override
+  String get shellOrgLabel => 'Organization';
+
+  @override
+  String get shellBranchLabel => 'Branch';
+
+  @override
+  String get shellPeriodLabel => 'Period';
+
+  @override
+  String get shellCurrentOrg => 'Default Organization';
+
+  @override
+  String get shellCurrentBranch => 'Main Branch';
+
+  @override
+  String get shellCurrentPeriod => 'Current Fiscal Period';
+
+  @override
+  String get shellNotifications => 'Notifications';
+
+  @override
+  String get shellSearchResults => 'Search results';
+
+  @override
+  String get shellNoResults => 'No results found';
+
+  @override
+  String get navReports => 'Reports';
+
+  @override
+  String get shellCloseSearch => 'Close search';
 }

@@ -4135,6 +4135,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clear search'**
   String get clearSearchTooltip;
+
+  /// No description provided for @shellSearchAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Search everything'**
+  String get shellSearchAll;
+
+  /// No description provided for @shellSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search invoices, customers, items...'**
+  String get shellSearchHint;
+
+  /// No description provided for @shellToggleNav.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse/expand navigation bar'**
+  String get shellToggleNav;
+
+  /// No description provided for @shellOrgLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization'**
+  String get shellOrgLabel;
+
+  /// No description provided for @shellBranchLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get shellBranchLabel;
+
+  /// No description provided for @shellPeriodLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get shellPeriodLabel;
+
+  /// No description provided for @shellCurrentOrg.
+  ///
+  /// In en, this message translates to:
+  /// **'Default Organization'**
+  String get shellCurrentOrg;
+
+  /// No description provided for @shellCurrentBranch.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Branch'**
+  String get shellCurrentBranch;
+
+  /// No description provided for @shellCurrentPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Fiscal Period'**
+  String get shellCurrentPeriod;
+
+  /// No description provided for @shellNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get shellNotifications;
+
+  /// No description provided for @shellSearchResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Search results'**
+  String get shellSearchResults;
+
+  /// No description provided for @shellNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
+  String get shellNoResults;
+
+  /// No description provided for @navReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get navReports;
+
+  /// No description provided for @shellCloseSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Close search'**
+  String get shellCloseSearch;
 }
 
 class _AppLocalizationsDelegate
