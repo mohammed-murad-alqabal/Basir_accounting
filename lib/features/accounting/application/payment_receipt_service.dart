@@ -1,4 +1,5 @@
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/payment_receipt.dart';
 import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
@@ -124,7 +125,7 @@ class PaymentReceiptService extends _$PaymentReceiptService {
     required PaymentReceipt receipt,
     required Customer customer,
   }) async {
-    final accountingRepo = ref.read(accountingRepositoryProvider);
+    final accountingService = ref.read(accountingServiceProvider.notifier);
     final user = ref.read(basirUserProvider);
     final now = DateTime.now();
 
@@ -179,7 +180,7 @@ class PaymentReceiptService extends _$PaymentReceiptService {
       userId: user?.id,
     );
 
-    await accountingRepo.addJournalEntry(entry);
+    await accountingService.postJournalEntry(entry, bypassCognitive: true);
     return entry.id;
   }
 

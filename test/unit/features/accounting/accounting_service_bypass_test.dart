@@ -1,6 +1,8 @@
 // ignore_for_file: lines_longer_than_80_chars
+
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/authoritative_ledger_gateway.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
@@ -14,11 +16,9 @@ class MockAccountingRepository extends Mock implements AccountingRepository {}
 
 /// In-memory stub for the financial year repository.
 ///
-/// Returns an open (never-closed) financial year that covers any
-/// posting date, so `FinancialYearService.canPostToDate` resolves to
-/// `true` without needing to mock the generated `AsyncNotifier`
-/// provider directly (mocks cannot satisfy Riverpod's private
-/// `_setElement` lifecycle call).
+/// Returns an open (never-closed) financial year that covers any posting date,
+/// so `FinancialYearService.canPostToDate` resolves to `true` without needing
+/// to mock the generated `AsyncNotifier` provider directly.
 class InMemoryFinancialYearRepository implements FinancialYearRepository {
   @override
   Future<FinancialYear?> getCurrentFinancialYear() async {
@@ -60,6 +60,19 @@ class InMemoryFinancialYearRepository implements FinancialYearRepository {
   Future<bool> isPeriodOpen(DateTime date) async => true;
 }
 
+class TestAuthoritativeLedgerGateway implements AuthoritativeLedgerGateway {
+  const TestAuthoritativeLedgerGateway();
+
+  @override
+  Future<LedgerPostReceipt> post(JournalEntry entry) async => LedgerPostReceipt(
+        entryId: SupabaseLedgerGateway.operationIdFor(entry.id),
+        entryHash: 'test-entry-hash-${entry.id}',
+        previousHash: null,
+        postedAt: DateTime.utc(2025),
+        idempotentReplay: false,
+      );
+}
+
 void main() {
   late MockAccountingRepository mockRepository;
   late ProviderContainer container;
@@ -93,10 +106,12 @@ void main() {
 
   setUp(() {
     mockRepository = MockAccountingRepository();
-
     container = ProviderContainer(
       overrides: [
         accountingRepositoryProvider.overrideWithValue(mockRepository),
+        authoritativeLedgerGatewayProvider.overrideWithValue(
+          const TestAuthoritativeLedgerGateway(),
+        ),
         financialYearRepositoryProvider.overrideWithValue(
           InMemoryFinancialYearRepository(),
         ),
@@ -123,7 +138,7 @@ void main() {
           recognitionBasis: 'Accrual',
         ),
         description: 'Bypass test',
-        status: JournalEntryStatus.draft,
+        status: JournalEntryStatus.posted,
         sourceDocument: 'manual',
         sourceId: 'test',
         createdBy: 'test-user',
@@ -147,18 +162,17 @@ void main() {
         ],
       );
 
-      when(() => mockRepository.addJournalEntry(any()))
+      when(() => mockRepository.cacheAuthoritativeJournalEntry(any()))
           .thenAnswer((_) async => {});
 
       final service = container.read(accountingServiceProvider.notifier);
 
       await service.postJournalEntry(entry, bypassCognitive: true);
 
-      // Verify repository call captured the modified entry with logs
-      final capturedEntry =
-          verify(() => mockRepository.addJournalEntry(captureAny()))
-              .captured
-              .first as JournalEntry;
+      // Verify server-confirmed cache captured the modified entry with logs.
+      final capturedEntry = verify(
+        () => mockRepository.cacheAuthoritativeJournalEntry(captureAny()),
+      ).captured.first as JournalEntry;
 
       expect(capturedEntry.auditLogs, isNotEmpty);
       expect(capturedEntry.auditLogs.first.action, equals('COGNITIVE_BYPASS'));

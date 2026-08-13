@@ -1,0 +1,10 @@
+{
+  "entries": [
+    {
+      "id": "local-0001",
+      "authoritativeEntryId": "00000000-0000-0000-0000-000000000001",
+      "status": "Posted",
+      "hash": "stale-local-hash"
+    }
+  ]
+}

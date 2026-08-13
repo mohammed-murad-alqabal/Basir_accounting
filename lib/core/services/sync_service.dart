@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:basir_accounting_system/core/models/sync_status.dart';
+import 'package:basir_accounting_system/features/accounting/application/ledger_outbox_service.dart';
 import 'package:basir_accounting_system/features/accounting/data/models/account_model.dart';
 import 'package:basir_accounting_system/features/accounting/data/models/financial_voucher_model.dart';
 import 'package:basir_accounting_system/features/accounting/data/models/financial_year_model.dart';
-import 'package:basir_accounting_system/features/accounting/data/models/journal_entry_model.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
-import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/customers/data/models/customer_model.dart';
 import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
 import 'package:basir_accounting_system/features/invoices/data/models/invoice_model.dart';
@@ -77,8 +76,8 @@ class SyncService extends _$SyncService {
   /// 2. Vendors
   /// 3. Accounts
   /// 4. Financial Years
-  /// 5. Invoices
-  /// 6. Journal Entries
+  /// 5. Pending authoritative ledger commands (outbox)
+  /// 6. Invoices
   /// 7. Financial Vouchers
   /// 8. Profiles
   /// 9. Business Settings
@@ -168,7 +167,11 @@ class SyncService extends _$SyncService {
       },
     );
 
-    // 5. Invoices
+    // 5. Ledger commands are submitted only through the authoritative RPC.
+    // Journal entries must never pass through generic Last-Write-Wins sync.
+    await ref.read(ledgerOutboxServiceProvider).flush();
+
+    // 6. Invoices
     await _syncTable<InvoiceModel, Invoice>(
       tableName: 'invoices',
       collection: _isar.invoiceModels,
@@ -182,26 +185,6 @@ class SyncService extends _$SyncService {
       fromEntity: InvoiceModel.fromEntity,
       getServerUpdatedAt: (m) => m.serverUpdatedAt,
       getById: (col, id) => col.filter().invoiceIdEqualTo(id).findFirst(),
-      setSyncMetadata: (m, status, time) {
-        m.syncStatus = status;
-        m.serverUpdatedAt = time;
-      },
-    );
-
-    // 6. Journal Entries
-    await _syncTable<JournalEntryModel, JournalEntry>(
-      tableName: 'journal_entries',
-      collection: _isar.journalEntryModels,
-      getPendingPush: (col) =>
-          col.filter().syncStatusEqualTo(SyncStatus.pendingPush).findAll(),
-      getLastSynced: (col) =>
-          col.where().sortByServerUpdatedAtDesc().findFirst(),
-      toEntity: (m) => m.toEntity(),
-      toJson: (e) => e.toJson(),
-      fromJson: JournalEntry.fromJson,
-      fromEntity: JournalEntryModel.fromEntity,
-      getServerUpdatedAt: (m) => m.serverUpdatedAt,
-      getById: (col, id) => col.filter().idEqualTo(id).findFirst(),
       setSyncMetadata: (m, status, time) {
         m.syncStatus = status;
         m.serverUpdatedAt = time;

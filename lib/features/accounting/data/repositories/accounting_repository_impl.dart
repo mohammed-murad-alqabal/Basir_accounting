@@ -1,7 +1,6 @@
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/services/ledger_authority_policy.dart';
 import 'package:basir_accounting_system/features/accounting/data/models/account_model.dart';
-import 'package:basir_accounting_system/features/accounting/data/models/financial_year_model.dart';
 import 'package:basir_accounting_system/features/accounting/data/models/journal_entry_model.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
@@ -12,30 +11,27 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'accounting_repository_impl.g.dart';
 
-/// تنفيذ مستودع المحاسبة باستخدام Isar.
-/// (FR-ACC-007: تخزين مؤقت للبيانات لسرعة الوصول)
+/// Isar-backed local cache for accounts and journal-entry drafts.
+///
+/// Postgres is the sole authority for `Posted` ledger facts and balances. Isar
+/// may cache a posted entry only after the authoritative receipt has been
+/// attached by [cacheAuthoritativeJournalEntry].
 class IsarAccountingRepository implements AccountingRepository {
-  /// إنشاء نسخة جديدة مع تمرير مثيل Isar ومعرف المستخدم.
   IsarAccountingRepository({
     required this.isar,
     required this.userId,
     this.warehouseId,
   });
 
-  /// مثيل قاعدة بيانات Isar.
   final Isar isar;
-
-  /// معرف المستخدم الحالي لعزل البيانات.
   final String? userId;
-
-  /// معرف المستودع الحالي (لعزل البيانات).
   final String? warehouseId;
 
   @override
   Future<List<Account>> getAccounts() async {
     final query = isar.accountModels.filter().userIdEqualTo(userId);
     final models = await query.findAll();
-    return models.map((m) => m.toEntity()).toList();
+    return models.map((model) => model.toEntity()).toList();
   }
 
   @override
@@ -52,9 +48,7 @@ class IsarAccountingRepository implements AccountingRepository {
   @override
   Future<void> addAccount(Account account) async {
     final model = AccountModel.fromEntity(account.copyWith(userId: userId));
-    await isar.writeTxn(() async {
-      await isar.accountModels.put(model);
-    });
+    await isar.writeTxn(() => isar.accountModels.put(model));
   }
 
   @override
@@ -66,12 +60,8 @@ class IsarAccountingRepository implements AccountingRepository {
         .and()
         .userIdEqualTo(userId)
         .findFirst();
-    if (existing != null) {
-      model.isarId = existing.isarId;
-    }
-    await isar.writeTxn(() async {
-      await isar.accountModels.put(model);
-    });
+    if (existing != null) model.isarId = existing.isarId;
+    await isar.writeTxn(() => isar.accountModels.put(model));
   }
 
   @override
@@ -81,76 +71,46 @@ class IsarAccountingRepository implements AccountingRepository {
         .userIdEqualTo(userId)
         .and()
         .group(
-          (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+          (query) =>
+              query.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
         )
         .sortByDateDesc()
         .findAll();
-    return models.map((m) => m.toEntity()).toList();
+    return models.map((model) => model.toEntity()).toList();
   }
 
   @override
   Future<void> addJournalEntry(JournalEntry entry) async {
-    // 1. التحقق من السنة المالية والفترة المغلقة (FR-ACC-016)
-    final fy = await isar.financialYearModels
-        .filter()
-        .userIdEqualTo(userId)
-        .and()
-        .startDateLessThan(entry.date, include: true)
-        .and()
-        .endDateGreaterThan(entry.date, include: true)
-        .findFirst();
-
-    if (fy == null) {
-      throw Exception('No financial year defined for the date: ${entry.date}');
-    }
-    if (fy.isClosed) {
-      throw Exception('Cannot post to a closed financial year: ${fy.name}');
-    }
-
-    final periodId = '${entry.date.year}-'
-        '${entry.date.month.toString().padLeft(2, '0')}';
-    if (fy.lockedPeriodIds.contains(periodId)) {
-      throw Exception('Financial period $periodId is locked');
-    }
-
-    final model = JournalEntryModel.fromEntity(
+    LedgerAuthorityPolicy.assertLocalWriteAllowed(entry);
+    await _upsertLocal(
       entry.copyWith(
         userId: userId,
         warehouseId: entry.warehouseId ?? warehouseId,
       ),
     );
+  }
 
-    await isar.writeTxn(() async {
-      // 1. حفظ القيد
-      await isar.journalEntryModels.put(model);
+  @override
+  Future<void> cacheAuthoritativeJournalEntry(JournalEntry entry) async {
+    LedgerAuthorityPolicy.assertAuthoritativeCache(entry);
+    await _upsertLocal(
+      entry.copyWith(
+        userId: userId,
+        warehouseId: entry.warehouseId ?? warehouseId,
+      ),
+    );
+  }
 
-      // 2. تحديث أرصدة الحسابات المتأثرة
-      // (FR-ACC-002: ضمان توازن المعادلة)
-      if (entry.status == JournalEntryStatus.posted) {
-        for (final line in entry.lines) {
-          final accountModel = await isar.accountModels
-              .filter()
-              .idEqualTo(line.accountId)
-              .and()
-              .userIdEqualTo(userId)
-              .findFirst();
-
-          if (accountModel != null) {
-            final account = accountModel.toEntity();
-            var movement = Decimal.zero;
-            if (account.nature == AccountNature.debit) {
-              movement = line.debit - line.credit;
-            } else {
-              movement = line.credit - line.debit;
-            }
-
-            final updatedBalance = account.balance + movement;
-            accountModel.balance = updatedBalance.toString();
-            await isar.accountModels.put(accountModel);
-          }
-        }
-      }
-    });
+  Future<void> _upsertLocal(JournalEntry entry) async {
+    final model = JournalEntryModel.fromEntity(entry);
+    final existing = await isar.journalEntryModels
+        .filter()
+        .idEqualTo(entry.id)
+        .and()
+        .userIdEqualTo(userId)
+        .findFirst();
+    if (existing != null) model.isarId = existing.isarId;
+    await isar.writeTxn(() => isar.journalEntryModels.put(model));
   }
 
   @override
@@ -166,20 +126,14 @@ class IsarAccountingRepository implements AccountingRepository {
   }
 }
 
-/// مزود مستودع المحاسبة (Accounting Repository Provider).
 @Riverpod(keepAlive: true)
 AccountingRepository accountingRepository(AccountingRepositoryRef ref) {
-  // ملاحظة: يتم تمرير مثيل Isar عبر المزود العالمي
   final isar = ref.watch(isarProvider).value;
   if (isar == null) throw Exception('Isar is not initialized');
-
-  // جلب معرف المستخدم الحالي للعزل
   final user = ref.watch(basirUserProvider);
-  final warehouseId = user?.warehouseId;
-
   return IsarAccountingRepository(
     isar: isar,
     userId: user?.id,
-    warehouseId: warehouseId,
+    warehouseId: user?.warehouseId,
   );
 }

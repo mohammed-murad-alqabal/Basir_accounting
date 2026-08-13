@@ -7,6 +7,7 @@ import 'package:basir_accounting_system/features/accounting/data/models/account_
 import 'package:basir_accounting_system/features/accounting/data/models/financial_voucher_model.dart';
 import 'package:basir_accounting_system/features/accounting/data/models/financial_year_model.dart';
 import 'package:basir_accounting_system/features/accounting/data/models/journal_entry_model.dart';
+import 'package:basir_accounting_system/features/accounting/data/models/ledger_outbox_model.dart';
 import 'package:basir_accounting_system/features/accounting/data/repositories/financial_voucher_repository_impl.dart';
 import 'package:basir_accounting_system/features/accounting/data/repositories/financial_year_repository_impl.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
@@ -156,6 +157,7 @@ final isarProvider = FutureProvider<Isar>((ref) async {
         FinancialYearModelSchema,
         AccountModelSchema,
         JournalEntryModelSchema,
+        LedgerOutboxModelSchema,
         VendorModelSchema,
         FinancialVoucherModelSchema,
         AnalyticsEventSchema,
