@@ -9,6 +9,7 @@ import 'package:basir_accounting_system/features/accounting/domain/entities/jour
 import 'package:basir_accounting_system/features/accounting/domain/entities/liquidity_forecast.dart';
 import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
 import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
+import 'package:basir_accounting_system/features/accounting/domain/validation/journal_entry_validator.dart';
 import 'package:basir_accounting_system/features/customers/domain/repositories/customer_repository.dart';
 import 'package:basir_accounting_system/features/invoices/application/sales_bridge_service.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart'
@@ -360,12 +361,7 @@ class AccountingService extends _$AccountingService {
       postedAt: now,
     );
 
-    if (!entry.isBalanced) {
-      throw Exception(
-        'Journal Entry is unbalanced! Difference: '
-        '${entry.totalDebit - entry.totalCredit}',
-      );
-    }
+    JournalEntryValidator.ensurePostable(entry);
 
     // Use centralized posting mechanism with Hexagon activation
     await postJournalEntry(entry, bypassCognitive: bypassCognitive);
@@ -745,12 +741,7 @@ class AccountingService extends _$AccountingService {
       postedAt: now,
     );
 
-    if (!entry.isBalanced) {
-      throw Exception(
-        'Journal Entry is unbalanced! Difference: '
-        '${entry.totalDebit - entry.totalCredit}',
-      );
-    }
+    JournalEntryValidator.ensurePostable(entry);
 
     await postJournalEntry(entry, bypassCognitive: bypassCognitive);
   }
@@ -809,9 +800,7 @@ class AccountingService extends _$AccountingService {
     JournalEntry entry, {
     bool bypassCognitive = false,
   }) async {
-    if (!entry.isBalanced) {
-      throw Exception('Journal entry is unbalanced');
-    }
+    JournalEntryValidator.ensurePostable(entry);
 
     final isPeriodOpen = await _financialYearService.canPostToDate(entry.date);
     if (!isPeriodOpen) {
@@ -885,12 +874,17 @@ class AccountingService extends _$AccountingService {
       throw Exception('Can only reverse posted entries');
     }
 
+    final reversalReference = 'RV-${original.referenceNumber}';
+    if (entries.any((entry) => entry.referenceNumber == reversalReference)) {
+      throw Exception('Journal entry has already been reversed');
+    }
+
     final now = DateTime.now();
     final user = ref.read(basirUserProvider);
 
     final reversal = JournalEntry(
       id: const Uuid().v4(),
-      referenceNumber: 'RV-${original.referenceNumber}',
+      referenceNumber: reversalReference,
       date: now,
       temporal: TemporalJustification(
         transactionDate: now,

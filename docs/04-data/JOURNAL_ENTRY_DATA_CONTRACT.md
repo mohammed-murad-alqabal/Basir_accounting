@@ -1,0 +1,56 @@
+# عقد بيانات قيد اليومية
+
+> **document_id:** DATA-LEDGER-001
+> **status:** ACTIVE
+> **authority_level:** 2
+> **owner:** Data Owner
+> **approved_by:** Engineering Lead
+> **effective_from:** 2026-08-13
+> **last_verified_sha:** `3001138357c7aa3d12b07cb18a1537f9d6574c10`
+> **review_due:** 2026-10-13
+> **related_requirements:** REQ-ACC-008, REQ-DATA-001, REQ-DATA-002, REQ-DATA-003
+> **related_adrs:** ADR-DATA-001, ADR-ACC-001
+
+## نطاق العقد
+
+يصف هذا العقد ما يجب أن يبقى متسقًا بين `JournalEntry` في domain و`JournalEntryModel` في Isar وترحيلات PostgreSQL. لا يجعل العقد المخازن متطابقة، ولا يمثل موافقة على sync أو migration غير منفذ. يعد domain الحاكم للسلوك والقيم؛ تعد Isar وPostgreSQL تمثيلين تشغيليين يحتاج كل منهما اختبار round-trip وترحيل خاصًا.
+
+## الحقول الجوهرية
+
+| معنى المجال | Domain | Isar الحالي | قاعدة العقد |
+|---|---|---|---|
+| هوية القيد | `id` | `id` | UUID/معرف ثابت لا يعاد استخدامه. |
+| مرجع ظاهر | `referenceNumber` | `referenceNumber` | فريد ضمن نطاق الأعمال الذي يحدده repository. |
+| تاريخ الأثر | `date`, `temporal.effectiveDate` | `date`, `temporal` | لا يرحل في فترة مقفلة؛ القرار في الخدمة. |
+| حالة القيد | `status` | `status` | لا يكتب أثر مرحل مخالف للـvalidator. |
+| سطور القيد | `lines` | embedded `lines` | سطران أو أكثر؛ طرف واحد موجب؛ إجمالي متوازن. |
+| قيم المدين/الدائن | `Decimal` | `String` | تمثيل نص عشري قانوني؛ يمنع `double` كقيمة حاكمة. |
+| عملة أصلية | `originalCurrency`, `originalAmount`, `exchangeRate` | strings/nullable | مجموعة atomic: كلها موجودة وموجبة أو كلها غائبة. |
+| دليل جنائي | `hash`, `previousHash`, `auditLogs` | حقول/embedded حسب النموذج | لا تعني الحقول وحدها أن السلسلة متحققة؛ يلزم REQ-ACC-009. |
+| مزامنة | `syncStatus`, `serverUpdatedAt`, `isDeleted` | حقول مطابقة تقريبًا | لا يعلن دعم sync حتى ADR-DATA-002 واختبارات التعارض. |
+
+## قواعد التحويل
+
+| الاتجاه | القاعدة | حالة التحقق |
+|---|---|---|
+| Domain → Isar | `Decimal.toString()` يكتب نصًا عشريًا بلا تقريب عبر `double`. | يحتاج round-trip test مخصص. |
+| Isar → Domain | `Decimal.parse()` يقرأ النص؛ النص غير الصالح يجب أن يفشل بصورة قابلة للتشخيص. | يحتاج test للحالة السلبية. |
+| Domain → PostgreSQL | يحدد migration/type الفعلي العقد؛ لا تستنتج دقة SQL من Isar. | يحتاج mapping register وترحيل تكاملي. |
+| عملة غير أساسية | تسجل العملة والمبلغ والسعر وقيمة الأساس في العملية نفسها. | validator يفرض اكتمال الحقول؛ mapping test لاحق. |
+
+## تغييرات schema
+
+لا يدمج PR يعدل `JournalEntryModel` أو `rust/migrations/` من دون: ID متطلب، ADR عند تغير الحد، تحديث هذا العقد أو data dictionary، اختبار schema/round-trip مناسب، وخطة توافق أو rollback. يلزم أي حقل للعكس أو idempotency — مثل `reversesEntryId` أو `idempotencyKey` — migration مستقلة ولا يضاف بصورة ضمنية.
+
+## الفجوات المفتوحة
+
+1. لا يوجد حتى الآن mapping register كامل لـPostgreSQL في هذا العقد.
+2. لا يوجد اختبار round-trip موحد لـIsar/domain لبيانات Decimal والعملات.
+3. لا يملك نموذج القيد علاقة reversal صريحة أو idempotency key مخزنة.
+4. لا توجد سياسة تعارض مزامنة معتمدة؛ يحكمها ADR-DATA-002 لاحقًا.
+
+## المراجع
+
+[1]: ../03-architecture/adrs/ADR-DATA-001-financial-data-boundaries.md "قرار حدود البيانات"
+[2]: ../03-architecture/adrs/ADR-ACC-001-journal-entry-posting-invariants.md "قرار حمايات القيود"
+[3]: ../02-domain/requirements/DATA_REQUIREMENTS.md "متطلبات البيانات"
