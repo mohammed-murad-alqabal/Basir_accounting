@@ -6,7 +6,7 @@
 > **owner:** Data Owner
 > **approved_by:** Engineering Lead
 > **effective_from:** 2026-08-13
-> **last_verified_sha:** `3001138357c7aa3d12b07cb18a1537f9d6574c10`
+> **last_verified_sha:** `ad39da61ec7cc756e6d551aa356c0e1824d9ab19` — [Quality Gates 31750243155](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31750243155)
 > **review_due:** 2026-10-13
 > **related_requirements:** REQ-ACC-008, REQ-DATA-001, REQ-DATA-002, REQ-DATA-003
 > **related_adrs:** ADR-DATA-001, ADR-ACC-001
@@ -33,7 +33,7 @@
 
 | الاتجاه | القاعدة | حالة التحقق |
 |---|---|---|
-| Domain → Isar | `Decimal.toString()` يكتب نصًا عشريًا بلا تقريب عبر `double`، وتطبع الأزمنة عند القراءة إلى UTC. | يغطيه `journal_entry_model_round_trip_test.dart` محليًا؛ ينتظر دليل CI للـSHA التالي. |
+| Domain → Isar | `Decimal.toString()` يكتب نصًا عشريًا بلا تقريب عبر `double`، وتطبع الأزمنة عند القراءة إلى UTC. | يغطيه `journal_entry_model_round_trip_test.dart` و[Quality Gates 31750243155](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31750243155): `1,223` نجاح، `2` تخطٍ. |
 | Isar → Domain | `Decimal.parse()` يقرأ النص؛ النص غير الصالح يفشل بـ`FormatException` ولا يتحول إلى صفر. | يغطيه اختبار الحالة السلبية في round-trip. |
 | Domain → PostgreSQL | يحدد migration/type الفعلي العقد؛ لا تستنتج دقة SQL من Isar. | يوثق `JOURNAL_ENTRY_STORAGE_MAPPING_REGISTER.md` الانحرافات؛ يحتاج contract DTO وترحيل تكاملي مستقل. |
 | عملة غير أساسية | تسجل العملة والمبلغ والسعر وقيمة الأساس في العملية نفسها. | validator يفرض اكتمال الحقول؛ mapping test لاحق. |
