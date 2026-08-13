@@ -52,6 +52,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
+      - name: Prepare non-secret environment asset
+        run: ./scripts/ci_prepare_env.sh
+
       - name: Setup Flutter
         # Avoids the composite action's unpinned actions/cache dependency.
         env:

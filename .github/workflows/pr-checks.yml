@@ -15,6 +15,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
+      - name: Prepare non-secret environment asset
+        run: ./scripts/ci_prepare_env.sh
+
       - name: Setup Flutter
         # Avoids the composite action's unpinned actions/cache dependency.
         env:
@@ -127,9 +130,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
+    # Isar 3.1.0+1 uses native FFI and generates schema IDs that cannot be
+    # represented exactly by the JavaScript compiler. The supported release
+    # targets are therefore native until a web-compatible local store is adopted.
     strategy:
       matrix:
-        platform: [android, web]
+        platform: [android]
 
     steps:
       - name: Checkout code
