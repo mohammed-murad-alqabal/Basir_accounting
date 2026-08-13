@@ -1,4 +1,7 @@
 // ignore_for_file: avoid_print
+@Tags(['benchmark'])
+library;
+
 import 'dart:io';
 import 'dart:math';
 

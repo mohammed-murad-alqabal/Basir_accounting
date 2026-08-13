@@ -99,7 +99,7 @@ jobs:
       - name: 🧪 Run tests
         run: |
           ./scripts/ci_prepare_env.sh
-          flutter test --coverage --reporter expanded
+          flutter test --coverage --exclude-tags benchmark --reporter expanded
 
       - name: 📊 Check Coverage
         run: |
