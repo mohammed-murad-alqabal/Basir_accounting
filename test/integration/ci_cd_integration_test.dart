@@ -67,12 +67,18 @@ void main() {
     });
 
     group('Quality Gates Integration', () {
-      test('should run flutter analyze successfully', () async {
-        // Run flutter analyze
-        final result = await Process.run('flutter', ['analyze', '--no-pub']);
+      test('should configure strict Flutter analysis in CI', () {
+        // Running Flutter analysis from inside `flutter test` duplicates work
+        // performed by the workflow and can exceed the test runner timeout.
+        // Assert the workflow contract instead; CI executes this command as a
+        // dedicated quality gate.
+        final workflow = File('.github/workflows/flutter_ci.yml');
+        final content = workflow.readAsStringSync();
 
-        // Should complete (may have warnings but shouldn't crash)
-        expect(result.exitCode, anyOf(0, 1, 2, 3));
+        expect(
+          content,
+          contains('flutter analyze --fatal-infos --fatal-warnings'),
+        );
       });
 
       test(
