@@ -39,11 +39,13 @@ class OperationalIntelService extends _$OperationalIntelService
         'readiness for sales transaction.',
       );
 
-      // Integration with InventoryService
-      final inventoryService = ref.read(inventoryServiceProvider);
+      // Integration with InventoryService (resolved lazily so that
+      // sales flows without item-level quantities never touch the
+      // inventory provider dependency chain).
       final items = context.metadata['items'] as List<dynamic>?;
 
       if (items != null && items.isNotEmpty) {
+        final inventoryService = ref.read(inventoryServiceProvider);
         for (final item in items) {
           try {
             final itemMap = item as Map<String, dynamic>;

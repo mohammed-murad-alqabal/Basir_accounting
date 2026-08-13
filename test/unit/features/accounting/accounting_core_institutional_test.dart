@@ -20,6 +20,7 @@ import 'package:basir_accounting_system/features/invoices/domain/entities/invoic
 import 'package:basir_accounting_system/features/vendors/domain/entities/vendor.dart';
 import 'package:basir_accounting_system/features/vendors/domain/repositories/vendor_repository.dart';
 import 'package:decimal/decimal.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -104,6 +105,8 @@ class InMemoryFinancialVoucherRepository implements FinancialVoucherRepository {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   group('Institutional Accounting Core Verification', () {
     late ProviderContainer container;
 
