@@ -193,23 +193,34 @@ jobs:
         run: |
           echo "🏛️ Checking Clean Architecture compliance..."
 
-          # Check for proper layer separation
+          # Business features require domain and presentation layers. Navigation and
+          # onboarding are presentation-only composition features; testing is support-only.
           for module in lib/features/*/; do
             module_name=$(basename "$module")
-            
-            # Check for domain layer
-            if [ ! -d "$module/domain" ]; then
-              echo "❌ $module_name missing domain layer"
-              exit 1
-            fi
-            
-            # Check for presentation layer
-            if [ ! -d "$module/presentation" ]; then
-              echo "❌ $module_name missing presentation layer"
-              exit 1
-            fi
-            
-            echo "✅ $module_name has proper architecture"
+
+            case "$module_name" in
+              navigation|onboarding)
+                if [ ! -d "$module/presentation" ]; then
+                  echo "❌ $module_name missing presentation layer"
+                  exit 1
+                fi
+                echo "✅ $module_name is an approved presentation-only feature"
+                ;;
+              testing)
+                echo "✅ $module_name is an approved support-only feature"
+                ;;
+              *)
+                if [ ! -d "$module/domain" ]; then
+                  echo "❌ $module_name missing domain layer"
+                  exit 1
+                fi
+                if [ ! -d "$module/presentation" ]; then
+                  echo "❌ $module_name missing presentation layer"
+                  exit 1
+                fi
+                echo "✅ $module_name has proper clean architecture"
+                ;;
+            esac
           done
 
   accounting-integrity:

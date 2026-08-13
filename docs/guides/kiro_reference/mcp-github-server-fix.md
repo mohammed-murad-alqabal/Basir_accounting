@@ -272,7 +272,8 @@ python3 fix_github_mcp.py
 ### متغيرات البيئة المطلوبة
 
 ```bash
-export GITHUB_TOKEN="redacted"
+# وفّر الرمز من مدير أسرار أو من بيئتك الآمنة؛ لا تضعه في الملف.
+export GITHUB_TOKEN="<personal-access-token>"
 ```
 
 ### أذونات التوكن المطلوبة
