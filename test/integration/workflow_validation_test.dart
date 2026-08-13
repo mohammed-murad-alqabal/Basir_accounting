@@ -185,7 +185,10 @@ void main() {
           (step) => (step as YamlMap)['name'] == 'Run tests with coverage',
         ) as YamlMap;
 
-        expect(testStep['run'], contains('flutter test --coverage'));
+        final runCommand = testStep['run'] as String;
+        expect(runCommand, contains('flutter test'));
+        expect(runCommand, contains('--concurrency=1'));
+        expect(runCommand, contains('--coverage'));
       });
 
       test('security gate should check vulnerabilities', () {
