@@ -66,6 +66,7 @@ jobs:
         id: tests
         continue-on-error: true
         run: |
+          ./scripts/ci_prepare_env.sh
           flutter test --coverage > test_output.txt 2>&1 || true
           cat test_output.txt
 

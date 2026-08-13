@@ -41,7 +41,10 @@ jobs:
           popd
           dart run build_runner build --delete-conflicting-outputs
       - name: 🎨 Verify formatting
-        run: dart format --set-exit-if-changed lib/ test/
+        # Generated outputs are intentionally untracked; format only versioned source.
+        run: |
+          git ls-files -z -- 'lib/**/*.dart' 'test/**/*.dart' | \
+            xargs -0 -r dart format --set-exit-if-changed
         continue-on-error: false
 
       - name: 🔍 Analyze code
@@ -86,7 +89,9 @@ jobs:
           popd
           dart run build_runner build --delete-conflicting-outputs
       - name: 🧪 Run tests
-        run: flutter test --coverage --reporter expanded
+        run: |
+          ./scripts/ci_prepare_env.sh
+          flutter test --coverage --reporter expanded
 
       - name: 📊 Check Coverage
         run: |
@@ -182,7 +187,9 @@ jobs:
           popd
           dart run build_runner build --delete-conflicting-outputs
       - name: 🏗️ Build APK
-        run: flutter build apk --release
+        run: |
+          ./scripts/ci_prepare_env.sh
+          flutter build apk --release
 
       - name: 📤 Upload APK
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3
@@ -222,7 +229,9 @@ jobs:
           popd
           dart run build_runner build --delete-conflicting-outputs
       - name: 🏗️ Build iOS
-        run: flutter build ios --release --no-codesign
+        run: |
+          ./scripts/ci_prepare_env.sh
+          flutter build ios --release --no-codesign
 
       - name: 📤 Upload iOS
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3

@@ -87,6 +87,7 @@ jobs:
             lib/features/accounting/data/repositories/accounting_repository_impl.dart \
             lib/features/accounting/domain/entities/journal_entry.dart \
             lib/features/accounting/domain/repositories/accounting_repository.dart
+          ./scripts/ci_prepare_env.sh
           flutter test \
             test/integration/invoice_posting_test.dart \
             test/unit/features/accounting/treasury_service_test.dart \

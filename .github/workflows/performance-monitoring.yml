@@ -48,7 +48,10 @@ jobs:
           popd
           dart run build_runner build --delete-conflicting-outputs
       - name: Build APK
-        run: flutter build apk --release --analyze-size
+        run: |
+          ./scripts/ci_prepare_env.sh
+          # `--analyze-size` requires a single ABI on current Flutter SDKs.
+          flutter build apk --release --analyze-size --target-platform android-arm64
 
       - name: Analyze APK size
         id: size

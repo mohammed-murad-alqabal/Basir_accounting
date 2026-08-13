@@ -41,7 +41,9 @@ jobs:
         run: flutter analyze --fatal-infos
 
       - name: Run tests
-        run: flutter test --coverage --reporter=expanded
+        run: |
+          ./scripts/ci_prepare_env.sh
+          flutter test --coverage --reporter=expanded
         timeout-minutes: 10
 
       - name: Upload coverage to Codecov
@@ -159,8 +161,10 @@ jobs:
       - name: Build for ${{ matrix.platform }}
         run: |
           if [ "${{ matrix.platform }}" == "android" ]; then
+            ./scripts/ci_prepare_env.sh
             flutter build apk --debug --no-shrink
           elif [ "${{ matrix.platform }}" == "web" ]; then
+            ./scripts/ci_prepare_env.sh
             flutter build web --debug
           fi
 
