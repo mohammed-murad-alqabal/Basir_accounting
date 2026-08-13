@@ -808,7 +808,17 @@
   "workAuditTitle": "سجل التدقيق",
   "workAuditEmpty": "لا توجد أحداث للتدقيق.",
   "workAuditLinkedDoc": "الوثيقة المرتبطة: {arg0}",
+  "@workAuditLinkedDoc": {
+    "placeholders": {
+      "arg0": {}
+    }
+  },
   "workAuditOpenLinked": "فتح الوثيقة المرتبطة {arg0}",
+  "@workAuditOpenLinked": {
+    "placeholders": {
+      "arg0": {}
+    }
+  },
   "workAuditEventCreated": "إنشاء",
   "workAuditEventModified": "تعديل",
   "workAuditEventApproved": "اعتماد",
@@ -819,9 +829,24 @@
   "workAuditEventAdministrative": "إجراء إداري",
   "workGridEmpty": "لا توجد سجلات.",
   "workGridSortableColumn": "‎{arg0}، عمود قابل للفرز",
+  "@workGridSortableColumn": {
+    "placeholders": {
+      "arg0": {}
+    }
+  },
   "workFilterSearchHint": "ابحث في الوثائق والعملاء والأصناف...",
   "workFilterExport": "تصدير",
   "workFilterCollapse": "طي الفلاتر",
   "workGridSelect": "تحديد",
-  "workGridRow": "صف الجدول"
+  "workGridRow": "صف الجدول",
+  "workDocumentSummary": "ملخص المستند",
+  "workDocumentRequestPreview": "طلب المعاينة",
+  "workDocumentPreviewImpact": "معاينة الأثر",
+  "workDocumentSaveDraft": "حفظ كمسودة",
+  "workDocumentPost": "تأكيد الترحيل",
+  "workDocumentPreviewRequired": "اطلب معاينة الأثر قبل الترحيل.",
+  "workDocumentApprovalRequired": "يتطلب اعتمادًا إضافيًا",
+  "workDocumentNoImpact": "لا توجد حركات متوقعة.",
+  "workEntityPickerNoOptions": "لا توجد خيارات متاحة",
+  "workEntityPickerDisabled": "غير مؤهل للاختيار"
 }

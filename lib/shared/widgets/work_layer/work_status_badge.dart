@@ -6,7 +6,6 @@
 /// المرجع: مكونات قابلة لإعادة الاستخدام — القسم 7.
 library;
 
-
 import 'package:flutter/material.dart';
 import 'package:basir_accounting_system/core/domain/contracts/index.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_colors.dart';

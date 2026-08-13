@@ -48,10 +48,14 @@ void main() {
   group('WorkStatusBadge', () {
     testWidgets('تعرض الحالة الموحدة بنص وأيقونة ولون دلالي', (tester) async {
       _setTestSurfaceSize(tester, const Size(800, 600));
-      await tester.pumpWidget(_wrap(child: const WorkStatusBadge(status: DocumentStatus.posted), rtl: true, surfaceSize: const Size(800, 600)));
+      await tester.pumpWidget(_wrap(
+          child: const WorkStatusBadge(status: DocumentStatus.posted),
+          rtl: true,
+          surfaceSize: const Size(800, 600)));
 
       expect(find.text('مرحّلة'), findsOneWidget);
-      final badge = tester.widget<WorkStatusBadge>(find.byType(WorkStatusBadge));
+      final badge =
+          tester.widget<WorkStatusBadge>(find.byType(WorkStatusBadge));
       expect(badge.status, DocumentStatus.posted);
       expect(badge.status?.semanticColor, AppColors.success);
     });
@@ -76,17 +80,20 @@ void main() {
       _setTestSurfaceSize(tester, const Size(800, 600));
       await tester.pumpWidget(
         _wrap(
-          child: const WorkStatusBadge(status: DocumentStatus.draft, compact: true),
+          child: const WorkStatusBadge(
+              status: DocumentStatus.draft, compact: true),
           rtl: true,
           surfaceSize: const Size(800, 600),
         ),
       );
-      final badge = tester.widget<WorkStatusBadge>(find.byType(WorkStatusBadge));
+      final badge =
+          tester.widget<WorkStatusBadge>(find.byType(WorkStatusBadge));
       expect(badge.compact, isTrue);
       expect(find.byType(FittedBox), findsOneWidget);
     });
 
-    testWidgets('تتطلب الحالة أو (label مع اللون) في وضع التصميم', (tester) async {
+    testWidgets('تتطلب الحالة أو (label مع اللون) في وضع التصميم',
+        (tester) async {
       _setTestSurfaceSize(tester, const Size(800, 600));
       expect(
         () => WorkStatusBadge(label: 'بدون لون', backgroundColor: null),
@@ -96,10 +103,13 @@ void main() {
   });
 
   group('WorkDataGrid', () {
-    final columnText =
-        WorkDataGridColumn<String>(key: 'name', label: 'الاسم', builder: (e) => Text(e));
-    final columnNumber =
-        WorkDataGridColumn<String>(key: 'amount', label: 'المبلغ', format: DataGridCellFormat.number, builder: (e) => Text('100'));
+    final columnText = WorkDataGridColumn<String>(
+        key: 'name', label: 'الاسم', builder: (e) => Text(e));
+    final columnNumber = WorkDataGridColumn<String>(
+        key: 'amount',
+        label: 'المبلغ',
+        format: DataGridCellFormat.number,
+        builder: (e) => Text('100'));
 
     testWidgets('تعرض الأعمدة والصفوف', (tester) async {
       _setTestSurfaceSize(tester, const Size(800, 600));
@@ -116,7 +126,8 @@ void main() {
       );
       await tester.pumpWidget(
         _wrap(
-          child: WorkDataGrid<String>(columns: [columnText], entities: entities),
+          child:
+              WorkDataGrid<String>(columns: [columnText], entities: entities),
           rtl: true,
           surfaceSize: const Size(800, 600),
         ),
@@ -157,7 +168,8 @@ void main() {
       expect(tapped?.id, 'R1');
     });
 
-    testWidgets('تستدعي onSort عند النقر على رأس عمود قابل للفرز', (tester) async {
+    testWidgets('تستدعي onSort عند النقر على رأس عمود قابل للفرز',
+        (tester) async {
       _setTestSurfaceSize(tester, const Size(800, 600));
       (String, bool)? sorted;
       await tester.pumpWidget(
@@ -224,10 +236,12 @@ void main() {
       // الأعمدة العددية تتحاذى نهاية الاتجاه (يمين في RTL).
       // Row الأول هو صف الرأس الرئيسي؛ عمود 'المبلغ' يتحاذى عبر صفوف
       // العمود الفرعية داخل خلاياه.
-      final rows = tester.widgetList<Row>(find.descendant(
-        of: find.byType(WorkDataGrid<String>).first,
-        matching: find.byType(Row),
-      )).toList(growable: false);
+      final rows = tester
+          .widgetList<Row>(find.descendant(
+            of: find.byType(WorkDataGrid<String>).first,
+            matching: find.byType(Row),
+          ))
+          .toList(growable: false);
       expect(rows.skip(1).first.mainAxisAlignment, MainAxisAlignment.end);
     });
   });
@@ -349,7 +363,8 @@ void main() {
 
     testWidgets('تعرض الأحداث مرتبة من الأحدث إلى الأقدم', (tester) async {
       _setTestSurfaceSize(tester, const Size(800, 600));
-      final items = entries.map((e) => WorkAuditTimelineItem(entry: e)).toList();
+      final items =
+          entries.map((e) => WorkAuditTimelineItem(entry: e)).toList();
       await tester.pumpWidget(
         _wrap(
           child: WorkAuditTimeline(items: items),
@@ -367,7 +382,8 @@ void main() {
 
     testWidgets('تعرض التفسير والوثيقة المرتبطة عند توفرهما', (tester) async {
       _setTestSurfaceSize(tester, const Size(800, 600));
-      final items = entries.map((e) => WorkAuditTimelineItem(entry: e)).toList();
+      final items =
+          entries.map((e) => WorkAuditTimelineItem(entry: e)).toList();
       await tester.pumpWidget(
         _wrap(
           child: WorkAuditTimeline(items: items),
@@ -379,11 +395,13 @@ void main() {
       expect(find.textContaining('الوثيقة المرتبطة'), findsOneWidget);
     });
 
-    testWidgets('تستدعي onReferenceTap عند النقر على الوثيقة المرتبطة', (tester) async {
+    testWidgets('تستدعي onReferenceTap عند النقر على الوثيقة المرتبطة',
+        (tester) async {
       _setTestSurfaceSize(tester, const Size(800, 600));
       var tapped = false;
       final items = entries
-          .map((e) => WorkAuditTimelineItem(entry: e, onReferenceTap: () => tapped = true))
+          .map((e) => WorkAuditTimelineItem(
+              entry: e, onReferenceTap: () => tapped = true))
           .toList();
       await tester.pumpWidget(
         _wrap(
@@ -475,7 +493,9 @@ void main() {
       await tester.pumpWidget(
         _wrap(
           child: WorkFilterBar(
-            options: [WorkFilterOption(status: DocumentStatus.draft, id: 'draft')],
+            options: [
+              WorkFilterOption(status: DocumentStatus.draft, id: 'draft')
+            ],
             selectedOptionId: 'draft',
             narrowBreakpoint: 600,
           ),
