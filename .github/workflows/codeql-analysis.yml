@@ -66,7 +66,7 @@ jobs:
           echo "🔒 Running security audit..."
 
           # Check for known vulnerabilities
-          flutter pub outdated --mode=null-safety
+          flutter pub outdated
 
           # Run static analysis with security focus
           flutter analyze --no-pub
