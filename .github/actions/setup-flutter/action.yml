@@ -1,0 +1,48 @@
+name: Setup Flutter (pinned-CI compatible)
+description: Installs a pinned Flutter SDK without third-party composite-action dependencies.
+
+inputs:
+  flutter-version:
+    description: Flutter SDK version to install.
+    required: true
+  channel:
+    description: Flutter release channel.
+    required: false
+    default: stable
+  cache:
+    description: Kept for compatibility with previous workflows; caching is intentionally disabled.
+    required: false
+    default: 'false'
+  pub-cache:
+    description: Kept for compatibility with previous workflows; caching is intentionally disabled.
+    required: false
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    - name: Download and expose Flutter SDK
+      shell: bash
+      env:
+        FLUTTER_VERSION: ${{ inputs.flutter-version }}
+        FLUTTER_CHANNEL: ${{ inputs.channel }}
+      run: |
+        set -euo pipefail
+
+        archive="flutter_linux_${FLUTTER_VERSION}-${FLUTTER_CHANNEL}.tar.xz"
+        archive_url="https://storage.googleapis.com/flutter_infra_release/releases/${FLUTTER_CHANNEL}/linux/${archive}"
+        sdk_dir="${RUNNER_TEMP}/flutter-${FLUTTER_VERSION}-${FLUTTER_CHANNEL}"
+
+        if [[ ! -x "${sdk_dir}/bin/flutter" ]]; then
+          download_dir="${RUNNER_TEMP}/basir-flutter-download"
+          archive_path="${download_dir}/${archive}"
+          rm -rf "${download_dir}" "${sdk_dir}" "${RUNNER_TEMP}/flutter"
+          mkdir -p "${download_dir}"
+
+          curl --fail --location --retry 3 --silent --show-error "${archive_url}" --output "${archive_path}"
+          tar -xJf "${archive_path}" -C "${RUNNER_TEMP}"
+          mv "${RUNNER_TEMP}/flutter" "${sdk_dir}"
+        fi
+
+        echo "${sdk_dir}/bin" >> "${GITHUB_PATH}"
+        "${sdk_dir}/bin/flutter" --version
