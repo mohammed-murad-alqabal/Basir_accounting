@@ -2148,4 +2148,46 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get clearSearchTooltip => 'مسح البحث';
+
+  @override
+  String get shellSearchAll => 'البحث الشامل';
+
+  @override
+  String get shellSearchHint => 'ابحث في الفواتير والعملاء والأصناف...';
+
+  @override
+  String get shellToggleNav => 'طي/فتح شريط التنقل';
+
+  @override
+  String get shellOrgLabel => 'المؤسسة';
+
+  @override
+  String get shellBranchLabel => 'الفرع';
+
+  @override
+  String get shellPeriodLabel => 'الفترة';
+
+  @override
+  String get shellCurrentOrg => 'المؤسسة الافتراضية';
+
+  @override
+  String get shellCurrentBranch => 'الفرع الرئيسي';
+
+  @override
+  String get shellCurrentPeriod => 'الفترة المالية الحالية';
+
+  @override
+  String get shellNotifications => 'الإشعارات';
+
+  @override
+  String get shellSearchResults => 'نتائج البحث';
+
+  @override
+  String get shellNoResults => 'لا توجد نتائج';
+
+  @override
+  String get navReports => 'التقارير';
+
+  @override
+  String get shellCloseSearch => 'إغلاق البحث';
 }

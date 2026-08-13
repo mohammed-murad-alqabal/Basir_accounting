@@ -34,7 +34,7 @@ import 'package:basir_accounting_system/features/customers/domain/entities/custo
 import 'package:basir_accounting_system/features/customers/presentation/screens/customer_details_screen.dart';
 import 'package:basir_accounting_system/features/customers/presentation/screens/customer_form_screen.dart';
 import 'package:basir_accounting_system/features/customers/presentation/screens/customers_screen.dart';
-import 'package:basir_accounting_system/features/dashboard/presentation/screens/main_shell.dart';
+import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:basir_accounting_system/features/expenses/presentation/screens/expense_form_screen.dart';
 import 'package:basir_accounting_system/features/expenses/presentation/screens/expenses_dashboard_screen.dart';
 import 'package:basir_accounting_system/features/forensics/presentation/screens/forensic_portal_screen.dart';
@@ -130,7 +130,7 @@ class AppRouter {
           ),
         );
       case '/dashboard':
-        return MaterialPageRoute(builder: (_) => const MainShell());
+        return MaterialPageRoute(builder: (_) => const BasirAppShell());
       case '/customers':
         return MaterialPageRoute(builder: (_) => const CustomersScreen());
       case '/vendors':
