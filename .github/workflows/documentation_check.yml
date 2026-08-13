@@ -35,13 +35,13 @@ jobs:
       - name: Validate documentation quality
         run: dart lib/tools/documentation/cli/documentation_cli.dart validate
 
-      - name: Generate documentation reports
+      - name: Generate documentation report
         if: always()
         run: |
           dart lib/tools/documentation/cli/documentation_cli.dart report --format=json --output=doc-report.json
           dart lib/tools/documentation/cli/documentation_cli.dart report --format=markdown --output=doc-report.md
 
-      - name: Record coverage threshold (advisory)
+      - name: Check coverage threshold (advisory)
         if: always()
         id: coverage
         env:
@@ -69,7 +69,7 @@ jobs:
             doc-report.json
           if-no-files-found: warn
 
-      - name: Update pull-request documentation comment
+      - name: Comment on PR
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false && always()
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
         with:
