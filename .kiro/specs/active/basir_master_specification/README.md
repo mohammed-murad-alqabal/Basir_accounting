@@ -1,5 +1,15 @@
 # Basir Master Specification - README
 
+> **document_id:** SPEC-MASTER-INDEX-001
+> **status:** ACTIVE — engineering intent pending requirement-by-requirement rebase
+> **authority_level:** 1 for approved requirements; repository reality remains level 0 for current behavior
+> **owner:** Engineering Lead
+> **approved_by:** Pending formal repository owner approval
+> **effective_from:** 2026-08-13
+> **last_verified_sha:** `ce825c55c6e9959645f6eef330a78e2bbd844c7c`
+> **review_due:** 2026-10-13
+> **supersedes:** no repository-reality or CI evidence
+
 **Version:** 2.0 (Sovereign Edition)
 **Created:** 2026-01-16
 **Location:** `.kiro/specs/active/basir_master_specification/`
@@ -8,7 +18,7 @@
 
 ## Purpose
 
-This directory contains the **authoritative engineering specification** for the Basir Accounting System. It synthesizes insights from:
+This directory contains the active engineering specification for intended Basir behavior. It is authoritative for an approved requirement only after that requirement is identified, owned, and linked to acceptance evidence. Repository reality (code, tests, configuration, and CI artifacts at a SHA) remains authoritative for current behavior. It synthesizes insights from:
 
 1. **Legacy Visual Analysis** (99 screenshots in `FORENSIC_ATLAS.md`)
 2. **Foundational Manifesto** (`00-03` documents from `basir_accounting`)
@@ -79,4 +89,4 @@ This directory contains the **authoritative engineering specification** for the 
 
 ---
 
-_This specification is the single source of truth for all Basir engineering decisions._
+_This specification is a source of intended engineering design. Authority conflicts are resolved by [`docs/00-governance/AUTHORITY_MODEL.md`](../../../../docs/00-governance/AUTHORITY_MODEL.md); it is not a substitute for repository reality or SHA-linked evidence._
