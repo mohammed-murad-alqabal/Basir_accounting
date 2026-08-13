@@ -2095,4 +2095,57 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get actionEmailInvoice => 'إرسال الفاتورة بالبريد';
+
+  @override
+  String get searchInvoicesHint => 'ابحث في الفواتير أو العملاء أو الأرقام';
+
+  @override
+  String get searchInvoicesLabel => 'البحث في الفواتير';
+
+  @override
+  String get sortBy => 'ترتيب حسب';
+
+  @override
+  String get sortLabel => 'ترتيب';
+
+  @override
+  String get sortNewest => 'الأحدث أولًا';
+
+  @override
+  String get sortOldest => 'الأقدم أولًا';
+
+  @override
+  String get sortAmountDesc => 'الأعلى مبلغًا';
+
+  @override
+  String get sortAmountAsc => 'الأدنى مبلغًا';
+
+  @override
+  String get sortCustomer => 'اسم العميل';
+
+  @override
+  String get sortDueDateAsc => 'تاريخ الاستحقاق (الأقرب)';
+
+  @override
+  String get filterCancelled => 'ملغاة';
+
+  @override
+  String get noSearchResults => 'لا توجد فواتير تطابق بحثك';
+
+  @override
+  String resultsCount(String count) {
+    return '$count نتيجة';
+  }
+
+  @override
+  String get resultsCountZero => 'لا توجد نتائج';
+
+  @override
+  String get searchTooltip => 'بحث';
+
+  @override
+  String get sortTooltip => 'ترتيب الفواتير';
+
+  @override
+  String get clearSearchTooltip => 'مسح البحث';
 }

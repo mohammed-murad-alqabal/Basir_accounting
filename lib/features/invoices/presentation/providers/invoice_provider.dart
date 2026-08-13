@@ -1,3 +1,4 @@
+import 'package:basir_accounting_system/core/extensions/string_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
@@ -132,12 +133,16 @@ final invoiceSearchProvider = StateProvider<String>((ref) => '');
 /// State Provider لحالة الفلتر
 final invoiceFilterProvider = StateProvider<String>((ref) => 'all');
 
-/// Provider لقائمة الفواتير المفلترة حسب البحث والحالة
+/// Provider لحالة الترتيب (إصدار، قديم، مبلغ، عميل، استحقاق)
+final invoiceSortProvider = StateProvider<String>((ref) => 'newest');
+
+/// Provider لقائمة الفواتير المفلترة حسب البحث والحالة مع الترتيب
 final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
   final searchQuery = ref.watch(invoiceSearchProvider.select((value) => value));
   final filterStatus = ref.watch(
     invoiceFilterProvider.select((value) => value),
   );
+  final sortKey = ref.watch(invoiceSortProvider.select((value) => value));
   final invoicesAsync = ref.watch(invoicesProvider);
 
   return invoicesAsync.whenData((invoices) {
@@ -166,19 +171,57 @@ final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
     }
 
     if (searchQuery.isNotEmpty) {
+      final query = searchQuery.normalizeArabic().toLowerCase();
       filtered = filtered
           .where(
             (invoice) =>
-                invoice.invoiceNumber.contains(searchQuery) ||
-                invoice.id.contains(searchQuery) ||
-                invoice.customerName.contains(searchQuery),
+                invoice.invoiceNumber.toLowerCase().contains(query) ||
+                invoice.id.toLowerCase().contains(query) ||
+                invoice.customerName
+                    .normalizeArabic()
+                    .toLowerCase()
+                    .contains(query),
           )
           .toList();
     }
 
-    return filtered;
+    return _sortedInvoices(filtered, sortKey);
   });
 });
+
+/// ترتيب قائمة الفواتير وفق مفتاح الترتيب المحدد.
+/// يدعم الافتراضي `newest`، وأيضًا `oldest` و`amount_desc` و`amount_asc`
+/// و`customer` و`due_date`.
+List<Invoice> _sortedInvoices(List<Invoice> invoices, String sortKey) {
+  final sorted = List<Invoice>.of(invoices);
+  switch (sortKey) {
+    case 'oldest':
+      sorted.sort((a, b) => a.issuedDate.compareTo(b.issuedDate));
+      return sorted;
+    case 'amount_desc':
+      sorted.sort(
+        (a, b) =>
+            b.totalAmountBaseCurrency.compareTo(a.totalAmountBaseCurrency),
+      );
+      return sorted;
+    case 'amount_asc':
+      sorted.sort(
+        (a, b) =>
+            a.totalAmountBaseCurrency.compareTo(b.totalAmountBaseCurrency),
+      );
+      return sorted;
+    case 'customer':
+      sorted.sort((a, b) => a.customerName.compareTo(b.customerName));
+      return sorted;
+    case 'due_date':
+      sorted.sort((a, b) => a.dueDate.compareTo(b.dueDate));
+      return sorted;
+    case 'newest':
+    default:
+      sorted.sort((a, b) => b.issuedDate.compareTo(a.issuedDate));
+      return sorted;
+  }
+}
 
 /// Provider لحساب إجمالي المبيعات
 final totalSalesProvider = Provider<AsyncValue<Decimal>>((ref) {

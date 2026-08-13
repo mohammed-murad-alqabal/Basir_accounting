@@ -759,5 +759,30 @@
   "labelProjectedNetIncome": "صافي الدخل المتوقع",
   "labelConfidenceScore": "درجة ثقة الذكاء الاصطناعي",
   "msgNoStrategicData": "بيانات تاريخية غير كافية للتنبؤ الدقيق. يرجى ترحيل المزيد من المعاملات.",
-  "actionEmailInvoice": "إرسال الفاتورة بالبريد"
+  "actionEmailInvoice": "إرسال الفاتورة بالبريد",
+  "searchInvoicesHint": "ابحث في الفواتير أو العملاء أو الأرقام",
+  "searchInvoicesLabel": "البحث في الفواتير",
+  "sortBy": "ترتيب حسب",
+  "sortLabel": "ترتيب",
+  "sortNewest": "الأحدث أولًا",
+  "sortOldest": "الأقدم أولًا",
+  "sortAmountDesc": "الأعلى مبلغًا",
+  "sortAmountAsc": "الأدنى مبلغًا",
+  "sortCustomer": "اسم العميل",
+  "sortDueDateAsc": "تاريخ الاستحقاق (الأقرب)",
+  "filterCancelled": "ملغاة",
+  "noSearchResults": "لا توجد فواتير تطابق بحثك",
+  "resultsCount": "{count} نتيجة",
+  "@resultsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String",
+        "example": "12"
+      }
+    }
+  },
+  "resultsCountZero": "لا توجد نتائج",
+  "searchTooltip": "بحث",
+  "sortTooltip": "ترتيب الفواتير",
+  "clearSearchTooltip": "مسح البحث"
 }
