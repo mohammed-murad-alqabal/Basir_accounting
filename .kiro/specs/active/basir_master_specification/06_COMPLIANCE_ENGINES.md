@@ -1,8 +1,20 @@
 # Compliance Engines Specification
 
-**Version:** 2.0 (Sovereign Edition)
-**Basis:** Screens 034, 097, 099 & Regulatory Standards (ZATCA, SOCPA)
-**Scope:** Tax Calculation, E-Invoicing, Zakat, IFRS 18
+> **document_id:** SPEC-COM-001
+> **status:** ACTIVE — technical and product specification; not an independent regulatory certificate
+> **authority_level:** 1
+> **owner:** Compliance Owner
+> **approved_by:** Pending formal repository owner approval
+> **effective_from:** 2026-08-13
+> **last_verified_sha:** `ce825c55c6e9959645f6eef330a78e2bbd844c7c`
+> **review_due:** 2026-10-13
+> **related_requirements:** REQ-COM-001 through REQ-COM-005
+
+**Version:** 2.1 (Evidence-Bounded Edition)
+**Basis:** Screens 034, 097, 099, implementation evidence, and regulatory requirements requiring separate validation
+**Scope:** Tax calculation, e-invoicing, Zakat, IFRS 18, and the boundaries of technical evidence
+
+> **Evidence boundary:** a capability may be technically implemented or simulated without being production-integrated or regulatorily verified. The terms `SIMULATION`, `SANDBOX-VERIFIED`, `PRODUCTION-INTEGRATED`, and `REGULATORY-EVIDENCED` are distinct states. Only the Compliance Owner may move a requirement to the latter state after attaching evidence.
 
 ---
 
@@ -52,10 +64,12 @@ ZATCA (Zakat, Tax and Customs Authority) mandates electronic invoicing for all b
 
 | Phase   | Name        | Requirement                                |
 | ------- | ----------- | ------------------------------------------ |
-| Phase 1 | Generation  | Generate compliant XML (complete)          |
-| Phase 2 | Integration | Report invoices to ZATCA in near real-time |
+| Phase 1 | Generation  | Generate technical XML artifacts; conformance evidence required before any compliance claim. |
+| Phase 2 | Integration | Target production reporting; not verified by this specification. |
 
 ### 2.2 Onboarding Flow (Screen 034)
+
+> **Current evidence classification:** `SIMULATION`. The flow below is a target workflow. It is not proof that a production CSR/CCSID/PCSID exchange is available or approved.
 
 ```mermaid
 sequenceDiagram
@@ -74,6 +88,8 @@ sequenceDiagram
 ```
 
 ### 2.3 Invoice Reporting Flow
+
+> **Current evidence classification:** `SIMULATION`. The diagram intentionally labels the API as simulated; it must not be used to claim live submission.
 
 ```mermaid
 sequenceDiagram
@@ -186,16 +202,22 @@ A payroll module will integrate GOSI calculations, generating journal entries:
 
 ---
 
-## 6. Compliance Verification Checklist
+## 6. Evidence Register and Verification Boundaries
 
-- [x] VAT is correctly calculated at 15% per line.
-- [x] ZATCA-compliant XML can be generated.
-- [x] Invoice hashing meets ZATCA PIH requirements.
-- [x] Zakat base is calculable from CoA.
-- [x] Sharia Guard flags prohibited terms.
-- [x] IFRS 18 categories are mandatory on accounts.
-- [ ] GOSI integration (planned for payroll module).
+| Requirement area | Current classification | Evidence boundary | Required before `REGULATORY-EVIDENCED` |
+| --- | --- | --- | --- |
+| VAT calculation | PARTIAL | Source and tests may demonstrate arithmetic behavior; this document does not validate a legal interpretation or every tax category. | Versioned regulatory basis, acceptance tests by category, and Compliance Owner review. |
+| XML/UBL/QR generation | PARTIAL | Technical artifacts and tests may exist; format conformance is not certification. | Signed conformance results for the required profile and version. |
+| Invoice hashing/signing | SIMULATION / PARTIAL | Mock or local cryptographic behavior is not production credential evidence. | Key lifecycle, certificate evidence, and verified production/sandbox transaction evidence. |
+| ZATCA onboarding/reporting | SIMULATION | The repository contains simulated flow evidence, not a live integration certificate. | Environment, endpoint, credential governance, response artifacts, and regulator-required evidence. |
+| Zakat / Sharia guard | PARTIAL | Calculation/keyword logic is technical behavior, not a jurisprudential opinion. | Approved policy, assumptions, tests, and Domain/Compliance Owner sign-off. |
+| IFRS 18 classification | PARTIAL | Account categorization may be implemented; this is not an accounting opinion. | Approved accounting policy and report acceptance evidence. |
+| GOSI | PLANNED / MISSING | No implementation evidence is asserted here. | Dedicated requirement, design, implementation, and tests. |
+
+### 6.1 Prohibited Status Language
+
+This document must not use `compliant`, `certified`, `complete`, or equivalent language for a live regulatory claim unless it links to a dated evidence package with environment, SHA, test result, owner, and approval. Product UI and README must use the same boundary.
 
 ---
 
-_This specification ensures Basir meets all KSA regulatory requirements for taxation, e-invoicing, and Sharia compliance._
+_This specification defines technical and product requirements. It does not by itself establish KSA taxation, e-invoicing, Sharia, IFRS, or other regulatory compliance._
