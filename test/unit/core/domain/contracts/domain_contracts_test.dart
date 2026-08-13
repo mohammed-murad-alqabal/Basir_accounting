@@ -68,12 +68,16 @@ void main() {
         reason: 'ترحيل نهائي',
       );
       final b = AuditEntry(
-          type: AuditEventType.posted,
-          operatorName: 'خالد',
-          occurredAt: now,
-          reason: 'ترحيل نهائي');
+        type: AuditEventType.posted,
+        operatorName: 'خالد',
+        occurredAt: now,
+        reason: 'ترحيل نهائي',
+      );
       final c = AuditEntry(
-          type: AuditEventType.edited, operatorName: 'خالد', occurredAt: now);
+        type: AuditEventType.edited,
+        operatorName: 'خالد',
+        occurredAt: now,
+      );
       expect(a, equals(b));
       expect(a, isNot(c));
       expect(a.hashCode, equals(b.hashCode));
@@ -82,7 +86,7 @@ void main() {
 
   group('OperationResult', () {
     test('النتيجة الناجحة تحمل القيمة', () {
-      final result =
+      const result =
           OperationResult<int>.success(value: 42, message: 'تم الترحيل');
       expect(result.success, isTrue);
       expect(result.value, 42);
@@ -90,7 +94,7 @@ void main() {
     });
 
     test('النتيجة الفاشلة تحمل الرسالة ولا تحمل قيمة', () {
-      final result = OperationResult<int>.failure(message: 'رصيد غير كافٍ');
+      const result = OperationResult<int>.failure(message: 'رصيد غير كافٍ');
       expect(result.success, isFalse);
       expect(result.value, isNull);
       expect(result.message, 'رصيد غير كافٍ');
@@ -105,8 +109,10 @@ void main() {
       const result = OperationResult<int>.failure(message: 'فشل الحفظ');
       expect(
         () => result.getOrThrow(),
-        throwsA(isA<OperationFailedException>()
-            .having((e) => e.message, 'message', 'فشل الحفظ')),
+        throwsA(
+          isA<OperationFailedException>()
+              .having((e) => e.message, 'message', 'فشل الحفظ'),
+        ),
       );
     });
 
@@ -134,7 +140,7 @@ void main() {
       );
       final withTrail =
           OperationResult<int>.success(value: 1, auditTrail: [entry]);
-      final withoutTrail = OperationResult<int>.success(value: 1);
+      const withoutTrail = OperationResult<int>.success(value: 1);
       expect(withTrail.hasAuditTrail, isTrue);
       expect(withoutTrail.hasAuditTrail, isFalse);
     });
@@ -147,7 +153,6 @@ void main() {
         description: 'صنف تجريبي',
         quantity: 10,
         unitPrice: 100,
-        taxRate: 0.15,
         discount: 50,
       );
       expect(line.netAmount, 950); // 10×100-50
@@ -160,7 +165,7 @@ void main() {
           DraftLineItem(id: 'L1', description: 'س', quantity: 1, unitPrice: 1);
       const b =
           DraftLineItem(id: 'L1', description: 'س', quantity: 1, unitPrice: 1);
-      final c =
+      const c =
           DraftLineItem(id: 'L1', description: 'س', quantity: 2, unitPrice: 1);
       expect(a, equals(b));
       expect(a, isNot(c));
@@ -183,15 +188,20 @@ void main() {
         id: 'D1',
         documentType: 'invoice',
         currencyCode: 'SAR',
-        lines: [
+        lines: const [
           DraftLineItem(
-              id: 'L1', description: 'أ', quantity: 2, unitPrice: 100),
+            id: 'L1',
+            description: 'أ',
+            quantity: 2,
+            unitPrice: 100,
+          ),
           DraftLineItem(
-              id: 'L2',
-              description: 'ب',
-              quantity: 1,
-              unitPrice: 50,
-              discount: 10),
+            id: 'L2',
+            description: 'ب',
+            quantity: 1,
+            unitPrice: 50,
+            discount: 10,
+          ),
         ],
       );
       expect(draft.subTotal, 200 + 40); // 200 + (50-10)
@@ -205,8 +215,8 @@ void main() {
         id: 'D1',
         documentType: 'invoice',
         currencyCode: 'SAR',
-        lines: [
-          DraftLineItem(id: 'L1', description: 'أ', quantity: 1, unitPrice: 10)
+        lines: const [
+          DraftLineItem(id: 'L1', description: 'أ', quantity: 1, unitPrice: 10),
         ],
       );
       expect(valid.isSaveable, isTrue);
@@ -215,8 +225,8 @@ void main() {
         id: 'D1',
         documentType: 'invoice',
         currencyCode: 'SAR',
-        lines: [
-          DraftLineItem(id: 'L1', description: 'أ', quantity: 0, unitPrice: 10)
+        lines: const [
+          DraftLineItem(id: 'L1', description: 'أ', quantity: 0, unitPrice: 10),
         ],
       );
       expect(zeroQuantity.isSaveable, isFalse);
@@ -225,7 +235,11 @@ void main() {
     test('copyWithLines تنشئ نسخة جديدة ببنود محدثة', () {
       final updated = empty.copyWithLines([
         const DraftLineItem(
-            id: 'L1', description: 'بند جديد', quantity: 3, unitPrice: 20),
+          id: 'L1',
+          description: 'بند جديد',
+          quantity: 3,
+          unitPrice: 20,
+        ),
       ]);
       expect(updated.lines, hasLength(1));
       expect(updated.grandTotal, greaterThan(0));
