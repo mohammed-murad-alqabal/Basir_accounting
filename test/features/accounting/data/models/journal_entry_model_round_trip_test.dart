@@ -36,7 +36,9 @@ void main() {
       final source = _entryFixture();
 
       await isar.writeTxn(() async {
-        await isar.journalEntryModels.put(JournalEntryModel.fromEntity(source));
+        await isar.journalEntryModels.put(
+          JournalEntryModel.fromEntity(source),
+        );
       });
 
       final stored = await isar.journalEntryModels
@@ -50,8 +52,10 @@ void main() {
       expect(restored, source);
       expect(restored.lines.first.debit.toString(), '123456789.123456789');
       expect(restored.lines.first.exchangeRate.toString(), '3.7500000001');
-      expect(restored.lines.first.originalAmount.toString(),
-          '329218106.788065842');
+      expect(
+        restored.lines.first.originalAmount.toString(),
+        '329218106.788065842',
+      );
       expect(restored.auditLogs, hasLength(1));
       expect(restored.auditLogs.single.actor, 'user-001');
       expect(restored.syncStatus, SyncStatus.pendingPush);
@@ -134,6 +138,5 @@ JournalEntry _entryFixture() {
     ],
     syncStatus: SyncStatus.pendingPush,
     serverUpdatedAt: timestamp,
-    isDeleted: false,
   );
 }
