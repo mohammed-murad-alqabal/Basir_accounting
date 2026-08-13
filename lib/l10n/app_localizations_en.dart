@@ -2159,4 +2159,128 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clearSearchTooltip => 'Clear search';
+
+  @override
+  String get shellSearchAll => 'Search everything';
+
+  @override
+  String get shellSearchHint => 'Search invoices, customers, items...';
+
+  @override
+  String get shellToggleNav => 'Collapse/expand navigation bar';
+
+  @override
+  String get shellOrgLabel => 'Organization';
+
+  @override
+  String get shellBranchLabel => 'Branch';
+
+  @override
+  String get shellPeriodLabel => 'Period';
+
+  @override
+  String get shellCurrentOrg => 'Default Organization';
+
+  @override
+  String get shellCurrentBranch => 'Main Branch';
+
+  @override
+  String get shellCurrentPeriod => 'Current Fiscal Period';
+
+  @override
+  String get shellNotifications => 'Notifications';
+
+  @override
+  String get shellSearchResults => 'Search results';
+
+  @override
+  String get shellNoResults => 'No results found';
+
+  @override
+  String get navReports => 'Reports';
+
+  @override
+  String get shellCloseSearch => 'Close search';
+
+  @override
+  String get workStatusDraft => 'Draft';
+
+  @override
+  String get workStatusPendingApproval => 'Pending Approval';
+
+  @override
+  String get workStatusApproved => 'Approved';
+
+  @override
+  String get workStatusPosted => 'Posted';
+
+  @override
+  String get workStatusCancelled => 'Cancelled';
+
+  @override
+  String get workStatusReversed => 'Reversed';
+
+  @override
+  String get workAuditTitle => 'Audit Trail';
+
+  @override
+  String get workAuditEmpty => 'No audit events yet.';
+
+  @override
+  String workAuditLinkedDoc(Object arg0) {
+    return 'Linked document: $arg0';
+  }
+
+  @override
+  String workAuditOpenLinked(Object arg0) {
+    return 'Open linked document $arg0';
+  }
+
+  @override
+  String get workAuditEventCreated => 'Created';
+
+  @override
+  String get workAuditEventModified => 'Modified';
+
+  @override
+  String get workAuditEventApproved => 'Approved';
+
+  @override
+  String get workAuditEventReturned => 'Returned for revision';
+
+  @override
+  String get workAuditEventPosted => 'Posted';
+
+  @override
+  String get workAuditEventCancelled => 'Cancelled';
+
+  @override
+  String get workAuditEventReversed => 'Reversed';
+
+  @override
+  String get workAuditEventAdministrative => 'Administrative action';
+
+  @override
+  String get workGridEmpty => 'No records found.';
+
+  @override
+  String workGridSortableColumn(Object arg0) {
+    return '$arg0, sortable column';
+  }
+
+  @override
+  String get workFilterSearchHint =>
+      'Search in documents, customers, and items...';
+
+  @override
+  String get workFilterExport => 'Export';
+
+  @override
+  String get workFilterCollapse => 'Collapse filters';
+
+  @override
+  String get workGridSelect => 'Select';
+
+  @override
+  String get workGridRow => 'Table row';
 }
