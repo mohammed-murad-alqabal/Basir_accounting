@@ -6,7 +6,7 @@
 > **owner:** Data Owner
 > **approved_by:** Pending formal repository owner approval
 > **effective_from:** 2026-08-13
-> **last_verified_sha:** `e9c6de2266e567c076a2dbe64765f72545e1c68d`
+> **last_verified_sha:** `ad39da61ec7cc756e6d551aa356c0e1824d9ab19` — [Quality Gates 31750243155](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31750243155)
 > **review_due:** 2026-09-13
 > **related_requirements:** REQ-DATA-001, REQ-DATA-002, REQ-DATA-003, REQ-ACC-008
 > **related_adrs:** ADR-DATA-001, ADR-ACC-001
@@ -52,9 +52,9 @@
 
 | المعرّف | الدليل المطلوب لهذه الدفعة |
 |---|---|
-| DATA-RT-ISAR-001 | fixture شامل يتحول `JournalEntry → JournalEntryModel → JournalEntry` ويحافظ على كل حقل محفوظ و`Decimal` من دون `double`. |
-| DATA-RT-ISAR-002 | إدخال نص decimal معطوب في نموذج Isar يفشل ولا يتحول إلى `Decimal.zero`. |
-| DATA-PG-DEC-001 | اختبار Rust خالص يثبت أن JSON decimal النصي والعددي يتحولان إلى `rust_decimal::Decimal` بلا `f64`، وأن القيمة المعطوبة تعيد خطأ. |
+| DATA-RT-ISAR-001 | fixture شامل يتحول `JournalEntry → JournalEntryModel → JournalEntry` ويحافظ على كل حقل محفوظ و`Decimal` من دون `double`. مرّ ضمن [Quality Gates 31750243155](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31750243155). |
+| DATA-RT-ISAR-002 | إدخال نص decimal معطوب في نموذج Isar يفشل ولا يتحول إلى `Decimal.zero`. مرّ ضمن الاختبار نفسه في CI. |
+| DATA-PG-DEC-001 | اختبار Rust خالص يثبت أن JSON decimal النصي والعددي يتحولان إلى `rust_decimal::Decimal` بلا `f64`، وأن القيمة المعطوبة تعيد خطأ. أضيف الاختبار، لكن لم يجر محليًا بسبب cache Cargo غير مكتمل؛ لا يعد دليل PostgreSQL integration. |
 | DATA-SCHEMA-BOUNDARY-001 | يثبت هذا السجل أن حقل PostgreSQL الخاسر أو غير المتوافق لا يعامل كـcanonical ولا يدّعى دعم sync. |
 
 ## خطوات مؤجلة صراحة
