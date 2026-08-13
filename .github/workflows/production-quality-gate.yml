@@ -228,10 +228,27 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Scan repository history for secrets
-        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
+      - name: Install checksum-verified Gitleaks scanner
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_VERSION: v8.30.1
+          GITLEAKS_ARCHIVE_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/gitleaks.tar.gz"
+          install_dir="$RUNNER_TEMP/gitleaks-bin"
+          curl --fail --location --proto '=https' --tlsv1.2 \
+            --output "$archive" \
+            "https://github.com/gitleaks/gitleaks/releases/download/${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION#v}_linux_x64.tar.gz"
+          printf '%s  %s\n' "$GITLEAKS_ARCHIVE_SHA256" "$archive" | sha256sum --check --strict
+          mkdir -p "$install_dir"
+          tar --extract --gzip --file "$archive" --directory "$install_dir" gitleaks
+          install --mode=0755 "$install_dir/gitleaks" "$RUNNER_TEMP/gitleaks"
+          "$RUNNER_TEMP/gitleaks" version
+
+      - name: Scan complete repository history for secrets
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/gitleaks" git --redact --verbose --log-opts="--all"
 
   dependency-review:
     name: Dependency review
@@ -250,8 +267,7 @@ jobs:
           allow-dependencies-licenses: >-
             pkg:pub/material_color_utilities@0.13.0,
             pkg:pub/matcher@0.12.19,
-            pkg:pub/test_api@0.7.11,
-            pkg:githubactions/gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7
+            pkg:pub/test_api@0.7.11
 
       - name: Record non-PR dependency-review policy
         if: github.event_name != 'pull_request'
