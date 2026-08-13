@@ -6,32 +6,68 @@
       {
         "ordinal": 0,
         "name": "code",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "currencies",
+            "name": "code"
+          }
+        }
       },
       {
         "ordinal": 1,
         "name": "name",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "currencies",
+            "name": "name"
+          }
+        }
       },
       {
         "ordinal": 2,
         "name": "symbol",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "currencies",
+            "name": "symbol"
+          }
+        }
       },
       {
         "ordinal": 3,
         "name": "decimals",
-        "type_info": "Int4"
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "currencies",
+            "name": "decimals"
+          }
+        }
       },
       {
         "ordinal": 4,
         "name": "is_active",
-        "type_info": "Bool"
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "currencies",
+            "name": "is_active"
+          }
+        }
       },
       {
         "ordinal": 5,
         "name": "is_functional",
-        "type_info": "Bool"
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "currencies",
+            "name": "is_functional"
+          }
+        }
       }
     ],
     "parameters": {

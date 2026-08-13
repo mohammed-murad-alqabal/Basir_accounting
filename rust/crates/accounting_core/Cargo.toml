@@ -29,7 +29,8 @@ thiserror = { workspace = true }
 tokio = { workspace = true }
 sqlx = { workspace = true, features = [
   "postgres",
-  "runtime-tokio-rustls",
+  "runtime-tokio",
+  "tls-rustls-ring",
   "macros",
 ] }
 strum = "0.27.2"

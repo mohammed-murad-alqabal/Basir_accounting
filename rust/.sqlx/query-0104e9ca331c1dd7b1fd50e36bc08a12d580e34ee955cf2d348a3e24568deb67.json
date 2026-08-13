@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            SELECT \n                a.id,\n                a.code,\n                a.name_ar as account_name_ar,\n                a.name_en as account_name_en,\n                a.type as \"account_type!\",\n                a.classification as account_classification,\n                COALESCE(SUM(l.debit), 0) as \"total_debits!: Decimal\",\n                COALESCE(SUM(l.credit), 0) as \"total_credits!: Decimal\"\n            FROM accounts a\n            LEFT JOIN journal_entry_lines l ON a.id = l.account_id\n            LEFT JOIN journal_entries e ON l.entry_id = e.id\n            WHERE a.is_leaf = true\n              AND (a.type = 'Income' OR a.type = 'Expense')\n              AND e.effective_date >= $1\n              AND e.effective_date <= $2\n            GROUP BY a.id, a.code, a.name_ar, a.name_en, a.type, a.classification\n            ",
+  "query": "\n            SELECT \n                a.id,\n                a.code,\n                a.name_ar as account_name_ar,\n                a.name_en as account_name_en,\n                a.type as \"account_type!\",\n                a.classification as account_classification,\n                COALESCE(SUM(l.debit), 0) as \"total_debits!: Decimal\",\n                COALESCE(SUM(l.credit), 0) as \"total_credits!: Decimal\"\n            FROM accounts a\n            LEFT JOIN journal_entry_lines l ON a.id = l.account_id\n            LEFT JOIN journal_entries e ON l.entry_id = e.id\n            WHERE a.is_leaf = true\n              AND (a.type = 'Asset' OR a.type = 'Liability' OR a.type = 'Equity')\n              AND e.effective_date <= $1\n            GROUP BY a.id, a.code, a.name_ar, a.name_en, a.type, a.classification\n            ",
   "describe": {
     "columns": [
       {
@@ -84,7 +84,6 @@
     ],
     "parameters": {
       "Left": [
-        "Date",
         "Date"
       ]
     },
@@ -99,5 +98,5 @@
       null
     ]
   },
-  "hash": "9aee7e345f2f483e740bfee4c17531f3ef340ee681e935d3f75e4c3ca7b4964b"
+  "hash": "0104e9ca331c1dd7b1fd50e36bc08a12d580e34ee955cf2d348a3e24568deb67"
 }

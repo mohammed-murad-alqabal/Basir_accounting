@@ -51,8 +51,9 @@ proptest = "1"
 flutter_rust_bridge = { version = "2.11.1", features = ["chrono", "uuid"] }
 
 # Database
-sqlx = { version = "0.8", default-features = false, features = [
-    "runtime-tokio-rustls",
+sqlx = { version = "0.9", default-features = false, features = [
+    "runtime-tokio",
+    "tls-rustls-ring",
     "postgres",
     "uuid",
     "chrono",
