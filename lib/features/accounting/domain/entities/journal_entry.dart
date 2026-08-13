@@ -90,7 +90,7 @@ class AuditLogEntry with _$AuditLogEntry {
 class JournalEntryLine with _$JournalEntryLine {
   /// Creates a journal entry line.
   const factory JournalEntryLine({
-    /// Reference to the target [Account] ID.
+    /// Reference to the target account identifier.
     required String accountId,
 
     /// Denormalized account name for high-performance listing and audit.
@@ -171,6 +171,11 @@ class JournalEntry with _$JournalEntry {
 
     /// Last modification timestamp in UTC.
     required DateTime updatedAt,
+
+    /// Stable Postgres identifier returned after authoritative posting.
+    ///
+    /// It is null for local drafts and mandatory for a cached `Posted` entry.
+    String? authoritativeEntryId,
 
     /// Integrity verification fingerprint (Merkle-style link).
     /// (Standard Reference: CP-003: Immutability)

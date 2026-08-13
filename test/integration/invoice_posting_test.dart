@@ -1,5 +1,6 @@
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/authoritative_ledger_gateway.dart';
 import 'package:basir_accounting_system/features/accounting/application/orchestrator_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
@@ -110,6 +111,9 @@ void main() {
       container = ProviderContainer(
         overrides: [
           accountingRepositoryProvider.overrideWithValue(mockAccountingRepo),
+          authoritativeLedgerGatewayProvider.overrideWithValue(
+            const TestAuthoritativeLedgerGateway(),
+          ),
           financialYearRepositoryProvider.overrideWithValue(mockFyRepo),
           customerRepositoryProvider.overrideWithValue(mockCustomerRepo),
           salesBridgeServiceProvider.overrideWithValue(mockSalesBridge),
@@ -159,7 +163,7 @@ void main() {
       ).thenAnswer((_) async => []);
 
       when(
-        () => mockAccountingRepo.addJournalEntry(any()),
+        () => mockAccountingRepo.cacheAuthoritativeJournalEntry(any()),
       ).thenAnswer((_) async {});
     });
 
@@ -217,8 +221,9 @@ void main() {
 
       // Verify Journal Entry
       final captured = verify(
-        () => mockAccountingRepo.addJournalEntry(captureAny()),
+        () => mockAccountingRepo.cacheAuthoritativeJournalEntry(captureAny()),
       ).captured;
+      verifyNever(() => mockAccountingRepo.addJournalEntry(any()));
 
       final entry = captured.first as JournalEntry;
 

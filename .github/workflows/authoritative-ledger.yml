@@ -1,0 +1,94 @@
+name: Authoritative ledger boundary
+
+on:
+  pull_request:
+    paths:
+      - 'lib/core/services/ledger_authority_policy.dart'
+      - 'lib/core/services/sync_service.dart'
+      - 'lib/features/accounting/**'
+      - 'rust/migrations/**'
+      - 'rust/crates/accounting_data/**'
+      - 'scripts/**'
+      - 'test/**'
+      - '.github/workflows/authoritative-ledger.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'lib/core/services/ledger_authority_policy.dart'
+      - 'lib/core/services/sync_service.dart'
+      - 'lib/features/accounting/**'
+      - 'rust/migrations/**'
+      - 'rust/crates/accounting_data/**'
+      - 'scripts/**'
+      - 'test/**'
+
+jobs:
+  postgres-contract:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: basir_authority_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d basir_authority_ci"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      # Pinned SHAs are required by the repository Actions policy.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.11'
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install --yes postgresql-client
+      - name: Validate authoritative PostgreSQL contract
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: 5432
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGDATABASE: basir_authority_ci
+        run: bash scripts/ci_authoritative_ledger.sh
+
+  flutter-authority-path:
+    runs-on: ubuntu-latest
+    steps:
+      # Pinned SHAs are required by the repository Actions policy.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install Flutter SDK without composite Actions
+        run: |
+          git clone --depth 1 --branch stable https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          export PATH="$RUNNER_TEMP/flutter/bin:$PATH"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+          flutter --version
+      - name: Fetch Flutter dependencies
+        run: flutter pub get
+      - name: Generate Dart sources for a clean checkout
+        run: dart run build_runner build --delete-conflicting-outputs
+      - name: Validate authoritative Flutter boundary
+        run: |
+          : > .env
+          flutter analyze \
+            lib/core/services/ledger_authority_policy.dart \
+            lib/core/services/sync_service.dart \
+            lib/core/providers.dart \
+            lib/features/accounting/application/accounting_service.dart \
+            lib/features/accounting/application/authoritative_ledger_gateway.dart \
+            lib/features/accounting/application/ledger_outbox_service.dart \
+            lib/features/accounting/application/payment_receipt_service.dart \
+            lib/features/accounting/data/models/journal_entry_model.dart \
+            lib/features/accounting/data/models/ledger_outbox_model.dart \
+            lib/features/accounting/data/repositories/accounting_repository_impl.dart \
+            lib/features/accounting/domain/entities/journal_entry.dart \
+            lib/features/accounting/domain/repositories/accounting_repository.dart
+          flutter test \
+            test/integration/invoice_posting_test.dart \
+            test/unit/features/accounting/treasury_service_test.dart \
+            test/unit/features/accounting/accounting_service_bypass_test.dart \
+            test/unit/features/accounting/authoritative_ledger_gateway_test.dart

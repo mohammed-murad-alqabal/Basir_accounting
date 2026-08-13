@@ -36,7 +36,7 @@ impl PgLedgerRepository {
         // 1. Insert Header
         let adjustment_reason_str = entry.adjustment_reason.map(|r| format!("{:?}", r));
 
-        sqlx::query!(
+        let header_insert = sqlx::query!(
             r#"
             INSERT INTO journal_entries (
                 id, entry_number, entry_type, status, 
@@ -45,6 +45,7 @@ impl PgLedgerRepository {
                 linked_entry_id, adjustment_reason
             )
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+            ON CONFLICT (id) DO NOTHING
             "#,
             entry.entry_id,
             entry.entry_number,
@@ -61,6 +62,12 @@ impl PgLedgerRepository {
         )
         .execute(&mut *tx)
         .await?;
+
+        // A replay with the same operation UUID has already committed the
+        // header, lines and audit record. Do not append partial duplicates.
+        if header_insert.rows_affected() == 0 {
+            return Ok(());
+        }
 
         // 2. Insert Lines
         for line in &entry.lines {
