@@ -2148,4 +2148,127 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get clearSearchTooltip => 'مسح البحث';
+
+  @override
+  String get shellSearchAll => 'البحث الشامل';
+
+  @override
+  String get shellSearchHint => 'ابحث في الفواتير والعملاء والأصناف...';
+
+  @override
+  String get shellToggleNav => 'طي/فتح شريط التنقل';
+
+  @override
+  String get shellOrgLabel => 'المؤسسة';
+
+  @override
+  String get shellBranchLabel => 'الفرع';
+
+  @override
+  String get shellPeriodLabel => 'الفترة';
+
+  @override
+  String get shellCurrentOrg => 'المؤسسة الافتراضية';
+
+  @override
+  String get shellCurrentBranch => 'الفرع الرئيسي';
+
+  @override
+  String get shellCurrentPeriod => 'الفترة المالية الحالية';
+
+  @override
+  String get shellNotifications => 'الإشعارات';
+
+  @override
+  String get shellSearchResults => 'نتائج البحث';
+
+  @override
+  String get shellNoResults => 'لا توجد نتائج';
+
+  @override
+  String get navReports => 'التقارير';
+
+  @override
+  String get shellCloseSearch => 'إغلاق البحث';
+
+  @override
+  String get workStatusDraft => 'مسودة';
+
+  @override
+  String get workStatusPendingApproval => 'بانتظار الاعتماد';
+
+  @override
+  String get workStatusApproved => 'معتمدة';
+
+  @override
+  String get workStatusPosted => 'مرحّلة';
+
+  @override
+  String get workStatusCancelled => 'ملغاة';
+
+  @override
+  String get workStatusReversed => 'معكوسة';
+
+  @override
+  String get workAuditTitle => 'سجل التدقيق';
+
+  @override
+  String get workAuditEmpty => 'لا توجد أحداث للتدقيق.';
+
+  @override
+  String workAuditLinkedDoc(Object arg0) {
+    return 'الوثيقة المرتبطة: $arg0';
+  }
+
+  @override
+  String workAuditOpenLinked(Object arg0) {
+    return 'فتح الوثيقة المرتبطة $arg0';
+  }
+
+  @override
+  String get workAuditEventCreated => 'إنشاء';
+
+  @override
+  String get workAuditEventModified => 'تعديل';
+
+  @override
+  String get workAuditEventApproved => 'اعتماد';
+
+  @override
+  String get workAuditEventReturned => 'إرجاع للمراجعة';
+
+  @override
+  String get workAuditEventPosted => 'ترحيل';
+
+  @override
+  String get workAuditEventCancelled => 'إلغاء';
+
+  @override
+  String get workAuditEventReversed => 'عكس';
+
+  @override
+  String get workAuditEventAdministrative => 'إجراء إداري';
+
+  @override
+  String get workGridEmpty => 'لا توجد سجلات.';
+
+  @override
+  String workGridSortableColumn(Object arg0) {
+    return '‎$arg0، عمود قابل للفرز';
+  }
+
+  @override
+  String get workFilterSearchHint => 'ابحث في الوثائق والعملاء والأصناف...';
+
+  @override
+  String get workFilterExport => 'تصدير';
+
+  @override
+  String get workFilterCollapse => 'طي الفلاتر';
+
+  @override
+  String get workGridSelect => 'تحديد';
+
+  @override
+  String get workGridRow => 'صف الجدول';
 }

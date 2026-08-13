@@ -4135,6 +4135,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clear search'**
   String get clearSearchTooltip;
+
+  /// No description provided for @shellSearchAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Search everything'**
+  String get shellSearchAll;
+
+  /// No description provided for @shellSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search invoices, customers, items...'**
+  String get shellSearchHint;
+
+  /// No description provided for @shellToggleNav.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse/expand navigation bar'**
+  String get shellToggleNav;
+
+  /// No description provided for @shellOrgLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization'**
+  String get shellOrgLabel;
+
+  /// No description provided for @shellBranchLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get shellBranchLabel;
+
+  /// No description provided for @shellPeriodLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get shellPeriodLabel;
+
+  /// No description provided for @shellCurrentOrg.
+  ///
+  /// In en, this message translates to:
+  /// **'Default Organization'**
+  String get shellCurrentOrg;
+
+  /// No description provided for @shellCurrentBranch.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Branch'**
+  String get shellCurrentBranch;
+
+  /// No description provided for @shellCurrentPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Fiscal Period'**
+  String get shellCurrentPeriod;
+
+  /// No description provided for @shellNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get shellNotifications;
+
+  /// No description provided for @shellSearchResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Search results'**
+  String get shellSearchResults;
+
+  /// No description provided for @shellNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
+  String get shellNoResults;
+
+  /// No description provided for @navReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get navReports;
+
+  /// No description provided for @shellCloseSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Close search'**
+  String get shellCloseSearch;
+
+  /// No description provided for @workStatusDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get workStatusDraft;
+
+  /// No description provided for @workStatusPendingApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Approval'**
+  String get workStatusPendingApproval;
+
+  /// No description provided for @workStatusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get workStatusApproved;
+
+  /// No description provided for @workStatusPosted.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted'**
+  String get workStatusPosted;
+
+  /// No description provided for @workStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get workStatusCancelled;
+
+  /// No description provided for @workStatusReversed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed'**
+  String get workStatusReversed;
+
+  /// No description provided for @workAuditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit Trail'**
+  String get workAuditTitle;
+
+  /// No description provided for @workAuditEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No audit events yet.'**
+  String get workAuditEmpty;
+
+  /// No description provided for @workAuditLinkedDoc.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked document: {arg0}'**
+  String workAuditLinkedDoc(Object arg0);
+
+  /// No description provided for @workAuditOpenLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'Open linked document {arg0}'**
+  String workAuditOpenLinked(Object arg0);
+
+  /// No description provided for @workAuditEventCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get workAuditEventCreated;
+
+  /// No description provided for @workAuditEventModified.
+  ///
+  /// In en, this message translates to:
+  /// **'Modified'**
+  String get workAuditEventModified;
+
+  /// No description provided for @workAuditEventApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get workAuditEventApproved;
+
+  /// No description provided for @workAuditEventReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned for revision'**
+  String get workAuditEventReturned;
+
+  /// No description provided for @workAuditEventPosted.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted'**
+  String get workAuditEventPosted;
+
+  /// No description provided for @workAuditEventCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get workAuditEventCancelled;
+
+  /// No description provided for @workAuditEventReversed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed'**
+  String get workAuditEventReversed;
+
+  /// No description provided for @workAuditEventAdministrative.
+  ///
+  /// In en, this message translates to:
+  /// **'Administrative action'**
+  String get workAuditEventAdministrative;
+
+  /// No description provided for @workGridEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No records found.'**
+  String get workGridEmpty;
+
+  /// No description provided for @workGridSortableColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'{arg0}, sortable column'**
+  String workGridSortableColumn(Object arg0);
+
+  /// No description provided for @workFilterSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search in documents, customers, and items...'**
+  String get workFilterSearchHint;
+
+  /// No description provided for @workFilterExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get workFilterExport;
+
+  /// No description provided for @workFilterCollapse.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse filters'**
+  String get workFilterCollapse;
+
+  /// No description provided for @workGridSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get workGridSelect;
+
+  /// No description provided for @workGridRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Table row'**
+  String get workGridRow;
 }
 
 class _AppLocalizationsDelegate
