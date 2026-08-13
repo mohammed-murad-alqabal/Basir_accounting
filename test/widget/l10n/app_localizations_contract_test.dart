@@ -124,8 +124,10 @@ void main() {
     });
 
     test('يسجل مفوض الترجمة العربية والإنجليزية فقط كلغات مدعومة', () {
-      expect(AppLocalizations.supportedLocales,
-          const [Locale('ar'), Locale('en')]);
+      expect(
+        AppLocalizations.supportedLocales,
+        const [Locale('ar'), Locale('en')],
+      );
       expect(AppLocalizations.localizationsDelegates, hasLength(4));
     });
   });
