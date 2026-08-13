@@ -85,6 +85,7 @@ firebase_options.dart
 **/api_key*
 **/api-key*
 **/*password*
+!lib/**/*.dart
 **/*token*
 !**/*_guide.md
 !**/*_manual.md

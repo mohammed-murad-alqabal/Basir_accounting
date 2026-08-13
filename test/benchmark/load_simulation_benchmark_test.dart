@@ -56,10 +56,13 @@ void main() {
         ..taxAmount = 150.0
         ..totalAmount = 1150.0
         ..paidAmount = random.nextBool() ? 1150.0 : 0.0
+        ..discountAmount = 0.0
+        ..discountRate = 0.0
         ..status = InvoiceStatus.paid
         ..type = InvoiceType.sales
         ..currency = 'SAR'
         ..exchangeRate = 1.0
+        ..taxRate = 15.0
         ..createdAt = now
         ..updatedAt = now
         ..syncStatus = SyncStatus.synced
