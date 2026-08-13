@@ -59,6 +59,8 @@ class TreasuryService extends _$TreasuryService {
 
     await _validateTreasuryAccount(voucher.treasuryAccountId);
 
+    final isForeignCurrency =
+        voucher.originalCurrency?.trim().isNotEmpty ?? false;
     final lines = [
       JournalEntryLine(
         accountId: voucher.treasuryAccountId,
@@ -66,9 +68,9 @@ class TreasuryService extends _$TreasuryService {
         debit: voucher.amount,
         credit: Decimal.zero,
         description: 'Receipt: ${voucher.description}',
-        originalCurrency: voucher.originalCurrency,
-        exchangeRate: voucher.exchangeRate,
-        originalAmount: voucher.originalAmount,
+        originalCurrency: isForeignCurrency ? voucher.originalCurrency : null,
+        exchangeRate: isForeignCurrency ? voucher.exchangeRate : null,
+        originalAmount: isForeignCurrency ? voucher.originalAmount : null,
       ),
       JournalEntryLine(
         accountId: voucher.accountId,
@@ -76,9 +78,9 @@ class TreasuryService extends _$TreasuryService {
         credit: voucher.amount,
         debit: Decimal.zero,
         description: 'Receipt Voucher #${voucher.referenceNumber}',
-        originalCurrency: voucher.originalCurrency,
-        exchangeRate: voucher.exchangeRate,
-        originalAmount: voucher.originalAmount,
+        originalCurrency: isForeignCurrency ? voucher.originalCurrency : null,
+        exchangeRate: isForeignCurrency ? voucher.exchangeRate : null,
+        originalAmount: isForeignCurrency ? voucher.originalAmount : null,
       ),
     ];
 
@@ -143,6 +145,8 @@ class TreasuryService extends _$TreasuryService {
 
     await _validateTreasuryAccount(voucher.treasuryAccountId);
 
+    final isForeignCurrency =
+        voucher.originalCurrency?.trim().isNotEmpty ?? false;
     final lines = [
       JournalEntryLine(
         accountId: voucher.accountId,
@@ -150,9 +154,9 @@ class TreasuryService extends _$TreasuryService {
         debit: voucher.amount,
         credit: Decimal.zero,
         description: 'Payment: ${voucher.description}',
-        originalCurrency: voucher.originalCurrency,
-        exchangeRate: voucher.exchangeRate,
-        originalAmount: voucher.originalAmount,
+        originalCurrency: isForeignCurrency ? voucher.originalCurrency : null,
+        exchangeRate: isForeignCurrency ? voucher.exchangeRate : null,
+        originalAmount: isForeignCurrency ? voucher.originalAmount : null,
       ),
       JournalEntryLine(
         accountId: voucher.treasuryAccountId,
@@ -160,9 +164,9 @@ class TreasuryService extends _$TreasuryService {
         credit: voucher.amount,
         debit: Decimal.zero,
         description: 'Payment Voucher #${voucher.referenceNumber}',
-        originalCurrency: voucher.originalCurrency,
-        exchangeRate: voucher.exchangeRate,
-        originalAmount: voucher.originalAmount,
+        originalCurrency: isForeignCurrency ? voucher.originalCurrency : null,
+        exchangeRate: isForeignCurrency ? voucher.exchangeRate : null,
+        originalAmount: isForeignCurrency ? voucher.originalAmount : null,
       ),
     ];
 
