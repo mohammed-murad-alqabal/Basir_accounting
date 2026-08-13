@@ -106,7 +106,9 @@ jobs:
           printf '%s\n' '# Generated only for CI tests; intentionally contains no secrets.' > .env
 
       - name: Run Flutter tests with coverage
-        run: flutter test --coverage --reporter expanded
+        # Run every test in one worker to keep native bridge test processes within
+        # the hosted runner's memory limits; no test path or quality assertion is omitted.
+        run: flutter test --coverage --reporter expanded --concurrency=1
 
       - name: Enforce line coverage threshold
         run: |
