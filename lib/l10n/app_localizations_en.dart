@@ -2106,4 +2106,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionEmailInvoice => 'Email Invoice';
+
+  @override
+  String get searchInvoicesHint => 'Search invoices, customers, or numbers';
+
+  @override
+  String get searchInvoicesLabel => 'Search invoices';
+
+  @override
+  String get sortBy => 'Sort by';
+
+  @override
+  String get sortLabel => 'Sort';
+
+  @override
+  String get sortNewest => 'Newest first';
+
+  @override
+  String get sortOldest => 'Oldest first';
+
+  @override
+  String get sortAmountDesc => 'Highest amount';
+
+  @override
+  String get sortAmountAsc => 'Lowest amount';
+
+  @override
+  String get sortCustomer => 'Customer name';
+
+  @override
+  String get sortDueDateAsc => 'Due date (soonest)';
+
+  @override
+  String get filterCancelled => 'Cancelled';
+
+  @override
+  String get noSearchResults => 'No invoices match your search';
+
+  @override
+  String resultsCount(String count) {
+    return '$count results';
+  }
+
+  @override
+  String get resultsCountZero => 'No results';
+
+  @override
+  String get searchTooltip => 'Search';
+
+  @override
+  String get sortTooltip => 'Sort invoices';
+
+  @override
+  String get clearSearchTooltip => 'Clear search';
 }

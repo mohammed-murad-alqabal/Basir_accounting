@@ -86,7 +86,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       body: Column(
         children: [
           _buildStatsHeader(statsAsync),
-          _buildFilterBar(),
+          _buildToolbar(invoicesAsync.value?.length ?? 0),
           Expanded(
             child: invoicesAsync.when(
               data: (invoices) =>
@@ -200,22 +200,40 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
         ],
       );
 
-  Widget _buildFilterBar() => SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(
-          horizontal: Spacing.lg,
-          vertical: Spacing.sm,
-        ),
-        child: Row(
-          children: [
-            _buildFilterChip(context.l10n.filterAll, 'all'),
-            _buildFilterChip(context.l10n.filterDraft, 'draft'),
-            _buildFilterChip(context.l10n.filterIssued, 'issued'),
-            _buildFilterChip(context.l10n.filterPaid, 'paid'),
-            _buildFilterChip(context.l10n.filterOverdue, 'overdue'),
-          ],
-        ),
-      );
+  /// شريط الأدوات الموحد: بحث نصي + فرز + شرائح حالة الفاتورة.
+  Widget _buildToolbar(int matchedCount) {
+    final isSearching = ref.watch(
+      invoiceSearchProvider.select((query) => query.isNotEmpty),
+    );
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: Spacing.xs),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          InvoiceListToolbar(
+            totalMatches: isSearching ? matchedCount : null,
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(
+              horizontal: Spacing.lg,
+              vertical: Spacing.sm,
+            ),
+            child: Row(
+              children: [
+                _buildFilterChip(context.l10n.filterAll, 'all'),
+                _buildFilterChip(context.l10n.filterDraft, 'draft'),
+                _buildFilterChip(context.l10n.filterIssued, 'issued'),
+                _buildFilterChip(context.l10n.filterPaid, 'paid'),
+                _buildFilterChip(context.l10n.filterOverdue, 'overdue'),
+                _buildFilterChip(context.l10n.filterCancelled, 'cancelled'),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildFilterChip(String label, String value) {
     final isSelected = _selectedFilter == value;

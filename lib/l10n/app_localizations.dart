@@ -4033,6 +4033,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Email Invoice'**
   String get actionEmailInvoice;
+
+  /// No description provided for @searchInvoicesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search invoices, customers, or numbers'**
+  String get searchInvoicesHint;
+
+  /// No description provided for @searchInvoicesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Search invoices'**
+  String get searchInvoicesLabel;
+
+  /// No description provided for @sortBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by'**
+  String get sortBy;
+
+  /// No description provided for @sortLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort'**
+  String get sortLabel;
+
+  /// No description provided for @sortNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest first'**
+  String get sortNewest;
+
+  /// No description provided for @sortOldest.
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest first'**
+  String get sortOldest;
+
+  /// No description provided for @sortAmountDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest amount'**
+  String get sortAmountDesc;
+
+  /// No description provided for @sortAmountAsc.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest amount'**
+  String get sortAmountAsc;
+
+  /// No description provided for @sortCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer name'**
+  String get sortCustomer;
+
+  /// No description provided for @sortDueDateAsc.
+  ///
+  /// In en, this message translates to:
+  /// **'Due date (soonest)'**
+  String get sortDueDateAsc;
+
+  /// No description provided for @filterCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get filterCancelled;
+
+  /// No description provided for @noSearchResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No invoices match your search'**
+  String get noSearchResults;
+
+  /// No description provided for @resultsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} results'**
+  String resultsCount(String count);
+
+  /// No description provided for @resultsCountZero.
+  ///
+  /// In en, this message translates to:
+  /// **'No results'**
+  String get resultsCountZero;
+
+  /// No description provided for @searchTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get searchTooltip;
+
+  /// No description provided for @sortTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort invoices'**
+  String get sortTooltip;
+
+  /// No description provided for @clearSearchTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get clearSearchTooltip;
 }
 
 class _AppLocalizationsDelegate

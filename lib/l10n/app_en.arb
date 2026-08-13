@@ -901,5 +901,30 @@
   "labelProjectedNetIncome": "Projected Net Income",
   "labelConfidenceScore": "AI Confidence Score",
   "msgNoStrategicData": "Insufficient historical data for accurate forecasting. Please post more transactions.",
-  "actionEmailInvoice": "Email Invoice"
+  "actionEmailInvoice": "Email Invoice",
+  "searchInvoicesHint": "Search invoices, customers, or numbers",
+  "searchInvoicesLabel": "Search invoices",
+  "sortBy": "Sort by",
+  "sortLabel": "Sort",
+  "sortNewest": "Newest first",
+  "sortOldest": "Oldest first",
+  "sortAmountDesc": "Highest amount",
+  "sortAmountAsc": "Lowest amount",
+  "sortCustomer": "Customer name",
+  "sortDueDateAsc": "Due date (soonest)",
+  "filterCancelled": "Cancelled",
+  "noSearchResults": "No invoices match your search",
+  "resultsCount": "{count} results",
+  "@resultsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String",
+        "example": "12"
+      }
+    }
+  },
+  "resultsCountZero": "No results",
+  "searchTooltip": "Search",
+  "sortTooltip": "Sort invoices",
+  "clearSearchTooltip": "Clear search"
 }
