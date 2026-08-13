@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:basir_accounting_system/core/constants.dart';
+import 'package:basir_accounting_system/core/security/password_hasher.dart';
 import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
-import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:uuid/uuid.dart';
@@ -15,11 +12,12 @@ import 'package:uuid/uuid.dart';
 /// The central orchestration layer for localized institutional security.
 /// This service manages the entire lifecycle of operator identities, including:
 /// - Secure persistence of credentials via hardware-backed encryption.
-/// - Cryptographic stretching (SHA-256) and salt-based salting.
+/// - bcrypt password hashes and bounded legacy-hash migration.
 /// - Transient operator (Guest) lifecycle and permanent upgrades.
 /// - Real-time state broadcasting for reactive UI updates.
 ///
-/// Security Standard: AES-256 (via SecureStorage) + SHA-256 Stretching.
+/// Password policy: bcrypt cost 12 per ADR-SEC-001; secure storage protects
+/// the local credential at rest.
 /// ***
 class AuthService {
   /// Initializes the localized authentication engine.
@@ -63,16 +61,13 @@ class AuthService {
         throw Exception('المستخدم غير موجود');
       }
 
-      // Generate new salt and hash
-      final userSalt = _generateUserSalt();
-      final hashedPassword = _hashPassword(newPassword, userSalt);
+      final passwordHash = PasswordHasher.hash(newPassword);
 
-      // Update stored password and salt
       await secureStorage.write(
         key: <credential-fixture>,
-        value: hashedPassword,
+        value: passwordHash,
       );
-      await secureStorage.write(key: '${username}_salt', value: userSalt);
+      await secureStorage.delete(key: '${username}_salt');
 
       debugPrint('🔐 [AUTH] Password changed successfully for $username');
     } catch (e) {
@@ -113,45 +108,6 @@ class AuthService {
     } on Exception catch (e) {
       debugPrint('⚠️ [AUTH] Error during initialization: $e');
     }
-  }
-
-  /// Salt ثابت للتطبيق (في بيئة إنتاج حقيقية، يجب أن يكون فريد لكل مستخدم)
-  static const String _appSalt = 'basir_mvp_2025_secure_salt';
-
-  /// تشفير كلمة المرور باستخدام SHA-256 مع Salt
-  ///
-  /// يطبق تشفير متعدد المراحل لتحسين الأمان:
-  /// 1. إضافة salt للكلمة المرور
-  /// 2. تطبيق SHA-256 عدة مرات (key stretching)
-  /// 3. إضافة salt إضافي
-  ///
-  /// Parameters:
-  /// - [password]: كلمة المرور المراد تشفيرها
-  /// - [userSalt]: salt خاص بالمستخدم (اختياري)
-  ///
-  /// Returns: كلمة المرور المشفرة كـ hex string
-  String _hashPassword(String password, [String? userSalt]) {
-    // إنشاء salt مركب
-    final combinedSalt = _appSalt + (userSalt ?? '');
-
-    // المرحلة الأولى: إضافة salt وتشفير
-    var hash = sha256.convert(utf8.encode(password + combinedSalt)).toString();
-
-    // Key stretching: تطبيق التشفير 1000 مرة لزيادة الأمان
-    for (var i = 0; i < 1000; i++) {
-      hash = sha256.convert(utf8.encode(hash + combinedSalt)).toString();
-    }
-
-    return hash;
-  }
-
-  /// إنشاء salt عشوائي للمستخدم
-  ///
-  /// Returns: salt عشوائي بطول 32 حرف
-  String _generateUserSalt() {
-    final random = Random.secure();
-    final bytes = List<int>.generate(16, (i) => random.nextInt(256));
-    return base64Encode(bytes);
   }
 
   /// التحقق من وجود حساب مسجل
@@ -247,10 +203,26 @@ class AuthService {
         throw Exception('اسم المستخدم غير صحيح');
       }
 
-      // التحقق من كلمة المرور باستخدام التشفير المحسن
-      final passwordHash = _hashPassword(password, userSalt);
-      if (storedPasswordHash != passwordHash) {
+      final isCurrentHash = PasswordHasher.isBcryptHash(storedPasswordHash);
+      final isValid = isCurrentHash
+          ? PasswordHasher.verifyBcrypt(password, storedPasswordHash)
+          : userSalt != null &&
+              PasswordHasher.verifyLegacySaltedSha256(
+                password: <credential-fixture>
+                encodedHash: storedPasswordHash,
+                userSalt: userSalt,
+              );
+
+      if (!isValid) {
         throw Exception('كلمة المرور غير صحيحة');
+      }
+
+      if (!isCurrentHash) {
+        await secureStorage.write(
+          key: <credential-fixture>,
+          value: PasswordHasher.hash(password),
+        );
+        await secureStorage.delete(key: '${username}_salt');
       }
 
       // تحديث حالة تسجيل الدخول
@@ -356,21 +328,13 @@ class AuthService {
         throw Exception('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
       }
 
-      // إنشاء salt فريد للمستخدم
-      final userSalt = _generateUserSalt();
-
-      // تشفير كلمة المرور باستخدام التشفير المحسن
-      final passwordHash = _hashPassword(password, userSalt);
+      final passwordHash = PasswordHasher.hash(password);
 
       // حفظ البيانات بشكل آمن
       await secureStorage.write(key: <credential-fixture>, value: username);
       await secureStorage.write(
         key: <credential-fixture>,
         value: passwordHash,
-      );
-      await secureStorage.write(
-        key: '${username}_salt',
-        value: userSalt,
       );
 
       // Save RBAC info
@@ -422,10 +386,12 @@ class AuthService {
       // حفظ الاسم الجديد
       await secureStorage.write(key: <credential-fixture>, value: newUsername);
 
-      // Handle Salt migration
+      // Preserve only a legacy salt until the next successful password check
+      // upgrades the credential to bcrypt.
       final salt = await secureStorage.read(key: '${currentUser.email}_salt');
       if (salt != null) {
         await secureStorage.write(key: '${newUsername}_salt', value: salt);
+        await secureStorage.delete(key: '${currentUser.email}_salt');
       }
 
       // بث حدث التحديث
@@ -450,9 +416,16 @@ class AuthService {
         throw Exception('لا يوجد حساب مسجل');
       }
 
-      // التحقق من كلمة المرور القديمة باستخدام التشفير المحسن
-      final oldPasswordHash = _hashPassword(oldPassword, userSalt);
-      if (storedPasswordHash != oldPasswordHash) {
+      final isCurrentHash = PasswordHasher.isBcryptHash(storedPasswordHash);
+      final isValid = isCurrentHash
+          ? PasswordHasher.verifyBcrypt(oldPassword, storedPasswordHash)
+          : userSalt != null &&
+              PasswordHasher.verifyLegacySaltedSha256(
+                password: <credential-fixture>
+                encodedHash: storedPasswordHash,
+                userSalt: userSalt,
+              );
+      if (!isValid) {
         throw Exception('كلمة المرور القديمة غير صحيحة');
       }
 
@@ -461,19 +434,11 @@ class AuthService {
         throw Exception('كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل');
       }
 
-      // إنشاء salt جديد لكلمة المرور الجديدة (أمان إضافي)
-      final newUserSalt = _generateUserSalt();
-
-      // تشفير وحفظ كلمة المرور الجديدة
-      final newPasswordHash = _hashPassword(newPassword, newUserSalt);
       await secureStorage.write(
         key: <credential-fixture>,
-        value: newPasswordHash,
+        value: PasswordHasher.hash(newPassword),
       );
-      await secureStorage.write(
-        key: '${username}_salt',
-        value: newUserSalt,
-      );
+      await secureStorage.delete(key: '${username}_salt');
     } on Exception catch (e) {
       throw Exception('خطأ في تغيير كلمة المرور: $e');
     }
@@ -546,15 +511,16 @@ class AuthService {
         securityScore -= 50;
       }
 
-      if (passwordHash != null && userSalt == null) {
-        issues.add('كلمة المرور موجودة لكن Salt مفقود (تشفير قديم)');
-        securityScore -= 30;
+      if (passwordHash != null && !PasswordHasher.isBcryptHash(passwordHash)) {
+        issues.add('تجزئة كلمة المرور تحتاج ترقية بعد مصادقة ناجحة');
+        securityScore -= 20;
       }
 
-      // فحص قوة التشفير
-      if (passwordHash != null && passwordHash.length != 64) {
-        issues.add('تنسيق تشفير كلمة المرور غير صحيح');
-        securityScore -= 40;
+      if (passwordHash != null &&
+          PasswordHasher.isBcryptHash(passwordHash) &&
+          userSalt != null) {
+        issues.add('Salt تاريخي زائد يجب تنظيفه بعد الترحيل');
+        securityScore -= 5;
       }
 
       return SecurityAuditResult(
@@ -562,7 +528,8 @@ class AuthService {
         isSecure: securityScore >= 80,
         issues: issues,
         hasAccount: username != null,
-        hasValidEncryption: passwordHash != null && userSalt != null,
+        hasValidEncryption:
+            passwordHash != null && PasswordHasher.isBcryptHash(passwordHash),
       );
     } on Exception catch (e) {
       return SecurityAuditResult(

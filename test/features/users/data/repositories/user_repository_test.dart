@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:basir_accounting_system/core/security/password_hasher.dart';
 import 'package:basir_accounting_system/features/users/data/models/user_model.dart';
 import 'package:basir_accounting_system/features/users/data/repositories/user_repository_impl.dart';
 import 'package:basir_accounting_system/features/users/domain/entities/user.dart';
 import 'package:basir_accounting_system/features/users/domain/entities/user_role.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
 
@@ -48,7 +51,8 @@ void main() {
           await isar.userModels.filter().userIdEqualTo('user1').findFirst();
       expect(stored, isNotNull);
       expect(stored?.username, 'john_doe');
-      expect(stored?.passwordHash, isNot('password123')); // Hashed
+      expect(stored?.passwordHash, isNot('password123'));
+      expect(PasswordHasher.isBcryptHash(stored!.passwordHash), isTrue);
     });
 
     test('getUserByUsername should return correct user', () async {
@@ -67,6 +71,33 @@ void main() {
 
       final isInvalid = await repository.verifyPassword('john_doe', 'wrong');
       expect(isInvalid, isFalse);
+    });
+
+    test('verifyPassword should upgrade legacy SHA-256 hash after success',
+        () async {
+      const password = '<credential-fixture>';
+      final legacyHash = sha256.convert(utf8.encode(password)).toString();
+      final now = DateTime.utc(2026, 8, 13);
+      final legacyModel = UserModel()
+        ..userId = tUser.id
+        ..username = tUser.username
+        ..fullName = tUser.fullName
+        ..email = tUser.email
+        ..role = tUser.role
+        ..passwordHash = legacyHash
+        ..createdAt = now
+        ..updatedAt = now;
+      await isar.writeTxn(() async {
+        await isar.userModels.put(legacyModel);
+      });
+
+      final isValid = await repository.verifyPassword(tUser.username, password);
+
+      expect(isValid, isTrue);
+      final upgraded =
+          await isar.userModels.filter().userIdEqualTo(tUser.id).findFirst();
+      expect(upgraded, isNotNull);
+      expect(PasswordHasher.isBcryptHash(upgraded!.passwordHash), isTrue);
     });
 
     test('changePassword should update hash', () async {
