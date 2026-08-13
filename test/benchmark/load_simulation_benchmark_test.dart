@@ -1,4 +1,7 @@
 // ignore_for_file: avoid_print
+@Tags(['benchmark'])
+library;
+
 import 'dart:io';
 import 'dart:math';
 
@@ -12,6 +15,10 @@ import 'package:isar/isar.dart';
 /// Benchmark suite for large-scale invoice processing.
 void main() {
   late Isar isar;
+
+  setUpAll(() async {
+    await Isar.initializeIsarCore(download: true);
+  });
 
   setUp(() async {
     final tempDir = Directory.systemTemp.createTempSync('isar_load_');

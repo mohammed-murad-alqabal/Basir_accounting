@@ -21,14 +21,24 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
-        with:
-          flutter-version: "3.24.0"
-          channel: "stable"
-
+        # Avoids the composite action's unpinned actions/cache dependency.
+        env:
+          FLUTTER_VERSION: "3.35.5"
+        run: |
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          export PATH="$RUNNER_TEMP/flutter/bin:$PATH"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+          flutter --version
       - name: Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
+          dart run build_runner build --delete-conflicting-outputs
       - name: Run Flutter Analyze
         id: analyze
         continue-on-error: true
@@ -56,7 +66,8 @@ jobs:
         id: tests
         continue-on-error: true
         run: |
-          flutter test --coverage > test_output.txt 2>&1 || true
+          ./scripts/ci_prepare_env.sh
+          flutter test --coverage --exclude-tags benchmark > test_output.txt 2>&1 || true
           cat test_output.txt
 
           # استخراج نتائج الاختبارات

@@ -42,8 +42,8 @@ void main() {
           (step) => (step as YamlMap)['name'] == 'Setup Flutter',
         ) as YamlMap;
 
-        final with_ = setupFlutterStep['with'] as YamlMap;
-        expect(with_['flutter-version'], equals('3.24.0'));
+        final environment = setupFlutterStep['env'] as YamlMap;
+        expect(environment['FLUTTER_VERSION'], equals('3.35.5'));
       });
 
       test('should run analyze command', () {

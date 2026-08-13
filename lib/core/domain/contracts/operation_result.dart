@@ -1,6 +1,3 @@
-library;
-
-import 'package:flutter/foundation.dart';
 /// العقد الموحد لنتائج عمليات الخدمات عالية الأثر في نظام بصير المحاسبي.
 ///
 /// القرارات عالية الأثر (الترحيل، تعديل المخزون، الضريبة) تمر عبر طبقة
@@ -8,8 +5,10 @@ import 'package:flutter/foundation.dart';
 /// من طبقة الخدمات ولا يقرر السياسة بنفسه.
 ///
 /// المرجع: خطة تنفيذ بصير — المعيار 2 (العقود موحدة).
+library;
 
 import 'package:basir_accounting_system/core/domain/contracts/audit_entry.dart';
+import 'package:flutter/foundation.dart';
 
 /// نتيجة عملية خدمة موحدة: نجاح يحمل القيمة، وفشل يحمل الرسالة والسبب.
 ///
@@ -19,14 +18,19 @@ import 'package:basir_accounting_system/core/domain/contracts/audit_entry.dart';
 @immutable
 class OperationResult<T> {
   /// يبني نتيجة ناجحة تحمل [value] مع رسالة تأكيد اختيارية.
-  const OperationResult.success(
-      {required this.value, this.message, this.cause, this.auditTrail})
-      : success = true;
+  const OperationResult.success({
+    required this.value,
+    this.message,
+    this.cause,
+    this.auditTrail,
+  }) : success = true;
 
   /// يبني نتيجة فاشلة مع [message] إلزامية وسبب برمجي اختياري.
-  const OperationResult.failure(
-      {required this.message, this.cause, this.auditTrail})
-      : success = false,
+  const OperationResult.failure({
+    required this.message,
+    this.cause,
+    this.auditTrail,
+  })  : success = false,
         value = null;
 
   /// هل انتهت العملية بنجاح؟
@@ -56,12 +60,16 @@ class OperationResult<T> {
       return value as T;
     }
     throw OperationFailedException(
-        message ?? 'فشلت العملية دون رسالة تفسيرية', cause);
+      message ?? 'فشلت العملية دون رسالة تفسيرية',
+      cause,
+    );
   }
 
   /// يحوّل النتيجة إلى قيمة عبر [onSuccess]/[onFailure] دون رمي استثناءات.
   R fold<R>(
-      R Function(T value) onSuccess, R Function(String message) onFailure) {
+    R Function(T value) onSuccess,
+    R Function(String message) onFailure,
+  ) {
     if (success) {
       return onSuccess(value as T);
     }

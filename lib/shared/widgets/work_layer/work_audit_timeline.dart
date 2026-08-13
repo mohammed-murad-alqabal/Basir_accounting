@@ -2,22 +2,21 @@
 ///
 /// يعرض أحداث التدقيق (إنشاء/تعديل/اعتماد/ترحيل/إلغاء/عكس) كتسلسل
 /// زمني: من نفّذ، ماذا فعل، متى، ولماذا — مع إمكانية الرجوع للوثيقة
-/// المرتبطة عند توفر [referenceId].
+/// المرتبطة عند توفر معرّف المرجع.
 ///
 /// المرجع: مخطط UI/UX التنفيذي — القسم 6 (سجل التدقيق) + القسم 7.
 library;
 
-import 'package:basir_accounting_system/l10n/app_localizations.dart';
-
-import 'package:basir_accounting_system/core/theme/tokens/border_widths.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:basir_accounting_system/core/domain/contracts/index.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_colors.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_text_styles.dart';
+import 'package:basir_accounting_system/core/theme/tokens/border_widths.dart';
 import 'package:basir_accounting_system/core/theme/tokens/font_weights.dart';
-import 'package:basir_accounting_system/core/theme/tokens/spacing.dart';
 import 'package:basir_accounting_system/core/theme/tokens/icon_sizes.dart';
+import 'package:basir_accounting_system/core/theme/tokens/spacing.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 /// عنصر سجل تدقيق واحد معروضة داخل [WorkAuditTimeline].
 class WorkAuditTimelineItem {
@@ -42,8 +41,8 @@ class WorkAuditTimelineItem {
 class WorkAuditTimeline extends StatelessWidget {
   /// يبني السجل بالإلزامية عبر [items].
   const WorkAuditTimeline({
-    super.key,
     required this.items,
+    super.key,
     this.dateFormat,
     this.emptyLabel,
     this.title,
@@ -73,7 +72,9 @@ class WorkAuditTimeline extends StatelessWidget {
         if (title != null)
           Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: Spacing.md, vertical: Spacing.sm),
+              horizontal: Spacing.md,
+              vertical: Spacing.sm,
+            ),
             child: Text(
               title!,
               style: AppTextStyles.titleSmall
@@ -93,14 +94,22 @@ class WorkAuditTimeline extends StatelessWidget {
             ),
           )
         else
-          ...sorted.asMap().entries.map((entry) =>
-              _buildTimelineItem(entry.value, entry.key == sorted.length - 1, context)),
+          ...sorted.asMap().entries.map(
+                (entry) => _buildTimelineItem(
+                  entry.value,
+                  entry.key == sorted.length - 1,
+                  context,
+                ),
+              ),
       ],
     );
   }
 
-  Widget _buildTimelineItem(WorkAuditTimelineItem item, bool isLast,
-      BuildContext ctx) {
+  Widget _buildTimelineItem(
+    WorkAuditTimelineItem item,
+    bool isLast,
+    BuildContext ctx,
+  ) {
     final entry = item.entry;
     final dateFormatter = dateFormat ?? DateFormat.yMMMd('ar');
 
@@ -158,8 +167,11 @@ class WorkAuditTimeline extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.link,
-                                size: IconSizes.xs, color: AppColors.primary),
+                            const Icon(
+                              Icons.link,
+                              size: IconSizes.xs,
+                              color: AppColors.primary,
+                            ),
                             const SizedBox(width: Spacing.xs),
                             Text(
                               AppLocalizations.of(ctx)
@@ -181,34 +193,31 @@ class WorkAuditTimeline extends StatelessWidget {
     );
   }
 
-  Widget _buildTrack(bool isLast, AuditEntry entry) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        const SizedBox(height: Spacing.sm),
-        Container(
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            color: entry.type.semanticColor,
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            entry.type.icon,
-            size: IconSizes.xs,
-            color: AppColors.textOnDark,
-          ),
-        ),
-        if (!isLast)
-          Expanded(
-            child: Container(
-              width: BorderWidths.normal,
-              color: AppColors.borderLight,
-            ),
-          )
-        else
+  Widget _buildTrack(bool isLast, AuditEntry entry) => Column(
+        children: [
           const SizedBox(height: Spacing.sm),
-      ],
-    );
-  }
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: entry.type.semanticColor,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              entry.type.icon,
+              size: IconSizes.xs,
+              color: AppColors.textOnDark,
+            ),
+          ),
+          if (!isLast)
+            Expanded(
+              child: Container(
+                width: BorderWidths.normal,
+                color: AppColors.borderLight,
+              ),
+            )
+          else
+            const SizedBox(height: Spacing.sm),
+        ],
+      );
 }

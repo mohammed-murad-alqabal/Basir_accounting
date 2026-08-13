@@ -96,6 +96,12 @@ class DocumentationCLI {
       final stats = _analysisEngine.getCoverageStats();
 
       // عرض النتائج
+      print(
+        'Documentation coverage: '
+        '${stats.coveragePercentage.toStringAsFixed(1)}% '
+        '(${stats.documentedElements}/${stats.totalElements} public elements; '
+        '${stats.undocumentedElements} undocumented)',
+      );
 
       if (verbose) {
         for (final result in results) {
@@ -108,7 +114,9 @@ class DocumentationCLI {
 
       // تحديد حالة الخروج بناءً على التغطية
       return stats.coveragePercentage >= 70 ? 0 : 1;
-    } on Exception {
+    } on Exception catch (error, stackTrace) {
+      stderr.writeln('Documentation analysis failed: $error');
+      stderr.writeln(stackTrace);
       return 1;
     }
   }

@@ -18,17 +18,20 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Dependency Review
-        uses: actions/dependency-review-action@72eb03d02c7872a771aacd928f3123ac62ad6d1a # v4.3.3
+        uses: actions/dependency-review-action@72eb03d02c7872a771aacd928f3123ac62ad6d3a # v4.3.3
         with:
           fail-on-severity: moderate
           comment-summary-in-pr: always
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
-        with:
-          flutter-version: "3.24.0"
-          channel: "stable"
-
+        # Avoids the composite action's unpinned actions/cache dependency.
+        env:
+          FLUTTER_VERSION: "3.35.5"
+        run: |
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          export PATH="$RUNNER_TEMP/flutter/bin:$PATH"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+          flutter --version
       - name: Install dependencies
         run: flutter pub get
 
@@ -51,10 +54,15 @@ jobs:
         run: |
           echo "🔒 Checking for security vulnerabilities..."
 
-          # Check pub.dev for known vulnerabilities
-          flutter pub outdated --mode=null-safety
+          # Dependency Review above enforces GitHub advisories. This checks the
+          # current pub.dev advisory marker without using the removed null-safety mode.
+          flutter pub outdated --json > security-outdated.json
+          if grep -q '"isCurrentAffectedByAdvisory": true' security-outdated.json; then
+            echo "❌ A dependency is affected by a published advisory"
+            exit 1
+          fi
 
-          echo "✅ Security check completed"
+          echo "✅ No pub.dev advisory affects the locked dependencies"
 
       - name: Analyze dependency licenses
         run: |

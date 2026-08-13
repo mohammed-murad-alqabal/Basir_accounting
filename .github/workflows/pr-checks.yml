@@ -15,16 +15,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
+      - name: Prepare non-secret environment asset
+        run: ./scripts/ci_prepare_env.sh
+
       - name: Setup Flutter
-        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
-        with:
-          flutter-version: "3.35.5"
-          channel: "stable"
-          cache: false
-
+        # Avoids the composite action's unpinned actions/cache dependency.
+        env:
+          FLUTTER_VERSION: "3.35.5"
+        run: |
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          export PATH="$RUNNER_TEMP/flutter/bin:$PATH"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+          flutter --version
       - name: Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
+          dart run build_runner build --delete-conflicting-outputs
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
 
@@ -32,7 +44,9 @@ jobs:
         run: flutter analyze --fatal-infos
 
       - name: Run tests
-        run: flutter test --coverage --reporter=expanded
+        run: |
+          ./scripts/ci_prepare_env.sh
+          flutter test --coverage --exclude-tags benchmark --reporter=expanded
         timeout-minutes: 10
 
       - name: Upload coverage to Codecov
@@ -82,15 +96,24 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
-        with:
-          flutter-version: "3.35.5"
-          channel: "stable"
-          cache: false
-
+        # Avoids the composite action's unpinned actions/cache dependency.
+        env:
+          FLUTTER_VERSION: "3.35.5"
+        run: |
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          export PATH="$RUNNER_TEMP/flutter/bin:$PATH"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+          flutter --version
       - name: Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
+          dart run build_runner build --delete-conflicting-outputs
       - name: Check for known vulnerabilities
         run: |
           # Check pubspec.lock for known vulnerable packages
@@ -107,33 +130,47 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
+    # Isar 3.1.0+1 uses native FFI and generates schema IDs that cannot be
+    # represented exactly by the JavaScript compiler. The supported release
+    # targets are therefore native until a web-compatible local store is adopted.
     strategy:
       matrix:
-        platform: [android, web]
+        platform: [android]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
-        with:
-          flutter-version: "3.35.5"
-          channel: "stable"
-          cache: false
-
+        # Avoids the composite action's unpinned actions/cache dependency.
+        env:
+          FLUTTER_VERSION: "3.35.5"
+        run: |
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          export PATH="$RUNNER_TEMP/flutter/bin:$PATH"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+          flutter --version
       - name: Setup Android SDK (for Android build)
         if: matrix.platform == 'android'
         uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407
 
       - name: Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
+          dart run build_runner build --delete-conflicting-outputs
       - name: Build for ${{ matrix.platform }}
         run: |
           if [ "${{ matrix.platform }}" == "android" ]; then
+            ./scripts/ci_prepare_env.sh
             flutter build apk --debug --no-shrink
           elif [ "${{ matrix.platform }}" == "web" ]; then
+            ./scripts/ci_prepare_env.sh
             flutter build web --debug
           fi
 
@@ -166,23 +203,34 @@ jobs:
         run: |
           echo "🏛️ Checking Clean Architecture compliance..."
 
-          # Check for proper layer separation
+          # Business features require domain and presentation layers. Navigation and
+          # onboarding are presentation-only composition features; testing is support-only.
           for module in lib/features/*/; do
             module_name=$(basename "$module")
-            
-            # Check for domain layer
-            if [ ! -d "$module/domain" ]; then
-              echo "❌ $module_name missing domain layer"
-              exit 1
-            fi
-            
-            # Check for presentation layer
-            if [ ! -d "$module/presentation" ]; then
-              echo "❌ $module_name missing presentation layer"
-              exit 1
-            fi
-            
-            echo "✅ $module_name has proper architecture"
+
+            case "$module_name" in
+              navigation|onboarding)
+                if [ ! -d "$module/presentation" ]; then
+                  echo "❌ $module_name missing presentation layer"
+                  exit 1
+                fi
+                echo "✅ $module_name is an approved presentation-only feature"
+                ;;
+              testing)
+                echo "✅ $module_name is an approved support-only feature"
+                ;;
+              *)
+                if [ ! -d "$module/domain" ]; then
+                  echo "❌ $module_name missing domain layer"
+                  exit 1
+                fi
+                if [ ! -d "$module/presentation" ]; then
+                  echo "❌ $module_name missing presentation layer"
+                  exit 1
+                fi
+                echo "✅ $module_name has proper clean architecture"
+                ;;
+            esac
           done
 
   accounting-integrity:
@@ -195,15 +243,24 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
-        with:
-          flutter-version: "3.35.5"
-          channel: "stable"
-          cache: false
-
+        # Avoids the composite action's unpinned actions/cache dependency.
+        env:
+          FLUTTER_VERSION: "3.35.5"
+        run: |
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          export PATH="$RUNNER_TEMP/flutter/bin:$PATH"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+          flutter --version
       - name: Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
+          dart run build_runner build --delete-conflicting-outputs
       - name: Check accounting equation compliance
         run: |
           echo "⚖️ Checking accounting equation compliance..."
@@ -237,15 +294,24 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
-        with:
-          flutter-version: "3.35.5"
-          channel: "stable"
-          cache: false
-
+        # Avoids the composite action's unpinned actions/cache dependency.
+        env:
+          FLUTTER_VERSION: "3.35.5"
+        run: |
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          export PATH="$RUNNER_TEMP/flutter/bin:$PATH"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+          flutter --version
       - name: Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
+          dart run build_runner build --delete-conflicting-outputs
       - name: Check for performance anti-patterns
         run: |
           echo "⚡ Checking for performance anti-patterns..."

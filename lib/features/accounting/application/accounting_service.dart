@@ -1,6 +1,9 @@
 // ignore_for_file: lines_longer_than_80_chars
+import 'package:basir_accounting_system/core/models/sync_status.dart';
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/application/authoritative_ledger_gateway.dart';
 import 'package:basir_accounting_system/features/accounting/application/financial_year_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/ledger_outbox_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/multi_standard_coa_engine.dart';
 import 'package:basir_accounting_system/features/accounting/application/orchestrator_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
@@ -44,6 +47,12 @@ part 'accounting_service.g.dart';
 class AccountingService extends _$AccountingService {
   AccountingRepository get _repository =>
       ref.read(accountingRepositoryProvider);
+
+  AuthoritativeLedgerGateway get _ledgerGateway =>
+      ref.read(authoritativeLedgerGatewayProvider);
+
+  LedgerOutboxService get _ledgerOutbox =>
+      ref.read(ledgerOutboxServiceProvider);
 
   FinancialYearService get _financialYearService =>
       ref.read(financialYearServiceProvider.notifier);
@@ -863,7 +872,27 @@ class AccountingService extends _$AccountingService {
       );
     }
 
-    await _repository.addJournalEntry(finalEntry);
+    try {
+      final receipt = await _ledgerGateway.post(finalEntry);
+      await _repository.cacheAuthoritativeJournalEntry(
+        finalEntry.copyWith(
+          authoritativeEntryId: receipt.entryId,
+          hash: receipt.entryHash,
+          previousHash: receipt.previousHash,
+          postedAt: receipt.postedAt,
+          updatedAt: receipt.postedAt,
+          serverUpdatedAt: receipt.postedAt,
+          syncStatus: SyncStatus.synced,
+          status: JournalEntryStatus.posted,
+        ),
+      );
+    } on LedgerTransportException catch (error) {
+      await _ledgerOutbox.enqueue(finalEntry, error);
+      throw LedgerPostQueuedException(
+        SupabaseLedgerGateway.operationIdFor(finalEntry.id),
+        error,
+      );
+    }
     ref.invalidateSelf();
   }
 

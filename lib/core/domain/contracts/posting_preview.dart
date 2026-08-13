@@ -1,13 +1,12 @@
-library;
-
-import 'package:flutter/foundation.dart';
 /// معاينة أثر ترحيل الوثيقة قبل التنفيذ الفعلي.
 ///
 /// تعرض الملخصَ المحاسبي والمخزني للترحيل القادم دون تطبيقه؛
 /// تُستخدم في لوحة الملخص/الاعتماد لعرض ما سيحدث بعد التأكيد.
 /// المرجع: مخطط UI/UX التنفيذي — القسم 8 (ملخص قبل الترحيل) + العقود الموحدة.
+library;
 
 import 'package:basir_accounting_system/core/domain/contracts/audit_entry.dart';
+import 'package:flutter/foundation.dart';
 
 /// نوع الأثر المحاسبي/المخزني لحركة واحدة في المعاينة.
 enum PostingImpactKind {

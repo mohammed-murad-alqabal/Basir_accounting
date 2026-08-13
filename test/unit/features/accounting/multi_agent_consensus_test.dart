@@ -24,6 +24,9 @@ class MockAccountingRepository implements AccountingRepository {
   Future<Decimal> getAccountBalance(String accountId) async => Decimal.zero;
   @override
   Future<void> addJournalEntry(JournalEntry entry) async {}
+
+  @override
+  Future<void> cacheAuthoritativeJournalEntry(JournalEntry entry) async {}
 }
 
 void main() {
@@ -45,7 +48,8 @@ void main() {
       container.dispose();
     });
 
-    testWidgets('Consensus Test 1: Valid Sales Invoice with Tax', (tester) async {
+    testWidgets('Consensus Test 1: Valid Sales Invoice with Tax',
+        (tester) async {
       final orchestrator = container.read(orchestratorServiceProvider.notifier);
 
       final entry = JournalEntry(
