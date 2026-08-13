@@ -66,8 +66,8 @@ jobs:
       - name: Generate build-time sources
         run: dart run build_runner build --delete-conflicting-outputs
       - name: Run tests with coverage
-        # Serial execution avoids a reproducible CI worker crash (exit -7) while
-        # each test file initializes isolated native/plugin-backed test state.
+        # Serial execution isolates native/plugin-backed test state after a
+        # reproducible CI worker crash (exit -7); coverage remains mandatory.
         run: flutter test --concurrency=1 --coverage
       - name: Check Test Coverage
         run: |
