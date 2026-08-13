@@ -39,7 +39,7 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --release --analyze-size
+        run: flutter build apk --release --analyze-size --target-platform android-arm64
 
       - name: Analyze APK size
         id: size
