@@ -25,7 +25,7 @@
 | حالة القيد | `status` | `status` | لا يكتب أثر مرحل مخالف للـvalidator. |
 | سطور القيد | `lines` | embedded `lines` | سطران أو أكثر؛ طرف واحد موجب؛ إجمالي متوازن. |
 | قيم المدين/الدائن | `Decimal` | `String` | تمثيل نص عشري قانوني؛ يمنع `double` كقيمة حاكمة. |
-| عملة أصلية | `originalCurrency`, `originalAmount`, `exchangeRate` | strings/nullable | مجموعة atomic: كلها موجودة وموجبة أو كلها غائبة. |
+| عملة أصلية | `originalCurrency`, `originalAmount`, `exchangeRate` | strings/nullable | العملة الأجنبية تتطلب الحقول الثلاثة موجبة؛ في العملة الأساسية يجوز غياب الرمز، لكن المبلغ والسعر يوجدان معًا أو يغيبان معًا. |
 | دليل جنائي | `hash`, `previousHash`, `auditLogs` | حقول/embedded حسب النموذج | لا تعني الحقول وحدها أن السلسلة متحققة؛ يلزم REQ-ACC-009. |
 | مزامنة | `syncStatus`, `serverUpdatedAt`, `isDeleted` | حقول مطابقة تقريبًا | لا يعلن دعم sync حتى ADR-DATA-002 واختبارات التعارض. |
 
@@ -37,6 +37,7 @@
 | Isar → Domain | `Decimal.parse()` يقرأ النص؛ النص غير الصالح يجب أن يفشل بصورة قابلة للتشخيص. | يحتاج test للحالة السلبية. |
 | Domain → PostgreSQL | يحدد migration/type الفعلي العقد؛ لا تستنتج دقة SQL من Isar. | يحتاج mapping register وترحيل تكاملي. |
 | عملة غير أساسية | تسجل العملة والمبلغ والسعر وقيمة الأساس في العملية نفسها. | validator يفرض اكتمال الحقول؛ mapping test لاحق. |
+| عملة أساسية | قد يغيب الرمز، لكن المبلغ الأصلي وسعره زوج موجب ومتلازم إذا خزّنا. | validator يرفض وجود أحدهما دون الآخر. |
 
 ## تغييرات schema
 

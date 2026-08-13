@@ -108,22 +108,23 @@ class JournalEntryValidator {
     final hasExchangeRate = line.exchangeRate != null;
     final hasCompleteCurrencyContext =
         hasCurrency && hasOriginalAmount && hasExchangeRate;
-    final hasUnexpectedCurrencyData =
-        !hasCurrency && (hasOriginalAmount || hasExchangeRate);
+    final hasPartialAmountOrRate = hasOriginalAmount != hasExchangeRate;
     final hasInvalidCurrencyValues =
         (line.originalAmount != null && line.originalAmount! <= Decimal.zero) ||
             (line.exchangeRate != null && line.exchangeRate! <= Decimal.zero);
 
-    if (!hasCompleteCurrencyContext &&
-            (hasCurrency || hasOriginalAmount || hasExchangeRate) ||
-        hasUnexpectedCurrencyData ||
+    // A base-currency voucher may omit the currency code while still carrying
+    // its original amount and a positive rate. A foreign-currency code, by
+    // contrast, always requires both amount and rate.
+    if ((hasCurrency && !hasCompleteCurrencyContext) ||
+        hasPartialAmountOrRate ||
         hasInvalidCurrencyValues) {
       failures.add(
         JournalEntryValidationFailure(
           code: JournalEntryValidationCode.invalidOriginalCurrency,
           lineIndex: index,
-          message: 'Original currency, amount, and exchange rate must be '
-              'provided together and be positive.',
+          message: 'A foreign currency requires amount and exchange rate; '
+              'amount and rate must be supplied together and be positive.',
         ),
       );
     }
