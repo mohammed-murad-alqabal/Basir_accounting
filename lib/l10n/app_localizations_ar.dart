@@ -2197,6 +2197,26 @@ class AppLocalizationsAr extends AppLocalizations {
   String get workGridEmpty => 'لا توجد سجلات.';
   String get workGridSelect => 'تحديد';
   String get workGridRow => 'صف';
+  @override
+  String get workDocumentSummary => 'ملخص المستند';
+  @override
+  String get workDocumentRequestPreview => 'طلب المعاينة';
+  @override
+  String get workDocumentPreviewImpact => 'معاينة الأثر';
+  @override
+  String get workDocumentSaveDraft => 'حفظ كمسودة';
+  @override
+  String get workDocumentPost => 'تأكيد الترحيل';
+  @override
+  String get workDocumentPreviewRequired => 'اطلب معاينة الأثر قبل الترحيل.';
+  @override
+  String get workDocumentApprovalRequired => 'يتطلب اعتمادًا إضافيًا';
+  @override
+  String get workDocumentNoImpact => 'لا توجد حركات متوقعة.';
+  @override
+  String get workEntityPickerNoOptions => 'لا توجد خيارات متاحة';
+  @override
+  String get workEntityPickerDisabled => 'غير مؤهل للاختيار';
   String get workAuditEventAdministrative => 'إجراء إداري';
   String get workAuditEventReversed => 'عكس';
   String get workAuditEventCancelled => 'إلغاء';

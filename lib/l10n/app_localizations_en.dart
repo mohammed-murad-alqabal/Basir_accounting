@@ -2208,6 +2208,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workGridEmpty => 'No records found.';
   String get workGridSelect => 'Select';
   String get workGridRow => 'row';
+  @override
+  String get workDocumentSummary => 'Document summary';
+  @override
+  String get workDocumentRequestPreview => 'Request preview';
+  @override
+  String get workDocumentPreviewImpact => 'Preview impact';
+  @override
+  String get workDocumentSaveDraft => 'Save as draft';
+  @override
+  String get workDocumentPost => 'Confirm posting';
+  @override
+  String get workDocumentPreviewRequired => 'Request an impact preview before posting.';
+  @override
+  String get workDocumentApprovalRequired => 'Additional approval required';
+  @override
+  String get workDocumentNoImpact => 'No movements are expected.';
+  @override
+  String get workEntityPickerNoOptions => 'No options available';
+  @override
+  String get workEntityPickerDisabled => 'Not eligible for selection';
   String get workAuditEventAdministrative => 'Administrative action';
   String get workAuditEventReversed => 'Reversed';
   String get workAuditEventCancelled => 'Cancelled';

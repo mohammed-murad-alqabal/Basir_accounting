@@ -4240,6 +4240,16 @@ abstract class AppLocalizations {
   String get workGridEmpty;
   String get workGridSelect;
   String get workGridRow;
+  String get workDocumentSummary;
+  String get workDocumentRequestPreview;
+  String get workDocumentPreviewImpact;
+  String get workDocumentSaveDraft;
+  String get workDocumentPost;
+  String get workDocumentPreviewRequired;
+  String get workDocumentApprovalRequired;
+  String get workDocumentNoImpact;
+  String get workEntityPickerNoOptions;
+  String get workEntityPickerDisabled;
   String workGridSortableColumn(Object arg0);
   String get workFilterSearchHint;
   String get workFilterExport;

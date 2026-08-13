@@ -965,5 +965,15 @@
   "workFilterExport": "Export",
   "workFilterCollapse": "Collapse filters",
   "workGridSelect": "Select",
-  "workGridRow": "Table row"
+  "workGridRow": "Table row",
+  "workDocumentSummary": "Document summary",
+  "workDocumentRequestPreview": "Request preview",
+  "workDocumentPreviewImpact": "Preview impact",
+  "workDocumentSaveDraft": "Save as draft",
+  "workDocumentPost": "Confirm posting",
+  "workDocumentPreviewRequired": "Request an impact preview before posting.",
+  "workDocumentApprovalRequired": "Additional approval required",
+  "workDocumentNoImpact": "No movements are expected.",
+  "workEntityPickerNoOptions": "No options available",
+  "workEntityPickerDisabled": "Not eligible for selection"
 }

@@ -823,5 +823,15 @@
   "workFilterExport": "تصدير",
   "workFilterCollapse": "طي الفلاتر",
   "workGridSelect": "تحديد",
-  "workGridRow": "صف الجدول"
+  "workGridRow": "صف الجدول",
+  "workDocumentSummary": "ملخص المستند",
+  "workDocumentRequestPreview": "طلب المعاينة",
+  "workDocumentPreviewImpact": "معاينة الأثر",
+  "workDocumentSaveDraft": "حفظ كمسودة",
+  "workDocumentPost": "تأكيد الترحيل",
+  "workDocumentPreviewRequired": "اطلب معاينة الأثر قبل الترحيل.",
+  "workDocumentApprovalRequired": "يتطلب اعتمادًا إضافيًا",
+  "workDocumentNoImpact": "لا توجد حركات متوقعة.",
+  "workEntityPickerNoOptions": "لا توجد خيارات متاحة",
+  "workEntityPickerDisabled": "غير مؤهل للاختيار"
 }
