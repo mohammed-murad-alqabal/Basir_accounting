@@ -105,6 +105,20 @@ void main() {
       expect(JournalEntryValidator.validate(entry), isEmpty);
     });
 
+    test('accepts base-currency amount and rate without a currency code', () {
+      final entry = _entry(lines: <JournalEntryLine>[
+        _line(
+          accountId: 'cash',
+          debit: Decimal.parse('100'),
+          originalAmount: Decimal.parse('100'),
+          exchangeRate: Decimal.one,
+        ),
+        _line(accountId: 'revenue', credit: Decimal.parse('100')),
+      ]);
+
+      expect(JournalEntryValidator.validate(entry), isEmpty);
+    });
+
     test('rejects voided entries before persistence', () {
       final entry = _entry(
         status: JournalEntryStatus.voided,
