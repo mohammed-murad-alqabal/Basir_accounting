@@ -807,8 +807,18 @@
   "workStatusReversed": "معكوسة",
   "workAuditTitle": "سجل التدقيق",
   "workAuditEmpty": "لا توجد أحداث للتدقيق.",
-  "workAuditLinkedDoc": "الوثيقة المرتبطة: {}",
-  "workAuditOpenLinked": "فتح الوثيقة المرتبطة {}",
+  "workAuditLinkedDoc": "الوثيقة المرتبطة: {arg0}",
+  "@workAuditLinkedDoc": {
+    "placeholders": {
+      "arg0": {}
+    }
+  },
+  "workAuditOpenLinked": "فتح الوثيقة المرتبطة {arg0}",
+  "@workAuditOpenLinked": {
+    "placeholders": {
+      "arg0": {}
+    }
+  },
   "workAuditEventCreated": "إنشاء",
   "workAuditEventModified": "تعديل",
   "workAuditEventApproved": "اعتماد",
@@ -818,7 +828,12 @@
   "workAuditEventReversed": "عكس",
   "workAuditEventAdministrative": "إجراء إداري",
   "workGridEmpty": "لا توجد سجلات.",
-  "workGridSortableColumn": "‎{}، عمود قابل للفرز",
+  "workGridSortableColumn": "‎{arg0}، عمود قابل للفرز",
+  "@workGridSortableColumn": {
+    "placeholders": {
+      "arg0": {}
+    }
+  },
   "workFilterSearchHint": "ابحث في الوثائق والعملاء والأصناف...",
   "workFilterExport": "تصدير",
   "workFilterCollapse": "طي الفلاتر",

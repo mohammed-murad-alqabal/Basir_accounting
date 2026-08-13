@@ -4219,41 +4219,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close search'**
   String get shellCloseSearch;
+
+  /// No description provided for @workStatusDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
   String get workStatusDraft;
+
+  /// No description provided for @workStatusPendingApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Approval'**
   String get workStatusPendingApproval;
+
+  /// No description provided for @workStatusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
   String get workStatusApproved;
+
+  /// No description provided for @workStatusPosted.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted'**
   String get workStatusPosted;
+
+  /// No description provided for @workStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
   String get workStatusCancelled;
+
+  /// No description provided for @workStatusReversed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed'**
   String get workStatusReversed;
+
+  /// No description provided for @workAuditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit Trail'**
   String get workAuditTitle;
+
+  /// No description provided for @workAuditEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No audit events yet.'**
   String get workAuditEmpty;
+
+  /// No description provided for @workAuditLinkedDoc.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked document: {arg0}'**
   String workAuditLinkedDoc(Object arg0);
+
+  /// No description provided for @workAuditOpenLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'Open linked document {arg0}'**
   String workAuditOpenLinked(Object arg0);
+
+  /// No description provided for @workAuditEventCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
   String get workAuditEventCreated;
+
+  /// No description provided for @workAuditEventModified.
+  ///
+  /// In en, this message translates to:
+  /// **'Modified'**
   String get workAuditEventModified;
+
+  /// No description provided for @workAuditEventApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
   String get workAuditEventApproved;
+
+  /// No description provided for @workAuditEventReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned for revision'**
   String get workAuditEventReturned;
+
+  /// No description provided for @workAuditEventPosted.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted'**
   String get workAuditEventPosted;
+
+  /// No description provided for @workAuditEventCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
   String get workAuditEventCancelled;
+
+  /// No description provided for @workAuditEventReversed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed'**
   String get workAuditEventReversed;
+
+  /// No description provided for @workAuditEventAdministrative.
+  ///
+  /// In en, this message translates to:
+  /// **'Administrative action'**
   String get workAuditEventAdministrative;
+
+  /// No description provided for @workGridEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No records found.'**
   String get workGridEmpty;
-  String get workGridSelect;
-  String get workGridRow;
-  String get workDocumentSummary;
-  String get workDocumentRequestPreview;
-  String get workDocumentPreviewImpact;
-  String get workDocumentSaveDraft;
-  String get workDocumentPost;
-  String get workDocumentPreviewRequired;
-  String get workDocumentApprovalRequired;
-  String get workDocumentNoImpact;
-  String get workEntityPickerNoOptions;
-  String get workEntityPickerDisabled;
+
+  /// No description provided for @workGridSortableColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'{arg0}, sortable column'**
   String workGridSortableColumn(Object arg0);
+
+  /// No description provided for @workFilterSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search in documents, customers, and items...'**
   String get workFilterSearchHint;
+
+  /// No description provided for @workFilterExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
   String get workFilterExport;
+
+  /// No description provided for @workFilterCollapse.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse filters'**
   String get workFilterCollapse;
+
+  /// No description provided for @workGridSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get workGridSelect;
+
+  /// No description provided for @workGridRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Table row'**
+  String get workGridRow;
+
+  /// No description provided for @workDocumentSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Document summary'**
+  String get workDocumentSummary;
+
+  /// No description provided for @workDocumentRequestPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Request preview'**
+  String get workDocumentRequestPreview;
+
+  /// No description provided for @workDocumentPreviewImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview impact'**
+  String get workDocumentPreviewImpact;
+
+  /// No description provided for @workDocumentSaveDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Save as draft'**
+  String get workDocumentSaveDraft;
+
+  /// No description provided for @workDocumentPost.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm posting'**
+  String get workDocumentPost;
+
+  /// No description provided for @workDocumentPreviewRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Request an impact preview before posting.'**
+  String get workDocumentPreviewRequired;
+
+  /// No description provided for @workDocumentApprovalRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional approval required'**
+  String get workDocumentApprovalRequired;
+
+  /// No description provided for @workDocumentNoImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'No movements are expected.'**
+  String get workDocumentNoImpact;
+
+  /// No description provided for @workEntityPickerNoOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'No options available'**
+  String get workEntityPickerNoOptions;
+
+  /// No description provided for @workEntityPickerDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Not eligible for selection'**
+  String get workEntityPickerDisabled;
 }
 
 class _AppLocalizationsDelegate

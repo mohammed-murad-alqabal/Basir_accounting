@@ -2201,49 +2201,117 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shellCloseSearch => 'Close search';
-  String get workFilterCollapse => 'Collapse filters';
-  String get workFilterExport => 'Export';
-  String get workFilterSearchHint => 'Search in documents, customers, and items...';
-  String workGridSortableColumn(Object arg0) => '{arg0}, sortable column';
+
+  @override
+  String get workStatusDraft => 'Draft';
+
+  @override
+  String get workStatusPendingApproval => 'Pending Approval';
+
+  @override
+  String get workStatusApproved => 'Approved';
+
+  @override
+  String get workStatusPosted => 'Posted';
+
+  @override
+  String get workStatusCancelled => 'Cancelled';
+
+  @override
+  String get workStatusReversed => 'Reversed';
+
+  @override
+  String get workAuditTitle => 'Audit Trail';
+
+  @override
+  String get workAuditEmpty => 'No audit events yet.';
+
+  @override
+  String workAuditLinkedDoc(Object arg0) {
+    return 'Linked document: $arg0';
+  }
+
+  @override
+  String workAuditOpenLinked(Object arg0) {
+    return 'Open linked document $arg0';
+  }
+
+  @override
+  String get workAuditEventCreated => 'Created';
+
+  @override
+  String get workAuditEventModified => 'Modified';
+
+  @override
+  String get workAuditEventApproved => 'Approved';
+
+  @override
+  String get workAuditEventReturned => 'Returned for revision';
+
+  @override
+  String get workAuditEventPosted => 'Posted';
+
+  @override
+  String get workAuditEventCancelled => 'Cancelled';
+
+  @override
+  String get workAuditEventReversed => 'Reversed';
+
+  @override
+  String get workAuditEventAdministrative => 'Administrative action';
+
+  @override
   String get workGridEmpty => 'No records found.';
+
+  @override
+  String workGridSortableColumn(Object arg0) {
+    return '$arg0, sortable column';
+  }
+
+  @override
+  String get workFilterSearchHint =>
+      'Search in documents, customers, and items...';
+
+  @override
+  String get workFilterExport => 'Export';
+
+  @override
+  String get workFilterCollapse => 'Collapse filters';
+
+  @override
   String get workGridSelect => 'Select';
-  String get workGridRow => 'row';
+
+  @override
+  String get workGridRow => 'Table row';
+
   @override
   String get workDocumentSummary => 'Document summary';
+
   @override
   String get workDocumentRequestPreview => 'Request preview';
+
   @override
   String get workDocumentPreviewImpact => 'Preview impact';
+
   @override
   String get workDocumentSaveDraft => 'Save as draft';
+
   @override
   String get workDocumentPost => 'Confirm posting';
+
   @override
-  String get workDocumentPreviewRequired => 'Request an impact preview before posting.';
+  String get workDocumentPreviewRequired =>
+      'Request an impact preview before posting.';
+
   @override
   String get workDocumentApprovalRequired => 'Additional approval required';
+
   @override
   String get workDocumentNoImpact => 'No movements are expected.';
+
   @override
   String get workEntityPickerNoOptions => 'No options available';
+
   @override
   String get workEntityPickerDisabled => 'Not eligible for selection';
-  String get workAuditEventAdministrative => 'Administrative action';
-  String get workAuditEventReversed => 'Reversed';
-  String get workAuditEventCancelled => 'Cancelled';
-  String get workAuditEventPosted => 'Posted';
-  String get workAuditEventReturned => 'Returned for revision';
-  String get workAuditEventApproved => 'Approved';
-  String get workAuditEventModified => 'Modified';
-  String get workAuditEventCreated => 'Created';
-  String workAuditOpenLinked(Object arg0) => 'Open linked document {arg0}';
-  String workAuditLinkedDoc(Object arg0) => 'Linked document: {arg0}';
-  String get workAuditEmpty => 'No audit events yet.';
-  String get workAuditTitle => 'Audit Trail';
-  String get workStatusReversed => 'Reversed';
-  String get workStatusCancelled => 'Cancelled';
-  String get workStatusPosted => 'Posted';
-  String get workStatusApproved => 'Approved';
-  String get workStatusPendingApproval => 'Pending Approval';
-  String get workStatusDraft => 'Draft';
 }
