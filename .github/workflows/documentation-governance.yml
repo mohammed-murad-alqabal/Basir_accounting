@@ -1,0 +1,109 @@
+name: Documentation Governance
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  governance-advisory:
+    name: Documentation Governance (advisory)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history for changed-file detection
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup-flutter
+        with:
+          flutter-version: "3.35.5"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Prepare governance inputs
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          BEFORE_SHA: ${{ github.event.before }}
+          GITHUB_SHA_VALUE: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          printf '%s' "${PR_BODY:-}" > .governance-pr-body.md
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            echo "BASE_REF=$BASE_SHA" >> "$GITHUB_ENV"
+            echo "HEAD_REF=$HEAD_SHA" >> "$GITHUB_ENV"
+          elif [ -n "${BEFORE_SHA:-}" ] && [ "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ]; then
+            echo "BASE_REF=$BEFORE_SHA" >> "$GITHUB_ENV"
+            echo "HEAD_REF=$GITHUB_SHA_VALUE" >> "$GITHUB_ENV"
+          else
+            echo "BASE_REF=HEAD~1" >> "$GITHUB_ENV"
+            echo "HEAD_REF=HEAD" >> "$GITHUB_ENV"
+          fi
+
+      - name: Run deterministic governance analysis
+        run: |
+          dart lib/tools/documentation/cli/documentation_cli.dart governance \
+            --base "$BASE_REF" \
+            --head "$HEAD_REF" \
+            --pr-body-file .governance-pr-body.md \
+            --output governance-report.json \
+            --markdown-output governance-report.md
+
+      - name: Upload governance evidence
+        if: always()
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3
+        with:
+          name: documentation-governance-report
+          path: |
+            governance-report.json
+            governance-report.md
+          if-no-files-found: warn
+
+      - name: Update pull-request governance comment
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false && always()
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- basir-documentation-governance -->';
+            const reportPath = 'governance-report.md';
+            const report = fs.existsSync(reportPath)
+              ? fs.readFileSync(reportPath, 'utf8')
+              : '# Documentation Governance Report\n\nThe report was not generated; inspect the workflow logs.';
+            const body = `${marker}\n${report}`;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find((comment) => comment.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }

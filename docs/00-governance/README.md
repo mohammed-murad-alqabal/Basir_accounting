@@ -12,6 +12,7 @@
 | [AUTHORITY_MODEL.md](AUTHORITY_MODEL.md) | هرمية السلطة وقواعد الحسم عند التعارض. |
 | [DOCUMENT_OWNERSHIP.md](DOCUMENT_OWNERSHIP.md) | ملكية المجالات ومسؤوليات الاعتماد والمراجعة. |
 | [DOCUMENT_METADATA_TEMPLATE.md](DOCUMENT_METADATA_TEMPLATE.md) | قالب metadata إلزامي للوثائق الحاكمة. |
+| [AUTOMATION.md](AUTOMATION.md) | قواعد الحوكمة الآلية، التقرير الاستشاري، وخطة التحول إلى بوابات مانعة. |
 | [../audits/bkip-2026-08/EXECUTION_ROADMAP.md](../audits/bkip-2026-08/EXECUTION_ROADMAP.md) | برنامج الانتقال إلى الحوكمة المؤتمتة. |
 
 > لا تُستخدم تقارير الحالة أو الملخصات أو الوثائق المؤرشفة لإثبات سلوك النظام الحالي. يثبت السلوك بالكود والاختبارات ونتائج CI المرتبطة بـSHA، وتثبت النية بمتطلبات معتمدة ذات معايير قبول.

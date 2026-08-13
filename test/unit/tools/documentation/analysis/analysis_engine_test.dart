@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:basir_accounting_system/tools/documentation/analysis/analysis_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -350,6 +352,30 @@ void main() {
 
       expect(stats.coveragePercentage, greaterThanOrEqualTo(95.0));
       expect(stats.undocumentedElements, lessThanOrEqualTo(25));
+    });
+  });
+
+  group('AnalysisEngine coverage aggregation', () {
+    test('derives project statistics from the most recent analysis', () async {
+      final root =
+          await Directory.systemTemp.createTemp('basir-analysis-test-');
+      addTearDown(() => root.delete(recursive: true));
+      final source = File('${root.path}/sample.dart');
+      await source.writeAsString('''
+/// A documented public class.
+class Documented {}
+
+class Undocumented {}
+''');
+
+      final engine = AnalysisEngine();
+      await engine.analyzeDirectory(root.path);
+      final stats = engine.getCoverageStats();
+
+      expect(stats.totalElements, 2);
+      expect(stats.documentedElements, 1);
+      expect(stats.undocumentedElements, 1);
+      expect(stats.coveragePercentage, 50);
     });
   });
 }
