@@ -189,6 +189,8 @@ void main() {
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
         exchangeRate: Decimal.one,
+        zatcaUuid: 'test-zatca-uuid-001',
+        zatcaHash: 'test-zatca-hash-001',
         items: [
           InvoiceItem(
             taxRate: Decimal.parse('0.15'),
