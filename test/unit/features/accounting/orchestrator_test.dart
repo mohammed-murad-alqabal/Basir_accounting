@@ -24,6 +24,9 @@ class MockAccountingRepository implements AccountingRepository {
   Future<Decimal> getAccountBalance(String accountId) async => Decimal.zero;
   @override
   Future<void> addJournalEntry(JournalEntry entry) async {}
+
+  @override
+  Future<void> cacheAuthoritativeJournalEntry(JournalEntry entry) async {}
 }
 
 void main() {

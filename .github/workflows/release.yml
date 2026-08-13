@@ -52,6 +52,12 @@ jobs:
       - name: Get dependencies
         run: |
           flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
           dart run build_runner build --delete-conflicting-outputs
       - name: Run tests
         run: flutter test

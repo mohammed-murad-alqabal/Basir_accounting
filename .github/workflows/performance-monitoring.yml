@@ -40,6 +40,12 @@ jobs:
       - name: Install dependencies
         run: |
           flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
           dart run build_runner build --delete-conflicting-outputs
       - name: Build APK
         run: flutter build apk --release --analyze-size
@@ -138,6 +144,12 @@ jobs:
       - name: Install dependencies
         run: |
           flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
           dart run build_runner build --delete-conflicting-outputs
       - name: Analyze startup time
         continue-on-error: true
@@ -184,6 +196,12 @@ jobs:
       - name: Install dependencies
         run: |
           flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
           dart run build_runner build --delete-conflicting-outputs
       - name: Check for memory leaks
         run: |
@@ -235,6 +253,12 @@ jobs:
       - name: Install dependencies
         run: |
           flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
           dart run build_runner build --delete-conflicting-outputs
       - name: Analyze code complexity
         run: |

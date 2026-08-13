@@ -33,6 +33,12 @@ jobs:
       - name: 📦 Get dependencies
         run: |
           flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
           dart run build_runner build --delete-conflicting-outputs
       - name: 🎨 Verify formatting
         run: dart format --set-exit-if-changed lib/ test/
@@ -72,6 +78,12 @@ jobs:
       - name: 📦 Get dependencies
         run: |
           flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
           dart run build_runner build --delete-conflicting-outputs
       - name: 🧪 Run tests
         run: flutter test --coverage --reporter expanded
@@ -160,6 +172,12 @@ jobs:
       - name: 📦 Get dependencies
         run: |
           flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
           dart run build_runner build --delete-conflicting-outputs
       - name: 🏗️ Build APK
         run: flutter build apk --release
@@ -194,6 +212,12 @@ jobs:
       - name: 📦 Get dependencies
         run: |
           flutter pub get
+          pushd rust_builder
+          flutter pub get
+          popd
+          pushd rust_builder/cargokit/build_tool
+          dart pub get
+          popd
           dart run build_runner build --delete-conflicting-outputs
       - name: 🏗️ Build iOS
         run: flutter build ios --release --no-codesign
