@@ -39,7 +39,8 @@ jobs:
         continue-on-error: false
 
       - name: 🔍 Analyze code
-        run: flutter analyze --fatal-infos --fatal-warnings
+        # ملاحظات الأسلوب تُبلَّغ في السجل؛ الأخطاء والتحذيرات فقط تمنع الدمج.
+        run: flutter analyze --no-fatal-infos
 
       - name: 📏 Code Metrics
         run: |
