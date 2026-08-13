@@ -18,6 +18,7 @@ void main() {
 
   setUp(() {
     mockRepository = MockAccountingRepository();
+    when(() => mockRepository.getJournalEntries()).thenAnswer((_) async => []);
     container = ProviderContainer(
       overrides: [
         accountingRepositoryProvider.overrideWithValue(mockRepository),
