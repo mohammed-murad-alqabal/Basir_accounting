@@ -123,8 +123,10 @@ jobs:
 
       - name: 🔍 Scan for secrets
         run: |
-          if grep -r -E "(password|secret|api_key|token)" lib/ --include="*.dart" | grep -v "// TODO\|// FIXME\|test\|SecureStorage"; then
-            echo "❌ Potential secrets found"
+          # Match only likely hard-coded credential assignments, not ordinary identifiers
+          # such as imports from the design-token package.
+          if grep -r -n -E "(password|secret|api[_-]?key|token)[[:space:]]*[:=][[:space:]]*['\"][^'\"]{8,}['\"]" lib/ --include="*.dart" | grep -v "// TODO\|// FIXME\|test\|SecureStorage"; then
+            echo "❌ Potential hard-coded secret found"
             exit 1
           fi
 

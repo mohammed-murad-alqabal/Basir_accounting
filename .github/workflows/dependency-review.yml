@@ -54,10 +54,15 @@ jobs:
         run: |
           echo "🔒 Checking for security vulnerabilities..."
 
-          # Check pub.dev for known vulnerabilities
-          flutter pub outdated --mode=null-safety
+          # Dependency Review above enforces GitHub advisories. This checks the
+          # current pub.dev advisory marker without using the removed null-safety mode.
+          flutter pub outdated --json > security-outdated.json
+          if grep -q '"isCurrentAffectedByAdvisory": true' security-outdated.json; then
+            echo "❌ A dependency is affected by a published advisory"
+            exit 1
+          fi
 
-          echo "✅ Security check completed"
+          echo "✅ No pub.dev advisory affects the locked dependencies"
 
       - name: Analyze dependency licenses
         run: |
