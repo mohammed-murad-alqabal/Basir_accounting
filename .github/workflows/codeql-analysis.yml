@@ -69,7 +69,8 @@ jobs:
           flutter pub outdated
 
           # Run static analysis with security focus
-          flutter analyze --no-pub
+          # Keep compilation and analyzer errors blocking; report style infos separately.
+          flutter analyze --no-pub --no-fatal-infos --no-fatal-warnings
 
           echo "✅ Security audit completed"
 

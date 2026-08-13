@@ -10,6 +10,11 @@ on:
     - cron: "0 2 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
 jobs:
   analyze-and-report:
     name: تحليل الأخطاء وإنشاء التقارير
@@ -39,10 +44,14 @@ jobs:
           echo "analyze_exit_code=$?" >> $GITHUB_OUTPUT
 
           # استخراج الإحصائيات
-          ISSUES_COUNT=$(grep -c "issue" analyze_output.txt || echo "0")
-          ERRORS_COUNT=$(grep -c "error •" analyze_output.txt || echo "0")
-          WARNINGS_COUNT=$(grep -c "warning •" analyze_output.txt || echo "0")
-          INFO_COUNT=$(grep -c "info •" analyze_output.txt || echo "0")
+          ISSUES_COUNT=$(grep -c "issue" analyze_output.txt || true)
+          ERRORS_COUNT=$(grep -c "error •" analyze_output.txt || true)
+          WARNINGS_COUNT=$(grep -c "warning •" analyze_output.txt || true)
+          INFO_COUNT=$(grep -c "info •" analyze_output.txt || true)
+          ISSUES_COUNT=${ISSUES_COUNT:-0}
+          ERRORS_COUNT=${ERRORS_COUNT:-0}
+          WARNINGS_COUNT=${WARNINGS_COUNT:-0}
+          INFO_COUNT=${INFO_COUNT:-0}
 
           echo "issues_count=$ISSUES_COUNT" >> $GITHUB_OUTPUT
           echo "errors_count=$ERRORS_COUNT" >> $GITHUB_OUTPUT
@@ -57,9 +66,12 @@ jobs:
           echo "test_exit_code=$?" >> $GITHUB_OUTPUT
 
           # استخراج نتائج الاختبارات
-          PASSED=$(grep -oP '\+\K[0-9]+' test_output.txt | tail -1 || echo "0")
-          FAILED=$(grep -oP '\-\K[0-9]+' test_output.txt | tail -1 || echo "0")
-          SKIPPED=$(grep -oP '~\K[0-9]+' test_output.txt | tail -1 || echo "0")
+          PASSED=$(grep -oP '\+\K[0-9]+' test_output.txt | tail -1 || true)
+          FAILED=$(grep -oP '\-\K[0-9]+' test_output.txt | tail -1 || true)
+          SKIPPED=$(grep -oP '~\K[0-9]+' test_output.txt | tail -1 || true)
+          PASSED=${PASSED:-0}
+          FAILED=${FAILED:-0}
+          SKIPPED=${SKIPPED:-0}
 
           echo "tests_passed=$PASSED" >> $GITHUB_OUTPUT
           echo "tests_failed=$FAILED" >> $GITHUB_OUTPUT
@@ -118,9 +130,9 @@ jobs:
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
           script: |
-            const errorsCount = ${{ steps.analyze.outputs.errors_count }};
-            const warningsCount = ${{ steps.analyze.outputs.warnings_count }};
-            const testsFailedCount = ${{ steps.test.outputs.tests_failed }};
+            const errorsCount = Number('${{ steps.analyze.outputs.errors_count }}' || '0');
+            const warningsCount = Number('${{ steps.analyze.outputs.warnings_count }}' || '0');
+            const testsFailedCount = Number('${{ steps.test.outputs.tests_failed }}' || '0');
 
             if (errorsCount > 0 || testsFailedCount > 0) {
               const title = `🚨 أخطاء حرجة مكتشفة - ${new Date().toISOString().split('T')[0]}`;
@@ -166,10 +178,10 @@ jobs:
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
           script: |
-            const errorsCount = ${{ steps.analyze.outputs.errors_count }};
-            const warningsCount = ${{ steps.analyze.outputs.warnings_count }};
-            const testsPassedCount = ${{ steps.test.outputs.tests_passed }};
-            const testsFailedCount = ${{ steps.test.outputs.tests_failed }};
+            const errorsCount = Number('${{ steps.analyze.outputs.errors_count }}' || '0');
+            const warningsCount = Number('${{ steps.analyze.outputs.warnings_count }}' || '0');
+            const testsPassedCount = Number('${{ steps.test.outputs.tests_passed }}' || '0');
+            const testsFailedCount = Number('${{ steps.test.outputs.tests_failed }}' || '0');
 
             const comment = `
             ## 📊 تقرير جودة الكود
