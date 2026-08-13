@@ -2190,4 +2190,29 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get shellCloseSearch => 'إغلاق البحث';
+  String get workFilterCollapse => 'طي الفلاتر';
+  String get workFilterExport => 'تصدير';
+  String get workFilterSearchHint => 'ابحث في الوثائق والعملاء والأصناف...';
+  String workGridSortableColumn(Object arg0) => '‎{arg0}، عمود قابل للفرز';
+  String get workGridEmpty => 'لا توجد سجلات.';
+  String get workGridSelect => 'تحديد';
+  String get workGridRow => 'صف';
+  String get workAuditEventAdministrative => 'إجراء إداري';
+  String get workAuditEventReversed => 'عكس';
+  String get workAuditEventCancelled => 'إلغاء';
+  String get workAuditEventPosted => 'ترحيل';
+  String get workAuditEventReturned => 'إرجاع للمراجعة';
+  String get workAuditEventApproved => 'اعتماد';
+  String get workAuditEventModified => 'تعديل';
+  String get workAuditEventCreated => 'إنشاء';
+  String workAuditOpenLinked(Object arg0) => 'فتح الوثيقة المرتبطة {arg0}';
+  String workAuditLinkedDoc(Object arg0) => 'الوثيقة المرتبطة: {arg0}';
+  String get workAuditEmpty => 'لا توجد أحداث للتدقيق.';
+  String get workAuditTitle => 'سجل التدقيق';
+  String get workStatusReversed => 'معكوسة';
+  String get workStatusCancelled => 'ملغاة';
+  String get workStatusPosted => 'مرحّلة';
+  String get workStatusApproved => 'معتمدة';
+  String get workStatusPendingApproval => 'بانتظار الاعتماد';
+  String get workStatusDraft => 'مسودة';
 }

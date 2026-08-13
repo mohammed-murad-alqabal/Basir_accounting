@@ -4219,6 +4219,31 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close search'**
   String get shellCloseSearch;
+  String get workStatusDraft;
+  String get workStatusPendingApproval;
+  String get workStatusApproved;
+  String get workStatusPosted;
+  String get workStatusCancelled;
+  String get workStatusReversed;
+  String get workAuditTitle;
+  String get workAuditEmpty;
+  String workAuditLinkedDoc(Object arg0);
+  String workAuditOpenLinked(Object arg0);
+  String get workAuditEventCreated;
+  String get workAuditEventModified;
+  String get workAuditEventApproved;
+  String get workAuditEventReturned;
+  String get workAuditEventPosted;
+  String get workAuditEventCancelled;
+  String get workAuditEventReversed;
+  String get workAuditEventAdministrative;
+  String get workGridEmpty;
+  String get workGridSelect;
+  String get workGridRow;
+  String workGridSortableColumn(Object arg0);
+  String get workFilterSearchHint;
+  String get workFilterExport;
+  String get workFilterCollapse;
 }
 
 class _AppLocalizationsDelegate
