@@ -1,10 +1,12 @@
-// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: avoid_redundant_argument_values, lines_longer_than_80_chars
+
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
 import 'package:basir_accounting_system/features/accounting/domain/repositories/financial_year_repository.dart';
+import 'package:basir_accounting_system/features/accounting/domain/validation/journal_entry_validation_exception.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -167,6 +169,52 @@ void main() {
         capturedEntry.auditLogs.first.rationale,
         contains('Consensus bypassed'),
       );
+    });
+
+    test('rejects an invalid entry before repository persistence', () async {
+      final now = DateTime.now();
+      final entry = JournalEntry(
+        id: 'test-invalid-boundary',
+        referenceNumber: 'JE-INVALID',
+        date: now,
+        temporal: TemporalJustification(
+          transactionDate: now,
+          effectiveDate: now,
+          recordingDate: now,
+        ),
+        standards: const StandardsJustification(
+          standardReference: 'IFRS',
+          recognitionBasis: 'Accrual',
+        ),
+        description: 'Invalid entry boundary test',
+        status: JournalEntryStatus.draft,
+        sourceDocument: 'manual',
+        sourceId: 'test',
+        createdBy: 'test-user',
+        createdAt: now,
+        updatedAt: now,
+        lines: [
+          JournalEntryLine(
+            accountId: 'acc-1',
+            accountName: 'Cash',
+            debit: Decimal.parse('100'),
+            credit: Decimal.parse('100'),
+          ),
+          JournalEntryLine(
+            accountId: 'acc-2',
+            accountName: 'Revenue',
+            debit: Decimal.zero,
+            credit: Decimal.parse('100'),
+          ),
+        ],
+      );
+      final service = container.read(accountingServiceProvider.notifier);
+
+      await expectLater(
+        service.postJournalEntry(entry, bypassCognitive: true),
+        throwsA(isA<JournalEntryValidationException>()),
+      );
+      verifyNever(() => mockRepository.addJournalEntry(any()));
     });
   });
 }
