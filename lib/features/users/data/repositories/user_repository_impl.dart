@@ -1,9 +1,7 @@
-import 'dart:convert';
-
+import 'package:basir_accounting_system/core/security/password_hasher.dart';
 import 'package:basir_accounting_system/features/users/data/models/user_model.dart';
 import 'package:basir_accounting_system/features/users/domain/entities/user.dart';
 import 'package:basir_accounting_system/features/users/domain/repositories/user_repository.dart';
-import 'package:crypto/crypto.dart';
 import 'package:isar/isar.dart';
 
 /// تنفيذ مستودع المستخدمين باستخدام Isar
@@ -33,7 +31,7 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<void> createUser(User user, String password) async {
-    final model = _toModel(user, _hashPassword(password));
+    final model = _toModel(user, PasswordHasher.hash(password));
     await _isar.writeTxn(() async {
       await _isar.userModels.put(model);
     });
@@ -64,7 +62,7 @@ class UserRepositoryImpl implements UserRepository {
     final query = _isar.userModels.filter().userIdEqualTo(id);
     final existing = await query.findFirst();
     if (existing != null) {
-      existing.passwordHash = _hashPassword(newPassword);
+      existing.passwordHash = PasswordHasher.hash(newPassword);
       existing.updatedAt = DateTime.now();
       await _isar.writeTxn(() async {
         await _isar.userModels.put(existing);
@@ -77,16 +75,23 @@ class UserRepositoryImpl implements UserRepository {
     final query = _isar.userModels.filter().usernameEqualTo(username);
     final user = await query.findFirst();
     if (user == null) return false;
-    return user.passwordHash == _hashPassword(password);
-  }
+    final isCurrentHash = PasswordHasher.isBcryptHash(user.passwordHash);
+    final isValid = isCurrentHash
+        ? PasswordHasher.verifyBcrypt(password, user.passwordHash)
+        : PasswordHasher.verifyLegacyUnsaltedSha256(
+            password,
+            user.passwordHash,
+          );
 
-  // --- Helpers ---
+    if (isValid && !isCurrentHash) {
+      user.passwordHash = PasswordHasher.hash(password);
+      user.updatedAt = DateTime.now();
+      await _isar.writeTxn(() async {
+        await _isar.userModels.put(user);
+      });
+    }
 
-  String _hashPassword(String password) {
-    // Simple SHA256 for MVP. In production, use bcrypt/argon2.
-    final bytes = utf8.encode(password);
-    final digest = sha256.convert(bytes);
-    return digest.toString();
+    return isValid;
   }
 
   User _toEntity(UserModel model) => User(
