@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  FLUTTER_VERSION: "3.24.0"
+  FLUTTER_VERSION: "3.35.5"
   MIN_COVERAGE: 70
   MAX_COMPLEXITY: 10
   MAX_LINE_LENGTH: 80

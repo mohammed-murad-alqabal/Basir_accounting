@@ -18,7 +18,7 @@ jobs:
       - name: Setup Flutter
         # Avoids the composite action's unpinned actions/cache dependency.
         env:
-          FLUTTER_VERSION: "3.24.0"
+          FLUTTER_VERSION: "3.35.5"
         run: |
           git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
           export PATH="$RUNNER_TEMP/flutter/bin:$PATH"
@@ -38,7 +38,7 @@ jobs:
       - name: Setup Flutter
         # Avoids the composite action's unpinned actions/cache dependency.
         env:
-          FLUTTER_VERSION: "3.24.0"
+          FLUTTER_VERSION: "3.35.5"
         run: |
           git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
           export PATH="$RUNNER_TEMP/flutter/bin:$PATH"
@@ -56,7 +56,7 @@ jobs:
       - name: Setup Flutter
         # Avoids the composite action's unpinned actions/cache dependency.
         env:
-          FLUTTER_VERSION: "3.24.0"
+          FLUTTER_VERSION: "3.35.5"
         run: |
           git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
           export PATH="$RUNNER_TEMP/flutter/bin:$PATH"
@@ -81,7 +81,7 @@ jobs:
       - name: Setup Flutter
         # Avoids the composite action's unpinned actions/cache dependency.
         env:
-          FLUTTER_VERSION: "3.24.0"
+          FLUTTER_VERSION: "3.35.5"
         run: |
           git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
           export PATH="$RUNNER_TEMP/flutter/bin:$PATH"
