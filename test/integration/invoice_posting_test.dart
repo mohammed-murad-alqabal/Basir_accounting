@@ -1,5 +1,6 @@
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/multi_standard_coa_engine.dart';
 import 'package:basir_accounting_system/features/accounting/application/orchestrator_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
@@ -276,6 +277,225 @@ void main() {
       final logic = container.read(accountingServiceProvider.notifier);
 
       expect(() => logic.postSalesInvoice(invoice), throwsException);
+    });
+
+    test('postSalesInvoice لا يرحّل فاتورة سبق إنشاء قيدها', () async {
+      const invoiceId = 'inv-existing';
+      final existingEntry = JournalEntry(
+        id: 'je-inv-$invoiceId',
+        referenceNumber: 'JE-$invoiceId',
+        date: DateTime(2025, 5, 20),
+        temporal: TemporalJustification(
+          transactionDate: DateTime(2025, 5, 20),
+          effectiveDate: DateTime(2025, 5, 20),
+          recordingDate: DateTime(2025, 5, 20),
+        ),
+        standards: const StandardsJustification(
+          standardReference: 'IFRS 15',
+          recognitionBasis: 'Accrual',
+        ),
+        description: 'Existing posting',
+        status: JournalEntryStatus.posted,
+        sourceDocument: 'invoice',
+        sourceId: invoiceId,
+        createdBy: 'system',
+        createdAt: DateTime(2025, 5, 20),
+        updatedAt: DateTime(2025, 5, 20),
+        lines: const [],
+      );
+      when(
+        () => mockAccountingRepo.getJournalEntries(),
+      ).thenAnswer((_) async => [existingEntry]);
+      when(
+        () => mockCustomerRepo.getCustomerById('cust-1'),
+      ).thenAnswer((_) async => null);
+
+      final invoice = Invoice(
+        id: invoiceId,
+        invoiceNumber: 'INV-EXISTING',
+        customerId: 'cust-1',
+        customerName: 'Client A',
+        issuedDate: DateTime(2025, 5, 20),
+        dueDate: DateTime(2025, 6, 20),
+        subtotalAmount: Decimal.fromInt(100),
+        taxAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        totalAmount: Decimal.fromInt(100),
+        paidAmount: Decimal.zero,
+        taxRate: Decimal.zero,
+        status: InvoiceStatus.sent,
+        createdAt: DateTime(2025, 5, 20),
+        updatedAt: DateTime(2025, 5, 20),
+        exchangeRate: Decimal.one,
+        items: const [],
+      );
+
+      await container
+          .read(accountingServiceProvider.notifier)
+          .postSalesInvoice(invoice);
+
+      verifyNever(() => mockAccountingRepo.addJournalEntry(any()));
+    });
+
+    test('postSalesInvoice يرفض الفاتورة غير القابلة للترحيل', () async {
+      final invoice = Invoice(
+        id: 'inv-draft',
+        invoiceNumber: 'INV-DRAFT',
+        customerId: 'cust-1',
+        customerName: 'Client A',
+        issuedDate: DateTime(2025, 5, 20),
+        dueDate: DateTime(2025, 6, 20),
+        subtotalAmount: Decimal.fromInt(100),
+        taxAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        totalAmount: Decimal.fromInt(100),
+        paidAmount: Decimal.zero,
+        taxRate: Decimal.zero,
+        status: InvoiceStatus.draft,
+        createdAt: DateTime(2025, 5, 20),
+        updatedAt: DateTime(2025, 5, 20),
+        exchangeRate: Decimal.one,
+        items: const [],
+      );
+
+      await expectLater(
+        container
+            .read(accountingServiceProvider.notifier)
+            .postSalesInvoice(invoice),
+        throwsA(
+          isA<Exception>().having(
+            (error) => error.toString(),
+            'message',
+            contains('Can only post'),
+          ),
+        ),
+      );
+      verifyNever(() => mockAccountingRepo.addJournalEntry(any()));
+    });
+
+    test('postJournalEntry يسجل تجاوز الإجماع للقيد اليدوي المتوازن', () async {
+      final entry = JournalEntry(
+        id: 'manual-1',
+        referenceNumber: 'JE-MANUAL-1',
+        date: DateTime(2025, 5, 20),
+        temporal: TemporalJustification(
+          transactionDate: DateTime(2025, 5, 20),
+          effectiveDate: DateTime(2025, 5, 20),
+          recordingDate: DateTime(2025, 5, 20),
+        ),
+        standards: const StandardsJustification(
+          standardReference: 'IAS 1',
+          recognitionBasis: 'Accrual',
+        ),
+        description: 'Manual balanced entry',
+        status: JournalEntryStatus.posted,
+        sourceDocument: 'manual',
+        sourceId: 'manual-1',
+        createdBy: 'tester',
+        createdAt: DateTime(2025, 5, 20),
+        updatedAt: DateTime(2025, 5, 20),
+        lines: [
+          JournalEntryLine(
+            accountId: 'acc-1000',
+            accountName: 'Cash',
+            debit: Decimal.fromInt(100),
+            credit: Decimal.zero,
+          ),
+          JournalEntryLine(
+            accountId: 'acc-4101',
+            accountName: 'Sales',
+            debit: Decimal.zero,
+            credit: Decimal.fromInt(100),
+          ),
+        ],
+      );
+
+      await container
+          .read(accountingServiceProvider.notifier)
+          .postJournalEntry(entry, bypassCognitive: true);
+
+      final captured = verify(
+        () => mockAccountingRepo.addJournalEntry(captureAny()),
+      ).captured.single as JournalEntry;
+      expect(captured.isBalanced, isTrue);
+      expect(captured.auditLogs, hasLength(1));
+      expect(captured.auditLogs.single.action, 'COGNITIVE_BYPASS');
+    });
+
+    test('postJournalEntry يرفض القيد اليدوي غير المتوازن قبل ترحيله',
+        () async {
+      final entry = JournalEntry(
+        id: 'manual-unbalanced',
+        referenceNumber: 'JE-MANUAL-UNBALANCED',
+        date: DateTime(2025, 5, 20),
+        temporal: TemporalJustification(
+          transactionDate: DateTime(2025, 5, 20),
+          effectiveDate: DateTime(2025, 5, 20),
+          recordingDate: DateTime(2025, 5, 20),
+        ),
+        standards: const StandardsJustification(
+          standardReference: 'IAS 1',
+          recognitionBasis: 'Accrual',
+        ),
+        description: 'Manual unbalanced entry',
+        status: JournalEntryStatus.draft,
+        sourceDocument: 'manual',
+        sourceId: 'manual-unbalanced',
+        createdBy: 'tester',
+        createdAt: DateTime(2025, 5, 20),
+        updatedAt: DateTime(2025, 5, 20),
+        lines: [
+          JournalEntryLine(
+            accountId: 'acc-1000',
+            accountName: 'Cash',
+            debit: Decimal.fromInt(100),
+            credit: Decimal.zero,
+          ),
+          JournalEntryLine(
+            accountId: 'acc-4101',
+            accountName: 'Sales',
+            debit: Decimal.zero,
+            credit: Decimal.fromInt(90),
+          ),
+        ],
+      );
+
+      await expectLater(
+        container
+            .read(accountingServiceProvider.notifier)
+            .postJournalEntry(entry, bypassCognitive: true),
+        throwsA(isA<Exception>()),
+      );
+      verifyNever(() => mockAccountingRepo.addJournalEntry(any()));
+    });
+
+    test('seedDefaultAccounts يضيف دليل الحسابات العالمي عندما يكون فارغاً',
+        () async {
+      final expectedAccounts = MultiStandardCoaEngine.generateCoa(
+        AccountingCountry.global,
+      );
+      when(() => mockAccountingRepo.getAccounts()).thenAnswer((_) async => []);
+      when(() => mockAccountingRepo.getAccountById(any()))
+          .thenAnswer((call) async {
+        final id = call.positionalArguments.single as String;
+        return expectedAccounts.firstWhere((account) => account.id == id);
+      });
+      when(() => mockAccountingRepo.addAccount(any())).thenAnswer((_) async {});
+
+      await container
+          .read(accountingServiceProvider.notifier)
+          .seedDefaultAccounts();
+
+      final addedAccounts = verify(
+        () => mockAccountingRepo.addAccount(captureAny()),
+      ).captured.cast<Account>();
+      expect(addedAccounts, hasLength(expectedAccounts.length));
+      expect(
+        addedAccounts.map((account) => account.code),
+        containsAll(expectedAccounts.map((account) => account.code)),
+      );
     });
   });
 }
