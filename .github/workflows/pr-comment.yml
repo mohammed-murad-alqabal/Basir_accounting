@@ -28,7 +28,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.24.0"
+          flutter-version: "3.35.5"
           channel: "stable"
           cache: false
 

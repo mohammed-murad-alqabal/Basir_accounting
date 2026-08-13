@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  FLUTTER_VERSION: "3.24.0"
+  FLUTTER_VERSION: "3.35.5"
   MIN_COVERAGE: 70
 
 jobs:
@@ -105,8 +105,15 @@ jobs:
 
       - name: 🔍 Scan for secrets
         run: |
-          if grep -r -E "(password|secret|api_key|token)" lib/ --include="*.dart" | grep -v "// TODO\|// FIXME\|test\|SecureStorage"; then
-            echo "❌ Potential secrets found"
+          # Match credential-shaped values and assignments only.  Domain terms
+          # such as password validation or token refresh documentation are safe.
+          if grep -r -n -E '(ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16})' lib/ --include='*.dart'; then
+            echo "❌ Credential-shaped value found"
+            exit 1
+          fi
+
+          if grep -r -n -E "(password|secret|api[_-]?key|token)[[:space:]]*[:=][[:space:]]*['\"][^'\"]{8,}" lib/ --include='*.dart'; then
+            echo "❌ Hard-coded credential assignment found"
             exit 1
           fi
 
