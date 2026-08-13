@@ -8,9 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../../../helpers/mock_data.dart';
 import '../../../../../mocks/mock_invoice_repository.dart';
 
-class MockNotificationService extends NotificationService {
-  MockNotificationService() : super();
-
+class _NoopNotificationService extends NotificationService {
   @override
   Future<void> initialize() async {}
 
@@ -19,8 +17,11 @@ class MockNotificationService extends NotificationService {
     required int id,
     required String title,
     required String body,
-    DateTime? scheduledDate,
+    required DateTime scheduledDate,
   }) async {}
+
+  @override
+  Future<void> cancelNotification(int id) async {}
 }
 
 void main() {
@@ -34,8 +35,9 @@ void main() {
       container = ProviderContainer(
         overrides: [
           invoiceRepositoryProvider.overrideWithValue(mockRepository),
-          notificationServiceProvider
-              .overrideWithValue(MockNotificationService()),
+          notificationServiceProvider.overrideWithValue(
+            _NoopNotificationService(),
+          ),
         ],
       );
     });
