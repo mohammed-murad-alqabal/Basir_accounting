@@ -3,6 +3,7 @@ import 'package:basir_accounting_system/core/providers/supabase_auth_provider.da
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounts_payable_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounts_receivable_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/authoritative_ledger_gateway.dart';
 import 'package:basir_accounting_system/features/accounting/application/financial_reporting_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/treasury_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
@@ -23,6 +24,8 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../../helpers/mock_accounting_repository.dart';
 
 class InMemoryCustomerRepository implements CustomerRepository {
   final _customers = <String, Customer>{};
@@ -118,6 +121,9 @@ void main() {
           ),
           accountingRepositoryProvider.overrideWithValue(
             InMemoryAccountingRepository(),
+          ),
+          authoritativeLedgerGatewayProvider.overrideWithValue(
+            const TestAuthoritativeLedgerGateway(),
           ),
           customerRepositoryProvider.overrideWithValue(
             InMemoryCustomerRepository(),
@@ -505,6 +511,16 @@ class InMemoryAccountingRepository implements AccountingRepository {
         );
       }
     }
+  }
+
+  @override
+  Future<void> cacheAuthoritativeJournalEntry(JournalEntry entry) async {
+    final index = _entries.indexWhere((current) => current.id == entry.id);
+    if (index == -1) {
+      await addJournalEntry(entry);
+      return;
+    }
+    _entries[index] = entry;
   }
 
   @override

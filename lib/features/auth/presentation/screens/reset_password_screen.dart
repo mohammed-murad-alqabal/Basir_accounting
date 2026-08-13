@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// ***
 /// Cognitive Foundation: ResetPasswordScreen
 ///
-/// Password replacement surface referenced by [AppRouter] at
+/// Password replacement surface referenced by the application router at
 /// `'/reset-password'`. Requires `email` and `token` route arguments.
 ///
 /// Collects the new password; submission logic is out of scope for the
@@ -14,9 +14,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// ***
 class ResetPasswordScreen extends ConsumerStatefulWidget {
   const ResetPasswordScreen({
-    super.key,
     required this.email,
     required this.token,
+    super.key,
   });
 
   /// Registered e-mail address supplied via route arguments.
@@ -54,7 +54,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.resetPasswordTitle)),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
           child: Column(

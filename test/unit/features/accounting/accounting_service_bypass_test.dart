@@ -42,10 +42,8 @@ class InMemoryFinancialYearRepository implements FinancialYearRepository {
       FinancialYear(
         id: 'fy-${now.year}',
         name: 'FY ${now.year}',
-        startDate: DateTime(now.year, 1, 1),
+        startDate: DateTime(now.year),
         endDate: DateTime(now.year, 12, 31),
-        isClosed: false,
-        lockedPeriodIds: const [],
       ),
     ];
   }
