@@ -36,16 +36,19 @@ jobs:
         run: dart lib/tools/documentation/cli/documentation_cli.dart validate
 
       - name: Generate documentation reports
+        if: always()
         run: |
           dart lib/tools/documentation/cli/documentation_cli.dart report --format=json --output=doc-report.json
           dart lib/tools/documentation/cli/documentation_cli.dart report --format=markdown --output=doc-report.md
 
       - name: Check coverage threshold
+        if: always()
         id: coverage
         env:
           THRESHOLD: 80
         run: |
           set -euo pipefail
+          test -s doc-report.json || { echo "Documentation JSON report is missing"; exit 1; }
           COVERAGE=$(node -e "const r=require('./doc-report.json'); console.log(r.coverage_percentage)")
           node -e "const coverage=Number(process.argv[1]); const threshold=Number(process.argv[2]); if (!Number.isFinite(coverage) || coverage < threshold) process.exit(1)" "$COVERAGE" "$THRESHOLD" \
             || { echo "Documentation coverage $COVERAGE% is below threshold $THRESHOLD%"; exit 1; }
