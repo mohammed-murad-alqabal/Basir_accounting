@@ -183,57 +183,55 @@ class BasirGlobalSearchField extends StatelessWidget {
   final AppLocalizations l10n;
 
   @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      textField: true,
-      label: l10n.shellSearchAll,
-      child: Container(
-        height: 40,
-        padding: const EdgeInsets.symmetric(horizontal: Spacing.sm),
-        decoration: BoxDecoration(
-          color: AppColors.background,
-          borderRadius: BorderRadius.circular(Radii.md),
-          border: Border.all(color: AppColors.borderLight),
-        ),
-        child: Row(
-          children: [
-            const Icon(
-              Icons.search,
-              size: IconSizes.sm,
-              color: AppColors.textHint,
-            ),
-            const SizedBox(width: Spacing.xs),
-            Expanded(
-              child: Text(
-                l10n.shellSearchHint,
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textHint,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+  Widget build(BuildContext context) => Semantics(
+        textField: true,
+        label: l10n.shellSearchAll,
+        child: Container(
+          height: 40,
+          padding: const EdgeInsets.symmetric(horizontal: Spacing.sm),
+          decoration: BoxDecoration(
+            color: AppColors.background,
+            borderRadius: BorderRadius.circular(Radii.md),
+            border: Border.all(color: AppColors.borderLight),
+          ),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.search,
+                size: IconSizes.sm,
+                color: AppColors.textHint,
               ),
-            ),
-            const SizedBox(width: Spacing.xs),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Spacing.xs,
-                vertical: 2,
-              ),
-              decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
-                borderRadius: BorderRadius.circular(Radii.xs),
-                border: Border.all(color: AppColors.borderLight),
-              ),
-              child: Text(
-                '⌘K',
-                style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.textSecondary,
+              const SizedBox(width: Spacing.xs),
+              Expanded(
+                child: Text(
+                  l10n.shellSearchHint,
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: AppColors.textHint,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-            ),
-          ],
+              const SizedBox(width: Spacing.xs),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Spacing.xs,
+                  vertical: 2,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.surfaceVariant,
+                  borderRadius: BorderRadius.circular(Radii.xs),
+                  border: Border.all(color: AppColors.borderLight),
+                ),
+                child: Text(
+                  '⌘K',
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

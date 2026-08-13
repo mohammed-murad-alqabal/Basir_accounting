@@ -52,7 +52,6 @@ import 'package:basir_accounting_system/features/reports/presentation/screens/in
 import 'package:basir_accounting_system/features/reports/presentation/screens/reports_dashboard_screen.dart';
 import 'package:basir_accounting_system/features/reports/presentation/screens/smart_tax_report_screen.dart';
 import 'package:basir_accounting_system/features/settings/presentation/screens/barcode_settings_screen.dart';
-import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:basir_accounting_system/features/settings/presentation/screens/cloud_backup_screen.dart';
 import 'package:basir_accounting_system/features/settings/presentation/screens/excel_import_screen.dart';
 import 'package:basir_accounting_system/features/settings/presentation/screens/settings_screen.dart';
@@ -62,6 +61,7 @@ import 'package:basir_accounting_system/features/users/presentation/screens/user
 import 'package:basir_accounting_system/features/vendors/presentation/screens/vendor_form_screen.dart';
 import 'package:basir_accounting_system/features/vendors/presentation/screens/vendors_screen.dart';
 import 'package:basir_accounting_system/features/zatca/presentation/screens/zatca_onboarding_screen.dart';
+import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:flutter/material.dart';
 
 /// نظام التوجيه للتطبيق
