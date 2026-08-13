@@ -1,6 +1,4 @@
 import 'package:basir_accounting_system/core/providers.dart';
-import 'package:basir_accounting_system/core/providers/calendar_provider.dart';
-import 'package:basir_accounting_system/core/providers/theme_provider.dart';
 import 'package:basir_accounting_system/core/theme/app_theme.dart';
 import 'package:basir_accounting_system/core/theme/services/appearance_service.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';

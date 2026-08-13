@@ -76,7 +76,7 @@ void main() {
         () => repository.getFinancialYearByDate(any()),
       ).thenAnswer((_) async => null);
 
-      expect(await service().canPostToDate(DateTime(2025, 5, 1)), isFalse);
+      expect(await service().canPostToDate(DateTime(2025, 5)), isFalse);
     });
 
     test('canPostToDate يرفض سنة مقفلة حتى إن احتوت التاريخ', () async {
@@ -84,7 +84,7 @@ void main() {
         () => repository.getFinancialYearByDate(any()),
       ).thenAnswer((_) async => financialYear(isClosed: true));
 
-      expect(await service().canPostToDate(DateTime(2025, 5, 1)), isFalse);
+      expect(await service().canPostToDate(DateTime(2025, 5)), isFalse);
     });
 
     test('canPostToDate يرفض الشهر المقفل ويقبل الشهر المفتوح', () async {
@@ -92,8 +92,8 @@ void main() {
         (_) async => financialYear(lockedPeriodIds: const ['2025-05']),
       );
 
-      expect(await service().canPostToDate(DateTime(2025, 5, 1)), isFalse);
-      expect(await service().canPostToDate(DateTime(2025, 6, 1)), isTrue);
+      expect(await service().canPostToDate(DateTime(2025, 5)), isFalse);
+      expect(await service().canPostToDate(DateTime(2025, 6)), isTrue);
     });
 
     test('يقفل الشهر مرة واحدة ويحفظ معرف الفترة المنسق', () async {
