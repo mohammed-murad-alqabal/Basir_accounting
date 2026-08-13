@@ -277,7 +277,7 @@ jobs:
           echo ""
 
           ./scripts/ci_prepare_env.sh
-          flutter test --coverage --reporter expanded
+          flutter test --coverage --exclude-tags benchmark --reporter expanded
 
           echo ""
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

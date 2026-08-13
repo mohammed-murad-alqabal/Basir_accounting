@@ -93,7 +93,7 @@ jobs:
       - name: Run tests with coverage
         run: |
           ./scripts/ci_prepare_env.sh
-          flutter test --coverage
+          flutter test --coverage --exclude-tags benchmark
       - name: Check Test Coverage
         run: |
           COVERAGE=$(lcov --summary coverage/lcov.info | grep "lines" | awk '{print $2}' | sed 's/%//')

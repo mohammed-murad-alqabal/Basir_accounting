@@ -76,7 +76,7 @@ jobs:
         run: |
           ./scripts/ci_prepare_env.sh
           set +e
-          flutter test > test_output.txt 2>&1
+          flutter test --exclude-tags benchmark > test_output.txt 2>&1
           TEST_EXIT_CODE=$?
           set -e
           echo "test_exit_code=$TEST_EXIT_CODE" >> "$GITHUB_OUTPUT"

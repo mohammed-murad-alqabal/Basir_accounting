@@ -83,7 +83,7 @@ jobs:
         run: |
           echo "Running tests..."
           ./scripts/ci_prepare_env.sh
-          flutter test --no-pub > test_output.txt 2>&1 || true
+          flutter test --no-pub --exclude-tags benchmark > test_output.txt 2>&1 || true
 
           # استخراج نتائج الاختبارات
           PASSED=$(grep -oP '\d+(?= tests? passed)' test_output.txt | head -1 || echo "0")

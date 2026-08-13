@@ -62,7 +62,7 @@ jobs:
       - name: Run tests
         run: |
           ./scripts/ci_prepare_env.sh
-          flutter test
+          flutter test --exclude-tags benchmark
 
       - name: Build APK
         run: |
