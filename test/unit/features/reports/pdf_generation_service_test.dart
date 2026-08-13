@@ -29,7 +29,6 @@ Invoice _invoice({required InvoiceType type, String? qrCode}) => Invoice(
       discountRate: Decimal.zero,
       exchangeRate: Decimal.one,
       type: type,
-      currency: 'SAR',
       qrCode: qrCode,
       items: [
         InvoiceItem(
