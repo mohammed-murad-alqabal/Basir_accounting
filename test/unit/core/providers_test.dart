@@ -14,6 +14,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
 
 void main() {
+  setUpAll(() async {
+    await Isar.initializeIsarCore(download: true);
+  });
+
   group('Core Providers Tests', () {
     late ProviderContainer container;
     late Isar isar;

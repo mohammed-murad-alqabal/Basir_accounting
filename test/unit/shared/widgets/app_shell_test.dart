@@ -16,6 +16,7 @@ Widget buildShell({
   String locale = 'ar',
   bool rtl = true,
   bool sidebarCollapsedDefault = false,
+
   /// مفتاح فريد لإجبار Riverpod على إعادة إنشاء ProviderContainer عند إعادة
   /// البناء (pumpWidget جديد بقيم overrides مختلفة)
   Key? providerKey,
@@ -36,7 +37,8 @@ Widget buildShell({
         overrides: [
           appIconsProvider.overrideWith((ref) => const MaterialAppIcons()),
           // يجب إبقاء نفس عدد الـ overrides في كل إعادة بناء (riverpod لا يسمح بتغيير العدد)
-          sidebarCollapsedProvider.overrideWith((ref) => sidebarCollapsedDefault),
+          sidebarCollapsedProvider
+              .overrideWith((ref) => sidebarCollapsedDefault),
         ],
         child: MediaQuery(
           data: MediaQueryData(size: Size(width, 800)),
@@ -86,7 +88,8 @@ void main() {
       // IndexedStack يعرض كل الشاشات (مع إخفاء غير النشطة)
       expect(tester.widgetList<IndexedStack>(find.byType(IndexedStack)).length,
           greaterThanOrEqualTo(1));
-      final stack = tester.widget<IndexedStack>(find.byType(IndexedStack).first);
+      final stack =
+          tester.widget<IndexedStack>(find.byType(IndexedStack).first);
       expect(stack.children.length, 8);
     });
 
@@ -97,9 +100,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // العرض الموسّع: الشريط الجانبي يشغل kSidebarExpandedWidth من إجمالي الصف
-      final sidebarRenderBoxBefore = tester
-          .renderObject<RenderBox>(find.byType(BasirSidebar))
-          .size;
+      final sidebarRenderBoxBefore =
+          tester.renderObject<RenderBox>(find.byType(BasirSidebar)).size;
       expect(sidebarRenderBoxBefore.width, kSidebarExpandedWidth);
 
       await tester.pumpWidget(buildShell(
@@ -174,7 +176,7 @@ void main() {
       expect(activeContainers, findsOneWidget);
     });
 
-        testWidgets('highlights selected item semantically', (tester) async {
+    testWidgets('highlights selected item semantically', (tester) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
@@ -192,8 +194,7 @@ void main() {
       );
     });
 
-    testWidgets('shows Basir brand header with system title',
-        (tester) async {
+    testWidgets('shows Basir brand header with system title', (tester) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
@@ -247,10 +248,11 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(BasirGlobalSearchField), findsOneWidget);
-      expect(find.text('ابحث في الفواتير والعملاء والأصناف...'), findsOneWidget);
+      expect(
+          find.text('ابحث في الفواتير والعملاء والأصناف...'), findsOneWidget);
     });
 
-        testWidgets('chips are announced for accessibility', (tester) async {
+    testWidgets('chips are announced for accessibility', (tester) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
@@ -263,8 +265,7 @@ void main() {
         isNull,
       );
 
-      final semantics =
-          tester.getSemantics(find.byType(BasirTopBar).first);
+      final semantics = tester.getSemantics(find.byType(BasirTopBar).first);
       // Semantics الشرائح مدموجة مع الزر (button: true) ومحتواها النصي،
       // لذا تُجمع كل الـ labels المدموجة ثم يُتحقق من احتواء كل شريحة عنوانها
       final collectedLabels = <String>[];
@@ -304,7 +305,7 @@ void main() {
       expect(find.text('Search invoices, customers, items...'), findsOneWidget);
     });
 
-        testWidgets('renders topbar in mobile layout too', (tester) async {
+    testWidgets('renders topbar in mobile layout too', (tester) async {
       setTestSurfaceSize(tester, 1280);
       setTestSurfaceSize(tester, 480);
       await tester.pumpWidget(buildShell(width: 480, locale: 'en'));

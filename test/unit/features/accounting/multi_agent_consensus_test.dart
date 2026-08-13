@@ -45,7 +45,8 @@ void main() {
       container.dispose();
     });
 
-    testWidgets('Consensus Test 1: Valid Sales Invoice with Tax', (tester) async {
+    testWidgets('Consensus Test 1: Valid Sales Invoice with Tax',
+        (tester) async {
       final orchestrator = container.read(orchestratorServiceProvider.notifier);
 
       final entry = JournalEntry(

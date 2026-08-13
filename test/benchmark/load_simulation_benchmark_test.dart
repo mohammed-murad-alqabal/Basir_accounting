@@ -13,6 +13,10 @@ import 'package:isar/isar.dart';
 void main() {
   late Isar isar;
 
+  setUpAll(() async {
+    await Isar.initializeIsarCore(download: true);
+  });
+
   setUp(() async {
     final tempDir = Directory.systemTemp.createTempSync('isar_load_');
     isar = await Isar.open(

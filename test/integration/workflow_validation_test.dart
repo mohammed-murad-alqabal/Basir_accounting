@@ -43,7 +43,7 @@ void main() {
         ) as YamlMap;
 
         final with_ = setupFlutterStep['with'] as YamlMap;
-        expect(with_['flutter-version'], equals('3.24.0'));
+        expect(with_['flutter-version'], equals('3.35.5'));
       });
 
       test('should run analyze command', () {

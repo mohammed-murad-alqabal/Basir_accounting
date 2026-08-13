@@ -950,7 +950,17 @@
   "workAuditTitle": "Audit Trail",
   "workAuditEmpty": "No audit events yet.",
   "workAuditLinkedDoc": "Linked document: {arg0}",
+  "@workAuditLinkedDoc": {
+    "placeholders": {
+      "arg0": {}
+    }
+  },
   "workAuditOpenLinked": "Open linked document {arg0}",
+  "@workAuditOpenLinked": {
+    "placeholders": {
+      "arg0": {}
+    }
+  },
   "workAuditEventCreated": "Created",
   "workAuditEventModified": "Modified",
   "workAuditEventApproved": "Approved",
@@ -961,9 +971,24 @@
   "workAuditEventAdministrative": "Administrative action",
   "workGridEmpty": "No records found.",
   "workGridSortableColumn": "{arg0}, sortable column",
+  "@workGridSortableColumn": {
+    "placeholders": {
+      "arg0": {}
+    }
+  },
   "workFilterSearchHint": "Search in documents, customers, and items...",
   "workFilterExport": "Export",
   "workFilterCollapse": "Collapse filters",
   "workGridSelect": "Select",
-  "workGridRow": "Table row"
+  "workGridRow": "Table row",
+  "workDocumentSummary": "Document summary",
+  "workDocumentRequestPreview": "Request preview",
+  "workDocumentPreviewImpact": "Preview impact",
+  "workDocumentSaveDraft": "Save as draft",
+  "workDocumentPost": "Confirm posting",
+  "workDocumentPreviewRequired": "Request an impact preview before posting.",
+  "workDocumentApprovalRequired": "Additional approval required",
+  "workDocumentNoImpact": "No movements are expected.",
+  "workEntityPickerNoOptions": "No options available",
+  "workEntityPickerDisabled": "Not eligible for selection"
 }

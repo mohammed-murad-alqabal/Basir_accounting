@@ -1,17 +1,18 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 
+import 'package:basir_accounting_system/core/domain/contracts/index.dart';
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/core/utils/format_helpers.dart';
 import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
 import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
-import 'package:basir_accounting_system/features/auth/presentation/widgets/permission_guard.dart';
 import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
 import 'package:basir_accounting_system/features/customers/presentation/providers/customer_provider.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/providers/inventory_provider.dart';
+import 'package:basir_accounting_system/features/invoices/application/invoice_posting_preview_service.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
@@ -60,11 +61,15 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   InvoiceType _type = InvoiceType.sales;
   List<InvoiceItem> _items = [];
   String _currency = 'SAR';
+  PostingPreview? _postingPreview;
+  String? _previewFingerprint;
+  late final String _draftId;
   late TextEditingController _exchangeRateController;
 
   @override
   void initState() {
     super.initState();
+    _draftId = widget.invoice?.id ?? const Uuid().v4();
     if (widget.invoice != null) {
       _notesController.text = widget.invoice!.notes ?? '';
       _issuedDate = widget.invoice!.issuedDate;
@@ -97,6 +102,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     final isEditing = widget.invoice != null;
     final customersAsync = ref.watch(customersProvider);
     final appIcons = ref.watch(appIconsProvider);
+    final canPost = ref.watch(currentUserProfileProvider)?.hasPermission(
+              Permission.postJournalEntry,
+            ) ??
+        false;
     final calendarType =
         ref.watch(calendarProvider).value ?? CalendarType.gregorian;
 
@@ -121,85 +130,83 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       }
     });
 
+    final draft = _buildDocumentDraft();
+    final preview = _previewFingerprint == _documentFingerprint(draft)
+        ? _postingPreview
+        : null;
+
     return GlassScaffold(
       title: _getLocalizedTitle(context, isEditing),
       body: Form(
         key: <credential-fixture>,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(Spacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              GlassCard(
-                child: customersAsync.when(
-                  data: _buildCustomerSelector,
-                  loading: () => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                  error: (error, stack) => Text(
-                    context.l10n.errLoadCustomers(error.toString()),
-                    style: const TextStyle(color: AppColors.error),
-                  ),
-                ),
-              ),
-              const SizedBox(height: Spacing.md),
-              GlassCard(
-                child: _buildDateField(
-                  label: context.l10n.labelIssuedDate,
-                  date: _issuedDate,
-                  onTap: () => _selectDate(context, true),
-                  icon: appIcons.calendar,
-                  calendarType: calendarType,
-                ),
-              ),
-              const SizedBox(height: Spacing.md),
-              GlassCard(
-                child: _buildDateField(
-                  label: context.l10n.labelDueDate,
-                  date: _dueDate,
-                  onTap: () => _selectDate(context, false),
-                  icon: appIcons.calendar,
-                  calendarType: calendarType,
-                ),
-              ),
-              const SizedBox(height: Spacing.md),
-              GlassCard(child: _buildTaxRateField(appIcons)),
-              const SizedBox(height: Spacing.md),
-              GlassCard(child: _buildStatusSelector()),
-              const SizedBox(height: Spacing.md),
-              GlassCard(child: _buildCurrencySelector(appIcons)),
-              const SizedBox(height: Spacing.md),
-              _buildItemsSection(appIcons),
-              const SizedBox(height: Spacing.md),
-              _buildTotalsSection(),
-              const SizedBox(height: Spacing.md),
-              AppTextField(
-                controller: _notesController,
-                label: context.l10n.labelNotes,
-                hint: context.l10n.hintNotes,
-                prefixIcon: Icon(appIcons.note),
-                maxLines: 3,
-              ),
-              const SizedBox(height: Spacing.xl),
-              PermissionGuard(
-                permission: Permission.postJournalEntry,
-                fallback: Center(
-                  child: Text(
-                    context.l10n.errPermissionDenied,
-                    style: const TextStyle(color: AppColors.textSecondary),
+          child: DocumentEditor(
+            draft: draft,
+            preview: preview,
+            onPreviewRequested: _isLoading || _type != InvoiceType.sales
+                ? null
+                : _requestPostingPreview,
+            onSaveDraftRequested: _isLoading ? null : _saveInvoice,
+            onPostRequested: _isLoading || !canPost ? null : _confirmPosting,
+            header: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                GlassCard(
+                  child: customersAsync.when(
+                    data: _buildCustomerSelector,
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    error: (error, stack) => Text(
+                      context.l10n.errLoadCustomers(error.toString()),
+                      style: const TextStyle(color: AppColors.error),
+                    ),
                   ),
                 ),
-                child: AppEnhancedButton(
-                  label: isEditing
-                      ? context.l10n.btnUpdateInvoice
-                      : context.l10n.btnSaveInvoice,
-                  onPressed: _isLoading ? null : _saveInvoice,
-                  isLoading: _isLoading,
-                  icon: appIcons.save,
-                  width: double.infinity,
+                const SizedBox(height: Spacing.md),
+                GlassCard(
+                  child: _buildDateField(
+                    label: context.l10n.labelIssuedDate,
+                    date: _issuedDate,
+                    onTap: () => _selectDate(context, true),
+                    icon: appIcons.calendar,
+                    calendarType: calendarType,
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: Spacing.md),
+                GlassCard(
+                  child: _buildDateField(
+                    label: context.l10n.labelDueDate,
+                    date: _dueDate,
+                    onTap: () => _selectDate(context, false),
+                    icon: appIcons.calendar,
+                    calendarType: calendarType,
+                  ),
+                ),
+                const SizedBox(height: Spacing.md),
+                GlassCard(child: _buildTaxRateField(appIcons)),
+                const SizedBox(height: Spacing.md),
+                GlassCard(child: _buildStatusSelector()),
+                const SizedBox(height: Spacing.md),
+                GlassCard(child: _buildCurrencySelector(appIcons)),
+              ],
+            ),
+            lineItems: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildItemsSection(appIcons),
+                const SizedBox(height: Spacing.md),
+                AppTextField(
+                  controller: _notesController,
+                  label: context.l10n.labelNotes,
+                  hint: context.l10n.hintNotes,
+                  prefixIcon: Icon(appIcons.note),
+                  maxLines: 3,
+                  onChanged: (_) => setState(() {}),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -225,46 +232,128 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     }
   }
 
-  Widget _buildCustomerSelector(List<Customer> customers) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            context.l10n.labelCustomer,
-            style: AppTextStyles.bodyLarge.copyWith(
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
+  Widget _buildCustomerSelector(List<Customer> customers) => EntityPicker(
+        label: context.l10n.labelCustomer,
+        hint: context.l10n.hintSelectCustomer,
+        selectedId: _selectedCustomer?.id,
+        options: customers
+            .map(
+              (customer) => EntityPickerOption(
+                id: customer.id,
+                label: customer.name(isArabic: context.isArabic),
+              ),
+            )
+            .toList(growable: false),
+        onChanged: (option) {
+          final customer = customers.firstWhere(
+            (candidate) => candidate.id == option?.id,
+          );
+          setState(() => _selectedCustomer = customer);
+        },
+      );
+
+  DocumentDraft _buildDocumentDraft() => DocumentDraft(
+        id: _draftId,
+        documentType: _type == InvoiceType.sales
+            ? 'sales_invoice'
+            : 'invoice_${_type.name}',
+        currencyCode: _currency,
+        headerNote: _notesController.text.trim().isEmpty
+            ? null
+            : _notesController.text.trim(),
+        lines: _items
+            .map(
+              (item) => DraftLineItem(
+                id: item.id,
+                description: item.name,
+                quantity: double.parse(item.quantity.toString()),
+                unitPrice: double.parse(item.price.toString()),
+                taxRate: double.parse(item.taxRate.toString()),
+              ),
+            )
+            .toList(growable: false),
+      );
+
+  String _documentFingerprint(DocumentDraft draft) => [
+        draft.documentType,
+        draft.currencyCode,
+        draft.headerNote ?? '',
+        ...draft.lines.map(
+          (line) => '${line.id}:${line.quantity}:${line.unitPrice}:'
+              '${line.taxRate}:${line.discount}',
+        ),
+      ].join('|');
+
+  void _requestPostingPreview() {
+    if (_selectedCustomer == null) {
+      _showFormError(context.l10n.errSelectCustomer);
+      return;
+    }
+    final draft = _buildDocumentDraft();
+    if (!draft.isSaveable) {
+      _showFormError(context.l10n.errNoItems);
+      return;
+    }
+
+    const service = InvoicePostingPreviewService();
+    final result = service.previewSalesDocument(
+      draft: draft,
+      customerName: _selectedCustomer!.name(isArabic: context.isArabic),
+    );
+    result.fold(
+      (preview) {
+        setState(() {
+          _postingPreview = preview;
+          _previewFingerprint = _documentFingerprint(draft);
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.l10n.workDocumentPreviewImpact)),
+        );
+      },
+      (_) => _showFormError(context.l10n.errGeneric('preview-unavailable')),
+    );
+  }
+
+  Future<void> _confirmPosting() async {
+    final draft = _buildDocumentDraft();
+    final preview = _postingPreview;
+    if (preview == null || _previewFingerprint != _documentFingerprint(draft)) {
+      _showFormError(context.l10n.workDocumentPreviewRequired);
+      return;
+    }
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(context.l10n.workDocumentPreviewImpact),
+        content: Text(
+          preview.requiresAdditionalApproval
+              ? preview.approvalReason ??
+                  context.l10n.workDocumentApprovalRequired
+              : context.l10n.workDocumentPost,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(context.l10n.dialogCancel),
           ),
-          const SizedBox(height: Spacing.sm),
-          DropdownButtonFormField<Customer>(
-            initialValue: _selectedCustomer,
-            decoration: InputDecoration(
-              hintText: context.l10n.hintSelectCustomer,
-              border: const OutlineInputBorder(),
-            ),
-            items: customers
-                .map(
-                  (customer) => DropdownMenuItem(
-                    value: customer,
-                    child: Text(
-                      customer.nameAr,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                )
-                .toList(),
-            onChanged: (customer) {
-              setState(() => _selectedCustomer = customer);
-            },
-            validator: (value) {
-              if (value == null) {
-                return context.l10n.errSelectCustomer;
-              }
-              return null;
-            },
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(context.l10n.workDocumentPost),
           ),
         ],
-      );
+      ),
+    );
+    if ((confirmed ?? false) && mounted) {
+      await _saveInvoiceAsync(statusOverride: InvoiceStatus.sent);
+    }
+  }
+
+  void _showFormError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: AppColors.error),
+    );
+  }
 
   Widget _buildCurrencySelector(AppIconsBase appIcons) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -536,74 +625,6 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   );
                 },
               ),
-          ],
-        ),
-      );
-
-  Widget _buildTotalsSection() {
-    final subtotal = _items.fold<Decimal>(
-      Decimal.zero,
-      (sum, item) => sum + item.total,
-    );
-    final taxTotal = subtotal * _taxRate;
-    final grandTotal = subtotal + taxTotal;
-
-    return Container(
-      padding: const EdgeInsets.all(Spacing.md),
-      decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(Radii.md),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
-      ),
-      child: Column(
-        children: [
-          _buildTotalRow(context.l10n.labelSubtotal, subtotal),
-          const Divider(),
-          _buildTotalRow(
-            context.l10n.labelTaxTotal,
-            taxTotal,
-          ),
-          const Divider(thickness: 2),
-          _buildTotalRow(
-            context.l10n.labelGrandTotal,
-            grandTotal,
-            isGrandTotal: true,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTotalRow(
-    String label,
-    Decimal amount, {
-    bool isGrandTotal = false,
-  }) =>
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: Spacing.xs),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              label,
-              style: (isGrandTotal
-                      ? AppTextStyles.bodyLarge
-                      : AppTextStyles.bodyMedium)
-                  .copyWith(
-                fontWeight: isGrandTotal ? FontWeight.bold : FontWeight.w500,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            Text(
-              FormatHelpers.formatCurrency(
-                amount,
-                locale: context.l10n.localeName,
-              ),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: isGrandTotal ? AppColors.primary : AppColors.textPrimary,
-              ),
-            ),
           ],
         ),
       );
@@ -910,10 +931,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   }
 
   void _saveInvoice() {
-    unawaited(_saveInvoiceAsync());
+    unawaited(_saveInvoiceAsync(statusOverride: InvoiceStatus.draft));
   }
 
-  Future<void> _saveInvoiceAsync() async {
+  Future<void> _saveInvoiceAsync({InvoiceStatus? statusOverride}) async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -951,6 +972,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       );
       final grandTotal = subtotal + taxTotal;
 
+      final effectiveStatus = statusOverride ?? _status;
       final invoice = Invoice(
         id: widget.invoice?.id ?? const Uuid().v4(),
         invoiceNumber: widget.invoice?.invoiceNumber ??
@@ -962,7 +984,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         dueDate: _dueDate,
         createdAt: widget.invoice?.createdAt ?? DateTime.now(),
         updatedAt: DateTime.now(),
-        status: _status,
+        status: effectiveStatus,
         type: _type,
         currency: _currency,
         exchangeRate: Decimal.parse(_exchangeRateController.text),
@@ -970,7 +992,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         taxAmount: taxTotal,
         discountAmount: Decimal.zero,
         totalAmount: grandTotal,
-        paidAmount: _status == InvoiceStatus.paid ? grandTotal : Decimal.zero,
+        paidAmount:
+            effectiveStatus == InvoiceStatus.paid ? grandTotal : Decimal.zero,
         taxRate: _taxRate,
         discountRate: Decimal.zero,
         notes: _notesController.text,
