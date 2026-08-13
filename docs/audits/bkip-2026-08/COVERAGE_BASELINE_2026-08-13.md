@@ -6,7 +6,7 @@
 > **owner:** Engineering Quality Owner
 > **approved_by:** Pending formal repository owner approval
 > **effective_from:** 2026-08-13
-> **last_verified_sha:** `0c2981aee35be5f629a1bcb51f9d054dbc52f9fa`
+> **last_verified_sha:** `2f2bc5abe532bb8f5cec750bcdc8270e7c8b4c88` — [Quality Gates 31751982823](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31751982823)
 > **review_due:** 2026-09-13
 > **related_requirements:** REQ-SEC-001, REQ-SEC-005
 > **related_adrs:** ADR-SEC-001
@@ -27,6 +27,7 @@
 | بوابة الاختبارات البعيدة المصححة | [Quality Gates run 31746115542](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31746115542) | `1,221` نجاح، `2` تخطٍ، `25.98%` مطبوعة | أول دليل CI أن التقرير وُجد وحُسبت النسبة؛ الهدف 70% ما زال استشاريًا ومعلنًا. |
 | بوابة الاختبارات البعيدة السابقة | [Quality Gates run 31745319865](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31745319865) | نجحت الاختبارات (`1,220`، `2` متخطيان) | ليست دليلاً للتغطية؛ فشل استعمال `lcov` ثم استمر الشرط الفارغ بلا فشل مانع. |
 | بوابة التحليل البعيدة | [Quality Gates run 31746115542](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31746115542) | `177` معلوماتية، `0` أخطاء/تحذيرات | خط أساس تحليل مستقل؛ لا يستدل منه على تغطية الاختبارات. |
+| ملاحظة لاحقة — دفعة الرموز | [Quality Gates run 31751982823](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31751982823) على `2f2bc5ab` | `1,225` نجاح، `2` تخطٍ، `26.19%`، و`177` معلوماتية | أعلى من خط الأساس `25.98%` بمقدار `0.21` نقطة مئوية؛ لا يغير عتبة البوابة أو هدف `70%`. |
 
 ## سبب إصلاح البوابة
 
