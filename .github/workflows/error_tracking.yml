@@ -22,9 +22,9 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.24.0"
+          flutter-version: "3.35.5"
           channel: "stable"
           cache: false
 

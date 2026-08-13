@@ -40,7 +40,7 @@ Invoice fakeInvoice({
       discountRate: Decimal.zero,
       exchangeRate: Decimal.one,
       currency: 'SAR',
-  );
+    );
 
 /// مزود وهمي لقائمة الفواتير لتجاوز طبقة المستودع في الاختبار.
 // ignore: unreachable_from_main
