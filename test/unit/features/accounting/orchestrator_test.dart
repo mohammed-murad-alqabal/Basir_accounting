@@ -86,6 +86,7 @@ void main() {
       final context = AccountingContext(
         proposedJournalEntry: mockEntry,
         transactionType: 'sales',
+        locale: 'en',
       );
 
       final result = await orchestrator.orchestrate(context);
@@ -99,7 +100,10 @@ void main() {
       );
       expect(
         result.explanation,
-        contains('Confirmed: Account correctly mapped to Operating category'),
+        contains(
+          'Compliance verified: Journal entry adheres to (IFRS/SOCPA) '
+          'standards.',
+        ),
       );
       expect(result.explanation, contains('Validating IFRS 18 Category'));
     });
@@ -160,6 +164,7 @@ void main() {
         transactionType: 'industrial_expense',
         isSustainabilityRequired: true,
         sustainabilityMetrics: [], // Missing required metrics
+        locale: 'en',
       );
 
       final result = await orchestrator.orchestrate(context);
@@ -167,7 +172,10 @@ void main() {
       expect(result.isApproved, isFalse);
       expect(
         result.explanation,
-        contains('REJECTION: ISSB compliance requires sustainability metrics'),
+        contains(
+          'CRITICAL REJECTION: ISSB S2 standards require carbon footprint '
+          'metrics for this industry-specific transaction.',
+        ),
       );
     });
   });

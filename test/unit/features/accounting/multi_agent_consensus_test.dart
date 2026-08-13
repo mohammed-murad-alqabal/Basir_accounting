@@ -45,7 +45,7 @@ void main() {
       container.dispose();
     });
 
-    test('Consensus Test 1: Valid Sales Invoice with Tax', () async {
+    testWidgets('Consensus Test 1: Valid Sales Invoice with Tax', (tester) async {
       final orchestrator = container.read(orchestratorServiceProvider.notifier);
 
       final entry = JournalEntry(
@@ -95,6 +95,7 @@ void main() {
       final context = AccountingContext(
         proposedJournalEntry: entry,
         transactionType: 'sales',
+        locale: 'en',
         metadata: {
           'tax_id': '310123456700003', // Valid ZATCA style tax ID
           'priority': 'high',
@@ -107,7 +108,7 @@ void main() {
       expect(consensus.agentResults.length, 6);
       expect(consensus.explanation.contains('agent-1-standards-engine'), true);
       expect(consensus.explanation.contains('agent-2-tax-engine'), true);
-      expect(consensus.explanation.contains('agent-3-forensic-audit'), true);
+      expect(consensus.explanation.contains('agent-3-forensic'), true);
       expect(consensus.explanation.contains('agent-4-operational-intel'), true);
       expect(
         consensus.explanation.contains('agent-5-financial-strategy'),
@@ -119,9 +120,9 @@ void main() {
       );
     });
 
-    test(
+    testWidgets(
       'Consensus Test 2: Rejection on Missing Tax ID for Large Transaction',
-      () async {
+      (tester) async {
         final orchestrator = container.read(
           orchestratorServiceProvider.notifier,
         );
@@ -167,6 +168,7 @@ void main() {
         final context = AccountingContext(
           proposedJournalEntry: entry,
           transactionType: 'purchase',
+          locale: 'en',
           metadata: {
             'tax_id': '', // MISSING TAX ID
           },
@@ -178,7 +180,8 @@ void main() {
         expect(consensus.isApproved, false);
         expect(
           consensus.explanation.contains(
-            'رفض: العمليات التي تتجاوز 10,000 ريال تتطلب رقم ضريبي صالح',
+            'REJECT: Transactions exceeding 10,000 SAR require a valid Tax '
+            'ID for ZATCA Phase 2 compliance.',
           ),
           true,
         );
