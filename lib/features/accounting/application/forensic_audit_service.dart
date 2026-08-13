@@ -111,9 +111,8 @@ class ForensicAuditService extends _$ForensicAuditService
     }
 
     // 5. Sequence integrity check (CP-011).
-    final existingEntries = await ref
-        .read(accountingRepositoryProvider)
-        .getJournalEntries();
+    final existingEntries =
+        await ref.read(accountingRepositoryProvider).getJournalEntries();
     final sequenceGap = _sequenceGapRationale(entry, existingEntries);
     if (sequenceGap != null) {
       return AgentResult(
@@ -140,9 +139,8 @@ class ForensicAuditService extends _$ForensicAuditService
       isAllowed: true,
       rationale: 'agentRationaleForensicBalanced',
       confidenceScore: 0.95,
-      suggestedAdjustments: suggestedAdjustments.isNotEmpty
-          ? suggestedAdjustments
-          : null,
+      suggestedAdjustments:
+          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
     );
   }
 
@@ -169,11 +167,9 @@ class ForensicAuditService extends _$ForensicAuditService
     final expectedNumber = previous.number + 1;
     if (proposedReference.number == expectedNumber) return null;
 
-    final expectedReference =
-        '${proposedReference.prefix}'
+    final expectedReference = '${proposedReference.prefix}'
         '${expectedNumber.toString().padLeft(proposedReference.width, '0')}';
-    final previousReference =
-        '${previous.prefix}'
+    final previousReference = '${previous.prefix}'
         '${previous.number.toString().padLeft(previous.width, '0')}';
     return 'Gap detected: expected $expectedReference between '
         '$previousReference and ${proposedEntry.referenceNumber}.';
