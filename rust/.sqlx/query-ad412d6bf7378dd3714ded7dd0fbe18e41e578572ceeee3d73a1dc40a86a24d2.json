@@ -1,38 +1,38 @@
 {
   "db_name": "PostgreSQL",
-  "query": "SELECT entry_number, entry_type, standard_reference FROM journal_entries WHERE id = $1",
+  "query": "SELECT id, curr_hash, prev_hash FROM audit_log WHERE entity_id = $1",
   "describe": {
     "columns": [
       {
         "ordinal": 0,
-        "name": "entry_number",
-        "type_info": "Text",
+        "name": "id",
+        "type_info": "Uuid",
         "origin": {
           "Table": {
-            "table": "journal_entries",
-            "name": "entry_number"
+            "table": "audit_log",
+            "name": "id"
           }
         }
       },
       {
         "ordinal": 1,
-        "name": "entry_type",
+        "name": "curr_hash",
         "type_info": "Text",
         "origin": {
           "Table": {
-            "table": "journal_entries",
-            "name": "entry_type"
+            "table": "audit_log",
+            "name": "curr_hash"
           }
         }
       },
       {
         "ordinal": 2,
-        "name": "standard_reference",
+        "name": "prev_hash",
         "type_info": "Text",
         "origin": {
           "Table": {
-            "table": "journal_entries",
-            "name": "standard_reference"
+            "table": "audit_log",
+            "name": "prev_hash"
           }
         }
       }
@@ -48,5 +48,5 @@
       true
     ]
   },
-  "hash": "db5d1a34b0d8109a20a7e2740e5dd2a4a0f71a8f117cc988b2c4c62cf21b2c45"
+  "hash": "ad412d6bf7378dd3714ded7dd0fbe18e41e578572ceeee3d73a1dc40a86a24d2"
 }

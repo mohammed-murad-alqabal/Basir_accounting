@@ -6,32 +6,68 @@
       {
         "ordinal": 0,
         "name": "id",
-        "type_info": "Uuid"
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "exchange_rates",
+            "name": "id"
+          }
+        }
       },
       {
         "ordinal": 1,
         "name": "base_currency",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "exchange_rates",
+            "name": "base_currency"
+          }
+        }
       },
       {
         "ordinal": 2,
         "name": "target_currency",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "exchange_rates",
+            "name": "target_currency"
+          }
+        }
       },
       {
         "ordinal": 3,
         "name": "rate",
-        "type_info": "Numeric"
+        "type_info": "Numeric",
+        "origin": {
+          "Table": {
+            "table": "exchange_rates",
+            "name": "rate"
+          }
+        }
       },
       {
         "ordinal": 4,
         "name": "effective_date",
-        "type_info": "Date"
+        "type_info": "Date",
+        "origin": {
+          "Table": {
+            "table": "exchange_rates",
+            "name": "effective_date"
+          }
+        }
       },
       {
         "ordinal": 5,
         "name": "source",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "exchange_rates",
+            "name": "source"
+          }
+        }
       }
     ],
     "parameters": {

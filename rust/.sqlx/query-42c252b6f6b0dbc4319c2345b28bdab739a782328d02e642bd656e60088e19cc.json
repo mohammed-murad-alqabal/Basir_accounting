@@ -6,27 +6,57 @@
       {
         "ordinal": 0,
         "name": "code",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "accounts",
+            "name": "code"
+          }
+        }
       },
       {
         "ordinal": 1,
         "name": "name_ar",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "accounts",
+            "name": "name_ar"
+          }
+        }
       },
       {
         "ordinal": 2,
         "name": "name_en",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "accounts",
+            "name": "name_en"
+          }
+        }
       },
       {
         "ordinal": 3,
         "name": "account_type!",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "accounts",
+            "name": "type"
+          }
+        }
       },
       {
         "ordinal": 4,
         "name": "classification",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "accounts",
+            "name": "classification"
+          }
+        }
       }
     ],
     "parameters": {
