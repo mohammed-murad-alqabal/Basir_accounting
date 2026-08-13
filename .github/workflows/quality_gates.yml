@@ -66,7 +66,9 @@ jobs:
       - name: Generate build-time sources
         run: dart run build_runner build --delete-conflicting-outputs
       - name: Run tests with coverage
-        run: flutter test --coverage
+        # Serial execution avoids a reproducible CI worker crash (exit -7) while
+        # each test file initializes isolated native/plugin-backed test state.
+        run: flutter test --concurrency=1 --coverage
       - name: Check Test Coverage
         run: |
           COVERAGE=$(lcov --summary coverage/lcov.info | grep "lines" | awk '{print $2}' | sed 's/%//')
