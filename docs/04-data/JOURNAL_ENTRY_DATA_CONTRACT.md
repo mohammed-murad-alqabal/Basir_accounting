@@ -26,16 +26,16 @@
 | سطور القيد | `lines` | embedded `lines` | سطران أو أكثر؛ طرف واحد موجب؛ إجمالي متوازن. |
 | قيم المدين/الدائن | `Decimal` | `String` | تمثيل نص عشري قانوني؛ يمنع `double` كقيمة حاكمة. |
 | عملة أصلية | `originalCurrency`, `originalAmount`, `exchangeRate` | strings/nullable | العملة الأجنبية تتطلب الحقول الثلاثة موجبة؛ في العملة الأساسية يجوز غياب الرمز، لكن المبلغ والسعر يوجدان معًا أو يغيبان معًا. |
-| دليل جنائي | `hash`, `previousHash`, `auditLogs` | حقول/embedded حسب النموذج | لا تعني الحقول وحدها أن السلسلة متحققة؛ يلزم REQ-ACC-009. |
+| دليل جنائي | `hash`, `previousHash`, `auditLogs` | `hash` و`previousHash` و`auditLogs` embedded | لا تعني الحقول وحدها أن السلسلة متحققة؛ يمثل `auditLogs` مسار Dart/Isar المحلي ولا يعادل `audit_log` في PostgreSQL. |
 | مزامنة | `syncStatus`, `serverUpdatedAt`, `isDeleted` | حقول مطابقة تقريبًا | لا يعلن دعم sync حتى ADR-DATA-002 واختبارات التعارض. |
 
 ## قواعد التحويل
 
 | الاتجاه | القاعدة | حالة التحقق |
 |---|---|---|
-| Domain → Isar | `Decimal.toString()` يكتب نصًا عشريًا بلا تقريب عبر `double`. | يحتاج round-trip test مخصص. |
-| Isar → Domain | `Decimal.parse()` يقرأ النص؛ النص غير الصالح يجب أن يفشل بصورة قابلة للتشخيص. | يحتاج test للحالة السلبية. |
-| Domain → PostgreSQL | يحدد migration/type الفعلي العقد؛ لا تستنتج دقة SQL من Isar. | يحتاج mapping register وترحيل تكاملي. |
+| Domain → Isar | `Decimal.toString()` يكتب نصًا عشريًا بلا تقريب عبر `double`، وتطبع الأزمنة عند القراءة إلى UTC. | يغطيه `journal_entry_model_round_trip_test.dart` محليًا؛ ينتظر دليل CI للـSHA التالي. |
+| Isar → Domain | `Decimal.parse()` يقرأ النص؛ النص غير الصالح يفشل بـ`FormatException` ولا يتحول إلى صفر. | يغطيه اختبار الحالة السلبية في round-trip. |
+| Domain → PostgreSQL | يحدد migration/type الفعلي العقد؛ لا تستنتج دقة SQL من Isar. | يوثق `JOURNAL_ENTRY_STORAGE_MAPPING_REGISTER.md` الانحرافات؛ يحتاج contract DTO وترحيل تكاملي مستقل. |
 | عملة غير أساسية | تسجل العملة والمبلغ والسعر وقيمة الأساس في العملية نفسها. | validator يفرض اكتمال الحقول؛ mapping test لاحق. |
 | عملة أساسية | قد يغيب الرمز، لكن المبلغ الأصلي وسعره زوج موجب ومتلازم إذا خزّنا. | validator يرفض وجود أحدهما دون الآخر. |
 
@@ -45,8 +45,8 @@
 
 ## الفجوات المفتوحة
 
-1. لا يوجد حتى الآن mapping register كامل لـPostgreSQL في هذا العقد.
-2. لا يوجد اختبار round-trip موحد لـIsar/domain لبيانات Decimal والعملات.
+1. لا يوجد بعد contract DTO معتمد بين Flutter وRust يحدد تحويل statuses والحقول الخاسرة ودقة PostgreSQL؛ السجل يصف الانحراف ولا يحله.
+2. لا يوجد اختبار تكامل PostgreSQL يعيد قراءة كل حقل أو يثبت سياسة تقريب `DECIMAL(20,4)` و`DECIMAL(20,10)` من قاعدة نظيفة.
 3. لا يملك نموذج القيد علاقة reversal صريحة أو idempotency key مخزنة.
 4. لا توجد سياسة تعارض مزامنة معتمدة؛ يحكمها ADR-DATA-002 لاحقًا.
 
@@ -55,3 +55,4 @@
 [1]: ../03-architecture/adrs/ADR-DATA-001-financial-data-boundaries.md "قرار حدود البيانات"
 [2]: ../03-architecture/adrs/ADR-ACC-001-journal-entry-posting-invariants.md "قرار حمايات القيود"
 [3]: ../02-domain/requirements/DATA_REQUIREMENTS.md "متطلبات البيانات"
+[4]: JOURNAL_ENTRY_STORAGE_MAPPING_REGISTER.md "سجل mapping التخزيني لقيد اليومية"
