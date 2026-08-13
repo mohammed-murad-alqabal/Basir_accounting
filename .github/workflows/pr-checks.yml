@@ -25,8 +25,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
 
@@ -93,8 +94,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Check for known vulnerabilities
         run: |
           # Check pubspec.lock for known vulnerable packages
@@ -133,8 +135,9 @@ jobs:
         uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407
 
       - name: Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Build for ${{ matrix.platform }}
         run: |
           if [ "${{ matrix.platform }}" == "android" ]; then
@@ -210,8 +213,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Check accounting equation compliance
         run: |
           echo "⚖️ Checking accounting equation compliance..."
@@ -254,8 +258,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Check for performance anti-patterns
         run: |
           echo "⚡ Checking for performance anti-patterns..."

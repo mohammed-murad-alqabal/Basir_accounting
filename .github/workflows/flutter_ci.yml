@@ -31,8 +31,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: 📦 Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: 🎨 Verify formatting
         run: dart format --set-exit-if-changed lib/ test/
         continue-on-error: false
@@ -69,8 +70,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: 📦 Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: 🧪 Run tests
         run: flutter test --coverage --reporter expanded
 
@@ -156,8 +158,9 @@ jobs:
           cache: "gradle"
 
       - name: 📦 Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: 🏗️ Build APK
         run: flutter build apk --release
 
@@ -189,8 +192,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: 📦 Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: 🏗️ Build iOS
         run: flutter build ios --release --no-codesign
 

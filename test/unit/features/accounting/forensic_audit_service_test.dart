@@ -63,8 +63,7 @@ void main() {
       createdBy: 'test-user',
       createdAt: now,
       updatedAt: now,
-      postedAt:
-          status == JournalEntryStatus.posted ? now : null,
+      postedAt: status == JournalEntryStatus.posted ? now : null,
     );
   }
 
@@ -74,8 +73,7 @@ void main() {
       expect(service.authority, AgentAuthority.high);
     });
 
-    test(
-        'should REJECT an unbalanced journal entry (CP-001 structural check)',
+    test('should REJECT an unbalanced journal entry (CP-001 structural check)',
         () async {
       final entry = makeEntry(
         lines: [
@@ -95,7 +93,8 @@ void main() {
       );
 
       final result = await service.process(
-        AccountingContext(proposedJournalEntry: entry, transactionType: 'manual'),
+        AccountingContext(
+            proposedJournalEntry: entry, transactionType: 'manual'),
       );
 
       expect(result.isAllowed, false);
@@ -103,13 +102,13 @@ void main() {
       expect(result.confidenceScore, 1);
     });
 
-    test(
-        'should REJECT transactions with prohibited Sharia terms (CP-012)',
+    test('should REJECT transactions with prohibited Sharia terms (CP-012)',
         () async {
       final entry = makeEntry(description: 'Interest-bearing loan payment');
 
       final result = await service.process(
-        AccountingContext(proposedJournalEntry: entry, transactionType: 'manual'),
+        AccountingContext(
+            proposedJournalEntry: entry, transactionType: 'manual'),
       );
 
       expect(result.isAllowed, false);
@@ -121,7 +120,8 @@ void main() {
       final entry = makeEntry(description: 'Riba settlement adjustment');
 
       final result = await service.process(
-        AccountingContext(proposedJournalEntry: entry, transactionType: 'manual'),
+        AccountingContext(
+            proposedJournalEntry: entry, transactionType: 'manual'),
       );
 
       expect(result.isAllowed, false);
@@ -130,8 +130,7 @@ void main() {
 
     test(
         'should ALLOW a high-value transaction (above 100,000 SAR) with '
-        'high-value rationale (CP-009)',
-        () async {
+        'high-value rationale (CP-009)', () async {
       final entry = makeEntry(
         lines: [
           JournalEntryLine(
@@ -150,7 +149,8 @@ void main() {
       );
 
       final result = await service.process(
-        AccountingContext(proposedJournalEntry: entry, transactionType: 'manual'),
+        AccountingContext(
+            proposedJournalEntry: entry, transactionType: 'manual'),
       );
 
       expect(result.isAllowed, true);
@@ -184,7 +184,8 @@ void main() {
       );
 
       final result = await service.process(
-        AccountingContext(proposedJournalEntry: entry, transactionType: 'manual'),
+        AccountingContext(
+            proposedJournalEntry: entry, transactionType: 'manual'),
       );
 
       expect(result.isAllowed, true);

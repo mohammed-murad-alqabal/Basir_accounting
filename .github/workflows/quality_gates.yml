@@ -25,7 +25,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Check documentation coverage
         run: dart lib/tools/documentation/cli/documentation_cli.dart analyze
       - name: Check documentation quality
@@ -45,7 +47,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Run Flutter analyze
         run: flutter analyze --fatal-infos
 
@@ -63,7 +67,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Run tests with coverage
         run: flutter test --coverage
       - name: Check Test Coverage
@@ -88,7 +94,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Check for security vulnerabilities
         run: flutter pub outdated
 

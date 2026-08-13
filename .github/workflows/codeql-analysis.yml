@@ -62,8 +62,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: Install dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Run security audit
         run: |
           echo "🔒 Running security audit..."

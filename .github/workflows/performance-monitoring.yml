@@ -38,8 +38,9 @@ jobs:
           cache: "gradle"
 
       - name: Install dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Build APK
         run: flutter build apk --release --analyze-size
 
@@ -135,8 +136,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: Install dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Analyze startup time
         continue-on-error: true
         run: |
@@ -180,8 +182,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: Install dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Check for memory leaks
         run: |
           echo "🧠 Checking for potential memory leaks..."
@@ -230,8 +233,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: Install dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: Analyze code complexity
         run: |
           echo "📊 Analyzing code complexity..."

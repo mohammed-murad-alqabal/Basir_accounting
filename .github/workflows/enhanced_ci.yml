@@ -78,8 +78,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: 📦 Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: 🔍 Check English for Code (ENGLISH FOR CODE principle)
         run: |
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -164,8 +165,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: 📦 Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: 🎨 Check formatting
         run: |
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -243,8 +245,9 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           flutter --version
       - name: 📦 Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: 🧪 Run all tests
         run: |
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -401,8 +404,9 @@ jobs:
           cache: "gradle"
 
       - name: 📦 Get dependencies
-        run: flutter pub get
-
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
       - name: 🏗️ Build APK
         run: flutter build apk --release
 
