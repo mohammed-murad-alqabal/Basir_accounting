@@ -242,3 +242,6 @@ rust_builder/linux/flutter/
 rust_builder/windows/flutter/
 
 
+
+# Generated cache used by the steering compatibility checker
+scripts/.cache/
