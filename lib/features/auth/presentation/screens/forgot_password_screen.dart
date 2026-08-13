@@ -30,13 +30,13 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     super.dispose();
   }
 
-  void _onSubmit() {
+  Future<void> _onSubmit() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
     final email = _emailController.text.trim();
 
     final context = this.context;
-    Navigator.of(context).pushReplacementNamed(
+    await Navigator.of(context).pushReplacementNamed(
       '/reset-password',
       arguments: <String, String>{'email': email, 'token': ''},
     );
