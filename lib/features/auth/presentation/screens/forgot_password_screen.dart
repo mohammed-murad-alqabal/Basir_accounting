@@ -33,12 +33,12 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   void _onSubmit() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
-    final email = _emailController.text.trim();
-
-    final context = this.context;
-    Navigator.of(context).pushReplacementNamed(
-      '/reset-password',
-      arguments: <String, String>{'email': email, 'token': ''},
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'تم تسجيل الطلب. يرجى التواصل مع مسؤول النظام لإتمام إعادة التعيين.',
+        ),
+      ),
     );
   }
 
