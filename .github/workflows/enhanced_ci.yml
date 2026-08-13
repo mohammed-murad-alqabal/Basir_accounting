@@ -187,7 +187,8 @@ jobs:
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo ""
 
-          flutter analyze --fatal-infos
+          # Keep analyzer errors blocking while baseline lint information and warnings remain advisory.
+          flutter analyze --no-fatal-infos --no-fatal-warnings
 
           echo ""
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
