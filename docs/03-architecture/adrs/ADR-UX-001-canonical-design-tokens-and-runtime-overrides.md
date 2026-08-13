@@ -6,7 +6,7 @@
 > **owner:** UX Owner
 > **approved_by:** Pending formal repository owner approval
 > **effective_from:** 2026-08-14
-> **last_verified_sha:** Pending implementation and CI evidence
+> **last_verified_sha:** `2f2bc5abe532bb8f5cec750bcdc8270e7c8b4c88` — [Quality Gates 31751982823](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31751982823)
 > **review_due:** 2026-11-14
 > **related_requirements:** REQ-UX-001, REQ-UX-002
 > **supersedes:** None
@@ -67,11 +67,11 @@
 
 | المعرّف | معيار القبول | الدليل الأدنى | الحالة في هذه الدفعة |
 |---|---|---|---|
-| UX-TOK-001 | Given الثيم الافتراضي، Then يطابق `ColorScheme` الفاتح `AppColors` والداكن `AppPalette` حيث ينص هذا القرار. | اختبار عقد `AppTheme` محدد بالألوان الدلالية. | PLANNED |
-| UX-TOK-002 | Given تعديل في قيمة token حاكم، Then يتغير الكود والـADR/المواصفة والاختبار في PR نفسه. | diff قابل للمراجعة + CI أخضر. | PLANNED |
-| UX-TOK-003 | Given مواصفة UI حية، Then لا تعلن `#009688` أو مسارات tokens غير موجودة كقيمة حاكمة. | تحقق توثيق صارم وقراءة مرجعية. | PLANNED |
+| UX-TOK-001 | Given الثيم الافتراضي، Then يطابق `ColorScheme` الفاتح `AppColors` والداكن `AppPalette` حيث ينص هذا القرار. | `app_theme_token_contract_test.dart` ضمن [Quality Gates 31751982823](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31751982823). | VERIFIED for current defaults |
+| UX-TOK-002 | Given تعديل في قيمة token حاكم، Then يتغير الكود والـADR/المواصفة والاختبار في PR نفسه. | diff `2f2bc5ab` + CI أخضر؛ يطبق على هذه الدفعة، ويظل التزامًا لأي تغيير لاحق. | VERIFIED for this batch |
+| UX-TOK-003 | Given مواصفة UI حية، Then لا تعلن `#009688` أو مسارات tokens غير موجودة كقيمة حاكمة. | تحقق توثيق صارم في CI و`04_UI_DESIGN_SYSTEM.md` المحدث. | VERIFIED for active UI specification |
 | UX-TOK-004 | Given قيمة تخصيص مستخدم، Then لا تسوق كهوية product، ولا تقبل إن لم يثبت تحقق الوصولية لاحقًا. | اختبار خدمة/واجهة عند تنفيذ التحقق الفعلي. | DEFERRED |
-| REQ-UX-001 | Given token حاكم، Then لا توجد ثلاث قيم متنافسة للمعنى نفسه في الوثائق الحية. | ADR + مواصفة UI + اختبار العقد + رابط CI على SHA. | PARTIAL حتى موافقة المالك وتحديث كل المستندات الحية. |
+| REQ-UX-001 | Given token حاكم، Then لا توجد ثلاث قيم متنافسة للمعنى نفسه في الوثائق الحية. | ADR + مواصفة UI + اختبار العقد + [CI أخضر 31751982823](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31751982823). | PARTIAL حتى موافقة المالك ومراجعة بقية الوثائق الحية خارج نطاق UI الحالي. |
 
 ## النتائج والقيود
 
