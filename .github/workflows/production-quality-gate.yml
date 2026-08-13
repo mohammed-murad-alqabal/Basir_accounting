@@ -245,7 +245,17 @@ jobs:
           install --mode=0755 "$install_dir/gitleaks" "$RUNNER_TEMP/gitleaks"
           "$RUNNER_TEMP/gitleaks" version
 
-      - name: Scan complete repository history for secrets
+      - name: Scan every commit introduced by the pull request for secrets
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/gitleaks" git --redact --verbose --log-opts="${BASE_SHA}..${HEAD_SHA}"
+
+      - name: Scan complete repository history for secrets outside pull requests
+        if: github.event_name != 'pull_request'
         run: |
           set -euo pipefail
           "$RUNNER_TEMP/gitleaks" git --redact --verbose --log-opts="--all"
