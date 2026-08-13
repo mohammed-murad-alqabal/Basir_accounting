@@ -8,6 +8,21 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../../../helpers/mock_data.dart';
 import '../../../../../mocks/mock_invoice_repository.dart';
 
+class MockNotificationService extends NotificationService {
+  MockNotificationService() : super();
+
+  @override
+  Future<void> initialize() async {}
+
+  @override
+  Future<void> scheduleNotification({
+    required int id,
+    required String title,
+    required String body,
+    DateTime? scheduledDate,
+  }) async {}
+}
+
 void main() {
   group('Invoice Providers Tests', () {
     late ProviderContainer container;
@@ -19,6 +34,7 @@ void main() {
       container = ProviderContainer(
         overrides: [
           invoiceRepositoryProvider.overrideWithValue(mockRepository),
+          notificationServiceProvider.overrideWithValue(MockNotificationService()),
         ],
       );
     });
