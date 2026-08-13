@@ -1,5 +1,4 @@
 import 'package:basir_accounting_system/core/providers.dart';
-import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/providers/supabase_auth_provider.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounts_payable_service.dart';
