@@ -52,7 +52,7 @@ jobs:
           echo "🔒 Checking for security vulnerabilities..."
 
           # Check pub.dev for known vulnerabilities
-          flutter pub outdated --mode=null-safety
+          flutter pub outdated
 
           echo "✅ Security check completed"
 
