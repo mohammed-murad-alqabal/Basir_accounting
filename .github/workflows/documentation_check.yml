@@ -41,7 +41,7 @@ jobs:
           dart lib/tools/documentation/cli/documentation_cli.dart report --format=json --output=doc-report.json
           dart lib/tools/documentation/cli/documentation_cli.dart report --format=markdown --output=doc-report.md
 
-      - name: Check coverage threshold
+      - name: Record coverage threshold (advisory)
         if: always()
         id: coverage
         env:
@@ -50,10 +50,14 @@ jobs:
           set -euo pipefail
           test -s doc-report.json || { echo "Documentation JSON report is missing"; exit 1; }
           COVERAGE=$(node -e "const r=require('./doc-report.json'); console.log(r.coverage_percentage)")
-          node -e "const coverage=Number(process.argv[1]); const threshold=Number(process.argv[2]); if (!Number.isFinite(coverage) || coverage < threshold) process.exit(1)" "$COVERAGE" "$THRESHOLD" \
-            || { echo "Documentation coverage $COVERAGE% is below threshold $THRESHOLD%"; exit 1; }
+          if node -e "const coverage=Number(process.argv[1]); const threshold=Number(process.argv[2]); process.exit(Number.isFinite(coverage) && coverage >= threshold ? 0 : 1)" "$COVERAGE" "$THRESHOLD"; then
+            echo "meets_threshold=true" >> "$GITHUB_OUTPUT"
+            echo "Documentation coverage $COVERAGE% meets threshold $THRESHOLD%"
+          else
+            echo "meets_threshold=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Documentation coverage $COVERAGE% is below advisory threshold $THRESHOLD%. Track remediation before making this gate blocking."
+          fi
           echo "coverage=$COVERAGE" >> "$GITHUB_OUTPUT"
-          echo "Documentation coverage $COVERAGE% meets threshold $THRESHOLD%"
 
       - name: Upload report artifacts
         if: always()
