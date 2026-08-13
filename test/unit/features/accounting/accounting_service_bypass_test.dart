@@ -1,9 +1,10 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
-import 'package:basir_accounting_system/features/accounting/application/financial_year_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
+import 'package:basir_accounting_system/features/accounting/domain/repositories/financial_year_repository.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,11 +12,56 @@ import 'package:mocktail/mocktail.dart';
 
 class MockAccountingRepository extends Mock implements AccountingRepository {}
 
-class MockFinancialYearService extends Mock implements FinancialYearService {}
+/// In-memory stub for the financial year repository.
+///
+/// Returns an open (never-closed) financial year that covers any
+/// posting date, so `FinancialYearService.canPostToDate` resolves to
+/// `true` without needing to mock the generated `AsyncNotifier`
+/// provider directly (mocks cannot satisfy Riverpod's private
+/// `_setElement` lifecycle call).
+class InMemoryFinancialYearRepository implements FinancialYearRepository {
+  @override
+  Future<FinancialYear?> getCurrentFinancialYear() async {
+    final years = await getAllFinancialYears();
+    return years.isNotEmpty ? years.first : null;
+  }
+
+  @override
+  Future<FinancialYear?> getFinancialYearByDate(DateTime date) async {
+    final years = await getAllFinancialYears();
+    return years.firstWhere(
+      (y) => y.startDate.isBefore(date) && y.endDate.isAfter(date),
+      orElse: () => years.first,
+    );
+  }
+
+  @override
+  Future<List<FinancialYear>> getAllFinancialYears() async {
+    final now = DateTime.now();
+    return [
+      FinancialYear(
+        id: 'fy-${now.year}',
+        name: 'FY ${now.year}',
+        startDate: DateTime(now.year, 1, 1),
+        endDate: DateTime(now.year, 12, 31),
+        isClosed: false,
+        lockedPeriodIds: const [],
+      ),
+    ];
+  }
+
+  @override
+  Future<void> saveFinancialYear(FinancialYear year) async {}
+
+  @override
+  Future<void> closeFinancialYear(String id, String userId) async {}
+
+  @override
+  Future<bool> isPeriodOpen(DateTime date) async => true;
+}
 
 void main() {
   late MockAccountingRepository mockRepository;
-  late MockFinancialYearService mockFinancialYearService;
   late ProviderContainer container;
 
   setUpAll(() {
@@ -47,13 +93,13 @@ void main() {
 
   setUp(() {
     mockRepository = MockAccountingRepository();
-    mockFinancialYearService = MockFinancialYearService();
 
     container = ProviderContainer(
       overrides: [
         accountingRepositoryProvider.overrideWithValue(mockRepository),
-        financialYearServiceProvider
-            .overrideWith(() => mockFinancialYearService),
+        financialYearRepositoryProvider.overrideWithValue(
+          InMemoryFinancialYearRepository(),
+        ),
       ],
     );
   });
@@ -101,8 +147,6 @@ void main() {
         ],
       );
 
-      when(() => mockFinancialYearService.canPostToDate(any()))
-          .thenAnswer((_) async => true);
       when(() => mockRepository.addJournalEntry(any()))
           .thenAnswer((_) async => {});
 
