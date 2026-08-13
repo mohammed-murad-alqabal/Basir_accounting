@@ -18,6 +18,7 @@ export 'app_snackbar.dart';
 export 'app_text_field.dart';
 export 'basir_dashboard_widgets.dart';
 export 'color_picker_dialog.dart';
+export 'document_editor/index.dart';
 export 'error_widget.dart';
 export 'glass_card.dart';
 export 'glass_scaffold.dart';

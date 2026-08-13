@@ -2190,29 +2190,115 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get shellCloseSearch => 'إغلاق البحث';
-  String get workFilterCollapse => 'طي الفلاتر';
-  String get workFilterExport => 'تصدير';
-  String get workFilterSearchHint => 'ابحث في الوثائق والعملاء والأصناف...';
-  String workGridSortableColumn(Object arg0) => '‎{arg0}، عمود قابل للفرز';
-  String get workGridEmpty => 'لا توجد سجلات.';
-  String get workGridSelect => 'تحديد';
-  String get workGridRow => 'صف';
-  String get workAuditEventAdministrative => 'إجراء إداري';
-  String get workAuditEventReversed => 'عكس';
-  String get workAuditEventCancelled => 'إلغاء';
-  String get workAuditEventPosted => 'ترحيل';
-  String get workAuditEventReturned => 'إرجاع للمراجعة';
-  String get workAuditEventApproved => 'اعتماد';
-  String get workAuditEventModified => 'تعديل';
-  String get workAuditEventCreated => 'إنشاء';
-  String workAuditOpenLinked(Object arg0) => 'فتح الوثيقة المرتبطة {arg0}';
-  String workAuditLinkedDoc(Object arg0) => 'الوثيقة المرتبطة: {arg0}';
-  String get workAuditEmpty => 'لا توجد أحداث للتدقيق.';
-  String get workAuditTitle => 'سجل التدقيق';
-  String get workStatusReversed => 'معكوسة';
-  String get workStatusCancelled => 'ملغاة';
-  String get workStatusPosted => 'مرحّلة';
-  String get workStatusApproved => 'معتمدة';
-  String get workStatusPendingApproval => 'بانتظار الاعتماد';
+
+  @override
   String get workStatusDraft => 'مسودة';
+
+  @override
+  String get workStatusPendingApproval => 'بانتظار الاعتماد';
+
+  @override
+  String get workStatusApproved => 'معتمدة';
+
+  @override
+  String get workStatusPosted => 'مرحّلة';
+
+  @override
+  String get workStatusCancelled => 'ملغاة';
+
+  @override
+  String get workStatusReversed => 'معكوسة';
+
+  @override
+  String get workAuditTitle => 'سجل التدقيق';
+
+  @override
+  String get workAuditEmpty => 'لا توجد أحداث للتدقيق.';
+
+  @override
+  String workAuditLinkedDoc(Object arg0) {
+    return 'الوثيقة المرتبطة: $arg0';
+  }
+
+  @override
+  String workAuditOpenLinked(Object arg0) {
+    return 'فتح الوثيقة المرتبطة $arg0';
+  }
+
+  @override
+  String get workAuditEventCreated => 'إنشاء';
+
+  @override
+  String get workAuditEventModified => 'تعديل';
+
+  @override
+  String get workAuditEventApproved => 'اعتماد';
+
+  @override
+  String get workAuditEventReturned => 'إرجاع للمراجعة';
+
+  @override
+  String get workAuditEventPosted => 'ترحيل';
+
+  @override
+  String get workAuditEventCancelled => 'إلغاء';
+
+  @override
+  String get workAuditEventReversed => 'عكس';
+
+  @override
+  String get workAuditEventAdministrative => 'إجراء إداري';
+
+  @override
+  String get workGridEmpty => 'لا توجد سجلات.';
+
+  @override
+  String workGridSortableColumn(Object arg0) {
+    return '‎$arg0، عمود قابل للفرز';
+  }
+
+  @override
+  String get workFilterSearchHint => 'ابحث في الوثائق والعملاء والأصناف...';
+
+  @override
+  String get workFilterExport => 'تصدير';
+
+  @override
+  String get workFilterCollapse => 'طي الفلاتر';
+
+  @override
+  String get workGridSelect => 'تحديد';
+
+  @override
+  String get workGridRow => 'صف الجدول';
+
+  @override
+  String get workDocumentSummary => 'ملخص المستند';
+
+  @override
+  String get workDocumentRequestPreview => 'طلب المعاينة';
+
+  @override
+  String get workDocumentPreviewImpact => 'معاينة الأثر';
+
+  @override
+  String get workDocumentSaveDraft => 'حفظ كمسودة';
+
+  @override
+  String get workDocumentPost => 'تأكيد الترحيل';
+
+  @override
+  String get workDocumentPreviewRequired => 'اطلب معاينة الأثر قبل الترحيل.';
+
+  @override
+  String get workDocumentApprovalRequired => 'يتطلب اعتمادًا إضافيًا';
+
+  @override
+  String get workDocumentNoImpact => 'لا توجد حركات متوقعة.';
+
+  @override
+  String get workEntityPickerNoOptions => 'لا توجد خيارات متاحة';
+
+  @override
+  String get workEntityPickerDisabled => 'غير مؤهل للاختيار';
 }

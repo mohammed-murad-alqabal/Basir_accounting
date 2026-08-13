@@ -11,6 +11,8 @@ analyzer:
     - "**/*.mocks.dart"
     - "lib/src/rust/**"
     - "tmp_rust/**"
+    # CargoKit مشروع Dart مستقل داخل مُنشئ Rust وله pubspec واعتماديات خاصة.
+    - "rust_builder/cargokit/build_tool/**"
     - "build/**"
     - ".dart_tool/**"
     - "coverage/**"
