@@ -418,14 +418,14 @@ abstract final class AppTheme {
         surface: AppPalette.darkSurface,
         onSurface: AppPalette.darkTextPrimary,
         surfaceContainerHighest: AppPalette.darkBorder,
-        onSurfaceVariant: Color(0xFFCBD5E1), // Slate 300
+        onSurfaceVariant: AppPalette.darkTextSecondary,
         // الأخطاء
-        error: Color(0xFFEF4444), // Red 500
-        onError: Colors.white,
-        errorContainer: Color(0xFF7F1D1D), // Red 900
+        error: AppPalette.redAlert,
+        onError: AppPalette.white,
+        errorContainer: AppPalette.redBurgundy,
         // الحدود
-        outline: Color(0xFF475569), // Slate 500
-        outlineVariant: Color(0xFF334155), // Slate 700
+        outline: AppPalette.darkOutline,
+        outlineVariant: AppPalette.darkBorder,
       );
 
   // ═══════════════════════════════════════════════════════════════════════════
