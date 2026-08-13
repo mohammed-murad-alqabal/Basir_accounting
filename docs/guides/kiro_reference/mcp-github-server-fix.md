@@ -272,7 +272,7 @@ python3 fix_github_mcp.py
 ### متغيرات البيئة المطلوبة
 
 ```bash
-export GITHUB_TOKEN="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+export GITHUB_TOKEN="<YOUR_GITHUB_TOKEN>"
 ```
 
 ### أذونات التوكن المطلوبة
