@@ -223,9 +223,7 @@ class BasirSidebar extends ConsumerWidget {
             ),
             height: 48,
             decoration: BoxDecoration(
-              color: isSelected
-                  ? AppColors.primaryLight
-                  : Colors.transparent,
+              color: isSelected ? AppColors.primaryLight : Colors.transparent,
               borderRadius: BorderRadius.circular(Radii.sm),
               border: isSelected
                   ? Border(
@@ -245,9 +243,8 @@ class BasirSidebar extends ConsumerWidget {
                 Icon(
                   isSelected ? item.selectedIcon : item.icon,
                   size: IconSizes.md,
-                  color: isSelected
-                      ? AppColors.primary
-                      : AppColors.textSecondary,
+                  color:
+                      isSelected ? AppColors.primary : AppColors.textSecondary,
                 ),
                 if (!collapsed) ...[
                   const SizedBox(width: Spacing.sm),
@@ -258,9 +255,8 @@ class BasirSidebar extends ConsumerWidget {
                         color: isSelected
                             ? AppColors.primary
                             : AppColors.textPrimary,
-                        fontWeight: isSelected
-                            ? FontWeights.bold
-                            : FontWeights.medium,
+                        fontWeight:
+                            isSelected ? FontWeights.bold : FontWeights.medium,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

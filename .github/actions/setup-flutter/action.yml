@@ -44,5 +44,12 @@ runs:
           mv "${RUNNER_TEMP}/flutter" "${sdk_dir}"
         fi
 
+        # The application declares `.env` as a Flutter asset, while the real
+        # environment file is intentionally ignored by Git.  CI needs a
+        # non-secret placeholder so asset-bundle generation can proceed.
+        if [[ ! -f "${GITHUB_WORKSPACE}/.env" ]]; then
+          touch "${GITHUB_WORKSPACE}/.env"
+        fi
+
         echo "${sdk_dir}/bin" >> "${GITHUB_PATH}"
         "${sdk_dir}/bin/flutter" --version

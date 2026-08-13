@@ -93,14 +93,14 @@ class WorkAuditTimeline extends StatelessWidget {
             ),
           )
         else
-          ...sorted.asMap().entries.map((entry) =>
-              _buildTimelineItem(entry.value, entry.key == sorted.length - 1, context)),
+          ...sorted.asMap().entries.map((entry) => _buildTimelineItem(
+              entry.value, entry.key == sorted.length - 1, context)),
       ],
     );
   }
 
-  Widget _buildTimelineItem(WorkAuditTimelineItem item, bool isLast,
-      BuildContext ctx) {
+  Widget _buildTimelineItem(
+      WorkAuditTimelineItem item, bool isLast, BuildContext ctx) {
     final entry = item.entry;
     final dateFormatter = dateFormat ?? DateFormat.yMMMd('ar');
 
