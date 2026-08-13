@@ -114,8 +114,8 @@ jq --version
 ### متغيرات البيئة
 
 ```bash
-# GitHub Personal Access Token
-export GITHUB_TOKEN="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+# أدخل رمز الوصول الشخصي عبر مدير أسرار أو من بيئتك الآمنة.
+export GITHUB_TOKEN="<personal-access-token>"
 
 # التحقق من وجوده
 echo "Token length: ${#GITHUB_TOKEN}"
