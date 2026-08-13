@@ -135,7 +135,7 @@ void main() {
 
     test('ينشئ PDF بيان ضريبة قيمة مضافة متكاملاً بأقسام الاستحقاق', () async {
       final vatReturn = VatReturnStatement(
-        periodStart: DateTime(2025, 4, 1),
+        periodStart: DateTime(2025, 4),
         periodEnd: DateTime(2025, 6, 30),
         standardSalesBase: Decimal.parse('150000.00'),
         standardSalesTax: Decimal.parse('22500.00'),
