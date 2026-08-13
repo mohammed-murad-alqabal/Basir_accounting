@@ -140,8 +140,9 @@ class ForensicAuditService extends _$ForensicAuditService
       isAllowed: true,
       rationale: 'agentRationaleForensicBalanced',
       confidenceScore: 0.95,
-      suggestedAdjustments:
-          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
+      suggestedAdjustments: suggestedAdjustments.isNotEmpty
+          ? suggestedAdjustments
+          : null,
     );
   }
 
@@ -168,9 +169,11 @@ class ForensicAuditService extends _$ForensicAuditService
     final expectedNumber = previous.number + 1;
     if (proposedReference.number == expectedNumber) return null;
 
-    final expectedReference = '${proposedReference.prefix}'
+    final expectedReference =
+        '${proposedReference.prefix}'
         '${expectedNumber.toString().padLeft(proposedReference.width, '0')}';
-    final previousReference = '${previous.prefix}'
+    final previousReference =
+        '${previous.prefix}'
         '${previous.number.toString().padLeft(previous.width, '0')}';
     return 'Gap detected: expected $expectedReference between '
         '$previousReference and ${proposedEntry.referenceNumber}.';
@@ -217,11 +220,7 @@ class ForensicAuditService extends _$ForensicAuditService
             (a) => a.when(
               sequenceGap: (expected, found) =>
                   'Sequence gap: Expected $expected but found $found.',
-              reconciliationMismatch: (
-                accountId,
-                bookBalance,
-                physicalCount,
-              ) =>
+              reconciliationMismatch: (accountId, bookBalance, physicalCount) =>
                   'Reconciliation mismatch in account $accountId: Book $bookBalance vs Count $physicalCount.',
               orphanedDraft: (entryId, date) =>
                   'Orphaned draft entry #$entryId dated $date.',
@@ -246,9 +245,7 @@ class ForensicAuditService extends _$ForensicAuditService
   /// Performs a thorough scrutiny of the entire historical ledger.
   ///
   /// Verifies hash chain integrity (Standard Reference: CP-011).
-  Future<AuditResult> scrutinizeHistoricalLedger({
-    String locale = 'en',
-  }) async {
+  Future<AuditResult> scrutinizeHistoricalLedger({String locale = 'en'}) async {
     final l10n = lookupAppLocalizations(Locale(locale));
     final repository = ref.read(accountingRepositoryProvider);
     final entries = await repository.getJournalEntries();
@@ -259,9 +256,7 @@ class ForensicAuditService extends _$ForensicAuditService
 
     for (final entry in sortedEntries) {
       if (!entry.isBalanced) {
-        issues.add(
-          l10n.errForensicImbalance(entry.referenceNumber),
-        );
+        issues.add(l10n.errForensicImbalance(entry.referenceNumber));
       }
 
       // Verify mathematical identity
@@ -270,9 +265,7 @@ class ForensicAuditService extends _$ForensicAuditService
         (sum, l) => sum + l.debit,
       );
       if (calculatedSubtotal != entry.totalDebit) {
-        issues.add(
-          l10n.errForensicDiscrepancy(entry.referenceNumber),
-        );
+        issues.add(l10n.errForensicDiscrepancy(entry.referenceNumber));
       }
     }
 
