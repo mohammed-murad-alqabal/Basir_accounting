@@ -93,10 +93,10 @@ void main() {
       ProviderScope(
         overrides: [receivables, payables],
         child: const MaterialApp(
-          locale: const Locale('ar'),
+          locale: Locale('ar'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: const AgingReportsScreen(),
+          home: AgingReportsScreen(),
         ),
       );
 
