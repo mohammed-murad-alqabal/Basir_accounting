@@ -97,10 +97,13 @@ void main() {
     });
 
     test('يقفل الشهر مرة واحدة ويحفظ معرف الفترة المنسق', () async {
+      var financialYears = [financialYear()];
       when(
         () => repository.getAllFinancialYears(),
-      ).thenAnswer((_) async => [financialYear()]);
-      when(() => repository.saveFinancialYear(any())).thenAnswer((_) async {});
+      ).thenAnswer((_) async => financialYears);
+      when(() => repository.saveFinancialYear(any())).thenAnswer((call) async {
+        financialYears = [call.positionalArguments.single as FinancialYear];
+      });
 
       await service().lockMonthlyPeriod('fy-2025', DateTime(2025, 5, 15));
       await service().lockMonthlyPeriod('fy-2025', DateTime(2025, 5, 15));

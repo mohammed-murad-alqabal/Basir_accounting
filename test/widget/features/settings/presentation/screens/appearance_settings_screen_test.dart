@@ -20,6 +20,7 @@ void main() {
       container = ProviderContainer(
         overrides: [
           appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          basirUserProvider.overrideWith((ref) => null),
         ],
       );
     });
