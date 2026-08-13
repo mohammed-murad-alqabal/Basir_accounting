@@ -4,10 +4,12 @@ library;
 import 'dart:convert';
 
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
+import 'package:basir_accounting_system/features/accounting/application/tax_engine_service.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
 import 'package:basir_accounting_system/features/reports/application/pdf_generation_service.dart';
+import 'package:basir_accounting_system/features/reports/application/report_pdf_service.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -126,6 +128,26 @@ void main() {
       );
 
       expect(entry.isBalanced, isTrue);
+      expect(bytes, isNotEmpty);
+      expect(utf8.decode(bytes.take(4).toList()), '%PDF');
+      expect(bytes.length, greaterThan(1000));
+    });
+
+    test('ينشئ PDF بيان ضريبة قيمة مضافة متكاملاً بأقسام الاستحقاق', () async {
+      const vatReturn = VatReturnStatement(
+        periodStart: DateTime(2025, 4, 1),
+        periodEnd: DateTime(2025, 6, 30),
+        standardSalesBase: Decimal.parse('150000.00'),
+        standardSalesTax: Decimal.parse('22500.00'),
+        zeroRatedSales: Decimal.parse('5000.00'),
+        exemptSales: Decimal.zero,
+        standardPurchasesBase: Decimal.parse('80000.00'),
+        standardPurchasesTax: Decimal.parse('12000.00'),
+        netVatDue: Decimal.parse('10500.00'),
+      );
+
+      final bytes = await ReportPdfService().generateVatReturnPdf(vatReturn);
+
       expect(bytes, isNotEmpty);
       expect(utf8.decode(bytes.take(4).toList()), '%PDF');
       expect(bytes.length, greaterThan(1000));
