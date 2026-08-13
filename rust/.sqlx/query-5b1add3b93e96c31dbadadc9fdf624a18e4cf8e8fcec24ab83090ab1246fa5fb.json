@@ -6,32 +6,68 @@
       {
         "ordinal": 0,
         "name": "id",
-        "type_info": "Uuid"
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "financial_periods",
+            "name": "id"
+          }
+        }
       },
       {
         "ordinal": 1,
         "name": "name",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "financial_periods",
+            "name": "name"
+          }
+        }
       },
       {
         "ordinal": 2,
         "name": "start_date",
-        "type_info": "Date"
+        "type_info": "Date",
+        "origin": {
+          "Table": {
+            "table": "financial_periods",
+            "name": "start_date"
+          }
+        }
       },
       {
         "ordinal": 3,
         "name": "end_date",
-        "type_info": "Date"
+        "type_info": "Date",
+        "origin": {
+          "Table": {
+            "table": "financial_periods",
+            "name": "end_date"
+          }
+        }
       },
       {
         "ordinal": 4,
         "name": "status",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "financial_periods",
+            "name": "status"
+          }
+        }
       },
       {
         "ordinal": 5,
         "name": "is_year_end",
-        "type_info": "Bool"
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "financial_periods",
+            "name": "is_year_end"
+          }
+        }
       }
     ],
     "parameters": {
