@@ -115,7 +115,7 @@ jq --version
 
 ```bash
 # GitHub Personal Access Token
-export GITHUB_TOKEN="redacted"
+export GITHUB_TOKEN="$GITHUB_TOKEN"
 
 # التحقق من وجوده
 echo "Token length: ${#GITHUB_TOKEN}"
