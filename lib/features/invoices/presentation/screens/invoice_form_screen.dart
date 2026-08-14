@@ -13,6 +13,7 @@ import 'package:basir_accounting_system/features/customers/presentation/provider
 import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/providers/inventory_provider.dart';
 import 'package:basir_accounting_system/features/invoices/application/invoice_posting_preview_service.dart';
+import 'package:basir_accounting_system/features/invoices/application/sales_invoice_posting_service.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
@@ -345,7 +346,67 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       ),
     );
     if ((confirmed ?? false) && mounted) {
-      await _saveInvoiceAsync(statusOverride: InvoiceStatus.sent);
+      await _postConfirmedSalesInvoice(preview);
+    }
+  }
+
+  Future<void> _postConfirmedSalesInvoice(PostingPreview preview) async {
+    if (!_formKey.currentState!.validate()) return;
+    if (_selectedCustomer == null || _items.isEmpty) {
+      _showFormError(
+        _selectedCustomer == null
+            ? context.l10n.errSelectCustomer
+            : context.l10n.errNoItems,
+      );
+      return;
+    }
+
+    final operator = ref.read(currentUserProfileProvider);
+    final canPost =
+        operator?.hasPermission(Permission.postJournalEntry) ?? false;
+    if (!canPost || operator == null) {
+      _showFormError(context.l10n.errPermissionDenied);
+      return;
+    }
+
+    setState(() => _isLoading = true);
+    try {
+      final service = await ref.read(salesInvoicePostingServiceProvider.future);
+      final result = await service.post(
+        SalesInvoicePostingRequest(
+          invoice: _buildInvoice(status: InvoiceStatus.sent),
+          preview: preview,
+          hasExplicitConfirmation: true,
+          canPost: canPost,
+          operatorId: operator.id,
+          operatorName: operator.displayName ?? operator.email,
+        ),
+      );
+
+      if (!mounted) return;
+      if (!result.success) {
+        _showFormError(
+          context.l10n.errGeneric(result.message ?? 'posting-failed'),
+        );
+        return;
+      }
+
+      ref.invalidate(invoicesProvider);
+      await HapticFeedback.mediumImpact();
+      if (mounted) {
+        await showDialog<void>(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => const _SuccessDialog(),
+        );
+      }
+      if (mounted) Navigator.pop(context, true);
+    } on Exception catch (error) {
+      if (mounted) {
+        _showFormError(context.l10n.errGeneric(error.toString()));
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -934,6 +995,43 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     unawaited(_saveInvoiceAsync(statusOverride: InvoiceStatus.draft));
   }
 
+  Invoice _buildInvoice({required InvoiceStatus status}) {
+    final subtotal = _items.fold<Decimal>(
+      Decimal.zero,
+      (sum, item) => sum + item.total,
+    );
+    final taxTotal = _items.fold<Decimal>(
+      Decimal.zero,
+      (sum, item) => sum + item.taxAmount,
+    );
+    final grandTotal = subtotal + taxTotal;
+
+    return Invoice(
+      id: widget.invoice?.id ?? _draftId,
+      invoiceNumber: widget.invoice?.invoiceNumber ??
+          'INV-${DateTime.now().millisecondsSinceEpoch}',
+      customerId: _selectedCustomer!.id,
+      customerName: _selectedCustomer!.name(isArabic: context.isArabic),
+      items: _items,
+      issuedDate: _issuedDate,
+      dueDate: _dueDate,
+      createdAt: widget.invoice?.createdAt ?? DateTime.now(),
+      updatedAt: DateTime.now(),
+      status: status,
+      type: _type,
+      currency: _currency,
+      exchangeRate: Decimal.parse(_exchangeRateController.text),
+      subtotalAmount: subtotal,
+      taxAmount: taxTotal,
+      discountAmount: Decimal.zero,
+      totalAmount: grandTotal,
+      paidAmount: status == InvoiceStatus.paid ? grandTotal : Decimal.zero,
+      taxRate: _taxRate,
+      discountRate: Decimal.zero,
+      notes: _notesController.text,
+    );
+  }
+
   Future<void> _saveInvoiceAsync({InvoiceStatus? statusOverride}) async {
     if (!_formKey.currentState!.validate()) {
       return;
@@ -962,41 +1060,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final subtotal = _items.fold<Decimal>(
-        Decimal.zero,
-        (sum, item) => sum + item.total,
-      );
-      final taxTotal = _items.fold<Decimal>(
-        Decimal.zero,
-        (sum, item) => sum + item.taxAmount,
-      );
-      final grandTotal = subtotal + taxTotal;
-
-      final effectiveStatus = statusOverride ?? _status;
-      final invoice = Invoice(
-        id: widget.invoice?.id ?? const Uuid().v4(),
-        invoiceNumber: widget.invoice?.invoiceNumber ??
-            'INV-${DateTime.now().millisecondsSinceEpoch}',
-        customerId: _selectedCustomer!.id,
-        customerName: _selectedCustomer!.name(isArabic: context.isArabic),
-        items: _items,
-        issuedDate: _issuedDate,
-        dueDate: _dueDate,
-        createdAt: widget.invoice?.createdAt ?? DateTime.now(),
-        updatedAt: DateTime.now(),
-        status: effectiveStatus,
-        type: _type,
-        currency: _currency,
-        exchangeRate: Decimal.parse(_exchangeRateController.text),
-        subtotalAmount: subtotal,
-        taxAmount: taxTotal,
-        discountAmount: Decimal.zero,
-        totalAmount: grandTotal,
-        paidAmount:
-            effectiveStatus == InvoiceStatus.paid ? grandTotal : Decimal.zero,
-        taxRate: _taxRate,
-        discountRate: Decimal.zero,
-        notes: _notesController.text,
+      final invoice = _buildInvoice(
+        status: statusOverride ?? _status,
       );
 
       final isEditing = widget.invoice != null;
