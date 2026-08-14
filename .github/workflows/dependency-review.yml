@@ -51,10 +51,11 @@ jobs:
         run: |
           echo "🔒 Checking for security vulnerabilities..."
 
-          # Check pub.dev for known vulnerabilities
-          flutter pub outdated --mode=null-safety
+          # Dependency Review above is the vulnerability gate. This command
+          # reports the resolved package state without the removed null-safety mode.
+          flutter pub outdated
 
-          echo "✅ Security check completed"
+          echo "✅ Dependency state check completed"
 
       - name: Analyze dependency licenses
         run: |
