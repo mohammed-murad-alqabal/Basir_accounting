@@ -177,7 +177,8 @@ void main() {
     final amountFields = find.byType(TextFormField);
     await tester.enterText(amountFields.at(4), '125');
     await tester.enterText(amountFields.at(7), '100');
-    await tester.pump();
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
 
     final saveButton = find.byWidgetPredicate(
       (widget) => widget is AppEnhancedButton && widget.label == 'حفظ كمسودة',
@@ -186,9 +187,16 @@ void main() {
       of: saveButton,
       matching: find.byType(InkWell),
     );
-    await tester.ensureVisible(saveAction);
+    final formScrollView = find.byType(SingleChildScrollView);
+    await tester.scrollUntilVisible(
+      saveAction,
+      120,
+      scrollable: formScrollView,
+    );
+    await tester.pumpAndSettle();
+    expect(saveAction, findsOneWidget);
     await tester.tap(saveAction);
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     expect(
       find.text('القيد غير متزن! يجب أن يتساوى المدين والدائن'),
