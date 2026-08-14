@@ -1,0 +1,100 @@
+feature_register_id,atlas_screen_id,source_occurrences,module,legacy_name,legacy_features,legacy_status_claim,reconciliation_state,evidence_state
+FR-ATLAS-001,001,1,"Module 1: Dashboard & Navigation (001, 053, 075, 087)",Main Dashboard     ,"Quick actions, KPIs, navigation grid",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-002,002,1,"Module 2: Sales & Invoicing (002-006, 015)",Invoice Settings,"Customer, payment type, tax toggle",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-003,003,1,"Module 2: Sales & Invoicing (002-006, 015)",Sales Invoice   ,"Line items, barcode, totals       ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-004,004,1,"Module 2: Sales & Invoicing (002-006, 015)",Item Picker     ,"Category grid, item cards         ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-005,005,1,"Module 2: Sales & Invoicing (002-006, 015)",Invoice List    ,"Filter, sort, export              ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-006,006,1,"Module 2: Sales & Invoicing (002-006, 015)",Invoice Editing ,"Modify line items, recalculate    ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-007,007,1,"Module 3: Reporting & Analytics (007, 016-019, 026, 054-057, 065)",Report Field Selection ,Custom column picker       ,✅ Complete          ,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-008,008,1,"Module 6: Currency & Pricing (008, 021, 035, 045-046, 071)",Currency Selection ,Pick transaction currency,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-009,009,1,"Module 4: Inventory Management (009, 020, 023-024, 047-050, 074, 085, 091, 098)",Item Index           ,"Master list, search   ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-010,010,1,"Module 10: System States & Dialogs (010-014, 056, 072-073)",Returns & Damages   ,RMA module          ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-011,011,1,"Module 10: System States & Dialogs (010-014, 056, 072-073)",Invoice Search      ,Find invoices       ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-012,012,1,"Module 10: System States & Dialogs (010-014, 056, 072-073)",Processing State    ,Loading indicator   ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-013,013,1,"Module 10: System States & Dialogs (010-014, 056, 072-073)",Selection Error     ,Validation message  ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-014,014,1,"Module 10: System States & Dialogs (010-014, 056, 072-073)",Sort Options        ,List ordering       ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-015,015,1,"Module 2: Sales & Invoicing (002-006, 015)",Quotes/Drafts   ,"Draft workflow, conversion        ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-016,016,1,"Module 3: Reporting & Analytics (007, 016-019, 026, 054-057, 065)",Daily Sales Summary    ,"Totals, breakdown          ",✅ Complete          ,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-017,017,1,"Module 3: Reporting & Analytics (007, 016-019, 026, 054-057, 065)",Category Reports       ,Drill-down by category     ,✅ Complete          ,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-018,018,1,"Module 3: Reporting & Analytics (007, 016-019, 026, 054-057, 065)",Customer Reports       ,"A/R aging, history         ",✅ Complete          ,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-019,019,1,"Module 3: Reporting & Analytics (007, 016-019, 026, 054-057, 065)",Account Movement Filter,"Date range, account filter ",✅ Complete          ,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-020,020,1,"Module 4: Inventory Management (009, 020, 023-024, 047-050, 074, 085, 091, 098)",Item Search Options  ,Advanced filters      ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-021,021,1,"Module 6: Currency & Pricing (008, 021, 035, 045-046, 071)",Pricing Method     ,"Margin, markup rules     ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-022,022,0,,,,,MISSING_IN_ATLAS,UNVERIFIED
+FR-ATLAS-023,023,1,"Module 4: Inventory Management (009, 020, 023-024, 047-050, 074, 085, 091, 098)",Inventory Adjustments,Stock corrections     ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-024,024,1,"Module 4: Inventory Management (009, 020, 023-024, 047-050, 074, 085, 091, 098)",Barcode Engine       ,Label generation      ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-025,025,0,,,,,MISSING_IN_ATLAS,UNVERIFIED
+FR-ATLAS-026,026,1,"Module 3: Reporting & Analytics (007, 016-019, 026, 054-057, 065)",Reports Dashboard      ,Report hub                 ,✅ Complete          ,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-027,027,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Backup Settings        ,Local backup config  ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-028,028,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",System Info            ,"Version, device info ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-029,029,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Manager PIN            ,Security PIN setup   ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-030,030,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",User Selection         ,Switch user          ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-031,031,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Calculator             ,Built-in calc        ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-032,032,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Database Selection     ,Choose DB file       ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-033,033,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Cloud Backup           ,Google Drive sync    ,⚠️ Planned ,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-034,034,2,"Module 7: Administration & Settings (027-043, 088-095, 099) || Module 9: Compliance & Tax (034, 097)",Tax Settings            || Tax & E-Invoice Settings,"VAT, E-Invoice config || VAT toggle, ZATCA config",✅ Complete || ✅ Complete,DUPLICATE_LEGACY_REFERENCE,UNVERIFIED
+FR-ATLAS-035,035,1,"Module 6: Currency & Pricing (008, 021, 035, 045-046, 071)",Pricing Strategy   ,Complex pricing          ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-036,036,0,,,,,MISSING_IN_ATLAS,UNVERIFIED
+FR-ATLAS-037,037,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Company Data           ,Branding setup       ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-038,038,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Language Selection     ,AR/EN switch         ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-039,039,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Invoice Labels         ,Customize terminology,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-040,040,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Document Type Edit     ,Template selection   ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-041,041,2,"Module 7: Administration & Settings (027-043, 088-095, 099) || Module 8: Printing & Output (041-044, 096)",Print Templates         || Print Template Select,Template picker       || Choose template    ,✅ Complete || ✅ Complete,DUPLICATE_LEGACY_REFERENCE,UNVERIFIED
+FR-ATLAS-042,042,2,"Module 7: Administration & Settings (027-043, 088-095, 099) || Module 8: Printing & Output (041-044, 096)",Template Preview        || Template Preview     ,WYSIWYG preview       || Preview output     ,✅ Complete || ✅ Complete,DUPLICATE_LEGACY_REFERENCE,UNVERIFIED
+FR-ATLAS-043,043,2,"Module 7: Administration & Settings (027-043, 088-095, 099) || Module 8: Printing & Output (041-044, 096)",Paper Size              || Paper Size           ,Printer settings      || Page dimensions    ,✅ Complete || ✅ Complete,DUPLICATE_LEGACY_REFERENCE,UNVERIFIED
+FR-ATLAS-044,044,1,"Module 8: Printing & Output (041-044, 096)",Print Options        ,"Layout, copies     ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-045,045,1,"Module 6: Currency & Pricing (008, 021, 035, 045-046, 071)",Currency Search    ,Find currencies          ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-046,046,1,"Module 6: Currency & Pricing (008, 021, 035, 045-046, 071)",Currency Info      ,Rate details             ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-047,047,1,"Module 4: Inventory Management (009, 020, 023-024, 047-050, 074, 085, 091, 098)",Item Index Mgmt      ,CRUD operations       ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-048,048,1,"Module 4: Inventory Management (009, 020, 023-024, 047-050, 074, 085, 091, 098)",Index Registration   ,New item creation     ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-049,049,1,"Module 4: Inventory Management (009, 020, 023-024, 047-050, 074, 085, 091, 098)",UOM Search           ,Unit of measure picker,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-050,050,1,"Module 4: Inventory Management (009, 020, 023-024, 047-050, 074, 085, 091, 098)",Costing Method       ,FIFO / Avg selection  ,⚠️ Planned ,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-051,051,0,,,,,MISSING_IN_ATLAS,UNVERIFIED
+FR-ATLAS-052,052,0,,,,,MISSING_IN_ATLAS,UNVERIFIED
+FR-ATLAS-053,053,1,"Module 1: Dashboard & Navigation (001, 053, 075, 087)",System Drawer      ,"Global menu, user context           ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-054,054,1,"Module 3: Reporting & Analytics (007, 016-019, 026, 054-057, 065)",Profit Report          ,Income Statement / P&L     ,✅ Complete (IFRS 18),EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-055,055,1,"Module 3: Reporting & Analytics (007, 016-019, 026, 054-057, 065)",Daily Movement         ,Transaction log            ,✅ Complete          ,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-056,056,1,"Module 10: System States & Dialogs (010-014, 056, 072-073)",Daily Movement State,Processing animation,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-057,057,1,"Module 3: Reporting & Analytics (007, 016-019, 026, 054-057, 065)",Balance Sheet          ,"Assets, Liabilities, Equity",✅ Complete (IFRS 18),EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-058,058,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Debt Registration      ,New receivable/payable     ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-059,059,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Cash Receipt Voucher   ,Receive payment            ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-060,060,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Cash Payment Voucher   ,Issue payment              ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-061,061,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Debt List              ,A/R & A/P dashboard        ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-062,062,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Currency Movement      ,Multi-currency transactions,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-063,063,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Journal Entry History  ,GL transaction log         ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-064,064,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Account Statement Query,Ledger filter              ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-065,065,1,"Module 3: Reporting & Analytics (007, 016-019, 026, 054-057, 065)",Cashier Movement       ,Shift report               ,✅ Complete          ,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-066,066,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Expenses Dashboard     ,Expense tracking           ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-067,067,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Journal Search         ,Find entries               ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-068,068,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Opening Balances       ,Initial setup              ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-069,069,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Cash Reconciliation    ,Physical vs. book          ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-070,070,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Reconciliation Audit   ,Variance report            ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-071,071,1,"Module 6: Currency & Pricing (008, 021, 035, 045-046, 071)",Exchange Rate Entry,Set rates                ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-072,072,1,"Module 10: System States & Dialogs (010-014, 056, 072-073)",Financial Ops List  ,Quick actions       ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-073,073,1,"Module 10: System States & Dialogs (010-014, 056, 072-073)",System Behavior     ,Maintenance options ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-074,074,1,"Module 4: Inventory Management (009, 020, 023-024, 047-050, 074, 085, 091, 098)",Inventory List       ,Real-time stock levels,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-075,075,1,"Module 1: Dashboard & Navigation (001, 053, 075, 087)",Control Dashboard  ,"Admin overview, system health       ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-076,076,0,,,,,MISSING_IN_ATLAS,UNVERIFIED
+FR-ATLAS-077,077,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Chart of Accounts      ,CoA tree                   ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-078,078,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Fixed Assets Index     ,Asset accounts             ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-079,079,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Current Assets         ,"Cash, Receivables          ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-080,080,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Liabilities & Equity   ,"Payables, Capital          ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-081,081,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Expenses Index         ,Operating costs            ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-082,082,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Revenue Index          ,"Sales, Income              ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-083,083,0,,,,,MISSING_IN_ATLAS,UNVERIFIED
+FR-ATLAS-084,084,0,,,,,MISSING_IN_ATLAS,UNVERIFIED
+FR-ATLAS-085,085,1,"Module 4: Inventory Management (009, 020, 023-024, 047-050, 074, 085, 091, 098)",Inventory Operations ,Bulk actions          ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-086,086,1,"Module 5: Accounting Core (058-070, 077-082, 086)",Account Entries List   ,Ledger drill-down          ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-087,087,1,"Module 1: Dashboard & Navigation (001, 053, 075, 087)",Comprehensive Index,"Feature discovery, advanced menu    ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-088,088,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Data Paths             ,Storage locations    ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-089,089,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Sales Policies         ,Business rules       ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-090,090,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Auto-Messaging         ,SMS/Email triggers   ,⚠️ Planned ,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-091,091,1,"Module 4: Inventory Management (009, 020, 023-024, 047-050, 074, 085, 091, 098)",UOM Index            ,Manage units          ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-092,092,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",User Management        ,User CRUD            ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-093,093,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Permissions Matrix     ,RBAC config          ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-094,094,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",User Edit              ,Profile update       ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-095,095,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Brand Identity         ,"Logo, colors         ",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-096,096,1,"Module 8: Printing & Output (041-044, 096)",Advanced Print       ,"ZATCA QR, signature",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-097,097,1,"Module 9: Compliance & Tax (034, 097)",Tax Configuration       ,"Rate setup, account link",✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-098,098,1,"Module 4: Inventory Management (009, 020, 023-024, 047-050, 074, 085, 091, 098)",Barcode Config       ,Scanner settings      ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
+FR-ATLAS-099,099,1,"Module 7: Administration & Settings (027-043, 088-095, 099)",Subscription Activation,License key entry    ,✅ Complete,EXTRACTED_FROM_ATLAS,UNVERIFIED
