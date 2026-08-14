@@ -72,7 +72,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(DropdownButtonFormField<String>), findsNWidgets(2));
-    expect(find.text('غير متوازن'), findsOneWidget);
+    expect(find.text('غير متزن'), findsOneWidget);
     expect(find.text('مدين'), findsNWidgets(3));
     expect(find.text('دائن'), findsNWidgets(3));
   });
@@ -95,14 +95,14 @@ void main() {
     final amountFields = find.byType(TextFormField);
     await tester.enterText(amountFields.at(4), '125');
     await tester.pump();
-    expect(find.text('غير متوازن'), findsOneWidget);
-    expect(find.text('فرق: 125'), findsOneWidget);
+    expect(find.text('غير متزن'), findsOneWidget);
+    expect(find.text('الفرق: 125'), findsOneWidget);
 
     await tester.enterText(amountFields.at(7), '125');
     await tester.pump();
 
-    expect(find.text('متوازن'), findsOneWidget);
-    expect(find.text('فرق: 125'), findsNothing);
+    expect(find.text('متزن'), findsOneWidget);
+    expect(find.text('الفرق: 125'), findsNothing);
   });
 
   testWidgets('يعرض حقول المبلغ وسعر الصرف بعد اختيار عملة أجنبية',
@@ -110,7 +110,9 @@ void main() {
     await tester.pumpWidget(testApp());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('إضافة عملة').first);
+    final addCurrency = find.text('إضافة عملة').first;
+    await tester.ensureVisible(addCurrency);
+    await tester.tap(addCurrency);
     await tester.pumpAndSettle();
     await tester.tap(find.text('USD'));
     await tester.pumpAndSettle();

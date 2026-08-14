@@ -87,7 +87,15 @@ void main() {
 
       test('includes mandatory secret scan and dependency review jobs', () {
         expect(workflow, contains('secret-scan:'));
-        expect(workflow, contains('gitleaks/gitleaks-action@'));
+        expect(workflow, contains('Install checksum-verified Gitleaks scanner'));
+        expect(workflow, contains('GITLEAKS_ARCHIVE_SHA256:'));
+        expect(workflow, contains('sha256sum --check --strict'));
+        expect(
+          workflow,
+          contains(r'"$RUNNER_TEMP/gitleaks" git --redact --verbose'),
+        );
+        expect(workflow, contains(r'${BASE_SHA}..${HEAD_SHA}'));
+        expect(workflow, contains('--log-opts="--all"'));
         expect(workflow, contains('dependency-review:'));
         expect(workflow, contains('actions/dependency-review-action@'));
         expect(workflow, contains('fail-on-severity: high'));
