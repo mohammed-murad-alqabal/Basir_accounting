@@ -38,9 +38,11 @@ jobs:
         run: flutter analyze --no-fatal-infos
 
       - name: Run functional tests
+        # Keep benchmark workloads outside the PR gate and serialize functional
+        # tests to satisfy the documented runner-stability boundary.
         run: |
           find test -type f -name '*_test.dart' ! -path 'test/benchmark/*' -print0 \
-            | xargs -0 flutter test --coverage --reporter=expanded
+            | xargs -0 flutter test --concurrency=1 --coverage --reporter=expanded
         timeout-minutes: 10
 
       - name: Upload coverage to Codecov
