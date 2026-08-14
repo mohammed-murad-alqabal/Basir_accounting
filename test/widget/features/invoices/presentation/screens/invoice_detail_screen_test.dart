@@ -80,7 +80,7 @@ void main() {
     final uuid = find.text('ZATCA-UUID-PAID-001');
     await tester.ensureVisible(uuid);
     await tester.tap(uuid);
-    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pumpAndSettle();
 
     expect(find.text('تم نسخ القيمة إلى الحافظة'), findsOneWidget);
   });

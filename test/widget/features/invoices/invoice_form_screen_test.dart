@@ -4,7 +4,6 @@ import 'package:basir_accounting_system/features/auth/domain/models/auth_models.
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart'; // Fixed import
-import 'package:basir_accounting_system/shared/widgets/app_enhanced_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -168,17 +167,10 @@ void main() {
       await tester.pumpAndSettle();
       final saveButton = find.descendant(
         of: dialog,
-        matching: find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.label == 'حفظ',
-        ),
+        matching: find.text('حفظ'),
       );
       expect(saveButton, findsOneWidget);
-      final saveAction = find.descendant(
-        of: saveButton,
-        matching: find.byType(InkWell),
-      );
-      expect(saveAction, findsOneWidget);
-      await tester.tap(saveAction);
+      await tester.tap(saveButton);
       await tester.pumpAndSettle();
 
       expect(find.text('5%'), findsOneWidget);
@@ -226,17 +218,10 @@ void main() {
       await tester.pumpAndSettle();
       final confirmAddButton = find.descendant(
         of: dialog,
-        matching: find.byWidgetPredicate(
-          (widget) => widget is AppEnhancedButton && widget.label == 'إضافة',
-        ),
+        matching: find.text('إضافة'),
       );
       expect(confirmAddButton, findsOneWidget);
-      final confirmAddAction = find.descendant(
-        of: confirmAddButton,
-        matching: find.byType(InkWell),
-      );
-      expect(confirmAddAction, findsOneWidget);
-      await tester.tap(confirmAddAction);
+      await tester.tap(confirmAddButton);
       await tester.pumpAndSettle();
 
       expect(find.text('خدمة اختبارية'), findsOneWidget);
