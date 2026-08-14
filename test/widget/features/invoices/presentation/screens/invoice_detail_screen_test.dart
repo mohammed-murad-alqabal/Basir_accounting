@@ -10,6 +10,7 @@ import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/app_qr_code.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -22,6 +23,21 @@ class _GregorianCalendarNotifier extends CalendarNotifier {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  final platformCalls = <MethodCall>[];
+
+  setUp(() {
+    platformCalls.clear();
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(SystemChannels.platform, (methodCall) async {
+      platformCalls.add(methodCall);
+      return null;
+    });
+  });
+
+  tearDown(() {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(SystemChannels.platform, null);
+  });
 
   Widget testApp({required Invoice invoice}) => ProviderScope(
         overrides: [
@@ -82,6 +98,10 @@ void main() {
     await tester.tap(uuid);
     await tester.pumpAndSettle();
 
+    expect(
+      platformCalls.where((call) => call.method == 'Clipboard.setData'),
+      hasLength(1),
+    );
     expect(find.text('تم نسخ القيمة إلى الحافظة'), findsOneWidget);
   });
 

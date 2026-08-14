@@ -730,17 +730,14 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         actions: [
           SizedBox(
             width: 88,
-            child: AppEnhancedButton(
-              label: context.l10n.dialogCancel,
+            child: TextButton(
               onPressed: () => Navigator.pop(context),
-              type: AppEnhancedButtonType.text,
-              height: 36,
+              child: Text(context.l10n.dialogCancel),
             ),
           ),
           SizedBox(
             width: 88,
-            child: AppEnhancedButton(
-              label: context.l10n.btnSave,
+            child: TextButton(
               onPressed: () {
                 final value = Decimal.tryParse(controller.text);
 
@@ -753,8 +750,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   Navigator.pop(context);
                 }
               },
-              type: AppEnhancedButtonType.text,
-              height: 36,
+              child: Text(context.l10n.btnSave),
             ),
           ),
         ],
@@ -944,17 +940,14 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           actions: [
             SizedBox(
               width: 88,
-              child: AppEnhancedButton(
-                label: context.l10n.dialogCancel,
+              child: TextButton(
                 onPressed: () => Navigator.pop(context),
-                type: AppEnhancedButtonType.text,
-                height: 36,
+                child: Text(context.l10n.dialogCancel),
               ),
             ),
             SizedBox(
               width: 88,
-              child: AppEnhancedButton(
-                label: context.l10n.btnAdd,
+              child: TextButton(
                 onPressed: () {
                   final name = nameController.text.trim();
                   final quantity = Decimal.tryParse(
@@ -983,8 +976,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                     Navigator.pop(context);
                   }
                 },
-                type: AppEnhancedButtonType.text,
-                height: 36,
+                child: Text(context.l10n.btnAdd),
               ),
             ),
           ],

@@ -7,7 +7,6 @@ import 'package:basir_accounting_system/features/accounting/domain/entities/acco
 import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entry_form_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
-import 'package:basir_accounting_system/shared/widgets/app_enhanced_button.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -127,15 +126,23 @@ void main() {
     await tester.pumpWidget(testApp());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('إضافة عملة').first);
+    final addCurrency = find.text('إضافة عملة').first;
+    await tester.ensureVisible(addCurrency);
+    await tester.tap(addCurrency);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('USD'));
+    final usd = find.text('USD');
+    await tester.ensureVisible(usd);
+    await tester.tap(usd);
     await tester.pumpAndSettle();
     expect(find.text('المبلغ (USD)'), findsOneWidget);
 
-    await tester.tap(find.text('العملة: USD'));
+    final selectedCurrency = find.text('العملة: USD');
+    await tester.ensureVisible(selectedCurrency);
+    await tester.tap(selectedCurrency);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('SAR'));
+    final sar = find.text('SAR');
+    await tester.ensureVisible(sar);
+    await tester.tap(sar);
     await tester.pumpAndSettle();
 
     expect(find.text('المبلغ (USD)'), findsNothing);
@@ -148,14 +155,22 @@ void main() {
     await tester.pumpAndSettle();
 
     final accountSelectors = find.byType(DropdownButtonFormField<String>);
-    await tester.tap(accountSelectors.at(0));
+    final debitAccountSelector = accountSelectors.at(0);
+    await tester.ensureVisible(debitAccountSelector);
+    await tester.tap(debitAccountSelector);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('1100 - النقدية').last);
+    final cashAccount = find.text('1100 - النقدية').last;
+    await tester.ensureVisible(cashAccount);
+    await tester.tap(cashAccount);
     await tester.pumpAndSettle();
 
-    await tester.tap(accountSelectors.at(1));
+    final creditAccountSelector = accountSelectors.at(1);
+    await tester.ensureVisible(creditAccountSelector);
+    await tester.tap(creditAccountSelector);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('4100 - المبيعات').last);
+    final salesAccount = find.text('4100 - المبيعات').last;
+    await tester.ensureVisible(salesAccount);
+    await tester.tap(salesAccount);
     await tester.pumpAndSettle();
 
     final amountFields = find.byType(TextFormField);
@@ -163,15 +178,9 @@ void main() {
     await tester.enterText(amountFields.at(7), '100');
     await tester.pump();
 
-    final saveButton = find.byWidgetPredicate(
-      (widget) => widget is AppEnhancedButton && widget.label == 'حفظ كمسودة',
-    );
-    final saveAction = find.descendant(
-      of: saveButton,
-      matching: find.byType(InkWell),
-    );
-    expect(saveAction, findsOneWidget);
-    await tester.tap(saveAction);
+    final saveButton = find.text('حفظ كمسودة');
+    await tester.ensureVisible(saveButton);
+    await tester.tap(saveButton);
     await tester.pump();
 
     expect(

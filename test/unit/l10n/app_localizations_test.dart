@@ -69,7 +69,7 @@ void main() {
       expect(en.msgBalanceUnbalancedTB, contains('unbalanced'));
       expect(en.sectionBasicReports, 'Basic Reports');
       expect(en.labelGeneralLedger, 'General Ledger');
-      expect(en.labelTaxTotal, 'Tax Total');
+      expect(en.labelTaxTotal, 'Total Tax');
       expect(en.labelVatRate, 'VAT Rate');
       expect(en.zatcaComplianceText, contains('ZATCA'));
       expect(en.journalEntryFormTitleAdd, 'Add Manual Journal Entry');
