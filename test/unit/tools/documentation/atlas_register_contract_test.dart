@@ -18,7 +18,9 @@ void main() {
     expect(lines, hasLength(99));
 
     final ids = lines
-        .map((line) => RegExp(r'^FR-ATLAS-(\d{3}),').firstMatch(line)!.group(1))
+        .map(
+          (line) => RegExp(r'^FR-ATLAS-(\d{3}),').firstMatch(line)!.group(1),
+        )
         .toList();
     expect(
       ids,
@@ -30,9 +32,18 @@ void main() {
       () {
     final inventory = File(inventoryPath).readAsStringSync();
 
-    expect(RegExp('DUPLICATE_LEGACY_REFERENCE').allMatches(inventory), hasLength(4));
-    expect(RegExp('MISSING_IN_ATLAS').allMatches(inventory), hasLength(8));
-    expect(RegExp('EXTRACTED_FROM_ATLAS').allMatches(inventory), hasLength(87));
+    expect(
+      RegExp('DUPLICATE_LEGACY_REFERENCE').allMatches(inventory),
+      hasLength(4),
+    );
+    expect(
+      RegExp('MISSING_IN_ATLAS').allMatches(inventory),
+      hasLength(8),
+    );
+    expect(
+      RegExp('EXTRACTED_FROM_ATLAS').allMatches(inventory),
+      hasLength(87),
+    );
   });
 
   test('legacy Atlas defers implementation status to the governed feature register',
