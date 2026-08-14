@@ -25,7 +25,6 @@ void main() {
         const SizedBox(
           height: 680,
           child: TextScaleFactorTester(
-            initialScaleFactor: 1,
             child: Text('نص محاسبي طويل لاختبار الوصول'),
           ),
         ),
@@ -37,15 +36,17 @@ void main() {
     expect(find.byType(Slider), findsOneWidget);
     expect(find.text('نص محاسبي طويل لاختبار الوصول'), findsOneWidget);
 
-    await tester.tap(find.text('2.0x'));
+    await tester.tap(find.widgetWithText(ElevatedButton, '2.0x'));
     await tester.pumpAndSettle();
 
     expect(find.text('القيمة الحالية: 2.0x'), findsOneWidget);
     final content = tester.element(find.text('نص محاسبي طويل لاختبار الوصول'));
-    expect(MediaQuery.textScalerOf(content).textScaleFactor, 2);
+    expect(MediaQuery.textScalerOf(content).scale(1), 2);
   });
 
-  testWidgets('يمكن إخفاء لوحات التحكم والمعلومات للاستخدام المضمن', (tester) async {
+  testWidgets('يمكن إخفاء لوحات التحكم والمعلومات للاستخدام المضمن', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       _app(
         const SizedBox(
@@ -110,17 +111,20 @@ void main() {
         ),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
 
     expect(find.byType(AppEnhancedButton), findsNWidgets(7));
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
     await tester.tap(find.text('أساسي'));
-    await tester.pumpAndSettle();
+    await tester.pump();
     expect(presses, 1);
 
-    final disabled = tester.widget<AppEnhancedButton>(find.text('معطل').ancestor(
-      of: find.byType(AppEnhancedButton),
-    ));
+    final disabled = tester.widget<AppEnhancedButton>(
+      find.ancestor(
+        of: find.text('معطل'),
+        matching: find.byType(AppEnhancedButton),
+      ),
+    );
     expect(disabled.onPressed, isNull);
   });
 }

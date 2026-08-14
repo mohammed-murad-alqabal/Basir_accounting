@@ -1,6 +1,7 @@
 /// اختبارات سلوكية لقائمة قيود اليومية.
 library;
 
+import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/providers/journal_entry_providers.dart';
@@ -38,14 +39,14 @@ JournalEntry _entry({
         accountId: 'cash',
         accountName: 'النقدية',
         description: 'استلام نقدي',
-        debit: Decimal(250),
+        debit: Decimal.fromInt(250),
         credit: Decimal.zero,
       ),
       JournalEntryLine(
         accountId: 'revenue',
         accountName: 'إيرادات المبيعات',
         debit: Decimal.zero,
-        credit: Decimal(250),
+        credit: Decimal.fromInt(250),
       ),
     ],
     sourceDocument: 'sales_invoice',
@@ -77,8 +78,7 @@ void main() {
     await tester.pumpWidget(
       _testApp(
         overrides: [
-          filteredJournalEntriesProvider(accountId: null)
-              .overrideWith((ref) async => []),
+          filteredJournalEntriesProvider().overrideWith((ref) async => []),
         ],
       ),
     );
@@ -96,7 +96,7 @@ void main() {
     await tester.pumpWidget(
       _testApp(
         overrides: [
-          filteredJournalEntriesProvider(accountId: null).overrideWith(
+          filteredJournalEntriesProvider().overrideWith(
             (ref) => Future<List<JournalEntry>>.error(
               StateError('ledger unavailable'),
             ),
@@ -127,7 +127,7 @@ void main() {
     await tester.pumpWidget(
       _testApp(
         overrides: [
-          filteredJournalEntriesProvider(accountId: null)
+          filteredJournalEntriesProvider()
               .overrideWith((ref) async => [draft, posted]),
         ],
       ),

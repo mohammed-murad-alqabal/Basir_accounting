@@ -27,7 +27,7 @@ Account _account({
   required String code,
   required String nameAr,
   required String nameEn,
-  required String? subType,
+  required String subType,
   required Decimal balance,
 }) =>
     Account(
@@ -71,8 +71,9 @@ void main() {
     tester,
   ) async {
     final entries = Completer<List<JournalEntry>>();
-    when(() => accountingRepository.getJournalEntries())
-        .thenAnswer((_) => entries.future);
+    when(
+      () => accountingRepository.getJournalEntries(),
+    ).thenAnswer((_) => entries.future);
 
     await tester.pumpWidget(testApp());
     await tester.pump();
@@ -84,9 +85,9 @@ void main() {
   testWidgets('يعرض حالة الخطأ ويتيح إعادة المحاولة إذا أخفق دفتر القيود', (
     tester,
   ) async {
-    when(() => accountingRepository.getJournalEntries()).thenAnswer(
-      (_) async => throw StateError('ledger unavailable'),
-    );
+    when(
+      () => accountingRepository.getJournalEntries(),
+    ).thenAnswer((_) async => throw StateError('ledger unavailable'));
 
     await tester.pumpWidget(testApp());
     await tester.pumpAndSettle();
@@ -98,7 +99,9 @@ void main() {
   testWidgets('يعرض النقد والبنك فقط ويستبعد الحسابات التشغيلية من السيولة', (
     tester,
   ) async {
-    when(() => accountingRepository.getJournalEntries()).thenAnswer((_) async => []);
+    when(
+      () => accountingRepository.getJournalEntries(),
+    ).thenAnswer((_) async => []);
     when(() => accountingRepository.getAccounts()).thenAnswer(
       (_) async => [
         _account(
@@ -107,7 +110,7 @@ void main() {
           nameAr: 'الصندوق الرئيسي',
           nameEn: 'Main Cash',
           subType: 'cash',
-          balance: Decimal(750),
+          balance: Decimal.fromInt(750),
         ),
         _account(
           id: 'bank',
@@ -115,7 +118,7 @@ void main() {
           nameAr: 'الحساب البنكي',
           nameEn: 'Operating Bank',
           subType: 'bank',
-          balance: Decimal(1250),
+          balance: Decimal.fromInt(1250),
         ),
         _account(
           id: 'expense',
@@ -123,7 +126,7 @@ void main() {
           nameAr: 'مصروفات تشغيلية',
           nameEn: 'Operating Expense',
           subType: 'expense',
-          balance: Decimal(999),
+          balance: Decimal.fromInt(999),
         ),
       ],
     );

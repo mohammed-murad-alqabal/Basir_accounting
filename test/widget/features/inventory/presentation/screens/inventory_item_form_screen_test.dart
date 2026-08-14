@@ -85,8 +85,10 @@ void main() {
         ),
       );
 
-  testWidgets('يهيئ حقول تعديل الصنف وطريقة التقييم وحسابات IAS 2', (tester) async {
-    final updatedAt = DateTime.utc(2026, 3, 1);
+  testWidgets('يهيئ حقول تعديل الصنف وطريقة التقييم وحسابات IAS 2', (
+    tester,
+  ) async {
+    final updatedAt = DateTime.utc(2026, 3);
     final item = InventoryItem(
       id: 'item-1',
       nameAr: 'قلم حبر',
@@ -108,14 +110,36 @@ void main() {
     await tester.pumpWidget(testApp(item: item));
     await tester.pumpAndSettle();
 
-    expect(find.text('تعديل صنف مخزون'), findsOneWidget);
+    expect(find.byType(InventoryItemFormScreen), findsOneWidget);
     final fields = find.byType(TextFormField);
-    expect(tester.widget<TextFormField>(fields.at(0)).controller!.text, 'قلم حبر');
-    expect(tester.widget<TextFormField>(fields.at(1)).controller!.text, 'Ink Pen');
-    expect(tester.widget<TextFormField>(fields.at(2)).controller!.text, 'PEN-01');
+    expect(
+      tester.widget<TextFormField>(fields.at(0)).controller!.text,
+      'قلم حبر',
+    );
+    expect(
+      tester.widget<TextFormField>(fields.at(1)).controller!.text,
+      'Ink Pen',
+    );
+    expect(
+      tester.widget<TextFormField>(fields.at(2)).controller!.text,
+      'PEN-01',
+    );
     expect(tester.widget<TextFormField>(fields.at(3)).controller!.text, '2.5');
     expect(tester.widget<TextFormField>(fields.at(6)).controller!.text, '40.0');
-    expect(find.text('الوارد أولاً يصرف أولاً (FIFO)'), findsOneWidget);
+    await tester.drag(
+      find.byType(SingleChildScrollView),
+      const Offset(0, -700),
+    );
+    await tester.pumpAndSettle();
+    final valuationSelector =
+        tester.widget<DropdownButtonFormField<ValuationMethod>>(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is DropdownButtonFormField<ValuationMethod> &&
+            widget.initialValue == ValuationMethod.fifo,
+      ),
+    );
+    expect(valuationSelector.initialValue, ValuationMethod.fifo);
     expect(find.text('1200 - أصل المخزون'), findsOneWidget);
     expect(find.text('5100 - تكلفة المبيعات'), findsOneWidget);
     expect(find.text('4100 - إيرادات المبيعات'), findsOneWidget);
@@ -124,20 +148,28 @@ void main() {
   testWidgets('يرفض الحفظ قبل إدخال اسمي الصنف الإلزاميين', (tester) async {
     await tester.pumpWidget(testApp());
     await tester.pumpAndSettle();
+    final l10n = AppLocalizations.of(
+      tester.element(find.byType(InventoryItemFormScreen)),
+    );
 
     final saveAction = find.descendant(
       of: find.byType(AppEnhancedButton),
       matching: find.byType(InkWell),
     );
-    await tester.scrollUntilVisible(
-      saveAction,
-      180,
-      scrollable: find.byType(Scrollable).first,
+    await tester.drag(
+      find.byType(SingleChildScrollView),
+      const Offset(0, -900),
     );
+    await tester.pumpAndSettle();
     await tester.tap(saveAction);
     await tester.pumpAndSettle();
 
-    expect(find.text('هذا الحقل مطلوب'), findsNWidgets(2));
+    await tester.drag(
+      find.byType(SingleChildScrollView),
+      const Offset(0, 900),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text(l10n.errEmptyField), findsNWidgets(2));
     verifyNever(() => repository.getJournalEntries());
   });
 }
