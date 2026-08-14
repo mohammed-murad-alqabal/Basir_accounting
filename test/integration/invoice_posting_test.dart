@@ -10,6 +10,7 @@ import 'package:basir_accounting_system/features/customers/domain/entities/custo
 import 'package:basir_accounting_system/features/invoices/application/sales_bridge_service.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -469,6 +470,216 @@ void main() {
         throwsA(isA<Exception>()),
       );
       verifyNever(() => mockAccountingRepo.addJournalEntry(any()));
+    });
+
+    test('reverseJournalEntry ينشئ قيداً معاكساً متوازناً للقيد المرحّل',
+        () async {
+      final now = DateTime.now();
+      final original = JournalEntry(
+        id: 'posted-entry',
+        referenceNumber: 'JE-POSTED-1',
+        date: now,
+        temporal: TemporalJustification(
+          transactionDate: now,
+          effectiveDate: now,
+          recordingDate: now,
+        ),
+        standards: const StandardsJustification(
+          standardReference: 'IFRS 15',
+          recognitionBasis: 'Accrual',
+          measurementBasis: 'Transaction Price',
+        ),
+        description: 'Posted sales entry',
+        status: JournalEntryStatus.posted,
+        sourceDocument: 'invoice',
+        sourceId: 'inv-reversal',
+        createdBy: 'tester',
+        createdAt: now,
+        updatedAt: now,
+        lines: [
+          JournalEntryLine(
+            accountId: 'acc-1201',
+            accountName: 'Receivable',
+            debit: Decimal.fromInt(115),
+            credit: Decimal.zero,
+          ),
+          JournalEntryLine(
+            accountId: 'acc-4101',
+            accountName: 'Sales',
+            debit: Decimal.zero,
+            credit: Decimal.fromInt(115),
+          ),
+        ],
+      );
+      when(() => mockAccountingRepo.getJournalEntries())
+          .thenAnswer((_) async => [original]);
+      when(() => mockFyRepo.getFinancialYearByDate(any())).thenAnswer(
+        (_) async => FinancialYear(
+          id: 'fy-current',
+          name: '${now.year}',
+          startDate: DateTime(now.year),
+          endDate: DateTime(now.year, 12, 31),
+        ),
+      );
+
+      await container
+          .read(accountingServiceProvider.notifier)
+          .reverseJournalEntry(original.id);
+
+      final reversal = verify(
+        () => mockAccountingRepo.addJournalEntry(captureAny()),
+      ).captured.single as JournalEntry;
+      expect(reversal.referenceNumber, 'RV-${original.referenceNumber}');
+      expect(reversal.status, JournalEntryStatus.posted);
+      expect(reversal.isBalanced, isTrue);
+      expect(reversal.lines[0].debit, original.lines[0].credit);
+      expect(reversal.lines[0].credit, original.lines[0].debit);
+      expect(reversal.lines[1].debit, original.lines[1].credit);
+      expect(reversal.lines[1].credit, original.lines[1].debit);
+    });
+
+    test('reverseInvoice يلغي الفاتورة ويعكس قيدها المرحّل', () async {
+      final now = DateTime.now();
+      final invoice = Invoice(
+        id: 'inv-cancel',
+        invoiceNumber: 'INV-CANCEL',
+        customerId: 'cust-1',
+        customerName: 'Client A',
+        issuedDate: now,
+        dueDate: now.add(const Duration(days: 7)),
+        subtotalAmount: Decimal.fromInt(100),
+        taxAmount: Decimal.fromInt(15),
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        totalAmount: Decimal.fromInt(115),
+        paidAmount: Decimal.zero,
+        taxRate: Decimal.fromInt(15),
+        status: InvoiceStatus.sent,
+        createdAt: now,
+        updatedAt: now,
+        exchangeRate: Decimal.one,
+        items: const [],
+      );
+      final original = JournalEntry(
+        id: 'je-inv-${invoice.id}',
+        referenceNumber: 'JE-${invoice.id}',
+        date: now,
+        temporal: TemporalJustification(
+          transactionDate: now,
+          effectiveDate: now,
+          recordingDate: now,
+        ),
+        standards: const StandardsJustification(
+          standardReference: 'IFRS 15',
+          recognitionBasis: 'Accrual',
+        ),
+        description: 'Invoice posting',
+        status: JournalEntryStatus.posted,
+        sourceDocument: 'invoice',
+        sourceId: invoice.id,
+        createdBy: 'tester',
+        createdAt: now,
+        updatedAt: now,
+        lines: [
+          JournalEntryLine(
+            accountId: 'acc-1201',
+            accountName: 'Receivable',
+            debit: Decimal.fromInt(115),
+            credit: Decimal.zero,
+          ),
+          JournalEntryLine(
+            accountId: 'acc-4101',
+            accountName: 'Sales',
+            debit: Decimal.zero,
+            credit: Decimal.fromInt(115),
+          ),
+        ],
+      );
+      when(() => mockInvoiceRepo.updateInvoice(any())).thenAnswer((_) async {});
+      when(() => mockAccountingRepo.getJournalEntries())
+          .thenAnswer((_) async => [original]);
+      when(() => mockFyRepo.getFinancialYearByDate(any())).thenAnswer(
+        (_) async => FinancialYear(
+          id: 'fy-current',
+          name: '${now.year}',
+          startDate: DateTime(now.year),
+          endDate: DateTime(now.year, 12, 31),
+        ),
+      );
+
+      await container
+          .read(accountingServiceProvider.notifier)
+          .reverseInvoice(invoice);
+
+      final cancelled = verify(
+        () => mockInvoiceRepo.updateInvoice(captureAny()),
+      ).captured.single as Invoice;
+      expect(cancelled.status, InvoiceStatus.cancelled);
+      expect(cancelled.notes, contains('Cancelled on'));
+      final reversal = verify(
+        () => mockAccountingRepo.addJournalEntry(captureAny()),
+      ).captured.single as JournalEntry;
+      expect(reversal.referenceNumber, 'RV-${original.referenceNumber}');
+      expect(reversal.isBalanced, isTrue);
+    });
+
+    test('getLiquidityForecast يجمع المستحقات والمدفوعات ضمن نطاق اليوم',
+        () async {
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+      final receivable = Invoice(
+        id: 'inv-receivable',
+        invoiceNumber: 'INV-RECEIVABLE',
+        customerId: 'cust-1',
+        customerName: 'Client A',
+        issuedDate: today,
+        dueDate: today.add(const Duration(days: 1)),
+        subtotalAmount: Decimal.fromInt(100),
+        taxAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        totalAmount: Decimal.fromInt(120),
+        paidAmount: Decimal.fromInt(20),
+        taxRate: Decimal.zero,
+        status: InvoiceStatus.sent,
+        createdAt: today,
+        updatedAt: today,
+        exchangeRate: Decimal.one,
+        items: const [],
+      );
+      final overduePayable = receivable.copyWith(
+        id: 'inv-payable',
+        invoiceNumber: 'INV-PAYABLE',
+        customerId: 'vendor-1',
+        customerName: 'Vendor A',
+        dueDate: today.subtract(const Duration(days: 2)),
+        subtotalAmount: Decimal.fromInt(60),
+        totalAmount: Decimal.fromInt(75),
+        paidAmount: Decimal.fromInt(15),
+        status: InvoiceStatus.overdue,
+        type: InvoiceType.purchase,
+      );
+      final settled = receivable.copyWith(
+        id: 'inv-settled',
+        invoiceNumber: 'INV-SETTLED',
+        dueDate: today.add(const Duration(days: 2)),
+        totalAmount: Decimal.fromInt(999),
+        paidAmount: Decimal.zero,
+        status: InvoiceStatus.paid,
+      );
+      when(() => mockInvoiceRepo.getAllInvoices())
+          .thenAnswer((_) async => [receivable, overduePayable, settled]);
+
+      final forecast = await container
+          .read(accountingServiceProvider.notifier)
+          .getLiquidityForecast(days: 3);
+
+      expect(forecast.totalInflow, Decimal.fromInt(100));
+      expect(forecast.totalOutflow, Decimal.fromInt(60));
+      expect(forecast.netChange, Decimal.fromInt(40));
+      expect(forecast.dailyBreakdown, hasLength(4));
+      expect(forecast.dailyBreakdown.first.outflow, Decimal.fromInt(60));
+      expect(forecast.dailyBreakdown[1].inflow, Decimal.fromInt(100));
     });
 
     test('seedDefaultAccounts يضيف دليل الحسابات العالمي عندما يكون فارغاً',
