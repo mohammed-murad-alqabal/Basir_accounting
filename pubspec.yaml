@@ -92,6 +92,8 @@ dependencies:
 dev_dependencies:
   # Dev Dependencies (sorted alphabetically)
   build_runner: ^2.4.9
+  # Test-only executor for isolated SQLite migration verification.
+  drift: 2.31.0
   flutter_launcher_icons: ^0.14.4
   flutter_lints: ^6.0.0
   flutter_native_splash: ^2.3.5
