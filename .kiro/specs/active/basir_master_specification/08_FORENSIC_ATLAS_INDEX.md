@@ -1,14 +1,15 @@
 # Forensic Atlas: Screen Index & Feature Mapping
 
-**Version:** 2.0 (Sovereign Edition)
+**Version:** 2.1 (Legacy Input / Governed Register Transition)
 **Basis:** Deep Analysis of Legacy Visuals (001-099)
-**Scope:** Screen-by-Screen Feature Extraction & Implementation Status
+**Scope:** Historical screen-by-screen feature extraction; the authoritative implementation state is in [`ATLAS_FEATURE_REGISTER.md`](../../../docs/02-domain/ATLAS_FEATURE_REGISTER.md).
+**Authority notice:** The status cells below are legacy claims, not evidence of current feature completion. Do not promote them to product status without code, test, and SHA-linked CI evidence.
 
 ---
 
 ## Overview
 
-This atlas provides a complete mapping of the **99 legacy UI screens** to their corresponding features, implementation status, and engineering notes. It serves as the definitive traceability matrix for ensuring no feature is lost during the modernization effort.
+This atlas preserves the legacy visual input for the declared `001–099` scope. It is **not** a complete or definitive implementation map: a BKIP reconciliation found 95 source rows, 91 unique IDs, four duplicate IDs, and eight missing IDs. [`ATLAS_FEATURE_REGISTER.md`](../../../docs/02-domain/ATLAS_FEATURE_REGISTER.md) assigns every identifier a stable `FR-ATLAS-*` record and controls evidence status for modernization work.
 
 ---
 
@@ -177,16 +178,12 @@ This atlas provides a complete mapping of the **99 legacy UI screens** to their 
 
 ---
 
-## Summary Statistics
+## Legacy Claim Summary
 
-| Status         | Count |
-| -------------- | ----- |
-| ✅ Complete    | 91    |
-| ⚠️ Planned     | 4     |
-| ❌ Not Started | 0     |
+| Legacy status cell | Atlas self-declared count | Governing interpretation |
+| --- | ---: | --- |
+| `✅ Complete` including IFRS-qualified cells | 92 source rows | Historical claim only; no status is promoted to `COMPLETE` by this document. |
+| `⚠️ Planned` | 3 source rows | Historical planning signal only; requires Product Owner confirmation. |
+| Missing / duplicate source ID | 12 reconciliation conditions across eight missing and four duplicate IDs | Explicitly tracked in the feature register; never inferred or deleted automatically. |
 
-**Overall Completion:** 92%
-
----
-
-_This atlas ensures complete traceability from legacy visuals to live implementation._
+> **Migration rule:** New work must cite `FR-ATLAS-*` and update the authoritative [Atlas feature register](../../../docs/02-domain/ATLAS_FEATURE_REGISTER.md), including code, test, and SHA-linked CI evidence. This document remains a preserved legacy input and must not be used to claim feature completion on its own.
