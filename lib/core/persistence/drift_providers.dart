@@ -1,0 +1,98 @@
+import 'dart:async';
+
+import 'package:basir_accounting_system/features/reports/data/repositories/drift_market_price_repository.dart';
+import 'package:basir_accounting_system/features/reports/domain/repositories/market_price_repository.dart';
+import 'package:basir_accounting_system/features/settings/data/repositories/drift_barcode_config_repository.dart';
+import 'package:basir_accounting_system/features/settings/domain/repositories/barcode_config_repository.dart';
+import 'package:basir_drift_storage/basir_drift_storage.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+/// مراحل تفعيل Drift. لا يتغير مسار المستودعات النشطة تلقائيًا بناءً على هذه
+/// القيمة؛ يستخدم كل repository مرحلة مستقلة بعد بوابة قبول خاصة به.
+enum DriftRolloutStage {
+  /// Isar هو المسار الوحيد. هذه هي القيمة الإنتاجية الافتراضية.
+  isarPrimary,
+
+  /// مقارنة قراءات Drift تشخيصيًا من دون التأثير على مخرجات Isar.
+  shadowRead,
+
+  /// يسمح بقراءة Drift في بيئات canary المعتمدة فقط.
+  canaryRead,
+
+  /// يصبح Drift المصدر المحلي الأساسي للشريحة المعتمدة فقط.
+  driftPrimary,
+}
+
+/// الحالة العامة الآمنة للطرح. تبقى [DriftRolloutStage.isarPrimary] حتى يُعتمد
+/// تبديل repository محدد في PR ومراجعة منفصلين.
+final driftRolloutStageProvider = Provider<DriftRolloutStage>(
+  (ref) => DriftRolloutStage.isarPrimary,
+);
+
+/// نقطة حقن لاختبارات الجاهزية فقط؛ يبقى إنشاء قاعدة Drift خارج طبقات domain.
+typedef DriftConnectionVerifier = Future<void> Function();
+
+class _DatabaseDriftConnectionVerifier {
+  const _DatabaseDriftConnectionVerifier(this._database);
+
+  final BasirDatabase _database;
+
+  Future<void> call() async {
+    await _database.customSelect('SELECT 1').get();
+  }
+}
+
+/// قاعدة Drift المشتركة. لا تُفتح أو تُستخدم عبر أي provider نشط تلقائيًا؛
+/// مزودات المستودعات التالية مخصصة للتحقق والـcanary فقط في هذه الموجة.
+final driftDatabaseProvider = Provider<BasirDatabase>((ref) {
+  final database = BasirDatabase();
+  ref.onDispose(() => unawaited(database.close()));
+  return database;
+});
+
+/// منفذ اختبار الاتصال، مع قابلية override في الاختبارات من دون الحاجة إلى
+/// فتح SQLite أو WASM.
+final driftConnectionVerifierProvider = Provider<DriftConnectionVerifier>(
+  (ref) => _DatabaseDriftConnectionVerifier(
+    ref.watch(driftDatabaseProvider),
+  ).call,
+);
+
+/// نتيجة تحقق صريحة بدل تحويل أخطاء فتح Drift إلى fallback صامت.
+sealed class DriftReadiness {
+  const DriftReadiness();
+}
+
+class DriftReady extends DriftReadiness {
+  const DriftReady();
+}
+
+class DriftUnavailable extends DriftReadiness {
+  const DriftUnavailable(this.error, this.stackTrace);
+
+  final Object error;
+  final StackTrace stackTrace;
+}
+
+/// يفحص القدرة على تنفيذ استعلام محلي بسيط. لا يغيّر هذا الفحص أي provider
+/// إنتاجي ولا ينفذ ترحيلًا أو كتابة بيانات.
+final driftReadinessProvider = FutureProvider<DriftReadiness>((ref) async {
+  try {
+    await ref.watch(driftConnectionVerifierProvider)();
+    return const DriftReady();
+  } on Object catch (error, stackTrace) {
+    return DriftUnavailable(error, stackTrace);
+  }
+});
+
+/// مسار Drift المرشح لأسعار السوق. لا يستخدمه `marketPriceRepositoryProvider`
+/// النشط حتى اجتياز shadow-read وقرار cutover مستقل.
+final driftMarketPriceRepositoryProvider = Provider<MarketPriceRepository>(
+  (ref) => DriftMarketPriceRepository(ref.watch(driftDatabaseProvider)),
+);
+
+/// مسار Drift المرشح لإعدادات الباركود. لا يستخدمه
+/// `barcodeConfigRepositoryProvider` النشط في هذه الموجة.
+final driftBarcodeConfigRepositoryProvider = Provider<BarcodeConfigRepository>(
+  (ref) => DriftBarcodeConfigRepository(ref.watch(driftDatabaseProvider)),
+);
