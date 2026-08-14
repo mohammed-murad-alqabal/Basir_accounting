@@ -78,10 +78,14 @@ void main() {
       expect(statement['totalRevenue'], Decimal.parse('1000'));
       expect(statement['totalExpenses'], Decimal.parse('250'));
       expect(statement['netIncome'], Decimal.parse('750'));
-      expect(statement['revenueDetails'],
-          {'Service revenue': Decimal.parse('1000')});
       expect(
-          statement['expenseDetails'], {'Rent expense': Decimal.parse('250')});
+        statement['revenueDetails'],
+        {'Service revenue': Decimal.parse('1000')},
+      );
+      expect(
+        statement['expenseDetails'],
+        {'Rent expense': Decimal.parse('250')},
+      );
     });
 
     test('يجمع المصروفات تحت الفئة الفرعية أو فئة أخرى', () async {

@@ -1,11 +1,10 @@
 // السجل الزمني للتدقيق الموحد لنظام بصير المحاسبي.
 //
-// يعرض أحداث التدقيق (إنشاء/تعديل/اعتماد/ترحيل/إلغاء/عكس) كتسلسل
-// زمني: من نفّذ، ماذا فعل، متى، ولماذا — مع إمكانية الرجوع للوثيقة
-// المرتبطة عند توفر معرّف المرجع.
+// يعرض أحداث التدقيق (إنشاء/تعديل/اعتماد/ترحيل/إلغاء/عكس) كتسلسل زمني:
+// من نفّذ، ماذا فعل، متى، ولماذا — مع إمكانية الرجوع للوثيقة المرتبطة عند
+// توفر `referenceId`.
 //
 // المرجع: مخطط UI/UX التنفيذي — القسم 6 (سجل التدقيق) + القسم 7.
-
 import 'package:basir_accounting_system/core/domain/contracts/index.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_colors.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_text_styles.dart';

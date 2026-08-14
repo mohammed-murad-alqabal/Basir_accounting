@@ -336,14 +336,8 @@ void main() {
     });
 
     test('sidebar width helper responds to collapse state', () {
-      expect(
-        sidebarWidthOf(collapsed: false),
-        kSidebarExpandedWidth,
-      );
-      expect(
-        sidebarWidthOf(collapsed: true),
-        kSidebarCollapsedWidth,
-      );
+      expect(sidebarWidthOf(collapsed: false), kSidebarExpandedWidth);
+      expect(sidebarWidthOf(collapsed: true), kSidebarCollapsedWidth);
     });
   });
 }
