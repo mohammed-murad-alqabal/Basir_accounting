@@ -70,7 +70,10 @@ jobs:
           if-no-files-found: warn
 
       - name: Comment on PR
+        # A report artifact remains available when repository policy restricts
+        # GITHUB_TOKEN comment writes; reporting must not mask validation success.
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false && always()
+        continue-on-error: true
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
         with:
           script: |
