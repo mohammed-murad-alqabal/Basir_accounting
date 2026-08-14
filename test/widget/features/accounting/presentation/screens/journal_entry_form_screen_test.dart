@@ -191,7 +191,7 @@ void main() {
       of: saveButton,
       matching: find.byType(InkWell),
     );
-    final formScrollView = find.byType(SingleChildScrollView);
+    final formScrollView = find.byType(Scrollable);
     await tester.scrollUntilVisible(
       saveAction,
       120,
