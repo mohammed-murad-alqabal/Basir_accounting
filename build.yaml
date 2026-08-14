@@ -21,9 +21,3 @@ targets:
         generate_for:
           exclude:
             - lib/src/rust/**
-      drift_dev:
-        options:
-          databases:
-            basir_database: lib/core/persistence/drift/basir_database.dart
-          test_dir: test/drift/
-          schema_dir: drift_schemas/

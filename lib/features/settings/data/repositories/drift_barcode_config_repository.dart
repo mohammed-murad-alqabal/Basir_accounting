@@ -1,65 +1,59 @@
-import 'package:basir_accounting_system/core/persistence/drift/basir_database.dart';
 import 'package:basir_accounting_system/features/settings/domain/entities/barcode_config.dart';
 import 'package:basir_accounting_system/features/settings/domain/repositories/barcode_config_repository.dart';
-import 'package:drift/drift.dart';
+import 'package:basir_drift_storage/basir_drift_storage.dart';
 
-/// تنفيذ تجريبي لعقد إعدادات الباركود باستخدام Drift.
+/// مكيّف تجريبي لعقد إعدادات الباركود باستخدام حزمة Drift الداخلية.
 ///
-/// لا يُسجّل هذا التنفيذ في Riverpod بعد؛ يظل Isar هو التنفيذ النشط حتى تنجح
+/// لا يُسجّل هذا التنفيذ في Riverpod بعد؛ يبقى Isar هو التنفيذ النشط حتى تنجح
 /// اختبارات التكافؤ ويُعتمد تبديل feature flag بصورة منفصلة.
 class DriftBarcodeConfigRepository implements BarcodeConfigRepository {
-  DriftBarcodeConfigRepository(this._database);
+  DriftBarcodeConfigRepository(BasirDatabase database)
+      : _storage = BarcodeConfigStore(database);
 
-  final BasirDatabase _database;
+  /// منشئ اختبار/حقن؛ يحافظ على عزل domain عن أنواع Drift.
+  DriftBarcodeConfigRepository.withStorage(this._storage);
+
+  final BarcodeConfigStorage _storage;
 
   @override
   Future<BarcodeConfig> getConfig() async {
-    final row = await (_database.select(_database.barcodeConfigs)
-          ..where((table) => table.id.equals('default')))
-        .getSingleOrNull();
-
-    if (row == null) {
-      return const BarcodeConfig();
-    }
+    final record = await _storage.read('default');
+    if (record == null) return const BarcodeConfig();
 
     return BarcodeConfig(
-      id: row.id,
-      printerType: _printerTypeFromStorage(row.printerType),
-      columnsPerRow: row.columnsPerRow,
-      height: row.heightMm,
-      width: row.widthMm,
-      margin: row.marginMm,
-      showItemName: row.showItemName,
-      showPrice: row.showPrice,
+      id: record.id,
+      printerType: _printerTypeFromStorage(record.printerType),
+      columnsPerRow: record.columnsPerRow,
+      height: record.heightMm,
+      width: record.widthMm,
+      margin: record.marginMm,
+      showItemName: record.showItemName,
+      showPrice: record.showPrice,
     );
   }
 
   @override
   Future<void> saveConfig(BarcodeConfig config) async {
     _validate(config);
-
-    await _database.into(_database.barcodeConfigs).insertOnConflictUpdate(
-          BarcodeConfigsCompanion.insert(
-            id: config.id,
-            printerType: Value(config.printerType.name),
-            columnsPerRow: Value(config.columnsPerRow),
-            heightMm: Value(config.height),
-            widthMm: Value(config.width),
-            marginMm: Value(config.margin),
-            showItemName: Value(config.showItemName),
-            showPrice: Value(config.showPrice),
-            updatedAt: Value(DateTime.now().toUtc()),
-          ),
-        );
+    await _storage.save(
+      BarcodeConfigRecord(
+        id: config.id,
+        printerType: config.printerType.name,
+        columnsPerRow: config.columnsPerRow,
+        heightMm: config.height,
+        widthMm: config.width,
+        marginMm: config.margin,
+        showItemName: config.showItemName,
+        showPrice: config.showPrice,
+      ),
+    );
   }
 
-  static PrinterType _printerTypeFromStorage(String value) {
-    return switch (value) {
-      'thermal' => PrinterType.thermal,
-      'a4' => PrinterType.a4,
-      _ => throw StateError('Unsupported persisted printer type: $value'),
-    };
-  }
+  static PrinterType _printerTypeFromStorage(String value) => switch (value) {
+        'thermal' => PrinterType.thermal,
+        'a4' => PrinterType.a4,
+        _ => throw StateError('Unsupported persisted printer type: $value'),
+      };
 
   static void _validate(BarcodeConfig config) {
     if (config.id != 'default') {
