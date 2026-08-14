@@ -268,7 +268,7 @@ class $BarcodeConfigsTable extends BarcodeConfigs
       'height_mm', aliasedName, false,
       type: DriftSqlType.double,
       requiredDuringInsert: false,
-      defaultValue: const Constant(30.0));
+      defaultValue: const Constant<double>(30));
   static const VerificationMeta _widthMmMeta =
       const VerificationMeta('widthMm');
   @override
@@ -276,7 +276,7 @@ class $BarcodeConfigsTable extends BarcodeConfigs
       'width_mm', aliasedName, false,
       type: DriftSqlType.double,
       requiredDuringInsert: false,
-      defaultValue: const Constant(50.0));
+      defaultValue: const Constant<double>(50));
   static const VerificationMeta _marginMmMeta =
       const VerificationMeta('marginMm');
   @override
@@ -284,7 +284,7 @@ class $BarcodeConfigsTable extends BarcodeConfigs
       'margin_mm', aliasedName, false,
       type: DriftSqlType.double,
       requiredDuringInsert: false,
-      defaultValue: const Constant(2.0));
+      defaultValue: const Constant<double>(2));
   static const VerificationMeta _showItemNameMeta =
       const VerificationMeta('showItemName');
   @override
@@ -739,6 +739,313 @@ class BarcodeConfigsCompanion extends UpdateCompanion<BarcodeConfig> {
           ..write('showPrice: $showPrice, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MarketPricesTable extends MarketPrices
+    with TableInfo<$MarketPricesTable, MarketPrice> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MarketPricesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  @override
+  late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
+      'item_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _priceMeta = const VerificationMeta('price');
+  @override
+  late final GeneratedColumn<double> price = GeneratedColumn<double>(
+      'price', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _asOfDateMeta =
+      const VerificationMeta('asOfDate');
+  @override
+  late final GeneratedColumn<DateTime> asOfDate = GeneratedColumn<DateTime>(
+      'as_of_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, itemId, price, asOfDate, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'market_prices';
+  @override
+  VerificationContext validateIntegrity(Insertable<MarketPrice> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
+    }
+    if (data.containsKey('price')) {
+      context.handle(
+          _priceMeta, price.isAcceptableOrUnknown(data['price']!, _priceMeta));
+    } else if (isInserting) {
+      context.missing(_priceMeta);
+    }
+    if (data.containsKey('as_of_date')) {
+      context.handle(_asOfDateMeta,
+          asOfDate.isAcceptableOrUnknown(data['as_of_date']!, _asOfDateMeta));
+    } else if (isInserting) {
+      context.missing(_asOfDateMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MarketPrice map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MarketPrice(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      itemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}item_id'])!,
+      price: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}price'])!,
+      asOfDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}as_of_date'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $MarketPricesTable createAlias(String alias) {
+    return $MarketPricesTable(attachedDatabase, alias);
+  }
+}
+
+class MarketPrice extends DataClass implements Insertable<MarketPrice> {
+  final String id;
+  final String itemId;
+  final double price;
+  final DateTime asOfDate;
+  final DateTime createdAt;
+  const MarketPrice(
+      {required this.id,
+      required this.itemId,
+      required this.price,
+      required this.asOfDate,
+      required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['item_id'] = Variable<String>(itemId);
+    map['price'] = Variable<double>(price);
+    map['as_of_date'] = Variable<DateTime>(asOfDate);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  MarketPricesCompanion toCompanion(bool nullToAbsent) {
+    return MarketPricesCompanion(
+      id: Value(id),
+      itemId: Value(itemId),
+      price: Value(price),
+      asOfDate: Value(asOfDate),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory MarketPrice.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MarketPrice(
+      id: serializer.fromJson<String>(json['id']),
+      itemId: serializer.fromJson<String>(json['itemId']),
+      price: serializer.fromJson<double>(json['price']),
+      asOfDate: serializer.fromJson<DateTime>(json['asOfDate']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'itemId': serializer.toJson<String>(itemId),
+      'price': serializer.toJson<double>(price),
+      'asOfDate': serializer.toJson<DateTime>(asOfDate),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  MarketPrice copyWith(
+          {String? id,
+          String? itemId,
+          double? price,
+          DateTime? asOfDate,
+          DateTime? createdAt}) =>
+      MarketPrice(
+        id: id ?? this.id,
+        itemId: itemId ?? this.itemId,
+        price: price ?? this.price,
+        asOfDate: asOfDate ?? this.asOfDate,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  MarketPrice copyWithCompanion(MarketPricesCompanion data) {
+    return MarketPrice(
+      id: data.id.present ? data.id.value : this.id,
+      itemId: data.itemId.present ? data.itemId.value : this.itemId,
+      price: data.price.present ? data.price.value : this.price,
+      asOfDate: data.asOfDate.present ? data.asOfDate.value : this.asOfDate,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MarketPrice(')
+          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
+          ..write('price: $price, ')
+          ..write('asOfDate: $asOfDate, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, itemId, price, asOfDate, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MarketPrice &&
+          other.id == this.id &&
+          other.itemId == this.itemId &&
+          other.price == this.price &&
+          other.asOfDate == this.asOfDate &&
+          other.createdAt == this.createdAt);
+}
+
+class MarketPricesCompanion extends UpdateCompanion<MarketPrice> {
+  final Value<String> id;
+  final Value<String> itemId;
+  final Value<double> price;
+  final Value<DateTime> asOfDate;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const MarketPricesCompanion({
+    this.id = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.price = const Value.absent(),
+    this.asOfDate = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MarketPricesCompanion.insert({
+    required String id,
+    required String itemId,
+    required double price,
+    required DateTime asOfDate,
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        itemId = Value(itemId),
+        price = Value(price),
+        asOfDate = Value(asOfDate),
+        createdAt = Value(createdAt);
+  static Insertable<MarketPrice> custom({
+    Expression<String>? id,
+    Expression<String>? itemId,
+    Expression<double>? price,
+    Expression<DateTime>? asOfDate,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (itemId != null) 'item_id': itemId,
+      if (price != null) 'price': price,
+      if (asOfDate != null) 'as_of_date': asOfDate,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MarketPricesCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? itemId,
+      Value<double>? price,
+      Value<DateTime>? asOfDate,
+      Value<DateTime>? createdAt,
+      Value<int>? rowid}) {
+    return MarketPricesCompanion(
+      id: id ?? this.id,
+      itemId: itemId ?? this.itemId,
+      price: price ?? this.price,
+      asOfDate: asOfDate ?? this.asOfDate,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (itemId.present) {
+      map['item_id'] = Variable<String>(itemId.value);
+    }
+    if (price.present) {
+      map['price'] = Variable<double>(price.value);
+    }
+    if (asOfDate.present) {
+      map['as_of_date'] = Variable<DateTime>(asOfDate.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MarketPricesCompanion(')
+          ..write('id: $id, ')
+          ..write('itemId: $itemId, ')
+          ..write('price: $price, ')
+          ..write('asOfDate: $asOfDate, ')
+          ..write('createdAt: $createdAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1291,13 +1598,22 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
   $BasirDatabaseManager get managers => $BasirDatabaseManager(this);
   late final $LocalMetadataTable localMetadata = $LocalMetadataTable(this);
   late final $BarcodeConfigsTable barcodeConfigs = $BarcodeConfigsTable(this);
+  late final $MarketPricesTable marketPrices = $MarketPricesTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
+  late final Index marketPricesItemAsOfIdx = Index(
+      'market_prices_item_as_of_idx',
+      'CREATE INDEX market_prices_item_as_of_idx ON market_prices (item_id, as_of_date)');
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [localMetadata, barcodeConfigs, syncOutbox];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+        localMetadata,
+        barcodeConfigs,
+        marketPrices,
+        syncOutbox,
+        marketPricesItemAsOfIdx
+      ];
 }
 
 typedef $$LocalMetadataTableCreateCompanionBuilder = LocalMetadataCompanion
@@ -1695,6 +2011,179 @@ typedef $$BarcodeConfigsTableProcessedTableManager = ProcessedTableManager<
     ),
     BarcodeConfig,
     PrefetchHooks Function()>;
+typedef $$MarketPricesTableCreateCompanionBuilder = MarketPricesCompanion
+    Function({
+  required String id,
+  required String itemId,
+  required double price,
+  required DateTime asOfDate,
+  required DateTime createdAt,
+  Value<int> rowid,
+});
+typedef $$MarketPricesTableUpdateCompanionBuilder = MarketPricesCompanion
+    Function({
+  Value<String> id,
+  Value<String> itemId,
+  Value<double> price,
+  Value<DateTime> asOfDate,
+  Value<DateTime> createdAt,
+  Value<int> rowid,
+});
+
+class $$MarketPricesTableFilterComposer
+    extends Composer<_$BasirDatabase, $MarketPricesTable> {
+  $$MarketPricesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get itemId => $composableBuilder(
+      column: $table.itemId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get price => $composableBuilder(
+      column: $table.price, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get asOfDate => $composableBuilder(
+      column: $table.asOfDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+}
+
+class $$MarketPricesTableOrderingComposer
+    extends Composer<_$BasirDatabase, $MarketPricesTable> {
+  $$MarketPricesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get itemId => $composableBuilder(
+      column: $table.itemId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get price => $composableBuilder(
+      column: $table.price, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get asOfDate => $composableBuilder(
+      column: $table.asOfDate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+}
+
+class $$MarketPricesTableAnnotationComposer
+    extends Composer<_$BasirDatabase, $MarketPricesTable> {
+  $$MarketPricesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get itemId =>
+      $composableBuilder(column: $table.itemId, builder: (column) => column);
+
+  GeneratedColumn<double> get price =>
+      $composableBuilder(column: $table.price, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get asOfDate =>
+      $composableBuilder(column: $table.asOfDate, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$MarketPricesTableTableManager extends RootTableManager<
+    _$BasirDatabase,
+    $MarketPricesTable,
+    MarketPrice,
+    $$MarketPricesTableFilterComposer,
+    $$MarketPricesTableOrderingComposer,
+    $$MarketPricesTableAnnotationComposer,
+    $$MarketPricesTableCreateCompanionBuilder,
+    $$MarketPricesTableUpdateCompanionBuilder,
+    (
+      MarketPrice,
+      BaseReferences<_$BasirDatabase, $MarketPricesTable, MarketPrice>
+    ),
+    MarketPrice,
+    PrefetchHooks Function()> {
+  $$MarketPricesTableTableManager(_$BasirDatabase db, $MarketPricesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MarketPricesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MarketPricesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MarketPricesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> itemId = const Value.absent(),
+            Value<double> price = const Value.absent(),
+            Value<DateTime> asOfDate = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              MarketPricesCompanion(
+            id: id,
+            itemId: itemId,
+            price: price,
+            asOfDate: asOfDate,
+            createdAt: createdAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String itemId,
+            required double price,
+            required DateTime asOfDate,
+            required DateTime createdAt,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              MarketPricesCompanion.insert(
+            id: id,
+            itemId: itemId,
+            price: price,
+            asOfDate: asOfDate,
+            createdAt: createdAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$MarketPricesTableProcessedTableManager = ProcessedTableManager<
+    _$BasirDatabase,
+    $MarketPricesTable,
+    MarketPrice,
+    $$MarketPricesTableFilterComposer,
+    $$MarketPricesTableOrderingComposer,
+    $$MarketPricesTableAnnotationComposer,
+    $$MarketPricesTableCreateCompanionBuilder,
+    $$MarketPricesTableUpdateCompanionBuilder,
+    (
+      MarketPrice,
+      BaseReferences<_$BasirDatabase, $MarketPricesTable, MarketPrice>
+    ),
+    MarketPrice,
+    PrefetchHooks Function()>;
 typedef $$SyncOutboxTableCreateCompanionBuilder = SyncOutboxCompanion Function({
   required String id,
   required String entityType,
@@ -1951,6 +2440,8 @@ class $BasirDatabaseManager {
       $$LocalMetadataTableTableManager(_db, _db.localMetadata);
   $$BarcodeConfigsTableTableManager get barcodeConfigs =>
       $$BarcodeConfigsTableTableManager(_db, _db.barcodeConfigs);
+  $$MarketPricesTableTableManager get marketPrices =>
+      $$MarketPricesTableTableManager(_db, _db.marketPrices);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

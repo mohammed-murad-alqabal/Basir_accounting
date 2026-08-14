@@ -42,6 +42,22 @@ class BarcodeConfigs extends Table {
       ];
 }
 
+/// سجل زمني محايد لأسعار السوق؛ يطابق UUID الكيان بدلاً من معرف Isar المحلي.
+@TableIndex(
+  name: 'market_prices_item_as_of_idx',
+  columns: {#itemId, #asOfDate},
+)
+class MarketPrices extends Table {
+  TextColumn get id => text()();
+  TextColumn get itemId => text()();
+  RealColumn get price => real()();
+  DateTimeColumn get asOfDate => dateTime()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 /// Outbox تحضيري فقط؛ لا يوجد عامل مزامنة مفعل في هذه الحزمة بعد.
 class SyncOutbox extends Table {
   TextColumn get id => text()();
@@ -65,20 +81,24 @@ class SyncOutbox extends Table {
 }
 
 /// قاعدة Drift متعددة المنصات، منفصلة عن تطبيق Basir وكياناته.
-@DriftDatabase(tables: [LocalMetadata, BarcodeConfigs, SyncOutbox])
+@DriftDatabase(
+  tables: [LocalMetadata, BarcodeConfigs, MarketPrices, SyncOutbox],
+)
 class BasirDatabase extends _$BasirDatabase {
   BasirDatabase([QueryExecutor? executor])
       : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (migrator) async => migrator.createAll(),
-        onUpgrade: (migrator, from, to) async =>
-            // كل version لاحق يضيف مسار migration صريحًا ومختبرًا.
-            Future<void>.value(),
+        onUpgrade: (migrator, from, to) async {
+          if (from < 2) {
+            await migrator.createTable(marketPrices);
+          }
+        },
         beforeOpen: (details) async {
           await customStatement('PRAGMA foreign_keys = ON');
         },
