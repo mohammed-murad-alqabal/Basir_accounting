@@ -38,11 +38,11 @@ void main() {
     await tester.pumpWidget(testApp(VoucherType.payment));
     await tester.pumpAndSettle();
 
-    expect(find.byIcon(Icons.payments), findsOneWidget);
-    expect(find.byIcon(Icons.account_balance), findsOneWidget);
-    expect(find.byIcon(Icons.document_scanner), findsNWidgets(2));
+    expect(find.text('نقدي'), findsOneWidget);
+    expect(find.text('بنكي'), findsOneWidget);
+    expect(find.text('شيك'), findsOneWidget);
 
-    await tester.tap(find.byIcon(Icons.account_balance));
+    await tester.tap(find.text('بنكي'));
     await tester.pumpAndSettle();
 
     expect(

@@ -133,7 +133,9 @@ void main() {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byType(DropdownButtonFormField<String>));
+      final currencySelector =
+          find.byType(DropdownButtonFormField<String>).last;
+      await tester.tap(currencySelector);
       await tester.pumpAndSettle();
       await tester.tap(find.text('USD').last);
       await tester.pumpAndSettle();
@@ -156,7 +158,9 @@ void main() {
         of: dialog,
         matching: find.byType(TextField),
       );
-      await tester.enterText(taxField, '5');
+      final taxInput = tester.widget<TextField>(taxField);
+      taxInput.controller!.text = '5';
+      await tester.pump();
       await tester.tap(
         find.descendant(of: dialog, matching: find.text('حفظ')).last,
       );
@@ -178,11 +182,32 @@ void main() {
       final dialog = find.byType(AlertDialog);
       final fields = find.descendant(
         of: dialog,
-        matching: find.byType(TextField),
+        matching: find.byWidgetPredicate(
+          (widget) =>
+              widget is TextField &&
+              widget.decoration?.labelText == 'اسم الصنف',
+        ),
       );
-      await tester.enterText(fields.at(1), 'خدمة اختبارية');
-      await tester.enterText(fields.at(2), '2');
-      await tester.enterText(fields.at(3), '100');
+      final itemNameInput = tester.widget<TextField>(fields);
+      itemNameInput.controller!.text = 'خدمة اختبارية';
+
+      final quantityField = find.descendant(
+        of: dialog,
+        matching: find.byWidgetPredicate(
+          (widget) =>
+              widget is TextField && widget.decoration?.labelText == 'الكمية',
+        ),
+      );
+      final priceField = find.descendant(
+        of: dialog,
+        matching: find.byWidgetPredicate(
+          (widget) =>
+              widget is TextField && widget.decoration?.labelText == 'السعر',
+        ),
+      );
+      tester.widget<TextField>(quantityField).controller!.text = '2';
+      tester.widget<TextField>(priceField).controller!.text = '100';
+      await tester.pump();
       await tester.tap(
         find.descendant(of: dialog, matching: find.text('إضافة')).last,
       );

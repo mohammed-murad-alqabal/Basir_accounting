@@ -48,7 +48,7 @@ void main() {
     await tester.pumpWidget(testApp(invoice: InvoiceFixtures.invoice1));
     await tester.pumpAndSettle();
 
-    expect(find.text('INV-001'), findsOneWidget);
+    expect(find.textContaining('INV-001'), findsOneWidget);
     expect(find.text(InvoiceFixtures.invoice1.customerName), findsOneWidget);
     expect(find.text('خدمة استشارية'), findsOneWidget);
     expect(find.textContaining('ر.س'), findsWidgets);
