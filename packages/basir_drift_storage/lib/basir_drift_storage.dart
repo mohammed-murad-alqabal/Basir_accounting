@@ -1,3 +1,4 @@
 export 'src/barcode_config_store.dart';
-// لا نُصدر `BarcodeConfig` المولد؛ إذ يتعارض اسمه مع كيان domain في التطبيق.
-export 'src/basir_database.dart' hide BarcodeConfig;
+export 'src/market_price_store.dart';
+// لا نُصدر صفوف Drift المولدة التي تتعارض أسماؤها مع كيانات Domain في التطبيق.
+export 'src/basir_database.dart' hide BarcodeConfig, MarketPrice;
