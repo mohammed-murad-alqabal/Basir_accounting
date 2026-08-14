@@ -81,7 +81,7 @@ void main() {
     await tester.pumpWidget(testApp());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byType(IconButton).single);
+    await tester.tap(find.byType(IconButton).first);
     await tester.pumpAndSettle();
 
     expect(find.byType(DropdownButtonFormField<String>), findsNWidgets(3));
