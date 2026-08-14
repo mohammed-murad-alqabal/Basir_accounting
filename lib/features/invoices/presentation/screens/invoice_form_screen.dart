@@ -728,28 +728,34 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           ),
         ),
         actions: [
-          AppEnhancedButton(
-            label: context.l10n.dialogCancel,
-            onPressed: () => Navigator.pop(context),
-            type: AppEnhancedButtonType.text,
-            height: 36,
+          SizedBox(
+            width: 88,
+            child: AppEnhancedButton(
+              label: context.l10n.dialogCancel,
+              onPressed: () => Navigator.pop(context),
+              type: AppEnhancedButtonType.text,
+              height: 36,
+            ),
           ),
-          AppEnhancedButton(
-            label: context.l10n.btnSave,
-            onPressed: () {
-              final value = Decimal.tryParse(controller.text);
+          SizedBox(
+            width: 88,
+            child: AppEnhancedButton(
+              label: context.l10n.btnSave,
+              onPressed: () {
+                final value = Decimal.tryParse(controller.text);
 
-              if (value != null &&
-                  value >= Decimal.zero &&
-                  value <= Decimal.fromInt(100)) {
-                setState(
-                  () => _taxRate = (value / Decimal.fromInt(100)).toDecimal(),
-                );
-                Navigator.pop(context);
-              }
-            },
-            type: AppEnhancedButtonType.text,
-            height: 36,
+                if (value != null &&
+                    value >= Decimal.zero &&
+                    value <= Decimal.fromInt(100)) {
+                  setState(
+                    () => _taxRate = (value / Decimal.fromInt(100)).toDecimal(),
+                  );
+                  Navigator.pop(context);
+                }
+              },
+              type: AppEnhancedButtonType.text,
+              height: 36,
+            ),
           ),
         ],
       ),
@@ -936,44 +942,50 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             ),
           ),
           actions: [
-            AppEnhancedButton(
-              label: context.l10n.dialogCancel,
-              onPressed: () => Navigator.pop(context),
-              type: AppEnhancedButtonType.text,
-              height: 36,
+            SizedBox(
+              width: 88,
+              child: AppEnhancedButton(
+                label: context.l10n.dialogCancel,
+                onPressed: () => Navigator.pop(context),
+                type: AppEnhancedButtonType.text,
+                height: 36,
+              ),
             ),
-            AppEnhancedButton(
-              label: context.l10n.btnAdd,
-              onPressed: () {
-                final name = nameController.text.trim();
-                final quantity = Decimal.tryParse(
-                  quantityController.text,
-                );
-                final price = Decimal.tryParse(priceController.text);
+            SizedBox(
+              width: 88,
+              child: AppEnhancedButton(
+                label: context.l10n.btnAdd,
+                onPressed: () {
+                  final name = nameController.text.trim();
+                  final quantity = Decimal.tryParse(
+                    quantityController.text,
+                  );
+                  final price = Decimal.tryParse(priceController.text);
 
-                if (name.isNotEmpty && quantity != null && price != null) {
-                  final total = quantity * price;
-                  // Calculate tax based on category
-                  // Note: rate is determined by selection in dialog
-                  setState(() {
-                    _items.add(
-                      InvoiceItem(
-                        id: const Uuid().v4(),
-                        name: name,
-                        quantity: quantity,
-                        price: price,
-                        total: total,
-                        taxAmount: total * selectedTaxRate,
-                        taxRate: selectedTaxRate,
-                        taxCategory: selectedTaxCategory,
-                      ),
-                    );
-                  });
-                  Navigator.pop(context);
-                }
-              },
-              type: AppEnhancedButtonType.text,
-              height: 36,
+                  if (name.isNotEmpty && quantity != null && price != null) {
+                    final total = quantity * price;
+                    // Calculate tax based on category
+                    // Note: rate is determined by selection in dialog
+                    setState(() {
+                      _items.add(
+                        InvoiceItem(
+                          id: const Uuid().v4(),
+                          name: name,
+                          quantity: quantity,
+                          price: price,
+                          total: total,
+                          taxAmount: total * selectedTaxRate,
+                          taxRate: selectedTaxRate,
+                          taxCategory: selectedTaxCategory,
+                        ),
+                      );
+                    });
+                    Navigator.pop(context);
+                  }
+                },
+                type: AppEnhancedButtonType.text,
+                height: 36,
+              ),
             ),
           ],
         ),

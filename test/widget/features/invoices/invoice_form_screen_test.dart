@@ -173,7 +173,12 @@ void main() {
         ),
       );
       expect(saveButton, findsOneWidget);
-      await tester.tap(saveButton);
+      final saveAction = find.descendant(
+        of: saveButton,
+        matching: find.byType(InkWell),
+      );
+      expect(saveAction, findsOneWidget);
+      await tester.tap(saveAction);
       await tester.pumpAndSettle();
 
       expect(find.text('5%'), findsOneWidget);
@@ -226,7 +231,12 @@ void main() {
         ),
       );
       expect(confirmAddButton, findsOneWidget);
-      await tester.tap(confirmAddButton);
+      final confirmAddAction = find.descendant(
+        of: confirmAddButton,
+        matching: find.byType(InkWell),
+      );
+      expect(confirmAddAction, findsOneWidget);
+      await tester.tap(confirmAddAction);
       await tester.pumpAndSettle();
 
       expect(find.text('خدمة اختبارية'), findsOneWidget);
