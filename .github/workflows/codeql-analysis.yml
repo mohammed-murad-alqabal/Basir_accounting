@@ -65,8 +65,9 @@ jobs:
         run: |
           echo "🔒 Running security audit..."
 
-          # Check for known vulnerabilities
-          flutter pub outdated --mode=null-safety
+          # يسرد مخرَج JSON الاعتمادات المتقادمة في Dart 3 من دون خيار
+          # null-safety المحذوف، ولا يمنع فشل الشبكة التحليل الأمني اللاحق.
+          flutter pub outdated --json > outdated.json || true
 
           # Run static analysis with security focus
           flutter analyze --no-pub
