@@ -11,6 +11,7 @@ import 'package:basir_accounting_system/features/invoices/application/sales_brid
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
+import 'package:basir_accounting_system/features/vendors/domain/repositories/vendor_repository.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -34,12 +35,15 @@ class FakeOrchestratorService extends OrchestratorService {
       );
 }
 
+class MockVendorRepository extends Mock implements VendorRepository {}
+
 void main() {
   group('Invoice Posting Integration', () {
     late ProviderContainer container;
     late MockAccountingRepository mockAccountingRepo;
     late MockFinancialYearRepository mockFyRepo;
     late MockCustomerRepository mockCustomerRepo;
+    late MockVendorRepository mockVendorRepo;
     late MockSalesBridgeService mockSalesBridge;
     late MockInvoiceRepository mockInvoiceRepo;
 
@@ -50,6 +54,7 @@ void main() {
       mockAccountingRepo = MockAccountingRepository();
       mockFyRepo = MockFinancialYearRepository();
       mockCustomerRepo = MockCustomerRepository();
+      mockVendorRepo = MockVendorRepository();
       mockSalesBridge = MockSalesBridgeService();
       mockInvoiceRepo = MockInvoiceRepository();
 
@@ -114,6 +119,7 @@ void main() {
           accountingRepositoryProvider.overrideWithValue(mockAccountingRepo),
           financialYearRepositoryProvider.overrideWithValue(mockFyRepo),
           customerRepositoryProvider.overrideWithValue(mockCustomerRepo),
+          vendorRepositoryProvider.overrideWithValue(mockVendorRepo),
           salesBridgeServiceProvider.overrideWithValue(mockSalesBridge),
           invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepo),
           orchestratorServiceProvider.overrideWith(FakeOrchestratorService.new),
@@ -151,10 +157,33 @@ void main() {
         nature: AccountNature.credit,
         balance: Decimal.zero,
       );
+      final expenseAccount = Account(
+        id: 'acc-5101',
+        code: '5101',
+        nameAr: 'مصروفات',
+        nameEn: 'Expense',
+        type: AccountType.expense,
+        nature: AccountNature.debit,
+        balance: Decimal.zero,
+      );
+      final inventoryAccount = Account(
+        id: 'acc-1301',
+        code: '1301',
+        nameAr: 'المخزون',
+        nameEn: 'Inventory',
+        type: AccountType.asset,
+        nature: AccountNature.debit,
+        balance: Decimal.zero,
+      );
 
       when(
         () => mockAccountingRepo.getAccounts(),
-      ).thenAnswer((_) async => [revenueAccount, taxAccount]);
+      ).thenAnswer(
+        (_) async =>
+            [revenueAccount, taxAccount, expenseAccount, inventoryAccount],
+      );
+      when(() => mockVendorRepo.getVendorById(any()))
+          .thenAnswer((_) async => null);
 
       when(
         () => mockAccountingRepo.getJournalEntries(),
@@ -680,6 +709,145 @@ void main() {
       expect(forecast.dailyBreakdown, hasLength(4));
       expect(forecast.dailyBreakdown.first.outflow, Decimal.fromInt(60));
       expect(forecast.dailyBreakdown[1].inflow, Decimal.fromInt(100));
+    });
+
+    test(
+        'postInvoice يرحّل فاتورة شراء أجنبية بضريبة إلى الدائن والمصروف وضريبة المدخلات',
+        () async {
+      final invoice = Invoice(
+        id: 'purchase-usd-1',
+        invoiceNumber: 'PUR-USD-1',
+        customerId: 'vendor-1',
+        customerName: 'Vendor A',
+        issuedDate: DateTime(2025, 5, 20),
+        dueDate: DateTime(2025, 6, 20),
+        subtotalAmount: Decimal.fromInt(100),
+        taxAmount: Decimal.fromInt(15),
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        totalAmount: Decimal.fromInt(115),
+        paidAmount: Decimal.zero,
+        taxRate: Decimal.fromInt(15),
+        status: InvoiceStatus.sent,
+        type: InvoiceType.purchase,
+        currency: 'USD',
+        exchangeRate: Decimal.parse('3.75'),
+        createdAt: DateTime(2025, 5, 20),
+        updatedAt: DateTime(2025, 5, 20),
+        items: const [],
+      );
+
+      await container
+          .read(accountingServiceProvider.notifier)
+          .postInvoice(invoice, bypassCognitive: true);
+
+      final entry = verify(
+        () => mockAccountingRepo.addJournalEntry(captureAny()),
+      ).captured.single as JournalEntry;
+      expect(entry.sourceDocument, 'purchase_invoice');
+      expect(entry.isBalanced, isTrue);
+      expect(entry.lines, hasLength(3));
+      expect(
+        entry.lines.firstWhere((line) => line.accountId == 'acc-2101').credit,
+        Decimal.parse('431.25'),
+      );
+      expect(
+        entry.lines.firstWhere((line) => line.accountId == 'acc-5101').debit,
+        Decimal.parse('375.0'),
+      );
+      expect(
+        entry.lines.firstWhere((line) => line.accountId == 'acc-2105').debit,
+        Decimal.parse('56.25'),
+      );
+    });
+
+    test('postInvoice يعكس مرتجع الشراء في قيد متوازن', () async {
+      final invoice = Invoice(
+        id: 'purchase-return-1',
+        invoiceNumber: 'PUR-RET-1',
+        customerId: 'vendor-1',
+        customerName: 'Vendor A',
+        issuedDate: DateTime(2025, 5, 20),
+        dueDate: DateTime(2025, 6, 20),
+        subtotalAmount: Decimal.fromInt(100),
+        taxAmount: Decimal.fromInt(15),
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        totalAmount: Decimal.fromInt(115),
+        paidAmount: Decimal.zero,
+        taxRate: Decimal.fromInt(15),
+        status: InvoiceStatus.sent,
+        type: InvoiceType.purchaseReturn,
+        createdAt: DateTime(2025, 5, 20),
+        updatedAt: DateTime(2025, 5, 20),
+        exchangeRate: Decimal.one,
+        items: const [],
+      );
+
+      await container
+          .read(accountingServiceProvider.notifier)
+          .postInvoice(invoice, bypassCognitive: true);
+
+      final entry = verify(
+        () => mockAccountingRepo.addJournalEntry(captureAny()),
+      ).captured.single as JournalEntry;
+      expect(entry.sourceDocument, 'purchase_return');
+      expect(entry.isBalanced, isTrue);
+      expect(
+        entry.lines.firstWhere((line) => line.accountId == 'acc-2101').debit,
+        Decimal.fromInt(115),
+      );
+      expect(
+        entry.lines.firstWhere((line) => line.accountId == 'acc-5101').credit,
+        Decimal.fromInt(100),
+      );
+      expect(
+        entry.lines.firstWhere((line) => line.accountId == 'acc-2105').credit,
+        Decimal.fromInt(15),
+      );
+    });
+
+    test('postInvoice يرحّل تلف المخزون إلى خسارة ومخزون متوازنين', () async {
+      final invoice = Invoice(
+        id: 'damage-1',
+        invoiceNumber: 'DMG-1',
+        customerId: 'warehouse-1',
+        customerName: 'Main Warehouse',
+        issuedDate: DateTime(2025, 5, 20),
+        dueDate: DateTime(2025, 5, 20),
+        subtotalAmount: Decimal.fromInt(250),
+        taxAmount: Decimal.zero,
+        discountAmount: Decimal.zero,
+        discountRate: Decimal.zero,
+        totalAmount: Decimal.fromInt(250),
+        paidAmount: Decimal.zero,
+        taxRate: Decimal.zero,
+        status: InvoiceStatus.sent,
+        type: InvoiceType.damage,
+        createdAt: DateTime(2025, 5, 20),
+        updatedAt: DateTime(2025, 5, 20),
+        exchangeRate: Decimal.one,
+        items: const [],
+      );
+
+      await container
+          .read(accountingServiceProvider.notifier)
+          .postInvoice(invoice, bypassCognitive: true);
+
+      final entry = verify(
+        () => mockAccountingRepo.addJournalEntry(captureAny()),
+      ).captured.single as JournalEntry;
+      expect(entry.sourceDocument, 'damage_invoice');
+      expect(entry.isBalanced, isTrue);
+      expect(entry.lines, hasLength(2));
+      expect(
+        entry.lines.firstWhere((line) => line.accountId == 'acc-5101').debit,
+        Decimal.fromInt(250),
+      );
+      expect(
+        entry.lines.firstWhere((line) => line.accountId == 'acc-1301').credit,
+        Decimal.fromInt(250),
+      );
     });
 
     test('seedDefaultAccounts يضيف دليل الحسابات العالمي عندما يكون فارغاً',
