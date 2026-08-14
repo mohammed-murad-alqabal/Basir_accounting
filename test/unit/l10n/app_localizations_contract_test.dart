@@ -1295,4 +1295,124 @@ void main() {
       }
     },
   );
+
+  test(
+    'تستبدل رسائل التعريب ذات المعاملات قيم الأعمال في العربية والإنجليزية',
+    () async {
+      final ar = await load('ar');
+      final en = await load('en');
+      final messages = <String, List<String>>{
+        'msgInvoiceShare': [
+          ar.msgInvoiceShare('عميل تجريبي', 'INV-42', '115.00', 'ر.س'),
+          en.msgInvoiceShare('Test customer', 'INV-42', '115.00', 'SAR'),
+        ],
+        'msgSaveError': [
+          ar.msgSaveError('خطأ اختبار'),
+          en.msgSaveError('test error')
+        ],
+        'pdfShareSubject': [
+          ar.pdfShareSubject('INV-42'),
+          en.pdfShareSubject('INV-42')
+        ],
+        'pdfShareText': [
+          ar.pdfShareText('عميل تجريبي'),
+          en.pdfShareText('Test customer')
+        ],
+        'placeholderComingSoon': [
+          ar.placeholderComingSoon('تقرير'),
+          en.placeholderComingSoon('Report')
+        ],
+        'msgConfirmDeleteItem': [
+          ar.msgConfirmDeleteItem('صنف'),
+          en.msgConfirmDeleteItem('Item')
+        ],
+        'labelTax': [ar.labelTax('15%'), en.labelTax('15%')],
+        'msgBalanceUnbalanced': [
+          ar.msgBalanceUnbalanced('25.00'),
+          en.msgBalanceUnbalanced('25.00')
+        ],
+        'agentRationaleStandardsManualReview': [
+          ar.agentRationaleStandardsManualReview('فاتورة'),
+          en.agentRationaleStandardsManualReview('Invoice'),
+        ],
+        'agentRationaleTaxRateMismatch': [
+          ar.agentRationaleTaxRateMismatch('5%'),
+          en.agentRationaleTaxRateMismatch('5%'),
+        ],
+        'agentRationaleForensicHighValue': [
+          ar.agentRationaleForensicHighValue('100,000'),
+          en.agentRationaleForensicHighValue('100,000'),
+        ],
+        'agentRationaleForensicDuplicate': [
+          ar.agentRationaleForensicDuplicate('REF-9'),
+          en.agentRationaleForensicDuplicate('REF-9'),
+        ],
+        'agentRationaleOperationalSufficient': [
+          ar.agentRationaleOperationalSufficient('الخزينة', '10,000'),
+          en.agentRationaleOperationalSufficient('Cash', '10,000'),
+        ],
+        'agentRationaleOperationalInsufficient': [
+          ar.agentRationaleOperationalInsufficient('الخزينة', '0'),
+          en.agentRationaleOperationalInsufficient('Cash', '0'),
+        ],
+        'agentRationaleStrategyInflow': [
+          ar.agentRationaleStrategyInflow('5,000'),
+          en.agentRationaleStrategyInflow('5,000'),
+        ],
+        'agentRationaleSustainabilitySuccess': [
+          ar.agentRationaleSustainabilitySuccess(3),
+          en.agentRationaleSustainabilitySuccess(3),
+        ],
+        'agentRationaleForensicTimeAnomaly': [
+          ar.agentRationaleForensicTimeAnomaly('02:00'),
+          en.agentRationaleForensicTimeAnomaly('02:00'),
+        ],
+        'agentRationaleForensicSequenceGap': [
+          ar.agentRationaleForensicSequenceGap('REF-1', 'REF-3'),
+          en.agentRationaleForensicSequenceGap('REF-1', 'REF-3'),
+        ],
+        'msgConfirmDeleteCustomer': [
+          ar.msgConfirmDeleteCustomer('عميل تجريبي'),
+          en.msgConfirmDeleteCustomer('Test customer'),
+        ],
+        'resetPasswordSubtitle': [
+          ar.resetPasswordSubtitle('test@basir.local'),
+          en.resetPasswordSubtitle('test@basir.local'),
+        ],
+        'errForensicImbalance': [
+          ar.errForensicImbalance('JE-1'),
+          en.errForensicImbalance('JE-1')
+        ],
+        'errForensicDiscrepancy': [
+          ar.errForensicDiscrepancy('JE-1'),
+          en.errForensicDiscrepancy('JE-1')
+        ],
+        'errForensicHashBreach': [
+          ar.errForensicHashBreach('hash-current', 'hash-previous'),
+          en.errForensicHashBreach('hash-current', 'hash-previous'),
+        ],
+        'workAuditLinkedDoc': [
+          ar.workAuditLinkedDoc('INV-42'),
+          en.workAuditLinkedDoc('INV-42')
+        ],
+        'workAuditOpenLinked': [
+          ar.workAuditOpenLinked('INV-42'),
+          en.workAuditOpenLinked('INV-42')
+        ],
+      };
+
+      expect(messages, hasLength(25));
+      for (final entry in messages.entries) {
+        for (final message in entry.value) {
+          expect(message.trim(), isNotEmpty, reason: entry.key);
+        }
+      }
+      expect(messages['msgInvoiceShare']![0], contains('INV-42'));
+      expect(messages['msgInvoiceShare']![1], contains('INV-42'));
+      expect(
+          messages['agentRationaleForensicSequenceGap']![0], contains('REF-3'));
+      expect(
+          messages['agentRationaleForensicSequenceGap']![1], contains('REF-3'));
+    },
+  );
 }

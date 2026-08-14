@@ -178,6 +178,46 @@ void main() {
       expect(find.text('5%'), findsOneWidget);
     });
 
+    testWidgets('should keep the tax dialog open for an out-of-range rate', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      final editTaxRateButton = find.byTooltip('تعديل نسبة الضريبة');
+      await tester.ensureVisible(editTaxRateButton);
+      await tester.tap(editTaxRateButton);
+      await tester.pumpAndSettle();
+
+      final dialog = find.byType(AlertDialog);
+      final taxField = find.descendant(
+        of: dialog,
+        matching: find.byType(TextField),
+      );
+      await tester.enterText(taxField, '101');
+      await tester.pumpAndSettle();
+      await tester.tap(find.descendant(of: dialog, matching: find.text('حفظ')));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(AlertDialog), findsOneWidget);
+      expect(find.text('15%'), findsOneWidget);
+    });
+
+    testWidgets('should show validation feedback when saving without customer',
+        (
+      tester,
+    ) async {
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      final saveAction = find.byKey(const Key('summaryRailSaveDraftAction'));
+      await tester.ensureVisible(saveAction);
+      await tester.tap(saveAction);
+      await tester.pump();
+
+      expect(find.byType(SnackBar), findsOneWidget);
+    });
+
     testWidgets('should add and remove an invoice line item through the dialog',
         (
       tester,
