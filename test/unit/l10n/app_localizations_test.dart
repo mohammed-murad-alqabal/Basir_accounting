@@ -72,7 +72,7 @@ void main() {
       expect(en.labelTaxTotal, 'Total Tax');
       expect(en.labelVatRate, 'VAT Rate');
       expect(en.zatcaComplianceText, contains('ZATCA'));
-      expect(en.journalEntryFormTitleAdd, 'Add Manual Journal Entry');
+      expect(en.journalEntryFormTitleAdd, 'Add Journal Entry');
       expect(en.invoiceFormTitleAdd, 'Add New Invoice');
       expect(en.dialogTaxTitle, 'Tax Rate');
       expect(en.labelInvoiceItems, 'Invoice Items');

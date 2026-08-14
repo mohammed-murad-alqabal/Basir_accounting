@@ -165,6 +165,8 @@ void main() {
       );
       await tester.enterText(taxField, '5');
       await tester.pumpAndSettle();
+      await tester.testTextInput.receiveAction(TextInputAction.done);
+      await tester.pumpAndSettle();
       final saveButton = find.descendant(
         of: dialog,
         matching: find.text('حفظ'),
@@ -215,6 +217,8 @@ void main() {
       );
       await tester.enterText(quantityField, '2');
       await tester.enterText(priceField, '100');
+      await tester.pumpAndSettle();
+      await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
       final confirmAddButton = find.descendant(
         of: dialog,

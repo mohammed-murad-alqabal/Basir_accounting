@@ -7,6 +7,7 @@ import 'package:basir_accounting_system/features/accounting/domain/entities/acco
 import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entry_form_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/shared/widgets/app_enhanced_button.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -178,9 +179,15 @@ void main() {
     await tester.enterText(amountFields.at(7), '100');
     await tester.pump();
 
-    final saveButton = find.text('حفظ كمسودة');
-    await tester.ensureVisible(saveButton);
-    await tester.tap(saveButton);
+    final saveButton = find.byWidgetPredicate(
+      (widget) => widget is AppEnhancedButton && widget.label == 'حفظ كمسودة',
+    );
+    final saveAction = find.descendant(
+      of: saveButton,
+      matching: find.byType(InkWell),
+    );
+    await tester.ensureVisible(saveAction);
+    await tester.tap(saveAction);
     await tester.pump();
 
     expect(
