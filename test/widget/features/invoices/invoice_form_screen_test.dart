@@ -4,6 +4,7 @@ import 'package:basir_accounting_system/features/auth/domain/models/auth_models.
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart'; // Fixed import
+import 'package:basir_accounting_system/shared/widgets/app_enhanced_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -135,9 +136,12 @@ void main() {
 
       final currencySelector =
           find.byType(DropdownButtonFormField<String>).last;
+      await tester.ensureVisible(currencySelector);
       await tester.tap(currencySelector);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('USD').last);
+      final usdOption = find.text('USD').last;
+      expect(usdOption, findsOneWidget);
+      await tester.tap(usdOption);
       await tester.pumpAndSettle();
 
       expect(find.text('سعر الصرف'), findsOneWidget);
@@ -150,7 +154,9 @@ void main() {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byTooltip('تعديل نسبة الضريبة'));
+      final editTaxRateButton = find.byTooltip('تعديل نسبة الضريبة');
+      await tester.ensureVisible(editTaxRateButton);
+      await tester.tap(editTaxRateButton);
       await tester.pumpAndSettle();
 
       final dialog = find.byType(AlertDialog);
@@ -158,12 +164,16 @@ void main() {
         of: dialog,
         matching: find.byType(TextField),
       );
-      final taxInput = tester.widget<TextField>(taxField);
-      taxInput.controller!.text = '5';
-      await tester.pump();
-      await tester.tap(
-        find.descendant(of: dialog, matching: find.text('حفظ')).last,
+      await tester.enterText(taxField, '5');
+      await tester.pumpAndSettle();
+      final saveButton = find.descendant(
+        of: dialog,
+        matching: find.byWidgetPredicate(
+          (widget) => widget is AppEnhancedButton && widget.label == 'حفظ',
+        ),
       );
+      expect(saveButton, findsOneWidget);
+      await tester.tap(saveButton);
       await tester.pumpAndSettle();
 
       expect(find.text('5%'), findsOneWidget);
@@ -176,7 +186,9 @@ void main() {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byTooltip('إضافة بند جديد'));
+      final addItemButton = find.byTooltip('إضافة بند جديد');
+      await tester.ensureVisible(addItemButton);
+      await tester.tap(addItemButton);
       await tester.pumpAndSettle();
 
       final dialog = find.byType(AlertDialog);
@@ -188,8 +200,7 @@ void main() {
               widget.decoration?.labelText == 'اسم الصنف',
         ),
       );
-      final itemNameInput = tester.widget<TextField>(fields);
-      itemNameInput.controller!.text = 'خدمة اختبارية';
+      await tester.enterText(fields, 'خدمة اختبارية');
 
       final quantityField = find.descendant(
         of: dialog,
@@ -205,16 +216,23 @@ void main() {
               widget is TextField && widget.decoration?.labelText == 'السعر',
         ),
       );
-      tester.widget<TextField>(quantityField).controller!.text = '2';
-      tester.widget<TextField>(priceField).controller!.text = '100';
-      await tester.pump();
-      await tester.tap(
-        find.descendant(of: dialog, matching: find.text('إضافة')).last,
+      await tester.enterText(quantityField, '2');
+      await tester.enterText(priceField, '100');
+      await tester.pumpAndSettle();
+      final confirmAddButton = find.descendant(
+        of: dialog,
+        matching: find.byWidgetPredicate(
+          (widget) => widget is AppEnhancedButton && widget.label == 'إضافة',
+        ),
       );
+      expect(confirmAddButton, findsOneWidget);
+      await tester.tap(confirmAddButton);
       await tester.pumpAndSettle();
 
       expect(find.text('خدمة اختبارية'), findsOneWidget);
-      await tester.tap(find.byTooltip('حذف البند'));
+      final deleteItemButton = find.byTooltip('حذف البند');
+      await tester.ensureVisible(deleteItemButton);
+      await tester.tap(deleteItemButton);
       await tester.pumpAndSettle();
 
       expect(find.text('خدمة اختبارية'), findsNothing);

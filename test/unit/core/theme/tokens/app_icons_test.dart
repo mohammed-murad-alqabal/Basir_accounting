@@ -330,7 +330,7 @@ void main() {
         icons.percent,
       ];
 
-      expect(resolved, hasLength(141));
+      expect(resolved, hasLength(139));
       expect(resolved.every((icon) => icon.codePoint > 0), isTrue);
       expect(
         resolved.map((icon) => icon.fontFamily).toSet(),

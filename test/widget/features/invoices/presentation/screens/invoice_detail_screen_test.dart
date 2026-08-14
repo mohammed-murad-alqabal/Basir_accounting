@@ -80,9 +80,9 @@ void main() {
     final uuid = find.text('ZATCA-UUID-PAID-001');
     await tester.ensureVisible(uuid);
     await tester.tap(uuid);
-    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.byType(SnackBar), findsOneWidget);
+    expect(find.text('تم نسخ القيمة إلى الحافظة'), findsOneWidget);
   });
 
   testWidgets('يعرض حوار التأكيد قبل عكس فاتورة مرسلة ويلغيه دون تعديل', (
