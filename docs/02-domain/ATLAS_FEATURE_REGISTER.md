@@ -6,7 +6,7 @@
 > **owner:** Product Owner + QA Owner
 > **approved_by:** Pending formal repository owner approval
 > **effective_from:** 2026-08-14
-> **last_verified_sha:** `2a72f677904b997c8b977a55520a696a51323c66` — [Quality Gates 31757216700](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31757216700)
+> **last_verified_sha:** `199ef2e5213eea125120a8da2c0440c6a773286a` — [Quality Gates 31759934847](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31759934847)
 > **review_due:** 2026-09-14
 > **related_requirements:** REQ-UX-004, REQ-UX-002, REQ-UX-003
 > **source_inventory:** `atlas_screen_legacy_inventory.csv`
@@ -50,7 +50,7 @@
 | `VERIFIED` | أثبتت روابط التنفيذ والاختبار وCI معيار القبول المحدد في الصف. | مراجعة دورية عند تغير feature. |
 | `COMPLETE` | حالة منتج معتمدة فقط بعد `VERIFIED` وموافقة Product + QA Owner. | لا تنشأ تلقائيًا من CI أو من Atlas. |
 
-> **دليل هذه الدفعة:** اجتازت [Quality Gates 31757216700](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31757216700) على `2a72f677` اختبار عقد السجل ضمن مجموعة `1,228` نجاحًا و`2` تخطٍ، مع تغطية `26.19%` وتحليل معلوماتي `177/177`. يثبت هذا سلامة الجرد والروابط الحالية، لا اكتمال أي feature من Atlas.
+> **دليل هذه الدفعة:** اجتازت [Quality Gates 31759934847](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31759934847) على `199ef2e5` اختبار عقد السجل ضمن مجموعة `1,228` نجاحًا و`2` تخطٍ، مع تغطية `26.18%` وتحليل معلوماتي `177/177`. كما اجتازت مسارات `Dependency Review` و`ERP Compliance Checks` و`Security Scan` و`documentation-coverage` بعد معالجة عوائق CI المثبتة في هذه الدفعة. يثبت ذلك سلامة الجرد والروابط الحالية والبوابات المصححة، لا اكتمال أي feature من Atlas.
 
 ## فهرس الأدلة المرصودة
 
