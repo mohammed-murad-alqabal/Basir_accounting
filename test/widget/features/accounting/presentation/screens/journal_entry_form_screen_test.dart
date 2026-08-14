@@ -191,10 +191,12 @@ void main() {
       of: saveButton,
       matching: find.byType(InkWell),
     );
-    final formScrollView = find.descendant(
-      of: find.byType(Form),
-      matching: find.byType(Scrollable),
-    );
+    final formScrollView = find
+        .descendant(
+          of: find.byType(Form),
+          matching: find.byType(Scrollable),
+        )
+        .first;
     await tester.scrollUntilVisible(
       saveAction,
       120,
