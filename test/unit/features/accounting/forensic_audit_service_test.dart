@@ -170,6 +170,7 @@ void main() {
     test('should ALLOW a balanced standard entry with balanced rationale',
         () async {
       final entry = makeEntry(
+        date: DateTime(2026, 8, 13, 10),
         lines: [
           JournalEntryLine(
             accountId: 'acc-1',
