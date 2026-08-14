@@ -55,3 +55,12 @@ flutter test --concurrency=1 --coverage
 [3]: [تعريف بوابات الجودة](../../../.github/workflows/quality_gates.yml) — المسار الذي حُدّث بالعزل التسلسلي.
 
 **المؤلف:** Manus AI
+
+## تحقق لاحق — مسار Pull Request
+
+أضافت دفعة صيانة CI في 2026-08-14 العزل نفسه إلى `Pull Request Checks` بعد أن أعاد المسار القديم تشغيل benchmark متوازيًا وتوقف دون اكتمال. أثبت التشغيل اليدوي [`31770540601`](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31770540601) على SHA `74c46655` أن مسار `Code Quality Checks` اجتاز بعد `build_runner` و`flutter analyze --no-fatal-infos` وتشغيل `flutter test --concurrency=1 --coverage`: ظهر `177` ملاحظة معلوماتية ضمن خط الأساس، ونجحت `1,228` حالة مع `2` تخطٍ خلال `4:46`.
+
+يبقى هذا الدليل خاصًا باستقرار عامل الاختبار وبوابة التحليل. لا يثبت دعم Web؛ سجل تشغيله فشلًا استشاريًا منفصلًا بسبب Isar موثق في `ADR-PLAT-001`.
+
+[4]: [Pull Request Checks 31770540601](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31770540601) — تحقق العزل التسلسلي وتوليد الكود على SHA `74c46655`.
+[5]: [ADR-PLAT-001](../../../03-architecture/adrs/ADR-PLAT-001-web-build-support-boundary.md) — حد دعم Web الحالي.
