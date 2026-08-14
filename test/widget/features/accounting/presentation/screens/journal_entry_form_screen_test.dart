@@ -7,6 +7,7 @@ import 'package:basir_accounting_system/features/accounting/domain/entities/acco
 import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entry_form_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/shared/widgets/app_enhanced_button.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -119,5 +120,63 @@ void main() {
 
     expect(find.text('المبلغ (USD)'), findsOneWidget);
     expect(find.text('سعر الصرف'), findsOneWidget);
+  });
+
+  testWidgets('يعيد حقول السطر إلى الريال عند إلغاء العملة الأجنبية',
+      (tester) async {
+    await tester.pumpWidget(testApp());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('إضافة عملة').first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('USD'));
+    await tester.pumpAndSettle();
+    expect(find.text('المبلغ (USD)'), findsOneWidget);
+
+    await tester.tap(find.text('العملة: USD'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('SAR'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('المبلغ (USD)'), findsNothing);
+    expect(find.text('سعر الصرف'), findsNothing);
+    expect(find.text('إضافة عملة').first, findsOneWidget);
+  });
+
+  testWidgets('يرفض حفظ قيد غير متزن بعد اختيار حسابات الدليل', (tester) async {
+    await tester.pumpWidget(testApp());
+    await tester.pumpAndSettle();
+
+    final accountSelectors = find.byType(DropdownButtonFormField<String>);
+    await tester.tap(accountSelectors.at(0));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('1100 - النقدية').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(accountSelectors.at(1));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('4100 - المبيعات').last);
+    await tester.pumpAndSettle();
+
+    final amountFields = find.byType(TextFormField);
+    await tester.enterText(amountFields.at(4), '125');
+    await tester.enterText(amountFields.at(7), '100');
+    await tester.pump();
+
+    final saveButton = find.byWidgetPredicate(
+      (widget) => widget is AppEnhancedButton && widget.label == 'حفظ كمسودة',
+    );
+    final saveAction = find.descendant(
+      of: saveButton,
+      matching: find.byType(InkWell),
+    );
+    expect(saveAction, findsOneWidget);
+    await tester.tap(saveAction);
+    await tester.pump();
+
+    expect(
+      find.text('القيد غير متزن! يجب أن يتساوى المدين والدائن'),
+      findsOneWidget,
+    );
   });
 }
