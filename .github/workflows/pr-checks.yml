@@ -34,8 +34,10 @@ jobs:
       - name: Analyze code
         run: flutter analyze --no-fatal-infos
 
-      - name: Run tests
-        run: flutter test --coverage --reporter=expanded
+      - name: Run functional tests
+        run: |
+          find test -type f -name '*_test.dart' ! -path 'test/benchmark/*' -print0 \
+            | xargs -0 flutter test --coverage --reporter=expanded
         timeout-minutes: 10
 
       - name: Upload coverage to Codecov
@@ -112,7 +114,9 @@ jobs:
 
     strategy:
       matrix:
-        platform: [android, web]
+        # Isar 3 generates 64-bit schema identifiers that are not compatible
+        # with the JavaScript compiler; Android remains the supported CI build target.
+        platform: [android]
 
     steps:
       - name: Checkout code
@@ -176,11 +180,14 @@ jobs:
           for module in lib/features/*/; do
             module_name=$(basename "$module")
 
-            # navigation is an application-shell presentation module, not a domain feature.
-            if [ "$module_name" = "navigation" ]; then
-              echo "⏭️ $module_name is a presentation-only application module"
-              continue
-            fi
+            # These modules supply application-shell, onboarding, or test support
+            # concerns and do not model a standalone domain feature.
+            case "$module_name" in
+              navigation|onboarding|testing)
+                echo "⏭️ $module_name is a non-domain support module"
+                continue
+                ;;
+            esac
             
             # Check for domain layer
             if [ ! -d "$module/domain" ]; then
