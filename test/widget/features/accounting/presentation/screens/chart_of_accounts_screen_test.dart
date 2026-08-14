@@ -90,7 +90,7 @@ void main() {
     expect(find.text('1000 - الأصول'), findsOneWidget);
     expect(find.text('1100 - النقدية'), findsNothing);
 
-    await tester.tap(find.bySemanticsLabel(RegExp(r'^1000: الأصول,')));
+    await tester.tap(find.bySemanticsLabel(RegExp('^1000: الأصول,')));
     await tester.pumpAndSettle();
     expect(find.text('1100 - النقدية'), findsOneWidget);
     expect(container.read(expandedAccountsProvider), contains(parent.id));

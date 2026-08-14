@@ -88,7 +88,9 @@ void main() {
       test('includes mandatory secret scan and dependency review jobs', () {
         expect(workflow, contains('secret-scan:'));
         expect(
-            workflow, contains('Install checksum-verified Gitleaks scanner'));
+          workflow,
+          contains('Install checksum-verified Gitleaks scanner'),
+        );
         expect(workflow, contains('GITLEAKS_ARCHIVE_SHA256:'));
         expect(workflow, contains('sha256sum --check --strict'));
         expect(
