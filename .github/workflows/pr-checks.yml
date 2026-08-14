@@ -33,6 +33,8 @@ jobs:
         run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze code
+        # BKIP baseline: errors remain blocking; 177 informational findings are
+        # tracked separately until their remediation program is approved.
         run: flutter analyze --no-fatal-infos
 
       - name: Run functional tests
