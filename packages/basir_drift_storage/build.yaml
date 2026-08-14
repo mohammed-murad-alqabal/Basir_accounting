@@ -1,0 +1,9 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        options:
+          databases:
+            basir_database: lib/src/basir_database.dart
+          test_dir: test/
+          schema_dir: drift_schemas/
