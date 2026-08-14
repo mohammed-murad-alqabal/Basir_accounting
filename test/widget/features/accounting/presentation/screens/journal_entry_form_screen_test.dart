@@ -155,6 +155,8 @@ void main() {
     await tester.pumpWidget(testApp());
     await tester.pumpAndSettle();
 
+    await tester.enterText(
+        find.byType(TextFormField).first, 'قيد اختبار غير متزن');
     final accountSelectors = find.byType(DropdownButtonFormField<String>);
     final debitAccountSelector = accountSelectors.at(0);
     await tester.ensureVisible(debitAccountSelector);
