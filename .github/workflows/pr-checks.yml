@@ -4,6 +4,7 @@ on:
     branches: [main, development]
   push:
     branches: [main, development]
+  workflow_dispatch:
 
 jobs:
   code-quality:
@@ -32,12 +33,16 @@ jobs:
         run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze code
+        # BKIP baseline: errors remain blocking; 177 informational findings are
+        # tracked separately until their remediation program is approved.
         run: flutter analyze --no-fatal-infos
 
       - name: Run functional tests
+        # Keep benchmark workloads outside the PR gate and serialize functional
+        # tests to satisfy the documented runner-stability boundary.
         run: |
           find test -type f -name '*_test.dart' ! -path 'test/benchmark/*' -print0 \
-            | xargs -0 flutter test --coverage --reporter=expanded
+            | xargs -0 flutter test --concurrency=1 --coverage --reporter=expanded
         timeout-minutes: 10
 
       - name: Upload coverage to Codecov
@@ -176,7 +181,9 @@ jobs:
         run: |
           echo "🏛️ Checking Clean Architecture compliance..."
 
-          # Check for proper layer separation
+          # Check for proper layer separation. Navigation, onboarding, and
+          # test-support surfaces are declared infrastructure rather than ERP
+          # domain modules; all remaining feature modules must retain layers.
           for module in lib/features/*/; do
             module_name=$(basename "$module")
 
