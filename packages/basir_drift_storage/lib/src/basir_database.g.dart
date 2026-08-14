@@ -1052,6 +1052,1185 @@ class MarketPricesCompanion extends UpdateCompanion<MarketPrice> {
   }
 }
 
+class $ProfilesTable extends Profiles with TableInfo<$ProfilesTable, Profile> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProfilesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _scopeKeyMeta =
+      const VerificationMeta('scopeKey');
+  @override
+  late final GeneratedColumn<String> scopeKey = <credential-fixture><String>(
+      'scope_key', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _displayNameMeta =
+      const VerificationMeta('displayName');
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+      'display_name', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _avatarUrlMeta =
+      const VerificationMeta('avatarUrl');
+  @override
+  late final GeneratedColumn<String> avatarUrl = GeneratedColumn<String>(
+      'avatar_url', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _phoneNumberMeta =
+      const VerificationMeta('phoneNumber');
+  @override
+  late final GeneratedColumn<String> phoneNumber = GeneratedColumn<String>(
+      'phone_number', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _syncStatusMeta =
+      const VerificationMeta('syncStatus');
+  @override
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+      'sync_status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('synced'));
+  static const VerificationMeta _serverUpdatedAtMeta =
+      const VerificationMeta('serverUpdatedAt');
+  @override
+  late final GeneratedColumn<DateTime> serverUpdatedAt =
+      GeneratedColumn<DateTime>('server_updated_at', aliasedName, true,
+          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _isDeletedMeta =
+      const VerificationMeta('isDeleted');
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+      'is_deleted', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_deleted" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  @override
+  List<GeneratedColumn> get $columns => [
+        scopeKey,
+        id,
+        email,
+        displayName,
+        avatarUrl,
+        phoneNumber,
+        userId,
+        syncStatus,
+        serverUpdatedAt,
+        isDeleted
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'profiles';
+  @override
+  VerificationContext validateIntegrity(Insertable<Profile> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('scope_key')) {
+      context.handle(_scopeKeyMeta,
+          scopeKey.isAcceptableOrUnknown(data['scope_key']!, _scopeKeyMeta));
+    } else if (isInserting) {
+      context.missing(_scopeKeyMeta);
+    }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    } else if (isInserting) {
+      context.missing(_emailMeta);
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+          _displayNameMeta,
+          displayName.isAcceptableOrUnknown(
+              data['display_name']!, _displayNameMeta));
+    }
+    if (data.containsKey('avatar_url')) {
+      context.handle(_avatarUrlMeta,
+          avatarUrl.isAcceptableOrUnknown(data['avatar_url']!, _avatarUrlMeta));
+    }
+    if (data.containsKey('phone_number')) {
+      context.handle(
+          _phoneNumberMeta,
+          phoneNumber.isAcceptableOrUnknown(
+              data['phone_number']!, _phoneNumberMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+          _syncStatusMeta,
+          syncStatus.isAcceptableOrUnknown(
+              data['sync_status']!, _syncStatusMeta));
+    }
+    if (data.containsKey('server_updated_at')) {
+      context.handle(
+          _serverUpdatedAtMeta,
+          serverUpdatedAt.isAcceptableOrUnknown(
+              data['server_updated_at']!, _serverUpdatedAtMeta));
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(_isDeletedMeta,
+          isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {scopeKey};
+  @override
+  Profile map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Profile(
+      scopeKey: <credential-fixture>
+          .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email'])!,
+      displayName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}display_name']),
+      avatarUrl: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}avatar_url']),
+      phoneNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}phone_number']),
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id']),
+      syncStatus: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
+      serverUpdatedAt: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}server_updated_at']),
+      isDeleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_deleted'])!,
+    );
+  }
+
+  @override
+  $ProfilesTable createAlias(String alias) {
+    return $ProfilesTable(attachedDatabase, alias);
+  }
+}
+
+class Profile extends DataClass implements Insertable<Profile> {
+  final String scopeKey;
+  final String id;
+  final String email;
+  final String? displayName;
+  final String? avatarUrl;
+  final String? phoneNumber;
+  final String? userId;
+  final String syncStatus;
+  final DateTime? serverUpdatedAt;
+  final bool isDeleted;
+  const Profile(
+      {required this.scopeKey,
+      required this.id,
+      required this.email,
+      this.displayName,
+      this.avatarUrl,
+      this.phoneNumber,
+      this.userId,
+      required this.syncStatus,
+      this.serverUpdatedAt,
+      required this.isDeleted});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['scope_key'] = Variable<String>(scopeKey);
+    map['id'] = Variable<String>(id);
+    map['email'] = Variable<String>(email);
+    if (!nullToAbsent || displayName != null) {
+      map['display_name'] = Variable<String>(displayName);
+    }
+    if (!nullToAbsent || avatarUrl != null) {
+      map['avatar_url'] = Variable<String>(avatarUrl);
+    }
+    if (!nullToAbsent || phoneNumber != null) {
+      map['phone_number'] = Variable<String>(phoneNumber);
+    }
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<String>(userId);
+    }
+    map['sync_status'] = Variable<String>(syncStatus);
+    if (!nullToAbsent || serverUpdatedAt != null) {
+      map['server_updated_at'] = Variable<DateTime>(serverUpdatedAt);
+    }
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  ProfilesCompanion toCompanion(bool nullToAbsent) {
+    return ProfilesCompanion(
+      scopeKey: Value(scopeKey),
+      id: Value(id),
+      email: Value(email),
+      displayName: displayName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayName),
+      avatarUrl: avatarUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(avatarUrl),
+      phoneNumber: phoneNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(phoneNumber),
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      syncStatus: Value(syncStatus),
+      serverUpdatedAt: serverUpdatedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverUpdatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory Profile.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Profile(
+      scopeKey: <credential-fixture><String>(json['scopeKey']),
+      id: serializer.fromJson<String>(json['id']),
+      email: serializer.fromJson<String>(json['email']),
+      displayName: serializer.fromJson<String?>(json['displayName']),
+      avatarUrl: serializer.fromJson<String?>(json['avatarUrl']),
+      phoneNumber: serializer.fromJson<String?>(json['phoneNumber']),
+      userId: serializer.fromJson<String?>(json['userId']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
+      serverUpdatedAt: serializer.fromJson<DateTime?>(json['serverUpdatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'scopeKey': serializer.toJson<String>(scopeKey),
+      'id': serializer.toJson<String>(id),
+      'email': serializer.toJson<String>(email),
+      'displayName': serializer.toJson<String?>(displayName),
+      'avatarUrl': serializer.toJson<String?>(avatarUrl),
+      'phoneNumber': serializer.toJson<String?>(phoneNumber),
+      'userId': serializer.toJson<String?>(userId),
+      'syncStatus': serializer.toJson<String>(syncStatus),
+      'serverUpdatedAt': serializer.toJson<DateTime?>(serverUpdatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  Profile copyWith(
+          {String? scopeKey,
+          String? id,
+          String? email,
+          Value<String?> displayName = const Value.absent(),
+          Value<String?> avatarUrl = const Value.absent(),
+          Value<String?> phoneNumber = const Value.absent(),
+          Value<String?> userId = const Value.absent(),
+          String? syncStatus,
+          Value<DateTime?> serverUpdatedAt = const Value.absent(),
+          bool? isDeleted}) =>
+      Profile(
+        scopeKey: <credential-fixture> ?? this.scopeKey,
+        id: id ?? this.id,
+        email: email ?? this.email,
+        displayName: displayName.present ? displayName.value : this.displayName,
+        avatarUrl: avatarUrl.present ? avatarUrl.value : this.avatarUrl,
+        phoneNumber: phoneNumber.present ? phoneNumber.value : this.phoneNumber,
+        userId: userId.present ? userId.value : this.userId,
+        syncStatus: syncStatus ?? this.syncStatus,
+        serverUpdatedAt: serverUpdatedAt.present
+            ? serverUpdatedAt.value
+            : this.serverUpdatedAt,
+        isDeleted: isDeleted ?? this.isDeleted,
+      );
+  Profile copyWithCompanion(ProfilesCompanion data) {
+    return Profile(
+      scopeKey: <credential-fixture> ? data.scopeKey.value : <credential-fixture>,
+      id: data.id.present ? data.id.value : this.id,
+      email: data.email.present ? data.email.value : this.email,
+      displayName:
+          data.displayName.present ? data.displayName.value : this.displayName,
+      avatarUrl: data.avatarUrl.present ? data.avatarUrl.value : this.avatarUrl,
+      phoneNumber:
+          data.phoneNumber.present ? data.phoneNumber.value : this.phoneNumber,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      syncStatus:
+          data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
+      serverUpdatedAt: data.serverUpdatedAt.present
+          ? data.serverUpdatedAt.value
+          : this.serverUpdatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Profile(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('id: $id, ')
+          ..write('email: $email, ')
+          ..write('displayName: $displayName, ')
+          ..write('avatarUrl: $avatarUrl, ')
+          ..write('phoneNumber: $phoneNumber, ')
+          ..write('userId: $userId, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('serverUpdatedAt: $serverUpdatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(scopeKey, id, email, displayName, avatarUrl,
+      phoneNumber, userId, syncStatus, serverUpdatedAt, isDeleted);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Profile &&
+          other.scopeKey == this.scopeKey &&
+          other.id == this.id &&
+          other.email == this.email &&
+          other.displayName == this.displayName &&
+          other.avatarUrl == this.avatarUrl &&
+          other.phoneNumber == this.phoneNumber &&
+          other.userId == this.userId &&
+          other.syncStatus == this.syncStatus &&
+          other.serverUpdatedAt == this.serverUpdatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class ProfilesCompanion extends UpdateCompanion<Profile> {
+  final Value<String> scopeKey;
+  final Value<String> id;
+  final Value<String> email;
+  final Value<String?> displayName;
+  final Value<String?> avatarUrl;
+  final Value<String?> phoneNumber;
+  final Value<String?> userId;
+  final Value<String> syncStatus;
+  final Value<DateTime?> serverUpdatedAt;
+  final Value<bool> isDeleted;
+  final Value<int> rowid;
+  const ProfilesCompanion({
+    this.scopeKey = const Value.absent(),
+    this.id = const Value.absent(),
+    this.email = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.avatarUrl = const Value.absent(),
+    this.phoneNumber = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.serverUpdatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProfilesCompanion.insert({
+    required String scopeKey,
+    required String id,
+    required String email,
+    this.displayName = const Value.absent(),
+    this.avatarUrl = const Value.absent(),
+    this.phoneNumber = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.serverUpdatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : scopeKey = Value(scopeKey),
+        id = Value(id),
+        email = Value(email);
+  static Insertable<Profile> custom({
+    Expression<String>? scopeKey,
+    Expression<String>? id,
+    Expression<String>? email,
+    Expression<String>? displayName,
+    Expression<String>? avatarUrl,
+    Expression<String>? phoneNumber,
+    Expression<String>? userId,
+    Expression<String>? syncStatus,
+    Expression<DateTime>? serverUpdatedAt,
+    Expression<bool>? isDeleted,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (scopeKey != null) 'scope_key': scopeKey,
+      if (id != null) 'id': id,
+      if (email != null) 'email': email,
+      if (displayName != null) 'display_name': displayName,
+      if (avatarUrl != null) 'avatar_url': avatarUrl,
+      if (phoneNumber != null) 'phone_number': phoneNumber,
+      if (userId != null) 'user_id': userId,
+      if (syncStatus != null) 'sync_status': syncStatus,
+      if (serverUpdatedAt != null) 'server_updated_at': serverUpdatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ProfilesCompanion copyWith(
+      {Value<String>? scopeKey,
+      Value<String>? id,
+      Value<String>? email,
+      Value<String?>? displayName,
+      Value<String?>? avatarUrl,
+      Value<String?>? phoneNumber,
+      Value<String?>? userId,
+      Value<String>? syncStatus,
+      Value<DateTime?>? serverUpdatedAt,
+      Value<bool>? isDeleted,
+      Value<int>? rowid}) {
+    return ProfilesCompanion(
+      scopeKey: <credential-fixture> ?? this.scopeKey,
+      id: id ?? this.id,
+      email: email ?? this.email,
+      displayName: displayName ?? this.displayName,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      userId: userId ?? this.userId,
+      syncStatus: syncStatus ?? this.syncStatus,
+      serverUpdatedAt: serverUpdatedAt ?? this.serverUpdatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (scopeKey.present) {
+      map['scope_key'] = Variable<String>(scopeKey.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (avatarUrl.present) {
+      map['avatar_url'] = Variable<String>(avatarUrl.value);
+    }
+    if (phoneNumber.present) {
+      map['phone_number'] = Variable<String>(phoneNumber.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
+    if (serverUpdatedAt.present) {
+      map['server_updated_at'] = Variable<DateTime>(serverUpdatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProfilesCompanion(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('id: $id, ')
+          ..write('email: $email, ')
+          ..write('displayName: $displayName, ')
+          ..write('avatarUrl: $avatarUrl, ')
+          ..write('phoneNumber: $phoneNumber, ')
+          ..write('userId: $userId, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('serverUpdatedAt: $serverUpdatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $BusinessSettingsTable extends BusinessSettings
+    with TableInfo<$BusinessSettingsTable, BusinessSetting> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BusinessSettingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _scopeKeyMeta =
+      const VerificationMeta('scopeKey');
+  @override
+  late final GeneratedColumn<String> scopeKey = <credential-fixture><String>(
+      'scope_key', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _companyNameMeta =
+      const VerificationMeta('companyName');
+  @override
+  late final GeneratedColumn<String> companyName = GeneratedColumn<String>(
+      'company_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _taxNumberMeta =
+      const VerificationMeta('taxNumber');
+  @override
+  late final GeneratedColumn<String> taxNumber = GeneratedColumn<String>(
+      'tax_number', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _addressMeta =
+      const VerificationMeta('address');
+  @override
+  late final GeneratedColumn<String> address = GeneratedColumn<String>(
+      'address', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _logoUrlMeta =
+      const VerificationMeta('logoUrl');
+  @override
+  late final GeneratedColumn<String> logoUrl = GeneratedColumn<String>(
+      'logo_url', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _defaultTaxRateMeta =
+      const VerificationMeta('defaultTaxRate');
+  @override
+  late final GeneratedColumn<double> defaultTaxRate = GeneratedColumn<double>(
+      'default_tax_rate', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _currencyCodeMeta =
+      const VerificationMeta('currencyCode');
+  @override
+  late final GeneratedColumn<String> currencyCode = GeneratedColumn<String>(
+      'currency_code', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _currencySymbolMeta =
+      const VerificationMeta('currencySymbol');
+  @override
+  late final GeneratedColumn<String> currencySymbol = GeneratedColumn<String>(
+      'currency_symbol', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _syncStatusMeta =
+      const VerificationMeta('syncStatus');
+  @override
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+      'sync_status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('synced'));
+  static const VerificationMeta _serverUpdatedAtMeta =
+      const VerificationMeta('serverUpdatedAt');
+  @override
+  late final GeneratedColumn<DateTime> serverUpdatedAt =
+      GeneratedColumn<DateTime>('server_updated_at', aliasedName, true,
+          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _isDeletedMeta =
+      const VerificationMeta('isDeleted');
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+      'is_deleted', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_deleted" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  @override
+  List<GeneratedColumn> get $columns => [
+        scopeKey,
+        id,
+        companyName,
+        taxNumber,
+        address,
+        logoUrl,
+        defaultTaxRate,
+        currencyCode,
+        currencySymbol,
+        userId,
+        syncStatus,
+        serverUpdatedAt,
+        isDeleted
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'business_settings';
+  @override
+  VerificationContext validateIntegrity(Insertable<BusinessSetting> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('scope_key')) {
+      context.handle(_scopeKeyMeta,
+          scopeKey.isAcceptableOrUnknown(data['scope_key']!, _scopeKeyMeta));
+    } else if (isInserting) {
+      context.missing(_scopeKeyMeta);
+    }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('company_name')) {
+      context.handle(
+          _companyNameMeta,
+          companyName.isAcceptableOrUnknown(
+              data['company_name']!, _companyNameMeta));
+    } else if (isInserting) {
+      context.missing(_companyNameMeta);
+    }
+    if (data.containsKey('tax_number')) {
+      context.handle(_taxNumberMeta,
+          taxNumber.isAcceptableOrUnknown(data['tax_number']!, _taxNumberMeta));
+    }
+    if (data.containsKey('address')) {
+      context.handle(_addressMeta,
+          address.isAcceptableOrUnknown(data['address']!, _addressMeta));
+    }
+    if (data.containsKey('logo_url')) {
+      context.handle(_logoUrlMeta,
+          logoUrl.isAcceptableOrUnknown(data['logo_url']!, _logoUrlMeta));
+    }
+    if (data.containsKey('default_tax_rate')) {
+      context.handle(
+          _defaultTaxRateMeta,
+          defaultTaxRate.isAcceptableOrUnknown(
+              data['default_tax_rate']!, _defaultTaxRateMeta));
+    } else if (isInserting) {
+      context.missing(_defaultTaxRateMeta);
+    }
+    if (data.containsKey('currency_code')) {
+      context.handle(
+          _currencyCodeMeta,
+          currencyCode.isAcceptableOrUnknown(
+              data['currency_code']!, _currencyCodeMeta));
+    } else if (isInserting) {
+      context.missing(_currencyCodeMeta);
+    }
+    if (data.containsKey('currency_symbol')) {
+      context.handle(
+          _currencySymbolMeta,
+          currencySymbol.isAcceptableOrUnknown(
+              data['currency_symbol']!, _currencySymbolMeta));
+    } else if (isInserting) {
+      context.missing(_currencySymbolMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+          _syncStatusMeta,
+          syncStatus.isAcceptableOrUnknown(
+              data['sync_status']!, _syncStatusMeta));
+    }
+    if (data.containsKey('server_updated_at')) {
+      context.handle(
+          _serverUpdatedAtMeta,
+          serverUpdatedAt.isAcceptableOrUnknown(
+              data['server_updated_at']!, _serverUpdatedAtMeta));
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(_isDeletedMeta,
+          isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {scopeKey};
+  @override
+  BusinessSetting map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BusinessSetting(
+      scopeKey: <credential-fixture>
+          .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      companyName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}company_name'])!,
+      taxNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tax_number']),
+      address: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}address']),
+      logoUrl: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}logo_url']),
+      defaultTaxRate: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}default_tax_rate'])!,
+      currencyCode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}currency_code'])!,
+      currencySymbol: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}currency_symbol'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id']),
+      syncStatus: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
+      serverUpdatedAt: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}server_updated_at']),
+      isDeleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_deleted'])!,
+    );
+  }
+
+  @override
+  $BusinessSettingsTable createAlias(String alias) {
+    return $BusinessSettingsTable(attachedDatabase, alias);
+  }
+}
+
+class BusinessSetting extends DataClass implements Insertable<BusinessSetting> {
+  final String scopeKey;
+  final String id;
+  final String companyName;
+  final String? taxNumber;
+  final String? address;
+  final String? logoUrl;
+  final double defaultTaxRate;
+  final String currencyCode;
+  final String currencySymbol;
+  final String? userId;
+  final String syncStatus;
+  final DateTime? serverUpdatedAt;
+  final bool isDeleted;
+  const BusinessSetting(
+      {required this.scopeKey,
+      required this.id,
+      required this.companyName,
+      this.taxNumber,
+      this.address,
+      this.logoUrl,
+      required this.defaultTaxRate,
+      required this.currencyCode,
+      required this.currencySymbol,
+      this.userId,
+      required this.syncStatus,
+      this.serverUpdatedAt,
+      required this.isDeleted});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['scope_key'] = Variable<String>(scopeKey);
+    map['id'] = Variable<String>(id);
+    map['company_name'] = Variable<String>(companyName);
+    if (!nullToAbsent || taxNumber != null) {
+      map['tax_number'] = Variable<String>(taxNumber);
+    }
+    if (!nullToAbsent || address != null) {
+      map['address'] = Variable<String>(address);
+    }
+    if (!nullToAbsent || logoUrl != null) {
+      map['logo_url'] = Variable<String>(logoUrl);
+    }
+    map['default_tax_rate'] = Variable<double>(defaultTaxRate);
+    map['currency_code'] = Variable<String>(currencyCode);
+    map['currency_symbol'] = Variable<String>(currencySymbol);
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<String>(userId);
+    }
+    map['sync_status'] = Variable<String>(syncStatus);
+    if (!nullToAbsent || serverUpdatedAt != null) {
+      map['server_updated_at'] = Variable<DateTime>(serverUpdatedAt);
+    }
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  BusinessSettingsCompanion toCompanion(bool nullToAbsent) {
+    return BusinessSettingsCompanion(
+      scopeKey: Value(scopeKey),
+      id: Value(id),
+      companyName: Value(companyName),
+      taxNumber: taxNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(taxNumber),
+      address: address == null && nullToAbsent
+          ? const Value.absent()
+          : Value(address),
+      logoUrl: logoUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(logoUrl),
+      defaultTaxRate: Value(defaultTaxRate),
+      currencyCode: Value(currencyCode),
+      currencySymbol: Value(currencySymbol),
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      syncStatus: Value(syncStatus),
+      serverUpdatedAt: serverUpdatedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverUpdatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory BusinessSetting.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BusinessSetting(
+      scopeKey: <credential-fixture><String>(json['scopeKey']),
+      id: serializer.fromJson<String>(json['id']),
+      companyName: serializer.fromJson<String>(json['companyName']),
+      taxNumber: serializer.fromJson<String?>(json['taxNumber']),
+      address: serializer.fromJson<String?>(json['address']),
+      logoUrl: serializer.fromJson<String?>(json['logoUrl']),
+      defaultTaxRate: serializer.fromJson<double>(json['defaultTaxRate']),
+      currencyCode: serializer.fromJson<String>(json['currencyCode']),
+      currencySymbol: serializer.fromJson<String>(json['currencySymbol']),
+      userId: serializer.fromJson<String?>(json['userId']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
+      serverUpdatedAt: serializer.fromJson<DateTime?>(json['serverUpdatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'scopeKey': serializer.toJson<String>(scopeKey),
+      'id': serializer.toJson<String>(id),
+      'companyName': serializer.toJson<String>(companyName),
+      'taxNumber': serializer.toJson<String?>(taxNumber),
+      'address': serializer.toJson<String?>(address),
+      'logoUrl': serializer.toJson<String?>(logoUrl),
+      'defaultTaxRate': serializer.toJson<double>(defaultTaxRate),
+      'currencyCode': serializer.toJson<String>(currencyCode),
+      'currencySymbol': serializer.toJson<String>(currencySymbol),
+      'userId': serializer.toJson<String?>(userId),
+      'syncStatus': serializer.toJson<String>(syncStatus),
+      'serverUpdatedAt': serializer.toJson<DateTime?>(serverUpdatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  BusinessSetting copyWith(
+          {String? scopeKey,
+          String? id,
+          String? companyName,
+          Value<String?> taxNumber = const Value.absent(),
+          Value<String?> address = const Value.absent(),
+          Value<String?> logoUrl = const Value.absent(),
+          double? defaultTaxRate,
+          String? currencyCode,
+          String? currencySymbol,
+          Value<String?> userId = const Value.absent(),
+          String? syncStatus,
+          Value<DateTime?> serverUpdatedAt = const Value.absent(),
+          bool? isDeleted}) =>
+      BusinessSetting(
+        scopeKey: <credential-fixture> ?? this.scopeKey,
+        id: id ?? this.id,
+        companyName: companyName ?? this.companyName,
+        taxNumber: taxNumber.present ? taxNumber.value : this.taxNumber,
+        address: address.present ? address.value : this.address,
+        logoUrl: logoUrl.present ? logoUrl.value : this.logoUrl,
+        defaultTaxRate: defaultTaxRate ?? this.defaultTaxRate,
+        currencyCode: currencyCode ?? this.currencyCode,
+        currencySymbol: currencySymbol ?? this.currencySymbol,
+        userId: userId.present ? userId.value : this.userId,
+        syncStatus: syncStatus ?? this.syncStatus,
+        serverUpdatedAt: serverUpdatedAt.present
+            ? serverUpdatedAt.value
+            : this.serverUpdatedAt,
+        isDeleted: isDeleted ?? this.isDeleted,
+      );
+  BusinessSetting copyWithCompanion(BusinessSettingsCompanion data) {
+    return BusinessSetting(
+      scopeKey: <credential-fixture> ? data.scopeKey.value : <credential-fixture>,
+      id: data.id.present ? data.id.value : this.id,
+      companyName:
+          data.companyName.present ? data.companyName.value : this.companyName,
+      taxNumber: data.taxNumber.present ? data.taxNumber.value : this.taxNumber,
+      address: data.address.present ? data.address.value : this.address,
+      logoUrl: data.logoUrl.present ? data.logoUrl.value : this.logoUrl,
+      defaultTaxRate: data.defaultTaxRate.present
+          ? data.defaultTaxRate.value
+          : this.defaultTaxRate,
+      currencyCode: data.currencyCode.present
+          ? data.currencyCode.value
+          : this.currencyCode,
+      currencySymbol: data.currencySymbol.present
+          ? data.currencySymbol.value
+          : this.currencySymbol,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      syncStatus:
+          data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
+      serverUpdatedAt: data.serverUpdatedAt.present
+          ? data.serverUpdatedAt.value
+          : this.serverUpdatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BusinessSetting(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('id: $id, ')
+          ..write('companyName: $companyName, ')
+          ..write('taxNumber: $taxNumber, ')
+          ..write('address: $address, ')
+          ..write('logoUrl: $logoUrl, ')
+          ..write('defaultTaxRate: $defaultTaxRate, ')
+          ..write('currencyCode: $currencyCode, ')
+          ..write('currencySymbol: $currencySymbol, ')
+          ..write('userId: $userId, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('serverUpdatedAt: $serverUpdatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      scopeKey,
+      id,
+      companyName,
+      taxNumber,
+      address,
+      logoUrl,
+      defaultTaxRate,
+      currencyCode,
+      currencySymbol,
+      userId,
+      syncStatus,
+      serverUpdatedAt,
+      isDeleted);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BusinessSetting &&
+          other.scopeKey == this.scopeKey &&
+          other.id == this.id &&
+          other.companyName == this.companyName &&
+          other.taxNumber == this.taxNumber &&
+          other.address == this.address &&
+          other.logoUrl == this.logoUrl &&
+          other.defaultTaxRate == this.defaultTaxRate &&
+          other.currencyCode == this.currencyCode &&
+          other.currencySymbol == this.currencySymbol &&
+          other.userId == this.userId &&
+          other.syncStatus == this.syncStatus &&
+          other.serverUpdatedAt == this.serverUpdatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class BusinessSettingsCompanion extends UpdateCompanion<BusinessSetting> {
+  final Value<String> scopeKey;
+  final Value<String> id;
+  final Value<String> companyName;
+  final Value<String?> taxNumber;
+  final Value<String?> address;
+  final Value<String?> logoUrl;
+  final Value<double> defaultTaxRate;
+  final Value<String> currencyCode;
+  final Value<String> currencySymbol;
+  final Value<String?> userId;
+  final Value<String> syncStatus;
+  final Value<DateTime?> serverUpdatedAt;
+  final Value<bool> isDeleted;
+  final Value<int> rowid;
+  const BusinessSettingsCompanion({
+    this.scopeKey = const Value.absent(),
+    this.id = const Value.absent(),
+    this.companyName = const Value.absent(),
+    this.taxNumber = const Value.absent(),
+    this.address = const Value.absent(),
+    this.logoUrl = const Value.absent(),
+    this.defaultTaxRate = const Value.absent(),
+    this.currencyCode = const Value.absent(),
+    this.currencySymbol = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.serverUpdatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BusinessSettingsCompanion.insert({
+    required String scopeKey,
+    required String id,
+    required String companyName,
+    this.taxNumber = const Value.absent(),
+    this.address = const Value.absent(),
+    this.logoUrl = const Value.absent(),
+    required double defaultTaxRate,
+    required String currencyCode,
+    required String currencySymbol,
+    this.userId = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.serverUpdatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : scopeKey = Value(scopeKey),
+        id = Value(id),
+        companyName = Value(companyName),
+        defaultTaxRate = Value(defaultTaxRate),
+        currencyCode = Value(currencyCode),
+        currencySymbol = Value(currencySymbol);
+  static Insertable<BusinessSetting> custom({
+    Expression<String>? scopeKey,
+    Expression<String>? id,
+    Expression<String>? companyName,
+    Expression<String>? taxNumber,
+    Expression<String>? address,
+    Expression<String>? logoUrl,
+    Expression<double>? defaultTaxRate,
+    Expression<String>? currencyCode,
+    Expression<String>? currencySymbol,
+    Expression<String>? userId,
+    Expression<String>? syncStatus,
+    Expression<DateTime>? serverUpdatedAt,
+    Expression<bool>? isDeleted,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (scopeKey != null) 'scope_key': scopeKey,
+      if (id != null) 'id': id,
+      if (companyName != null) 'company_name': companyName,
+      if (taxNumber != null) 'tax_number': taxNumber,
+      if (address != null) 'address': address,
+      if (logoUrl != null) 'logo_url': logoUrl,
+      if (defaultTaxRate != null) 'default_tax_rate': defaultTaxRate,
+      if (currencyCode != null) 'currency_code': currencyCode,
+      if (currencySymbol != null) 'currency_symbol': currencySymbol,
+      if (userId != null) 'user_id': userId,
+      if (syncStatus != null) 'sync_status': syncStatus,
+      if (serverUpdatedAt != null) 'server_updated_at': serverUpdatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BusinessSettingsCompanion copyWith(
+      {Value<String>? scopeKey,
+      Value<String>? id,
+      Value<String>? companyName,
+      Value<String?>? taxNumber,
+      Value<String?>? address,
+      Value<String?>? logoUrl,
+      Value<double>? defaultTaxRate,
+      Value<String>? currencyCode,
+      Value<String>? currencySymbol,
+      Value<String?>? userId,
+      Value<String>? syncStatus,
+      Value<DateTime?>? serverUpdatedAt,
+      Value<bool>? isDeleted,
+      Value<int>? rowid}) {
+    return BusinessSettingsCompanion(
+      scopeKey: <credential-fixture> ?? this.scopeKey,
+      id: id ?? this.id,
+      companyName: companyName ?? this.companyName,
+      taxNumber: taxNumber ?? this.taxNumber,
+      address: address ?? this.address,
+      logoUrl: logoUrl ?? this.logoUrl,
+      defaultTaxRate: defaultTaxRate ?? this.defaultTaxRate,
+      currencyCode: currencyCode ?? this.currencyCode,
+      currencySymbol: currencySymbol ?? this.currencySymbol,
+      userId: userId ?? this.userId,
+      syncStatus: syncStatus ?? this.syncStatus,
+      serverUpdatedAt: serverUpdatedAt ?? this.serverUpdatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (scopeKey.present) {
+      map['scope_key'] = Variable<String>(scopeKey.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (companyName.present) {
+      map['company_name'] = Variable<String>(companyName.value);
+    }
+    if (taxNumber.present) {
+      map['tax_number'] = Variable<String>(taxNumber.value);
+    }
+    if (address.present) {
+      map['address'] = Variable<String>(address.value);
+    }
+    if (logoUrl.present) {
+      map['logo_url'] = Variable<String>(logoUrl.value);
+    }
+    if (defaultTaxRate.present) {
+      map['default_tax_rate'] = Variable<double>(defaultTaxRate.value);
+    }
+    if (currencyCode.present) {
+      map['currency_code'] = Variable<String>(currencyCode.value);
+    }
+    if (currencySymbol.present) {
+      map['currency_symbol'] = Variable<String>(currencySymbol.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
+    if (serverUpdatedAt.present) {
+      map['server_updated_at'] = Variable<DateTime>(serverUpdatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BusinessSettingsCompanion(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('id: $id, ')
+          ..write('companyName: $companyName, ')
+          ..write('taxNumber: $taxNumber, ')
+          ..write('address: $address, ')
+          ..write('logoUrl: $logoUrl, ')
+          ..write('defaultTaxRate: $defaultTaxRate, ')
+          ..write('currencyCode: $currencyCode, ')
+          ..write('currencySymbol: $currencySymbol, ')
+          ..write('userId: $userId, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('serverUpdatedAt: $serverUpdatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxData> {
   @override
@@ -1599,6 +2778,9 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
   late final $LocalMetadataTable localMetadata = $LocalMetadataTable(this);
   late final $BarcodeConfigsTable barcodeConfigs = $BarcodeConfigsTable(this);
   late final $MarketPricesTable marketPrices = $MarketPricesTable(this);
+  late final $ProfilesTable profiles = $ProfilesTable(this);
+  late final $BusinessSettingsTable businessSettings =
+      $BusinessSettingsTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   late final Index marketPricesItemAsOfIdx = Index(
       'market_prices_item_as_of_idx',
@@ -1611,6 +2793,8 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
         localMetadata,
         barcodeConfigs,
         marketPrices,
+        profiles,
+        businessSettings,
         syncOutbox,
         marketPricesItemAsOfIdx
       ];
@@ -2184,6 +3368,549 @@ typedef $$MarketPricesTableProcessedTableManager = ProcessedTableManager<
     ),
     MarketPrice,
     PrefetchHooks Function()>;
+typedef $$ProfilesTableCreateCompanionBuilder = ProfilesCompanion Function({
+  required String scopeKey,
+  required String id,
+  required String email,
+  Value<String?> displayName,
+  Value<String?> avatarUrl,
+  Value<String?> phoneNumber,
+  Value<String?> userId,
+  Value<String> syncStatus,
+  Value<DateTime?> serverUpdatedAt,
+  Value<bool> isDeleted,
+  Value<int> rowid,
+});
+typedef $$ProfilesTableUpdateCompanionBuilder = ProfilesCompanion Function({
+  Value<String> scopeKey,
+  Value<String> id,
+  Value<String> email,
+  Value<String?> displayName,
+  Value<String?> avatarUrl,
+  Value<String?> phoneNumber,
+  Value<String?> userId,
+  Value<String> syncStatus,
+  Value<DateTime?> serverUpdatedAt,
+  Value<bool> isDeleted,
+  Value<int> rowid,
+});
+
+class $$ProfilesTableFilterComposer
+    extends Composer<_$BasirDatabase, $ProfilesTable> {
+  $$ProfilesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get avatarUrl => $composableBuilder(
+      column: $table.avatarUrl, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get phoneNumber => $composableBuilder(
+      column: $table.phoneNumber, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get serverUpdatedAt => $composableBuilder(
+      column: $table.serverUpdatedAt,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnFilters(column));
+}
+
+class $$ProfilesTableOrderingComposer
+    extends Composer<_$BasirDatabase, $ProfilesTable> {
+  $$ProfilesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get avatarUrl => $composableBuilder(
+      column: $table.avatarUrl, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get phoneNumber => $composableBuilder(
+      column: $table.phoneNumber, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get serverUpdatedAt => $composableBuilder(
+      column: $table.serverUpdatedAt,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnOrderings(column));
+}
+
+class $$ProfilesTableAnnotationComposer
+    extends Composer<_$BasirDatabase, $ProfilesTable> {
+  $$ProfilesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get scopeKey =>
+      $composableBuilder(column: $table.scopeKey, builder: (column) => column);
+
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => column);
+
+  GeneratedColumn<String> get avatarUrl =>
+      $composableBuilder(column: $table.avatarUrl, builder: (column) => column);
+
+  GeneratedColumn<String> get phoneNumber => $composableBuilder(
+      column: $table.phoneNumber, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get serverUpdatedAt => $composableBuilder(
+      column: $table.serverUpdatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+}
+
+class $$ProfilesTableTableManager extends RootTableManager<
+    _$BasirDatabase,
+    $ProfilesTable,
+    Profile,
+    $$ProfilesTableFilterComposer,
+    $$ProfilesTableOrderingComposer,
+    $$ProfilesTableAnnotationComposer,
+    $$ProfilesTableCreateCompanionBuilder,
+    $$ProfilesTableUpdateCompanionBuilder,
+    (Profile, BaseReferences<_$BasirDatabase, $ProfilesTable, Profile>),
+    Profile,
+    PrefetchHooks Function()> {
+  $$ProfilesTableTableManager(_$BasirDatabase db, $ProfilesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ProfilesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ProfilesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ProfilesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> scopeKey = const Value.absent(),
+            Value<String> id = const Value.absent(),
+            Value<String> email = const Value.absent(),
+            Value<String?> displayName = const Value.absent(),
+            Value<String?> avatarUrl = const Value.absent(),
+            Value<String?> phoneNumber = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<DateTime?> serverUpdatedAt = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ProfilesCompanion(
+            scopeKey: <credential-fixture>,
+            id: id,
+            email: email,
+            displayName: displayName,
+            avatarUrl: avatarUrl,
+            phoneNumber: phoneNumber,
+            userId: userId,
+            syncStatus: syncStatus,
+            serverUpdatedAt: serverUpdatedAt,
+            isDeleted: isDeleted,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String scopeKey,
+            required String id,
+            required String email,
+            Value<String?> displayName = const Value.absent(),
+            Value<String?> avatarUrl = const Value.absent(),
+            Value<String?> phoneNumber = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<DateTime?> serverUpdatedAt = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ProfilesCompanion.insert(
+            scopeKey: <credential-fixture>,
+            id: id,
+            email: email,
+            displayName: displayName,
+            avatarUrl: avatarUrl,
+            phoneNumber: phoneNumber,
+            userId: userId,
+            syncStatus: syncStatus,
+            serverUpdatedAt: serverUpdatedAt,
+            isDeleted: isDeleted,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$ProfilesTableProcessedTableManager = ProcessedTableManager<
+    _$BasirDatabase,
+    $ProfilesTable,
+    Profile,
+    $$ProfilesTableFilterComposer,
+    $$ProfilesTableOrderingComposer,
+    $$ProfilesTableAnnotationComposer,
+    $$ProfilesTableCreateCompanionBuilder,
+    $$ProfilesTableUpdateCompanionBuilder,
+    (Profile, BaseReferences<_$BasirDatabase, $ProfilesTable, Profile>),
+    Profile,
+    PrefetchHooks Function()>;
+typedef $$BusinessSettingsTableCreateCompanionBuilder
+    = BusinessSettingsCompanion Function({
+  required String scopeKey,
+  required String id,
+  required String companyName,
+  Value<String?> taxNumber,
+  Value<String?> address,
+  Value<String?> logoUrl,
+  required double defaultTaxRate,
+  required String currencyCode,
+  required String currencySymbol,
+  Value<String?> userId,
+  Value<String> syncStatus,
+  Value<DateTime?> serverUpdatedAt,
+  Value<bool> isDeleted,
+  Value<int> rowid,
+});
+typedef $$BusinessSettingsTableUpdateCompanionBuilder
+    = BusinessSettingsCompanion Function({
+  Value<String> scopeKey,
+  Value<String> id,
+  Value<String> companyName,
+  Value<String?> taxNumber,
+  Value<String?> address,
+  Value<String?> logoUrl,
+  Value<double> defaultTaxRate,
+  Value<String> currencyCode,
+  Value<String> currencySymbol,
+  Value<String?> userId,
+  Value<String> syncStatus,
+  Value<DateTime?> serverUpdatedAt,
+  Value<bool> isDeleted,
+  Value<int> rowid,
+});
+
+class $$BusinessSettingsTableFilterComposer
+    extends Composer<_$BasirDatabase, $BusinessSettingsTable> {
+  $$BusinessSettingsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get companyName => $composableBuilder(
+      column: $table.companyName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get taxNumber => $composableBuilder(
+      column: $table.taxNumber, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get address => $composableBuilder(
+      column: $table.address, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get logoUrl => $composableBuilder(
+      column: $table.logoUrl, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get defaultTaxRate => $composableBuilder(
+      column: $table.defaultTaxRate,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get currencyCode => $composableBuilder(
+      column: $table.currencyCode, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get currencySymbol => $composableBuilder(
+      column: $table.currencySymbol,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get serverUpdatedAt => $composableBuilder(
+      column: $table.serverUpdatedAt,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnFilters(column));
+}
+
+class $$BusinessSettingsTableOrderingComposer
+    extends Composer<_$BasirDatabase, $BusinessSettingsTable> {
+  $$BusinessSettingsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get companyName => $composableBuilder(
+      column: $table.companyName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get taxNumber => $composableBuilder(
+      column: $table.taxNumber, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get address => $composableBuilder(
+      column: $table.address, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get logoUrl => $composableBuilder(
+      column: $table.logoUrl, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get defaultTaxRate => $composableBuilder(
+      column: $table.defaultTaxRate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get currencyCode => $composableBuilder(
+      column: $table.currencyCode,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get currencySymbol => $composableBuilder(
+      column: $table.currencySymbol,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get serverUpdatedAt => $composableBuilder(
+      column: $table.serverUpdatedAt,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnOrderings(column));
+}
+
+class $$BusinessSettingsTableAnnotationComposer
+    extends Composer<_$BasirDatabase, $BusinessSettingsTable> {
+  $$BusinessSettingsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get scopeKey =>
+      $composableBuilder(column: $table.scopeKey, builder: (column) => column);
+
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get companyName => $composableBuilder(
+      column: $table.companyName, builder: (column) => column);
+
+  GeneratedColumn<String> get taxNumber =>
+      $composableBuilder(column: $table.taxNumber, builder: (column) => column);
+
+  GeneratedColumn<String> get address =>
+      $composableBuilder(column: $table.address, builder: (column) => column);
+
+  GeneratedColumn<String> get logoUrl =>
+      $composableBuilder(column: $table.logoUrl, builder: (column) => column);
+
+  GeneratedColumn<double> get defaultTaxRate => $composableBuilder(
+      column: $table.defaultTaxRate, builder: (column) => column);
+
+  GeneratedColumn<String> get currencyCode => $composableBuilder(
+      column: $table.currencyCode, builder: (column) => column);
+
+  GeneratedColumn<String> get currencySymbol => $composableBuilder(
+      column: $table.currencySymbol, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get serverUpdatedAt => $composableBuilder(
+      column: $table.serverUpdatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+}
+
+class $$BusinessSettingsTableTableManager extends RootTableManager<
+    _$BasirDatabase,
+    $BusinessSettingsTable,
+    BusinessSetting,
+    $$BusinessSettingsTableFilterComposer,
+    $$BusinessSettingsTableOrderingComposer,
+    $$BusinessSettingsTableAnnotationComposer,
+    $$BusinessSettingsTableCreateCompanionBuilder,
+    $$BusinessSettingsTableUpdateCompanionBuilder,
+    (
+      BusinessSetting,
+      BaseReferences<_$BasirDatabase, $BusinessSettingsTable, BusinessSetting>
+    ),
+    BusinessSetting,
+    PrefetchHooks Function()> {
+  $$BusinessSettingsTableTableManager(
+      _$BasirDatabase db, $BusinessSettingsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BusinessSettingsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BusinessSettingsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BusinessSettingsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> scopeKey = const Value.absent(),
+            Value<String> id = const Value.absent(),
+            Value<String> companyName = const Value.absent(),
+            Value<String?> taxNumber = const Value.absent(),
+            Value<String?> address = const Value.absent(),
+            Value<String?> logoUrl = const Value.absent(),
+            Value<double> defaultTaxRate = const Value.absent(),
+            Value<String> currencyCode = const Value.absent(),
+            Value<String> currencySymbol = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<DateTime?> serverUpdatedAt = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              BusinessSettingsCompanion(
+            scopeKey: <credential-fixture>,
+            id: id,
+            companyName: companyName,
+            taxNumber: taxNumber,
+            address: address,
+            logoUrl: logoUrl,
+            defaultTaxRate: defaultTaxRate,
+            currencyCode: currencyCode,
+            currencySymbol: currencySymbol,
+            userId: userId,
+            syncStatus: syncStatus,
+            serverUpdatedAt: serverUpdatedAt,
+            isDeleted: isDeleted,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String scopeKey,
+            required String id,
+            required String companyName,
+            Value<String?> taxNumber = const Value.absent(),
+            Value<String?> address = const Value.absent(),
+            Value<String?> logoUrl = const Value.absent(),
+            required double defaultTaxRate,
+            required String currencyCode,
+            required String currencySymbol,
+            Value<String?> userId = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<DateTime?> serverUpdatedAt = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              BusinessSettingsCompanion.insert(
+            scopeKey: <credential-fixture>,
+            id: id,
+            companyName: companyName,
+            taxNumber: taxNumber,
+            address: address,
+            logoUrl: logoUrl,
+            defaultTaxRate: defaultTaxRate,
+            currencyCode: currencyCode,
+            currencySymbol: currencySymbol,
+            userId: userId,
+            syncStatus: syncStatus,
+            serverUpdatedAt: serverUpdatedAt,
+            isDeleted: isDeleted,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$BusinessSettingsTableProcessedTableManager = ProcessedTableManager<
+    _$BasirDatabase,
+    $BusinessSettingsTable,
+    BusinessSetting,
+    $$BusinessSettingsTableFilterComposer,
+    $$BusinessSettingsTableOrderingComposer,
+    $$BusinessSettingsTableAnnotationComposer,
+    $$BusinessSettingsTableCreateCompanionBuilder,
+    $$BusinessSettingsTableUpdateCompanionBuilder,
+    (
+      BusinessSetting,
+      BaseReferences<_$BasirDatabase, $BusinessSettingsTable, BusinessSetting>
+    ),
+    BusinessSetting,
+    PrefetchHooks Function()>;
 typedef $$SyncOutboxTableCreateCompanionBuilder = SyncOutboxCompanion Function({
   required String id,
   required String entityType,
@@ -2442,6 +4169,10 @@ class $BasirDatabaseManager {
       $$BarcodeConfigsTableTableManager(_db, _db.barcodeConfigs);
   $$MarketPricesTableTableManager get marketPrices =>
       $$MarketPricesTableTableManager(_db, _db.marketPrices);
+  $$ProfilesTableTableManager get profiles =>
+      $$ProfilesTableTableManager(_db, _db.profiles);
+  $$BusinessSettingsTableTableManager get businessSettings =>
+      $$BusinessSettingsTableTableManager(_db, _db.businessSettings);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

@@ -58,6 +58,55 @@ class MarketPrices extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+/// ملف شخصي واحد لكل نطاق مستخدم؛ [scopeKey] يميز المستخدم المجهول عن أي
+/// قيمة userId نصية ويمنع ظهور سجل مستخدم لآخر في الاستعلامات المحلية.
+class Profiles extends Table {
+  TextColumn get scopeKey => text()();
+  TextColumn get id => text()();
+  TextColumn get email => text()();
+  TextColumn get displayName => text().nullable()();
+  TextColumn get avatarUrl => text().nullable()();
+  TextColumn get phoneNumber => text().nullable()();
+  TextColumn get userId => text().nullable()();
+  TextColumn get syncStatus => text().withDefault(const Constant('synced'))();
+  DateTimeColumn get serverUpdatedAt => dateTime().nullable()();
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column<Object>> get primaryKey => {scopeKey};
+
+  @override
+  List<String> get customConstraints => const [
+        "CHECK (sync_status IN ('synced', 'pendingPush', 'pendingPull', 'conflict'))",
+      ];
+}
+
+/// إعدادات عمل واحدة لكل نطاق مستخدم؛ المفتاح ليس UUID الكيان حتى يسمح
+/// بالحفظ اللاحق باستبدال الإعدادات المقيدة بالمستخدم نفسه لا بإنشاء نسخة أخرى.
+class BusinessSettings extends Table {
+  TextColumn get scopeKey => text()();
+  TextColumn get id => text()();
+  TextColumn get companyName => text()();
+  TextColumn get taxNumber => text().nullable()();
+  TextColumn get address => text().nullable()();
+  TextColumn get logoUrl => text().nullable()();
+  RealColumn get defaultTaxRate => real()();
+  TextColumn get currencyCode => text()();
+  TextColumn get currencySymbol => text()();
+  TextColumn get userId => text().nullable()();
+  TextColumn get syncStatus => text().withDefault(const Constant('synced'))();
+  DateTimeColumn get serverUpdatedAt => dateTime().nullable()();
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column<Object>> get primaryKey => {scopeKey};
+
+  @override
+  List<String> get customConstraints => const [
+        "CHECK (sync_status IN ('synced', 'pendingPush', 'pendingPull', 'conflict'))",
+      ];
+}
+
 /// Outbox تحضيري فقط؛ لا يوجد عامل مزامنة مفعل في هذه الحزمة بعد.
 class SyncOutbox extends Table {
   TextColumn get id => text()();
@@ -82,14 +131,21 @@ class SyncOutbox extends Table {
 
 /// قاعدة Drift متعددة المنصات، منفصلة عن تطبيق Basir وكياناته.
 @DriftDatabase(
-  tables: [LocalMetadata, BarcodeConfigs, MarketPrices, SyncOutbox],
+  tables: [
+    LocalMetadata,
+    BarcodeConfigs,
+    MarketPrices,
+    Profiles,
+    BusinessSettings,
+    SyncOutbox,
+  ],
 )
 class BasirDatabase extends _$BasirDatabase {
   BasirDatabase([QueryExecutor? executor])
       : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -98,31 +154,31 @@ class BasirDatabase extends _$BasirDatabase {
           if (from < 2) {
             await migrator.createTable(marketPrices);
           }
-        },
-        beforeOpen: (details) async {
-          await customStatement('PRAGMA foreign_keys = ON');
-        },
-      );
-
-  static QueryExecutor _openConnection() {
-    return driftDatabase(
-      name: 'basir_drift_vnext',
-      native: const DriftNativeOptions(
-        databaseDirectory: getApplicationSupportDirectory,
-        shareAcrossIsolates: true,
-      ),
-      web: DriftWebOptions(
-        sqlite3Wasm: Uri.parse('sqlite3.wasm'),
-        driftWorker: Uri.parse('drift_worker.dart.js'),
-        onResult: (result) {
-          if (result.missingFeatures.isNotEmpty) {
-            debugPrint(
-              'Drift Web fallback: ${result.chosenImplementation}; '
-              'missing: ${result.missingFeatures.join(', ')}',
-            );
+          if (from < 3) {
+            await migrator.createTable(profiles);
+            await migrator.createTable(businessSettings);
           }
         },
-      ),
-    );
-  }
+        beforeOpen: (details) => customStatement('PRAGMA foreign_keys = ON'),
+      );
+
+  static QueryExecutor _openConnection() => driftDatabase(
+        name: 'basir_drift_vnext',
+        native: const DriftNativeOptions(
+          databaseDirectory: getApplicationSupportDirectory,
+          shareAcrossIsolates: true,
+        ),
+        web: DriftWebOptions(
+          sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+          driftWorker: Uri.parse('drift_worker.dart.js'),
+          onResult: (result) {
+            if (result.missingFeatures.isNotEmpty) {
+              debugPrint(
+                'Drift Web fallback: ${result.chosenImplementation}; '
+                'missing: ${result.missingFeatures.join(', ')}',
+              );
+            }
+          },
+        ),
+      );
 }
