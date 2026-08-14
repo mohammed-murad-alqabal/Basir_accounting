@@ -42,11 +42,11 @@ Widget _app(List<Override> overrides) => UncontrolledProviderScope(
           ...overrides,
         ],
       ),
-      child: MaterialApp(
-        locale: const Locale('ar'),
+      child: const MaterialApp(
+        locale: Locale('ar'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const WarehouseTransferScreen(),
+        home: WarehouseTransferScreen(),
       ),
     );
 

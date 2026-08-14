@@ -71,11 +71,11 @@ Widget _testApp(Future<FinancialReport> balanceSheetFuture) => ProviderScope(
           () => _FakeFinancialStatementService(balanceSheetFuture),
         ),
       ],
-      child: MaterialApp(
-        locale: const Locale('ar'),
+      child: const MaterialApp(
+        locale: Locale('ar'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const BalanceSheetScreen(),
+        home: BalanceSheetScreen(),
       ),
     );
 
@@ -119,7 +119,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(AppErrorWidget), findsOneWidget);
-    expect(find.textContaining('Balance sheet service unavailable'),
-        findsOneWidget);
+    expect(
+      find.textContaining('Balance sheet service unavailable'),
+      findsOneWidget,
+    );
   });
 }

@@ -1,9 +1,13 @@
+// Test doubles must implement generated value DTO interfaces to exercise DCO
+// list decoders without invoking the native FFI bridge.
+// ignore_for_file: avoid_implementing_value_types
+
 import 'dart:async';
 
 import 'package:basir_accounting_system/src/rust/api.dart';
 import 'package:basir_accounting_system/src/rust/api/accounts.dart';
-import 'package:basir_accounting_system/src/rust/api/auditor.dart';
 import 'package:basir_accounting_system/src/rust/api/assets.dart';
+import 'package:basir_accounting_system/src/rust/api/auditor.dart';
 import 'package:basir_accounting_system/src/rust/api/calendar.dart';
 import 'package:basir_accounting_system/src/rust/api/currency.dart';
 import 'package:basir_accounting_system/src/rust/api/inventory.dart';
@@ -46,7 +50,7 @@ class _RecordingHandler extends BaseHandler {
     if (task.constMeta.debugName == 'scan_sequence') {
       return <AnomalyDto>[] as S;
     }
-    return false as dynamic;
+    return false as S;
   }
 }
 
@@ -112,15 +116,12 @@ RustLibApiImpl _apiFor(_RecordingHandler handler) {
 
 class _DcoProbe extends RustLibApiImpl {
   _DcoProbe({
-    required BaseHandler handler,
-    required RustLibWire wire,
+    required super.handler,
+    required super.wire,
     required frb_io.GeneralizedFrbRustBinding binding,
-    required PortManager portManager,
+    required super.portManager,
   }) : super(
-          handler: handler,
-          wire: wire,
           generalizedFrbRustBinding: binding,
-          portManager: portManager,
         );
 
   AccountDto account(dynamic raw) => dco_decode_account_dto(raw);
@@ -188,56 +189,77 @@ void main() {
       final metadata = _auditMetadata();
       final entry = _MockEntryDto();
 
-      unawaited(api.crateApiCalendarCloseFinancialYear(
-        periodId: 'FY-2026',
-        closingDate: '2026-12-31',
-        retainedEarningsAccountId: '3200',
-      ));
       unawaited(
-          api.crateApiCalendarClosePeriod(id: 'P-2026-01', userId: 'u-1'));
-      unawaited(api.crateApiReportsGenerateBalanceSheet(
-        asOfDate: '2026-01-31',
-        fairValuationUpdates: const {'asset-1': '12.50'},
-      ));
-      unawaited(api.crateApiReportsGenerateCashFlowStatement(
-        fromDate: '2026-01-01',
-        toDate: '2026-01-31',
-      ));
-      unawaited(api.crateApiReportsGenerateIncomeStatement(
-        fromDate: '2026-01-01',
-        toDate: '2026-01-31',
-      ));
-      unawaited(api.crateApiReportsGenerateTrialBalance(
-        asOfDate: '2026-01-31',
-        periodStart: '2026-01-01',
-      ));
-      unawaited(api.crateApiLedgerPostJournalEntry(
-        dto: entry,
-        metadata: metadata,
-      ));
-      unawaited(api.crateApiLedgerReverseJournalEntry(
-        entryId: 'JE-1',
-        reason: 'تصحيح محاسبي معتمد',
-        metadata: metadata,
-      ));
+        api.crateApiCalendarCloseFinancialYear(
+          periodId: 'FY-2026',
+          closingDate: '2026-12-31',
+          retainedEarningsAccountId: '3200',
+        ),
+      );
+      unawaited(
+        api.crateApiCalendarClosePeriod(id: 'P-2026-01', userId: 'u-1'),
+      );
+      unawaited(
+        api.crateApiReportsGenerateBalanceSheet(
+          asOfDate: '2026-01-31',
+          fairValuationUpdates: const {'asset-1': '12.50'},
+        ),
+      );
+      unawaited(
+        api.crateApiReportsGenerateCashFlowStatement(
+          fromDate: '2026-01-01',
+          toDate: '2026-01-31',
+        ),
+      );
+      unawaited(
+        api.crateApiReportsGenerateIncomeStatement(
+          fromDate: '2026-01-01',
+          toDate: '2026-01-31',
+        ),
+      );
+      unawaited(
+        api.crateApiReportsGenerateTrialBalance(
+          asOfDate: '2026-01-31',
+          periodStart: '2026-01-01',
+        ),
+      );
+      unawaited(
+        api.crateApiLedgerPostJournalEntry(
+          dto: entry,
+          metadata: metadata,
+        ),
+      );
+      unawaited(
+        api.crateApiLedgerReverseJournalEntry(
+          entryId: 'JE-1',
+          reason: 'تصحيح محاسبي معتمد',
+          metadata: metadata,
+        ),
+      );
       unawaited(api.crateApiLedgerValidateJournalEntry(dto: entry));
-      unawaited(api.crateApiLedgerLogAgentConsensus(
-        entryId: 'JE-1',
-        consensusJson: '{"decision":"approve"}',
-        metadata: metadata,
-      ));
-      unawaited(api.crateApiReportsGetAccountEntries(
-        accountId: '1101',
-        periodStart: '2026-01-01',
-        periodEnd: '2026-01-31',
-      ));
-      unawaited(api.crateApiLedgerListJournalEntries(
-        limit: 50,
-        offset: 0,
-        fromDate: '2026-01-01',
-        toDate: '2026-01-31',
-        accountId: '1101',
-      ));
+      unawaited(
+        api.crateApiLedgerLogAgentConsensus(
+          entryId: 'JE-1',
+          consensusJson: '{"decision":"approve"}',
+          metadata: metadata,
+        ),
+      );
+      unawaited(
+        api.crateApiReportsGetAccountEntries(
+          accountId: '1101',
+          periodStart: '2026-01-01',
+          periodEnd: '2026-01-31',
+        ),
+      );
+      unawaited(
+        api.crateApiLedgerListJournalEntries(
+          limit: 50,
+          offset: 0,
+          fromDate: '2026-01-01',
+          toDate: '2026-01-31',
+          accountId: '1101',
+        ),
+      );
 
       expect(
         handler.tasks.map((task) => task.name),
@@ -278,58 +300,77 @@ void main() {
       unawaited(api.crateApiInventoryGetValuationReport(asOf: '2026-01-31'));
       unawaited(api.crateApiInventoryListItems());
       unawaited(api.crateApiInventoryListMovements(itemId: 'ITEM-1'));
-      unawaited(api.crateApiInventoryRecordImpairment(
-        itemId: 'ITEM-1',
-        totalImpairmentAmount: '25.00',
-        referenceId: 'ADJ-1',
-        metadata: metadata,
-      ));
-      unawaited(api.crateApiInventoryRecordMovement(
-        movement: _MockStockMovementDto(),
-        metadata: metadata,
-      ));
-      unawaited(api.crateApiInventoryRecordPurchase(
-        itemId: 'ITEM-1',
-        quantity: '4',
-        unitCost: '25.00',
-        metadata: metadata,
-      ));
-      unawaited(api.crateApiInventoryRecordSale(
-        itemId: 'ITEM-1',
-        quantity: '1',
-        referenceId: 'INV-1',
-        metadata: metadata,
-      ));
+      unawaited(
+        api.crateApiInventoryRecordImpairment(
+          itemId: 'ITEM-1',
+          totalImpairmentAmount: '25.00',
+          referenceId: 'ADJ-1',
+          metadata: metadata,
+        ),
+      );
+      unawaited(
+        api.crateApiInventoryRecordMovement(
+          movement: _MockStockMovementDto(),
+          metadata: metadata,
+        ),
+      );
+      unawaited(
+        api.crateApiInventoryRecordPurchase(
+          itemId: 'ITEM-1',
+          quantity: '4',
+          unitCost: '25.00',
+          metadata: metadata,
+        ),
+      );
+      unawaited(
+        api.crateApiInventoryRecordSale(
+          itemId: 'ITEM-1',
+          quantity: '1',
+          referenceId: 'INV-1',
+          metadata: metadata,
+        ),
+      );
       unawaited(api.crateApiInventorySaveItem(item: _MockInventoryItemDto()));
       unawaited(api.crateApiInventoryVerifyInventoryChain(itemId: 'ITEM-1'));
       unawaited(api.crateApiAssetsGetAssetById(id: 'ASSET-1'));
       unawaited(api.crateApiAssetsListAssets());
       unawaited(api.crateApiAssetsListCategories());
       unawaited(api.crateApiAssetsRegisterAsset(asset: _MockAssetDto()));
-      unawaited(api.crateApiAssetsRegisterCategory(
-        category: _MockAssetCategoryDto(),
-      ));
-      unawaited(api.crateApiAssetsRunDepreciationCycle(
-        assetId: 'ASSET-1',
-        asOf: '2026-01-31',
-        metadata: metadata,
-      ));
-      unawaited(api.crateApiCurrencyGetExchangeRate(
-        base: 'SAR',
-        target: 'USD',
-        date: '2026-01-31',
-      ));
       unawaited(
-          api.crateApiCurrencyListExchangeRates(base: 'SAR', target: 'USD'));
-      unawaited(api.crateApiCurrencyPerformRevaluation(
-        date: '2026-01-31',
-        systemBase: 'SAR',
-        unrealizedGainLossAccountId: '5100',
-        metadata: metadata,
-      ));
-      unawaited(api.crateApiCurrencySaveExchangeRate(
-        dto: _MockExchangeRateDto(),
-      ));
+        api.crateApiAssetsRegisterCategory(
+          category: _MockAssetCategoryDto(),
+        ),
+      );
+      unawaited(
+        api.crateApiAssetsRunDepreciationCycle(
+          assetId: 'ASSET-1',
+          asOf: '2026-01-31',
+          metadata: metadata,
+        ),
+      );
+      unawaited(
+        api.crateApiCurrencyGetExchangeRate(
+          base: 'SAR',
+          target: 'USD',
+          date: '2026-01-31',
+        ),
+      );
+      unawaited(
+        api.crateApiCurrencyListExchangeRates(base: 'SAR', target: 'USD'),
+      );
+      unawaited(
+        api.crateApiCurrencyPerformRevaluation(
+          date: '2026-01-31',
+          systemBase: 'SAR',
+          unrealizedGainLossAccountId: '5100',
+          metadata: metadata,
+        ),
+      );
+      unawaited(
+        api.crateApiCurrencySaveExchangeRate(
+          dto: _MockExchangeRateDto(),
+        ),
+      );
 
       expect(handler.tasks, hasLength(20));
       expect(
@@ -357,42 +398,54 @@ void main() {
       final api = _apiFor(handler);
       final metadata = _auditMetadata();
 
-      unawaited(api.crateApiAccountsCreateAccount(
-        dto: _MockAccountDto(),
-        metadata: metadata,
-      ));
+      unawaited(
+        api.crateApiAccountsCreateAccount(
+          dto: _MockAccountDto(),
+          metadata: metadata,
+        ),
+      );
       unawaited(api.crateApiAccountsGetAccountById(id: '1101'));
       unawaited(api.crateApiAccountsListAccounts());
-      unawaited(api.crateApiAccountsUpdateAccount(
-        dto: _MockAccountDto(),
-        metadata: metadata,
-      ));
-      unawaited(api.crateApiAccountsUpdateAccountCategory(
-        accountId: '1101',
-        category: 'operating',
-        metadata: metadata,
-      ));
+      unawaited(
+        api.crateApiAccountsUpdateAccount(
+          dto: _MockAccountDto(),
+          metadata: metadata,
+        ),
+      );
+      unawaited(
+        api.crateApiAccountsUpdateAccountCategory(
+          accountId: '1101',
+          category: 'operating',
+          metadata: metadata,
+        ),
+      );
       unawaited(api.crateApiSalesCreateCustomer(customer: _MockCustomerDto()));
-      unawaited(api.crateApiSalesCreateInvoice(
-        invoice: _MockSalesInvoiceDto(),
-        lines: <SalesInvoiceLineDto>[_MockSalesInvoiceLineDto()],
-        metadata: metadata,
-      ));
+      unawaited(
+        api.crateApiSalesCreateInvoice(
+          invoice: _MockSalesInvoiceDto(),
+          lines: <SalesInvoiceLineDto>[_MockSalesInvoiceLineDto()],
+          metadata: metadata,
+        ),
+      );
       unawaited(api.crateApiSalesDeleteCustomer(id: 'C-1'));
       unawaited(api.crateApiSalesDeleteInvoice(id: 'INV-1'));
       unawaited(api.crateApiSalesGetInvoiceById(id: 'INV-1'));
       unawaited(api.crateApiSalesListCustomers());
       unawaited(api.crateApiSalesListInvoices());
       unawaited(api.crateApiSalesPostInvoice(id: 'INV-1', metadata: metadata));
-      unawaited(api.crateApiSalesRecordCustomerPayment(
-        payment: _MockCustomerPaymentDto(),
-        metadata: metadata,
-      ));
+      unawaited(
+        api.crateApiSalesRecordCustomerPayment(
+          payment: _MockCustomerPaymentDto(),
+          metadata: metadata,
+        ),
+      );
       unawaited(api.crateApiSalesUpdateCustomer(customer: _MockCustomerDto()));
-      unawaited(api.crateApiPurchasingCreatePurchaseBill(
-        bill: _MockPurchaseBillDto(),
-        metadata: metadata,
-      ));
+      unawaited(
+        api.crateApiPurchasingCreatePurchaseBill(
+          bill: _MockPurchaseBillDto(),
+          metadata: metadata,
+        ),
+      );
       unawaited(api.crateApiPurchasingCreateVendor(vendor: _MockVendorDto()));
       unawaited(api.crateApiPurchasingDeleteBill(id: 'BILL-1'));
       unawaited(api.crateApiPurchasingDeleteVendor(id: 'V-1'));
@@ -400,24 +453,30 @@ void main() {
       unawaited(api.crateApiPurchasingGetVendorById(id: 'V-1'));
       unawaited(api.crateApiPurchasingListPurchaseBills());
       unawaited(api.crateApiPurchasingListVendors());
-      unawaited(api.crateApiPurchasingRecordBillPayment(
-        payment: _MockBillPaymentDto(),
-        metadata: metadata,
-      ));
+      unawaited(
+        api.crateApiPurchasingRecordBillPayment(
+          payment: _MockBillPaymentDto(),
+          metadata: metadata,
+        ),
+      );
       unawaited(api.crateApiPurchasingUpdateVendor(vendor: _MockVendorDto()));
       unawaited(api.crateApiCalendarGetPeriodByDate(date: '2026-01-31'));
       unawaited(api.crateApiCalendarListPeriods());
       unawaited(api.crateApiCalendarSavePeriod(dto: _MockPeriodDto()));
-      unawaited(api.crateApiZatcaGenerateZatcaCsr(
-        input: _MockZatcaCsrInputDto(),
-        keyPairPem: 'test-key-pair',
-      ));
+      unawaited(
+        api.crateApiZatcaGenerateZatcaCsr(
+          input: _MockZatcaCsrInputDto(),
+          keyPairPem: 'test-key-pair',
+        ),
+      );
       unawaited(api.crateApiZatcaGenerateZatcaKeyPair());
-      unawaited(api.crateApiZatcaGenerateZatcaSignedXml(
-        input: _MockZatcaInvoiceInputDto(),
-        certificatePem: 'test-certificate',
-        privateKeyPem: 'test-private-key',
-      ));
+      unawaited(
+        api.crateApiZatcaGenerateZatcaSignedXml(
+          input: _MockZatcaInvoiceInputDto(),
+          certificatePem: 'test-certificate',
+          privateKeyPem: 'test-private-key',
+        ),
+      );
       unawaited(api.crateApiInitApi(databaseUrl: 'postgres://local-test'));
       unawaited(api.crateApiReportsGetPayablesAging(asOfDate: '2026-01-31'));
       unawaited(api.crateApiReportsGetReceivablesAging(asOfDate: '2026-01-31'));
@@ -453,10 +512,12 @@ void main() {
       );
       unawaited(api.crateApiLedgerGetAgentConsensus(entryId: 'JE-42'));
       unawaited(api.crateApiLedgerListAuditLogs(entityId: 'JE-42'));
-      unawaited(api.crateApiReportsGenerateZakahStatement(
-        asOfDate: '2026-08-14',
-        calendar: ZakahCalendarDto.hijri,
-      ));
+      unawaited(
+        api.crateApiReportsGenerateZakahStatement(
+          asOfDate: '2026-08-14',
+          calendar: ZakahCalendarDto.hijri,
+        ),
+      );
       unawaited(api.crateApiStandardsGetStandardInfo(reference: 'IAS 2'));
       unawaited(api.crateApiStandardsSearchStandards(query: 'inventory'));
 
@@ -477,7 +538,7 @@ void main() {
             .arguments,
         <String, dynamic>{
           'prefix': 'ledger-chain',
-          'entries': <EntryDto>[entry]
+          'entries': <EntryDto>[entry],
         },
       );
       expect(

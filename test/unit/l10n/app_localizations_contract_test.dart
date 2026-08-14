@@ -1308,28 +1308,28 @@ void main() {
         ],
         'msgSaveError': [
           ar.msgSaveError('خطأ اختبار'),
-          en.msgSaveError('test error')
+          en.msgSaveError('test error'),
         ],
         'pdfShareSubject': [
           ar.pdfShareSubject('INV-42'),
-          en.pdfShareSubject('INV-42')
+          en.pdfShareSubject('INV-42'),
         ],
         'pdfShareText': [
           ar.pdfShareText('عميل تجريبي'),
-          en.pdfShareText('Test customer')
+          en.pdfShareText('Test customer'),
         ],
         'placeholderComingSoon': [
           ar.placeholderComingSoon('تقرير'),
-          en.placeholderComingSoon('Report')
+          en.placeholderComingSoon('Report'),
         ],
         'msgConfirmDeleteItem': [
           ar.msgConfirmDeleteItem('صنف'),
-          en.msgConfirmDeleteItem('Item')
+          en.msgConfirmDeleteItem('Item'),
         ],
         'labelTax': [ar.labelTax('15%'), en.labelTax('15%')],
         'msgBalanceUnbalanced': [
           ar.msgBalanceUnbalanced('25.00'),
-          en.msgBalanceUnbalanced('25.00')
+          en.msgBalanceUnbalanced('25.00'),
         ],
         'agentRationaleStandardsManualReview': [
           ar.agentRationaleStandardsManualReview('فاتورة'),
@@ -1381,11 +1381,11 @@ void main() {
         ],
         'errForensicImbalance': [
           ar.errForensicImbalance('JE-1'),
-          en.errForensicImbalance('JE-1')
+          en.errForensicImbalance('JE-1'),
         ],
         'errForensicDiscrepancy': [
           ar.errForensicDiscrepancy('JE-1'),
-          en.errForensicDiscrepancy('JE-1')
+          en.errForensicDiscrepancy('JE-1'),
         ],
         'errForensicHashBreach': [
           ar.errForensicHashBreach('hash-current', 'hash-previous'),
@@ -1393,11 +1393,11 @@ void main() {
         ],
         'workAuditLinkedDoc': [
           ar.workAuditLinkedDoc('INV-42'),
-          en.workAuditLinkedDoc('INV-42')
+          en.workAuditLinkedDoc('INV-42'),
         ],
         'workAuditOpenLinked': [
           ar.workAuditOpenLinked('INV-42'),
-          en.workAuditOpenLinked('INV-42')
+          en.workAuditOpenLinked('INV-42'),
         ],
       };
 
@@ -1410,9 +1410,13 @@ void main() {
       expect(messages['msgInvoiceShare']![0], contains('INV-42'));
       expect(messages['msgInvoiceShare']![1], contains('INV-42'));
       expect(
-          messages['agentRationaleForensicSequenceGap']![0], contains('REF-3'));
+        messages['agentRationaleForensicSequenceGap']![0],
+        contains('REF-3'),
+      );
       expect(
-          messages['agentRationaleForensicSequenceGap']![1], contains('REF-3'));
+        messages['agentRationaleForensicSequenceGap']![1],
+        contains('REF-3'),
+      );
     },
   );
 }

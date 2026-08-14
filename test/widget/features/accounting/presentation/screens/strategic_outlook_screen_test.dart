@@ -68,11 +68,11 @@ Widget _testApp(Future<StrategicOutlook> outlookFuture) => ProviderScope(
           () => _FakeStrategicForecastNotifier(outlookFuture),
         ),
       ],
-      child: MaterialApp(
-        locale: const Locale('ar'),
+      child: const MaterialApp(
+        locale: Locale('ar'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const StrategicOutlookScreen(),
+        home: StrategicOutlookScreen(),
       ),
     );
 
@@ -144,6 +144,8 @@ void main() {
 
     expect(find.byType(AppErrorWidget), findsOneWidget);
     expect(
-        find.textContaining('forecast repository unavailable'), findsOneWidget);
+      find.textContaining('forecast repository unavailable'),
+      findsOneWidget,
+    );
   });
 }

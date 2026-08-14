@@ -55,11 +55,11 @@ Widget _testApp(Future<FinancialReport> incomeStatementFuture) => ProviderScope(
           () => _FakeFinancialStatementService(incomeStatementFuture),
         ),
       ],
-      child: MaterialApp(
-        locale: const Locale('ar'),
+      child: const MaterialApp(
+        locale: Locale('ar'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const IncomeStatementScreen(),
+        home: IncomeStatementScreen(),
       ),
     );
 
@@ -86,7 +86,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-        find.text('Operating Performance (Current vs Prior)'), findsOneWidget);
+      find.text('Operating Performance (Current vs Prior)'),
+      findsOneWidget,
+    );
     expect(find.text('Current'), findsOneWidget);
     expect(find.text('Prior'), findsOneWidget);
     expect(find.text('Operating Activities'), findsOneWidget);
@@ -107,7 +109,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(AppErrorWidget), findsOneWidget);
-    expect(find.textContaining('Income statement service unavailable'),
-        findsOneWidget);
+    expect(
+      find.textContaining('Income statement service unavailable'),
+      findsOneWidget,
+    );
   });
 }

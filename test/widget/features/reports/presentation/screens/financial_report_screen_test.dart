@@ -6,9 +6,9 @@ import 'package:basir_accounting_system/features/reports/presentation/screens/fi
 import 'package:basir_accounting_system/features/reports/presentation/widgets/report_line_item.dart';
 import 'package:basir_accounting_system/features/reports/services/reporting_service.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
-import 'package:basir_accounting_system/src/rust/api/reports.dart';
 import 'package:basir_accounting_system/shared/widgets/app_error_widget.dart';
 import 'package:basir_accounting_system/shared/widgets/app_loading_indicator.dart';
+import 'package:basir_accounting_system/src/rust/api/reports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -39,7 +39,9 @@ class _FakeOrchestratorService extends OrchestratorService {
 
   @override
   Future<List<AgentResult>> getPeriodInsights(
-          DateTime from, DateTime to) async =>
+    DateTime from,
+    DateTime to,
+  ) async =>
       const [
         AgentResult(
           agentId: 'Standards Engine',
@@ -137,8 +139,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(AppErrorWidget), findsOneWidget);
-    expect(find.textContaining('Native reporting service unavailable'),
-        findsOneWidget);
+    expect(
+      find.textContaining('Native reporting service unavailable'),
+      findsOneWidget,
+    );
     expect(find.byType(SwitchListTile), findsOneWidget);
   });
 }

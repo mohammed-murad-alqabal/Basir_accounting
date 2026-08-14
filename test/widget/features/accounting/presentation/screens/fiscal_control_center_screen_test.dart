@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
 import 'package:basir_accounting_system/features/accounting/domain/repositories/financial_year_repository.dart';
@@ -71,7 +69,8 @@ void main() {
     expect(find.text('Operational Period'), findsOneWidget);
     expect(
       find.text(
-          'No active financial year detected. System operation might be restricted.'),
+        'No active financial year detected. System operation might be restricted.',
+      ),
       findsOneWidget,
     );
     expect(find.text('Financial Cycles'), findsOneWidget);

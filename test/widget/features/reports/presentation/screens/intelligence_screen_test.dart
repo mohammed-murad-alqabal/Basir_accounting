@@ -117,9 +117,13 @@ void main() {
     );
     expect(find.byType(LineChart), findsOneWidget);
     expect(
-        find.byIcon(Icons.trending_down, skipOffstage: false), findsOneWidget);
+      find.byIcon(Icons.trending_down, skipOffstage: false),
+      findsOneWidget,
+    );
     expect(
-        find.byIcon(Icons.trending_up, skipOffstage: false), findsNWidgets(2));
+      find.byIcon(Icons.trending_up, skipOffstage: false),
+      findsNWidgets(2),
+    );
   });
 
   testWidgets('يعرض رسالة الخطأ عندما يفشل تحميل المؤشرات', (tester) async {
@@ -134,7 +138,9 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
 
-    expect(find.textContaining('analytics repository unavailable'),
-        findsOneWidget);
+    expect(
+      find.textContaining('analytics repository unavailable'),
+      findsOneWidget,
+    );
   });
 }

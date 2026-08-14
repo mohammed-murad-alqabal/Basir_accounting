@@ -128,7 +128,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final formContext = tester.element(find.byType(Form));
-    final l10n = AppLocalizations.of(formContext)!;
+    final l10n = AppLocalizations.of(formContext);
     final saveButton = find.byType(AppEnhancedButton);
     await tester.ensureVisible(saveButton);
     await tester.tap(saveButton);
