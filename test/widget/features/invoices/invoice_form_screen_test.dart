@@ -126,6 +126,76 @@ void main() {
       },
     );
   });
+
+  group('InvoiceFormScreen - Document composition', () {
+    testWidgets('should reveal the exchange-rate field for USD',
+        (tester) async {
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byType(DropdownButtonFormField<String>));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('USD').last);
+      await tester.pumpAndSettle();
+
+      expect(find.text('سعر الصرف'), findsOneWidget);
+      expect(find.text('3.75'), findsOneWidget);
+    });
+
+    testWidgets('should update the displayed tax rate after confirmation', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byTooltip('تعديل نسبة الضريبة'));
+      await tester.pumpAndSettle();
+
+      final dialog = find.byType(AlertDialog);
+      final taxField = find.descendant(
+        of: dialog,
+        matching: find.byType(TextField),
+      );
+      await tester.enterText(taxField, '5');
+      await tester.tap(
+        find.descendant(of: dialog, matching: find.text('حفظ')).last,
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('5%'), findsOneWidget);
+    });
+
+    testWidgets('should add and remove an invoice line item through the dialog',
+        (
+      tester,
+    ) async {
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byTooltip('إضافة بند جديد'));
+      await tester.pumpAndSettle();
+
+      final dialog = find.byType(AlertDialog);
+      final fields = find.descendant(
+        of: dialog,
+        matching: find.byType(TextField),
+      );
+      await tester.enterText(fields.at(1), 'خدمة اختبارية');
+      await tester.enterText(fields.at(2), '2');
+      await tester.enterText(fields.at(3), '100');
+      await tester.tap(
+        find.descendant(of: dialog, matching: find.text('إضافة')).last,
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('خدمة اختبارية'), findsOneWidget);
+      await tester.tap(find.byTooltip('حذف البند'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('خدمة اختبارية'), findsNothing);
+      expect(find.text('لا توجد بنود. اضغط + لإضافة بند'), findsOneWidget);
+    });
+  });
 }
 
 class _MockCalendarNotifier extends CalendarNotifier {
