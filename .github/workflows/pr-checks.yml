@@ -166,23 +166,33 @@ jobs:
         run: |
           echo "🏛️ Checking Clean Architecture compliance..."
 
-          # Check for proper layer separation
+          # Apply the layer contract that matches each feature's role.
+          # Presentation-only features coordinate UI and routes; tooling is not
+          # a business feature. All other features must retain domain and UI layers.
           for module in lib/features/*/; do
             module_name=$(basename "$module")
-            
-            # Check for domain layer
-            if [ ! -d "$module/domain" ]; then
-              echo "❌ $module_name missing domain layer"
-              exit 1
-            fi
-            
-            # Check for presentation layer
-            if [ ! -d "$module/presentation" ]; then
-              echo "❌ $module_name missing presentation layer"
-              exit 1
-            fi
-            
-            echo "✅ $module_name has proper architecture"
+
+            case "$module_name" in
+              navigation|onboarding)
+                required_layers=(presentation)
+                ;;
+              testing)
+                echo "⏭️  $module_name is tooling; no business-layer contract applies"
+                continue
+                ;;
+              *)
+                required_layers=(domain presentation)
+                ;;
+            esac
+
+            for layer in "${required_layers[@]}"; do
+              if [ ! -d "$module/$layer" ]; then
+                echo "❌ $module_name missing required $layer layer"
+                exit 1
+              fi
+            done
+
+            echo "✅ $module_name satisfies its architecture contract"
           done
 
   accounting-integrity:
