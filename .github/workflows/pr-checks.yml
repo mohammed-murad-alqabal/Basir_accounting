@@ -176,7 +176,9 @@ jobs:
         run: |
           echo "🏛️ Checking Clean Architecture compliance..."
 
-          # Check for proper layer separation
+          # Check for proper layer separation. Navigation, onboarding, and
+          # test-support surfaces are declared infrastructure rather than ERP
+          # domain modules; all remaining feature modules must retain layers.
           for module in lib/features/*/; do
             module_name=$(basename "$module")
 
