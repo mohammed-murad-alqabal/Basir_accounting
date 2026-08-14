@@ -168,6 +168,91 @@ class _DcoProbe extends RustLibApiImpl {
       dco_decode_list_drill_down_entry_dto(raw);
   InventoryValuationReportDto inventoryValuation(dynamic raw) =>
       dco_decode_inventory_valuation_report_dto(raw);
+  List<AccountDto> accounts(dynamic raw) => dco_decode_list_account_dto(raw);
+  List<CustomerDto> customers(dynamic raw) => dco_decode_list_customer_dto(raw);
+  List<EntryDto> entries(dynamic raw) => dco_decode_list_entry_dto(raw);
+  List<ExchangeRateDto> exchangeRates(dynamic raw) =>
+      dco_decode_list_exchange_rate_dto(raw);
+  List<FinancialReportLineDto> financialReportLines(dynamic raw) =>
+      dco_decode_list_financial_report_line_dto(raw);
+  List<InventoryItemDto> inventoryItems(dynamic raw) =>
+      dco_decode_list_inventory_item_dto(raw);
+  List<LineDto> lines(dynamic raw) => dco_decode_list_line_dto(raw);
+  List<PeriodDto> periods(dynamic raw) => dco_decode_list_period_dto(raw);
+  List<PurchaseBillDto> purchaseBills(dynamic raw) =>
+      dco_decode_list_purchase_bill_dto(raw);
+  List<SalesInvoiceDto> salesInvoices(dynamic raw) =>
+      dco_decode_list_sales_invoice_dto(raw);
+  List<SalesInvoiceLineDto> salesInvoiceLines(dynamic raw) =>
+      dco_decode_list_sales_invoice_line_dto(raw);
+  List<StandardDto> standards(dynamic raw) => dco_decode_list_standard_dto(raw);
+  List<StockMovementDto> stockMovements(dynamic raw) =>
+      dco_decode_list_stock_movement_dto(raw);
+  List<TrialBalanceLineDto> trialBalanceLines(dynamic raw) =>
+      dco_decode_list_trial_balance_line_dto(raw);
+  List<ValuationItemDto> valuationItems(dynamic raw) =>
+      dco_decode_list_valuation_item_dto(raw);
+  List<VendorDto> vendors(dynamic raw) => dco_decode_list_vendor_dto(raw);
+  List<ZatcaInvoiceLineDto> zatcaInvoiceLines(dynamic raw) =>
+      dco_decode_list_zatca_invoice_line_dto(raw);
+  List<(String, String)> stringPairs(dynamic raw) =>
+      dco_decode_list_record_string_string(raw);
+  Map<String, String>? stringMap(dynamic raw) =>
+      dco_decode_opt_Map_String_String_None(raw);
+  Uint8List bytes(dynamic raw) => dco_decode_list_prim_u_8_strict(raw);
+  bool boolValue(dynamic raw) => dco_decode_bool(raw);
+  int int32(dynamic raw) => dco_decode_i_32(raw);
+  int uint32(dynamic raw) => dco_decode_u_32(raw);
+  int uint8(dynamic raw) => dco_decode_u_8(raw);
+  void unit(dynamic raw) => dco_decode_unit(raw);
+  AccountDto boxedAccount(dynamic raw) =>
+      dco_decode_box_autoadd_account_dto(raw);
+  AssetCategoryDto boxedAssetCategory(dynamic raw) =>
+      dco_decode_box_autoadd_asset_category_dto(raw);
+  AssetDto boxedAsset(dynamic raw) => dco_decode_box_autoadd_asset_dto(raw);
+  AuditMetadataDto boxedAuditMetadata(dynamic raw) =>
+      dco_decode_box_autoadd_audit_metadata_dto(raw);
+  BillPaymentDto boxedBillPayment(dynamic raw) =>
+      dco_decode_box_autoadd_bill_payment_dto(raw);
+  CustomerDto boxedCustomer(dynamic raw) =>
+      dco_decode_box_autoadd_customer_dto(raw);
+  CustomerPaymentDto boxedCustomerPayment(dynamic raw) =>
+      dco_decode_box_autoadd_customer_payment_dto(raw);
+  EntryDto boxedEntry(dynamic raw) => dco_decode_box_autoadd_entry_dto(raw);
+  ExchangeRateDto boxedExchangeRate(dynamic raw) =>
+      dco_decode_box_autoadd_exchange_rate_dto(raw);
+  InventoryItemDto boxedInventoryItem(dynamic raw) =>
+      dco_decode_box_autoadd_inventory_item_dto(raw);
+  PeriodDto boxedPeriod(dynamic raw) => dco_decode_box_autoadd_period_dto(raw);
+  PurchaseBillDto boxedPurchaseBill(dynamic raw) =>
+      dco_decode_box_autoadd_purchase_bill_dto(raw);
+  SalesInvoiceDto boxedSalesInvoice(dynamic raw) =>
+      dco_decode_box_autoadd_sales_invoice_dto(raw);
+  StockMovementDto boxedStockMovement(dynamic raw) =>
+      dco_decode_box_autoadd_stock_movement_dto(raw);
+  VendorDto boxedVendor(dynamic raw) => dco_decode_box_autoadd_vendor_dto(raw);
+  ZatcaCsrInputDto boxedZatcaCsr(dynamic raw) =>
+      dco_decode_box_autoadd_zatca_csr_input_dto(raw);
+  ZatcaInvoiceInputDto boxedZatcaInvoice(dynamic raw) =>
+      dco_decode_box_autoadd_zatca_invoice_input_dto(raw);
+  AccountDto? optionalAccount(dynamic raw) =>
+      dco_decode_opt_box_autoadd_account_dto(raw);
+  AssetDto? optionalAsset(dynamic raw) =>
+      dco_decode_opt_box_autoadd_asset_dto(raw);
+  ExchangeRateDto? optionalExchangeRate(dynamic raw) =>
+      dco_decode_opt_box_autoadd_exchange_rate_dto(raw);
+  InventoryItemDto? optionalInventoryItem(dynamic raw) =>
+      dco_decode_opt_box_autoadd_inventory_item_dto(raw);
+  PeriodDto? optionalPeriod(dynamic raw) =>
+      dco_decode_opt_box_autoadd_period_dto(raw);
+  PurchaseBillDto? optionalPurchaseBill(dynamic raw) =>
+      dco_decode_opt_box_autoadd_purchase_bill_dto(raw);
+  SalesInvoiceDto? optionalSalesInvoice(dynamic raw) =>
+      dco_decode_opt_box_autoadd_sales_invoice_dto(raw);
+  VendorDto? optionalVendor(dynamic raw) =>
+      dco_decode_opt_box_autoadd_vendor_dto(raw);
+  ZatcaInvoiceInputDto zatcaInvoice(dynamic raw) =>
+      dco_decode_zatca_invoice_input_dto(raw);
 }
 
 _DcoProbe _dcoProbe() {
@@ -888,6 +973,322 @@ void main() {
       expect(anomalies[0], isA<AnomalyDto_SequenceGap>());
       expect(anomalies[1], isA<AnomalyDto_ReconciliationMismatch>());
       expect(anomalies[2], isA<AnomalyDto_OrphanedDraft>());
+    });
+
+    test('يفك مسارات DCO المتبقية للقوائم والصناديق والخيارات وZATCA', () {
+      final api = _dcoProbe();
+      final account = <dynamic>[
+        'ACC-1',
+        '1101',
+        'الصندوق',
+        'Cash',
+        'asset',
+        null,
+        'IAS 1',
+        'current',
+        'operating',
+        'SAR',
+      ];
+      final category = <dynamic>[
+        'CAT-1',
+        'تقنية',
+        'Technology',
+        'straight_line',
+        5,
+        '1501',
+        '5501',
+        '1502',
+      ];
+      final asset = <dynamic>[
+        'ASSET-1',
+        'FA-001',
+        'خادم',
+        'Server',
+        'CAT-1',
+        '2025-01-01',
+        '12000.00',
+        '2000.00',
+        5,
+        'straight_line',
+        '1500.00',
+        '1501',
+        '5501',
+        '1502',
+        true,
+      ];
+      final metadata = <dynamic>[
+        <dynamic>['U-1', 'مراجع', 'auditor', 'S-1'],
+        <dynamic>['basir', null, null, null, null],
+        <dynamic>['audit', null, null],
+        <dynamic>['automated', null, null],
+      ];
+      final billPayment = <dynamic>[
+        'BP-1',
+        'BILL-1',
+        '50.00',
+        '2026-02-01',
+        'bank_transfer',
+        'BANK-1',
+        'REF-1',
+      ];
+      final customer = <dynamic>[
+        'C-1',
+        'C-100',
+        'عميل',
+        'Customer',
+        '3000000000',
+      ];
+      final customerPayment = <dynamic>[
+        'CP-1',
+        'INV-1',
+        '50.00',
+        '2026-02-02',
+        'BANK-1',
+        'mada',
+        'REF-2',
+      ];
+      final line = <dynamic>[
+        '1101',
+        '50.00',
+        true,
+        'إثبات',
+        null,
+        null,
+        null,
+      ];
+      final entry = <dynamic>[
+        'JE-1',
+        'JE-2026-001',
+        'قيد',
+        '2026-01-01',
+        'IAS 1',
+        <dynamic>[line],
+        null,
+        null,
+      ];
+      final exchangeRate = <dynamic>[
+        'SAR',
+        'USD',
+        '3.75',
+        '2026-01-31',
+        'SAMA',
+      ];
+      final inventoryItem = <dynamic>[
+        'ITEM-1',
+        'STK-100',
+        'مخزون',
+        'Stock',
+        null,
+        'قطعة',
+        null,
+        'FIFO',
+        null,
+        null,
+        '1301',
+        '5101',
+        '4101',
+        '2026-01-01T00:00:00Z',
+        '2026-01-31T00:00:00Z',
+      ];
+      final period = <dynamic>[
+        'P-1',
+        'يناير',
+        '2026-01-01',
+        '2026-01-31',
+        'open',
+        false,
+      ];
+      final purchaseBill = <dynamic>[
+        'BILL-1',
+        'PB-1',
+        'V-1',
+        '2026-01-01',
+        '2026-02-01',
+        '50.00',
+        '50.00',
+        'open',
+        '5101',
+        '2101',
+        null,
+      ];
+      final salesInvoice = <dynamic>[
+        'INV-1',
+        'SI-1',
+        'C-1',
+        '2026-01-01',
+        '2026-02-01',
+        'posted',
+        '50.00',
+        '0.00',
+        null,
+        '4101',
+        '1201',
+        null,
+      ];
+      final salesInvoiceLine = <dynamic>[
+        'ITEM-1',
+        'خدمة',
+        '1',
+        '50.00',
+        '7.50',
+        'S',
+      ];
+      final standard = <dynamic>['IAS 2', 'Inventories', true];
+      final movement = <dynamic>[
+        'MOVE-1',
+        'ITEM-1',
+        'purchase',
+        '5',
+        '10.00',
+        null,
+        '2026-01-01',
+        null,
+      ];
+      final trialBalanceLine = <dynamic>[
+        'ACC-1',
+        '1101',
+        'الصندوق',
+        '50.00',
+        '0.00',
+      ];
+      final valuation = <dynamic>[
+        'ITEM-1',
+        'مخزون',
+        'Stock',
+        '5',
+        '10.00',
+        '50.00',
+      ];
+      final vendor = <dynamic>['V-1', 'V-100', 'مورد', 'Vendor', null];
+      final csr = <dynamic>[
+        'Basir',
+        'Finance',
+        'Basir Accounting',
+        'SA',
+        'CR-1',
+        '3000000000',
+        'Software',
+        'Riyadh',
+      ];
+      final zatcaLine = <dynamic>['L-1', '1', '50.00', 'S', 'خدمة'];
+      final zatcaInvoice = <dynamic>[
+        'INV-1',
+        'uuid-1',
+        '2026-01-01',
+        '10:00:00',
+        '388',
+        1,
+        'previous-hash',
+        <dynamic>['seller-vat', 'VAT'],
+        <dynamic>['buyer-vat', 'VAT'],
+        <dynamic>[zatcaLine],
+      ];
+
+      expect(api.accounts(<dynamic>[account]).single.code, '1101');
+      expect(api.customers(<dynamic>[customer]).single.code, 'C-100');
+      expect(api.entries(<dynamic>[entry]).single.lines, hasLength(1));
+      expect(api.exchangeRates(<dynamic>[exchangeRate]).single.rate, '3.75');
+      expect(
+        api
+            .financialReportLines(<dynamic>[
+              <dynamic>['الإيرادات', '50.00', false, true, 0],
+            ])
+            .single
+            .isTotal,
+        isTrue,
+      );
+      expect(
+        api.inventoryItems(<dynamic>[inventoryItem]).single.code,
+        'STK-100',
+      );
+      expect(api.lines(<dynamic>[line]).single.isDebit, isTrue);
+      expect(api.periods(<dynamic>[period]).single.status, 'open');
+      expect(
+        api.purchaseBills(<dynamic>[purchaseBill]).single.billNumber,
+        'PB-1',
+      );
+      expect(
+        api.salesInvoices(<dynamic>[salesInvoice]).single.invoiceNumber,
+        'SI-1',
+      );
+      expect(
+        api.salesInvoiceLines(<dynamic>[salesInvoiceLine]).single.quantity,
+        '1',
+      );
+      expect(api.standards(<dynamic>[standard]).single.reference, 'IAS 2');
+      expect(api.stockMovements(<dynamic>[movement]).single.itemId, 'ITEM-1');
+      expect(
+        api.trialBalanceLines(<dynamic>[trialBalanceLine]).single.accountCode,
+        '1101',
+      );
+      expect(
+        api.valuationItems(<dynamic>[valuation]).single.totalValue,
+        '50.00',
+      );
+      expect(api.vendors(<dynamic>[vendor]).single.code, 'V-100');
+      expect(
+        api.zatcaInvoiceLines(<dynamic>[zatcaLine]).single.itemName,
+        'خدمة',
+      );
+      expect(
+        api.stringPairs(<dynamic>[
+          <dynamic>['currency', 'SAR'],
+        ]),
+        [
+          ('currency', 'SAR'),
+        ],
+      );
+      expect(
+        api.stringMap(<dynamic>[
+          <dynamic>['currency', 'SAR'],
+        ]),
+        {
+          'currency': 'SAR',
+        },
+      );
+      expect(api.stringMap(null), isNull);
+      expect(api.bytes(Uint8List.fromList(<int>[1, 2, 3])), <int>[1, 2, 3]);
+      expect(api.boolValue(true), isTrue);
+      expect(api.int32(-32), -32);
+      expect(api.uint32(32), 32);
+      expect(api.uint8(8), 8);
+      api.unit(null);
+
+      expect(api.boxedAccount(account).code, '1101');
+      expect(api.boxedAssetCategory(category).id, 'CAT-1');
+      expect(api.boxedAsset(asset).code, 'FA-001');
+      expect(api.boxedAuditMetadata(metadata).who.role, 'auditor');
+      expect(api.boxedBillPayment(billPayment).reference, 'REF-1');
+      expect(api.boxedCustomer(customer).taxId, '3000000000');
+      expect(api.boxedCustomerPayment(customerPayment).reference, 'REF-2');
+      expect(api.boxedEntry(entry).entryId, 'JE-1');
+      expect(api.boxedExchangeRate(exchangeRate).source, 'SAMA');
+      expect(api.boxedInventoryItem(inventoryItem).valuationMethod, 'FIFO');
+      expect(api.boxedPeriod(period).id, 'P-1');
+      expect(api.boxedPurchaseBill(purchaseBill).vendorId, 'V-1');
+      expect(api.boxedSalesInvoice(salesInvoice).customerId, 'C-1');
+      expect(api.boxedStockMovement(movement).movementType, 'purchase');
+      expect(api.boxedVendor(vendor).nameEn, 'Vendor');
+      expect(api.boxedZatcaCsr(csr).country, 'SA');
+      expect(api.boxedZatcaInvoice(zatcaInvoice).lines.single.id, 'L-1');
+
+      expect(api.optionalAccount(null), isNull);
+      expect(api.optionalAsset(null), isNull);
+      expect(api.optionalExchangeRate(null), isNull);
+      expect(api.optionalInventoryItem(null), isNull);
+      expect(api.optionalPeriod(null), isNull);
+      expect(api.optionalPurchaseBill(null), isNull);
+      expect(api.optionalSalesInvoice(null), isNull);
+      expect(api.optionalVendor(null), isNull);
+      expect(api.optionalAccount(account)?.currency, 'SAR');
+      expect(api.optionalAsset(asset)?.id, 'ASSET-1');
+      expect(api.optionalExchangeRate(exchangeRate)?.targetCurrency, 'USD');
+      expect(api.optionalInventoryItem(inventoryItem)?.id, 'ITEM-1');
+      expect(api.optionalPeriod(period)?.name, 'يناير');
+      expect(api.optionalPurchaseBill(purchaseBill)?.id, 'BILL-1');
+      expect(api.optionalSalesInvoice(salesInvoice)?.id, 'INV-1');
+      expect(api.optionalVendor(vendor)?.id, 'V-1');
+      expect(api.zatcaInvoice(zatcaInvoice).invoiceCounterValue, BigInt.one);
     });
   });
 }
