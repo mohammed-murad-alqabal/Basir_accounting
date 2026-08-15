@@ -1,6 +1,11 @@
 import 'dart:async';
 
+import 'package:basir_accounting_system/core/persistence/drift_goals_budgets_shadow_read.dart';
 import 'package:basir_accounting_system/core/persistence/drift_settings_shadow_read.dart';
+import 'package:basir_accounting_system/features/budget/data/repositories/drift_budget_repository.dart';
+import 'package:basir_accounting_system/features/budget/domain/repositories/budget_repository.dart';
+import 'package:basir_accounting_system/features/goals/data/repositories/drift_goal_repository.dart';
+import 'package:basir_accounting_system/features/goals/domain/repositories/goal_repository.dart';
 import 'package:basir_accounting_system/features/reports/data/repositories/drift_market_price_repository.dart';
 import 'package:basir_accounting_system/features/reports/domain/repositories/market_price_repository.dart';
 import 'package:basir_accounting_system/features/settings/data/repositories/drift_barcode_config_repository.dart';
@@ -86,6 +91,16 @@ final driftReadinessProvider = FutureProvider<DriftReadiness>((ref) async {
   }
 });
 
+/// مسار Drift المرشح للأهداف؛ لا يستخدمه `goalRepositoryProvider` النشط.
+final driftGoalRepositoryProvider = Provider<GoalRepository>(
+  (ref) => DriftGoalRepository(ref.watch(driftDatabaseProvider)),
+);
+
+/// مسار Drift المرشح للميزانيات؛ لا يستخدمه `budgetRepositoryProvider` النشط.
+final driftBudgetRepositoryProvider = Provider<BudgetRepository>(
+  (ref) => DriftBudgetRepository(ref.watch(driftDatabaseProvider)),
+);
+
 /// مسار Drift المرشح لأسعار السوق. لا يستخدمه `marketPriceRepositoryProvider`
 /// النشط حتى اجتياز shadow-read وقرار cutover مستقل.
 final driftMarketPriceRepositoryProvider = Provider<MarketPriceRepository>(
@@ -96,6 +111,21 @@ final driftMarketPriceRepositoryProvider = Provider<MarketPriceRepository>(
 /// `barcodeConfigRepositoryProvider` النشط في هذه الموجة.
 final driftBarcodeConfigRepositoryProvider = Provider<BarcodeConfigRepository>(
   (ref) => DriftBarcodeConfigRepository(ref.watch(driftDatabaseProvider)),
+);
+
+/// Feature flag مستقل لـGoals shadow-read. يبقى مغلقًا حتى اعتماد parity.
+final driftGoalsShadowReadEnabledProvider = Provider<bool>((ref) => false);
+
+/// Feature flag مستقل لـBudgets shadow-read. يبقى مغلقًا حتى اعتماد parity.
+final driftBudgetsShadowReadEnabledProvider = Provider<bool>((ref) => false);
+
+/// Comparator قابل للحقن لـGoals وBudgets؛ sink الذاكراتي للاختبارات فقط.
+final driftGoalsBudgetsShadowReadComparatorProvider =
+    Provider<DriftGoalsBudgetsShadowReadComparator>(
+  (ref) {
+    final sink = InMemoryDriftShadowReadSink();
+    return DriftGoalsBudgetsShadowReadComparator(recorder: sink.record);
+  },
 );
 
 /// Feature flag مستقل لـProfile shadow-read. يبقى مغلقًا حتى اعتماد لقطة
