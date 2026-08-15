@@ -42,9 +42,9 @@
 | `ARCHIVE-P4-001` | تقارير 2025 و2026-01 التي لا تصف SHA الحالي | إضافة banner وفهرسة في archive | PENDING_REVIEW | historical SHA/date + مراجعة مالك التقرير |
 | `MERGE-P4-001` | `.kiro/FINAL_STATUS.md` و`.kiro/docs/reports/FINAL_STATUS.md` | اختيار مصدر حاكم وإبقاء redirect تاريخي | PENDING_REVIEW | مقارنة الروابط + موافقة Product/Engineering؛ لا حذف الآن |
 | `MERGE-P4-002` | `.kiro/BLUEPRINT_STATUS.md` و`.kiro/docs/reports/BLUEPRINT_STATUS.md` | اختيار مصدر حاكم وإبقاء lineage | PENDING_REVIEW | مقارنة التاريخ والادعاءات + موافقة المالك |
-| `MERGE-P4-003` | `logs/reports/latest_report.md` ونسخة التقرير المؤرخة | فصل latest pointer عن التقرير التاريخي | PENDING_REVIEW | التحقق من الروابط وسياسة توليد latest |
+| `MERGE-P4-003` | `logs/reports/latest_report.md` ونسخة التقرير المؤرخة | إبقاء latest pointer التشغيلي كما هو؛ لا دمج أو حذف | KEEP_APPROVED | موافقة المالك على KEEP + فحص symlink وسكربت التوليد مكتمل |
 | `MERGE-P4-004` | ملفات dependencies الثلاثة المتطابقة | إبقاء archive كمرجع وفحص current source | PENDING_REVIEW | تحديد أي ملف يعكس الحالة الحالية قبل merge |
-| `MERGE-P4-005` | `l10n_errors.txt` ونسخة archive | إبقاء artifact التاريخي أو redirect | PENDING_REVIEW | فحص استعمال أدوات الترجمة والروابط |
+| `MERGE-P4-005` | `l10n_errors.txt` ونسخة archive | إبقاء الملف الجذري ونسخة archive دون حذف أو redirect | KEEP_APPROVED | موافقة المالك على KEEP + `l10n.yaml` وSHA متطابقان |
 | `RECLASSIFY-P4-001` | `.kiro/specs/active`, `completed`, `planning` | تصنيف كل spec حسب acceptance evidence | PENDING_REVIEW | owner + REQ/ADR/test/evidence لكل spec عالي الأثر |
 | `INDEX-P4-001` | `docs/INDEX.md` وفهارس `.kiro` | جعل [DOCUMENTATION_REGISTER](../../00-governance/DOCUMENTATION_REGISTER.md) الفهرس الحاكم | DRAFT | اعتماد هذا السجل وتحديث redirects دون حذف الفهارس القديمة |
 
