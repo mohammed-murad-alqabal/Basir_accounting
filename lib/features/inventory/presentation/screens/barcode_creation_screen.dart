@@ -1,8 +1,11 @@
 // ignore_for_file: lines_longer_than_80_chars
+import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/inventory/application/barcode_service.dart';
+import 'package:basir_accounting_system/features/inventory/application/inventory_item_service.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
+import 'package:basir_accounting_system/features/inventory/presentation/providers/inventory_provider.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,36 +65,37 @@ class _BarcodeCreationScreenState extends ConsumerState<BarcodeCreationScreen> {
   }
 
   Future<void> _handleSave() async {
-    if (_selectedItem == null || _barcodeController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('يرجى اختيار صنف وإدخال الباركود')),
+    if (_selectedItem == null || _barcodeController.text.trim().isEmpty) {
+      AppSnackbar.showError(
+        context,
+        context.l10n.inventoryBarcodeSelectRequired,
       );
       return;
     }
 
     setState(() => _isLoading = true);
-    try {
-      final repo = ref.read(inventoryRepositoryProvider);
-      final updatedItem = _selectedItem!.copyWith(
-        barcode: _barcodeController.text,
-      );
-      await repo.updateItem(updatedItem);
+    final result = await ref.read(inventoryActionProvider.notifier).updateItem(
+          _selectedItem!.copyWith(barcode: _barcodeController.text.trim()),
+        );
 
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('تم حفظ الباركود بنجاح')),
-        );
-        Navigator.pop(context);
-      }
-    } on Exception catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('خطأ: $e')),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+    if (!result.success) {
+      final message = switch (result.message) {
+        InventoryItemService.duplicateBarcodeCode =>
+          context.l10n.inventoryItemDuplicateBarcode,
+        InventoryItemService.duplicateSkuCode =>
+          context.l10n.inventoryItemDuplicateSku,
+        InventoryItemService.itemNotFoundCode =>
+          context.l10n.inventoryItemNotFound,
+        _ => context.l10n.inventoryBarcodeSaveFailed,
+      };
+      AppSnackbar.showError(context, message);
+      return;
     }
+
+    AppSnackbar.showSuccess(context, context.l10n.inventoryBarcodeSaved);
+    Navigator.pop(context, true);
   }
 
   @override

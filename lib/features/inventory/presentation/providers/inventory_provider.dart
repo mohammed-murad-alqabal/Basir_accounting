@@ -1,4 +1,6 @@
+import 'package:basir_accounting_system/core/domain/contracts/operation_result.dart';
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/inventory/application/inventory_item_service.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,15 +33,24 @@ final filteredInventoryItemsProvider =
       final nameAr = item.nameAr.toLowerCase();
       final nameEn = item.nameEn.toLowerCase();
       final sku = (item.sku ?? '').toLowerCase();
+      final barcode = (item.barcode ?? '').toLowerCase();
 
       return nameAr.contains(searchQuery) ||
           nameEn.contains(searchQuery) ||
-          sku.contains(searchQuery);
+          sku.contains(searchQuery) ||
+          barcode.contains(searchQuery);
     }).toList(),
   );
 });
 
-/// صنف المورد/الخدمة (نوتيفاير لإدارة العمليات)
+/// مزود سياسة إنشاء وتعديل البيانات الرئيسية للأصناف.
+final inventoryItemServiceProvider = Provider<InventoryItemService>(
+  (ref) => InventoryItemService(
+    repository: ref.watch(inventoryRepositoryProvider),
+  ),
+);
+
+/// نوتيفاير لإدارة عمليات فهرس الأصناف.
 class InventoryNotifier extends StateNotifier<AsyncValue<void>> {
   /// إنشاء نوتيفاير إجراءات المخزون
   InventoryNotifier({required this.ref}) : super(const AsyncValue.data(null));
@@ -47,30 +58,35 @@ class InventoryNotifier extends StateNotifier<AsyncValue<void>> {
   /// مرجع الموفر (Riverpod)
   final Ref ref;
 
-  /// إضافة صنف مخزون جديد
-  Future<void> addItem(InventoryItem item) async {
+  /// إضافة صنف رئيسي جديد عبر سياسة الخدمة الموحدة.
+  Future<OperationResult<InventoryItem>> addItem(InventoryItem item) async {
     state = const AsyncValue.loading();
-    try {
-      final repository = ref.read(inventoryRepositoryProvider);
-      await repository.addItem(item);
-      ref.invalidate(inventoryItemsProvider);
-      state = const AsyncValue.data(null);
-    } on Object catch (e, stack) {
-      state = AsyncValue.error(e, stack);
-    }
+    final result = await ref.read(inventoryItemServiceProvider).create(
+          item,
+          operatorName: _operatorName(),
+        );
+    if (result.success) ref.invalidate(inventoryItemsProvider);
+    state = const AsyncValue.data(null);
+    return result;
   }
 
-  /// تحديث صنف مخزون موجود
-  Future<void> updateItem(InventoryItem item) async {
+  /// تحديث بيانات صنف قائمة من دون السماح بتعديل الرصيد مباشرة.
+  Future<OperationResult<InventoryItem>> updateItem(InventoryItem item) async {
     state = const AsyncValue.loading();
-    try {
-      final repository = ref.read(inventoryRepositoryProvider);
-      await repository.updateItem(item);
-      ref.invalidate(inventoryItemsProvider);
-      state = const AsyncValue.data(null);
-    } on Object catch (e, stack) {
-      state = AsyncValue.error(e, stack);
-    }
+    final result = await ref.read(inventoryItemServiceProvider).update(
+          item,
+          operatorName: _operatorName(),
+        );
+    if (result.success) ref.invalidate(inventoryItemsProvider);
+    state = const AsyncValue.data(null);
+    return result;
+  }
+
+  String _operatorName() {
+    final profile = ref.read(currentUserProfileProvider);
+    return profile?.displayName ??
+        ref.read(currentUsernameProvider) ??
+        'system';
   }
 
   /// حذف صنف مخزون
