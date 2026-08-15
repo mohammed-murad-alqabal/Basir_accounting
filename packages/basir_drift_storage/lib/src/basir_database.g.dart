@@ -3394,6 +3394,1696 @@ class BudgetsCompanion extends UpdateCompanion<Budget> {
   }
 }
 
+class $CustomersTable extends Customers
+    with TableInfo<$CustomersTable, Customer> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CustomersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _scopeKeyMeta =
+      const VerificationMeta('scopeKey');
+  @override
+  late final GeneratedColumn<String> scopeKey = <credential-fixture><String>(
+      'scope_key', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+      'uuid', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameArMeta = const VerificationMeta('nameAr');
+  @override
+  late final GeneratedColumn<String> nameAr = GeneratedColumn<String>(
+      'name_ar', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameEnMeta = const VerificationMeta('nameEn');
+  @override
+  late final GeneratedColumn<String> nameEn = GeneratedColumn<String>(
+      'name_en', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _taxNumberMeta =
+      const VerificationMeta('taxNumber');
+  @override
+  late final GeneratedColumn<String> taxNumber = GeneratedColumn<String>(
+      'tax_number', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _phoneMeta = const VerificationMeta('phone');
+  @override
+  late final GeneratedColumn<String> phone = GeneratedColumn<String>(
+      'phone', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _addressMeta =
+      const VerificationMeta('address');
+  @override
+  late final GeneratedColumn<String> address = GeneratedColumn<String>(
+      'address', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+      'notes', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _creditLimitMeta =
+      const VerificationMeta('creditLimit');
+  @override
+  late final GeneratedColumn<double> creditLimit = GeneratedColumn<double>(
+      'credit_limit', aliasedName, false,
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _balanceMeta =
+      const VerificationMeta('balance');
+  @override
+  late final GeneratedColumn<double> balance = GeneratedColumn<double>(
+      'balance', aliasedName, false,
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _receivableAccountIdMeta =
+      const VerificationMeta('receivableAccountId');
+  @override
+  late final GeneratedColumn<String> receivableAccountId =
+      GeneratedColumn<String>('receivable_account_id', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _syncStatusMeta =
+      const VerificationMeta('syncStatus');
+  @override
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+      'sync_status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('synced'));
+  static const VerificationMeta _serverUpdatedAtMeta =
+      const VerificationMeta('serverUpdatedAt');
+  @override
+  late final GeneratedColumn<DateTime> serverUpdatedAt =
+      GeneratedColumn<DateTime>('server_updated_at', aliasedName, true,
+          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _isDeletedMeta =
+      const VerificationMeta('isDeleted');
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+      'is_deleted', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_deleted" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  @override
+  List<GeneratedColumn> get $columns => [
+        scopeKey,
+        uuid,
+        nameAr,
+        nameEn,
+        taxNumber,
+        phone,
+        email,
+        address,
+        notes,
+        createdAt,
+        updatedAt,
+        creditLimit,
+        balance,
+        receivableAccountId,
+        userId,
+        syncStatus,
+        serverUpdatedAt,
+        isDeleted
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'customers';
+  @override
+  VerificationContext validateIntegrity(Insertable<Customer> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('scope_key')) {
+      context.handle(_scopeKeyMeta,
+          scopeKey.isAcceptableOrUnknown(data['scope_key']!, _scopeKeyMeta));
+    } else if (isInserting) {
+      context.missing(_scopeKeyMeta);
+    }
+    if (data.containsKey('uuid')) {
+      context.handle(
+          _uuidMeta, uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta));
+    } else if (isInserting) {
+      context.missing(_uuidMeta);
+    }
+    if (data.containsKey('name_ar')) {
+      context.handle(_nameArMeta,
+          nameAr.isAcceptableOrUnknown(data['name_ar']!, _nameArMeta));
+    } else if (isInserting) {
+      context.missing(_nameArMeta);
+    }
+    if (data.containsKey('name_en')) {
+      context.handle(_nameEnMeta,
+          nameEn.isAcceptableOrUnknown(data['name_en']!, _nameEnMeta));
+    } else if (isInserting) {
+      context.missing(_nameEnMeta);
+    }
+    if (data.containsKey('tax_number')) {
+      context.handle(_taxNumberMeta,
+          taxNumber.isAcceptableOrUnknown(data['tax_number']!, _taxNumberMeta));
+    }
+    if (data.containsKey('phone')) {
+      context.handle(
+          _phoneMeta, phone.isAcceptableOrUnknown(data['phone']!, _phoneMeta));
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    }
+    if (data.containsKey('address')) {
+      context.handle(_addressMeta,
+          address.isAcceptableOrUnknown(data['address']!, _addressMeta));
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+          _notesMeta, notes.isAcceptableOrUnknown(data['notes']!, _notesMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('credit_limit')) {
+      context.handle(
+          _creditLimitMeta,
+          creditLimit.isAcceptableOrUnknown(
+              data['credit_limit']!, _creditLimitMeta));
+    }
+    if (data.containsKey('balance')) {
+      context.handle(_balanceMeta,
+          balance.isAcceptableOrUnknown(data['balance']!, _balanceMeta));
+    }
+    if (data.containsKey('receivable_account_id')) {
+      context.handle(
+          _receivableAccountIdMeta,
+          receivableAccountId.isAcceptableOrUnknown(
+              data['receivable_account_id']!, _receivableAccountIdMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+          _syncStatusMeta,
+          syncStatus.isAcceptableOrUnknown(
+              data['sync_status']!, _syncStatusMeta));
+    }
+    if (data.containsKey('server_updated_at')) {
+      context.handle(
+          _serverUpdatedAtMeta,
+          serverUpdatedAt.isAcceptableOrUnknown(
+              data['server_updated_at']!, _serverUpdatedAtMeta));
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(_isDeletedMeta,
+          isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {scopeKey, uuid};
+  @override
+  Customer map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Customer(
+      scopeKey: <credential-fixture>
+          .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
+      uuid: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}uuid'])!,
+      nameAr: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name_ar'])!,
+      nameEn: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name_en'])!,
+      taxNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tax_number']),
+      phone: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}phone']),
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email']),
+      address: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}address']),
+      notes: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}notes']),
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
+      creditLimit: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}credit_limit'])!,
+      balance: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}balance'])!,
+      receivableAccountId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}receivable_account_id']),
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id']),
+      syncStatus: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
+      serverUpdatedAt: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}server_updated_at']),
+      isDeleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_deleted'])!,
+    );
+  }
+
+  @override
+  $CustomersTable createAlias(String alias) {
+    return $CustomersTable(attachedDatabase, alias);
+  }
+}
+
+class Customer extends DataClass implements Insertable<Customer> {
+  final String scopeKey;
+  final String uuid;
+  final String nameAr;
+  final String nameEn;
+  final String? taxNumber;
+  final String? phone;
+  final String? email;
+  final String? address;
+  final String? notes;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final double creditLimit;
+  final double balance;
+  final String? receivableAccountId;
+  final String? userId;
+  final String syncStatus;
+  final DateTime? serverUpdatedAt;
+  final bool isDeleted;
+  const Customer(
+      {required this.scopeKey,
+      required this.uuid,
+      required this.nameAr,
+      required this.nameEn,
+      this.taxNumber,
+      this.phone,
+      this.email,
+      this.address,
+      this.notes,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.creditLimit,
+      required this.balance,
+      this.receivableAccountId,
+      this.userId,
+      required this.syncStatus,
+      this.serverUpdatedAt,
+      required this.isDeleted});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['scope_key'] = Variable<String>(scopeKey);
+    map['uuid'] = Variable<String>(uuid);
+    map['name_ar'] = Variable<String>(nameAr);
+    map['name_en'] = Variable<String>(nameEn);
+    if (!nullToAbsent || taxNumber != null) {
+      map['tax_number'] = Variable<String>(taxNumber);
+    }
+    if (!nullToAbsent || phone != null) {
+      map['phone'] = Variable<String>(phone);
+    }
+    if (!nullToAbsent || email != null) {
+      map['email'] = Variable<String>(email);
+    }
+    if (!nullToAbsent || address != null) {
+      map['address'] = Variable<String>(address);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['credit_limit'] = Variable<double>(creditLimit);
+    map['balance'] = Variable<double>(balance);
+    if (!nullToAbsent || receivableAccountId != null) {
+      map['receivable_account_id'] = Variable<String>(receivableAccountId);
+    }
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<String>(userId);
+    }
+    map['sync_status'] = Variable<String>(syncStatus);
+    if (!nullToAbsent || serverUpdatedAt != null) {
+      map['server_updated_at'] = Variable<DateTime>(serverUpdatedAt);
+    }
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  CustomersCompanion toCompanion(bool nullToAbsent) {
+    return CustomersCompanion(
+      scopeKey: Value(scopeKey),
+      uuid: Value(uuid),
+      nameAr: Value(nameAr),
+      nameEn: Value(nameEn),
+      taxNumber: taxNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(taxNumber),
+      phone:
+          phone == null && nullToAbsent ? const Value.absent() : Value(phone),
+      email:
+          email == null && nullToAbsent ? const Value.absent() : Value(email),
+      address: address == null && nullToAbsent
+          ? const Value.absent()
+          : Value(address),
+      notes:
+          notes == null && nullToAbsent ? const Value.absent() : Value(notes),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      creditLimit: Value(creditLimit),
+      balance: Value(balance),
+      receivableAccountId: receivableAccountId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(receivableAccountId),
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      syncStatus: Value(syncStatus),
+      serverUpdatedAt: serverUpdatedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverUpdatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory Customer.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Customer(
+      scopeKey: <credential-fixture><String>(json['scopeKey']),
+      uuid: serializer.fromJson<String>(json['uuid']),
+      nameAr: serializer.fromJson<String>(json['nameAr']),
+      nameEn: serializer.fromJson<String>(json['nameEn']),
+      taxNumber: serializer.fromJson<String?>(json['taxNumber']),
+      phone: serializer.fromJson<String?>(json['phone']),
+      email: serializer.fromJson<String?>(json['email']),
+      address: serializer.fromJson<String?>(json['address']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      creditLimit: serializer.fromJson<double>(json['creditLimit']),
+      balance: serializer.fromJson<double>(json['balance']),
+      receivableAccountId:
+          serializer.fromJson<String?>(json['receivableAccountId']),
+      userId: serializer.fromJson<String?>(json['userId']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
+      serverUpdatedAt: serializer.fromJson<DateTime?>(json['serverUpdatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'scopeKey': serializer.toJson<String>(scopeKey),
+      'uuid': serializer.toJson<String>(uuid),
+      'nameAr': serializer.toJson<String>(nameAr),
+      'nameEn': serializer.toJson<String>(nameEn),
+      'taxNumber': serializer.toJson<String?>(taxNumber),
+      'phone': serializer.toJson<String?>(phone),
+      'email': serializer.toJson<String?>(email),
+      'address': serializer.toJson<String?>(address),
+      'notes': serializer.toJson<String?>(notes),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'creditLimit': serializer.toJson<double>(creditLimit),
+      'balance': serializer.toJson<double>(balance),
+      'receivableAccountId': serializer.toJson<String?>(receivableAccountId),
+      'userId': serializer.toJson<String?>(userId),
+      'syncStatus': serializer.toJson<String>(syncStatus),
+      'serverUpdatedAt': serializer.toJson<DateTime?>(serverUpdatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  Customer copyWith(
+          {String? scopeKey,
+          String? uuid,
+          String? nameAr,
+          String? nameEn,
+          Value<String?> taxNumber = const Value.absent(),
+          Value<String?> phone = const Value.absent(),
+          Value<String?> email = const Value.absent(),
+          Value<String?> address = const Value.absent(),
+          Value<String?> notes = const Value.absent(),
+          DateTime? createdAt,
+          DateTime? updatedAt,
+          double? creditLimit,
+          double? balance,
+          Value<String?> receivableAccountId = const Value.absent(),
+          Value<String?> userId = const Value.absent(),
+          String? syncStatus,
+          Value<DateTime?> serverUpdatedAt = const Value.absent(),
+          bool? isDeleted}) =>
+      Customer(
+        scopeKey: <credential-fixture> ?? this.scopeKey,
+        uuid: uuid ?? this.uuid,
+        nameAr: nameAr ?? this.nameAr,
+        nameEn: nameEn ?? this.nameEn,
+        taxNumber: taxNumber.present ? taxNumber.value : this.taxNumber,
+        phone: phone.present ? phone.value : this.phone,
+        email: email.present ? email.value : this.email,
+        address: address.present ? address.value : this.address,
+        notes: notes.present ? notes.value : this.notes,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        creditLimit: creditLimit ?? this.creditLimit,
+        balance: balance ?? this.balance,
+        receivableAccountId: receivableAccountId.present
+            ? receivableAccountId.value
+            : this.receivableAccountId,
+        userId: userId.present ? userId.value : this.userId,
+        syncStatus: syncStatus ?? this.syncStatus,
+        serverUpdatedAt: serverUpdatedAt.present
+            ? serverUpdatedAt.value
+            : this.serverUpdatedAt,
+        isDeleted: isDeleted ?? this.isDeleted,
+      );
+  Customer copyWithCompanion(CustomersCompanion data) {
+    return Customer(
+      scopeKey: <credential-fixture> ? data.scopeKey.value : <credential-fixture>,
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      nameAr: data.nameAr.present ? data.nameAr.value : this.nameAr,
+      nameEn: data.nameEn.present ? data.nameEn.value : this.nameEn,
+      taxNumber: data.taxNumber.present ? data.taxNumber.value : this.taxNumber,
+      phone: data.phone.present ? data.phone.value : this.phone,
+      email: data.email.present ? data.email.value : this.email,
+      address: data.address.present ? data.address.value : this.address,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      creditLimit:
+          data.creditLimit.present ? data.creditLimit.value : this.creditLimit,
+      balance: data.balance.present ? data.balance.value : this.balance,
+      receivableAccountId: data.receivableAccountId.present
+          ? data.receivableAccountId.value
+          : this.receivableAccountId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      syncStatus:
+          data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
+      serverUpdatedAt: data.serverUpdatedAt.present
+          ? data.serverUpdatedAt.value
+          : this.serverUpdatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Customer(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('uuid: $uuid, ')
+          ..write('nameAr: $nameAr, ')
+          ..write('nameEn: $nameEn, ')
+          ..write('taxNumber: $taxNumber, ')
+          ..write('phone: $phone, ')
+          ..write('email: $email, ')
+          ..write('address: $address, ')
+          ..write('notes: $notes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('creditLimit: $creditLimit, ')
+          ..write('balance: $balance, ')
+          ..write('receivableAccountId: $receivableAccountId, ')
+          ..write('userId: $userId, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('serverUpdatedAt: $serverUpdatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      scopeKey,
+      uuid,
+      nameAr,
+      nameEn,
+      taxNumber,
+      phone,
+      email,
+      address,
+      notes,
+      createdAt,
+      updatedAt,
+      creditLimit,
+      balance,
+      receivableAccountId,
+      userId,
+      syncStatus,
+      serverUpdatedAt,
+      isDeleted);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Customer &&
+          other.scopeKey == this.scopeKey &&
+          other.uuid == this.uuid &&
+          other.nameAr == this.nameAr &&
+          other.nameEn == this.nameEn &&
+          other.taxNumber == this.taxNumber &&
+          other.phone == this.phone &&
+          other.email == this.email &&
+          other.address == this.address &&
+          other.notes == this.notes &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.creditLimit == this.creditLimit &&
+          other.balance == this.balance &&
+          other.receivableAccountId == this.receivableAccountId &&
+          other.userId == this.userId &&
+          other.syncStatus == this.syncStatus &&
+          other.serverUpdatedAt == this.serverUpdatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class CustomersCompanion extends UpdateCompanion<Customer> {
+  final Value<String> scopeKey;
+  final Value<String> uuid;
+  final Value<String> nameAr;
+  final Value<String> nameEn;
+  final Value<String?> taxNumber;
+  final Value<String?> phone;
+  final Value<String?> email;
+  final Value<String?> address;
+  final Value<String?> notes;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<double> creditLimit;
+  final Value<double> balance;
+  final Value<String?> receivableAccountId;
+  final Value<String?> userId;
+  final Value<String> syncStatus;
+  final Value<DateTime?> serverUpdatedAt;
+  final Value<bool> isDeleted;
+  final Value<int> rowid;
+  const CustomersCompanion({
+    this.scopeKey = const Value.absent(),
+    this.uuid = const Value.absent(),
+    this.nameAr = const Value.absent(),
+    this.nameEn = const Value.absent(),
+    this.taxNumber = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.email = const Value.absent(),
+    this.address = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.creditLimit = const Value.absent(),
+    this.balance = const Value.absent(),
+    this.receivableAccountId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.serverUpdatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CustomersCompanion.insert({
+    required String scopeKey,
+    required String uuid,
+    required String nameAr,
+    required String nameEn,
+    this.taxNumber = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.email = const Value.absent(),
+    this.address = const Value.absent(),
+    this.notes = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.creditLimit = const Value.absent(),
+    this.balance = const Value.absent(),
+    this.receivableAccountId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.serverUpdatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : scopeKey = Value(scopeKey),
+        uuid = Value(uuid),
+        nameAr = Value(nameAr),
+        nameEn = Value(nameEn),
+        createdAt = Value(createdAt),
+        updatedAt = Value(updatedAt);
+  static Insertable<Customer> custom({
+    Expression<String>? scopeKey,
+    Expression<String>? uuid,
+    Expression<String>? nameAr,
+    Expression<String>? nameEn,
+    Expression<String>? taxNumber,
+    Expression<String>? phone,
+    Expression<String>? email,
+    Expression<String>? address,
+    Expression<String>? notes,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<double>? creditLimit,
+    Expression<double>? balance,
+    Expression<String>? receivableAccountId,
+    Expression<String>? userId,
+    Expression<String>? syncStatus,
+    Expression<DateTime>? serverUpdatedAt,
+    Expression<bool>? isDeleted,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (scopeKey != null) 'scope_key': scopeKey,
+      if (uuid != null) 'uuid': uuid,
+      if (nameAr != null) 'name_ar': nameAr,
+      if (nameEn != null) 'name_en': nameEn,
+      if (taxNumber != null) 'tax_number': taxNumber,
+      if (phone != null) 'phone': phone,
+      if (email != null) 'email': email,
+      if (address != null) 'address': address,
+      if (notes != null) 'notes': notes,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (creditLimit != null) 'credit_limit': creditLimit,
+      if (balance != null) 'balance': balance,
+      if (receivableAccountId != null)
+        'receivable_account_id': receivableAccountId,
+      if (userId != null) 'user_id': userId,
+      if (syncStatus != null) 'sync_status': syncStatus,
+      if (serverUpdatedAt != null) 'server_updated_at': serverUpdatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CustomersCompanion copyWith(
+      {Value<String>? scopeKey,
+      Value<String>? uuid,
+      Value<String>? nameAr,
+      Value<String>? nameEn,
+      Value<String?>? taxNumber,
+      Value<String?>? phone,
+      Value<String?>? email,
+      Value<String?>? address,
+      Value<String?>? notes,
+      Value<DateTime>? createdAt,
+      Value<DateTime>? updatedAt,
+      Value<double>? creditLimit,
+      Value<double>? balance,
+      Value<String?>? receivableAccountId,
+      Value<String?>? userId,
+      Value<String>? syncStatus,
+      Value<DateTime?>? serverUpdatedAt,
+      Value<bool>? isDeleted,
+      Value<int>? rowid}) {
+    return CustomersCompanion(
+      scopeKey: <credential-fixture> ?? this.scopeKey,
+      uuid: uuid ?? this.uuid,
+      nameAr: nameAr ?? this.nameAr,
+      nameEn: nameEn ?? this.nameEn,
+      taxNumber: taxNumber ?? this.taxNumber,
+      phone: phone ?? this.phone,
+      email: email ?? this.email,
+      address: address ?? this.address,
+      notes: notes ?? this.notes,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      creditLimit: creditLimit ?? this.creditLimit,
+      balance: balance ?? this.balance,
+      receivableAccountId: receivableAccountId ?? this.receivableAccountId,
+      userId: userId ?? this.userId,
+      syncStatus: syncStatus ?? this.syncStatus,
+      serverUpdatedAt: serverUpdatedAt ?? this.serverUpdatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (scopeKey.present) {
+      map['scope_key'] = Variable<String>(scopeKey.value);
+    }
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (nameAr.present) {
+      map['name_ar'] = Variable<String>(nameAr.value);
+    }
+    if (nameEn.present) {
+      map['name_en'] = Variable<String>(nameEn.value);
+    }
+    if (taxNumber.present) {
+      map['tax_number'] = Variable<String>(taxNumber.value);
+    }
+    if (phone.present) {
+      map['phone'] = Variable<String>(phone.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (address.present) {
+      map['address'] = Variable<String>(address.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (creditLimit.present) {
+      map['credit_limit'] = Variable<double>(creditLimit.value);
+    }
+    if (balance.present) {
+      map['balance'] = Variable<double>(balance.value);
+    }
+    if (receivableAccountId.present) {
+      map['receivable_account_id'] =
+          Variable<String>(receivableAccountId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
+    if (serverUpdatedAt.present) {
+      map['server_updated_at'] = Variable<DateTime>(serverUpdatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CustomersCompanion(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('uuid: $uuid, ')
+          ..write('nameAr: $nameAr, ')
+          ..write('nameEn: $nameEn, ')
+          ..write('taxNumber: $taxNumber, ')
+          ..write('phone: $phone, ')
+          ..write('email: $email, ')
+          ..write('address: $address, ')
+          ..write('notes: $notes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('creditLimit: $creditLimit, ')
+          ..write('balance: $balance, ')
+          ..write('receivableAccountId: $receivableAccountId, ')
+          ..write('userId: $userId, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('serverUpdatedAt: $serverUpdatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VendorsTable extends Vendors with TableInfo<$VendorsTable, Vendor> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VendorsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _scopeKeyMeta =
+      const VerificationMeta('scopeKey');
+  @override
+  late final GeneratedColumn<String> scopeKey = <credential-fixture><String>(
+      'scope_key', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+      'uuid', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameArMeta = const VerificationMeta('nameAr');
+  @override
+  late final GeneratedColumn<String> nameAr = GeneratedColumn<String>(
+      'name_ar', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameEnMeta = const VerificationMeta('nameEn');
+  @override
+  late final GeneratedColumn<String> nameEn = GeneratedColumn<String>(
+      'name_en', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _phoneMeta = const VerificationMeta('phone');
+  @override
+  late final GeneratedColumn<String> phone = GeneratedColumn<String>(
+      'phone', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _addressMeta =
+      const VerificationMeta('address');
+  @override
+  late final GeneratedColumn<String> address = GeneratedColumn<String>(
+      'address', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+      'notes', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _payableAccountIdMeta =
+      const VerificationMeta('payableAccountId');
+  @override
+  late final GeneratedColumn<String> payableAccountId = GeneratedColumn<String>(
+      'payable_account_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _vatNumberMeta =
+      const VerificationMeta('vatNumber');
+  @override
+  late final GeneratedColumn<String> vatNumber = GeneratedColumn<String>(
+      'vat_number', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _registrationNumberMeta =
+      const VerificationMeta('registrationNumber');
+  @override
+  late final GeneratedColumn<String> registrationNumber =
+      GeneratedColumn<String>('registration_number', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _balanceMeta =
+      const VerificationMeta('balance');
+  @override
+  late final GeneratedColumn<double> balance = GeneratedColumn<double>(
+      'balance', aliasedName, false,
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _syncStatusMeta =
+      const VerificationMeta('syncStatus');
+  @override
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+      'sync_status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('synced'));
+  static const VerificationMeta _serverUpdatedAtMeta =
+      const VerificationMeta('serverUpdatedAt');
+  @override
+  late final GeneratedColumn<DateTime> serverUpdatedAt =
+      GeneratedColumn<DateTime>('server_updated_at', aliasedName, true,
+          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _isDeletedMeta =
+      const VerificationMeta('isDeleted');
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+      'is_deleted', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_deleted" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  @override
+  List<GeneratedColumn> get $columns => [
+        scopeKey,
+        uuid,
+        nameAr,
+        nameEn,
+        phone,
+        email,
+        address,
+        notes,
+        createdAt,
+        updatedAt,
+        payableAccountId,
+        vatNumber,
+        registrationNumber,
+        balance,
+        userId,
+        syncStatus,
+        serverUpdatedAt,
+        isDeleted
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vendors';
+  @override
+  VerificationContext validateIntegrity(Insertable<Vendor> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('scope_key')) {
+      context.handle(_scopeKeyMeta,
+          scopeKey.isAcceptableOrUnknown(data['scope_key']!, _scopeKeyMeta));
+    } else if (isInserting) {
+      context.missing(_scopeKeyMeta);
+    }
+    if (data.containsKey('uuid')) {
+      context.handle(
+          _uuidMeta, uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta));
+    } else if (isInserting) {
+      context.missing(_uuidMeta);
+    }
+    if (data.containsKey('name_ar')) {
+      context.handle(_nameArMeta,
+          nameAr.isAcceptableOrUnknown(data['name_ar']!, _nameArMeta));
+    } else if (isInserting) {
+      context.missing(_nameArMeta);
+    }
+    if (data.containsKey('name_en')) {
+      context.handle(_nameEnMeta,
+          nameEn.isAcceptableOrUnknown(data['name_en']!, _nameEnMeta));
+    } else if (isInserting) {
+      context.missing(_nameEnMeta);
+    }
+    if (data.containsKey('phone')) {
+      context.handle(
+          _phoneMeta, phone.isAcceptableOrUnknown(data['phone']!, _phoneMeta));
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    }
+    if (data.containsKey('address')) {
+      context.handle(_addressMeta,
+          address.isAcceptableOrUnknown(data['address']!, _addressMeta));
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+          _notesMeta, notes.isAcceptableOrUnknown(data['notes']!, _notesMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('payable_account_id')) {
+      context.handle(
+          _payableAccountIdMeta,
+          payableAccountId.isAcceptableOrUnknown(
+              data['payable_account_id']!, _payableAccountIdMeta));
+    }
+    if (data.containsKey('vat_number')) {
+      context.handle(_vatNumberMeta,
+          vatNumber.isAcceptableOrUnknown(data['vat_number']!, _vatNumberMeta));
+    }
+    if (data.containsKey('registration_number')) {
+      context.handle(
+          _registrationNumberMeta,
+          registrationNumber.isAcceptableOrUnknown(
+              data['registration_number']!, _registrationNumberMeta));
+    }
+    if (data.containsKey('balance')) {
+      context.handle(_balanceMeta,
+          balance.isAcceptableOrUnknown(data['balance']!, _balanceMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+          _syncStatusMeta,
+          syncStatus.isAcceptableOrUnknown(
+              data['sync_status']!, _syncStatusMeta));
+    }
+    if (data.containsKey('server_updated_at')) {
+      context.handle(
+          _serverUpdatedAtMeta,
+          serverUpdatedAt.isAcceptableOrUnknown(
+              data['server_updated_at']!, _serverUpdatedAtMeta));
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(_isDeletedMeta,
+          isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {scopeKey, uuid};
+  @override
+  Vendor map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Vendor(
+      scopeKey: <credential-fixture>
+          .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
+      uuid: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}uuid'])!,
+      nameAr: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name_ar'])!,
+      nameEn: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name_en'])!,
+      phone: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}phone']),
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email']),
+      address: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}address']),
+      notes: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}notes']),
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
+      payableAccountId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}payable_account_id']),
+      vatNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}vat_number']),
+      registrationNumber: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}registration_number']),
+      balance: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}balance'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id']),
+      syncStatus: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
+      serverUpdatedAt: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}server_updated_at']),
+      isDeleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_deleted'])!,
+    );
+  }
+
+  @override
+  $VendorsTable createAlias(String alias) {
+    return $VendorsTable(attachedDatabase, alias);
+  }
+}
+
+class Vendor extends DataClass implements Insertable<Vendor> {
+  final String scopeKey;
+  final String uuid;
+  final String nameAr;
+  final String nameEn;
+  final String? phone;
+  final String? email;
+  final String? address;
+  final String? notes;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final String? payableAccountId;
+  final String? vatNumber;
+  final String? registrationNumber;
+  final double balance;
+  final String? userId;
+  final String syncStatus;
+  final DateTime? serverUpdatedAt;
+  final bool isDeleted;
+  const Vendor(
+      {required this.scopeKey,
+      required this.uuid,
+      required this.nameAr,
+      required this.nameEn,
+      this.phone,
+      this.email,
+      this.address,
+      this.notes,
+      required this.createdAt,
+      required this.updatedAt,
+      this.payableAccountId,
+      this.vatNumber,
+      this.registrationNumber,
+      required this.balance,
+      this.userId,
+      required this.syncStatus,
+      this.serverUpdatedAt,
+      required this.isDeleted});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['scope_key'] = Variable<String>(scopeKey);
+    map['uuid'] = Variable<String>(uuid);
+    map['name_ar'] = Variable<String>(nameAr);
+    map['name_en'] = Variable<String>(nameEn);
+    if (!nullToAbsent || phone != null) {
+      map['phone'] = Variable<String>(phone);
+    }
+    if (!nullToAbsent || email != null) {
+      map['email'] = Variable<String>(email);
+    }
+    if (!nullToAbsent || address != null) {
+      map['address'] = Variable<String>(address);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || payableAccountId != null) {
+      map['payable_account_id'] = Variable<String>(payableAccountId);
+    }
+    if (!nullToAbsent || vatNumber != null) {
+      map['vat_number'] = Variable<String>(vatNumber);
+    }
+    if (!nullToAbsent || registrationNumber != null) {
+      map['registration_number'] = Variable<String>(registrationNumber);
+    }
+    map['balance'] = Variable<double>(balance);
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<String>(userId);
+    }
+    map['sync_status'] = Variable<String>(syncStatus);
+    if (!nullToAbsent || serverUpdatedAt != null) {
+      map['server_updated_at'] = Variable<DateTime>(serverUpdatedAt);
+    }
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  VendorsCompanion toCompanion(bool nullToAbsent) {
+    return VendorsCompanion(
+      scopeKey: Value(scopeKey),
+      uuid: Value(uuid),
+      nameAr: Value(nameAr),
+      nameEn: Value(nameEn),
+      phone:
+          phone == null && nullToAbsent ? const Value.absent() : Value(phone),
+      email:
+          email == null && nullToAbsent ? const Value.absent() : Value(email),
+      address: address == null && nullToAbsent
+          ? const Value.absent()
+          : Value(address),
+      notes:
+          notes == null && nullToAbsent ? const Value.absent() : Value(notes),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      payableAccountId: payableAccountId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(payableAccountId),
+      vatNumber: vatNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vatNumber),
+      registrationNumber: registrationNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(registrationNumber),
+      balance: Value(balance),
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      syncStatus: Value(syncStatus),
+      serverUpdatedAt: serverUpdatedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverUpdatedAt),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory Vendor.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Vendor(
+      scopeKey: <credential-fixture><String>(json['scopeKey']),
+      uuid: serializer.fromJson<String>(json['uuid']),
+      nameAr: serializer.fromJson<String>(json['nameAr']),
+      nameEn: serializer.fromJson<String>(json['nameEn']),
+      phone: serializer.fromJson<String?>(json['phone']),
+      email: serializer.fromJson<String?>(json['email']),
+      address: serializer.fromJson<String?>(json['address']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      payableAccountId: serializer.fromJson<String?>(json['payableAccountId']),
+      vatNumber: serializer.fromJson<String?>(json['vatNumber']),
+      registrationNumber:
+          serializer.fromJson<String?>(json['registrationNumber']),
+      balance: serializer.fromJson<double>(json['balance']),
+      userId: serializer.fromJson<String?>(json['userId']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
+      serverUpdatedAt: serializer.fromJson<DateTime?>(json['serverUpdatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'scopeKey': serializer.toJson<String>(scopeKey),
+      'uuid': serializer.toJson<String>(uuid),
+      'nameAr': serializer.toJson<String>(nameAr),
+      'nameEn': serializer.toJson<String>(nameEn),
+      'phone': serializer.toJson<String?>(phone),
+      'email': serializer.toJson<String?>(email),
+      'address': serializer.toJson<String?>(address),
+      'notes': serializer.toJson<String?>(notes),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'payableAccountId': serializer.toJson<String?>(payableAccountId),
+      'vatNumber': serializer.toJson<String?>(vatNumber),
+      'registrationNumber': serializer.toJson<String?>(registrationNumber),
+      'balance': serializer.toJson<double>(balance),
+      'userId': serializer.toJson<String?>(userId),
+      'syncStatus': serializer.toJson<String>(syncStatus),
+      'serverUpdatedAt': serializer.toJson<DateTime?>(serverUpdatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  Vendor copyWith(
+          {String? scopeKey,
+          String? uuid,
+          String? nameAr,
+          String? nameEn,
+          Value<String?> phone = const Value.absent(),
+          Value<String?> email = const Value.absent(),
+          Value<String?> address = const Value.absent(),
+          Value<String?> notes = const Value.absent(),
+          DateTime? createdAt,
+          DateTime? updatedAt,
+          Value<String?> payableAccountId = const Value.absent(),
+          Value<String?> vatNumber = const Value.absent(),
+          Value<String?> registrationNumber = const Value.absent(),
+          double? balance,
+          Value<String?> userId = const Value.absent(),
+          String? syncStatus,
+          Value<DateTime?> serverUpdatedAt = const Value.absent(),
+          bool? isDeleted}) =>
+      Vendor(
+        scopeKey: <credential-fixture> ?? this.scopeKey,
+        uuid: uuid ?? this.uuid,
+        nameAr: nameAr ?? this.nameAr,
+        nameEn: nameEn ?? this.nameEn,
+        phone: phone.present ? phone.value : this.phone,
+        email: email.present ? email.value : this.email,
+        address: address.present ? address.value : this.address,
+        notes: notes.present ? notes.value : this.notes,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        payableAccountId: payableAccountId.present
+            ? payableAccountId.value
+            : this.payableAccountId,
+        vatNumber: vatNumber.present ? vatNumber.value : this.vatNumber,
+        registrationNumber: registrationNumber.present
+            ? registrationNumber.value
+            : this.registrationNumber,
+        balance: balance ?? this.balance,
+        userId: userId.present ? userId.value : this.userId,
+        syncStatus: syncStatus ?? this.syncStatus,
+        serverUpdatedAt: serverUpdatedAt.present
+            ? serverUpdatedAt.value
+            : this.serverUpdatedAt,
+        isDeleted: isDeleted ?? this.isDeleted,
+      );
+  Vendor copyWithCompanion(VendorsCompanion data) {
+    return Vendor(
+      scopeKey: <credential-fixture> ? data.scopeKey.value : <credential-fixture>,
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      nameAr: data.nameAr.present ? data.nameAr.value : this.nameAr,
+      nameEn: data.nameEn.present ? data.nameEn.value : this.nameEn,
+      phone: data.phone.present ? data.phone.value : this.phone,
+      email: data.email.present ? data.email.value : this.email,
+      address: data.address.present ? data.address.value : this.address,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      payableAccountId: data.payableAccountId.present
+          ? data.payableAccountId.value
+          : this.payableAccountId,
+      vatNumber: data.vatNumber.present ? data.vatNumber.value : this.vatNumber,
+      registrationNumber: data.registrationNumber.present
+          ? data.registrationNumber.value
+          : this.registrationNumber,
+      balance: data.balance.present ? data.balance.value : this.balance,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      syncStatus:
+          data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
+      serverUpdatedAt: data.serverUpdatedAt.present
+          ? data.serverUpdatedAt.value
+          : this.serverUpdatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Vendor(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('uuid: $uuid, ')
+          ..write('nameAr: $nameAr, ')
+          ..write('nameEn: $nameEn, ')
+          ..write('phone: $phone, ')
+          ..write('email: $email, ')
+          ..write('address: $address, ')
+          ..write('notes: $notes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('payableAccountId: $payableAccountId, ')
+          ..write('vatNumber: $vatNumber, ')
+          ..write('registrationNumber: $registrationNumber, ')
+          ..write('balance: $balance, ')
+          ..write('userId: $userId, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('serverUpdatedAt: $serverUpdatedAt, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      scopeKey,
+      uuid,
+      nameAr,
+      nameEn,
+      phone,
+      email,
+      address,
+      notes,
+      createdAt,
+      updatedAt,
+      payableAccountId,
+      vatNumber,
+      registrationNumber,
+      balance,
+      userId,
+      syncStatus,
+      serverUpdatedAt,
+      isDeleted);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Vendor &&
+          other.scopeKey == this.scopeKey &&
+          other.uuid == this.uuid &&
+          other.nameAr == this.nameAr &&
+          other.nameEn == this.nameEn &&
+          other.phone == this.phone &&
+          other.email == this.email &&
+          other.address == this.address &&
+          other.notes == this.notes &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.payableAccountId == this.payableAccountId &&
+          other.vatNumber == this.vatNumber &&
+          other.registrationNumber == this.registrationNumber &&
+          other.balance == this.balance &&
+          other.userId == this.userId &&
+          other.syncStatus == this.syncStatus &&
+          other.serverUpdatedAt == this.serverUpdatedAt &&
+          other.isDeleted == this.isDeleted);
+}
+
+class VendorsCompanion extends UpdateCompanion<Vendor> {
+  final Value<String> scopeKey;
+  final Value<String> uuid;
+  final Value<String> nameAr;
+  final Value<String> nameEn;
+  final Value<String?> phone;
+  final Value<String?> email;
+  final Value<String?> address;
+  final Value<String?> notes;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<String?> payableAccountId;
+  final Value<String?> vatNumber;
+  final Value<String?> registrationNumber;
+  final Value<double> balance;
+  final Value<String?> userId;
+  final Value<String> syncStatus;
+  final Value<DateTime?> serverUpdatedAt;
+  final Value<bool> isDeleted;
+  final Value<int> rowid;
+  const VendorsCompanion({
+    this.scopeKey = const Value.absent(),
+    this.uuid = const Value.absent(),
+    this.nameAr = const Value.absent(),
+    this.nameEn = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.email = const Value.absent(),
+    this.address = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.payableAccountId = const Value.absent(),
+    this.vatNumber = const Value.absent(),
+    this.registrationNumber = const Value.absent(),
+    this.balance = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.serverUpdatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VendorsCompanion.insert({
+    required String scopeKey,
+    required String uuid,
+    required String nameAr,
+    required String nameEn,
+    this.phone = const Value.absent(),
+    this.email = const Value.absent(),
+    this.address = const Value.absent(),
+    this.notes = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.payableAccountId = const Value.absent(),
+    this.vatNumber = const Value.absent(),
+    this.registrationNumber = const Value.absent(),
+    this.balance = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.serverUpdatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : scopeKey = Value(scopeKey),
+        uuid = Value(uuid),
+        nameAr = Value(nameAr),
+        nameEn = Value(nameEn),
+        createdAt = Value(createdAt),
+        updatedAt = Value(updatedAt);
+  static Insertable<Vendor> custom({
+    Expression<String>? scopeKey,
+    Expression<String>? uuid,
+    Expression<String>? nameAr,
+    Expression<String>? nameEn,
+    Expression<String>? phone,
+    Expression<String>? email,
+    Expression<String>? address,
+    Expression<String>? notes,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<String>? payableAccountId,
+    Expression<String>? vatNumber,
+    Expression<String>? registrationNumber,
+    Expression<double>? balance,
+    Expression<String>? userId,
+    Expression<String>? syncStatus,
+    Expression<DateTime>? serverUpdatedAt,
+    Expression<bool>? isDeleted,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (scopeKey != null) 'scope_key': scopeKey,
+      if (uuid != null) 'uuid': uuid,
+      if (nameAr != null) 'name_ar': nameAr,
+      if (nameEn != null) 'name_en': nameEn,
+      if (phone != null) 'phone': phone,
+      if (email != null) 'email': email,
+      if (address != null) 'address': address,
+      if (notes != null) 'notes': notes,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (payableAccountId != null) 'payable_account_id': payableAccountId,
+      if (vatNumber != null) 'vat_number': vatNumber,
+      if (registrationNumber != null) 'registration_number': registrationNumber,
+      if (balance != null) 'balance': balance,
+      if (userId != null) 'user_id': userId,
+      if (syncStatus != null) 'sync_status': syncStatus,
+      if (serverUpdatedAt != null) 'server_updated_at': serverUpdatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VendorsCompanion copyWith(
+      {Value<String>? scopeKey,
+      Value<String>? uuid,
+      Value<String>? nameAr,
+      Value<String>? nameEn,
+      Value<String?>? phone,
+      Value<String?>? email,
+      Value<String?>? address,
+      Value<String?>? notes,
+      Value<DateTime>? createdAt,
+      Value<DateTime>? updatedAt,
+      Value<String?>? payableAccountId,
+      Value<String?>? vatNumber,
+      Value<String?>? registrationNumber,
+      Value<double>? balance,
+      Value<String?>? userId,
+      Value<String>? syncStatus,
+      Value<DateTime?>? serverUpdatedAt,
+      Value<bool>? isDeleted,
+      Value<int>? rowid}) {
+    return VendorsCompanion(
+      scopeKey: <credential-fixture> ?? this.scopeKey,
+      uuid: uuid ?? this.uuid,
+      nameAr: nameAr ?? this.nameAr,
+      nameEn: nameEn ?? this.nameEn,
+      phone: phone ?? this.phone,
+      email: email ?? this.email,
+      address: address ?? this.address,
+      notes: notes ?? this.notes,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      payableAccountId: payableAccountId ?? this.payableAccountId,
+      vatNumber: vatNumber ?? this.vatNumber,
+      registrationNumber: registrationNumber ?? this.registrationNumber,
+      balance: balance ?? this.balance,
+      userId: userId ?? this.userId,
+      syncStatus: syncStatus ?? this.syncStatus,
+      serverUpdatedAt: serverUpdatedAt ?? this.serverUpdatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (scopeKey.present) {
+      map['scope_key'] = Variable<String>(scopeKey.value);
+    }
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (nameAr.present) {
+      map['name_ar'] = Variable<String>(nameAr.value);
+    }
+    if (nameEn.present) {
+      map['name_en'] = Variable<String>(nameEn.value);
+    }
+    if (phone.present) {
+      map['phone'] = Variable<String>(phone.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (address.present) {
+      map['address'] = Variable<String>(address.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (payableAccountId.present) {
+      map['payable_account_id'] = Variable<String>(payableAccountId.value);
+    }
+    if (vatNumber.present) {
+      map['vat_number'] = Variable<String>(vatNumber.value);
+    }
+    if (registrationNumber.present) {
+      map['registration_number'] = Variable<String>(registrationNumber.value);
+    }
+    if (balance.present) {
+      map['balance'] = Variable<double>(balance.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
+    if (serverUpdatedAt.present) {
+      map['server_updated_at'] = Variable<DateTime>(serverUpdatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VendorsCompanion(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('uuid: $uuid, ')
+          ..write('nameAr: $nameAr, ')
+          ..write('nameEn: $nameEn, ')
+          ..write('phone: $phone, ')
+          ..write('email: $email, ')
+          ..write('address: $address, ')
+          ..write('notes: $notes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('payableAccountId: $payableAccountId, ')
+          ..write('vatNumber: $vatNumber, ')
+          ..write('registrationNumber: $registrationNumber, ')
+          ..write('balance: $balance, ')
+          ..write('userId: $userId, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('serverUpdatedAt: $serverUpdatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxData> {
   @override
@@ -3946,10 +5636,22 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
       $BusinessSettingsTable(this);
   late final $GoalsTable goals = $GoalsTable(this);
   late final $BudgetsTable budgets = $BudgetsTable(this);
+  late final $CustomersTable customers = $CustomersTable(this);
+  late final $VendorsTable vendors = $VendorsTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   late final Index marketPricesItemAsOfIdx = Index(
       'market_prices_item_as_of_idx',
       'CREATE INDEX market_prices_item_as_of_idx ON market_prices (item_id, as_of_date)');
+  late final Index customersScopeNameArIdx = Index(
+      'customers_scope_name_ar_idx',
+      'CREATE INDEX customers_scope_name_ar_idx ON customers (scope_key, name_ar)');
+  late final Index customersScopeNameEnIdx = Index(
+      'customers_scope_name_en_idx',
+      'CREATE INDEX customers_scope_name_en_idx ON customers (scope_key, name_en)');
+  late final Index vendorsScopeNameArIdx = Index('vendors_scope_name_ar_idx',
+      'CREATE INDEX vendors_scope_name_ar_idx ON vendors (scope_key, name_ar)');
+  late final Index vendorsScopeNameEnIdx = Index('vendors_scope_name_en_idx',
+      'CREATE INDEX vendors_scope_name_en_idx ON vendors (scope_key, name_en)');
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3962,8 +5664,14 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
         businessSettings,
         goals,
         budgets,
+        customers,
+        vendors,
         syncOutbox,
-        marketPricesItemAsOfIdx
+        marketPricesItemAsOfIdx,
+        customersScopeNameArIdx,
+        customersScopeNameEnIdx,
+        vendorsScopeNameArIdx,
+        vendorsScopeNameEnIdx
       ];
 }
 
@@ -5607,6 +7315,736 @@ typedef $$BudgetsTableProcessedTableManager = ProcessedTableManager<
     (Budget, BaseReferences<_$BasirDatabase, $BudgetsTable, Budget>),
     Budget,
     PrefetchHooks Function()>;
+typedef $$CustomersTableCreateCompanionBuilder = CustomersCompanion Function({
+  required String scopeKey,
+  required String uuid,
+  required String nameAr,
+  required String nameEn,
+  Value<String?> taxNumber,
+  Value<String?> phone,
+  Value<String?> email,
+  Value<String?> address,
+  Value<String?> notes,
+  required DateTime createdAt,
+  required DateTime updatedAt,
+  Value<double> creditLimit,
+  Value<double> balance,
+  Value<String?> receivableAccountId,
+  Value<String?> userId,
+  Value<String> syncStatus,
+  Value<DateTime?> serverUpdatedAt,
+  Value<bool> isDeleted,
+  Value<int> rowid,
+});
+typedef $$CustomersTableUpdateCompanionBuilder = CustomersCompanion Function({
+  Value<String> scopeKey,
+  Value<String> uuid,
+  Value<String> nameAr,
+  Value<String> nameEn,
+  Value<String?> taxNumber,
+  Value<String?> phone,
+  Value<String?> email,
+  Value<String?> address,
+  Value<String?> notes,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
+  Value<double> creditLimit,
+  Value<double> balance,
+  Value<String?> receivableAccountId,
+  Value<String?> userId,
+  Value<String> syncStatus,
+  Value<DateTime?> serverUpdatedAt,
+  Value<bool> isDeleted,
+  Value<int> rowid,
+});
+
+class $$CustomersTableFilterComposer
+    extends Composer<_$BasirDatabase, $CustomersTable> {
+  $$CustomersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get uuid => $composableBuilder(
+      column: $table.uuid, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get nameAr => $composableBuilder(
+      column: $table.nameAr, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get nameEn => $composableBuilder(
+      column: $table.nameEn, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get taxNumber => $composableBuilder(
+      column: $table.taxNumber, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get phone => $composableBuilder(
+      column: $table.phone, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get address => $composableBuilder(
+      column: $table.address, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get creditLimit => $composableBuilder(
+      column: $table.creditLimit, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get balance => $composableBuilder(
+      column: $table.balance, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get receivableAccountId => $composableBuilder(
+      column: $table.receivableAccountId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get serverUpdatedAt => $composableBuilder(
+      column: $table.serverUpdatedAt,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnFilters(column));
+}
+
+class $$CustomersTableOrderingComposer
+    extends Composer<_$BasirDatabase, $CustomersTable> {
+  $$CustomersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get uuid => $composableBuilder(
+      column: $table.uuid, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get nameAr => $composableBuilder(
+      column: $table.nameAr, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get nameEn => $composableBuilder(
+      column: $table.nameEn, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get taxNumber => $composableBuilder(
+      column: $table.taxNumber, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get phone => $composableBuilder(
+      column: $table.phone, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get address => $composableBuilder(
+      column: $table.address, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get creditLimit => $composableBuilder(
+      column: $table.creditLimit, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get balance => $composableBuilder(
+      column: $table.balance, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get receivableAccountId => $composableBuilder(
+      column: $table.receivableAccountId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get serverUpdatedAt => $composableBuilder(
+      column: $table.serverUpdatedAt,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnOrderings(column));
+}
+
+class $$CustomersTableAnnotationComposer
+    extends Composer<_$BasirDatabase, $CustomersTable> {
+  $$CustomersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get scopeKey =>
+      $composableBuilder(column: $table.scopeKey, builder: (column) => column);
+
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<String> get nameAr =>
+      $composableBuilder(column: $table.nameAr, builder: (column) => column);
+
+  GeneratedColumn<String> get nameEn =>
+      $composableBuilder(column: $table.nameEn, builder: (column) => column);
+
+  GeneratedColumn<String> get taxNumber =>
+      $composableBuilder(column: $table.taxNumber, builder: (column) => column);
+
+  GeneratedColumn<String> get phone =>
+      $composableBuilder(column: $table.phone, builder: (column) => column);
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get address =>
+      $composableBuilder(column: $table.address, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<double> get creditLimit => $composableBuilder(
+      column: $table.creditLimit, builder: (column) => column);
+
+  GeneratedColumn<double> get balance =>
+      $composableBuilder(column: $table.balance, builder: (column) => column);
+
+  GeneratedColumn<String> get receivableAccountId => $composableBuilder(
+      column: $table.receivableAccountId, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get serverUpdatedAt => $composableBuilder(
+      column: $table.serverUpdatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+}
+
+class $$CustomersTableTableManager extends RootTableManager<
+    _$BasirDatabase,
+    $CustomersTable,
+    Customer,
+    $$CustomersTableFilterComposer,
+    $$CustomersTableOrderingComposer,
+    $$CustomersTableAnnotationComposer,
+    $$CustomersTableCreateCompanionBuilder,
+    $$CustomersTableUpdateCompanionBuilder,
+    (Customer, BaseReferences<_$BasirDatabase, $CustomersTable, Customer>),
+    Customer,
+    PrefetchHooks Function()> {
+  $$CustomersTableTableManager(_$BasirDatabase db, $CustomersTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CustomersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CustomersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CustomersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> scopeKey = const Value.absent(),
+            Value<String> uuid = const Value.absent(),
+            Value<String> nameAr = const Value.absent(),
+            Value<String> nameEn = const Value.absent(),
+            Value<String?> taxNumber = const Value.absent(),
+            Value<String?> phone = const Value.absent(),
+            Value<String?> email = const Value.absent(),
+            Value<String?> address = const Value.absent(),
+            Value<String?> notes = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
+            Value<double> creditLimit = const Value.absent(),
+            Value<double> balance = const Value.absent(),
+            Value<String?> receivableAccountId = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<DateTime?> serverUpdatedAt = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              CustomersCompanion(
+            scopeKey: <credential-fixture>,
+            uuid: uuid,
+            nameAr: nameAr,
+            nameEn: nameEn,
+            taxNumber: taxNumber,
+            phone: phone,
+            email: email,
+            address: address,
+            notes: notes,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            creditLimit: creditLimit,
+            balance: balance,
+            receivableAccountId: receivableAccountId,
+            userId: userId,
+            syncStatus: syncStatus,
+            serverUpdatedAt: serverUpdatedAt,
+            isDeleted: isDeleted,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String scopeKey,
+            required String uuid,
+            required String nameAr,
+            required String nameEn,
+            Value<String?> taxNumber = const Value.absent(),
+            Value<String?> phone = const Value.absent(),
+            Value<String?> email = const Value.absent(),
+            Value<String?> address = const Value.absent(),
+            Value<String?> notes = const Value.absent(),
+            required DateTime createdAt,
+            required DateTime updatedAt,
+            Value<double> creditLimit = const Value.absent(),
+            Value<double> balance = const Value.absent(),
+            Value<String?> receivableAccountId = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<DateTime?> serverUpdatedAt = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              CustomersCompanion.insert(
+            scopeKey: <credential-fixture>,
+            uuid: uuid,
+            nameAr: nameAr,
+            nameEn: nameEn,
+            taxNumber: taxNumber,
+            phone: phone,
+            email: email,
+            address: address,
+            notes: notes,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            creditLimit: creditLimit,
+            balance: balance,
+            receivableAccountId: receivableAccountId,
+            userId: userId,
+            syncStatus: syncStatus,
+            serverUpdatedAt: serverUpdatedAt,
+            isDeleted: isDeleted,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$CustomersTableProcessedTableManager = ProcessedTableManager<
+    _$BasirDatabase,
+    $CustomersTable,
+    Customer,
+    $$CustomersTableFilterComposer,
+    $$CustomersTableOrderingComposer,
+    $$CustomersTableAnnotationComposer,
+    $$CustomersTableCreateCompanionBuilder,
+    $$CustomersTableUpdateCompanionBuilder,
+    (Customer, BaseReferences<_$BasirDatabase, $CustomersTable, Customer>),
+    Customer,
+    PrefetchHooks Function()>;
+typedef $$VendorsTableCreateCompanionBuilder = VendorsCompanion Function({
+  required String scopeKey,
+  required String uuid,
+  required String nameAr,
+  required String nameEn,
+  Value<String?> phone,
+  Value<String?> email,
+  Value<String?> address,
+  Value<String?> notes,
+  required DateTime createdAt,
+  required DateTime updatedAt,
+  Value<String?> payableAccountId,
+  Value<String?> vatNumber,
+  Value<String?> registrationNumber,
+  Value<double> balance,
+  Value<String?> userId,
+  Value<String> syncStatus,
+  Value<DateTime?> serverUpdatedAt,
+  Value<bool> isDeleted,
+  Value<int> rowid,
+});
+typedef $$VendorsTableUpdateCompanionBuilder = VendorsCompanion Function({
+  Value<String> scopeKey,
+  Value<String> uuid,
+  Value<String> nameAr,
+  Value<String> nameEn,
+  Value<String?> phone,
+  Value<String?> email,
+  Value<String?> address,
+  Value<String?> notes,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
+  Value<String?> payableAccountId,
+  Value<String?> vatNumber,
+  Value<String?> registrationNumber,
+  Value<double> balance,
+  Value<String?> userId,
+  Value<String> syncStatus,
+  Value<DateTime?> serverUpdatedAt,
+  Value<bool> isDeleted,
+  Value<int> rowid,
+});
+
+class $$VendorsTableFilterComposer
+    extends Composer<_$BasirDatabase, $VendorsTable> {
+  $$VendorsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get uuid => $composableBuilder(
+      column: $table.uuid, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get nameAr => $composableBuilder(
+      column: $table.nameAr, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get nameEn => $composableBuilder(
+      column: $table.nameEn, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get phone => $composableBuilder(
+      column: $table.phone, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get address => $composableBuilder(
+      column: $table.address, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get payableAccountId => $composableBuilder(
+      column: $table.payableAccountId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get vatNumber => $composableBuilder(
+      column: $table.vatNumber, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get registrationNumber => $composableBuilder(
+      column: $table.registrationNumber,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get balance => $composableBuilder(
+      column: $table.balance, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get serverUpdatedAt => $composableBuilder(
+      column: $table.serverUpdatedAt,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnFilters(column));
+}
+
+class $$VendorsTableOrderingComposer
+    extends Composer<_$BasirDatabase, $VendorsTable> {
+  $$VendorsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get uuid => $composableBuilder(
+      column: $table.uuid, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get nameAr => $composableBuilder(
+      column: $table.nameAr, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get nameEn => $composableBuilder(
+      column: $table.nameEn, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get phone => $composableBuilder(
+      column: $table.phone, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get address => $composableBuilder(
+      column: $table.address, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get payableAccountId => $composableBuilder(
+      column: $table.payableAccountId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get vatNumber => $composableBuilder(
+      column: $table.vatNumber, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get registrationNumber => $composableBuilder(
+      column: $table.registrationNumber,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get balance => $composableBuilder(
+      column: $table.balance, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get serverUpdatedAt => $composableBuilder(
+      column: $table.serverUpdatedAt,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnOrderings(column));
+}
+
+class $$VendorsTableAnnotationComposer
+    extends Composer<_$BasirDatabase, $VendorsTable> {
+  $$VendorsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get scopeKey =>
+      $composableBuilder(column: $table.scopeKey, builder: (column) => column);
+
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<String> get nameAr =>
+      $composableBuilder(column: $table.nameAr, builder: (column) => column);
+
+  GeneratedColumn<String> get nameEn =>
+      $composableBuilder(column: $table.nameEn, builder: (column) => column);
+
+  GeneratedColumn<String> get phone =>
+      $composableBuilder(column: $table.phone, builder: (column) => column);
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get address =>
+      $composableBuilder(column: $table.address, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get payableAccountId => $composableBuilder(
+      column: $table.payableAccountId, builder: (column) => column);
+
+  GeneratedColumn<String> get vatNumber =>
+      $composableBuilder(column: $table.vatNumber, builder: (column) => column);
+
+  GeneratedColumn<String> get registrationNumber => $composableBuilder(
+      column: $table.registrationNumber, builder: (column) => column);
+
+  GeneratedColumn<double> get balance =>
+      $composableBuilder(column: $table.balance, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get serverUpdatedAt => $composableBuilder(
+      column: $table.serverUpdatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+}
+
+class $$VendorsTableTableManager extends RootTableManager<
+    _$BasirDatabase,
+    $VendorsTable,
+    Vendor,
+    $$VendorsTableFilterComposer,
+    $$VendorsTableOrderingComposer,
+    $$VendorsTableAnnotationComposer,
+    $$VendorsTableCreateCompanionBuilder,
+    $$VendorsTableUpdateCompanionBuilder,
+    (Vendor, BaseReferences<_$BasirDatabase, $VendorsTable, Vendor>),
+    Vendor,
+    PrefetchHooks Function()> {
+  $$VendorsTableTableManager(_$BasirDatabase db, $VendorsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VendorsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VendorsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VendorsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> scopeKey = const Value.absent(),
+            Value<String> uuid = const Value.absent(),
+            Value<String> nameAr = const Value.absent(),
+            Value<String> nameEn = const Value.absent(),
+            Value<String?> phone = const Value.absent(),
+            Value<String?> email = const Value.absent(),
+            Value<String?> address = const Value.absent(),
+            Value<String?> notes = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
+            Value<String?> payableAccountId = const Value.absent(),
+            Value<String?> vatNumber = const Value.absent(),
+            Value<String?> registrationNumber = const Value.absent(),
+            Value<double> balance = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<DateTime?> serverUpdatedAt = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              VendorsCompanion(
+            scopeKey: <credential-fixture>,
+            uuid: uuid,
+            nameAr: nameAr,
+            nameEn: nameEn,
+            phone: phone,
+            email: email,
+            address: address,
+            notes: notes,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            payableAccountId: payableAccountId,
+            vatNumber: vatNumber,
+            registrationNumber: registrationNumber,
+            balance: balance,
+            userId: userId,
+            syncStatus: syncStatus,
+            serverUpdatedAt: serverUpdatedAt,
+            isDeleted: isDeleted,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String scopeKey,
+            required String uuid,
+            required String nameAr,
+            required String nameEn,
+            Value<String?> phone = const Value.absent(),
+            Value<String?> email = const Value.absent(),
+            Value<String?> address = const Value.absent(),
+            Value<String?> notes = const Value.absent(),
+            required DateTime createdAt,
+            required DateTime updatedAt,
+            Value<String?> payableAccountId = const Value.absent(),
+            Value<String?> vatNumber = const Value.absent(),
+            Value<String?> registrationNumber = const Value.absent(),
+            Value<double> balance = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<DateTime?> serverUpdatedAt = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              VendorsCompanion.insert(
+            scopeKey: <credential-fixture>,
+            uuid: uuid,
+            nameAr: nameAr,
+            nameEn: nameEn,
+            phone: phone,
+            email: email,
+            address: address,
+            notes: notes,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            payableAccountId: payableAccountId,
+            vatNumber: vatNumber,
+            registrationNumber: registrationNumber,
+            balance: balance,
+            userId: userId,
+            syncStatus: syncStatus,
+            serverUpdatedAt: serverUpdatedAt,
+            isDeleted: isDeleted,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$VendorsTableProcessedTableManager = ProcessedTableManager<
+    _$BasirDatabase,
+    $VendorsTable,
+    Vendor,
+    $$VendorsTableFilterComposer,
+    $$VendorsTableOrderingComposer,
+    $$VendorsTableAnnotationComposer,
+    $$VendorsTableCreateCompanionBuilder,
+    $$VendorsTableUpdateCompanionBuilder,
+    (Vendor, BaseReferences<_$BasirDatabase, $VendorsTable, Vendor>),
+    Vendor,
+    PrefetchHooks Function()>;
 typedef $$SyncOutboxTableCreateCompanionBuilder = SyncOutboxCompanion Function({
   required String id,
   required String entityType,
@@ -5873,6 +8311,10 @@ class $BasirDatabaseManager {
       $$GoalsTableTableManager(_db, _db.goals);
   $$BudgetsTableTableManager get budgets =>
       $$BudgetsTableTableManager(_db, _db.budgets);
+  $$CustomersTableTableManager get customers =>
+      $$CustomersTableTableManager(_db, _db.customers);
+  $$VendorsTableTableManager get vendors =>
+      $$VendorsTableTableManager(_db, _db.vendors);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }
