@@ -34,6 +34,8 @@ class GoalRecord {
 abstract interface class GoalStorage {
   Future<List<GoalRecord>> readAllForUser(String? userId);
 
+  Future<List<GoalRecord>> readAll();
+
   Future<GoalRecord?> readById(String id, String? userId);
 
   Future<void> save(GoalRecord record);
@@ -55,6 +57,17 @@ class GoalStore implements GoalStorage {
           ..where((table) => table.scopeKey.equals(userScopeKey(userId)))
           ..orderBy([
             (table) => OrderingTerm.asc(table.startDate),
+            (table) => OrderingTerm.asc(table.uuid),
+          ]))
+        .get();
+    return rows.map(_toRecord).toList(growable: false);
+  }
+
+  @override
+  Future<List<GoalRecord>> readAll() async {
+    final rows = await (_database.select(_database.goals)
+          ..orderBy([
+            (table) => OrderingTerm.asc(table.scopeKey),
             (table) => OrderingTerm.asc(table.uuid),
           ]))
         .get();

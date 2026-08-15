@@ -36,6 +36,8 @@ class BudgetRecord {
 abstract interface class BudgetStorage {
   Future<List<BudgetRecord>> readAllForUser(String? userId);
 
+  Future<List<BudgetRecord>> readAll();
+
   Future<BudgetRecord?> readById(String id, String? userId);
 
   Future<void> save(BudgetRecord record);
@@ -55,6 +57,17 @@ class BudgetStore implements BudgetStorage {
           ..where((table) => table.scopeKey.equals(userScopeKey(userId)))
           ..orderBy([
             (table) => OrderingTerm.asc(table.startDate),
+            (table) => OrderingTerm.asc(table.budgetId),
+          ]))
+        .get();
+    return rows.map(_toRecord).toList(growable: false);
+  }
+
+  @override
+  Future<List<BudgetRecord>> readAll() async {
+    final rows = await (_database.select(_database.budgets)
+          ..orderBy([
+            (table) => OrderingTerm.asc(table.scopeKey),
             (table) => OrderingTerm.asc(table.budgetId),
           ]))
         .get();
