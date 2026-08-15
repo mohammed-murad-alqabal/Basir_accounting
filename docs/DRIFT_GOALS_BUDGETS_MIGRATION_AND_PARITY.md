@@ -30,6 +30,22 @@
 | duplicate user scope | ناجح ويمنع التقدم |
 | Isar مؤقت → SQLite في الذاكرة → parity | ناجح |
 | بقاء بيانات Isar المصدرية | ناجح؛ السجلات المصدرية بقيت كما هي |
+| shadow-read flags وdecorators | ناجح؛ flags مغلقة وIsar يعيد النتيجة دائمًا |
+| snapshot parser وrunner في SQLite memory | ناجح؛ clean fixture ورفض البيانات غير المعقمة |
+
+## shadow-read الآمن
+
+يحتوي `drift_goals_budgets_shadow_read.dart` على comparator مستقل لعمليات القراءة الفردية والقوائم، ويسجل slice وoperation وoutcome ووقت التنفيذ فقط. عند إغلاق flag لا يُستدعى Drift إطلاقًا؛ وعند فتحه تشخيصيًا يظل Isar مصدر النتيجة، وتبقى عمليات الكتابة والحذف موجهة إلى Isar فقط. توجد flags مستقلة لـGoals وBudgets، وقيمتها الافتراضية `false`، بينما تبقى `driftRolloutStageProvider` على `isarPrimary`.
+
+## التحقق offline من snapshot
+
+يُشغّل `DriftGoalsBudgetsSnapshotRunner` importer وparity داخل SQLite في الذاكرة فقط، ويمكن تشغيله من CLI عبر:
+
+```bash
+dart run tool/run_drift_goals_budgets_snapshot.dart <sanitized-snapshot.json>
+```
+
+العقد الكامل للـJSON وقواعد تفسير المخرجات موثق في [`DRIFT_GOALS_BUDGETS_SNAPSHOT_RUNBOOK.md`](DRIFT_GOALS_BUDGETS_SNAPSHOT_RUNBOOK.md). لا تُعد الموجة مقبولة إلا عند `clean: true`، واكتمال checkpoints، وتطابق fingerprint، وصفر ambiguous scopes.
 
 ## بوابات الانتقال
 

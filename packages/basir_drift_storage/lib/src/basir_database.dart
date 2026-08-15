@@ -1,7 +1,5 @@
+import 'package:basir_drift_storage/src/database_connection.dart';
 import 'package:drift/drift.dart';
-import 'package:drift_flutter/drift_flutter.dart';
-import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
 
 part 'basir_database.g.dart';
 
@@ -216,23 +214,5 @@ class BasirDatabase extends _$BasirDatabase {
         beforeOpen: (details) => customStatement('PRAGMA foreign_keys = ON'),
       );
 
-  static QueryExecutor _openConnection() => driftDatabase(
-        name: 'basir_drift_vnext',
-        native: const DriftNativeOptions(
-          databaseDirectory: getApplicationSupportDirectory,
-          shareAcrossIsolates: true,
-        ),
-        web: DriftWebOptions(
-          sqlite3Wasm: Uri.parse('sqlite3.wasm'),
-          driftWorker: Uri.parse('drift_worker.dart.js'),
-          onResult: (result) {
-            if (result.missingFeatures.isNotEmpty) {
-              debugPrint(
-                'Drift Web fallback: ${result.chosenImplementation}; '
-                'missing: ${result.missingFeatures.join(', ')}',
-              );
-            }
-          },
-        ),
-      );
+  static QueryExecutor _openConnection() => openBasirConnection();
 }
