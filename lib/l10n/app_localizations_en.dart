@@ -594,10 +594,63 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelAssetAccountId => 'Inventory Account (Assets)';
 
   @override
-  String get inventoryItemsSearchHint => 'Search inventory...';
+  String get inventoryItemsSearchHint => 'Search by name, SKU, or barcode...';
+
+  @override
+  String get inventoryEmptyHintTitle => 'Inventory management';
+
+  @override
+  String get inventoryEmptyHintDescription =>
+      'Add inventory items here to track quantities and costs accurately. You can start by adding an item manually.';
 
   @override
   String get labelSKU => 'SKU';
+
+  @override
+  String get labelBarcode => 'Barcode';
+
+  @override
+  String get inventoryItemNameArRequired => 'Enter the item name in Arabic.';
+
+  @override
+  String get inventoryItemNameEnRequired => 'Enter the item name in English.';
+
+  @override
+  String get inventoryItemInvalidPrice =>
+      'Enter valid, non-negative purchase and sales prices.';
+
+  @override
+  String get inventoryItemQuantityMustUseMovement =>
+      'Update item quantity through an inventory movement or stock count only.';
+
+  @override
+  String get inventoryItemDuplicateSku =>
+      'The SKU or barcode is already used by another item.';
+
+  @override
+  String get inventoryItemDuplicateBarcode =>
+      'The barcode is already used by another item.';
+
+  @override
+  String get inventoryItemNotFound => 'The requested item could not be found.';
+
+  @override
+  String get inventoryItemSaveFailed =>
+      'Item details could not be saved. Please try again.';
+
+  @override
+  String get inventoryItemSaved => 'Item details were saved.';
+
+  @override
+  String get inventoryBarcodeSelectRequired =>
+      'Select an item and enter the barcode first.';
+
+  @override
+  String get inventoryBarcodeSaved => 'Barcode was saved successfully.';
+
+  @override
+  String get inventoryBarcodeSaveFailed =>
+      'Barcode could not be saved. Please try again.';
 
   @override
   String get labelPurchasePrice => 'Purchase Price';
