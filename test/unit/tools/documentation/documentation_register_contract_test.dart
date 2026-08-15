@@ -50,15 +50,24 @@ void main() {
                 RegExp(
                   r'\| `(MOVE|ARCHIVE|MERGE|RECLASSIFY)-P4-[0-9]+`',
                 ).hasMatch(line) &&
-                line.contains('PENDING_REVIEW'),
+                (line.contains('PENDING_REVIEW') ||
+                    line.contains('KEEP_APPROVED')),
           )
           .toList();
       expect(decisionRows, hasLength(9));
-      for (final row in decisionRows) {
-        expect(row, contains('PENDING_REVIEW'));
+      final pendingRows =
+          decisionRows.where((row) => row.contains('PENDING_REVIEW')).toList();
+      expect(pendingRows, hasLength(7));
+      for (final row in pendingRows) {
         expect(row, isNot(contains('APPROVED')));
         expect(row, isNot(contains('CANONICAL-ACTIVE')));
       }
+
+      final keepRows =
+          decisionRows.where((row) => row.contains('KEEP_APPROVED')).toList();
+      expect(keepRows, hasLength(2));
+      expect(keepRows.any((row) => row.contains('MERGE-P4-003')), isTrue);
+      expect(keepRows.any((row) => row.contains('MERGE-P4-005')), isTrue);
 
       final indexRow = migrationText
           .split('\n')
