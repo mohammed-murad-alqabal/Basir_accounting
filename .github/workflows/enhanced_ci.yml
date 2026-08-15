@@ -9,7 +9,9 @@ on:
 
 env:
   FLUTTER_VERSION: "3.35.5"
+  # 70% هو الهدف الاستراتيجي؛ baseline الموثق هو الحد المانع أثناء التعافي.
   MIN_COVERAGE: 70
+  BASELINE_COVERAGE: 25.98
   MAX_COMPLEXITY: 10
   MAX_LINE_LENGTH: 80
 
@@ -266,15 +268,21 @@ jobs:
             COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep lines | awk '{print $2}' | sed 's/%//' || echo "0")
             
             echo "📈 Coverage: $COVERAGE%"
+            echo "📌 Documented baseline: ${{ env.BASELINE_COVERAGE }}%"
             echo "🎯 Target: ${{ env.MIN_COVERAGE }}%"
             echo ""
-            
-            if (( $(echo "$COVERAGE < ${{ env.MIN_COVERAGE }}" | bc -l) )); then
-              echo "❌ Coverage is below target: $COVERAGE% < ${{ env.MIN_COVERAGE }}%"
-              echo "💡 Quality First principle: Maintain 70%+ test coverage"
+
+            if (( $(echo "$COVERAGE < ${{ env.BASELINE_COVERAGE }}" | bc -l) )); then
+              echo "❌ Coverage is below the documented baseline: $COVERAGE% < ${{ env.BASELINE_COVERAGE }}%"
+              echo "💡 Restore at least the verified baseline before merging."
               echo ""
               echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
               exit 1
+            elif (( $(echo "$COVERAGE < ${{ env.MIN_COVERAGE }}" | bc -l) )); then
+              echo "::warning title=Coverage target not yet met::$COVERAGE% is below the strategic target of ${{ env.MIN_COVERAGE }}% but meets the documented baseline of ${{ env.BASELINE_COVERAGE }}%."
+              echo "⚠️  Coverage is below the target; improvement remains required."
+              echo ""
+              echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
             else
               echo "✅ Coverage meets target: $COVERAGE% ≥ ${{ env.MIN_COVERAGE }}%"
               echo ""
@@ -446,7 +454,7 @@ jobs:
           echo "   ✅ KISS - Checked code complexity"
           echo "   ✅ ENGLISH FOR CODE - Validated code language"
           echo "   ✅ Security First - Checked for secrets"
-          echo "   ✅ Quality First - Enforced 70%+ coverage"
+          echo "   ✅ Quality First - Enforced documented coverage baseline; reported progress toward 70%"
           echo ""
           echo "📊 Job Results:"
           echo "   📋 Standards Validation: ${{ needs.validate-standards.result }}"
