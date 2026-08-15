@@ -41,9 +41,8 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
           _searchController.text.isEmpty) {
         showCognitiveHint(
           context,
-          'قم بإضافة أصناف المخزون هنا لتتمكن من تتبع الكميات والتكاليف بدقة. '
-          'يمكنك البدء بإضافة صنف يدويًا.',
-          title: 'إدارة المخزون',
+          context.l10n.inventoryEmptyHintDescription,
+          title: context.l10n.inventoryEmptyHintTitle,
         );
       }
     });
@@ -117,15 +116,19 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
       itemBuilder: (context, index) {
         final item = items[index];
         final localizedName = item.name(isArabic: context.isArabic);
+        final identifiers = [
+          if (item.sku != null) '${context.l10n.labelSKU}: ${item.sku}',
+          if (item.barcode != null)
+            '${context.l10n.labelBarcode}: ${item.barcode}',
+        ].join(' • ');
+        final quantityLabel = _quantityLabel(item);
         return Semantics(
-          label: '$localizedName, '
-              '${item.sku ?? ""}, '
-              '${item.currentQuantity} ${item.unit ?? ""}',
+          label: '$localizedName, $identifiers, $quantityLabel',
           button: true,
           child: AppListCard(
             title: localizedName,
-            subtitle: item.sku ?? '',
-            trailing: '${item.currentQuantity} ${item.unit ?? ""}',
+            subtitle: identifiers,
+            trailing: quantityLabel,
             leading: CircleAvatar(
               backgroundColor: AppColors.primary.withValues(alpha: 0.2),
               child: Text(
@@ -141,6 +144,15 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
         );
       },
     );
+  }
+
+  String _quantityLabel(InventoryItem item) {
+    final quantity = item.currentQuantity;
+    final value = quantity == quantity.truncateToDouble()
+        ? quantity.toInt().toString()
+        : quantity.toString();
+    final unit = item.unit?.trim();
+    return unit == null || unit.isEmpty ? value : '$value $unit';
   }
 
   Future<void> _addItem() async {
