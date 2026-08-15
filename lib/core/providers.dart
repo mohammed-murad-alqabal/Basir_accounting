@@ -79,6 +79,8 @@ export '../features/analytics/application/analytics_service.dart';
 export '../features/auth/presentation/providers/auth_provider.dart';
 export '../features/reports/application/pdf_generation_service.dart';
 export '../features/reports/services/reporting_service.dart';
+// تصدير مزودات التخزين التجريبية؛ لا تغيّر مسار Isar النشط تلقائيًا.
+export 'persistence/drift_providers.dart';
 // تصدير المزودات الأساسية
 export 'providers/calendar_provider.dart';
 export 'providers/locale_provider.dart';
