@@ -23,6 +23,18 @@ jobs:
           channel: "stable"
           cache: false
 
+      - name: Configure Gradle memory for Android CI
+        if: matrix.platform == 'android'
+        run: |
+          mkdir -p "$HOME/.gradle"
+          cat > "$HOME/.gradle/gradle.properties" <<'EOF'
+          org.gradle.jvmargs=-Xmx5g -XX:MaxMetaspaceSize=768m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+          org.gradle.workers.max=2
+          org.gradle.parallel=false
+          org.gradle.daemon=false
+          EOF
+          echo "Gradle CI memory configured: heap=5g, metaspace=768m, workers=2, parallel=false"
+
       - name: Get dependencies
         run: flutter pub get
 
@@ -268,6 +280,18 @@ jobs:
           flutter-version: "3.35.5"
           channel: "stable"
           cache: false
+
+      - name: Configure Gradle memory for Android CI
+        if: matrix.platform == 'android'
+        run: |
+          mkdir -p "$HOME/.gradle"
+          cat > "$HOME/.gradle/gradle.properties" <<'EOF'
+          org.gradle.jvmargs=-Xmx5g -XX:MaxMetaspaceSize=768m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+          org.gradle.workers.max=2
+          org.gradle.parallel=false
+          org.gradle.daemon=false
+          EOF
+          echo "Gradle CI memory configured: heap=5g, metaspace=768m, workers=2, parallel=false"
 
       - name: Get dependencies
         run: flutter pub get
