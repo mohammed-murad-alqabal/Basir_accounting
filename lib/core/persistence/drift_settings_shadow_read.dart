@@ -1,5 +1,7 @@
 import 'package:basir_accounting_system/features/settings/domain/entities/business_settings.dart';
 import 'package:basir_accounting_system/features/settings/domain/entities/profile.dart';
+import 'package:basir_accounting_system/features/settings/domain/repositories/business_settings_repository.dart';
+import 'package:basir_accounting_system/features/settings/domain/repositories/profile_repository.dart';
 
 /// نتيجة تشغيل shadow-read؛ لا تحمل قيم الأعمال أو هوية المستخدم.
 enum DriftShadowReadOutcome {
@@ -177,3 +179,80 @@ bool _businessSettingsEqual(
     left.syncStatus == right.syncStatus &&
     left.serverUpdatedAt?.toUtc() == right.serverUpdatedAt?.toUtc() &&
     left.isDeleted == right.isDeleted;
+
+/// Decorator يحافظ على قيمة Profile من المصدر القديم، ويشغّل المقارنة فقط عند
+/// تفعيل flag خارجي مغلق افتراضيًا.
+class ShadowReadProfileRepository implements ProfileRepository {
+  ShadowReadProfileRepository({
+    required ProfileRepository source,
+    required ProfileRepository candidate,
+    required DriftSettingsShadowReadComparator comparator,
+    required bool enabled,
+  })  : _source = source,
+        _candidate = candidate,
+        _comparator = comparator,
+        _enabled = enabled;
+
+  final ProfileRepository _source;
+  final ProfileRepository _candidate;
+  final DriftSettingsShadowReadComparator _comparator;
+  final bool _enabled;
+
+  @override
+  Future<Profile?> getProfile() async {
+    if (!_enabled) return _source.getProfile();
+
+    final sourceRead = _source.getProfile;
+    final sourceValue = await sourceRead();
+    await _comparator.compareProfile(
+      operation: 'getProfile',
+      sourceRead: () async => sourceValue,
+      candidateRead: _candidate.getProfile,
+    );
+    return sourceValue;
+  }
+
+  @override
+  Future<void> saveProfile(Profile profile) => _source.saveProfile(profile);
+
+  @override
+  Future<void> deleteProfile() => _source.deleteProfile();
+}
+
+/// Decorator يحافظ على قيمة BusinessSettings من المصدر القديم، ويشغّل المقارنة
+/// فقط عند تفعيل flag خارجي مغلق افتراضيًا.
+class ShadowReadBusinessSettingsRepository
+    implements BusinessSettingsRepository {
+  ShadowReadBusinessSettingsRepository({
+    required BusinessSettingsRepository source,
+    required BusinessSettingsRepository candidate,
+    required DriftSettingsShadowReadComparator comparator,
+    required bool enabled,
+  })  : _source = source,
+        _candidate = candidate,
+        _comparator = comparator,
+        _enabled = enabled;
+
+  final BusinessSettingsRepository _source;
+  final BusinessSettingsRepository _candidate;
+  final DriftSettingsShadowReadComparator _comparator;
+  final bool _enabled;
+
+  @override
+  Future<BusinessSettings?> getSettings() async {
+    if (!_enabled) return _source.getSettings();
+
+    final sourceRead = _source.getSettings;
+    final sourceValue = await sourceRead();
+    await _comparator.compareBusinessSettings(
+      operation: 'getSettings',
+      sourceRead: () async => sourceValue,
+      candidateRead: _candidate.getSettings,
+    );
+    return sourceValue;
+  }
+
+  @override
+  Future<void> saveSettings(BusinessSettings settings) =>
+      _source.saveSettings(settings);
+}

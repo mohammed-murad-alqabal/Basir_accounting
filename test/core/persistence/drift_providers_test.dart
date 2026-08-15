@@ -14,6 +14,21 @@ void main() {
       );
     });
 
+    test('keeps settings shadow-read flags closed by default', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+
+      expect(container.read(driftProfileShadowReadEnabledProvider), isFalse);
+      expect(
+        container.read(driftBusinessSettingsShadowReadEnabledProvider),
+        isFalse,
+      );
+      expect(
+        container.read(driftRolloutStageProvider),
+        DriftRolloutStage.isarPrimary,
+      );
+    });
+
     test('reports readiness when the injected verifier succeeds', () async {
       final container = ProviderContainer(
         overrides: [
