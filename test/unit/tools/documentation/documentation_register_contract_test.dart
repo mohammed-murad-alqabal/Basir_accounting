@@ -25,7 +25,7 @@ void main() {
       expect(
         registerText,
         contains(
-          '**last_verified_sha:** `705c63e7586f1ae063ac6f092890da81ed439192`',
+          '**last_verified_sha:** `93df611433a62f7935e7aa622d3741c2bb1869d6`',
         ),
       );
       expect(registerText, contains('لا يحذف هذا السجل'));
