@@ -29,9 +29,34 @@ runs:
       run: |
         set -euo pipefail
 
-        archive="flutter_linux_${FLUTTER_VERSION}-${FLUTTER_CHANNEL}.tar.xz"
-        archive_url="https://storage.googleapis.com/flutter_infra_release/releases/${FLUTTER_CHANNEL}/linux/${archive}"
-        sdk_dir="${RUNNER_TEMP}/flutter-${FLUTTER_VERSION}-${FLUTTER_CHANNEL}"
+        runner_os="$(uname -s)"
+        runner_arch="$(uname -m)"
+        case "${runner_os}" in
+          Linux)
+            platform="linux"
+            archive="flutter_linux_${FLUTTER_VERSION}-${FLUTTER_CHANNEL}.tar.xz"
+            archive_format="tar.xz"
+            ;;
+          Darwin)
+            platform="macos"
+            if [[ "${runner_arch}" == "arm64" ]]; then
+              archive="flutter_macos_arm64_${FLUTTER_VERSION}-${FLUTTER_CHANNEL}.zip"
+            elif [[ "${runner_arch}" == "x86_64" ]]; then
+              archive="flutter_macos_${FLUTTER_VERSION}-${FLUTTER_CHANNEL}.zip"
+            else
+              echo "Unsupported macOS architecture: ${runner_arch}" >&2
+              exit 1
+            fi
+            archive_format="zip"
+            ;;
+          *)
+            echo "Unsupported runner OS: ${runner_os}" >&2
+            exit 1
+            ;;
+        esac
+
+        archive_url="https://storage.googleapis.com/flutter_infra_release/releases/${FLUTTER_CHANNEL}/${platform}/${archive}"
+        sdk_dir="${RUNNER_TEMP}/flutter-${FLUTTER_VERSION}-${FLUTTER_CHANNEL}-${platform}-${runner_arch}"
 
         if [[ ! -x "${sdk_dir}/bin/flutter" ]]; then
           download_dir="${RUNNER_TEMP}/basir-flutter-download"
@@ -40,7 +65,11 @@ runs:
           mkdir -p "${download_dir}"
 
           curl --fail --location --retry 3 --silent --show-error "${archive_url}" --output "${archive_path}"
-          tar -xJf "${archive_path}" -C "${RUNNER_TEMP}"
+          if [[ "${archive_format}" == "tar.xz" ]]; then
+            tar -xJf "${archive_path}" -C "${RUNNER_TEMP}"
+          else
+            unzip -q "${archive_path}" -d "${RUNNER_TEMP}"
+          fi
           mv "${RUNNER_TEMP}/flutter" "${sdk_dir}"
         fi
 
