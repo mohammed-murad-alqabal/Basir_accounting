@@ -6,7 +6,7 @@
 > **owner:** Documentation Steward
 > **approved_by:** Pending formal repository owner approval
 > **effective_from:** 2026-08-15
-> **last_verified_sha:** `705c63e7586f1ae063ac6f092890da81ed439192`
+> **last_verified_sha:** `93df611433a62f7935e7aa622d3741c2bb1869d6`
 > **review_due:** 2026-11-13
 > **related_requirements:** REQ-UX-004
 > **related_adrs:** None
