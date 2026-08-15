@@ -1,18 +1,17 @@
+import 'dart:async';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/bulk_price_change.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/providers/bulk_price_change_provider.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/providers/inventory_provider.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
-import 'package:basir_accounting_system/shared/widgets/app_button.dart';
 import 'package:basir_accounting_system/shared/widgets/app_card.dart';
-import 'package:basir_accounting_system/shared/widgets/app_text_field.dart';
-import 'package:basir_accounting_system/shared/widgets/app_snackbar.dart';
-import 'package:basir_accounting_system/shared/widgets/app_loading_indicator.dart';
+import 'package:basir_accounting_system/shared/widgets/app_enhanced_button.dart';
 import 'package:basir_accounting_system/shared/widgets/app_error_widget.dart';
+import 'package:basir_accounting_system/shared/widgets/app_loading_indicator.dart';
+import 'package:basir_accounting_system/shared/widgets/app_snackbar.dart';
+import 'package:basir_accounting_system/shared/widgets/app_text_field.dart';
 import 'package:basir_accounting_system/shared/widgets/glass_scaffold.dart';
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -94,10 +93,9 @@ class _WizardStepper extends StatelessWidget {
                     labels[index],
                     style: TextStyle(
                       fontSize: AppTextStyles.titleSmallSize,
-                      fontWeight: active
-                          ? FontWeight.bold
-                          : FontWeight.normal,
-                      color: active ? AppColors.primary : AppColors.textSecondary,
+                      fontWeight: active ? FontWeight.bold : FontWeight.normal,
+                      color:
+                          active ? AppColors.primary : AppColors.textSecondary,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -147,10 +145,10 @@ class _ScopeStep extends ConsumerWidget {
           onTap: () => _openItemPicker(context, ref),
         ),
         const SizedBox(height: Spacing.xl),
-        AppButton(
+        AppEnhancedButton(
           label: l10n.bulkWizardNext,
-          isFullWidth: true,
-          type: AppButtonType.primary,
+          width: double.infinity,
+          type: AppEnhancedButtonType.primary,
           onPressed: ref.read(bulkChangeWizardProvider.notifier).nextStep,
         ),
       ],
@@ -203,8 +201,7 @@ class _RuleStepState extends ConsumerState<_RuleStep> {
     final wizard = ref.watch(bulkChangeWizardProvider);
     final notifier = ref.read(bulkChangeWizardProvider.notifier);
     final ruleType = wizard.ruleType;
-    final needsValue =
-        ruleType != BulkPriceChangeRuleType.copyFromPurchase;
+    final needsValue = ruleType != BulkPriceChangeRuleType.copyFromPurchase;
     return ListView(
       padding: const EdgeInsets.all(Spacing.lg),
       children: [
@@ -277,10 +274,10 @@ class _RuleStepState extends ConsumerState<_RuleStep> {
           ),
         ],
         const SizedBox(height: Spacing.xl),
-        AppButton(
+        AppEnhancedButton(
           label: l10n.bulkWizardNext,
-          isFullWidth: true,
-          type: AppButtonType.primary,
+          width: double.infinity,
+          type: AppEnhancedButtonType.primary,
           onPressed: notifier.nextStep,
         ),
       ],
@@ -323,8 +320,8 @@ class _PreviewStep extends ConsumerWidget {
     final wizard = ref.watch(bulkChangeWizardProvider);
     final notifier = ref.read(bulkChangeWizardProvider.notifier);
     if (!wizard.previewLoaded && !wizard.applying) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        notifier.refreshPreview();
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await notifier.refreshPreview();
       });
     }
     if (wizard.applying && wizard.previewEntries.isEmpty) {
@@ -363,8 +360,11 @@ class _PreviewStep extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.info_outline,
-                        size: 40, color: AppColors.textSecondary),
+                    const Icon(
+                      Icons.info_outline,
+                      size: 40,
+                      color: AppColors.textSecondary,
+                    ),
                     const SizedBox(height: Spacing.md),
                     Text(
                       l10n.bulkPreviewNoChanges,
@@ -388,13 +388,11 @@ class _PreviewStep extends ConsumerWidget {
           ),
         Padding(
           padding: const EdgeInsets.all(Spacing.lg),
-          child: AppButton(
+          child: AppEnhancedButton(
             label: l10n.bulkWizardNext,
-            isFullWidth: true,
-            type: AppButtonType.primary,
-            onPressed: wizard.previewEntries.isEmpty
-                ? null
-                : notifier.nextStep,
+            width: double.infinity,
+            type: AppEnhancedButtonType.primary,
+            onPressed: wizard.previewEntries.isEmpty ? null : notifier.nextStep,
           ),
         ),
       ],
@@ -434,19 +432,18 @@ class _PreviewEntryCard extends StatelessWidget {
             size: IconSizes.md,
           ),
         ),
-        backgroundColor: blocked
-            ? AppColors.error.withValues(alpha: 0.05)
-            : null,
+        backgroundColor:
+            blocked ? AppColors.error.withValues(alpha: 0.05) : null,
       ),
     );
   }
 
   String _priceDelta(AppLocalizations l10n) {
     final parts = <String>[];
-    final showSale = target == BulkPriceTarget.sale ||
-        target == BulkPriceTarget.both;
-    final showPurchase = target == BulkPriceTarget.purchase ||
-        target == BulkPriceTarget.both;
+    final showSale =
+        target == BulkPriceTarget.sale || target == BulkPriceTarget.both;
+    final showPurchase =
+        target == BulkPriceTarget.purchase || target == BulkPriceTarget.both;
     if (showSale &&
         entry.previousSalePrice != null &&
         entry.newSalePrice != null) {
@@ -547,18 +544,17 @@ class _ApprovalStepState extends ConsumerState<_ApprovalStep> {
           ),
         ),
         const SizedBox(height: Spacing.xl),
-        AppButton(
+        AppEnhancedButton(
           label: l10n.bulkApprovalExecute,
-          isFullWidth: true,
-          type: AppButtonType.primary,
+          width: double.infinity,
+          type: AppEnhancedButtonType.primary,
           isLoading: wizard.executing,
-            onPressed: wizard.confirmed && !wizard.executing
-                ? () => _onExecute(context, ref)
-                : null,
+          onPressed: wizard.confirmed && !wizard.executing
+              ? () => _onExecute(context, ref)
+              : null,
         ),
         const SizedBox(height: Spacing.md),
-        if (wizard.executing)
-          const Center(child: AppLoadingIndicator()),
+        if (wizard.executing) const Center(child: AppLoadingIndicator()),
       ],
     );
   }
@@ -600,10 +596,12 @@ class _ApprovalStepState extends ConsumerState<_ApprovalStep> {
     final wizard = ref.read(bulkChangeWizardProvider);
     if (wizard.lastRecord != null && wizard.error == null) {
       if (context.mounted) {
-        _notifier.nextStep();
+        await _notifier.nextStep();
       }
-    } else if (wizard.error != null && context.mounted) {
-      AppSnackbar.showError(context, wizard.error!);
+    } else if (wizard.error != null) {
+      if (context.mounted) {
+        AppSnackbar.showError(context, wizard.error!);
+      }
     }
   }
 }
@@ -651,9 +649,10 @@ class _SuccessStepState extends ConsumerState<_SuccessStep> {
     final record = ref.read(bulkChangeWizardProvider).lastRecord;
     if (record == null) return;
     final notifier = ref.read(bulkChangeWizardProvider.notifier);
-    final canCancel = !record.isCancelled && record.isCancellableAt(
-      ref.read(bulkChangeNowProvider)(),
-    );
+    final canCancel = !record.isCancelled &&
+        record.isCancellableAt(
+          ref.read(bulkChangeNowProvider)(),
+        );
     if (!canCancel && mounted) {
       AppSnackbar.showInfo(
         context,
@@ -673,12 +672,14 @@ class _SuccessStepState extends ConsumerState<_SuccessStep> {
     );
     final updated = ref.read(bulkChangeWizardProvider);
     if (updated.lastRecord?.isCancelled ?? false) {
-      if (mounted) {
+      if (context.mounted) {
         AppSnackbar.showSuccess(context, l10n.bulkCancellationSuccess);
         ref.invalidate(inventoryItemsProvider);
       }
-    } else if (updated.error != null && mounted) {
-      AppSnackbar.showError(context, updated.error!);
+    } else if (updated.error != null) {
+      if (context.mounted) {
+        AppSnackbar.showError(context, updated.error!);
+      }
     }
   }
 
@@ -712,7 +713,7 @@ class _SuccessStepState extends ConsumerState<_SuccessStep> {
         const SizedBox(height: Spacing.lg),
         Text(
           l10n.bulkSuccessTitle,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: AppTextStyles.titleMediumSize,
             fontWeight: FontWeight.bold,
           ),
@@ -739,20 +740,21 @@ class _SuccessStepState extends ConsumerState<_SuccessStep> {
           ),
         const SizedBox(height: Spacing.lg),
         if (!record.isCancelled)
-          AppButton(
+          AppEnhancedButton(
             label: cancellable
                 ? l10n.bulkCancellationExecute
                 : l10n.bulkCancellationExpired,
-            isFullWidth: true,
-            type: AppButtonType.primary,
-            color: AppColors.warning,
-            onPressed: cancellable ? () => _openCancellation(context, ref) : null,
+            width: double.infinity,
+            type: AppEnhancedButtonType.primary,
+            backgroundColor: AppColors.warning,
+            onPressed:
+                cancellable ? () => _openCancellation(context, ref) : null,
           ),
         if (record.isCancelled)
-          AppButton(
+          AppEnhancedButton(
             label: l10n.bulkWizardReset,
-            isFullWidth: true,
-            type: AppButtonType.primary,
+            width: double.infinity,
+            type: AppEnhancedButtonType.primary,
             onPressed: () {
               ref.read(bulkChangeWizardProvider.notifier).reset();
             },
@@ -787,39 +789,36 @@ class _CancellationStatusCard extends StatelessWidget {
   final AppLocalizations l10n;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(Spacing.md),
-      decoration: BoxDecoration(
-        color: isCancelled
-            ? AppColors.info.withValues(alpha: 0.08)
-            : AppColors.warning.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(Radii.md),
-        border: Border.all(
-          color: (isCancelled ? AppColors.info : AppColors.warning)
-              .withValues(alpha: 0.3),
-          width: BorderWidths.thin,
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.all(Spacing.md),
+        decoration: BoxDecoration(
+          color: isCancelled
+              ? AppColors.info.withValues(alpha: 0.08)
+              : AppColors.warning.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(Radii.md),
+          border: Border.all(
+            color: (isCancelled ? AppColors.info : AppColors.warning)
+                .withValues(alpha: 0.3),
+          ),
         ),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            isCancelled ? Icons.check_circle_outline : Icons.timer_outlined,
-            color: isCancelled ? AppColors.info : AppColors.warning,
-            size: IconSizes.md,
-          ),
-          const SizedBox(width: Spacing.md),
-          Expanded(
-            child: Text(
-              isCancelled
-                  ? l10n.bulkCancellationSuccess
-                  : l10n.bulkSuccessCancellable(int.tryParse(hours) ?? 0),
+        child: Row(
+          children: [
+            Icon(
+              isCancelled ? Icons.check_circle_outline : Icons.timer_outlined,
+              color: isCancelled ? AppColors.info : AppColors.warning,
+              size: IconSizes.md,
             ),
-          ),
-        ],
-      ),
-    );
-  }
+            const SizedBox(width: Spacing.md),
+            Expanded(
+              child: Text(
+                isCancelled
+                    ? l10n.bulkCancellationSuccess
+                    : l10n.bulkSuccessCancellable(int.tryParse(hours) ?? 0),
+              ),
+            ),
+          ],
+        ),
+      );
 }
 
 /// حوار إدخال اسم المنفذ للإلغاء.
@@ -835,32 +834,30 @@ class _CancellationDialog {
     final controller = TextEditingController();
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: Text(title),
-          content: TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              labelText: AppLocalizations.of(dialogContext).bulkApprovalOperator,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(Radii.md),
-              ),
+      builder: (dialogContext) => AlertDialog(
+        title: Text(title),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(dialogContext).bulkApprovalOperator,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(Radii.md),
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: Text(AppLocalizations.of(dialogContext).dialogCancel),
-            ),
-            FilledButton(
-              onPressed: controller.text.trim().isEmpty
-                  ? null
-                  : () => Navigator.of(dialogContext).pop(true),
-              child: Text(confirmLabel),
-            ),
-          ],
-        );
-      },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(AppLocalizations.of(dialogContext).dialogCancel),
+          ),
+          FilledButton(
+            onPressed: controller.text.trim().isEmpty
+                ? null
+                : () => Navigator.of(dialogContext).pop(true),
+            child: Text(confirmLabel),
+          ),
+        ],
+      ),
     );
     if (!(confirmed ?? false)) return null;
     return controller.text.trim();
@@ -886,28 +883,29 @@ class _ConfirmationCheckbox extends StatelessWidget {
   final ValueChanged<bool?> onChanged;
 
   @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      label: label,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Checkbox(
-            value: value,
-            onChanged: onChanged,
-            activeColor: AppColors.primary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Radii.sm),
+  Widget build(BuildContext context) => Semantics(
+        label: label,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Checkbox(
+              value: value,
+              onChanged: onChanged,
+              activeColor: AppColors.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Radii.sm),
+              ),
             ),
-          ),
-          const SizedBox(width: Spacing.sm),
-          Expanded(
-            child: Text(label, style: const TextStyle(fontSize: AppTextStyles.titleSmallSize)),
-          ),
-        ],
-      ),
-    );
-  }
+            const SizedBox(width: Spacing.sm),
+            Expanded(
+              child: Text(
+                label,
+                style: const TextStyle(fontSize: AppTextStyles.titleSmallSize),
+              ),
+            ),
+          ],
+        ),
+      );
 }
 
 /// شريط خطأ داخل الخطوات.
@@ -919,27 +917,27 @@ class _ErrorBanner extends StatelessWidget {
   final String message;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(Spacing.md),
-      decoration: BoxDecoration(
-        color: AppColors.error.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(Radii.md),
-        border: Border.all(
-          color: AppColors.error.withValues(alpha: 0.3),
-          width: BorderWidths.thin,
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.all(Spacing.md),
+        decoration: BoxDecoration(
+          color: AppColors.error.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(Radii.md),
+          border: Border.all(
+            color: AppColors.error.withValues(alpha: 0.3),
+          ),
         ),
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.error_outline,
-              color: AppColors.error, size: IconSizes.md),
-          const SizedBox(width: Spacing.md),
-          Expanded(child: Text(message)),
-        ],
-      ),
-    );
-  }
+        child: Row(
+          children: [
+            const Icon(
+              Icons.error_outline,
+              color: AppColors.error,
+              size: IconSizes.md,
+            ),
+            const SizedBox(width: Spacing.md),
+            Expanded(child: Text(message)),
+          ],
+        ),
+      );
 }
 
 /// محدد أصناف المخزون المتعدد.
@@ -952,8 +950,7 @@ class _InventoryMultiPicker extends ConsumerStatefulWidget {
       _InventoryMultiPickerState();
 }
 
-class _InventoryMultiPickerState
-    extends ConsumerState<_InventoryMultiPicker> {
+class _InventoryMultiPickerState extends ConsumerState<_InventoryMultiPicker> {
   final Set<String> _selectedIds = <String>{};
 
   @override
@@ -965,7 +962,7 @@ class _InventoryMultiPickerState
         title: Text(l10n.bulkScopeSelectItems),
         actions: [
           TextButton(
-            onPressed: _selectedIds.isNotEmpty ? () => _finish() : null,
+            onPressed: _selectedIds.isNotEmpty ? _finish : null,
             child: Text('${l10n.btnDone} (${_selectedIds.length})'),
           ),
         ],
@@ -979,11 +976,12 @@ class _InventoryMultiPickerState
             final selected = _selectedIds.contains(item.id);
             return AppListCard(
               title: item.name(
-                  isArabic: Directionality.of(context) == TextDirection.rtl),
+                isArabic: Directionality.of(context) == TextDirection.rtl,
+              ),
               leading: CircleAvatar(
                 backgroundColor: selected
                     ? AppColors.primary.withValues(alpha: 0.2)
-                    :                     AppColors.disabled.withValues(alpha: 0.2),
+                    : AppColors.disabled.withValues(alpha: 0.2),
                 child: Icon(
                   selected ? Icons.check : Icons.add,
                   color: selected ? AppColors.primary : AppColors.textSecondary,

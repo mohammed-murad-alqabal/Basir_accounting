@@ -341,8 +341,7 @@ class BulkChangeExecutionRecord {
   bool get isCancelled => cancellation != null;
 
   /// هل لا تزال نافذة الإلغاء مفتوحة؟
-  bool isCancellableAt(DateTime now) =>
-      now.isBefore(cancellationDeadline);
+  bool isCancellableAt(DateTime now) => now.isBefore(cancellationDeadline);
 
   @override
   bool operator ==(Object other) =>
@@ -373,7 +372,8 @@ class BulkChangeExecutionRecord {
         'rule': rule.toJson(),
         'scopeItemIds': scopeItemIds,
         'affectedItemIds': affectedItemIds,
-        'previousValues': previousValues.map((entry) => entry.toJson()).toList(),
+        'previousValues':
+            previousValues.map((entry) => entry.toJson()).toList(),
         'auditTrail': auditTrail.map((entry) => entry.toJson()).toList(),
         if (effectiveAt != null) 'effectiveAt': effectiveAt!.toIso8601String(),
         'cancellationDeadline': cancellationDeadline.toIso8601String(),
@@ -397,17 +397,17 @@ class BulkChangeExecutionRecord {
                 Map<String, dynamic>.from(raw as Map)))
             .toList(),
         auditTrail: (json['auditTrail'] as List)
-            .map((raw) => AuditEntry.fromJson(
-                Map<String, dynamic>.from(raw as Map)))
+            .map((raw) =>
+                AuditEntry.fromJson(Map<String, dynamic>.from(raw as Map)))
             .toList(),
         effectiveAt: json['effectiveAt'] == null
             ? null
             : DateTime.parse(json['effectiveAt'] as String),
-        cancellationDeadline: DateTime.parse(
-            json['cancellationDeadline'] as String),
+        cancellationDeadline:
+            DateTime.parse(json['cancellationDeadline'] as String),
         cancellation: json['cancellation'] == null
             ? null
             : AuditEntry.fromJson(
-                Map<String, dynamic>.from(json['cancellation'] as Map)),
+                Map<String, dynamic>.from(json['cancellation'] as Map,),),
       );
 }

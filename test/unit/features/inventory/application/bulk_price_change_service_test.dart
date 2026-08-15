@@ -1,7 +1,6 @@
 library;
 
 import 'package:basir_accounting_system/core/domain/contracts/audit_entry.dart';
-import 'package:basir_accounting_system/core/domain/contracts/operation_result.dart';
 import 'package:basir_accounting_system/features/inventory/application/bulk_price_change_service.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/bulk_price_change.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
@@ -40,19 +39,21 @@ class FakeInventoryRepository implements InventoryRepository {
   Future<void> deleteItem(String id) async => _items.remove(id);
 
   @override
-  Future<List<InventoryItem>> searchItems(String query) async =>
-      _items.values
-          .where((item) => item.nameAr.contains(query) ||
-              item.nameEn.contains(query) ||
-              (item.sku?.contains(query) ?? false))
-          .toList(growable: false);
+  Future<List<InventoryItem>> searchItems(String query) async => _items.values
+      .where((item) =>
+          item.nameAr.contains(query) ||
+          item.nameEn.contains(query) ||
+          (item.sku?.contains(query) ?? false))
+      .toList(growable: false);
 
   @override
   Future<InventoryItem?> getItemBySku(String sku) async => _items.values
       .firstWhere(
-          (item) => item.sku?.toUpperCase() == sku.toUpperCase() ||
+          (item) =>
+              item.sku?.toUpperCase() == sku.toUpperCase() ||
               item.barcode?.toUpperCase() == sku.toUpperCase(),
-          orElse: () => _items.values.firstOrNull ??
+          orElse: () =>
+              _items.values.firstOrNull ??
               (throw StateError('لا يوجد صنف مطابق')));
 }
 
@@ -68,8 +69,7 @@ class FakeExecutionStorage implements BulkChangeExecutionStorage {
   }
 
   @override
-  Future<BulkChangeExecutionRecord?> fetch(String id) async =>
-      _records[id];
+  Future<BulkChangeExecutionRecord?> fetch(String id) async => _records[id];
 
   @override
   Future<void> markCancelled(String id, AuditEntry cancellation) async {
@@ -133,7 +133,8 @@ void main() {
     test('يحسب السعر الجديد بنسبة موجبة على كل الأصناف', () async {
       final result = await service.preview(
         scope: const BulkPriceChangeScope.all(),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         target: BulkPriceTarget.sale,
       );
 
@@ -149,7 +150,8 @@ void main() {
     test('يستبعد الأصناف المحذوفة من النطاق', () async {
       final result = await service.preview(
         scope: const BulkPriceChangeScope.all(),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         target: BulkPriceTarget.sale,
       );
 
@@ -164,7 +166,8 @@ void main() {
     test('يحصر النطاق المحدد في المعرّفات المطلوبة', () async {
       final result = await service.preview(
         scope: const BulkPriceChangeScope.items(['a', 'c']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 20),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 20),
         target: BulkPriceTarget.sale,
       );
 
@@ -176,7 +179,8 @@ void main() {
     test('يعرض معاينة السعرين معًا عند استهداف السعرين', () async {
       final result = await service.preview(
         scope: const BulkPriceChangeScope.items(['a']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 5),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 5),
         target: BulkPriceTarget.both,
       );
 
@@ -189,7 +193,8 @@ void main() {
     test('يحدد نتيجة سالبة عند نسب تخفيض تخفض السعر دون الصفر', () async {
       final result = await service.preview(
         scope: const BulkPriceChangeScope.items(['c']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: -200),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: -200),
         target: BulkPriceTarget.sale,
       );
 
@@ -211,7 +216,8 @@ void main() {
       );
       final result = await previewer.preview(
         scope: const BulkPriceChangeScope.all(),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         target: BulkPriceTarget.sale,
       );
 
@@ -231,7 +237,8 @@ void main() {
     test('قاعدة المبلغ الثابت تجمع القيمة على السعر الحالي', () async {
       final result = await service.preview(
         scope: const BulkPriceChangeScope.items(['b']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.fixedAmount, value: 25),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.fixedAmount, value: 25),
         target: BulkPriceTarget.sale,
       );
 
@@ -241,7 +248,8 @@ void main() {
     test('قاعدة التعيين المباشر تطبق القيمة الجديدة تمامًا', () async {
       final result = await service.preview(
         scope: const BulkPriceChangeScope.items(['a']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.setTo, value: 150),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.setTo, value: 150),
         target: BulkPriceTarget.sale,
       );
 
@@ -267,7 +275,8 @@ void main() {
     test('يرفض قيمة نسب غير منتهية', () async {
       final result = await service.preview(
         scope: const BulkPriceChangeScope.all(),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: double.infinity),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: double.infinity),
         target: BulkPriceTarget.sale,
       );
 
@@ -278,7 +287,8 @@ void main() {
     test('يرفض قاعدة نسخ بلا مصدر', () async {
       final result = await service.preview(
         scope: const BulkPriceChangeScope.items(['a']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.copyFromPurchase, value: 0),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.copyFromPurchase, value: 0),
         target: BulkPriceTarget.sale,
       );
 
@@ -289,7 +299,8 @@ void main() {
     test('يرفض تعيينًا يسفر عن سعر سالب مباشرة', () async {
       final result = await service.preview(
         scope: const BulkPriceChangeScope.items(['a']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.setTo, value: -5),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.setTo, value: -5),
         target: BulkPriceTarget.sale,
       );
 
@@ -306,7 +317,8 @@ void main() {
       );
       final result = await previewer.preview(
         scope: const BulkPriceChangeScope.all(),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         target: BulkPriceTarget.sale,
       );
 
@@ -319,14 +331,16 @@ void main() {
     test('ينفذ القاعدة على النطاق ويسجل سجل تنفيذ وسبب وسجل تدقيق', () async {
       final preview = (await service.preview(
         scope: const BulkPriceChangeScope.items(['a', 'b']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         target: BulkPriceTarget.sale,
       ))
           .getOrThrow();
 
       final result = await service.execute(
         preview: preview,
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         scope: const BulkPriceChangeScope.items(['a', 'b']),
         target: BulkPriceTarget.sale,
         operatorName: operatorName,
@@ -353,14 +367,16 @@ void main() {
     test('يسجل القيمة السابقة لكل صنف متأثر لتمكين الإلغاء', () async {
       final preview = (await service.preview(
         scope: const BulkPriceChangeScope.items(['a']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         target: BulkPriceTarget.sale,
       ))
           .getOrThrow();
 
       final result = await service.execute(
         preview: preview,
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         scope: const BulkPriceChangeScope.items(['a']),
         target: BulkPriceTarget.sale,
         operatorName: operatorName,
@@ -377,14 +393,16 @@ void main() {
     test('يستبعد الأصناف غير الموجودة والنطاق المنتهي عند التنفيذ', () async {
       final preview = (await service.preview(
         scope: const BulkPriceChangeScope.items(['a', 'gone']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         target: BulkPriceTarget.sale,
       ))
           .getOrThrow();
 
       final result = await service.execute(
         preview: preview,
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         scope: const BulkPriceChangeScope.items(['a', 'gone']),
         target: BulkPriceTarget.sale,
         operatorName: operatorName,
@@ -398,14 +416,16 @@ void main() {
     test('يعيد فشلًا عند غياب سبب الاعتماد', () async {
       final preview = (await service.preview(
         scope: const BulkPriceChangeScope.items(['a']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         target: BulkPriceTarget.sale,
       ))
           .getOrThrow();
 
       final result = await service.execute(
         preview: preview,
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         scope: const BulkPriceChangeScope.items(['a']),
         target: BulkPriceTarget.sale,
         operatorName: operatorName,
@@ -420,14 +440,16 @@ void main() {
       repository.shouldFailOnUpdate = true;
       final preview = (await service.preview(
         scope: const BulkPriceChangeScope.items(['a']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         target: BulkPriceTarget.sale,
       ))
           .getOrThrow();
 
       final result = await service.execute(
         preview: preview,
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         scope: const BulkPriceChangeScope.items(['a']),
         target: BulkPriceTarget.sale,
         operatorName: operatorName,
@@ -445,14 +467,16 @@ void main() {
     test('يعيد الأسعار السابقة مع حدث إلغاء موثق داخل النافذة', () async {
       final preview = (await service.preview(
         scope: const BulkPriceChangeScope.items(['a']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         target: BulkPriceTarget.sale,
       ))
           .getOrThrow();
 
       final execution = (await service.execute(
         preview: preview,
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         scope: const BulkPriceChangeScope.items(['a']),
         target: BulkPriceTarget.sale,
         operatorName: operatorName,
@@ -472,21 +496,22 @@ void main() {
       final itemA = await repository.getItemById('a');
       expect(itemA!.salePrice, 100);
       expect(itemA.purchasePrice, 60);
-      expect(storage.cancellationEvents(execution.id),
-          [isA<AuditEntry>()]);
+      expect(storage.cancellationEvents(execution.id), [isA<AuditEntry>()]);
     });
 
     test('يرفض الإلغاء بعد انقضاء نافذة الأربع وعشرين ساعة', () async {
       final preview = (await service.preview(
         scope: const BulkPriceChangeScope.items(['a']),
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         target: BulkPriceTarget.sale,
       ))
           .getOrThrow();
 
       final execution = (await service.execute(
         preview: preview,
-        rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
+        rule: const BulkPriceChangeRule(
+            type: BulkPriceChangeRuleType.percentage, value: 10),
         scope: const BulkPriceChangeScope.items(['a']),
         target: BulkPriceTarget.sale,
         operatorName: operatorName,

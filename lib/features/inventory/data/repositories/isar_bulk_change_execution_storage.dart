@@ -57,11 +57,9 @@ class IsarBulkChangeExecutionStorage implements BulkChangeExecutionStorage {
 }
 
 /// ملحق كيان سجل التنفيذ لتوثيق الإلغاء ضمن السلسلةية.
-extension BulkChangeExecutionRecordCancellation
-    on BulkChangeExecutionRecord {
+extension BulkChangeExecutionRecordCancellation on BulkChangeExecutionRecord {
   /// يبني نسخة من السجل تحمل حدث الإلغاء الموثق.
-  BulkChangeExecutionRecord copyWithCancellation(
-      AuditEntry cancellation) {
+  BulkChangeExecutionRecord copyWithCancellation(AuditEntry cancellation) {
     return BulkChangeExecutionRecord(
       id: id,
       operatorName: operatorName,

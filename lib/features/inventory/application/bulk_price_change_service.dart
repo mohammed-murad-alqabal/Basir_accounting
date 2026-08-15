@@ -49,8 +49,7 @@ class BulkPriceChangeService {
   static const emptyReasonCode = 'bulk_price_change_reason_required';
 
   /// رمز فشل عند غياب هوية منفذ العملية.
-  static const operatorRequiredCode =
-      'bulk_price_change_operator_required';
+  static const operatorRequiredCode = 'bulk_price_change_operator_required';
 
   /// رمز فشل عند غياب سجل التنفيذ.
   static const executionNotFoundCode = 'bulk_price_change_execution_not_found';
@@ -111,8 +110,9 @@ class BulkPriceChangeService {
 
     final current = await _allActiveItems();
     final currentById = {for (final item in current) item.id: item};
-    final selectedIds = scope.isSpecific ? scope.specificItemIds! :
-        current.map((e) => e.id).toList(growable: false);
+    final selectedIds = scope.isSpecific
+        ? scope.specificItemIds!
+        : current.map((e) => e.id).toList(growable: false);
     final previousByItemId = <String, BulkPriceChangePreviewEntry>{};
     for (final entry in preview) {
       previousByItemId[entry.itemId] = entry;
@@ -145,8 +145,8 @@ class BulkPriceChangeService {
         rule: rule,
         scopeItemIds: List.unmodifiable(selectedIds),
         affectedItemIds: List.unmodifiable(affected),
-        previousValues: List.unmodifiable(
-            previousByItemId.values.toList(growable: false)),
+        previousValues:
+            List.unmodifiable(previousByItemId.values.toList(growable: false)),
         auditTrail: [
           AuditEntry(
             type: AuditEventType.administrative,
@@ -351,8 +351,7 @@ class BulkPriceChangeService {
 
   /// يقرب النتيجة إلى أقرب فلس ( منزلتين عشريتين) لتفادي أخطاء الحساب
   /// العائمة مثل 110.00000000000001 في الأسعار المئوية.
-  double _roundCents(double value) =>
-      (value * 100).roundToDouble() / 100;
+  double _roundCents(double value) => (value * 100).roundToDouble() / 100;
 
   bool _appliesTo(double? base, BulkPriceTarget target) {
     if (base == null) return false;

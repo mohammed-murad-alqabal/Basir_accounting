@@ -22,8 +22,8 @@ class _FakeBulkService implements BulkPriceChangeService {
   List<BulkPriceChangePreviewEntry> previewResult = const [];
   OperationResult<BulkChangeExecutionRecord> executeResult =
       const OperationResult<BulkChangeExecutionRecord>.failure(
-        message: 'فشل',
-      );
+    message: 'فشل',
+  );
   OperationResult<List<InventoryItem>> cancelResult =
       const OperationResult<List<InventoryItem>>.failure(message: 'فشل');
 
@@ -116,7 +116,8 @@ class _FakeBulkChangeExecutionStorage implements BulkChangeExecutionStorage {
   final List<BulkChangeExecutionRecord> records = [];
 
   @override
-  Future<BulkChangeExecutionRecord> save(BulkChangeExecutionRecord record) async {
+  Future<BulkChangeExecutionRecord> save(
+      BulkChangeExecutionRecord record) async {
     records.removeWhere((existing) => existing.id == record.id);
     records.add(record);
     return record;
@@ -338,8 +339,7 @@ void main() {
       expect(service.executeCalls.last, 'المدير:السبب');
     });
 
-    test('يظهر خطأ التنفيذ دون الانتقال إلى خطوة النجاح عند الفشل',
-        () async {
+    test('يظهر خطأ التنفيذ دون الانتقال إلى خطوة النجاح عند الفشل', () async {
       final repository = _FakeInventoryRepository([
         buildItem(id: 'item-1', nameAr: 'صنف 1', nameEn: 'Item 1'),
       ]);
@@ -455,9 +455,8 @@ void main() {
           inventoryRepositoryProvider.overrideWithValue(repository),
           bulkChangeExecutionStorageProvider
               .overrideWithValue(_FakeBulkChangeExecutionStorage()),
-          bulkPriceChangeServiceProvider
-              .overrideWithValue(_FakeBulkService()..executeResult =
-                  OperationResult.success(value: buildRecord())),
+          bulkPriceChangeServiceProvider.overrideWithValue(_FakeBulkService()
+            ..executeResult = OperationResult.success(value: buildRecord())),
           bulkChangeNowProvider.overrideWithProvider(lateNowProvider),
         ],
       );

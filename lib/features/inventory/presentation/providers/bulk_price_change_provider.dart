@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:async';
 
 import 'package:basir_accounting_system/core/domain/contracts/audit_entry.dart';
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/bulk_price_change.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// خطوة المعالج الحالية في شاشة تغيير الأسعار الجماعي.
 enum BulkChangeWizardStep {
@@ -18,6 +19,7 @@ enum BulkChangeWizardStep {
 
   /// خطوة الاعتماد والتنفيذ.
   approval,
+
   /// خطوة النجاح مع نافذة الإلغاء.
   success,
 }
@@ -99,7 +101,7 @@ class BulkChangeWizardState {
         previewLoaded: previewLoaded,
         applying: applying,
         executing: executing,
-        error: null,
+        error: error,
         lastRecord: lastRecord,
         confirmed: confirmed,
         confirmationText: confirmationText,
@@ -151,7 +153,7 @@ class BulkChangeWizardState {
         target: target,
         ruleType: ruleType ?? this.ruleType,
         ruleValue: ruleValue ?? this.ruleValue,
-        previewLoaded: clearPreview ? false : previewLoaded,
+        previewLoaded: !clearPreview && previewLoaded,
         applying: applying,
         executing: executing,
         error: error,
@@ -232,7 +234,7 @@ class BulkChangeWizardState {
 /// مزود حالة المعالج.
 final bulkChangeWizardProvider =
     StateNotifierProvider<BulkChangeWizardNotifier, BulkChangeWizardState>(
-  (ref) => BulkChangeWizardNotifier(ref),
+  BulkChangeWizardNotifier.new,
 );
 
 /// معالج حالة خطوات تغيير الأسعار الجماعي.
@@ -290,11 +292,12 @@ class BulkChangeWizardNotifier extends StateNotifier<BulkChangeWizardState> {
         return BulkChangeWizardStep.approval;
     }
   }
+
   /// يحدّث النطاق المحدد ويعيد بناء المعاينة.
   void updateScope(BulkPriceChangeScope scope) {
     state = state.copyWithScope(scope);
     if (state.previewLoaded) {
-      refreshPreview();
+      unawaited(refreshPreview());
     }
   }
 
@@ -302,7 +305,7 @@ class BulkChangeWizardNotifier extends StateNotifier<BulkChangeWizardState> {
   void updateTarget(BulkPriceTarget target) {
     state = state.copyWithTarget(target);
     if (state.previewLoaded) {
-      refreshPreview();
+      unawaited(refreshPreview());
     }
   }
 
@@ -319,7 +322,8 @@ class BulkChangeWizardNotifier extends StateNotifier<BulkChangeWizardState> {
   /// يحدث المعاينة من جديد وفق القاعدة والنطاق الحاليين.
   Future<void> refreshPreview() async {
     final service = _ref.read(bulkPriceChangeServiceProvider);
-    state = state.copyWithPreview(entries: state.previewEntries, applying: true);
+    state =
+        state.copyWithPreview(entries: state.previewEntries, applying: true);
     final result = await service.preview(
       scope: state.scope,
       rule: state.rule,
@@ -337,7 +341,10 @@ class BulkChangeWizardNotifier extends StateNotifier<BulkChangeWizardState> {
 
   /// يحدّث حالة الإقرار النهائي قبل التنفيذ.
   void updateConfirmation({required bool confirmed, String? text}) {
-    state = state.copyWithConfirmation(confirmed: confirmed, confirmationText: text);
+    state = state.copyWithConfirmation(
+      confirmed: confirmed,
+      confirmationText: text,
+    );
   }
 
   /// ينفذ التغيير الجماعي المعتمد ويوثق السبب والمنفذ.
@@ -394,7 +401,6 @@ class BulkChangeWizardNotifier extends StateNotifier<BulkChangeWizardState> {
     }
   }
 
-
   /// يفتح نافذة الإلغاء داخل شاشة النجاح (24 ساعة من التنفيذ).
   Future<bool> isExecutionCancellable() async {
     final record = state.lastRecord;
@@ -410,7 +416,8 @@ class BulkChangeWizardNotifier extends StateNotifier<BulkChangeWizardState> {
 }
 
 /// مزود دالة الزمن الحالية لأغراض الإلغاء القابل للاختبار.
-final bulkChangeNowProvider = Provider<DateTime Function()>((ref) => DateTime.now);
+final bulkChangeNowProvider =
+    Provider<DateTime Function()>((ref) => DateTime.now);
 
 /// ملحق سجل التنفيذ لإنتاج نسخة بإحداث إلغاء موثق.
 extension BulkChangeRecordCancellation on BulkChangeExecutionRecord {
