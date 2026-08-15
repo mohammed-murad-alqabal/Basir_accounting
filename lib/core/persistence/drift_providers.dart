@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basir_accounting_system/core/persistence/drift_settings_shadow_read.dart';
 import 'package:basir_accounting_system/features/reports/data/repositories/drift_market_price_repository.dart';
 import 'package:basir_accounting_system/features/reports/domain/repositories/market_price_repository.dart';
 import 'package:basir_accounting_system/features/settings/data/repositories/drift_barcode_config_repository.dart';
@@ -95,4 +96,23 @@ final driftMarketPriceRepositoryProvider = Provider<MarketPriceRepository>(
 /// `barcodeConfigRepositoryProvider` النشط في هذه الموجة.
 final driftBarcodeConfigRepositoryProvider = Provider<BarcodeConfigRepository>(
   (ref) => DriftBarcodeConfigRepository(ref.watch(driftDatabaseProvider)),
+);
+
+/// Feature flag مستقل لـProfile shadow-read. يبقى مغلقًا حتى اعتماد لقطة
+/// parity ومراجعة telemetry؛ لا يبدل Provider النشط عند تغييره.
+final driftProfileShadowReadEnabledProvider = Provider<bool>((ref) => false);
+
+/// Feature flag مستقل لـBusinessSettings shadow-read. يبقى مغلقًا حتى اعتماد
+/// لقطة parity ومراجعة telemetry؛ لا يبدل Provider النشط عند تغييره.
+final driftBusinessSettingsShadowReadEnabledProvider =
+    Provider<bool>((ref) => false);
+
+/// Comparator قابل للحقن في اختبارات shadow-read. لا يُربط تلقائيًا بمراقبة
+/// خارجية، ويظل sink الذاكراتي مناسبًا للاختبارات فقط.
+final driftSettingsShadowReadComparatorProvider =
+    Provider<DriftSettingsShadowReadComparator>(
+  (ref) {
+    final sink = InMemoryDriftShadowReadSink();
+    return DriftSettingsShadowReadComparator(recorder: sink.record);
+  },
 );
