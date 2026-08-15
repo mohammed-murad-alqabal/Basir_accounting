@@ -177,7 +177,7 @@ Map<String, dynamic> _customerJson({
 
 Future<void> _authenticate(SupabaseClient supabase) => supabase.auth.setSession(
       'refresh-token',
-      accessToken: redacted(),
+      accessToken: _accessToken(),
     );
 
 String _accessToken() {

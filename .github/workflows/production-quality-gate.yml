@@ -75,6 +75,12 @@ jobs:
           flutter pub get
           git diff --exit-code -- pubspec.lock
 
+      - name: Create non-secret environment asset for analysis and tests
+        run: |
+          set -euo pipefail
+          umask 077
+          printf '%s\n' '# Generated only for CI analysis and tests; intentionally contains no secrets.' > .env
+
       - name: Verify generated sources are current
         run: |
           set -euo pipefail
@@ -98,12 +104,6 @@ jobs:
             targets+=(integration_test)
           fi
           flutter analyze --fatal-infos "${targets[@]}"
-
-      - name: Create non-secret environment asset for tests
-        run: |
-          set -euo pipefail
-          umask 077
-          printf '%s\n' '# Generated only for CI tests; intentionally contains no secrets.' > .env
 
       - name: Run Flutter tests with coverage
         # Run every test in one worker to keep native bridge test processes within
