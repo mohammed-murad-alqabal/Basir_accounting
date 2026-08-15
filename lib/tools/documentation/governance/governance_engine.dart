@@ -195,6 +195,28 @@ class GovernanceEngine {
       workingDirectory: root.path,
     );
     if (result.exitCode != 0) {
+      final currentHead = await Process.run(
+        'git',
+        <String>['rev-parse', 'HEAD'],
+        workingDirectory: root.path,
+      );
+      final checkedOutHead = currentHead.stdout.toString().trim();
+      final stderr = result.stderr.toString();
+      final baseRefUnavailable =
+          stderr.contains('bad object') || stderr.contains('unknown revision');
+      if (baseRefUnavailable && checkedOutHead == head) {
+        final fallback = await Process.run(
+          'git',
+          <String>['diff', '--name-only', 'HEAD~1', 'HEAD'],
+          workingDirectory: root.path,
+        );
+        if (fallback.exitCode == 0) {
+          return LineSplitter.split(fallback.stdout.toString())
+              .map((String item) => item.trim())
+              .where((String item) => item.isNotEmpty)
+              .toList(growable: false);
+        }
+      }
       throw StateError('Unable to read changed files: ${result.stderr}');
     }
     return LineSplitter.split(result.stdout.toString())
