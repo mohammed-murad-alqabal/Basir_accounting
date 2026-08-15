@@ -3,6 +3,7 @@
 // ignore_for_file: avoid_implementing_value_types
 
 import 'dart:async';
+import 'dart:ffi' as ffi;
 
 import 'package:basir_accounting_system/src/rust/api.dart';
 import 'package:basir_accounting_system/src/rust/api/accounts.dart';
@@ -19,6 +20,7 @@ import 'package:basir_accounting_system/src/rust/api/standards.dart';
 import 'package:basir_accounting_system/src/rust/api/zatca.dart';
 import 'package:basir_accounting_system/src/rust/frb_generated.dart';
 import 'package:basir_accounting_system/src/rust/frb_generated.io.dart';
+import 'package:ffi/ffi.dart' as ffi_allocator;
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'package:flutter_rust_bridge/src/generalized_frb_rust_binding/_io.dart'
     as frb_io;
@@ -31,6 +33,20 @@ class _RecordedTask {
 
   final String name;
   final Map<String, dynamic> arguments;
+}
+
+class _RecordedFfiDispatch {
+  const _RecordedFfiDispatch({
+    required this.funcId,
+    required this.port,
+    required this.rustVecLen,
+    required this.dataLen,
+  });
+
+  final int funcId;
+  final int port;
+  final int rustVecLen;
+  final int dataLen;
 }
 
 class _RecordingHandler extends BaseHandler {
@@ -51,6 +67,15 @@ class _RecordingHandler extends BaseHandler {
       return <AnomalyDto>[] as S;
     }
     return false as S;
+  }
+}
+
+class _SerializingHandler extends _RecordingHandler {
+  @override
+  Future<S> executeNormal<S, E extends Object>(NormalTask<S, E> task) {
+    tasks.add(_RecordedTask(task.constMeta.debugName, task.argMap));
+    task.callFfi(4242);
+    return Completer<S>().future;
   }
 }
 
@@ -104,14 +129,61 @@ AuditMetadataDto _auditMetadata() => const AuditMetadataDto(
       how: HowDto(method: 'widget-test'),
     );
 
-RustLibApiImpl _apiFor(_RecordingHandler handler) {
-  final binding = _MockBinding();
+RustLibApiImpl _apiFor(_RecordingHandler handler, {_MockBinding? binding}) {
+  final bridgeBinding = binding ?? _MockBinding();
   return RustLibApiImpl(
     handler: handler,
     wire: _MockWire(),
-    generalizedFrbRustBinding: binding,
-    portManager: PortManager(binding, handler),
+    generalizedFrbRustBinding: bridgeBinding,
+    portManager: PortManager(bridgeBinding, handler),
   );
+}
+
+void _configureSerializationBinding(
+  _MockBinding binding,
+  List<_RecordedFfiDispatch> dispatches,
+) {
+  when(() => binding.rustVecU8New(any())).thenAnswer((invocation) {
+    final length = invocation.positionalArguments.single as int;
+    return ffi_allocator.calloc<ffi.Uint8>(length);
+  });
+  when(() => binding.rustVecU8Resize(any(), any(), any())).thenAnswer(
+    (invocation) {
+      final oldPointer =
+          invocation.positionalArguments[0] as ffi.Pointer<ffi.Uint8>;
+      final oldLength = invocation.positionalArguments[1] as int;
+      final newLength = invocation.positionalArguments[2] as int;
+      final resized = ffi_allocator.calloc<ffi.Uint8>(newLength);
+      final copyLength = oldLength < newLength ? oldLength : newLength;
+      resized.asTypedList(newLength).setRange(
+            0,
+            copyLength,
+            oldPointer.asTypedList(oldLength),
+          );
+      ffi_allocator.calloc.free(oldPointer);
+      return resized;
+    },
+  );
+  when(
+    () => binding.pdeFfiDispatcherPrimary(
+      funcId: any(named: 'funcId'),
+      port: any(named: 'port'),
+      ptr: any(named: 'ptr'),
+      rustVecLen: any(named: 'rustVecLen'),
+      dataLen: any(named: 'dataLen'),
+    ),
+  ).thenAnswer((invocation) {
+    final arguments = invocation.namedArguments;
+    dispatches.add(
+      _RecordedFfiDispatch(
+        funcId: arguments[#funcId] as int,
+        port: arguments[#port] as int,
+        rustVecLen: arguments[#rustVecLen] as int,
+        dataLen: arguments[#dataLen] as int,
+      ),
+    );
+    ffi_allocator.calloc.free(arguments[#ptr] as ffi.Pointer<ffi.Uint8>);
+  });
 }
 
 class _DcoProbe extends RustLibApiImpl {
@@ -267,6 +339,10 @@ _DcoProbe _dcoProbe() {
 }
 
 void main() {
+  setUpAll(() {
+    registerFallbackValue(ffi.Pointer<ffi.Uint8>.fromAddress(0));
+  });
+
   group('RustLibApiImpl bridge task contracts', () {
     test('يحافظ على تعريفات مهام دفتر الأستاذ والتقارير ووسائطها', () {
       final handler = _RecordingHandler();
@@ -634,6 +710,99 @@ void main() {
           'asOfDate': '2026-08-14',
           'calendar': ZakahCalendarDto.hijri,
         },
+      );
+    });
+
+    test('يرمز ويمرر مفوضات FFI الأولية إلى المنفذ المعزول', () {
+      final dispatches = <_RecordedFfiDispatch>[];
+      final binding = _MockBinding();
+      _configureSerializationBinding(binding, dispatches);
+      final handler = _SerializingHandler();
+      final api = _apiFor(handler, binding: binding);
+
+      unawaited(
+        api.crateApiCalendarCloseFinancialYear(
+          periodId: 'FY-2026',
+          closingDate: '2026-12-31',
+          retainedEarningsAccountId: '3200',
+        ),
+      );
+      unawaited(api.crateApiCalendarClosePeriod(id: 'P-01', userId: 'u-1'));
+      unawaited(api.crateApiPurchasingDeleteBill(id: 'B-1'));
+      unawaited(api.crateApiSalesDeleteCustomer(id: 'C-1'));
+      unawaited(api.crateApiSalesDeleteInvoice(id: 'INV-1'));
+      unawaited(api.crateApiPurchasingDeleteVendor(id: 'V-1'));
+      unawaited(
+        api.crateApiReportsGenerateBalanceSheet(
+          asOfDate: '2026-01-31',
+          fairValuationUpdates: const {'asset-1': '12.50'},
+        ),
+      );
+      unawaited(
+        api.crateApiReportsGenerateCashFlowStatement(
+          fromDate: '2026-01-01',
+          toDate: '2026-01-31',
+        ),
+      );
+      unawaited(
+        api.crateApiReportsGenerateIncomeStatement(
+          fromDate: '2026-01-01',
+          toDate: '2026-01-31',
+        ),
+      );
+      unawaited(
+        api.crateApiReportsGenerateTrialBalance(
+          asOfDate: '2026-01-31',
+          periodStart: '2026-01-01',
+        ),
+      );
+      unawaited(api.crateApiAccountsGetAccountById(id: '1101'));
+      unawaited(api.crateApiAssetsGetAssetById(id: 'ASSET-1'));
+      unawaited(
+        api.crateApiCurrencyGetExchangeRate(
+          base: 'SAR',
+          target: 'USD',
+          date: '2026-01-31',
+        ),
+      );
+      unawaited(api.crateApiSalesGetInvoiceById(id: 'INV-1'));
+      unawaited(api.crateApiInventoryGetItemById(id: 'ITEM-1'));
+      unawaited(api.crateApiReportsGetPayablesAging(asOfDate: '2026-01-31'));
+      unawaited(api.crateApiCalendarGetPeriodByDate(date: '2026-01-31'));
+      unawaited(api.crateApiPurchasingGetPurchaseBillById(id: 'B-1'));
+      unawaited(
+        api.crateApiReportsGetReceivablesAging(asOfDate: '2026-01-31'),
+      );
+      unawaited(api.crateApiStandardsGetStandardInfo(reference: 'IAS 2'));
+      unawaited(
+        api.crateApiInventoryGetValuationReport(asOf: '2026-01-31'),
+      );
+      unawaited(api.crateApiInitApi(databaseUrl: 'postgres://local-test'));
+      unawaited(api.crateApiAccountsListAccounts());
+      unawaited(api.crateApiAssetsListAssets());
+      unawaited(api.crateApiLedgerListAuditLogs(entityId: 'JE-1'));
+      unawaited(api.crateApiAssetsListCategories());
+      unawaited(api.crateApiSalesListCustomers());
+      unawaited(
+        api.crateApiCurrencyListExchangeRates(base: 'SAR', target: 'USD'),
+      );
+      unawaited(api.crateApiSalesListInvoices());
+      unawaited(api.crateApiInventoryListItems());
+      unawaited(api.crateApiCalendarListPeriods());
+      unawaited(api.crateApiPurchasingListPurchaseBills());
+      unawaited(api.crateApiPurchasingListVendors());
+      unawaited(api.crateApiStandardsSearchStandards(query: 'inventory'));
+      unawaited(api.crateApiInventoryVerifyInventoryChain(itemId: 'ITEM-1'));
+
+      expect(dispatches, hasLength(35));
+      expect(dispatches.map((dispatch) => dispatch.funcId).toSet(), hasLength(35));
+      expect(
+        dispatches.every(
+          (dispatch) =>
+              dispatch.port == 4242 &&
+              dispatch.rustVecLen >= dispatch.dataLen,
+        ),
+        isTrue,
       );
     });
 

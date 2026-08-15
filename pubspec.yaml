@@ -94,6 +94,7 @@ dev_dependencies:
   flutter_native_splash: ^2.3.5
   flutter_test:
     sdk: flutter
+  ffi: ^2.1.4
   freezed: ^2.5.2
   integration_test:
     sdk: flutter
