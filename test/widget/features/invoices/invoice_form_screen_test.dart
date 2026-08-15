@@ -2,8 +2,10 @@ import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
 import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
-import 'package:basir_accounting_system/l10n/app_localizations.dart'; // Fixed import
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,13 +14,35 @@ import '../../../fixtures/invoice_fixtures.dart';
 import '../../../mocks/mock_customer_repository.dart';
 import '../../../mocks/mock_invoice_repository.dart';
 
+class _FakeNotificationService extends NotificationService {
+  int initializeCalls = 0;
+  final List<DateTime> scheduledDates = [];
+
+  @override
+  Future<void> initialize() async {
+    initializeCalls++;
+  }
+
+  @override
+  Future<void> scheduleNotification({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime scheduledDate,
+  }) async {
+    scheduledDates.add(scheduledDate);
+  }
+}
+
 void main() {
   late MockCustomerRepository mockCustomerRepository;
   late MockInvoiceRepository mockInvoiceRepository;
+  late _FakeNotificationService notificationService;
 
   setUp(() {
     mockCustomerRepository = MockCustomerRepository();
     mockInvoiceRepository = MockInvoiceRepository();
+    notificationService = _FakeNotificationService();
   });
 
   Widget createTestWidget({Invoice? invoice}) => ProviderScope(
@@ -34,6 +58,7 @@ void main() {
           ),
           customerRepositoryProvider.overrideWithValue(mockCustomerRepository),
           invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepository),
+          notificationServiceProvider.overrideWithValue(notificationService),
         ],
         child: MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -276,6 +301,102 @@ void main() {
 
       expect(find.text('خدمة اختبارية'), findsNothing);
       expect(find.text('لا توجد بنود. اضغط + لإضافة بند'), findsOneWidget);
+    });
+
+    testWidgets('يحفظ مسودة فاتورة مكتملة بالحسابات الدقيقة وجدولة الاستحقاق',
+        (tester) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      final customerPicker = find.byKey(const Key('entityPickerInput'));
+      await tester.ensureVisible(customerPicker);
+      await tester.tap(customerPicker);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('أحمد محمد').last);
+      await tester.pumpAndSettle();
+
+      final addItemButton = find.byTooltip('إضافة بند جديد');
+      await tester.ensureVisible(addItemButton);
+      await tester.tap(addItemButton);
+      await tester.pumpAndSettle();
+
+      final dialog = find.byType(AlertDialog);
+      await tester.enterText(
+        find.descendant(
+          of: dialog,
+          matching: find.byWidgetPredicate(
+            (widget) =>
+                widget is TextField && widget.decoration?.labelText == 'اسم الصنف',
+          ),
+        ),
+        'اشتراك محاسبي',
+      );
+      await tester.enterText(
+        find.descendant(
+          of: dialog,
+          matching: find.byWidgetPredicate(
+            (widget) =>
+                widget is TextField && widget.decoration?.labelText == 'الكمية',
+          ),
+        ),
+        '2',
+      );
+      await tester.enterText(
+        find.descendant(
+          of: dialog,
+          matching: find.byWidgetPredicate(
+            (widget) =>
+                widget is TextField && widget.decoration?.labelText == 'السعر',
+          ),
+        ),
+        '100',
+      );
+      await tester.tap(find.descendant(of: dialog, matching: find.text('إضافة')));
+      await tester.pumpAndSettle();
+
+      final saveAction = find.byKey(const Key('summaryRailSaveDraftAction'));
+      await tester.ensureVisible(saveAction);
+      await tester.tap(saveAction);
+      await tester.pump();
+
+      expect(mockInvoiceRepository.invoices, hasLength(1));
+      final savedInvoice = mockInvoiceRepository.invoices.single;
+      expect(savedInvoice.customerId, 'test-1');
+      expect(savedInvoice.customerName, 'أحمد محمد');
+      expect(savedInvoice.status, InvoiceStatus.draft);
+      expect(savedInvoice.items, hasLength(1));
+      expect(savedInvoice.items.single.name, 'اشتراك محاسبي');
+      expect(savedInvoice.subtotalAmount, Decimal.parse('200'));
+      expect(savedInvoice.taxAmount, Decimal.parse('30'));
+      expect(savedInvoice.totalAmount, Decimal.parse('230'));
+      expect(notificationService.initializeCalls, 1);
+      expect(notificationService.scheduledDates, hasLength(1));
+    });
+
+    testWidgets('يرفض الحفظ بعد اختيار العميل عند غياب بنود الفاتورة',
+        (tester) async {
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      final customerPicker = find.byKey(const Key('entityPickerInput'));
+      await tester.ensureVisible(customerPicker);
+      await tester.tap(customerPicker);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('أحمد محمد').last);
+      await tester.pumpAndSettle();
+
+      final saveAction = find.byKey(const Key('summaryRailSaveDraftAction'));
+      await tester.ensureVisible(saveAction);
+      await tester.tap(saveAction);
+      await tester.pump();
+
+      expect(mockInvoiceRepository.invoices, isEmpty);
+      expect(find.byType(SnackBar), findsOneWidget);
     });
   });
 }

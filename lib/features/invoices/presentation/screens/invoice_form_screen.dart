@@ -768,7 +768,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     var selectedTaxRate = _taxRate;
     final inventoryItemsAsync = ref.read(inventoryItemsProvider);
 
-    await showDialog<void>(
+    final item = await showDialog<InvoiceItem>(
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
@@ -959,21 +959,19 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                     final total = quantity * price;
                     // Calculate tax based on category
                     // Note: rate is determined by selection in dialog
-                    setState(() {
-                      _items.add(
-                        InvoiceItem(
-                          id: const Uuid().v4(),
-                          name: name,
-                          quantity: quantity,
-                          price: price,
-                          total: total,
-                          taxAmount: total * selectedTaxRate,
-                          taxRate: selectedTaxRate,
-                          taxCategory: selectedTaxCategory,
-                        ),
-                      );
-                    });
-                    Navigator.pop(context);
+                    Navigator.pop(
+                      context,
+                      InvoiceItem(
+                        id: const Uuid().v4(),
+                        name: name,
+                        quantity: quantity,
+                        price: price,
+                        total: total,
+                        taxAmount: total * selectedTaxRate,
+                        taxRate: selectedTaxRate,
+                        taxCategory: selectedTaxCategory,
+                      ),
+                    );
                   }
                 },
                 child: Text(context.l10n.btnAdd),
@@ -984,9 +982,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       ),
     );
 
-    nameController.dispose();
-    quantityController.dispose();
-    priceController.dispose();
+    if (item != null && mounted) {
+      setState(() => _items.add(item));
+    }
   }
 
   void _removeItem(int index) {
