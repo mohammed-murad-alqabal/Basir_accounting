@@ -106,6 +106,9 @@ class _ProfileStorage implements ProfileStorage {
   Future<ProfileRecord?> readForUser(String? userId) async => records[userId];
 
   @override
+  Future<List<ProfileRecord>> readAll() async => records.values.toList();
+
+  @override
   Future<void> save(ProfileRecord record) async {
     saved.add(record);
     records[record.userId] = record;
@@ -119,6 +122,10 @@ class _BusinessSettingsStorage implements BusinessSettingsStorage {
   @override
   Future<BusinessSettingsRecord?> readForUser(String? userId) async =>
       records[userId];
+
+  @override
+  Future<List<BusinessSettingsRecord>> readAll() async =>
+      records.values.toList();
 
   @override
   Future<void> save(BusinessSettingsRecord record) async {

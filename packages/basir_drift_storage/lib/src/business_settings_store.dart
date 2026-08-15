@@ -38,6 +38,8 @@ class BusinessSettingsRecord {
 abstract interface class BusinessSettingsStorage {
   Future<BusinessSettingsRecord?> readForUser(String? userId);
 
+  Future<List<BusinessSettingsRecord>> readAll();
+
   Future<void> save(BusinessSettingsRecord record);
 }
 
@@ -54,6 +56,14 @@ class BusinessSettingsStore implements BusinessSettingsStorage {
           ..where((table) => table.scopeKey.equals(userScopeKey(userId))))
         .getSingleOrNull();
     return row == null ? null : _toRecord(row);
+  }
+
+  @override
+  Future<List<BusinessSettingsRecord>> readAll() async {
+    final rows = await (_database.select(_database.businessSettings)
+          ..orderBy([(table) => OrderingTerm.asc(table.scopeKey)]))
+        .get();
+    return rows.map(_toRecord).toList(growable: false);
   }
 
   @override
