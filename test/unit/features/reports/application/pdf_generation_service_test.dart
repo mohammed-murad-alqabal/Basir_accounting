@@ -1,3 +1,4 @@
+import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
 import 'package:basir_accounting_system/features/reports/application/pdf_generation_service.dart';
@@ -80,6 +81,35 @@ void main() {
       expectPdf(bytes);
     });
 
+    testWidgets('ينشئ إيصالاً حرارياً يتضمن رقم الضريبة ورمز QR',
+        (tester) async {
+      final invoice = InvoiceFixtures.invoice1.copyWith(
+        qrCode: 'ZATCA:THERMAL:invoice-1',
+      );
+
+      final bytes = await service.generateThermalReceipt(
+        invoice,
+        companySettings: const {
+          'companyName': 'شركة بصير للاختبارات',
+          'taxNumber': '310000000000003',
+        },
+      );
+
+      expectPdf(bytes);
+    });
+
+    testWidgets('ينشئ إيصال إشعار دائن حرارياً بالإعدادات الافتراضية', (
+      tester,
+    ) async {
+      final invoice = InvoiceFixtures.invoice1.copyWith(
+        type: InvoiceType.salesReturn,
+      );
+
+      final bytes = await service.generateThermalReceipt(invoice);
+
+      expectPdf(bytes);
+    });
+
     testWidgets('ينشئ تقرير PDF لقيد يومية مرحّل ومتوازن', (tester) async {
       final bytes = await service.generateJournalEntryPdf(
         entryFor(JournalEntryStatus.posted),
@@ -96,6 +126,32 @@ void main() {
         (tester) async {
       final bytes = await service.generateJournalEntryPdf(
         entryFor(JournalEntryStatus.draft),
+      );
+
+      expectPdf(bytes);
+    });
+
+    testWidgets('ينشئ تقرير ذكاء لفترة بنتائج قبول واعتراض وتوصيات', (
+      tester,
+    ) async {
+      final bytes = await service.generateIntelligenceReportPdf(
+        DateTime.utc(2025),
+        DateTime.utc(2025, 1, 31),
+        const [
+          AgentResult(
+            agentId: 'standards',
+            isAllowed: true,
+            rationale: 'المعالجة متوافقة مع معيار الاعتراف بالإيراد.',
+            confidenceScore: 0.97,
+            suggestedAdjustments: {'classification': 'service_revenue'},
+          ),
+          AgentResult(
+            agentId: 'forensic',
+            isAllowed: false,
+            rationale: 'يلزم إرفاق مستند مصدر إضافي.',
+            confidenceScore: 0.82,
+          ),
+        ],
       );
 
       expectPdf(bytes);

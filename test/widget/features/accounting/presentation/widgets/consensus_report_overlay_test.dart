@@ -11,29 +11,31 @@ void main() {
     required AgentConsensus consensus,
     required VoidCallback onConfirm,
     required VoidCallback onCancel,
-  }) => MaterialApp(
-    theme: ThemeData.dark().copyWith(extensions: [GlassTheme.dark()]),
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
-    supportedLocales: AppLocalizations.supportedLocales,
-    locale: const Locale('ar'),
-    home: ConsensusReportOverlay(
-      consensus: consensus,
-      onConfirm: onConfirm,
-      onCancel: onCancel,
-    ),
-  );
+  }) =>
+      MaterialApp(
+        theme: ThemeData.dark().copyWith(extensions: [GlassTheme.dark()]),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: const Locale('ar'),
+        home: ConsensusReportOverlay(
+          consensus: consensus,
+          onConfirm: onConfirm,
+          onCancel: onCancel,
+        ),
+      );
 
   AgentConsensus consensus({
     required bool approved,
     required List<AgentResult> results,
     Map<String, dynamic>? adjustments,
-  }) => AgentConsensus(
-    isApproved: approved,
-    explanation: 'تقرير تدقيق تجريبي',
-    agentResults: results,
-    suggestedAdjustments: adjustments,
-    orchestrationTimestamp: DateTime(2026, 8, 15),
-  );
+  }) =>
+      AgentConsensus(
+        isApproved: approved,
+        explanation: 'تقرير تدقيق تجريبي',
+        agentResults: results,
+        suggestedAdjustments: adjustments,
+        orchestrationTimestamp: DateTime(2026, 8, 15),
+      );
 
   group('ConsensusReportOverlay', () {
     testWidgets('يعرض الإجماع المعتمد والتوصية وينفذ التأكيد', (tester) async {

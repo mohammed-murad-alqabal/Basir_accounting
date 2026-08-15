@@ -5,11 +5,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   Widget buildScreen() => const MaterialApp(
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
-    supportedLocales: AppLocalizations.supportedLocales,
-    locale: Locale('ar'),
-    home: PrintSettingsScreen(),
-  );
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: Locale('ar'),
+        home: PrintSettingsScreen(),
+      );
 
   group('PrintSettingsScreen', () {
     testWidgets('يحدث خيارات الطباعة ثم يحفظ الإعدادات', (tester) async {
@@ -27,8 +27,7 @@ void main() {
 
       final bluetoothRadio = tester.widget<Radio<String>>(
         find.byWidgetPredicate(
-          (widget) =>
-              widget is Radio<String> && widget.value == 'Bluetooth',
+          (widget) => widget is Radio<String> && widget.value == 'Bluetooth',
         ),
       );
       // ignore: deprecated_member_use

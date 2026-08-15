@@ -391,6 +391,62 @@ void main() {
       expect(find.byType(GlassScaffold), findsOneWidget);
     });
 
+    testWidgets('يعرض هياكل التحميل ومؤشر الإحصاءات أثناء انتظار البيانات',
+        (tester) async {
+      await tester.pumpWidget(
+        createTestWidget(
+          overrides: [
+            filteredInvoicesProvider.overrideWithValue(const AsyncLoading()),
+            invoiceStatisticsProvider.overrideWithValue(const AsyncLoading()),
+          ],
+        ),
+      );
+      await tester.pump();
+
+      expect(find.byType(AppListSkeleton), findsNWidgets(5));
+      expect(find.byType(LinearProgressIndicator), findsOneWidget);
+    });
+
+    testWidgets('يعرض خطأ التحميل ويقبل إجراء إعادة المحاولة', (tester) async {
+      await tester.pumpWidget(
+        createTestWidget(
+          overrides: [
+            filteredInvoicesProvider.overrideWithValue(
+              AsyncValue.error(
+                StateError('repository unavailable'),
+                StackTrace.empty,
+              ),
+            ),
+            invoiceStatisticsProvider.overrideWithValue(
+              AsyncValue.data(
+                InvoiceStatistics(
+                  totalInvoices: 0,
+                  paidInvoices: 0,
+                  overdueInvoices: 0,
+                  totalAmount: Decimal.zero,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(ErrorIllustration), findsOneWidget);
+      final retryButton = find.byWidgetPredicate(
+        (widget) =>
+            widget is AppEnhancedButton &&
+            widget.label == 'انقر لإعادة المحاولة',
+      );
+      expect(retryButton, findsOneWidget);
+
+      await tester.tap(
+        find.descendant(of: retryButton, matching: find.byType(InkWell)),
+      );
+      await tester.pump();
+      expect(find.byType(ErrorIllustration), findsOneWidget);
+    });
+
     testWidgets('action button icons use IconSizes.md (24px) - WCAG standard', (
       tester,
     ) async {
@@ -747,6 +803,78 @@ void main() {
       );
       final fabIcon = tester.widget<Icon>(fabIconFinder);
       expect(fabIcon.size, IconSizes.md);
+    });
+
+    testWidgets('يعرض حالات الفواتير ويفتح إجراءات الضغط المطول ويلغي الحذف',
+        (tester) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final invoices = [
+        InvoiceStatus.paid,
+        InvoiceStatus.overdue,
+        InvoiceStatus.sent,
+        InvoiceStatus.draft,
+        InvoiceStatus.cancelled,
+      ]
+          .map(
+            (status) => MockData.createTestInvoice(id: status.name).copyWith(
+              invoiceNumber: 'INV-${status.name.toUpperCase()}',
+              customerName: 'عميل ${status.name}',
+              status: status,
+            ),
+          )
+          .toList();
+
+      await tester.pumpWidget(
+        createTestWidget(
+          overrides: [
+            filteredInvoicesProvider
+                .overrideWithValue(AsyncValue.data(invoices)),
+            invoiceStatisticsProvider.overrideWithValue(
+              AsyncValue.data(
+                InvoiceStatistics(
+                  totalInvoices: invoices.length,
+                  paidInvoices: 1,
+                  overdueInvoices: 1,
+                  totalAmount: Decimal.fromInt(5000),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(AppListCard), findsNWidgets(5));
+      expect(find.textContaining('INV-CANCELLED'), findsOneWidget);
+
+      await tester.longPress(find.byType(AppListCard).first);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(BottomSheet), findsOneWidget);
+      expect(find.byType(ListTile), findsNWidgets(4));
+
+      await tester.tap(find.byType(ListTile).last);
+      await tester.pumpAndSettle();
+
+      final dialog = find.byType(Dialog);
+      expect(dialog, findsOneWidget);
+      final cancelButton = find.descendant(
+        of: dialog,
+        matching: find.byWidgetPredicate(
+          (widget) => widget is AppEnhancedButton && widget.label == 'إلغاء',
+        ),
+      );
+      expect(cancelButton, findsOneWidget);
+      await tester.tap(
+        find.descendant(of: cancelButton, matching: find.byType(InkWell)),
+      );
+      await tester.pumpAndSettle();
+
+      expect(dialog, findsNothing);
+      expect(find.byType(AppListCard), findsNWidgets(5));
     });
   });
 }

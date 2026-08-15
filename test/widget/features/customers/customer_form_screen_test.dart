@@ -17,26 +17,27 @@ void main() {
     Widget createTestWidget({
       required MockCustomerRepository repository,
       Customer? customer,
-    }) => ProviderScope(
-      overrides: [
-        appIconsProvider.overrideWithValue(const MaterialAppIcons()),
-        currentUserProfileProvider.overrideWith(
-          (ref) => const BasirUser(
-            id: 'test-user',
-            email: 'test@example.com',
-            displayName: 'Test User',
-            role: UserRole.admin,
+    }) =>
+        ProviderScope(
+          overrides: [
+            appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+            currentUserProfileProvider.overrideWith(
+              (ref) => const BasirUser(
+                id: 'test-user',
+                email: 'test@example.com',
+                displayName: 'Test User',
+                role: UserRole.admin,
+              ),
+            ),
+            customerRepositoryProvider.overrideWithValue(repository),
+          ],
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: const Locale('ar'),
+            home: CustomerFormScreen(customer: customer),
           ),
-        ),
-        customerRepositoryProvider.overrideWithValue(repository),
-      ],
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: const Locale('ar'),
-        home: CustomerFormScreen(customer: customer),
-      ),
-    );
+        );
 
     testWidgets('should display add customer title when customer is null', (
       tester,
@@ -139,7 +140,8 @@ void main() {
       await tester.tap(saveAction);
       await tester.pumpAndSettle();
 
-      final updatedCustomer = await repository.getCustomerById(originalCustomer.id);
+      final updatedCustomer =
+          await repository.getCustomerById(originalCustomer.id);
       expect(updatedCustomer, isNotNull);
       expect(updatedCustomer!.phone, '0507654321');
       expect(updatedCustomer.nameAr, originalCustomer.nameAr);

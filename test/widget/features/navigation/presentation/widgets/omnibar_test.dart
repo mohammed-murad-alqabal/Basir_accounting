@@ -7,28 +7,30 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   Widget buildHost({List<Override> overrides = const []}) => ProviderScope(
-    overrides: overrides,
-    child: MaterialApp(
-      theme: ThemeData.light().copyWith(extensions: [GlassTheme.light()]),
-      routes: {
-        '/invoice-form': (_) => const Scaffold(body: Text('Invoice form route')),
-        '/customer-form': (_) => const Scaffold(body: Text('Customer form route')),
-        '/returns-and-damages':
-            (_) => const Scaffold(body: Text('Returns route')),
-        '/settings': (_) => const Scaffold(body: Text('Settings route')),
-      },
-      home: Builder(
-        builder: (context) => Scaffold(
-          body: Center(
-            child: ElevatedButton(
-              onPressed: () => showOmnibar<void>(context),
-              child: const Text('Open omnibar'),
+        overrides: overrides,
+        child: MaterialApp(
+          theme: ThemeData.light().copyWith(extensions: [GlassTheme.light()]),
+          routes: {
+            '/invoice-form': (_) =>
+                const Scaffold(body: Text('Invoice form route')),
+            '/customer-form': (_) =>
+                const Scaffold(body: Text('Customer form route')),
+            '/returns-and-damages': (_) =>
+                const Scaffold(body: Text('Returns route')),
+            '/settings': (_) => const Scaffold(body: Text('Settings route')),
+          },
+          home: Builder(
+            builder: (context) => Scaffold(
+              body: Center(
+                child: ElevatedButton(
+                  onPressed: () => showOmnibar<void>(context),
+                  child: const Text('Open omnibar'),
+                ),
+              ),
             ),
           ),
         ),
-      ),
-    ),
-  );
+      );
 
   Future<void> openOmnibar(WidgetTester tester) async {
     await tester.tap(find.text('Open omnibar'));

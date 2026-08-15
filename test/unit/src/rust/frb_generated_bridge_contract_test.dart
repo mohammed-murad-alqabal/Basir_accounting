@@ -795,12 +795,14 @@ void main() {
       unawaited(api.crateApiInventoryVerifyInventoryChain(itemId: 'ITEM-1'));
 
       expect(dispatches, hasLength(35));
-      expect(dispatches.map((dispatch) => dispatch.funcId).toSet(), hasLength(35));
+      expect(
+        dispatches.map((dispatch) => dispatch.funcId).toSet(),
+        hasLength(35),
+      );
       expect(
         dispatches.every(
           (dispatch) =>
-              dispatch.port == 4242 &&
-              dispatch.rustVecLen >= dispatch.dataLen,
+              dispatch.port == 4242 && dispatch.rustVecLen >= dispatch.dataLen,
         ),
         isTrue,
       );

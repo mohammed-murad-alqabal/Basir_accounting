@@ -280,7 +280,11 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('صندوق الاختبار').last);
     await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(selectors.at(1), 120, scrollable: scrollable);
+    await tester.scrollUntilVisible(
+      selectors.at(1),
+      120,
+      scrollable: scrollable,
+    );
     await tester.tap(selectors.at(1));
     await tester.pumpAndSettle();
     await tester.tap(find.text('عميل الاختبار').last);
@@ -323,7 +327,11 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('حساب بنكي الاختبار').last);
     await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(selectors.at(1), 120, scrollable: scrollable);
+    await tester.scrollUntilVisible(
+      selectors.at(1),
+      120,
+      scrollable: scrollable,
+    );
     await tester.tap(selectors.at(1));
     await tester.pumpAndSettle();
     await tester.tap(find.text('مورد الاختبار').last);

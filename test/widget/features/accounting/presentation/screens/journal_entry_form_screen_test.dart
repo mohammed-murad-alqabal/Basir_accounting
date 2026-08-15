@@ -6,7 +6,9 @@ import 'dart:async';
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/orchestrator_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entry_form_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
@@ -21,6 +23,7 @@ class _FakeAccountingService extends AccountingService {
 
   final List<Account> accounts;
   final List<JournalEntry> postedEntries = [];
+  final List<bool> bypassCognitiveFlags = [];
 
   @override
   FutureOr<List<JournalEntry>> build() => const [];
@@ -34,7 +37,29 @@ class _FakeAccountingService extends AccountingService {
     bool bypassCognitive = false,
   }) async {
     postedEntries.add(entry);
+    bypassCognitiveFlags.add(bypassCognitive);
   }
+}
+
+class _ApprovedOrchestratorService extends OrchestratorService {
+  @override
+  FutureOr<void> build() {}
+
+  @override
+  Future<AgentConsensus> orchestrate(AccountingContext context) async =>
+      AgentConsensus(
+        isApproved: true,
+        explanation: 'Approved accounting entry for test',
+        agentResults: const [
+          AgentResult(
+            agentId: 'Forensic Audit',
+            isAllowed: true,
+            rationale: 'agentRationaleForensicBalanced',
+            confidenceScore: 0.99,
+          ),
+        ],
+        orchestrationTimestamp: DateTime(2026),
+      );
 }
 
 Account _leafAccount({
@@ -68,6 +93,8 @@ void main() {
     container = ProviderContainer(
       overrides: [
         accountingServiceProvider.overrideWith(() => accountingService),
+        orchestratorServiceProvider
+            .overrideWith(_ApprovedOrchestratorService.new),
         appIconsProvider.overrideWithValue(const MaterialAppIcons()),
         basirUserProvider.overrideWith((ref) => null),
       ],
@@ -290,5 +317,71 @@ void main() {
     expect(entry.description, 'قيد مسودة متزن');
     expect(entry.isBalanced, isTrue);
     expect(entry.lines.map((line) => line.accountId), ['cash', 'sales']);
+  });
+
+  testWidgets('يعرض تقرير الإجماع ثم يرحّل القيد المتزن بعد تأكيد المستخدم',
+      (tester) async {
+    await tester.pumpWidget(testApp());
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextFormField).first, 'قيد ترحيل متزن');
+    final accountSelectors = find.byType(DropdownButtonFormField<String>);
+    final formScrollView = find
+        .descendant(
+          of: find.byType(Form),
+          matching: find.byType(Scrollable),
+        )
+        .first;
+
+    await tester.tap(accountSelectors.at(0));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('1100 - النقدية').last);
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      accountSelectors.at(1),
+      120,
+      scrollable: formScrollView,
+    );
+    await tester.tap(accountSelectors.at(1));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('4100 - المبيعات').last);
+    await tester.pumpAndSettle();
+
+    final amountFields = find.byType(TextFormField);
+    await tester.enterText(amountFields.at(4), '250');
+    await tester.enterText(amountFields.at(7), '250');
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+
+    final postButton = find.byWidgetPredicate(
+      (widget) => widget is AppEnhancedButton && widget.label == 'ترحيل القيد',
+    );
+    final postAction = find.descendant(
+      of: postButton,
+      matching: find.byType(InkWell),
+    );
+    await tester.scrollUntilVisible(
+      postAction,
+      120,
+      scrollable: formScrollView,
+    );
+    await tester.tap(postAction);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.text('Post Transaction'), findsOneWidget);
+    expect(find.text('FORENSIC AUDIT'), findsOneWidget);
+
+    await tester.tap(find.text('Post Transaction'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(accountingService.postedEntries, hasLength(1));
+    final entry = accountingService.postedEntries.single;
+    expect(entry.status, JournalEntryStatus.posted);
+    expect(entry.description, 'قيد ترحيل متزن');
+    expect(entry.isBalanced, isTrue);
+    expect(entry.lines.map((line) => line.accountId), ['cash', 'sales']);
+    expect(accountingService.bypassCognitiveFlags.single, isTrue);
   });
 }

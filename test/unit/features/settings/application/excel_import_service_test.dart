@@ -62,7 +62,8 @@ Future<File> _createWorkbook() async {
   sheet.appendRow([TextCellValue('')]);
   sheet.appendRow([TextCellValue('صف ناقص')]);
 
-  final directory = await Directory.systemTemp.createTemp('basir_excel_import_');
+  final directory =
+      await Directory.systemTemp.createTemp('basir_excel_import_');
   final file = File('${directory.path}/customers.xlsx');
   await file.writeAsBytes(excel.encode()!);
   return file;
@@ -73,11 +74,11 @@ ProviderContainer _container({
   required MockAccountingRepository accountingRepository,
 }) =>
     ProviderContainer(
-    overrides: [
-      customerRepositoryProvider.overrideWithValue(customerRepository),
-      accountingRepositoryProvider.overrideWithValue(accountingRepository),
-    ],
-  );
+      overrides: [
+        customerRepositoryProvider.overrideWithValue(customerRepository),
+        accountingRepositoryProvider.overrideWithValue(accountingRepository),
+      ],
+    );
 
 void main() {
   tearDown(() {
@@ -133,7 +134,8 @@ void main() {
       expect(container.read(excelImportServiceProvider).requireValue, isEmpty);
     });
 
-    test('يحفظ الصفوف الصالحة وينشئ الحسابات وقيود الأرصدة الافتتاحية', () async {
+    test('يحفظ الصفوف الصالحة وينشئ الحسابات وقيود الأرصدة الافتتاحية',
+        () async {
       final file = await _createWorkbook();
       addTearDown(() => file.parent.delete(recursive: true));
       FilePicker.platform = _FilePickerFake(
@@ -160,7 +162,10 @@ void main() {
 
       expect(customerRepository.count, 3);
       expect(accountingRepository.accounts, hasLength(3));
-      expect(accountingRepository.accounts.first.balance, Decimal.parse('1500.50'));
+      expect(
+        accountingRepository.accounts.first.balance,
+        Decimal.parse('1500.50'),
+      );
       expect(accountingRepository.journalEntries, hasLength(1));
       final entry = accountingRepository.journalEntries.single;
       expect(entry.lines.first.credit, Decimal.parse('1500.50'));

@@ -244,5 +244,108 @@ void main() {
         expect(mockRepository.invoices, hasLength(2));
       });
     });
+
+    group('extended invoice lifecycle and derived data', () {
+      test('filters every lifecycle state and derives totals and counts',
+          () async {
+        final invoices = [
+          MockData.createTestInvoice(
+            id: 'sent-001',
+            customerName: 'شركة باء',
+            issuedDate: DateTime.utc(2026, 1, 2),
+            status: InvoiceStatus.sent,
+            itemPrice: Decimal.fromInt(90),
+          ),
+          MockData.createTestInvoice(
+            id: 'cancelled-001',
+            customerName: 'شركة ألف',
+            issuedDate: DateTime.utc(2026),
+            status: InvoiceStatus.cancelled,
+            itemPrice: Decimal.fromInt(40),
+          ),
+          MockData.createTestInvoice(
+            id: 'refunded-001',
+            customerName: 'شركة جيم',
+            issuedDate: DateTime.utc(2026, 1, 3),
+            status: InvoiceStatus.refunded,
+            itemPrice: Decimal.fromInt(30),
+          ),
+          MockData.createTestInvoice(
+            id: 'overdue-001',
+            customerName: 'شركة دال',
+            issuedDate: DateTime.utc(2026, 1, 4),
+            status: InvoiceStatus.overdue,
+            itemPrice: Decimal.fromInt(20),
+          ),
+        ];
+        mockRepository.setInvoices(invoices);
+        await container.read(invoicesProvider.future);
+
+        for (final state in ['sent', 'cancelled', 'refunded', 'overdue']) {
+          container.read(invoiceFilterProvider.notifier).state = state;
+          expect(container.read(filteredInvoicesProvider).value, hasLength(1));
+        }
+
+        container.read(invoiceFilterProvider.notifier).state = 'all';
+        container.read(invoiceSortProvider.notifier).state = 'oldest';
+        expect(
+          container.read(filteredInvoicesProvider).value!.first.id,
+          'cancelled-001',
+        );
+        container.read(invoiceSortProvider.notifier).state = 'customer';
+        expect(
+          container.read(filteredInvoicesProvider).value!.first.customerName,
+          'شركة ألف',
+        );
+        container.read(invoiceSortProvider.notifier).state = 'amount_asc';
+        expect(
+          container.read(filteredInvoicesProvider).value!.first.id,
+          'overdue-001',
+        );
+        container.read(invoiceSortProvider.notifier).state = 'due_date';
+        expect(container.read(filteredInvoicesProvider).value, hasLength(4));
+
+        expect(
+          container.read(totalSalesProvider).value,
+          greaterThan(Decimal.zero),
+        );
+        expect(container.read(overdueInvoicesCountProvider).value, 1);
+        expect(container.read(invoicesCountProvider).value, 4);
+        expect(container.read(hasInvoicesProvider).value, isTrue);
+        container.read(invoiceSearchProvider.notifier).state = '  إرسال  ';
+        expect(container.read(searchQueryProvider), 'إرسال');
+        expect(container.read(filterStatusProvider), 'all');
+      });
+
+      test('updates and deletes a draft invoice, returning false on failures',
+          () async {
+        final draft = MockData.createTestInvoice(
+          id: 'draft-001',
+          status: InvoiceStatus.draft,
+        );
+        mockRepository.setInvoices([draft]);
+
+        final updated = draft.copyWith(customerName: 'العميل المعدل');
+        expect(
+          await container.read(updateInvoiceProvider(updated).future),
+          isTrue,
+        );
+        expect(mockRepository.invoices.single.customerName, 'العميل المعدل');
+
+        expect(
+          await container.read(deleteInvoiceProvider(draft.id).future),
+          isTrue,
+        );
+        expect(mockRepository.invoices, isEmpty);
+
+        mockRepository.shouldThrowError = true;
+        expect(
+          await container.read(
+            deleteInvoiceProvider('missing-failure').future,
+          ),
+          isFalse,
+        );
+      });
+    });
   });
 }

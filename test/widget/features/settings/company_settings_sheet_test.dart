@@ -13,8 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../mocks/mock_secure_storage.dart';
 
-class _MemoryBusinessSettingsRepository
-    implements BusinessSettingsRepository {
+class _MemoryBusinessSettingsRepository implements BusinessSettingsRepository {
   _MemoryBusinessSettingsRepository(this.current);
 
   BusinessSettings? current;
@@ -69,22 +68,26 @@ void main() {
   }
 
   Widget buildSheet(ProviderContainer container) => UncontrolledProviderScope(
-    container: container,
-    child: const MaterialApp(
-      locale: Locale('ar'),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: Scaffold(body: CompanySettingsSheet(initialSettings: initialSettings)),
-    ),
-  );
+        container: container,
+        child: const MaterialApp(
+          locale: Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: CompanySettingsSheet(initialSettings: initialSettings),
+          ),
+        ),
+      );
 
   group('CompanySettingsSheet', () {
-    testWidgets('يعدل الإعدادات ويحفظ الحمولة المحاسبية الصحيحة', (tester) async {
+    testWidgets('يعدل الإعدادات ويحفظ الحمولة المحاسبية الصحيحة',
+        (tester) async {
       final repository = _MemoryBusinessSettingsRepository(
         const BusinessSettings(id: 'settings-1', companyName: 'شركة بصير'),
       );
       final storage = MockSecureStorage();
-      final container = createContainer(repository: repository, storage: storage);
+      final container =
+          createContainer(repository: repository, storage: storage);
       addTearDown(container.dispose);
 
       await tester.pumpWidget(buildSheet(container));
@@ -120,7 +123,8 @@ void main() {
         const BusinessSettings(id: 'settings-2', companyName: 'شركة بصير'),
       );
       final storage = MockSecureStorage()..shouldThrowOnWrite = true;
-      final container = createContainer(repository: repository, storage: storage);
+      final container =
+          createContainer(repository: repository, storage: storage);
       addTearDown(container.dispose);
 
       await tester.pumpWidget(buildSheet(container));

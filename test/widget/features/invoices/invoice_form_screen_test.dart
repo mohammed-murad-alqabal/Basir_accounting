@@ -1,8 +1,11 @@
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:decimal/decimal.dart';
@@ -34,6 +37,21 @@ class _FakeNotificationService extends NotificationService {
   }
 }
 
+class _InvoiceAccountingServiceFake extends AccountingService {
+  static final List<Invoice> postedInvoices = [];
+
+  @override
+  Future<List<JournalEntry>> build() async => [];
+
+  @override
+  Future<void> postInvoice(
+    Invoice invoice, {
+    bool bypassCognitive = false,
+  }) async {
+    postedInvoices.add(invoice);
+  }
+}
+
 void main() {
   late MockCustomerRepository mockCustomerRepository;
   late MockInvoiceRepository mockInvoiceRepository;
@@ -43,6 +61,7 @@ void main() {
     mockCustomerRepository = MockCustomerRepository();
     mockInvoiceRepository = MockInvoiceRepository();
     notificationService = _FakeNotificationService();
+    _InvoiceAccountingServiceFake.postedInvoices.clear();
   });
 
   Widget createTestWidget({Invoice? invoice}) => ProviderScope(
@@ -54,11 +73,14 @@ void main() {
               email: 'test@example.com',
               displayName: 'Test User',
               role: UserRole.admin,
+              permissions: Permission.all,
             ),
           ),
           customerRepositoryProvider.overrideWithValue(mockCustomerRepository),
           invoiceRepositoryProvider.overrideWithValue(mockInvoiceRepository),
           notificationServiceProvider.overrideWithValue(notificationService),
+          accountingServiceProvider
+              .overrideWith(_InvoiceAccountingServiceFake.new),
         ],
         child: MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -331,7 +353,8 @@ void main() {
           of: dialog,
           matching: find.byWidgetPredicate(
             (widget) =>
-                widget is TextField && widget.decoration?.labelText == 'اسم الصنف',
+                widget is TextField &&
+                widget.decoration?.labelText == 'اسم الصنف',
           ),
         ),
         'اشتراك محاسبي',
@@ -356,7 +379,8 @@ void main() {
         ),
         '100',
       );
-      await tester.tap(find.descendant(of: dialog, matching: find.text('إضافة')));
+      await tester
+          .tap(find.descendant(of: dialog, matching: find.text('إضافة')));
       await tester.pumpAndSettle();
 
       final saveAction = find.byKey(const Key('summaryRailSaveDraftAction'));
@@ -397,6 +421,124 @@ void main() {
 
       expect(mockInvoiceRepository.invoices, isEmpty);
       expect(find.byType(SnackBar), findsOneWidget);
+    });
+
+    testWidgets('يعاين الأثر ثم يرحل فاتورة مبيعات مرسلة بقيد محاسبي',
+        (tester) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      final customerPicker = find.byKey(const Key('entityPickerInput'));
+      await tester.ensureVisible(customerPicker);
+      await tester.tap(customerPicker);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('أحمد محمد').last);
+      await tester.pumpAndSettle();
+
+      final addItemButton = find.byTooltip('إضافة بند جديد');
+      await tester.ensureVisible(addItemButton);
+      await tester.tap(addItemButton);
+      await tester.pumpAndSettle();
+
+      final dialog = find.byType(AlertDialog);
+      await tester.enterText(
+        find.descendant(
+          of: dialog,
+          matching: find.byWidgetPredicate(
+            (widget) =>
+                widget is TextField &&
+                widget.decoration?.labelText == 'اسم الصنف',
+          ),
+        ),
+        'خدمة ترحيل',
+      );
+      await tester.enterText(
+        find.descendant(
+          of: dialog,
+          matching: find.byWidgetPredicate(
+            (widget) =>
+                widget is TextField && widget.decoration?.labelText == 'الكمية',
+          ),
+        ),
+        '1',
+      );
+      await tester.enterText(
+        find.descendant(
+          of: dialog,
+          matching: find.byWidgetPredicate(
+            (widget) =>
+                widget is TextField && widget.decoration?.labelText == 'السعر',
+          ),
+        ),
+        '100',
+      );
+      await tester
+          .tap(find.descendant(of: dialog, matching: find.text('إضافة')));
+      await tester.pumpAndSettle();
+
+      final previewAction = find.byKey(const Key('summaryRailPreviewAction'));
+      await tester.ensureVisible(previewAction);
+      await tester.tap(previewAction);
+      await tester.pumpAndSettle();
+
+      expect(find.text('معاينة الأثر'), findsNWidgets(2));
+      expect(find.textContaining('Receivable - أحمد محمد'), findsOneWidget);
+
+      final postAction = find.byKey(const Key('summaryRailPostAction'));
+      await tester.ensureVisible(postAction);
+      await tester.tap(postAction);
+      await tester.pumpAndSettle();
+
+      final confirmDialog = find.byType(AlertDialog);
+      expect(confirmDialog, findsOneWidget);
+      await tester.tap(
+        find.descendant(
+          of: confirmDialog,
+          matching: find.byType(FilledButton),
+        ),
+      );
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(mockInvoiceRepository.invoices, hasLength(1));
+      expect(mockInvoiceRepository.invoices.single.status, InvoiceStatus.sent);
+      expect(_InvoiceAccountingServiceFake.postedInvoices, hasLength(1));
+      expect(
+        _InvoiceAccountingServiceFake.postedInvoices.single.type,
+        InvoiceType.sales,
+      );
+
+      await tester.pump(const Duration(seconds: 3));
+    });
+
+    testWidgets('يحدّث فاتورة موجودة عبر مسار الحفظ مع إبقاء هويتها وبنودها',
+        (tester) async {
+      final existing = InvoiceFixtures.invoice1;
+      mockInvoiceRepository.setInvoices([existing]);
+
+      await tester.pumpWidget(createTestWidget(invoice: existing));
+      await tester.pumpAndSettle();
+
+      final saveAction = find.byKey(const Key('summaryRailSaveDraftAction'));
+      await tester.ensureVisible(saveAction);
+      await tester.tap(saveAction);
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(mockInvoiceRepository.invoices, hasLength(1));
+      final updated = mockInvoiceRepository.invoices.single;
+      expect(updated.id, existing.id);
+      expect(updated.invoiceNumber, existing.invoiceNumber);
+      expect(updated.customerId, existing.customerId);
+      expect(updated.status, InvoiceStatus.draft);
+      expect(updated.items, hasLength(1));
+      expect(updated.items.single.name, 'خدمة استشارية');
+      expect(updated.totalAmount, Decimal.parse('1150'));
+
+      await tester.pump(const Duration(seconds: 3));
     });
   });
 }

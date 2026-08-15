@@ -41,25 +41,26 @@ void main() {
   Widget buildPortal({
     required IntegrityPulse pulse,
     required Future<List<LedgerBlock>> Function() loadBlocks,
-  }) => ProviderScope(
-    overrides: [
-      forensicPortalNotifierProvider.overrideWith(
-        () => _FixedForensicPortalNotifier(pulse),
-      ),
-      ledgerBlocksProvider.overrideWith((ref) => loadBlocks()),
-    ],
-    child: MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      locale: const Locale('ar'),
-      routes: {
-        '/fiscal-control-center': (context) => const Scaffold(
-          body: Center(child: Text('وصلت إلى إدارة الدورة المالية')),
+  }) =>
+      ProviderScope(
+        overrides: [
+          forensicPortalNotifierProvider.overrideWith(
+            () => _FixedForensicPortalNotifier(pulse),
+          ),
+          ledgerBlocksProvider.overrideWith((ref) => loadBlocks()),
+        ],
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: const Locale('ar'),
+          routes: {
+            '/fiscal-control-center': (context) => const Scaffold(
+                  body: Center(child: Text('وصلت إلى إدارة الدورة المالية')),
+                ),
+          },
+          home: const ForensicPortalScreen(),
         ),
-      },
-      home: const ForensicPortalScreen(),
-    ),
-  );
+      );
 
   group('ForensicPortalScreen', () {
     testWidgets('يعرض نبض السلامة وكتل السجل ثم ينتقل للضبط الإداري', (
