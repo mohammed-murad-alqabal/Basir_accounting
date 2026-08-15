@@ -408,6 +408,9 @@ class BulkChangeExecutionRecord {
         cancellation: json['cancellation'] == null
             ? null
             : AuditEntry.fromJson(
-                Map<String, dynamic>.from(json['cancellation'] as Map,),),
+                Map<String, dynamic>.from(
+                  json['cancellation'] as Map,
+                ),
+              ),
       );
 }
