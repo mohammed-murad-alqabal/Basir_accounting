@@ -2231,6 +2231,1169 @@ class BusinessSettingsCompanion extends UpdateCompanion<BusinessSetting> {
   }
 }
 
+class $GoalsTable extends Goals with TableInfo<$GoalsTable, Goal> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GoalsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _scopeKeyMeta =
+      const VerificationMeta('scopeKey');
+  @override
+  late final GeneratedColumn<String> scopeKey = <credential-fixture><String>(
+      'scope_key', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+      'uuid', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _categoryMeta =
+      const VerificationMeta('category');
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+      'category', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _targetAmountMeta =
+      const VerificationMeta('targetAmount');
+  @override
+  late final GeneratedColumn<String> targetAmount = GeneratedColumn<String>(
+      'target_amount', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _currentAmountMeta =
+      const VerificationMeta('currentAmount');
+  @override
+  late final GeneratedColumn<String> currentAmount = GeneratedColumn<String>(
+      'current_amount', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _startDateMeta =
+      const VerificationMeta('startDate');
+  @override
+  late final GeneratedColumn<DateTime> startDate = GeneratedColumn<DateTime>(
+      'start_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _targetDateMeta =
+      const VerificationMeta('targetDate');
+  @override
+  late final GeneratedColumn<DateTime> targetDate = GeneratedColumn<DateTime>(
+      'target_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _isActiveMeta =
+      const VerificationMeta('isActive');
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+      'is_active', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_active" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        scopeKey,
+        uuid,
+        name,
+        category,
+        targetAmount,
+        currentAmount,
+        startDate,
+        targetDate,
+        isActive,
+        description,
+        userId
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'goals';
+  @override
+  VerificationContext validateIntegrity(Insertable<Goal> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('scope_key')) {
+      context.handle(_scopeKeyMeta,
+          scopeKey.isAcceptableOrUnknown(data['scope_key']!, _scopeKeyMeta));
+    } else if (isInserting) {
+      context.missing(_scopeKeyMeta);
+    }
+    if (data.containsKey('uuid')) {
+      context.handle(
+          _uuidMeta, uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta));
+    } else if (isInserting) {
+      context.missing(_uuidMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(_categoryMeta,
+          category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('target_amount')) {
+      context.handle(
+          _targetAmountMeta,
+          targetAmount.isAcceptableOrUnknown(
+              data['target_amount']!, _targetAmountMeta));
+    } else if (isInserting) {
+      context.missing(_targetAmountMeta);
+    }
+    if (data.containsKey('current_amount')) {
+      context.handle(
+          _currentAmountMeta,
+          currentAmount.isAcceptableOrUnknown(
+              data['current_amount']!, _currentAmountMeta));
+    } else if (isInserting) {
+      context.missing(_currentAmountMeta);
+    }
+    if (data.containsKey('start_date')) {
+      context.handle(_startDateMeta,
+          startDate.isAcceptableOrUnknown(data['start_date']!, _startDateMeta));
+    } else if (isInserting) {
+      context.missing(_startDateMeta);
+    }
+    if (data.containsKey('target_date')) {
+      context.handle(
+          _targetDateMeta,
+          targetDate.isAcceptableOrUnknown(
+              data['target_date']!, _targetDateMeta));
+    } else if (isInserting) {
+      context.missing(_targetDateMeta);
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(_isActiveMeta,
+          isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta));
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {scopeKey, uuid};
+  @override
+  Goal map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Goal(
+      scopeKey: <credential-fixture>
+          .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
+      uuid: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}uuid'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      category: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}category'])!,
+      targetAmount: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}target_amount'])!,
+      currentAmount: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}current_amount'])!,
+      startDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}start_date'])!,
+      targetDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}target_date'])!,
+      isActive: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_active'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id']),
+    );
+  }
+
+  @override
+  $GoalsTable createAlias(String alias) {
+    return $GoalsTable(attachedDatabase, alias);
+  }
+}
+
+class Goal extends DataClass implements Insertable<Goal> {
+  final String scopeKey;
+  final String uuid;
+  final String name;
+  final String category;
+  final String targetAmount;
+  final String currentAmount;
+  final DateTime startDate;
+  final DateTime targetDate;
+  final bool isActive;
+  final String? description;
+  final String? userId;
+  const Goal(
+      {required this.scopeKey,
+      required this.uuid,
+      required this.name,
+      required this.category,
+      required this.targetAmount,
+      required this.currentAmount,
+      required this.startDate,
+      required this.targetDate,
+      required this.isActive,
+      this.description,
+      this.userId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['scope_key'] = Variable<String>(scopeKey);
+    map['uuid'] = Variable<String>(uuid);
+    map['name'] = Variable<String>(name);
+    map['category'] = Variable<String>(category);
+    map['target_amount'] = Variable<String>(targetAmount);
+    map['current_amount'] = Variable<String>(currentAmount);
+    map['start_date'] = Variable<DateTime>(startDate);
+    map['target_date'] = Variable<DateTime>(targetDate);
+    map['is_active'] = Variable<bool>(isActive);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<String>(userId);
+    }
+    return map;
+  }
+
+  GoalsCompanion toCompanion(bool nullToAbsent) {
+    return GoalsCompanion(
+      scopeKey: Value(scopeKey),
+      uuid: Value(uuid),
+      name: Value(name),
+      category: Value(category),
+      targetAmount: Value(targetAmount),
+      currentAmount: Value(currentAmount),
+      startDate: Value(startDate),
+      targetDate: Value(targetDate),
+      isActive: Value(isActive),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+    );
+  }
+
+  factory Goal.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Goal(
+      scopeKey: <credential-fixture><String>(json['scopeKey']),
+      uuid: serializer.fromJson<String>(json['uuid']),
+      name: serializer.fromJson<String>(json['name']),
+      category: serializer.fromJson<String>(json['category']),
+      targetAmount: serializer.fromJson<String>(json['targetAmount']),
+      currentAmount: serializer.fromJson<String>(json['currentAmount']),
+      startDate: serializer.fromJson<DateTime>(json['startDate']),
+      targetDate: serializer.fromJson<DateTime>(json['targetDate']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+      description: serializer.fromJson<String?>(json['description']),
+      userId: serializer.fromJson<String?>(json['userId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'scopeKey': serializer.toJson<String>(scopeKey),
+      'uuid': serializer.toJson<String>(uuid),
+      'name': serializer.toJson<String>(name),
+      'category': serializer.toJson<String>(category),
+      'targetAmount': serializer.toJson<String>(targetAmount),
+      'currentAmount': serializer.toJson<String>(currentAmount),
+      'startDate': serializer.toJson<DateTime>(startDate),
+      'targetDate': serializer.toJson<DateTime>(targetDate),
+      'isActive': serializer.toJson<bool>(isActive),
+      'description': serializer.toJson<String?>(description),
+      'userId': serializer.toJson<String?>(userId),
+    };
+  }
+
+  Goal copyWith(
+          {String? scopeKey,
+          String? uuid,
+          String? name,
+          String? category,
+          String? targetAmount,
+          String? currentAmount,
+          DateTime? startDate,
+          DateTime? targetDate,
+          bool? isActive,
+          Value<String?> description = const Value.absent(),
+          Value<String?> userId = const Value.absent()}) =>
+      Goal(
+        scopeKey: <credential-fixture> ?? this.scopeKey,
+        uuid: uuid ?? this.uuid,
+        name: name ?? this.name,
+        category: category ?? this.category,
+        targetAmount: targetAmount ?? this.targetAmount,
+        currentAmount: currentAmount ?? this.currentAmount,
+        startDate: startDate ?? this.startDate,
+        targetDate: targetDate ?? this.targetDate,
+        isActive: isActive ?? this.isActive,
+        description: description.present ? description.value : this.description,
+        userId: userId.present ? userId.value : this.userId,
+      );
+  Goal copyWithCompanion(GoalsCompanion data) {
+    return Goal(
+      scopeKey: <credential-fixture> ? data.scopeKey.value : <credential-fixture>,
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      name: data.name.present ? data.name.value : this.name,
+      category: data.category.present ? data.category.value : this.category,
+      targetAmount: data.targetAmount.present
+          ? data.targetAmount.value
+          : this.targetAmount,
+      currentAmount: data.currentAmount.present
+          ? data.currentAmount.value
+          : this.currentAmount,
+      startDate: data.startDate.present ? data.startDate.value : this.startDate,
+      targetDate:
+          data.targetDate.present ? data.targetDate.value : this.targetDate,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      description:
+          data.description.present ? data.description.value : this.description,
+      userId: data.userId.present ? data.userId.value : this.userId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Goal(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('uuid: $uuid, ')
+          ..write('name: $name, ')
+          ..write('category: $category, ')
+          ..write('targetAmount: $targetAmount, ')
+          ..write('currentAmount: $currentAmount, ')
+          ..write('startDate: $startDate, ')
+          ..write('targetDate: $targetDate, ')
+          ..write('isActive: $isActive, ')
+          ..write('description: $description, ')
+          ..write('userId: $userId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(scopeKey, uuid, name, category, targetAmount,
+      currentAmount, startDate, targetDate, isActive, description, userId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Goal &&
+          other.scopeKey == this.scopeKey &&
+          other.uuid == this.uuid &&
+          other.name == this.name &&
+          other.category == this.category &&
+          other.targetAmount == this.targetAmount &&
+          other.currentAmount == this.currentAmount &&
+          other.startDate == this.startDate &&
+          other.targetDate == this.targetDate &&
+          other.isActive == this.isActive &&
+          other.description == this.description &&
+          other.userId == this.userId);
+}
+
+class GoalsCompanion extends UpdateCompanion<Goal> {
+  final Value<String> scopeKey;
+  final Value<String> uuid;
+  final Value<String> name;
+  final Value<String> category;
+  final Value<String> targetAmount;
+  final Value<String> currentAmount;
+  final Value<DateTime> startDate;
+  final Value<DateTime> targetDate;
+  final Value<bool> isActive;
+  final Value<String?> description;
+  final Value<String?> userId;
+  final Value<int> rowid;
+  const GoalsCompanion({
+    this.scopeKey = const Value.absent(),
+    this.uuid = const Value.absent(),
+    this.name = const Value.absent(),
+    this.category = const Value.absent(),
+    this.targetAmount = const Value.absent(),
+    this.currentAmount = const Value.absent(),
+    this.startDate = const Value.absent(),
+    this.targetDate = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.description = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  GoalsCompanion.insert({
+    required String scopeKey,
+    required String uuid,
+    required String name,
+    required String category,
+    required String targetAmount,
+    required String currentAmount,
+    required DateTime startDate,
+    required DateTime targetDate,
+    this.isActive = const Value.absent(),
+    this.description = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : scopeKey = Value(scopeKey),
+        uuid = Value(uuid),
+        name = Value(name),
+        category = Value(category),
+        targetAmount = Value(targetAmount),
+        currentAmount = Value(currentAmount),
+        startDate = Value(startDate),
+        targetDate = Value(targetDate);
+  static Insertable<Goal> custom({
+    Expression<String>? scopeKey,
+    Expression<String>? uuid,
+    Expression<String>? name,
+    Expression<String>? category,
+    Expression<String>? targetAmount,
+    Expression<String>? currentAmount,
+    Expression<DateTime>? startDate,
+    Expression<DateTime>? targetDate,
+    Expression<bool>? isActive,
+    Expression<String>? description,
+    Expression<String>? userId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (scopeKey != null) 'scope_key': scopeKey,
+      if (uuid != null) 'uuid': uuid,
+      if (name != null) 'name': name,
+      if (category != null) 'category': category,
+      if (targetAmount != null) 'target_amount': targetAmount,
+      if (currentAmount != null) 'current_amount': currentAmount,
+      if (startDate != null) 'start_date': startDate,
+      if (targetDate != null) 'target_date': targetDate,
+      if (isActive != null) 'is_active': isActive,
+      if (description != null) 'description': description,
+      if (userId != null) 'user_id': userId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  GoalsCompanion copyWith(
+      {Value<String>? scopeKey,
+      Value<String>? uuid,
+      Value<String>? name,
+      Value<String>? category,
+      Value<String>? targetAmount,
+      Value<String>? currentAmount,
+      Value<DateTime>? startDate,
+      Value<DateTime>? targetDate,
+      Value<bool>? isActive,
+      Value<String?>? description,
+      Value<String?>? userId,
+      Value<int>? rowid}) {
+    return GoalsCompanion(
+      scopeKey: <credential-fixture> ?? this.scopeKey,
+      uuid: uuid ?? this.uuid,
+      name: name ?? this.name,
+      category: category ?? this.category,
+      targetAmount: targetAmount ?? this.targetAmount,
+      currentAmount: currentAmount ?? this.currentAmount,
+      startDate: startDate ?? this.startDate,
+      targetDate: targetDate ?? this.targetDate,
+      isActive: isActive ?? this.isActive,
+      description: description ?? this.description,
+      userId: userId ?? this.userId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (scopeKey.present) {
+      map['scope_key'] = Variable<String>(scopeKey.value);
+    }
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (targetAmount.present) {
+      map['target_amount'] = Variable<String>(targetAmount.value);
+    }
+    if (currentAmount.present) {
+      map['current_amount'] = Variable<String>(currentAmount.value);
+    }
+    if (startDate.present) {
+      map['start_date'] = Variable<DateTime>(startDate.value);
+    }
+    if (targetDate.present) {
+      map['target_date'] = Variable<DateTime>(targetDate.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GoalsCompanion(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('uuid: $uuid, ')
+          ..write('name: $name, ')
+          ..write('category: $category, ')
+          ..write('targetAmount: $targetAmount, ')
+          ..write('currentAmount: $currentAmount, ')
+          ..write('startDate: $startDate, ')
+          ..write('targetDate: $targetDate, ')
+          ..write('isActive: $isActive, ')
+          ..write('description: $description, ')
+          ..write('userId: $userId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $BudgetsTable extends Budgets with TableInfo<$BudgetsTable, Budget> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BudgetsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _scopeKeyMeta =
+      const VerificationMeta('scopeKey');
+  @override
+  late final GeneratedColumn<String> scopeKey = <credential-fixture><String>(
+      'scope_key', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _budgetIdMeta =
+      const VerificationMeta('budgetId');
+  @override
+  late final GeneratedColumn<String> budgetId = GeneratedColumn<String>(
+      'budget_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _categoryMeta =
+      const VerificationMeta('category');
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+      'category', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _limitAmountMeta =
+      const VerificationMeta('limitAmount');
+  @override
+  late final GeneratedColumn<String> limitAmount = GeneratedColumn<String>(
+      'limit_amount', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _spentAmountMeta =
+      const VerificationMeta('spentAmount');
+  @override
+  late final GeneratedColumn<String> spentAmount = GeneratedColumn<String>(
+      'spent_amount', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _startDateMeta =
+      const VerificationMeta('startDate');
+  @override
+  late final GeneratedColumn<DateTime> startDate = GeneratedColumn<DateTime>(
+      'start_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _endDateMeta =
+      const VerificationMeta('endDate');
+  @override
+  late final GeneratedColumn<DateTime> endDate = GeneratedColumn<DateTime>(
+      'end_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _alertThresholdMeta =
+      const VerificationMeta('alertThreshold');
+  @override
+  late final GeneratedColumn<double> alertThreshold = GeneratedColumn<double>(
+      'alert_threshold', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _isRolloverMeta =
+      const VerificationMeta('isRollover');
+  @override
+  late final GeneratedColumn<bool> isRollover = GeneratedColumn<bool>(
+      'is_rollover', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_rollover" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _isActiveMeta =
+      const VerificationMeta('isActive');
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+      'is_active', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_active" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        scopeKey,
+        budgetId,
+        name,
+        category,
+        limitAmount,
+        spentAmount,
+        startDate,
+        endDate,
+        alertThreshold,
+        isRollover,
+        isActive,
+        userId
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'budgets';
+  @override
+  VerificationContext validateIntegrity(Insertable<Budget> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('scope_key')) {
+      context.handle(_scopeKeyMeta,
+          scopeKey.isAcceptableOrUnknown(data['scope_key']!, _scopeKeyMeta));
+    } else if (isInserting) {
+      context.missing(_scopeKeyMeta);
+    }
+    if (data.containsKey('budget_id')) {
+      context.handle(_budgetIdMeta,
+          budgetId.isAcceptableOrUnknown(data['budget_id']!, _budgetIdMeta));
+    } else if (isInserting) {
+      context.missing(_budgetIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(_categoryMeta,
+          category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('limit_amount')) {
+      context.handle(
+          _limitAmountMeta,
+          limitAmount.isAcceptableOrUnknown(
+              data['limit_amount']!, _limitAmountMeta));
+    } else if (isInserting) {
+      context.missing(_limitAmountMeta);
+    }
+    if (data.containsKey('spent_amount')) {
+      context.handle(
+          _spentAmountMeta,
+          spentAmount.isAcceptableOrUnknown(
+              data['spent_amount']!, _spentAmountMeta));
+    } else if (isInserting) {
+      context.missing(_spentAmountMeta);
+    }
+    if (data.containsKey('start_date')) {
+      context.handle(_startDateMeta,
+          startDate.isAcceptableOrUnknown(data['start_date']!, _startDateMeta));
+    } else if (isInserting) {
+      context.missing(_startDateMeta);
+    }
+    if (data.containsKey('end_date')) {
+      context.handle(_endDateMeta,
+          endDate.isAcceptableOrUnknown(data['end_date']!, _endDateMeta));
+    } else if (isInserting) {
+      context.missing(_endDateMeta);
+    }
+    if (data.containsKey('alert_threshold')) {
+      context.handle(
+          _alertThresholdMeta,
+          alertThreshold.isAcceptableOrUnknown(
+              data['alert_threshold']!, _alertThresholdMeta));
+    } else if (isInserting) {
+      context.missing(_alertThresholdMeta);
+    }
+    if (data.containsKey('is_rollover')) {
+      context.handle(
+          _isRolloverMeta,
+          isRollover.isAcceptableOrUnknown(
+              data['is_rollover']!, _isRolloverMeta));
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(_isActiveMeta,
+          isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {scopeKey, budgetId};
+  @override
+  Budget map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Budget(
+      scopeKey: <credential-fixture>
+          .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
+      budgetId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}budget_id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      category: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}category'])!,
+      limitAmount: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}limit_amount'])!,
+      spentAmount: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}spent_amount'])!,
+      startDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}start_date'])!,
+      endDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}end_date'])!,
+      alertThreshold: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}alert_threshold'])!,
+      isRollover: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_rollover'])!,
+      isActive: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_active'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id']),
+    );
+  }
+
+  @override
+  $BudgetsTable createAlias(String alias) {
+    return $BudgetsTable(attachedDatabase, alias);
+  }
+}
+
+class Budget extends DataClass implements Insertable<Budget> {
+  final String scopeKey;
+  final String budgetId;
+  final String name;
+  final String category;
+  final String limitAmount;
+  final String spentAmount;
+  final DateTime startDate;
+  final DateTime endDate;
+  final double alertThreshold;
+  final bool isRollover;
+  final bool isActive;
+  final String? userId;
+  const Budget(
+      {required this.scopeKey,
+      required this.budgetId,
+      required this.name,
+      required this.category,
+      required this.limitAmount,
+      required this.spentAmount,
+      required this.startDate,
+      required this.endDate,
+      required this.alertThreshold,
+      required this.isRollover,
+      required this.isActive,
+      this.userId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['scope_key'] = Variable<String>(scopeKey);
+    map['budget_id'] = Variable<String>(budgetId);
+    map['name'] = Variable<String>(name);
+    map['category'] = Variable<String>(category);
+    map['limit_amount'] = Variable<String>(limitAmount);
+    map['spent_amount'] = Variable<String>(spentAmount);
+    map['start_date'] = Variable<DateTime>(startDate);
+    map['end_date'] = Variable<DateTime>(endDate);
+    map['alert_threshold'] = Variable<double>(alertThreshold);
+    map['is_rollover'] = Variable<bool>(isRollover);
+    map['is_active'] = Variable<bool>(isActive);
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<String>(userId);
+    }
+    return map;
+  }
+
+  BudgetsCompanion toCompanion(bool nullToAbsent) {
+    return BudgetsCompanion(
+      scopeKey: Value(scopeKey),
+      budgetId: Value(budgetId),
+      name: Value(name),
+      category: Value(category),
+      limitAmount: Value(limitAmount),
+      spentAmount: Value(spentAmount),
+      startDate: Value(startDate),
+      endDate: Value(endDate),
+      alertThreshold: Value(alertThreshold),
+      isRollover: Value(isRollover),
+      isActive: Value(isActive),
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+    );
+  }
+
+  factory Budget.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Budget(
+      scopeKey: <credential-fixture><String>(json['scopeKey']),
+      budgetId: serializer.fromJson<String>(json['budgetId']),
+      name: serializer.fromJson<String>(json['name']),
+      category: serializer.fromJson<String>(json['category']),
+      limitAmount: serializer.fromJson<String>(json['limitAmount']),
+      spentAmount: serializer.fromJson<String>(json['spentAmount']),
+      startDate: serializer.fromJson<DateTime>(json['startDate']),
+      endDate: serializer.fromJson<DateTime>(json['endDate']),
+      alertThreshold: serializer.fromJson<double>(json['alertThreshold']),
+      isRollover: serializer.fromJson<bool>(json['isRollover']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+      userId: serializer.fromJson<String?>(json['userId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'scopeKey': serializer.toJson<String>(scopeKey),
+      'budgetId': serializer.toJson<String>(budgetId),
+      'name': serializer.toJson<String>(name),
+      'category': serializer.toJson<String>(category),
+      'limitAmount': serializer.toJson<String>(limitAmount),
+      'spentAmount': serializer.toJson<String>(spentAmount),
+      'startDate': serializer.toJson<DateTime>(startDate),
+      'endDate': serializer.toJson<DateTime>(endDate),
+      'alertThreshold': serializer.toJson<double>(alertThreshold),
+      'isRollover': serializer.toJson<bool>(isRollover),
+      'isActive': serializer.toJson<bool>(isActive),
+      'userId': serializer.toJson<String?>(userId),
+    };
+  }
+
+  Budget copyWith(
+          {String? scopeKey,
+          String? budgetId,
+          String? name,
+          String? category,
+          String? limitAmount,
+          String? spentAmount,
+          DateTime? startDate,
+          DateTime? endDate,
+          double? alertThreshold,
+          bool? isRollover,
+          bool? isActive,
+          Value<String?> userId = const Value.absent()}) =>
+      Budget(
+        scopeKey: <credential-fixture> ?? this.scopeKey,
+        budgetId: budgetId ?? this.budgetId,
+        name: name ?? this.name,
+        category: category ?? this.category,
+        limitAmount: limitAmount ?? this.limitAmount,
+        spentAmount: spentAmount ?? this.spentAmount,
+        startDate: startDate ?? this.startDate,
+        endDate: endDate ?? this.endDate,
+        alertThreshold: alertThreshold ?? this.alertThreshold,
+        isRollover: isRollover ?? this.isRollover,
+        isActive: isActive ?? this.isActive,
+        userId: userId.present ? userId.value : this.userId,
+      );
+  Budget copyWithCompanion(BudgetsCompanion data) {
+    return Budget(
+      scopeKey: <credential-fixture> ? data.scopeKey.value : <credential-fixture>,
+      budgetId: data.budgetId.present ? data.budgetId.value : this.budgetId,
+      name: data.name.present ? data.name.value : this.name,
+      category: data.category.present ? data.category.value : this.category,
+      limitAmount:
+          data.limitAmount.present ? data.limitAmount.value : this.limitAmount,
+      spentAmount:
+          data.spentAmount.present ? data.spentAmount.value : this.spentAmount,
+      startDate: data.startDate.present ? data.startDate.value : this.startDate,
+      endDate: data.endDate.present ? data.endDate.value : this.endDate,
+      alertThreshold: data.alertThreshold.present
+          ? data.alertThreshold.value
+          : this.alertThreshold,
+      isRollover:
+          data.isRollover.present ? data.isRollover.value : this.isRollover,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      userId: data.userId.present ? data.userId.value : this.userId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Budget(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('budgetId: $budgetId, ')
+          ..write('name: $name, ')
+          ..write('category: $category, ')
+          ..write('limitAmount: $limitAmount, ')
+          ..write('spentAmount: $spentAmount, ')
+          ..write('startDate: $startDate, ')
+          ..write('endDate: $endDate, ')
+          ..write('alertThreshold: $alertThreshold, ')
+          ..write('isRollover: $isRollover, ')
+          ..write('isActive: $isActive, ')
+          ..write('userId: $userId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      scopeKey,
+      budgetId,
+      name,
+      category,
+      limitAmount,
+      spentAmount,
+      startDate,
+      endDate,
+      alertThreshold,
+      isRollover,
+      isActive,
+      userId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Budget &&
+          other.scopeKey == this.scopeKey &&
+          other.budgetId == this.budgetId &&
+          other.name == this.name &&
+          other.category == this.category &&
+          other.limitAmount == this.limitAmount &&
+          other.spentAmount == this.spentAmount &&
+          other.startDate == this.startDate &&
+          other.endDate == this.endDate &&
+          other.alertThreshold == this.alertThreshold &&
+          other.isRollover == this.isRollover &&
+          other.isActive == this.isActive &&
+          other.userId == this.userId);
+}
+
+class BudgetsCompanion extends UpdateCompanion<Budget> {
+  final Value<String> scopeKey;
+  final Value<String> budgetId;
+  final Value<String> name;
+  final Value<String> category;
+  final Value<String> limitAmount;
+  final Value<String> spentAmount;
+  final Value<DateTime> startDate;
+  final Value<DateTime> endDate;
+  final Value<double> alertThreshold;
+  final Value<bool> isRollover;
+  final Value<bool> isActive;
+  final Value<String?> userId;
+  final Value<int> rowid;
+  const BudgetsCompanion({
+    this.scopeKey = const Value.absent(),
+    this.budgetId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.category = const Value.absent(),
+    this.limitAmount = const Value.absent(),
+    this.spentAmount = const Value.absent(),
+    this.startDate = const Value.absent(),
+    this.endDate = const Value.absent(),
+    this.alertThreshold = const Value.absent(),
+    this.isRollover = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BudgetsCompanion.insert({
+    required String scopeKey,
+    required String budgetId,
+    required String name,
+    required String category,
+    required String limitAmount,
+    required String spentAmount,
+    required DateTime startDate,
+    required DateTime endDate,
+    required double alertThreshold,
+    this.isRollover = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : scopeKey = Value(scopeKey),
+        budgetId = Value(budgetId),
+        name = Value(name),
+        category = Value(category),
+        limitAmount = Value(limitAmount),
+        spentAmount = Value(spentAmount),
+        startDate = Value(startDate),
+        endDate = Value(endDate),
+        alertThreshold = Value(alertThreshold);
+  static Insertable<Budget> custom({
+    Expression<String>? scopeKey,
+    Expression<String>? budgetId,
+    Expression<String>? name,
+    Expression<String>? category,
+    Expression<String>? limitAmount,
+    Expression<String>? spentAmount,
+    Expression<DateTime>? startDate,
+    Expression<DateTime>? endDate,
+    Expression<double>? alertThreshold,
+    Expression<bool>? isRollover,
+    Expression<bool>? isActive,
+    Expression<String>? userId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (scopeKey != null) 'scope_key': scopeKey,
+      if (budgetId != null) 'budget_id': budgetId,
+      if (name != null) 'name': name,
+      if (category != null) 'category': category,
+      if (limitAmount != null) 'limit_amount': limitAmount,
+      if (spentAmount != null) 'spent_amount': spentAmount,
+      if (startDate != null) 'start_date': startDate,
+      if (endDate != null) 'end_date': endDate,
+      if (alertThreshold != null) 'alert_threshold': alertThreshold,
+      if (isRollover != null) 'is_rollover': isRollover,
+      if (isActive != null) 'is_active': isActive,
+      if (userId != null) 'user_id': userId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BudgetsCompanion copyWith(
+      {Value<String>? scopeKey,
+      Value<String>? budgetId,
+      Value<String>? name,
+      Value<String>? category,
+      Value<String>? limitAmount,
+      Value<String>? spentAmount,
+      Value<DateTime>? startDate,
+      Value<DateTime>? endDate,
+      Value<double>? alertThreshold,
+      Value<bool>? isRollover,
+      Value<bool>? isActive,
+      Value<String?>? userId,
+      Value<int>? rowid}) {
+    return BudgetsCompanion(
+      scopeKey: <credential-fixture> ?? this.scopeKey,
+      budgetId: budgetId ?? this.budgetId,
+      name: name ?? this.name,
+      category: category ?? this.category,
+      limitAmount: limitAmount ?? this.limitAmount,
+      spentAmount: spentAmount ?? this.spentAmount,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+      alertThreshold: alertThreshold ?? this.alertThreshold,
+      isRollover: isRollover ?? this.isRollover,
+      isActive: isActive ?? this.isActive,
+      userId: userId ?? this.userId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (scopeKey.present) {
+      map['scope_key'] = Variable<String>(scopeKey.value);
+    }
+    if (budgetId.present) {
+      map['budget_id'] = Variable<String>(budgetId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (limitAmount.present) {
+      map['limit_amount'] = Variable<String>(limitAmount.value);
+    }
+    if (spentAmount.present) {
+      map['spent_amount'] = Variable<String>(spentAmount.value);
+    }
+    if (startDate.present) {
+      map['start_date'] = Variable<DateTime>(startDate.value);
+    }
+    if (endDate.present) {
+      map['end_date'] = Variable<DateTime>(endDate.value);
+    }
+    if (alertThreshold.present) {
+      map['alert_threshold'] = Variable<double>(alertThreshold.value);
+    }
+    if (isRollover.present) {
+      map['is_rollover'] = Variable<bool>(isRollover.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BudgetsCompanion(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('budgetId: $budgetId, ')
+          ..write('name: $name, ')
+          ..write('category: $category, ')
+          ..write('limitAmount: $limitAmount, ')
+          ..write('spentAmount: $spentAmount, ')
+          ..write('startDate: $startDate, ')
+          ..write('endDate: $endDate, ')
+          ..write('alertThreshold: $alertThreshold, ')
+          ..write('isRollover: $isRollover, ')
+          ..write('isActive: $isActive, ')
+          ..write('userId: $userId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxData> {
   @override
@@ -2781,6 +3944,8 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
   late final $ProfilesTable profiles = $ProfilesTable(this);
   late final $BusinessSettingsTable businessSettings =
       $BusinessSettingsTable(this);
+  late final $GoalsTable goals = $GoalsTable(this);
+  late final $BudgetsTable budgets = $BudgetsTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   late final Index marketPricesItemAsOfIdx = Index(
       'market_prices_item_as_of_idx',
@@ -2795,6 +3960,8 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
         marketPrices,
         profiles,
         businessSettings,
+        goals,
+        budgets,
         syncOutbox,
         marketPricesItemAsOfIdx
       ];
@@ -3911,6 +5078,535 @@ typedef $$BusinessSettingsTableProcessedTableManager = ProcessedTableManager<
     ),
     BusinessSetting,
     PrefetchHooks Function()>;
+typedef $$GoalsTableCreateCompanionBuilder = GoalsCompanion Function({
+  required String scopeKey,
+  required String uuid,
+  required String name,
+  required String category,
+  required String targetAmount,
+  required String currentAmount,
+  required DateTime startDate,
+  required DateTime targetDate,
+  Value<bool> isActive,
+  Value<String?> description,
+  Value<String?> userId,
+  Value<int> rowid,
+});
+typedef $$GoalsTableUpdateCompanionBuilder = GoalsCompanion Function({
+  Value<String> scopeKey,
+  Value<String> uuid,
+  Value<String> name,
+  Value<String> category,
+  Value<String> targetAmount,
+  Value<String> currentAmount,
+  Value<DateTime> startDate,
+  Value<DateTime> targetDate,
+  Value<bool> isActive,
+  Value<String?> description,
+  Value<String?> userId,
+  Value<int> rowid,
+});
+
+class $$GoalsTableFilterComposer
+    extends Composer<_$BasirDatabase, $GoalsTable> {
+  $$GoalsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get uuid => $composableBuilder(
+      column: $table.uuid, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get category => $composableBuilder(
+      column: $table.category, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get targetAmount => $composableBuilder(
+      column: $table.targetAmount, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get currentAmount => $composableBuilder(
+      column: $table.currentAmount, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get startDate => $composableBuilder(
+      column: $table.startDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get targetDate => $composableBuilder(
+      column: $table.targetDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+      column: $table.isActive, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnFilters(column));
+}
+
+class $$GoalsTableOrderingComposer
+    extends Composer<_$BasirDatabase, $GoalsTable> {
+  $$GoalsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get uuid => $composableBuilder(
+      column: $table.uuid, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get category => $composableBuilder(
+      column: $table.category, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get targetAmount => $composableBuilder(
+      column: $table.targetAmount,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get currentAmount => $composableBuilder(
+      column: $table.currentAmount,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get startDate => $composableBuilder(
+      column: $table.startDate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get targetDate => $composableBuilder(
+      column: $table.targetDate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+      column: $table.isActive, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnOrderings(column));
+}
+
+class $$GoalsTableAnnotationComposer
+    extends Composer<_$BasirDatabase, $GoalsTable> {
+  $$GoalsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get scopeKey =>
+      $composableBuilder(column: $table.scopeKey, builder: (column) => column);
+
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get targetAmount => $composableBuilder(
+      column: $table.targetAmount, builder: (column) => column);
+
+  GeneratedColumn<String> get currentAmount => $composableBuilder(
+      column: $table.currentAmount, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get startDate =>
+      $composableBuilder(column: $table.startDate, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get targetDate => $composableBuilder(
+      column: $table.targetDate, builder: (column) => column);
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+}
+
+class $$GoalsTableTableManager extends RootTableManager<
+    _$BasirDatabase,
+    $GoalsTable,
+    Goal,
+    $$GoalsTableFilterComposer,
+    $$GoalsTableOrderingComposer,
+    $$GoalsTableAnnotationComposer,
+    $$GoalsTableCreateCompanionBuilder,
+    $$GoalsTableUpdateCompanionBuilder,
+    (Goal, BaseReferences<_$BasirDatabase, $GoalsTable, Goal>),
+    Goal,
+    PrefetchHooks Function()> {
+  $$GoalsTableTableManager(_$BasirDatabase db, $GoalsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GoalsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$GoalsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$GoalsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> scopeKey = const Value.absent(),
+            Value<String> uuid = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String> category = const Value.absent(),
+            Value<String> targetAmount = const Value.absent(),
+            Value<String> currentAmount = const Value.absent(),
+            Value<DateTime> startDate = const Value.absent(),
+            Value<DateTime> targetDate = const Value.absent(),
+            Value<bool> isActive = const Value.absent(),
+            Value<String?> description = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              GoalsCompanion(
+            scopeKey: <credential-fixture>,
+            uuid: uuid,
+            name: name,
+            category: category,
+            targetAmount: targetAmount,
+            currentAmount: currentAmount,
+            startDate: startDate,
+            targetDate: targetDate,
+            isActive: isActive,
+            description: description,
+            userId: userId,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String scopeKey,
+            required String uuid,
+            required String name,
+            required String category,
+            required String targetAmount,
+            required String currentAmount,
+            required DateTime startDate,
+            required DateTime targetDate,
+            Value<bool> isActive = const Value.absent(),
+            Value<String?> description = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              GoalsCompanion.insert(
+            scopeKey: <credential-fixture>,
+            uuid: uuid,
+            name: name,
+            category: category,
+            targetAmount: targetAmount,
+            currentAmount: currentAmount,
+            startDate: startDate,
+            targetDate: targetDate,
+            isActive: isActive,
+            description: description,
+            userId: userId,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$GoalsTableProcessedTableManager = ProcessedTableManager<
+    _$BasirDatabase,
+    $GoalsTable,
+    Goal,
+    $$GoalsTableFilterComposer,
+    $$GoalsTableOrderingComposer,
+    $$GoalsTableAnnotationComposer,
+    $$GoalsTableCreateCompanionBuilder,
+    $$GoalsTableUpdateCompanionBuilder,
+    (Goal, BaseReferences<_$BasirDatabase, $GoalsTable, Goal>),
+    Goal,
+    PrefetchHooks Function()>;
+typedef $$BudgetsTableCreateCompanionBuilder = BudgetsCompanion Function({
+  required String scopeKey,
+  required String budgetId,
+  required String name,
+  required String category,
+  required String limitAmount,
+  required String spentAmount,
+  required DateTime startDate,
+  required DateTime endDate,
+  required double alertThreshold,
+  Value<bool> isRollover,
+  Value<bool> isActive,
+  Value<String?> userId,
+  Value<int> rowid,
+});
+typedef $$BudgetsTableUpdateCompanionBuilder = BudgetsCompanion Function({
+  Value<String> scopeKey,
+  Value<String> budgetId,
+  Value<String> name,
+  Value<String> category,
+  Value<String> limitAmount,
+  Value<String> spentAmount,
+  Value<DateTime> startDate,
+  Value<DateTime> endDate,
+  Value<double> alertThreshold,
+  Value<bool> isRollover,
+  Value<bool> isActive,
+  Value<String?> userId,
+  Value<int> rowid,
+});
+
+class $$BudgetsTableFilterComposer
+    extends Composer<_$BasirDatabase, $BudgetsTable> {
+  $$BudgetsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get budgetId => $composableBuilder(
+      column: $table.budgetId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get category => $composableBuilder(
+      column: $table.category, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get limitAmount => $composableBuilder(
+      column: $table.limitAmount, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get spentAmount => $composableBuilder(
+      column: $table.spentAmount, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get startDate => $composableBuilder(
+      column: $table.startDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get endDate => $composableBuilder(
+      column: $table.endDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get alertThreshold => $composableBuilder(
+      column: $table.alertThreshold,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isRollover => $composableBuilder(
+      column: $table.isRollover, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+      column: $table.isActive, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnFilters(column));
+}
+
+class $$BudgetsTableOrderingComposer
+    extends Composer<_$BasirDatabase, $BudgetsTable> {
+  $$BudgetsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get budgetId => $composableBuilder(
+      column: $table.budgetId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get category => $composableBuilder(
+      column: $table.category, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get limitAmount => $composableBuilder(
+      column: $table.limitAmount, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get spentAmount => $composableBuilder(
+      column: $table.spentAmount, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get startDate => $composableBuilder(
+      column: $table.startDate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get endDate => $composableBuilder(
+      column: $table.endDate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get alertThreshold => $composableBuilder(
+      column: $table.alertThreshold,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isRollover => $composableBuilder(
+      column: $table.isRollover, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+      column: $table.isActive, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnOrderings(column));
+}
+
+class $$BudgetsTableAnnotationComposer
+    extends Composer<_$BasirDatabase, $BudgetsTable> {
+  $$BudgetsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get scopeKey =>
+      $composableBuilder(column: $table.scopeKey, builder: (column) => column);
+
+  GeneratedColumn<String> get budgetId =>
+      $composableBuilder(column: $table.budgetId, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get limitAmount => $composableBuilder(
+      column: $table.limitAmount, builder: (column) => column);
+
+  GeneratedColumn<String> get spentAmount => $composableBuilder(
+      column: $table.spentAmount, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get startDate =>
+      $composableBuilder(column: $table.startDate, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get endDate =>
+      $composableBuilder(column: $table.endDate, builder: (column) => column);
+
+  GeneratedColumn<double> get alertThreshold => $composableBuilder(
+      column: $table.alertThreshold, builder: (column) => column);
+
+  GeneratedColumn<bool> get isRollover => $composableBuilder(
+      column: $table.isRollover, builder: (column) => column);
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+}
+
+class $$BudgetsTableTableManager extends RootTableManager<
+    _$BasirDatabase,
+    $BudgetsTable,
+    Budget,
+    $$BudgetsTableFilterComposer,
+    $$BudgetsTableOrderingComposer,
+    $$BudgetsTableAnnotationComposer,
+    $$BudgetsTableCreateCompanionBuilder,
+    $$BudgetsTableUpdateCompanionBuilder,
+    (Budget, BaseReferences<_$BasirDatabase, $BudgetsTable, Budget>),
+    Budget,
+    PrefetchHooks Function()> {
+  $$BudgetsTableTableManager(_$BasirDatabase db, $BudgetsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BudgetsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BudgetsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BudgetsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> scopeKey = const Value.absent(),
+            Value<String> budgetId = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String> category = const Value.absent(),
+            Value<String> limitAmount = const Value.absent(),
+            Value<String> spentAmount = const Value.absent(),
+            Value<DateTime> startDate = const Value.absent(),
+            Value<DateTime> endDate = const Value.absent(),
+            Value<double> alertThreshold = const Value.absent(),
+            Value<bool> isRollover = const Value.absent(),
+            Value<bool> isActive = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              BudgetsCompanion(
+            scopeKey: <credential-fixture>,
+            budgetId: budgetId,
+            name: name,
+            category: category,
+            limitAmount: limitAmount,
+            spentAmount: spentAmount,
+            startDate: startDate,
+            endDate: endDate,
+            alertThreshold: alertThreshold,
+            isRollover: isRollover,
+            isActive: isActive,
+            userId: userId,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String scopeKey,
+            required String budgetId,
+            required String name,
+            required String category,
+            required String limitAmount,
+            required String spentAmount,
+            required DateTime startDate,
+            required DateTime endDate,
+            required double alertThreshold,
+            Value<bool> isRollover = const Value.absent(),
+            Value<bool> isActive = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              BudgetsCompanion.insert(
+            scopeKey: <credential-fixture>,
+            budgetId: budgetId,
+            name: name,
+            category: category,
+            limitAmount: limitAmount,
+            spentAmount: spentAmount,
+            startDate: startDate,
+            endDate: endDate,
+            alertThreshold: alertThreshold,
+            isRollover: isRollover,
+            isActive: isActive,
+            userId: userId,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$BudgetsTableProcessedTableManager = ProcessedTableManager<
+    _$BasirDatabase,
+    $BudgetsTable,
+    Budget,
+    $$BudgetsTableFilterComposer,
+    $$BudgetsTableOrderingComposer,
+    $$BudgetsTableAnnotationComposer,
+    $$BudgetsTableCreateCompanionBuilder,
+    $$BudgetsTableUpdateCompanionBuilder,
+    (Budget, BaseReferences<_$BasirDatabase, $BudgetsTable, Budget>),
+    Budget,
+    PrefetchHooks Function()>;
 typedef $$SyncOutboxTableCreateCompanionBuilder = SyncOutboxCompanion Function({
   required String id,
   required String entityType,
@@ -4173,6 +5869,10 @@ class $BasirDatabaseManager {
       $$ProfilesTableTableManager(_db, _db.profiles);
   $$BusinessSettingsTableTableManager get businessSettings =>
       $$BusinessSettingsTableTableManager(_db, _db.businessSettings);
+  $$GoalsTableTableManager get goals =>
+      $$GoalsTableTableManager(_db, _db.goals);
+  $$BudgetsTableTableManager get budgets =>
+      $$BudgetsTableTableManager(_db, _db.budgets);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }

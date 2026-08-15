@@ -107,6 +107,54 @@ class BusinessSettings extends Table {
       ];
 }
 
+/// هدف مالي واحد لكل UUID داخل نطاق المستخدم، مع حفظ المبالغ كنص للحفاظ
+/// على دقة Decimal كما في نموذج Isar.
+class Goals extends Table {
+  TextColumn get scopeKey => text()();
+  TextColumn get uuid => text()();
+  TextColumn get name => text()();
+  TextColumn get category => text()();
+  TextColumn get targetAmount => text()();
+  TextColumn get currentAmount => text()();
+  DateTimeColumn get startDate => dateTime()();
+  DateTimeColumn get targetDate => dateTime()();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+  TextColumn get description => text().nullable()();
+  TextColumn get userId => text().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {scopeKey, uuid};
+
+  @override
+  List<String> get customConstraints => const [
+        "CHECK (category IN ('emergencyFund', 'savings', 'investment', 'bigPurchase', 'debtRepayment', 'travel', 'other'))",
+      ];
+}
+
+/// ميزانية واحدة لكل UUID داخل نطاق المستخدم، مع حفظ Decimal كنص.
+class Budgets extends Table {
+  TextColumn get scopeKey => text()();
+  TextColumn get budgetId => text()();
+  TextColumn get name => text()();
+  TextColumn get category => text()();
+  TextColumn get limitAmount => text()();
+  TextColumn get spentAmount => text()();
+  DateTimeColumn get startDate => dateTime()();
+  DateTimeColumn get endDate => dateTime()();
+  RealColumn get alertThreshold => real()();
+  BoolColumn get isRollover => boolean().withDefault(const Constant(false))();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+  TextColumn get userId => text().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {scopeKey, budgetId};
+
+  @override
+  List<String> get customConstraints => const [
+        "CHECK (category IN ('housing', 'utilities', 'transportation', 'food', 'health', 'insurance', 'personal', 'entertainment', 'education', 'savings', 'debt', 'other'))",
+      ];
+}
+
 /// Outbox تحضيري فقط؛ لا يوجد عامل مزامنة مفعل في هذه الحزمة بعد.
 class SyncOutbox extends Table {
   TextColumn get id => text()();
@@ -137,6 +185,8 @@ class SyncOutbox extends Table {
     MarketPrices,
     Profiles,
     BusinessSettings,
+    Goals,
+    Budgets,
     SyncOutbox,
   ],
 )
@@ -145,7 +195,7 @@ class BasirDatabase extends _$BasirDatabase {
       : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -157,6 +207,10 @@ class BasirDatabase extends _$BasirDatabase {
           if (from < 3) {
             await migrator.createTable(profiles);
             await migrator.createTable(businessSettings);
+          }
+          if (from < 4) {
+            await migrator.createTable(goals);
+            await migrator.createTable(budgets);
           }
         },
         beforeOpen: (details) => customStatement('PRAGMA foreign_keys = ON'),
