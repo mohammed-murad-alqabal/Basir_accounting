@@ -1,0 +1,141 @@
+=== PLATFORM DIRECTORIES ===
+android: present
+ios: present
+macos: present
+windows: present
+linux: present
+web: present
+
+=== SDK AND PERSISTENCE DEPENDENCIES ===
+21:environment:
+52:  flutter_rust_bridge: 2.11.1
+53:  flutter_secure_storage: ^10.0.0
+65:  isar: ^3.1.0+1
+66:  isar_flutter_libs: ^3.1.0+1
+73:  path_provider: ^2.1.5
+81:  shared_preferences: ^2.5.4
+83:  supabase_flutter: ^2.12.0
+99:  isar_generator: ^3.1.0+1
+
+=== ISAR IMPORTS (NON-GENERATED APP FILES) ===
+lib/core/providers.dart
+lib/core/services/sync_service.dart
+lib/features/accounting/data/models/account_model.dart
+lib/features/accounting/data/models/financial_voucher_model.dart
+lib/features/accounting/data/models/financial_year_model.dart
+lib/features/accounting/data/models/journal_entry_model.dart
+lib/features/accounting/data/models/payment_receipt_model.dart
+lib/features/accounting/data/models/payment_voucher_model.dart
+lib/features/accounting/data/repositories/accounting_repository_impl.dart
+lib/features/accounting/data/repositories/financial_voucher_repository_impl.dart
+lib/features/accounting/data/repositories/financial_year_repository_impl.dart
+lib/features/accounting/data/repositories/payment_receipt_repository_impl.dart
+lib/features/analytics/application/analytics_service.dart
+lib/features/analytics/domain/entities/analytics_event.dart
+lib/features/assets/data/models/asset_category_model.dart
+lib/features/assets/data/models/fixed_asset_model.dart
+lib/features/assets/data/repositories/asset_repository_impl.dart
+lib/features/budget/data/models/budget_model.dart
+lib/features/budget/data/repositories/isar_budget_repository.dart
+lib/features/customers/data/models/customer_model.dart
+lib/features/customers/data/repositories/customer_repository_impl.dart
+lib/features/expenses/data/models/expense_model.dart
+lib/features/goals/data/models/goal_model.dart
+lib/features/goals/data/repositories/isar_goal_repository.dart
+lib/features/inventory/data/models/inventory_item_model.dart
+lib/features/inventory/data/models/stock_movement_model.dart
+lib/features/inventory/data/models/warehouse_model.dart
+lib/features/inventory/data/models/warehouse_transfer_model.dart
+lib/features/inventory/data/repositories/inventory_repository_impl.dart
+lib/features/inventory/data/repositories/stock_movement_repository_impl.dart
+lib/features/inventory/data/repositories/warehouse_repository_impl.dart
+lib/features/inventory/data/repositories/warehouse_transfer_repository_impl.dart
+lib/features/invoices/data/models/invoice_model.dart
+lib/features/invoices/data/repositories/invoice_repository_impl.dart
+lib/features/reports/data/models/market_price_model.dart
+lib/features/reports/data/repositories/market_price_repository_impl.dart
+lib/features/settings/data/models/barcode_config_model.dart
+lib/features/settings/data/models/business_settings_model.dart
+lib/features/settings/data/models/profile_model.dart
+lib/features/settings/data/repositories/business_settings_repository_impl.dart
+lib/features/settings/data/repositories/isar_barcode_config_repository.dart
+lib/features/settings/data/repositories/profile_repository_impl.dart
+lib/features/users/data/models/user_model.dart
+lib/features/users/data/repositories/user_repository_impl.dart
+lib/features/vendors/data/models/vendor_model.dart
+lib/features/vendors/data/repositories/vendor_repository_impl.dart
+
+=== ISAR GENERATED SCHEMA FILES ===
+lib/features/accounting/data/models/account_model.g.dart
+lib/features/accounting/data/models/financial_voucher_model.g.dart
+lib/features/accounting/data/models/financial_year_model.g.dart
+lib/features/accounting/data/models/journal_entry_model.g.dart
+lib/features/accounting/data/models/payment_receipt_model.g.dart
+lib/features/accounting/data/models/payment_voucher_model.g.dart
+lib/features/analytics/domain/entities/analytics_event.g.dart
+lib/features/assets/data/models/asset_category_model.g.dart
+lib/features/assets/data/models/fixed_asset_model.g.dart
+lib/features/budget/data/models/budget_model.g.dart
+lib/features/customers/data/models/customer_model.g.dart
+lib/features/expenses/data/models/expense_model.g.dart
+lib/features/goals/data/models/goal_model.g.dart
+lib/features/inventory/data/models/inventory_item_model.g.dart
+lib/features/inventory/data/models/stock_movement_model.g.dart
+lib/features/inventory/data/models/warehouse_model.g.dart
+lib/features/inventory/data/models/warehouse_transfer_model.g.dart
+lib/features/invoices/data/models/invoice_model.g.dart
+lib/features/reports/data/models/market_price_model.g.dart
+lib/features/settings/data/models/barcode_config_model.g.dart
+lib/features/settings/data/models/business_settings_model.g.dart
+lib/features/settings/data/models/profile_model.g.dart
+lib/features/users/data/models/user_model.g.dart
+lib/features/vendors/data/models/vendor_model.g.dart
+
+=== APPLICATION DATABASE OPEN POINTS ===
+lib/core/providers.dart:129:      return Isar.getInstance()!;
+lib/core/providers.dart:152:    final isar = await Isar.open(
+lib/features/customers/data/repositories/customer_repository_impl.dart:20:/// final isar = await Isar.open([CustomerModelSchema],);
+lib/features/customers/data/repositories/customer_repository_impl.dart:48:  /// final isar = await Isar.open([CustomerModelSchema],);
+test/benchmark/forensic_benchmark_test.dart:20:    await Isar.initializeIsarCore(download: true);
+test/benchmark/forensic_benchmark_test.dart:25:    isar = await Isar.open(
+test/benchmark/load_simulation_benchmark_test.dart:17:    await Isar.initializeIsarCore(download: true);
+test/benchmark/load_simulation_benchmark_test.dart:22:    isar = await Isar.open(
+test/features/users/data/repositories/user_repository_test.dart:16:    await Isar.initializeIsarCore(download: true);
+test/features/users/data/repositories/user_repository_test.dart:21:    isar = await Isar.open(
+test/helpers/test_helpers.dart:46:      await Isar.initializeIsarCore(download: true);
+test/helpers/test_helpers.dart:51:      return Isar.open(
+test/unit/core/providers_test.dart:18:    await Isar.initializeIsarCore(download: true);
+test/unit/core/providers_test.dart:27:      isar = await Isar.open(
+test/unit/data/repositories/invoice_repository_test.dart:23:    await Isar.initializeIsarCore(download: true);
+test/unit/data/repositories/invoice_repository_test.dart:24:    isar = await Isar.open(
+
+=== SUPABASE CLIENT REFERENCES ===
+lib/core/config/supabase_config.dart
+lib/core/providers/supabase_auth_provider.dart
+lib/core/providers/supabase_auth_provider.g.dart
+lib/core/services/sync_service.dart
+lib/core/services/sync_service.g.dart
+lib/features/auth/data/services/supabase_auth_service.dart
+lib/features/auth/domain/models/auth_models.dart
+lib/features/auth/presentation/providers/auth_provider.dart
+lib/main.dart
+
+=== DATABASE-RELATED TESTS ===
+test/features/users/data/repositories/user_repository_test.dart
+test/property/accounting_invariants_test.dart
+test/unit/core/repositories/locale_repository_test.dart
+test/unit/data/repositories/customer_repository_test.dart
+test/unit/data/repositories/invoice_repository_test.dart
+test/unit/features/accounting/accounting_core_institutional_test.dart
+test/unit/features/accounting/accounting_service_bypass_test.dart
+test/unit/features/accounting/accounting_service_test.dart
+test/unit/features/accounting/domain/journal_entry_validator_test.dart
+test/unit/features/accounting/fiscal_control_test.dart
+test/unit/features/accounting/forensic_audit_service_test.dart
+test/unit/features/accounting/multi_agent_consensus_test.dart
+test/unit/features/accounting/multi_currency_posting_test.dart
+test/unit/features/accounting/orchestrator_test.dart
+test/unit/features/accounting/treasury_service_test.dart
+test/unit/features/settings/data/repositories/business_settings_repository_impl_test.dart
+test/unit/features/settings/data/repositories/profile_repository_impl_test.dart
+test/unit/tools/documentation/repository/documentation_repository_test.dart
