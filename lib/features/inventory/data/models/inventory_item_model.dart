@@ -19,6 +19,7 @@ class InventoryItemModel {
         ..nameAr = item.nameAr
         ..nameEn = item.nameEn
         ..sku = item.sku
+        ..barcode = item.barcode
         ..description = item.description
         ..purchasePrice = item.purchasePrice
         ..salePrice = item.salePrice
@@ -56,6 +57,10 @@ class InventoryItemModel {
 
   /// كود الصنف (SKU)
   String? sku;
+
+  /// باركود الصنف، قابل للبحث السريع في الفهرس.
+  @Index(caseSensitive: false)
+  String? barcode;
 
   /// وصف الصنف
   String? description;
@@ -123,6 +128,7 @@ class InventoryItemModel {
         nameAr: nameAr,
         nameEn: nameEn,
         sku: sku,
+        barcode: barcode,
         description: description,
         purchasePrice: purchasePrice,
         salePrice: salePrice,

@@ -41,17 +41,24 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
+      - name: Generate code
+        run: dart run build_runner build --delete-conflicting-outputs
+
       - name: Run Flutter Analyze
         id: analyze
         continue-on-error: true
         run: |
           echo "Running flutter analyze..."
-          flutter analyze --no-pub > analyze_output.txt 2>&1 || true
+          # لا تحجب ملاحظات الأسلوب، لكن تبقى الأخطاء والتحذيرات ظاهرة وحاجبة.
+          flutter analyze --no-pub --no-fatal-infos > analyze_output.txt 2>&1 || true
 
-          # عد الأخطاء والتحذيرات
-          ERROR_COUNT=$(grep -c "error •" analyze_output.txt || echo "0")
-          WARNING_COUNT=$(grep -c "warning •" analyze_output.txt || echo "0")
-          INFO_COUNT=$(grep -c "info •" analyze_output.txt || echo "0")
+          # عد الأخطاء والتحذيرات دون توليد قيمة متعددة الأسطر عند غياب المطابقات.
+          ERROR_COUNT=$(grep -c "error •" analyze_output.txt || true)
+          WARNING_COUNT=$(grep -c "warning •" analyze_output.txt || true)
+          INFO_COUNT=$(grep -c "info •" analyze_output.txt || true)
+          ERROR_COUNT=${ERROR_COUNT:-0}
+          WARNING_COUNT=${WARNING_COUNT:-0}
+          INFO_COUNT=${INFO_COUNT:-0}
 
           echo "error_count=$ERROR_COUNT" >> $GITHUB_OUTPUT
           echo "warning_count=$WARNING_COUNT" >> $GITHUB_OUTPUT
@@ -73,11 +80,19 @@ jobs:
         continue-on-error: true
         run: |
           echo "Running tests..."
-          flutter test --no-pub > test_output.txt 2>&1 || true
+          set +e
+          flutter test --no-pub --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*') > test_output.txt 2>&1
+          TEST_EXIT_CODE=$?
+          set -e
 
-          # استخراج نتائج الاختبارات
-          PASSED=$(grep -oP '\d+(?= tests? passed)' test_output.txt | head -1 || echo "0")
-          FAILED=$(grep -oP '\d+(?= tests? failed)' test_output.txt | head -1 || echo "0")
+          # تمثل القيم حالة المجموعة لا عدًّا هشًا لمخرجات Flutter المتغيرة.
+          if [ "$TEST_EXIT_CODE" -eq 0 ]; then
+            PASSED=1
+            FAILED=0
+          else
+            PASSED=0
+            FAILED=1
+          fi
 
           echo "passed=$PASSED" >> $GITHUB_OUTPUT
           echo "failed=$FAILED" >> $GITHUB_OUTPUT
