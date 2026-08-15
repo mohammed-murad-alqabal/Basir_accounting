@@ -153,6 +153,84 @@ class Budgets extends Table {
       ];
 }
 
+/// عميل واحد لكل UUID داخل نطاق المستخدم؛ يحافظ على حقول الهوية والمحاسبة
+/// والمزامنة المطلوبة لموجة النقل الأولى.
+@TableIndex(
+  name: 'customers_scope_name_ar_idx',
+  columns: {#scopeKey, #nameAr},
+)
+@TableIndex(
+  name: 'customers_scope_name_en_idx',
+  columns: {#scopeKey, #nameEn},
+)
+class Customers extends Table {
+  TextColumn get scopeKey => text()();
+  TextColumn get uuid => text()();
+  TextColumn get nameAr => text()();
+  TextColumn get nameEn => text()();
+  TextColumn get taxNumber => text().nullable()();
+  TextColumn get phone => text().nullable()();
+  TextColumn get email => text().nullable()();
+  TextColumn get address => text().nullable()();
+  TextColumn get notes => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  RealColumn get creditLimit => real().withDefault(const Constant(0))();
+  RealColumn get balance => real().withDefault(const Constant(0))();
+  TextColumn get receivableAccountId => text().nullable()();
+  TextColumn get userId => text().nullable()();
+  TextColumn get syncStatus => text().withDefault(const Constant('synced'))();
+  DateTimeColumn get serverUpdatedAt => dateTime().nullable()();
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column<Object>> get primaryKey => {scopeKey, uuid};
+
+  @override
+  List<String> get customConstraints => const [
+        "CHECK (sync_status IN ('synced', 'pendingPush', 'pendingPull', 'conflict'))",
+      ];
+}
+
+/// مورد واحد لكل UUID داخل نطاق المستخدم؛ يحافظ على رابط الدائنين وبيانات
+/// المزامنة دون إدخال سلوك sync أو cutover في هذه المرحلة.
+@TableIndex(
+  name: 'vendors_scope_name_ar_idx',
+  columns: {#scopeKey, #nameAr},
+)
+@TableIndex(
+  name: 'vendors_scope_name_en_idx',
+  columns: {#scopeKey, #nameEn},
+)
+class Vendors extends Table {
+  TextColumn get scopeKey => text()();
+  TextColumn get uuid => text()();
+  TextColumn get nameAr => text()();
+  TextColumn get nameEn => text()();
+  TextColumn get phone => text().nullable()();
+  TextColumn get email => text().nullable()();
+  TextColumn get address => text().nullable()();
+  TextColumn get notes => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  TextColumn get payableAccountId => text().nullable()();
+  TextColumn get vatNumber => text().nullable()();
+  TextColumn get registrationNumber => text().nullable()();
+  RealColumn get balance => real().withDefault(const Constant(0))();
+  TextColumn get userId => text().nullable()();
+  TextColumn get syncStatus => text().withDefault(const Constant('synced'))();
+  DateTimeColumn get serverUpdatedAt => dateTime().nullable()();
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column<Object>> get primaryKey => {scopeKey, uuid};
+
+  @override
+  List<String> get customConstraints => const [
+        "CHECK (sync_status IN ('synced', 'pendingPush', 'pendingPull', 'conflict'))",
+      ];
+}
+
 /// Outbox تحضيري فقط؛ لا يوجد عامل مزامنة مفعل في هذه الحزمة بعد.
 class SyncOutbox extends Table {
   TextColumn get id => text()();
@@ -185,6 +263,8 @@ class SyncOutbox extends Table {
     BusinessSettings,
     Goals,
     Budgets,
+    Customers,
+    Vendors,
     SyncOutbox,
   ],
 )
@@ -193,7 +273,7 @@ class BasirDatabase extends _$BasirDatabase {
       : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -209,6 +289,10 @@ class BasirDatabase extends _$BasirDatabase {
           if (from < 4) {
             await migrator.createTable(goals);
             await migrator.createTable(budgets);
+          }
+          if (from < 5) {
+            await migrator.createTable(customers);
+            await migrator.createTable(vendors);
           }
         },
         beforeOpen: (details) => customStatement('PRAGMA foreign_keys = ON'),
