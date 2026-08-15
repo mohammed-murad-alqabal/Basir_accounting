@@ -1,10 +1,13 @@
 /// اختبارات السلوك المرئي لنموذج القيد اليدوي.
 library;
 
+import 'dart:async';
+
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
+import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
-import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
+import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/screens/journal_entry_form_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/app_enhanced_button.dart';
@@ -12,9 +15,27 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
-class _MockAccountingRepository extends Mock implements AccountingRepository {}
+class _FakeAccountingService extends AccountingService {
+  _FakeAccountingService(this.accounts);
+
+  final List<Account> accounts;
+  final List<JournalEntry> postedEntries = [];
+
+  @override
+  FutureOr<List<JournalEntry>> build() => const [];
+
+  @override
+  Future<List<Account>> getAccounts() async => accounts;
+
+  @override
+  Future<void> postJournalEntry(
+    JournalEntry entry, {
+    bool bypassCognitive = false,
+  }) async {
+    postedEntries.add(entry);
+  }
+}
 
 Account _leafAccount({
   required String id,
@@ -34,21 +55,19 @@ Account _leafAccount({
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  late _MockAccountingRepository repository;
+  late _FakeAccountingService accountingService;
   late ProviderContainer container;
 
   setUp(() {
-    repository = _MockAccountingRepository();
-    when(() => repository.getJournalEntries()).thenAnswer((_) async => []);
-    when(() => repository.getAccounts()).thenAnswer(
-      (_) async => [
+    accountingService = _FakeAccountingService(
+      [
         _leafAccount(id: 'cash', code: '1100', nameAr: 'النقدية'),
         _leafAccount(id: 'sales', code: '4100', nameAr: 'المبيعات'),
       ],
     );
     container = ProviderContainer(
       overrides: [
-        accountingRepositoryProvider.overrideWithValue(repository),
+        accountingServiceProvider.overrideWith(() => accountingService),
         appIconsProvider.overrideWithValue(const MaterialAppIcons()),
         basirUserProvider.overrideWith((ref) => null),
       ],
@@ -211,5 +230,65 @@ void main() {
       find.text('القيد غير متزن! يجب أن يتساوى المدين والدائن'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('يحفظ مسودة متزنة بقيد ذي طرفين متساويين', (tester) async {
+    await tester.pumpWidget(testApp());
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.byType(TextFormField).first,
+      'قيد مسودة متزن',
+    );
+    final accountSelectors = find.byType(DropdownButtonFormField<String>);
+    final formScrollView = find
+        .descendant(
+          of: find.byType(Form),
+          matching: find.byType(Scrollable),
+        )
+        .first;
+    await tester.tap(accountSelectors.at(0));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('1100 - النقدية').last);
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      accountSelectors.at(1),
+      120,
+      scrollable: formScrollView,
+    );
+    await tester.tap(accountSelectors.at(1));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('4100 - المبيعات').last);
+    await tester.pumpAndSettle();
+
+    final amountFields = find.byType(TextFormField);
+    await tester.enterText(amountFields.at(4), '125');
+    await tester.enterText(amountFields.at(7), '125');
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+    expect(find.text('متزن'), findsOneWidget);
+
+    final saveButton = find.byWidgetPredicate(
+      (widget) => widget is AppEnhancedButton && widget.label == 'حفظ كمسودة',
+    );
+    final saveAction = find.descendant(
+      of: saveButton,
+      matching: find.byType(InkWell),
+    );
+    await tester.scrollUntilVisible(
+      saveAction,
+      120,
+      scrollable: formScrollView,
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(saveAction);
+    await tester.pump();
+
+    expect(accountingService.postedEntries, hasLength(1));
+    final entry = accountingService.postedEntries.single;
+    expect(entry.status, JournalEntryStatus.draft);
+    expect(entry.description, 'قيد مسودة متزن');
+    expect(entry.isBalanced, isTrue);
+    expect(entry.lines.map((line) => line.accountId), ['cash', 'sales']);
   });
 }
