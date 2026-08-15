@@ -3,6 +3,7 @@ import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/providers/supabase_auth_provider.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoices_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
@@ -217,6 +218,126 @@ void main() {
         expect(find.textContaining('١٤٤٥'), findsOneWidget);
       },
     );
+  });
+
+  group('InvoicesScreen - behavioral search and status filters', () {
+    late ProviderContainer container;
+
+    setUp(() {
+      final invoices = [
+        MockData.createTestInvoice(id: 'paid').copyWith(
+          invoiceNumber: 'INV-PAID',
+          customerName: 'شركة الإبداع',
+          issuedDate: DateTime(2025, 3, 3),
+          dueDate: DateTime(2025, 3, 20),
+          status: InvoiceStatus.paid,
+          totalAmount: Decimal.fromInt(900),
+          paidAmount: Decimal.fromInt(900),
+        ),
+        MockData.createTestInvoice(id: 'overdue').copyWith(
+          invoiceNumber: 'INV-OVERDUE',
+          customerName: 'مؤسسة النور',
+          issuedDate: DateTime(2025, 2, 3),
+          dueDate: DateTime(2025, 2, 20),
+          status: InvoiceStatus.overdue,
+        ),
+        MockData.createTestInvoice(id: 'draft').copyWith(
+          invoiceNumber: 'INV-DRAFT',
+          customerName: 'متجر الربيع',
+          issuedDate: DateTime(2025, 1, 3),
+          dueDate: DateTime(2025, 1, 20),
+          status: InvoiceStatus.draft,
+        ),
+      ];
+      container = ProviderContainer(
+        overrides: [
+          appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          currentUserProfileProvider.overrideWith(
+            (ref) => const BasirUser(
+              id: 'test-user',
+              email: 'test@example.com',
+              displayName: 'Test User',
+              role: UserRole.admin,
+            ),
+          ),
+          currentUserProvider.overrideWith((ref) => null),
+          calendarProvider.overrideWith(
+            () => _MockCalendarNotifier(CalendarType.gregorian),
+          ),
+          invoicesProvider.overrideWith((ref) async => invoices),
+        ],
+      );
+    });
+
+    tearDown(() => container.dispose());
+
+    Widget testApp() => UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+            home: InvoicesScreen(),
+          ),
+        );
+
+    testWidgets('يبحث بالاسم العربي ثم يفلتر الفواتير المدفوعة', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(testApp());
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('INV-PAID'), findsOneWidget);
+      expect(find.textContaining('INV-OVERDUE'), findsOneWidget);
+      expect(find.textContaining('INV-DRAFT'), findsOneWidget);
+
+      await tester.enterText(find.byType(TextField), 'الابداع');
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('INV-PAID'), findsOneWidget);
+      expect(find.textContaining('INV-OVERDUE'), findsNothing);
+      expect(find.textContaining('INV-DRAFT'), findsNothing);
+      expect(find.text('1 نتيجة'), findsOneWidget);
+
+      await tester.enterText(find.byType(TextField), '');
+      await tester.pumpAndSettle();
+      final paidFilter = find.widgetWithText(FilterChip, 'مدفوعة');
+      await tester.ensureVisible(paidFilter);
+      await tester.tap(paidFilter);
+      await tester.pumpAndSettle();
+
+      expect(container.read(invoiceFilterProvider), 'paid');
+      expect(find.textContaining('INV-PAID'), findsOneWidget);
+      expect(find.textContaining('INV-OVERDUE'), findsNothing);
+      expect(find.textContaining('INV-DRAFT'), findsNothing);
+      expect(find.text('مدفوعة'), findsWidgets);
+    });
+
+    testWidgets('يعرض حالة الفراغ عند فلترة حالة بلا فواتير مطابقة', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(testApp());
+      await tester.pumpAndSettle();
+
+      final cancelledFilter = find.widgetWithText(FilterChip, 'ملغاة');
+      await tester.ensureVisible(cancelledFilter);
+      await tester.tap(cancelledFilter);
+      await tester.pumpAndSettle();
+
+      expect(container.read(invoiceFilterProvider), 'cancelled');
+      expect(find.byType(AppEmptyState), findsOneWidget);
+      expect(find.textContaining('INV-PAID'), findsNothing);
+      expect(find.textContaining('INV-OVERDUE'), findsNothing);
+      expect(find.textContaining('INV-DRAFT'), findsNothing);
+    });
   });
 
   group('InvoicesScreen - UI/UX Improvements (Task 17)', () {
