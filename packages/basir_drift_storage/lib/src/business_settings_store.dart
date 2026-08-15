@@ -71,7 +71,7 @@ class BusinessSettingsStore implements BusinessSettingsStorage {
     _validate(record);
     return _database.into(_database.businessSettings).insertOnConflictUpdate(
           BusinessSettingsCompanion.insert(
-            scopeKey: <credential-fixture>(record.userId),
+            scopeKey: userScopeKey(record.userId),
             id: record.id,
             companyName: record.companyName,
             taxNumber: Value(record.taxNumber),

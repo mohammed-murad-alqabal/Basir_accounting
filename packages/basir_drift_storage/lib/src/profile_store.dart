@@ -66,7 +66,7 @@ class ProfileStore implements ProfileStorage {
     _validate(record);
     return _database.into(_database.profiles).insertOnConflictUpdate(
           ProfilesCompanion.insert(
-            scopeKey: <credential-fixture>(record.userId),
+            scopeKey: userScopeKey(record.userId),
             id: record.id,
             email: record.email,
             displayName: Value(record.displayName),

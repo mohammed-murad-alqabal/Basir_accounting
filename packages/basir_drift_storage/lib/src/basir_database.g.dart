@@ -11,7 +11,7 @@ class $LocalMetadataTable extends LocalMetadata
   $LocalMetadataTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _keyMeta = const VerificationMeta('key');
   @override
-  late final GeneratedColumn<String> key = <credential-fixture><String>(
+  late final GeneratedColumn<String> key = GeneratedColumn<String>(
       'key', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _valueJsonMeta =
@@ -65,7 +65,7 @@ class $LocalMetadataTable extends LocalMetadata
   LocalMetadataData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return LocalMetadataData(
-      key: <credential-fixture>
+      key: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}key'])!,
       valueJson: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}value_json'])!,
@@ -108,7 +108,7 @@ class LocalMetadataData extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return LocalMetadataData(
-      key: <credential-fixture><String>(json['key']),
+      key: serializer.fromJson<String>(json['key']),
       valueJson: serializer.fromJson<String>(json['valueJson']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -132,7 +132,7 @@ class LocalMetadataData extends DataClass
       );
   LocalMetadataData copyWithCompanion(LocalMetadataCompanion data) {
     return LocalMetadataData(
-      key: <credential-fixture> ? data.key.value : <credential-fixture>,
+      key: data.key.present ? data.key.value : this.key,
       valueJson: data.valueJson.present ? data.valueJson.value : this.valueJson,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
@@ -1060,7 +1060,7 @@ class $ProfilesTable extends Profiles with TableInfo<$ProfilesTable, Profile> {
   static const VerificationMeta _scopeKeyMeta =
       const VerificationMeta('scopeKey');
   @override
-  late final GeneratedColumn<String> scopeKey = <credential-fixture><String>(
+  late final GeneratedColumn<String> scopeKey = GeneratedColumn<String>(
       'scope_key', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
@@ -1205,7 +1205,7 @@ class $ProfilesTable extends Profiles with TableInfo<$ProfilesTable, Profile> {
   Profile map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Profile(
-      scopeKey: <credential-fixture>
+      scopeKey: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
@@ -1310,7 +1310,7 @@ class Profile extends DataClass implements Insertable<Profile> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Profile(
-      scopeKey: <credential-fixture><String>(json['scopeKey']),
+      scopeKey: serializer.fromJson<String>(json['scopeKey']),
       id: serializer.fromJson<String>(json['id']),
       email: serializer.fromJson<String>(json['email']),
       displayName: serializer.fromJson<String?>(json['displayName']),
@@ -1351,7 +1351,7 @@ class Profile extends DataClass implements Insertable<Profile> {
           Value<DateTime?> serverUpdatedAt = const Value.absent(),
           bool? isDeleted}) =>
       Profile(
-        scopeKey: <credential-fixture> ?? this.scopeKey,
+        scopeKey: scopeKey ?? this.scopeKey,
         id: id ?? this.id,
         email: email ?? this.email,
         displayName: displayName.present ? displayName.value : this.displayName,
@@ -1366,7 +1366,7 @@ class Profile extends DataClass implements Insertable<Profile> {
       );
   Profile copyWithCompanion(ProfilesCompanion data) {
     return Profile(
-      scopeKey: <credential-fixture> ? data.scopeKey.value : <credential-fixture>,
+      scopeKey: data.scopeKey.present ? data.scopeKey.value : this.scopeKey,
       id: data.id.present ? data.id.value : this.id,
       email: data.email.present ? data.email.value : this.email,
       displayName:
@@ -1501,7 +1501,7 @@ class ProfilesCompanion extends UpdateCompanion<Profile> {
       Value<bool>? isDeleted,
       Value<int>? rowid}) {
     return ProfilesCompanion(
-      scopeKey: <credential-fixture> ?? this.scopeKey,
+      scopeKey: scopeKey ?? this.scopeKey,
       id: id ?? this.id,
       email: email ?? this.email,
       displayName: displayName ?? this.displayName,
@@ -1582,7 +1582,7 @@ class $BusinessSettingsTable extends BusinessSettings
   static const VerificationMeta _scopeKeyMeta =
       const VerificationMeta('scopeKey');
   @override
-  late final GeneratedColumn<String> scopeKey = <credential-fixture><String>(
+  late final GeneratedColumn<String> scopeKey = GeneratedColumn<String>(
       'scope_key', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
@@ -1771,7 +1771,7 @@ class $BusinessSettingsTable extends BusinessSettings
   BusinessSetting map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return BusinessSetting(
-      scopeKey: <credential-fixture>
+      scopeKey: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
@@ -1894,7 +1894,7 @@ class BusinessSetting extends DataClass implements Insertable<BusinessSetting> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return BusinessSetting(
-      scopeKey: <credential-fixture><String>(json['scopeKey']),
+      scopeKey: serializer.fromJson<String>(json['scopeKey']),
       id: serializer.fromJson<String>(json['id']),
       companyName: serializer.fromJson<String>(json['companyName']),
       taxNumber: serializer.fromJson<String?>(json['taxNumber']),
@@ -1944,7 +1944,7 @@ class BusinessSetting extends DataClass implements Insertable<BusinessSetting> {
           Value<DateTime?> serverUpdatedAt = const Value.absent(),
           bool? isDeleted}) =>
       BusinessSetting(
-        scopeKey: <credential-fixture> ?? this.scopeKey,
+        scopeKey: scopeKey ?? this.scopeKey,
         id: id ?? this.id,
         companyName: companyName ?? this.companyName,
         taxNumber: taxNumber.present ? taxNumber.value : this.taxNumber,
@@ -1962,7 +1962,7 @@ class BusinessSetting extends DataClass implements Insertable<BusinessSetting> {
       );
   BusinessSetting copyWithCompanion(BusinessSettingsCompanion data) {
     return BusinessSetting(
-      scopeKey: <credential-fixture> ? data.scopeKey.value : <credential-fixture>,
+      scopeKey: data.scopeKey.present ? data.scopeKey.value : this.scopeKey,
       id: data.id.present ? data.id.value : this.id,
       companyName:
           data.companyName.present ? data.companyName.value : this.companyName,
@@ -2144,7 +2144,7 @@ class BusinessSettingsCompanion extends UpdateCompanion<BusinessSetting> {
       Value<bool>? isDeleted,
       Value<int>? rowid}) {
     return BusinessSettingsCompanion(
-      scopeKey: <credential-fixture> ?? this.scopeKey,
+      scopeKey: scopeKey ?? this.scopeKey,
       id: id ?? this.id,
       companyName: companyName ?? this.companyName,
       taxNumber: taxNumber ?? this.taxNumber,
@@ -2239,7 +2239,7 @@ class $GoalsTable extends Goals with TableInfo<$GoalsTable, Goal> {
   static const VerificationMeta _scopeKeyMeta =
       const VerificationMeta('scopeKey');
   @override
-  late final GeneratedColumn<String> scopeKey = <credential-fixture><String>(
+  late final GeneratedColumn<String> scopeKey = GeneratedColumn<String>(
       'scope_key', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
@@ -2404,7 +2404,7 @@ class $GoalsTable extends Goals with TableInfo<$GoalsTable, Goal> {
   Goal map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Goal(
-      scopeKey: <credential-fixture>
+      scopeKey: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
       uuid: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}uuid'])!,
@@ -2503,7 +2503,7 @@ class Goal extends DataClass implements Insertable<Goal> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Goal(
-      scopeKey: <credential-fixture><String>(json['scopeKey']),
+      scopeKey: serializer.fromJson<String>(json['scopeKey']),
       uuid: serializer.fromJson<String>(json['uuid']),
       name: serializer.fromJson<String>(json['name']),
       category: serializer.fromJson<String>(json['category']),
@@ -2547,7 +2547,7 @@ class Goal extends DataClass implements Insertable<Goal> {
           Value<String?> description = const Value.absent(),
           Value<String?> userId = const Value.absent()}) =>
       Goal(
-        scopeKey: <credential-fixture> ?? this.scopeKey,
+        scopeKey: scopeKey ?? this.scopeKey,
         uuid: uuid ?? this.uuid,
         name: name ?? this.name,
         category: category ?? this.category,
@@ -2561,7 +2561,7 @@ class Goal extends DataClass implements Insertable<Goal> {
       );
   Goal copyWithCompanion(GoalsCompanion data) {
     return Goal(
-      scopeKey: <credential-fixture> ? data.scopeKey.value : <credential-fixture>,
+      scopeKey: data.scopeKey.present ? data.scopeKey.value : this.scopeKey,
       uuid: data.uuid.present ? data.uuid.value : this.uuid,
       name: data.name.present ? data.name.value : this.name,
       category: data.category.present ? data.category.value : this.category,
@@ -2711,7 +2711,7 @@ class GoalsCompanion extends UpdateCompanion<Goal> {
       Value<String?>? userId,
       Value<int>? rowid}) {
     return GoalsCompanion(
-      scopeKey: <credential-fixture> ?? this.scopeKey,
+      scopeKey: scopeKey ?? this.scopeKey,
       uuid: uuid ?? this.uuid,
       name: name ?? this.name,
       category: category ?? this.category,
@@ -2796,7 +2796,7 @@ class $BudgetsTable extends Budgets with TableInfo<$BudgetsTable, Budget> {
   static const VerificationMeta _scopeKeyMeta =
       const VerificationMeta('scopeKey');
   @override
-  late final GeneratedColumn<String> scopeKey = <credential-fixture><String>(
+  late final GeneratedColumn<String> scopeKey = GeneratedColumn<String>(
       'scope_key', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _budgetIdMeta =
@@ -2979,7 +2979,7 @@ class $BudgetsTable extends Budgets with TableInfo<$BudgetsTable, Budget> {
   Budget map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Budget(
-      scopeKey: <credential-fixture>
+      scopeKey: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
       budgetId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}budget_id'])!,
@@ -3080,7 +3080,7 @@ class Budget extends DataClass implements Insertable<Budget> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Budget(
-      scopeKey: <credential-fixture><String>(json['scopeKey']),
+      scopeKey: serializer.fromJson<String>(json['scopeKey']),
       budgetId: serializer.fromJson<String>(json['budgetId']),
       name: serializer.fromJson<String>(json['name']),
       category: serializer.fromJson<String>(json['category']),
@@ -3127,7 +3127,7 @@ class Budget extends DataClass implements Insertable<Budget> {
           bool? isActive,
           Value<String?> userId = const Value.absent()}) =>
       Budget(
-        scopeKey: <credential-fixture> ?? this.scopeKey,
+        scopeKey: scopeKey ?? this.scopeKey,
         budgetId: budgetId ?? this.budgetId,
         name: name ?? this.name,
         category: category ?? this.category,
@@ -3142,7 +3142,7 @@ class Budget extends DataClass implements Insertable<Budget> {
       );
   Budget copyWithCompanion(BudgetsCompanion data) {
     return Budget(
-      scopeKey: <credential-fixture> ? data.scopeKey.value : <credential-fixture>,
+      scopeKey: data.scopeKey.present ? data.scopeKey.value : this.scopeKey,
       budgetId: data.budgetId.present ? data.budgetId.value : this.budgetId,
       name: data.name.present ? data.name.value : this.name,
       category: data.category.present ? data.category.value : this.category,
@@ -3312,7 +3312,7 @@ class BudgetsCompanion extends UpdateCompanion<Budget> {
       Value<String?>? userId,
       Value<int>? rowid}) {
     return BudgetsCompanion(
-      scopeKey: <credential-fixture> ?? this.scopeKey,
+      scopeKey: scopeKey ?? this.scopeKey,
       budgetId: budgetId ?? this.budgetId,
       name: name ?? this.name,
       category: category ?? this.category,
@@ -3403,7 +3403,7 @@ class $CustomersTable extends Customers
   static const VerificationMeta _scopeKeyMeta =
       const VerificationMeta('scopeKey');
   @override
-  late final GeneratedColumn<String> scopeKey = <credential-fixture><String>(
+  late final GeneratedColumn<String> scopeKey = GeneratedColumn<String>(
       'scope_key', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
@@ -3643,7 +3643,7 @@ class $CustomersTable extends Customers
   Customer map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Customer(
-      scopeKey: <credential-fixture>
+      scopeKey: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
       uuid: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}uuid'])!,
@@ -3805,7 +3805,7 @@ class Customer extends DataClass implements Insertable<Customer> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Customer(
-      scopeKey: <credential-fixture><String>(json['scopeKey']),
+      scopeKey: serializer.fromJson<String>(json['scopeKey']),
       uuid: serializer.fromJson<String>(json['uuid']),
       nameAr: serializer.fromJson<String>(json['nameAr']),
       nameEn: serializer.fromJson<String>(json['nameEn']),
@@ -3871,7 +3871,7 @@ class Customer extends DataClass implements Insertable<Customer> {
           Value<DateTime?> serverUpdatedAt = const Value.absent(),
           bool? isDeleted}) =>
       Customer(
-        scopeKey: <credential-fixture> ?? this.scopeKey,
+        scopeKey: scopeKey ?? this.scopeKey,
         uuid: uuid ?? this.uuid,
         nameAr: nameAr ?? this.nameAr,
         nameEn: nameEn ?? this.nameEn,
@@ -3896,7 +3896,7 @@ class Customer extends DataClass implements Insertable<Customer> {
       );
   Customer copyWithCompanion(CustomersCompanion data) {
     return Customer(
-      scopeKey: <credential-fixture> ? data.scopeKey.value : <credential-fixture>,
+      scopeKey: data.scopeKey.present ? data.scopeKey.value : this.scopeKey,
       uuid: data.uuid.present ? data.uuid.value : this.uuid,
       nameAr: data.nameAr.present ? data.nameAr.value : this.nameAr,
       nameEn: data.nameEn.present ? data.nameEn.value : this.nameEn,
@@ -4125,7 +4125,7 @@ class CustomersCompanion extends UpdateCompanion<Customer> {
       Value<bool>? isDeleted,
       Value<int>? rowid}) {
     return CustomersCompanion(
-      scopeKey: <credential-fixture> ?? this.scopeKey,
+      scopeKey: scopeKey ?? this.scopeKey,
       uuid: uuid ?? this.uuid,
       nameAr: nameAr ?? this.nameAr,
       nameEn: nameEn ?? this.nameEn,
@@ -4246,7 +4246,7 @@ class $VendorsTable extends Vendors with TableInfo<$VendorsTable, Vendor> {
   static const VerificationMeta _scopeKeyMeta =
       const VerificationMeta('scopeKey');
   @override
-  late final GeneratedColumn<String> scopeKey = <credential-fixture><String>(
+  late final GeneratedColumn<String> scopeKey = GeneratedColumn<String>(
       'scope_key', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
@@ -4484,7 +4484,7 @@ class $VendorsTable extends Vendors with TableInfo<$VendorsTable, Vendor> {
   Vendor map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Vendor(
-      scopeKey: <credential-fixture>
+      scopeKey: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
       uuid: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}uuid'])!,
@@ -4650,7 +4650,7 @@ class Vendor extends DataClass implements Insertable<Vendor> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Vendor(
-      scopeKey: <credential-fixture><String>(json['scopeKey']),
+      scopeKey: serializer.fromJson<String>(json['scopeKey']),
       uuid: serializer.fromJson<String>(json['uuid']),
       nameAr: serializer.fromJson<String>(json['nameAr']),
       nameEn: serializer.fromJson<String>(json['nameEn']),
@@ -4716,7 +4716,7 @@ class Vendor extends DataClass implements Insertable<Vendor> {
           Value<DateTime?> serverUpdatedAt = const Value.absent(),
           bool? isDeleted}) =>
       Vendor(
-        scopeKey: <credential-fixture> ?? this.scopeKey,
+        scopeKey: scopeKey ?? this.scopeKey,
         uuid: uuid ?? this.uuid,
         nameAr: nameAr ?? this.nameAr,
         nameEn: nameEn ?? this.nameEn,
@@ -4743,7 +4743,7 @@ class Vendor extends DataClass implements Insertable<Vendor> {
       );
   Vendor copyWithCompanion(VendorsCompanion data) {
     return Vendor(
-      scopeKey: <credential-fixture> ? data.scopeKey.value : <credential-fixture>,
+      scopeKey: data.scopeKey.present ? data.scopeKey.value : this.scopeKey,
       uuid: data.uuid.present ? data.uuid.value : this.uuid,
       nameAr: data.nameAr.present ? data.nameAr.value : this.nameAr,
       nameEn: data.nameEn.present ? data.nameEn.value : this.nameEn,
@@ -4972,7 +4972,7 @@ class VendorsCompanion extends UpdateCompanion<Vendor> {
       Value<bool>? isDeleted,
       Value<int>? rowid}) {
     return VendorsCompanion(
-      scopeKey: <credential-fixture> ?? this.scopeKey,
+      scopeKey: scopeKey ?? this.scopeKey,
       uuid: uuid ?? this.uuid,
       nameAr: nameAr ?? this.nameAr,
       nameEn: nameEn ?? this.nameEn,
@@ -6428,7 +6428,7 @@ class $$ProfilesTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               ProfilesCompanion(
-            scopeKey: <credential-fixture>,
+            scopeKey: scopeKey,
             id: id,
             email: email,
             displayName: displayName,
@@ -6454,7 +6454,7 @@ class $$ProfilesTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               ProfilesCompanion.insert(
-            scopeKey: <credential-fixture>,
+            scopeKey: scopeKey,
             id: id,
             email: email,
             displayName: displayName,
@@ -6717,7 +6717,7 @@ class $$BusinessSettingsTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               BusinessSettingsCompanion(
-            scopeKey: <credential-fixture>,
+            scopeKey: scopeKey,
             id: id,
             companyName: companyName,
             taxNumber: taxNumber,
@@ -6749,7 +6749,7 @@ class $$BusinessSettingsTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               BusinessSettingsCompanion.insert(
-            scopeKey: <credential-fixture>,
+            scopeKey: scopeKey,
             id: id,
             companyName: companyName,
             taxNumber: taxNumber,
@@ -6983,7 +6983,7 @@ class $$GoalsTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               GoalsCompanion(
-            scopeKey: <credential-fixture>,
+            scopeKey: scopeKey,
             uuid: uuid,
             name: name,
             category: category,
@@ -7011,7 +7011,7 @@ class $$GoalsTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               GoalsCompanion.insert(
-            scopeKey: <credential-fixture>,
+            scopeKey: scopeKey,
             uuid: uuid,
             name: name,
             category: category,
@@ -7252,7 +7252,7 @@ class $$BudgetsTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               BudgetsCompanion(
-            scopeKey: <credential-fixture>,
+            scopeKey: scopeKey,
             budgetId: budgetId,
             name: name,
             category: category,
@@ -7282,7 +7282,7 @@ class $$BudgetsTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               BudgetsCompanion.insert(
-            scopeKey: <credential-fixture>,
+            scopeKey: scopeKey,
             budgetId: budgetId,
             name: name,
             category: category,
@@ -7598,7 +7598,7 @@ class $$CustomersTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               CustomersCompanion(
-            scopeKey: <credential-fixture>,
+            scopeKey: scopeKey,
             uuid: uuid,
             nameAr: nameAr,
             nameEn: nameEn,
@@ -7640,7 +7640,7 @@ class $$CustomersTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               CustomersCompanion.insert(
-            scopeKey: <credential-fixture>,
+            scopeKey: scopeKey,
             uuid: uuid,
             nameAr: nameAr,
             nameEn: nameEn,
@@ -7964,7 +7964,7 @@ class $$VendorsTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               VendorsCompanion(
-            scopeKey: <credential-fixture>,
+            scopeKey: scopeKey,
             uuid: uuid,
             nameAr: nameAr,
             nameEn: nameEn,
@@ -8006,7 +8006,7 @@ class $$VendorsTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               VendorsCompanion.insert(
-            scopeKey: <credential-fixture>,
+            scopeKey: scopeKey,
             uuid: uuid,
             nameAr: nameAr,
             nameEn: nameEn,
