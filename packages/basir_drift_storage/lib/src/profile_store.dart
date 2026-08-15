@@ -31,6 +31,8 @@ class ProfileRecord {
 abstract interface class ProfileStorage {
   Future<ProfileRecord?> readForUser(String? userId);
 
+  Future<List<ProfileRecord>> readAll();
+
   Future<void> save(ProfileRecord record);
 
   Future<void> deleteForUser(String? userId);
@@ -49,6 +51,14 @@ class ProfileStore implements ProfileStorage {
           ..where((table) => table.scopeKey.equals(userScopeKey(userId))))
         .getSingleOrNull();
     return row == null ? null : _toRecord(row);
+  }
+
+  @override
+  Future<List<ProfileRecord>> readAll() async {
+    final rows = await (_database.select(_database.profiles)
+          ..orderBy([(table) => OrderingTerm.asc(table.scopeKey)]))
+        .get();
+    return rows.map(_toRecord).toList(growable: false);
   }
 
   @override
