@@ -77,6 +77,9 @@ class _GoalStorage implements GoalStorage {
   Future<void> deleteById(String id, String? userId) async {}
 
   @override
+  Future<List<GoalRecord>> readAll() async => List.of(saved);
+
+  @override
   Future<List<GoalRecord>> readAllForUser(String? userId) async =>
       saved.where((record) => record.userId == userId).toList(growable: false);
 
@@ -105,6 +108,9 @@ class _BudgetStorage implements BudgetStorage {
 
   @override
   Future<void> deleteById(String id, String? userId) async {}
+
+  @override
+  Future<List<BudgetRecord>> readAll() async => List.of(saved);
 
   @override
   Future<List<BudgetRecord>> readAllForUser(String? userId) async =>
