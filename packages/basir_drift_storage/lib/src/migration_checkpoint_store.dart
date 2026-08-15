@@ -53,7 +53,7 @@ class LocalMetadataMigrationCheckpointStore
     implements MigrationCheckpointStorage {
   LocalMetadataMigrationCheckpointStore(this._database);
 
-  static const _keyPrefix = '<credential-fixture>:';
+  static const _keyPrefix = 'migration-checkpoint:';
 
   final BasirDatabase _database;
 

@@ -91,7 +91,7 @@ class GoalStore implements GoalStorage {
     _validate(record);
     return _database.into(_database.goals).insertOnConflictUpdate(
           GoalsCompanion.insert(
-            scopeKey: <credential-fixture>(record.userId),
+            scopeKey: userScopeKey(record.userId),
             uuid: record.id,
             name: record.name,
             category: record.category,

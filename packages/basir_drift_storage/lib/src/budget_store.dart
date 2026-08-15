@@ -91,7 +91,7 @@ class BudgetStore implements BudgetStorage {
     _validate(record);
     return _database.into(_database.budgets).insertOnConflictUpdate(
           BudgetsCompanion.insert(
-            scopeKey: <credential-fixture>(record.userId),
+            scopeKey: userScopeKey(record.userId),
             budgetId: record.id,
             name: record.name,
             category: record.category,

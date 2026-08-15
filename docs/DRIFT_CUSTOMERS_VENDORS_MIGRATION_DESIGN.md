@@ -104,3 +104,17 @@
 أُضيفت اختبارات وحدة تغطي عزل UUID بين المستخدمين، الحقول المحاسبية، sync metadata، البحث، الحذف، ورفض sync status غير المعروف. كما أُضيف اختبار تكامل فعلي Isar مؤقت → SQLite في الذاكرة يثبت حفظ Customers وVendors وعدم تغير عدد سجلات Isar المصدرية. نجحت اختبارات الحزمة وعددها 24 اختبارًا، ونجحت الاختبارات المستهدفة المشتركة وعددها 25 اختبارًا، والتحليل الساكن للملفات الجديدة بلا ملاحظات.
 
 لم تُنفذ بعد importer/parity الخاصة بالموجة، ولا shadow-read decorators أو flags، ولا أي wiring في Providers أو `sync_service`. هذه العناصر تبقى بوابات لاحقة مستقلة، كما لم يُنشأ commit أو push جديد لهذه المرحلة.
+
+## حالة importer وparity المحلية
+
+أُضيف `IsarCustomerMigrationSource` و`IsarVendorMigrationSource` لتحويل نماذج Isar إلى DTOs محايدة بترتيب deterministic حسب `scopeKey` ثم UUID. كما أُضيف `DriftCustomersVendorsMigrator` بشريحتي `customers-v1` و`vendors-v1` وcheckpoints مستقلة وbatch size قابل للتحقق.
+
+يقارن `DriftCustomersVendorsParityVerifier` كامل الحقول، بما فيها روابط الحسابات والقيم المالية وsync metadata، ويستخدم fingerprint حتميًا. يميز التقرير بين mismatch العادي وتكرار UUID داخل النطاق؛ ولا يعتبر تعدد سجلات المستخدم نفسه غموضًا، لأن ذلك سلوك صحيح للعملاء والموردين. لا ينفذ verifier حذفًا أو إصلاحًا تلقائيًا.
+
+اختبارات importer/parity الحالية تغطي التشغيل النظيف، checkpoints وbatch size، mismatch في رابط الحساب، وتكرار UUID داخل scope. نجحت أربعة اختبارات، والتحليل الساكن للملفات الجديدة بلا ملاحظات. لا تزال snapshot runner وshadow-read decorators والـflags وProvider wiring وsync_service خارج هذه المرحلة.
+
+## ملاحظة سلامة قاعدة PR #62 الحالية
+
+عند بناء أحدث HEAD البعيد لـPR #62 ظهر أن القاعدة تحتوي placeholder غير صالحًا هو `credential-fixture` داخل generated Drift code وتسعة ملفات تخزين وlockfile. تسبب ذلك في فشل parser وbuild_runner والاختبارات قبل وصول التنفيذ إلى importer/parity. أُصلح محليًا باستعادة الصياغات النظيفة المقابلة فقط: 59 موضعًا في generated file وموضع واحد في كل ملف متأثر، دون تغيير منطق الجداول أو عقود التخزين أو dependency versions. بعد الإصلاح أصبح عدد placeholders صفرًا، ونجحت اختبارات الحزمة وعددها 24 والاختبارات المستهدفة وعددها 29 والتحليل الساكن.
+
+ينبغي عرض هذا الإصلاح في PR الجديدة بوضوح باعتباره **baseline build-repair ضروريًا** وليس تفعيلًا لـDrift. لم يُرفع أو يُلتزم هذا الإصلاح بعد على فرع GitHub الجديد.

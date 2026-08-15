@@ -124,7 +124,7 @@ class CustomerStore implements CustomerStorage {
     _validate(record);
     return _database.into(_database.customers).insertOnConflictUpdate(
           CustomersCompanion.insert(
-            scopeKey: <credential-fixture>(record.userId),
+            scopeKey: userScopeKey(record.userId),
             uuid: record.id,
             nameAr: record.nameAr,
             nameEn: record.nameEn,

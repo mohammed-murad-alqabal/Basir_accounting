@@ -118,7 +118,7 @@ class VendorStore implements VendorStorage {
     _validate(record);
     return _database.into(_database.vendors).insertOnConflictUpdate(
           VendorsCompanion.insert(
-            scopeKey: <credential-fixture>(record.userId),
+            scopeKey: userScopeKey(record.userId),
             uuid: record.id,
             nameAr: record.nameAr,
             nameEn: record.nameEn,
