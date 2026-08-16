@@ -97,15 +97,15 @@ class $BarcodeConfigRowsTable extends BarcodeConfigRows
   );
   @override
   List<GeneratedColumn> get $columns => [
-    id,
-    printerType,
-    columnsPerRow,
-    height,
-    width,
-    margin,
-    showItemName,
-    showPrice,
-  ];
+        id,
+        printerType,
+        columnsPerRow,
+        height,
+        width,
+        margin,
+        showItemName,
+        showPrice,
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -325,22 +325,22 @@ class BarcodeConfigRow extends DataClass
     double? margin,
     bool? showItemName,
     bool? showPrice,
-  }) => BarcodeConfigRow(
-    id: id ?? this.id,
-    printerType: printerType ?? this.printerType,
-    columnsPerRow: columnsPerRow ?? this.columnsPerRow,
-    height: height ?? this.height,
-    width: width ?? this.width,
-    margin: margin ?? this.margin,
-    showItemName: showItemName ?? this.showItemName,
-    showPrice: showPrice ?? this.showPrice,
-  );
+  }) =>
+      BarcodeConfigRow(
+        id: id ?? this.id,
+        printerType: printerType ?? this.printerType,
+        columnsPerRow: columnsPerRow ?? this.columnsPerRow,
+        height: height ?? this.height,
+        width: width ?? this.width,
+        margin: margin ?? this.margin,
+        showItemName: showItemName ?? this.showItemName,
+        showPrice: showPrice ?? this.showPrice,
+      );
   BarcodeConfigRow copyWithCompanion(BarcodeConfigRowsCompanion data) {
     return BarcodeConfigRow(
       id: data.id.present ? data.id.value : this.id,
-      printerType: data.printerType.present
-          ? data.printerType.value
-          : this.printerType,
+      printerType:
+          data.printerType.present ? data.printerType.value : this.printerType,
       columnsPerRow: data.columnsPerRow.present
           ? data.columnsPerRow.value
           : this.columnsPerRow,
@@ -371,15 +371,15 @@ class BarcodeConfigRow extends DataClass
 
   @override
   int get hashCode => Object.hash(
-    id,
-    printerType,
-    columnsPerRow,
-    height,
-    width,
-    margin,
-    showItemName,
-    showPrice,
-  );
+        id,
+        printerType,
+        columnsPerRow,
+        height,
+        width,
+        margin,
+        showItemName,
+        showPrice,
+      );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -425,14 +425,14 @@ class BarcodeConfigRowsCompanion extends UpdateCompanion<BarcodeConfigRow> {
     required bool showItemName,
     required bool showPrice,
     this.rowid = const Value.absent(),
-  }) : id = Value(id),
-       printerType = Value(printerType),
-       columnsPerRow = Value(columnsPerRow),
-       height = Value(height),
-       width = Value(width),
-       margin = Value(margin),
-       showItemName = Value(showItemName),
-       showPrice = Value(showPrice);
+  })  : id = Value(id),
+        printerType = Value(printerType),
+        columnsPerRow = Value(columnsPerRow),
+        height = Value(height),
+        width = Value(width),
+        margin = Value(margin),
+        showItemName = Value(showItemName),
+        showPrice = Value(showPrice);
   static Insertable<BarcodeConfigRow> custom({
     Expression<String>? id,
     Expression<int>? printerType,
@@ -543,30 +543,30 @@ abstract class _$BarcodeDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [barcodeConfigRows];
 }
 
-typedef $$BarcodeConfigRowsTableCreateCompanionBuilder =
-    BarcodeConfigRowsCompanion Function({
-      required String id,
-      required int printerType,
-      required int columnsPerRow,
-      required double height,
-      required double width,
-      required double margin,
-      required bool showItemName,
-      required bool showPrice,
-      Value<int> rowid,
-    });
-typedef $$BarcodeConfigRowsTableUpdateCompanionBuilder =
-    BarcodeConfigRowsCompanion Function({
-      Value<String> id,
-      Value<int> printerType,
-      Value<int> columnsPerRow,
-      Value<double> height,
-      Value<double> width,
-      Value<double> margin,
-      Value<bool> showItemName,
-      Value<bool> showPrice,
-      Value<int> rowid,
-    });
+typedef $$BarcodeConfigRowsTableCreateCompanionBuilder
+    = BarcodeConfigRowsCompanion Function({
+  required String id,
+  required int printerType,
+  required int columnsPerRow,
+  required double height,
+  required double width,
+  required double margin,
+  required bool showItemName,
+  required bool showPrice,
+  Value<int> rowid,
+});
+typedef $$BarcodeConfigRowsTableUpdateCompanionBuilder
+    = BarcodeConfigRowsCompanion Function({
+  Value<String> id,
+  Value<int> printerType,
+  Value<int> columnsPerRow,
+  Value<double> height,
+  Value<double> width,
+  Value<double> margin,
+  Value<bool> showItemName,
+  Value<bool> showPrice,
+  Value<int> rowid,
+});
 
 class $$BarcodeConfigRowsTableFilterComposer
     extends Composer<_$BarcodeDatabase, $BarcodeConfigRowsTable> {
@@ -578,44 +578,44 @@ class $$BarcodeConfigRowsTableFilterComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.id,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<int> get printerType => $composableBuilder(
-    column: $table.printerType,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.printerType,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<int> get columnsPerRow => $composableBuilder(
-    column: $table.columnsPerRow,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.columnsPerRow,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<double> get height => $composableBuilder(
-    column: $table.height,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.height,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<double> get width => $composableBuilder(
-    column: $table.width,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.width,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<double> get margin => $composableBuilder(
-    column: $table.margin,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.margin,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<bool> get showItemName => $composableBuilder(
-    column: $table.showItemName,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.showItemName,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<bool> get showPrice => $composableBuilder(
-    column: $table.showPrice,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.showPrice,
+        builder: (column) => ColumnFilters(column),
+      );
 }
 
 class $$BarcodeConfigRowsTableOrderingComposer
@@ -628,44 +628,44 @@ class $$BarcodeConfigRowsTableOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.id,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<int> get printerType => $composableBuilder(
-    column: $table.printerType,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.printerType,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<int> get columnsPerRow => $composableBuilder(
-    column: $table.columnsPerRow,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.columnsPerRow,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<double> get height => $composableBuilder(
-    column: $table.height,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.height,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<double> get width => $composableBuilder(
-    column: $table.width,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.width,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<double> get margin => $composableBuilder(
-    column: $table.margin,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.margin,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<bool> get showItemName => $composableBuilder(
-    column: $table.showItemName,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.showItemName,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<bool> get showPrice => $composableBuilder(
-    column: $table.showPrice,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.showPrice,
+        builder: (column) => ColumnOrderings(column),
+      );
 }
 
 class $$BarcodeConfigRowsTableAnnotationComposer
@@ -681,14 +681,14 @@ class $$BarcodeConfigRowsTableAnnotationComposer
       $composableBuilder(column: $table.id, builder: (column) => column);
 
   GeneratedColumn<int> get printerType => $composableBuilder(
-    column: $table.printerType,
-    builder: (column) => column,
-  );
+        column: $table.printerType,
+        builder: (column) => column,
+      );
 
   GeneratedColumn<int> get columnsPerRow => $composableBuilder(
-    column: $table.columnsPerRow,
-    builder: (column) => column,
-  );
+        column: $table.columnsPerRow,
+        builder: (column) => column,
+      );
 
   GeneratedColumn<double> get height =>
       $composableBuilder(column: $table.height, builder: (column) => column);
@@ -700,125 +700,115 @@ class $$BarcodeConfigRowsTableAnnotationComposer
       $composableBuilder(column: $table.margin, builder: (column) => column);
 
   GeneratedColumn<bool> get showItemName => $composableBuilder(
-    column: $table.showItemName,
-    builder: (column) => column,
-  );
+        column: $table.showItemName,
+        builder: (column) => column,
+      );
 
   GeneratedColumn<bool> get showPrice =>
       $composableBuilder(column: $table.showPrice, builder: (column) => column);
 }
 
-class $$BarcodeConfigRowsTableTableManager
-    extends
-        RootTableManager<
-          _$BarcodeDatabase,
-          $BarcodeConfigRowsTable,
-          BarcodeConfigRow,
-          $$BarcodeConfigRowsTableFilterComposer,
-          $$BarcodeConfigRowsTableOrderingComposer,
-          $$BarcodeConfigRowsTableAnnotationComposer,
-          $$BarcodeConfigRowsTableCreateCompanionBuilder,
-          $$BarcodeConfigRowsTableUpdateCompanionBuilder,
-          (
-            BarcodeConfigRow,
-            BaseReferences<
-              _$BarcodeDatabase,
-              $BarcodeConfigRowsTable,
-              BarcodeConfigRow
-            >,
-          ),
-          BarcodeConfigRow,
-          PrefetchHooks Function()
-        > {
+class $$BarcodeConfigRowsTableTableManager extends RootTableManager<
+    _$BarcodeDatabase,
+    $BarcodeConfigRowsTable,
+    BarcodeConfigRow,
+    $$BarcodeConfigRowsTableFilterComposer,
+    $$BarcodeConfigRowsTableOrderingComposer,
+    $$BarcodeConfigRowsTableAnnotationComposer,
+    $$BarcodeConfigRowsTableCreateCompanionBuilder,
+    $$BarcodeConfigRowsTableUpdateCompanionBuilder,
+    (
+      BarcodeConfigRow,
+      BaseReferences<_$BarcodeDatabase, $BarcodeConfigRowsTable,
+          BarcodeConfigRow>,
+    ),
+    BarcodeConfigRow,
+    PrefetchHooks Function()> {
   $$BarcodeConfigRowsTableTableManager(
     _$BarcodeDatabase db,
     $BarcodeConfigRowsTable table,
   ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$BarcodeConfigRowsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$BarcodeConfigRowsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$BarcodeConfigRowsTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<int> printerType = const Value.absent(),
-                Value<int> columnsPerRow = const Value.absent(),
-                Value<double> height = const Value.absent(),
-                Value<double> width = const Value.absent(),
-                Value<double> margin = const Value.absent(),
-                Value<bool> showItemName = const Value.absent(),
-                Value<bool> showPrice = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => BarcodeConfigRowsCompanion(
-                id: id,
-                printerType: printerType,
-                columnsPerRow: columnsPerRow,
-                height: height,
-                width: width,
-                margin: margin,
-                showItemName: showItemName,
-                showPrice: showPrice,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String id,
-                required int printerType,
-                required int columnsPerRow,
-                required double height,
-                required double width,
-                required double margin,
-                required bool showItemName,
-                required bool showPrice,
-                Value<int> rowid = const Value.absent(),
-              }) => BarcodeConfigRowsCompanion.insert(
-                id: id,
-                printerType: printerType,
-                columnsPerRow: columnsPerRow,
-                height: height,
-                width: width,
-                margin: margin,
-                showItemName: showItemName,
-                showPrice: showPrice,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
+          TableManagerState(
+            db: db,
+            table: table,
+            createFilteringComposer: () =>
+                $$BarcodeConfigRowsTableFilterComposer($db: db, $table: table),
+            createOrderingComposer: () =>
+                $$BarcodeConfigRowsTableOrderingComposer(
+                    $db: db, $table: table),
+            createComputedFieldComposer: () =>
+                $$BarcodeConfigRowsTableAnnotationComposer(
+              $db: db,
+              $table: table,
+            ),
+            updateCompanionCallback: ({
+              Value<String> id = const Value.absent(),
+              Value<int> printerType = const Value.absent(),
+              Value<int> columnsPerRow = const Value.absent(),
+              Value<double> height = const Value.absent(),
+              Value<double> width = const Value.absent(),
+              Value<double> margin = const Value.absent(),
+              Value<bool> showItemName = const Value.absent(),
+              Value<bool> showPrice = const Value.absent(),
+              Value<int> rowid = const Value.absent(),
+            }) =>
+                BarcodeConfigRowsCompanion(
+              id: id,
+              printerType: printerType,
+              columnsPerRow: columnsPerRow,
+              height: height,
+              width: width,
+              margin: margin,
+              showItemName: showItemName,
+              showPrice: showPrice,
+              rowid: rowid,
+            ),
+            createCompanionCallback: ({
+              required String id,
+              required int printerType,
+              required int columnsPerRow,
+              required double height,
+              required double width,
+              required double margin,
+              required bool showItemName,
+              required bool showPrice,
+              Value<int> rowid = const Value.absent(),
+            }) =>
+                BarcodeConfigRowsCompanion.insert(
+              id: id,
+              printerType: printerType,
+              columnsPerRow: columnsPerRow,
+              height: height,
+              width: width,
+              margin: margin,
+              showItemName: showItemName,
+              showPrice: showPrice,
+              rowid: rowid,
+            ),
+            withReferenceMapper: (p0) => p0
+                .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+                .toList(),
+            prefetchHooksCallback: null,
+          ),
+        );
 }
 
-typedef $$BarcodeConfigRowsTableProcessedTableManager =
-    ProcessedTableManager<
-      _$BarcodeDatabase,
-      $BarcodeConfigRowsTable,
+typedef $$BarcodeConfigRowsTableProcessedTableManager = ProcessedTableManager<
+    _$BarcodeDatabase,
+    $BarcodeConfigRowsTable,
+    BarcodeConfigRow,
+    $$BarcodeConfigRowsTableFilterComposer,
+    $$BarcodeConfigRowsTableOrderingComposer,
+    $$BarcodeConfigRowsTableAnnotationComposer,
+    $$BarcodeConfigRowsTableCreateCompanionBuilder,
+    $$BarcodeConfigRowsTableUpdateCompanionBuilder,
+    (
       BarcodeConfigRow,
-      $$BarcodeConfigRowsTableFilterComposer,
-      $$BarcodeConfigRowsTableOrderingComposer,
-      $$BarcodeConfigRowsTableAnnotationComposer,
-      $$BarcodeConfigRowsTableCreateCompanionBuilder,
-      $$BarcodeConfigRowsTableUpdateCompanionBuilder,
-      (
-        BarcodeConfigRow,
-        BaseReferences<
-          _$BarcodeDatabase,
-          $BarcodeConfigRowsTable,
-          BarcodeConfigRow
-        >,
-      ),
-      BarcodeConfigRow,
-      PrefetchHooks Function()
-    >;
+      BaseReferences<_$BarcodeDatabase, $BarcodeConfigRowsTable,
+          BarcodeConfigRow>,
+    ),
+    BarcodeConfigRow,
+    PrefetchHooks Function()>;
 
 class $BarcodeDatabaseManager {
   final _$BarcodeDatabase _db;
