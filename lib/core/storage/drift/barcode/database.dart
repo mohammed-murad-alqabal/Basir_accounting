@@ -1,7 +1,7 @@
 import 'package:basir_accounting_system/features/settings/domain/entities/barcode_config.dart';
 import 'package:drift/drift.dart';
 
-part 'database.g.dart';
+part 'database_drift_generated.dart';
 
 class BarcodeConfigRows extends Table {
   TextColumn get id => text()();
