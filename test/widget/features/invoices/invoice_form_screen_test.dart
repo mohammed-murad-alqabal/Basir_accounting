@@ -3,9 +3,11 @@ import 'package:basir_accounting_system/core/theme/tokens/app_icons.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
+import 'package:basir_accounting_system/features/invoices/application/sales_invoice_posting_service.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_type.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:decimal/decimal.dart';
@@ -52,15 +54,89 @@ class _InvoiceAccountingServiceFake extends AccountingService {
   }
 }
 
+class _SalesInvoicePostingGatewayFake implements SalesInvoicePostingGateway {
+  _SalesInvoicePostingGatewayFake(this.repository);
+
+  final MockInvoiceRepository repository;
+  final List<Invoice> postedInvoices = [];
+  final List<JournalEntry> postedEntries = [];
+
+  @override
+  Future<JournalEntry> buildSalesJournalEntry({
+    required Invoice invoice,
+    required String actorId,
+    required DateTime recordedAt,
+  }) async {
+    final amount = invoice.totalAmount;
+    return JournalEntry(
+      id: 'entry-${invoice.id}',
+      referenceNumber: 'POST-${invoice.invoiceNumber}',
+      date: recordedAt,
+      temporal: TemporalJustification(
+        transactionDate: recordedAt,
+        effectiveDate: recordedAt,
+        recordingDate: recordedAt,
+      ),
+      standards: const StandardsJustification(standardReference: 'IFRS 15.31'),
+      description: 'Posted sales invoice',
+      status: JournalEntryStatus.posted,
+      lines: [
+        JournalEntryLine(
+          accountId: 'accounts-receivable',
+          accountName: 'Accounts receivable',
+          debit: amount,
+          credit: Decimal.zero,
+        ),
+        JournalEntryLine(
+          accountId: 'sales-revenue',
+          accountName: 'Sales revenue',
+          debit: Decimal.zero,
+          credit: invoice.subtotalAmount,
+        ),
+        if (invoice.taxAmount > Decimal.zero)
+          JournalEntryLine(
+            accountId: 'vat-liability',
+            accountName: 'VAT liability',
+            debit: Decimal.zero,
+            credit: invoice.taxAmount,
+          ),
+      ],
+      sourceDocument: 'sales_invoice',
+      sourceId: invoice.id,
+      createdBy: actorId,
+      createdAt: recordedAt,
+      updatedAt: recordedAt,
+    );
+  }
+
+  @override
+  Future<void> commitSalesInvoice({
+    required Invoice invoice,
+    required JournalEntry journalEntry,
+  }) async {
+    if (repository.invoices.any((current) => current.id == invoice.id)) {
+      await repository.updateInvoice(invoice);
+    } else {
+      await repository.addInvoice(invoice);
+    }
+    postedInvoices.add(invoice);
+    postedEntries.add(journalEntry);
+  }
+}
+
 void main() {
   late MockCustomerRepository mockCustomerRepository;
   late MockInvoiceRepository mockInvoiceRepository;
   late _FakeNotificationService notificationService;
+  late _SalesInvoicePostingGatewayFake salesPostingGateway;
 
   setUp(() {
     mockCustomerRepository = MockCustomerRepository();
     mockInvoiceRepository = MockInvoiceRepository();
     notificationService = _FakeNotificationService();
+    salesPostingGateway = _SalesInvoicePostingGatewayFake(
+      mockInvoiceRepository,
+    );
     _InvoiceAccountingServiceFake.postedInvoices.clear();
   });
 
@@ -81,6 +157,12 @@ void main() {
           notificationServiceProvider.overrideWithValue(notificationService),
           accountingServiceProvider
               .overrideWith(_InvoiceAccountingServiceFake.new),
+          salesInvoicePostingServiceProvider.overrideWith(
+            (ref) async => SalesInvoicePostingService(
+              gateway: salesPostingGateway,
+              now: () => DateTime.utc(2026),
+            ),
+          ),
         ],
         child: MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -502,14 +584,16 @@ void main() {
           matching: find.byType(FilledButton),
         ),
       );
-      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pumpAndSettle();
 
       expect(mockInvoiceRepository.invoices, hasLength(1));
       expect(mockInvoiceRepository.invoices.single.status, InvoiceStatus.sent);
-      expect(_InvoiceAccountingServiceFake.postedInvoices, hasLength(1));
+      expect(salesPostingGateway.postedInvoices, hasLength(1));
+      expect(salesPostingGateway.postedEntries, hasLength(1));
+      expect(salesPostingGateway.postedInvoices.single.type, InvoiceType.sales);
       expect(
-        _InvoiceAccountingServiceFake.postedInvoices.single.type,
-        InvoiceType.sales,
+        salesPostingGateway.postedEntries.single.auditLogs,
+        hasLength(1),
       );
 
       await tester.pump(const Duration(seconds: 3));

@@ -374,7 +374,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       final service = await ref.read(salesInvoicePostingServiceProvider.future);
       final result = await service.post(
         SalesInvoicePostingRequest(
-          invoice: _buildInvoice(status: InvoiceStatus.sent),
+          invoice: _buildInvoice(status: InvoiceStatus.draft),
           preview: preview,
           hasExplicitConfirmation: true,
           canPost: canPost,

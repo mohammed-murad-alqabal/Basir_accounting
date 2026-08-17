@@ -4,6 +4,7 @@ import 'package:basir_accounting_system/features/inventory/domain/entities/inven
 import 'package:basir_accounting_system/features/inventory/domain/repositories/inventory_repository.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/screens/barcode_creation_screen.dart';
 import 'package:basir_accounting_system/features/settings/domain/entities/barcode_config.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,7 +22,12 @@ void main() {
           inventoryRepositoryProvider.overrideWithValue(inventory),
           barcodeServiceProvider.overrideWith(_FakeBarcodeService.new),
         ],
-        child: const MaterialApp(home: BarcodeCreationScreen()),
+        child: const MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: Locale('ar'),
+          home: BarcodeCreationScreen(),
+        ),
       );
 
   Future<void> selectItem(WidgetTester tester) async {
@@ -58,7 +64,7 @@ void main() {
       await tester.tap(find.text('حفظ'));
       await tester.pump();
 
-      expect(find.text('يرجى اختيار صنف وإدخال الباركود'), findsOneWidget);
+      expect(find.text('اختر صنفًا وأدخل الباركود أولًا.'), findsOneWidget);
       expect(inventory.updatedItems, isEmpty);
     });
 
@@ -104,7 +110,7 @@ void main() {
       await tester.tap(find.text('حفظ'));
       await tester.pump();
 
-      expect(find.textContaining('تعذر حفظ الصنف'), findsOneWidget);
+      expect(find.text('تعذر حفظ الباركود. حاول مرة أخرى.'), findsOneWidget);
       expect(find.byType(BarcodeCreationScreen), findsOneWidget);
     });
   });

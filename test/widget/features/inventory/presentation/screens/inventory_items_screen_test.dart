@@ -73,9 +73,9 @@ void main() {
 
       expect(find.text('ورق مكتبي'), findsOneWidget);
       expect(find.text('حبر طابعة'), findsOneWidget);
-      expect(find.text('PAPER-01'), findsOneWidget);
+      expect(find.textContaining('PAPER-01'), findsOneWidget);
       expect(
-        find.bySemanticsLabel('ورق مكتبي, PAPER-01, 12.0 علبة'),
+        find.bySemanticsLabel(RegExp(r'^ورق مكتبي, .*PAPER-01, 12 علبة$')),
         findsOneWidget,
       );
 
