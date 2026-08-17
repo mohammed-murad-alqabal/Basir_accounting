@@ -140,13 +140,24 @@
 
 الحالة الآمنة المستهدفة هي ثلاث شرائح Drift معزولة، لكل منها schema واضح وDAO وimporter وparity وsnapshot وshadow-read مستقل، مع composite scope keys وفingerprints حتمية. يظل Isar قابلًا للرجوع إليه ومصدرًا وحيدًا للكتابة، ولا يبدأ canary إلا بعد تقرير نظيف يتضمن الحقول المحاسبية، soft-delete، null warehouse، الرصيد المشتق، وقرار barcode وtransfer.
 
-## حالة التنفيذ المحلية: Warehouses
+## حالة التنفيذ المحلية: Warehouses وInventoryItems
 
-أُنشئ الفرع المحلي `work/inventory-warehouses-drift-20260817` فوق commit Customers/Vendors المستقر. أضيف جدول `Warehouses` إلى Drift مع `schemaVersion = 6` وmigration additive من الإصدارات السابقة، ومفتاح مركب `(scopeKey, uuid)` وفهارس اسمية. أضيف `WarehouseRecord` و`WarehouseStorage` و`WarehouseStore` مع القراءة حسب المستخدم، القراءة الكاملة، lookup، upsert، والحذف الفعلي المقيد بالنطاق. ترتيب القراءة داخل النطاق يعتمد UUID لضمان deterministic behavior عبر SQLite وWASM.
+أُنشئ فرع Warehouses المحلي `work/inventory-warehouses-drift-20260817` فوق commit Customers/Vendors المستقر، وأُضيف جدول `Warehouses` إلى Drift مع `schemaVersion = 6` وmigration additive ومفتاح مركب `(scopeKey, uuid)` وفهارس اسمية. أُضيف `WarehouseRecord` و`WarehouseStorage` و`WarehouseStore` مع القراءة حسب المستخدم، القراءة الكاملة، lookup، upsert، والحذف الفعلي المقيد بالنطاق. أصبح هذا الجزء في commit محلي منشور ضمن PR #148، ولم يُدمج.
 
-أضيفت اختبارات SQLite in-memory تغطي عزل نفس UUID بين المستخدمين، replacement داخل نفس scope، التواريخ UTC، الحذف الفعلي المقيد بالنطاق، ورفض الهوية أو الأسماء الفارغة. نجحت اختبارات الحزمة وعددها **28 اختبارًا**، ونجح التحليل الساكن للملفات المتأثرة بلا ملاحظات، كما نجح `git diff --check`. لم يُسجل WarehouseStore في Providers التطبيق، ولم يتغير Isar أو `sync_service`، ولا يوجد commit أو push لهذه الشريحة حتى الآن.
+بدأ فرع InventoryItems `work/inventory-items-drift-20260817` من commit Warehouses المنشور `69b16563`. أُضيف جدول `InventoryItems` وmigration additive إلى `schemaVersion = 7`، مع composite scope key، وwarehouse scope nullable، وفهارس SKU والأسماء وsoft-delete. أُضيف `InventoryItemRecord` و`InventoryItemStorage` و`InventoryItemStore` مع:
 
-الخطوة الآمنة التالية هي مراجعة هذه التغييرات محليًا، ثم طلب إذن مستقل لإنشاء commit محلي. سيُطلب إذن آخر قبل أي push أو فتح PR.
+| السلوك | التنفيذ المحلي |
+|---|---|
+| النطاق | `scopeKey` مع السجل العام `warehouseId = null` أو المستودع المطابق |
+| list/search/SKU | تستبعد `isDeleted = true` كما في Isar |
+| lookup بالمعرف | لا يستبعد المحذوف، للحفاظ على asymmetry الحالية |
+| الحذف | soft-delete وتحديث `updatedAt` بدل حذف الصف |
+| الحقول الحرجة | account links، الأسعار، الكمية، valuation، sync metadata، tax category |
+| barcode | محفوظ في Drift كـnullable، لكنه **غير مقبول للـparity أو cutover** قبل إصلاح فجوة Isar/domain |
+
+نجحت اختبارات الحزمة وعددها **33 اختبارًا** بعد إضافة خمس اختبارات InventoryItems، ونجح التحليل الساكن للملفات المتأثرة بلا ملاحظات، كما نجح `git diff --check`. لم يُسجل InventoryItemStore في Providers التطبيق، ولم يتغير Isar أو `sync_service` أو أي مسار posting. لا يوجد commit أو push لشريحة InventoryItems حتى الآن.
+
+الخطوة الآمنة التالية هي مراجعة بوابة barcode وتقرير ما إذا كان سيتم إصلاح persistence في Isar في تغيير مستقل أو اعتماد barcode غير متاح تاريخيًا. بعد ذلك يمكن طلب إذن مستقل لإنشاء commit محلي لهذه الشريحة، ثم طلب آخر قبل أي push أو فتح PR.
 
 ## المراجع الداخلية
 
