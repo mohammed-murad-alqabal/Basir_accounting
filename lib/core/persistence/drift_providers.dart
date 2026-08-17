@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basir_accounting_system/core/persistence/drift_customers_vendors_shadow_read.dart';
 import 'package:basir_accounting_system/core/persistence/drift_goals_budgets_shadow_read.dart';
 import 'package:basir_accounting_system/core/persistence/drift_settings_shadow_read.dart';
 import 'package:basir_accounting_system/features/budget/data/repositories/drift_budget_repository.dart';
@@ -144,5 +145,22 @@ final driftSettingsShadowReadComparatorProvider =
   (ref) {
     final sink = InMemoryDriftShadowReadSink();
     return DriftSettingsShadowReadComparator(recorder: sink.record);
+  },
+);
+
+/// Feature flag مستقل لـCustomer shadow-read. يبقى مغلقًا حتى اعتماد parity
+/// على لقطة فعلية ومراجعة telemetry؛ لا يبدل Provider النشط.
+final driftCustomerShadowReadEnabledProvider = Provider<bool>((ref) => false);
+
+/// Feature flag مستقل لـVendor shadow-read. يبقى مغلقًا حتى اعتماد parity
+/// على لقطة فعلية ومراجعة telemetry؛ لا يبدل Provider النشط.
+final driftVendorShadowReadEnabledProvider = Provider<bool>((ref) => false);
+
+/// Comparator قابل للحقن لـCustomers وVendors؛ sink الذاكراتي للاختبارات فقط.
+final driftCustomersVendorsShadowReadComparatorProvider =
+    Provider<DriftCustomersVendorsShadowReadComparator>(
+  (ref) {
+    final sink = InMemoryDriftShadowReadSink();
+    return DriftCustomersVendorsShadowReadComparator(recorder: sink.record);
   },
 );
