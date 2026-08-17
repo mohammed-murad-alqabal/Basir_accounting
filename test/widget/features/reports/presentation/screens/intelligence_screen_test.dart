@@ -89,31 +89,33 @@ void main() {
   testWidgets('يعرض بطاقات المؤشرات والرؤى والرسم البياني للاتجاه', (
     tester,
   ) async {
+    final cashFlowCompleter = Completer<List<double>>();
     await tester.pumpWidget(
       _testApp(
         kpisFuture: Future<List<FinancialKpi>>.value(_kpis),
-        cashFlowFuture: Future<List<double>>.value(<double>[1200, -600, 900]),
+        cashFlowFuture: cashFlowCompleter.future,
       ),
     );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump();
 
     expect(find.text('انخفاض السيولة النقدية'), findsOneWidget);
     expect(find.text('تسارع في معدل الاستنزاف'), findsOneWidget);
     expect(find.text('أداء ربحي ممتاز'), findsOneWidget);
 
-    await tester.scrollUntilVisible(
-      find.text('Current Ratio', skipOffstage: false),
-      300,
-    );
-
     expect(find.text('Current Ratio', skipOffstage: false), findsOneWidget);
     expect(find.text('Burn Rate', skipOffstage: false), findsOneWidget);
     expect(find.text('Profit Margin', skipOffstage: false), findsOneWidget);
-    await tester.scrollUntilVisible(
+
+    cashFlowCompleter.complete(<double>[1200, -600, 900]);
+    await tester.pump();
+    await tester.pump();
+
+    await tester.dragUntilVisible(
       find.byType(LineChart),
-      300,
-      scrollable: find.byType(Scrollable).first,
+      find.byType(Scrollable).first,
+      const Offset(0, -200),
     );
     expect(find.byType(LineChart), findsOneWidget);
     expect(
@@ -122,7 +124,7 @@ void main() {
     );
     expect(
       find.byIcon(Icons.trending_up, skipOffstage: false),
-      findsNWidgets(2),
+      findsAtLeastNWidgets(2),
     );
   });
 

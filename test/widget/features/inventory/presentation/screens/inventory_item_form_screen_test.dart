@@ -134,9 +134,12 @@ void main() {
     );
     expect(tester.widget<TextFormField>(fields.at(4)).controller!.text, '2.5');
     expect(
-      find.bySemanticsLabel(
-        '${l10n.labelQuantity}: 40.0. '
-        '${l10n.inventoryItemQuantityMustUseMovement}',
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is Semantics &&
+            widget.properties.label ==
+                '${l10n.labelQuantity}: 40.0. '
+                    '${l10n.inventoryItemQuantityMustUseMovement}',
       ),
       findsOneWidget,
     );

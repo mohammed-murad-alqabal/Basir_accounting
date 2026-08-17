@@ -63,14 +63,26 @@ void main() {
         delay: const Duration(milliseconds: 30),
       );
       await tester.pumpWidget(buildSubject(service));
+      await tester.pump();
+      await tester.pump();
       final button = tester.widget<ElevatedButton>(
-        find.widgetWithText(ElevatedButton, 'إنشاء نسخة احتياطية الآن'),
+        find.ancestor(
+          of: find.text('إنشاء نسخة احتياطية الآن'),
+          matching: find.byWidgetPredicate(
+            (widget) => widget is ElevatedButton,
+          ),
+        ),
       );
       expect(button.onPressed, isNull);
 
       await tester.pump(const Duration(milliseconds: 40));
       final enabledButton = tester.widget<ElevatedButton>(
-        find.widgetWithText(ElevatedButton, 'إنشاء نسخة احتياطية الآن'),
+        find.ancestor(
+          of: find.text('إنشاء نسخة احتياطية الآن'),
+          matching: find.byWidgetPredicate(
+            (widget) => widget is ElevatedButton,
+          ),
+        ),
       );
       expect(enabledButton.onPressed, isNotNull);
     });
