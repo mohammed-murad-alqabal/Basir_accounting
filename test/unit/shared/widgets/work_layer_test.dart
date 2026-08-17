@@ -4,38 +4,37 @@
 /// التغطية: RTL/EN، الاستجابة للعرض، الفرز والاختيار، الإعلانات الصوتية.
 library;
 
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:basir_accounting_system/l10n/app_localizations.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:basir_accounting_system/core/domain/contracts/index.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_colors.dart';
+import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/work_layer/index.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 /// يغلف ودجت الطبقة بسياق تعريب واتجاه RTL/EN وRiverpod.
 Widget _wrap({
   required Widget child,
   required bool rtl,
   required Size surfaceSize,
-}) {
-  return MaterialApp(
-    locale: rtl ? const Locale('ar') : const Locale('en'),
-    supportedLocales: const [Locale('ar'), Locale('en')],
-    localizationsDelegates: const [
-      AppLocalizations.delegate,
-      GlobalMaterialLocalizations.delegate,
-      GlobalWidgetsLocalizations.delegate,
-      GlobalCupertinoLocalizations.delegate,
-    ],
-    home: MediaQuery(
-      data: MediaQueryData(size: surfaceSize),
-      child: Directionality(
-        textDirection: rtl ? TextDirection.rtl : TextDirection.ltr,
-        child: Scaffold(body: child),
+}) =>
+    MaterialApp(
+      locale: rtl ? const Locale('ar') : const Locale('en'),
+      supportedLocales: const [Locale('ar'), Locale('en')],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      home: MediaQuery(
+        data: MediaQueryData(size: surfaceSize),
+        child: Directionality(
+          textDirection: rtl ? TextDirection.rtl : TextDirection.ltr,
+          child: Scaffold(body: child),
+        ),
       ),
-    ),
-  );
-}
+    );
 
 void _setTestSurfaceSize(WidgetTester tester, Size size) {
   tester.view.physicalSize = size;
@@ -48,10 +47,13 @@ void main() {
   group('WorkStatusBadge', () {
     testWidgets('تعرض الحالة الموحدة بنص وأيقونة ولون دلالي', (tester) async {
       _setTestSurfaceSize(tester, const Size(800, 600));
-      await tester.pumpWidget(_wrap(
+      await tester.pumpWidget(
+        _wrap(
           child: const WorkStatusBadge(status: DocumentStatus.posted),
           rtl: true,
-          surfaceSize: const Size(800, 600)));
+          surfaceSize: const Size(800, 600),
+        ),
+      );
 
       expect(find.text('مرحّلة'), findsOneWidget);
       final badge =
@@ -81,7 +83,9 @@ void main() {
       await tester.pumpWidget(
         _wrap(
           child: const WorkStatusBadge(
-              status: DocumentStatus.draft, compact: true),
+            status: DocumentStatus.draft,
+            compact: true,
+          ),
           rtl: true,
           surfaceSize: const Size(800, 600),
         ),
@@ -96,20 +100,24 @@ void main() {
         (tester) async {
       _setTestSurfaceSize(tester, const Size(800, 600));
       expect(
-        () => WorkStatusBadge(label: 'بدون لون', backgroundColor: null),
+        () => WorkStatusBadge(label: 'بدون لون'),
         throwsAssertionError,
       );
     });
   });
 
   group('WorkDataGrid', () {
-    final columnText = WorkDataGridColumn<String>(
-        key: 'name', label: 'الاسم', builder: (e) => Text(e));
+    const columnText = WorkDataGridColumn<String>(
+      key: 'name',
+      label: 'الاسم',
+      builder: Text.new,
+    );
     final columnNumber = WorkDataGridColumn<String>(
-        key: 'amount',
-        label: 'المبلغ',
-        format: DataGridCellFormat.number,
-        builder: (e) => Text('100'));
+      key: 'amount',
+      label: 'المبلغ',
+      format: DataGridCellFormat.number,
+      builder: (e) => const Text('100'),
+    );
 
     testWidgets('تعرض الأعمدة والصفوف', (tester) async {
       _setTestSurfaceSize(tester, const Size(800, 600));
@@ -119,15 +127,18 @@ void main() {
       ];
       await tester.pumpWidget(
         _wrap(
-          child: WorkDataGrid<String>(columns: [columnText], entities: []),
+          child:
+              const WorkDataGrid<String>(columns: [columnText], entities: []),
           rtl: true,
           surfaceSize: const Size(800, 600),
         ),
       );
       await tester.pumpWidget(
         _wrap(
-          child:
-              WorkDataGrid<String>(columns: [columnText], entities: entities),
+          child: WorkDataGrid<String>(
+            columns: const [columnText],
+            entities: entities,
+          ),
           rtl: true,
           surfaceSize: const Size(800, 600),
         ),
@@ -141,7 +152,8 @@ void main() {
       _setTestSurfaceSize(tester, const Size(800, 600));
       await tester.pumpWidget(
         _wrap(
-          child: WorkDataGrid<String>(columns: [columnText], entities: []),
+          child:
+              const WorkDataGrid<String>(columns: [columnText], entities: []),
           rtl: true,
           surfaceSize: const Size(800, 600),
         ),
@@ -156,7 +168,7 @@ void main() {
       await tester.pumpWidget(
         _wrap(
           child: WorkDataGrid<String>(
-            columns: [columnText],
+            columns: const [columnText],
             entities: entities,
             onSelect: (entity) => tapped = entity,
           ),
@@ -175,7 +187,7 @@ void main() {
       await tester.pumpWidget(
         _wrap(
           child: WorkDataGrid<String>(
-            columns: [columnText],
+            columns: const [columnText],
             entities: const [],
             onSort: (value) => sorted = value,
           ),
@@ -191,11 +203,10 @@ void main() {
       _setTestSurfaceSize(tester, const Size(800, 600));
       await tester.pumpWidget(
         _wrap(
-          child: WorkDataGrid<String>(
+          child: const WorkDataGrid<String>(
             columns: [columnText],
             entities: [],
             sortKey: 'name',
-            sortAscending: true,
           ),
           rtl: true,
           surfaceSize: const Size(800, 600),
@@ -210,7 +221,7 @@ void main() {
       await tester.pumpWidget(
         _wrap(
           child: WorkDataGrid<String>(
-            columns: [columnText],
+            columns: const [columnText],
             entities: entities,
             showSelection: true,
           ),
@@ -227,7 +238,7 @@ void main() {
         _wrap(
           child: WorkDataGrid<String>(
             columns: [columnNumber],
-            entities: [],
+            entities: const [],
           ),
           rtl: true,
           surfaceSize: const Size(800, 600),
@@ -237,10 +248,12 @@ void main() {
       // Row الأول هو صف الرأس الرئيسي؛ عمود 'المبلغ' يتحاذى عبر صفوف
       // العمود الفرعية داخل خلاياه.
       final rows = tester
-          .widgetList<Row>(find.descendant(
-            of: find.byType(WorkDataGrid<String>).first,
-            matching: find.byType(Row),
-          ))
+          .widgetList<Row>(
+            find.descendant(
+              of: find.byType(WorkDataGrid<String>).first,
+              matching: find.byType(Row),
+            ),
+          )
           .toList(growable: false);
       expect(rows.skip(1).first.mainAxisAlignment, MainAxisAlignment.end);
     });
@@ -259,7 +272,6 @@ void main() {
           child: WorkFilterBar(
             options: options,
             selectedOptionId: 'posted',
-            narrowBreakpoint: 600,
           ),
           rtl: true,
           surfaceSize: const Size(800, 600),
@@ -278,7 +290,6 @@ void main() {
           child: WorkFilterBar(
             options: options,
             onSelectOption: (id) => selected = id,
-            narrowBreakpoint: 600,
           ),
           rtl: true,
           surfaceSize: const Size(800, 600),
@@ -297,7 +308,6 @@ void main() {
           child: WorkFilterBar(
             options: options,
             onSearchChanged: (text) => query = text,
-            narrowBreakpoint: 600,
           ),
           rtl: true,
           surfaceSize: const Size(800, 600),
@@ -315,7 +325,6 @@ void main() {
           child: WorkFilterBar(
             options: options,
             onExportRequested: () => exported = true,
-            narrowBreakpoint: 600,
           ),
           rtl: true,
           surfaceSize: const Size(800, 600),
@@ -331,7 +340,6 @@ void main() {
         _wrap(
           child: WorkFilterBar(
             options: options,
-            narrowBreakpoint: 600,
           ),
           rtl: true,
           surfaceSize: const Size(480, 800),
@@ -350,7 +358,7 @@ void main() {
       AuditEntry(
         type: AuditEventType.created,
         operatorName: 'أحمد المحاسب',
-        occurredAt: DateTime(2026, 1, 1),
+        occurredAt: DateTime(2026),
       ),
       AuditEntry(
         type: AuditEventType.posted,
@@ -400,8 +408,12 @@ void main() {
       _setTestSurfaceSize(tester, const Size(800, 600));
       var tapped = false;
       final items = entries
-          .map((e) => WorkAuditTimelineItem(
-              entry: e, onReferenceTap: () => tapped = true))
+          .map(
+            (e) => WorkAuditTimelineItem(
+              entry: e,
+              onReferenceTap: () => tapped = true,
+            ),
+          )
           .toList();
       await tester.pumpWidget(
         _wrap(
@@ -474,8 +486,6 @@ void main() {
                 key: 'amount',
                 label: 'Amount',
                 format: DataGridCellFormat.number,
-                flex: 1,
-                sortable: true,
                 builder: (e) => Text(e['amount'].toString()),
               ),
             ],
@@ -492,12 +502,11 @@ void main() {
       _setTestSurfaceSize(tester, const Size(800, 600));
       await tester.pumpWidget(
         _wrap(
-          child: WorkFilterBar(
+          child: const WorkFilterBar(
             options: [
-              WorkFilterOption(status: DocumentStatus.draft, id: 'draft')
+              WorkFilterOption(status: DocumentStatus.draft, id: 'draft'),
             ],
             selectedOptionId: 'draft',
-            narrowBreakpoint: 600,
           ),
           rtl: false,
           surfaceSize: const Size(800, 600),
@@ -517,7 +526,7 @@ void main() {
                 entry: AuditEntry(
                   type: AuditEventType.created,
                   operatorName: 'Alice',
-                  occurredAt: DateTime(2026, 8, 13, 10, 0, 0),
+                  occurredAt: DateTime(2026, 8, 13, 10),
                 ),
               ),
             ],

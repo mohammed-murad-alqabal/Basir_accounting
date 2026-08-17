@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-/// Integration tests for CI/CD workflows
+/// Contract tests for repository CI/CD controls.
 ///
-/// These tests verify that the CI/CD workflows function correctly
+/// These tests verify committed policy artifacts. They do not start nested
+/// Flutter invocations or expect coverage before the enclosing test command
+/// has completed writing it.
 void main() {
   group('CI/CD Integration Tests', () {
     group('Documentation CLI Integration', () {
@@ -16,248 +18,157 @@ void main() {
       });
 
       test('CLI tool has main function', () {
-        final cliFile = File(
+        final content = File(
           'lib/tools/documentation/cli/documentation_cli.dart',
-        );
-        final content = cliFile.readAsStringSync();
+        ).readAsStringSync();
 
         expect(content, contains('Future<void> main('));
         expect(content, contains('DocumentationCLI'));
       });
 
-      test('CLI tool has analyze command', () {
-        final cliFile = File(
+      test('CLI tool has analyze, validate, report, and help commands', () {
+        final content = File(
           'lib/tools/documentation/cli/documentation_cli.dart',
-        );
-        final content = cliFile.readAsStringSync();
+        ).readAsStringSync();
 
         expect(content, contains('analyze'));
         expect(content, contains('_runAnalyze'));
-      });
-
-      test('CLI tool has validate command', () {
-        final cliFile = File(
-          'lib/tools/documentation/cli/documentation_cli.dart',
-        );
-        final content = cliFile.readAsStringSync();
-
         expect(content, contains('validate'));
         expect(content, contains('_runValidate'));
-      });
-
-      test('CLI tool has report command', () {
-        final cliFile = File(
-          'lib/tools/documentation/cli/documentation_cli.dart',
-        );
-        final content = cliFile.readAsStringSync();
-
         expect(content, contains('report'));
         expect(content, contains('_runReport'));
-      });
-
-      test('CLI tool has help command', () {
-        final cliFile = File(
-          'lib/tools/documentation/cli/documentation_cli.dart',
-        );
-        final content = cliFile.readAsStringSync();
-
         expect(content, contains('help'));
         expect(content, contains('_printUsage'));
       });
     });
 
-    group('Quality Gates Integration', () {
-      test('should configure static analysis in Flutter CI', () {
-        final workflowFile = File('.github/workflows/flutter_ci.yml');
-        final content = workflowFile.readAsStringSync();
+    group('Production Quality Gate Contract', () {
+      late String workflow;
 
-        // The workflow itself executes analysis before test execution. Running
-        // it again here is non-hermetic and may exceed this test's timeout.
-        expect(content, contains('flutter analyze --no-fatal-infos'));
+      setUpAll(() {
+        final workflowFile = File(
+          '.github/workflows/production-quality-gate.yml',
+        );
+        expect(workflowFile.existsSync(), isTrue);
+        workflow = workflowFile.readAsStringSync();
       });
 
-      test(
-        'should run flutter test successfully',
-        () async {
-          // Run a simple test
-          final result = await Process.run('flutter', [
-            'test',
-            'test/integration/ci_cd_integration_test.dart',
-          ]);
+      test('pins the Flutter toolchain and locks dependency resolution', () {
+        expect(workflow, contains('FLUTTER_VERSION: "3.44.9"'));
+        expect(workflow, contains('FLUTTER_GIT_SHA:'));
+        expect(workflow, contains(r'checkout --detach "$FLUTTER_GIT_SHA"'));
+        expect(workflow, contains('flutter pub get'));
+        expect(workflow, contains('git diff --exit-code -- pubspec.lock'));
+      });
 
-          // Should complete
-          expect(result.exitCode, anyOf(0, 1));
-        },
-        skip: 'Avoid recursive test execution',
-      );
-
-      test('should configure coverage generation in Flutter CI', () {
-        final workflowFile = File('.github/workflows/flutter_ci.yml');
-        final content = workflowFile.readAsStringSync();
-
-        // Flutter writes lcov.info only after the entire test suite completes,
-        // so inspecting it during the same suite is inherently racy.
+      test('enforces Flutter sources, format, analysis, tests, and coverage',
+          () {
+        expect(workflow, contains('dart run build_runner build'));
+        expect(workflow, contains('dart format --set-exit-if-changed'));
+        expect(workflow, contains('flutter analyze --fatal-infos'));
         expect(
-            content, contains('flutter test --coverage --reporter expanded'));
-        expect(content, contains('coverage/lcov.info'));
+          workflow,
+          contains('flutter test --coverage --reporter expanded'),
+        );
+        expect(workflow, contains('test -s coverage/lcov.info'));
+        expect(workflow, contains('MIN_COVERAGE: "70"'));
+        expect(workflow, contains('Coverage %.2f%% is below required'));
+      });
+
+      test('enforces Rust quality, test, and vulnerability controls', () {
+        expect(workflow, contains('cargo fmt --all -- --check'));
+        expect(workflow, contains('cargo clippy --workspace'));
+        expect(workflow, contains('-- -D warnings'));
+        expect(workflow, contains('cargo test --workspace --all-targets'));
+        expect(workflow, contains('cargo audit --deny warnings'));
+        expect(workflow, contains('DATABASE_URL: postgres://'));
+        expect(workflow, contains('migrations/*.sql'));
+      });
+
+      test('includes mandatory secret scan and dependency review jobs', () {
+        expect(workflow, contains('secret-scan:'));
+        expect(
+          workflow,
+          contains('Install checksum-verified Gitleaks scanner'),
+        );
+        expect(workflow, contains('GITLEAKS_ARCHIVE_SHA256:'));
+        expect(workflow, contains('sha256sum --check --strict'));
+        expect(
+          workflow,
+          contains(r'"$RUNNER_TEMP/gitleaks" git --redact --verbose'),
+        );
+        expect(workflow, contains(r'${BASE_SHA}..${HEAD_SHA}'));
+        expect(workflow, contains('--log-opts="--all"'));
+        expect(workflow, contains('dependency-review:'));
+        expect(workflow, contains('actions/dependency-review-action@'));
+        expect(workflow, contains('fail-on-severity: high'));
+      });
+
+      test('fails the aggregate gate when a mandatory check does not pass', () {
+        expect(workflow, contains('quality-gate:'));
+        expect(workflow, contains(r'if: ${{ always() }}'));
+        expect(workflow, contains(r'"$result" != success'));
+        expect(
+          workflow,
+          contains('A mandatory production-quality check did not pass.'),
+        );
+        expect(workflow, contains('exit 1'));
+      });
+
+      test('isolates release signing behind the protected environment', () {
+        expect(workflow, contains('environment: production'));
+        expect(workflow, contains('ANDROID_KEYSTORE_BASE64'));
+        expect(workflow, contains('Build signed Android artifacts'));
+        expect(workflow, contains('rm -f android/app/upload-keystore.jks'));
       });
     });
 
-    group('Workflow File Validation', () {
-      test('should have valid documentation_check.yml', () {
-        final workflowFile = File('.github/workflows/documentation_check.yml');
+    group('Policy Documentation', () {
+      test('documents the production gate and required status check', () {
+        final document = File('docs/CI_PRODUCTION_GATE.md');
+        expect(document.existsSync(), isTrue);
 
-        expect(workflowFile.existsSync(), isTrue);
-
-        final content = workflowFile.readAsStringSync();
-
-        // Check for required sections
-        expect(content, contains('name: Documentation Check'));
-        expect(content, contains('on:'));
-        expect(content, contains('jobs:'));
-        expect(content, contains('documentation-coverage:'));
+        final content = document.readAsStringSync();
+        expect(content, contains('# بوابة الإنتاج في GitHub Actions'));
+        expect(content, contains('Required production quality gate'));
+        expect(content, contains('branch protection'));
+        expect(content, contains('production'));
       });
 
-      test('should have valid quality_gates.yml', () {
-        final workflowFile = File('.github/workflows/quality_gates.yml');
+      test('documents time-bound RustSec dependency exceptions', () {
+        final document = File('docs/DEPENDENCY_SECURITY_MONITORING.md');
+        expect(document.existsSync(), isTrue);
 
-        expect(workflowFile.existsSync(), isTrue);
-
-        final content = workflowFile.readAsStringSync();
-
-        // Check for required sections
-        expect(content, contains('name: Quality Gates'));
-        expect(content, contains('documentation-quality-gate:'));
-        expect(content, contains('code-quality-gate:'));
-        expect(content, contains('test-quality-gate:'));
-        expect(content, contains('security-quality-gate:'));
+        final content = document.readAsStringSync();
+        expect(content, contains('RUSTSEC-2026-0235'));
+        expect(content, contains('RUSTSEC-2023-0071'));
+        expect(content, contains('RUSTSEC-2026-0221'));
+        expect(content, contains('2026-09-12'));
       });
 
-      test('should have quality gates configuration', () {
-        final configFile = File('.github/quality_gates_config.yml');
-
-        expect(configFile.existsSync(), isTrue);
-
-        final content = configFile.readAsStringSync();
-
-        // Check for required configuration sections
-        expect(content, contains('documentation:'));
-        expect(content, contains('min_coverage:'));
-        expect(content, contains('code_quality:'));
-        expect(content, contains('test_coverage:'));
-        expect(content, contains('security:'));
-      });
-
-      test('should have quality gates documentation', () {
-        final docFile = File('.github/QUALITY_GATES.md');
-
-        expect(docFile.existsSync(), isTrue);
-
-        final content = docFile.readAsStringSync();
-
-        // Check for required documentation sections
-        expect(content, contains('# Quality Gates Documentation'));
-        expect(content, contains('## Overview'));
-        expect(content, contains('## Quality Gates'));
-        expect(content, contains('## Running Quality Gates Locally'));
-      });
-
-      test('should have executable quality gates script', () {
+      test('keeps the local quality-gate script executable', () {
         final scriptFile = File('scripts/run_quality_gates.sh');
-
         expect(scriptFile.existsSync(), isTrue);
 
-        // Check if script is executable
         final stat = scriptFile.statSync();
-        final isExecutable = (stat.mode & 0x49) != 0; // Check execute bits
-
+        final isExecutable = (stat.mode & 0x49) != 0;
         expect(isExecutable, isTrue);
       });
     });
 
-    group('PR Rejection Simulation', () {
-      test('workflow checks coverage threshold', () {
-        final workflowFile = File('.github/workflows/documentation_check.yml');
-        final content = workflowFile.readAsStringSync();
-
-        expect(content, contains('Check coverage threshold'));
-        expect(content, contains('THRESHOLD'));
-      });
-
-      test('workflow has strict validation mode', () {
-        final workflowFile = File('.github/workflows/quality_gates.yml');
-        final content = workflowFile.readAsStringSync();
-
-        expect(content, contains('--strict'));
-      });
-
-      test('workflow fails on low coverage', () {
-        final workflowFile = File('.github/workflows/documentation_check.yml');
-        final content = workflowFile.readAsStringSync();
-
-        expect(content, contains('exit 1'));
-      });
-    });
-
     group('Report Generation', () {
-      test('CLI supports markdown format', () {
-        final cliFile = File(
+      test('CLI supports markdown, JSON, and HTML formats', () {
+        final content = File(
           'lib/tools/documentation/cli/documentation_cli.dart',
-        );
-        final content = cliFile.readAsStringSync();
+        ).readAsStringSync();
 
         expect(content, contains('markdown'));
         expect(content, contains('ReportFormat.markdown'));
-      });
-
-      test('CLI supports JSON format', () {
-        final cliFile = File(
-          'lib/tools/documentation/cli/documentation_cli.dart',
-        );
-        final content = cliFile.readAsStringSync();
-
         expect(content, contains('json'));
         expect(content, contains('ReportFormat.json'));
-      });
-
-      test('CLI supports HTML format', () {
-        final cliFile = File(
-          'lib/tools/documentation/cli/documentation_cli.dart',
-        );
-        final content = cliFile.readAsStringSync();
-
         expect(content, contains('html'));
         expect(content, contains('ReportFormat.html'));
-      });
-
-      test('CLI has report format parser', () {
-        final cliFile = File(
-          'lib/tools/documentation/cli/documentation_cli.dart',
-        );
-        final content = cliFile.readAsStringSync();
-
         expect(content, contains('_parseReportFormat'));
-      });
-    });
-
-    group('Notification System', () {
-      test('should have PR comment functionality in workflows', () {
-        final workflowFile = File('.github/workflows/documentation_check.yml');
-        final content = workflowFile.readAsStringSync();
-
-        // Check for PR comment action
-        expect(content, contains('Comment on PR'));
-        expect(content, contains('github-script'));
-        expect(content, contains('createComment'));
-      });
-
-      test('should have summary job in quality gates', () {
-        final workflowFile = File('.github/workflows/quality_gates.yml');
-        final content = workflowFile.readAsStringSync();
-
-        // Check for summary job
-        expect(content, contains('quality-gate-summary:'));
-        expect(content, contains('needs:'));
       });
     });
   });

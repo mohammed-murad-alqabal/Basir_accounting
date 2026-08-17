@@ -6,6 +6,19 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'journal_entry.freezed.dart';
 part 'journal_entry.g.dart';
 
+/// Serializes [Decimal] values as portable JSON strings without loss of
+/// monetary precision.
+class DecimalJsonConverter implements JsonConverter<Decimal, String> {
+  /// Creates a decimal JSON converter.
+  const DecimalJsonConverter();
+
+  @override
+  Decimal fromJson(String json) => Decimal.fromJson(json);
+
+  @override
+  String toJson(Decimal object) => object.toString();
+}
+
 /// Operational lifecycle states of a Journal Entry.
 enum JournalEntryStatus {
   /// Initial editable state for preparation.
@@ -89,18 +102,19 @@ class AuditLogEntry with _$AuditLogEntry {
 @freezed
 class JournalEntryLine with _$JournalEntryLine {
   /// Creates a journal entry line.
+  @JsonSerializable(explicitToJson: true)
   const factory JournalEntryLine({
-    /// Reference to the target [Account] ID.
+    /// Identifier of the target account.
     required String accountId,
 
     /// Denormalized account name for high-performance listing and audit.
     required String accountName,
 
     /// Positive increase for Debit-nature accounts.
-    required Decimal debit,
+    @DecimalJsonConverter() required Decimal debit,
 
     /// Positive increase for Credit-nature accounts.
-    required Decimal credit,
+    @DecimalJsonConverter() required Decimal credit,
 
     /// Line-specific memo or explanation.
     String? description,
@@ -116,10 +130,10 @@ class JournalEntryLine with _$JournalEntryLine {
     String? originalCurrency,
 
     /// Spot exchange rate at the time of recording.
-    Decimal? exchangeRate,
+    @DecimalJsonConverter() Decimal? exchangeRate,
 
     /// Original amount in the source currency before conversion.
-    Decimal? originalAmount,
+    @DecimalJsonConverter() Decimal? originalAmount,
   }) = _JournalEntryLine;
 
   /// deserialization from JSON format.
@@ -132,6 +146,7 @@ class JournalEntryLine with _$JournalEntryLine {
 @freezed
 class JournalEntry with _$JournalEntry {
   /// Creates a central journal entry.
+  @JsonSerializable(explicitToJson: true)
   const factory JournalEntry({
     /// Unique internal UUID for the entry.
     required String id,

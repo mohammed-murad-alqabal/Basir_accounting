@@ -15,6 +15,6 @@
 //! - SHA-256 hash chain for tamper detection
 //! - Append-only structure
 
-pub mod models;
 pub mod chain;
+pub mod models;
 pub mod service;

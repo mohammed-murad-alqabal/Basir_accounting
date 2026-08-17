@@ -285,7 +285,7 @@ void main() {
     });
 
     test('rejects an update that reuses another item barcode', () async {
-      final existing = makeItem(id: 'item-1', barcode: '6291111111111');
+      final existing = makeItem(barcode: '6291111111111');
       final other = makeItem(
         id: 'item-2',
         sku: 'SKU-002',

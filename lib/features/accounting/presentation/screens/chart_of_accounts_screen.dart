@@ -108,6 +108,7 @@ class ChartOfAccountsScreen extends ConsumerWidget {
       floatingActionButton: AppEnhancedButton(
         label: context.l10n.btnCreateAccount,
         icon: Icons.add,
+        width: 180,
         onPressed: () => Navigator.pushNamed(context, '/account-form'),
       ),
     );

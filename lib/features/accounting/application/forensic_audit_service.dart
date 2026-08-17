@@ -90,8 +90,49 @@ class ForensicAuditService extends _$ForensicAuditService
       );
     }
 
-    // 4. Sequence Integrity Check (Placeholder for Smart Correction)
-    // In a real scenario, this would call auditSequence and map anomalies to adjustments.
+    // 4. ZATCA identity check for posted invoice entries (CP-014).
+    if (entry.sourceDocument == 'invoice' &&
+        entry.status == domain_je.JournalEntryStatus.posted) {
+      final invoice = await ref
+          .read(invoiceRepositoryProvider)
+          .getInvoiceById(entry.sourceId);
+      if (invoice == null ||
+          invoice.zatcaUuid == null ||
+          invoice.zatcaUuid!.isEmpty ||
+          invoice.zatcaHash == null ||
+          invoice.zatcaHash!.isEmpty) {
+        return AgentResult(
+          agentId: agentId,
+          isAllowed: false,
+          rationale: 'Missing ZATCA Phase 2 cryptographic identity.',
+          confidenceScore: 0.99,
+        );
+      }
+    }
+
+    // 5. Sequence integrity check (CP-011).
+    final existingEntries =
+        await ref.read(accountingRepositoryProvider).getJournalEntries();
+    final sequenceGap = _sequenceGapRationale(entry, existingEntries);
+    if (sequenceGap != null) {
+      return AgentResult(
+        agentId: agentId,
+        isAllowed: true,
+        rationale: sequenceGap,
+        confidenceScore: 0.9,
+      );
+    }
+
+    // 6. Operational-hours anomaly detection (CP-015).
+    if (entry.date.hour < 6 || entry.date.hour >= 22) {
+      final hour = entry.date.hour.toString().padLeft(2, '0');
+      return AgentResult(
+        agentId: agentId,
+        isAllowed: true,
+        rationale: 'Entry recorded during non-standard hours: $hour:00.',
+        confidenceScore: 0.85,
+      );
+    }
 
     return AgentResult(
       agentId: agentId,
@@ -100,6 +141,50 @@ class ForensicAuditService extends _$ForensicAuditService
       confidenceScore: 0.95,
       suggestedAdjustments:
           suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
+    );
+  }
+
+  String? _sequenceGapRationale(
+    domain_je.JournalEntry proposedEntry,
+    List<domain_je.JournalEntry> existingEntries,
+  ) {
+    final proposedReference = _referenceParts(proposedEntry.referenceNumber);
+    if (proposedReference == null) return null;
+
+    final priorReferences = existingEntries
+        .map((entry) => _referenceParts(entry.referenceNumber))
+        .whereType<_ReferenceParts>()
+        .where(
+          (reference) =>
+              reference.prefix == proposedReference.prefix &&
+              reference.number < proposedReference.number,
+        )
+        .toList();
+    if (priorReferences.isEmpty) return null;
+
+    priorReferences.sort((left, right) => right.number.compareTo(left.number));
+    final previous = priorReferences.first;
+    final expectedNumber = previous.number + 1;
+    if (proposedReference.number == expectedNumber) return null;
+
+    final expectedReference = '${proposedReference.prefix}'
+        '${expectedNumber.toString().padLeft(proposedReference.width, '0')}';
+    final previousReference = '${previous.prefix}'
+        '${previous.number.toString().padLeft(previous.width, '0')}';
+    return 'Gap detected: expected $expectedReference between '
+        '$previousReference and ${proposedEntry.referenceNumber}.';
+  }
+
+  _ReferenceParts? _referenceParts(String referenceNumber) {
+    final match = RegExp(r'^(.*?)(\d+)$').firstMatch(referenceNumber);
+    if (match == null) return null;
+    final numberText = match.group(2)!;
+    final number = int.tryParse(numberText);
+    if (number == null) return null;
+    return _ReferenceParts(
+      prefix: match.group(1)!,
+      number: number,
+      width: numberText.length,
     );
   }
 
@@ -131,11 +216,7 @@ class ForensicAuditService extends _$ForensicAuditService
             (a) => a.when(
               sequenceGap: (expected, found) =>
                   'Sequence gap: Expected $expected but found $found.',
-              reconciliationMismatch: (
-                accountId,
-                bookBalance,
-                physicalCount,
-              ) =>
+              reconciliationMismatch: (accountId, bookBalance, physicalCount) =>
                   'Reconciliation mismatch in account $accountId: Book $bookBalance vs Count $physicalCount.',
               orphanedDraft: (entryId, date) =>
                   'Orphaned draft entry #$entryId dated $date.',
@@ -160,9 +241,7 @@ class ForensicAuditService extends _$ForensicAuditService
   /// Performs a thorough scrutiny of the entire historical ledger.
   ///
   /// Verifies hash chain integrity (Standard Reference: CP-011).
-  Future<AuditResult> scrutinizeHistoricalLedger({
-    String locale = 'en',
-  }) async {
+  Future<AuditResult> scrutinizeHistoricalLedger({String locale = 'en'}) async {
     final l10n = lookupAppLocalizations(Locale(locale));
     final repository = ref.read(accountingRepositoryProvider);
     final entries = await repository.getJournalEntries();
@@ -173,9 +252,7 @@ class ForensicAuditService extends _$ForensicAuditService
 
     for (final entry in sortedEntries) {
       if (!entry.isBalanced) {
-        issues.add(
-          l10n.errForensicImbalance(entry.referenceNumber),
-        );
+        issues.add(l10n.errForensicImbalance(entry.referenceNumber));
       }
 
       // Verify mathematical identity
@@ -184,9 +261,7 @@ class ForensicAuditService extends _$ForensicAuditService
         (sum, l) => sum + l.debit,
       );
       if (calculatedSubtotal != entry.totalDebit) {
-        issues.add(
-          l10n.errForensicDiscrepancy(entry.referenceNumber),
-        );
+        issues.add(l10n.errForensicDiscrepancy(entry.referenceNumber));
       }
     }
 
@@ -231,4 +306,16 @@ class ForensicAuditService extends _$ForensicAuditService
           );
         }).toList(),
       );
+}
+
+class _ReferenceParts {
+  const _ReferenceParts({
+    required this.prefix,
+    required this.number,
+    required this.width,
+  });
+
+  final String prefix;
+  final int number;
+  final int width;
 }

@@ -48,14 +48,19 @@ jobs:
           fi
 
       - name: Check for security vulnerabilities
+        env:
+          OSV_SCANNER_VERSION: v2.5.0
+          OSV_SCANNER_SHA256: edcfc41d257db36148f065055655fe3fcfc434b0b423ea67468a84c207524e0c
         run: |
-          echo "🔒 Checking for security vulnerabilities..."
-
-          # Dependency Review above is the vulnerability gate. This command
-          # reports the resolved package state without the removed null-safety mode.
-          flutter pub outdated
-
-          echo "✅ Dependency state check completed"
+          set -euo pipefail
+          scanner="$RUNNER_TEMP/osv-scanner"
+          curl --fail --location --proto '=https' --tlsv1.2 \
+            --output "$scanner" \
+            "https://github.com/google/osv-scanner/releases/download/${OSV_SCANNER_VERSION}/osv-scanner_linux_amd64"
+          printf '%s  %s\n' "$OSV_SCANNER_SHA256" "$scanner" | sha256sum --check --strict
+          chmod 0755 "$scanner"
+          "$scanner" --version
+          "$scanner" scan source --lockfile pubspec.lock
 
       - name: Analyze dependency licenses
         run: |

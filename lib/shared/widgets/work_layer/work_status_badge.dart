@@ -6,14 +6,14 @@
 /// المرجع: مكونات قابلة لإعادة الاستخدام — القسم 7.
 library;
 
-import 'package:flutter/material.dart';
 import 'package:basir_accounting_system/core/domain/contracts/index.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_colors.dart';
 import 'package:basir_accounting_system/core/theme/tokens/app_text_styles.dart';
 import 'package:basir_accounting_system/core/theme/tokens/font_weights.dart';
+import 'package:basir_accounting_system/core/theme/tokens/icon_sizes.dart';
 import 'package:basir_accounting_system/core/theme/tokens/radii.dart';
 import 'package:basir_accounting_system/core/theme/tokens/spacing.dart';
-import 'package:basir_accounting_system/core/theme/tokens/icon_sizes.dart';
+import 'package:flutter/material.dart';
 
 /// شارة حالة الوثيقة: نص + رمز + لون دلالي.
 ///
@@ -68,9 +68,13 @@ class WorkStatusBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final padding = compact
         ? const EdgeInsets.symmetric(
-            horizontal: Spacing.sm, vertical: Spacing.xs)
+            horizontal: Spacing.sm,
+            vertical: Spacing.xs,
+          )
         : const EdgeInsets.symmetric(
-            horizontal: Spacing.md, vertical: Spacing.sm);
+            horizontal: Spacing.md,
+            vertical: Spacing.sm,
+          );
     final iconSize = compact ? IconSizes.sm : IconSizes.md;
     final fontSize =
         compact ? AppTextStyles.labelSmallSize : AppTextStyles.labelMediumSize;
@@ -89,7 +93,6 @@ class WorkStatusBadge extends StatelessWidget {
           Flexible(
             child: FittedBox(
               fit: BoxFit.scaleDown,
-              alignment: Alignment.center,
               child: Text(
                 _labelOf(context),
                 style: AppTextStyles.bodySmall.copyWith(

@@ -257,7 +257,6 @@ final _financialReportProvider = FutureProvider.autoDispose.family<
       bool useFairValue,
     })>((ref, params) async {
   final service = ref.watch(nativeReportingServiceProvider);
-  final fairValueService = ref.watch(fairValuationServiceProvider);
 
   switch (params.type) {
     case FinancialReportType.incomeStatement:
@@ -269,6 +268,7 @@ final _financialReportProvider = FutureProvider.autoDispose.family<
       // For BS, 'toDate' is the 'As Of' date.
       Map<String, String>? updates;
       if (params.useFairValue) {
+        final fairValueService = ref.watch(fairValuationServiceProvider);
         final asOfDate = DateTime.parse(params.toDate);
         final adjustments =
             await fairValueService.getFairValueAdjustments(asOfDate);

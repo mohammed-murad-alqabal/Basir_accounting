@@ -106,52 +106,63 @@ class InvoiceDetailScreen extends ConsumerWidget {
         children: [
           Icon(statusIcon, color: statusColor, size: 24),
           const SizedBox(width: Spacing.md),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                invoice.status.toDisplayString(ctx),
-                style: AppTextStyles.titleMedium.copyWith(
-                  color: statusColor,
-                  fontWeight: FontWeights.bold,
-                ),
-              ),
-              const SizedBox(height: Spacing.xs),
-              ZatcaStatusBadge(status: invoice.zatcaStatus),
-              if (isPaid && invoice.paidDate != null)
-                Text(
-                  '${ctx.l10n.labelPaidDate}: '
-                  '${FormatHelpers.formatDate(
-                    invoice.paidDate!,
-                    locale: ctx.l10n.localeName,
-                  )}',
-                  textDirection: TextDirection.ltr,
-                  style: AppTextStyles.bodySmall,
-                ),
-            ],
-          ),
-          if (invoice.currency != 'SAR') ...[
-            const SizedBox(height: Spacing.md),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  ctx.l10n.labelBaseCurrencyEquivalent,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    fontWeight: FontWeights.medium,
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-                Text(
-                  FormatHelpers.formatCurrency(
-                    invoice.totalAmountBaseCurrency,
-                  ),
+                  invoice.status.toDisplayString(ctx),
                   style: AppTextStyles.titleMedium.copyWith(
+                    color: statusColor,
                     fontWeight: FontWeights.bold,
-                    color: AppColors.textSecondary,
                   ),
                 ),
+                const SizedBox(height: Spacing.xs),
+                ZatcaStatusBadge(status: invoice.zatcaStatus),
+                if (isPaid && invoice.paidDate != null)
+                  Text(
+                    '${ctx.l10n.labelPaidDate}: '
+                    '${FormatHelpers.formatDate(
+                      invoice.paidDate!,
+                      locale: ctx.l10n.localeName,
+                    )}',
+                    textDirection: TextDirection.ltr,
+                    style: AppTextStyles.bodySmall,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
               ],
+            ),
+          ),
+          if (invoice.currency != 'SAR') ...[
+            const SizedBox(width: Spacing.md),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    ctx.l10n.labelBaseCurrencyEquivalent,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      fontWeight: FontWeights.medium,
+                      color: AppColors.textSecondary,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    FormatHelpers.formatCurrency(
+                      invoice.totalAmountBaseCurrency,
+                    ),
+                    style: AppTextStyles.titleMedium.copyWith(
+                      fontWeight: FontWeights.bold,
+                      color: AppColors.textSecondary,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
           ],
         ],
@@ -533,10 +544,14 @@ class InvoiceDetailScreen extends ConsumerWidget {
             children: [
               const Icon(Icons.security, size: 20, color: AppColors.primary),
               const SizedBox(width: Spacing.sm),
-              Text(
-                ctx.l10n.zatcaComplianceText,
-                style: AppTextStyles.titleSmall.copyWith(
-                  fontWeight: FontWeights.bold,
+              Expanded(
+                child: Text(
+                  ctx.l10n.zatcaComplianceText,
+                  style: AppTextStyles.titleSmall.copyWith(
+                    fontWeight: FontWeights.bold,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],

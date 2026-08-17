@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// ***
 /// Cognitive Foundation: ForgotPasswordScreen
 ///
-/// Minimal recovery entry point referenced by [AppRouter] at
+/// Minimal recovery entry point registered by the application router at
 /// `'/forgot-password'`. Collects the user's registered e-mail address.
 ///
 /// This module provides the navigation contract only; actual recovery
@@ -33,12 +33,12 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   void _onSubmit() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
-    final email = _emailController.text.trim();
-
-    final context = this.context;
-    Navigator.of(context).pushReplacementNamed(
-      '/reset-password',
-      arguments: <String, String>{'email': email, 'token': ''},
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'تم تسجيل الطلب. يرجى التواصل مع مسؤول النظام لإتمام إعادة التعيين.',
+        ),
+      ),
     );
   }
 
@@ -49,7 +49,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.forgotPassword)),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
           child: Column(
