@@ -1,6 +1,4 @@
-use accounting_core::{
-    standards::{registry::StandardsRegistry, validator::validate_complete},
-};
+use accounting_core::standards::{registry::StandardsRegistry, validator::validate_complete};
 use proptest::prelude::*;
 
 // Generates valid-looking standard references
@@ -37,7 +35,7 @@ proptest! {
     ) {
         let registry = StandardsRegistry::load_defaults();
         let result = validate_complete(&std_ref, &registry);
-        
+
         // Invariant: Known references must always validate
         prop_assert!(result.is_ok());
     }

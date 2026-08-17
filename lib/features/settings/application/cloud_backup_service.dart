@@ -16,7 +16,7 @@ part 'cloud_backup_service.g.dart';
 class CloudBackupService extends _$CloudBackupService {
   late final GoogleSignIn _googleSignIn;
   GoogleSignInAccount? _currentUser;
-  StreamSubscription<GoogleSignInAccount?>? _sub;
+  StreamSubscription<GoogleSignInAuthenticationEvent>? _sub;
 
   @override
   FutureOr<void> build() {
@@ -29,7 +29,7 @@ class CloudBackupService extends _$CloudBackupService {
       } else if (event is GoogleSignInAuthenticationEventSignOut) {
         _currentUser = null;
       }
-    }) as StreamSubscription<GoogleSignInAccount?>?;
+    });
 
     ref.onDispose(() async {
       await _sub?.cancel();
@@ -73,6 +73,8 @@ class CloudBackupService extends _$CloudBackupService {
   /// استعادة نسخة احتياطية من Drive (تتطلب إعادة تشغيل التطبيق)
   Future<bool> restoreFromDrive(String fileId) async {
     try {
+      if (!isSignedIn || _currentUser == null) return false;
+
       final appDocDir = await getApplicationDocumentsDirectory();
       // Isar 3 name convention: [name].isar
       final restorePath = '${appDocDir.path}/basir_db.isar.restore';
@@ -97,7 +99,7 @@ class CloudBackupService extends _$CloudBackupService {
       final account = await _googleSignIn.authenticate();
       _currentUser = account;
       return account;
-    } on Exception catch (e) {
+    } on Object catch (e) {
       debugPrint('❌ [BACKUP] Google Sign-In Error: $e');
       return null;
     }

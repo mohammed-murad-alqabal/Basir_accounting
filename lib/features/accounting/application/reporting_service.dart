@@ -218,6 +218,8 @@ class ReportingService extends _$ReportingService {
   Future<Map<String, double>> getFinancialHealthIndicators() async {
     final balanceSheet = await getBalanceSheet();
     final incomeStatement = await getIncomeStatement();
+    final accountingService = ref.read(accountingServiceProvider.notifier);
+    final accounts = await accountingService.getAccounts();
 
     final assets = balanceSheet['assets'] ?? Decimal.zero;
     final liabilities = balanceSheet['liabilities'] ?? Decimal.zero;
@@ -227,9 +229,9 @@ class ReportingService extends _$ReportingService {
         liabilities != Decimal.zero ? (assets / liabilities).toDouble() : 0.0;
 
     // 2. Net Margin
-    final revenue = incomeStatement.entries
-        .where((e) => e.key == Ifrs18Category.operating)
-        .fold(Decimal.zero, (prev, curr) => prev + curr.value);
+    final revenue = accounts
+        .where((account) => account.type == acct.AccountType.revenue)
+        .fold(Decimal.zero, (total, account) => total + account.balance);
 
     final netIncome = incomeStatement.values.fold(
       Decimal.zero,

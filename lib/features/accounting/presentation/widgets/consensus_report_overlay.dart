@@ -29,7 +29,11 @@ class ConsensusReportOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final glassTheme = Theme.of(context).extension<GlassTheme>()!;
+    final theme = Theme.of(context);
+    final glassTheme = theme.extension<GlassTheme>() ??
+        (theme.brightness == Brightness.dark
+            ? GlassTheme.dark()
+            : GlassTheme.light());
     final l10n = AppLocalizations.of(context);
 
     return Scaffold(

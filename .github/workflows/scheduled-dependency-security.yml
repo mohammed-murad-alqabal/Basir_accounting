@@ -52,7 +52,7 @@ jobs:
     steps:
       - name: Enforce zero open high or critical Dependabot alerts
         env:
-          GH_TOKEN: ${{ secrets.BASIR_REPOSITORY_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           alerts="$(gh api "/repos/${GITHUB_REPOSITORY}/dependabot/alerts?state=open&per_page=100")"

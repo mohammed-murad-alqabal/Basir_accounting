@@ -1,7 +1,74 @@
+import 'package:basir_accounting_system/core/models/sync_status.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
+import 'package:basir_accounting_system/features/zatca/domain/zatca_types.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+Invoice _invoiceFixture({
+  InvoiceStatus status = InvoiceStatus.sent,
+  DateTime? dueDate,
+  Decimal? subtotalAmount,
+  Decimal? taxAmount,
+  Decimal? totalAmount,
+}) {
+  final issuedAt = DateTime.utc(2026, 1, 1, 9);
+  return Invoice(
+    id: 'invoice-001',
+    invoiceNumber: 'INV-2026-001',
+    customerId: 'customer-001',
+    customerName: 'شركة بصير',
+    items: [
+      InvoiceItem(
+        id: 'item-001',
+        name: 'خدمة محاسبية',
+        quantity: Decimal.fromInt(2),
+        price: Decimal.fromInt(50),
+        total: Decimal.fromInt(100),
+        taxAmount: Decimal.fromInt(15),
+        taxRate: Decimal.parse('0.15'),
+        description: 'اشتراك شهري',
+      ),
+      InvoiceItem(
+        id: 'item-002',
+        name: 'استشارة',
+        quantity: Decimal.one,
+        price: Decimal.fromInt(20),
+        total: Decimal.fromInt(20),
+        taxAmount: Decimal.fromInt(3),
+        taxRate: Decimal.parse('0.15'),
+      ),
+    ],
+    issuedDate: issuedAt,
+    dueDate: dueDate ?? issuedAt.add(const Duration(days: 30)),
+    createdAt: issuedAt,
+    updatedAt: issuedAt,
+    status: status,
+    subtotalAmount: subtotalAmount ?? Decimal.fromInt(120),
+    taxAmount: taxAmount ?? Decimal.fromInt(18),
+    discountAmount: Decimal.fromInt(8),
+    totalAmount: totalAmount ?? Decimal.fromInt(130),
+    paidAmount: Decimal.fromInt(30),
+    taxRate: Decimal.parse('0.15'),
+    discountRate: Decimal.parse('0.05'),
+    exchangeRate: Decimal.parse('3.75'),
+    paidDate: issuedAt.add(const Duration(days: 3)),
+    currency: 'USD',
+    notes: 'يتطلب مراجعة',
+    terms: 'السداد خلال 30 يوماً',
+    zatcaUuid: 'zatca-uuid-001',
+    zatcaHash: 'hash-001',
+    qrCode: 'qr-payload',
+    xmlContent: '<Invoice/>',
+    zatcaDeviceId: 'device-001',
+    zatcaStatus: ZatcaSubmissionStatus.reportedWithWarnings,
+    zatcaCounter: 42,
+    userId: 'user-001',
+    warehouseId: 'warehouse-001',
+    syncStatus: SyncStatus.pendingPush,
+    serverUpdatedAt: issuedAt.add(const Duration(hours: 1)),
+  );
+}
 
 void main() {
   group('InvoiceItem Tests', () {
@@ -284,6 +351,77 @@ void main() {
       expect(updated.status, InvoiceStatus.paid);
       expect(updated.id, invoice.id);
       expect(updated.customerId, invoice.customerId);
+    });
+  });
+
+  group('Invoice fiscal integrity contract', () {
+    test('round-trips fiscal, ZATCA, and synchronization fields through JSON',
+        () {
+      final invoice = _invoiceFixture();
+
+      final json = invoice.toJson();
+      final restored = Invoice.fromJson(json);
+
+      expect(json['invoiceNumber'], 'INV-2026-001');
+      expect(json['status'], 'sent');
+      expect(json['zatcaStatus'], 'reportedWithWarnings');
+      expect(json['syncStatus'], 'pendingPush');
+      expect(restored, invoice);
+      expect(restored.items, hasLength(2));
+      expect(restored.items.first.taxRate, Decimal.parse('0.15'));
+      expect(restored.paidDate, DateTime.utc(2026, 1, 4, 9));
+      expect(restored.serverUpdatedAt, DateTime.utc(2026, 1, 1, 10));
+    });
+
+    test('calculates outstanding, base-currency, and item-derived totals', () {
+      final invoice = _invoiceFixture();
+
+      expect(invoice.remainingAmount, Decimal.fromInt(100));
+      expect(
+        invoice.totalAmountBaseCurrency,
+        Decimal.fromInt(130) * Decimal.parse('3.75'),
+      );
+      expect(invoice.subtotalAmountBaseCurrency, Decimal.fromInt(450));
+      expect(invoice.taxAmountBaseCurrency, Decimal.parse('67.50'));
+      expect(invoice.discountAmountBaseCurrency, Decimal.fromInt(30));
+      expect(invoice.calculatedSubtotal, Decimal.fromInt(120));
+      expect(invoice.calculatedTax, Decimal.fromInt(18));
+      expect(invoice.calculatedTotal, Decimal.fromInt(130));
+      expect(invoice.hasTotalDiscrepancy, isFalse);
+    });
+
+    test('detects a material discrepancy and returns a corrected audit copy',
+        () {
+      final inconsistent = _invoiceFixture(
+        subtotalAmount: Decimal.fromInt(100),
+        taxAmount: Decimal.fromInt(15),
+        totalAmount: Decimal.fromInt(107),
+      );
+
+      final healed = inconsistent.healedCopy;
+
+      expect(inconsistent.hasTotalDiscrepancy, isTrue);
+      expect(healed.subtotalAmount, Decimal.fromInt(120));
+      expect(healed.taxAmount, Decimal.fromInt(18));
+      expect(healed.totalAmount, Decimal.fromInt(130));
+      expect(healed.updatedAt.isAfter(inconsistent.updatedAt), isTrue);
+    });
+
+    test('marks only unsettled invoices with a past due date as overdue', () {
+      final pastDue = DateTime.now().subtract(const Duration(days: 1));
+
+      expect(_invoiceFixture(dueDate: pastDue).isOverdue, isTrue);
+      expect(
+        _invoiceFixture(status: InvoiceStatus.paid, dueDate: pastDue).isOverdue,
+        isFalse,
+      );
+      expect(
+        _invoiceFixture(
+          status: InvoiceStatus.cancelled,
+          dueDate: pastDue,
+        ).isOverdue,
+        isFalse,
+      );
     });
   });
 }

@@ -3,6 +3,7 @@ import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/providers/supabase_auth_provider.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
+import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/providers/invoice_provider.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoices_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
@@ -219,6 +220,126 @@ void main() {
     );
   });
 
+  group('InvoicesScreen - behavioral search and status filters', () {
+    late ProviderContainer container;
+
+    setUp(() {
+      final invoices = [
+        MockData.createTestInvoice(id: 'paid').copyWith(
+          invoiceNumber: 'INV-PAID',
+          customerName: 'شركة الإبداع',
+          issuedDate: DateTime(2025, 3, 3),
+          dueDate: DateTime(2025, 3, 20),
+          status: InvoiceStatus.paid,
+          totalAmount: Decimal.fromInt(900),
+          paidAmount: Decimal.fromInt(900),
+        ),
+        MockData.createTestInvoice(id: 'overdue').copyWith(
+          invoiceNumber: 'INV-OVERDUE',
+          customerName: 'مؤسسة النور',
+          issuedDate: DateTime(2025, 2, 3),
+          dueDate: DateTime(2025, 2, 20),
+          status: InvoiceStatus.overdue,
+        ),
+        MockData.createTestInvoice(id: 'draft').copyWith(
+          invoiceNumber: 'INV-DRAFT',
+          customerName: 'متجر الربيع',
+          issuedDate: DateTime(2025, 1, 3),
+          dueDate: DateTime(2025, 1, 20),
+          status: InvoiceStatus.draft,
+        ),
+      ];
+      container = ProviderContainer(
+        overrides: [
+          appIconsProvider.overrideWithValue(const MaterialAppIcons()),
+          currentUserProfileProvider.overrideWith(
+            (ref) => const BasirUser(
+              id: 'test-user',
+              email: 'test@example.com',
+              displayName: 'Test User',
+              role: UserRole.admin,
+            ),
+          ),
+          currentUserProvider.overrideWith((ref) => null),
+          calendarProvider.overrideWith(
+            () => _MockCalendarNotifier(CalendarType.gregorian),
+          ),
+          invoicesProvider.overrideWith((ref) async => invoices),
+        ],
+      );
+    });
+
+    tearDown(() => container.dispose());
+
+    Widget testApp() => UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('ar'),
+            home: InvoicesScreen(),
+          ),
+        );
+
+    testWidgets('يبحث بالاسم العربي ثم يفلتر الفواتير المدفوعة', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(testApp());
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('INV-PAID'), findsOneWidget);
+      expect(find.textContaining('INV-OVERDUE'), findsOneWidget);
+      expect(find.textContaining('INV-DRAFT'), findsOneWidget);
+
+      await tester.enterText(find.byType(TextField), 'الابداع');
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('INV-PAID'), findsOneWidget);
+      expect(find.textContaining('INV-OVERDUE'), findsNothing);
+      expect(find.textContaining('INV-DRAFT'), findsNothing);
+      expect(find.text('1 نتيجة'), findsOneWidget);
+
+      await tester.enterText(find.byType(TextField), '');
+      await tester.pumpAndSettle();
+      final paidFilter = find.widgetWithText(FilterChip, 'مدفوعة');
+      await tester.ensureVisible(paidFilter);
+      await tester.tap(paidFilter);
+      await tester.pumpAndSettle();
+
+      expect(container.read(invoiceFilterProvider), 'paid');
+      expect(find.textContaining('INV-PAID'), findsOneWidget);
+      expect(find.textContaining('INV-OVERDUE'), findsNothing);
+      expect(find.textContaining('INV-DRAFT'), findsNothing);
+      expect(find.text('مدفوعة'), findsWidgets);
+    });
+
+    testWidgets('يعرض حالة الفراغ عند فلترة حالة بلا فواتير مطابقة', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(testApp());
+      await tester.pumpAndSettle();
+
+      final cancelledFilter = find.widgetWithText(FilterChip, 'ملغاة');
+      await tester.ensureVisible(cancelledFilter);
+      await tester.tap(cancelledFilter);
+      await tester.pumpAndSettle();
+
+      expect(container.read(invoiceFilterProvider), 'cancelled');
+      expect(find.byType(AppEmptyState), findsOneWidget);
+      expect(find.textContaining('INV-PAID'), findsNothing);
+      expect(find.textContaining('INV-OVERDUE'), findsNothing);
+      expect(find.textContaining('INV-DRAFT'), findsNothing);
+    });
+  });
+
   group('InvoicesScreen - UI/UX Improvements (Task 17)', () {
     Widget createTestWidget({
       required List<Override> overrides,
@@ -268,6 +389,62 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.byType(GlassScaffold), findsOneWidget);
+    });
+
+    testWidgets('يعرض هياكل التحميل ومؤشر الإحصاءات أثناء انتظار البيانات',
+        (tester) async {
+      await tester.pumpWidget(
+        createTestWidget(
+          overrides: [
+            filteredInvoicesProvider.overrideWithValue(const AsyncLoading()),
+            invoiceStatisticsProvider.overrideWithValue(const AsyncLoading()),
+          ],
+        ),
+      );
+      await tester.pump();
+
+      expect(find.byType(AppListSkeleton), findsNWidgets(5));
+      expect(find.byType(LinearProgressIndicator), findsOneWidget);
+    });
+
+    testWidgets('يعرض خطأ التحميل ويقبل إجراء إعادة المحاولة', (tester) async {
+      await tester.pumpWidget(
+        createTestWidget(
+          overrides: [
+            filteredInvoicesProvider.overrideWithValue(
+              AsyncValue.error(
+                StateError('repository unavailable'),
+                StackTrace.empty,
+              ),
+            ),
+            invoiceStatisticsProvider.overrideWithValue(
+              AsyncValue.data(
+                InvoiceStatistics(
+                  totalInvoices: 0,
+                  paidInvoices: 0,
+                  overdueInvoices: 0,
+                  totalAmount: Decimal.zero,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(ErrorIllustration), findsOneWidget);
+      final retryButton = find.byWidgetPredicate(
+        (widget) =>
+            widget is AppEnhancedButton &&
+            widget.label == 'انقر لإعادة المحاولة',
+      );
+      expect(retryButton, findsOneWidget);
+
+      await tester.tap(
+        find.descendant(of: retryButton, matching: find.byType(InkWell)),
+      );
+      await tester.pump();
+      expect(find.byType(ErrorIllustration), findsOneWidget);
     });
 
     testWidgets('action button icons use IconSizes.md (24px) - WCAG standard', (
@@ -626,6 +803,78 @@ void main() {
       );
       final fabIcon = tester.widget<Icon>(fabIconFinder);
       expect(fabIcon.size, IconSizes.md);
+    });
+
+    testWidgets('يعرض حالات الفواتير ويفتح إجراءات الضغط المطول ويلغي الحذف',
+        (tester) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final invoices = [
+        InvoiceStatus.paid,
+        InvoiceStatus.overdue,
+        InvoiceStatus.sent,
+        InvoiceStatus.draft,
+        InvoiceStatus.cancelled,
+      ]
+          .map(
+            (status) => MockData.createTestInvoice(id: status.name).copyWith(
+              invoiceNumber: 'INV-${status.name.toUpperCase()}',
+              customerName: 'عميل ${status.name}',
+              status: status,
+            ),
+          )
+          .toList();
+
+      await tester.pumpWidget(
+        createTestWidget(
+          overrides: [
+            filteredInvoicesProvider
+                .overrideWithValue(AsyncValue.data(invoices)),
+            invoiceStatisticsProvider.overrideWithValue(
+              AsyncValue.data(
+                InvoiceStatistics(
+                  totalInvoices: invoices.length,
+                  paidInvoices: 1,
+                  overdueInvoices: 1,
+                  totalAmount: Decimal.fromInt(5000),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(AppListCard), findsNWidgets(5));
+      expect(find.textContaining('INV-CANCELLED'), findsOneWidget);
+
+      await tester.longPress(find.byType(AppListCard).first);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(BottomSheet), findsOneWidget);
+      expect(find.byType(ListTile), findsNWidgets(4));
+
+      await tester.tap(find.byType(ListTile).last);
+      await tester.pumpAndSettle();
+
+      final dialog = find.byType(Dialog);
+      expect(dialog, findsOneWidget);
+      final cancelButton = find.descendant(
+        of: dialog,
+        matching: find.byWidgetPredicate(
+          (widget) => widget is AppEnhancedButton && widget.label == 'إلغاء',
+        ),
+      );
+      expect(cancelButton, findsOneWidget);
+      await tester.tap(
+        find.descendant(of: cancelButton, matching: find.byType(InkWell)),
+      );
+      await tester.pumpAndSettle();
+
+      expect(dialog, findsNothing);
+      expect(find.byType(AppListCard), findsNWidgets(5));
     });
   });
 }
