@@ -8,7 +8,8 @@ export 'src/basir_database.dart'
         BusinessSettings,
         Goal,
         MarketPrice,
-        Profile;
+        Profile,
+        Warehouse;
 
 export 'src/budget_store.dart';
 export 'src/business_settings_store.dart';
@@ -19,3 +20,4 @@ export 'src/migration_checkpoint_store.dart';
 export 'src/profile_store.dart';
 export 'src/user_scope.dart';
 export 'src/vendor_store.dart';
+export 'src/warehouse_store.dart';

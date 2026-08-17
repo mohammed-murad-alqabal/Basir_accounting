@@ -5084,6 +5084,426 @@ class VendorsCompanion extends UpdateCompanion<Vendor> {
   }
 }
 
+class $WarehousesTable extends Warehouses
+    with TableInfo<$WarehousesTable, Warehouse> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $WarehousesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _scopeKeyMeta =
+      const VerificationMeta('scopeKey');
+  @override
+  late final GeneratedColumn<String> scopeKey = GeneratedColumn<String>(
+      'scope_key', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+      'uuid', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameArMeta = const VerificationMeta('nameAr');
+  @override
+  late final GeneratedColumn<String> nameAr = GeneratedColumn<String>(
+      'name_ar', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameEnMeta = const VerificationMeta('nameEn');
+  @override
+  late final GeneratedColumn<String> nameEn = GeneratedColumn<String>(
+      'name_en', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _locationMeta =
+      const VerificationMeta('location');
+  @override
+  late final GeneratedColumn<String> location = GeneratedColumn<String>(
+      'location', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [scopeKey, uuid, nameAr, nameEn, location, userId, createdAt, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'warehouses';
+  @override
+  VerificationContext validateIntegrity(Insertable<Warehouse> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('scope_key')) {
+      context.handle(_scopeKeyMeta,
+          scopeKey.isAcceptableOrUnknown(data['scope_key']!, _scopeKeyMeta));
+    } else if (isInserting) {
+      context.missing(_scopeKeyMeta);
+    }
+    if (data.containsKey('uuid')) {
+      context.handle(
+          _uuidMeta, uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta));
+    } else if (isInserting) {
+      context.missing(_uuidMeta);
+    }
+    if (data.containsKey('name_ar')) {
+      context.handle(_nameArMeta,
+          nameAr.isAcceptableOrUnknown(data['name_ar']!, _nameArMeta));
+    } else if (isInserting) {
+      context.missing(_nameArMeta);
+    }
+    if (data.containsKey('name_en')) {
+      context.handle(_nameEnMeta,
+          nameEn.isAcceptableOrUnknown(data['name_en']!, _nameEnMeta));
+    } else if (isInserting) {
+      context.missing(_nameEnMeta);
+    }
+    if (data.containsKey('location')) {
+      context.handle(_locationMeta,
+          location.isAcceptableOrUnknown(data['location']!, _locationMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {scopeKey, uuid};
+  @override
+  Warehouse map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Warehouse(
+      scopeKey: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
+      uuid: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}uuid'])!,
+      nameAr: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name_ar'])!,
+      nameEn: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name_en'])!,
+      location: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}location']),
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id']),
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
+    );
+  }
+
+  @override
+  $WarehousesTable createAlias(String alias) {
+    return $WarehousesTable(attachedDatabase, alias);
+  }
+}
+
+class Warehouse extends DataClass implements Insertable<Warehouse> {
+  final String scopeKey;
+  final String uuid;
+  final String nameAr;
+  final String nameEn;
+  final String? location;
+  final String? userId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const Warehouse(
+      {required this.scopeKey,
+      required this.uuid,
+      required this.nameAr,
+      required this.nameEn,
+      this.location,
+      this.userId,
+      required this.createdAt,
+      required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['scope_key'] = Variable<String>(scopeKey);
+    map['uuid'] = Variable<String>(uuid);
+    map['name_ar'] = Variable<String>(nameAr);
+    map['name_en'] = Variable<String>(nameEn);
+    if (!nullToAbsent || location != null) {
+      map['location'] = Variable<String>(location);
+    }
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<String>(userId);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  WarehousesCompanion toCompanion(bool nullToAbsent) {
+    return WarehousesCompanion(
+      scopeKey: Value(scopeKey),
+      uuid: Value(uuid),
+      nameAr: Value(nameAr),
+      nameEn: Value(nameEn),
+      location: location == null && nullToAbsent
+          ? const Value.absent()
+          : Value(location),
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory Warehouse.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Warehouse(
+      scopeKey: serializer.fromJson<String>(json['scopeKey']),
+      uuid: serializer.fromJson<String>(json['uuid']),
+      nameAr: serializer.fromJson<String>(json['nameAr']),
+      nameEn: serializer.fromJson<String>(json['nameEn']),
+      location: serializer.fromJson<String?>(json['location']),
+      userId: serializer.fromJson<String?>(json['userId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'scopeKey': serializer.toJson<String>(scopeKey),
+      'uuid': serializer.toJson<String>(uuid),
+      'nameAr': serializer.toJson<String>(nameAr),
+      'nameEn': serializer.toJson<String>(nameEn),
+      'location': serializer.toJson<String?>(location),
+      'userId': serializer.toJson<String?>(userId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  Warehouse copyWith(
+          {String? scopeKey,
+          String? uuid,
+          String? nameAr,
+          String? nameEn,
+          Value<String?> location = const Value.absent(),
+          Value<String?> userId = const Value.absent(),
+          DateTime? createdAt,
+          DateTime? updatedAt}) =>
+      Warehouse(
+        scopeKey: scopeKey ?? this.scopeKey,
+        uuid: uuid ?? this.uuid,
+        nameAr: nameAr ?? this.nameAr,
+        nameEn: nameEn ?? this.nameEn,
+        location: location.present ? location.value : this.location,
+        userId: userId.present ? userId.value : this.userId,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
+  Warehouse copyWithCompanion(WarehousesCompanion data) {
+    return Warehouse(
+      scopeKey: data.scopeKey.present ? data.scopeKey.value : this.scopeKey,
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      nameAr: data.nameAr.present ? data.nameAr.value : this.nameAr,
+      nameEn: data.nameEn.present ? data.nameEn.value : this.nameEn,
+      location: data.location.present ? data.location.value : this.location,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Warehouse(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('uuid: $uuid, ')
+          ..write('nameAr: $nameAr, ')
+          ..write('nameEn: $nameEn, ')
+          ..write('location: $location, ')
+          ..write('userId: $userId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      scopeKey, uuid, nameAr, nameEn, location, userId, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Warehouse &&
+          other.scopeKey == this.scopeKey &&
+          other.uuid == this.uuid &&
+          other.nameAr == this.nameAr &&
+          other.nameEn == this.nameEn &&
+          other.location == this.location &&
+          other.userId == this.userId &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class WarehousesCompanion extends UpdateCompanion<Warehouse> {
+  final Value<String> scopeKey;
+  final Value<String> uuid;
+  final Value<String> nameAr;
+  final Value<String> nameEn;
+  final Value<String?> location;
+  final Value<String?> userId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const WarehousesCompanion({
+    this.scopeKey = const Value.absent(),
+    this.uuid = const Value.absent(),
+    this.nameAr = const Value.absent(),
+    this.nameEn = const Value.absent(),
+    this.location = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  WarehousesCompanion.insert({
+    required String scopeKey,
+    required String uuid,
+    required String nameAr,
+    required String nameEn,
+    this.location = const Value.absent(),
+    this.userId = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  })  : scopeKey = Value(scopeKey),
+        uuid = Value(uuid),
+        nameAr = Value(nameAr),
+        nameEn = Value(nameEn),
+        createdAt = Value(createdAt),
+        updatedAt = Value(updatedAt);
+  static Insertable<Warehouse> custom({
+    Expression<String>? scopeKey,
+    Expression<String>? uuid,
+    Expression<String>? nameAr,
+    Expression<String>? nameEn,
+    Expression<String>? location,
+    Expression<String>? userId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (scopeKey != null) 'scope_key': scopeKey,
+      if (uuid != null) 'uuid': uuid,
+      if (nameAr != null) 'name_ar': nameAr,
+      if (nameEn != null) 'name_en': nameEn,
+      if (location != null) 'location': location,
+      if (userId != null) 'user_id': userId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  WarehousesCompanion copyWith(
+      {Value<String>? scopeKey,
+      Value<String>? uuid,
+      Value<String>? nameAr,
+      Value<String>? nameEn,
+      Value<String?>? location,
+      Value<String?>? userId,
+      Value<DateTime>? createdAt,
+      Value<DateTime>? updatedAt,
+      Value<int>? rowid}) {
+    return WarehousesCompanion(
+      scopeKey: scopeKey ?? this.scopeKey,
+      uuid: uuid ?? this.uuid,
+      nameAr: nameAr ?? this.nameAr,
+      nameEn: nameEn ?? this.nameEn,
+      location: location ?? this.location,
+      userId: userId ?? this.userId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (scopeKey.present) {
+      map['scope_key'] = Variable<String>(scopeKey.value);
+    }
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (nameAr.present) {
+      map['name_ar'] = Variable<String>(nameAr.value);
+    }
+    if (nameEn.present) {
+      map['name_en'] = Variable<String>(nameEn.value);
+    }
+    if (location.present) {
+      map['location'] = Variable<String>(location.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WarehousesCompanion(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('uuid: $uuid, ')
+          ..write('nameAr: $nameAr, ')
+          ..write('nameEn: $nameEn, ')
+          ..write('location: $location, ')
+          ..write('userId: $userId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxData> {
   @override
@@ -5638,6 +6058,7 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
   late final $BudgetsTable budgets = $BudgetsTable(this);
   late final $CustomersTable customers = $CustomersTable(this);
   late final $VendorsTable vendors = $VendorsTable(this);
+  late final $WarehousesTable warehouses = $WarehousesTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   late final Index marketPricesItemAsOfIdx = Index(
       'market_prices_item_as_of_idx',
@@ -5652,6 +6073,12 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
       'CREATE INDEX vendors_scope_name_ar_idx ON vendors (scope_key, name_ar)');
   late final Index vendorsScopeNameEnIdx = Index('vendors_scope_name_en_idx',
       'CREATE INDEX vendors_scope_name_en_idx ON vendors (scope_key, name_en)');
+  late final Index warehousesScopeNameArIdx = Index(
+      'warehouses_scope_name_ar_idx',
+      'CREATE INDEX warehouses_scope_name_ar_idx ON warehouses (scope_key, name_ar)');
+  late final Index warehousesScopeNameEnIdx = Index(
+      'warehouses_scope_name_en_idx',
+      'CREATE INDEX warehouses_scope_name_en_idx ON warehouses (scope_key, name_en)');
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -5666,12 +6093,15 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
         budgets,
         customers,
         vendors,
+        warehouses,
         syncOutbox,
         marketPricesItemAsOfIdx,
         customersScopeNameArIdx,
         customersScopeNameEnIdx,
         vendorsScopeNameArIdx,
-        vendorsScopeNameEnIdx
+        vendorsScopeNameEnIdx,
+        warehousesScopeNameArIdx,
+        warehousesScopeNameEnIdx
       ];
 }
 
@@ -8045,6 +8475,216 @@ typedef $$VendorsTableProcessedTableManager = ProcessedTableManager<
     (Vendor, BaseReferences<_$BasirDatabase, $VendorsTable, Vendor>),
     Vendor,
     PrefetchHooks Function()>;
+typedef $$WarehousesTableCreateCompanionBuilder = WarehousesCompanion Function({
+  required String scopeKey,
+  required String uuid,
+  required String nameAr,
+  required String nameEn,
+  Value<String?> location,
+  Value<String?> userId,
+  required DateTime createdAt,
+  required DateTime updatedAt,
+  Value<int> rowid,
+});
+typedef $$WarehousesTableUpdateCompanionBuilder = WarehousesCompanion Function({
+  Value<String> scopeKey,
+  Value<String> uuid,
+  Value<String> nameAr,
+  Value<String> nameEn,
+  Value<String?> location,
+  Value<String?> userId,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
+  Value<int> rowid,
+});
+
+class $$WarehousesTableFilterComposer
+    extends Composer<_$BasirDatabase, $WarehousesTable> {
+  $$WarehousesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get uuid => $composableBuilder(
+      column: $table.uuid, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get nameAr => $composableBuilder(
+      column: $table.nameAr, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get nameEn => $composableBuilder(
+      column: $table.nameEn, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get location => $composableBuilder(
+      column: $table.location, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+}
+
+class $$WarehousesTableOrderingComposer
+    extends Composer<_$BasirDatabase, $WarehousesTable> {
+  $$WarehousesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get uuid => $composableBuilder(
+      column: $table.uuid, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get nameAr => $composableBuilder(
+      column: $table.nameAr, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get nameEn => $composableBuilder(
+      column: $table.nameEn, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get location => $composableBuilder(
+      column: $table.location, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+}
+
+class $$WarehousesTableAnnotationComposer
+    extends Composer<_$BasirDatabase, $WarehousesTable> {
+  $$WarehousesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get scopeKey =>
+      $composableBuilder(column: $table.scopeKey, builder: (column) => column);
+
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<String> get nameAr =>
+      $composableBuilder(column: $table.nameAr, builder: (column) => column);
+
+  GeneratedColumn<String> get nameEn =>
+      $composableBuilder(column: $table.nameEn, builder: (column) => column);
+
+  GeneratedColumn<String> get location =>
+      $composableBuilder(column: $table.location, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$WarehousesTableTableManager extends RootTableManager<
+    _$BasirDatabase,
+    $WarehousesTable,
+    Warehouse,
+    $$WarehousesTableFilterComposer,
+    $$WarehousesTableOrderingComposer,
+    $$WarehousesTableAnnotationComposer,
+    $$WarehousesTableCreateCompanionBuilder,
+    $$WarehousesTableUpdateCompanionBuilder,
+    (Warehouse, BaseReferences<_$BasirDatabase, $WarehousesTable, Warehouse>),
+    Warehouse,
+    PrefetchHooks Function()> {
+  $$WarehousesTableTableManager(_$BasirDatabase db, $WarehousesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$WarehousesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WarehousesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WarehousesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> scopeKey = const Value.absent(),
+            Value<String> uuid = const Value.absent(),
+            Value<String> nameAr = const Value.absent(),
+            Value<String> nameEn = const Value.absent(),
+            Value<String?> location = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              WarehousesCompanion(
+            scopeKey: scopeKey,
+            uuid: uuid,
+            nameAr: nameAr,
+            nameEn: nameEn,
+            location: location,
+            userId: userId,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String scopeKey,
+            required String uuid,
+            required String nameAr,
+            required String nameEn,
+            Value<String?> location = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            required DateTime createdAt,
+            required DateTime updatedAt,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              WarehousesCompanion.insert(
+            scopeKey: scopeKey,
+            uuid: uuid,
+            nameAr: nameAr,
+            nameEn: nameEn,
+            location: location,
+            userId: userId,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$WarehousesTableProcessedTableManager = ProcessedTableManager<
+    _$BasirDatabase,
+    $WarehousesTable,
+    Warehouse,
+    $$WarehousesTableFilterComposer,
+    $$WarehousesTableOrderingComposer,
+    $$WarehousesTableAnnotationComposer,
+    $$WarehousesTableCreateCompanionBuilder,
+    $$WarehousesTableUpdateCompanionBuilder,
+    (Warehouse, BaseReferences<_$BasirDatabase, $WarehousesTable, Warehouse>),
+    Warehouse,
+    PrefetchHooks Function()>;
 typedef $$SyncOutboxTableCreateCompanionBuilder = SyncOutboxCompanion Function({
   required String id,
   required String entityType,
@@ -8315,6 +8955,8 @@ class $BasirDatabaseManager {
       $$CustomersTableTableManager(_db, _db.customers);
   $$VendorsTableTableManager get vendors =>
       $$VendorsTableTableManager(_db, _db.vendors);
+  $$WarehousesTableTableManager get warehouses =>
+      $$WarehousesTableTableManager(_db, _db.warehouses);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }
