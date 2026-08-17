@@ -7,8 +7,12 @@ on:
     branches: [main, develop]
   workflow_dispatch:
 
+concurrency:
+  group: enhanced-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 env:
-  FLUTTER_VERSION: "3.35.5"
+  FLUTTER_VERSION: "3.44.9"
   # يمنع التراجع عن خط الأساس القابل للقياس، بينما يُرفع تدريجيًا مع المهمات.
   MIN_COVERAGE: 25
   MAX_COMPLEXITY: 10
@@ -35,9 +39,9 @@ jobs:
 
           # Get commit messages
           if [ "${{ github.event_name }}" == "pull_request" ]; then
-            COMMITS=$(git log --format=%s ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
+            COMMITS=$(git log --no-merges --format=%s ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
           else
-            COMMITS=$(git log --format=%s -1)
+            COMMITS=$(git log --no-merges --format=%s -1)
           fi
 
           # Validate format: type(scope): description
@@ -45,16 +49,20 @@ jobs:
           PATTERN="^($VALID_TYPES)(\(.+\))?: .+"
 
           INVALID_COUNT=0
-          while IFS= read -r commit; do
-            if [[ ! "$commit" =~ $PATTERN ]]; then
-              echo "❌ Invalid commit message: $commit"
-              echo "   Expected format: type(scope): description"
-              echo "   Valid types: $VALID_TYPES"
-              INVALID_COUNT=$((INVALID_COUNT + 1))
-            else
-              echo "✅ Valid: $commit"
-            fi
-          done <<< "$COMMITS"
+          if [ -z "$COMMITS" ]; then
+            echo "ℹ️ No non-merge commits found in the selected range"
+          else
+            while IFS= read -r commit; do
+              if [[ ! "$commit" =~ $PATTERN ]]; then
+                echo "❌ Invalid commit message: $commit"
+                echo "   Expected format: type(scope): description"
+                echo "   Valid types: $VALID_TYPES"
+                INVALID_COUNT=$((INVALID_COUNT + 1))
+              else
+                echo "✅ Valid: $commit"
+              fi
+            done <<< "$COMMITS"
+          fi
 
           echo ""
           if [ $INVALID_COUNT -gt 0 ]; then

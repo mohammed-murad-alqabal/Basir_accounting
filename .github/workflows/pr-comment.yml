@@ -28,7 +28,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
           channel: "stable"
           cache: false
 
@@ -218,59 +218,59 @@ jobs:
             // إنشاء التعليق
             const body = `## ${emoji} تقرير جودة الكود - PR #${{ github.event.pull_request.number }}
 
-### 📊 النتيجة الإجمالية: ${score}/100 (${grade})
+            ### 📊 النتيجة الإجمالية: ${score}/100 (${grade})
 
----
+            ---
 
-### 🔍 تحليل الكود (Flutter Analyze)
+            ### 🔍 تحليل الكود (Flutter Analyze)
 
-| النوع | العدد | الحالة |
-|:---|:---:|:---:|
-| أخطاء (Errors) | ${errorCount} | ${errorCount === '0' ? '✅' : '❌'} |
-| تحذيرات (Warnings) | ${warningCount} | ${warningCount === '0' ? '✅' : warningCount <= '5' ? '⚠️' : '❌'} |
-| معلومات (Info) | ${infoCount} | ℹ️ |
+            | النوع | العدد | الحالة |
+            |:---|:---:|:---:|
+            | أخطاء (Errors) | ${errorCount} | ${errorCount === '0' ? '✅' : '❌'} |
+            | تحذيرات (Warnings) | ${warningCount} | ${warningCount === '0' ? '✅' : warningCount <= '5' ? '⚠️' : '❌'} |
+            | معلومات (Info) | ${infoCount} | ℹ️ |
 
-### 🧪 نتائج الاختبارات
+            ### 🧪 نتائج الاختبارات
 
-| المقياس | القيمة | الحالة |
-|:---|:---:|:---:|
-| نجح | ${passedTests} | ✅ |
-| فشل | ${failedTests} | ${failedTests === '0' ? '✅' : '❌'} |
-| تم تخطيه | ${skippedTests} | ${skippedTests === '0' ? '✅' : 'ℹ️'} |
+            | المقياس | القيمة | الحالة |
+            |:---|:---:|:---:|
+            | نجح | ${passedTests} | ✅ |
+            | فشل | ${failedTests} | ${failedTests === '0' ? '✅' : '❌'} |
+            | تم تخطيه | ${skippedTests} | ${skippedTests === '0' ? '✅' : 'ℹ️'} |
 
----
+            ---
 
-### 💡 التوصيات
+            ### 💡 التوصيات
 
-${recommendations}
+            ${recommendations}
 
-${errorDetails}${warningDetails}${failedTestsDetails}
+            ${errorDetails}${warningDetails}${failedTestsDetails}
 
----
+            ---
 
-### 📋 الإجراءات التالية
+            ### 📋 الإجراءات التالية
 
-${errorCount !== '0' || failedTests !== '0' ? 
-  '⚠️ **يُنصح بإصلاح المشاكل قبل الدمج**\n\n- [ ] إصلاح جميع الأخطاء الحرجة\n- [ ] إصلاح الاختبارات الفاشلة\n- [ ] مراجعة التحذيرات وتقليلها' : 
-  '✅ **الكود جاهز للدمج!**\n\nجميع الفحوصات نجحت. يمكن المتابعة بالدمج بعد المراجعة.'}
+            ${errorCount !== '0' || failedTests !== '0' ?
+              '⚠️ **يُنصح بإصلاح المشاكل قبل الدمج**\n\n- [ ] إصلاح جميع الأخطاء الحرجة\n- [ ] إصلاح الاختبارات الفاشلة\n- [ ] مراجعة التحذيرات وتقليلها' :
+              '✅ **الكود جاهز للدمج!**\n\nجميع الفحوصات نجحت. يمكن المتابعة بالدمج بعد المراجعة.'}
 
----
+            ---
 
-<details>
-<summary>📚 روابط مفيدة</summary>
+            <details>
+            <summary>📚 روابط مفيدة</summary>
 
-- [نتائج التحليل الكاملة](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-- [دليل معايير الجودة](../docs/code-quality-standards.md)
-- [دليل إصلاح الأخطاء](../docs/ERROR_TRACKING_GUIDE.md)
+            - [نتائج التحليل الكاملة](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            - [دليل معايير الجودة](../docs/code-quality-standards.md)
+            - [دليل إصلاح الأخطاء](../docs/ERROR_TRACKING_GUIDE.md)
 
-</details>
+            </details>
 
----
+            ---
 
-🤖 **تم إنشاء هذا التقرير تلقائياً** بواسطة Error Tracking System  
-📅 **التاريخ:** ${new Date().toISOString().split('T')[0]}  
-🔗 **Workflow Run:** [#${{ github.run_id }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-`;
+            🤖 **تم إنشاء هذا التقرير تلقائياً** بواسطة Error Tracking System
+            📅 **التاريخ:** ${new Date().toISOString().split('T')[0]}
+            🔗 **Workflow Run:** [#${{ github.run_id }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            `;
 
             // البحث عن تعليق سابق من البوت
             const comments = await github.rest.issues.listComments({
