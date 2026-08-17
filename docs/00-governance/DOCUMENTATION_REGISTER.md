@@ -61,3 +61,12 @@
 [3]: ../audits/bkip-2026-08/EXECUTION_ROADMAP.md "خارطة تنفيذ BKIP — P4"
 [4]: ../audits/bkip-2026-08/appendices/DUPLICATION_CANDIDATES.csv "مرشحات التكرار"
 [5]: ../audits/bkip-2026-08/REQUIREMENTS_TRACEABILITY_MATRIX.md "مصفوفة التتبع"
+
+
+## قرارات المراجعة التشغيلية — 2026-08-15
+
+| القرار | الحالة | النطاق | المرجع |
+|---|---|---|---|
+| [GOV-DOC-DRIFT-20260815-001](DECISION-DOC-DRIFT-GENERATED-SOURCES-20260815.md) | `PROPOSED` — بانتظار اعتماد Repository Owner وEngineering Lead | سياسة المصادر المولّدة، تصنيف `SYNC_STATUS_REPORT.md`، ومنع أسرار PAT داخل remote URLs | SHA `c390a985f72a956b5896691c75d51dbbb6d9eeee` |
+
+لا يجيز هذا الإدخال أرشفة أو حذف أي وثيقة، ولا يغيّر حالة الوثائق القديمة قبل صدور اعتماد المالك.
