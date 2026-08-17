@@ -153,6 +153,30 @@ class Budgets extends Table {
       ];
 }
 
+/// مستودع واحد لكل UUID داخل نطاق المستخدم؛ يحافظ على CRUD المرجعي
+/// دون إدخال sync أو soft-delete غير موجودين في Isar الحالي.
+@TableIndex(
+  name: 'warehouses_scope_name_ar_idx',
+  columns: {#scopeKey, #nameAr},
+)
+@TableIndex(
+  name: 'warehouses_scope_name_en_idx',
+  columns: {#scopeKey, #nameEn},
+)
+class Warehouses extends Table {
+  TextColumn get scopeKey => text()();
+  TextColumn get uuid => text()();
+  TextColumn get nameAr => text()();
+  TextColumn get nameEn => text()();
+  TextColumn get location => text().nullable()();
+  TextColumn get userId => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {scopeKey, uuid};
+}
+
 /// عميل واحد لكل UUID داخل نطاق المستخدم؛ يحافظ على حقول الهوية والمحاسبة
 /// والمزامنة المطلوبة لموجة النقل الأولى.
 @TableIndex(
@@ -265,6 +289,7 @@ class SyncOutbox extends Table {
     Budgets,
     Customers,
     Vendors,
+    Warehouses,
     SyncOutbox,
   ],
 )
@@ -273,7 +298,7 @@ class BasirDatabase extends _$BasirDatabase {
       : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -293,6 +318,9 @@ class BasirDatabase extends _$BasirDatabase {
           if (from < 5) {
             await migrator.createTable(customers);
             await migrator.createTable(vendors);
+          }
+          if (from < 6) {
+            await migrator.createTable(warehouses);
           }
         },
         beforeOpen: (details) => customStatement('PRAGMA foreign_keys = ON'),
