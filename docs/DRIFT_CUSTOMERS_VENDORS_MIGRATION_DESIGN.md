@@ -103,4 +103,33 @@
 
 أُضيفت اختبارات وحدة تغطي عزل UUID بين المستخدمين، الحقول المحاسبية، sync metadata، البحث، الحذف، ورفض sync status غير المعروف. كما أُضيف اختبار تكامل فعلي Isar مؤقت → SQLite في الذاكرة يثبت حفظ Customers وVendors وعدم تغير عدد سجلات Isar المصدرية. نجحت اختبارات الحزمة وعددها 24 اختبارًا، ونجحت الاختبارات المستهدفة المشتركة وعددها 25 اختبارًا، والتحليل الساكن للملفات الجديدة بلا ملاحظات.
 
-لم تُنفذ بعد importer/parity الخاصة بالموجة، ولا shadow-read decorators أو flags، ولا أي wiring في Providers أو `sync_service`. هذه العناصر تبقى بوابات لاحقة مستقلة، كما لم يُنشأ commit أو push جديد لهذه المرحلة.
+اكتمل محليًا importer/parity الخاصة بالموجة، بينما أضيفت shadow-read decorators وflags وProvider wiring التشخيصية في مرحلة لاحقة مستقلة. لم يُفعّل أي decorator داخل Providers النشطة، ولم يتغير `sync_service`، كما لم يُنشأ commit أو push جديد لهذه المرحلة.
+
+## حالة importer وparity المحلية
+
+أُضيف `IsarCustomerMigrationSource` و`IsarVendorMigrationSource` لتحويل نماذج Isar إلى DTOs محايدة بترتيب deterministic حسب `scopeKey` ثم UUID. كما أُضيف `DriftCustomersVendorsMigrator` بشريحتي `customers-v1` و`vendors-v1` وcheckpoints مستقلة وbatch size قابل للتحقق.
+
+يقارن `DriftCustomersVendorsParityVerifier` كامل الحقول، بما فيها روابط الحسابات والقيم المالية وsync metadata، ويستخدم fingerprint حتميًا. يميز التقرير بين mismatch العادي وتكرار UUID داخل النطاق؛ ولا يعتبر تعدد سجلات المستخدم نفسه غموضًا، لأن ذلك سلوك صحيح للعملاء والموردين. لا ينفذ verifier حذفًا أو إصلاحًا تلقائيًا.
+
+اختبارات importer/parity الحالية تغطي التشغيل النظيف، checkpoints وbatch size، mismatch في رابط الحساب، وتكرار UUID داخل scope. نجحت أربعة اختبارات، والتحليل الساكن للملفات الجديدة بلا ملاحظات. اكتمل لاحقًا snapshot runner وCLI وrunbook، ثم أضيفت shadow-read decorators والـflags وProvider wiring دون إدخال Drift في `sync_service`.
+
+## ملاحظة سلامة قاعدة PR #62 الحالية
+
+عند بناء أحدث HEAD البعيد لـPR #62 ظهر أن القاعدة تحتوي placeholder غير صالحًا هو `credential-fixture` داخل generated Drift code وتسعة ملفات تخزين وlockfile. تسبب ذلك في فشل parser وbuild_runner والاختبارات قبل وصول التنفيذ إلى importer/parity. أُصلح محليًا باستعادة الصياغات النظيفة المقابلة فقط: 59 موضعًا في generated file وموضع واحد في كل ملف متأثر، دون تغيير منطق الجداول أو عقود التخزين أو dependency versions. بعد الإصلاح أصبح عدد placeholders صفرًا، ونجحت اختبارات الحزمة وعددها 24 والاختبارات المستهدفة وعددها 29 والتحليل الساكن.
+
+ينبغي عرض هذا الإصلاح في PR الجديدة بوضوح باعتباره **baseline build-repair ضروريًا** وليس تفعيلًا لـDrift. لم يُرفع أو يُلتزم هذا الإصلاح بعد على فرع GitHub الجديد.
+
+
+## حالة snapshot والقبول offline
+
+أُضيف `drift_customers_vendors_snapshot.dart` وCLI المقابل لتشغيل parser وimporter وparity داخل SQLite in-memory فقط. يرفض parser أي snapshot لا يعلن `sanitized: true`، ويثبت `schemaVersion: 1`، ويتحقق من التواريخ والأرقام وحالات المزامنة والحقول الاختيارية قبل فتح قاعدة البيانات. مخرجات CLI privacy-safe ولا تعرض payload أو identifiers.
+
+أضيفت اختبارات snapshot للتشغيل النظيف، ورفض snapshot غير معقم، ورفض sync status غير صالح، ومنع clean acceptance عند duplicate scoped key. نجحت الاختبارات الأربع، ونجح التحليل الساكن، كما أعاد تشغيل CLI end-to-end على fixture معقمة `clean: true` مع تطابق Customers وVendors وصفر duplicate keys. التفاصيل التشغيلية في `DRIFT_CUSTOMERS_VENDORS_SNAPSHOT_RUNBOOK.md`.
+
+## حالة shadow-read المحلية
+
+أضيف `DriftCustomersVendorsShadowReadComparator` لمقارنة `getAll` وlookup والبحث لكل من Customers وVendors. المقارنة تشمل جميع الحقول الدومينية والحقول المحاسبية وsync metadata، وتتعامل مع ترتيب القوائم ترتيبًا حتميًا. لا تحمل الأحداث `userId` أو payload؛ وتقتصر على `slice`, `operation`, `outcome`, ووقت UTC.
+
+أضيف `ShadowReadCustomerRepository` و`ShadowReadVendorRepository`. عند إغلاق flag لا يُستدعى المرشح إطلاقًا. عند فتحه تُقرأ Isar أولًا، ويُستدعى Drift تشخيصيًا، ثم تُعاد قيمة Isar حتى عند mismatch أو خطأ في المرشح. كل عمليات الإضافة والتحديث والحذف تُفوّض إلى Isar فقط. أضيفت flags مستقلة في `drift_providers.dart` وقيمتها الافتراضية `false`، وبقي `DriftRolloutStage.isarPrimary` دون تغيير.
+
+اختبارات shadow-read تغطي عدم استدعاء المرشح عند الإغلاق، إعادة نتيجة المصدر عند mismatch، تسجيل telemetry الآمن، تطابق Customers/Vendors، وتوجيه الكتابة إلى المصدر فقط. نجحت جميع اختبارات `test/core/persistence` و`test/drift` وعددها 73 اختبارًا في آخر تشغيل محلي. قبول snapshot fixture لا يغني عن تشغيل لاحق على لقطة فعلية معقمة ومراجعة بشرية.
