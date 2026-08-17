@@ -1005,5 +1005,83 @@
   "workDocumentApprovalRequired": "Additional approval required",
   "workDocumentNoImpact": "No movements are expected.",
   "workEntityPickerNoOptions": "No options available",
-  "workEntityPickerDisabled": "Not eligible for selection"
+  "workEntityPickerDisabled": "Not eligible for selection",
+  "bulkWizardTitle": "Bulk Price Change",
+  "bulkWizardStep1": "1. Scope",
+  "bulkWizardStep2": "2. Rule",
+  "bulkWizardStep3": "3. Preview",
+  "bulkWizardStep4": "4. Approve & Execute",
+  "bulkWizardNext": "Next",
+  "bulkWizardPrevious": "Previous",
+  "bulkWizardFinish": "Finish Wizard",
+  "bulkWizardReset": "New Price Change",
+  "bulkScopeAll": "All Items",
+  "bulkScopeAllDescription": "Apply the rule to every non-deleted inventory item",
+  "bulkScopeSpecific": "Specific Items",
+  "bulkScopeSpecificDescription": "Hand-pick the items from the inventory list",
+  "bulkScopeSelectItems": "Select Items",
+  "bulkScopeSelectedCount": "{count} items selected",
+  "bulkTargetSale": "Sale Price",
+  "bulkTargetPurchase": "Purchase Price",
+  "bulkTargetBoth": "Both Prices",
+  "bulkTargetLabel": "Target Price",
+  "bulkRulePercentage": "Percentage",
+  "bulkRuleFixedAmount": "Fixed Amount",
+  "bulkRuleSetTo": "Set To Value",
+  "bulkRuleCopyFromPurchase": "Copy From Purchase",
+  "bulkRuleValueLabel": "Value",
+  "bulkRuleValueHint": "e.g. 10",
+  "bulkRuleValuePositive": "Positive value",
+  "bulkRuleValueNegative": "Negative value",
+  "bulkPreviewTitle": "Change Impact Preview",
+  "bulkPreviewCount": "{count} items included",
+  "bulkPreviewBlocked": "Blocked",
+  "bulkPreviewSale": "Sale Price",
+  "bulkPreviewPurchase": "Purchase Price",
+  "bulkPreviewNoChanges": "No valid changes for the current rule.",
+  "bulkPreviewRefresh": "Refresh Preview",
+  "bulkApprovalTitle": "Approval & Execution",
+  "bulkApprovalOperator": "Operator",
+  "bulkApprovalReason": "Reason",
+  "bulkApprovalReasonHint": "Provide a documented reason for this bulk change",
+  "bulkApprovalConfirmLabel": "I acknowledge that this change immediately affects the prices of the selected items.",
+  "bulkApprovalWarning": "This is a high-impact change. Quantities are never modified, and a 24-hour cancellation window applies.",
+  "bulkApprovalExecute": "Execute Change",
+  "bulkSuccessTitle": "Executed Successfully",
+  "bulkSuccessCount": "{count} items were affected",
+  "bulkSuccessCancellable": "This change can be cancelled within {hours} hours of execution.",
+  "bulkCancellationTitle": "Cancel Last Change",
+  "bulkCancellationWarning": "Every affected item's price will be restored to its previous value and removed from the price history.",
+  "bulkCancellationExecute": "Cancel Change",
+  "bulkCancellationSuccess": "Previous prices restored successfully within the cancellation window.",
+  "bulkCancellationExpired": "The cancellation window (24 hours) has expired; the change cannot be reverted.",
+  "bulkErrorEmptyScope": "No items fall within the selected scope.",
+  "bulkErrorRuleRequired": "The rule is invalid; review the entered values.",
+  "bulkErrorReasonRequired": "A documented reason is required for execution.",
+  "bulkErrorOperatorRequired": "The operator name is required for execution.",
+  "bulkErrorCommitFailed": "The change could not be executed; item data was not touched.",
+  "bulkErrorNotCancellable": "The change is outside the cancellation window.",
+  "bulkRuleTypeLabel": "Rule Type",
+  "bulkScopeNoItems": "No inventory items found",
+  "bulkApprovalReviewSummary": "Pre-execution change summary",
+  "@bulkScopeSelectedCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "@bulkPreviewCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "@bulkSuccessCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "@bulkSuccessCancellable": {
+    "placeholders": {
+      "hours": {}
+    }
+  }
 }

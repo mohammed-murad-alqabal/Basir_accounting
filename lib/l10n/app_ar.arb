@@ -863,5 +863,83 @@
   "workDocumentApprovalRequired": "يتطلب اعتمادًا إضافيًا",
   "workDocumentNoImpact": "لا توجد حركات متوقعة.",
   "workEntityPickerNoOptions": "لا توجد خيارات متاحة",
-  "workEntityPickerDisabled": "غير مؤهل للاختيار"
+  "workEntityPickerDisabled": "غير مؤهل للاختيار",
+  "bulkWizardTitle": "تغيير أسعار جماعي",
+  "bulkWizardStep1": "1. النطاق",
+  "bulkWizardStep2": "2. القاعدة",
+  "bulkWizardStep3": "3. المعاينة",
+  "bulkWizardStep4": "4. الاعتماد والتنفيذ",
+  "bulkWizardNext": "التالي",
+  "bulkWizardPrevious": "السابق",
+  "bulkWizardFinish": "إنهاء المعالج",
+  "bulkWizardReset": "تغيير أسعار جديد",
+  "bulkScopeAll": "جميع الأصناف",
+  "bulkScopeAllDescription": "تطبيق القاعدة على كل الأصناف غير المحذوفة",
+  "bulkScopeSpecific": "أصناف محددة",
+  "bulkScopeSpecificDescription": "تحديد الأصناف يدويًا من قائمة المخزون",
+  "bulkScopeSelectItems": "تحديد الأصناف",
+  "bulkScopeSelectedCount": "تم تحديد {count} صنف",
+  "bulkTargetSale": "سعر البيع",
+  "bulkTargetPurchase": "سعر الشراء",
+  "bulkTargetBoth": "السعران معًا",
+  "bulkTargetLabel": "السعر المستهدف",
+  "bulkRulePercentage": "نسبة مئوية",
+  "bulkRuleFixedAmount": "مبلغ ثابت",
+  "bulkRuleSetTo": "تعيين قيمة",
+  "bulkRuleCopyFromPurchase": "نسخ من سعر الشراء",
+  "bulkRuleValueLabel": "القيمة",
+  "bulkRuleValueHint": "مثال: 10",
+  "bulkRuleValuePositive": "قيمة موجبة",
+  "bulkRuleValueNegative": "قيمة سالبة",
+  "bulkPreviewTitle": "معاينة أثر التغيير",
+  "bulkPreviewCount": "{count} صنف متضمن",
+  "bulkPreviewBlocked": "محجوب",
+  "bulkPreviewSale": "سعر البيع",
+  "bulkPreviewPurchase": "سعر الشراء",
+  "bulkPreviewNoChanges": "لا توجد تغييرات صالحة ضمن القاعدة الحالية.",
+  "bulkPreviewRefresh": "تحديث المعاينة",
+  "bulkApprovalTitle": "الاعتماد والتنفيذ",
+  "bulkApprovalOperator": "منفّذ العملية",
+  "bulkApprovalReason": "سبب التغيير",
+  "bulkApprovalReasonHint": "اكتب سببًا موثقًا يوضح دافع التغيير الجماعي",
+  "bulkApprovalConfirmLabel": "أقرّ بفهمي أن هذا التغيير يؤثر على أسعار الأصناف المحددة فور التنفيذ.",
+  "bulkApprovalWarning": "هذا تغيير عالي الأثر ولا يعدّل أرصدة الكميات، مع نافذة إلغاء مفتوحة لمدة 24 ساعة من التنفيذ.",
+  "bulkApprovalExecute": "تنفيذ التغيير",
+  "bulkSuccessTitle": "تم التنفيذ بنجاح",
+  "bulkSuccessCount": "تأثر {count} صنف بالتغيير",
+  "bulkSuccessCancellable": "يمكن إلغاء هذا التغيير خلال {hours} ساعة من التنفيذ.",
+  "bulkCancellationTitle": "إلغاء آخر تغيير",
+  "bulkCancellationWarning": "سيُعاد سعر كل صنف متأثر إلى قيمته السابقة ويزال التغيير من سجلات الأسعار.",
+  "bulkCancellationExecute": "إلغاء التغيير",
+  "bulkCancellationSuccess": "أُعيدت الأسعار السابقة بنجاح داخل نافذة الإلغاء.",
+  "bulkCancellationExpired": "انقضت نافذة الإلغاء (24 ساعة) ولا يمكن التراجع عن التغيير.",
+  "bulkErrorEmptyScope": "لا توجد أصناف ضمن النطاق المحدد.",
+  "bulkErrorRuleRequired": "القاعدة غير صالحة، راجع القيم المدخلة.",
+  "bulkErrorReasonRequired": "يتطلب التنفيذ سببًا موثقًا.",
+  "bulkErrorOperatorRequired": "يتطلب التنفيذ اسم منفّذ العملية.",
+  "bulkErrorCommitFailed": "تعذر تنفيذ التغيير، لم تُمسّ بيانات الأصناف.",
+  "bulkErrorNotCancellable": "التغيير خارج نافذة الإلغاء الزمنية.",
+  "bulkRuleTypeLabel": "نوع القاعدة",
+  "bulkScopeNoItems": "لا توجد أصناف في المخزون",
+  "bulkApprovalReviewSummary": "ملخص التغيير قبل التنفيذ",
+  "@bulkScopeSelectedCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "@bulkPreviewCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "@bulkSuccessCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "@bulkSuccessCancellable": {
+    "placeholders": {
+      "hours": {}
+    }
+  }
 }

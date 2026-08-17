@@ -4519,6 +4519,354 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not eligible for selection'**
   String get workEntityPickerDisabled;
+
+  /// No description provided for @bulkWizardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulk Price Change'**
+  String get bulkWizardTitle;
+
+  /// No description provided for @bulkWizardStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Scope'**
+  String get bulkWizardStep1;
+
+  /// No description provided for @bulkWizardStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Rule'**
+  String get bulkWizardStep2;
+
+  /// No description provided for @bulkWizardStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Preview'**
+  String get bulkWizardStep3;
+
+  /// No description provided for @bulkWizardStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Approve & Execute'**
+  String get bulkWizardStep4;
+
+  /// No description provided for @bulkWizardNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get bulkWizardNext;
+
+  /// No description provided for @bulkWizardPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get bulkWizardPrevious;
+
+  /// No description provided for @bulkWizardFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish Wizard'**
+  String get bulkWizardFinish;
+
+  /// No description provided for @bulkWizardReset.
+  ///
+  /// In en, this message translates to:
+  /// **'New Price Change'**
+  String get bulkWizardReset;
+
+  /// No description provided for @bulkScopeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All Items'**
+  String get bulkScopeAll;
+
+  /// No description provided for @bulkScopeAllDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply the rule to every non-deleted inventory item'**
+  String get bulkScopeAllDescription;
+
+  /// No description provided for @bulkScopeSpecific.
+  ///
+  /// In en, this message translates to:
+  /// **'Specific Items'**
+  String get bulkScopeSpecific;
+
+  /// No description provided for @bulkScopeSpecificDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Hand-pick the items from the inventory list'**
+  String get bulkScopeSpecificDescription;
+
+  /// No description provided for @bulkScopeSelectItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Items'**
+  String get bulkScopeSelectItems;
+
+  /// No description provided for @bulkScopeSelectedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} items selected'**
+  String bulkScopeSelectedCount(Object count);
+
+  /// No description provided for @bulkTargetSale.
+  ///
+  /// In en, this message translates to:
+  /// **'Sale Price'**
+  String get bulkTargetSale;
+
+  /// No description provided for @bulkTargetPurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Price'**
+  String get bulkTargetPurchase;
+
+  /// No description provided for @bulkTargetBoth.
+  ///
+  /// In en, this message translates to:
+  /// **'Both Prices'**
+  String get bulkTargetBoth;
+
+  /// No description provided for @bulkTargetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Price'**
+  String get bulkTargetLabel;
+
+  /// No description provided for @bulkRulePercentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Percentage'**
+  String get bulkRulePercentage;
+
+  /// No description provided for @bulkRuleFixedAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed Amount'**
+  String get bulkRuleFixedAmount;
+
+  /// No description provided for @bulkRuleSetTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Set To Value'**
+  String get bulkRuleSetTo;
+
+  /// No description provided for @bulkRuleCopyFromPurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy From Purchase'**
+  String get bulkRuleCopyFromPurchase;
+
+  /// No description provided for @bulkRuleValueLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get bulkRuleValueLabel;
+
+  /// No description provided for @bulkRuleValueHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 10'**
+  String get bulkRuleValueHint;
+
+  /// No description provided for @bulkRuleValuePositive.
+  ///
+  /// In en, this message translates to:
+  /// **'Positive value'**
+  String get bulkRuleValuePositive;
+
+  /// No description provided for @bulkRuleValueNegative.
+  ///
+  /// In en, this message translates to:
+  /// **'Negative value'**
+  String get bulkRuleValueNegative;
+
+  /// No description provided for @bulkPreviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Impact Preview'**
+  String get bulkPreviewTitle;
+
+  /// No description provided for @bulkPreviewCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} items included'**
+  String bulkPreviewCount(Object count);
+
+  /// No description provided for @bulkPreviewBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get bulkPreviewBlocked;
+
+  /// No description provided for @bulkPreviewSale.
+  ///
+  /// In en, this message translates to:
+  /// **'Sale Price'**
+  String get bulkPreviewSale;
+
+  /// No description provided for @bulkPreviewPurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Price'**
+  String get bulkPreviewPurchase;
+
+  /// No description provided for @bulkPreviewNoChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'No valid changes for the current rule.'**
+  String get bulkPreviewNoChanges;
+
+  /// No description provided for @bulkPreviewRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh Preview'**
+  String get bulkPreviewRefresh;
+
+  /// No description provided for @bulkApprovalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approval & Execution'**
+  String get bulkApprovalTitle;
+
+  /// No description provided for @bulkApprovalOperator.
+  ///
+  /// In en, this message translates to:
+  /// **'Operator'**
+  String get bulkApprovalOperator;
+
+  /// No description provided for @bulkApprovalReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get bulkApprovalReason;
+
+  /// No description provided for @bulkApprovalReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Provide a documented reason for this bulk change'**
+  String get bulkApprovalReasonHint;
+
+  /// No description provided for @bulkApprovalConfirmLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'I acknowledge that this change immediately affects the prices of the selected items.'**
+  String get bulkApprovalConfirmLabel;
+
+  /// No description provided for @bulkApprovalWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a high-impact change. Quantities are never modified, and a 24-hour cancellation window applies.'**
+  String get bulkApprovalWarning;
+
+  /// No description provided for @bulkApprovalExecute.
+  ///
+  /// In en, this message translates to:
+  /// **'Execute Change'**
+  String get bulkApprovalExecute;
+
+  /// No description provided for @bulkSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Executed Successfully'**
+  String get bulkSuccessTitle;
+
+  /// No description provided for @bulkSuccessCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} items were affected'**
+  String bulkSuccessCount(Object count);
+
+  /// No description provided for @bulkSuccessCancellable.
+  ///
+  /// In en, this message translates to:
+  /// **'This change can be cancelled within {hours} hours of execution.'**
+  String bulkSuccessCancellable(Object hours);
+
+  /// No description provided for @bulkCancellationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Last Change'**
+  String get bulkCancellationTitle;
+
+  /// No description provided for @bulkCancellationWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Every affected item\'s price will be restored to its previous value and removed from the price history.'**
+  String get bulkCancellationWarning;
+
+  /// No description provided for @bulkCancellationExecute.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Change'**
+  String get bulkCancellationExecute;
+
+  /// No description provided for @bulkCancellationSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous prices restored successfully within the cancellation window.'**
+  String get bulkCancellationSuccess;
+
+  /// No description provided for @bulkCancellationExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'The cancellation window (24 hours) has expired; the change cannot be reverted.'**
+  String get bulkCancellationExpired;
+
+  /// No description provided for @bulkErrorEmptyScope.
+  ///
+  /// In en, this message translates to:
+  /// **'No items fall within the selected scope.'**
+  String get bulkErrorEmptyScope;
+
+  /// No description provided for @bulkErrorRuleRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'The rule is invalid; review the entered values.'**
+  String get bulkErrorRuleRequired;
+
+  /// No description provided for @bulkErrorReasonRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'A documented reason is required for execution.'**
+  String get bulkErrorReasonRequired;
+
+  /// No description provided for @bulkErrorOperatorRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'The operator name is required for execution.'**
+  String get bulkErrorOperatorRequired;
+
+  /// No description provided for @bulkErrorCommitFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The change could not be executed; item data was not touched.'**
+  String get bulkErrorCommitFailed;
+
+  /// No description provided for @bulkErrorNotCancellable.
+  ///
+  /// In en, this message translates to:
+  /// **'The change is outside the cancellation window.'**
+  String get bulkErrorNotCancellable;
+
+  /// No description provided for @bulkRuleTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Rule Type'**
+  String get bulkRuleTypeLabel;
+
+  /// No description provided for @bulkScopeNoItems.
+  ///
+  /// In en, this message translates to:
+  /// **'No inventory items found'**
+  String get bulkScopeNoItems;
+
+  /// No description provided for @bulkApprovalReviewSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-execution change summary'**
+  String get bulkApprovalReviewSummary;
 }
 
 class _AppLocalizationsDelegate

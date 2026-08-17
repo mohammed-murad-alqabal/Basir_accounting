@@ -2367,4 +2367,199 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get workEntityPickerDisabled => 'Not eligible for selection';
+
+  @override
+  String get bulkWizardTitle => 'Bulk Price Change';
+
+  @override
+  String get bulkWizardStep1 => '1. Scope';
+
+  @override
+  String get bulkWizardStep2 => '2. Rule';
+
+  @override
+  String get bulkWizardStep3 => '3. Preview';
+
+  @override
+  String get bulkWizardStep4 => '4. Approve & Execute';
+
+  @override
+  String get bulkWizardNext => 'Next';
+
+  @override
+  String get bulkWizardPrevious => 'Previous';
+
+  @override
+  String get bulkWizardFinish => 'Finish Wizard';
+
+  @override
+  String get bulkWizardReset => 'New Price Change';
+
+  @override
+  String get bulkScopeAll => 'All Items';
+
+  @override
+  String get bulkScopeAllDescription =>
+      'Apply the rule to every non-deleted inventory item';
+
+  @override
+  String get bulkScopeSpecific => 'Specific Items';
+
+  @override
+  String get bulkScopeSpecificDescription =>
+      'Hand-pick the items from the inventory list';
+
+  @override
+  String get bulkScopeSelectItems => 'Select Items';
+
+  @override
+  String bulkScopeSelectedCount(Object count) {
+    return '$count items selected';
+  }
+
+  @override
+  String get bulkTargetSale => 'Sale Price';
+
+  @override
+  String get bulkTargetPurchase => 'Purchase Price';
+
+  @override
+  String get bulkTargetBoth => 'Both Prices';
+
+  @override
+  String get bulkTargetLabel => 'Target Price';
+
+  @override
+  String get bulkRulePercentage => 'Percentage';
+
+  @override
+  String get bulkRuleFixedAmount => 'Fixed Amount';
+
+  @override
+  String get bulkRuleSetTo => 'Set To Value';
+
+  @override
+  String get bulkRuleCopyFromPurchase => 'Copy From Purchase';
+
+  @override
+  String get bulkRuleValueLabel => 'Value';
+
+  @override
+  String get bulkRuleValueHint => 'e.g. 10';
+
+  @override
+  String get bulkRuleValuePositive => 'Positive value';
+
+  @override
+  String get bulkRuleValueNegative => 'Negative value';
+
+  @override
+  String get bulkPreviewTitle => 'Change Impact Preview';
+
+  @override
+  String bulkPreviewCount(Object count) {
+    return '$count items included';
+  }
+
+  @override
+  String get bulkPreviewBlocked => 'Blocked';
+
+  @override
+  String get bulkPreviewSale => 'Sale Price';
+
+  @override
+  String get bulkPreviewPurchase => 'Purchase Price';
+
+  @override
+  String get bulkPreviewNoChanges => 'No valid changes for the current rule.';
+
+  @override
+  String get bulkPreviewRefresh => 'Refresh Preview';
+
+  @override
+  String get bulkApprovalTitle => 'Approval & Execution';
+
+  @override
+  String get bulkApprovalOperator => 'Operator';
+
+  @override
+  String get bulkApprovalReason => 'Reason';
+
+  @override
+  String get bulkApprovalReasonHint =>
+      'Provide a documented reason for this bulk change';
+
+  @override
+  String get bulkApprovalConfirmLabel =>
+      'I acknowledge that this change immediately affects the prices of the selected items.';
+
+  @override
+  String get bulkApprovalWarning =>
+      'This is a high-impact change. Quantities are never modified, and a 24-hour cancellation window applies.';
+
+  @override
+  String get bulkApprovalExecute => 'Execute Change';
+
+  @override
+  String get bulkSuccessTitle => 'Executed Successfully';
+
+  @override
+  String bulkSuccessCount(Object count) {
+    return '$count items were affected';
+  }
+
+  @override
+  String bulkSuccessCancellable(Object hours) {
+    return 'This change can be cancelled within $hours hours of execution.';
+  }
+
+  @override
+  String get bulkCancellationTitle => 'Cancel Last Change';
+
+  @override
+  String get bulkCancellationWarning =>
+      'Every affected item\'s price will be restored to its previous value and removed from the price history.';
+
+  @override
+  String get bulkCancellationExecute => 'Cancel Change';
+
+  @override
+  String get bulkCancellationSuccess =>
+      'Previous prices restored successfully within the cancellation window.';
+
+  @override
+  String get bulkCancellationExpired =>
+      'The cancellation window (24 hours) has expired; the change cannot be reverted.';
+
+  @override
+  String get bulkErrorEmptyScope => 'No items fall within the selected scope.';
+
+  @override
+  String get bulkErrorRuleRequired =>
+      'The rule is invalid; review the entered values.';
+
+  @override
+  String get bulkErrorReasonRequired =>
+      'A documented reason is required for execution.';
+
+  @override
+  String get bulkErrorOperatorRequired =>
+      'The operator name is required for execution.';
+
+  @override
+  String get bulkErrorCommitFailed =>
+      'The change could not be executed; item data was not touched.';
+
+  @override
+  String get bulkErrorNotCancellable =>
+      'The change is outside the cancellation window.';
+
+  @override
+  String get bulkRuleTypeLabel => 'Rule Type';
+
+  @override
+  String get bulkScopeNoItems => 'No inventory items found';
+
+  @override
+  String get bulkApprovalReviewSummary => 'Pre-execution change summary';
 }
