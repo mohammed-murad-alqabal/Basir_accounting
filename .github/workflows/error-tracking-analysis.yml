@@ -81,7 +81,8 @@ jobs:
         run: |
           echo "Running tests..."
           set +e
-          flutter test --no-pub --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*') > test_output.txt 2>&1
+          # تشغيل Flutter test تسلسيًا يمنع انهيار flutter_tester في CI عند تجميع suites كثيرة.
+          flutter test --no-pub --concurrency=1 --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*') > test_output.txt 2>&1
           TEST_EXIT_CODE=$?
           set -e
 
