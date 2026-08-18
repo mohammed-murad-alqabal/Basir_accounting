@@ -10,6 +10,7 @@ export 'src/basir_database.dart'
         InventoryItem,
         MarketPrice,
         Profile,
+        StockMovement,
         Warehouse;
 
 export 'src/budget_store.dart';
@@ -20,6 +21,7 @@ export 'src/inventory_item_store.dart';
 export 'src/market_price_store.dart';
 export 'src/migration_checkpoint_store.dart';
 export 'src/profile_store.dart';
+export 'src/stock_movement_store.dart';
 export 'src/user_scope.dart';
 export 'src/vendor_store.dart';
 export 'src/warehouse_store.dart';

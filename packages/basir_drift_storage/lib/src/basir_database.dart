@@ -234,6 +234,47 @@ class InventoryItems extends Table {
       ];
 }
 
+/// حركة مخزون append-only داخل نطاق المستخدم؛ يحافظ على الاتجاه والمرجع
+/// والتكلفة والمزامنة دون اشتقاق رصيد مخزن داخل الصف.
+@TableIndex(
+  name: 'stock_movements_scope_item_date_idx',
+  columns: {#scopeKey, #itemId, #date},
+)
+@TableIndex(
+  name: 'stock_movements_scope_warehouse_date_idx',
+  columns: {#scopeKey, #warehouseId, #date},
+)
+@TableIndex(
+  name: 'stock_movements_scope_reference_idx',
+  columns: {#scopeKey, #referenceId},
+)
+class StockMovements extends Table {
+  TextColumn get scopeKey => text()();
+  TextColumn get uuid => text()();
+  TextColumn get itemId => text()();
+  TextColumn get warehouseId => text().nullable()();
+  TextColumn get type => text()();
+  RealColumn get quantity => real()();
+  RealColumn get unitCost => real()();
+  DateTimeColumn get date => dateTime()();
+  TextColumn get referenceId => text().nullable()();
+  TextColumn get description => text().nullable()();
+  TextColumn get userId => text().nullable()();
+  TextColumn get syncStatus => text().withDefault(const Constant('synced'))();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {scopeKey, uuid};
+
+  @override
+  List<String> get customConstraints => const [
+        '''CHECK (type IN ('inbound', 'outbound', 'transfer', 'adjustment'))''',
+        '''CHECK (sync_status IN ('synced', 'pendingPush', 'pendingPull', 'conflict'))''',
+        'CHECK (quantity > 0)',
+        'CHECK (unit_cost >= 0)',
+      ];
+}
+
 /// عميل واحد لكل UUID داخل نطاق المستخدم؛ يحافظ على حقول الهوية والمحاسبة
 /// والمزامنة المطلوبة لموجة النقل الأولى.
 @TableIndex(
@@ -348,6 +389,7 @@ class SyncOutbox extends Table {
     Vendors,
     Warehouses,
     InventoryItems,
+    StockMovements,
     SyncOutbox,
   ],
 )
@@ -356,7 +398,7 @@ class BasirDatabase extends _$BasirDatabase {
       : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 7;
+  int get schemaVersion => 8;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -382,6 +424,9 @@ class BasirDatabase extends _$BasirDatabase {
           }
           if (from < 7) {
             await migrator.createTable(inventoryItems);
+          }
+          if (from < 8) {
+            await migrator.createTable(stockMovements);
           }
         },
         beforeOpen: (details) => customStatement('PRAGMA foreign_keys = ON'),

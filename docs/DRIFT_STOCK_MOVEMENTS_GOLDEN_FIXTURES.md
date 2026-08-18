@@ -113,9 +113,17 @@
 
 أُضيف اختبار `test/core/persistence/drift_stock_movements_golden_test.dart` بعدد **9 اختبارات ناجحة** تغطي parser والـcatalog، جميع clean fixtures، دورة الحركة، scope العام والخاص، حد `asOfDate` الشامل، dual-entry transfer، عزل المستخدمين، رفض non-UTC، ورفض standalone transfer. نجح `flutter analyze` للملفات المتأثرة بلا ملاحظات، ونجح `git diff --check`. لم يُضف أي Drift schema أو DAO أو importer، ولم يتغير Isar أو Providers أو `sync_service`.
 
+## التنفيذ المحلي الحالي: Storage وSQLite parity
+
+أُنشئ فرع `work/stock-movements-drift-20260817` فوق commit golden fixtures المنشور `dd716a36`. أُضيف جدول `StockMovements` إلى Drift مع migration additive إلى `schemaVersion = 8`، composite scope key `(scopeKey, uuid)`، وفهارس item/date وwarehouse/date وreference. لا يخزن الجدول رصيدًا مشتقًا داخل الصف.
+
+أُضيف `StockMovementRecord` و`StockMovementStorage` و`StockMovementStore` مع القراءة حسب الصنف والمستخدم والمستودع والتاريخ، القراءة حسب reference داخل user scope، القراءة الكاملة، الإضافة الفردية والدفعية، وحساب الرصيد من `inbound` و`outbound` وpositive `adjustment`. تُحفظ الحركة `transfer` في storage لرصد البيانات، لكن `readStockLevel` يرفض حسابها كحركة standalone حتى يثبت dual-entry contract.
+
+أُضيف اختبار SQLite يحمّل clean fixtures نفسها ويقارن الأرصدة المتوقعة مع `StockMovementStore`، واختبارات scope وasOfDate وbatch/reference وround-trip والبوابة المحجوبة. نجحت **50 اختبارًا** في الاختبارات المستهدفة، ونجح `flutter analyze` للملفات المتأثرة بلا ملاحظات، و`git diff --check`. لم يتغير Isar أو Providers أو `sync_service`، ولا يوجد commit أو push لشريحة Storage هذه حتى الآن.
+
 ## الخطوة التالية بعد اعتماد التصميم
 
-بعد مراجعة هذه الوثيقة، يمكن إضافة جدول Drift و`StockMovementStore` على فرع مستقل، ثم إعادة تشغيل نفس fixtures على SQLite in-memory. لا يُسمح بإنشاء importer من Isar أو parity على بيانات فعلية قبل نجاح golden fixtures على التخزين الجديد، ولا يُسمح بإنشاء commit أو push أو PR دون موافقة مستقلة.
+بعد المراجعة البشرية، يمكن طلب إذن مستقل لإنشاء commit محلي لشريحة StockMovements Storage. لا يُسمح بإنشاء importer من Isar أو parity على بيانات فعلية أو shadow-read قبل تثبيت قرار `asOfDate` في domain، واعتماد positive/negative adjustment، والتحقق من dual-entry transfer. لا يُسمح بأي push أو PR جديدة دون موافقة مستقلة.
 
 ## المراجع الداخلية
 

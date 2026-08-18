@@ -6662,6 +6662,648 @@ class InventoryItemsCompanion extends UpdateCompanion<InventoryItem> {
   }
 }
 
+class $StockMovementsTable extends StockMovements
+    with TableInfo<$StockMovementsTable, StockMovement> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StockMovementsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _scopeKeyMeta =
+      const VerificationMeta('scopeKey');
+  @override
+  late final GeneratedColumn<String> scopeKey = GeneratedColumn<String>(
+      'scope_key', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+      'uuid', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  @override
+  late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
+      'item_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _warehouseIdMeta =
+      const VerificationMeta('warehouseId');
+  @override
+  late final GeneratedColumn<String> warehouseId = GeneratedColumn<String>(
+      'warehouse_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+      'type', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _quantityMeta =
+      const VerificationMeta('quantity');
+  @override
+  late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
+      'quantity', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _unitCostMeta =
+      const VerificationMeta('unitCost');
+  @override
+  late final GeneratedColumn<double> unitCost = GeneratedColumn<double>(
+      'unit_cost', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+      'date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _referenceIdMeta =
+      const VerificationMeta('referenceId');
+  @override
+  late final GeneratedColumn<String> referenceId = GeneratedColumn<String>(
+      'reference_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _syncStatusMeta =
+      const VerificationMeta('syncStatus');
+  @override
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+      'sync_status', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('synced'));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        scopeKey,
+        uuid,
+        itemId,
+        warehouseId,
+        type,
+        quantity,
+        unitCost,
+        date,
+        referenceId,
+        description,
+        userId,
+        syncStatus,
+        createdAt
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'stock_movements';
+  @override
+  VerificationContext validateIntegrity(Insertable<StockMovement> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('scope_key')) {
+      context.handle(_scopeKeyMeta,
+          scopeKey.isAcceptableOrUnknown(data['scope_key']!, _scopeKeyMeta));
+    } else if (isInserting) {
+      context.missing(_scopeKeyMeta);
+    }
+    if (data.containsKey('uuid')) {
+      context.handle(
+          _uuidMeta, uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta));
+    } else if (isInserting) {
+      context.missing(_uuidMeta);
+    }
+    if (data.containsKey('item_id')) {
+      context.handle(_itemIdMeta,
+          itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta));
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
+    }
+    if (data.containsKey('warehouse_id')) {
+      context.handle(
+          _warehouseIdMeta,
+          warehouseId.isAcceptableOrUnknown(
+              data['warehouse_id']!, _warehouseIdMeta));
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('quantity')) {
+      context.handle(_quantityMeta,
+          quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta));
+    } else if (isInserting) {
+      context.missing(_quantityMeta);
+    }
+    if (data.containsKey('unit_cost')) {
+      context.handle(_unitCostMeta,
+          unitCost.isAcceptableOrUnknown(data['unit_cost']!, _unitCostMeta));
+    } else if (isInserting) {
+      context.missing(_unitCostMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+          _dateMeta, date.isAcceptableOrUnknown(data['date']!, _dateMeta));
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('reference_id')) {
+      context.handle(
+          _referenceIdMeta,
+          referenceId.isAcceptableOrUnknown(
+              data['reference_id']!, _referenceIdMeta));
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+          _syncStatusMeta,
+          syncStatus.isAcceptableOrUnknown(
+              data['sync_status']!, _syncStatusMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {scopeKey, uuid};
+  @override
+  StockMovement map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return StockMovement(
+      scopeKey: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}scope_key'])!,
+      uuid: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}uuid'])!,
+      itemId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}item_id'])!,
+      warehouseId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}warehouse_id']),
+      type: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
+      quantity: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}quantity'])!,
+      unitCost: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}unit_cost'])!,
+      date: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
+      referenceId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}reference_id']),
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id']),
+      syncStatus: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $StockMovementsTable createAlias(String alias) {
+    return $StockMovementsTable(attachedDatabase, alias);
+  }
+}
+
+class StockMovement extends DataClass implements Insertable<StockMovement> {
+  final String scopeKey;
+  final String uuid;
+  final String itemId;
+  final String? warehouseId;
+  final String type;
+  final double quantity;
+  final double unitCost;
+  final DateTime date;
+  final String? referenceId;
+  final String? description;
+  final String? userId;
+  final String syncStatus;
+  final DateTime createdAt;
+  const StockMovement(
+      {required this.scopeKey,
+      required this.uuid,
+      required this.itemId,
+      this.warehouseId,
+      required this.type,
+      required this.quantity,
+      required this.unitCost,
+      required this.date,
+      this.referenceId,
+      this.description,
+      this.userId,
+      required this.syncStatus,
+      required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['scope_key'] = Variable<String>(scopeKey);
+    map['uuid'] = Variable<String>(uuid);
+    map['item_id'] = Variable<String>(itemId);
+    if (!nullToAbsent || warehouseId != null) {
+      map['warehouse_id'] = Variable<String>(warehouseId);
+    }
+    map['type'] = Variable<String>(type);
+    map['quantity'] = Variable<double>(quantity);
+    map['unit_cost'] = Variable<double>(unitCost);
+    map['date'] = Variable<DateTime>(date);
+    if (!nullToAbsent || referenceId != null) {
+      map['reference_id'] = Variable<String>(referenceId);
+    }
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<String>(userId);
+    }
+    map['sync_status'] = Variable<String>(syncStatus);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  StockMovementsCompanion toCompanion(bool nullToAbsent) {
+    return StockMovementsCompanion(
+      scopeKey: Value(scopeKey),
+      uuid: Value(uuid),
+      itemId: Value(itemId),
+      warehouseId: warehouseId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(warehouseId),
+      type: Value(type),
+      quantity: Value(quantity),
+      unitCost: Value(unitCost),
+      date: Value(date),
+      referenceId: referenceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(referenceId),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      syncStatus: Value(syncStatus),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory StockMovement.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return StockMovement(
+      scopeKey: serializer.fromJson<String>(json['scopeKey']),
+      uuid: serializer.fromJson<String>(json['uuid']),
+      itemId: serializer.fromJson<String>(json['itemId']),
+      warehouseId: serializer.fromJson<String?>(json['warehouseId']),
+      type: serializer.fromJson<String>(json['type']),
+      quantity: serializer.fromJson<double>(json['quantity']),
+      unitCost: serializer.fromJson<double>(json['unitCost']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      referenceId: serializer.fromJson<String?>(json['referenceId']),
+      description: serializer.fromJson<String?>(json['description']),
+      userId: serializer.fromJson<String?>(json['userId']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'scopeKey': serializer.toJson<String>(scopeKey),
+      'uuid': serializer.toJson<String>(uuid),
+      'itemId': serializer.toJson<String>(itemId),
+      'warehouseId': serializer.toJson<String?>(warehouseId),
+      'type': serializer.toJson<String>(type),
+      'quantity': serializer.toJson<double>(quantity),
+      'unitCost': serializer.toJson<double>(unitCost),
+      'date': serializer.toJson<DateTime>(date),
+      'referenceId': serializer.toJson<String?>(referenceId),
+      'description': serializer.toJson<String?>(description),
+      'userId': serializer.toJson<String?>(userId),
+      'syncStatus': serializer.toJson<String>(syncStatus),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  StockMovement copyWith(
+          {String? scopeKey,
+          String? uuid,
+          String? itemId,
+          Value<String?> warehouseId = const Value.absent(),
+          String? type,
+          double? quantity,
+          double? unitCost,
+          DateTime? date,
+          Value<String?> referenceId = const Value.absent(),
+          Value<String?> description = const Value.absent(),
+          Value<String?> userId = const Value.absent(),
+          String? syncStatus,
+          DateTime? createdAt}) =>
+      StockMovement(
+        scopeKey: scopeKey ?? this.scopeKey,
+        uuid: uuid ?? this.uuid,
+        itemId: itemId ?? this.itemId,
+        warehouseId: warehouseId.present ? warehouseId.value : this.warehouseId,
+        type: type ?? this.type,
+        quantity: quantity ?? this.quantity,
+        unitCost: unitCost ?? this.unitCost,
+        date: date ?? this.date,
+        referenceId: referenceId.present ? referenceId.value : this.referenceId,
+        description: description.present ? description.value : this.description,
+        userId: userId.present ? userId.value : this.userId,
+        syncStatus: syncStatus ?? this.syncStatus,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  StockMovement copyWithCompanion(StockMovementsCompanion data) {
+    return StockMovement(
+      scopeKey: data.scopeKey.present ? data.scopeKey.value : this.scopeKey,
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      itemId: data.itemId.present ? data.itemId.value : this.itemId,
+      warehouseId:
+          data.warehouseId.present ? data.warehouseId.value : this.warehouseId,
+      type: data.type.present ? data.type.value : this.type,
+      quantity: data.quantity.present ? data.quantity.value : this.quantity,
+      unitCost: data.unitCost.present ? data.unitCost.value : this.unitCost,
+      date: data.date.present ? data.date.value : this.date,
+      referenceId:
+          data.referenceId.present ? data.referenceId.value : this.referenceId,
+      description:
+          data.description.present ? data.description.value : this.description,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      syncStatus:
+          data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StockMovement(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('uuid: $uuid, ')
+          ..write('itemId: $itemId, ')
+          ..write('warehouseId: $warehouseId, ')
+          ..write('type: $type, ')
+          ..write('quantity: $quantity, ')
+          ..write('unitCost: $unitCost, ')
+          ..write('date: $date, ')
+          ..write('referenceId: $referenceId, ')
+          ..write('description: $description, ')
+          ..write('userId: $userId, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      scopeKey,
+      uuid,
+      itemId,
+      warehouseId,
+      type,
+      quantity,
+      unitCost,
+      date,
+      referenceId,
+      description,
+      userId,
+      syncStatus,
+      createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is StockMovement &&
+          other.scopeKey == this.scopeKey &&
+          other.uuid == this.uuid &&
+          other.itemId == this.itemId &&
+          other.warehouseId == this.warehouseId &&
+          other.type == this.type &&
+          other.quantity == this.quantity &&
+          other.unitCost == this.unitCost &&
+          other.date == this.date &&
+          other.referenceId == this.referenceId &&
+          other.description == this.description &&
+          other.userId == this.userId &&
+          other.syncStatus == this.syncStatus &&
+          other.createdAt == this.createdAt);
+}
+
+class StockMovementsCompanion extends UpdateCompanion<StockMovement> {
+  final Value<String> scopeKey;
+  final Value<String> uuid;
+  final Value<String> itemId;
+  final Value<String?> warehouseId;
+  final Value<String> type;
+  final Value<double> quantity;
+  final Value<double> unitCost;
+  final Value<DateTime> date;
+  final Value<String?> referenceId;
+  final Value<String?> description;
+  final Value<String?> userId;
+  final Value<String> syncStatus;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const StockMovementsCompanion({
+    this.scopeKey = const Value.absent(),
+    this.uuid = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.warehouseId = const Value.absent(),
+    this.type = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.unitCost = const Value.absent(),
+    this.date = const Value.absent(),
+    this.referenceId = const Value.absent(),
+    this.description = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  StockMovementsCompanion.insert({
+    required String scopeKey,
+    required String uuid,
+    required String itemId,
+    this.warehouseId = const Value.absent(),
+    required String type,
+    required double quantity,
+    required double unitCost,
+    required DateTime date,
+    this.referenceId = const Value.absent(),
+    this.description = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  })  : scopeKey = Value(scopeKey),
+        uuid = Value(uuid),
+        itemId = Value(itemId),
+        type = Value(type),
+        quantity = Value(quantity),
+        unitCost = Value(unitCost),
+        date = Value(date),
+        createdAt = Value(createdAt);
+  static Insertable<StockMovement> custom({
+    Expression<String>? scopeKey,
+    Expression<String>? uuid,
+    Expression<String>? itemId,
+    Expression<String>? warehouseId,
+    Expression<String>? type,
+    Expression<double>? quantity,
+    Expression<double>? unitCost,
+    Expression<DateTime>? date,
+    Expression<String>? referenceId,
+    Expression<String>? description,
+    Expression<String>? userId,
+    Expression<String>? syncStatus,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (scopeKey != null) 'scope_key': scopeKey,
+      if (uuid != null) 'uuid': uuid,
+      if (itemId != null) 'item_id': itemId,
+      if (warehouseId != null) 'warehouse_id': warehouseId,
+      if (type != null) 'type': type,
+      if (quantity != null) 'quantity': quantity,
+      if (unitCost != null) 'unit_cost': unitCost,
+      if (date != null) 'date': date,
+      if (referenceId != null) 'reference_id': referenceId,
+      if (description != null) 'description': description,
+      if (userId != null) 'user_id': userId,
+      if (syncStatus != null) 'sync_status': syncStatus,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  StockMovementsCompanion copyWith(
+      {Value<String>? scopeKey,
+      Value<String>? uuid,
+      Value<String>? itemId,
+      Value<String?>? warehouseId,
+      Value<String>? type,
+      Value<double>? quantity,
+      Value<double>? unitCost,
+      Value<DateTime>? date,
+      Value<String?>? referenceId,
+      Value<String?>? description,
+      Value<String?>? userId,
+      Value<String>? syncStatus,
+      Value<DateTime>? createdAt,
+      Value<int>? rowid}) {
+    return StockMovementsCompanion(
+      scopeKey: scopeKey ?? this.scopeKey,
+      uuid: uuid ?? this.uuid,
+      itemId: itemId ?? this.itemId,
+      warehouseId: warehouseId ?? this.warehouseId,
+      type: type ?? this.type,
+      quantity: quantity ?? this.quantity,
+      unitCost: unitCost ?? this.unitCost,
+      date: date ?? this.date,
+      referenceId: referenceId ?? this.referenceId,
+      description: description ?? this.description,
+      userId: userId ?? this.userId,
+      syncStatus: syncStatus ?? this.syncStatus,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (scopeKey.present) {
+      map['scope_key'] = Variable<String>(scopeKey.value);
+    }
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (itemId.present) {
+      map['item_id'] = Variable<String>(itemId.value);
+    }
+    if (warehouseId.present) {
+      map['warehouse_id'] = Variable<String>(warehouseId.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (quantity.present) {
+      map['quantity'] = Variable<double>(quantity.value);
+    }
+    if (unitCost.present) {
+      map['unit_cost'] = Variable<double>(unitCost.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (referenceId.present) {
+      map['reference_id'] = Variable<String>(referenceId.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StockMovementsCompanion(')
+          ..write('scopeKey: $scopeKey, ')
+          ..write('uuid: $uuid, ')
+          ..write('itemId: $itemId, ')
+          ..write('warehouseId: $warehouseId, ')
+          ..write('type: $type, ')
+          ..write('quantity: $quantity, ')
+          ..write('unitCost: $unitCost, ')
+          ..write('date: $date, ')
+          ..write('referenceId: $referenceId, ')
+          ..write('description: $description, ')
+          ..write('userId: $userId, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SyncOutboxTable extends SyncOutbox
     with TableInfo<$SyncOutboxTable, SyncOutboxData> {
   @override
@@ -7218,6 +7860,7 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
   late final $VendorsTable vendors = $VendorsTable(this);
   late final $WarehousesTable warehouses = $WarehousesTable(this);
   late final $InventoryItemsTable inventoryItems = $InventoryItemsTable(this);
+  late final $StockMovementsTable stockMovements = $StockMovementsTable(this);
   late final $SyncOutboxTable syncOutbox = $SyncOutboxTable(this);
   late final Index marketPricesItemAsOfIdx = Index(
       'market_prices_item_as_of_idx',
@@ -7250,6 +7893,15 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
   late final Index inventoryItemsScopeNameEnIdx = Index(
       'inventory_items_scope_name_en_idx',
       'CREATE INDEX inventory_items_scope_name_en_idx ON inventory_items (scope_key, name_en)');
+  late final Index stockMovementsScopeItemDateIdx = Index(
+      'stock_movements_scope_item_date_idx',
+      'CREATE INDEX stock_movements_scope_item_date_idx ON stock_movements (scope_key, item_id, date)');
+  late final Index stockMovementsScopeWarehouseDateIdx = Index(
+      'stock_movements_scope_warehouse_date_idx',
+      'CREATE INDEX stock_movements_scope_warehouse_date_idx ON stock_movements (scope_key, warehouse_id, date)');
+  late final Index stockMovementsScopeReferenceIdx = Index(
+      'stock_movements_scope_reference_idx',
+      'CREATE INDEX stock_movements_scope_reference_idx ON stock_movements (scope_key, reference_id)');
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -7266,6 +7918,7 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
         vendors,
         warehouses,
         inventoryItems,
+        stockMovements,
         syncOutbox,
         marketPricesItemAsOfIdx,
         customersScopeNameArIdx,
@@ -7277,7 +7930,10 @@ abstract class _$BasirDatabase extends GeneratedDatabase {
         inventoryItemsScopeWarehouseDeletedIdx,
         inventoryItemsScopeSkuIdx,
         inventoryItemsScopeNameArIdx,
-        inventoryItemsScopeNameEnIdx
+        inventoryItemsScopeNameEnIdx,
+        stockMovementsScopeItemDateIdx,
+        stockMovementsScopeWarehouseDateIdx,
+        stockMovementsScopeReferenceIdx
       ];
 }
 
@@ -10349,6 +11005,300 @@ typedef $$InventoryItemsTableProcessedTableManager = ProcessedTableManager<
     ),
     InventoryItem,
     PrefetchHooks Function()>;
+typedef $$StockMovementsTableCreateCompanionBuilder = StockMovementsCompanion
+    Function({
+  required String scopeKey,
+  required String uuid,
+  required String itemId,
+  Value<String?> warehouseId,
+  required String type,
+  required double quantity,
+  required double unitCost,
+  required DateTime date,
+  Value<String?> referenceId,
+  Value<String?> description,
+  Value<String?> userId,
+  Value<String> syncStatus,
+  required DateTime createdAt,
+  Value<int> rowid,
+});
+typedef $$StockMovementsTableUpdateCompanionBuilder = StockMovementsCompanion
+    Function({
+  Value<String> scopeKey,
+  Value<String> uuid,
+  Value<String> itemId,
+  Value<String?> warehouseId,
+  Value<String> type,
+  Value<double> quantity,
+  Value<double> unitCost,
+  Value<DateTime> date,
+  Value<String?> referenceId,
+  Value<String?> description,
+  Value<String?> userId,
+  Value<String> syncStatus,
+  Value<DateTime> createdAt,
+  Value<int> rowid,
+});
+
+class $$StockMovementsTableFilterComposer
+    extends Composer<_$BasirDatabase, $StockMovementsTable> {
+  $$StockMovementsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get uuid => $composableBuilder(
+      column: $table.uuid, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get itemId => $composableBuilder(
+      column: $table.itemId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get warehouseId => $composableBuilder(
+      column: $table.warehouseId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get quantity => $composableBuilder(
+      column: $table.quantity, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get unitCost => $composableBuilder(
+      column: $table.unitCost, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+      column: $table.date, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get referenceId => $composableBuilder(
+      column: $table.referenceId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+}
+
+class $$StockMovementsTableOrderingComposer
+    extends Composer<_$BasirDatabase, $StockMovementsTable> {
+  $$StockMovementsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get scopeKey => $composableBuilder(
+      column: $table.scopeKey, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get uuid => $composableBuilder(
+      column: $table.uuid, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get itemId => $composableBuilder(
+      column: $table.itemId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get warehouseId => $composableBuilder(
+      column: $table.warehouseId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get quantity => $composableBuilder(
+      column: $table.quantity, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get unitCost => $composableBuilder(
+      column: $table.unitCost, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+      column: $table.date, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get referenceId => $composableBuilder(
+      column: $table.referenceId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+}
+
+class $$StockMovementsTableAnnotationComposer
+    extends Composer<_$BasirDatabase, $StockMovementsTable> {
+  $$StockMovementsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get scopeKey =>
+      $composableBuilder(column: $table.scopeKey, builder: (column) => column);
+
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<String> get itemId =>
+      $composableBuilder(column: $table.itemId, builder: (column) => column);
+
+  GeneratedColumn<String> get warehouseId => $composableBuilder(
+      column: $table.warehouseId, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<double> get quantity =>
+      $composableBuilder(column: $table.quantity, builder: (column) => column);
+
+  GeneratedColumn<double> get unitCost =>
+      $composableBuilder(column: $table.unitCost, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get referenceId => $composableBuilder(
+      column: $table.referenceId, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+      column: $table.syncStatus, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$StockMovementsTableTableManager extends RootTableManager<
+    _$BasirDatabase,
+    $StockMovementsTable,
+    StockMovement,
+    $$StockMovementsTableFilterComposer,
+    $$StockMovementsTableOrderingComposer,
+    $$StockMovementsTableAnnotationComposer,
+    $$StockMovementsTableCreateCompanionBuilder,
+    $$StockMovementsTableUpdateCompanionBuilder,
+    (
+      StockMovement,
+      BaseReferences<_$BasirDatabase, $StockMovementsTable, StockMovement>
+    ),
+    StockMovement,
+    PrefetchHooks Function()> {
+  $$StockMovementsTableTableManager(
+      _$BasirDatabase db, $StockMovementsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$StockMovementsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$StockMovementsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$StockMovementsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> scopeKey = const Value.absent(),
+            Value<String> uuid = const Value.absent(),
+            Value<String> itemId = const Value.absent(),
+            Value<String?> warehouseId = const Value.absent(),
+            Value<String> type = const Value.absent(),
+            Value<double> quantity = const Value.absent(),
+            Value<double> unitCost = const Value.absent(),
+            Value<DateTime> date = const Value.absent(),
+            Value<String?> referenceId = const Value.absent(),
+            Value<String?> description = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              StockMovementsCompanion(
+            scopeKey: scopeKey,
+            uuid: uuid,
+            itemId: itemId,
+            warehouseId: warehouseId,
+            type: type,
+            quantity: quantity,
+            unitCost: unitCost,
+            date: date,
+            referenceId: referenceId,
+            description: description,
+            userId: userId,
+            syncStatus: syncStatus,
+            createdAt: createdAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String scopeKey,
+            required String uuid,
+            required String itemId,
+            Value<String?> warehouseId = const Value.absent(),
+            required String type,
+            required double quantity,
+            required double unitCost,
+            required DateTime date,
+            Value<String?> referenceId = const Value.absent(),
+            Value<String?> description = const Value.absent(),
+            Value<String?> userId = const Value.absent(),
+            Value<String> syncStatus = const Value.absent(),
+            required DateTime createdAt,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              StockMovementsCompanion.insert(
+            scopeKey: scopeKey,
+            uuid: uuid,
+            itemId: itemId,
+            warehouseId: warehouseId,
+            type: type,
+            quantity: quantity,
+            unitCost: unitCost,
+            date: date,
+            referenceId: referenceId,
+            description: description,
+            userId: userId,
+            syncStatus: syncStatus,
+            createdAt: createdAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$StockMovementsTableProcessedTableManager = ProcessedTableManager<
+    _$BasirDatabase,
+    $StockMovementsTable,
+    StockMovement,
+    $$StockMovementsTableFilterComposer,
+    $$StockMovementsTableOrderingComposer,
+    $$StockMovementsTableAnnotationComposer,
+    $$StockMovementsTableCreateCompanionBuilder,
+    $$StockMovementsTableUpdateCompanionBuilder,
+    (
+      StockMovement,
+      BaseReferences<_$BasirDatabase, $StockMovementsTable, StockMovement>
+    ),
+    StockMovement,
+    PrefetchHooks Function()>;
 typedef $$SyncOutboxTableCreateCompanionBuilder = SyncOutboxCompanion Function({
   required String id,
   required String entityType,
@@ -10623,6 +11573,8 @@ class $BasirDatabaseManager {
       $$WarehousesTableTableManager(_db, _db.warehouses);
   $$InventoryItemsTableTableManager get inventoryItems =>
       $$InventoryItemsTableTableManager(_db, _db.inventoryItems);
+  $$StockMovementsTableTableManager get stockMovements =>
+      $$StockMovementsTableTableManager(_db, _db.stockMovements);
   $$SyncOutboxTableTableManager get syncOutbox =>
       $$SyncOutboxTableTableManager(_db, _db.syncOutbox);
 }
