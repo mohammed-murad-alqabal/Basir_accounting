@@ -153,6 +153,128 @@ class Budgets extends Table {
       ];
 }
 
+/// مستودع واحد لكل UUID داخل نطاق المستخدم؛ يحافظ على CRUD المرجعي
+/// دون إدخال sync أو soft-delete غير موجودين في Isar الحالي.
+@TableIndex(
+  name: 'warehouses_scope_name_ar_idx',
+  columns: {#scopeKey, #nameAr},
+)
+@TableIndex(
+  name: 'warehouses_scope_name_en_idx',
+  columns: {#scopeKey, #nameEn},
+)
+class Warehouses extends Table {
+  TextColumn get scopeKey => text()();
+  TextColumn get uuid => text()();
+  TextColumn get nameAr => text()();
+  TextColumn get nameEn => text()();
+  TextColumn get location => text().nullable()();
+  TextColumn get userId => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {scopeKey, uuid};
+}
+
+/// صنف مخزون واحد لكل UUID داخل نطاق المستخدم؛ يحافظ على الحقول
+/// المحاسبية والتقييمية وsoft-delete دون فرض unique عالمي.
+@TableIndex(
+  name: 'inventory_items_scope_warehouse_deleted_idx',
+  columns: {#scopeKey, #warehouseId, #isDeleted},
+)
+@TableIndex(
+  name: 'inventory_items_scope_sku_idx',
+  columns: {#scopeKey, #sku},
+)
+@TableIndex(
+  name: 'inventory_items_scope_name_ar_idx',
+  columns: {#scopeKey, #nameAr},
+)
+@TableIndex(
+  name: 'inventory_items_scope_name_en_idx',
+  columns: {#scopeKey, #nameEn},
+)
+class InventoryItems extends Table {
+  TextColumn get scopeKey => text()();
+  TextColumn get uuid => text()();
+  TextColumn get nameAr => text()();
+  TextColumn get nameEn => text()();
+  TextColumn get sku => text().nullable()();
+  TextColumn get description => text().nullable()();
+  RealColumn get purchasePrice => real().nullable()();
+  RealColumn get salePrice => real().nullable()();
+  RealColumn get currentQuantity => real().withDefault(const Constant(0))();
+  TextColumn get unit => text().nullable()();
+  TextColumn get categoryId => text().nullable()();
+  TextColumn get valuationMethod =>
+      text().withDefault(const Constant('weightedAverage'))();
+  TextColumn get assetAccountId => text().nullable()();
+  TextColumn get cogsAccountId => text().nullable()();
+  TextColumn get revenueAccountId => text().nullable()();
+  TextColumn get primaryAccountId => text().nullable()();
+  TextColumn get syncStatus => text().withDefault(const Constant('synced'))();
+  DateTimeColumn get serverUpdatedAt => dateTime().nullable()();
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  TextColumn get userId => text().nullable()();
+  TextColumn get warehouseId => text().nullable()();
+  TextColumn get barcode => text().nullable()();
+  TextColumn get taxCategory => text().withDefault(const Constant('S'))();
+
+  @override
+  Set<Column<Object>> get primaryKey => {scopeKey, uuid};
+
+  @override
+  List<String> get customConstraints => const [
+        '''CHECK (valuation_method IN ('fifo', 'weightedAverage'))''',
+        '''CHECK (sync_status IN ('synced', 'pendingPush', 'pendingPull', 'conflict'))''',
+        'CHECK (length(tax_category) > 0)',
+      ];
+}
+
+/// حركة مخزون append-only داخل نطاق المستخدم؛ يحافظ على الاتجاه والمرجع
+/// والتكلفة والمزامنة دون اشتقاق رصيد مخزن داخل الصف.
+@TableIndex(
+  name: 'stock_movements_scope_item_date_idx',
+  columns: {#scopeKey, #itemId, #date},
+)
+@TableIndex(
+  name: 'stock_movements_scope_warehouse_date_idx',
+  columns: {#scopeKey, #warehouseId, #date},
+)
+@TableIndex(
+  name: 'stock_movements_scope_reference_idx',
+  columns: {#scopeKey, #referenceId},
+)
+class StockMovements extends Table {
+  TextColumn get scopeKey => text()();
+  TextColumn get uuid => text()();
+  TextColumn get itemId => text()();
+  TextColumn get warehouseId => text().nullable()();
+  TextColumn get type => text()();
+  RealColumn get quantity => real()();
+  RealColumn get unitCost => real()();
+  DateTimeColumn get date => dateTime()();
+  TextColumn get referenceId => text().nullable()();
+  TextColumn get description => text().nullable()();
+  TextColumn get userId => text().nullable()();
+  TextColumn get syncStatus => text().withDefault(const Constant('synced'))();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {scopeKey, uuid};
+
+  @override
+  List<String> get customConstraints => const [
+        '''CHECK (type IN ('inbound', 'outbound', 'transfer', 'adjustment'))''',
+        '''CHECK (sync_status IN ('synced', 'pendingPush', 'pendingPull', 'conflict'))''',
+        'CHECK (quantity > 0)',
+        'CHECK (unit_cost >= 0)',
+      ];
+}
+
 /// عميل واحد لكل UUID داخل نطاق المستخدم؛ يحافظ على حقول الهوية والمحاسبة
 /// والمزامنة المطلوبة لموجة النقل الأولى.
 @TableIndex(
@@ -265,6 +387,9 @@ class SyncOutbox extends Table {
     Budgets,
     Customers,
     Vendors,
+    Warehouses,
+    InventoryItems,
+    StockMovements,
     SyncOutbox,
   ],
 )
@@ -273,7 +398,7 @@ class BasirDatabase extends _$BasirDatabase {
       : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 8;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -293,6 +418,15 @@ class BasirDatabase extends _$BasirDatabase {
           if (from < 5) {
             await migrator.createTable(customers);
             await migrator.createTable(vendors);
+          }
+          if (from < 6) {
+            await migrator.createTable(warehouses);
+          }
+          if (from < 7) {
+            await migrator.createTable(inventoryItems);
+          }
+          if (from < 8) {
+            await migrator.createTable(stockMovements);
           }
         },
         beforeOpen: (details) => customStatement('PRAGMA foreign_keys = ON'),
