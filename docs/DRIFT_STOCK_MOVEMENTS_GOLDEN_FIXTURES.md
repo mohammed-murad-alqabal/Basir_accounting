@@ -133,9 +133,16 @@
 
 قبل أي commit أو رفع، يجب أن يراجع الفريق contract الخاص بإضافة `asOfDate` إلى domain، ودلالة negative adjustment، وقاعدة dual-entry transfer. بعد اعتماد هذه القرارات يمكن طلب commit محلي مستقل لهذه الموجة، ثم push وDraft PR بموافقتين مستقلتين. لا يُسمح بتفعيل importer على بيانات إنتاجية، أو parity فعلية، أو shadow-read، أو canary قبل تقرير بشري نظيف.
 
+## contract-fix المحلي
+
+تُفصّل قرارات العقد الحالية في [DRIFT_STOCK_MOVEMENTS_CONTRACT_DECISIONS.md](DRIFT_STOCK_MOVEMENTS_CONTRACT_DECISIONS.md). أُعلن `asOfDate` الآن في `getMovementsForItem` كوسيط اختياري شامل، مع استخدام `date` بعد UTC canonicalization. تبقى `adjustment` السالبة وstandalone `transfer` محجوبتين، لأن domain يصف الكمية بأنها موجبة ولأن `InventoryService` ينفذ التحويل بحركتي `outbound` و`inbound` ذريتين.
+
+هذه الإضافة لا تفعل Drift ولا تغيّر Isar أو Providers أو `sync_service`، ولا تصلح الحساب legacy داخل `StockMovementRepositoryImpl` تلقائيًا. الغرض هو توحيد العقد قبل parity الفعلية وshadow-read.
+
 ## المراجع الداخلية
 
 [1]: ../lib/features/inventory/domain/entities/stock_movement.dart "StockMovement domain contract"
-[2]: ../lib/features/inventory/domain/repositories/stock_movement_repository.dart "StockMovement repository interface"
-[3]: ../lib/features/inventory/data/repositories/stock_movement_repository_impl.dart "Current Isar movement behavior"
-[4]: ../lib/features/inventory/application/inventory_service.dart "Dual-entry transfer orchestration"
+[2]: ../lib/features/inventory/application/inventory_service.dart "InventoryService dual-entry transfer contract"
+[3]: DRIFT_STOCK_MOVEMENTS_CONTRACT_DECISIONS.md "StockMovements contract decisions"
+[4]: ../lib/features/inventory/domain/repositories/stock_movement_repository.dart "StockMovement repository interface"
+[5]: ../lib/features/inventory/data/repositories/stock_movement_repository_impl.dart "Current Isar movement behavior"
