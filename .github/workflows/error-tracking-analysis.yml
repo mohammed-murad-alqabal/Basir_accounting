@@ -14,6 +14,10 @@ on:
     - cron: "0 2 * * *"
   workflow_dispatch:
 
+concurrency:
+  group: error-tracking-analysis-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
   issues: write
@@ -34,7 +38,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
           channel: "stable"
           cache: false
 
@@ -153,33 +157,3 @@ jobs:
             echo "::error::تم اكتشاف مشاكل حرجة: $ERROR_COUNT أخطاء، $FAILED_TESTS اختبار فاشل"
             exit 1
           fi
-
-      - name: Add PR Comment
-        if: github.event_name == 'pull_request' && always()
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
-        with:
-          script: |
-            const errorCount = '${{ steps.analyze.outputs.error_count }}';
-            const warningCount = '${{ steps.analyze.outputs.warning_count }}';
-            const passedTests = '${{ steps.tests.outputs.passed }}';
-            const failedTests = '${{ steps.tests.outputs.failed }}';
-
-            const body = `## 🔍 نتائج التحليل التلقائي
-
-            ### تحليل الكود
-            - أخطاء: ${errorCount} ${errorCount === '0' ? '✅' : '❌'}
-            - تحذيرات: ${warningCount} ${warningCount === '0' ? '✅' : '⚠️'}
-
-            ### الاختبارات
-            - نجح: ${passedTests} ✅
-            - فشل: ${failedTests} ${failedTests === '0' ? '✅' : '❌'}
-
-            ${errorCount !== '0' || failedTests !== '0' ? '⚠️ **يرجى إصلاح المشاكل قبل الدمج**' : '✅ **جميع الفحوصات نجحت!**'}
-            `;
-
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: body
-            });

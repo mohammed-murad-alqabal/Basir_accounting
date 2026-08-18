@@ -6,6 +6,10 @@ on:
     branches: [main, development]
   workflow_dispatch:
 
+concurrency:
+  group: pr-checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   code-quality:
     name: Code Quality Checks
@@ -19,7 +23,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
           channel: "stable"
           cache: false
 
@@ -94,7 +98,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
           channel: "stable"
           cache: false
 
@@ -130,7 +134,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
           channel: "stable"
           cache: false
 
@@ -236,7 +240,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
           channel: "stable"
           cache: false
 
@@ -278,7 +282,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
           channel: "stable"
           cache: false
 

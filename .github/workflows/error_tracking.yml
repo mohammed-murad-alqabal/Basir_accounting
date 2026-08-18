@@ -10,6 +10,10 @@ on:
     - cron: "0 2 * * *"
   workflow_dispatch:
 
+concurrency:
+  group: error-tracking-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 # تتيح الصلاحيات للتقارير حيث تسمح سياسة المستودع؛ فشل النشر يبقى استشاريًا.
 permissions:
   contents: read
@@ -30,7 +34,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
           channel: "stable"
           cache: false
 
@@ -187,40 +191,3 @@ jobs:
                 labels: ['bug', 'automated', 'critical']
               });
             }
-
-      - name: Comment on PR
-        # يبقى تقرير الجودة مرئيًا في السجل إذا كانت التعليقات محظورة.
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
-        with:
-          script: |
-            const errorsCount = ${{ steps.analyze.outputs.errors_count }};
-            const warningsCount = ${{ steps.analyze.outputs.warnings_count }};
-            const testsPassedCount = ${{ steps.test.outputs.tests_passed }};
-            const testsFailedCount = ${{ steps.test.outputs.tests_failed }};
-
-            const comment = `
-            ## 📊 تقرير جودة الكود
-
-            ### Flutter Analyze
-            - ❌ Errors: ${errorsCount}
-            - ⚠️ Warnings: ${warningsCount}
-            - ℹ️ Info: ${{ steps.analyze.outputs.info_count }}
-
-            ### الاختبارات
-            - ✅ نجح: ${testsPassedCount}
-            - ❌ فشل: ${testsFailedCount}
-            - ⏭️ تخطي: ${{ steps.test.outputs.tests_skipped }}
-
-            ${errorsCount > 0 ? '⚠️ **تحذير:** يوجد أخطاء حرجة يجب إصلاحها قبل الدمج!' : ''}
-            ${testsFailedCount > 0 ? '⚠️ **تحذير:** يوجد اختبارات فاشلة!' : ''}
-            ${errorsCount === 0 && testsFailedCount === 0 ? '✅ **ممتاز!** لا توجد أخطاء حرجة.' : ''}
-            `;
-
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: comment
-            });
