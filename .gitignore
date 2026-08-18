@@ -124,6 +124,9 @@ logs/archive_*.zip
 # Kiro (optional - keep local only)
 # .kiro/
 
+# Generated steering compatibility cache
+scripts/.cache/
+
 # Test outputs
 test_output.txt
 test_full_output.txt
