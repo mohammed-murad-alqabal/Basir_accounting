@@ -2,119 +2,139 @@ import 'package:basir_accounting_system/core/extensions/context_extensions.dart'
 import 'package:basir_accounting_system/core/theme/border_contrast_design.dart';
 import 'package:basir_accounting_system/core/theme/services/icon_customization_service.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/assets/presentation/screens/assets_screen.dart';
+import 'package:basir_accounting_system/features/customers/presentation/screens/customers_screen.dart';
+import 'package:basir_accounting_system/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:basir_accounting_system/features/inventory/presentation/screens/inventory_items_screen.dart';
+import 'package:basir_accounting_system/features/invoices/presentation/screens/invoices_screen.dart';
+import 'package:basir_accounting_system/features/reports/presentation/screens/reports_dashboard_screen.dart';
+import 'package:basir_accounting_system/features/settings/presentation/screens/settings_screen.dart';
+import 'package:basir_accounting_system/features/vendors/presentation/screens/vendors_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/basir_sidebar.dart';
 import 'package:basir_accounting_system/shared/widgets/basir_topbar.dart';
 import 'package:flutter/material.dart' hide Durations;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// الحد الأدنى لعرض الشاشة لاستخدام تخطيط سطح المكتب (شريط جانبي + شريط علوي)
-///
-/// عند العرض الأقل من هذه القيمة يتحول التطبيق تلقائيًا إلى تخطيط الهاتف
-/// (شريط سفلي) للحفاظ على سهولة الاستخدام على الأجهزة الصغيرة.
+/// الحد الأدنى لعرض الشاشة لاستخدام تخطيط سطح المكتب (شريط جانبي + شريط علوي).
 const double kDesktopBreakpoint = 900;
 
-/// عرض الشريط الجانبي عند طيّه (الأيقونات فقط)
+/// عرض الشريط الجانبي عند طيّه (الأيقونات فقط).
 const double kSidebarCollapsedWidth = 68;
 
-/// عرض الشريط الجانبي عند فتحه (أيقونات + تسميات)
+/// عرض الشريط الجانبي عند فتحه (أيقونات + تسميات).
 const double kSidebarExpandedWidth = 232;
 
-/// ارتفاع الشريط العلوي
+/// ارتفاع الشريط العلوي.
 const double kTopBarHeight = 56;
 
-/// نقطة التصفية لعرض نصوص شرائح سياق العمل في الشريط العلوي (عند العرض الأقل تُطوى إلى الأيقونات)
-///
-/// الشرائح مع نصوصها + البحث + الأزرار تحتاج ~860px على الأقل، والعرض المتاح
-/// للشريط العلوي عند أصغر شاشة مكتبيّة (900px) مع شريط جانبي مفتوح هو 668px
-/// فقط، لذا تُطوى النصوص حتى يتجاوز العرض المتاح 1048px (سطح مكتبي واسع).
+/// نقطة عرض نصوص سياق العمل في الشريط العلوي.
 const double kChipLabelBreakpoint = 1048;
 
-/// عرض الشريط الجانبي الحالي حسب حالة الطي
+/// عرض الشريط الجانبي الحالي حسب حالة الطي.
 double sidebarWidthOf({required bool collapsed}) =>
     collapsed ? kSidebarCollapsedWidth : kSidebarExpandedWidth;
 
-/// حالة طي الشريط الجانبي (تُحفظ أثناء التنقل بين الوحدات)
+/// حالة طي الشريط الجانبي، وتبقى مستقلة عن فهرس الوحدة النشطة.
 final sidebarCollapsedProvider = StateProvider<bool>((ref) => false);
 
-/// هيكل تطبيق بصير المكتبي (BasirAppShell)
+/// هيكل تطبيق بصير المتجاوب.
 ///
-/// ينفذ متطلبات المخطط التنفيذي v1.0:
-/// - سطح المكتب: شريط جانبي قابل للطي + شريط علوي للمؤسسة/الفرع/الفترة
-///   + بحث شامل
-/// - الهاتف/اللوحي الضيق: شريط سفلي (MainShell التقليدي)
-/// - ألوان الهوية (#0F6E7D)، شبكة مسافات 4px، أنصاف أقطار 8/12/16
-/// - مساحات نقر ≥ 48px، تباين ≥ 3:1، حركات ≤ 200ms
-class BasirAppShell extends ConsumerWidget {
-  /// إنشاء هيكل تطبيق بصير
-  const BasirAppShell({super.key, this.screens});
+/// يحتفظ بفهرس الوحدة في حالة واحدة مشتركة بين تخطيط المكتب والهاتف. وبذلك لا
+/// يختلف سلوك التنقل باختلاف حجم الشاشة، ولا تظهر شاشة بديلة عند فتح المسار
+/// الرئيسي في التطبيق الفعلي.
+class BasirAppShell extends ConsumerStatefulWidget {
+  /// إنشاء هيكل تطبيق بصير.
+  const BasirAppShell({super.key, this.screens, this.initialIndex = 0});
 
-  /// الوحدات المعروضة (بترتيب بنود التنقل)
+  /// الوحدات المعروضة، وتستخدم للاختبارات أو التخصيص المؤسسي.
   final List<Widget>? screens;
 
+  /// الوحدة التي تظهر عند فتح الهيكل.
+  final int initialIndex;
+
+  @override
+  ConsumerState<BasirAppShell> createState() => _BasirAppShellState();
+}
+
+class _BasirAppShellState extends ConsumerState<BasirAppShell> {
+  late int _selectedIndex;
+
   static const List<Widget> _defaultScreens = [
-    _PlaceholderScreen('dashboard'),
-    _PlaceholderScreen('invoices'),
-    _PlaceholderScreen('vendors'),
-    _PlaceholderScreen('customers'),
-    _PlaceholderScreen('inventory'),
-    _PlaceholderScreen('assets'),
-    _PlaceholderScreen('reports'),
-    _PlaceholderScreen('settings'),
+    DashboardScreen(),
+    InvoicesScreen(),
+    VendorsScreen(),
+    CustomersScreen(),
+    InventoryItemsScreen(),
+    AssetsScreen(),
+    ReportsDashboardScreen(),
+    SettingsScreen(),
   ];
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex.clamp(0, _screenCount - 1).toInt();
+  }
+
+  int get _screenCount => (widget.screens ?? _defaultScreens).length;
+
+  void _selectIndex(int index) {
+    if (index < 0 || index >= _screenCount || index == _selectedIndex) return;
+    setState(() => _selectedIndex = index);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final appIcons = ref.watch(appIconsProvider);
     final l10n = context.l10n;
+    final screens = widget.screens ?? _defaultScreens;
     final isDesktop = MediaQuery.sizeOf(context).width >= kDesktopBreakpoint;
-
-    final activeScreens = screens ?? _defaultScreens;
-    final index = _selectedIndexFor(context);
 
     return Scaffold(
       body: isDesktop
           ? _DesktopLayout(
-              selectedIndex: index,
-              screens: activeScreens,
+              selectedIndex: _selectedIndex,
+              screens: screens,
               appIcons: appIcons,
               l10n: l10n,
+              onItemSelected: _selectIndex,
             )
           : _MobileLayout(
-              selectedIndex: index,
-              screens: activeScreens,
+              selectedIndex: _selectedIndex,
+              screens: screens,
               appIcons: appIcons,
               l10n: l10n,
+              onItemSelected: _selectIndex,
             ),
     );
   }
-
-  /// يحسب فهرس الوحدة النشطة من [BasirNavContext] الحالي
-  static int _selectedIndexFor(BuildContext context) => 0;
 }
 
-/// سياق الوحدة النشطة داخل الهيكل (يُغذى مستقبلًا من StateProvider)
+/// سياق الوحدة النشطة داخل الهيكل.
 class BasirNavContext {
-  /// إنشاء سياق تنقل
+  /// إنشاء سياق تنقل.
   const BasirNavContext({this.index = 0});
 
-  /// الفهرس النشط
+  /// الفهرس النشط.
   final int index;
 }
 
-/// تخطيط سطح المكتب: شريط جانبي + شريط علوي + محتوى
+/// تخطيط سطح المكتب: شريط جانبي + شريط علوي + محتوى.
 class _DesktopLayout extends ConsumerWidget {
   const _DesktopLayout({
     required this.selectedIndex,
     required this.screens,
     required this.appIcons,
     required this.l10n,
+    required this.onItemSelected,
   });
 
   final int selectedIndex;
   final List<Widget> screens;
   final AppIconsBase appIcons;
   final AppLocalizations l10n;
+  final ValueChanged<int> onItemSelected;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -126,6 +146,7 @@ class _DesktopLayout extends ConsumerWidget {
           selectedIndex: selectedIndex,
           appIcons: appIcons,
           l10n: l10n,
+          onItemSelected: onItemSelected,
         ),
         Expanded(
           child: Column(
@@ -149,19 +170,21 @@ class _DesktopLayout extends ConsumerWidget {
   }
 }
 
-/// تخطيط الهاتف/اللوحي الضيق: شريط سفلي (MainShell التقليدي)
+/// تخطيط الهاتف/اللوحي الضيق: شريط علوي وشريط إجراءات سفلي سياقي.
 class _MobileLayout extends StatelessWidget {
   const _MobileLayout({
     required this.selectedIndex,
     required this.screens,
     required this.appIcons,
     required this.l10n,
+    required this.onItemSelected,
   });
 
   final int selectedIndex;
   final List<Widget> screens;
   final AppIconsBase appIcons;
   final AppLocalizations l10n;
+  final ValueChanged<int> onItemSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -196,12 +219,13 @@ class _MobileLayout extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(
-                  7,
+                  screens.length,
                   (index) => _MobileNavItem(
                     index: index,
                     isSelected: index == selectedIndex,
                     appIcons: appIcons,
                     l10n: l10n,
+                    onTap: () => onItemSelected(index),
                   ),
                 ),
               ),
@@ -213,19 +237,21 @@ class _MobileLayout extends StatelessWidget {
   }
 }
 
-/// عنصر التنقل السفلي في تخطيط الهاتف
+/// عنصر التنقل السفلي في تخطيط الهاتف.
 class _MobileNavItem extends StatelessWidget {
   const _MobileNavItem({
     required this.index,
     required this.isSelected,
     required this.appIcons,
     required this.l10n,
+    required this.onTap,
   });
 
   final int index;
   final bool isSelected;
   final AppIconsBase appIcons;
   final AppLocalizations l10n;
+  final VoidCallback onTap;
 
   static const List<IconData> _mobileIcons = [
     Icons.home_outlined,
@@ -234,12 +260,15 @@ class _MobileNavItem extends StatelessWidget {
     Icons.people_outline,
     Icons.inventory_2_outlined,
     Icons.account_balance_wallet_outlined,
+    Icons.analytics_outlined,
     Icons.settings_outlined,
   ];
 
   @override
   Widget build(BuildContext context) {
-    final icon = _mobileIcons[index];
+    final icon = index < _mobileIcons.length
+        ? _mobileIcons[index]
+        : Icons.apps_outlined;
     final label = switch (index) {
       0 => l10n.navHome,
       1 => l10n.navInvoices,
@@ -247,6 +276,7 @@ class _MobileNavItem extends StatelessWidget {
       3 => l10n.navCustomers,
       4 => l10n.navInventory,
       5 => l10n.navAssets,
+      6 => l10n.navReports,
       _ => l10n.navSettings,
     };
 
@@ -254,32 +284,39 @@ class _MobileNavItem extends StatelessWidget {
       button: true,
       selected: isSelected,
       label: label,
-      child: InkWell(
-        onTap: () {},
-        splashColor: AppColors.primary.withValues(alpha: 0.12),
-        child: SizedBox(
-          width: TouchTargets.minimum,
-          height: kBottomNavigationBarHeight,
-          child: Icon(
-            icon,
-            color: isSelected ? AppColors.primary : AppColors.textSecondary,
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          onTap: onTap,
+          splashColor: AppColors.primary.withValues(alpha: 0.12),
+          child: SizedBox(
+            width: TouchTargets.minimum,
+            height: kBottomNavigationBarHeight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: isSelected
+                        ? AppColors.primary
+                        : AppColors.textSecondary,
+                    fontWeight:
+                        isSelected ? FontWeights.bold : FontWeights.medium,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-}
-
-/// شاشة بديلة للوحدة غير المنفذة بعد (Phase 0 لا يشمل شاشات الوحدات)
-class _PlaceholderScreen extends StatelessWidget {
-  const _PlaceholderScreen(this.key_);
-  final String key_;
-
-  @override
-  Widget build(BuildContext context) => Center(
-        child: Text(
-          AppLocalizations.of(context).shellCurrentOrg,
-          style: AppTextStyles.bodyLarge,
-        ),
-      );
 }
