@@ -1,0 +1,698 @@
+# Terminal Full Output
+# Terminal: rust_baseline_stable
+# Command: cd /home/ubuntu/Basir_accounting/rust && . "$HOME/.cargo/env" && cargo test --workspace
+# PID: 1129
+# Timestamp: 2026-08-20_17-24-52.147538
+# Original Length: 36001 characters
+# ----------------------------------------
+
+[32mubuntu@sandbox:~$ [0mcd /home/ubuntu/Basir_accounting/rust && . "$HOME/.cargo/env" && cargo test --workspace
+[1m[92m    Updating[0m crates.io index
+[1m[92m  Downloaded[0m version_check v0.9.5
+[1m[92m  Downloaded[0m tinyvec_macros v0.1.1
+[1m[92m  Downloaded[0m unarray v0.1.4
+[1m[92m  Downloaded[0m ptr_meta v0.1.4
+[1m[92m  Downloaded[0m zerofrom-derive v0.1.7
+[1m[92m  Downloaded[0m strum v0.28.0
+[1m[92m  Downloaded[0m wnaf v0.14.0
+[1m[92m  Downloaded[0m time-core v0.1.9
+[1m[92m  Downloaded[0m scopeguard v1.2.0
+[1m[92m  Downloaded[0m subtle v2.6.1
+[1m[92m  Downloaded[0m zerofrom v0.1.8
+[1m[92m  Downloaded[0m ptr_meta_derive v0.1.4
+[1m[92m  Downloaded[0m untrusted v0.9.0
+[1m[92m  Downloaded[0m proc-macro-crate v3.5.0
+[1m[92m  Downloaded[0m cpufeatures v0.3.0
+[1m[92m  Downloaded[0m delegate-attr v0.3.0
+[1m[92m  Downloaded[0m crc v3.4.0
+[1m[92m  Downloaded[0m rfc6979 v0.6.0
+[1m[92m  Downloaded[0m rand_xorshift v0.4.0
+[1m[92m  Downloaded[0m wait-timeout v0.2.1
+[1m[92m  Downloaded[0m rusticata-macros v4.1.0
+[1m[92m  Downloaded[0m rand_chacha v0.3.1
+[1m[92m  Downloaded[0m quick-error v1.2.3
+[1m[92m  Downloaded[0m rend v0.4.2
+[1m[92m  Downloaded[0m sha1_smol v1.0.1
+[1m[92m  Downloaded[0m signature v3.0.0
+[1m[92m  Downloaded[0m crypto-common v0.1.6
+[1m[92m  Downloaded[0m errno v0.3.14
+[1m[92m  Downloaded[0m equivalent v1.0.2
+[1m[92m  Downloaded[0m radium v0.7.0
+[1m[92m  Downloaded[0m sha1 v0.11.0
+[1m[92m  Downloaded[0m adler2 v2.0.1
+[1m[92m  Downloaded[0m threadpool v1.8.1
+[1m[92m  Downloaded[0m fnv v1.0.7
+[1m[92m  Downloaded[0m funty v2.0.0
+[1m[92m  Downloaded[0m rand_core v0.6.4
+[1m[92m  Downloaded[0m primeorder v0.14.0
+[1m[92m  Downloaded[0m rkyv_derive v0.7.46
+[1m[92m  Downloaded[0m rusty-fork v0.3.1
+[1m[92m  Downloaded[0m rand_core v0.10.1
+[1m[92m  Downloaded[0m simdutf8 v0.1.5
+[1m[92m  Downloaded[0m crypto-common v0.2.2
+[1m[92m  Downloaded[0m data-encoding v2.11.0
+[1m[92m  Downloaded[0m shlex v2.0.1
+[1m[92m  Downloaded[0m tokio-macros v2.7.1
+[1m[92m  Downloaded[0m sec1 v0.8.1
+[1m[92m  Downloaded[0m sqlx-macros v0.9.0
+[1m[92m  Downloaded[0m rustc-demangle v0.1.28
+[1m[92m  Downloaded[0m digest v0.11.3
+[1m[92m  Downloaded[0m yoke-derive v0.8.2
+[1m[92m  Downloaded[0m find-msvc-tools v0.1.9
+[1m[92m  Downloaded[0m deranged v0.5.8
+[1m[92m  Downloaded[0m fastrand v2.5.0
+[1m[92m  Downloaded[0m asn1-rs-impl v0.2.0
+[1m[92m  Downloaded[0m crc-catalog v2.5.0
+[1m[92m  Downloaded[0m ppv-lite86 v0.2.21
+[1m[92m  Downloaded[0m displaydoc v0.2.6
+[1m[92m  Downloaded[0m sha2 v0.10.9
+[1m[92m  Downloaded[0m bytecheck v0.6.12
+[1m[92m  Downloaded[0m block-buffer v0.12.1
+[1m[92m  Downloaded[0m signal-hook-registry v1.4.8
+[1m[92m  Downloaded[0m slab v0.4.12
+[1m[92m  Downloaded[0m serdect v0.4.3
+[1m[92m  Downloaded[0m crossbeam-queue v0.3.13
+[1m[92m  Downloaded[0m dotenvy v0.15.7
+[1m[92m  Downloaded[0m either v1.16.0
+[1m[92m  Downloaded[0m ff v0.14.0
+[1m[92m  Downloaded[0m atoi v2.0.0
+[1m[92m  Downloaded[0m form_urlencoded v1.2.2
+[1m[92m  Downloaded[0m foldhash v0.2.0
+[1m[92m  Downloaded[0m flutter_rust_bridge_macros v2.12.0
+[1m[92m  Downloaded[0m primefield v0.14.0
+[1m[92m  Downloaded[0m rand_chacha v0.9.0
+[1m[92m  Downloaded[0m quote v1.0.47
+[1m[92m  Downloaded[0m bytecheck_derive v0.6.12
+[1m[92m  Downloaded[0m crossbeam-utils v0.8.22
+[1m[92m  Downloaded[0m sha2 v0.11.0
+[1m[92m  Downloaded[0m build-target v0.4.0
+[1m[92m  Downloaded[0m base16ct v1.0.0
+[1m[92m  Downloaded[0m spki v0.8.0
+[1m[92m  Downloaded[0m asn1-rs-derive v0.6.0
+[1m[92m  Downloaded[0m ecdsa v0.17.0
+[1m[92m  Downloaded[0m block-buffer v0.10.4
+[1m[92m  Downloaded[0m digest v0.10.7
+[1m[92m  Downloaded[0m rand_core v0.9.5
+[1m[92m  Downloaded[0m synstructure v0.13.2
+[1m[92m  Downloaded[0m utf8_iter v1.0.4
+[1m[92m  Downloaded[0m wyz v0.5.1
+[1m[92m  Downloaded[0m seahash v4.1.0
+[1m[92m  Downloaded[0m cfg_aliases v0.2.2
+[1m[92m  Downloaded[0m ctutils v0.4.2
+[1m[92m  Downloaded[0m cpufeatures v0.2.17
+[1m[92m  Downloaded[0m percent-encoding v2.3.2
+[1m[92m  Downloaded[0m potential_utf v0.1.5
+[1m[92m  Downloaded[0m cfg-if v1.0.4
+[1m[92m  Downloaded[0m proc-macro2 v1.0.107
+[1m[92m  Downloaded[0m sqlx-macros-core v0.9.0
+[1m[92m  Downloaded[0m smallvec v1.15.2
+[1m[92m  Downloaded[0m rcgen v0.14.9
+[1m[92m  Downloaded[0m elliptic-curve v0.14.1
+[1m[92m  Downloaded[0m serde_derive v1.0.229
+[1m[92m  Downloaded[0m event-listener v5.4.2
+[1m[92m  Downloaded[0m socket2 v0.6.5
+[1m[92m  Downloaded[0m stable_deref_trait v1.2.1
+[1m[92m  Downloaded[0m strum_macros v0.28.0
+[1m[92m  Downloaded[0m oid-registry v0.8.1
+[1m[92m  Downloaded[0m zeroize v1.9.0
+[1m[92m  Downloaded[0m futures-task v0.3.33
+[1m[92m  Downloaded[0m num-integer v0.1.46
+[1m[92m  Downloaded[0m group v0.14.0
+[1m[92m  Downloaded[0m hex v0.4.3
+[1m[92m  Downloaded[0m tinystr v0.8.3
+[1m[92m  Downloaded[0m rustls-pki-types v1.15.0
+[1m[92m  Downloaded[0m spin v0.9.9
+[1m[92m  Downloaded[0m allo-isolate v0.1.27
+[1m[92m  Downloaded[0m thiserror-impl v2.0.19
+[1m[92m  Downloaded[0m der-parser v10.0.0
+[1m[92m  Downloaded[0m flume v0.12.0
+[1m[92m  Downloaded[0m writeable v0.6.3
+[1m[92m  Downloaded[0m serde_core v1.0.229
+[1m[92m  Downloaded[0m sqlx-mysql v0.9.0
+[1m[92m  Downloaded[0m futures v0.3.33
+[1m[92m  Downloaded[0m zerovec-derive v0.11.3
+[1m[92m  Downloaded[0m parking_lot v0.12.5
+[1m[92m  Downloaded[0m whoami v2.1.3
+[1m[92m  Downloaded[0m num-conv v0.2.2
+[1m[92m  Downloaded[0m dart-sys v4.1.5
+[1m[92m  Downloaded[0m rand v0.8.7
+[1m[92m  Downloaded[0m thiserror v2.0.19
+[1m[92m  Downloaded[0m serde v1.0.229
+[1m[92m  Downloaded[0m zmij v1.0.23
+[1m[92m  Downloaded[0m bit-vec v0.8.0
+[1m[92m  Downloaded[0m stringprep v0.1.5
+[1m[92m  Downloaded[0m bit-set v0.8.0
+[1m[92m  Downloaded[0m atomic v0.5.3
+[1m[92m  Downloaded[0m byteorder v1.5.0
+[1m[92m  Downloaded[0m bit-vec v0.9.1
+[1m[92m  Downloaded[0m litemap v0.8.2
+[1m[92m  Downloaded[0m base64ct v1.8.3
+[1m[92m  Downloaded[0m tap v1.0.1
+[1m[92m  Downloaded[0m hybrid-array v0.4.14
+[1m[92m  Downloaded[0m unicode-bidi v0.3.18
+[1m[92m  Downloaded[0m rustls-webpki v0.103.13
+[1m[92m  Downloaded[0m sqlx-sqlite v0.9.0
+[1m[92m  Downloaded[0m rand v0.9.5
+[1m[92m  Downloaded[0m cpubits v0.1.1
+[1m[92m  Downloaded[0m toml_datetime v1.1.1+spec-1.1.0
+[1m[92m  Downloaded[0m icu_normalizer_data v2.2.0
+[1m[92m  Downloaded[0m lazy_static v1.5.0
+[1m[92m  Downloaded[0m tracing-attributes v0.1.31
+[1m[92m  Downloaded[0m num_cpus v1.17.0
+[1m[92m  Downloaded[0m yoke v0.8.3
+[1m[92m  Downloaded[0m cmov v0.5.4
+[1m[92m  Downloaded[0m futures-core v0.3.33
+[1m[92m  Downloaded[0m heck v0.5.0
+[1m[92m  Downloaded[0m unicode-properties v0.1.4
+[1m[92m  Downloaded[0m hmac v0.13.0
+[1m[92m  Downloaded[0m time-macros v0.2.32
+[1m[92m  Downloaded[0m toml_parser v1.1.2+spec-1.1.0
+[1m[92m  Downloaded[0m once_cell v1.21.4
+[1m[92m  Downloaded[0m rand v0.10.2
+[1m[92m  Downloaded[0m tempfile v3.27.0
+[1m[92m  Downloaded[0m powerfmt v0.2.0
+[1m[92m  Downloaded[0m autocfg v1.5.1
+[1m[92m  Downloaded[0m anyhow v1.0.104
+[1m[92m  Downloaded[0m arrayvec v0.7.8
+[1m[92m  Downloaded[0m futures-executor v0.3.33
+[1m[92m  Downloaded[0m pem v3.0.6
+[1m[92m  Downloaded[0m pin-project-lite v0.2.17
+[1m[92m  Downloaded[0m itoa v1.0.18
+[1m[92m  Downloaded[0m borsh-derive v1.8.0
+[1m[92m  Downloaded[0m futures-sink v0.3.33
+[1m[92m  Downloaded[0m flutter_rust_bridge v2.12.0
+[1m[92m  Downloaded[0m addr2line v0.25.1
+[1m[92m  Downloaded[0m chacha20 v0.10.1
+[1m[92m  Downloaded[0m tinyvec v1.12.0
+[1m[92m  Downloaded[0m ahash v0.7.8
+[1m[92m  Downloaded[0m tracing-core v0.1.36
+[1m[92m  Downloaded[0m unicode-ident v1.0.24
+[1m[92m  Downloaded[0m rkyv v0.7.46
+[1m[92m  Downloaded[0m hashlink v0.11.1
+[1m[92m  Downloaded[0m yasna v0.6.0
+[1m[92m  Downloaded[0m der v0.8.1
+[1m[92m  Downloaded[0m allocator-api2 v0.2.21
+[1m[92m  Downloaded[0m lock_api v0.4.14
+[1m[92m  Downloaded[0m bitflags v2.13.1
+[1m[92m  Downloaded[0m const-oid v0.10.2
+[1m[92m  Downloaded[0m getrandom v0.3.4
+[1m[92m  Downloaded[0m md-5 v0.10.6
+[1m[92m  Downloaded[0m sqlx-core v0.9.0
+[1m[92m  Downloaded[0m futures-io v0.3.33
+[1m[92m  Downloaded[0m idna_adapter v1.2.2
+[1m[92m  Downloaded[0m toml_edit v0.25.13+spec-1.1.0
+[1m[92m  Downloaded[0m pem-rfc7468 v1.0.0
+[1m[92m  Downloaded[0m uuid v1.24.0
+[1m[92m  Downloaded[0m parking_lot_core v0.9.12
+[1m[92m  Downloaded[0m bytes v1.12.1
+[1m[92m  Downloaded[0m pkg-config v0.3.33
+[1m[92m  Downloaded[0m icu_collections v2.2.0
+[1m[92m  Downloaded[0m mio v1.2.2
+[1m[92m  Downloaded[0m rust_decimal v1.42.1
+[1m[92m  Downloaded[0m log v0.4.33
+[1m[92m  Downloaded[0m futures-macro v0.3.33
+[1m[92m  Downloaded[0m icu_properties v2.2.0
+[1m[92m  Downloaded[0m parking v2.2.1
+[1m[92m  Downloaded[0m icu_locale_core v2.2.0
+[1m[92m  Downloaded[0m miniz_oxide v0.8.9
+[1m[92m  Downloaded[0m zerotrie v0.2.4
+[1m[92m  Downloaded[0m minimal-lexical v0.2.1
+[1m[92m  Downloaded[0m url v2.5.8
+[1m[92m  Downloaded[0m serde_json v1.0.151
+[1m[92m  Downloaded[0m num-traits v0.2.19
+[1m[92m  Downloaded[0m base64 v0.22.1
+[1m[92m  Downloaded[0m tokio-stream v0.1.18
+[1m[92m  Downloaded[0m backtrace v0.3.76
+[1m[92m  Downloaded[0m borsh v1.8.0
+[1m[92m  Downloaded[0m iana-time-zone v0.1.65
+[1m[92m  Downloaded[0m md-5 v0.11.0
+[1m[92m  Downloaded[0m p256 v0.14.0
+[1m[92m  Downloaded[0m generic-array v0.14.9
+[1m[92m  Downloaded[0m sqlx-postgres v0.9.0
+[1m[92m  Downloaded[0m x509-parser v0.18.1
+[1m[92m  Downloaded[0m futures-util v0.3.33
+[1m[92m  Downloaded[0m indexmap v2.14.0
+[1m[92m  Downloaded[0m asn1-rs v0.7.2
+[1m[92m  Downloaded[0m memchr v2.8.3
+[1m[92m  Downloaded[0m futures-channel v0.3.33
+[1m[92m  Downloaded[0m num-bigint v0.4.8
+[1m[92m  Downloaded[0m hashbrown v0.12.3
+[1m[92m  Downloaded[0m proptest v1.11.0
+[1m[92m  Downloaded[0m cc v1.3.0
+[1m[92m  Downloaded[0m pkcs8 v0.11.0
+[1m[92m  Downloaded[0m typenum v1.20.1
+[1m[92m  Downloaded[0m nom v7.1.3
+[1m[92m  Downloaded[0m getrandom v0.2.17
+[1m[92m  Downloaded[0m getrandom v0.4.3
+[1m[92m  Downloaded[0m quick-xml v0.41.0
+[1m[92m  Downloaded[0m icu_provider v2.2.0
+[1m[92m  Downloaded[0m hkdf v0.13.0
+[1m[92m  Downloaded[0m sqlx v0.9.0
+[1m[92m  Downloaded[0m zerovec v0.11.6
+[1m[92m  Downloaded[0m futures-intrusive v0.5.0
+[1m[92m  Downloaded[0m icu_normalizer v2.2.0
+[1m[92m  Downloaded[0m icu_properties_data v2.2.0
+[1m[92m  Downloaded[0m crypto-bigint v0.7.5
+[1m[92m  Downloaded[0m unicode-normalization v0.1.25
+[1m[92m  Downloaded[0m winnow v1.0.4
+[1m[92m  Downloaded[0m regex-syntax v0.8.11
+[1m[92m  Downloaded[0m hashbrown v0.16.1
+[1m[92m  Downloaded[0m gimli v0.32.3
+[1m[92m  Downloaded[0m idna v1.1.0
+[1m[92m  Downloaded[0m rustls v0.23.42
+[1m[92m  Downloaded[0m rustix v1.1.4
+[1m[92m  Downloaded[0m hashbrown v0.17.1
+[1m[92m  Downloaded[0m webpki-roots v1.0.9
+[1m[92m  Downloaded[0m object v0.37.3
+[1m[92m  Downloaded[0m vcpkg v0.2.15
+[1m[92m  Downloaded[0m bitvec v1.1.1
+[1m[92m  Downloaded[0m chrono v0.4.45
+[1m[92m  Downloaded[0m syn v1.0.109
+[1m[92m  Downloaded[0m portable-atomic v1.14.0
+[1m[92m  Downloaded[0m time v0.3.54
+[1m[92m  Downloaded[0m zerocopy v0.8.54
+[1m[92m  Downloaded[0m syn v2.0.119
+[1m[92m  Downloaded[0m syn v3.0.2
+[1m[92m  Downloaded[0m tracing v0.1.44
+[1m[92m  Downloaded[0m tokio v1.53.1
+[1m[92m  Downloaded[0m libc v0.2.186
+[1m[92m  Downloaded[0m ring v0.17.14
+[1m[92m  Downloaded[0m linux-raw-sys v0.12.1
+[1m[92m  Downloaded[0m libsqlite3-sys v0.30.1
+[1m[92m  Downloaded[0m 271 crates (26.3MiB) in 53.87s (largest was `libsqlite3-sys` at 4.9MiB)
+[1m[92m   Compiling[0m libc v0.2.186
+[1m[92m   Compiling[0m proc-macro2 v1.0.107
+[1m[92m   Compiling[0m unicode-ident v1.0.24
+[1m[92m   Compiling[0m quote v1.0.47
+[1m[92m   Compiling[0m cfg-if v1.0.4
+[1m[92m   Compiling[0m typenum v1.20.1
+[1m[92m   Compiling[0m zeroize v1.9.0
+[1m[92m   Compiling[0m rand_core v0.10.1
+[1m[92m   Compiling[0m getrandom v0.4.3
+[1m[92m   Compiling[0m serde_core v1.0.229
+[1m[92m   Compiling[0m cmov v0.5.4
+[1m[92m   Compiling[0m autocfg v1.5.1
+[1m[92m   Compiling[0m serde v1.0.229
+[1m[92m   Compiling[0m subtle v2.6.1
+[1m[92m   Compiling[0m num-traits v0.2.19
+[1m[92m   Compiling[0m find-msvc-tools v0.1.9
+[1m[92m   Compiling[0m syn v2.0.119
+[1m[92m   Compiling[0m syn v3.0.2
+[1m[92m   Compiling[0m shlex v2.0.1
+[1m[92m   Compiling[0m cc v1.3.0
+[1m[92m   Compiling[0m hybrid-array v0.4.14
+[1m[92m   Compiling[0m const-oid v0.10.2
+[1m[92m   Compiling[0m version_check v0.9.5
+[1m[92m   Compiling[0m memchr v2.8.3
+[1m[92m   Compiling[0m stable_deref_trait v1.2.1
+[1m[92m   Compiling[0m generic-array v0.14.9
+[1m[92m   Compiling[0m ctutils v0.4.2
+[1m[92m   Compiling[0m pin-project-lite v0.2.17
+[1m[92m   Compiling[0m ring v0.17.14
+[1m[92m   Compiling[0m crypto-common v0.2.2
+[1m[92m   Compiling[0m futures-core v0.3.33
+[1m[92m   Compiling[0m block-buffer v0.12.1
+[1m[92m   Compiling[0m getrandom v0.2.17
+[1m[92m   Compiling[0m rustls-pki-types v1.15.0
+[1m[92m   Compiling[0m untrusted v0.9.0
+[1m[92m   Compiling[0m block-buffer v0.10.4
+[1m[92m   Compiling[0m writeable v0.6.3
+[1m[92m   Compiling[0m serde_derive v1.0.229
+[1m[92m   Compiling[0m digest v0.11.3
+[1m[92m   Compiling[0m cpufeatures v0.3.0
+[1m[92m   Compiling[0m litemap v0.8.2
+[1m[92m   Compiling[0m once_cell v1.21.4
+[1m[92m   Compiling[0m iana-time-zone v0.1.65
+[1m[92m   Compiling[0m parking_lot_core v0.9.12
+[1m[92m   Compiling[0m icu_normalizer_data v2.2.0
+[1m[92m   Compiling[0m scopeguard v1.2.0
+[1m[92m   Compiling[0m icu_properties_data v2.2.0
+[1m[92m   Compiling[0m utf8_iter v1.0.4
+[1m[92m   Compiling[0m lock_api v0.4.14
+[1m[92m   Compiling[0m thiserror-impl v2.0.19
+[1m[92m   Compiling[0m mio v1.2.2
+[1m[92m   Compiling[0m socket2 v0.6.5
+[1m[92m   Compiling[0m synstructure v0.13.2
+[1m[92m   Compiling[0m arrayvec v0.7.8
+[1m[92m   Compiling[0m futures-task v0.3.33
+[1m[92m   Compiling[0m slab v0.4.12
+[1m[92m   Compiling[0m futures-io v0.3.33
+[1m[92m   Compiling[0m base64ct v1.8.3
+[1m[92m   Compiling[0m bytes v1.12.1
+[1m[92m   Compiling[0m pem-rfc7468 v1.0.0
+[1m[92m   Compiling[0m der v0.8.1
+[1m[92m   Compiling[0m chacha20 v0.10.1
+[1m[92m   Compiling[0m crypto-common v0.1.6
+[1m[92m   Compiling[0m ff v0.14.0
+[1m[92m   Compiling[0m zerofrom-derive v0.1.7
+[1m[92m   Compiling[0m yoke-derive v0.8.2
+[1m[92m   Compiling[0m zerovec-derive v0.11.3
+[1m[92m   Compiling[0m smallvec v1.15.2
+[1m[92m   Compiling[0m displaydoc v0.2.6
+[1m[92m   Compiling[0m hex v0.4.3
+[1m[92m   Compiling[0m zerofrom v0.1.8
+[1m[92m   Compiling[0m yoke v0.8.3
+[1m[92m   Compiling[0m parking_lot v0.12.5
+[1m[92m   Compiling[0m zmij v1.0.23
+[1m[92m   Compiling[0m crossbeam-utils v0.8.22
+[1m[92m   Compiling[0m zerovec v0.11.6
+[1m[92m   Compiling[0m rustls v0.23.42
+[1m[92m   Compiling[0m equivalent v1.0.2
+[1m[92m   Compiling[0m zerotrie v0.2.4
+[1m[92m   Compiling[0m cpubits v0.1.1
+[1m[92m   Compiling[0m crypto-bigint v0.7.5
+[1m[92m   Compiling[0m rustls-webpki v0.103.13
+[1m[92m   Compiling[0m digest v0.10.7
+[1m[92m   Compiling[0m hmac v0.13.0
+[1m[92m   Compiling[0m tinystr v0.8.3
+[1m[92m   Compiling[0m potential_utf v0.1.5
+[1m[92m   Compiling[0m sha1_smol v1.0.1
+[1m[92m   Compiling[0m icu_collections v2.2.0
+[1m[92m   Compiling[0m icu_locale_core v2.2.0
+[1m[92m   Compiling[0m log v0.4.33
+[1m[92m   Compiling[0m cpufeatures v0.2.17
+[1m[92m   Compiling[0m allocator-api2 v0.2.21
+[1m[92m   Compiling[0m serde_json v1.0.151
+[1m[92m   Compiling[0m foldhash v0.2.0
+[1m[92m   Compiling[0m percent-encoding v2.3.2
+[1m[92m   Compiling[0m hashbrown v0.16.1
+[1m[92m   Compiling[0m uuid v1.24.0
+[1m[92m   Compiling[0m form_urlencoded v1.2.2
+[1m[92m   Compiling[0m icu_provider v2.2.0
+[1m[92m   Compiling[0m spki v0.8.0
+[1m[92m   Compiling[0m chrono v0.4.45
+[1m[92m   Compiling[0m group v0.14.0
+[1m[92m   Compiling[0m tracing-attributes v0.1.31
+[1m[92m   Compiling[0m icu_normalizer v2.2.0
+[1m[92m   Compiling[0m icu_properties v2.2.0
+[1m[92m   Compiling[0m tracing-core v0.1.36
+[1m[92m   Compiling[0m base16ct v1.0.0
+[1m[92m   Compiling[0m itoa v1.0.18
+[1m[92m   Compiling[0m parking v2.2.1
+[1m[92m   Compiling[0m thiserror v2.0.19
+[1m[92m   Compiling[0m hashbrown v0.17.1
+[1m[92m   Compiling[0m crc-catalog v2.5.0
+[1m[92m   Compiling[0m futures-sink v0.3.33
+[1m[92m   Compiling[0m rust_decimal v1.42.1
+[1m[92m   Compiling[0m base64 v0.22.1
+[1m[92m   Compiling[0m tinyvec_macros v0.1.1
+[1m[92m   Compiling[0m idna_adapter v1.2.2
+[1m[92m   Compiling[0m idna v1.1.0
+[1m[92m   Compiling[0m tinyvec v1.12.0
+[1m[92m   Compiling[0m tracing v0.1.44
+[1m[92m   Compiling[0m indexmap v2.14.0
+[1m[92m   Compiling[0m futures-channel v0.3.33
+[1m[92m   Compiling[0m url v2.5.8
+[1m[92m   Compiling[0m crc v3.4.0
+[1m[92m   Compiling[0m event-listener v5.4.2
+[1m[92m   Compiling[0m sec1 v0.8.1
+[1m[92m   Compiling[0m crossbeam-queue v0.3.13
+[1m[92m   Compiling[0m pkcs8 v0.11.0
+[1m[92m   Compiling[0m hashlink v0.11.1
+[1m[92m   Compiling[0m futures-intrusive v0.5.0
+[1m[92m   Compiling[0m either v1.16.0
+[1m[92m   Compiling[0m futures-macro v0.3.33
+[1m[92m   Compiling[0m webpki-roots v1.0.9
+[1m[92m   Compiling[0m errno v0.3.14
+[1m[92m   Compiling[0m anyhow v1.0.104
+[1m[92m   Compiling[0m signal-hook-registry v1.4.8
+[1m[92m   Compiling[0m elliptic-curve v0.14.1
+[1m[92m   Compiling[0m unicode-normalization v0.1.25
+[1m[92m   Compiling[0m tokio-macros v2.7.1
+[1m[92m   Compiling[0m futures-util v0.3.33
+[1m[92m   Compiling[0m tokio v1.53.1
+[1m[92m   Compiling[0m sha2 v0.11.0
+[1m[92m   Compiling[0m bitflags v2.13.1
+[1m[92m   Compiling[0m time-core v0.1.9
+[1m[92m   Compiling[0m num-conv v0.2.2
+[1m[92m   Compiling[0m powerfmt v0.2.0
+[1m[92m   Compiling[0m unicode-bidi v0.3.18
+[1m[92m   Compiling[0m deranged v0.5.8
+[1m[92m   Compiling[0m unicode-properties v0.1.4
+[1m[92m   Compiling[0m stringprep v0.1.5
+[1m[92m   Compiling[0m time v0.3.54
+[1m[92m   Compiling[0m primefield v0.14.0
+[1m[92m   Compiling[0m rfc6979 v0.6.0
+[1m[92m   Compiling[0m wnaf v0.14.0
+[1m[92m   Compiling[0m sha2 v0.10.9
+[1m[92m   Compiling[0m rand v0.10.2
+[1m[92m   Compiling[0m signature v3.0.0
+[1m[92m   Compiling[0m atoi v2.0.0
+[1m[92m   Compiling[0m tokio-stream v0.1.18
+[1m[92m   Compiling[0m whoami v2.1.3
+[1m[92m   Compiling[0m dotenvy v0.15.7
+[1m[92m   Compiling[0m sqlx-core v0.9.0
+[1m[92m   Compiling[0m ecdsa v0.17.0
+[1m[92m   Compiling[0m primeorder v0.14.0
+[1m[92m   Compiling[0m hkdf v0.13.0
+[1m[92m   Compiling[0m yasna v0.6.0
+[1m[92m   Compiling[0m pem v3.0.6
+[1m[92m   Compiling[0m md-5 v0.11.0
+[1m[92m   Compiling[0m byteorder v1.5.0
+[1m[92m   Compiling[0m heck v0.5.0
+[1m[92m   Compiling[0m rcgen v0.14.9
+[1m[92m   Compiling[0m p256 v0.14.0
+[1m[92m   Compiling[0m quick-xml v0.41.0
+[1m[92m   Compiling[0m sqlx-postgres v0.9.0
+[1m[92m   Compiling[0m getrandom v0.3.4
+[1m[92m   Compiling[0m rustix v1.1.4
+[1m[92m   Compiling[0m zerocopy v0.8.54
+[1m[92m   Compiling[0m rand_core v0.9.5
+[1m[92m   Compiling[0m strum_macros v0.28.0
+[1m[92m   Compiling[0m strum v0.28.0
+[1m[92m   Compiling[0m linux-raw-sys v0.12.1
+[1m[92m   Compiling[0m accounting_zatca v0.1.0 (/home/ubuntu/Basir_accounting/rust/crates/accounting_zatca)
+[1m[92m   Compiling[0m fastrand v2.5.0
+[1m[92m   Compiling[0m tempfile v3.27.0
+[1m[92m   Compiling[0m wait-timeout v0.2.1
+[1m[92m   Compiling[0m sqlx-macros-core v0.9.0
+[1m[92m   Compiling[0m fnv v1.0.7
+[1m[92m   Compiling[0m bit-vec v0.8.0
+[1m[92m   Compiling[0m quick-error v1.2.3
+[1m[92m   Compiling[0m ppv-lite86 v0.2.21
+[1m[92m   Compiling[0m rusty-fork v0.3.1
+[1m[92m   Compiling[0m rand_chacha v0.9.0
+[1m[92m   Compiling[0m bit-set v0.8.0
+[1m[92m   Compiling[0m rand v0.9.5
+[1m[92m   Compiling[0m rand_xorshift v0.4.0
+[1m[92m   Compiling[0m regex-syntax v0.8.11
+[1m[92m   Compiling[0m unarray v0.1.4
+[1m[92m   Compiling[0m object v0.37.3
+[1m[92m   Compiling[0m gimli v0.32.3
+[1m[92m   Compiling[0m adler2 v2.0.1
+[1m[92m   Compiling[0m miniz_oxide v0.8.9
+[1m[92m   Compiling[0m proptest v1.11.0
+[1m[92m   Compiling[0m dart-sys v4.1.5
+[1m[92m   Compiling[0m addr2line v0.25.1
+[1m[92m   Compiling[0m build-target v0.4.0
+[1m[92m   Compiling[0m portable-atomic v1.14.0
+[1m[92m   Compiling[0m rustc-demangle v0.1.28
+[1m[92m   Compiling[0m flutter_rust_bridge v2.12.0
+[1m[92m   Compiling[0m futures-executor v0.3.33
+[1m[92m   Compiling[0m sqlx-macros v0.9.0
+[1m[92m   Compiling[0m md-5 v0.10.6
+[1m[92m   Compiling[0m num_cpus v1.17.0
+[1m[92m   Compiling[0m atomic v0.5.3
+[1m[92m   Compiling[0m threadpool v1.8.1
+[1m[92m   Compiling[0m backtrace v0.3.76
+[1m[92m   Compiling[0m flutter_rust_bridge_macros v2.12.0
+[1m[92m   Compiling[0m futures v0.3.33
+[1m[92m   Compiling[0m allo-isolate v0.1.27
+[1m[92m   Compiling[0m sqlx v0.9.0
+[1m[92m   Compiling[0m accounting_core v0.1.0 (/home/ubuntu/Basir_accounting/rust/crates/accounting_core)
+[1m[92m   Compiling[0m delegate-attr v0.3.0
+[1m[92m   Compiling[0m lazy_static v1.5.0
+[1m[92m   Compiling[0m rust_lib_basir_app v0.1.0 (/home/ubuntu/Basir_accounting/rust/crates/accounting_native)
+[1m[92m   Compiling[0m accounting_data v0.1.0 (/home/ubuntu/Basir_accounting/rust/crates/accounting_data)
+[1m[92m   Compiling[0m accounting_cli v0.1.0 (/home/ubuntu/Basir_accounting/rust/crates/accounting_cli)
+[1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 2m 20s
+[1m[92m     Running[0m unittests src/main.rs (target/debug/deps/accounting_cli-ac29e0889bc2632f)
+running 0 tests
+test result: [32mok(B[m. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/accounting_core-184bde94261f2338)
+running 70 tests
+test accounts::models::tests::test_account_kind_normal_balances ... [32mok(B
+[mtest accounts::hierarchy::tests::test_cycle_detection ... [32mok(B
+[mtest accounts::hierarchy::tests::test_kind_mismatch ... [32mok(B
+[mtest accounts::hierarchy::tests::test_missing_parent ... [32mok(B
+[mtest accounts::hierarchy::tests::test_valid_hierarchy ... [32mok(B
+[mtest accounts::taxonomy::tests::test_validate_account_code_valid ... [32mok(B
+[mtest accounts::models::tests::test_create_account ... [32mok(B
+[mtest accounts::taxonomy::tests::test_validate_account_code_range_mismatch ... [32mok(B
+[mtest accounts::taxonomy::tests::test_duplicate_code_detection ... [32mok(B
+[mtest accounts::taxonomy::tests::test_validate_tag_format_invalid ... [32mok(B
+[mtest accounts::taxonomy::tests::test_validate_tag_format_valid ... [32mok(B
+[mtest accounts::taxonomy::tests::test_validate_tag_kind_match ... [32mok(B
+[mtest accounts::taxonomy::tests::test_validate_tag_kind_mismatch ... [32mok(B
+[mtest audit::chain::tests::test_hash_deterministic ... [32mok(B
+[mtest audit::chain::tests::test_verify_record_hash ... [32mok(B
+[mtest audit::chain::tests::test_verify_chain_valid ... [32mok(B
+[mtest audit::chain::tests::test_verify_chain_broken ... [32mok(B
+[mtest inventory::transfer_service::tests::test_generate_stock_movements ... [32mok(B
+[mtest audit::models::tests::test_audit_action_serialization ... [32mok(B
+[mtest inventory::transfer_service::tests::test_generate_transfer_entry ... [32mok(B
+[mtest inventory::transfer_service::tests::test_transfer_validation_no_lines ... [32mok(B
+[mtest inventory::transfer_service::tests::test_transfer_validation_same_warehouse ... [32mok(B
+[mtest audit::service::tests::test_record_creation_chaining ... [32mok(B
+[mtest inventory::warehouse::tests::test_multiple_lines ... [32mok(B
+[mtest inventory::warehouse::tests::test_warehouse_transfer_creation ... [32mok(B
+[mtest ledger::models::tests::test_balanced_entry ... [32mok(B
+[mtest ledger::models::tests::test_multi_currency_line ... [32mok(B
+[mtest ledger::models::tests::test_status_modifiable ... [32mok(B
+[mtest ledger::models::tests::test_total_calculations ... [32mok(B
+[mtest ledger::models::tests::test_unbalanced_entry ... [32mok(B
+[mtest ledger::validation::tests::test_validate_currency_mismatch ... [32mok(B
+[mtest ledger::validation::tests::test_validate_currency_success ... [32mok(B
+[mtest ledger::validation::tests::test_validate_balanced ... [32mok(B
+[mtest ledger::validation::tests::test_validate_traceability_standard_missing_doc ... [32mok(B
+[mtest ledger::validation::tests::test_validate_traceability_adjusting_missing_link ... [32mok(B
+[mtest ledger::validation::tests::test_validate_unbalanced ... [32mok(B
+[mtest reporting::generator::tests::test_synthesize_balance_sheet_fair_value ... [32mok(B
+[mtest ledger::service::tests::test_post_entry_hashing ... [32mok(B
+[mtest ledger::validation::tests::test_validate_for_posting_success ... [32mok(B
+[mtest reporting::generator::tests::test_synthesize_cash_flow_statement ... [32mok(B
+[mtest ledger::validation::tests::test_validate_for_posting_bad_reference ... [32mok(B
+[mtest reporting::generator::tests::test_synthesize_zakah_statement ... [32mok(B
+[mtest reporting::generator::tests::test_sythesize_ifrs18_income_statement ... [32mok(B
+[mtest reporting::models::tests::test_account_balance_credit_normal ... [32mok(B
+[mtest reporting::models::tests::test_account_balance_debit_normal ... [32mok(B
+[mtest reporting::models::tests::test_trial_balance_imbalance_detection ... [32mok(B
+[mtest reporting::models::tests::test_trial_balance_verification ... [32mok(B
+[mtest reporting::trial_balance::tests::test_empty_trial_balance ... [32mok(B
+[mtest reporting::trial_balance::tests::test_generate_trial_balance_balanced ... [32mok(B
+[mtest reporting::trial_balance::tests::test_generate_trial_balance_with_period_filter ... [32mok(B
+[mtest self_healing::tests::test_scan_sequence_gaps ... [32mok(B
+[mtest self_healing::tests::test_suggest_repair_mismatch ... [32mok(B
+[mtest standards::data::tests::test_conceptual_framework_coverage ... [32mok(B
+[mtest standards::data::tests::test_ias_1_coverage ... [32mok(B
+[mtest standards::models::tests::test_canonical_format ... [32mok(B
+[mtest standards::data::tests::test_all_standards_count ... [32mok(B
+[mtest standards::data::tests::test_ifrs_15_five_step_model ... [32mok(B
+[mtest standards::models::tests::test_invalid_reference_rejected ... [32mok(B
+[mtest standards::models::tests::test_parse_ifrs_reference ... [32mok(B
+[mtest standards::models::tests::test_parse_ias_reference ... [32mok(B
+[mtest standards::recognition::tests::test_ifrs15_helper_incomplete_warning ... [32mok(B
+[mtest standards::recognition::tests::test_ifrs_15_step_model_completeness ... [32mok(B
+[mtest standards::registry::tests::test_lookup_ifrs_15 ... [32mok(B
+[mtest standards::validator::tests::test_validate_format_invalid ... [32mok(B
+[mtest standards::validator::tests::test_validate_format_valid ... [32mok(B
+[mtest standards::validator::tests::test_validate_exists ... [32mok(B
+[mtest standards::registry::tests::test_is_valid ... [32mok(B
+[mtest standards::registry::tests::test_load_defaults ... [32mok(B
+[mtest standards::validator::tests::test_validate_complete ... [32mok(B
+[mtest standards::registry::tests::test_lookup_invalid_ref ... [32mok(B
+[mtest result: [32mok(B[m. 70 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/assets_test.rs (target/debug/deps/assets_test-56941ef1aa884c84)
+running 3 tests
+test test_create_acquisition_entry ... [32mok(B
+[mtest test_create_depreciation_entry ... [32mok(B
+[mtest test_straight_line_depreciation ... [32mok(B
+[mtest result: [32mok(B[m. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[92m     Running[0m tests/audit_properties.rs (target/debug/deps/audit_properties-aac0fc222c5feeac)
+running 2 tests
+test prop_temporal_justification_validity ... [32mok(B
+[mtest prop_tamper_detection ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+[1m[92m     Running[0m tests/closing_properties.rs (target/debug/deps/closing_properties-f118b9de1183838a)
+running 2 tests
+test prop_opening_balance_integrity ... [32mok(B
+[mtest prop_closing_integrity ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+[1m[92m     Running[0m tests/e2e_workflow.rs (target/debug/deps/e2e_workflow-3eda11d77f2f7e79)
+running 1 test
+test test_e2e_accounting_workflow ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[92m     Running[0m tests/hierarchy_properties.rs (target/debug/deps/hierarchy_properties-e6db5c1687da0872)
+running 3 tests
+test prop_detects_circular_reference ... [32mok(B
+[mtest prop_enforces_taxonomy_alignment ... [32mok(B
+[mtest prop_dag_hierarchy_passes ... [32mok(B
+[mtest result: [32mok(B[m. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+[1m[92m     Running[0m tests/inventory_test.rs (target/debug/deps/inventory_test-482ab987e171900e)
+running 3 tests
+test test_fifo_valuation ... [32mok(B
+[mtest test_min_stock_validation ... [32mok(B
+[mtest test_weighted_average_valuation ... [32mok(B
+[mtest result: [32mok(B[m. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[92m     Running[0m tests/ledger_properties.rs (target/debug/deps/ledger_properties-f04cea404863c778)
+running 2 tests
+test prop_double_entry_balance_enforcement ... [32mok(B
+[mtest prop_temporal_justification_completeness ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/prop_accounts.rs (target/debug/deps/prop_accounts-ac04a32df5bdccdc)
+running 2 tests
+test prop_cp_006_simple_cycle_detection ... [32mok(B
+[mtest prop_cp_006_valid_tree_structure ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+[1m[92m     Running[0m tests/prop_assets.rs (target/debug/deps/prop_assets-7bd5d92658cd79ab)
+running 1 test
+test prop_straight_line_depreciation_convergence ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/prop_audit.rs (target/debug/deps/prop_audit-6f2e9c190ffddee5)
+running 2 tests
+test prop_cp_003_tamper_evidence ... [32mok(B
+[mtest prop_cp_003_hash_chain_integrity ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+[1m[92m     Running[0m tests/prop_balance.rs (target/debug/deps/prop_balance-17f8c19abe557c50)
+running 2 tests
+test prop_cp_001_unbalanced_entries_are_rejected ... [32mok(B
+[mtest prop_cp_001_balanced_entries_are_valid ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/prop_closing.rs (target/debug/deps/prop_closing-89c98469484fb9f1)
+running 1 test
+test prop_period_closing_integrity ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+[1m[92m     Running[0m tests/prop_currency.rs (target/debug/deps/prop_currency-56b3daa2153958c6)
+running 3 tests
+test prop_cp_005_currency_zero_rate_rejected ... [32mok(B
+[mtest prop_cp_005_currency_arithmetic_invalid ... [32mok(B
+[mtest prop_cp_005_currency_arithmetic_valid ... [32mok(B
+[mtest result: [32mok(B[m. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/prop_partners.rs (target/debug/deps/prop_partners-cd85e12071a1b418)
+running 2 tests
+test prop_cp_010_partner_required_enforced ... [32mok(B
+[mtest prop_cp_010_mixed_lines_validation ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/prop_standards.rs (target/debug/deps/prop_standards-1ec25892bf8b34f9)
+running 2 tests
+test prop_cp_002_known_refs_always_valid ... [32mok(B
+[mtest prop_cp_002_invalid_formats_always_rejected ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+[1m[92m     Running[0m tests/prop_temporal.rs (target/debug/deps/prop_temporal-dd2f7d3f7dac9d72)
+running 1 test
+test prop_cp_008_temporal_justification_enforcement ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/prop_traceability.rs (target/debug/deps/prop_traceability-0cb38296e4256d34)
+running 1 test
+test prop_cp_009_traceability_completeness ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+[1m[92m     Running[0m tests/prop_zakah.rs (target/debug/deps/prop_zakah-5cafdad6335eec8a)
+running 1 test
+test test_zakah_mathematical_invariants ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[92m     Running[0m tests/reporting_properties.rs (target/debug/deps/reporting_properties-ce698acd6e124613)
+running 1 test
+test prop_trial_balance_integral ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/sales_test.rs (target/debug/deps/sales_test-5f92d1aad79e349a)
+running 1 test
+test test_finalize_invoice_with_zatca ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/accounting_data-3f1cef608152ea83)
+running 2 tests
+test db::ledger::tests::parses_decimal_text_and_json_number_without_f64 ... [32mok(B
+[mtest db::ledger::tests::rejects_invalid_or_missing_decimal_values ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[92m     Running[0m tests/db_integration.rs (target/debug/deps/db_integration-8fe77009c94ddba5)
+running 1 test
+test test_persistence_flow ... [31mFAILED(B
+[mfailures:
+---- test_persistence_flow stdout ----
+thread 'test_persistence_flow' (10119) panicked at crates/accounting_data/tests/db_integration.rs:19:54:
+DATABASE_URL must be set: NotPresent
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+failures:
+    test_persistence_flow
+test result: [31mFAILED(B[m. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[91merror[0m: test failed, to rerun pass `-p accounting_data --test db_integration`
+[32mubuntu@sandbox:~/Basir_accounting/rust$ [0m

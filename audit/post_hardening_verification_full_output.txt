@@ -1,0 +1,99 @@
+[1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 0.37s
+[1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/accounting_core-448f63ad534c0e9a)
+
+running 73 tests
+test accounts::hierarchy::tests::test_cycle_detection ... ok
+test accounts::hierarchy::tests::test_kind_mismatch ... ok
+test accounts::hierarchy::tests::test_missing_parent ... ok
+test accounts::hierarchy::tests::test_valid_hierarchy ... ok
+test accounts::models::tests::test_account_kind_normal_balances ... ok
+test accounts::models::tests::test_create_account ... ok
+test accounts::taxonomy::tests::test_duplicate_code_detection ... ok
+test accounts::taxonomy::tests::test_validate_account_code_range_mismatch ... ok
+test accounts::taxonomy::tests::test_validate_tag_format_invalid ... ok
+test accounts::taxonomy::tests::test_validate_tag_format_valid ... ok
+test accounts::taxonomy::tests::test_validate_tag_kind_mismatch ... ok
+test audit::chain::tests::test_hash_deterministic ... ok
+test accounts::taxonomy::tests::test_validate_account_code_valid ... ok
+test accounts::taxonomy::tests::test_validate_tag_kind_match ... ok
+test audit::chain::tests::test_verify_chain_broken ... ok
+test audit::chain::tests::test_verify_record_hash ... ok
+test audit::models::tests::test_audit_action_serialization ... ok
+test audit::chain::tests::test_verify_chain_valid ... ok
+test inventory::transfer_service::tests::test_transfer_validation_no_lines ... ok
+test inventory::transfer_service::tests::test_generate_stock_movements ... ok
+test audit::service::tests::test_record_creation_chaining ... ok
+test inventory::warehouse::tests::test_multiple_lines ... ok
+test inventory::warehouse::tests::test_warehouse_transfer_creation ... ok
+test ledger::models::tests::test_status_modifiable ... ok
+test ledger::models::tests::test_balanced_entry ... ok
+test inventory::transfer_service::tests::test_generate_transfer_entry ... ok
+test ledger::models::tests::test_multi_currency_line ... ok
+test inventory::transfer_service::tests::test_transfer_validation_same_warehouse ... ok
+test ledger::models::tests::test_unbalanced_entry ... ok
+test ledger::models::tests::test_total_calculations ... ok
+test ledger::validation::tests::test_validate_accounts_rejects_unknown_and_non_leaf_accounts ... ok
+test ledger::validation::tests::test_validate_balanced ... ok
+test ledger::validation::tests::test_validate_currency_rejects_partial_metadata ... ok
+test ledger::validation::tests::test_validate_currency_mismatch ... ok
+test ledger::validation::tests::test_validate_currency_success ... ok
+test ledger::validation::tests::test_validate_line_amounts_rejects_negative_and_ambiguous_lines ... ok
+test ledger::validation::tests::test_validate_traceability_standard_missing_doc ... ok
+test ledger::validation::tests::test_validate_for_posting_bad_reference ... ok
+test ledger::validation::tests::test_validate_unbalanced ... ok
+test reporting::generator::tests::test_synthesize_balance_sheet_fair_value ... ok
+test reporting::generator::tests::test_synthesize_cash_flow_statement ... ok
+test reporting::generator::tests::test_synthesize_zakah_statement ... ok
+test ledger::validation::tests::test_validate_traceability_adjusting_missing_link ... ok
+test ledger::validation::tests::test_validate_for_posting_success ... ok
+test reporting::generator::tests::test_sythesize_ifrs18_income_statement ... ok
+test reporting::models::tests::test_account_balance_credit_normal ... ok
+test reporting::models::tests::test_account_balance_debit_normal ... ok
+test reporting::models::tests::test_trial_balance_imbalance_detection ... ok
+test reporting::trial_balance::tests::test_empty_trial_balance ... ok
+test reporting::models::tests::test_trial_balance_verification ... ok
+test reporting::trial_balance::tests::test_generate_trial_balance_balanced ... ok
+test self_healing::tests::test_scan_sequence_gaps ... ok
+test self_healing::tests::test_suggest_repair_mismatch ... ok
+test standards::data::tests::test_conceptual_framework_coverage ... ok
+test standards::data::tests::test_all_standards_count ... ok
+test standards::models::tests::test_canonical_format ... ok
+test standards::data::tests::test_ifrs_15_five_step_model ... ok
+test ledger::service::tests::test_post_entry_hashing ... ok
+test reporting::trial_balance::tests::test_generate_trial_balance_with_period_filter ... ok
+test standards::data::tests::test_ias_1_coverage ... ok
+test standards::models::tests::test_invalid_reference_rejected ... ok
+test standards::models::tests::test_parse_ifrs_reference ... ok
+test standards::models::tests::test_parse_ias_reference ... ok
+test standards::recognition::tests::test_ifrs15_helper_incomplete_warning ... ok
+test standards::recognition::tests::test_ifrs_15_step_model_completeness ... ok
+test standards::registry::tests::test_is_valid ... ok
+test standards::registry::tests::test_load_defaults ... ok
+test standards::validator::tests::test_validate_complete ... ok
+test standards::validator::tests::test_validate_format_invalid ... ok
+test standards::registry::tests::test_lookup_ifrs_15 ... ok
+test standards::validator::tests::test_validate_format_valid ... ok
+test standards::registry::tests::test_lookup_invalid_ref ... ok
+test standards::validator::tests::test_validate_exists ... ok
+
+test result: ok. 73 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+[1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/accounting_data-e7d5be614eac5ad3)
+
+running 2 tests
+test db::ledger::tests::parses_decimal_text_and_json_number_without_f64 ... ok
+test db::ledger::tests::rejects_invalid_or_missing_decimal_values ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+[1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/accounting_zatca-7bcc80de91473644)
+
+running 3 tests
+test xades::tests::test_xades_signature_xml_generation ... ok
+test tests::test_zatca_csr_generation ... ok
+test tests::test_zatca_invoice_generation_multi_rate ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+[1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 0.18s
+[1m[92m  Executable[0m unittests src/lib.rs (target/debug/deps/rust_lib_basir_app-a8cd1f8d6661ac79)

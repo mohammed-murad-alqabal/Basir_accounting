@@ -52,10 +52,83 @@ pub enum EntryValidationError {
     /// Missing partner for sub-ledger account (CP-010 violation)
     #[error("Missing partner for sub-ledger account: {0}")]
     MissingPartner(String),
+
+    /// Journal line references an account that is not present in the chart of accounts.
+    #[error("Account not found: {0}")]
+    AccountNotFound(uuid::Uuid),
+
+    /// Journal line references an account that is not active.
+    #[error("Account is inactive: {0}")]
+    InactiveAccount(String),
+
+    /// Journal line references a non-postable parent account.
+    #[error("Account is not postable because it is not a leaf: {0}")]
+    NonPostableAccount(String),
+
+    /// A journal line has an invalid debit/credit shape or a negative amount.
+    #[error("Invalid line amount: {0}")]
+    InvalidLineAmount(String),
+
+    /// A journal line has both debit and credit amounts.
+    #[error("Line has both debit and credit amounts: {0}")]
+    AmbiguousLineAmount(String),
 }
 
 /// Result type for entry validation.
 pub type ValidationResult<T> = Result<T, EntryValidationError>;
+
+/// Validate that every line has exactly one positive side.
+pub fn validate_line_amounts(entry: &JournalEntry) -> ValidationResult<()> {
+    for (i, line) in entry.lines.iter().enumerate() {
+        if line.debit_amount < Decimal::ZERO || line.credit_amount < Decimal::ZERO {
+            return Err(EntryValidationError::InvalidLineAmount(format!(
+                "Line {} contains a negative debit or credit",
+                i + 1
+            )));
+        }
+
+        let has_debit = line.debit_amount > Decimal::ZERO;
+        let has_credit = line.credit_amount > Decimal::ZERO;
+        match (has_debit, has_credit) {
+            (true, true) => {
+                return Err(EntryValidationError::AmbiguousLineAmount(format!(
+                    "line {}",
+                    i + 1
+                )))
+            }
+            (false, false) => {
+                return Err(EntryValidationError::InvalidLineAmount(format!(
+                    "Line {} must contain a positive debit or credit",
+                    i + 1
+                )))
+            }
+            _ => {}
+        }
+    }
+    Ok(())
+}
+
+/// Validate that every line targets an active, postable account.
+pub fn validate_accounts(
+    entry: &JournalEntry,
+    accounts: &crate::accounts::AccountRegistry,
+) -> ValidationResult<()> {
+    for line in &entry.lines {
+        let account = accounts
+            .get(&line.account_id)
+            .ok_or(EntryValidationError::AccountNotFound(line.account_id))?;
+
+        if !account.is_active {
+            return Err(EntryValidationError::InactiveAccount(account.code.clone()));
+        }
+        if !accounts.is_leaf(&account.id) {
+            return Err(EntryValidationError::NonPostableAccount(
+                account.code.clone(),
+            ));
+        }
+    }
+    Ok(())
+}
 
 /// Validate that an entry is balanced (CP-001).
 ///
@@ -163,16 +236,27 @@ pub fn validate_traceability(entry: &JournalEntry) -> ValidationResult<()> {
 /// Original Amount * Exchange Rate == (Debit or Credit Amount)
 pub fn validate_currency(entry: &JournalEntry) -> ValidationResult<()> {
     for (i, line) in entry.lines.iter().enumerate() {
+        let supplied = [
+            line.original_currency.is_some(),
+            line.exchange_rate.is_some(),
+            line.original_amount.is_some(),
+        ];
+        if supplied.iter().any(|present| *present) && supplied.iter().any(|present| !*present) {
+            return Err(EntryValidationError::CurrencyMismatch(format!(
+                "Line {} must provide original currency, amount, and exchange rate together",
+                i + 1
+            )));
+        }
+
         if let (Some(orig_curr), Some(rate), Some(orig_amt)) = (
             &line.original_currency,
             line.exchange_rate,
             line.original_amount,
         ) {
-            if rate <= Decimal::ZERO {
+            if rate <= Decimal::ZERO || orig_amt <= Decimal::ZERO {
                 return Err(EntryValidationError::CurrencyMismatch(format!(
-                    "Line {}: Exchange rate must be positive, found {}",
-                    i + 1,
-                    rate
+                    "Line {}: Original amount and exchange rate must be positive",
+                    i + 1
                 )));
             }
 
@@ -226,12 +310,14 @@ pub fn validate_for_posting(
     accounts: &crate::accounts::AccountRegistry,
 ) -> ValidationResult<()> {
     validate_has_lines(entry)?;
+    validate_line_amounts(entry)?;
     validate_balance(entry)?;
     validate_standards_format(entry)?;
     validate_standards_exists(entry, registry)?;
     validate_temporal(entry)?;
     validate_traceability(entry)?;
     validate_currency(entry)?;
+    validate_accounts(entry, accounts)?;
     validate_partners(entry, accounts)?;
     Ok(())
 }
@@ -358,9 +444,81 @@ mod tests {
     #[test]
     fn test_validate_for_posting_success() {
         let registry = StandardsRegistry::load_defaults();
-        let accounts = crate::accounts::AccountRegistry::new(vec![]);
         let entry = make_entry(Decimal::from(500), Decimal::from(500), "IFRS 15.35");
+        let mut debit_account = crate::accounts::models::Account::new(
+            "1000",
+            "النقدية",
+            "Cash",
+            crate::accounts::models::AccountKind::Asset,
+        );
+        debit_account.id = entry.lines[0].account_id;
+        let mut credit_account = crate::accounts::models::Account::new(
+            "4000",
+            "الإيراد",
+            "Revenue",
+            crate::accounts::models::AccountKind::Income,
+        );
+        credit_account.id = entry.lines[1].account_id;
+        let accounts = crate::accounts::AccountRegistry::new(vec![debit_account, credit_account]);
         assert!(validate_for_posting(&entry, &registry, &accounts).is_ok());
+    }
+
+    #[test]
+    fn test_validate_line_amounts_rejects_negative_and_ambiguous_lines() {
+        let mut entry = make_entry(Decimal::from(500), Decimal::from(500), "IFRS 15.35");
+        entry.lines[0].debit_amount = Decimal::from(-1);
+        assert!(matches!(
+            validate_line_amounts(&entry),
+            Err(EntryValidationError::InvalidLineAmount(_))
+        ));
+
+        entry.lines[0].debit_amount = Decimal::from(500);
+        entry.lines[0].credit_amount = Decimal::from(1);
+        assert!(matches!(
+            validate_line_amounts(&entry),
+            Err(EntryValidationError::AmbiguousLineAmount(_))
+        ));
+    }
+
+    #[test]
+    fn test_validate_accounts_rejects_unknown_and_non_leaf_accounts() {
+        let entry = make_entry(Decimal::from(500), Decimal::from(500), "IFRS 15.35");
+        let accounts = crate::accounts::AccountRegistry::new(vec![]);
+        assert!(matches!(
+            validate_accounts(&entry, &accounts),
+            Err(EntryValidationError::AccountNotFound(_))
+        ));
+
+        let mut parent = crate::accounts::models::Account::new(
+            "1000",
+            "الأصول",
+            "Assets",
+            crate::accounts::models::AccountKind::Asset,
+        );
+        parent.id = entry.lines[0].account_id;
+        let mut child = crate::accounts::models::Account::new(
+            "1100",
+            "النقدية",
+            "Cash",
+            crate::accounts::models::AccountKind::Asset,
+        );
+        child.id = uuid::Uuid::new_v4();
+        child.parent_id = Some(parent.id);
+        let accounts = crate::accounts::AccountRegistry::new(vec![parent, child]);
+        assert!(matches!(
+            validate_accounts(&entry, &accounts),
+            Err(EntryValidationError::NonPostableAccount(_))
+        ));
+    }
+
+    #[test]
+    fn test_validate_currency_rejects_partial_metadata() {
+        let mut entry = make_entry(Decimal::from(500), Decimal::from(500), "IFRS 15.35");
+        entry.lines[0].original_currency = Some("USD".to_string());
+        assert!(matches!(
+            validate_currency(&entry),
+            Err(EntryValidationError::CurrencyMismatch(_))
+        ));
     }
 
     #[test]
