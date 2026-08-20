@@ -1,0 +1,103 @@
+name: Rust Integration Tests
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - 'audit/**'
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rust-integration-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rust-integration:
+    name: Rust workspace + PostgreSQL integration
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: basir_test
+          POSTGRES_PASSWORD: basir_test_password
+          POSTGRES_DB: basir_accounting_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U basir_test -d basir_accounting_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    defaults:
+      run:
+        working-directory: rust
+
+    env:
+      DATABASE_URL: postgres://basir_test:basir_test_password@127.0.0.1:5432/basir_accounting_test
+      CARGO_TERM_COLOR: always
+      RUST_BACKTRACE: 1
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y postgresql-client
+
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+
+      - name: Cache Cargo registry, Git dependencies, and build output
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust/target
+          key: ${{ runner.os }}-rust-${{ hashFiles('rust/Cargo.lock', 'rust/**/Cargo.toml', 'rust/migrations/*.sql') }}
+          restore-keys: |
+            ${{ runner.os }}-rust-
+
+      - name: Wait for PostgreSQL
+        run: pg_isready -h 127.0.0.1 -p 5432 -U basir_test -d basir_accounting_test
+
+      - name: Apply PostgreSQL migrations
+        run: |
+          set -euo pipefail
+          for migration in migrations/*.sql; do
+            echo "Applying ${migration}"
+            psql "${DATABASE_URL}" -v ON_ERROR_STOP=1 -f "${migration}"
+          done
+
+      - name: Check Rust formatting
+        run: cargo fmt --all -- --check
+
+      - name: Run full Rust workspace tests
+        run: |
+          set -o pipefail
+          cargo test --workspace -- --test-threads=1 2>&1 | tee "${GITHUB_WORKSPACE}/rust-workspace-test.log"
+
+      - name: Upload test log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-integration-log-${{ github.run_id }}
+          path: rust-workspace-test.log
+          if-no-files-found: warn
+          retention-days: 14
