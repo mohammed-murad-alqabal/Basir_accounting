@@ -70,7 +70,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             rust/target
-          key: ${{ runner.os }}-rust-${{ hashFiles('rust/Cargo.lock', 'rust/**/Cargo.toml', 'rust/migrations/*.sql') }}
+          key: ${{ runner.os }}-rust-${{ hashFiles('rust/Cargo.lock', 'rust/**/Cargo.toml') }}
           restore-keys: |
             ${{ runner.os }}-rust-
 
@@ -78,20 +78,53 @@ jobs:
         run: pg_isready -h 127.0.0.1 -p 5432 -U basir_test -d basir_accounting_test
 
       - name: Apply PostgreSQL migrations
+        id: migrations
         run: |
           set -euo pipefail
+          started_at=$(date +%s)
           for migration in migrations/*.sql; do
             echo "Applying ${migration}"
             psql "${DATABASE_URL}" -v ON_ERROR_STOP=1 -f "${migration}"
           done
+          finished_at=$(date +%s)
+          duration=$((finished_at - started_at))
+          echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "## CI timing"
+            echo "- PostgreSQL migrations: **${duration}s**"
+          } >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Check Rust formatting
-        run: cargo fmt --all -- --check
+        id: formatting
+        run: |
+          set -euo pipefail
+          started_at=$(date +%s)
+          cargo fmt --all -- --check
+          finished_at=$(date +%s)
+          duration=$((finished_at - started_at))
+          echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "## CI timing"
+            echo "- Rust formatting check: **${duration}s**"
+          } >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Run full Rust workspace tests
+        id: workspace_tests
         run: |
+          started_at=$(date +%s)
+          set +e
           set -o pipefail
           cargo test --workspace -- --test-threads=1 2>&1 | tee "${GITHUB_WORKSPACE}/rust-workspace-test.log"
+          test_status=${PIPESTATUS[0]}
+          set -e
+          finished_at=$(date +%s)
+          duration=$((finished_at - started_at))
+          echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "## CI timing"
+            echo "- Full Rust workspace tests: **${duration}s**"
+          } >> "${GITHUB_STEP_SUMMARY}"
+          exit "${test_status}"
 
       - name: Upload test log
         if: always()
