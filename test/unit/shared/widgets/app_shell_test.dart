@@ -1,5 +1,6 @@
 import 'package:basir_accounting_system/core/theme/services/icon_customization_service.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/navigation/presentation/widgets/omnibar.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:basir_accounting_system/shared/widgets/basir_sidebar.dart';
@@ -78,8 +79,9 @@ void main() {
       expect(find.byType(BasirSidebar), findsNothing);
     });
 
-    testWidgets('displays all 8 unit screens in desktop layout',
-        (tester) async {
+    testWidgets('displays all 8 unit screens in desktop layout', (
+      tester,
+    ) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
@@ -89,13 +91,15 @@ void main() {
         tester.widgetList<IndexedStack>(find.byType(IndexedStack)).length,
         greaterThanOrEqualTo(1),
       );
-      final stack =
-          tester.widget<IndexedStack>(find.byType(IndexedStack).first);
+      final stack = tester.widget<IndexedStack>(
+        find.byType(IndexedStack).first,
+      );
       expect(stack.children.length, 8);
     });
 
-    testWidgets('sidebar collapses to icon-only width when toggled',
-        (tester) async {
+    testWidgets('sidebar collapses to icon-only width when toggled', (
+      tester,
+    ) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
@@ -119,8 +123,9 @@ void main() {
       expect(sidebarRenderBoxAfter.width, kSidebarCollapsedWidth);
     });
 
-    testWidgets('toggle button announces its action for accessibility',
-        (tester) async {
+    testWidgets('toggle button announces its action for accessibility', (
+      tester,
+    ) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
@@ -159,8 +164,9 @@ void main() {
       expect(find.text('الإعدادات'), findsOneWidget);
     });
 
-    testWidgets('active item uses brand primary color for contrast',
-        (tester) async {
+    testWidgets('active item uses brand primary color for contrast', (
+      tester,
+    ) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
@@ -176,6 +182,37 @@ void main() {
         ),
       );
       expect(activeContainers, findsOneWidget);
+    });
+
+    testWidgets('navigates to the selected unit from the sidebar', (
+      tester,
+    ) async {
+      setTestSurfaceSize(tester, 1280);
+      await tester.pumpWidget(buildShell());
+      await tester.pumpAndSettle();
+
+      await tester.tap(
+        find
+            .descendant(
+              of: find.byType(BasirSidebar),
+              matching: find.byType(InkWell),
+            )
+            .at(1),
+      );
+      await tester.pumpAndSettle();
+
+      expect(
+        find.descendant(
+          of: find.byType(BasirSidebar),
+          matching: find.byWidgetPredicate(
+            (widget) =>
+                widget is Semantics &&
+                (widget.properties.selected ?? false) &&
+                (widget.properties.label ?? '').contains('الفواتير'),
+          ),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('highlights selected item semantically', (tester) async {
@@ -222,8 +259,9 @@ void main() {
       expect(find.byIcon(Icons.calendar_month_outlined), findsOneWidget);
     });
 
-    testWidgets('displays custom org/branch/period when provided',
-        (tester) async {
+    testWidgets('displays custom org/branch/period when provided', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         buildShell(
           child: Builder(
@@ -257,6 +295,26 @@ void main() {
       );
     });
 
+    testWidgets('opens the global Omnibar from the search field', (
+      tester,
+    ) async {
+      setTestSurfaceSize(tester, 1280);
+      await tester.pumpWidget(buildShell());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byType(BasirGlobalSearchField));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(Omnibar), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(Omnibar),
+          matching: find.byType(TextField),
+        ),
+        findsOneWidget,
+      );
+    });
+
     testWidgets('chips are announced for accessibility', (tester) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
@@ -265,10 +323,7 @@ void main() {
       final semanticsHandle = tester.ensureSemantics();
       await tester.pumpAndSettle();
 
-      expect(
-        tester.takeException(),
-        isNull,
-      );
+      expect(tester.takeException(), isNull);
 
       final semantics = tester.getSemantics(find.byType(BasirTopBar).first);
       // Semantics الشرائح مدموجة مع الزر (button: true) ومحتواها النصي،
@@ -318,10 +373,7 @@ void main() {
       expect(find.byType(BasirTopBar), findsOneWidget);
       // في الشاشات الضيقة (<1048px) تُطوى نصوص الشرائح إلى الأيقونات فقط،
       // لذا نتحقق من الإعلان الصوتي (Semantics) بدلًا من النص المرئي
-      expect(
-        find.bySemanticsLabel('Branch: Main Branch'),
-        findsWidgets,
-      );
+      expect(find.bySemanticsLabel('Branch: Main Branch'), findsWidgets);
       expect(find.byType(BottomNavigationBar), findsNothing);
     });
   });
