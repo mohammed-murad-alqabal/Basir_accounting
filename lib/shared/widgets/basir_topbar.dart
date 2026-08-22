@@ -176,8 +176,9 @@ class BasirTopBar extends StatelessWidget {
   );
 
   void _showNotifications(BuildContext context, AppLocalizations l10n) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(l10n.shellNotifications)));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(l10n.shellNotifications)));
   }
 
   void _showSearchDialog(BuildContext context) {
@@ -185,9 +186,9 @@ class BasirTopBar extends StatelessWidget {
   }
 }
 
-/// حقل البحث الشامل في الشريط العلوي
+/// حقل البحث الشامل في الشريط العلوي.
 ///
-/// placeholder جاهز لـ Command Palette الكامل (Phase 5).
+/// يفتح Omnibar الفعلي الذي يجمع الأوامر ونتائج الوحدات في تجربة واحدة.
 class BasirGlobalSearchField extends StatelessWidget {
   /// إنشاء حقل البحث
   const BasirGlobalSearchField({required this.l10n, super.key, this.onTap});
