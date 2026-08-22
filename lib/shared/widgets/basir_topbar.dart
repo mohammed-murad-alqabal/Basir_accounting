@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:basir_accounting_system/core/theme/border_contrast_design.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/navigation/presentation/widgets/omnibar.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:flutter/material.dart' hide Durations;
@@ -92,7 +93,7 @@ class BasirTopBar extends StatelessWidget {
                     constraints: const BoxConstraints(maxWidth: 240),
                     child: BasirGlobalSearchField(
                       l10n: l10n,
-                      onTap: () => _showSearchDialog(context, l10n),
+                      onTap: () => _showSearchDialog(context),
                     ),
                   ),
                 ),
@@ -184,27 +185,8 @@ class BasirTopBar extends StatelessWidget {
     );
   }
 
-  void _showSearchDialog(BuildContext context, AppLocalizations l10n) {
-    unawaited(showDialog<void>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.shellSearchAll),
-        content: TextField(
-          autofocus: true,
-          decoration: InputDecoration(hintText: l10n.shellSearchHint),
-          textInputAction: TextInputAction.search,
-          onSubmitted: (_) => Navigator.of(dialogContext).pop(),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(
-              MaterialLocalizations.of(dialogContext).closeButtonLabel,
-            ),
-          ),
-        ],
-      ),
-    ));
+  void _showSearchDialog(BuildContext context) {
+    unawaited(showOmnibar<void>(context).then<void>((_) {}));
   }
 }
 

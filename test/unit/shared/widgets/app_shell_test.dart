@@ -1,5 +1,6 @@
 import 'package:basir_accounting_system/core/theme/services/icon_customization_service.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/navigation/presentation/widgets/omnibar.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:basir_accounting_system/shared/widgets/basir_sidebar.dart';
@@ -178,6 +179,36 @@ void main() {
       expect(activeContainers, findsOneWidget);
     });
 
+    testWidgets('navigates to the selected unit from the sidebar',
+        (tester) async {
+      setTestSurfaceSize(tester, 1280);
+      await tester.pumpWidget(buildShell());
+      await tester.pumpAndSettle();
+
+      await tester.tap(
+        find
+            .descendant(
+              of: find.byType(BasirSidebar),
+              matching: find.byType(InkWell),
+            )
+            .at(1),
+      );
+      await tester.pumpAndSettle();
+
+      expect(
+        find.descendant(
+          of: find.byType(BasirSidebar),
+          matching: find.byWidgetPredicate(
+            (widget) =>
+                widget is Semantics &&
+                (widget.properties.selected ?? false) &&
+                (widget.properties.label ?? '').contains('الفواتير'),
+          ),
+        ),
+        findsOneWidget,
+      );
+    });
+
     testWidgets('highlights selected item semantically', (tester) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
@@ -253,6 +284,25 @@ void main() {
       expect(find.byType(BasirGlobalSearchField), findsOneWidget);
       expect(
         find.text('ابحث في الفواتير والعملاء والأصناف...'),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('opens the global Omnibar from the search field',
+        (tester) async {
+      setTestSurfaceSize(tester, 1280);
+      await tester.pumpWidget(buildShell());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byType(BasirGlobalSearchField));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(Omnibar), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(Omnibar),
+          matching: find.byType(TextField),
+        ),
         findsOneWidget,
       );
     });
