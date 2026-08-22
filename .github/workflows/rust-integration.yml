@@ -50,9 +50,9 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             rust/target
-          key: ${{ runner.os }}-rust-${{ hashFiles('rust/Cargo.lock', 'rust/**/Cargo.toml') }}
+          key: ${{ runner.os }}-${{ runner.arch }}-rust-${{ hashFiles('rust/Cargo.lock', 'rust/**/Cargo.toml', 'rust/rust-toolchain.toml') }}
           restore-keys: |
-            ${{ runner.os }}-rust-
+            ${{ runner.os }}-${{ runner.arch }}-rust-
 
       - name: Check Rust formatting
         id: formatting
@@ -75,8 +75,8 @@ jobs:
           set +e
           set -o pipefail
           {
-            cargo test -p accounting_core -p accounting_zatca --all-targets
-            cargo test -p accounting_data --lib
+            cargo test --locked -p accounting_core -p accounting_zatca --all-targets
+            cargo test --locked -p accounting_data --lib
           } 2>&1 | tee "${GITHUB_WORKSPACE}/rust-quality-test.log"
           test_status=${PIPESTATUS[0]}
           set -e
@@ -93,7 +93,7 @@ jobs:
         id: workspace_check
         run: |
           started_at=$(date +%s)
-          cargo check --workspace
+          cargo check --locked --workspace
           finished_at=$(date +%s)
           duration=$((finished_at - started_at))
           echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
@@ -112,9 +112,16 @@ jobs:
           retention-days: 14
 
   rust-integration:
-    name: PostgreSQL integration
+    name: PostgreSQL integration (${{ matrix.shard }})
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        shard:
+          - persistence
+          - hash_chain
 
     services:
       postgres:
@@ -122,11 +129,11 @@ jobs:
         env:
           POSTGRES_USER: basir_test
           POSTGRES_PASSWORD: basir_test_password
-          POSTGRES_DB: basir_accounting_test
+          POSTGRES_DB: basir_accounting_${{ matrix.shard }}
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U basir_test -d basir_accounting_test"
+          --health-cmd "pg_isready -U basir_test -d basir_accounting_${{ matrix.shard }}"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 20
@@ -136,7 +143,8 @@ jobs:
         working-directory: rust
 
     env:
-      DATABASE_URL: postgres://basir_test:basir_test_password@127.0.0.1:5432/basir_accounting_test
+      DATABASE_URL: postgres://basir_test:basir_test_password@127.0.0.1:5432/basir_accounting_${{ matrix.shard }}
+      INTEGRATION_SHARD: ${{ matrix.shard }}
       CARGO_TERM_COLOR: always
       RUST_BACKTRACE: 1
 
@@ -159,12 +167,12 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             rust/target
-          key: ${{ runner.os }}-rust-${{ hashFiles('rust/Cargo.lock', 'rust/**/Cargo.toml') }}
+          key: ${{ runner.os }}-${{ runner.arch }}-rust-${{ hashFiles('rust/Cargo.lock', 'rust/**/Cargo.toml', 'rust/rust-toolchain.toml') }}
           restore-keys: |
-            ${{ runner.os }}-rust-
+            ${{ runner.os }}-${{ runner.arch }}-rust-
 
       - name: Wait for PostgreSQL
-        run: pg_isready -h 127.0.0.1 -p 5432 -U basir_test -d basir_accounting_test
+        run: pg_isready -h 127.0.0.1 -p 5432 -U basir_test -d "basir_accounting_${INTEGRATION_SHARD}"
 
       - name: Apply PostgreSQL migrations
         id: migrations
@@ -172,7 +180,7 @@ jobs:
           set -euo pipefail
           started_at=$(date +%s)
           for migration in migrations/*.sql; do
-            echo "Applying ${migration}"
+            echo "Applying ${migration} to shard ${INTEGRATION_SHARD}"
             psql "${DATABASE_URL}" -v ON_ERROR_STOP=1 -f "${migration}"
           done
           finished_at=$(date +%s)
@@ -180,16 +188,29 @@ jobs:
           echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
           {
             echo "## CI timing"
-            echo "- PostgreSQL migrations: **${duration}s**"
+            echo "- PostgreSQL migrations (${INTEGRATION_SHARD}): **${duration}s**"
           } >> "${GITHUB_STEP_SUMMARY}"
 
-      - name: Run PostgreSQL integration tests
+      - name: Run PostgreSQL integration shard
         id: integration_tests
         run: |
+          case "${INTEGRATION_SHARD}" in
+            persistence)
+              test_target="db_persistence"
+              ;;
+            hash_chain)
+              test_target="db_hash_chain"
+              ;;
+            *)
+              echo "Unknown integration shard: ${INTEGRATION_SHARD}" >&2
+              exit 2
+              ;;
+          esac
+
           started_at=$(date +%s)
           set +e
           set -o pipefail
-          cargo test -p accounting_data --test db_integration -- --test-threads=1 2>&1 | tee "${GITHUB_WORKSPACE}/rust-integration-test.log"
+          cargo test --locked -p accounting_data --test "${test_target}" -- --test-threads=1 2>&1 | tee "${GITHUB_WORKSPACE}/rust-integration-${INTEGRATION_SHARD}.log"
           test_status=${PIPESTATUS[0]}
           set -e
           finished_at=$(date +%s)
@@ -197,16 +218,16 @@ jobs:
           echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
           {
             echo "## CI timing"
-            echo "- PostgreSQL integration tests: **${duration}s**"
+            echo "- PostgreSQL integration shard (${INTEGRATION_SHARD}): **${duration}s**"
           } >> "${GITHUB_STEP_SUMMARY}"
           exit "${test_status}"
 
-      - name: Upload integration log
+      - name: Upload integration shard log
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rust-integration-log-${{ github.run_id }}
-          path: rust-integration-test.log
+          name: rust-integration-${{ matrix.shard }}-${{ github.run_id }}
+          path: rust-integration-${{ matrix.shard }}.log
           if-no-files-found: warn
           retention-days: 14
 
@@ -218,11 +239,11 @@ jobs:
       - rust-quality
       - rust-integration
     steps:
-      - name: Require both parallel jobs to pass
+      - name: Require quality and every integration shard to pass
         run: |
           if [[ "${{ needs.rust-quality.result }}" != "success" || "${{ needs.rust-integration.result }}" != "success" ]]; then
             echo "Rust quality result: ${{ needs.rust-quality.result }}"
-            echo "PostgreSQL integration result: ${{ needs.rust-integration.result }}"
+            echo "PostgreSQL integration shards result: ${{ needs.rust-integration.result }}"
             exit 1
           fi
-          echo "Rust quality and PostgreSQL integration jobs passed."
+          echo "Rust quality and every PostgreSQL integration shard passed."
