@@ -6,6 +6,12 @@
 
 الهدف ليس جعل كل تشغيل أقصر بأي ثمن؛ الهدف هو تقليل **زمن التغذية الراجعة على Pull Request** مع إبقاء الاختبارات المحاسبية الحرجة، وخصوصًا التكامل والمعاملات، موثوقة وقابلة لإعادة الإنتاج.
 
+## حالة التنفيذ الحالية
+
+تم تنفيذ الدفعتين الأولى والثانية على الفرع [`audit/accounting-engine-hardening`](https://github.com/mohammed-murad-alqabal/Basir_accounting/tree/audit/accounting-engine-hardening). يحتوي Workflow المنشور الآن على وظيفتين متوازيتين: `Rust quality + unit tests` التي تشغّل التنسيق والاختبارات غير المعتمدة على قاعدة البيانات وفحص ترجمة مساحة العمل، و`PostgreSQL integration` التي تشغّل PostgreSQL 16 وتطبّق migrations ثم تنفّذ `db_integration` مع `--test-threads=1`. توجد وظيفة `Rust CI gate` لتجميع النتيجتين وجعل الفشل واضحًا كشرط واحد قابل للاستخدام في حماية الفرع.
+
+نجح التشغيل المرجعي بعد الفصل في [GitHub Actions Run #32519728062](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/32519728062). كما اجتاز التشغيل المحلي المنفصل اختبار `test_persistence_flow` على قاعدة جديدة بعد تطبيق migrations. لا يعني هذا أن زمن Job الكلي يساوي زمن الاختبار؛ فالتشغيلين المتوازيين يستهلكان Runner مستقلًا، وتظل أزمنة تجهيز Rust وPostgreSQL وcache ضمن الزمن الظاهر للوظيفة.
+
 ## استراتيجية القياس أولًا
 
 ينبغي تسجيل ثلاثة أرقام لكل تشغيل: زمن الانتظار في الطابور، زمن تجهيز البيئة، وزمن الاختبار الفعلي. داخل الوظيفة، يمكن كتابة مدة كل مرحلة في `GITHUB_STEP_SUMMARY` حتى تظهر في صفحة التشغيل بدل البحث اليدوي في السجل. GitHub يوفّر ملف `GITHUB_STEP_SUMMARY` لعرض ملخص Markdown خاص بكل Job [1].
@@ -65,7 +71,7 @@
 
 ## 2. تقسيم الاختبارات إلى Jobs متوازية
 
-الـ Workflow الحالي يضع فحص التنسيق، الاختبارات الداخلية، واختبار قاعدة البيانات في Job واحد. مع نمو المشروع، الأفضل فصلها إلى ثلاث وحدات:
+الـ Workflow المنشور حاليًا يفصل فحص التنسيق والاختبارات الداخلية عن اختبار قاعدة البيانات في Jobين متوازيين. ومع نمو المشروع، يمكن توسيعه لاحقًا إلى ثلاث وحدات إذا أصبح فصل `format` عن `unit` مفيدًا من ناحية القياس:
 
 ```text
 quality       -> cargo fmt --check وcargo clippy
@@ -136,7 +142,7 @@ jobs:
       - run: cargo test -p accounting_data --test db_integration -- --nocapture
 ```
 
-هذا المثال يوضح الفكرة، وليس استبدالًا فوريًا للـ Workflow المنشور؛ يجب أولًا التأكد من أن الاختبارات التي نُقلت إلى `unit` لا تحتاج اتصالًا بقاعدة البيانات.
+هذا المثال يوضح البنية العامة. وقد تم تطبيقها فعليًا في `.github/workflows/rust-integration.yml` مع تعديل أمر الاختبارات إلى `cargo test -p accounting_core -p accounting_zatca --all-targets` و`cargo test -p accounting_data --lib` في Job الجودة، وإلى `cargo test -p accounting_data --test db_integration -- --test-threads=1` في Job PostgreSQL. يجب تحديث قائمة الحزم إذا أضيفت حزمة جديدة أو اختبار تكاملي آخر.
 
 ## 3. حماية اختبارات التكامل من التوازي غير الآمن
 
@@ -234,9 +240,9 @@ strategy:
 
 أضف قياس المدة إلى `GITHUB_STEP_SUMMARY`، وراقب آخر 20 تشغيلًا، وعدّل cache key لإزالة migrations منه، وحافظ على `concurrency`. هذه الدفعة آمنة ولا تغير مجموعة الاختبارات.
 
-### الدفعة الثانية: تقليل زمن Pull Request
+### الدفعة الثانية: تقليل زمن Pull Request — منفذة
 
-افصل unit عن integration، وشغّلهما بالتوازي، وأضف path filters محسوبة. اجعل كل Job مطلوبًا في Branch protection أو استخدم Job تجميعية تنتظر نجاح الاثنين.
+تم فصل unit عن integration وتشغيلهما بالتوازي، مع إضافة Job تجميعية تنتظر نجاح الاثنين. لم تُضف path filters بعد، لأن تحديدها يحتاج جردًا دوريًا لمسارات التطبيق وملفات الإعداد حتى لا يفلت تغيير يؤثر في المحرك المحاسبي. الخطوة التالية الآمنة هي إضافة filters مع إبقاء `rust/**` و`migrations` و`.github/workflows/**` ضمن النطاق.
 
 ### الدفعة الثالثة: التوازي المتقدم
 

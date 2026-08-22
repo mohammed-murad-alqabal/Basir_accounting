@@ -20,8 +20,99 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  rust-quality:
+    name: Rust quality + unit tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    defaults:
+      run:
+        working-directory: rust
+
+    env:
+      CARGO_TERM_COLOR: always
+      RUST_BACKTRACE: 1
+      SQLX_OFFLINE: true
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+
+      - name: Cache Cargo registry, Git dependencies, and build output
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust/target
+          key: ${{ runner.os }}-rust-${{ hashFiles('rust/Cargo.lock', 'rust/**/Cargo.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-rust-
+
+      - name: Check Rust formatting
+        id: formatting
+        run: |
+          set -euo pipefail
+          started_at=$(date +%s)
+          cargo fmt --all -- --check
+          finished_at=$(date +%s)
+          duration=$((finished_at - started_at))
+          echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "## CI timing"
+            echo "- Rust formatting check: **${duration}s**"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Run database-independent tests
+        id: unit_tests
+        run: |
+          started_at=$(date +%s)
+          set +e
+          set -o pipefail
+          {
+            cargo test -p accounting_core -p accounting_zatca --all-targets
+            cargo test -p accounting_data --lib
+          } 2>&1 | tee "${GITHUB_WORKSPACE}/rust-quality-test.log"
+          test_status=${PIPESTATUS[0]}
+          set -e
+          finished_at=$(date +%s)
+          duration=$((finished_at - started_at))
+          echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "## CI timing"
+            echo "- Database-independent tests: **${duration}s**"
+          } >> "${GITHUB_STEP_SUMMARY}"
+          exit "${test_status}"
+
+      - name: Check workspace compilation
+        id: workspace_check
+        run: |
+          started_at=$(date +%s)
+          cargo check --workspace
+          finished_at=$(date +%s)
+          duration=$((finished_at - started_at))
+          echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "## CI timing"
+            echo "- Workspace compilation check: **${duration}s**"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Upload quality log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-quality-log-${{ github.run_id }}
+          path: rust-quality-test.log
+          if-no-files-found: warn
+          retention-days: 14
+
   rust-integration:
-    name: Rust workspace + PostgreSQL integration
+    name: PostgreSQL integration
     runs-on: ubuntu-24.04
     timeout-minutes: 20
 
@@ -60,8 +151,6 @@ jobs:
 
       - name: Install stable Rust toolchain
         uses: dtolnay/rust-toolchain@stable
-        with:
-          components: rustfmt
 
       - name: Cache Cargo registry, Git dependencies, and build output
         uses: actions/cache@v4
@@ -94,27 +183,13 @@ jobs:
             echo "- PostgreSQL migrations: **${duration}s**"
           } >> "${GITHUB_STEP_SUMMARY}"
 
-      - name: Check Rust formatting
-        id: formatting
-        run: |
-          set -euo pipefail
-          started_at=$(date +%s)
-          cargo fmt --all -- --check
-          finished_at=$(date +%s)
-          duration=$((finished_at - started_at))
-          echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
-          {
-            echo "## CI timing"
-            echo "- Rust formatting check: **${duration}s**"
-          } >> "${GITHUB_STEP_SUMMARY}"
-
-      - name: Run full Rust workspace tests
-        id: workspace_tests
+      - name: Run PostgreSQL integration tests
+        id: integration_tests
         run: |
           started_at=$(date +%s)
           set +e
           set -o pipefail
-          cargo test --workspace -- --test-threads=1 2>&1 | tee "${GITHUB_WORKSPACE}/rust-workspace-test.log"
+          cargo test -p accounting_data --test db_integration -- --test-threads=1 2>&1 | tee "${GITHUB_WORKSPACE}/rust-integration-test.log"
           test_status=${PIPESTATUS[0]}
           set -e
           finished_at=$(date +%s)
@@ -122,15 +197,32 @@ jobs:
           echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
           {
             echo "## CI timing"
-            echo "- Full Rust workspace tests: **${duration}s**"
+            echo "- PostgreSQL integration tests: **${duration}s**"
           } >> "${GITHUB_STEP_SUMMARY}"
           exit "${test_status}"
 
-      - name: Upload test log
+      - name: Upload integration log
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: rust-integration-log-${{ github.run_id }}
-          path: rust-workspace-test.log
+          path: rust-integration-test.log
           if-no-files-found: warn
           retention-days: 14
+
+  ci-gate:
+    name: Rust CI gate
+    runs-on: ubuntu-24.04
+    if: always()
+    needs:
+      - rust-quality
+      - rust-integration
+    steps:
+      - name: Require both parallel jobs to pass
+        run: |
+          if [[ "${{ needs.rust-quality.result }}" != "success" || "${{ needs.rust-integration.result }}" != "success" ]]; then
+            echo "Rust quality result: ${{ needs.rust-quality.result }}"
+            echo "PostgreSQL integration result: ${{ needs.rust-integration.result }}"
+            exit 1
+          fi
+          echo "Rust quality and PostgreSQL integration jobs passed."
