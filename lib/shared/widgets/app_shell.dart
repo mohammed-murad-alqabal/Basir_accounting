@@ -75,7 +75,7 @@ class _BasirAppShellState extends ConsumerState<BasirAppShell> {
   @override
   void initState() {
     super.initState();
-    _selectedIndex = widget.initialIndex.clamp(0, _screenCount - 1).toInt();
+    _selectedIndex = widget.initialIndex.clamp(0, _screenCount - 1);
     _visitedIndices = {_selectedIndex};
   }
 
