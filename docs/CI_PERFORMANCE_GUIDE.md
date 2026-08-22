@@ -8,9 +8,9 @@
 
 ## حالة التنفيذ الحالية
 
-تم تنفيذ الدفعتين الأولى والثانية على الفرع [`audit/accounting-engine-hardening`](https://github.com/mohammed-murad-alqabal/Basir_accounting/tree/audit/accounting-engine-hardening). يحتوي Workflow المنشور الآن على وظيفتين متوازيتين: `Rust quality + unit tests` التي تشغّل التنسيق والاختبارات غير المعتمدة على قاعدة البيانات وفحص ترجمة مساحة العمل، و`PostgreSQL integration` التي تشغّل PostgreSQL 16 وتطبّق migrations ثم تنفّذ `db_integration` مع `--test-threads=1`. توجد وظيفة `Rust CI gate` لتجميع النتيجتين وجعل الفشل واضحًا كشرط واحد قابل للاستخدام في حماية الفرع.
+تم تنفيذ دفعات القياس، الفصل، والتقسيم على الفرع [`audit/accounting-engine-hardening`](https://github.com/mohammed-murad-alqabal/Basir_accounting/tree/audit/accounting-engine-hardening). يحتوي Workflow المنشور الآن على Job جودة مستقل، وJob PostgreSQL يعمل عبر Matrix من shardين متوازيين: `persistence` و`hash_chain`. لكل shard حاوية PostgreSQL واسم قاعدة مختلفان، وتوجد وظيفة `Rust CI gate` لتجميع نجاح Job الجودة وجميع shards كشرط واحد قابل للاستخدام في حماية الفرع.
 
-نجح التشغيل المرجعي بعد الفصل في [GitHub Actions Run #32519728062](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/32519728062). كما اجتاز التشغيل المحلي المنفصل اختبار `test_persistence_flow` على قاعدة جديدة بعد تطبيق migrations. لا يعني هذا أن زمن Job الكلي يساوي زمن الاختبار؛ فالتشغيلين المتوازيين يستهلكان Runner مستقلًا، وتظل أزمنة تجهيز Rust وPostgreSQL وcache ضمن الزمن الظاهر للوظيفة.
+قبل التقسيم كان لدينا هدف تكامل واحد يجمع حفظ القيد والتحقق من سلسلة hash. أصبح لدينا الآن هدفان مستقلان: `db_persistence` و`db_hash_chain`. تحقق الاختبار المحلي من كل shard على حدة، وتضمن تشغيل كل واحد بعد migrations على قاعدة اختبار معزولة. لا يعني زمن Job الكلي زمن الاختبار فقط؛ فالتشغيلين المتوازيين يستهلكان Runner مستقلًا، وتظل أزمنة تجهيز Rust وPostgreSQL وcache ضمن الزمن الظاهر للوظيفة.
 
 ## استراتيجية القياس أولًا
 
@@ -69,98 +69,51 @@
 
 إذا لم يوجد `rust/rust-toolchain.toml`، احذفه من `hashFiles` أو أضف ملف toolchain مثبتًا في المستودع. تستخدم GitHub مفاتيح cache و`restore-keys` للبحث عن تطابق كامل ثم تطابقات جزئية [2]. يجب مراقبة حجم `rust/target`؛ إذا أصبح الاسترجاع أكبر من زمن إعادة البناء، فالأفضل الاكتفاء بـ registry وGit cache أو استخدام cache متخصصة لـ Rust.
 
-## 2. تقسيم الاختبارات إلى Jobs متوازية
+## 2. تقسيم الاختبارات إلى Jobs وShards متوازية
 
-الـ Workflow المنشور حاليًا يفصل فحص التنسيق والاختبارات الداخلية عن اختبار قاعدة البيانات في Jobين متوازيين. ومع نمو المشروع، يمكن توسيعه لاحقًا إلى ثلاث وحدات إذا أصبح فصل `format` عن `unit` مفيدًا من ناحية القياس:
+يفصل الـ Workflow المنشور بين Job الجودة وJob PostgreSQL، ثم يقسم Job PostgreSQL إلى shardين مستقلين عبر Matrix. هذا يجعل الاختبارات غير المعتمدة على قاعدة البيانات تعمل بالتوازي مع التكامل، ويجعل سيناريوهات التكامل المستقلة تعمل بالتوازي مع بعضها.
 
 ```text
-quality       -> cargo fmt --check وcargo clippy
-unit           -> accounting_core وaccounting_zatca واختبارات data unit
-integration    -> PostgreSQL + migrations + db_integration
+rust-quality                 -> format + unit + workspace check
+rust-integration[persistence] -> PostgreSQL + migrations + db_persistence
+rust-integration[hash_chain]  -> PostgreSQL + migrations + db_hash_chain
+ci-gate                      -> ينتظر نجاح الجودة وجميع shards
 ```
 
-يمكن تشغيل `unit` و`integration` بالتوازي، ثم جعل Job تجميعية مطلوبة للفرع الرئيسي. مثال مختصر:
+التقسيم الحالي مقصود ومحدود؛ فهو لا يكرر نفس الاختبار، بل نقل حالتي التحقق الموجودتين في الاختبار القديم إلى هدفين مستقلين. مثال Matrix الأساسي:
 
 ```yaml
-jobs:
-  unit:
-    name: Rust unit tests
-    runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: rust
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          components: rustfmt
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            rust/target
-          key: ${{ runner.os }}-rust-${{ hashFiles('rust/Cargo.lock', 'rust/**/Cargo.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-rust-
-      - run: cargo fmt --all -- --check
-      - run: cargo test -p accounting_core -p accounting_zatca -p accounting_data --lib
+strategy:
+  fail-fast: false
+  max-parallel: 2
+  matrix:
+    shard: [persistence, hash_chain]
 
-  integration:
-    name: PostgreSQL integration
-    runs-on: ubuntu-24.04
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: basir_test
-          POSTGRES_PASSWORD: basir_test_password
-          POSTGRES_DB: basir_accounting_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U basir_test -d basir_accounting_test"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 20
-    defaults:
-      run:
-        working-directory: rust
-    env:
-      DATABASE_URL: postgres://basir_test:basir_test_password@127.0.0.1:5432/basir_accounting_test
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - run: sudo apt-get update -y && sudo apt-get install -y postgresql-client
-      - run: pg_isready -h 127.0.0.1 -p 5432 -U basir_test -d basir_accounting_test
-      - name: Apply migrations
-        run: |
-          set -euo pipefail
-          for migration in migrations/*.sql; do
-            psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"
-          done
-      - run: cargo test -p accounting_data --test db_integration -- --nocapture
+env:
+  DATABASE_URL: postgres://basir_test:basir_test_password@127.0.0.1:5432/basir_accounting_${{ matrix.shard }}
 ```
 
-هذا المثال يوضح البنية العامة. وقد تم تطبيقها فعليًا في `.github/workflows/rust-integration.yml` مع تعديل أمر الاختبارات إلى `cargo test -p accounting_core -p accounting_zatca --all-targets` و`cargo test -p accounting_data --lib` في Job الجودة، وإلى `cargo test -p accounting_data --test db_integration -- --test-threads=1` في Job PostgreSQL. يجب تحديث قائمة الحزم إذا أضيفت حزمة جديدة أو اختبار تكاملي آخر.
+يُختار هدف Cargo من قيمة `matrix.shard` عبر `case` صريح، وتستخدم كل تركيبة قاعدة PostgreSQL خاصة بها. أما `Rust CI gate` فيفحص نتيجة Job التكامل كاملة، ولذلك لا يمر الدمج إذا فشل shard واحد.
 
-## 3. حماية اختبارات التكامل من التوازي غير الآمن
+## 3. حماية اختبارات التكامل أثناء Sharding
 
-اختبار التكامل الحالي ينفذ `TRUNCATE` على جداول محاسبية مشتركة. لذلك لا يجوز تشغيل عدة حالات منه بالتوازي على قاعدة واحدة. يمكن إبقاء:
-
-```bash
-cargo test -p accounting_data --test db_integration -- --test-threads=1
-```
-
-حتى يتم عزل كل اختبار في قاعدة مختلفة أو schema مختلف. بعد ذلك فقط يمكن استخدام `cargo nextest` أو Matrix لتشغيل الحالات بالتوازي. تسريع الاختبارات بإزالة العزل قد ينتج نجاحات وهمية أو تلفًا في بيانات الاختبار، وهو أسوأ من بطء CI في نظام محاسبي.
-
-عند الحاجة إلى التوازي الحقيقي، استخدم قاعدة أو schema لكل worker، مثل:
+كانت حالة التكامل الأصلية تنفذ `TRUNCATE` على جداول محاسبية مشتركة؛ لذلك لا يجوز تشغيل عدة حالات منها بالتوازي على قاعدة واحدة. الحل المنفذ هو تقسيم التغطية إلى test binaries مستقلة مع قاعدة لكل shard:
 
 ```text
-basir_test_${{ github.run_id }}_${{ strategy.job-index }}
+persistence -> basir_accounting_persistence -> db_persistence
+hash_chain  -> basir_accounting_hash_chain  -> db_hash_chain
 ```
 
-ثم طبّق migrations داخل كل قاعدة. يجب أن يكون التنظيف مضمونًا عبر `if: always()` أو سياسة انتهاء تلقائي، وألا تستخدم أي قاعدة staging مشتركة.
+كل test binary يستدعي `common::setup()`، ويطبق `TRUNCATE` داخل قاعدته الخاصة فقط، ثم يزرع الحسابات الافتراضية قبل التنفيذ. لذلك يمكن تشغيل shardين بالتوازي بأمان، مع إبقاء كل shard داخليًا على `--test-threads=1` حتى لا تتنافس حالاته المحلية على نفس البيانات.
+
+```bash
+cargo test --locked -p accounting_data --test db_persistence -- --test-threads=1
+cargo test --locked -p accounting_data --test db_hash_chain -- --test-threads=1
+```
+
+في GitHub Actions، تنشئ Matrix تركيبة مستقلة لكل قيمة، وتبني `DATABASE_URL` من `${{ matrix.shard }}`، بينما تطبق كل تركيبة migrations داخل PostgreSQL الخاص بها. لا تستخدم قاعدة staging مشتركة، ولا ترفع `DATABASE_URL` أو كلمات المرور إلى artifacts أو cache.
+
+إذا أضيفت اختبارات تكامل جديدة، يجب وضعها في binary مستقل أو مجموعة متجانسة، وإضافتها إلى قائمة Matrix و`case` مع قاعدة معزولة. إذا تجاوز عدد shards قدرة الـ Runner أو أصبح إنشاء PostgreSQL هو عنق الزجاجة، اضبط `max-parallel` بدل إزالة العزل.
 
 ## 4. الاستفادة من concurrency
 

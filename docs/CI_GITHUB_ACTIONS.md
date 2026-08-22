@@ -4,21 +4,24 @@
 
 ## ما ينفذه الـ Workflow
 
-يبدأ التنفيذ بخدمة PostgreSQL 16 مؤقتة داخل GitHub Actions، ثم ينتظر جاهزيتها، ويطبّق ملفات `rust/migrations/*.sql` بترتيبها الزمني، ويفحص تنسيق Rust، ثم ينفذ:
+يحتوي الـ Workflow على Job جودة سريع، وJob تكامل يعمل عبر Matrix من shardين مستقلين. ينفذ Job الجودة فحص التنسيق والاختبارات غير المعتمدة على قاعدة البيانات وفحص ترجمة مساحة العمل. أما كل shard تكاملي فينشئ حاوية PostgreSQL 16 خاصة به، وينتظر جاهزيتها، ويطبّق ملفات `rust/migrations/*.sql` بترتيبها الزمني، ثم يشغّل اختبارًا واحدًا مستقلًا:
 
-```bash
-cargo test --workspace -- --test-threads=1
-```
+| الـ shard | هدف Cargo | التغطية |
+|---|---|---|
+| `persistence` | `cargo test --locked -p accounting_data --test db_persistence -- --test-threads=1` | حفظ القيد، الأسطر، وسجل التدقيق |
+| `hash_chain` | `cargo test --locked -p accounting_data --test db_hash_chain -- --test-threads=1` | استمرارية سلسلة hash بين قيدين |
 
-يتم تمرير `DATABASE_URL` إلى الاختبارات داخل بيئة التشغيل فقط. بيانات الاتصال المستخدمة تخص حاوية اختبار مؤقتة وليست سرًا إنتاجيًا، ولا تُحفظ في المستودع أو في سجلات GitHub. عند الفشل، يرفع الـ Workflow سجل الاختبارات كـ artifact لمدة 14 يومًا.
+كل shard يحصل على `DATABASE_URL` مختلف مبني من `${{ matrix.shard }}`، لذلك لا يتشارك `TRUNCATE` أو بيانات الاختبار مع shard آخر. يتم رفع سجل مستقل لكل shard كـ artifact لمدة 14 يومًا، وتنتظر وظيفة `Rust CI gate` نجاح Job الجودة وجميع shards قبل اعتبار الفحص ناجحًا.
 
 ## تفعيل الحماية على الفرع الرئيسي
 
-بعد أول تشغيل ناجح، يوصى بإضافة نتيجة الوظيفة إلى قواعد حماية `main` أو `master` في إعدادات المستودع، بحيث لا يمكن دمج Pull Request إلا بعد نجاح فحص:
+بعد أول تشغيل ناجح، يوصى بإضافة نتيجة الوظيفة إلى قواعد حماية `main` أو `master` في إعدادات المستودع، بحيث لا يمكن دمج Pull Request إلا بعد نجاح الفحص التجميعي:
 
 ```text
-Rust workspace + PostgreSQL integration
+Rust CI gate
 ```
+
+لا تجعل فحص shard واحد هو الشرط الوحيد؛ الفحص التجميعي يتأكد من نجاح `Rust quality + unit tests` وجميع تركيبات Matrix.
 
 يجب تفعيل خيار انتظار نجاح الفحوصات قبل الدمج، ومنع تجاوز القاعدة إلا للمسؤولين عند الحاجة الاستثنائية.
 
@@ -28,7 +31,15 @@ Rust workspace + PostgreSQL integration
 
 ## إعادة الإنتاج محليًا
 
-يمكن إعادة إنتاج نفس السيناريو محليًا باستخدام PostgreSQL وقاعدة اختبار معزولة، كما هو موثق في [دليل تشغيل اختبار التكامل](../audit/دليل_تشغيل_اختبار_التكامل_PostgreSQL.md). لا تستخدم قاعدة التطوير المشتركة لأن اختبار التكامل ينفذ `TRUNCATE` على جداول الحسابات والقيود وسجل التدقيق.
+يمكن إعادة إنتاج نفس السيناريو محليًا باستخدام PostgreSQL وقاعدة اختبار معزولة، كما هو موثق في [دليل تشغيل اختبار التكامل](../audit/دليل_تشغيل_اختبار_التكامل_PostgreSQL.md). بعد تطبيق migrations شغّل الهدفين بالتتابع على قاعدة محلية واحدة، أو أنشئ قاعدة مستقلة لكل shard إذا أردت محاكاة التوازي. لا تستخدم قاعدة التطوير المشتركة لأن كل shard ينفذ `TRUNCATE` على جداول الحسابات والقيود وسجل التدقيق.
+
+```bash
+DATABASE_URL='postgres://basir_test:password@127.0.0.1:5432/basir_accounting_test' \
+  cargo test --locked -p accounting_data --test db_persistence -- --test-threads=1
+
+DATABASE_URL='postgres://basir_test:password@127.0.0.1:5432/basir_accounting_test' \
+  cargo test --locked -p accounting_data --test db_hash_chain -- --test-threads=1
+```
 
 ## استخدام قاعدة خارجية بدل خدمة GitHub
 
