@@ -59,6 +59,7 @@ class BasirAppShell extends ConsumerStatefulWidget {
 
 class _BasirAppShellState extends ConsumerState<BasirAppShell> {
   late int _selectedIndex;
+  late final Set<int> _visitedIndices;
 
   static const List<Widget> _defaultScreens = [
     DashboardScreen(),
@@ -75,13 +76,28 @@ class _BasirAppShellState extends ConsumerState<BasirAppShell> {
   void initState() {
     super.initState();
     _selectedIndex = widget.initialIndex.clamp(0, _screenCount - 1).toInt();
+    _visitedIndices = {_selectedIndex};
   }
 
   int get _screenCount => (widget.screens ?? _defaultScreens).length;
 
+  /// يبني الشاشة النشطة والشاشات التي زارها المستخدم فقط.
+  ///
+  /// هذا يحافظ على حالة الوحدات التي فُتحت سابقًا، ويمنع تهيئة مزودي البيانات
+  /// الثقيلة للشاشات غير المستخدمة عند تحميل الهيكل الرئيسي.
+  List<Widget> _screenStack(List<Widget> screens) => List<Widget>.generate(
+    screens.length,
+    (index) => _visitedIndices.contains(index)
+        ? screens[index]
+        : const SizedBox.shrink(),
+  );
+
   void _selectIndex(int index) {
     if (index < 0 || index >= _screenCount || index == _selectedIndex) return;
-    setState(() => _selectedIndex = index);
+    setState(() {
+      _selectedIndex = index;
+      _visitedIndices.add(index);
+    });
   }
 
   @override
@@ -95,14 +111,14 @@ class _BasirAppShellState extends ConsumerState<BasirAppShell> {
       body: isDesktop
           ? _DesktopLayout(
               selectedIndex: _selectedIndex,
-              screens: screens,
+              screens: _screenStack(screens),
               appIcons: appIcons,
               l10n: l10n,
               onItemSelected: _selectIndex,
             )
           : _MobileLayout(
               selectedIndex: _selectedIndex,
-              screens: screens,
+              screens: _screenStack(screens),
               appIcons: appIcons,
               l10n: l10n,
               onItemSelected: _selectIndex,
