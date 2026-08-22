@@ -20,14 +20,14 @@ Future<T?> showOmnibar<T>(BuildContext context) {
         UncontrolledProviderScope(container: container, child: const Omnibar()),
     transitionBuilder: (context, animation, secondaryAnimation, child) =>
         FadeTransition(
-          opacity: animation,
-          child: ScaleTransition(
-            scale: Tween<double>(begin: 0.95, end: 1).animate(
-              CurvedAnimation(parent: animation, curve: Curves.easeOutQuart),
-            ),
-            child: child,
-          ),
+      opacity: animation,
+      child: ScaleTransition(
+        scale: Tween<double>(begin: 0.95, end: 1).animate(
+          CurvedAnimation(parent: animation, curve: Curves.easeOutQuart),
         ),
+        child: child,
+      ),
+    ),
   );
 }
 
@@ -257,34 +257,35 @@ class _OmnibarState extends ConsumerState<Omnibar> {
   }
 
   Widget _buildSectionHeader(String title) => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    child: Text(
-      title.toUpperCase(),
-      style: const TextStyle(
-        fontSize: 11,
-        fontWeight: FontWeight.bold,
-        color: Colors.grey,
-        letterSpacing: 1,
-      ),
-    ),
-  );
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Text(
+          title.toUpperCase(),
+          style: const TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.bold,
+            color: Colors.grey,
+            letterSpacing: 1,
+          ),
+        ),
+      );
 
   Widget _buildActionItem(
     IconData icon,
     String title,
     String subtitle, {
     VoidCallback? onTap,
-  }) => ListTile(
-    leading: Icon(icon, size: 20),
-    title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
-    subtitle: Text(subtitle, style: const TextStyle(fontSize: 12)),
-    hoverColor: Colors.black.withValues(alpha: 0.05),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-    onTap: () {
-      if (onTap != null) {
-        Navigator.pop(context);
-        onTap();
-      }
-    },
-  );
+  }) =>
+      ListTile(
+        leading: Icon(icon, size: 20),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
+        subtitle: Text(subtitle, style: const TextStyle(fontSize: 12)),
+        hoverColor: Colors.black.withValues(alpha: 0.05),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        onTap: () {
+          if (onTap != null) {
+            Navigator.pop(context);
+            onTap();
+          }
+        },
+      );
 }

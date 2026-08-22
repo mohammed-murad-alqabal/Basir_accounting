@@ -118,62 +118,64 @@ class BasirTopBar extends StatelessWidget {
     required String value,
     required IconData icon,
     required bool showLabel,
-  }) => Semantics(
-    label: '$label: $value',
-    child: Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Spacing.sm,
-        vertical: Spacing.xs,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
-        borderRadius: BorderRadius.circular(Radii.md),
-        border: Border.all(color: AppColors.borderLight),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: IconSizes.sm, color: AppColors.textSecondary),
-          if (showLabel) ...[
-            const SizedBox(width: Spacing.xs),
-            Flexible(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.centerRight,
-                child: Text(
-                  value,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textPrimary,
-                    fontWeight: FontWeights.medium,
+  }) =>
+      Semantics(
+        label: '$label: $value',
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Spacing.sm,
+            vertical: Spacing.xs,
+          ),
+          decoration: BoxDecoration(
+            color: AppColors.surfaceVariant,
+            borderRadius: BorderRadius.circular(Radii.md),
+            border: Border.all(color: AppColors.borderLight),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: IconSizes.sm, color: AppColors.textSecondary),
+              if (showLabel) ...[
+                const SizedBox(width: Spacing.xs),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      value,
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.textPrimary,
+                        fontWeight: FontWeights.medium,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ],
-        ],
-      ),
-    ),
-  );
+              ],
+            ],
+          ),
+        ),
+      );
 
   /// زر أيقونة وظيفي (إشعارات/إعدادات)
   Widget _buildIconButton({
     required IconData icon,
     required String semanticsLabel,
     required VoidCallback onTap,
-  }) => Semantics(
-    button: true,
-    label: semanticsLabel,
-    child: SizedBox(
-      width: TouchTargets.minimum,
-      height: TouchTargets.minimum,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(Radii.full),
-        splashColor: AppColors.primary.withValues(alpha: 0.12),
-        child: Center(child: Icon(icon, color: AppColors.textSecondary)),
-      ),
-    ),
-  );
+  }) =>
+      Semantics(
+        button: true,
+        label: semanticsLabel,
+        child: SizedBox(
+          width: TouchTargets.minimum,
+          height: TouchTargets.minimum,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(Radii.full),
+            splashColor: AppColors.primary.withValues(alpha: 0.12),
+            child: Center(child: Icon(icon, color: AppColors.textSecondary)),
+          ),
+        ),
+      );
 
   void _showNotifications(BuildContext context, AppLocalizations l10n) {
     ScaffoldMessenger.of(
@@ -201,58 +203,58 @@ class BasirGlobalSearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Semantics(
-    textField: true,
-    label: l10n.shellSearchAll,
-    child: InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(Radii.md),
-      child: Container(
-        height: 40,
-        padding: const EdgeInsets.symmetric(horizontal: Spacing.sm),
-        decoration: BoxDecoration(
-          color: AppColors.background,
+        textField: true,
+        label: l10n.shellSearchAll,
+        child: InkWell(
+          onTap: onTap,
           borderRadius: BorderRadius.circular(Radii.md),
-          border: Border.all(color: AppColors.borderLight),
-        ),
-        child: Row(
-          children: [
-            const Icon(
-              Icons.search,
-              size: IconSizes.sm,
-              color: AppColors.textHint,
+          child: Container(
+            height: 40,
+            padding: const EdgeInsets.symmetric(horizontal: Spacing.sm),
+            decoration: BoxDecoration(
+              color: AppColors.background,
+              borderRadius: BorderRadius.circular(Radii.md),
+              border: Border.all(color: AppColors.borderLight),
             ),
-            const SizedBox(width: Spacing.xs),
-            Expanded(
-              child: Text(
-                l10n.shellSearchHint,
-                style: AppTextStyles.bodySmall.copyWith(
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.search,
+                  size: IconSizes.sm,
                   color: AppColors.textHint,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            const SizedBox(width: Spacing.xs),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Spacing.xs,
-                vertical: 2,
-              ),
-              decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
-                borderRadius: BorderRadius.circular(Radii.xs),
-                border: Border.all(color: AppColors.borderLight),
-              ),
-              child: Text(
-                '⌘K',
-                style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.textSecondary,
+                const SizedBox(width: Spacing.xs),
+                Expanded(
+                  child: Text(
+                    l10n.shellSearchHint,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.textHint,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
+                const SizedBox(width: Spacing.xs),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.xs,
+                    vertical: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.surfaceVariant,
+                    borderRadius: BorderRadius.circular(Radii.xs),
+                    border: Border.all(color: AppColors.borderLight),
+                  ),
+                  child: Text(
+                    '⌘K',
+                    style: AppTextStyles.labelSmall.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-    ),
-  );
+      );
 }

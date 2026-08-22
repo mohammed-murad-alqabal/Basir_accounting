@@ -86,11 +86,11 @@ class _BasirAppShellState extends ConsumerState<BasirAppShell> {
   /// هذا يحافظ على حالة الوحدات التي فُتحت سابقًا، ويمنع تهيئة مزودي البيانات
   /// الثقيلة للشاشات غير المستخدمة عند تحميل الهيكل الرئيسي.
   List<Widget> _screenStack(List<Widget> screens) => List<Widget>.generate(
-    screens.length,
-    (index) => _visitedIndices.contains(index)
-        ? screens[index]
-        : const SizedBox.shrink(),
-  );
+        screens.length,
+        (index) => _visitedIndices.contains(index)
+            ? screens[index]
+            : const SizedBox.shrink(),
+      );
 
   void _selectIndex(int index) {
     if (index < 0 || index >= _screenCount || index == _selectedIndex) return;
@@ -275,9 +275,8 @@ class _MobileNavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final icon = index < _mobileIcons.length
-        ? _mobileIcons[index]
-        : Icons.apps_outlined;
+    final icon =
+        index < _mobileIcons.length ? _mobileIcons[index] : Icons.apps_outlined;
     final label = switch (index) {
       0 => l10n.navHome,
       1 => l10n.navInvoices,
@@ -306,9 +305,8 @@ class _MobileNavItem extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  color: isSelected
-                      ? AppColors.primary
-                      : AppColors.textSecondary,
+                  color:
+                      isSelected ? AppColors.primary : AppColors.textSecondary,
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -319,9 +317,8 @@ class _MobileNavItem extends StatelessWidget {
                     color: isSelected
                         ? AppColors.primary
                         : AppColors.textSecondary,
-                    fontWeight: isSelected
-                        ? FontWeights.bold
-                        : FontWeights.medium,
+                    fontWeight:
+                        isSelected ? FontWeights.bold : FontWeights.medium,
                   ),
                 ),
               ],
