@@ -21,33 +21,31 @@ Widget buildShell({
   /// مفتاح فريد لإجبار Riverpod على إعادة إنشاء ProviderContainer عند إعادة
   /// البناء (pumpWidget جديد بقيم overrides مختلفة)
   Key? providerKey,
-}) =>
-    MaterialApp(
-      locale: Locale(locale),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+}) => MaterialApp(
+  locale: Locale(locale),
+  localizationsDelegates: const [
+    AppLocalizations.delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: const [Locale('ar'), Locale('en')],
+  home: Directionality(
+    textDirection: rtl ? TextDirection.rtl : TextDirection.ltr,
+    child: ProviderScope(
+      key: providerKey ?? UniqueKey(),
+      overrides: [
+        appIconsProvider.overrideWith((ref) => const MaterialAppIcons()),
+        // يجب إبقاء نفس عدد الـ overrides في كل إعادة بناء (riverpod لا يسمح بتغيير العدد)
+        sidebarCollapsedProvider.overrideWith((ref) => sidebarCollapsedDefault),
       ],
-      supportedLocales: const [Locale('ar'), Locale('en')],
-      home: Directionality(
-        textDirection: rtl ? TextDirection.rtl : TextDirection.ltr,
-        child: ProviderScope(
-          key: providerKey ?? UniqueKey(),
-          overrides: [
-            appIconsProvider.overrideWith((ref) => const MaterialAppIcons()),
-            // يجب إبقاء نفس عدد الـ overrides في كل إعادة بناء (riverpod لا يسمح بتغيير العدد)
-            sidebarCollapsedProvider
-                .overrideWith((ref) => sidebarCollapsedDefault),
-          ],
-          child: MediaQuery(
-            data: MediaQueryData(size: Size(width, 800)),
-            child: Scaffold(body: child ?? const BasirAppShell()),
-          ),
-        ),
+      child: MediaQuery(
+        data: MediaQueryData(size: Size(width, 800)),
+        child: Scaffold(body: child ?? const BasirAppShell()),
       ),
-    );
+    ),
+  ),
+);
 
 /// يضبط حجم سطح الاختبار الفعلي قبل pumpWidget (MediaQueryData وحده لا يحدد قيود السطح)
 void setTestSurfaceSize(WidgetTester tester, double width) {
@@ -79,8 +77,9 @@ void main() {
       expect(find.byType(BasirSidebar), findsNothing);
     });
 
-    testWidgets('displays all 8 unit screens in desktop layout',
-        (tester) async {
+    testWidgets('displays all 8 unit screens in desktop layout', (
+      tester,
+    ) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
@@ -90,20 +89,23 @@ void main() {
         tester.widgetList<IndexedStack>(find.byType(IndexedStack)).length,
         greaterThanOrEqualTo(1),
       );
-      final stack =
-          tester.widget<IndexedStack>(find.byType(IndexedStack).first);
+      final stack = tester.widget<IndexedStack>(
+        find.byType(IndexedStack).first,
+      );
       expect(stack.children.length, 8);
     });
 
-    testWidgets('sidebar collapses to icon-only width when toggled',
-        (tester) async {
+    testWidgets('sidebar collapses to icon-only width when toggled', (
+      tester,
+    ) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
 
       // العرض الموسّع: الشريط الجانبي يشغل kSidebarExpandedWidth من إجمالي الصف
-      final sidebarRenderBoxBefore =
-          tester.renderObject<RenderBox>(find.byType(BasirSidebar)).size;
+      final sidebarRenderBoxBefore = tester
+          .renderObject<RenderBox>(find.byType(BasirSidebar))
+          .size;
       expect(sidebarRenderBoxBefore.width, kSidebarExpandedWidth);
 
       await tester.pumpWidget(
@@ -115,13 +117,15 @@ void main() {
       await tester.pumpAndSettle();
 
       // العرض المطوي: أيقونات فقط
-      final sidebarRenderBoxAfter =
-          tester.renderObject<RenderBox>(find.byType(BasirSidebar)).size;
+      final sidebarRenderBoxAfter = tester
+          .renderObject<RenderBox>(find.byType(BasirSidebar))
+          .size;
       expect(sidebarRenderBoxAfter.width, kSidebarCollapsedWidth);
     });
 
-    testWidgets('toggle button announces its action for accessibility',
-        (tester) async {
+    testWidgets('toggle button announces its action for accessibility', (
+      tester,
+    ) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
@@ -160,8 +164,9 @@ void main() {
       expect(find.text('الإعدادات'), findsOneWidget);
     });
 
-    testWidgets('active item uses brand primary color for contrast',
-        (tester) async {
+    testWidgets('active item uses brand primary color for contrast', (
+      tester,
+    ) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
@@ -179,8 +184,9 @@ void main() {
       expect(activeContainers, findsOneWidget);
     });
 
-    testWidgets('navigates to the selected unit from the sidebar',
-        (tester) async {
+    testWidgets('navigates to the selected unit from the sidebar', (
+      tester,
+    ) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
@@ -253,8 +259,9 @@ void main() {
       expect(find.byIcon(Icons.calendar_month_outlined), findsOneWidget);
     });
 
-    testWidgets('displays custom org/branch/period when provided',
-        (tester) async {
+    testWidgets('displays custom org/branch/period when provided', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         buildShell(
           child: Builder(
@@ -288,8 +295,9 @@ void main() {
       );
     });
 
-    testWidgets('opens the global Omnibar from the search field',
-        (tester) async {
+    testWidgets('opens the global Omnibar from the search field', (
+      tester,
+    ) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
@@ -315,10 +323,7 @@ void main() {
       final semanticsHandle = tester.ensureSemantics();
       await tester.pumpAndSettle();
 
-      expect(
-        tester.takeException(),
-        isNull,
-      );
+      expect(tester.takeException(), isNull);
 
       final semantics = tester.getSemantics(find.byType(BasirTopBar).first);
       // Semantics الشرائح مدموجة مع الزر (button: true) ومحتواها النصي،
@@ -368,10 +373,7 @@ void main() {
       expect(find.byType(BasirTopBar), findsOneWidget);
       // في الشاشات الضيقة (<1048px) تُطوى نصوص الشرائح إلى الأيقونات فقط،
       // لذا نتحقق من الإعلان الصوتي (Semantics) بدلًا من النص المرئي
-      expect(
-        find.bySemanticsLabel('Branch: Main Branch'),
-        findsWidgets,
-      );
+      expect(find.bySemanticsLabel('Branch: Main Branch'), findsWidgets);
       expect(find.byType(BottomNavigationBar), findsNothing);
     });
   });

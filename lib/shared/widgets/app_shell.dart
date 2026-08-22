@@ -151,16 +151,9 @@ class _DesktopLayout extends ConsumerWidget {
         Expanded(
           child: Column(
             children: [
-              BasirTopBar(
-                appIcons: appIcons,
-                l10n: l10n,
-                collapsed: collapsed,
-              ),
+              BasirTopBar(appIcons: appIcons, l10n: l10n, collapsed: collapsed),
               Expanded(
-                child: IndexedStack(
-                  index: selectedIndex,
-                  children: screens,
-                ),
+                child: IndexedStack(index: selectedIndex, children: screens),
               ),
             ],
           ),
@@ -297,7 +290,9 @@ class _MobileNavItem extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                  color: isSelected
+                      ? AppColors.primary
+                      : AppColors.textSecondary,
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -308,8 +303,9 @@ class _MobileNavItem extends StatelessWidget {
                     color: isSelected
                         ? AppColors.primary
                         : AppColors.textSecondary,
-                    fontWeight:
-                        isSelected ? FontWeights.bold : FontWeights.medium,
+                    fontWeight: isSelected
+                        ? FontWeights.bold
+                        : FontWeights.medium,
                   ),
                 ),
               ],
