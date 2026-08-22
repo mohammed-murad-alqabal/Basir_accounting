@@ -9,26 +9,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Shows the Omnibar overlay.
-Future<T?> showOmnibar<T>(BuildContext context) => showGeneralDialog<T>(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: 'Omnibar',
-      barrierColor: Colors.black.withValues(alpha: 0.3),
-      pageBuilder: (context, animation, secondaryAnimation) => const Omnibar(),
-      transitionBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: ScaleTransition(
-          scale: Tween<double>(begin: 0.95, end: 1).animate(
-            CurvedAnimation(
-              parent: animation,
-              curve: Curves.easeOutQuart,
+Future<T?> showOmnibar<T>(BuildContext context) {
+  final container = ProviderScope.containerOf(context, listen: false);
+  return showGeneralDialog<T>(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: 'Omnibar',
+    barrierColor: Colors.black.withValues(alpha: 0.3),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        UncontrolledProviderScope(container: container, child: const Omnibar()),
+    transitionBuilder: (context, animation, secondaryAnimation, child) =>
+        FadeTransition(
+          opacity: animation,
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 0.95, end: 1).animate(
+              CurvedAnimation(parent: animation, curve: Curves.easeOutQuart),
             ),
+            child: child,
           ),
-          child: child,
         ),
-      ),
-    );
+  );
+}
 
 /// Global command and search overlay.
 class Omnibar extends ConsumerStatefulWidget {
@@ -164,8 +165,9 @@ class _OmnibarState extends ConsumerState<Omnibar> {
                           Icons.assignment_return_outlined,
                           'Returns & Damages',
                           'Process returns or damaged items',
-                          onTap: () => Navigator.of(context)
-                              .pushNamed('/returns-and-damages'),
+                          onTap: () => Navigator.of(
+                            context,
+                          ).pushNamed('/returns-and-damages'),
                         ),
                       ] else ...[
                         _buildSectionHeader('Results for "$_query"'),
@@ -230,65 +232,59 @@ class _OmnibarState extends ConsumerState<Omnibar> {
     switch (result.type) {
       case OmnibarResultType.invoice:
         unawaited(
-          Navigator.of(context).pushNamed(
-            '/invoice-detail',
-            arguments: result.data as Invoice,
-          ),
+          Navigator.of(
+            context,
+          ).pushNamed('/invoice-detail', arguments: result.data as Invoice),
         );
       case OmnibarResultType.customer:
         unawaited(
-          Navigator.of(context).pushNamed(
-            '/customer-detail',
-            arguments: result.data as Customer,
-          ),
+          Navigator.of(
+            context,
+          ).pushNamed('/customer-detail', arguments: result.data as Customer),
         );
       case OmnibarResultType.item:
         // Navigate to item form in view/edit mode
         unawaited(
-          Navigator.of(context).pushNamed(
-            '/inventory-form',
-            arguments: result.data,
-          ),
+          Navigator.of(
+            context,
+          ).pushNamed('/inventory-form', arguments: result.data),
         );
       case OmnibarResultType.action:
         if (result.data is String) {
-          unawaited(
-            Navigator.of(context).pushNamed(result.data as String),
-          );
+          unawaited(Navigator.of(context).pushNamed(result.data as String));
         }
     }
   }
 
   Widget _buildSectionHeader(String title) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Text(
-          title.toUpperCase(),
-          style: const TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey,
-            letterSpacing: 1,
-          ),
-        ),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    child: Text(
+      title.toUpperCase(),
+      style: const TextStyle(
+        fontSize: 11,
+        fontWeight: FontWeight.bold,
+        color: Colors.grey,
+        letterSpacing: 1,
+      ),
+    ),
+  );
 
   Widget _buildActionItem(
     IconData icon,
     String title,
     String subtitle, {
     VoidCallback? onTap,
-  }) =>
-      ListTile(
-        leading: Icon(icon, size: 20),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
-        subtitle: Text(subtitle, style: const TextStyle(fontSize: 12)),
-        hoverColor: Colors.black.withValues(alpha: 0.05),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        onTap: () {
-          if (onTap != null) {
-            Navigator.pop(context);
-            onTap();
-          }
-        },
-      );
+  }) => ListTile(
+    leading: Icon(icon, size: 20),
+    title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
+    subtitle: Text(subtitle, style: const TextStyle(fontSize: 12)),
+    hoverColor: Colors.black.withValues(alpha: 0.05),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    onTap: () {
+      if (onTap != null) {
+        Navigator.pop(context);
+        onTap();
+      }
+    },
+  );
 }
