@@ -378,6 +378,63 @@ void main() {
     });
   });
 
+  group('BasirTopBar responsive and feedback behavior', () {
+    testWidgets('collapses context chip labels below the label breakpoint', (
+      tester,
+    ) async {
+      setTestSurfaceSize(tester, kChipLabelBreakpoint - 1);
+      await tester.pumpWidget(
+        buildShell(width: kChipLabelBreakpoint - 1),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('المؤسسة الافتراضية'), findsNothing);
+      expect(find.text('الفرع الرئيسي'), findsNothing);
+      expect(find.text('الفترة المالية الحالية'), findsNothing);
+      expect(
+        find.bySemanticsLabel('المؤسسة: المؤسسة الافتراضية'),
+        findsOneWidget,
+      );
+      expect(find.bySemanticsLabel('الفرع: الفرع الرئيسي'), findsOneWidget);
+      expect(
+        find.bySemanticsLabel('الفترة: الفترة المالية الحالية'),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('notification action provides visible feedback',
+        (tester) async {
+      setTestSurfaceSize(tester, 1280);
+      await tester.pumpWidget(buildShell());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.bySemanticsLabel('الإشعارات'));
+      await tester.pump();
+
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(find.text('الإشعارات'), findsOneWidget);
+    });
+  });
+
+  group('BasirSidebar collapsed accessibility behavior', () {
+    testWidgets('keeps navigation labels accessible when visually collapsed', (
+      tester,
+    ) async {
+      setTestSurfaceSize(tester, 1280);
+      await tester.pumpWidget(
+        buildShell(
+          sidebarCollapsedDefault: true,
+          providerKey: const Key('accessibility-collapsed'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('الفواتير'), findsNothing);
+      expect(find.bySemanticsLabel('الفواتير'), findsOneWidget);
+      expect(find.bySemanticsLabel('طي/فتح شريط التنقل'), findsOneWidget);
+    });
+  });
+
   group('navigation constants', () {
     test('sidebar constants match the executive blueprint grid', () {
       expect(kDesktopBreakpoint, 900);
