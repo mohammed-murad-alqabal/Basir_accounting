@@ -44,9 +44,29 @@ jobs:
           components: rustfmt
 
       - name: Install cargo-nextest
-        uses: taiki-e/install-action@v2
-        with:
-          tool: nextest@0.9.143
+        env:
+          NEXTEST_VERSION: 0.9.143
+        run: |
+          set -euo pipefail
+          archive="cargo-nextest-${NEXTEST_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          base_url="https://github.com/nextest-rs/nextest/releases/download/cargo-nextest-${NEXTEST_VERSION}"
+          temp_dir="$(mktemp -d)"
+          trap 'rm -rf "${temp_dir}"' EXIT
+
+          curl --fail --silent --show-error --location --retry 3 \
+            --output "${temp_dir}/${archive}" "${base_url}/${archive}"
+          curl --fail --silent --show-error --location --retry 3 \
+            --output "${temp_dir}/checksum.txt" \
+            "${base_url}/cargo-nextest-${NEXTEST_VERSION}-x86_64-unknown-linux-gnu.sha256"
+
+          expected_checksum="$(awk '{print $1}' "${temp_dir}/checksum.txt")"
+          actual_checksum="$(sha256sum "${temp_dir}/${archive}" | awk '{print $1}')"
+          test "${expected_checksum}" = "${actual_checksum}"
+
+          tar -xzf "${temp_dir}/${archive}" -C "${temp_dir}"
+          install -m 0755 "${temp_dir}/cargo-nextest" "${HOME}/.cargo/bin/cargo-nextest"
+          echo "${HOME}/.cargo/bin" >> "${GITHUB_PATH}"
+          cargo nextest --version
 
       - name: Cache Cargo registry, Git dependencies, and build output
         uses: actions/cache@v4
