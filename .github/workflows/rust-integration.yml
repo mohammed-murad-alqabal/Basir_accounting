@@ -43,6 +43,11 @@ jobs:
         with:
           components: rustfmt
 
+      - name: Install cargo-nextest
+        uses: taiki-e/install-action@v2
+        with:
+          tool: nextest@0.9.143
+
       - name: Cache Cargo registry, Git dependencies, and build output
         uses: actions/cache@v4
         with:
@@ -68,15 +73,21 @@ jobs:
             echo "- Rust formatting check: **${duration}s**"
           } >> "${GITHUB_STEP_SUMMARY}"
 
-      - name: Run database-independent tests
+      - name: Run database-independent tests with nextest
         id: unit_tests
         run: |
           started_at=$(date +%s)
           set +e
           set -o pipefail
           {
-            cargo test --locked -p accounting_core -p accounting_zatca --all-targets
-            cargo test --locked -p accounting_data --lib
+            core_status=0
+            data_status=0
+            cargo nextest run --locked -p accounting_core -p accounting_zatca --all-targets || core_status=$?
+            cargo nextest run --locked -p accounting_data --lib || data_status=$?
+            if [ "${core_status}" -ne 0 ]; then
+              exit "${core_status}"
+            fi
+            exit "${data_status}"
           } 2>&1 | tee "${GITHUB_WORKSPACE}/rust-quality-test.log"
           test_status=${PIPESTATUS[0]}
           set -e
@@ -85,7 +96,8 @@ jobs:
           echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
           {
             echo "## CI timing"
-            echo "- Database-independent tests: **${duration}s**"
+            echo "- Database-independent tests with cargo-nextest: **${duration}s**"
+            echo "- cargo-nextest version: **0.9.143**"
           } >> "${GITHUB_STEP_SUMMARY}"
           exit "${test_status}"
 
