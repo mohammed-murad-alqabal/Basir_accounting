@@ -1,132 +1,142 @@
+== toolchain ==
+rustc 1.98.0 (88d9e12ae 2026-08-18)
+cargo 1.98.0 (797e8a9bc 2026-08-05)
+== git diff --check ==
+== cargo fmt ==
+== cargo-nextest version ==
 cargo-nextest 0.9.143 (60fa45f63 2026-08-04)
 release: 0.9.143
 commit-hash: 60fa45f638ffc3f35e74afa65737f45fcd32db2a
 commit-date: 2026-08-04
 host: x86_64-unknown-linux-gnu
-[1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 0.21s
+== accounting_core + accounting_zatca ==
+[1m[92m   Compiling[0m accounting_core v0.1.0 (/home/ubuntu/Basir_accounting/rust/crates/accounting_core)
+[1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 9.32s
 ────────────
-[32;1m Nextest run[0m ID [1m35ae14b1-370c-46f3-ac04-0a22be033201[0m with nextest profile: [1mdefault[0m
+[32;1m Nextest run[0m ID [1m5e8719fa-582b-4aaf-bbff-7739f53fd883[0m with nextest profile: [1mdefault[0m
 [32;1m    Starting[0m [1m112[0m tests across [1m22[0m binaries
-[32;1m        PASS[0m [   0.005s] (  1/112) [35;1maccounting_core[0m [36maccounts::hierarchy::tests[0m[36m::[0m[34;1mtest_missing_parent[0m
-[32;1m        PASS[0m [   0.005s] (  2/112) [35;1maccounting_core[0m [36maccounts::hierarchy::tests[0m[36m::[0m[34;1mtest_valid_hierarchy[0m
-[32;1m        PASS[0m [   0.005s] (  3/112) [35;1maccounting_core[0m [36maccounts::hierarchy::tests[0m[36m::[0m[34;1mtest_kind_mismatch[0m
-[32;1m        PASS[0m [   0.005s] (  4/112) [35;1maccounting_core[0m [36maccounts::hierarchy::tests[0m[36m::[0m[34;1mtest_cycle_detection[0m
-[32;1m        PASS[0m [   0.005s] (  5/112) [35;1maccounting_core[0m [36maccounts::models::tests[0m[36m::[0m[34;1mtest_create_account[0m
-[32;1m        PASS[0m [   0.009s] (  6/112) [35;1maccounting_core[0m [36maccounts::models::tests[0m[36m::[0m[34;1mtest_account_kind_normal_balances[0m
-[32;1m        PASS[0m [   0.005s] (  7/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_validate_account_code_valid[0m
-[32;1m        PASS[0m [   0.005s] (  8/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_validate_tag_format_valid[0m
-[32;1m        PASS[0m [   0.008s] (  9/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_duplicate_code_detection[0m
-[32;1m        PASS[0m [   0.008s] ( 10/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_validate_account_code_range_mismatch[0m
-[32;1m        PASS[0m [   0.010s] ( 11/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_validate_tag_format_invalid[0m
-[32;1m        PASS[0m [   0.005s] ( 12/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_validate_tag_kind_mismatch[0m
-[32;1m        PASS[0m [   0.009s] ( 13/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_validate_tag_kind_match[0m
-[32;1m        PASS[0m [   0.006s] ( 14/112) [35;1maccounting_core[0m [36maudit::chain::tests[0m[36m::[0m[34;1mtest_verify_chain_valid[0m
-[32;1m        PASS[0m [   0.009s] ( 15/112) [35;1maccounting_core[0m [36maudit::chain::tests[0m[36m::[0m[34;1mtest_hash_deterministic[0m
-[32;1m        PASS[0m [   0.004s] ( 16/112) [35;1maccounting_core[0m [36maudit::models::tests[0m[36m::[0m[34;1mtest_audit_action_serialization[0m
-[32;1m        PASS[0m [   0.007s] ( 17/112) [35;1maccounting_core[0m [36minventory::transfer_service::tests[0m[36m::[0m[34;1mtest_generate_stock_movements[0m
-[32;1m        PASS[0m [   0.007s] ( 18/112) [35;1maccounting_core[0m [36maudit::service::tests[0m[36m::[0m[34;1mtest_record_creation_chaining[0m
-[32;1m        PASS[0m [   0.008s] ( 19/112) [35;1maccounting_core[0m [36minventory::transfer_service::tests[0m[36m::[0m[34;1mtest_generate_transfer_entry[0m
-[32;1m        PASS[0m [   0.005s] ( 20/112) [35;1maccounting_core[0m [36minventory::transfer_service::tests[0m[36m::[0m[34;1mtest_transfer_validation_no_lines[0m
-[32;1m        PASS[0m [   0.014s] ( 21/112) [35;1maccounting_core[0m [36maudit::chain::tests[0m[36m::[0m[34;1mtest_verify_record_hash[0m
-[32;1m        PASS[0m [   0.006s] ( 22/112) [35;1maccounting_core[0m [36minventory::transfer_service::tests[0m[36m::[0m[34;1mtest_transfer_validation_same_warehouse[0m
-[32;1m        PASS[0m [   0.020s] ( 23/112) [35;1maccounting_core[0m [36maudit::chain::tests[0m[36m::[0m[34;1mtest_verify_chain_broken[0m
-[32;1m        PASS[0m [   0.006s] ( 24/112) [35;1maccounting_core[0m [36minventory::warehouse::tests[0m[36m::[0m[34;1mtest_multiple_lines[0m
-[32;1m        PASS[0m [   0.007s] ( 25/112) [35;1maccounting_core[0m [36minventory::warehouse::tests[0m[36m::[0m[34;1mtest_warehouse_transfer_creation[0m
-[32;1m        PASS[0m [   0.007s] ( 26/112) [35;1maccounting_core[0m [36mledger::models::tests[0m[36m::[0m[34;1mtest_balanced_entry[0m
-[32;1m        PASS[0m [   0.005s] ( 27/112) [35;1maccounting_core[0m [36mledger::models::tests[0m[36m::[0m[34;1mtest_status_modifiable[0m
-[32;1m        PASS[0m [   0.005s] ( 28/112) [35;1maccounting_core[0m [36mledger::models::tests[0m[36m::[0m[34;1mtest_total_calculations[0m
-[32;1m        PASS[0m [   0.010s] ( 29/112) [35;1maccounting_core[0m [36mledger::models::tests[0m[36m::[0m[34;1mtest_multi_currency_line[0m
-[32;1m        PASS[0m [   0.007s] ( 30/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_balanced[0m
-[32;1m        PASS[0m [   0.011s] ( 31/112) [35;1maccounting_core[0m [36mledger::models::tests[0m[36m::[0m[34;1mtest_unbalanced_entry[0m
-[32;1m        PASS[0m [   0.009s] ( 32/112) [35;1maccounting_core[0m [36mledger::service::tests[0m[36m::[0m[34;1mtest_post_entry_hashing[0m
-[32;1m        PASS[0m [   0.009s] ( 33/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_accounts_rejects_unknown_and_non_leaf_accounts[0m
-[32;1m        PASS[0m [   0.009s] ( 34/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_currency_mismatch[0m
-[32;1m        PASS[0m [   0.005s] ( 35/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_currency_success[0m
-[32;1m        PASS[0m [   0.005s] ( 36/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_for_posting_success[0m
-[32;1m        PASS[0m [   0.011s] ( 37/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_currency_rejects_partial_metadata[0m
-[32;1m        PASS[0m [   0.006s] ( 38/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_for_posting_bad_reference[0m
-[32;1m        PASS[0m [   0.005s] ( 39/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_line_amounts_rejects_negative_and_ambiguous_lines[0m
-[32;1m        PASS[0m [   0.005s] ( 40/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_traceability_adjusting_missing_link[0m
-[32;1m        PASS[0m [   0.004s] ( 41/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_traceability_standard_missing_doc[0m
-[32;1m        PASS[0m [   0.004s] ( 42/112) [35;1maccounting_core[0m [36mreporting::generator::tests[0m[36m::[0m[34;1mtest_synthesize_zakah_statement[0m
-[32;1m        PASS[0m [   0.004s] ( 43/112) [35;1maccounting_core[0m [36mreporting::generator::tests[0m[36m::[0m[34;1mtest_synthesize_cash_flow_statement[0m
+[32;1m        PASS[0m [   0.005s] (  1/112) [35;1maccounting_core[0m [36maccounts::hierarchy::tests[0m[36m::[0m[34;1mtest_cycle_detection[0m
+[32;1m        PASS[0m [   0.006s] (  2/112) [35;1maccounting_core[0m [36maccounts::hierarchy::tests[0m[36m::[0m[34;1mtest_valid_hierarchy[0m
+[32;1m        PASS[0m [   0.006s] (  3/112) [35;1maccounting_core[0m [36maccounts::hierarchy::tests[0m[36m::[0m[34;1mtest_missing_parent[0m
+[32;1m        PASS[0m [   0.008s] (  4/112) [35;1maccounting_core[0m [36maccounts::hierarchy::tests[0m[36m::[0m[34;1mtest_kind_mismatch[0m
+[32;1m        PASS[0m [   0.008s] (  5/112) [35;1maccounting_core[0m [36maccounts::models::tests[0m[36m::[0m[34;1mtest_account_kind_normal_balances[0m
+[32;1m        PASS[0m [   0.009s] (  6/112) [35;1maccounting_core[0m [36maccounts::models::tests[0m[36m::[0m[34;1mtest_create_account[0m
+[32;1m        PASS[0m [   0.005s] (  7/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_validate_account_code_range_mismatch[0m
+[32;1m        PASS[0m [   0.005s] (  8/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_validate_account_code_valid[0m
+[32;1m        PASS[0m [   0.006s] (  9/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_duplicate_code_detection[0m
+[32;1m        PASS[0m [   0.005s] ( 10/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_validate_tag_format_valid[0m
+[32;1m        PASS[0m [   0.006s] ( 11/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_validate_tag_kind_match[0m
+[32;1m        PASS[0m [   0.007s] ( 12/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_validate_tag_format_invalid[0m
+[32;1m        PASS[0m [   0.005s] ( 13/112) [35;1maccounting_core[0m [36maudit::chain::tests[0m[36m::[0m[34;1mtest_verify_chain_broken[0m
+[32;1m        PASS[0m [   0.007s] ( 14/112) [35;1maccounting_core[0m [36maudit::chain::tests[0m[36m::[0m[34;1mtest_hash_deterministic[0m
+[32;1m        PASS[0m [   0.008s] ( 15/112) [35;1maccounting_core[0m [36maccounts::taxonomy::tests[0m[36m::[0m[34;1mtest_validate_tag_kind_mismatch[0m
+[32;1m        PASS[0m [   0.005s] ( 16/112) [35;1maccounting_core[0m [36maudit::chain::tests[0m[36m::[0m[34;1mtest_verify_chain_valid[0m
+[32;1m        PASS[0m [   0.006s] ( 17/112) [35;1maccounting_core[0m [36maudit::chain::tests[0m[36m::[0m[34;1mtest_verify_record_hash[0m
+[32;1m        PASS[0m [   0.005s] ( 18/112) [35;1maccounting_core[0m [36maudit::service::tests[0m[36m::[0m[34;1mtest_record_creation_chaining[0m
+[32;1m        PASS[0m [   0.006s] ( 19/112) [35;1maccounting_core[0m [36maudit::models::tests[0m[36m::[0m[34;1mtest_audit_action_serialization[0m
+[32;1m        PASS[0m [   0.006s] ( 20/112) [35;1maccounting_core[0m [36minventory::transfer_service::tests[0m[36m::[0m[34;1mtest_transfer_validation_no_lines[0m
+[32;1m        PASS[0m [   0.008s] ( 21/112) [35;1maccounting_core[0m [36minventory::transfer_service::tests[0m[36m::[0m[34;1mtest_generate_stock_movements[0m
+[32;1m        PASS[0m [   0.007s] ( 22/112) [35;1maccounting_core[0m [36minventory::warehouse::tests[0m[36m::[0m[34;1mtest_multiple_lines[0m
+[32;1m        PASS[0m [   0.006s] ( 23/112) [35;1maccounting_core[0m [36mledger::models::tests[0m[36m::[0m[34;1mtest_balanced_entry[0m
+[32;1m        PASS[0m [   0.012s] ( 24/112) [35;1maccounting_core[0m [36minventory::transfer_service::tests[0m[36m::[0m[34;1mtest_generate_transfer_entry[0m
+[32;1m        PASS[0m [   0.010s] ( 25/112) [35;1maccounting_core[0m [36minventory::transfer_service::tests[0m[36m::[0m[34;1mtest_transfer_validation_same_warehouse[0m
+[32;1m        PASS[0m [   0.006s] ( 26/112) [35;1maccounting_core[0m [36mledger::models::tests[0m[36m::[0m[34;1mtest_multi_currency_line[0m
+[32;1m        PASS[0m [   0.005s] ( 27/112) [35;1maccounting_core[0m [36mledger::models::tests[0m[36m::[0m[34;1mtest_unbalanced_entry[0m
+[32;1m        PASS[0m [   0.016s] ( 28/112) [35;1maccounting_core[0m [36minventory::warehouse::tests[0m[36m::[0m[34;1mtest_warehouse_transfer_creation[0m
+[32;1m        PASS[0m [   0.005s] ( 29/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_accounts_rejects_unknown_and_non_leaf_accounts[0m
+[32;1m        PASS[0m [   0.008s] ( 30/112) [35;1maccounting_core[0m [36mledger::service::tests[0m[36m::[0m[34;1mtest_post_entry_hashing[0m
+[32;1m        PASS[0m [   0.013s] ( 31/112) [35;1maccounting_core[0m [36mledger::models::tests[0m[36m::[0m[34;1mtest_status_modifiable[0m
+[32;1m        PASS[0m [   0.011s] ( 32/112) [35;1maccounting_core[0m [36mledger::models::tests[0m[36m::[0m[34;1mtest_total_calculations[0m
+[32;1m        PASS[0m [   0.005s] ( 33/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_currency_mismatch[0m
+[32;1m        PASS[0m [   0.007s] ( 34/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_balanced[0m
+[32;1m        PASS[0m [   0.006s] ( 35/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_currency_success[0m
+[32;1m        PASS[0m [   0.004s] ( 36/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_line_amounts_rejects_negative_and_ambiguous_lines[0m
+[32;1m        PASS[0m [   0.007s] ( 37/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_for_posting_bad_reference[0m
+[32;1m        PASS[0m [   0.007s] ( 38/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_for_posting_success[0m
+[32;1m        PASS[0m [   0.007s] ( 39/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_currency_rejects_partial_metadata[0m
+[32;1m        PASS[0m [   0.008s] ( 40/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_traceability_adjusting_missing_link[0m
+[32;1m        PASS[0m [   0.005s] ( 41/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_traceability_standard_missing_doc[0m
+[32;1m        PASS[0m [   0.006s] ( 42/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_unbalanced[0m
+[32;1m        PASS[0m [   0.005s] ( 43/112) [35;1maccounting_core[0m [36mreporting::generator::tests[0m[36m::[0m[34;1mtest_synthesize_balance_sheet_fair_value[0m
 [32;1m        PASS[0m [   0.004s] ( 44/112) [35;1maccounting_core[0m [36mreporting::generator::tests[0m[36m::[0m[34;1mtest_sythesize_ifrs18_income_statement[0m
-[32;1m        PASS[0m [   0.008s] ( 45/112) [35;1maccounting_core[0m [36mledger::validation::tests[0m[36m::[0m[34;1mtest_validate_unbalanced[0m
-[32;1m        PASS[0m [   0.004s] ( 46/112) [35;1maccounting_core[0m [36mreporting::models::tests[0m[36m::[0m[34;1mtest_account_balance_debit_normal[0m
-[32;1m        PASS[0m [   0.008s] ( 47/112) [35;1maccounting_core[0m [36mreporting::models::tests[0m[36m::[0m[34;1mtest_account_balance_credit_normal[0m
-[32;1m        PASS[0m [   0.005s] ( 48/112) [35;1maccounting_core[0m [36mreporting::models::tests[0m[36m::[0m[34;1mtest_trial_balance_imbalance_detection[0m
-[32;1m        PASS[0m [   0.005s] ( 49/112) [35;1maccounting_core[0m [36mreporting::models::tests[0m[36m::[0m[34;1mtest_trial_balance_verification[0m
-[32;1m        PASS[0m [   0.004s] ( 50/112) [35;1maccounting_core[0m [36mreporting::trial_balance::tests[0m[36m::[0m[34;1mtest_empty_trial_balance[0m
-[32;1m        PASS[0m [   0.014s] ( 51/112) [35;1maccounting_core[0m [36mreporting::generator::tests[0m[36m::[0m[34;1mtest_synthesize_balance_sheet_fair_value[0m
-[32;1m        PASS[0m [   0.005s] ( 52/112) [35;1maccounting_core[0m [36mself_healing::tests[0m[36m::[0m[34;1mtest_suggest_repair_mismatch[0m
-[32;1m        PASS[0m [   0.006s] ( 53/112) [35;1maccounting_core[0m [36mreporting::trial_balance::tests[0m[36m::[0m[34;1mtest_generate_trial_balance_with_period_filter[0m
-[32;1m        PASS[0m [   0.005s] ( 54/112) [35;1maccounting_core[0m [36mstandards::data::tests[0m[36m::[0m[34;1mtest_conceptual_framework_coverage[0m
-[32;1m        PASS[0m [   0.008s] ( 55/112) [35;1maccounting_core[0m [36mself_healing::tests[0m[36m::[0m[34;1mtest_scan_sequence_gaps[0m
-[32;1m        PASS[0m [   0.008s] ( 56/112) [35;1maccounting_core[0m [36mreporting::trial_balance::tests[0m[36m::[0m[34;1mtest_generate_trial_balance_balanced[0m
-[32;1m        PASS[0m [   0.005s] ( 57/112) [35;1maccounting_core[0m [36mstandards::data::tests[0m[36m::[0m[34;1mtest_ias_1_coverage[0m
-[32;1m        PASS[0m [   0.010s] ( 58/112) [35;1maccounting_core[0m [36mstandards::data::tests[0m[36m::[0m[34;1mtest_all_standards_count[0m
-[32;1m        PASS[0m [   0.006s] ( 59/112) [35;1maccounting_core[0m [36mstandards::data::tests[0m[36m::[0m[34;1mtest_ifrs_15_five_step_model[0m
-[32;1m        PASS[0m [   0.005s] ( 60/112) [35;1maccounting_core[0m [36mstandards::models::tests[0m[36m::[0m[34;1mtest_parse_ias_reference[0m
-[32;1m        PASS[0m [   0.005s] ( 61/112) [35;1maccounting_core[0m [36mstandards::models::tests[0m[36m::[0m[34;1mtest_canonical_format[0m
-[32;1m        PASS[0m [   0.005s] ( 62/112) [35;1maccounting_core[0m [36mstandards::models::tests[0m[36m::[0m[34;1mtest_parse_ifrs_reference[0m
-[32;1m        PASS[0m [   0.007s] ( 63/112) [35;1maccounting_core[0m [36mstandards::models::tests[0m[36m::[0m[34;1mtest_invalid_reference_rejected[0m
-[32;1m        PASS[0m [   0.005s] ( 64/112) [35;1maccounting_core[0m [36mstandards::recognition::tests[0m[36m::[0m[34;1mtest_ifrs_15_step_model_completeness[0m
-[32;1m        PASS[0m [   0.006s] ( 65/112) [35;1maccounting_core[0m [36mstandards::registry::tests[0m[36m::[0m[34;1mtest_is_valid[0m
-[32;1m        PASS[0m [   0.006s] ( 66/112) [35;1maccounting_core[0m [36mstandards::registry::tests[0m[36m::[0m[34;1mtest_load_defaults[0m
-[32;1m        PASS[0m [   0.010s] ( 67/112) [35;1maccounting_core[0m [36mstandards::recognition::tests[0m[36m::[0m[34;1mtest_ifrs15_helper_incomplete_warning[0m
-[32;1m        PASS[0m [   0.008s] ( 68/112) [35;1maccounting_core[0m [36mstandards::registry::tests[0m[36m::[0m[34;1mtest_lookup_ifrs_15[0m
-[32;1m        PASS[0m [   0.005s] ( 69/112) [35;1maccounting_core[0m [36mstandards::registry::tests[0m[36m::[0m[34;1mtest_lookup_invalid_ref[0m
-[32;1m        PASS[0m [   0.004s] ( 70/112) [35;1maccounting_core[0m [36mstandards::validator::tests[0m[36m::[0m[34;1mtest_validate_complete[0m
-[32;1m        PASS[0m [   0.004s] ( 71/112) [35;1maccounting_core[0m [36mstandards::validator::tests[0m[36m::[0m[34;1mtest_validate_format_invalid[0m
-[32;1m        PASS[0m [   0.004s] ( 72/112) [35;1maccounting_core[0m [36mstandards::validator::tests[0m[36m::[0m[34;1mtest_validate_format_valid[0m
-[32;1m        PASS[0m [   0.007s] ( 73/112) [35;1maccounting_core[0m [36mstandards::validator::tests[0m[36m::[0m[34;1mtest_validate_exists[0m
-[32;1m        PASS[0m [   0.006s] ( 74/112) [35;1maccounting_core::assets_test[0m [34;1mtest_create_acquisition_entry[0m
-[32;1m        PASS[0m [   0.005s] ( 75/112) [35;1maccounting_core::assets_test[0m [34;1mtest_straight_line_depreciation[0m
-[32;1m        PASS[0m [   0.008s] ( 76/112) [35;1maccounting_core::audit_properties[0m [34;1mprop_temporal_justification_validity[0m
-[32;1m        PASS[0m [   0.009s] ( 77/112) [35;1maccounting_core::assets_test[0m [34;1mtest_create_depreciation_entry[0m
-[32;1m        PASS[0m [   0.005s] ( 78/112) [35;1maccounting_core::e2e_workflow[0m [34;1mtest_e2e_accounting_workflow[0m
-[32;1m        PASS[0m [   0.012s] ( 79/112) [35;1maccounting_core::closing_properties[0m [34;1mprop_opening_balance_integrity[0m
-[32;1m        PASS[0m [   0.010s] ( 80/112) [35;1maccounting_core::hierarchy_properties[0m [34;1mprop_detects_circular_reference[0m
-[32;1m        PASS[0m [   0.007s] ( 81/112) [35;1maccounting_core::inventory_test[0m [34;1mtest_fifo_valuation[0m
-[32;1m        PASS[0m [   0.016s] ( 82/112) [35;1maccounting_core::hierarchy_properties[0m [34;1mprop_dag_hierarchy_passes[0m
-[32;1m        PASS[0m [   0.007s] ( 83/112) [35;1maccounting_core::inventory_test[0m [34;1mtest_min_stock_validation[0m
-[32;1m        PASS[0m [   0.017s] ( 84/112) [35;1maccounting_core::hierarchy_properties[0m [34;1mprop_enforces_taxonomy_alignment[0m
-[32;1m        PASS[0m [   0.024s] ( 85/112) [35;1maccounting_core::closing_properties[0m [34;1mprop_closing_integrity[0m
-[32;1m        PASS[0m [   0.010s] ( 86/112) [35;1maccounting_core::ledger_properties[0m [34;1mprop_double_entry_balance_enforcement[0m
-[32;1m        PASS[0m [   0.011s] ( 87/112) [35;1maccounting_core::inventory_test[0m [34;1mtest_weighted_average_valuation[0m
-[32;1m        PASS[0m [   0.009s] ( 88/112) [35;1maccounting_core::ledger_properties[0m [34;1mprop_temporal_justification_completeness[0m
-[32;1m        PASS[0m [   0.021s] ( 89/112) [35;1maccounting_core::prop_assets[0m [34;1mprop_straight_line_depreciation_convergence[0m
-[32;1m        PASS[0m [   0.032s] ( 90/112) [35;1maccounting_core::prop_audit[0m [34;1mprop_cp_003_tamper_evidence[0m
-[32;1m        PASS[0m [   0.050s] ( 91/112) [35;1maccounting_core::prop_accounts[0m [34;1mprop_cp_006_simple_cycle_detection[0m
-[32;1m        PASS[0m [   0.022s] ( 92/112) [35;1maccounting_core::prop_balance[0m [34;1mprop_cp_001_unbalanced_entries_are_rejected[0m
-[32;1m        PASS[0m [   0.023s] ( 93/112) [35;1maccounting_core::prop_balance[0m [34;1mprop_cp_001_balanced_entries_are_valid[0m
-[32;1m        PASS[0m [   0.098s] ( 94/112) [35;1maccounting_core::audit_properties[0m [34;1mprop_tamper_detection[0m
-[32;1m        PASS[0m [   0.078s] ( 95/112) [35;1maccounting_core::prop_accounts[0m [34;1mprop_cp_006_valid_tree_structure[0m
-[32;1m        PASS[0m [   0.010s] ( 96/112) [35;1maccounting_core::prop_currency[0m [34;1mprop_cp_005_currency_arithmetic_invalid[0m
-[32;1m        PASS[0m [   0.010s] ( 97/112) [35;1maccounting_core::prop_currency[0m [34;1mprop_cp_005_currency_arithmetic_valid[0m
-[32;1m        PASS[0m [   0.012s] ( 98/112) [35;1maccounting_core::prop_currency[0m [34;1mprop_cp_005_currency_zero_rate_rejected[0m
-[32;1m        PASS[0m [   0.012s] ( 99/112) [35;1maccounting_core::prop_partners[0m [34;1mprop_cp_010_mixed_lines_validation[0m
-[32;1m        PASS[0m [   0.011s] (100/112) [35;1maccounting_core::prop_temporal[0m [34;1mprop_cp_008_temporal_justification_enforcement[0m
-[32;1m        PASS[0m [   0.018s] (101/112) [35;1maccounting_core::prop_partners[0m [34;1mprop_cp_010_partner_required_enforced[0m
-[32;1m        PASS[0m [   0.077s] (102/112) [35;1maccounting_core::prop_closing[0m [34;1mprop_period_closing_integrity[0m
-[32;1m        PASS[0m [   0.009s] (103/112) [35;1maccounting_core::prop_zakah[0m [34;1mtest_zakah_mathematical_invariants[0m
-[32;1m        PASS[0m [   0.056s] (104/112) [35;1maccounting_core::prop_standards[0m [34;1mprop_cp_002_known_refs_always_valid[0m
-[32;1m        PASS[0m [   0.137s] (105/112) [35;1maccounting_core::prop_audit[0m [34;1mprop_cp_003_hash_chain_integrity[0m
-[32;1m        PASS[0m [   0.018s] (106/112) [35;1maccounting_core::reporting_properties[0m [34;1mprop_trial_balance_integral[0m
-[32;1m        PASS[0m [   0.012s] (107/112) [35;1maccounting_core::sales_test[0m [34;1mtest_finalize_invoice_with_zatca[0m
-[32;1m        PASS[0m [   0.010s] (108/112) [35;1maccounting_zatca[0m [36mtests[0m[36m::[0m[34;1mtest_zatca_csr_generation[0m
-[32;1m        PASS[0m [   0.007s] (109/112) [35;1maccounting_zatca[0m [36mxades::tests[0m[36m::[0m[34;1mtest_xades_signature_xml_generation[0m
-[32;1m        PASS[0m [   0.015s] (110/112) [35;1maccounting_zatca[0m [36mtests[0m[36m::[0m[34;1mtest_zatca_invoice_generation_multi_rate[0m
-[32;1m        PASS[0m [   0.076s] (111/112) [35;1maccounting_core::prop_standards[0m [34;1mprop_cp_002_invalid_formats_always_rejected[0m
-[32;1m        PASS[0m [   0.056s] (112/112) [35;1maccounting_core::prop_traceability[0m [34;1mprop_cp_009_traceability_completeness[0m
+[32;1m        PASS[0m [   0.005s] ( 45/112) [35;1maccounting_core[0m [36mreporting::models::tests[0m[36m::[0m[34;1mtest_account_balance_debit_normal[0m
+[32;1m        PASS[0m [   0.007s] ( 46/112) [35;1maccounting_core[0m [36mreporting::models::tests[0m[36m::[0m[34;1mtest_account_balance_credit_normal[0m
+[32;1m        PASS[0m [   0.009s] ( 47/112) [35;1maccounting_core[0m [36mreporting::generator::tests[0m[36m::[0m[34;1mtest_synthesize_zakah_statement[0m
+[32;1m        PASS[0m [   0.009s] ( 48/112) [35;1maccounting_core[0m [36mreporting::generator::tests[0m[36m::[0m[34;1mtest_synthesize_cash_flow_statement[0m
+[32;1m        PASS[0m [   0.007s] ( 49/112) [35;1maccounting_core[0m [36mreporting::models::tests[0m[36m::[0m[34;1mtest_trial_balance_imbalance_detection[0m
+[32;1m        PASS[0m [   0.006s] ( 50/112) [35;1maccounting_core[0m [36mreporting::models::tests[0m[36m::[0m[34;1mtest_trial_balance_verification[0m
+[32;1m        PASS[0m [   0.005s] ( 51/112) [35;1maccounting_core[0m [36mreporting::trial_balance::tests[0m[36m::[0m[34;1mtest_generate_trial_balance_balanced[0m
+[32;1m        PASS[0m [   0.005s] ( 52/112) [35;1maccounting_core[0m [36mreporting::trial_balance::tests[0m[36m::[0m[34;1mtest_generate_trial_balance_with_period_filter[0m
+[32;1m        PASS[0m [   0.008s] ( 53/112) [35;1maccounting_core[0m [36mreporting::trial_balance::tests[0m[36m::[0m[34;1mtest_empty_trial_balance[0m
+[32;1m        PASS[0m [   0.006s] ( 54/112) [35;1maccounting_core[0m [36mself_healing::tests[0m[36m::[0m[34;1mtest_scan_sequence_gaps[0m
+[32;1m        PASS[0m [   0.007s] ( 55/112) [35;1maccounting_core[0m [36mstandards::data::tests[0m[36m::[0m[34;1mtest_all_standards_count[0m
+[32;1m        PASS[0m [   0.005s] ( 56/112) [35;1maccounting_core[0m [36mstandards::data::tests[0m[36m::[0m[34;1mtest_conceptual_framework_coverage[0m
+[32;1m        PASS[0m [   0.009s] ( 57/112) [35;1maccounting_core[0m [36mself_healing::tests[0m[36m::[0m[34;1mtest_suggest_repair_mismatch[0m
+[32;1m        PASS[0m [   0.005s] ( 58/112) [35;1maccounting_core[0m [36mstandards::data::tests[0m[36m::[0m[34;1mtest_ias_1_coverage[0m
+[32;1m        PASS[0m [   0.006s] ( 59/112) [35;1maccounting_core[0m [36mstandards::models::tests[0m[36m::[0m[34;1mtest_canonical_format[0m
+[32;1m        PASS[0m [   0.007s] ( 60/112) [35;1maccounting_core[0m [36mstandards::data::tests[0m[36m::[0m[34;1mtest_ifrs_15_five_step_model[0m
+[32;1m        PASS[0m [   0.005s] ( 61/112) [35;1maccounting_core[0m [36mstandards::models::tests[0m[36m::[0m[34;1mtest_parse_ias_reference[0m
+[32;1m        PASS[0m [   0.007s] ( 62/112) [35;1maccounting_core[0m [36mstandards::models::tests[0m[36m::[0m[34;1mtest_invalid_reference_rejected[0m
+[32;1m        PASS[0m [   0.006s] ( 63/112) [35;1maccounting_core[0m [36mstandards::models::tests[0m[36m::[0m[34;1mtest_parse_ifrs_reference[0m
+[32;1m        PASS[0m [   0.006s] ( 64/112) [35;1maccounting_core[0m [36mstandards::recognition::tests[0m[36m::[0m[34;1mtest_ifrs15_helper_incomplete_warning[0m
+[32;1m        PASS[0m [   0.005s] ( 65/112) [35;1maccounting_core[0m [36mstandards::recognition::tests[0m[36m::[0m[34;1mtest_ifrs_15_step_model_completeness[0m
+[32;1m        PASS[0m [   0.010s] ( 66/112) [35;1maccounting_core[0m [36mstandards::registry::tests[0m[36m::[0m[34;1mtest_is_valid[0m
+[32;1m        PASS[0m [   0.009s] ( 67/112) [35;1maccounting_core[0m [36mstandards::registry::tests[0m[36m::[0m[34;1mtest_load_defaults[0m
+[32;1m        PASS[0m [   0.006s] ( 68/112) [35;1maccounting_core[0m [36mstandards::validator::tests[0m[36m::[0m[34;1mtest_validate_complete[0m
+[32;1m        PASS[0m [   0.009s] ( 69/112) [35;1maccounting_core[0m [36mstandards::registry::tests[0m[36m::[0m[34;1mtest_lookup_ifrs_15[0m
+[32;1m        PASS[0m [   0.009s] ( 70/112) [35;1maccounting_core[0m [36mstandards::validator::tests[0m[36m::[0m[34;1mtest_validate_exists[0m
+[32;1m        PASS[0m [   0.005s] ( 71/112) [35;1maccounting_core[0m [36mstandards::validator::tests[0m[36m::[0m[34;1mtest_validate_format_invalid[0m
+[32;1m        PASS[0m [   0.009s] ( 72/112) [35;1maccounting_core[0m [36mstandards::registry::tests[0m[36m::[0m[34;1mtest_lookup_invalid_ref[0m
+[32;1m        PASS[0m [   0.007s] ( 73/112) [35;1maccounting_core[0m [36mstandards::validator::tests[0m[36m::[0m[34;1mtest_validate_format_valid[0m
+[32;1m        PASS[0m [   0.007s] ( 74/112) [35;1maccounting_core::assets_test[0m [34;1mtest_create_acquisition_entry[0m
+[32;1m        PASS[0m [   0.007s] ( 75/112) [35;1maccounting_core::assets_test[0m [34;1mtest_create_depreciation_entry[0m
+[32;1m        PASS[0m [   0.009s] ( 76/112) [35;1maccounting_core::assets_test[0m [34;1mtest_straight_line_depreciation[0m
+[32;1m        PASS[0m [   0.011s] ( 77/112) [35;1maccounting_core::audit_properties[0m [34;1mprop_temporal_justification_validity[0m
+[32;1m        PASS[0m [   0.007s] ( 78/112) [35;1maccounting_core::e2e_workflow[0m [34;1mtest_e2e_accounting_workflow[0m
+[32;1m        PASS[0m [   0.016s] ( 79/112) [35;1maccounting_core::closing_properties[0m [34;1mprop_opening_balance_integrity[0m
+[32;1m        PASS[0m [   0.012s] ( 80/112) [35;1maccounting_core::hierarchy_properties[0m [34;1mprop_detects_circular_reference[0m
+[32;1m        PASS[0m [   0.006s] ( 81/112) [35;1maccounting_core::inventory_test[0m [34;1mtest_fifo_valuation[0m
+[32;1m        PASS[0m [   0.018s] ( 82/112) [35;1maccounting_core::hierarchy_properties[0m [34;1mprop_enforces_taxonomy_alignment[0m
+[32;1m        PASS[0m [   0.027s] ( 83/112) [35;1maccounting_core::closing_properties[0m [34;1mprop_closing_integrity[0m
+[32;1m        PASS[0m [   0.007s] ( 84/112) [35;1maccounting_core::inventory_test[0m [34;1mtest_min_stock_validation[0m
+[32;1m        PASS[0m [   0.028s] ( 85/112) [35;1maccounting_core::hierarchy_properties[0m [34;1mprop_dag_hierarchy_passes[0m
+[32;1m        PASS[0m [   0.010s] ( 86/112) [35;1maccounting_core::inventory_test[0m [34;1mtest_weighted_average_valuation[0m
+[32;1m        PASS[0m [   0.017s] ( 87/112) [35;1maccounting_core::ledger_properties[0m [34;1mprop_double_entry_balance_enforcement[0m
+[32;1m        PASS[0m [   0.015s] ( 88/112) [35;1maccounting_core::ledger_properties[0m [34;1mprop_temporal_justification_completeness[0m
+[32;1m        PASS[0m [   0.018s] ( 89/112) [35;1maccounting_core::prop_assets[0m [34;1mprop_straight_line_depreciation_convergence[0m
+[32;1m        PASS[0m [   0.022s] ( 90/112) [35;1maccounting_core::prop_audit[0m [34;1mprop_cp_003_tamper_evidence[0m
+[32;1m        PASS[0m [   0.092s] ( 91/112) [35;1maccounting_core::audit_properties[0m [34;1mprop_tamper_detection[0m
+[32;1m        PASS[0m [   0.015s] ( 92/112) [35;1maccounting_core::prop_balance[0m [34;1mprop_cp_001_unbalanced_entries_are_rejected[0m
+[32;1m        PASS[0m [   0.021s] ( 93/112) [35;1maccounting_core::prop_balance[0m [34;1mprop_cp_001_balanced_entries_are_valid[0m
+[32;1m        PASS[0m [   0.061s] ( 94/112) [35;1maccounting_core::prop_accounts[0m [34;1mprop_cp_006_simple_cycle_detection[0m
+[32;1m        PASS[0m [   0.011s] ( 95/112) [35;1maccounting_core::prop_currency[0m [34;1mprop_cp_005_currency_arithmetic_invalid[0m
+[32;1m        PASS[0m [   0.014s] ( 96/112) [35;1maccounting_core::prop_currency[0m [34;1mprop_cp_005_currency_zero_rate_rejected[0m
+[32;1m        PASS[0m [   0.015s] ( 97/112) [35;1maccounting_core::prop_currency[0m [34;1mprop_cp_005_currency_arithmetic_valid[0m
+[32;1m        PASS[0m [   0.012s] ( 98/112) [35;1maccounting_core::prop_partners[0m [34;1mprop_cp_010_partner_required_enforced[0m
+[32;1m        PASS[0m [   0.021s] ( 99/112) [35;1maccounting_core::prop_partners[0m [34;1mprop_cp_010_mixed_lines_validation[0m
+[32;1m        PASS[0m [   0.085s] (100/112) [35;1maccounting_core::prop_accounts[0m [34;1mprop_cp_006_valid_tree_structure[0m
+[32;1m        PASS[0m [   0.015s] (101/112) [35;1maccounting_core::prop_temporal[0m [34;1mprop_cp_008_temporal_justification_enforcement[0m
+[32;1m        PASS[0m [   0.010s] (102/112) [35;1maccounting_core::prop_zakah[0m [34;1mtest_zakah_mathematical_invariants[0m
+[32;1m        PASS[0m [   0.012s] (103/112) [35;1maccounting_core::reporting_properties[0m [34;1mprop_trial_balance_integral[0m
+[32;1m        PASS[0m [   0.080s] (104/112) [35;1maccounting_core::prop_closing[0m [34;1mprop_period_closing_integrity[0m
+[32;1m        PASS[0m [   0.014s] (105/112) [35;1maccounting_core::sales_test[0m [34;1mtest_finalize_invoice_with_zatca[0m
+[32;1m        PASS[0m [   0.011s] (106/112) [35;1maccounting_zatca[0m [36mtests[0m[36m::[0m[34;1mtest_zatca_csr_generation[0m
+[32;1m        PASS[0m [   0.005s] (107/112) [35;1maccounting_zatca[0m [36mxades::tests[0m[36m::[0m[34;1mtest_xades_signature_xml_generation[0m
+[32;1m        PASS[0m [   0.014s] (108/112) [35;1maccounting_zatca[0m [36mtests[0m[36m::[0m[34;1mtest_zatca_invoice_generation_multi_rate[0m
+[32;1m        PASS[0m [   0.082s] (109/112) [35;1maccounting_core::prop_standards[0m [34;1mprop_cp_002_invalid_formats_always_rejected[0m
+[32;1m        PASS[0m [   0.071s] (110/112) [35;1maccounting_core::prop_traceability[0m [34;1mprop_cp_009_traceability_completeness[0m
+[32;1m        PASS[0m [   0.078s] (111/112) [35;1maccounting_core::prop_standards[0m [34;1mprop_cp_002_known_refs_always_valid[0m
+[32;1m        PASS[0m [   0.165s] (112/112) [35;1maccounting_core::prop_audit[0m [34;1mprop_cp_003_hash_chain_integrity[0m
 ────────────
-[32;1m     Summary[0m [   0.302s] [1m112[0m tests run: [1m112[0m [32;1mpassed[0m, [1m0[0m [33;1mskipped[0m
-[1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 0.16s
+[32;1m     Summary[0m [   0.305s] [1m112[0m tests run: [1m112[0m [32;1mpassed[0m, [1m0[0m [33;1mskipped[0m
+== accounting_data lib ==
+[1m[92m   Compiling[0m accounting_data v0.1.0 (/home/ubuntu/Basir_accounting/rust/crates/accounting_data)
+[1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 0.97s
 ────────────
-[32;1m Nextest run[0m ID [1m50d78179-5592-4ff6-a281-0a81338f8e15[0m with nextest profile: [1mdefault[0m
+[32;1m Nextest run[0m ID [1mcb32e7de-0086-4793-94bb-cbaae561124e[0m with nextest profile: [1mdefault[0m
 [32;1m    Starting[0m [1m2[0m tests across [1m1[0m binary
-[32;1m        PASS[0m [   0.004s] (1/2) [35;1maccounting_data[0m [36mdb::ledger::tests[0m[36m::[0m[34;1mrejects_invalid_or_missing_decimal_values[0m
-[32;1m        PASS[0m [   0.005s] (2/2) [35;1maccounting_data[0m [36mdb::ledger::tests[0m[36m::[0m[34;1mparses_decimal_text_and_json_number_without_f64[0m
+[32;1m        PASS[0m [   0.005s] (1/2) [35;1maccounting_data[0m [36mdb::ledger::tests[0m[36m::[0m[34;1mparses_decimal_text_and_json_number_without_f64[0m
+[32;1m        PASS[0m [   0.005s] (2/2) [35;1maccounting_data[0m [36mdb::ledger::tests[0m[36m::[0m[34;1mrejects_invalid_or_missing_decimal_values[0m
 ────────────
 [32;1m     Summary[0m [   0.005s] [1m2[0m tests run: [1m2[0m [32;1mpassed[0m, [1m0[0m [33;1mskipped[0m
-[1m[92m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 1.86s
+== local validation passed ==

@@ -8,7 +8,7 @@
 
 ## حالة التنفيذ الحالية
 
-تم تنفيذ دفعات القياس، الفصل، والتقسيم على الفرع [`audit/accounting-engine-hardening`](https://github.com/mohammed-murad-alqabal/Basir_accounting/tree/audit/accounting-engine-hardening). يحتوي Workflow المنشور الآن على Job جودة مستقل، وJob PostgreSQL يعمل عبر Matrix من shardين متوازيين: `persistence` و`hash_chain`. لكل shard حاوية PostgreSQL واسم قاعدة مختلفان، وتوجد وظيفة `Rust CI gate` لتجميع نجاح Job الجودة وجميع shards كشرط واحد قابل للاستخدام في حماية الفرع.
+تم تنفيذ دفعات القياس، الفصل، والتقسيم على الفرع [`audit/accounting-engine-hardening`](https://github.com/mohammed-murad-alqabal/Basir_accounting/tree/audit/accounting-engine-hardening). يحتوي Workflow المنشور الآن على Job جودة مستقل، وJob PostgreSQL يعمل عبر Matrix من shardين متوازيين: `persistence` و`hash_chain`. لكل shard حاوية PostgreSQL واسم قاعدة مختلفان، وتوجد وظيفة `Rust CI gate` لتجميع نجاح Job الجودة وجميع shards كشرط واحد قابل للاستخدام في حماية الفرع. بعد تثبيت إجراءات GitHub على SHAs وإضافة `toolchain: stable` صراحةً، نجح تشغيل PR رقم [167](https://github.com/mohammed-murad-alqabal/Basir_accounting/pull/167) رقم [32658053355](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/32658053355) على commit `7a47fe24ac10fa0d31f79b5429367445398e8c17`.
 
 قبل التقسيم كان لدينا هدف تكامل واحد يجمع حفظ القيد والتحقق من سلسلة hash. أصبح لدينا الآن هدفان مستقلان: `db_persistence` و`db_hash_chain`. تحقق الاختبار المحلي من كل shard على حدة، وتضمن تشغيل كل واحد بعد migrations على قاعدة اختبار معزولة. لا يعني زمن Job الكلي زمن الاختبار فقط؛ فالتشغيلين المتوازيين يستهلكان Runner مستقلًا، وتظل أزمنة تجهيز Rust وPostgreSQL وcache ضمن الزمن الظاهر للوظيفة.
 
@@ -174,9 +174,9 @@ strategy:
 
 استخدم Matrix لاحقًا لـ `stable` ونسخة دنيا مدعومة، أو لاختبارات property الثقيلة، وليس لتكرار PostgreSQL نفسه بلا حاجة.
 
-## 7. اعتماد `cargo nextest` في المرحلة المناسبة
+## 7. اعتماد `cargo nextest` في المرحلة المناسبة — منفذ
 
-`cargo nextest` مفيد عندما يصبح عدد اختبارات Rust كبيرًا لأنه يشغّل الاختبارات بصورة أكثر كفاءة ويعطي قياسات أوضح للاختبارات البطيئة. بعد فصل اختبارات PostgreSQL إلى shards بقواعد مستقلة، أصبح مطبقًا في Job الجودة فقط بالإصدار المثبت `0.9.143`. بقيت اختبارات PostgreSQL على `cargo test` مع `--test-threads=1` داخل كل shard لأن كل binary يتعامل مع قاعدة shard واحدة ويستخدم تنظيفًا مشتركًا للبيانات.
+`cargo nextest` مفيد عندما يصبح عدد اختبارات Rust كبيرًا لأنه يشغّل الاختبارات بصورة أكثر كفاءة ويعطي قياسات أوضح للاختبارات البطيئة. بعد فصل اختبارات PostgreSQL إلى shards بقواعد مستقلة، أصبح مطبقًا في Job الجودة فقط بالإصدار المثبت `0.9.143`. يُثبّت Workflow الـ binary الرسمي مباشرة مع تحقق SHA-256، بدل إجراء خارجي غير موجود في allowlist. بقيت اختبارات PostgreSQL على `cargo test` مع `--test-threads=1` داخل كل shard لأن كل binary يتعامل مع قاعدة shard واحدة ويستخدم تنظيفًا مشتركًا للبيانات. تحقق محليًا من نجاح 114 اختبارًا، كما نجح تشغيل CI رقم [32658053355](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/32658053355).
 
 المسار المنفذ:
 
@@ -200,7 +200,7 @@ strategy:
 
 ### الدفعة الثالثة: التوازي المتقدم — منفذة
 
-تم إدخال `cargo-nextest` بالإصدار المثبت `0.9.143` إلى Job الجودة فقط، مع إبقاء PostgreSQL shards على `cargo test`. تحقق محليًا من نجاح 112 اختبارًا في `accounting_core` و`accounting_zatca` واختبارين في `accounting_data --lib`. كما صُحّح تجميع حالات الفشل بحيث تُنفّذ مجموعتا الجودة كلتاهما، ثم يفشل الـ Job إذا فشلت أي مجموعة؛ وهذا يمنع الإيقاف المبكر من إخفاء نتيجة المجموعة الثانية.
+تم إدخال `cargo-nextest` بالإصدار المثبت `0.9.143` إلى Job الجودة فقط، مع إبقاء PostgreSQL shards على `cargo test`. تحقق محليًا من نجاح 112 اختبارًا في `accounting_core` و`accounting_zatca` واختبارين في `accounting_data --lib`، ونجح CI عن بُعد بعد إصلاح `toolchain: stable` المفقود إثر تثبيت إجراء dtolnay على SHA. كما صُحّح تجميع حالات الفشل بحيث تُنفّذ مجموعتا الجودة كلتاهما، ثم يفشل الـ Job إذا فشلت أي مجموعة؛ وهذا يمنع الإيقاف المبكر من إخفاء نتيجة المجموعة الثانية.
 
 لا تُنقل اختبارات PostgreSQL إلى nextest إلا بعد إعطاء كل حالة تشغيل قاعدة أو schema مستقلًا؛ أما التوازي الحالي بين `persistence` و`hash_chain` فهو آمن على مستوى Matrix لأن لكل منهما قاعدة مستقلة.
 

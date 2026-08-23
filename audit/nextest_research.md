@@ -4,13 +4,13 @@
 
 - التثبيت من binary الجاهز في CI: https://nexte.st/docs/installation/pre-built-binaries/
 - التثبيت من المصدر واشتراط `--locked`: https://nexte.st/docs/installation/from-source/
-- إجراء التثبيت المستخدم في GitHub Actions: https://github.com/taiki-e/install-action
+- مستودع الإصدارات الرسمية: https://github.com/nextest-rs/nextest/releases
 
 ## النتائج
 
-توصي وثائق cargo-nextest باستخدام binary جاهز في GitHub Actions لتقليل زمن التثبيت، وتعرض `taiki-e/install-action@v2` مع `tool: nextest` كطريقة مدعومة. يمكن تثبيت سلسلة أو إصدار محدد بدل أحدث إصدار، وهو الأنسب لقابلية إعادة الإنتاج وتقليل مخاطر تغيّر السلوك.
+توضح وثائق cargo-nextest أن استخدام binary جاهز يقلل زمن التثبيت في GitHub Actions. يعتمد Workflow الحالي الإصدار `0.9.143` من الإصدار الرسمي، ويتحقق من SHA-256 المنشور قبل تثبيته، وهو أنسب لقابلية إعادة الإنتاج وتقليل مخاطر تغيّر السلوك في مستودع يفرض allowlist على Actions الخارجية.
 
-توضح وثائق التثبيت من المصدر أن `cargo install cargo-nextest` يجب أن يستخدم `--locked`، وأن التثبيت من المصدر أبطأ من binary الجاهز. لذلك سيستخدم Workflow binary جاهزًا بإصدار مثبت، مع cache Cargo المعتادة، ولن يغيّر اختبارات PostgreSQL.
+توضح وثائق التثبيت من المصدر أن `cargo install cargo-nextest` يجب أن يستخدم `--locked`، وأن التثبيت من المصدر أبطأ من binary الجاهز. لذلك يستخدم Workflow binary جاهزًا بإصدار مثبت مع تحقق SHA-256 وcache Cargo المعتادة، ولا يغيّر اختبارات PostgreSQL.
 
 ## قرار المشروع
 
