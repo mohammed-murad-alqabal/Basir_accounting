@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:basir_accounting_system/core/persistence/drift_customers_vendors_shadow_read.dart';
 import 'package:basir_accounting_system/core/persistence/drift_goals_budgets_shadow_read.dart';
+import 'package:basir_accounting_system/core/persistence/drift_inventory_shadow_read.dart';
 import 'package:basir_accounting_system/core/persistence/drift_settings_shadow_read.dart';
 import 'package:basir_accounting_system/features/budget/data/repositories/drift_budget_repository.dart';
 import 'package:basir_accounting_system/features/budget/domain/repositories/budget_repository.dart';
@@ -162,5 +163,21 @@ final driftCustomersVendorsShadowReadComparatorProvider =
   (ref) {
     final sink = InMemoryDriftShadowReadSink();
     return DriftCustomersVendorsShadowReadComparator(recorder: sink.record);
+  },
+);
+
+/// Feature flags مستقلة لشريحة المخزون؛ تبقى مغلقة افتراضيًا.
+final driftWarehousesShadowReadEnabledProvider = Provider<bool>((ref) => false);
+final driftInventoryItemsShadowReadEnabledProvider =
+    Provider<bool>((ref) => false);
+final driftStockMovementsShadowReadEnabledProvider =
+    Provider<bool>((ref) => false);
+
+/// Comparator لشريحة المخزون؛ sink الذاكراتي للاختبار فقط حتى اعتماد telemetry.
+final driftInventoryShadowReadComparatorProvider =
+    Provider<DriftInventoryShadowReadComparator>(
+  (ref) {
+    final sink = InMemoryDriftShadowReadSink();
+    return DriftInventoryShadowReadComparator(recorder: sink.record);
   },
 );

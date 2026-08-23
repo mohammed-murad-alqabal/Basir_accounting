@@ -24,6 +24,8 @@
 | PRs | #147 و#148 و#149 و#156 و#159 و#160 و#163 مفتوحة Draft وفق آخر حالة معروفة؛ لا دمج حتى الآن |
 | الإنتاج | لا توجد كتابة Drift إنتاجية، ولا canary، ولا cutover |
 | الأمان | رمز GitHub المكشوف سابقًا يجب تدويره، وإصلاح workflow الذي يحتاج صلاحية `workflow` ما يزال بندًا مستقلًا؛ بوابة الأمان المحلية نجحت بعد إصلاحات harness/sanitizer/.gitignore |
+| العقد المشترك | `DRIFT_STORAGE_SYNC_CONTRACT.md` و`storage_contract.dart` يثبتان scope المركب وUTC وsync enum؛ تم دمجهما في حدود كتابة Warehouses/InventoryItems/StockMovements دون تفعيل Providers |
+| Shadow-read للمخزون | comparator وdecorators وflags مستقلة لـWarehouses/InventoryItems/StockMovements موجودة ومختبرة؛ flags مغلقة افتراضيًا، والقراءة المرئية والكتابة ما تزال Isar |
 
 ## 3. مبادئ غير قابلة للتفاوض
 

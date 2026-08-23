@@ -1,4 +1,5 @@
 import 'package:basir_drift_storage/src/basir_database.dart';
+import 'package:basir_drift_storage/src/storage_contract.dart';
 import 'package:basir_drift_storage/src/user_scope.dart';
 import 'package:drift/drift.dart';
 
@@ -114,6 +115,10 @@ class WarehouseStore implements WarehouseStorage {
       );
 
   static void _validate(WarehouseRecord record) {
+    DriftStorageContract.validateIdentity(
+      userId: record.userId,
+      recordId: record.id,
+    );
     if (record.id.isEmpty || record.nameAr.isEmpty || record.nameEn.isEmpty) {
       throw ArgumentError.value(
         record,
