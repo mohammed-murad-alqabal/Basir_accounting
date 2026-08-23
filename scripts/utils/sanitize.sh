@@ -74,35 +74,81 @@ sanitize_file() {
     cp "$file" "$temp"
     
     local changes=0
-    
+
+    # تنظيف مفاتيح PEM/SSH الخاصة
+    if grep -qE -- '-----BEGIN [A-Z ]*PRIVATE KEY-----' "$temp" 2>/dev/null; then
+        sed -i -E '/-----BEGIN [A-Z ]*PRIVATE KEY-----/,/-----END [A-Z ]*PRIVATE KEY-----/c\\[REDACTED PRIVATE KEY]' "$temp"
+        changes=$((changes + 1))
+    fi
+
+    # تنظيف متغيرات الاعتماد ذات الأسماء المركبة
+    if grep -qiE '(AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY)[[:space:]]*=' "$temp" 2>/dev/null; then
+        sed -i -E "s/((AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY)[[:space:]]*=[[:space:]]*)['\"]?[^'\"[:space:],}]+['\"]?/\1[REDACTED]/gi" "$temp"
+        changes=$((changes + 1))
+    fi
+
     # تنظيف الأنماط الحساسة
     for pattern in "${SENSITIVE_PATTERNS[@]}"; do
         if grep -qiE "$pattern" "$temp" 2>/dev/null; then
-            sed -i -E "s/${pattern}[[:space:]]*[:=][[:space:]]*['\"]?[^'\"[:space:]]+['\"]?/${pattern}=[REDACTED]/gi" "$temp"
-            ((changes++))
+            sed -i -E "s/(${pattern}[[:space:]]*['\"]?[[:space:]]*[:=][[:space:]]*)['\"]?[^'\"[:space:],}]+['\"]?/\\1[REDACTED]/gi" "$temp"
+            changes=$((changes + 1))
         fi
     done
     
     # تنظيف الكلمات المفتاحية الحساسة
     for keyword in "${SENSITIVE_KEYWORDS[@]}"; do
-        if grep -qiE "${keyword}[[:space:]]*[:=]" "$temp" 2>/dev/null; then
-            sed -i -E "s/(${keyword}[[:space:]]*[:=][[:space:]]*)['\"]?[^'\"[:space:]]+['\"]?/\1[REDACTED]/gi" "$temp"
-            ((changes++))
+        if grep -qiE "${keyword}[[:space:]]*['\"]?[[:space:]]*[:=]" "$temp" 2>/dev/null; then
+            sed -i -E "s/(${keyword}[[:space:]]*['\"]?[[:space:]]*[:=][[:space:]]*)['\"]?[^'\"[:space:],}]+['\"]?/\1[REDACTED]/gi" "$temp"
+            changes=$((changes + 1))
         fi
     done
     
-    # تنظيف عناوين URL التي تحتوي على بيانات حساسة
-    if grep -qE "https?://[^@]+:[^@]+@" "$temp" 2>/dev/null; then
-        sed -i -E "s|(https?://)[^:]+:[^@]+@|\1[REDACTED]:[REDACTED]@|g" "$temp"
-        ((changes++))
+    # تنظيف Authorization Bearer headers
+    if grep -qiE "Authorization[[:space:]]*:[[:space:]]*Bearer[[:space:]]+[^[:space:]]+" "$temp" 2>/dev/null; then
+        sed -i -E "s/(Authorization[[:space:]]*:[[:space:]]*Bearer[[:space:]]+)[^[:space:]]+/\1[REDACTED]/gi" "$temp"
+        changes=$((changes + 1))
+    fi
+
+    # تنظيف عناوين الاتصال التي تحتوي على بيانات اعتماد
+    if grep -qE "[A-Za-z][A-Za-z0-9+.-]*://[^:@/]+:[^@[:space:]]+@" "$temp" 2>/dev/null; then
+        sed -i -E "s|([A-Za-z][A-Za-z0-9+.-]*://)[^:@/]+:[^@[:space:]]+@|\1[REDACTED]:[REDACTED]@|g" "$temp"
+        changes=$((changes + 1))
     fi
     
     # تنظيف مفاتيح AWS
     if grep -qE "AKIA[0-9A-Z]{16}" "$temp" 2>/dev/null; then
         sed -i -E "s/AKIA[0-9A-Z]{16}/AKIA[REDACTED]/g" "$temp"
-        ((changes++))
+        changes=$((changes + 1))
     fi
     
+    # تنظيف عناوين البريد الإلكتروني
+    if grep -qE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' "$temp" 2>/dev/null; then
+        sed -i -E 's/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/[REDACTED_EMAIL]/g' "$temp"
+        changes=$((changes + 1))
+    fi
+
+    # تنظيف أرقام الهواتف السعودية والدولية
+    if grep -qE '(^|[^0-9])((05[0-9]{8})|(\+9665[0-9]{8}))([^0-9]|$)' "$temp" 2>/dev/null; then
+        sed -i -E 's/(^|[^0-9])((05[0-9]{8})|(\+9665[0-9]{8}))([^0-9]|$)/\1[REDACTED_PHONE]\5/g' "$temp"
+        changes=$((changes + 1))
+    fi
+
+    # تنظيف عناوين IPv4 وIPv6
+    if grep -qE '([0-9]{1,3}\.){3}[0-9]{1,3}' "$temp" 2>/dev/null; then
+        sed -i -E 's/([0-9]{1,3}\.){3}[0-9]{1,3}/[REDACTED_IP]/g' "$temp"
+        changes=$((changes + 1))
+    fi
+    if grep -qE '[0-9A-Fa-f]{0,4}:[0-9A-Fa-f:]{3,}' "$temp" 2>/dev/null; then
+        sed -i -E 's/[0-9A-Fa-f]{0,4}:[0-9A-Fa-f:]{3,}/[REDACTED_IP]/g' "$temp"
+        changes=$((changes + 1))
+    fi
+
+    # تنظيف أرقام بطاقات الائتمان بصيغة شرطات أو 16 رقمًا متصلًا
+    if grep -qE '([0-9]{4}-){3}[0-9]{4}|(^|[^0-9])[0-9]{16}([^0-9]|$)' "$temp" 2>/dev/null; then
+        sed -i -E 's/([0-9]{4}-){3}[0-9]{4}/[REDACTED_CARD]/g; s/(^|[^0-9])[0-9]{16}([^0-9]|$)/\1[REDACTED_CARD]\2/g' "$temp"
+        changes=$((changes + 1))
+    fi
+
     if [[ $changes -gt 0 ]]; then
         mv "$temp" "$file"
         print_success "تم تنظيف الملف: $file (تم إجراء $changes تغيير)"
@@ -128,7 +174,7 @@ sanitize_directory() {
     
     while IFS= read -r -d '' file; do
         if sanitize_file "$file"; then
-            ((count++))
+            count=$((count + 1))
         fi
     done < <(find "$dir" -type f \( -name "*.log" -o -name "*.txt" -o -name "*.json" \) -print0)
     
@@ -148,7 +194,7 @@ check_sensitive_data() {
     for pattern in "${SENSITIVE_PATTERNS[@]}"; do
         if grep -qiE "$pattern" "$file" 2>/dev/null; then
             print_warning "تم العثور على نمط حساس في $file: $pattern"
-            ((found++))
+            found=$((found + 1))
         fi
     done
     
