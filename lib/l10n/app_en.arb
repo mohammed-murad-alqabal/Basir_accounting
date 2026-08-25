@@ -70,7 +70,7 @@
   },
   "errLoginFailed": "Login failed. Please check your credentials.",
   "errNoItems": "Please add at least one item",
-  "errPasswordShort": "Password must be at least 6 characters",
+  "errPasswordShort": "Password must be at least 8 characters",
   "errPasswordsDoNotMatch": "Passwords do not match",
   "errPhoneLength": "Phone must be 10 digits",
   "errPhoneStart05": "Phone must start with 05",
@@ -1005,5 +1005,7 @@
   "workDocumentApprovalRequired": "Additional approval required",
   "workDocumentNoImpact": "No movements are expected.",
   "workEntityPickerNoOptions": "No options available",
-  "workEntityPickerDisabled": "Not eligible for selection"
+  "workEntityPickerDisabled": "Not eligible for selection",
+  "msgPasswordResetRequested": "If the account exists, a recovery link will be sent to the registered email.",
+  "msgPasswordResetFailed": "Password recovery is unavailable right now. Please try again later."
 }

@@ -9,6 +9,7 @@
 /// ***
 library;
 
+import 'package:basir_accounting_system/features/users/domain/entities/user_role.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// [PasswordStrengthResult]
@@ -81,23 +82,6 @@ class SecurityAuditResult {
     if (securityScore >= 60) return 'مقبول';
     return 'غير آمن';
   }
-}
-
-/// [UserRole]
-///
-/// Defines the institutional hierarchy of operators.
-enum UserRole {
-  /// Full administrative privileges.
-  admin,
-
-  /// Financial data management role.
-  accountant,
-
-  /// Inventory and warehouse management role.
-  storeManager,
-
-  /// Read-only access for oversight.
-  viewer,
 }
 
 /// [Permission]
@@ -219,8 +203,11 @@ class BasirUser {
         return Permission.viewFinancials |
             Permission.postJournalEntry |
             Permission.viewSensitiveReports;
-      case UserRole.storeManager:
+      case UserRole.manager:
+      case UserRole.clerk:
         return Permission.manageInventory;
+      case UserRole.auditor:
+        return Permission.viewFinancials | Permission.viewSensitiveReports;
       case UserRole.viewer:
         return Permission.viewFinancials;
     }

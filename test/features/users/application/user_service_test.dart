@@ -1,4 +1,6 @@
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
+import 'package:basir_accounting_system/features/auth/presentation/providers/auth_provider.dart';
 import 'package:basir_accounting_system/features/users/application/user_service.dart';
 import 'package:basir_accounting_system/features/users/domain/entities/user.dart';
 import 'package:basir_accounting_system/features/users/domain/entities/user_role.dart';
@@ -20,6 +22,14 @@ void main() {
     container = ProviderContainer(
       overrides: [
         userRepositoryProvider.overrideWithValue(mockRepository),
+        currentUserProfileProvider.overrideWith(
+          (ref) => const BasirUser(
+            id: 'admin-1',
+            email: 'admin@example.test',
+            role: UserRole.admin,
+            permissions: Permission.all,
+          ),
+        ),
       ],
     );
   });

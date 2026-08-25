@@ -8,10 +8,9 @@ on:
   workflow_dispatch:
 
 env:
-  FLUTTER_VERSION: "3.35.5"
-  # الخط الأساس المقاس في CI هو 25.5%. تُمنع أي تراجعات بينما تُرفع
-  # التغطية تدريجيًا مع كل مهمة، بدل حجب التغييرات السليمة بسبب دين تقني سابق.
-  MIN_COVERAGE: 25
+  FLUTTER_VERSION: "3.44.9"
+  # يجب أن تتطابق عتبة الدمج مع بوابة الإنتاج canonical.
+  MIN_COVERAGE: 70
 
 jobs:
   # Job 1: Static Analysis

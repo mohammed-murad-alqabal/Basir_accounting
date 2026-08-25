@@ -136,7 +136,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errNoItems => 'Please add at least one item';
 
   @override
-  String get errPasswordShort => 'Password must be at least 6 characters';
+  String get errPasswordShort => 'Password must be at least 8 characters';
 
   @override
   String get errPasswordsDoNotMatch => 'Passwords do not match';
@@ -2367,4 +2367,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get workEntityPickerDisabled => 'Not eligible for selection';
+  @override
+  String get msgPasswordResetRequested =>
+      'If the account exists, a recovery link will be sent to the registered email.';
+  @override
+  String get msgPasswordResetFailed =>
+      'Password recovery is unavailable right now. Please try again later.';
 }

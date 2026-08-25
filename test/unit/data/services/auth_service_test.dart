@@ -408,6 +408,17 @@ void main() {
       expect(isLoggedIn, true);
     });
 
+    test('logout should clear guest and remember-me state', () async {
+      await authService.loginAsGuest();
+      await authService.setKeepLoggedIn(keepLoggedIn: true);
+
+      await authService.logout();
+
+      expect(await authService.isGuest(), false);
+      expect(await authService.isLoggedIn(), false);
+      expect(await authService.shouldKeepLoggedIn(), false);
+    });
+
     test('isGuest should return false by default', () async {
       // Act
       final result = await authService.isGuest();

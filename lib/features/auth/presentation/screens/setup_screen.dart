@@ -1,4 +1,5 @@
 import 'package:basir_accounting_system/core/assets/app_logo.dart';
+import 'package:basir_accounting_system/core/constants.dart';
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/theme/services/icon_customization_service.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
@@ -45,10 +46,14 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // إنشاء الحساب الفعلي باستخدام AuthService
-      await ref
-          .read(authServiceProvider)
-          .createAccount(_usernameController.text, _passwordController.text);
+      final username = _usernameController.text.trim();
+      final password = _passwordController.text;
+      final success = await ref.read(
+        setupProvider((username, password)).future,
+      );
+      if (!success) {
+        throw Exception(context.l10n.errGeneric('تعذر إنشاء الحساب'));
+      }
 
       if (!mounted) return;
 
@@ -120,7 +125,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                       if (value == null || value.isEmpty) {
                         return context.l10n.errEmptyField;
                       }
-                      if (value.length < 6) {
+                      if (value.length < AppConfig.minPasswordLength) {
                         return context.l10n.errPasswordShort;
                       }
                       return null;

@@ -13,7 +13,6 @@ import 'package:basir_accounting_system/core/theme/glass_theme.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// نظام الثيمات الموحد
 ///
@@ -63,7 +62,9 @@ abstract final class AppTheme {
     }
 
     // 2. تحديد TextTheme وتطبيق الخط والحجم
-    final baseTextTheme = GoogleFonts.cairoTextTheme(_textTheme);
+    final baseTextTheme = _textTheme.apply(
+      fontFamily: fontFamily ?? FontFamilies.arabic,
+    );
     final scaledGenericTextTheme = baseTextTheme.apply(
       fontSizeFactor: textScaleFactor,
       displayColor: colorScheme.onSurface,
@@ -133,7 +134,7 @@ abstract final class AppTheme {
       primaryTextTheme: textTheme,
       // GoogleFonts handles the font family via textTheme, but we set strictly
       // to avoid fallback issues.
-      fontFamily: GoogleFonts.cairo().fontFamily,
+      fontFamily: fontFamily ?? FontFamilies.arabic,
       scaffoldBackgroundColor: colorScheme.brightness == Brightness.dark
           ? AppPalette.darkBackground // Professional Deep Navy
           : AppColors.background,
@@ -150,7 +151,7 @@ abstract final class AppTheme {
           color: colorScheme.brightness == Brightness.dark
               ? colorScheme.onSurface
               : colorScheme.onPrimary,
-          fontFamily: GoogleFonts.cairo().fontFamily,
+          fontFamily: fontFamily ?? FontFamilies.arabic,
         ),
         iconTheme: IconThemeData(
           color: colorScheme.brightness == Brightness.dark
@@ -162,7 +163,7 @@ abstract final class AppTheme {
           statusBarColor: Colors.transparent, // Edge-to-Edge
           statusBarIconBrightness: colorScheme.brightness == Brightness.dark
               ? Brightness.light
-              : Brightness.light, // Usually white icons on colored headers
+              : Brightness.dark,
           systemNavigationBarColor: Colors.transparent, // Edge-to-Edge
           systemNavigationBarIconBrightness:
               colorScheme.brightness == Brightness.dark

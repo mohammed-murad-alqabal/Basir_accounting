@@ -1,4 +1,5 @@
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers/supabase_auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,6 +24,7 @@ class ForgotPasswordScreen extends ConsumerStatefulWidget {
 class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  bool _isSubmitting = false;
 
   @override
   void dispose() {
@@ -30,16 +32,29 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     super.dispose();
   }
 
-  void _onSubmit() {
-    if (!(_formKey.currentState?.validate() ?? false)) return;
+  Future<void> _onSubmit() async {
+    if (_isSubmitting || !(_formKey.currentState?.validate() ?? false)) {
+      return;
+    }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'تم تسجيل الطلب. يرجى التواصل مع مسؤول النظام لإتمام إعادة التعيين.',
-        ),
-      ),
-    );
+    setState(() => _isSubmitting = true);
+    try {
+      await ref
+          .read(supabaseAuthProvider)
+          .resetPassword(_emailController.text.trim());
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.msgPasswordResetRequested)),
+      );
+    } on Exception {
+      if (!mounted) return;
+      // الرد العام يمنع كشف ما إذا كان البريد مسجلًا أم لا.
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.msgPasswordResetRequested)),
+      );
+    } finally {
+      if (mounted) setState(() => _isSubmitting = false);
+    }
   }
 
   @override
@@ -63,18 +78,24 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Required';
+                    return context.l10n.errEmptyField;
                   }
                   if (!value.contains('@')) {
-                    return 'Enter a valid e-mail';
+                    return context.l10n.errInvalidEmail;
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: _onSubmit,
-                child: Text(l10n.forgotPassword),
+                onPressed: _isSubmitting ? null : _onSubmit,
+                child: _isSubmitting
+                    ? const SizedBox(
+                        height: 18,
+                        width: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : Text(l10n.forgotPassword),
               ),
             ],
           ),

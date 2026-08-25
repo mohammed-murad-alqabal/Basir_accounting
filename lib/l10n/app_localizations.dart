@@ -341,7 +341,7 @@ abstract class AppLocalizations {
   /// No description provided for @errPasswordShort.
   ///
   /// In en, this message translates to:
-  /// **'Password must be at least 6 characters'**
+  /// **'Password must be at least 8 characters'
   String get errPasswordShort;
 
   /// No description provided for @errPasswordsDoNotMatch.
@@ -4519,6 +4519,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not eligible for selection'**
   String get workEntityPickerDisabled;
+
+  /// Generic response shown after requesting password recovery.
+  String get msgPasswordResetRequested;
+
+  /// Generic recovery failure message.
+  String get msgPasswordResetFailed;
 }
 
 class _AppLocalizationsDelegate

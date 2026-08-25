@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:basir_accounting_system/core/constants.dart';
 import 'package:basir_accounting_system/core/security/password_hasher.dart';
 import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
@@ -34,6 +35,11 @@ class AuthService {
   /// دفق التغييرات في حالة المصادقة (يرجع اسم المستخدم أو null)
   Stream<String?> get onAuthStateChange => _authStateController.stream;
 
+  /// تحرير موارد الدفق عند التخلص من الخدمة.
+  void dispose() {
+    _authStateController.close();
+  }
+
   /// Changes password without requiring old password verification
   ///
   /// Used for password reset operations where the user has been
@@ -45,35 +51,18 @@ class AuthService {
   /// - [newPassword]: New password to set
   ///
   /// Throws: [Exception] if user not found or password invalid
+  @Deprecated(
+    'Use a verified recovery flow with a one-time challenge and session revocation.',
+  )
   Future<void> changePasswordWithoutOldPassword(
     String username,
     String newPassword,
   ) async {
-    // Validate new password
-    if (newPassword.length < 6) {
-      throw Exception('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
-    }
-
-    try {
-      // Check if user exists
-      final storedUsername = await secureStorage.read(key: 'username');
-      if (storedUsername != username) {
-        throw Exception('المستخدم غير موجود');
-      }
-
-      final passwordHash = PasswordHasher.hash(newPassword);
-
-      await secureStorage.write(
-        key: StorageKeys.passwordHash,
-        value: passwordHash,
-      );
-      await secureStorage.delete(key: '${username}_salt');
-
-      debugPrint('🔐 [AUTH] Password changed successfully for $username');
-    } catch (e) {
-      debugPrint('⚠️ [AUTH] Password change failed: $e');
-      rethrow;
-    }
+    // لا نسمح بمسار تغيير كلمة المرور اعتمادًا على اسم مستخدم فقط.
+    // يجب تنفيذ الاستعادة عبر موفر موثوق يثبت ملكية الحساب أولًا.
+    throw StateError(
+      'Password recovery requires a verified one-time recovery challenge.',
+    );
   }
 
   /// تنظيف البيانات التالفة أو القديمة (Industrial-Grade Robustness)
@@ -239,7 +228,11 @@ class AuthService {
   /// تسجيل الخروج
   Future<void> logout() async {
     try {
-      await secureStorage.write(key: StorageKeys.isLoggedIn, value: 'false');
+      await Future.wait([
+        secureStorage.write(key: StorageKeys.isLoggedIn, value: 'false'),
+        secureStorage.delete(key: StorageKeys.isGuest),
+        secureStorage.write(key: StorageKeys.keepLoggedIn, value: 'false'),
+      ]);
       _authStateController.add(null);
     } on Exception catch (e) {
       throw Exception('خطأ في تسجيل الخروج: $e');
@@ -324,8 +317,10 @@ class AuthService {
       if (username.isEmpty || username.length < 3) {
         throw Exception('اسم المستخدم يجب أن يكون 3 أحرف على الأقل');
       }
-      if (password.isEmpty || password.length < 6) {
-        throw Exception('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+      if (password.isEmpty || password.length < AppConfig.minPasswordLength) {
+        throw Exception(
+        'كلمة المرور يجب أن تكون ${AppConfig.minPasswordLength} أحرف على الأقل',
+      );
       }
 
       final passwordHash = PasswordHasher.hash(password);
@@ -430,8 +425,11 @@ class AuthService {
       }
 
       // التحقق من صحة كلمة المرور الجديدة
-      if (newPassword.isEmpty || newPassword.length < 6) {
-        throw Exception('كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل');
+      if (newPassword.isEmpty ||
+          newPassword.length < AppConfig.minPasswordLength) {
+        throw Exception(
+          'كلمة المرور الجديدة يجب أن تكون ${AppConfig.minPasswordLength} أحرف على الأقل',
+        );
       }
 
       await secureStorage.write(
@@ -450,8 +448,10 @@ class AuthService {
     var score = 0;
 
     // فحص الطول
-    if (password.length < 8) {
-      issues.add('كلمة المرور يجب أن تكون 8 أحرف على الأقل');
+    if (password.length < AppConfig.minPasswordLength) {
+      issues.add(
+        'كلمة المرور يجب أن تكون ${AppConfig.minPasswordLength} أحرف على الأقل',
+      );
     } else {
       score += 25;
     }

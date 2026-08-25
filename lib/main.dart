@@ -47,6 +47,8 @@ void main() {
           SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge),
         ]);
 
+        AppEnvironmentConfig.validateForStartup();
+
         // إعداد شاشة الأخطاء العالمية
 
         ErrorWidget.builder =
@@ -233,7 +235,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       if (mounted) {
         setState(() {
           _status = context.l10n.splashCriticalError;
-          _error = e.toString();
+          // التفاصيل الكاملة تبقى في السجل التشخيصي ولا تُعرض للمستخدم.
+          _error = context.l10n.splashCriticalError;
         });
       }
     }
@@ -260,8 +263,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: DecoratedBox(
-          decoration: const BoxDecoration(color: Colors.white),
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+        ),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -305,7 +310,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       Text(
                         _status,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.primaryDark.withValues(alpha: 0.5),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -322,7 +329,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       Text(
                         _error ?? context.l10n.splashCriticalError,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.white70),
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                       ),
                       const SizedBox(height: Spacing.xl),
                       AppEnhancedButton(

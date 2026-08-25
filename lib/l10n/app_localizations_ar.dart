@@ -135,7 +135,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get errNoItems => 'يرجى إضافة بند واحد على الأقل';
 
   @override
-  String get errPasswordShort => 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+  String get errPasswordShort => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
 
   @override
   String get errPasswordsDoNotMatch => 'كلمات المرور غير متطابقة';
@@ -2352,4 +2352,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get workEntityPickerDisabled => 'غير مؤهل للاختيار';
+  @override
+  String get msgPasswordResetRequested =>
+      'إذا كان الحساب موجودًا، فسيتم إرسال رابط استعادة إلى البريد المسجل.';
+  @override
+  String get msgPasswordResetFailed =>
+      'تعذر تنفيذ طلب الاستعادة حاليًا. حاول مرة أخرى لاحقًا.';
 }

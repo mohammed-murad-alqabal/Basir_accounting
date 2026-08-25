@@ -20,7 +20,9 @@ final authServiceProvider = Provider((ref) {
   final secureStorage = ref.watch(
     secureStorageProvider.select((storage) => storage),
   );
-  return AuthService(secureStorage: secureStorage);
+  final service = AuthService(secureStorage: secureStorage);
+  ref.onDispose(service.dispose);
+  return service;
 });
 
 /// مزود التحقق من وجود حساب

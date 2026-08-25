@@ -1,4 +1,5 @@
 import 'package:basir_accounting_system/core/theme/services/theme_storage_utils.dart';
+import 'package:basir_accounting_system/core/theme/tokens/app_colors.dart';
 import 'package:basir_accounting_system/features/auth/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,8 +64,15 @@ class ColorCustomizationService extends AsyncNotifier<Color?> {
     }
   }
 
-  /// التحقق من تباين اللون مع الأبيض (WCAG AA)
-  bool isValidContrast(Color color) => true;
+  /// التحقق من تباين اللون مع سطح التطبيق والنص المقابل له.
+  ///
+  /// نتحقق من لونين لأن اللون المخصص يستخدم كلون خلفية رئيسي،
+  /// ويجب أن يبقى النص الأبيض فوقه مقروءًا أيضًا.
+  bool isValidContrast(Color color) {
+    final onWhite = AppColors.contrastRatio(color, Colors.white);
+    final onDarkText = AppColors.contrastRatio(color, AppColors.textPrimary);
+    return onWhite >= 4.5 || onDarkText >= 4.5;
+  }
 }
 
 /// موفر خدمة تخصيص الألوان

@@ -25,7 +25,10 @@ class SupabaseConfig {
       await Supabase.initialize(url: supabaseUrl, publishableKey: anonKey);
     } on Exception catch (e) {
       debugPrint('⚠️ Failed to initialize Supabase: $e');
-      // Continue without Supabase if it fails to initialize
+      if (AppEnvironmentConfig.isProduction) {
+        rethrow;
+      }
+      // Continue without Supabase only in non-production environments
     }
   }
 

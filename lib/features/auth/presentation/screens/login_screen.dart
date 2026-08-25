@@ -4,6 +4,7 @@ import 'package:basir_accounting_system/core/assets/app_logo.dart';
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/theme/services/icon_customization_service.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:basir_accounting_system/features/auth/presentation/providers/auth_provider.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
@@ -56,10 +57,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // تسجيل الدخول الفعلي باستخدام AuthService
-      final success = await ref
-          .read(authServiceProvider)
-          .login(_usernameController.text, _passwordController.text);
+      // استخدام المزود الموحد حتى تُحدّث حالة الجلسة والملف الشخصي.
+      final username = _usernameController.text.trim();
+      final success = await ref.read(
+        loginProvider((username, _passwordController.text)).future,
+      );
 
       if (!success) {
         if (!mounted) return;
@@ -68,10 +70,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       if (!mounted) return;
 
-      // حفظ حالة "البقاء مسجلاً" إذا تم اختيارها
-      if (_keepLoggedIn) {
-        await ref.read(authServiceProvider).setKeepLoggedIn(keepLoggedIn: true);
-      }
+      // حفظ حالة "البقاء مسجلاً" في كل دخول، بما في ذلك إلغاء الخيار.
+      await ref
+          .read(authServiceProvider)
+          .setKeepLoggedIn(keepLoggedIn: _keepLoggedIn);
 
       if (!mounted) return;
 
@@ -81,9 +83,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       if (!mounted) return;
       await Navigator.of(context).pushReplacementNamed('/dashboard');
     } on Exception catch (e) {
+      debugPrint('Login failed: $e');
       if (!mounted) return;
 
-      AppSnackbar.showError(context, context.l10n.errGeneric(e.toString()));
+      AppSnackbar.showError(context, context.l10n.errLoginFailed);
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -96,8 +99,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // تسجيل الدخول كضيف بشكل فوري (إزالة التأخير غير الضروري)
-      await ref.read(authServiceProvider).loginAsGuest();
+      // تسجيل الدخول كضيف بشكل فوري مع تحديث مصدر الهوية الموحد.
+      final auth = ref.read(authServiceProvider);
+      await auth.loginAsGuest();
+      ref.read(isLoggedInProvider.notifier).state = true;
+      ref.read(currentUserProfileProvider.notifier).state = const BasirUser(
+        id: 'guest',
+        email: 'guest@basir.local',
+        displayName: 'مستخدم ضيف',
+        isGuest: true,
+      );
+      await auth.setKeepLoggedIn(keepLoggedIn: false);
 
       if (!mounted) return;
 
@@ -107,9 +119,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       if (!mounted) return;
       await Navigator.of(context).pushReplacementNamed('/dashboard');
     } on Exception catch (e) {
+      debugPrint('Guest login failed: $e');
       if (!mounted) return;
 
-      AppSnackbar.showError(context, context.l10n.errGeneric(e.toString()));
+      AppSnackbar.showError(context, context.l10n.errLoginFailed);
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);

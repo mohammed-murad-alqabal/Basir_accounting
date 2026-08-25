@@ -10,6 +10,9 @@ library;
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:crypto/crypto.dart';
+import 'package:path/path.dart' as p;
+
 /// Manages automated backups for the Basir ERP system
 class BackupService {
   /// Default backup configuration
@@ -20,7 +23,8 @@ class BackupService {
     backupBranches: ['main', 'development'],
     backupDatabase: true,
     backupConfigurations: true,
-    compressionEnabled: true,
+    // لا نعلن الضغط حتى يتوفر archive pipeline متحقق منه.
+    compressionEnabled: false,
   );
 
   /// Backup storage locations
@@ -39,7 +43,9 @@ class BackupService {
   }) async {
     final backupConfig = config ?? defaultConfig;
     final timestamp = DateTime.now().toIso8601String().replaceAll(':', '-');
-    final backupName = customName ?? 'backup-$timestamp';
+    final backupName = _validateBackupName(
+      customName ?? 'backup-$timestamp',
+    );
 
     try {
       if (dryRun) {
@@ -52,7 +58,7 @@ class BackupService {
       // Create backup directories
       await _createBackupDirectories();
 
-      final backupPath = '.backups/$backupName';
+      final backupPath = p.join('.backups', backupName);
       await Directory(backupPath).create(recursive: true);
 
       // Collect backup items
@@ -90,9 +96,11 @@ class BackupService {
       // Create backup manifest
       await _createBackupManifest(backupPath, backupManifest);
 
-      // Compress if enabled
+      // لا نسمح بنسخة تبدو مضغوطة دون ضغط فعلي.
       if (backupConfig.compressionEnabled) {
-        await _compressBackup(backupPath);
+        throw StateError(
+          'Compression is unavailable until a verified archive pipeline is configured.',
+        );
       }
 
       // Clean old backups
@@ -116,7 +124,8 @@ class BackupService {
     bool dryRun = false,
   }) async {
     try {
-      final backupPath = '.backups/$backupName';
+      final safeBackupName = _validateBackupName(backupName);
+      final backupPath = p.join('.backups', safeBackupName);
       final backupDir = Directory(backupPath);
 
       if (!backupDir.existsSync()) {
@@ -149,6 +158,10 @@ class BackupService {
           (item) => item.name == itemName,
           orElse: () => throw ArgumentError('Item not found: $itemName'),
         );
+
+        if (!await _verifyItemIntegrity(backupPath, item)) {
+          throw StateError('Backup integrity check failed for ${item.name}');
+        }
 
         final restoreResult = await _restoreItem(backupPath, item);
         if (restoreResult.success) {
@@ -273,6 +286,18 @@ class BackupService {
 
   // Private helper methods
 
+  static String _validateBackupName(String value) {
+    final name = value.trim();
+    final isSafe = name.isNotEmpty &&
+        name.length <= 120 &&
+        RegExp(r'^[A-Za-z0-9][A-Za-z0-9._-]*$').hasMatch(name) &&
+        !name.contains('..');
+    if (!isSafe) {
+      throw ArgumentError.value(value, 'backupName', 'Invalid backup name');
+    }
+    return name;
+  }
+
   static Future<void> _createBackupDirectories() async {
     for (final location in backupLocations.values) {
       await Directory(location).create(recursive: true);
@@ -306,6 +331,7 @@ class BackupService {
               type: 'git_branch',
               path: bundlePath,
               size: await bundleFile.length(),
+              checksum: await _sha256File(bundleFile),
             ),
           );
         }
@@ -340,6 +366,7 @@ class BackupService {
             type: 'database_file',
             path: targetPath,
             size: await sourceFile.length(),
+            checksum: await _sha256File(File(targetPath)),
           ),
         );
       }
@@ -358,7 +385,6 @@ class BackupService {
     final configFiles = [
       'pubspec.yaml',
       'analysis_options.yaml',
-      '.env',
       '.kiro/config.json',
       '.github/workflows/pr-checks.yml',
       '.github/branch-protection.yml',
@@ -378,6 +404,7 @@ class BackupService {
             type: 'config_file',
             path: targetPath,
             size: await sourceFile.length(),
+            checksum: await _sha256File(File(targetPath)),
           ),
         );
       }
@@ -423,6 +450,33 @@ class BackupService {
     if (compressedMarker.existsSync()) {
       // Backup is compressed, would decompress here
     }
+  }
+
+  static Future<String> _sha256File(File file) async {
+    final digest = await sha256.bind(file.openRead()).first;
+    return digest.toString();
+  }
+
+  static Future<bool> _verifyItemIntegrity(
+    String backupPath,
+    BackupItem item,
+  ) async {
+    final expected = item.checksum;
+    if (expected == null || expected.isEmpty) return false;
+
+    final relativeDirectory = switch (item.type) {
+      'git_branch' => 'git',
+      'database_file' => 'database',
+      'config_file' => 'config',
+      _ => null,
+    };
+    if (relativeDirectory == null) return false;
+
+    final safeName = p.basename(item.name);
+    if (safeName != item.name || safeName.contains('..')) return false;
+    final file = File(p.join(backupPath, relativeDirectory, safeName));
+    if (!await file.exists()) return false;
+    return expected == await _sha256File(file);
   }
 
   static Future<BackupResult> _restoreItem(
@@ -671,6 +725,7 @@ class BackupItem {
     required this.type,
     required this.path,
     required this.size,
+    this.checksum,
   });
 
   /// Creates a [BackupItem] from a JSON map
@@ -679,6 +734,7 @@ class BackupItem {
         type: json['type'] as String,
         path: json['path'] as String,
         size: json['size'] as int,
+        checksum: json['checksum'] as String?,
       );
 
   /// The name of the item
@@ -693,12 +749,16 @@ class BackupItem {
   /// The size of the item in bytes
   final int size;
 
+  /// SHA-256 checksum of the file captured in the backup.
+  final String? checksum;
+
   /// Converts the [BackupItem] to a JSON map
   Map<String, dynamic> toJson() => {
         'name': name,
         'type': type,
         'path': path,
         'size': size,
+        'checksum': checksum,
       };
 }
 
