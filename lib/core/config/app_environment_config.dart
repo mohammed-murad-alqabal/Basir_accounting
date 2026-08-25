@@ -39,10 +39,7 @@ class AppEnvironmentConfig {
   static void validateForStartup() {
     if (!isProduction) return;
 
-    const requiredKeys = <String>[
-      'SUPABASE_URL',
-      'SUPABASE_ANON_KEY',
-    ];
+    const requiredKeys = <String>['SUPABASE_URL', 'SUPABASE_ANON_KEY'];
     final missing = requiredKeys
         .where((key) {
           final value = _safeEnv[key]?.trim();

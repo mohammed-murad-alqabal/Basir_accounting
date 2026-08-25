@@ -160,10 +160,9 @@ final basirUserProvider = Provider<BasirUser?>((ref) {
   }
 
   // 2. التحقق من وضع الضيف (المصدر الثانوي)
-  final isGuest = ref.watch(isGuestProvider).maybeWhen(
-        data: (v) => v,
-        orElse: () => false,
-      );
+  final isGuest = ref
+      .watch(isGuestProvider)
+      .maybeWhen(data: (v) => v, orElse: () => false);
 
   if (isGuest) {
     return const BasirUser(

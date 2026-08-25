@@ -110,7 +110,8 @@ class Permission {
   static const int viewSensitiveReports = 1 << 5;
 
   /// All permissions combined.
-  static const int all = viewFinancials |
+  static const int all =
+      viewFinancials |
       postJournalEntry |
       manageInventory |
       manageUsers |
@@ -146,7 +147,8 @@ class BasirUser {
     );
 
     // Determine permissions from metadata or role defaults
-    final permissions = user.userMetadata?['permissions'] as int? ??
+    final permissions =
+        user.userMetadata?['permissions'] as int? ??
         getDefaultPermissions(role);
 
     return BasirUser(

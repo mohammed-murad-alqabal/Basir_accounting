@@ -93,9 +93,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
+                decoration: const InputDecoration(border: OutlineInputBorder()),
                 validator: (value) {
                   if (value == null ||
                       value.isEmpty ||
@@ -109,9 +107,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
               TextFormField(
                 controller: _confirmController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
+                decoration: const InputDecoration(border: OutlineInputBorder()),
                 validator: (value) {
                   if (value != _passwordController.text) {
                     return 'Passwords do not match';

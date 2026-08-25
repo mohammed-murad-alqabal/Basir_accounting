@@ -40,22 +40,22 @@ abstract final class AccessPolicy {
 
   /// سياسة المسارات المسجلة مركزيًا.
   static int? requiredPermissionForRoute(String route) => switch (route) {
-        '/users' || '/user-form' => Permission.manageUsers,
-        '/cloud-backup' => Permission.manageUsers,
-        '/forensic-portal' || '/audit-trail-report' =>
-          Permission.viewSensitiveReports,
-        '/smart-tax-report' || '/intelligence' => Permission.viewSensitiveReports,
-        '/journal-entry-form' || '/voucher-form' => Permission.postJournalEntry,
-        '/zatca-onboarding' || '/fiscal-control-center' =>
-          Permission.approveTransactions,
-        _ => null,
-      };
+    '/users' || '/user-form' => Permission.manageUsers,
+    '/cloud-backup' => Permission.manageUsers,
+    '/forensic-portal' ||
+    '/audit-trail-report' => Permission.viewSensitiveReports,
+    '/smart-tax-report' || '/intelligence' => Permission.viewSensitiveReports,
+    '/journal-entry-form' || '/voucher-form' => Permission.postJournalEntry,
+    '/zatca-onboarding' ||
+    '/fiscal-control-center' => Permission.approveTransactions,
+    _ => null,
+  };
 
   /// المسارات التي لا تتطلب جلسة.
   static bool isPublicRoute(String route) => switch (route) {
-        '/setup' || '/login' || '/forgot-password' || '/reset-password' => true,
-        _ => false,
-      };
+    '/setup' || '/login' || '/forgot-password' || '/reset-password' => true,
+    _ => false,
+  };
 }
 
 /// حارس مصادقة/تفويض على مستوى route، وليس مجرد إخفاء Widget.
@@ -67,11 +67,7 @@ class AccessDeniedException implements Exception {
 }
 
 class AuthGuard extends ConsumerWidget {
-  const AuthGuard({
-    required this.child,
-    required this.routeName,
-    super.key,
-  });
+  const AuthGuard({required this.child, required this.routeName, super.key});
 
   final Widget child;
   final String routeName;
@@ -79,11 +75,14 @@ class AuthGuard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(basirUserProvider);
-    final isGuest = ref.watch(isGuestProvider).maybeWhen(
+    final isGuest = ref
+        .watch(isGuestProvider)
+        .maybeWhen(
           data: (value) => value,
           orElse: () => user?.isGuest ?? false,
         );
-    final effectiveUser = user ??
+    final effectiveUser =
+        user ??
         (isGuest
             ? const BasirUser(
                 id: 'guest',
@@ -114,11 +113,7 @@ class AuthGuard extends ConsumerWidget {
 }
 
 class _DeniedRoute extends StatelessWidget {
-  const _DeniedRoute({
-    required this.message,
-    this.actionLabel,
-    this.onAction,
-  });
+  const _DeniedRoute({required this.message, this.actionLabel, this.onAction});
 
   final String message;
   final String? actionLabel;
@@ -126,25 +121,25 @@ class _DeniedRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.lock_outline, size: 48),
-                const SizedBox(height: 16),
-                Text(message, textAlign: TextAlign.center),
-                if (onAction != null) ...[
-                  const SizedBox(height: 16),
-                  FilledButton(
-                    onPressed: onAction,
-                    child: Text(actionLabel ?? 'متابعة'),
-                  ),
-                ],
-              ],
-            ),
-          ),
+    body: Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.lock_outline, size: 48),
+            const SizedBox(height: 16),
+            Text(message, textAlign: TextAlign.center),
+            if (onAction != null) ...[
+              const SizedBox(height: 16),
+              FilledButton(
+                onPressed: onAction,
+                child: Text(actionLabel ?? 'متابعة'),
+              ),
+            ],
+          ],
         ),
-      );
+      ),
+    ),
+  );
 }

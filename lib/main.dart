@@ -51,8 +51,8 @@ void main() {
 
         // إعداد شاشة الأخطاء العالمية
 
-        ErrorWidget.builder =
-            (details) => basir.GlobalErrorWidget(errorDetails: details);
+        ErrorWidget.builder = (details) =>
+            basir.GlobalErrorWidget(errorDetails: details);
 
         // تهيئة الخدمات الأساسية قبل البدء
         final container = ProviderContainer(
@@ -263,94 +263,90 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-        ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // الشعار المطور Basir 2.0
-                const BasirLogo(size: 140),
-                const SizedBox(height: Spacing.xl),
-                Text(
-                  context.l10n.appTitle,
-                  style: const TextStyle(
-                    fontSize: 42,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primaryDark,
-                    fontFamily: 'Cairo',
-                    letterSpacing: 4,
-                  ),
-                ),
-                Text(
-                  AppConfig.appDescription,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.primaryDark.withValues(alpha: 0.6),
-                    fontFamily: 'Cairo',
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 60),
-                if (_error == null)
-                  Column(
-                    children: [
-                      const SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.primaryDark,
-                          ),
-                          strokeWidth: 2,
-                        ),
-                      ),
-                      const SizedBox(height: Spacing.md),
-                      Text(
-                        _status,
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  )
-                else
-                  Column(
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        size: 60,
-                        color: AppColors.error,
-                      ),
-                      const SizedBox(height: Spacing.md),
-                      Text(
-                        _error ?? context.l10n.splashCriticalError,
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                      ),
-                      const SizedBox(height: Spacing.xl),
-                      AppEnhancedButton(
-                        label: context.l10n.retryLabel,
-                        onPressed: () {
-                          setState(() {
-                            _error = null;
-                            _status = context.l10n.splashInitializing;
-                          });
-                          unawaited(_initializeApp());
-                        },
-                        type: AppEnhancedButtonType.outlined,
-                        foregroundColor: Colors.white,
-                      ),
-                    ],
-                  ),
-              ],
+    body: DecoratedBox(
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // الشعار المطور Basir 2.0
+            const BasirLogo(size: 140),
+            const SizedBox(height: Spacing.xl),
+            Text(
+              context.l10n.appTitle,
+              style: const TextStyle(
+                fontSize: 42,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primaryDark,
+                fontFamily: 'Cairo',
+                letterSpacing: 4,
+              ),
             ),
-          ),
+            Text(
+              AppConfig.appDescription,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.primaryDark.withValues(alpha: 0.6),
+                fontFamily: 'Cairo',
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 60),
+            if (_error == null)
+              Column(
+                children: [
+                  const SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        AppColors.primaryDark,
+                      ),
+                      strokeWidth: 2,
+                    ),
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  Text(
+                    _status,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              )
+            else
+              Column(
+                children: [
+                  const Icon(
+                    Icons.error_outline,
+                    size: 60,
+                    color: AppColors.error,
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  Text(
+                    _error ?? context.l10n.splashCriticalError,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: Spacing.xl),
+                  AppEnhancedButton(
+                    label: context.l10n.retryLabel,
+                    onPressed: () {
+                      setState(() {
+                        _error = null;
+                        _status = context.l10n.splashInitializing;
+                      });
+                      unawaited(_initializeApp());
+                    },
+                    type: AppEnhancedButtonType.outlined,
+                    foregroundColor: Colors.white,
+                  ),
+                ],
+              ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 }

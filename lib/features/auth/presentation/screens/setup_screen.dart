@@ -169,44 +169,44 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
   }
 
   Widget _buildHeader() => Column(
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(Radii.lg),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.2),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
+    children: [
+      Container(
+        width: 80,
+        height: 80,
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          borderRadius: BorderRadius.circular(Radii.lg),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary.withValues(alpha: 0.2),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
             ),
-            child: Center(
-              child: Semantics(
-                label: context.l10n.dashboardBasirSystemTitle,
-                image: true,
-                child: const BasirLogo(size: 60),
-              ),
-            ),
+          ],
+        ),
+        child: Center(
+          child: Semantics(
+            label: context.l10n.dashboardBasirSystemTitle,
+            image: true,
+            child: const BasirLogo(size: 60),
           ),
-          const SizedBox(height: Spacing.lg),
-          Text(
-            context.l10n.setupTitle,
-            style: AppTextStyles.headlineSmall.copyWith(
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: Spacing.sm),
-          Text(
-            context.l10n.setupSubtitle,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
-            ),
-          ),
-        ],
-      );
+        ),
+      ),
+      const SizedBox(height: Spacing.lg),
+      Text(
+        context.l10n.setupTitle,
+        style: AppTextStyles.headlineSmall.copyWith(
+          fontWeight: FontWeight.bold,
+          color: AppColors.textPrimary,
+        ),
+      ),
+      const SizedBox(height: Spacing.sm),
+      Text(
+        context.l10n.setupSubtitle,
+        style: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.textSecondary,
+        ),
+      ),
+    ],
+  );
 }

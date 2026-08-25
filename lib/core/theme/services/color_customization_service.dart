@@ -79,5 +79,5 @@ class ColorCustomizationService extends AsyncNotifier<Color?> {
 // ignore: lines_longer_than_80_chars
 final colorCustomizationProvider =
     AsyncNotifierProvider<ColorCustomizationService, Color?>(
-  ColorCustomizationService.new,
-);
+      ColorCustomizationService.new,
+    );

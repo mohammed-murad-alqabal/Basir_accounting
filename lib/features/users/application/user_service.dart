@@ -66,9 +66,6 @@ class UserService extends _$UserService {
   }
 
   void _requireManageUsers() {
-    AccessPolicy.require(
-      ref.read(basirUserProvider),
-      Permission.manageUsers,
-    );
+    AccessPolicy.require(ref.read(basirUserProvider), Permission.manageUsers);
   }
 }

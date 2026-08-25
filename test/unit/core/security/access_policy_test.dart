@@ -23,33 +23,26 @@ void main() {
   );
 
   test('admin can access user management', () {
-    expect(
-      AccessPolicy.can(admin, Permission.manageUsers),
-      isTrue,
-    );
+    expect(AccessPolicy.can(admin, Permission.manageUsers), isTrue);
   });
 
   test('viewer is denied user management', () {
-    expect(
-      AccessPolicy.can(viewer, Permission.manageUsers),
-      isFalse,
-    );
+    expect(AccessPolicy.can(viewer, Permission.manageUsers), isFalse);
     expect(
       () => AccessPolicy.require(viewer, Permission.manageUsers),
       throwsA(isA<AccessDeniedException>()),
     );
   });
 
-  test('guest is denied sensitive access even with a broad permission bitmask', () {
-    expect(
-      AccessPolicy.can(
-        guest,
-        Permission.viewFinancials,
-        allowGuest: false,
-      ),
-      isFalse,
-    );
-  });
+  test(
+    'guest is denied sensitive access even with a broad permission bitmask',
+    () {
+      expect(
+        AccessPolicy.can(guest, Permission.viewFinancials, allowGuest: false),
+        isFalse,
+      );
+    },
+  );
 
   test('warehouse scope is enforced for non-admin users', () {
     const scopedUser = BasirUser(

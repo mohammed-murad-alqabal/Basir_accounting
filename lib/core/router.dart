@@ -78,15 +78,10 @@ import 'package:flutter/material.dart';
 /// )
 /// ```
 class AppRouter {
-  static Route<dynamic> _protectedRoute(
-    RouteSettings settings,
-    Widget child,
-  ) => MaterialPageRoute(
+  static Route<dynamic> _protectedRoute(RouteSettings settings, Widget child) =>
+      MaterialPageRoute(
         settings: settings,
-        builder: (_) => AuthGuard(
-          routeName: settings.name ?? '',
-          child: child,
-        ),
+        builder: (_) => AuthGuard(routeName: settings.name ?? '', child: child),
       );
 
   /// توليد المسار المناسب بناءً على الاسم
@@ -118,9 +113,7 @@ class AppRouter {
       case '/login':
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case '/forgot-password':
-        return MaterialPageRoute(
-          builder: (_) => const ForgotPasswordScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
       case '/reset-password':
         final args = settings.arguments as Map<String, String>?;
         final hasEmail = args?.containsKey('email') ?? false;
@@ -136,9 +129,7 @@ class AppRouter {
         }
         return MaterialPageRoute(
           builder: (context) => Scaffold(
-            body: Center(
-              child: Text(context.l10n.errInvalidResetLink),
-            ),
+            body: Center(child: Text(context.l10n.errInvalidResetLink)),
           ),
         );
       case '/dashboard':
@@ -162,7 +153,10 @@ class AppRouter {
         return _protectedRoute(settings, const CustomerFormScreen());
       case '/customer-detail':
         final customer = settings.arguments! as Customer;
-        return _protectedRoute(settings, CustomerDetailsScreen(customer: customer));
+        return _protectedRoute(
+          settings,
+          CustomerDetailsScreen(customer: customer),
+        );
       case '/vendor-form':
         return _protectedRoute(settings, const VendorFormScreen());
       case '/settings':
@@ -188,7 +182,10 @@ class AppRouter {
         return _protectedRoute(settings, const CashReconciliationScreen());
       case '/journal-entry-detail':
         final entry = settings.arguments! as JournalEntry;
-        return _protectedRoute(settings, JournalEntryDetailScreen(entry: entry));
+        return _protectedRoute(
+          settings,
+          JournalEntryDetailScreen(entry: entry),
+        );
       case '/strategic-outlook':
         return _protectedRoute(settings, const StrategicOutlookScreen());
       case '/users':
@@ -305,7 +302,8 @@ class AppRouter {
         return _protectedRoute(
           settings,
           FinancialReportScreen(
-            reportType: args?['reportType'] as FinancialReportType? ??
+            reportType:
+                args?['reportType'] as FinancialReportType? ??
                 FinancialReportType.incomeStatement,
           ),
         );
@@ -321,8 +319,9 @@ class AppRouter {
           return MaterialPageRoute(
             builder: (context) => Scaffold(
               body: Center(
-                child:
-                    Text(context.l10n.errorScreenNotFound(settings.name ?? '')),
+                child: Text(
+                  context.l10n.errorScreenNotFound(settings.name ?? ''),
+                ),
               ),
             ),
           );
