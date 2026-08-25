@@ -34,6 +34,9 @@ class AuthService {
   /// دفق التغييرات في حالة المصادقة (يرجع اسم المستخدم أو null)
   Stream<String?> get onAuthStateChange => _authStateController.stream;
 
+  /// Releases resources owned by the authentication service.
+  Future<void> dispose() => _authStateController.close();
+
   /// Changes password without requiring old password verification
   ///
   /// Used for password reset operations where the user has been
