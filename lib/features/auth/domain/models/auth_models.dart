@@ -9,6 +9,7 @@
 /// ***
 library;
 
+export 'package:basir_accounting_system/features/users/domain/entities/user_role.dart';
 import 'package:basir_accounting_system/features/users/domain/entities/user_role.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
