@@ -1,0 +1,180 @@
+{
+  "fixtureVersion": 1,
+  "sanitized": true,
+  "description": "Synthetic blocked payloads for parser and clean-contract rejection coverage.",
+  "blockedCases": [
+    {
+      "id": "standalone_transfer_type",
+      "expectedFailureStage": "cleanContract",
+      "messageContains": "blocked standalone transfer type",
+      "payload": {
+        "id": "blocked-transfer-fixture",
+        "userId": "synthetic-user",
+        "itemId": "synthetic-item",
+        "warehouseId": "synthetic-warehouse",
+        "movements": [
+          {
+            "id": "blocked-transfer-movement",
+            "itemId": "synthetic-item",
+            "warehouseId": "synthetic-warehouse",
+            "type": "transfer",
+            "quantity": 1.0,
+            "unitCost": 1.0,
+            "date": "2026-07-01T00:00:00.000Z",
+            "createdAt": "2026-07-01T00:01:00.000Z",
+            "referenceId": "synthetic-transfer-reference",
+            "description": "synthetic blocked transfer",
+            "userId": "synthetic-user",
+            "syncStatus": "synced"
+          }
+        ],
+        "expectedBalances": [
+          {
+            "asOfDate": "2026-07-01T00:00:00.000Z",
+            "warehouseId": "synthetic-warehouse",
+            "quantity": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "negative_adjustment",
+      "expectedFailureStage": "parser",
+      "messageContains": "must be positive",
+      "payload": {
+        "id": "blocked-adjustment-fixture",
+        "userId": "synthetic-user",
+        "itemId": "synthetic-item",
+        "warehouseId": "synthetic-warehouse",
+        "movements": [
+          {
+            "id": "blocked-adjustment-movement",
+            "itemId": "synthetic-item",
+            "warehouseId": "synthetic-warehouse",
+            "type": "adjustment",
+            "quantity": -1.0,
+            "unitCost": 1.0,
+            "date": "2026-07-02T00:00:00.000Z",
+            "createdAt": "2026-07-02T00:01:00.000Z",
+            "referenceId": "synthetic-adjustment-reference",
+            "description": "synthetic blocked signed adjustment",
+            "userId": "synthetic-user",
+            "syncStatus": "synced"
+          }
+        ],
+        "expectedBalances": [
+          {
+            "asOfDate": "2026-07-02T00:00:00.000Z",
+            "warehouseId": "synthetic-warehouse",
+            "quantity": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "non_utc_date",
+      "expectedFailureStage": "parser",
+      "messageContains": "canonical UTC",
+      "payload": {
+        "id": "blocked-date-fixture",
+        "userId": "synthetic-user",
+        "itemId": "synthetic-item",
+        "warehouseId": "synthetic-warehouse",
+        "movements": [
+          {
+            "id": "blocked-date-movement",
+            "itemId": "synthetic-item",
+            "warehouseId": "synthetic-warehouse",
+            "type": "inbound",
+            "quantity": 1.0,
+            "unitCost": 1.0,
+            "date": "2026-07-03T03:00:00.000+03:00",
+            "createdAt": "2026-07-03T00:01:00.000Z",
+            "referenceId": "synthetic-date-reference",
+            "description": "synthetic blocked non UTC date",
+            "userId": "synthetic-user",
+            "syncStatus": "synced"
+          }
+        ],
+        "expectedBalances": [
+          {
+            "asOfDate": "2026-07-03T00:00:00.000Z",
+            "warehouseId": "synthetic-warehouse",
+            "quantity": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "unknown_enum",
+      "expectedFailureStage": "parser",
+      "messageContains": "unsupported",
+      "payloadVariants": [
+        {
+          "variant": "movement_type",
+          "payload": {
+            "id": "blocked-enum-type-fixture",
+            "userId": "synthetic-user",
+            "itemId": "synthetic-item",
+            "warehouseId": "synthetic-warehouse",
+            "movements": [
+              {
+                "id": "blocked-enum-type-movement",
+                "itemId": "synthetic-item",
+                "warehouseId": "synthetic-warehouse",
+                "type": "future_movement_type",
+                "quantity": 1.0,
+                "unitCost": 1.0,
+                "date": "2026-07-04T00:00:00.000Z",
+                "createdAt": "2026-07-04T00:01:00.000Z",
+                "referenceId": "synthetic-enum-type-reference",
+                "description": "synthetic blocked enum type",
+                "userId": "synthetic-user",
+                "syncStatus": "synced"
+              }
+            ],
+            "expectedBalances": [
+              {
+                "asOfDate": "2026-07-04T00:00:00.000Z",
+                "warehouseId": "synthetic-warehouse",
+                "quantity": 0.0
+              }
+            ]
+          }
+        },
+        {
+          "variant": "sync_status",
+          "payload": {
+            "id": "blocked-enum-status-fixture",
+            "userId": "synthetic-user",
+            "itemId": "synthetic-item",
+            "warehouseId": "synthetic-warehouse",
+            "movements": [
+              {
+                "id": "blocked-enum-status-movement",
+                "itemId": "synthetic-item",
+                "warehouseId": "synthetic-warehouse",
+                "type": "inbound",
+                "quantity": 1.0,
+                "unitCost": 1.0,
+                "date": "2026-07-05T00:00:00.000Z",
+                "createdAt": "2026-07-05T00:01:00.000Z",
+                "referenceId": "synthetic-enum-status-reference",
+                "description": "synthetic blocked enum status",
+                "userId": "synthetic-user",
+                "syncStatus": "future_sync_status"
+              }
+            ],
+            "expectedBalances": [
+              {
+                "asOfDate": "2026-07-05T00:00:00.000Z",
+                "warehouseId": "synthetic-warehouse",
+                "quantity": 0.0
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

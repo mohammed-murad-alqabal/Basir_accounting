@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:basir_accounting_system/core/persistence/drift_snapshot_preflight.dart';
 import 'package:basir_accounting_system/core/persistence/drift_stock_movements_golden.dart';
 import 'package:basir_accounting_system/core/persistence/drift_stock_movements_snapshot.dart';
 import 'package:basir_drift_storage/basir_drift_storage.dart';
@@ -19,9 +20,15 @@ Future<void> main(List<String> args) async {
       ? 'test/fixtures/stock_movements_golden_fixtures.json'
       : args.single;
   try {
-    final catalog = StockMovementGoldenCatalog.fromJsonString(
-      File(path).readAsStringSync(),
-    );
+    final source = File(path).readAsStringSync();
+    final preflight = DriftSnapshotPreflight.validate(source);
+    if (!preflight.isValid) {
+      stdout.writeln(jsonEncode(preflight.toSafeJson()));
+      exitCode = 1;
+      return;
+    }
+
+    final catalog = StockMovementGoldenCatalog.fromJsonString(source);
     final reports = await DriftStockMovementsSnapshotRunner().runAllClean(
       catalog,
       databaseFactory: () => BasirDatabase(NativeDatabase.memory()),
