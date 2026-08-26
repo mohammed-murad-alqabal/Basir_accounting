@@ -14,8 +14,7 @@ use sha2::{Digest, Sha256};
 use super::models::AuditRecord;
 
 /// The genesis hash for the first record in a chain.
-pub const GENESIS_HASH: &str =
-    "0000000000000000000000000000000000000000000000000000000000000000";
+pub const GENESIS_HASH: &str = "0000000000000000000000000000000000000000000000000000000000000000";
 
 /// Compute the SHA-256 hash of content.
 pub fn compute_hash(content: &str) -> String {

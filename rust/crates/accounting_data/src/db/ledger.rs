@@ -2,13 +2,27 @@ use accounting_core::audit::chain::{compute_record_hash, GENESIS_HASH};
 use accounting_core::audit::models::{AuditAction, AuditMetadata, AuditRecord, WhatInfo};
 use accounting_core::ledger::models::{EntryStatus, JournalEntry};
 use chrono::Utc;
-use rust_decimal::prelude::FromPrimitive;
+use rust_decimal::Decimal;
 use sqlx::PgPool;
 use std::str::FromStr;
-use uuid::Uuid; // For f64 to Decimal conversion optimization
+use uuid::Uuid;
 
 pub struct PgLedgerRepository {
     pool: PgPool,
+}
+
+/// يحول تمثيل JSON القادم من PostgreSQL إلى Decimal من دون المرور عبر f64.
+///
+/// تقبل PostgreSQL JSON الأرقام والنصوص؛ يعالج المساران كسلسلة عشرية حتى
+/// لا تتحول قيمة مالية غير صالحة بصمت إلى صفر أثناء إعادة بناء القيد.
+fn decimal_from_json(value: &serde_json::Value) -> anyhow::Result<Decimal> {
+    match value {
+        serde_json::Value::String(text) => Decimal::from_str(text)
+            .map_err(|error| anyhow::anyhow!("invalid decimal text '{text}': {error}")),
+        serde_json::Value::Number(number) => Decimal::from_str(&number.to_string())
+            .map_err(|error| anyhow::anyhow!("invalid decimal number '{number}': {error}")),
+        _ => anyhow::bail!("expected a JSON decimal number or string"),
+    }
 }
 
 impl PgLedgerRepository {
@@ -447,28 +461,16 @@ impl PgLedgerRepository {
                         continue;
                     }
 
-                    let to_decimal = |val: &serde_json::Value| -> rust_decimal::Decimal {
-                        if let Some(s) = val.as_str() {
-                            rust_decimal::Decimal::from_str(s)
-                                .unwrap_or(rust_decimal::Decimal::ZERO)
-                        } else if let Some(n) = val.as_f64() {
-                            rust_decimal::Decimal::from_f64(n)
-                                .unwrap_or(rust_decimal::Decimal::ZERO)
-                        } else {
-                            rust_decimal::Decimal::ZERO
-                        }
-                    };
-
-                    let debit = to_decimal(
+                    let debit = decimal_from_json(
                         line_val
                             .get("debit_amount")
-                            .unwrap_or(&serde_json::Value::Null),
-                    );
-                    let credit = to_decimal(
+                            .ok_or_else(|| anyhow::anyhow!("missing debit_amount"))?,
+                    )?;
+                    let credit = decimal_from_json(
                         line_val
                             .get("credit_amount")
-                            .unwrap_or(&serde_json::Value::Null),
-                    );
+                            .ok_or_else(|| anyhow::anyhow!("missing credit_amount"))?,
+                    )?;
 
                     let description = match line_val.get("description").and_then(|v| v.as_str()) {
                         Some(s) => s.to_string(),
@@ -482,12 +484,14 @@ impl PgLedgerRepository {
 
                     let exchange_rate = line_val
                         .get("exchange_rate")
-                        .map(|v: &serde_json::Value| to_decimal(v))
-                        .filter(|d: &rust_decimal::Decimal| !d.is_zero());
+                        .filter(|value| !value.is_null())
+                        .map(decimal_from_json)
+                        .transpose()?;
                     let original_amount = line_val
                         .get("original_amount")
-                        .map(|v: &serde_json::Value| to_decimal(v))
-                        .filter(|d: &rust_decimal::Decimal| !d.is_zero());
+                        .filter(|value| !value.is_null())
+                        .map(decimal_from_json)
+                        .transpose()?;
                     let partner_id = line_val
                         .get("partner_id")
                         .and_then(|v: &serde_json::Value| v.as_str())
@@ -578,5 +582,34 @@ impl PgLedgerRepository {
         }
 
         Ok(entries)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::decimal_from_json;
+    use rust_decimal::Decimal;
+    use serde_json::json;
+    use std::str::FromStr;
+
+    #[test]
+    fn parses_decimal_text_and_json_number_without_f64() {
+        let text_value = json!("123456789.123456789");
+        let number_value = json!(12345.6789);
+
+        assert_eq!(
+            decimal_from_json(&text_value).expect("text decimal should parse"),
+            Decimal::from_str("123456789.123456789").expect("fixture is valid"),
+        );
+        assert_eq!(
+            decimal_from_json(&number_value).expect("JSON number should parse"),
+            Decimal::from_str("12345.6789").expect("fixture is valid"),
+        );
+    }
+
+    #[test]
+    fn rejects_invalid_or_missing_decimal_values() {
+        assert!(decimal_from_json(&json!("not-a-decimal")).is_err());
+        assert!(decimal_from_json(&serde_json::Value::Null).is_err());
     }
 }

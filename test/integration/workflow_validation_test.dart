@@ -185,7 +185,27 @@ void main() {
           (step) => (step as YamlMap)['name'] == 'Run tests with coverage',
         ) as YamlMap;
 
-        expect(testStep['run'], contains('flutter test --coverage'));
+        final runCommand = testStep['run'] as String;
+        expect(runCommand, contains('flutter test'));
+        expect(runCommand, contains('--concurrency=1'));
+        expect(runCommand, contains('--coverage'));
+      });
+
+      test('test gate should enforce coverage from the lcov report', () {
+        final jobs = workflow['jobs'] as YamlMap;
+        final testGate = jobs['test-quality-gate'] as YamlMap;
+        final steps = testGate['steps'] as YamlList;
+
+        final coverageStep = steps.firstWhere(
+          (step) => (step as YamlMap)['name'] == 'Check Test Coverage',
+        ) as YamlMap;
+        final runCommand = coverageStep['run'] as String;
+
+        expect(runCommand, contains('coverage/lcov.info'));
+        expect(runCommand, contains('awk'));
+        expect(runCommand, contains('BASELINE=25.98'));
+        expect(runCommand, contains('TARGET=70'));
+        expect(runCommand, contains('::warning::'));
       });
 
       test('security gate should check vulnerabilities', () {

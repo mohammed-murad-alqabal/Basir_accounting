@@ -1,13 +1,11 @@
-library;
-
-import 'package:flutter/foundation.dart';
-
 /// مسودة وثيقة موحدة لنظام بصير المحاسبي.
 ///
 /// تمثل وثيقة غير مكتملة أو قابلة للتعديل لا أثر لها على الدفاتر أو المخزون.
 /// المرجع: مخطط UI/UX التنفيذي — القسم 6 (حالات الوثائق) + العقود الموحدة.
+library;
 
 import 'package:basir_accounting_system/core/domain/contracts/document_status.dart';
+import 'package:flutter/foundation.dart';
 
 /// بند واحد داخل مسودة الوثيقة.
 @immutable
@@ -75,16 +73,6 @@ class DraftLineItem {
 /// قبل استكمال بنودها وإجمالياتها عبر الطبقة الخدمية.
 @immutable
 class DocumentDraft {
-  /// يبني مسودة بإلزامية المعرّف والنوع والعملة.
-  const DocumentDraft._({
-    required this.id,
-    required this.documentType,
-    required this.currencyCode,
-    required this.lines,
-    required this.headerNote,
-    required this.updatedAt,
-  });
-
   /// يبني مسودة جديدة بزمن تعديل تلقائي (الحالي).
   factory DocumentDraft({
     required String id,
@@ -102,6 +90,16 @@ class DocumentDraft {
         headerNote: headerNote,
         updatedAt: updatedAt ?? DateTime.now(),
       );
+
+  /// يبني مسودة بإلزامية المعرّف والنوع والعملة.
+  const DocumentDraft._({
+    required this.id,
+    required this.documentType,
+    required this.currencyCode,
+    required this.lines,
+    required this.headerNote,
+    required this.updatedAt,
+  });
 
   /// معرّف المسودة الفريد.
   final String id;

@@ -2,6 +2,7 @@
 
 > **status:** ARCHIVED
 > **historical_as_of_date:** 2025-12-03
+> **historical_as_of_sha:** `df1c1feb20c68ce91bca2a503c4b5eb6faaa04f5`
 > **not_current_source_of_truth:** true
 > **superseded_by:** `docs/00-governance/AUTHORITY_MODEL.md`, `docs/Strategic/خطة_تنفيذ_بصير.md`, and SHA-linked CI evidence
 > **archive_note:** هذا تقرير تاريخي محفوظ؛ لا يصف الحالة الحالية للمستودع ولا يثبت جاهزية أو امتثالًا.

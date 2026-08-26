@@ -33,6 +33,7 @@ dependencies:
   barcode_widget: ^2.0.4
   basir_drift_storage:
     path: packages/basir_drift_storage
+  bcrypt: ^1.2.0
   crypto: ^3.0.7
   cupertino_icons: ^1.0.8
   decimal: ^3.2.4
@@ -94,6 +95,7 @@ dev_dependencies:
   build_runner: ^2.4.9
   # Test-only executor for isolated SQLite migration verification.
   drift: 2.31.0
+  ffi: ^2.1.4
   flutter_launcher_icons: ^0.14.4
   flutter_lints: ^6.0.0
   flutter_native_splash: ^2.3.5

@@ -7,7 +7,7 @@ part of 'cloud_backup_service.dart';
 // **************************************************************************
 
 String _$cloudBackupServiceHash() =>
-    r'9d9c3992d60c3a7f9de5cff85cb156232ddef975';
+    r'd8749e39c5a98550459b78b1c687fea9525bfa1a';
 
 /// خدمة النسخ الاحتياطي السحابي والمزامنة مع Google Drive.
 ///

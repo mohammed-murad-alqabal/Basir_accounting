@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Dependency Review
-        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0
         with:
           fail-on-severity: moderate
           comment-summary-in-pr: always
@@ -48,13 +48,19 @@ jobs:
           fi
 
       - name: Check for security vulnerabilities
+        env:
+          OSV_SCANNER_VERSION: v2.5.0
+          OSV_SCANNER_SHA256: edcfc41d257db36148f065055655fe3fcfc434b0b423ea67468a84c207524e0c
         run: |
-          echo "🔒 Checking for security vulnerabilities..."
-
-          # Check pub.dev for known vulnerabilities
-          flutter pub outdated
-
-          echo "✅ Security check completed"
+          set -euo pipefail
+          scanner="$RUNNER_TEMP/osv-scanner"
+          curl --fail --location --proto '=https' --tlsv1.2 \
+            --output "$scanner" \
+            "https://github.com/google/osv-scanner/releases/download/${OSV_SCANNER_VERSION}/osv-scanner_linux_amd64"
+          printf '%s  %s\n' "$OSV_SCANNER_SHA256" "$scanner" | sha256sum --check --strict
+          chmod 0755 "$scanner"
+          "$scanner" --version
+          "$scanner" scan source --lockfile pubspec.lock
 
       - name: Analyze dependency licenses
         run: |

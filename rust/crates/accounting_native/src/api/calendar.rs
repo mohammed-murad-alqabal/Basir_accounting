@@ -140,7 +140,7 @@ pub async fn close_financial_year(
     // 5. Post Journal Entry
     let metadata = accounting_core::audit::models::AuditMetadata {
         who: accounting_core::audit::models::WhoInfo {
-            user_id: user_id,
+            user_id,
             user_name: "SYSTEM".to_string(),
             role: "SYSTEM".to_string(),
             session_id: Uuid::new_v4(),

@@ -650,16 +650,18 @@ JournalEntryLine _$JournalEntryLineFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$JournalEntryLine {
-  /// Reference to the target [Account] ID.
+  /// Identifier of the target account.
   String get accountId => throw _privateConstructorUsedError;
 
   /// Denormalized account name for high-performance listing and audit.
   String get accountName => throw _privateConstructorUsedError;
 
   /// Positive increase for Debit-nature accounts.
+  @DecimalJsonConverter()
   Decimal get debit => throw _privateConstructorUsedError;
 
   /// Positive increase for Credit-nature accounts.
+  @DecimalJsonConverter()
   Decimal get credit => throw _privateConstructorUsedError;
 
   /// Line-specific memo or explanation.
@@ -676,9 +678,11 @@ mixin _$JournalEntryLine {
   String? get originalCurrency => throw _privateConstructorUsedError;
 
   /// Spot exchange rate at the time of recording.
+  @DecimalJsonConverter()
   Decimal? get exchangeRate => throw _privateConstructorUsedError;
 
   /// Original amount in the source currency before conversion.
+  @DecimalJsonConverter()
   Decimal? get originalAmount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -696,14 +700,14 @@ abstract class $JournalEntryLineCopyWith<$Res> {
   $Res call(
       {String accountId,
       String accountName,
-      Decimal debit,
-      Decimal credit,
+      @DecimalJsonConverter() Decimal debit,
+      @DecimalJsonConverter() Decimal credit,
       String? description,
       String? sourceDocumentRef,
       String? costCenterId,
       String? originalCurrency,
-      Decimal? exchangeRate,
-      Decimal? originalAmount});
+      @DecimalJsonConverter() Decimal? exchangeRate,
+      @DecimalJsonConverter() Decimal? originalAmount});
 }
 
 /// @nodoc
@@ -786,14 +790,14 @@ abstract class _$$JournalEntryLineImplCopyWith<$Res>
   $Res call(
       {String accountId,
       String accountName,
-      Decimal debit,
-      Decimal credit,
+      @DecimalJsonConverter() Decimal debit,
+      @DecimalJsonConverter() Decimal credit,
       String? description,
       String? sourceDocumentRef,
       String? costCenterId,
       String? originalCurrency,
-      Decimal? exchangeRate,
-      Decimal? originalAmount});
+      @DecimalJsonConverter() Decimal? exchangeRate,
+      @DecimalJsonConverter() Decimal? originalAmount});
 }
 
 /// @nodoc
@@ -864,24 +868,25 @@ class __$$JournalEntryLineImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$JournalEntryLineImpl implements _JournalEntryLine {
   const _$JournalEntryLineImpl(
       {required this.accountId,
       required this.accountName,
-      required this.debit,
-      required this.credit,
+      @DecimalJsonConverter() required this.debit,
+      @DecimalJsonConverter() required this.credit,
       this.description,
       this.sourceDocumentRef,
       this.costCenterId,
       this.originalCurrency,
-      this.exchangeRate,
-      this.originalAmount});
+      @DecimalJsonConverter() this.exchangeRate,
+      @DecimalJsonConverter() this.originalAmount});
 
   factory _$JournalEntryLineImpl.fromJson(Map<String, dynamic> json) =>
       _$$JournalEntryLineImplFromJson(json);
 
-  /// Reference to the target [Account] ID.
+  /// Identifier of the target account.
   @override
   final String accountId;
 
@@ -891,10 +896,12 @@ class _$JournalEntryLineImpl implements _JournalEntryLine {
 
   /// Positive increase for Debit-nature accounts.
   @override
+  @DecimalJsonConverter()
   final Decimal debit;
 
   /// Positive increase for Credit-nature accounts.
   @override
+  @DecimalJsonConverter()
   final Decimal credit;
 
   /// Line-specific memo or explanation.
@@ -916,10 +923,12 @@ class _$JournalEntryLineImpl implements _JournalEntryLine {
 
   /// Spot exchange rate at the time of recording.
   @override
+  @DecimalJsonConverter()
   final Decimal? exchangeRate;
 
   /// Original amount in the source currency before conversion.
   @override
+  @DecimalJsonConverter()
   final Decimal? originalAmount;
 
   @override
@@ -984,23 +993,24 @@ class _$JournalEntryLineImpl implements _JournalEntryLine {
 
 abstract class _JournalEntryLine implements JournalEntryLine {
   const factory _JournalEntryLine(
-      {required final String accountId,
-      required final String accountName,
-      required final Decimal debit,
-      required final Decimal credit,
-      final String? description,
-      final String? sourceDocumentRef,
-      final String? costCenterId,
-      final String? originalCurrency,
-      final Decimal? exchangeRate,
-      final Decimal? originalAmount}) = _$JournalEntryLineImpl;
+          {required final String accountId,
+          required final String accountName,
+          @DecimalJsonConverter() required final Decimal debit,
+          @DecimalJsonConverter() required final Decimal credit,
+          final String? description,
+          final String? sourceDocumentRef,
+          final String? costCenterId,
+          final String? originalCurrency,
+          @DecimalJsonConverter() final Decimal? exchangeRate,
+          @DecimalJsonConverter() final Decimal? originalAmount}) =
+      _$JournalEntryLineImpl;
 
   factory _JournalEntryLine.fromJson(Map<String, dynamic> json) =
       _$JournalEntryLineImpl.fromJson;
 
   @override
 
-  /// Reference to the target [Account] ID.
+  /// Identifier of the target account.
   String get accountId;
   @override
 
@@ -1009,10 +1019,12 @@ abstract class _JournalEntryLine implements JournalEntryLine {
   @override
 
   /// Positive increase for Debit-nature accounts.
+  @DecimalJsonConverter()
   Decimal get debit;
   @override
 
   /// Positive increase for Credit-nature accounts.
+  @DecimalJsonConverter()
   Decimal get credit;
   @override
 
@@ -1034,10 +1046,12 @@ abstract class _JournalEntryLine implements JournalEntryLine {
   @override
 
   /// Spot exchange rate at the time of recording.
+  @DecimalJsonConverter()
   Decimal? get exchangeRate;
   @override
 
   /// Original amount in the source currency before conversion.
+  @DecimalJsonConverter()
   Decimal? get originalAmount;
   @override
   @JsonKey(ignore: true)
@@ -1469,7 +1483,8 @@ class __$$JournalEntryImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$JournalEntryImpl extends _JournalEntry {
   const _$JournalEntryImpl(
       {required this.id,

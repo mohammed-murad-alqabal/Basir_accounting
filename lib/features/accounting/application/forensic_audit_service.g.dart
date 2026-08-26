@@ -7,7 +7,7 @@ part of 'forensic_audit_service.dart';
 // **************************************************************************
 
 String _$forensicAuditServiceHash() =>
-    r'50ece107571203147c04087512fe32d2b9d02549';
+    r'c067df664429e3f81a64f142385b13d8b94ed0f8';
 
 /// [ForensicAuditService]
 ///

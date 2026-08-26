@@ -1,5 +1,6 @@
 use base64::{engine::general_purpose, Engine as _};
 use p256::ecdsa::{signature::Signer, Signature, SigningKey};
+use p256::elliptic_curve::Generate;
 use p256::pkcs8::{DecodePrivateKey, EncodePrivateKey, EncodePublicKey, LineEnding};
 use sha2::{Digest, Sha256};
 use thiserror::Error;
@@ -126,7 +127,7 @@ pub fn sign_ecdsa(private_key_pem: &str, hash_base64: &str) -> Result<String, Cr
 /// Generates a new ECDSA P-256 key pair in PEM format.
 /// Returns (private_key_pem, public_key_pem).
 pub fn generate_key_pair() -> (String, String) {
-    let secret_key = p256::SecretKey::random(&mut rand::thread_rng());
+    let secret_key = p256::SecretKey::generate_from_rng(&mut rand::rng());
     let private_pem = secret_key.to_pkcs8_pem(LineEnding::LF).unwrap().to_string();
 
     let public_key = secret_key.public_key();

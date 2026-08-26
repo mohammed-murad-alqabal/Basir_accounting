@@ -10,13 +10,15 @@
 //! - Account balance calculation with period filtering
 //! - Drill-down capability to source entries
 
-pub mod models;
-pub mod trial_balance;
-pub mod query;
 pub mod generator;
+pub mod models;
+pub mod query;
+pub mod trial_balance;
 pub mod zakah;
 
-pub use models::{AccountBalance, TrialBalance, TrialBalanceLine, FinancialReport, FinancialReportLine};
+pub use generator::{ComparativeBalance, FinancialReportGenerator};
+pub use models::{
+    AccountBalance, FinancialReport, FinancialReportLine, TrialBalance, TrialBalanceLine,
+};
+pub use query::{BalanceQuery, EntryQuery};
 pub use trial_balance::generate_trial_balance;
-pub use query::{EntryQuery, BalanceQuery};
-pub use generator::{FinancialReportGenerator, ComparativeBalance};
