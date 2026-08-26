@@ -107,10 +107,10 @@ jobs:
 
           # خصم نقاط للأخطاء
           SCORE=$((SCORE - ERROR_COUNT * 10))
-          
+
           # خصم نقاط للتحذيرات
           SCORE=$((SCORE - WARNING_COUNT * 2))
-          
+
           # خصم نقاط للاختبارات الفاشلة
           SCORE=$((SCORE - FAILED_TESTS * 5))
 
@@ -176,7 +176,7 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            
+
             const errorCount = '${{ steps.analyze.outputs.error_count }}';
             const warningCount = '${{ steps.analyze.outputs.warning_count }}';
             const infoCount = '${{ steps.analyze.outputs.info_count }}';
@@ -218,59 +218,59 @@ jobs:
             // إنشاء التعليق
             const body = `## ${emoji} تقرير جودة الكود - PR #${{ github.event.pull_request.number }}
 
-### 📊 النتيجة الإجمالية: ${score}/100 (${grade})
+            ### 📊 النتيجة الإجمالية: ${score}/100 (${grade})
 
----
+            ---
 
-### 🔍 تحليل الكود (Flutter Analyze)
+            ### 🔍 تحليل الكود (Flutter Analyze)
 
-| النوع | العدد | الحالة |
-|:---|:---:|:---:|
-| أخطاء (Errors) | ${errorCount} | ${errorCount === '0' ? '✅' : '❌'} |
-| تحذيرات (Warnings) | ${warningCount} | ${warningCount === '0' ? '✅' : warningCount <= '5' ? '⚠️' : '❌'} |
-| معلومات (Info) | ${infoCount} | ℹ️ |
+            | النوع | العدد | الحالة |
+            |:---|:---:|:---:|
+            | أخطاء (Errors) | ${errorCount} | ${errorCount === '0' ? '✅' : '❌'} |
+            | تحذيرات (Warnings) | ${warningCount} | ${warningCount === '0' ? '✅' : warningCount <= '5' ? '⚠️' : '❌'} |
+            | معلومات (Info) | ${infoCount} | ℹ️ |
 
-### 🧪 نتائج الاختبارات
+            ### 🧪 نتائج الاختبارات
 
-| المقياس | القيمة | الحالة |
-|:---|:---:|:---:|
-| نجح | ${passedTests} | ✅ |
-| فشل | ${failedTests} | ${failedTests === '0' ? '✅' : '❌'} |
-| تم تخطيه | ${skippedTests} | ${skippedTests === '0' ? '✅' : 'ℹ️'} |
+            | المقياس | القيمة | الحالة |
+            |:---|:---:|:---:|
+            | نجح | ${passedTests} | ✅ |
+            | فشل | ${failedTests} | ${failedTests === '0' ? '✅' : '❌'} |
+            | تم تخطيه | ${skippedTests} | ${skippedTests === '0' ? '✅' : 'ℹ️'} |
 
----
+            ---
 
-### 💡 التوصيات
+            ### 💡 التوصيات
 
-${recommendations}
+            ${recommendations}
 
-${errorDetails}${warningDetails}${failedTestsDetails}
+            ${errorDetails}${warningDetails}${failedTestsDetails}
 
----
+            ---
 
-### 📋 الإجراءات التالية
+            ### 📋 الإجراءات التالية
 
-${errorCount !== '0' || failedTests !== '0' ? 
-  '⚠️ **يُنصح بإصلاح المشاكل قبل الدمج**\n\n- [ ] إصلاح جميع الأخطاء الحرجة\n- [ ] إصلاح الاختبارات الفاشلة\n- [ ] مراجعة التحذيرات وتقليلها' : 
-  '✅ **الكود جاهز للدمج!**\n\nجميع الفحوصات نجحت. يمكن المتابعة بالدمج بعد المراجعة.'}
+            ${errorCount !== '0' || failedTests !== '0' ?
+              '⚠️ **يُنصح بإصلاح المشاكل قبل الدمج**\n\n- [ ] إصلاح جميع الأخطاء الحرجة\n- [ ] إصلاح الاختبارات الفاشلة\n- [ ] مراجعة التحذيرات وتقليلها' :
+              '✅ **الكود جاهز للدمج!**\n\nجميع الفحوصات نجحت. يمكن المتابعة بالدمج بعد المراجعة.'}
 
----
+            ---
 
-<details>
-<summary>📚 روابط مفيدة</summary>
+            <details>
+            <summary>📚 روابط مفيدة</summary>
 
-- [نتائج التحليل الكاملة](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-- [دليل معايير الجودة](../docs/code-quality-standards.md)
-- [دليل إصلاح الأخطاء](../docs/ERROR_TRACKING_GUIDE.md)
+            - [نتائج التحليل الكاملة](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            - [دليل معايير الجودة](../docs/code-quality-standards.md)
+            - [دليل إصلاح الأخطاء](../docs/ERROR_TRACKING_GUIDE.md)
 
-</details>
+            </details>
 
----
+            ---
 
-🤖 **تم إنشاء هذا التقرير تلقائياً** بواسطة Error Tracking System  
-📅 **التاريخ:** ${new Date().toISOString().split('T')[0]}  
-🔗 **Workflow Run:** [#${{ github.run_id }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-`;
+            🤖 **تم إنشاء هذا التقرير تلقائياً** بواسطة Error Tracking System
+            📅 **التاريخ:** ${new Date().toISOString().split('T')[0]}
+            🔗 **Workflow Run:** [#${{ github.run_id }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            `;
 
             // البحث عن تعليق سابق من البوت
             const comments = await github.rest.issues.listComments({
@@ -279,8 +279,8 @@ ${errorCount !== '0' || failedTests !== '0' ?
               issue_number: context.issue.number
             });
 
-            const botComment = comments.data.find(comment => 
-              comment.user.type === 'Bot' && 
+            const botComment = comments.data.find(comment =>
+              comment.user.type === 'Bot' &&
               comment.body.includes('تقرير جودة الكود')
             );
 

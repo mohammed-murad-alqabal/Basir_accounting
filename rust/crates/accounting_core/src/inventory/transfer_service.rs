@@ -3,6 +3,7 @@
 //! Handles the business logic for inter-warehouse inventory transfers,
 //! including validation, stock movement generation, and journal entry creation.
 
+use crate::inventory::chain::compute_movement_hash;
 use crate::inventory::models::{MovementType, StockMovement};
 use crate::inventory::warehouse::{TransferStatus, Warehouse, WarehouseTransfer};
 use crate::ledger::models::{
@@ -172,7 +173,7 @@ impl WarehouseTransferService {
 
         for line in &transfer.lines {
             // Outbound from source
-            let outbound = StockMovement {
+            let mut outbound = StockMovement {
                 id: Uuid::new_v4(),
                 item_id: line.item_id,
                 movement_type: MovementType::Outbound,
@@ -184,11 +185,12 @@ impl WarehouseTransferService {
                 hash: String::new(),
                 previous_hash: current_hash.clone(),
             };
-            current_hash = format!("hash_{}", outbound.id); // Placeholder - should use real hash
+            outbound.hash = compute_movement_hash(&outbound);
+            current_hash = outbound.hash.clone();
             movements.push(outbound);
 
             // Inbound to destination
-            let inbound = StockMovement {
+            let mut inbound = StockMovement {
                 id: Uuid::new_v4(),
                 item_id: line.item_id,
                 movement_type: MovementType::Inbound,
@@ -200,7 +202,8 @@ impl WarehouseTransferService {
                 hash: String::new(),
                 previous_hash: current_hash.clone(),
             };
-            current_hash = format!("hash_{}", inbound.id);
+            inbound.hash = compute_movement_hash(&inbound);
+            current_hash = inbound.hash.clone();
             movements.push(inbound);
         }
 
@@ -276,5 +279,13 @@ mod tests {
         assert_eq!(movements.len(), 4);
         assert!(matches!(movements[0].movement_type, MovementType::Outbound));
         assert!(matches!(movements[1].movement_type, MovementType::Inbound));
+        assert!(movements.iter().all(|movement| !movement.hash.is_empty()));
+        assert_eq!(movements[0].previous_hash, "genesis");
+        assert_eq!(movements[1].previous_hash, movements[0].hash);
+        assert_eq!(movements[2].previous_hash, movements[1].hash);
+        assert_eq!(movements[3].previous_hash, movements[2].hash);
+        assert!(movements
+            .iter()
+            .all(|movement| movement.hash == compute_movement_hash(movement)));
     }
 }
