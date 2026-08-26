@@ -1,0 +1,3 @@
+20260826000100_organization_governance.sql: statements=41 parse=ok
+20260826000200_reference_data.sql: statements=34 parse=ok
+organization_governance_test.sql: statements=12 parse=ok
