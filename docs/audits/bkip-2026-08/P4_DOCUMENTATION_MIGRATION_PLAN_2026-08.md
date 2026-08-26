@@ -33,7 +33,7 @@
 
 ## سجل قرارات الهجرة
 
-لا توجد قرارات تنفيذية معتمدة في هذه الدفعة؛ الجدول التالي هو سجل عمل يجب أن يملأه المالك قبل التنفيذ.
+لا توجد قرارات نقل أو حذف أو دمج مساري معتمدة في هذه الدفعة؛ القراران الوحيدان المعتمدان هما `KEEP_APPROVED` لـ`MERGE-P4-003` و`MERGE-P4-005`. أما الجدول التالي فيبقى سجل عمل يجب أن يملأه المالك قبل أي تغيير مساري.
 
 | القرار | الأصول/النطاق | الإجراء المقترح | الحالة | شرط التنفيذ |
 |---|---|---|---|---|
@@ -47,6 +47,22 @@
 | `MERGE-P4-005` | `l10n_errors.txt` ونسخة archive | إبقاء الملف الجذري ونسخة archive دون حذف أو redirect | KEEP_APPROVED | موافقة المالك على KEEP + `l10n.yaml` وSHA متطابقان |
 | `RECLASSIFY-P4-001` | `.kiro/specs/active`, `completed`, `planning` | تصنيف كل spec حسب acceptance evidence | PENDING_REVIEW | owner + REQ/ADR/test/evidence لكل spec عالي الأثر |
 | `INDEX-P4-001` | `docs/INDEX.md` وفهارس `.kiro` | جعل [DOCUMENTATION_REGISTER](../../00-governance/DOCUMENTATION_REGISTER.md) الفهرس الحاكم | DRAFT | اعتماد هذا السجل وتحديث redirects دون حذف الفهارس القديمة |
+
+## نتائج MOVE link audit — قراءة فقط
+
+أُجري فحص تفصيلي على SHA `17428b6f53eb6bb70899ad2cec8fdcb0127fe52d` لمجموعتي `MOVE-P4-001` و`MOVE-P4-002` دون نقل أو حذف أو redirect. شمل الجرد المحدد 83 ملف Markdown و30 رابطًا محليًا؛ كانت 27 صالحة و3 مكسورة. تتركز المرشحات في `docs/Core` و`docs/Strategic` و`docs/architecture` و`docs/04-data` و`docs/specs`، لكنها ليست جميعًا وثائق مجال حية؛ لذلك لا تُعد قائمة نقل نهائية.
+
+| المجموعة | الملفات | الروابط | الصالحة | المكسورة | النتيجة |
+|---|---:|---:|---:|---:|---|
+| `docs/Core` | 11 | 3 | 1 | 2 | مراجعة owner والغرض قبل أي MOVE |
+| `docs/Strategic` | 60 | 22 | 21 | 1 | وثائق استراتيجية مختلطة؛ لا نقل تلقائي |
+| `docs/architecture` | 4 | 0 | 0 | 0 | لا دليل link-based على النقل |
+| `docs/04-data` | 2 | 5 | 5 | 0 | مسار بيانات مستقل؛ لا ينقل ضمن MOVE-P4-001 تلقائيًا |
+| `docs/specs` | 6 | 0 | 0 | 0 | يُراجع ضمن P4-05 لا MOVE تلقائيًا |
+
+لم يعثر الفحص الاسمي الحتمي على أي ADR خارج `docs/03-architecture/adrs/` بعد استبعاد تقارير التدقيق؛ النتيجة `0` مرشح ADR. لا يثبت ذلك اكتمال decision records، ولذلك تبقى `MOVE-P4-002` في `PENDING_REVIEW` إلى حين مراجعة authority وsupersedes.
+
+الروابط المكسورة الثلاثة تمنع أي نقل مساري في هذه الجولة. يجب قبل أي `git mv` إنشاء سجل ملفي يتضمن `document_id` و`owner` و`authority` وREQ/ADR references وacceptance evidence وسياسة رجوع، ثم إعادة فحص الروابط على SHA الـPR.
 
 ## موجات التنفيذ
 
