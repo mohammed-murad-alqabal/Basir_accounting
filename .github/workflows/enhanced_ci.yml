@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  FLUTTER_VERSION: "3.35.5"
+  FLUTTER_VERSION: "3.44.9"
   # يمنع التراجع عن خط الأساس القابل للقياس، بينما يُرفع تدريجيًا مع المهمات.
   MIN_COVERAGE: 25
   MAX_COMPLEXITY: 10
