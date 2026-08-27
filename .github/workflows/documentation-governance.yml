@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout full history for changed-file detection
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
 
@@ -78,7 +78,7 @@ jobs:
         # التقرير الاستشاري مكتمل حتى إذا قيّدت إعدادات المستودع كتابة التعليقات.
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false && always()
         continue-on-error: true
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71
         with:
           script: |
             const fs = require('fs');
