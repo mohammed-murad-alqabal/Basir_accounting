@@ -256,7 +256,7 @@ jobs:
 
           # تُشغَّل الاختبارات الوظيفية الحتمية فقط في CI؛ تقاس المعايير
           # الزمنية على عتاد مخصص لتجنّب تقلب موارد المشغلات المشتركة.
-          flutter test --coverage --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*')
+          flutter test --concurrency=1 --coverage --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*')
 
           echo ""
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
