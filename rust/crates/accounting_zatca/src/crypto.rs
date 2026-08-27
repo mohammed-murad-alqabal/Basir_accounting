@@ -1,6 +1,6 @@
-use p256::elliptic_curve::Generate;
 use base64::{engine::general_purpose, Engine as _};
 use p256::ecdsa::{signature::Signer, Signature, SigningKey};
+use p256::elliptic_curve::Generate;
 use p256::pkcs8::{DecodePrivateKey, EncodePrivateKey, EncodePublicKey, LineEnding};
 use sha2::{Digest, Sha256};
 use thiserror::Error;
