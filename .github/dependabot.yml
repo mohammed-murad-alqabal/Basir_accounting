@@ -39,10 +39,8 @@ updates:
           - "minor"
           - "patch"
     # تجاهل بعض التحديثات إذا لزم الأمر
-    ignore:
-      # مثال: تجاهل تحديثات major لحزمة معينة
-      # - dependency-name: "package_name"
-      #   update-types: ["version-update:semver-major"]
+    ignore: []
+      # لا توجد حزم مستثناة حاليًا؛ تُضاف الاستثناءات كعناصر مصفوفة عند الحاجة.
 
   # Rust/Cargo workspace dependencies
   - package-ecosystem: "cargo"

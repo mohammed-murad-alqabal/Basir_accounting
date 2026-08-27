@@ -33,19 +33,26 @@ jobs:
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo ""
 
-          # Get commit messages
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            COMMITS=$(git log --format=%s ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
-          else
-            COMMITS=$(git log --format=%s -1)
-          fi
-
-          # Validate format: type(scope): description
+          # Validate each non-merge commit message. Merge commits are topology
+          # records and are intentionally excluded from Conventional Commits.
           VALID_TYPES="feat|fix|docs|style|refactor|test|chore|perf|ci|build"
           PATTERN="^($VALID_TYPES)(\(.+\))?: .+"
 
           INVALID_COUNT=0
-          while IFS= read -r commit; do
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            COMMIT_RANGE="${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
+            COMMIT_LINES=$(git log --format='%H%x09%s' "$COMMIT_RANGE")
+          else
+            COMMIT_LINES=$(git log -1 --format='%H%x09%s')
+          fi
+
+          while IFS=$'\t' read -r sha commit; do
+            [ -n "$sha" ] || continue
+            parent_count=$(git rev-list --parents -n 1 "$sha" | wc -w)
+            if [ "$parent_count" -gt 2 ]; then
+              echo "⏭️ Skipping merge commit: $sha"
+              continue
+            fi
             if [[ ! "$commit" =~ $PATTERN ]]; then
               echo "❌ Invalid commit message: $commit"
               echo "   Expected format: type(scope): description"
@@ -54,7 +61,7 @@ jobs:
             else
               echo "✅ Valid: $commit"
             fi
-          done <<< "$COMMITS"
+          done <<< "$COMMIT_LINES"
 
           echo ""
           if [ $INVALID_COUNT -gt 0 ]; then

@@ -2,10 +2,15 @@ import 'package:basir_accounting_system/features/inventory/domain/entities/stock
 
 /// واجهة مستودع حركات المخزون
 abstract class StockMovementRepository {
-  /// جلب الحركات لصنف معين (مع إمكانية الفلترة حسب المستودع)
+  /// جلب حركات صنف ضمن المستودع الفعال حتى تاريخ شامل اختياري.
+  ///
+  /// يستخدم `date`، لا `createdAt`، لتحديد أهلية الحركة عند وجود
+  /// `asOfDate`. الحركة العامة ذات `warehouseId = null` تُعامل وفق
+  /// سياسة implementation الحالية عند طلب مستودع محدد.
   Future<List<StockMovement>> getMovementsForItem(
     String itemId, {
     String? warehouseId,
+    DateTime? asOfDate,
   });
 
   /// جلب الحركات بناءً على مرجع معين (مثل رقم الفاتورة)

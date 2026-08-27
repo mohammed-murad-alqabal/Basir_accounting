@@ -31,10 +31,14 @@ dependencies:
   # Dependencies (sorted alphabetically)
   archive: ^3.6.1
   barcode_widget: ^2.0.4
+  basir_drift_storage:
+    path: packages/basir_drift_storage
   bcrypt: ^1.2.0
   crypto: ^3.0.7
   cupertino_icons: ^1.0.8
   decimal: ^3.2.4
+  # Drift code generation is isolated in the internal storage package.
+  # Isar remains active until the explicit cutover phase.
   device_info_plus: ^12.3.0
   dio: ^5.9.0
   excel: ^4.0.6
@@ -89,6 +93,8 @@ dependencies:
 dev_dependencies:
   # Dev Dependencies (sorted alphabetically)
   build_runner: ^2.4.9
+  # Test-only executor for isolated SQLite migration verification.
+  drift: 2.31.0
   ffi: ^2.1.4
   flutter_launcher_icons: ^0.14.4
   flutter_lints: ^6.0.0
