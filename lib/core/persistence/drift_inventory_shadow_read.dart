@@ -366,8 +366,7 @@ class ShadowReadInventoryRepository implements InventoryRepository {
   }
 }
 
-class ShadowReadStockMovementRepository
-    implements StockMovementRepository {
+class ShadowReadStockMovementRepository implements StockMovementRepository {
   ShadowReadStockMovementRepository({
     required StockMovementRepository source,
     required StockMovementRepository candidate,
@@ -475,7 +474,8 @@ bool _inventoryItemListsEqual(
   final sortedRight = [...right]..sort(_compareInventoryItems);
   if (sortedLeft.length != sortedRight.length) return false;
   for (var index = 0; index < sortedLeft.length; index += 1) {
-    if (!_inventoryItemEqual(sortedLeft[index], sortedRight[index])) return false;
+    if (!_inventoryItemEqual(sortedLeft[index], sortedRight[index]))
+      return false;
   }
   return true;
 }
@@ -488,7 +488,8 @@ bool _stockMovementListsEqual(
   final sortedRight = [...right]..sort(_compareStockMovements);
   if (sortedLeft.length != sortedRight.length) return false;
   for (var index = 0; index < sortedLeft.length; index += 1) {
-    if (!_stockMovementEqual(sortedLeft[index], sortedRight[index])) return false;
+    if (!_stockMovementEqual(sortedLeft[index], sortedRight[index]))
+      return false;
   }
   return true;
 }
