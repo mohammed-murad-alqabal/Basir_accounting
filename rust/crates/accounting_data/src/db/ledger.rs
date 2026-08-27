@@ -1,6 +1,9 @@
 use accounting_core::audit::chain::{compute_record_hash, GENESIS_HASH};
 use accounting_core::audit::models::{AuditAction, AuditMetadata, AuditRecord, WhatInfo};
 use accounting_core::ledger::models::{EntryStatus, JournalEntry};
+use accounting_core::ledger::validation::{
+    validate_balance, validate_currency, validate_has_lines, validate_line_amounts,
+};
 use chrono::Utc;
 use rust_decimal::Decimal;
 use sqlx::PgPool;
@@ -47,6 +50,17 @@ impl PgLedgerRepository {
         entry: &JournalEntry,
         metadata: &AuditMetadata,
     ) -> Result<(), anyhow::Error> {
+        // Repository posting is the final boundary for all business flows. The
+        // native API and sub-ledgers can call this method directly, so enforce
+        // the database-independent invariants here as well as in the core service.
+        if entry.status != EntryStatus::Posted {
+            anyhow::bail!("Only entries in Posted status may be persisted to the ledger");
+        }
+        validate_has_lines(entry).map_err(|error| anyhow::anyhow!(error.to_string()))?;
+        validate_line_amounts(entry).map_err(|error| anyhow::anyhow!(error.to_string()))?;
+        validate_balance(entry).map_err(|error| anyhow::anyhow!(error.to_string()))?;
+        validate_currency(entry).map_err(|error| anyhow::anyhow!(error.to_string()))?;
+
         // 1. Insert Header
         let adjustment_reason_str = entry.adjustment_reason.map(|r| format!("{:?}", r));
 

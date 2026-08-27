@@ -1,0 +1,203 @@
+# Terminal Full Output
+# Terminal: core_tests
+# Command: cd /home/ubuntu/Basir_accounting/rust && . "$HOME/.cargo/env" && cargo test -p accounting_core -p accounting_zatca
+# PID: 1129
+# Timestamp: 2026-08-20_17-25-42.774594
+# Original Length: 13951 characters
+# ----------------------------------------
+
+[32mubuntu@sandbox:~$ [0mcd /home/ubuntu/Basir_accounting/rust && . "$HOME/.cargo/env" && cargo test -p accounting_core -p accounting_zatca
+[1m[92m   Compiling[0m futures-sink v0.3.33
+[1m[92m   Compiling[0m byteorder v1.5.0
+[1m[92m   Compiling[0m futures-util v0.3.33
+[1m[92m   Compiling[0m futures-channel v0.3.33
+[1m[92m   Compiling[0m sqlx-core v0.9.0
+[1m[92m   Compiling[0m sqlx-postgres v0.9.0
+[1m[92m   Compiling[0m sqlx-macros-core v0.9.0
+[1m[92m   Compiling[0m sqlx-macros v0.9.0
+[1m[92m   Compiling[0m sqlx v0.9.0
+[1m[92m   Compiling[0m accounting_core v0.1.0 (/home/ubuntu/Basir_accounting/rust/crates/accounting_core)
+[1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 17.93s
+[1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/accounting_core-448f63ad534c0e9a)
+running 70 tests
+test accounts::hierarchy::tests::test_kind_mismatch ... [32mok(B
+[mtest accounts::hierarchy::tests::test_missing_parent ... [32mok(B
+[mtest accounts::hierarchy::tests::test_cycle_detection ... [32mok(B
+[mtest accounts::hierarchy::tests::test_valid_hierarchy ... [32mok(B
+[mtest accounts::models::tests::test_account_kind_normal_balances ... [32mok(B
+[mtest accounts::models::tests::test_create_account ... [32mok(B
+[mtest accounts::taxonomy::tests::test_duplicate_code_detection ... [32mok(B
+[mtest accounts::taxonomy::tests::test_validate_account_code_valid ... [32mok(B
+[mtest accounts::taxonomy::tests::test_validate_account_code_range_mismatch ... [32mok(B
+[mtest accounts::taxonomy::tests::test_validate_tag_format_valid ... [32mok(B
+[mtest accounts::taxonomy::tests::test_validate_tag_format_invalid ... [32mok(B
+[mtest accounts::taxonomy::tests::test_validate_tag_kind_match ... [32mok(B
+[mtest accounts::taxonomy::tests::test_validate_tag_kind_mismatch ... [32mok(B
+[mtest audit::chain::tests::test_hash_deterministic ... [32mok(B
+[mtest audit::models::tests::test_audit_action_serialization ... [32mok(B
+[mtest inventory::transfer_service::tests::test_generate_stock_movements ... [32mok(B
+[mtest audit::chain::tests::test_verify_record_hash ... [32mok(B
+[mtest inventory::transfer_service::tests::test_transfer_validation_no_lines ... [32mok(B
+[mtest inventory::transfer_service::tests::test_generate_transfer_entry ... [32mok(B
+[mtest inventory::transfer_service::tests::test_transfer_validation_same_warehouse ... [32mok(B
+[mtest inventory::warehouse::tests::test_multiple_lines ... [32mok(B
+[mtest audit::service::tests::test_record_creation_chaining ... [32mok(B
+[mtest audit::chain::tests::test_verify_chain_broken ... [32mok(B
+[mtest inventory::warehouse::tests::test_warehouse_transfer_creation ... [32mok(B
+[mtest ledger::models::tests::test_balanced_entry ... [32mok(B
+[mtest audit::chain::tests::test_verify_chain_valid ... [32mok(B
+[mtest ledger::models::tests::test_status_modifiable ... [32mok(B
+[mtest ledger::models::tests::test_multi_currency_line ... [32mok(B
+[mtest ledger::models::tests::test_total_calculations ... [32mok(B
+[mtest ledger::models::tests::test_unbalanced_entry ... [32mok(B
+[mtest ledger::service::tests::test_post_entry_hashing ... [32mok(B
+[mtest ledger::validation::tests::test_validate_balanced ... [32mok(B
+[mtest ledger::validation::tests::test_validate_currency_mismatch ... [32mok(B
+[mtest ledger::validation::tests::test_validate_currency_success ... [32mok(B
+[mtest ledger::validation::tests::test_validate_for_posting_bad_reference ... [32mok(B
+[mtest ledger::validation::tests::test_validate_traceability_adjusting_missing_link ... [32mok(B
+[mtest reporting::generator::tests::test_synthesize_cash_flow_statement ... [32mok(B
+[mtest ledger::validation::tests::test_validate_traceability_standard_missing_doc ... [32mok(B
+[mtest reporting::generator::tests::test_synthesize_balance_sheet_fair_value ... [32mok(B
+[mtest reporting::generator::tests::test_synthesize_zakah_statement ... [32mok(B
+[mtest reporting::models::tests::test_account_balance_credit_normal ... [32mok(B
+[mtest reporting::generator::tests::test_sythesize_ifrs18_income_statement ... [32mok(B
+[mtest ledger::validation::tests::test_validate_unbalanced ... [32mok(B
+[mtest ledger::validation::tests::test_validate_for_posting_success ... [32mok(B
+[mtest reporting::models::tests::test_account_balance_debit_normal ... [32mok(B
+[mtest reporting::models::tests::test_trial_balance_imbalance_detection ... [32mok(B
+[mtest reporting::models::tests::test_trial_balance_verification ... [32mok(B
+[mtest reporting::trial_balance::tests::test_generate_trial_balance_with_period_filter ... [32mok(B
+[mtest reporting::trial_balance::tests::test_empty_trial_balance ... [32mok(B
+[mtest reporting::trial_balance::tests::test_generate_trial_balance_balanced ... [32mok(B
+[mtest self_healing::tests::test_suggest_repair_mismatch ... [32mok(B
+[mtest standards::data::tests::test_all_standards_count ... [32mok(B
+[mtest standards::data::tests::test_conceptual_framework_coverage ... [32mok(B
+[mtest standards::data::tests::test_ias_1_coverage ... [32mok(B
+[mtest standards::data::tests::test_ifrs_15_five_step_model ... [32mok(B
+[mtest standards::models::tests::test_canonical_format ... [32mok(B
+[mtest standards::models::tests::test_invalid_reference_rejected ... [32mok(B
+[mtest standards::models::tests::test_parse_ias_reference ... [32mok(B
+[mtest standards::models::tests::test_parse_ifrs_reference ... [32mok(B
+[mtest standards::recognition::tests::test_ifrs15_helper_incomplete_warning ... [32mok(B
+[mtest standards::recognition::tests::test_ifrs_15_step_model_completeness ... [32mok(B
+[mtest self_healing::tests::test_scan_sequence_gaps ... [32mok(B
+[mtest standards::registry::tests::test_is_valid ... [32mok(B
+[mtest standards::validator::tests::test_validate_format_invalid ... [32mok(B
+[mtest standards::registry::tests::test_lookup_ifrs_15 ... [32mok(B
+[mtest standards::validator::tests::test_validate_format_valid ... [32mok(B
+[mtest standards::validator::tests::test_validate_exists ... [32mok(B
+[mtest standards::registry::tests::test_lookup_invalid_ref ... [32mok(B
+[mtest standards::registry::tests::test_load_defaults ... [32mok(B
+[mtest standards::validator::tests::test_validate_complete ... [32mok(B
+[mtest result: [32mok(B[m. 70 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/assets_test.rs (target/debug/deps/assets_test-31763551b04830c5)
+running 3 tests
+test test_create_acquisition_entry ... [32mok(B
+[mtest test_create_depreciation_entry ... [32mok(B
+[mtest test_straight_line_depreciation ... [32mok(B
+[mtest result: [32mok(B[m. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[92m     Running[0m tests/audit_properties.rs (target/debug/deps/audit_properties-0b593255ccba9e1e)
+running 2 tests
+test prop_temporal_justification_validity ... [32mok(B
+[mtest prop_tamper_detection ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+[1m[92m     Running[0m tests/closing_properties.rs (target/debug/deps/closing_properties-06c2e1d7f939e069)
+running 2 tests
+test prop_opening_balance_integrity ... [32mok(B
+[mtest prop_closing_integrity ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/e2e_workflow.rs (target/debug/deps/e2e_workflow-7d6e937d79c009e4)
+running 1 test
+test test_e2e_accounting_workflow ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[92m     Running[0m tests/hierarchy_properties.rs (target/debug/deps/hierarchy_properties-cc536fc366cd1ff3)
+running 3 tests
+test prop_detects_circular_reference ... [32mok(B
+[mtest prop_enforces_taxonomy_alignment ... [32mok(B
+[mtest prop_dag_hierarchy_passes ... [32mok(B
+[mtest result: [32mok(B[m. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/inventory_test.rs (target/debug/deps/inventory_test-a92dce83a40b7cba)
+running 3 tests
+test test_min_stock_validation ... [32mok(B
+[mtest test_fifo_valuation ... [32mok(B
+[mtest test_weighted_average_valuation ... [32mok(B
+[mtest result: [32mok(B[m. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[92m     Running[0m tests/ledger_properties.rs (target/debug/deps/ledger_properties-50f0a6bee037d010)
+running 2 tests
+test prop_double_entry_balance_enforcement ... [32mok(B
+[mtest prop_temporal_justification_completeness ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/prop_accounts.rs (target/debug/deps/prop_accounts-90cebe1db2055112)
+running 2 tests
+test prop_cp_006_simple_cycle_detection ... [32mok(B
+[mtest prop_cp_006_valid_tree_structure ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+[1m[92m     Running[0m tests/prop_assets.rs (target/debug/deps/prop_assets-d4a7e5f13a8126f1)
+running 1 test
+test prop_straight_line_depreciation_convergence ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/prop_audit.rs (target/debug/deps/prop_audit-cc6eb0b3bba6bc3e)
+running 2 tests
+test prop_cp_003_tamper_evidence ... [32mok(B
+[mtest prop_cp_003_hash_chain_integrity ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+[1m[92m     Running[0m tests/prop_balance.rs (target/debug/deps/prop_balance-74eef57887be0e40)
+running 2 tests
+test prop_cp_001_unbalanced_entries_are_rejected ... [32mok(B
+[mtest prop_cp_001_balanced_entries_are_valid ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/prop_closing.rs (target/debug/deps/prop_closing-2749e3c5d2c472a9)
+running 1 test
+test prop_period_closing_integrity ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+[1m[92m     Running[0m tests/prop_currency.rs (target/debug/deps/prop_currency-c4520f547667ab2d)
+running 3 tests
+test prop_cp_005_currency_arithmetic_valid ... [32mok(B
+[mtest prop_cp_005_currency_zero_rate_rejected ... [32mok(B
+[mtest prop_cp_005_currency_arithmetic_invalid ... [32mok(B
+[mtest result: [32mok(B[m. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/prop_partners.rs (target/debug/deps/prop_partners-940cbc56e317daaf)
+running 2 tests
+test prop_cp_010_partner_required_enforced ... [32mok(B
+[mtest prop_cp_010_mixed_lines_validation ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/prop_standards.rs (target/debug/deps/prop_standards-f321506ead7bf9b9)
+running 2 tests
+test prop_cp_002_known_refs_always_valid ... [32mok(B
+[mtest prop_cp_002_invalid_formats_always_rejected ... [32mok(B
+[mtest result: [32mok(B[m. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+[1m[92m     Running[0m tests/prop_temporal.rs (target/debug/deps/prop_temporal-64ec3e0f78ca5d41)
+running 1 test
+test prop_cp_008_temporal_justification_enforcement ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[92m     Running[0m tests/prop_traceability.rs (target/debug/deps/prop_traceability-224b9ebdab925eca)
+running 1 test
+test prop_cp_009_traceability_completeness ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+[1m[92m     Running[0m tests/prop_zakah.rs (target/debug/deps/prop_zakah-19dbc411c670cd64)
+running 1 test
+test test_zakah_mathematical_invariants ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[92m     Running[0m tests/reporting_properties.rs (target/debug/deps/reporting_properties-09f9b7e5f48d864a)
+running 1 test
+test prop_trial_balance_integral ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m tests/sales_test.rs (target/debug/deps/sales_test-ed9c2e3257a8715f)
+running 1 test
+test test_finalize_invoice_with_zatca ... [32mok(B
+[mtest result: [32mok(B[m. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/accounting_zatca-7bcc80de91473644)
+running 3 tests
+test xades::tests::test_xades_signature_xml_generation ... [32mok(B
+[mtest tests::test_zatca_csr_generation ... [32mok(B
+[mtest tests::test_zatca_invoice_generation_multi_rate ... [32mok(B
+[mtest result: [32mok(B[m. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+[1m[92m   Doc-tests[0m accounting_core
+running 1 test
+test crates/accounting_core/src/standards/registry.rs - standards::registry::StandardsRegistry::get_by_standard (line 97) ... [33mignored(B
+[mtest result: [32mok(B[m. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[1m[92m   Doc-tests[0m accounting_zatca
+running 0 tests
+test result: [32mok(B[m. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[32mubuntu@sandbox:~/Basir_accounting/rust$ [0m

@@ -1,0 +1,63 @@
+# GitHub Actions: Rust وPostgreSQL Integration CI
+
+أصبح المستودع يحتوي على Workflow في `.github/workflows/rust-integration.yml` يشغّل اختبارات المحرك المحاسبي واختبار التكامل مع PostgreSQL تلقائيًا عند كل `push` إلى الفروع الرئيسية أو فروع التدقيق، وعند فتح أو تحديث Pull Request إلى `main` أو `master`، مع إمكانية التشغيل اليدوي عبر `workflow_dispatch`.
+
+## ما ينفذه الـ Workflow
+
+يحتوي الـ Workflow على Job جودة سريع، وJob تكامل يعمل عبر Matrix من shardين مستقلين. ينفذ Job الجودة فحص التنسيق، ثم يثبت `cargo-nextest` بالإصدار المثبت `0.9.143` ويشغّل الاختبارات غير المعتمدة على قاعدة البيانات به، ثم يفحص ترجمة مساحة العمل. أما كل shard تكاملي فينشئ حاوية PostgreSQL 16 خاصة به، وينتظر جاهزيتها، ويطبّق ملفات `rust/migrations/*.sql` بترتيبها الزمني، ثم يشغّل اختبارًا واحدًا مستقلًا عبر `cargo test` مع خيط واحد:
+
+| الـ shard | هدف Cargo | التغطية |
+|---|---|---|
+| `persistence` | `cargo test --locked -p accounting_data --test db_persistence -- --test-threads=1` | حفظ القيد، الأسطر، وسجل التدقيق |
+| `hash_chain` | `cargo test --locked -p accounting_data --test db_hash_chain -- --test-threads=1` | استمرارية سلسلة hash بين قيدين |
+
+كل shard يحصل على `DATABASE_URL` مختلف مبني من `${{ matrix.shard }}`، لذلك لا يتشارك `TRUNCATE` أو بيانات الاختبار مع shard آخر. يتم رفع سجل مستقل لكل shard كـ artifact لمدة 14 يومًا، وتنتظر وظيفة `Rust CI gate` نجاح Job الجودة وجميع shards قبل اعتبار الفحص ناجحًا.
+
+## تثبيت cargo-nextest في بيئة Actions المقيدة
+
+تمنع سياسة المستودع الحالية إجراءات Actions الخارجية غير المدرجة في allowlist، لذلك لا يستخدم الـ Workflow `taiki-e/install-action`. بدلًا من ذلك يحمّل أرشيف `cargo-nextest` الرسمي المثبت بالإصدار `0.9.143` لنظام Linux، يتحقق من ملف SHA-256 الرسمي، ثم يثبت binary في `~/.cargo/bin`. بهذه الطريقة لا نحتاج إلى منح صلاحية إضافية لإجراء خارجي، ولا نمرر أسرارًا، ولا نستخدم `cargo install` البطيء في كل تشغيل.
+
+كما ثُبّتت الإجراءات المستخدمة في هذا الـ Workflow على بصمات commits محددة بدل Tags متحركة: `actions/checkout`، و`actions/cache`، و`actions/upload-artifact`، و`dtolnay/rust-toolchain`. التعليقات بجانب كل بصمة توضح الإصدار أو مصدرها المرجعي. يجب تحديث هذه البصمات دوريًا عبر Pull Request مع تشغيل CI كامل، لا بتعديل مباشر على `main`.
+
+## تفعيل الحماية على الفرع الرئيسي
+
+يجب أن تكون نتيجة الوظيفة `Rust CI gate` فحصًا إلزاميًا في قاعدة حماية `main` أو قاعدة القواعد المقابلة للمستودع، بحيث لا يمكن دمج Pull Request إلا بعد نجاح الفحص التجميعي. ينبغي أيضًا تفعيل مراجعة Pull Request واحدة على الأقل، وانتظار أحدث commit، ومنع الدمج المباشر إلى `main`؛ أما `Enforce administrators` فيُفعّل وفق سياسة الفريق مع إبقاء الاستثناءات لحالات الطوارئ الموثقة فقط:
+
+
+```text
+Rust CI gate
+```
+
+لا تجعل فحص shard واحد هو الشرط الوحيد؛ الفحص التجميعي يتأكد من نجاح `Rust quality + unit tests` وجميع تركيبات Matrix.
+
+يجب تفعيل خيار انتظار نجاح الفحوصات قبل الدمج، ومنع تجاوز القاعدة إلا للمسؤولين عند الحاجة الاستثنائية.
+
+## تشغيل يدوي
+
+من واجهة GitHub افتح تبويب **Actions**، اختر **Rust Integration Tests**، ثم **Run workflow** وحدد الفرع. لا يحتاج التشغيل إلى إدخال `DATABASE_URL` لأن القاعدة تُنشأ تلقائيًا داخل خدمة الاختبار.
+
+## إعادة الإنتاج محليًا
+
+يمكن إعادة إنتاج نفس السيناريو محليًا باستخدام PostgreSQL وقاعدة اختبار معزولة، كما هو موثق في [دليل تشغيل اختبار التكامل](../audit/دليل_تشغيل_اختبار_التكامل_PostgreSQL.md). لاختبارات الجودة غير المعتمدة على قاعدة البيانات، ثبّت `cargo-nextest` ثم نفّذ الأوامر التالية من مجلد `rust`؛ أما اختبارات PostgreSQL فشغّل الهدفين بالتتابع على قاعدة محلية واحدة، أو أنشئ قاعدة مستقلة لكل shard إذا أردت محاكاة التوازي. لا تستخدم قاعدة التطوير المشتركة لأن كل shard ينفذ `TRUNCATE` على جداول الحسابات والقيود وسجل التدقيق.
+
+```bash
+cargo nextest run --locked -p accounting_core -p accounting_zatca --all-targets
+cargo nextest run --locked -p accounting_data --lib
+
+DATABASE_URL='postgres://basir_test:password@127.0.0.1:5432/basir_accounting_test' \
+  cargo test --locked -p accounting_data --test db_persistence -- --test-threads=1
+
+DATABASE_URL='postgres://basir_test:password@127.0.0.1:5432/basir_accounting_test' \
+  cargo test --locked -p accounting_data --test db_hash_chain -- --test-threads=1
+```
+
+## استخدام قاعدة خارجية بدل خدمة GitHub
+
+إذا احتاج الفريق لاحقًا إلى PostgreSQL مُدار أو بيئة staging، يجب استبدال قيمة الاتصال الثابتة بسر GitHub Actions مثل `DATABASE_URL`، ثم تمريره عبر:
+
+```yaml
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+```
+
+في هذه الحالة يجب تقييد السر إلى بيئة أو فروع موثوقة، وعدم تشغيله على Pull Requests من forks، وتجنب طباعة قيمة المتغير في السجلات. تظل خدمة PostgreSQL المؤقتة هي الخيار الأبسط والأكثر أمانًا لاختبارات التكامل العادية.
