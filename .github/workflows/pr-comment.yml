@@ -28,7 +28,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
           channel: "stable"
           cache: false
 
@@ -72,7 +72,7 @@ jobs:
         continue-on-error: true
         run: |
           echo "Running tests..."
-          flutter test --no-pub --reporter expanded > test_output.txt 2>&1 || true
+          flutter test --concurrency=1 --no-pub --reporter expanded > test_output.txt 2>&1 || true
 
           # استخراج نتائج الاختبارات
           PASSED=$(grep -oP '\d+(?= tests? passed)' test_output.txt | head -1 || echo "0")
