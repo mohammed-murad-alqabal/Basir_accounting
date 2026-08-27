@@ -28,7 +28,7 @@ fi
 # type(scope): description
 # أو
 # type: description
-PATTERN="^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .{1,}"
+PATTERN="^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert|audit)(\(.+\))?: .{1,}"
 
 if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
     echo -e "${RED}❌ رسالة الـ commit غير صحيحة!${NC}"
@@ -47,6 +47,7 @@ if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
     echo -e "  ${GREEN}perf${NC}     - تحسين الأداء"
     echo -e "  ${GREEN}ci${NC}       - تحديث CI/CD"
     echo -e "  ${GREEN}build${NC}    - تحديث البناء"
+    echo -e "  ${GREEN}audit${NC}    - تدقيق أو حوكمة أو ضوابط"
     echo ""
     echo -e "${YELLOW}أمثلة صحيحة:${NC}"
     echo -e "  ${GREEN}feat(auth): add login functionality${NC}"

@@ -41,7 +41,7 @@ jobs:
           fi
 
           # Validate format: type(scope): description
-          VALID_TYPES="feat|fix|docs|style|refactor|test|chore|perf|ci|build"
+          VALID_TYPES="feat|fix|docs|style|refactor|test|chore|perf|ci|build|audit"
           PATTERN="^($VALID_TYPES)(\(.+\))?: .+"
 
           INVALID_COUNT=0

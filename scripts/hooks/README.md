@@ -121,6 +121,7 @@ type(scope): description
 | `perf`     | أداء        | `perf: optimize query`      |
 | `ci`       | CI/CD       | `ci: update workflow`       |
 | `build`    | بناء        | `build: update deps`        |
+| `audit`    | تدقيق وحوكمة وضوابط | `audit(ledger): verify controls` |
 
 ---
 
