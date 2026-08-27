@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  FLUTTER_VERSION: "3.35.5"
+  FLUTTER_VERSION: "3.44.9"
   # يمنع التراجع عن خط الأساس القابل للقياس، بينما يُرفع تدريجيًا مع المهمات.
   MIN_COVERAGE: 25
   MAX_COMPLEXITY: 10
@@ -256,7 +256,7 @@ jobs:
 
           # تُشغَّل الاختبارات الوظيفية الحتمية فقط في CI؛ تقاس المعايير
           # الزمنية على عتاد مخصص لتجنّب تقلب موارد المشغلات المشتركة.
-          flutter test --coverage --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*')
+          flutter test --concurrency=1 --coverage --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*')
 
           echo ""
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
