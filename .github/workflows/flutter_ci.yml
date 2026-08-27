@@ -81,7 +81,7 @@ jobs:
       - name: 🧪 Run tests
         # تُشغَّل قياسات الأداء على عتاد مخصص؛ أما CI فيتحقق من الاختبارات
         # الوظيفية الحتمية فقط لتفادي تذبذب زمن التنفيذ وموارد العازل.
-        run: flutter test --coverage --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*')
+        run: flutter test --concurrency=1 --coverage --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*')
 
       - name: 📊 Check Coverage
         run: |
