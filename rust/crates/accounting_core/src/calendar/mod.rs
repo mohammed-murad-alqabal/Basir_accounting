@@ -3,8 +3,8 @@
 //! # Requirements Alignment
 //! - Req 4.4: Period Management and Closing cycles
 
-use serde::{Deserialize, Serialize};
 use chrono::NaiveDate;
+use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -35,11 +35,7 @@ pub enum ClosingError {
 }
 
 impl FinancialPeriod {
-    pub fn new(
-        name: impl Into<String>,
-        start: NaiveDate,
-        end: NaiveDate,
-    ) -> Self {
+    pub fn new(name: impl Into<String>, start: NaiveDate, end: NaiveDate) -> Self {
         Self {
             id: Uuid::new_v4(),
             name: name.into(),
@@ -59,15 +55,22 @@ impl FinancialPeriod {
     }
 
     /// Validates if the period can be closed based on the trial balance.
-    /// 
+    ///
     /// Requirement: Total Debits must equal Total Credits.
-    pub fn validate_for_closing(&self, total_debits: rust_decimal::Decimal, total_credits: rust_decimal::Decimal) -> Result<(), ClosingError> {
+    pub fn validate_for_closing(
+        &self,
+        total_debits: rust_decimal::Decimal,
+        total_credits: rust_decimal::Decimal,
+    ) -> Result<(), ClosingError> {
         if self.status != PeriodStatus::Open {
             return Err(ClosingError::InvalidStatus);
         }
 
         if total_debits != total_credits {
-            return Err(ClosingError::Unbalanced(total_debits.to_string(), total_credits.to_string()));
+            return Err(ClosingError::Unbalanced(
+                total_debits.to_string(),
+                total_credits.to_string(),
+            ));
         }
 
         Ok(())

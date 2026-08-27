@@ -30,10 +30,10 @@ void main() {
           appIconsProvider.overrideWithValue(const MaterialAppIcons()),
         ],
         child: const MaterialApp(
-          locale: const Locale('ar'),
+          locale: Locale('ar'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: const InventoryItemsScreen(),
+          home: InventoryItemsScreen(),
         ),
       ),
     );

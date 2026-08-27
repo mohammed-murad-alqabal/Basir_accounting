@@ -35,6 +35,44 @@ void main() {
       expect(migrationText, contains('MERGE'));
       expect(migrationText, contains('ARCHIVE'));
       expect(migrationText, contains('خطة هجرة وليست تصريح حذف'));
+      expect(
+        migrationText,
+        contains('لا تنفذ أي `git mv` أو `MERGE` أو حذف أو إعادة تصنيف نهائي'),
+      );
+      expect(migrationText, contains('22 رابطًا صالحًا و8 روابط مكسورة'));
+      expect(migrationText, contains('`KEEP`: pointer تشغيلي'));
+      expect(migrationText, contains('`KEEP` للجذري؛ لا حذف'));
+
+      final decisionRows = migrationText
+          .split('\n')
+          .where(
+            (line) =>
+                RegExp(
+                  r'\| `(MOVE|ARCHIVE|MERGE|RECLASSIFY)-P4-[0-9]+`',
+                ).hasMatch(line) &&
+                (line.contains('PENDING_REVIEW') ||
+                    line.contains('KEEP_APPROVED')),
+          )
+          .toList();
+      expect(decisionRows, hasLength(9));
+      final pendingRows =
+          decisionRows.where((row) => row.contains('PENDING_REVIEW')).toList();
+      expect(pendingRows, hasLength(7));
+      for (final row in pendingRows) {
+        expect(row, isNot(contains('APPROVED')));
+        expect(row, isNot(contains('CANONICAL-ACTIVE')));
+      }
+
+      final keepRows =
+          decisionRows.where((row) => row.contains('KEEP_APPROVED')).toList();
+      expect(keepRows, hasLength(2));
+      expect(keepRows.any((row) => row.contains('MERGE-P4-003')), isTrue);
+      expect(keepRows.any((row) => row.contains('MERGE-P4-005')), isTrue);
+
+      final indexRow = migrationText
+          .split('\n')
+          .firstWhere((line) => line.contains('`INDEX-P4-001`'));
+      expect(indexRow, contains('DRAFT'));
 
       for (final document in historicalDocuments) {
         expect(document.existsSync(), isTrue);

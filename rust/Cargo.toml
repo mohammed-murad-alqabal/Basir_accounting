@@ -34,11 +34,11 @@ uuid = { version = "1", features = ["v4", "v5", "serde"] }
 chrono = { version = "0.4", features = ["serde"] }
 
 # Cryptography (SHA-256 for hash chain)
-sha2 = "0.10"
+sha2 = "0.11"
 hex = "0.4"
 
 # Error handling
-thiserror = "1"
+thiserror = "2"
 anyhow = "1"
 
 # Environment

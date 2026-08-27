@@ -773,7 +773,7 @@ mod tests {
             .unwrap();
         assert_eq!(net_profit.amount, Decimal::from(3300));
 
-        assert_eq!(report.lines.len() > 10, true); // Visual check for sections and lines
+        assert!(report.lines.len() > 10); // Visual check for sections and lines
     }
 
     #[test]

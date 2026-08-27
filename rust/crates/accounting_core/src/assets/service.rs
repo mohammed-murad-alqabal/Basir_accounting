@@ -11,6 +11,12 @@ pub struct AssetService {
     // In a real implementation, this would hold repository references
 }
 
+impl Default for AssetService {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl AssetService {
     pub fn new() -> Self {
         Self {}

@@ -124,9 +124,7 @@ class StrategicOutlookScreen extends ConsumerWidget {
 
   Widget _buildPnLChart(BuildContext context, List<PredictiveMetric> forecast) {
     if (forecast.isEmpty) {
-      return AppEmptyState(
-        title: context.l10n.msgNoStrategicData,
-      );
+      return _buildCompactEmptyChartState(context);
     }
 
     return LineChart(
@@ -178,9 +176,7 @@ class StrategicOutlookScreen extends ConsumerWidget {
     List<PredictiveMetric> forecast,
   ) {
     if (forecast.isEmpty) {
-      return AppEmptyState(
-        title: context.l10n.msgNoStrategicData,
-      );
+      return _buildCompactEmptyChartState(context);
     }
 
     return BarChart(
@@ -230,6 +226,27 @@ class StrategicOutlookScreen extends ConsumerWidget {
       ),
     );
   }
+
+  Widget _buildCompactEmptyChartState(BuildContext context) => Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.insights_outlined,
+              color: AppColors.textHint,
+              size: IconSizes.lg,
+            ),
+            const SizedBox(height: Spacing.sm),
+            Text(
+              context.l10n.msgNoStrategicData,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      );
 
   LineChartBarData _generateLine(
     List<PredictiveMetric> forecast,
