@@ -18,7 +18,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
       - name: Install dependencies
         run: flutter pub get
       - name: Check documentation coverage
@@ -33,7 +33,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
       - name: Install dependencies
         run: flutter pub get
       - name: Generate build-time sources
@@ -60,7 +60,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
       - name: Install dependencies
         run: flutter pub get
       - name: Generate build-time sources
@@ -107,7 +107,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
       - name: Install dependencies
         run: flutter pub get
       - name: Check for security vulnerabilities

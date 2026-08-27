@@ -4,7 +4,8 @@ description: Installs a pinned Flutter SDK without third-party composite-action 
 inputs:
   flutter-version:
     description: Flutter SDK version to install.
-    required: true
+    default: '3.44.9'
+    required: false
   channel:
     description: Flutter release channel.
     required: false
