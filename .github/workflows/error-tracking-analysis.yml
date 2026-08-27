@@ -34,7 +34,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.35.5"
+          flutter-version: "3.44.9"
           channel: "stable"
           cache: false
 
@@ -81,7 +81,7 @@ jobs:
         run: |
           echo "Running tests..."
           set +e
-          flutter test --no-pub --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*') > test_output.txt 2>&1
+          flutter test --concurrency=1 --no-pub --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*') > test_output.txt 2>&1
           TEST_EXIT_CODE=$?
           set -e
 
