@@ -20,7 +20,9 @@ final authServiceProvider = Provider((ref) {
   final secureStorage = ref.watch(
     secureStorageProvider.select((storage) => storage),
   );
-  return AuthService(secureStorage: secureStorage);
+  final service = AuthService(secureStorage: secureStorage);
+  ref.onDispose(service.dispose);
+  return service;
 });
 
 /// مزود التحقق من وجود حساب
@@ -158,10 +160,9 @@ final basirUserProvider = Provider<BasirUser?>((ref) {
   }
 
   // 2. التحقق من وضع الضيف (المصدر الثانوي)
-  final isGuest = ref.watch(isGuestProvider).maybeWhen(
-        data: (v) => v,
-        orElse: () => false,
-      );
+  final isGuest = ref
+      .watch(isGuestProvider)
+      .maybeWhen(data: (v) => v, orElse: () => false);
 
   if (isGuest) {
     return const BasirUser(

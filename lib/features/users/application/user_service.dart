@@ -1,4 +1,7 @@
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/core/security/access_policy.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
+import 'package:basir_accounting_system/features/auth/presentation/providers/auth_provider.dart';
 import 'package:basir_accounting_system/features/users/domain/entities/user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,12 +12,14 @@ part 'user_service.g.dart';
 class UserService extends _$UserService {
   @override
   FutureOr<List<User>> build() async {
+    _requireManageUsers();
     final repo = ref.watch(userRepositoryProvider);
     return repo.getAllUsers();
   }
 
   /// إنشاء مستخدم جديد
   Future<void> createUser(User user, String password) async {
+    _requireManageUsers();
     state = const AsyncValue.loading();
     try {
       final repo = ref.read(userRepositoryProvider);
@@ -27,6 +32,7 @@ class UserService extends _$UserService {
 
   /// تحديث بيانات المستخدم
   Future<void> updateUser(User user) async {
+    _requireManageUsers();
     try {
       final repo = ref.read(userRepositoryProvider);
       await repo.updateUser(user);
@@ -38,6 +44,7 @@ class UserService extends _$UserService {
 
   /// حذف مستخدم
   Future<void> deleteUser(String id) async {
+    _requireManageUsers();
     try {
       final repo = ref.read(userRepositoryProvider);
       await repo.deleteUser(id);
@@ -49,11 +56,16 @@ class UserService extends _$UserService {
 
   /// تغيير كلمة المرور
   Future<void> changePassword(String id, String newPassword) async {
+    _requireManageUsers();
     try {
       final repo = ref.read(userRepositoryProvider);
       await repo.changePassword(id, newPassword);
     } on Exception {
       rethrow;
     }
+  }
+
+  void _requireManageUsers() {
+    AccessPolicy.require(ref.read(basirUserProvider), Permission.manageUsers);
   }
 }

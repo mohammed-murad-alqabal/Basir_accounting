@@ -1,4 +1,5 @@
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/security/access_policy.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
@@ -77,6 +78,12 @@ import 'package:flutter/material.dart';
 /// )
 /// ```
 class AppRouter {
+  static Route<dynamic> _protectedRoute(RouteSettings settings, Widget child) =>
+      MaterialPageRoute(
+        settings: settings,
+        builder: (_) => AuthGuard(routeName: settings.name ?? '', child: child),
+      );
+
   /// توليد المسار المناسب بناءً على الاسم
   ///
   /// يستقبل [RouteSettings] ويعيد [Route] المناسب للشاشة المطلوبة
@@ -106,9 +113,7 @@ class AppRouter {
       case '/login':
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case '/forgot-password':
-        return MaterialPageRoute(
-          builder: (_) => const ForgotPasswordScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
       case '/reset-password':
         final args = settings.arguments as Map<String, String>?;
         final hasEmail = args?.containsKey('email') ?? false;
@@ -124,173 +129,148 @@ class AppRouter {
         }
         return MaterialPageRoute(
           builder: (context) => Scaffold(
-            body: Center(
-              child: Text(context.l10n.errInvalidResetLink),
-            ),
+            body: Center(child: Text(context.l10n.errInvalidResetLink)),
           ),
         );
       case '/dashboard':
-        return MaterialPageRoute(builder: (_) => const BasirAppShell());
+        return _protectedRoute(settings, const BasirAppShell());
       case '/customers':
-        return MaterialPageRoute(builder: (_) => const CustomersScreen());
+        return _protectedRoute(settings, const CustomersScreen());
       case '/vendors':
-        return MaterialPageRoute(builder: (_) => const VendorsScreen());
+        return _protectedRoute(settings, const VendorsScreen());
       case '/invoices':
-        return MaterialPageRoute(builder: (_) => const InvoicesScreen());
+        return _protectedRoute(settings, const InvoicesScreen());
       case '/invoice-form':
         final args = settings.arguments as Map<String, dynamic>?;
-        return MaterialPageRoute(
-          builder: (_) => InvoiceFormScreen(
-            invoice: args?['invoice'] as Invoice?,
-          ),
+        return _protectedRoute(
+          settings,
+          InvoiceFormScreen(invoice: args?['invoice'] as Invoice?),
         );
       case '/invoice-detail':
         final invoice = settings.arguments! as Invoice;
-        return MaterialPageRoute(
-          builder: (_) => InvoiceDetailScreen(invoice: invoice),
-        );
+        return _protectedRoute(settings, InvoiceDetailScreen(invoice: invoice));
       case '/customer-form':
-        return MaterialPageRoute(builder: (_) => const CustomerFormScreen());
+        return _protectedRoute(settings, const CustomerFormScreen());
       case '/customer-detail':
         final customer = settings.arguments! as Customer;
-        return MaterialPageRoute(
-          builder: (_) => CustomerDetailsScreen(customer: customer),
+        return _protectedRoute(
+          settings,
+          CustomerDetailsScreen(customer: customer),
         );
       case '/vendor-form':
-        return MaterialPageRoute(builder: (_) => const VendorFormScreen());
+        return _protectedRoute(settings, const VendorFormScreen());
       case '/settings':
-        return MaterialPageRoute(builder: (_) => const SettingsScreen());
+        return _protectedRoute(settings, const SettingsScreen());
       case '/inventory':
-        return MaterialPageRoute(builder: (_) => const InventoryItemsScreen());
+        return _protectedRoute(settings, const InventoryItemsScreen());
       case '/inventory-form':
-        return MaterialPageRoute(
-          builder: (_) => const InventoryItemFormScreen(),
-        );
+        return _protectedRoute(settings, const InventoryItemFormScreen());
       case '/assets':
-        return MaterialPageRoute(builder: (_) => const AssetsScreen());
+        return _protectedRoute(settings, const AssetsScreen());
       case '/asset-form':
-        return MaterialPageRoute(builder: (_) => const AssetFormScreen());
+        return _protectedRoute(settings, const AssetFormScreen());
 
       case '/returns-and-damages':
-        return MaterialPageRoute(
-          builder: (_) => const ReturnsAndDamagesScreen(),
-        );
+        return _protectedRoute(settings, const ReturnsAndDamagesScreen());
       case '/financial-calculator':
-        return MaterialPageRoute(
-          builder: (_) => const FinancialCalculatorScreen(),
-        );
+        return _protectedRoute(settings, const FinancialCalculatorScreen());
       case '/treasury-dashboard':
-        return MaterialPageRoute(
-          builder: (_) => const TreasuryDashboardScreen(),
-        );
+        return _protectedRoute(settings, const TreasuryDashboardScreen());
       case '/voucher-list':
-        return MaterialPageRoute(builder: (_) => const VoucherListScreen());
+        return _protectedRoute(settings, const VoucherListScreen());
       case '/cash-reconciliation':
-        return MaterialPageRoute(
-          builder: (_) => const CashReconciliationScreen(),
-        );
+        return _protectedRoute(settings, const CashReconciliationScreen());
       case '/journal-entry-detail':
         final entry = settings.arguments! as JournalEntry;
-        return MaterialPageRoute(
-          builder: (_) => JournalEntryDetailScreen(entry: entry),
+        return _protectedRoute(
+          settings,
+          JournalEntryDetailScreen(entry: entry),
         );
       case '/strategic-outlook':
-        return MaterialPageRoute(
-          builder: (_) => const StrategicOutlookScreen(),
-        );
+        return _protectedRoute(settings, const StrategicOutlookScreen());
       case '/users':
-        return MaterialPageRoute(builder: (_) => const UsersDashboardScreen());
+        return _protectedRoute(settings, const UsersDashboardScreen());
       case '/user-form':
         final args = settings.arguments as Map<String, dynamic>?;
-        return MaterialPageRoute(
-          builder: (_) => UserFormScreen(user: args?['user'] as User?),
+        return _protectedRoute(
+          settings,
+          UserFormScreen(user: args?['user'] as User?),
         );
       case '/forensic-portal':
-        return MaterialPageRoute(
-          builder: (_) => const ForensicPortalScreen(),
-        );
+        return _protectedRoute(settings, const ForensicPortalScreen());
       case '/guest-upgrade':
-        return MaterialPageRoute(builder: (_) => const GuestUpgradeScreen());
+        return _protectedRoute(settings, const GuestUpgradeScreen());
       case '/zatca-onboarding':
-        return MaterialPageRoute(builder: (_) => const ZatcaOnboardingScreen());
+        return _protectedRoute(settings, const ZatcaOnboardingScreen());
       case '/fiscal-control-center':
-        return MaterialPageRoute(
-          builder: (_) => const FiscalControlCenterScreen(),
-        );
+        return _protectedRoute(settings, const FiscalControlCenterScreen());
       case '/financial-year-form':
         final args = settings.arguments as Map<String, dynamic>?;
-        return MaterialPageRoute(
-          builder: (_) => FinancialYearFormScreen(
+        return _protectedRoute(
+          settings,
+          FinancialYearFormScreen(
             financialYear: args?['financialYear'] as FinancialYear?,
           ),
         );
       case '/account-form':
         final args = settings.arguments as Map<String, dynamic>?;
-        return MaterialPageRoute(
-          builder: (_) => AccountFormScreen(
+        return _protectedRoute(
+          settings,
+          AccountFormScreen(
             account: args?['account'] as Account?,
             initialParentId: args?['parentId'] as String?,
           ),
         );
       case '/expenses':
-        return MaterialPageRoute(
-          builder: (_) => const ExpensesDashboardScreen(),
-        );
+        return _protectedRoute(settings, const ExpensesDashboardScreen());
       case '/expenses/add':
-        return MaterialPageRoute(
-          builder: (_) => const ExpenseFormScreen(),
-        );
+        return _protectedRoute(settings, const ExpenseFormScreen());
       case '/expenses/edit':
         final args = settings.arguments as Map<String, dynamic>?;
-        return MaterialPageRoute(
-          builder: (_) => ExpenseFormScreen(
-            expenseId: args?['id'] as String?,
-          ),
+        return _protectedRoute(
+          settings,
+          ExpenseFormScreen(expenseId: args?['id'] as String?),
         );
       case '/excel-import':
-        return MaterialPageRoute(builder: (_) => const ExcelImportScreen());
+        return _protectedRoute(settings, const ExcelImportScreen());
       case '/cloud-backup':
-        return MaterialPageRoute(builder: (_) => const CloudBackupScreen());
+        return _protectedRoute(settings, const CloudBackupScreen());
       case '/barcode-creation':
-        return MaterialPageRoute(builder: (_) => const BarcodeCreationScreen());
+        return _protectedRoute(settings, const BarcodeCreationScreen());
       case '/barcode-settings':
-        return MaterialPageRoute(builder: (_) => const BarcodeSettingsScreen());
+        return _protectedRoute(settings, const BarcodeSettingsScreen());
       case '/chart-of-accounts':
-        return MaterialPageRoute(builder: (_) => const ChartOfAccountsScreen());
+        return _protectedRoute(settings, const ChartOfAccountsScreen());
       case '/journal-entries':
-        return MaterialPageRoute(builder: (_) => const JournalEntriesScreen());
+        return _protectedRoute(settings, const JournalEntriesScreen());
       case '/journal-entry-form':
         final args = settings.arguments as Map<String, dynamic>?;
-        return MaterialPageRoute(
-          builder: (_) => JournalEntryFormScreen(
-            entry: args?['entry'] as JournalEntry?,
-          ),
+        return _protectedRoute(
+          settings,
+          JournalEntryFormScreen(entry: args?['entry'] as JournalEntry?),
         );
       case '/balance-sheet':
-        return MaterialPageRoute(builder: (_) => const BalanceSheetScreen());
+        return _protectedRoute(settings, const BalanceSheetScreen());
       case '/income-statement':
-        return MaterialPageRoute(builder: (_) => const IncomeStatementScreen());
+        return _protectedRoute(settings, const IncomeStatementScreen());
       case '/cash-flow':
-        return MaterialPageRoute(builder: (_) => const CashFlowScreen());
+        return _protectedRoute(settings, const CashFlowScreen());
       case '/trial-balance':
-        return MaterialPageRoute(builder: (_) => const TrialBalanceScreen());
+        return _protectedRoute(settings, const TrialBalanceScreen());
       case '/aging-reports':
-        return MaterialPageRoute(builder: (_) => const AgingReportsScreen());
+        return _protectedRoute(settings, const AgingReportsScreen());
       case '/reports':
-        return MaterialPageRoute(
-          builder: (_) => const ReportingOverviewScreen(),
-        );
+        return _protectedRoute(settings, const ReportingOverviewScreen());
       case '/voucher-form':
         final args = settings.arguments as Map<String, dynamic>?;
-        return MaterialPageRoute(
-          builder: (_) => VoucherFormScreen(
+        return _protectedRoute(
+          settings,
+          VoucherFormScreen(
             type: args?['type'] as VoucherType? ?? VoucherType.receipt,
           ),
         );
       case '/reports-dashboard':
-        return MaterialPageRoute(
-          builder: (_) => const ReportsDashboardScreen(),
-        );
+        return _protectedRoute(settings, const ReportsDashboardScreen());
       case '/general-ledger':
         final args = settings.arguments as Map<String, dynamic>?;
         if (args == null ||
@@ -308,8 +288,9 @@ class AppRouter {
             ),
           );
         }
-        return MaterialPageRoute(
-          builder: (_) => GeneralLedgerScreen(
+        return _protectedRoute(
+          settings,
+          GeneralLedgerScreen(
             accountId: args['accountId'] as String,
             accountName: args['accountName'] as String,
             fromDate: args['fromDate'] as DateTime,
@@ -318,34 +299,36 @@ class AppRouter {
         );
       case '/financial-report':
         final args = settings.arguments as Map<String, dynamic>?;
-        return MaterialPageRoute(
-          builder: (_) => FinancialReportScreen(
-            reportType: args?['reportType'] as FinancialReportType? ??
+        return _protectedRoute(
+          settings,
+          FinancialReportScreen(
+            reportType:
+                args?['reportType'] as FinancialReportType? ??
                 FinancialReportType.incomeStatement,
           ),
         );
       case '/audit-trail-report':
-        return MaterialPageRoute(
-          builder: (_) => const AuditTrailReportScreen(),
-        );
+        return _protectedRoute(settings, const AuditTrailReportScreen());
       case '/smart-tax-report':
-        return MaterialPageRoute(builder: (_) => const SmartTaxReportScreen());
+        return _protectedRoute(settings, const SmartTaxReportScreen());
       case '/intelligence':
-        return MaterialPageRoute(builder: (_) => const IntelligenceScreen());
+        return _protectedRoute(settings, const IntelligenceScreen());
       case '/entity-transactions':
         final args = settings.arguments as Map<String, dynamic>?;
         if (args == null) {
           return MaterialPageRoute(
             builder: (context) => Scaffold(
               body: Center(
-                child:
-                    Text(context.l10n.errorScreenNotFound(settings.name ?? '')),
+                child: Text(
+                  context.l10n.errorScreenNotFound(settings.name ?? ''),
+                ),
               ),
             ),
           );
         }
-        return MaterialPageRoute(
-          builder: (_) => EntityTransactionsScreen(
+        return _protectedRoute(
+          settings,
+          EntityTransactionsScreen(
             entityId: (args['entityId'] as String?) ?? '',
             entityName: (args['entityName'] as String?) ?? '',
             isCustomer: (args['isCustomer'] as bool?) ?? false,

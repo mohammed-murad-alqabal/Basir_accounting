@@ -35,6 +35,26 @@ class AppEnvironmentConfig {
     }
   }
 
+  /// يتحقق من الحد الأدنى لإعدادات التشغيل في الإنتاج.
+  static void validateForStartup() {
+    if (!isProduction) return;
+
+    const requiredKeys = <String>['SUPABASE_URL', 'SUPABASE_ANON_KEY'];
+    final missing = requiredKeys
+        .where((key) {
+          final value = _safeEnv[key]?.trim();
+          return value == null || value.isEmpty || value.startsWith('your_');
+        })
+        .toList(growable: false);
+
+    if (missing.isNotEmpty) {
+      throw StateError(
+        'Production environment is missing required configuration: '
+        '${missing.join(', ')}',
+      );
+    }
+  }
+
   /// الحصول على قيمة من dotenv.env, safely
   static Map<String, String> get _safeEnv => _isInitialized ? dotenv.env : {};
 

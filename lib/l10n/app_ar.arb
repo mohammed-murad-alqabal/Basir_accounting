@@ -199,7 +199,7 @@
   "errLoadCustomers": "خطأ في تحميل العملاء: {error}",
   "errLoginFailed": "فشل تسجيل الدخول. يرجى التحقق من البيانات.",
   "errNoItems": "يرجى إضافة بند واحد على الأقل",
-  "errPasswordShort": "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
+  "errPasswordShort": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
   "errPasswordsDoNotMatch": "كلمات المرور غير متطابقة",
   "errPhoneLength": "رقم الهاتف يجب أن يتكون من 10 أرقام",
   "errPhoneStart05": "رقم الهاتف يجب أن يبدأ بـ 05",
@@ -863,5 +863,7 @@
   "workDocumentApprovalRequired": "يتطلب اعتمادًا إضافيًا",
   "workDocumentNoImpact": "لا توجد حركات متوقعة.",
   "workEntityPickerNoOptions": "لا توجد خيارات متاحة",
-  "workEntityPickerDisabled": "غير مؤهل للاختيار"
+  "workEntityPickerDisabled": "غير مؤهل للاختيار",
+  "msgPasswordResetRequested": "إذا كان الحساب موجودًا، فسيتم إرسال رابط استعادة إلى البريد المسجل.",
+  "msgPasswordResetFailed": "تعذر تنفيذ طلب الاستعادة حاليًا. حاول مرة أخرى لاحقًا."
 }
