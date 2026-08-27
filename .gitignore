@@ -219,6 +219,9 @@ backups/
 docs/api/html/
 .env
 
+# Supabase local state and generated runtime artifacts
+.supabase/
+
 # Professional Cleanliness - Digital Noise
 analysis_output.txt
 analysis_report.txt
