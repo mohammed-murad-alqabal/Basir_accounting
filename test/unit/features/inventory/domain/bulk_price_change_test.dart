@@ -8,12 +8,12 @@ AuditEntry _auditEntry({
   AuditEventType type = AuditEventType.administrative,
   String reason = 'approved bulk price change',
 }) => AuditEntry(
-      type: type,
-      operatorName: 'operator-1',
-      occurredAt: DateTime.utc(2026, 8, 27, 12),
-      reason: reason,
-      referenceId: 'bulk-change-1',
-    );
+  type: type,
+  operatorName: 'operator-1',
+  occurredAt: DateTime.utc(2026, 8, 27, 12),
+  reason: reason,
+  referenceId: 'bulk-change-1',
+);
 
 BulkPriceChangePreviewEntry _preview({
   double? newSalePrice = 15.0,
@@ -21,16 +21,16 @@ BulkPriceChangePreviewEntry _preview({
   bool? isBlocked,
   String? blockReason,
 }) => BulkPriceChangePreviewEntry(
-      itemId: 'item-1',
-      itemName: 'Test item',
-      target: BulkPriceTarget.both,
-      previousSalePrice: 12.0,
-      newSalePrice: newSalePrice,
-      previousPurchasePrice: 8.0,
-      newPurchasePrice: newPurchasePrice,
-      isBlocked: isBlocked,
-      blockReason: blockReason,
-    );
+  itemId: 'item-1',
+  itemName: 'Test item',
+  target: BulkPriceTarget.both,
+  previousSalePrice: 12.0,
+  newSalePrice: newSalePrice,
+  previousPurchasePrice: 8.0,
+  newPurchasePrice: newPurchasePrice,
+  isBlocked: isBlocked,
+  blockReason: blockReason,
+);
 
 BulkChangeExecutionRecord _record({AuditEntry? cancellation}) {
   final executedAt = DateTime.utc(2026, 8, 27, 12);
@@ -106,10 +106,7 @@ void main() {
     test('detects negative results and round trips optional values', () {
       final positive = _preview();
       final negative = _preview(newSalePrice: -1, newPurchasePrice: null);
-      final blocked = _preview(
-        isBlocked: true,
-        blockReason: 'price policy',
-      );
+      final blocked = _preview(isBlocked: true, blockReason: 'price policy');
 
       expect(positive.hasNegativeResult, isFalse);
       expect(negative.hasNegativeResult, isTrue);
@@ -135,7 +132,10 @@ void main() {
       expect(record.isCancellableAt(beforeDeadline), isTrue);
       expect(record.isCancellableAt(afterDeadline), isFalse);
       expect(record.toString(), contains('bulk-change-1'));
-      expect(record.cancellationDeadline, record.executedAt.add(const Duration(hours: 24)));
+      expect(
+        record.cancellationDeadline,
+        record.executedAt.add(const Duration(hours: 24)),
+      );
     });
 
     test('preserves a cancellation audit entry in JSON', () {
