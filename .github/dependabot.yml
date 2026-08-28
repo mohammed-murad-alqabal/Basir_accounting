@@ -38,12 +38,6 @@ updates:
         update-types:
           - "minor"
           - "patch"
-    # تجاهل بعض التحديثات إذا لزم الأمر
-    ignore:
-      # مثال: تجاهل تحديثات major لحزمة معينة
-      # - dependency-name: "package_name"
-      #   update-types: ["version-update:semver-major"]
-
   # Rust/Cargo workspace dependencies
   - package-ecosystem: "cargo"
     directory: "/rust"

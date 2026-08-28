@@ -154,6 +154,26 @@ class AuditEntry {
   String toString() =>
       'AuditEntry(${type.localizedLabel}: $operatorName @ $occurredAt)';
 
+  /// تمثيل السلسلةية لاستخدام التخزين في Isar.
+  Map<String, dynamic> toJson() => {
+        'type': type.name,
+        'operatorName': operatorName,
+        'occurredAt': occurredAt.toIso8601String(),
+        if (reason != null) 'reason': reason,
+        if (referenceId != null) 'referenceId': referenceId,
+      };
+
+  /// يبني حدث التدقيق من تمثيله السلسلةي.
+  factory AuditEntry.fromJson(Map<String, dynamic> json) => AuditEntry(
+        type: AuditEventType.values.firstWhere(
+          (type) => type.name == json['type'],
+        ),
+        operatorName: json['operatorName'] as String,
+        occurredAt: DateTime.parse(json['occurredAt'] as String),
+        reason: json['reason'] as String?,
+        referenceId: json['referenceId'] as String?,
+      );
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

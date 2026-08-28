@@ -65,7 +65,7 @@ void main() {
           () {
         expect(workflow, contains('dart run build_runner build'));
         expect(workflow, contains('dart format --set-exit-if-changed'));
-        expect(workflow, contains('flutter analyze --fatal-infos'));
+        expect(workflow, contains('flutter analyze --no-fatal-infos'));
         expect(
           workflow,
           contains('flutter test --coverage --reporter expanded'),

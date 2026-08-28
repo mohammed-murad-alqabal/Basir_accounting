@@ -5,6 +5,7 @@ import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/providers/inventory_provider.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/screens/inventory_item_form_screen.dart';
+import 'package:basir_accounting_system/features/inventory/presentation/screens/bulk_price_change_screen.dart';
 import 'package:basir_accounting_system/features/onboarding/presentation/widgets/cognitive_overlay.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +70,16 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
           ),
           padding: EdgeInsets.zero,
           onPressed: _addItem,
+        ),
+        IconButton(
+          icon: Icon(appIcons.priceTag, size: IconSizes.md),
+          tooltip: context.l10n.bulkWizardTitle,
+          constraints: const BoxConstraints(
+            minWidth: TouchTargets.minimum,
+            minHeight: TouchTargets.minimum,
+          ),
+          padding: EdgeInsets.zero,
+          onPressed: _openBulkPriceChange,
         ),
       ],
       body: Column(
@@ -153,6 +164,16 @@ class _InventoryItemsScreenState extends ConsumerState<InventoryItemsScreen> {
         : quantity.toString();
     final unit = item.unit?.trim();
     return unit == null || unit.isEmpty ? value : '$value $unit';
+  }
+
+  Future<void> _openBulkPriceChange() async {
+    final result = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute<bool>(
+        builder: (context) => const BulkPriceChangeScreen(),
+      ),
+    );
+    if (result ?? false) ref.invalidate(inventoryItemsProvider);
   }
 
   Future<void> _addItem() async {

@@ -30,12 +30,15 @@ import 'package:basir_accounting_system/features/goals/application/goal_service.
 import 'package:basir_accounting_system/features/goals/data/models/goal_model.dart';
 import 'package:basir_accounting_system/features/goals/data/repositories/isar_goal_repository.dart';
 import 'package:basir_accounting_system/features/goals/domain/repositories/goal_repository.dart';
+import 'package:basir_accounting_system/features/inventory/application/bulk_price_change_service.dart';
 import 'package:basir_accounting_system/features/inventory/application/inventory_service.dart';
+import 'package:basir_accounting_system/features/inventory/data/models/bulk_price_change_execution_model.dart';
 import 'package:basir_accounting_system/features/inventory/data/models/inventory_item_model.dart';
 import 'package:basir_accounting_system/features/inventory/data/models/stock_movement_model.dart';
 import 'package:basir_accounting_system/features/inventory/data/models/warehouse_model.dart';
 import 'package:basir_accounting_system/features/inventory/data/models/warehouse_transfer_model.dart';
 import 'package:basir_accounting_system/features/inventory/data/repositories/inventory_repository_impl.dart';
+import 'package:basir_accounting_system/features/inventory/data/repositories/isar_bulk_change_execution_storage.dart';
 import 'package:basir_accounting_system/features/inventory/data/repositories/stock_movement_repository_impl.dart';
 import 'package:basir_accounting_system/features/inventory/data/repositories/warehouse_repository_impl.dart';
 import 'package:basir_accounting_system/features/inventory/data/repositories/warehouse_transfer_repository_impl.dart';
@@ -172,6 +175,7 @@ final isarProvider = FutureProvider<Isar>((ref) async {
         BarcodeConfigModelSchema,
         BudgetModelSchema,
         GoalModelSchema,
+        BulkPriceChangeExecutionModelSchema,
       ],
       directory: dir.path,
       name: 'basir_db',
@@ -420,6 +424,24 @@ final goalRepositoryProvider = Provider<GoalRepository>((ref) {
 final goalServiceProvider = Provider<GoalService>((ref) {
   final goalRepo = ref.watch(goalRepositoryProvider);
   return GoalService(goalRepo);
+});
+
+/// مزود تخزين سجلات تنفيذ تغيير الأسعار الجماعي (Isar).
+final bulkChangeExecutionStorageProvider =
+    Provider<BulkChangeExecutionStorage>((ref) {
+  final isar = ref.watch(isarProvider.select((async) => async.value));
+  if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
+  return IsarBulkChangeExecutionStorage(isar: isar);
+});
+
+/// مزود خدمة تغيير الأسعار الجماعي (المعاينة، التنفيذ، الإلغاء).
+final bulkPriceChangeServiceProvider = Provider<BulkPriceChangeService>((ref) {
+  final repository = ref.watch(inventoryRepositoryProvider);
+  final storage = ref.watch(bulkChangeExecutionStorageProvider);
+  return BulkPriceChangeService(
+    repository: repository,
+    storage: storage,
+  );
 });
 
 /// Provider for Google Sign-In instance.

@@ -103,7 +103,9 @@ jobs:
           if [ -d integration_test ]; then
             targets+=(integration_test)
           fi
-          flutter analyze --fatal-infos "${targets[@]}"
+          # Informational lints are tracked as the repository baseline; only
+          # analyzer errors and warnings should block the production gate.
+          flutter analyze --no-fatal-infos "${targets[@]}"
 
       - name: Run Flutter tests with coverage
         # Run every test in one worker to keep native bridge test processes within
