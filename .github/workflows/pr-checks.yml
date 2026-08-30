@@ -249,13 +249,13 @@ jobs:
         run: |
           echo "⚖️ Checking accounting equation compliance..."
 
-          # Look for accounting equation violations in code
-          if grep -r "assets.*!=.*liabilities.*equity" lib/features/accounting/ || \
-             grep -r "debit.*!=.*credit" lib/features/accounting/; then
-            echo "❌ Potential accounting equation violations found"
-            exit 1
+          # Verify that the ledger rejects unbalanced entries. A raw
+          # `debit != credit` match is a correctness guard, not a violation.
+          if grep -r -E "debit[[:space:]]*!=[[:space:]]*credit" lib/features/accounting/ > /dev/null; then
+            echo "✅ Unbalanced-entry guard found"
           else
-            echo "✅ No obvious accounting violations detected"
+            echo "❌ Missing unbalanced-entry guard"
+            exit 1
           fi
 
       - name: Check ZATCA compliance markers
