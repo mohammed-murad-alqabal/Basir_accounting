@@ -123,16 +123,26 @@ class _FinancialCalculatorScreenState extends State<FinancialCalculatorScreen> {
                       ),
                     ),
                   const Spacer(),
-                  Text(
-                    _display,
-                    style: theme.textTheme.headlineMedium
-                        ?.copyWith(color: theme.colorScheme.outline),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      _display,
+                      maxLines: 1,
+                      style: theme.textTheme.headlineMedium
+                          ?.copyWith(color: theme.colorScheme.outline),
+                    ),
                   ),
                   const SizedBox(height: Spacing.md),
-                  Text(
-                    _result,
-                    style: theme.textTheme.displaySmall
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      _result,
+                      maxLines: 1,
+                      style: theme.textTheme.displaySmall
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),
@@ -148,7 +158,13 @@ class _FinancialCalculatorScreenState extends State<FinancialCalculatorScreen> {
                   value: _useCurrencies,
                   onChanged: (val) => setState(() => _useCurrencies = val!),
                 ),
-                Text(l10n.convertToCurrencies),
+                Expanded(
+                  child: Text(
+                    l10n.convertToCurrencies,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ],
             ),
           ),

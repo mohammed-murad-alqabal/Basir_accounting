@@ -52,10 +52,7 @@ impl StandardsRegistry {
 
         self.entries.insert(key, entry);
 
-        self.by_number
-            .entry((body, number))
-            .or_default()
-            .push(id);
+        self.by_number.entry((body, number)).or_default().push(id);
     }
 
     /// Look up a standard by its canonical reference string.
@@ -100,18 +97,12 @@ impl StandardsRegistry {
     /// ```ignore
     /// registry.get_by_standard(StandardBody::IFRS, "15")
     /// ```
-    pub fn get_by_standard(
-        &self,
-        body: StandardBody,
-        number: &str,
-    ) -> Vec<&StandardEntry> {
+    pub fn get_by_standard(&self, body: StandardBody, number: &str) -> Vec<&StandardEntry> {
         self.by_number
             .get(&(body, number.to_string()))
             .map(|ids| {
                 ids.iter()
-                    .filter_map(|id| {
-                        self.entries.values().find(|e| e.reference.id == *id)
-                    })
+                    .filter_map(|id| self.entries.values().find(|e| e.reference.id == *id))
                     .collect()
             })
             .unwrap_or_default()
@@ -185,7 +176,8 @@ impl StandardsRegistry {
             title: "Reporting at End of Subsequent Periods".to_string(),
             full_text: "At the end of each reporting period: (a) foreign \
                        currency monetary items shall be translated using the \
-                       closing rate...".to_string(),
+                       closing rate..."
+                .to_string(),
             effective_date: NaiveDate::from_ymd_opt(2005, 1, 1).unwrap(),
             supersedes: vec![],
             superseded_by: None,

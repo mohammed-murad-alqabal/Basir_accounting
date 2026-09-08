@@ -15,10 +15,10 @@
 //! - Currency configuration per account
 //! - IFRS Taxonomy mapping
 
-pub mod models;
-pub mod hierarchy;
-pub mod taxonomy;
 pub mod defaults;
+pub mod hierarchy;
+pub mod models;
 pub mod registry;
+pub mod taxonomy;
 
 pub use registry::AccountRegistry;

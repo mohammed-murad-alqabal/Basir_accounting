@@ -86,7 +86,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       body: Column(
         children: [
           _buildStatsHeader(statsAsync),
-          _buildToolbar(invoicesAsync.value?.length ?? 0),
+          _buildToolbar(invoicesAsync.asData?.value.length ?? 0),
           Expanded(
             child: invoicesAsync.when(
               data: (invoices) =>

@@ -22,7 +22,7 @@ sequenceDiagram
     User->>LoginScreen: Enter Username/Password
     LoginScreen->>AuthService: authenticate(credentials)
     AuthService->>SecureStorage: Retrieve stored hash
-    AuthService->>AuthService: Verify bcrypt hash
+    AuthService->>AuthService: Verify hash per ADR-SEC-001
     alt Success
         AuthService->>SecureStorage: Store session token
         AuthService-->>LoginScreen: AuthSuccess
@@ -146,7 +146,7 @@ Future<void> logAudit({
 
 | Data Type        | Encryption            | Storage                   |
 | ---------------- | --------------------- | ------------------------- |
-| User Credentials | bcrypt hash (cost 12) | Isar (secured)            |
+| User Credentials | ADR-SEC-001 bcrypt target (cost 12) | Isar + secure storage; CI evidence required |
 | Session Tokens   | AES-256               | `flutter_secure_storage`  |
 | Database Backup  | AES-256 (user key)    | Local / Cloud             |
 | Sensitive Fields | N/A (local-first)     | Future: Column encryption |
@@ -185,16 +185,17 @@ For future cloud sync:
 
 ---
 
-## 6. Security Best Practices Checklist
+## 6. حالة الضوابط الأمنية
 
-- [x] No hardcoded secrets in codebase.
-- [x] All API keys stored in environment variables.
-- [x] Passwords never stored in plain text.
-- [x] User input sanitized against SQL/XSS injection.
-- [x] Session invalidated on logout.
-- [x] Rate limiting on login attempts. (Future)
-- [x] Regular security dependency audits.
+| الضبط | الحالة الحالية | مصدر الحقيقة أو الدليل المطلوب |
+| --- | --- | --- |
+| تجزئة كلمة المرور | `DRAFT / IMPLEMENTATION PENDING CI` | [ADR-SEC-001](../../../../docs/03-architecture/adrs/ADR-SEC-001-password-hashing-and-local-authentication.md)، و`REQ-SEC-001`. |
+| تخزين كلمة المرور النصية | لا يمثل النظام تخزين كلمة مرور نصية كتصميم مقصود؛ يلزم دليل اختبار وCI لكل مسار. | `REQ-SEC-001` واختبارات المصادقة. |
+| إدارة مفاتيح وبيانات حساسة | `PARTIAL` | يلزم secret scan وevidence وفق `REQ-SEC-004`. |
+| إبطال الجلسة عند logout | منفذ محليًا؛ يحتاج ربط اختبار ودليل إصدار قبل ادعاء أوسع. | `AuthService.logout`. |
+| rate limiting لمحاولات الدخول | `PLANNED` | ADR/threat model/اختبار رفض وفق `REQ-SEC-005`؛ ليس منفذًا حاليًا. |
+| تدقيق اعتماديات الأمن | منفذ كفحص CI، لا يمثل شهادة خلو من الثغرات. | `security-quality-gate`. |
 
 ---
 
-_This specification ensures Basir meets the highest standards of data security and regulatory compliance._
+> لا تشكل هذه المواصفة شهادة جاهزية إنتاج أو امتثال تنظيمي. يجب ربط كل ادعاء بنطاقه وSHA وتشغيل CI المناسب.

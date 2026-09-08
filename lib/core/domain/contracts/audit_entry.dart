@@ -4,10 +4,9 @@
 /// المرجع: مخطط UI/UX التنفيذي — القسم 6 (حالات الوثائق والأثر المحاسبي).
 library;
 
+import 'package:basir_accounting_system/core/theme/tokens/app_colors.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-
-import 'package:basir_accounting_system/core/theme/tokens/app_colors.dart';
 
 /// أنواع أحداث التدقيق المدعومة في السجل الزمني.
 enum AuditEventType {

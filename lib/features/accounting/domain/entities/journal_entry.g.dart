@@ -59,18 +59,16 @@ _$JournalEntryLineImpl _$$JournalEntryLineImplFromJson(
     _$JournalEntryLineImpl(
       accountId: json['accountId'] as String,
       accountName: json['accountName'] as String,
-      debit: Decimal.fromJson(json['debit'] as String),
-      credit: Decimal.fromJson(json['credit'] as String),
+      debit: const DecimalJsonConverter().fromJson(json['debit'] as String),
+      credit: const DecimalJsonConverter().fromJson(json['credit'] as String),
       description: json['description'] as String?,
       sourceDocumentRef: json['sourceDocumentRef'] as String?,
       costCenterId: json['costCenterId'] as String?,
       originalCurrency: json['originalCurrency'] as String?,
-      exchangeRate: json['exchangeRate'] == null
-          ? null
-          : Decimal.fromJson(json['exchangeRate'] as String),
-      originalAmount: json['originalAmount'] == null
-          ? null
-          : Decimal.fromJson(json['originalAmount'] as String),
+      exchangeRate: _$JsonConverterFromJson<String, Decimal>(
+          json['exchangeRate'], const DecimalJsonConverter().fromJson),
+      originalAmount: _$JsonConverterFromJson<String, Decimal>(
+          json['originalAmount'], const DecimalJsonConverter().fromJson),
     );
 
 Map<String, dynamic> _$$JournalEntryLineImplToJson(
@@ -78,15 +76,29 @@ Map<String, dynamic> _$$JournalEntryLineImplToJson(
     <String, dynamic>{
       'accountId': instance.accountId,
       'accountName': instance.accountName,
-      'debit': instance.debit,
-      'credit': instance.credit,
+      'debit': const DecimalJsonConverter().toJson(instance.debit),
+      'credit': const DecimalJsonConverter().toJson(instance.credit),
       'description': instance.description,
       'sourceDocumentRef': instance.sourceDocumentRef,
       'costCenterId': instance.costCenterId,
       'originalCurrency': instance.originalCurrency,
-      'exchangeRate': instance.exchangeRate,
-      'originalAmount': instance.originalAmount,
+      'exchangeRate': _$JsonConverterToJson<String, Decimal>(
+          instance.exchangeRate, const DecimalJsonConverter().toJson),
+      'originalAmount': _$JsonConverterToJson<String, Decimal>(
+          instance.originalAmount, const DecimalJsonConverter().toJson),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
 
 _$JournalEntryImpl _$$JournalEntryImplFromJson(Map<String, dynamic> json) =>
     _$JournalEntryImpl(
@@ -132,11 +144,11 @@ Map<String, dynamic> _$$JournalEntryImplToJson(_$JournalEntryImpl instance) =>
       'id': instance.id,
       'referenceNumber': instance.referenceNumber,
       'date': instance.date.toIso8601String(),
-      'temporal': instance.temporal,
-      'standards': instance.standards,
+      'temporal': instance.temporal.toJson(),
+      'standards': instance.standards.toJson(),
       'description': instance.description,
       'status': _$JournalEntryStatusEnumMap[instance.status]!,
-      'lines': instance.lines,
+      'lines': instance.lines.map((e) => e.toJson()).toList(),
       'sourceDocument': instance.sourceDocument,
       'sourceId': instance.sourceId,
       'createdBy': instance.createdBy,
@@ -147,7 +159,7 @@ Map<String, dynamic> _$$JournalEntryImplToJson(_$JournalEntryImpl instance) =>
       'postedAt': instance.postedAt?.toIso8601String(),
       'userId': instance.userId,
       'warehouseId': instance.warehouseId,
-      'auditLogs': instance.auditLogs,
+      'auditLogs': instance.auditLogs.map((e) => e.toJson()).toList(),
       'syncStatus': _$SyncStatusEnumMap[instance.syncStatus]!,
       'serverUpdatedAt': instance.serverUpdatedAt?.toIso8601String(),
       'isDeleted': instance.isDeleted,

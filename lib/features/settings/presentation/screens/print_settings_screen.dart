@@ -241,7 +241,13 @@ class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(label),
+            Expanded(
+              child: Text(
+                label,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(width: Spacing.sm),
             Row(
               children: [
                 IconButton(

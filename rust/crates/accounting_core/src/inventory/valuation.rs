@@ -1,7 +1,7 @@
-use uuid::Uuid;
+use crate::inventory::models::{MovementType, StockMovement, ValuationMethod};
 use rust_decimal::Decimal;
-use crate::inventory::models::{StockMovement, MovementType, ValuationMethod};
 use thiserror::Error;
+use uuid::Uuid;
 
 #[derive(Error, Debug)]
 pub enum InventoryError {
@@ -42,11 +42,15 @@ impl InventoryValuator for FifoValuator {
                 MovementType::Outbound => {
                     let mut to_consume = m.quantity;
                     for (lot_qty, _) in lots.iter_mut() {
-                        if *lot_qty <= Decimal::ZERO { continue; }
+                        if *lot_qty <= Decimal::ZERO {
+                            continue;
+                        }
                         let take = to_consume.min(*lot_qty);
                         *lot_qty -= take;
                         to_consume -= take;
-                        if to_consume <= Decimal::ZERO { break; }
+                        if to_consume <= Decimal::ZERO {
+                            break;
+                        }
                     }
                 }
                 MovementType::Adjustment => {
@@ -54,12 +58,17 @@ impl InventoryValuator for FifoValuator {
                         lots.push((m.quantity, m.unit_cost));
                     } else {
                         let mut to_consume = m.quantity.abs();
-                        for (lot_qty, _) in lots.iter_mut().rev() { // Adjustments consume from the latest lot or first? Usually latest.
-                            if *lot_qty <= Decimal::ZERO { continue; }
+                        for (lot_qty, _) in lots.iter_mut().rev() {
+                            // Adjustments consume from the latest lot or first? Usually latest.
+                            if *lot_qty <= Decimal::ZERO {
+                                continue;
+                            }
                             let take = to_consume.min(*lot_qty);
                             *lot_qty -= take;
                             to_consume -= take;
-                            if to_consume <= Decimal::ZERO { break; }
+                            if to_consume <= Decimal::ZERO {
+                                break;
+                            }
                         }
                     }
                 }
@@ -83,11 +92,15 @@ impl InventoryValuator for FifoValuator {
         let mut total_cost = Decimal::ZERO;
 
         for (lot_qty, unit_cost) in lots {
-            if lot_qty <= Decimal::ZERO { continue; }
+            if lot_qty <= Decimal::ZERO {
+                continue;
+            }
             let take = remaining_to_consume.min(lot_qty);
             total_cost += take * unit_cost;
             remaining_to_consume -= take;
-            if remaining_to_consume <= Decimal::ZERO { break; }
+            if remaining_to_consume <= Decimal::ZERO {
+                break;
+            }
         }
 
         if remaining_to_consume > Decimal::ZERO {
@@ -101,8 +114,12 @@ impl InventoryValuator for FifoValuator {
                     MovementType::Impairment => Decimal::ZERO,
                 })
                 .sum();
-            
-            return Err(InventoryError::InsufficientStock(item_id, quantity, total_available));
+
+            return Err(InventoryError::InsufficientStock(
+                item_id,
+                quantity,
+                total_available,
+            ));
         }
 
         Ok(total_cost)
@@ -143,7 +160,7 @@ impl InventoryValuator for WeightedAverageValuator {
                 }
                 MovementType::Impairment => {
                     // Impairment reduces the cost basis but DOES NOT change quantity.
-                    // m.quantity should be zero, m.unit_cost is the total impairment amount per unit (negative) 
+                    // m.quantity should be zero, m.unit_cost is the total impairment amount per unit (negative)
                     // or just use total_cost_basis -= m.unit_cost if quantity is 0?
                     // Let's assume m.unit_cost is the negative total impairment value for the item.
                     total_cost_basis += m.unit_cost.round_dp(6);
@@ -152,7 +169,9 @@ impl InventoryValuator for WeightedAverageValuator {
         }
 
         if total_qty < quantity {
-            return Err(InventoryError::InsufficientStock(item_id, quantity, total_qty));
+            return Err(InventoryError::InsufficientStock(
+                item_id, quantity, total_qty,
+            ));
         }
 
         if total_qty <= Decimal::ZERO {

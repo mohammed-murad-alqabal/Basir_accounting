@@ -163,36 +163,35 @@ impl ClosingEntryGenerator {
         for tb_line in tb.lines {
             // Find the account kind
             let account = accounts.iter().find(|a| a.code == tb_line.account_code);
-            if let Some(acc) = account {
-                // Only Balance Sheet accounts (Asset, Liability, Equity) are carried forward.
-                // Income and Expense should have been zeroed out by a closing entry.
-                if matches!(
-                    acc.kind,
-                    AccountKind::Asset | AccountKind::Liability | AccountKind::Equity
-                ) {
-                    if tb_line.debit_balance != Decimal::ZERO
-                        || tb_line.credit_balance != Decimal::ZERO
-                    {
-                        lines.push(JournalEntryLine {
-                            line_id: Uuid::new_v4(),
-                            line_number: line_num,
-                            account_id: acc.id,
-                            debit_amount: tb_line.debit_balance,
-                            credit_amount: tb_line.credit_balance,
-                            description: format!(
-                                "Opening balance carry-forward for {}",
-                                acc.name_en
-                            ),
-                            source_document_ref: None,
-                            original_currency: None,
-                            exchange_rate: None,
-                            original_amount: None,
-                            partner_id: None,
-                        });
-                        line_num += 1;
-                    }
-                }
+            let Some(acc) = account else {
+                continue;
+            };
+
+            // Only Balance Sheet accounts (Asset, Liability, Equity) are carried forward.
+            // Income and Expense should have been zeroed out by a closing entry.
+            if !matches!(
+                acc.kind,
+                AccountKind::Asset | AccountKind::Liability | AccountKind::Equity
+            ) || (tb_line.debit_balance == Decimal::ZERO
+                && tb_line.credit_balance == Decimal::ZERO)
+            {
+                continue;
             }
+
+            lines.push(JournalEntryLine {
+                line_id: Uuid::new_v4(),
+                line_number: line_num,
+                account_id: acc.id,
+                debit_amount: tb_line.debit_balance,
+                credit_amount: tb_line.credit_balance,
+                description: format!("Opening balance carry-forward for {}", acc.name_en),
+                source_document_ref: None,
+                original_currency: None,
+                exchange_rate: None,
+                original_amount: None,
+                partner_id: None,
+            });
+            line_num += 1;
         }
 
         JournalEntry {
