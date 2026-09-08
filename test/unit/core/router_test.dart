@@ -311,6 +311,103 @@ void main() {
         expect(route1, isA<MaterialPageRoute<dynamic>>());
         expect(route2, isA<MaterialPageRoute<dynamic>>());
       });
+
+      test('يغطي المسارات الإنتاجية العامة الإضافية', () {
+        const routes = [
+          '/forgot-password',
+          '/invoice-form',
+          '/customer-form',
+          '/vendor-form',
+          '/inventory',
+          '/inventory-form',
+          '/assets',
+          '/asset-form',
+          '/returns-and-damages',
+          '/financial-calculator',
+          '/treasury-dashboard',
+          '/voucher-list',
+          '/cash-reconciliation',
+          '/strategic-outlook',
+          '/users',
+          '/user-form',
+          '/forensic-portal',
+          '/guest-upgrade',
+          '/zatca-onboarding',
+          '/fiscal-control-center',
+          '/financial-year-form',
+          '/account-form',
+          '/expenses',
+          '/expenses/add',
+          '/expenses/edit',
+          '/excel-import',
+          '/cloud-backup',
+          '/barcode-creation',
+          '/barcode-settings',
+          '/chart-of-accounts',
+          '/journal-entries',
+          '/journal-entry-form',
+          '/balance-sheet',
+          '/income-statement',
+          '/cash-flow',
+          '/trial-balance',
+          '/aging-reports',
+          '/reports',
+          '/voucher-form',
+          '/reports-dashboard',
+          '/financial-report',
+          '/audit-trail-report',
+          '/smart-tax-report',
+          '/intelligence',
+        ];
+
+        for (final routeName in routes) {
+          final route = AppRouter.generateRoute(
+            RouteSettings(name: routeName),
+          );
+          expect(
+            route,
+            isA<MaterialPageRoute<dynamic>>(),
+            reason: '$routeName يجب أن يملك مساراً إنتاجياً',
+          );
+        }
+      });
+
+      test('يتعامل مع معاملات الاستعادة والتقارير والكيانات', () {
+        final routes = [
+          const RouteSettings(name: '/reset-password'),
+          const RouteSettings(
+            name: '/reset-password',
+            arguments: {'email': 'user@example.com', 'token': 'test-token'},
+          ),
+          const RouteSettings(name: '/general-ledger'),
+          RouteSettings(
+            name: '/general-ledger',
+            arguments: {
+              'accountId': '1000',
+              'accountName': 'Cash',
+              'fromDate': DateTime(2025),
+              'toDate': DateTime(2025, 12, 31),
+            },
+          ),
+          const RouteSettings(name: '/entity-transactions'),
+          const RouteSettings(
+            name: '/entity-transactions',
+            arguments: {
+              'entityId': 'customer-1',
+              'entityName': 'Customer One',
+              'isCustomer': true,
+            },
+          ),
+        ];
+
+        for (final settings in routes) {
+          expect(
+            AppRouter.generateRoute(settings),
+            isA<MaterialPageRoute<dynamic>>(),
+            reason: '${settings.name} يجب أن يعالج المعاملات بأمان',
+          );
+        }
+      });
     });
   });
 }

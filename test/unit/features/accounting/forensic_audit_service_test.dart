@@ -18,6 +18,7 @@ void main() {
 
   setUp(() {
     mockRepository = MockAccountingRepository();
+    when(() => mockRepository.getJournalEntries()).thenAnswer((_) async => []);
     container = ProviderContainer(
       overrides: [
         accountingRepositoryProvider.overrideWithValue(mockRepository),
@@ -94,7 +95,9 @@ void main() {
 
       final result = await service.process(
         AccountingContext(
-            proposedJournalEntry: entry, transactionType: 'manual'),
+          proposedJournalEntry: entry,
+          transactionType: 'manual',
+        ),
       );
 
       expect(result.isAllowed, false);
@@ -108,7 +111,9 @@ void main() {
 
       final result = await service.process(
         AccountingContext(
-            proposedJournalEntry: entry, transactionType: 'manual'),
+          proposedJournalEntry: entry,
+          transactionType: 'manual',
+        ),
       );
 
       expect(result.isAllowed, false);
@@ -121,7 +126,9 @@ void main() {
 
       final result = await service.process(
         AccountingContext(
-            proposedJournalEntry: entry, transactionType: 'manual'),
+          proposedJournalEntry: entry,
+          transactionType: 'manual',
+        ),
       );
 
       expect(result.isAllowed, false);
@@ -150,7 +157,9 @@ void main() {
 
       final result = await service.process(
         AccountingContext(
-            proposedJournalEntry: entry, transactionType: 'manual'),
+          proposedJournalEntry: entry,
+          transactionType: 'manual',
+        ),
       );
 
       expect(result.isAllowed, true);
@@ -161,6 +170,7 @@ void main() {
     test('should ALLOW a balanced standard entry with balanced rationale',
         () async {
       final entry = makeEntry(
+        date: DateTime(2026, 8, 13, 10),
         lines: [
           JournalEntryLine(
             accountId: 'acc-1',
@@ -185,7 +195,9 @@ void main() {
 
       final result = await service.process(
         AccountingContext(
-            proposedJournalEntry: entry, transactionType: 'manual'),
+          proposedJournalEntry: entry,
+          transactionType: 'manual',
+        ),
       );
 
       expect(result.isAllowed, true);

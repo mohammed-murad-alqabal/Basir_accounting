@@ -34,7 +34,6 @@ import 'package:basir_accounting_system/features/customers/domain/entities/custo
 import 'package:basir_accounting_system/features/customers/presentation/screens/customer_details_screen.dart';
 import 'package:basir_accounting_system/features/customers/presentation/screens/customer_form_screen.dart';
 import 'package:basir_accounting_system/features/customers/presentation/screens/customers_screen.dart';
-import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:basir_accounting_system/features/expenses/presentation/screens/expense_form_screen.dart';
 import 'package:basir_accounting_system/features/expenses/presentation/screens/expenses_dashboard_screen.dart';
 import 'package:basir_accounting_system/features/forensics/presentation/screens/forensic_portal_screen.dart';
@@ -62,6 +61,7 @@ import 'package:basir_accounting_system/features/users/presentation/screens/user
 import 'package:basir_accounting_system/features/vendors/presentation/screens/vendor_form_screen.dart';
 import 'package:basir_accounting_system/features/vendors/presentation/screens/vendors_screen.dart';
 import 'package:basir_accounting_system/features/zatca/presentation/screens/zatca_onboarding_screen.dart';
+import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:flutter/material.dart';
 
 /// نظام التوجيه للتطبيق

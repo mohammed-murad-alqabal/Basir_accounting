@@ -1,5 +1,12 @@
 # حالة المشروع الحالية - بصير MVP
 
+> **status:** HISTORICAL
+> **historical_as_of_date:** 2025-12-05
+> **historical_as_of_sha:** `560c3372de9ac640f01e3854b211ffb6ef0664fd`
+> **not_current_source_of_truth:** true
+> **superseded_by:** `docs/00-governance/DOCUMENTATION_REGISTER.md`, `docs/00-governance/AUTHORITY_MODEL.md`, and SHA-linked CI evidence
+> **archive_note:** هذا التقرير لقطة تاريخية متعددة الأقسام؛ لا يصف الحالة الحالية للمستودع ولا يثبت جاهزية أو امتثالًا حاليًا.
+
 **التاريخ:** 5 ديسمبر 2025  
 **المحلل:** فريق وكلاء تطوير مشروع بصير  
 **الإصدار الحالي:** 1.21.0  
