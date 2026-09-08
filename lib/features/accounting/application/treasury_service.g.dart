@@ -24,7 +24,7 @@ final getVouchersProvider =
 );
 
 typedef GetVouchersRef = AutoDisposeFutureProviderRef<List<FinancialVoucher>>;
-String _$treasuryServiceHash() => r'22b18280679201ef8ca9eb241006ad5d1998a1e4';
+String _$treasuryServiceHash() => r'f794533fa3cc7838635d203799abf62aa2dcc4bf';
 
 /// Treasury Service managing cash, banking, and financial voucher operations.
 ///

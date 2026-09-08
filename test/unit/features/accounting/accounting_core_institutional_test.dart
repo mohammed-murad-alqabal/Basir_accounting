@@ -23,6 +23,9 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:isar/isar.dart';
+
+import '../../../helpers/test_helpers.dart';
 
 class InMemoryCustomerRepository implements CustomerRepository {
   final _customers = <String, Customer>{};
@@ -109,10 +112,13 @@ void main() {
 
   group('Institutional Accounting Core Verification', () {
     late ProviderContainer container;
+    late Isar isar;
 
-    setUp(() {
+    setUp(() async {
+      isar = await TestHelpers.createTestIsar();
       container = ProviderContainer(
         overrides: [
+          isarProvider.overrideWith((ref) => Future.value(isar)),
           financialYearRepositoryProvider.overrideWithValue(
             InMemoryFinancialYearRepository(),
           ),
@@ -131,10 +137,12 @@ void main() {
           currentUserProvider.overrideWith((ref) => null),
         ],
       );
+      await container.read(isarProvider.future);
     });
 
-    tearDown(() {
+    tearDown(() async {
       container.dispose();
+      await TestHelpers.cleanupTestIsar(isar);
     });
 
     test(
@@ -181,6 +189,8 @@ void main() {
         discountAmount: Decimal.zero,
         discountRate: Decimal.zero,
         exchangeRate: Decimal.one,
+        zatcaUuid: 'test-zatca-uuid-001',
+        zatcaHash: 'test-zatca-hash-001',
         items: [
           InvoiceItem(
             taxRate: Decimal.parse('0.15'),
@@ -194,6 +204,7 @@ void main() {
         ],
       );
 
+      await container.read(invoiceRepositoryProvider).addInvoice(invoice);
       await accountingService.postSalesInvoice(invoice);
 
       // Step 3: Verify Trial Balance sums

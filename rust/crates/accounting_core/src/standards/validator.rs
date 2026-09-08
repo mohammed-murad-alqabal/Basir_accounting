@@ -40,9 +40,8 @@ pub type ValidationResult<T> = Result<T, ValidationError>;
 /// # Returns
 /// `Ok(StandardReference)` if valid, `Err(ValidationError)` otherwise.
 pub fn validate_format(reference: &str) -> ValidationResult<StandardReference> {
-    StandardReference::parse(reference).ok_or_else(|| {
-        ValidationError::InvalidFormat(reference.to_string())
-    })
+    StandardReference::parse(reference)
+        .ok_or_else(|| ValidationError::InvalidFormat(reference.to_string()))
 }
 
 /// Validate that a reference exists in the registry.
@@ -53,10 +52,7 @@ pub fn validate_format(reference: &str) -> ValidationResult<StandardReference> {
 ///
 /// # Returns
 /// `Ok(())` if reference exists, `Err(ValidationError)` otherwise.
-pub fn validate_exists(
-    reference: &str,
-    registry: &StandardsRegistry,
-) -> ValidationResult<()> {
+pub fn validate_exists(reference: &str, registry: &StandardsRegistry) -> ValidationResult<()> {
     if registry.contains(reference) {
         Ok(())
     } else {
@@ -101,17 +97,18 @@ pub fn validate_effective(
 ) -> ValidationResult<StandardReference> {
     let parsed = validate_format(reference)?;
     validate_exists(reference, registry)?;
-    
-    let entry = registry.lookup(reference)
+
+    let entry = registry
+        .lookup(reference)
         .expect("Entry must exist after validate_exists");
-    
+
     if !entry.is_effective(as_of_date) {
         return Err(ValidationError::NotEffective(
             reference.to_string(),
             as_of_date.to_string(),
         ));
     }
-    
+
     Ok(parsed)
 }
 

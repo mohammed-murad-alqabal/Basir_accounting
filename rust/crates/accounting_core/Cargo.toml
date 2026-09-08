@@ -33,8 +33,8 @@ sqlx = { workspace = true, features = [
   "tls-rustls-ring",
   "macros",
 ] }
-strum = "0.27.2"
-strum_macros = "0.27.2"
+strum = "0.28.0"
+strum_macros = "0.28.0"
 anyhow = { workspace = true }
 accounting_zatca = { path = "../accounting_zatca", version = "0.1.0" }
 

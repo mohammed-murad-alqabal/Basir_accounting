@@ -2,10 +2,32 @@ import 'package:basir_accounting_system/core/extensions/string_extensions.dart';
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/exceptions/cognitive_exceptions.dart';
+import 'package:basir_accounting_system/features/invoices/application/sales_invoice_posting_service.dart';
+import 'package:basir_accounting_system/features/invoices/data/repositories/isar_sales_invoice_posting_gateway.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice_status.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+/// مزود خدمة ترحيل البيع المحروسة بالمعاينة والتأكيد والصلاحية.
+///
+/// ينتظر جاهزية خدمة المحاسبة كي تظل قواعد الفترة والحسابات متاحة قبل إنشاء
+/// القيد، ثم يمررها إلى بوابة Isar التي تحفظ جميع الآثار في معاملة واحدة.
+final salesInvoicePostingServiceProvider =
+    FutureProvider.autoDispose<SalesInvoicePostingService>((ref) async {
+  final isar = await ref.watch(isarProvider.future);
+  await ref.watch(accountingServiceProvider.future);
+  final user = ref.watch(basirUserProvider);
+
+  return SalesInvoicePostingService(
+    gateway: IsarSalesInvoicePostingGateway(
+      isar: isar,
+      accountingService: ref.read(accountingServiceProvider.notifier),
+      userId: user?.id,
+      warehouseId: user?.warehouseId,
+    ),
+  );
+});
 
 /// Provider لقائمة جميع الفواتير
 final invoicesProvider = FutureProvider<List<Invoice>>((ref) async {
@@ -24,14 +46,6 @@ final addInvoiceProvider = FutureProvider.family<bool, Invoice>((
 
   try {
     await repository.addInvoice(invoice);
-
-    // ترحيل القيد المحاسبي تلقائياً (نظام القيد المزدوج)
-    // ignore: lines_longer_than_80_chars
-    if (invoice.status == InvoiceStatus.sent ||
-        invoice.status == InvoiceStatus.paid) {
-      final accountingService = ref.read(accountingServiceProvider.notifier);
-      await accountingService.postInvoice(invoice);
-    }
 
     // Schedule notification for due date
     if (invoice.status != InvoiceStatus.paid) {
@@ -65,14 +79,6 @@ final updateInvoiceProvider = FutureProvider.family<bool, Invoice>((
 
   try {
     await repository.updateInvoice(invoice);
-
-    // ترحيل أو تحديث القيد المحاسبي (نظام القيد المزدوج)
-    // ignore: lines_longer_than_80_chars
-    if (invoice.status == InvoiceStatus.sent ||
-        invoice.status == InvoiceStatus.paid) {
-      final accountingService = ref.read(accountingServiceProvider.notifier);
-      await accountingService.postInvoice(invoice);
-    }
 
     // Update notification
     final notificationService = ref.read(notificationServiceProvider);

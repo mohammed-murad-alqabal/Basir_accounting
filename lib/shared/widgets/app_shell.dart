@@ -1,10 +1,10 @@
-import 'package:basir_accounting_system/shared/widgets/basir_sidebar.dart';
-import 'package:basir_accounting_system/shared/widgets/basir_topbar.dart';
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/theme/border_contrast_design.dart';
 import 'package:basir_accounting_system/core/theme/services/icon_customization_service.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/shared/widgets/basir_sidebar.dart';
+import 'package:basir_accounting_system/shared/widgets/basir_topbar.dart';
 import 'package:flutter/material.dart' hide Durations;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,7 +31,7 @@ const double kTopBarHeight = 56;
 const double kChipLabelBreakpoint = 1048;
 
 /// عرض الشريط الجانبي الحالي حسب حالة الطي
-double sidebarWidthOf(bool collapsed) =>
+double sidebarWidthOf({required bool collapsed}) =>
     collapsed ? kSidebarCollapsedWidth : kSidebarExpandedWidth;
 
 /// حالة طي الشريط الجانبي (تُحفظ أثناء التنقل بين الوحدات)
@@ -69,8 +69,8 @@ class BasirAppShell extends ConsumerWidget {
     final l10n = context.l10n;
     final isDesktop = MediaQuery.sizeOf(context).width >= kDesktopBreakpoint;
 
-    final List<Widget> activeScreens = screens ?? _defaultScreens;
-    final int index = _selectedIndexFor(context);
+    final activeScreens = screens ?? _defaultScreens;
+    final index = _selectedIndexFor(context);
 
     return Scaffold(
       body: isDesktop
@@ -89,17 +89,17 @@ class BasirAppShell extends ConsumerWidget {
     );
   }
 
-  /// يحسب فهرس الوحدة النشطة من [BasirNavigatorContext] الحالي
+  /// يحسب فهرس الوحدة النشطة من [BasirNavContext] الحالي
   static int _selectedIndexFor(BuildContext context) => 0;
 }
 
 /// سياق الوحدة النشطة داخل الهيكل (يُغذى مستقبلًا من StateProvider)
 class BasirNavContext {
-  /// الفهرس النشط
-  final int index;
-
   /// إنشاء سياق تنقل
   const BasirNavContext({this.index = 0});
+
+  /// الفهرس النشط
+  final int index;
 }
 
 /// تخطيط سطح المكتب: شريط جانبي + شريط علوي + محتوى
@@ -276,12 +276,10 @@ class _PlaceholderScreen extends StatelessWidget {
   final String key_;
 
   @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        AppLocalizations.of(context).shellCurrentOrg,
-        style: AppTextStyles.bodyLarge,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Center(
+        child: Text(
+          AppLocalizations.of(context).shellCurrentOrg,
+          style: AppTextStyles.bodyLarge,
+        ),
+      );
 }

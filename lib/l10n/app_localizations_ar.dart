@@ -593,10 +593,61 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelAssetAccountId => 'حساب المخزون (الأصول)';
 
   @override
-  String get inventoryItemsSearchHint => 'ابحث في المخزون...';
+  String get inventoryItemsSearchHint =>
+      'ابحث بالاسم أو رمز الصنف أو الباركود...';
+
+  @override
+  String get inventoryEmptyHintTitle => 'إدارة المخزون';
+
+  @override
+  String get inventoryEmptyHintDescription =>
+      'أضف أصناف المخزون هنا لتتبع الكميات والتكاليف بدقة. يمكنك البدء بإضافة صنف يدويًا.';
 
   @override
   String get labelSKU => 'رمز الصنف (SKU)';
+
+  @override
+  String get labelBarcode => 'الباركود';
+
+  @override
+  String get inventoryItemNameArRequired => 'أدخل اسم الصنف بالعربية.';
+
+  @override
+  String get inventoryItemNameEnRequired => 'أدخل اسم الصنف بالإنجليزية.';
+
+  @override
+  String get inventoryItemInvalidPrice =>
+      'أدخل سعر شراء وبيع صحيحين غير سالبين.';
+
+  @override
+  String get inventoryItemQuantityMustUseMovement =>
+      'يُحدّث رصيد الصنف من خلال حركات المخزون أو الجرد فقط.';
+
+  @override
+  String get inventoryItemDuplicateSku =>
+      'رمز الصنف أو الباركود مستخدم لصنف آخر.';
+
+  @override
+  String get inventoryItemDuplicateBarcode => 'الباركود مستخدم لصنف آخر.';
+
+  @override
+  String get inventoryItemNotFound => 'تعذر العثور على الصنف المطلوب.';
+
+  @override
+  String get inventoryItemSaveFailed => 'تعذر حفظ بيانات الصنف. حاول مرة أخرى.';
+
+  @override
+  String get inventoryItemSaved => 'تم حفظ بيانات الصنف.';
+
+  @override
+  String get inventoryBarcodeSelectRequired =>
+      'اختر صنفًا وأدخل الباركود أولًا.';
+
+  @override
+  String get inventoryBarcodeSaved => 'تم حفظ الباركود بنجاح.';
+
+  @override
+  String get inventoryBarcodeSaveFailed => 'تعذر حفظ الباركود. حاول مرة أخرى.';
 
   @override
   String get labelPurchasePrice => 'سعر الشراء';

@@ -109,11 +109,13 @@ class IntelligenceScreen extends ConsumerWidget {
                 color: Theme.of(context).colorScheme.primary,
               ),
               const SizedBox(width: 8),
-              Text(
-                'رؤى الوكلاء الأذكياء (Agent Insights)',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+              Expanded(
+                child: Text(
+                  'رؤى الوكلاء الأذكياء (Agent Insights)',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
               ),
             ],
           ),

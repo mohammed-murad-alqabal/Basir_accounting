@@ -24,6 +24,7 @@ abstract final class AppPalette {
   static const Color darkTextPrimary = Color(0xFFF1F5F9);
   static const Color darkTextSecondary = Color(0xFFCBD5E1);
   static const Color darkBorder = Color(0xFF334155);
+  static const Color darkOutline = Color(0xFF475569);
 
   // Error Colors (Reds)
   static const Color redBurgundy = Color(0xFF7F1D1D);
