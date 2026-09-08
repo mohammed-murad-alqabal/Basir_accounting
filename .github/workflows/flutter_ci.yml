@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  FLUTTER_VERSION: "3.35.5"
+  FLUTTER_VERSION: "3.44.9"
   # الخط الأساس المقاس في CI هو 25.5%. تُمنع أي تراجعات بينما تُرفع
   # التغطية تدريجيًا مع كل مهمة، بدل حجب التغييرات السليمة بسبب دين تقني سابق.
   MIN_COVERAGE: 25
@@ -81,7 +81,7 @@ jobs:
       - name: 🧪 Run tests
         # تُشغَّل قياسات الأداء على عتاد مخصص؛ أما CI فيتحقق من الاختبارات
         # الوظيفية الحتمية فقط لتفادي تذبذب زمن التنفيذ وموارد العازل.
-        run: flutter test --coverage --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*')
+        run: flutter test --concurrency=1 --coverage --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*')
 
       - name: 📊 Check Coverage
         run: |

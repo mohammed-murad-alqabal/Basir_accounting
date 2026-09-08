@@ -17,113 +17,119 @@ const JournalEntryModelSchema = CollectionSchema(
   name: r'JournalEntryModel',
   id: 3211955384174486103,
   properties: {
-    r'createdAt': PropertySchema(
+    r'auditLogs': PropertySchema(
       id: 0,
+      name: r'auditLogs',
+      type: IsarType.objectList,
+      target: r'AuditLogEntryModel',
+    ),
+    r'createdAt': PropertySchema(
+      id: 1,
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
     r'createdBy': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'createdBy',
       type: IsarType.string,
     ),
     r'date': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'date',
       type: IsarType.dateTime,
     ),
     r'description': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'description',
       type: IsarType.string,
     ),
     r'hash': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'hash',
       type: IsarType.string,
     ),
     r'id': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'id',
       type: IsarType.string,
     ),
     r'isDeleted': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'isDeleted',
       type: IsarType.bool,
     ),
     r'lines': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'lines',
       type: IsarType.objectList,
       target: r'JournalEntryLineModel',
     ),
     r'postedAt': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'postedAt',
       type: IsarType.dateTime,
     ),
     r'previousHash': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'previousHash',
       type: IsarType.string,
     ),
     r'referenceNumber': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'referenceNumber',
       type: IsarType.string,
     ),
     r'serverUpdatedAt': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'serverUpdatedAt',
       type: IsarType.dateTime,
     ),
     r'sourceDocument': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'sourceDocument',
       type: IsarType.string,
     ),
     r'sourceId': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'sourceId',
       type: IsarType.string,
     ),
     r'standards': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'standards',
       type: IsarType.object,
       target: r'StandardsJustificationModel',
     ),
     r'status': PropertySchema(
-      id: 15,
+      id: 16,
       name: r'status',
       type: IsarType.byte,
       enumMap: _JournalEntryModelstatusEnumValueMap,
     ),
     r'syncStatus': PropertySchema(
-      id: 16,
+      id: 17,
       name: r'syncStatus',
       type: IsarType.byte,
       enumMap: _JournalEntryModelsyncStatusEnumValueMap,
     ),
     r'temporal': PropertySchema(
-      id: 17,
+      id: 18,
       name: r'temporal',
       type: IsarType.object,
       target: r'TemporalJustificationModel',
     ),
     r'updatedAt': PropertySchema(
-      id: 18,
+      id: 19,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'userId': PropertySchema(
-      id: 19,
+      id: 20,
       name: r'userId',
       type: IsarType.string,
     ),
     r'warehouseId': PropertySchema(
-      id: 20,
+      id: 21,
       name: r'warehouseId',
       type: IsarType.string,
     )
@@ -217,7 +223,8 @@ const JournalEntryModelSchema = CollectionSchema(
   embeddedSchemas: {
     r'TemporalJustificationModel': TemporalJustificationModelSchema,
     r'StandardsJustificationModel': StandardsJustificationModelSchema,
-    r'JournalEntryLineModel': JournalEntryLineModelSchema
+    r'JournalEntryLineModel': JournalEntryLineModelSchema,
+    r'AuditLogEntryModel': AuditLogEntryModelSchema
   },
   getId: _journalEntryModelGetId,
   getLinks: _journalEntryModelGetLinks,
@@ -231,6 +238,15 @@ int _journalEntryModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.auditLogs.length * 3;
+  {
+    final offsets = allOffsets[AuditLogEntryModel]!;
+    for (var i = 0; i < object.auditLogs.length; i++) {
+      final value = object.auditLogs[i];
+      bytesCount +=
+          AuditLogEntryModelSchema.estimateSize(value, offsets, allOffsets);
+    }
+  }
   bytesCount += 3 + object.createdBy.length * 3;
   bytesCount += 3 + object.description.length * 3;
   {
@@ -285,42 +301,48 @@ void _journalEntryModelSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDateTime(offsets[0], object.createdAt);
-  writer.writeString(offsets[1], object.createdBy);
-  writer.writeDateTime(offsets[2], object.date);
-  writer.writeString(offsets[3], object.description);
-  writer.writeString(offsets[4], object.hash);
-  writer.writeString(offsets[5], object.id);
-  writer.writeBool(offsets[6], object.isDeleted);
+  writer.writeObjectList<AuditLogEntryModel>(
+    offsets[0],
+    allOffsets,
+    AuditLogEntryModelSchema.serialize,
+    object.auditLogs,
+  );
+  writer.writeDateTime(offsets[1], object.createdAt);
+  writer.writeString(offsets[2], object.createdBy);
+  writer.writeDateTime(offsets[3], object.date);
+  writer.writeString(offsets[4], object.description);
+  writer.writeString(offsets[5], object.hash);
+  writer.writeString(offsets[6], object.id);
+  writer.writeBool(offsets[7], object.isDeleted);
   writer.writeObjectList<JournalEntryLineModel>(
-    offsets[7],
+    offsets[8],
     allOffsets,
     JournalEntryLineModelSchema.serialize,
     object.lines,
   );
-  writer.writeDateTime(offsets[8], object.postedAt);
-  writer.writeString(offsets[9], object.previousHash);
-  writer.writeString(offsets[10], object.referenceNumber);
-  writer.writeDateTime(offsets[11], object.serverUpdatedAt);
-  writer.writeString(offsets[12], object.sourceDocument);
-  writer.writeString(offsets[13], object.sourceId);
+  writer.writeDateTime(offsets[9], object.postedAt);
+  writer.writeString(offsets[10], object.previousHash);
+  writer.writeString(offsets[11], object.referenceNumber);
+  writer.writeDateTime(offsets[12], object.serverUpdatedAt);
+  writer.writeString(offsets[13], object.sourceDocument);
+  writer.writeString(offsets[14], object.sourceId);
   writer.writeObject<StandardsJustificationModel>(
-    offsets[14],
+    offsets[15],
     allOffsets,
     StandardsJustificationModelSchema.serialize,
     object.standards,
   );
-  writer.writeByte(offsets[15], object.status.index);
-  writer.writeByte(offsets[16], object.syncStatus.index);
+  writer.writeByte(offsets[16], object.status.index);
+  writer.writeByte(offsets[17], object.syncStatus.index);
   writer.writeObject<TemporalJustificationModel>(
-    offsets[17],
+    offsets[18],
     allOffsets,
     TemporalJustificationModelSchema.serialize,
     object.temporal,
   );
-  writer.writeDateTime(offsets[18], object.updatedAt);
-  writer.writeString(offsets[19], object.userId);
-  writer.writeString(offsets[20], object.warehouseId);
+  writer.writeDateTime(offsets[19], object.updatedAt);
+  writer.writeString(offsets[20], object.userId);
+  writer.writeString(offsets[21], object.warehouseId);
 }
 
 JournalEntryModel _journalEntryModelDeserialize(
@@ -330,48 +352,55 @@ JournalEntryModel _journalEntryModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = JournalEntryModel();
-  object.createdAt = reader.readDateTime(offsets[0]);
-  object.createdBy = reader.readString(offsets[1]);
-  object.date = reader.readDateTime(offsets[2]);
-  object.description = reader.readString(offsets[3]);
-  object.hash = reader.readStringOrNull(offsets[4]);
-  object.id = reader.readString(offsets[5]);
-  object.isDeleted = reader.readBool(offsets[6]);
+  object.auditLogs = reader.readObjectList<AuditLogEntryModel>(
+        offsets[0],
+        AuditLogEntryModelSchema.deserialize,
+        allOffsets,
+        AuditLogEntryModel(),
+      ) ??
+      [];
+  object.createdAt = reader.readDateTime(offsets[1]);
+  object.createdBy = reader.readString(offsets[2]);
+  object.date = reader.readDateTime(offsets[3]);
+  object.description = reader.readString(offsets[4]);
+  object.hash = reader.readStringOrNull(offsets[5]);
+  object.id = reader.readString(offsets[6]);
+  object.isDeleted = reader.readBool(offsets[7]);
   object.isarId = id;
   object.lines = reader.readObjectList<JournalEntryLineModel>(
-        offsets[7],
+        offsets[8],
         JournalEntryLineModelSchema.deserialize,
         allOffsets,
         JournalEntryLineModel(),
       ) ??
       [];
-  object.postedAt = reader.readDateTimeOrNull(offsets[8]);
-  object.previousHash = reader.readStringOrNull(offsets[9]);
-  object.referenceNumber = reader.readString(offsets[10]);
-  object.serverUpdatedAt = reader.readDateTimeOrNull(offsets[11]);
-  object.sourceDocument = reader.readString(offsets[12]);
-  object.sourceId = reader.readString(offsets[13]);
+  object.postedAt = reader.readDateTimeOrNull(offsets[9]);
+  object.previousHash = reader.readStringOrNull(offsets[10]);
+  object.referenceNumber = reader.readString(offsets[11]);
+  object.serverUpdatedAt = reader.readDateTimeOrNull(offsets[12]);
+  object.sourceDocument = reader.readString(offsets[13]);
+  object.sourceId = reader.readString(offsets[14]);
   object.standards = reader.readObjectOrNull<StandardsJustificationModel>(
-        offsets[14],
+        offsets[15],
         StandardsJustificationModelSchema.deserialize,
         allOffsets,
       ) ??
       StandardsJustificationModel();
   object.status = _JournalEntryModelstatusValueEnumMap[
-          reader.readByteOrNull(offsets[15])] ??
+          reader.readByteOrNull(offsets[16])] ??
       JournalEntryStatus.draft;
   object.syncStatus = _JournalEntryModelsyncStatusValueEnumMap[
-          reader.readByteOrNull(offsets[16])] ??
+          reader.readByteOrNull(offsets[17])] ??
       SyncStatus.synced;
   object.temporal = reader.readObjectOrNull<TemporalJustificationModel>(
-        offsets[17],
+        offsets[18],
         TemporalJustificationModelSchema.deserialize,
         allOffsets,
       ) ??
       TemporalJustificationModel();
-  object.updatedAt = reader.readDateTime(offsets[18]);
-  object.userId = reader.readStringOrNull(offsets[19]);
-  object.warehouseId = reader.readStringOrNull(offsets[20]);
+  object.updatedAt = reader.readDateTime(offsets[19]);
+  object.userId = reader.readStringOrNull(offsets[20]);
+  object.warehouseId = reader.readStringOrNull(offsets[21]);
   return object;
 }
 
@@ -383,20 +412,28 @@ P _journalEntryModelDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readObjectList<AuditLogEntryModel>(
+            offset,
+            AuditLogEntryModelSchema.deserialize,
+            allOffsets,
+            AuditLogEntryModel(),
+          ) ??
+          []) as P;
     case 1:
-      return (reader.readString(offset)) as P;
-    case 2:
       return (reader.readDateTime(offset)) as P;
+    case 2:
+      return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 4:
-      return (reader.readStringOrNull(offset)) as P;
-    case 5:
       return (reader.readString(offset)) as P;
+    case 5:
+      return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readBool(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 7:
+      return (reader.readBool(offset)) as P;
+    case 8:
       return (reader.readObjectList<JournalEntryLineModel>(
             offset,
             JournalEntryLineModelSchema.deserialize,
@@ -404,45 +441,45 @@ P _journalEntryModelDeserializeProp<P>(
             JournalEntryLineModel(),
           ) ??
           []) as P;
-    case 8:
-      return (reader.readDateTimeOrNull(offset)) as P;
     case 9:
-      return (reader.readStringOrNull(offset)) as P;
-    case 10:
-      return (reader.readString(offset)) as P;
-    case 11:
       return (reader.readDateTimeOrNull(offset)) as P;
-    case 12:
+    case 10:
+      return (reader.readStringOrNull(offset)) as P;
+    case 11:
       return (reader.readString(offset)) as P;
+    case 12:
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 13:
       return (reader.readString(offset)) as P;
     case 14:
+      return (reader.readString(offset)) as P;
+    case 15:
       return (reader.readObjectOrNull<StandardsJustificationModel>(
             offset,
             StandardsJustificationModelSchema.deserialize,
             allOffsets,
           ) ??
           StandardsJustificationModel()) as P;
-    case 15:
+    case 16:
       return (_JournalEntryModelstatusValueEnumMap[
               reader.readByteOrNull(offset)] ??
           JournalEntryStatus.draft) as P;
-    case 16:
+    case 17:
       return (_JournalEntryModelsyncStatusValueEnumMap[
               reader.readByteOrNull(offset)] ??
           SyncStatus.synced) as P;
-    case 17:
+    case 18:
       return (reader.readObjectOrNull<TemporalJustificationModel>(
             offset,
             TemporalJustificationModelSchema.deserialize,
             allOffsets,
           ) ??
           TemporalJustificationModel()) as P;
-    case 18:
-      return (reader.readDateTime(offset)) as P;
     case 19:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 20:
+      return (reader.readStringOrNull(offset)) as P;
+    case 21:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1105,6 +1142,95 @@ extension JournalEntryModelQueryWhere
 
 extension JournalEntryModelQueryFilter
     on QueryBuilder<JournalEntryModel, JournalEntryModel, QFilterCondition> {
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      auditLogsLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'auditLogs',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      auditLogsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'auditLogs',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      auditLogsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'auditLogs',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      auditLogsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'auditLogs',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      auditLogsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'auditLogs',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      auditLogsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'auditLogs',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
   QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
       createdAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
@@ -3142,6 +3268,13 @@ extension JournalEntryModelQueryFilter
 extension JournalEntryModelQueryObject
     on QueryBuilder<JournalEntryModel, JournalEntryModel, QFilterCondition> {
   QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      auditLogsElement(FilterQuery<AuditLogEntryModel> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'auditLogs');
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
       linesElement(FilterQuery<JournalEntryLineModel> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'lines');
@@ -3824,6 +3957,13 @@ extension JournalEntryModelQueryProperty
   QueryBuilder<JournalEntryModel, int, QQueryOperations> isarIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarId');
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, List<AuditLogEntryModel>, QQueryOperations>
+      auditLogsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'auditLogs');
     });
   }
 
@@ -4779,6 +4919,568 @@ extension StandardsJustificationModelQueryObject on QueryBuilder<
     StandardsJustificationModel,
     StandardsJustificationModel,
     QFilterCondition> {}
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+const AuditLogEntryModelSchema = Schema(
+  name: r'AuditLogEntryModel',
+  id: 711097923680722763,
+  properties: {
+    r'action': PropertySchema(
+      id: 0,
+      name: r'action',
+      type: IsarType.string,
+    ),
+    r'actor': PropertySchema(
+      id: 1,
+      name: r'actor',
+      type: IsarType.string,
+    ),
+    r'rationale': PropertySchema(
+      id: 2,
+      name: r'rationale',
+      type: IsarType.string,
+    ),
+    r'timestamp': PropertySchema(
+      id: 3,
+      name: r'timestamp',
+      type: IsarType.dateTime,
+    )
+  },
+  estimateSize: _auditLogEntryModelEstimateSize,
+  serialize: _auditLogEntryModelSerialize,
+  deserialize: _auditLogEntryModelDeserialize,
+  deserializeProp: _auditLogEntryModelDeserializeProp,
+);
+
+int _auditLogEntryModelEstimateSize(
+  AuditLogEntryModel object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.action.length * 3;
+  bytesCount += 3 + object.actor.length * 3;
+  bytesCount += 3 + object.rationale.length * 3;
+  return bytesCount;
+}
+
+void _auditLogEntryModelSerialize(
+  AuditLogEntryModel object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.action);
+  writer.writeString(offsets[1], object.actor);
+  writer.writeString(offsets[2], object.rationale);
+  writer.writeDateTime(offsets[3], object.timestamp);
+}
+
+AuditLogEntryModel _auditLogEntryModelDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = AuditLogEntryModel();
+  object.action = reader.readString(offsets[0]);
+  object.actor = reader.readString(offsets[1]);
+  object.rationale = reader.readString(offsets[2]);
+  object.timestamp = reader.readDateTime(offsets[3]);
+  return object;
+}
+
+P _auditLogEntryModelDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readString(offset)) as P;
+    case 1:
+      return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readString(offset)) as P;
+    case 3:
+      return (reader.readDateTime(offset)) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+extension AuditLogEntryModelQueryFilter
+    on QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QFilterCondition> {
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actionEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'action',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actionGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'action',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actionLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'action',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actionBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'action',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actionStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'action',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actionEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'action',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actionContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'action',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actionMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'action',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actionIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'action',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actionIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'action',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actorEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'actor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actorGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'actor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actorLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'actor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actorBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'actor',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actorStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'actor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actorEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'actor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actorContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'actor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actorMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'actor',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actorIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'actor',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      actorIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'actor',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      rationaleEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'rationale',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      rationaleGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'rationale',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      rationaleLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'rationale',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      rationaleBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'rationale',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      rationaleStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'rationale',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      rationaleEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'rationale',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      rationaleContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'rationale',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      rationaleMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'rationale',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      rationaleIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'rationale',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      rationaleIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'rationale',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      timestampEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'timestamp',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      timestampGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'timestamp',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      timestampLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'timestamp',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QAfterFilterCondition>
+      timestampBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'timestamp',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+}
+
+extension AuditLogEntryModelQueryObject
+    on QueryBuilder<AuditLogEntryModel, AuditLogEntryModel, QFilterCondition> {}
 
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types

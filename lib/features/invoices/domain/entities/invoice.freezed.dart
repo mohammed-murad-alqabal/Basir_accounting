@@ -22,16 +22,21 @@ InvoiceItem _$InvoiceItemFromJson(Map<String, dynamic> json) {
 mixin _$InvoiceItem {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  @DecimalJsonConverter()
   Decimal get quantity => throw _privateConstructorUsedError;
+  @DecimalJsonConverter()
   Decimal get price => throw _privateConstructorUsedError;
 
   /// Calculated subtotal: quantity * price.
+  @DecimalJsonConverter()
   Decimal get total => throw _privateConstructorUsedError;
 
   /// VAT amount calculated for this specific item.
+  @DecimalJsonConverter()
   Decimal get taxAmount => throw _privateConstructorUsedError;
 
   /// VAT rate applied to this item (e.g., 0.15, 0.05, 0.0).
+  @DecimalJsonConverter()
   Decimal get taxRate => throw _privateConstructorUsedError;
 
   /// Semantic description or notes.
@@ -55,11 +60,11 @@ abstract class $InvoiceItemCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      Decimal quantity,
-      Decimal price,
-      Decimal total,
-      Decimal taxAmount,
-      Decimal taxRate,
+      @DecimalJsonConverter() Decimal quantity,
+      @DecimalJsonConverter() Decimal price,
+      @DecimalJsonConverter() Decimal total,
+      @DecimalJsonConverter() Decimal taxAmount,
+      @DecimalJsonConverter() Decimal taxRate,
       String? description,
       String taxCategory});
 }
@@ -139,11 +144,11 @@ abstract class _$$InvoiceItemImplCopyWith<$Res>
   $Res call(
       {String id,
       String name,
-      Decimal quantity,
-      Decimal price,
-      Decimal total,
-      Decimal taxAmount,
-      Decimal taxRate,
+      @DecimalJsonConverter() Decimal quantity,
+      @DecimalJsonConverter() Decimal price,
+      @DecimalJsonConverter() Decimal total,
+      @DecimalJsonConverter() Decimal taxAmount,
+      @DecimalJsonConverter() Decimal taxRate,
       String? description,
       String taxCategory});
 }
@@ -216,11 +221,11 @@ class _$InvoiceItemImpl extends _InvoiceItem {
   _$InvoiceItemImpl(
       {required this.id,
       required this.name,
-      required this.quantity,
-      required this.price,
-      required this.total,
-      required this.taxAmount,
-      required this.taxRate,
+      @DecimalJsonConverter() required this.quantity,
+      @DecimalJsonConverter() required this.price,
+      @DecimalJsonConverter() required this.total,
+      @DecimalJsonConverter() required this.taxAmount,
+      @DecimalJsonConverter() required this.taxRate,
       this.description,
       this.taxCategory = 'S'})
       : super._();
@@ -233,20 +238,25 @@ class _$InvoiceItemImpl extends _InvoiceItem {
   @override
   final String name;
   @override
+  @DecimalJsonConverter()
   final Decimal quantity;
   @override
+  @DecimalJsonConverter()
   final Decimal price;
 
   /// Calculated subtotal: quantity * price.
   @override
+  @DecimalJsonConverter()
   final Decimal total;
 
   /// VAT amount calculated for this specific item.
   @override
+  @DecimalJsonConverter()
   final Decimal taxAmount;
 
   /// VAT rate applied to this item (e.g., 0.15, 0.05, 0.0).
   @override
+  @DecimalJsonConverter()
   final Decimal taxRate;
 
   /// Semantic description or notes.
@@ -306,11 +316,11 @@ abstract class _InvoiceItem extends InvoiceItem {
   factory _InvoiceItem(
       {required final String id,
       required final String name,
-      required final Decimal quantity,
-      required final Decimal price,
-      required final Decimal total,
-      required final Decimal taxAmount,
-      required final Decimal taxRate,
+      @DecimalJsonConverter() required final Decimal quantity,
+      @DecimalJsonConverter() required final Decimal price,
+      @DecimalJsonConverter() required final Decimal total,
+      @DecimalJsonConverter() required final Decimal taxAmount,
+      @DecimalJsonConverter() required final Decimal taxRate,
       final String? description,
       final String taxCategory}) = _$InvoiceItemImpl;
   _InvoiceItem._() : super._();
@@ -323,20 +333,25 @@ abstract class _InvoiceItem extends InvoiceItem {
   @override
   String get name;
   @override
+  @DecimalJsonConverter()
   Decimal get quantity;
   @override
+  @DecimalJsonConverter()
   Decimal get price;
   @override
 
   /// Calculated subtotal: quantity * price.
+  @DecimalJsonConverter()
   Decimal get total;
   @override
 
   /// VAT amount calculated for this specific item.
+  @DecimalJsonConverter()
   Decimal get taxAmount;
   @override
 
   /// VAT rate applied to this item (e.g., 0.15, 0.05, 0.0).
+  @DecimalJsonConverter()
   Decimal get taxRate;
   @override
 
@@ -381,17 +396,25 @@ mixin _$Invoice {
   InvoiceStatus get status => throw _privateConstructorUsedError;
 
   /// Financial aggregates (Persisted for Data Integrity).
+  @DecimalJsonConverter()
   Decimal get subtotalAmount => throw _privateConstructorUsedError;
+  @DecimalJsonConverter()
   Decimal get taxAmount => throw _privateConstructorUsedError;
+  @DecimalJsonConverter()
   Decimal get discountAmount => throw _privateConstructorUsedError;
+  @DecimalJsonConverter()
   Decimal get totalAmount => throw _privateConstructorUsedError;
+  @DecimalJsonConverter()
   Decimal get paidAmount => throw _privateConstructorUsedError;
 
   /// Rates and adjustments.
+  @DecimalJsonConverter()
   Decimal get taxRate => throw _privateConstructorUsedError;
+  @DecimalJsonConverter()
   Decimal get discountRate => throw _privateConstructorUsedError;
 
   /// Exchange rate to base currency (SAR).
+  @DecimalJsonConverter()
   Decimal get exchangeRate => throw _privateConstructorUsedError;
 
   /// Granular transaction categorization (Sales, Return, etc.)
@@ -450,14 +473,14 @@ abstract class $InvoiceCopyWith<$Res> {
       DateTime createdAt,
       DateTime updatedAt,
       InvoiceStatus status,
-      Decimal subtotalAmount,
-      Decimal taxAmount,
-      Decimal discountAmount,
-      Decimal totalAmount,
-      Decimal paidAmount,
-      Decimal taxRate,
-      Decimal discountRate,
-      Decimal exchangeRate,
+      @DecimalJsonConverter() Decimal subtotalAmount,
+      @DecimalJsonConverter() Decimal taxAmount,
+      @DecimalJsonConverter() Decimal discountAmount,
+      @DecimalJsonConverter() Decimal totalAmount,
+      @DecimalJsonConverter() Decimal paidAmount,
+      @DecimalJsonConverter() Decimal taxRate,
+      @DecimalJsonConverter() Decimal discountRate,
+      @DecimalJsonConverter() Decimal exchangeRate,
       InvoiceType type,
       DateTime? paidDate,
       String currency,
@@ -689,14 +712,14 @@ abstract class _$$InvoiceImplCopyWith<$Res> implements $InvoiceCopyWith<$Res> {
       DateTime createdAt,
       DateTime updatedAt,
       InvoiceStatus status,
-      Decimal subtotalAmount,
-      Decimal taxAmount,
-      Decimal discountAmount,
-      Decimal totalAmount,
-      Decimal paidAmount,
-      Decimal taxRate,
-      Decimal discountRate,
-      Decimal exchangeRate,
+      @DecimalJsonConverter() Decimal subtotalAmount,
+      @DecimalJsonConverter() Decimal taxAmount,
+      @DecimalJsonConverter() Decimal discountAmount,
+      @DecimalJsonConverter() Decimal totalAmount,
+      @DecimalJsonConverter() Decimal paidAmount,
+      @DecimalJsonConverter() Decimal taxRate,
+      @DecimalJsonConverter() Decimal discountRate,
+      @DecimalJsonConverter() Decimal exchangeRate,
       InvoiceType type,
       DateTime? paidDate,
       String currency,
@@ -909,7 +932,8 @@ class __$$InvoiceImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$InvoiceImpl extends _Invoice {
   _$InvoiceImpl(
       {required this.id,
@@ -922,14 +946,14 @@ class _$InvoiceImpl extends _Invoice {
       required this.createdAt,
       required this.updatedAt,
       required this.status,
-      required this.subtotalAmount,
-      required this.taxAmount,
-      required this.discountAmount,
-      required this.totalAmount,
-      required this.paidAmount,
-      required this.taxRate,
-      required this.discountRate,
-      required this.exchangeRate,
+      @DecimalJsonConverter() required this.subtotalAmount,
+      @DecimalJsonConverter() required this.taxAmount,
+      @DecimalJsonConverter() required this.discountAmount,
+      @DecimalJsonConverter() required this.totalAmount,
+      @DecimalJsonConverter() required this.paidAmount,
+      @DecimalJsonConverter() required this.taxRate,
+      @DecimalJsonConverter() required this.discountRate,
+      @DecimalJsonConverter() required this.exchangeRate,
       this.type = InvoiceType.sales,
       this.paidDate,
       this.currency = 'SAR',
@@ -994,24 +1018,32 @@ class _$InvoiceImpl extends _Invoice {
 
   /// Financial aggregates (Persisted for Data Integrity).
   @override
+  @DecimalJsonConverter()
   final Decimal subtotalAmount;
   @override
+  @DecimalJsonConverter()
   final Decimal taxAmount;
   @override
+  @DecimalJsonConverter()
   final Decimal discountAmount;
   @override
+  @DecimalJsonConverter()
   final Decimal totalAmount;
   @override
+  @DecimalJsonConverter()
   final Decimal paidAmount;
 
   /// Rates and adjustments.
   @override
+  @DecimalJsonConverter()
   final Decimal taxRate;
   @override
+  @DecimalJsonConverter()
   final Decimal discountRate;
 
   /// Exchange rate to base currency (SAR).
   @override
+  @DecimalJsonConverter()
   final Decimal exchangeRate;
 
   /// Granular transaction categorization (Sales, Return, etc.)
@@ -1211,14 +1243,14 @@ abstract class _Invoice extends Invoice {
       required final DateTime createdAt,
       required final DateTime updatedAt,
       required final InvoiceStatus status,
-      required final Decimal subtotalAmount,
-      required final Decimal taxAmount,
-      required final Decimal discountAmount,
-      required final Decimal totalAmount,
-      required final Decimal paidAmount,
-      required final Decimal taxRate,
-      required final Decimal discountRate,
-      required final Decimal exchangeRate,
+      @DecimalJsonConverter() required final Decimal subtotalAmount,
+      @DecimalJsonConverter() required final Decimal taxAmount,
+      @DecimalJsonConverter() required final Decimal discountAmount,
+      @DecimalJsonConverter() required final Decimal totalAmount,
+      @DecimalJsonConverter() required final Decimal paidAmount,
+      @DecimalJsonConverter() required final Decimal taxRate,
+      @DecimalJsonConverter() required final Decimal discountRate,
+      @DecimalJsonConverter() required final Decimal exchangeRate,
       final InvoiceType type,
       final DateTime? paidDate,
       final String currency,
@@ -1275,24 +1307,32 @@ abstract class _Invoice extends Invoice {
   @override
 
   /// Financial aggregates (Persisted for Data Integrity).
+  @DecimalJsonConverter()
   Decimal get subtotalAmount;
   @override
+  @DecimalJsonConverter()
   Decimal get taxAmount;
   @override
+  @DecimalJsonConverter()
   Decimal get discountAmount;
   @override
+  @DecimalJsonConverter()
   Decimal get totalAmount;
   @override
+  @DecimalJsonConverter()
   Decimal get paidAmount;
   @override
 
   /// Rates and adjustments.
+  @DecimalJsonConverter()
   Decimal get taxRate;
   @override
+  @DecimalJsonConverter()
   Decimal get discountRate;
   @override
 
   /// Exchange rate to base currency (SAR).
+  @DecimalJsonConverter()
   Decimal get exchangeRate;
   @override
 

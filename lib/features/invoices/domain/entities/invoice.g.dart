@@ -10,11 +10,13 @@ _$InvoiceItemImpl _$$InvoiceItemImplFromJson(Map<String, dynamic> json) =>
     _$InvoiceItemImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      quantity: Decimal.fromJson(json['quantity'] as String),
-      price: Decimal.fromJson(json['price'] as String),
-      total: Decimal.fromJson(json['total'] as String),
-      taxAmount: Decimal.fromJson(json['taxAmount'] as String),
-      taxRate: Decimal.fromJson(json['taxRate'] as String),
+      quantity:
+          const DecimalJsonConverter().fromJson(json['quantity'] as String),
+      price: const DecimalJsonConverter().fromJson(json['price'] as String),
+      total: const DecimalJsonConverter().fromJson(json['total'] as String),
+      taxAmount:
+          const DecimalJsonConverter().fromJson(json['taxAmount'] as String),
+      taxRate: const DecimalJsonConverter().fromJson(json['taxRate'] as String),
       description: json['description'] as String?,
       taxCategory: json['taxCategory'] as String? ?? 'S',
     );
@@ -23,11 +25,11 @@ Map<String, dynamic> _$$InvoiceItemImplToJson(_$InvoiceItemImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'quantity': instance.quantity,
-      'price': instance.price,
-      'total': instance.total,
-      'taxAmount': instance.taxAmount,
-      'taxRate': instance.taxRate,
+      'quantity': const DecimalJsonConverter().toJson(instance.quantity),
+      'price': const DecimalJsonConverter().toJson(instance.price),
+      'total': const DecimalJsonConverter().toJson(instance.total),
+      'taxAmount': const DecimalJsonConverter().toJson(instance.taxAmount),
+      'taxRate': const DecimalJsonConverter().toJson(instance.taxRate),
       'description': instance.description,
       'taxCategory': instance.taxCategory,
     };
@@ -46,14 +48,21 @@ _$InvoiceImpl _$$InvoiceImplFromJson(Map<String, dynamic> json) =>
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
       status: $enumDecode(_$InvoiceStatusEnumMap, json['status']),
-      subtotalAmount: Decimal.fromJson(json['subtotalAmount'] as String),
-      taxAmount: Decimal.fromJson(json['taxAmount'] as String),
-      discountAmount: Decimal.fromJson(json['discountAmount'] as String),
-      totalAmount: Decimal.fromJson(json['totalAmount'] as String),
-      paidAmount: Decimal.fromJson(json['paidAmount'] as String),
-      taxRate: Decimal.fromJson(json['taxRate'] as String),
-      discountRate: Decimal.fromJson(json['discountRate'] as String),
-      exchangeRate: Decimal.fromJson(json['exchangeRate'] as String),
+      subtotalAmount: const DecimalJsonConverter()
+          .fromJson(json['subtotalAmount'] as String),
+      taxAmount:
+          const DecimalJsonConverter().fromJson(json['taxAmount'] as String),
+      discountAmount: const DecimalJsonConverter()
+          .fromJson(json['discountAmount'] as String),
+      totalAmount:
+          const DecimalJsonConverter().fromJson(json['totalAmount'] as String),
+      paidAmount:
+          const DecimalJsonConverter().fromJson(json['paidAmount'] as String),
+      taxRate: const DecimalJsonConverter().fromJson(json['taxRate'] as String),
+      discountRate:
+          const DecimalJsonConverter().fromJson(json['discountRate'] as String),
+      exchangeRate:
+          const DecimalJsonConverter().fromJson(json['exchangeRate'] as String),
       type: $enumDecodeNullable(_$InvoiceTypeEnumMap, json['type']) ??
           InvoiceType.sales,
       paidDate: json['paidDate'] == null
@@ -88,20 +97,24 @@ Map<String, dynamic> _$$InvoiceImplToJson(_$InvoiceImpl instance) =>
       'invoiceNumber': instance.invoiceNumber,
       'customerId': instance.customerId,
       'customerName': instance.customerName,
-      'items': instance.items,
+      'items': instance.items.map((e) => e.toJson()).toList(),
       'issuedDate': instance.issuedDate.toIso8601String(),
       'dueDate': instance.dueDate.toIso8601String(),
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
       'status': _$InvoiceStatusEnumMap[instance.status]!,
-      'subtotalAmount': instance.subtotalAmount,
-      'taxAmount': instance.taxAmount,
-      'discountAmount': instance.discountAmount,
-      'totalAmount': instance.totalAmount,
-      'paidAmount': instance.paidAmount,
-      'taxRate': instance.taxRate,
-      'discountRate': instance.discountRate,
-      'exchangeRate': instance.exchangeRate,
+      'subtotalAmount':
+          const DecimalJsonConverter().toJson(instance.subtotalAmount),
+      'taxAmount': const DecimalJsonConverter().toJson(instance.taxAmount),
+      'discountAmount':
+          const DecimalJsonConverter().toJson(instance.discountAmount),
+      'totalAmount': const DecimalJsonConverter().toJson(instance.totalAmount),
+      'paidAmount': const DecimalJsonConverter().toJson(instance.paidAmount),
+      'taxRate': const DecimalJsonConverter().toJson(instance.taxRate),
+      'discountRate':
+          const DecimalJsonConverter().toJson(instance.discountRate),
+      'exchangeRate':
+          const DecimalJsonConverter().toJson(instance.exchangeRate),
       'type': _$InvoiceTypeEnumMap[instance.type]!,
       'paidDate': instance.paidDate?.toIso8601String(),
       'currency': instance.currency,
