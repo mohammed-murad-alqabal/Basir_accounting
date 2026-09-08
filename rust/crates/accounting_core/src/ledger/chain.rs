@@ -55,10 +55,8 @@ pub fn verify_ledger_chain(entries: &[JournalEntry]) -> Result<(), usize> {
         }
 
         // 2. Verify link to previous
-        if i > 0 {
-            if entry.previous_hash != entries[i - 1].hash {
-                return Err(i);
-            }
+        if i > 0 && entry.previous_hash != entries[i - 1].hash {
+            return Err(i);
         }
     }
 

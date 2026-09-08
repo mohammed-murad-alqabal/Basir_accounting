@@ -23,6 +23,12 @@ class _CloudBackupScreenState extends ConsumerState<CloudBackupScreen>
   }
 
   @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final serviceState = ref.watch(cloudBackupServiceProvider);
     final service = ref.read(cloudBackupServiceProvider.notifier);

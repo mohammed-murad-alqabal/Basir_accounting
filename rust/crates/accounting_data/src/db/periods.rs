@@ -1,7 +1,7 @@
 use accounting_core::calendar::{FinancialPeriod, PeriodStatus};
+use chrono::{NaiveDate, Utc};
 use sqlx::PgPool;
 use uuid::Uuid;
-use chrono::{NaiveDate, Utc};
 
 pub struct PgPeriodRepository {
     pool: PgPool,
@@ -14,7 +14,7 @@ impl PgPeriodRepository {
 
     pub async fn save_period(&self, period: &FinancialPeriod) -> Result<(), anyhow::Error> {
         let status_str = format!("{:?}", period.status);
-        
+
         sqlx::query!(
             r#"
             INSERT INTO financial_periods (id, name, start_date, end_date, status, is_year_end)
@@ -33,11 +33,14 @@ impl PgPeriodRepository {
         )
         .execute(&self.pool)
         .await?;
-        
+
         Ok(())
     }
 
-    pub async fn get_period_by_date(&self, date: NaiveDate) -> Result<Option<FinancialPeriod>, anyhow::Error> {
+    pub async fn get_period_by_date(
+        &self,
+        date: NaiveDate,
+    ) -> Result<Option<FinancialPeriod>, anyhow::Error> {
         let row = sqlx::query!(
             r#"
             SELECT id, name, start_date, end_date, status, is_year_end
@@ -77,7 +80,7 @@ impl PgPeriodRepository {
         )
         .execute(&self.pool)
         .await?;
-        
+
         Ok(())
     }
 
@@ -92,17 +95,20 @@ impl PgPeriodRepository {
         .fetch_all(&self.pool)
         .await?;
 
-        Ok(rows.into_iter().map(|r| FinancialPeriod {
-            id: r.id,
-            name: r.name,
-            start_date: r.start_date,
-            end_date: r.end_date,
-            status: match r.status.as_str() {
-                "Locked" => PeriodStatus::Locked,
-                "Closed" => PeriodStatus::Closed,
-                _ => PeriodStatus::Open,
-            },
-            is_year_end: r.is_year_end,
-        }).collect())
+        Ok(rows
+            .into_iter()
+            .map(|r| FinancialPeriod {
+                id: r.id,
+                name: r.name,
+                start_date: r.start_date,
+                end_date: r.end_date,
+                status: match r.status.as_str() {
+                    "Locked" => PeriodStatus::Locked,
+                    "Closed" => PeriodStatus::Closed,
+                    _ => PeriodStatus::Open,
+                },
+                is_year_end: r.is_year_end,
+            })
+            .collect())
     }
 }

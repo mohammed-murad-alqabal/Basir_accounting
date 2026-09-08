@@ -1,11 +1,11 @@
 //! Purchasing Domain Models
-//! 
+//!
 //! Defines models for vendors, purchase bills, and payments.
 
+use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-use chrono::{DateTime, Utc};
 
 /// Status of a purchase bill.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]

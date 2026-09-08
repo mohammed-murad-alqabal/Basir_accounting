@@ -56,7 +56,7 @@ impl DepreciationCalculator for StraightLineDepreciation {
         let is_leap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
         let days_in_year = if is_leap { 366 } else { 365 };
 
-        let days_in_period = (period_end - period_start).num_days() as i64 + 1; // Inclusive
+        let days_in_period = (period_end - period_start).num_days() + 1; // Inclusive
 
         let factor = Decimal::from(days_in_period) / Decimal::from(days_in_year);
 

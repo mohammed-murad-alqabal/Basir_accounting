@@ -316,8 +316,10 @@ class SyncService extends _$SyncService {
 
     // Phase 2: Pull server changes
     final lastSync = await getLastSynced(collection);
-    final lastSyncDate = getServerUpdatedAt(lastSync as M)?.toIso8601String() ??
-        DateTime(1970).toIso8601String();
+    final lastSyncDate = lastSync == null
+        ? DateTime(1970).toIso8601String()
+        : getServerUpdatedAt(lastSync)?.toIso8601String() ??
+            DateTime(1970).toIso8601String();
 
     try {
       final response = await _supabase
@@ -343,6 +345,7 @@ class SyncService extends _$SyncService {
           final remoteUpdatedAt = DateTime.parse(
             remoteData['updatedAt'] as String,
           );
+          (remoteModel as dynamic).id = (localRecord as dynamic).id;
 
           if (localSyncStatus == SyncStatus.pendingPush) {
             // Conflict: Local has unsynced changes, server has updates
