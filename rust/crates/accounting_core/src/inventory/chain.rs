@@ -1,5 +1,5 @@
-use sha2::{Digest, Sha256};
 use crate::inventory::models::StockMovement;
+use sha2::{Digest, Sha256};
 
 pub const GENESIS_HASH: &str = "0000000000000000000000000000000000000000000000000000000000000000";
 

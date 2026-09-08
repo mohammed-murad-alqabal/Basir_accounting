@@ -19,6 +19,16 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'invoice.freezed.dart';
 part 'invoice.g.dart';
 
+class DecimalJsonConverter implements JsonConverter<Decimal, String> {
+  const DecimalJsonConverter();
+
+  @override
+  Decimal fromJson(String json) => Decimal.parse(json);
+
+  @override
+  String toJson(Decimal object) => object.toString();
+}
+
 /// [InvoiceItem]
 ///
 /// Represents a single line item within an invoice.
@@ -28,17 +38,17 @@ class InvoiceItem with _$InvoiceItem {
   factory InvoiceItem({
     required String id,
     required String name,
-    required Decimal quantity,
-    required Decimal price,
+    @DecimalJsonConverter() required Decimal quantity,
+    @DecimalJsonConverter() required Decimal price,
 
     /// Calculated subtotal: quantity * price.
-    required Decimal total,
+    @DecimalJsonConverter() required Decimal total,
 
     /// VAT amount calculated for this specific item.
-    required Decimal taxAmount,
+    @DecimalJsonConverter() required Decimal taxAmount,
 
     /// VAT rate applied to this item (e.g., 0.15, 0.05, 0.0).
-    required Decimal taxRate,
+    @DecimalJsonConverter() required Decimal taxRate,
 
     /// Semantic description or notes.
     String? description,
@@ -64,6 +74,7 @@ class InvoiceItem with _$InvoiceItem {
 @freezed
 class Invoice with _$Invoice {
   /// Standard constructor for institutional invoices.
+  @JsonSerializable(explicitToJson: true)
   factory Invoice({
     /// Unique immutable identifier (UUID).
     required String id,
@@ -88,18 +99,18 @@ class Invoice with _$Invoice {
     required InvoiceStatus status,
 
     /// Financial aggregates (Persisted for Data Integrity).
-    required Decimal subtotalAmount,
-    required Decimal taxAmount,
-    required Decimal discountAmount,
-    required Decimal totalAmount,
-    required Decimal paidAmount,
+    @DecimalJsonConverter() required Decimal subtotalAmount,
+    @DecimalJsonConverter() required Decimal taxAmount,
+    @DecimalJsonConverter() required Decimal discountAmount,
+    @DecimalJsonConverter() required Decimal totalAmount,
+    @DecimalJsonConverter() required Decimal paidAmount,
 
     /// Rates and adjustments.
-    required Decimal taxRate,
-    required Decimal discountRate,
+    @DecimalJsonConverter() required Decimal taxRate,
+    @DecimalJsonConverter() required Decimal discountRate,
 
     /// Exchange rate to base currency (SAR).
-    required Decimal exchangeRate,
+    @DecimalJsonConverter() required Decimal exchangeRate,
 
     /// Granular transaction categorization (Sales, Return, etc.)
     @Default(InvoiceType.sales) InvoiceType type,

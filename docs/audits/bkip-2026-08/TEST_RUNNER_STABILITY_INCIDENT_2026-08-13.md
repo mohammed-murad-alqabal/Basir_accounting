@@ -1,0 +1,66 @@
+# BKIP — حادثة استقرار عامل الاختبارات في CI
+
+> **status:** ARCHIVED
+> **historical_as_of_sha:** `d15efa45fa5b31aedd582e34b7f1fa94846f95e7`
+> **historical_as_of_date:** 2026-08-13
+> **not_current_source_of_truth:** true
+> **superseded_by:** تشغيل CI اللاحق بعد تطبيق العزل التسلسلي، أو تقرير تحقيق جذري إذا أثبت سببًا أدق
+
+## الملخص
+
+أعاد تشغيل بوابات الجودة عند SHA المحدد أعلاه الفشل نفسه في خطوة `Run tests with coverage`، مع أن ملخص مشغل الاختبارات طبع نجاح معظم الحالات. لم يكن الفشل assertion وظيفيًا ظاهرًا؛ بل تعطل عامل Flutter الفرعي المخصص للملف `test/unit/data/repositories/invoice_repository_test.dart` برمز خروج `-7`. لذلك بقيت بوابة الاختبار مانعة ولم يجرِ تجاوزها أو تخفيض عتبة التغطية.[1]
+
+> `Shell subprocess crashed with unexpected exit code -7.`
+
+## الدليل
+
+| عنصر الدليل | القيمة |
+|---|---|
+| تشغيل الجودة البعيد | [`31741216475`](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31741216475) |
+| خطوة الفشل | `test-quality-gate` → `Run tests with coverage` |
+| الملف الذي أبلغ عنه العامل | `test/unit/data/repositories/invoice_repository_test.dart` |
+| نوع الفشل | `TestDeviceException` أثناء إنهاء عملية Flutter الفرعية، لا فشل assertion مثبت. |
+| ملخص التشغيل البعيد | `1,194` اختبارًا ناجحًا و`2` متخطيين، مع بقاء رمز العملية `1` بسبب تعطل العامل. |
+| تحقق محلي بالتشغيل المتسلسل | `flutter test --concurrency=1 --coverage` نجح: `1,214` اختبارًا ناجحًا و`2` متخطيين خلال نحو 2:43. |
+
+تكرر أثر مشابه في التشغيل السابق على SHA `36ec0bc977a43abc6c4e0f12fe114a0d77158cb1`، لكنه لم يكن معزولًا إلى ملف محدد في ذلك السجل. سجل خط الأساس السابق يحتفظ بهذه اللقطة ولا يخلط بين نجاح المحلل وبين صحة بوابة الاختبارات.[2]
+
+## الاستجابة المحدودة
+
+يعدل مسار الاختبار فقط من:
+
+```bash
+flutter test --coverage
+```
+
+إلى:
+
+```bash
+flutter test --concurrency=1 --coverage
+```
+
+يحافظ هذا التغيير على **المجموعة الكاملة للاختبارات** وعلى إنشاء ملف التغطية وفحص حد `70%` دون اختصار أو تجاوز للفشل. الغرض منه عزل ملفات الاختبار ذات الحالة الأصلية أو المعتمدة على الإضافات بدل تشغيلها متوازية داخل عامل CI واحد. لا يثبت هذا القرار أن التوازي هو السبب الجذري النهائي لرمز `-7`؛ إنه تخفيف محدد النطاق يحتاج تأكيدًا من تشغيل CI اللاحق.
+
+| معيار القبول | الدليل المطلوب |
+|---|---|
+| اجتياز خطوة الاختبار البعيدة | تنفيذ `flutter test --concurrency=1 --coverage` برمز خروج `0`. |
+| بقاء التغطية إلزامية | تنفيذ خطوة `Check Test Coverage` وظهور النسبة أو فشل صريح عند هبوطها دون `70%`. |
+| عدم إخفاء الانحدارات | تستمر أي assertion فاشلة أو خطأ تشغيل في إرجاع رمز غير صفري. |
+| قرار متابعة | إذا عاد تعطل `-7` في الوضع المتسلسل، يفتح تحقيق جذري في الملف/المكتبة المعنية بدل إعادة المحاولة أو خفض البوابة. |
+
+## مراجع
+
+[1]: [تشغيل Quality Gates رقم 31741216475](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31741216475) — سجل فشل العامل البعيد عند SHA المعني.
+[2]: [خط أساس بوابة الجودة](QUALITY_GATE_BASELINE_2026-08-13.md) — تصنيف التحليل وسجل فشل الاختبارات السابق.
+[3]: [تعريف بوابات الجودة](../../../.github/workflows/quality_gates.yml) — المسار الذي حُدّث بالعزل التسلسلي.
+
+**المؤلف:** Manus AI
+
+## تحقق لاحق — مسار Pull Request
+
+أضافت دفعة صيانة CI في 2026-08-14 العزل نفسه إلى `Pull Request Checks` بعد أن أعاد المسار القديم تشغيل benchmark متوازيًا وتوقف دون اكتمال. أثبت التشغيل اليدوي [`31770540601`](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31770540601) على SHA `74c46655` أن مسار `Code Quality Checks` اجتاز بعد `build_runner` و`flutter analyze --no-fatal-infos` وتشغيل `flutter test --concurrency=1 --coverage`: ظهر `177` ملاحظة معلوماتية ضمن خط الأساس، ونجحت `1,228` حالة مع `2` تخطٍ خلال `4:46`.
+
+يبقى هذا الدليل خاصًا باستقرار عامل الاختبار وبوابة التحليل. لا يثبت دعم Web؛ سجل تشغيله فشلًا استشاريًا منفصلًا بسبب Isar موثق في `ADR-PLAT-001`.
+
+[4]: [Pull Request Checks 31770540601](https://github.com/mohammed-murad-alqabal/Basir_accounting/actions/runs/31770540601) — تحقق العزل التسلسلي وتوليد الكود على SHA `74c46655`.
+[5]: [ADR-PLAT-001](../../../03-architecture/adrs/ADR-PLAT-001-web-build-support-boundary.md) — حد دعم Web الحالي.

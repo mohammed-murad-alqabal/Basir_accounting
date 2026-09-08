@@ -8,6 +8,9 @@ import 'package:basir_accounting_system/features/accounting/domain/repositories/
 import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:isar/isar.dart';
+
+import '../../../helpers/test_helpers.dart';
 
 class MockAccountingRepository implements AccountingRepository {
   @override
@@ -29,20 +32,25 @@ class MockAccountingRepository implements AccountingRepository {
 void main() {
   group('Multi-Agent Cognitive Consensus Verification', () {
     late ProviderContainer container;
+    late Isar isar;
 
-    setUp(() {
+    setUp(() async {
+      isar = await TestHelpers.createTestIsar();
       container = ProviderContainer(
         overrides: [
+          isarProvider.overrideWith((ref) => Future.value(isar)),
           accountingRepositoryProvider.overrideWithValue(
             MockAccountingRepository(),
           ),
           currentUserProvider.overrideWith((ref) => null),
         ],
       );
+      await container.read(isarProvider.future);
     });
 
-    tearDown(() {
+    tearDown(() async {
       container.dispose();
+      await TestHelpers.cleanupTestIsar(isar);
     });
 
     testWidgets('Consensus Test 1: Valid Sales Invoice with Tax',
