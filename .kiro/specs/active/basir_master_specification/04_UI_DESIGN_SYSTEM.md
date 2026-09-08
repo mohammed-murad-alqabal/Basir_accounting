@@ -1,8 +1,9 @@
 # UI/UX Design System Specification
 
-**Version:** 2.0 (Sovereign Edition)
-**Basis:** Glassmorphism Implementation & Legacy Visuals
+**Version:** 2.1 (Governed Token Baseline)
+**Basis:** التنفيذ القائم وقرار `ADR-UX-001`؛ لا تعد القيم التاريخية للهوية مصدر حقيقة.
 **Scope:** Design Tokens, Component Library, Interaction Patterns
+**Canonical authority:** [`ADR-UX-001`](../../../docs/03-architecture/adrs/ADR-UX-001-canonical-design-tokens-and-runtime-overrides.md) ثم `lib/core/theme/tokens/` و`lib/core/theme/app_theme.dart`.
 
 ---
 
@@ -18,26 +19,35 @@ The Basir UI is built on the **Glassmorphism** design language, creating a moder
 | **Layered Transparency** | Cards use 10-20% opacity on dark backgrounds     |
 | **Subtle Borders**       | 1px borders with 20% opacity for edge definition |
 | **Smooth Animations**    | Spring physics for transitions (200-400ms)       |
-| **Premium Typography**   | Inter/Roboto font families, clear hierarchy      |
+| **Premium Typography**   | Cairo عبر `GoogleFonts.cairoTextTheme`، مع hierarchy واضح      |
 
 ---
 
 ## 2. Design Tokens
 
-### 2.1 Color Palette (`lib/core/theme/tokens/color_tokens.dart`)
+### 2.1 Color Palette (`AppColors` + `AppPalette` + `AppTheme`)
 
-| Token           | Light Mode        | Dark Mode | Usage                    |
-| --------------- | ----------------- | --------- | ------------------------ |
-| `primary`       | `#009688` (Teal)  | `#26A69A` | Primary actions, headers |
-| `primaryDark`   | `#00796B`         | `#00897B` | AppBar, navigation       |
-| `secondary`     | `#FFB74D` (Amber) | `#FFB74D` | Accents, warnings        |
-| `surface`       | `#FFFFFF`         | `#1E1E2E` | Card backgrounds         |
-| `background`    | `#F5F5F5`         | `#121218` | Scaffold background      |
-| `textPrimary`   | `#212121`         | `#ECEFF4` | Body text                |
-| `textSecondary` | `#757575`         | `#8E8E93` | Captions, hints          |
-| `success`       | `#4CAF50`         | `#66BB6A` | Positive indicators      |
-| `error`         | `#F44336`         | `#EF5350` | Negative indicators      |
-| `warning`       | `#FF9800`         | `#FFA726` | Alerts                   |
+`ADR-UX-001` هو القرار الحاكم لمصدر الرموز. تمثل `AppColors` الرموز الدلالية للوضع الفاتح والمشترك، وتمثل `AppPalette` primitives للوضع الداكن، بينما يبني `AppTheme` `ColorScheme` الافتراضي. لا تضع الشاشة قيمة brand مستقلة؛ تستهلك `Theme.of(context).colorScheme` أولًا أو token دلاليًا عند الحاجة المعزولة.
+
+| Token / ColorScheme role | Light default source and value | Dark default source and value | Usage |
+| --- | --- | --- | --- |
+| `primary` | `AppColors.primary` — `#0056B3` | `AppPalette.blueCorporate` — `#2563EB` | Primary actions, navigation selection, priority links. |
+| `primaryContainer` | `AppColors.primaryLight` — `#E3F2FD` | `AppPalette.navyDeep` — `#1E3A8A` | Tinted primary containers. |
+| `onPrimaryContainer` | `AppColors.primaryDark` — `#003D82` | `AppPalette.blueLight` — `#BFDBFE` | Text and icons on primary containers. |
+| `secondary` | `AppColors.secondary` — `#1E7E34` | `AppPalette.greenEmerald` — `#10B981` | Secondary action and positive supporting emphasis. |
+| `surface` | `AppColors.surface` — `#FFFFFF` | `AppPalette.darkSurface` — `#1E293B` | Cards, input and dialog surfaces. |
+| scaffold background | `AppColors.background` — `#F5F7FA` | `AppPalette.darkBackground` — `#0F172A` | Page background. |
+| text / `onSurface` | `AppColors.onSurface` — `#212529` | `AppPalette.darkTextPrimary` — `#F1F5F9` | Body and heading text through `ColorScheme`. |
+| `error` | `AppColors.error` — `#C62828` | `AppPalette.redAlert` — `#EF4444` | Negative indicators and errors; never use color alone for state. |
+| warning | `AppColors.warning` — `#D73502` | No separate dark semantic token is approved. | Alerts that require text, icon, or border support. |
+
+#### Runtime user color preference
+
+`ColorCustomizationService` may provide a per-user `seedColor` to `AppTheme` at runtime. It is a local preference, **not** a product-brand token and must not be copied into this specification. Its current acceptance path does not yet prove contrast validation; therefore do not claim WCAG conformance for an arbitrary user-selected seed until `REQ-UX-002` receives dedicated validation and tests.
+
+#### Planned brand evolution
+
+The strategic value `#0F6E7D` remains a planned identity direction, not an implemented default. A future change requires the migration controls in `ADR-UX-001`: owner approval, one token-level implementation change, synchronized specification/documentation update, contract or visual test, and contrast evidence.
 
 ### 2.2 Typography Scale (`lib/core/theme/tokens/typography_tokens.dart`)
 

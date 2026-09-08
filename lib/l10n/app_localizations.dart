@@ -1199,14 +1199,104 @@ abstract class AppLocalizations {
   /// No description provided for @inventoryItemsSearchHint.
   ///
   /// In en, this message translates to:
-  /// **'Search inventory...'**
+  /// **'Search by name, SKU, or barcode...'**
   String get inventoryItemsSearchHint;
+
+  /// No description provided for @inventoryEmptyHintTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory management'**
+  String get inventoryEmptyHintTitle;
+
+  /// No description provided for @inventoryEmptyHintDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add inventory items here to track quantities and costs accurately. You can start by adding an item manually.'**
+  String get inventoryEmptyHintDescription;
 
   /// No description provided for @labelSKU.
   ///
   /// In en, this message translates to:
   /// **'SKU'**
   String get labelSKU;
+
+  /// No description provided for @labelBarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode'**
+  String get labelBarcode;
+
+  /// No description provided for @inventoryItemNameArRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the item name in Arabic.'**
+  String get inventoryItemNameArRequired;
+
+  /// No description provided for @inventoryItemNameEnRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the item name in English.'**
+  String get inventoryItemNameEnRequired;
+
+  /// No description provided for @inventoryItemInvalidPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter valid, non-negative purchase and sales prices.'**
+  String get inventoryItemInvalidPrice;
+
+  /// No description provided for @inventoryItemQuantityMustUseMovement.
+  ///
+  /// In en, this message translates to:
+  /// **'Update item quantity through an inventory movement or stock count only.'**
+  String get inventoryItemQuantityMustUseMovement;
+
+  /// No description provided for @inventoryItemDuplicateSku.
+  ///
+  /// In en, this message translates to:
+  /// **'The SKU or barcode is already used by another item.'**
+  String get inventoryItemDuplicateSku;
+
+  /// No description provided for @inventoryItemDuplicateBarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'The barcode is already used by another item.'**
+  String get inventoryItemDuplicateBarcode;
+
+  /// No description provided for @inventoryItemNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'The requested item could not be found.'**
+  String get inventoryItemNotFound;
+
+  /// No description provided for @inventoryItemSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Item details could not be saved. Please try again.'**
+  String get inventoryItemSaveFailed;
+
+  /// No description provided for @inventoryItemSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Item details were saved.'**
+  String get inventoryItemSaved;
+
+  /// No description provided for @inventoryBarcodeSelectRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an item and enter the barcode first.'**
+  String get inventoryBarcodeSelectRequired;
+
+  /// No description provided for @inventoryBarcodeSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode was saved successfully.'**
+  String get inventoryBarcodeSaved;
+
+  /// No description provided for @inventoryBarcodeSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode could not be saved. Please try again.'**
+  String get inventoryBarcodeSaveFailed;
 
   /// No description provided for @labelPurchasePrice.
   ///

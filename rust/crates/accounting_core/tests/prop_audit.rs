@@ -1,5 +1,6 @@
-use accounting_core::{
-    audit::{chain::{compute_record_hash, GENESIS_HASH}, models::{AuditAction, AuditRecord, HowInfo, WhatInfo, WhereInfo, WhoInfo, WhyInfo}},
+use accounting_core::audit::{
+    chain::{compute_record_hash, GENESIS_HASH},
+    models::{AuditAction, AuditRecord, HowInfo, WhatInfo, WhereInfo, WhoInfo, WhyInfo},
 };
 use chrono::Utc;
 use proptest::prelude::*;
@@ -29,15 +30,15 @@ proptest! {
     ) {
         let mut prev_hash = GENESIS_HASH.to_string();
         let user_uuid = Uuid::from_bytes(user_id);
-        
+
         for action in actions {
             let record_id = Uuid::new_v4();
             let timestamp = Utc::now();
-            
+
             // Reconstruct a record as if it were being created
             // Note: In real implementation, the `AuditTrail` struct manages this.
             // Here we verify the core hash property: Hash(Content + PrevHash)
-            
+
             let mut record = AuditRecord {
                 record_id,
                 who: WhoInfo {
@@ -75,20 +76,20 @@ proptest! {
                 previous_hash: prev_hash.clone(),
                 hash: String::new(), // To be computed
             };
-            
+
             let computed = compute_record_hash(&record);
             record.hash = computed.clone();
-            
+
             // Invariant: The record's hash MUST rely on the previous hash
             // (If we changed previous_hash, the check would fail)
             prop_assert_eq!(&record.previous_hash, &prev_hash);
             prop_assert_eq!(&record.hash, &compute_record_hash(&record));
-            
+
             // Advance chain
             prev_hash = computed;
         }
     }
-    
+
     #[test]
     fn prop_cp_003_tamper_evidence(
         action in arb_audit_action()
@@ -123,13 +124,13 @@ proptest! {
             previous_hash: prev_hash,
             hash: String::new(),
         };
-        
+
         let valid_hash = compute_record_hash(&record);
         record.hash = valid_hash.clone();
-        
+
         // TAMPERING: Change the content
         record.what.change_description = "Tampered Content".to_string();
-        
+
         // Invariant: Hash check must fail
         let new_hash = compute_record_hash(&record);
         prop_assert_ne!(record.hash, new_hash);

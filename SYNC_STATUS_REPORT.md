@@ -1,5 +1,9 @@
 # 📊 تقرير حالة المزامنة - نظام بصير المحاسبي
 
+> **تحذير الحالة والسرية — LEGACY-REFERENCE / ARCHIVE-CANDIDATE**
+> هذا التقرير تاريخي وليس مصدر الحقيقة الحالي. لا تعتمد حالته أو SHA أو اسم المستودع لتقرير وضع GitHub الحالي. **لا تضع PAT أو أي secret داخل عنوان remote أو سجل الأوامر أو ملفات Git config.** استخدم GitHub CLI أو credential helper أو مخزن أسرار آمن. راجع [قرار الحوكمة GOV-DOC-DRIFT-20260815-001](docs/00-governance/DECISION-DOC-DRIFT-GENERATED-SOURCES-20260815.md).
+> لم يُنقل التقرير أو يُحذف؛ أي أرشفة أو supersede نهائي يحتاج قرار مالك موثق.
+>
 **التاريخ:** 21 فبراير 2026، 12:30 م  
 **الحالة:** ⚠️ يحتاج مزامنة فورية مع المستودع البعيد  
 **الفريق:** Basir Accounting System Development Agents Team

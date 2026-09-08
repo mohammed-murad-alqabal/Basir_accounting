@@ -132,16 +132,17 @@ class AppearanceSettingsScreen extends ConsumerWidget {
             icon: appIcons.accessibility,
           ),
           const SizedBox(height: Spacing.md),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: Theme.of(
-                context,
-              ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.2),
+          Material(
+            color: Theme.of(
+              context,
+            ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.2),
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(Radii.lg),
-              border: Border.all(
+              side: BorderSide(
                 color: Theme.of(context).colorScheme.outlineVariant,
               ),
             ),
+            clipBehavior: Clip.antiAlias,
             child: Column(
               children: [
                 SwitchListTile(

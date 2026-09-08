@@ -54,7 +54,7 @@ prop_compose! {
         entry_type in arb_entry_type(),
         std_ref in arb_maybe_empty_string(),
         linked_id in prop_oneof![Just(None), Just(Some(Uuid::new_v4()))],
-        lines in prop::collection::vec(any::<bool>().prop_flat_map(|is_std| arb_journal_entry_line(is_std)), 1..5)
+        lines in prop::collection::vec(any::<bool>().prop_flat_map(arb_journal_entry_line), 1..5)
     ) -> JournalEntry {
         JournalEntry {
             entry_id: Uuid::new_v4(),
@@ -97,7 +97,7 @@ proptest! {
         // 2. If it's valid and Standard type, ALL lines must have non-empty source_doc_ref
         if result.is_ok() && entry.entry_type == EntryType::Standard {
             for line in &entry.lines {
-                prop_assert!(line.source_document_ref.as_ref().map_or(false, |s| !s.trim().is_empty()));
+                prop_assert!(line.source_document_ref.as_ref().is_some_and(|s| !s.trim().is_empty()));
             }
         }
 
@@ -111,7 +111,12 @@ proptest! {
             prop_assert!(result.is_err());
         }
 
-        if entry.entry_type == EntryType::Standard && entry.lines.iter().any(|l| l.source_document_ref.as_ref().map_or(true, |s| s.trim().is_empty())) {
+        if entry.entry_type == EntryType::Standard
+            && entry
+                .lines
+                .iter()
+                .any(|l| l.source_document_ref.as_ref().is_none_or(|s| s.trim().is_empty()))
+        {
             prop_assert!(result.is_err());
         }
 

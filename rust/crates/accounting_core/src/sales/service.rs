@@ -12,6 +12,10 @@ pub struct SalesService;
 
 impl SalesService {
     /// Finalizes a draft invoice, generates ZATCA compliance data, and posts it to the ledger.
+    ///
+    /// The explicit compliance inputs are kept in this public service boundary so callers must
+    /// supply the signing material and chain state deliberately for every finalized invoice.
+    #[allow(clippy::too_many_arguments)]
     pub fn finalize_invoice(
         invoice: &mut SalesInvoice,
         lines: &[SalesInvoiceLine],

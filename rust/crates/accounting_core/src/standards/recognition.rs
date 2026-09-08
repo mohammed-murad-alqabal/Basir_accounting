@@ -4,7 +4,7 @@
 //! ensuring compliance with the IFRS Conceptual Framework and IFRS 15.
 
 use crate::ledger::models::StandardsJustification;
-use crate::standards::models::{RecognitionBasis, MeasurementBasis};
+use crate::standards::models::{MeasurementBasis, RecognitionBasis};
 use serde::{Deserialize, Serialize};
 
 /// The IFRS 15 Five-Step Model for revenue recognition.
@@ -38,12 +38,22 @@ impl Ifrs15StepModel {
     /// Generate a professional judgment summary based on the steps.
     pub fn to_judgment_summary(&self) -> String {
         let mut summary = Vec::new();
-        if self.contract_identified { summary.push("Contract verified"); }
-        if self.performance_obligations_identified { summary.push("Performance obligations defined"); }
-        if self.transaction_price_determined { summary.push("Transaction price confirmed"); }
-        if self.price_allocated { summary.push("Allocation complete"); }
-        if self.revenue_recognized_on_transfer { summary.push("Control transferred to customer"); }
-        
+        if self.contract_identified {
+            summary.push("Contract verified");
+        }
+        if self.performance_obligations_identified {
+            summary.push("Performance obligations defined");
+        }
+        if self.transaction_price_determined {
+            summary.push("Transaction price confirmed");
+        }
+        if self.price_allocated {
+            summary.push("Allocation complete");
+        }
+        if self.revenue_recognized_on_transfer {
+            summary.push("Control transferred to customer");
+        }
+
         summary.join("; ")
     }
 }
