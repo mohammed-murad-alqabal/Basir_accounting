@@ -5,9 +5,9 @@ import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:basir_accounting_system/shared/widgets/basir_sidebar.dart';
 import 'package:basir_accounting_system/shared/widgets/basir_topbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 /// أداة بناء ودجت اختباري بمحيط ProviderScope وتهيئة l10n
 Widget buildShell({
@@ -20,34 +20,33 @@ Widget buildShell({
   /// مفتاح فريد لإجبار Riverpod على إعادة إنشاء ProviderContainer عند إعادة
   /// البناء (pumpWidget جديد بقيم overrides مختلفة)
   Key? providerKey,
-}) {
-  return MaterialApp(
-    locale: Locale(locale),
-    localizationsDelegates: const [
-      AppLocalizations.delegate,
-      GlobalMaterialLocalizations.delegate,
-      GlobalWidgetsLocalizations.delegate,
-      GlobalCupertinoLocalizations.delegate,
-    ],
-    supportedLocales: const [Locale('ar'), Locale('en')],
-    home: Directionality(
-      textDirection: rtl ? TextDirection.rtl : TextDirection.ltr,
-      child: ProviderScope(
-        key: providerKey ?? UniqueKey(),
-        overrides: [
-          appIconsProvider.overrideWith((ref) => const MaterialAppIcons()),
-          // يجب إبقاء نفس عدد الـ overrides في كل إعادة بناء (riverpod لا يسمح بتغيير العدد)
-          sidebarCollapsedProvider
-              .overrideWith((ref) => sidebarCollapsedDefault),
-        ],
-        child: MediaQuery(
-          data: MediaQueryData(size: Size(width, 800)),
-          child: Scaffold(body: child ?? const BasirAppShell()),
+}) =>
+    MaterialApp(
+      locale: Locale(locale),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('ar'), Locale('en')],
+      home: Directionality(
+        textDirection: rtl ? TextDirection.rtl : TextDirection.ltr,
+        child: ProviderScope(
+          key: providerKey ?? UniqueKey(),
+          overrides: [
+            appIconsProvider.overrideWith((ref) => const MaterialAppIcons()),
+            // يجب إبقاء نفس عدد الـ overrides في كل إعادة بناء (riverpod لا يسمح بتغيير العدد)
+            sidebarCollapsedProvider
+                .overrideWith((ref) => sidebarCollapsedDefault),
+          ],
+          child: MediaQuery(
+            data: MediaQueryData(size: Size(width, 800)),
+            child: Scaffold(body: child ?? const BasirAppShell()),
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
 
 /// يضبط حجم سطح الاختبار الفعلي قبل pumpWidget (MediaQueryData وحده لا يحدد قيود السطح)
 void setTestSurfaceSize(WidgetTester tester, double width) {
@@ -86,8 +85,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // IndexedStack يعرض كل الشاشات (مع إخفاء غير النشطة)
-      expect(tester.widgetList<IndexedStack>(find.byType(IndexedStack)).length,
-          greaterThanOrEqualTo(1));
+      expect(
+        tester.widgetList<IndexedStack>(find.byType(IndexedStack)).length,
+        greaterThanOrEqualTo(1),
+      );
       final stack =
           tester.widget<IndexedStack>(find.byType(IndexedStack).first);
       expect(stack.children.length, 8);
@@ -104,11 +105,12 @@ void main() {
           tester.renderObject<RenderBox>(find.byType(BasirSidebar)).size;
       expect(sidebarRenderBoxBefore.width, kSidebarExpandedWidth);
 
-      await tester.pumpWidget(buildShell(
-        width: 1280,
-        sidebarCollapsedDefault: true,
-        providerKey: const Key('collapsed'),
-      ));
+      await tester.pumpWidget(
+        buildShell(
+          sidebarCollapsedDefault: true,
+          providerKey: const Key('collapsed'),
+        ),
+      );
       await tester.pumpAndSettle();
 
       // العرض المطوي: أيقونات فقط
@@ -169,7 +171,7 @@ void main() {
         matching: find.byWidgetPredicate(
           (widget) =>
               widget is AnimatedContainer &&
-              (widget.decoration as BoxDecoration).color ==
+              (widget.decoration! as BoxDecoration).color ==
                   AppColors.primaryLight,
         ),
       );
@@ -222,19 +224,20 @@ void main() {
 
     testWidgets('displays custom org/branch/period when provided',
         (tester) async {
-      await tester.pumpWidget(buildShell(
-        width: 1280,
-        child: Builder(
-          builder: (context) => BasirTopBar(
-            appIcons: null,
-            l10n: AppLocalizations.of(context),
-            collapsed: false,
-            orgName: 'شركة بصير للتجارة',
-            branchName: 'فرع الرياض',
-            periodName: 'الفترة 2026',
+      await tester.pumpWidget(
+        buildShell(
+          child: Builder(
+            builder: (context) => BasirTopBar(
+              appIcons: null,
+              l10n: AppLocalizations.of(context),
+              collapsed: false,
+              orgName: 'شركة بصير للتجارة',
+              branchName: 'فرع الرياض',
+              periodName: 'الفترة 2026',
+            ),
           ),
         ),
-      ));
+      );
       await tester.pumpAndSettle();
 
       expect(find.text('شركة بصير للتجارة'), findsOneWidget);
@@ -249,7 +252,9 @@ void main() {
 
       expect(find.byType(BasirGlobalSearchField), findsOneWidget);
       expect(
-          find.text('ابحث في الفواتير والعملاء والأصناف...'), findsOneWidget);
+        find.text('ابحث في الفواتير والعملاء والأصناف...'),
+        findsOneWidget,
+      );
     });
 
     testWidgets('chips are announced for accessibility', (tester) async {
@@ -295,7 +300,7 @@ void main() {
   group('BasirAppShell localization', () {
     testWidgets('renders English labels in EN locale', (tester) async {
       setTestSurfaceSize(tester, 1280);
-      await tester.pumpWidget(buildShell(width: 1280, locale: 'en'));
+      await tester.pumpWidget(buildShell(locale: 'en'));
       await tester.pumpAndSettle();
 
       expect(find.text('Home'), findsOneWidget);
@@ -331,8 +336,8 @@ void main() {
     });
 
     test('sidebar width helper responds to collapse state', () {
-      expect(sidebarWidthOf(false), kSidebarExpandedWidth);
-      expect(sidebarWidthOf(true), kSidebarCollapsedWidth);
+      expect(sidebarWidthOf(collapsed: false), kSidebarExpandedWidth);
+      expect(sidebarWidthOf(collapsed: true), kSidebarCollapsedWidth);
     });
   });
 }

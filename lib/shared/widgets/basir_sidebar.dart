@@ -1,9 +1,9 @@
-import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/core/theme/border_contrast_design.dart';
+import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
+import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:flutter/material.dart' hide Durations;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 
 /// نموذج بيانات بند الشريط الجانبي
 class SidebarNavItem {
@@ -77,10 +77,10 @@ const List<SidebarNavItem> basirSidebarItems = [
 class BasirSidebar extends ConsumerWidget {
   /// إنشاء الشريط الجانبي
   const BasirSidebar({
-    super.key,
     required this.selectedIndex,
     required this.appIcons,
     required this.l10n,
+    super.key,
     this.items = basirSidebarItems,
   });
 
@@ -100,7 +100,7 @@ class BasirSidebar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final collapsed = ref.watch(sidebarCollapsedProvider);
     final brightness = Theme.of(context).brightness;
-    final width = sidebarWidthOf(collapsed);
+    final width = sidebarWidthOf(collapsed: collapsed);
 
     return AnimatedContainer(
       duration: Durations.short,
@@ -149,7 +149,7 @@ class BasirSidebar extends ConsumerWidget {
         children: [
           if (!collapsed) ...[
             const SizedBox(width: Spacing.sm),
-            Icon(
+            const Icon(
               Icons.auto_awesome,
               color: AppColors.primary,
               size: IconSizes.md,
@@ -180,7 +180,7 @@ class BasirSidebar extends ConsumerWidget {
                   turns: (collapsed && !isRtl) || (!collapsed && isRtl)
                       ? 0.5
                       : 0.0,
-                  child: Icon(
+                  child: const Icon(
                     Icons.chevron_left,
                     color: AppColors.textSecondary,
                     size: IconSizes.md,
@@ -217,7 +217,7 @@ class BasirSidebar extends ConsumerWidget {
           child: AnimatedContainer(
             duration: Durations.short,
             curve: AnimationCurves.fastOutSlowIn,
-            margin: EdgeInsets.symmetric(
+            margin: const EdgeInsets.symmetric(
               horizontal: Spacing.sm,
               vertical: Spacing.xs / 2,
             ),
@@ -226,7 +226,7 @@ class BasirSidebar extends ConsumerWidget {
               color: isSelected ? AppColors.primaryLight : Colors.transparent,
               borderRadius: BorderRadius.circular(Radii.sm),
               border: isSelected
-                  ? Border(
+                  ? const Border(
                       right: BorderSide(
                         color: AppColors.primary,
                         width: 3,

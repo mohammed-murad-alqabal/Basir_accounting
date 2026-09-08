@@ -385,6 +385,123 @@ class AccountingService extends _$AccountingService {
     ref.invalidateSelf();
   }
 
+  /// يبني قيد فاتورة البيع النهائي دون حفظه في التخزين.
+  ///
+  /// تستخدمه خدمة ترحيل المبيعات الذرية كي يبقى منطق اختيار حساب العميل
+  /// والإيراد والضريبة والتحقق من الفترة في موضع واحد.
+  Future<JournalEntry> prepareSalesInvoiceEntry(
+    domain_inv.Invoice invoice, {
+    required String createdBy,
+    required DateTime recordedAt,
+  }) async {
+    final isPeriodOpen =
+        await _financialYearService.canPostToDate(invoice.issuedDate);
+    if (!isPeriodOpen) {
+      throw Exception('Cannot post to a closed or undefined financial period');
+    }
+
+    if (invoice.status != InvoiceStatus.sent &&
+        invoice.status != InvoiceStatus.paid &&
+        invoice.status != InvoiceStatus.overdue) {
+      throw Exception('Can only post issued, paid, or overdue invoices');
+    }
+
+    final lines = <JournalEntryLine>[];
+    var receivableAccountId = 'acc-1201';
+    final customer =
+        await _customerRepository.getCustomerById(invoice.customerId);
+    if (customer?.receivableAccountId != null) {
+      receivableAccountId = customer!.receivableAccountId!;
+    }
+
+    lines.add(
+      JournalEntryLine(
+        accountId: receivableAccountId,
+        accountName: 'Receivable - ${invoice.customerName}',
+        description: 'Sales Invoice #${invoice.invoiceNumber}',
+        debit: invoice.totalAmountBaseCurrency,
+        credit: Decimal.zero,
+        originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+        originalAmount: invoice.currency != 'SAR' ? invoice.totalAmount : null,
+        exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+      ),
+    );
+
+    final allAccounts = await _repository.getAccounts();
+    final revenueAccount = allAccounts.firstWhere(
+      (account) => account.code == '4101' || account.subType == 'revenue',
+      orElse: () => allAccounts
+          .firstWhere((account) => account.type == AccountType.revenue),
+    );
+    lines.add(
+      JournalEntryLine(
+        accountId: revenueAccount.id,
+        credit: invoice.subtotalAmountBaseCurrency,
+        debit: Decimal.zero,
+        accountName: revenueAccount.nameEn,
+        description: 'Revenue for Invoice #${invoice.invoiceNumber}',
+        originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+        originalAmount:
+            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+      ),
+    );
+
+    if (invoice.taxAmount > Decimal.zero) {
+      final taxAccount = allAccounts.firstWhere(
+        (account) => account.code == '2105' || account.nameEn.contains('VAT'),
+        orElse: () => Account(
+          id: 'acc-2105',
+          code: '2105',
+          nameAr: 'الضريبة',
+          nameEn: 'Tax',
+          type: AccountType.liability,
+          nature: AccountNature.credit,
+          balance: Decimal.zero,
+        ),
+      );
+      lines.add(
+        JournalEntryLine(
+          accountId: taxAccount.id,
+          accountName: taxAccount.nameEn,
+          description: 'VAT for Invoice #${invoice.invoiceNumber}',
+          credit: invoice.taxAmountBaseCurrency,
+          debit: Decimal.zero,
+          originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
+          originalAmount: invoice.currency != 'SAR' ? invoice.taxAmount : null,
+          exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
+        ),
+      );
+    }
+
+    final entry = JournalEntry(
+      id: 'je-inv-${invoice.id}',
+      referenceNumber: 'JE-${invoice.id}',
+      date: invoice.issuedDate,
+      temporal: TemporalJustification(
+        transactionDate: invoice.issuedDate,
+        effectiveDate: invoice.issuedDate,
+        recordingDate: recordedAt,
+      ),
+      standards: const StandardsJustification(
+        standardReference: 'IFRS 15',
+        recognitionBasis: 'Accrual',
+        measurementBasis: 'Transaction Price',
+      ),
+      description: 'Posting sales invoice ${invoice.id}',
+      status: JournalEntryStatus.posted,
+      lines: lines,
+      sourceDocument: 'invoice',
+      sourceId: invoice.id,
+      createdAt: recordedAt,
+      createdBy: createdBy,
+      updatedAt: recordedAt,
+      postedAt: recordedAt,
+    );
+    JournalEntryValidator.ensurePostable(entry);
+    return entry;
+  }
+
   /// Posts a purchase invoice to the ledger.
   ///
   /// Typical impact:

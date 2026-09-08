@@ -23,115 +23,120 @@ const InventoryItemModelSchema = CollectionSchema(
       name: r'assetAccountId',
       type: IsarType.string,
     ),
-    r'categoryId': PropertySchema(
+    r'barcode': PropertySchema(
       id: 1,
+      name: r'barcode',
+      type: IsarType.string,
+    ),
+    r'categoryId': PropertySchema(
+      id: 2,
       name: r'categoryId',
       type: IsarType.string,
     ),
     r'cogsAccountId': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'cogsAccountId',
       type: IsarType.string,
     ),
     r'createdAt': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
     r'currentQuantity': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'currentQuantity',
       type: IsarType.double,
     ),
     r'description': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'description',
       type: IsarType.string,
     ),
     r'id': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'id',
       type: IsarType.string,
     ),
     r'isDeleted': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'isDeleted',
       type: IsarType.bool,
     ),
     r'nameAr': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'nameAr',
       type: IsarType.string,
     ),
     r'nameEn': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'nameEn',
       type: IsarType.string,
     ),
     r'primaryAccountId': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'primaryAccountId',
       type: IsarType.string,
     ),
     r'purchasePrice': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'purchasePrice',
       type: IsarType.double,
     ),
     r'revenueAccountId': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'revenueAccountId',
       type: IsarType.string,
     ),
     r'salePrice': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'salePrice',
       type: IsarType.double,
     ),
     r'serverUpdatedAt': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'serverUpdatedAt',
       type: IsarType.dateTime,
     ),
     r'sku': PropertySchema(
-      id: 15,
+      id: 16,
       name: r'sku',
       type: IsarType.string,
     ),
     r'syncStatus': PropertySchema(
-      id: 16,
+      id: 17,
       name: r'syncStatus',
       type: IsarType.string,
       enumMap: _InventoryItemModelsyncStatusEnumValueMap,
     ),
     r'taxCategory': PropertySchema(
-      id: 17,
+      id: 18,
       name: r'taxCategory',
       type: IsarType.string,
     ),
     r'unit': PropertySchema(
-      id: 18,
+      id: 19,
       name: r'unit',
       type: IsarType.string,
     ),
     r'updatedAt': PropertySchema(
-      id: 19,
+      id: 20,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'userId': PropertySchema(
-      id: 20,
+      id: 21,
       name: r'userId',
       type: IsarType.string,
     ),
     r'valuationMethod': PropertySchema(
-      id: 21,
+      id: 22,
       name: r'valuationMethod',
       type: IsarType.string,
       enumMap: _InventoryItemModelvaluationMethodEnumValueMap,
     ),
     r'warehouseId': PropertySchema(
-      id: 22,
+      id: 23,
       name: r'warehouseId',
       type: IsarType.string,
     )
@@ -181,6 +186,19 @@ const InventoryItemModelSchema = CollectionSchema(
         )
       ],
     ),
+    r'barcode': IndexSchema(
+      id: 1156800733621869998,
+      name: r'barcode',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'barcode',
+          type: IndexType.hash,
+          caseSensitive: false,
+        )
+      ],
+    ),
     r'warehouseId': IndexSchema(
       id: -3759612439572445753,
       name: r'warehouseId',
@@ -211,6 +229,12 @@ int _inventoryItemModelEstimateSize(
   var bytesCount = offsets.last;
   {
     final value = object.assetAccountId;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
+    final value = object.barcode;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -290,28 +314,29 @@ void _inventoryItemModelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.assetAccountId);
-  writer.writeString(offsets[1], object.categoryId);
-  writer.writeString(offsets[2], object.cogsAccountId);
-  writer.writeDateTime(offsets[3], object.createdAt);
-  writer.writeDouble(offsets[4], object.currentQuantity);
-  writer.writeString(offsets[5], object.description);
-  writer.writeString(offsets[6], object.id);
-  writer.writeBool(offsets[7], object.isDeleted);
-  writer.writeString(offsets[8], object.nameAr);
-  writer.writeString(offsets[9], object.nameEn);
-  writer.writeString(offsets[10], object.primaryAccountId);
-  writer.writeDouble(offsets[11], object.purchasePrice);
-  writer.writeString(offsets[12], object.revenueAccountId);
-  writer.writeDouble(offsets[13], object.salePrice);
-  writer.writeDateTime(offsets[14], object.serverUpdatedAt);
-  writer.writeString(offsets[15], object.sku);
-  writer.writeString(offsets[16], object.syncStatus.name);
-  writer.writeString(offsets[17], object.taxCategory);
-  writer.writeString(offsets[18], object.unit);
-  writer.writeDateTime(offsets[19], object.updatedAt);
-  writer.writeString(offsets[20], object.userId);
-  writer.writeString(offsets[21], object.valuationMethod.name);
-  writer.writeString(offsets[22], object.warehouseId);
+  writer.writeString(offsets[1], object.barcode);
+  writer.writeString(offsets[2], object.categoryId);
+  writer.writeString(offsets[3], object.cogsAccountId);
+  writer.writeDateTime(offsets[4], object.createdAt);
+  writer.writeDouble(offsets[5], object.currentQuantity);
+  writer.writeString(offsets[6], object.description);
+  writer.writeString(offsets[7], object.id);
+  writer.writeBool(offsets[8], object.isDeleted);
+  writer.writeString(offsets[9], object.nameAr);
+  writer.writeString(offsets[10], object.nameEn);
+  writer.writeString(offsets[11], object.primaryAccountId);
+  writer.writeDouble(offsets[12], object.purchasePrice);
+  writer.writeString(offsets[13], object.revenueAccountId);
+  writer.writeDouble(offsets[14], object.salePrice);
+  writer.writeDateTime(offsets[15], object.serverUpdatedAt);
+  writer.writeString(offsets[16], object.sku);
+  writer.writeString(offsets[17], object.syncStatus.name);
+  writer.writeString(offsets[18], object.taxCategory);
+  writer.writeString(offsets[19], object.unit);
+  writer.writeDateTime(offsets[20], object.updatedAt);
+  writer.writeString(offsets[21], object.userId);
+  writer.writeString(offsets[22], object.valuationMethod.name);
+  writer.writeString(offsets[23], object.warehouseId);
 }
 
 InventoryItemModel _inventoryItemModelDeserialize(
@@ -322,33 +347,34 @@ InventoryItemModel _inventoryItemModelDeserialize(
 ) {
   final object = InventoryItemModel();
   object.assetAccountId = reader.readStringOrNull(offsets[0]);
-  object.categoryId = reader.readStringOrNull(offsets[1]);
-  object.cogsAccountId = reader.readStringOrNull(offsets[2]);
-  object.createdAt = reader.readDateTime(offsets[3]);
-  object.currentQuantity = reader.readDoubleOrNull(offsets[4]);
-  object.description = reader.readStringOrNull(offsets[5]);
-  object.id = reader.readStringOrNull(offsets[6]);
-  object.isDeleted = reader.readBool(offsets[7]);
+  object.barcode = reader.readStringOrNull(offsets[1]);
+  object.categoryId = reader.readStringOrNull(offsets[2]);
+  object.cogsAccountId = reader.readStringOrNull(offsets[3]);
+  object.createdAt = reader.readDateTime(offsets[4]);
+  object.currentQuantity = reader.readDoubleOrNull(offsets[5]);
+  object.description = reader.readStringOrNull(offsets[6]);
+  object.id = reader.readStringOrNull(offsets[7]);
+  object.isDeleted = reader.readBool(offsets[8]);
   object.isarId = id;
-  object.nameAr = reader.readString(offsets[8]);
-  object.nameEn = reader.readString(offsets[9]);
-  object.primaryAccountId = reader.readStringOrNull(offsets[10]);
-  object.purchasePrice = reader.readDoubleOrNull(offsets[11]);
-  object.revenueAccountId = reader.readStringOrNull(offsets[12]);
-  object.salePrice = reader.readDoubleOrNull(offsets[13]);
-  object.serverUpdatedAt = reader.readDateTimeOrNull(offsets[14]);
-  object.sku = reader.readStringOrNull(offsets[15]);
+  object.nameAr = reader.readString(offsets[9]);
+  object.nameEn = reader.readString(offsets[10]);
+  object.primaryAccountId = reader.readStringOrNull(offsets[11]);
+  object.purchasePrice = reader.readDoubleOrNull(offsets[12]);
+  object.revenueAccountId = reader.readStringOrNull(offsets[13]);
+  object.salePrice = reader.readDoubleOrNull(offsets[14]);
+  object.serverUpdatedAt = reader.readDateTimeOrNull(offsets[15]);
+  object.sku = reader.readStringOrNull(offsets[16]);
   object.syncStatus = _InventoryItemModelsyncStatusValueEnumMap[
-          reader.readStringOrNull(offsets[16])] ??
+          reader.readStringOrNull(offsets[17])] ??
       SyncStatus.synced;
-  object.taxCategory = reader.readString(offsets[17]);
-  object.unit = reader.readStringOrNull(offsets[18]);
-  object.updatedAt = reader.readDateTime(offsets[19]);
-  object.userId = reader.readStringOrNull(offsets[20]);
+  object.taxCategory = reader.readString(offsets[18]);
+  object.unit = reader.readStringOrNull(offsets[19]);
+  object.updatedAt = reader.readDateTime(offsets[20]);
+  object.userId = reader.readStringOrNull(offsets[21]);
   object.valuationMethod = _InventoryItemModelvaluationMethodValueEnumMap[
-          reader.readStringOrNull(offsets[21])] ??
+          reader.readStringOrNull(offsets[22])] ??
       ValuationMethod.fifo;
-  object.warehouseId = reader.readStringOrNull(offsets[22]);
+  object.warehouseId = reader.readStringOrNull(offsets[23]);
   return object;
 }
 
@@ -366,48 +392,50 @@ P _inventoryItemModelDeserializeProp<P>(
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readDateTime(offset)) as P;
-    case 4:
-      return (reader.readDoubleOrNull(offset)) as P;
-    case 5:
       return (reader.readStringOrNull(offset)) as P;
+    case 4:
+      return (reader.readDateTime(offset)) as P;
+    case 5:
+      return (reader.readDoubleOrNull(offset)) as P;
     case 6:
       return (reader.readStringOrNull(offset)) as P;
     case 7:
-      return (reader.readBool(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 8:
-      return (reader.readString(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 9:
       return (reader.readString(offset)) as P;
     case 10:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 11:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 12:
-      return (reader.readStringOrNull(offset)) as P;
-    case 13:
       return (reader.readDoubleOrNull(offset)) as P;
-    case 14:
-      return (reader.readDateTimeOrNull(offset)) as P;
-    case 15:
+    case 13:
       return (reader.readStringOrNull(offset)) as P;
+    case 14:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 15:
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 16:
+      return (reader.readStringOrNull(offset)) as P;
+    case 17:
       return (_InventoryItemModelsyncStatusValueEnumMap[
               reader.readStringOrNull(offset)] ??
           SyncStatus.synced) as P;
-    case 17:
-      return (reader.readString(offset)) as P;
     case 18:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 19:
-      return (reader.readDateTime(offset)) as P;
-    case 20:
       return (reader.readStringOrNull(offset)) as P;
+    case 20:
+      return (reader.readDateTime(offset)) as P;
     case 21:
+      return (reader.readStringOrNull(offset)) as P;
+    case 22:
       return (_InventoryItemModelvaluationMethodValueEnumMap[
               reader.readStringOrNull(offset)] ??
           ValuationMethod.fifo) as P;
-    case 22:
+    case 23:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -952,6 +980,73 @@ extension InventoryItemModelQueryWhere
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterWhereClause>
+      barcodeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'barcode',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterWhereClause>
+      barcodeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'barcode',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterWhereClause>
+      barcodeEqualTo(String? barcode) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'barcode',
+        value: [barcode],
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterWhereClause>
+      barcodeNotEqualTo(String? barcode) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'barcode',
+              lower: [],
+              upper: [barcode],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'barcode',
+              lower: [barcode],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'barcode',
+              lower: [barcode],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'barcode',
+              lower: [],
+              upper: [barcode],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterWhereClause>
       warehouseIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
@@ -1170,6 +1265,160 @@ extension InventoryItemModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'assetAccountId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
+      barcodeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'barcode',
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
+      barcodeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'barcode',
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
+      barcodeEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'barcode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
+      barcodeGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'barcode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
+      barcodeLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'barcode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
+      barcodeBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'barcode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
+      barcodeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'barcode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
+      barcodeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'barcode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
+      barcodeContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'barcode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
+      barcodeMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'barcode',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
+      barcodeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'barcode',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
+      barcodeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'barcode',
         value: '',
       ));
     });
@@ -3941,6 +4190,20 @@ extension InventoryItemModelQuerySortBy
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterSortBy>
+      sortByBarcode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterSortBy>
+      sortByBarcodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcode', Sort.desc);
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterSortBy>
       sortByCategoryId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'categoryId', Sort.asc);
@@ -4262,6 +4525,20 @@ extension InventoryItemModelQuerySortThenBy
       thenByAssetAccountIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'assetAccountId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterSortBy>
+      thenByBarcode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterSortBy>
+      thenByBarcodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'barcode', Sort.desc);
     });
   }
 
@@ -4599,6 +4876,13 @@ extension InventoryItemModelQueryWhereDistinct
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QDistinct>
+      distinctByBarcode({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'barcode', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, InventoryItemModel, QDistinct>
       distinctByCategoryId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'categoryId', caseSensitive: caseSensitive);
@@ -4769,6 +5053,13 @@ extension InventoryItemModelQueryProperty
       assetAccountIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'assetAccountId');
+    });
+  }
+
+  QueryBuilder<InventoryItemModel, String?, QQueryOperations>
+      barcodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'barcode');
     });
   }
 

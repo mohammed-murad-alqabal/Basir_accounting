@@ -21,6 +21,7 @@ class JournalEntryModel {
     description = entity.description;
     status = entity.status;
     lines = entity.lines.map(JournalEntryLineModel.fromEntity).toList();
+    auditLogs = entity.auditLogs.map(AuditLogEntryModel.fromEntity).toList();
     sourceDocument = entity.sourceDocument;
     sourceId = entity.sourceId;
     hash = entity.hash;
@@ -68,6 +69,12 @@ class JournalEntryModel {
   /// بنود القيد (مضمنة).
   late List<JournalEntryLineModel> lines;
 
+  /// سجل التدقيق المحلي المضمن.
+  ///
+  /// يمثل هذا المسار سجل التطبيق المحلي فقط، ولا يعادل تلقائيًا سلسلة
+  /// `audit_log` في PostgreSQL.
+  List<AuditLogEntryModel> auditLogs = [];
+
   /// المستند المصدر.
   late String sourceDocument;
 
@@ -114,24 +121,25 @@ class JournalEntryModel {
   JournalEntry toEntity() => JournalEntry(
         id: id,
         referenceNumber: referenceNumber,
-        date: date,
+        date: date.toUtc(),
         temporal: temporal.toEntity(),
         standards: standards.toEntity(),
         description: description,
         status: status,
         lines: lines.map((l) => l.toEntity()).toList(),
+        auditLogs: auditLogs.map((log) => log.toEntity()).toList(),
         sourceDocument: sourceDocument,
         sourceId: sourceId,
         hash: hash,
         previousHash: previousHash,
         createdBy: createdBy,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        postedAt: postedAt,
+        createdAt: createdAt.toUtc(),
+        updatedAt: updatedAt.toUtc(),
+        postedAt: postedAt?.toUtc(),
         userId: userId,
         warehouseId: warehouseId,
         syncStatus: syncStatus,
-        serverUpdatedAt: serverUpdatedAt,
+        serverUpdatedAt: serverUpdatedAt?.toUtc(),
         isDeleted: isDeleted,
       );
 }
@@ -160,9 +168,9 @@ class TemporalJustificationModel {
 
   /// تحويل إلى كيان.
   TemporalJustification toEntity() => TemporalJustification(
-        transactionDate: transactionDate,
-        effectiveDate: effectiveDate,
-        recordingDate: recordingDate,
+        transactionDate: transactionDate.toUtc(),
+        effectiveDate: effectiveDate.toUtc(),
+        recordingDate: recordingDate.toUtc(),
       );
 }
 
@@ -193,6 +201,41 @@ class StandardsJustificationModel {
         standardReference: standardReference,
         recognitionBasis: recognitionBasis,
         measurementBasis: measurementBasis,
+      );
+}
+
+/// نموذج سجل التدقيق المحلي المضمن.
+@embedded
+class AuditLogEntryModel {
+  /// إنشاء نموذج فارغ.
+  AuditLogEntryModel();
+
+  /// إنشاء نموذج تدقيق من كيان النطاق.
+  AuditLogEntryModel.fromEntity(AuditLogEntry entity) {
+    timestamp = entity.timestamp;
+    action = entity.action;
+    rationale = entity.rationale;
+    actor = entity.actor;
+  }
+
+  /// وقت وقوع الحدث.
+  late DateTime timestamp;
+
+  /// رمز أو وصف الفعل.
+  late String action;
+
+  /// التبرير المسجل للحدث.
+  late String rationale;
+
+  /// الفاعل الذي أنشأ الحدث.
+  late String actor;
+
+  /// تحويل النموذج إلى كيان النطاق.
+  AuditLogEntry toEntity() => AuditLogEntry(
+        timestamp: timestamp.toUtc(),
+        action: action,
+        rationale: rationale,
+        actor: actor,
       );
 }
 

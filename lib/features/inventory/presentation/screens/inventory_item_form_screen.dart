@@ -2,6 +2,7 @@ import 'package:basir_accounting_system/core/extensions/context_extensions.dart'
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/presentation/providers/accounts_provider.dart';
+import 'package:basir_accounting_system/features/inventory/application/inventory_item_service.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/providers/inventory_provider.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
@@ -28,10 +29,10 @@ class _InventoryItemFormScreenState
   late TextEditingController _nameArController;
   late TextEditingController _nameEnController;
   late TextEditingController _skuController;
+  late TextEditingController _barcodeController;
   late TextEditingController _purchasePriceController;
   late TextEditingController _salePriceController;
   late TextEditingController _unitController;
-  late TextEditingController _quantityController;
   late TextEditingController _descriptionController;
   late ValuationMethod _valuationMethod;
   String? _assetAccountId;
@@ -44,6 +45,8 @@ class _InventoryItemFormScreenState
     _nameArController = TextEditingController(text: widget.item?.nameAr ?? '');
     _nameEnController = TextEditingController(text: widget.item?.nameEn ?? '');
     _skuController = TextEditingController(text: widget.item?.sku ?? '');
+    _barcodeController =
+        TextEditingController(text: widget.item?.barcode ?? '');
     _purchasePriceController = TextEditingController(
       text: widget.item?.purchasePrice?.toString() ?? '',
     );
@@ -51,9 +54,6 @@ class _InventoryItemFormScreenState
       text: widget.item?.salePrice?.toString() ?? '',
     );
     _unitController = TextEditingController(text: widget.item?.unit ?? '');
-    _quantityController = TextEditingController(
-      text: widget.item?.currentQuantity.toString() ?? '0',
-    );
     _descriptionController = TextEditingController(
       text: widget.item?.description ?? '',
     );
@@ -69,10 +69,10 @@ class _InventoryItemFormScreenState
     _nameArController.dispose();
     _nameEnController.dispose();
     _skuController.dispose();
+    _barcodeController.dispose();
     _purchasePriceController.dispose();
     _salePriceController.dispose();
     _unitController.dispose();
-    _quantityController.dispose();
     _descriptionController.dispose();
     super.dispose();
   }
@@ -94,20 +94,28 @@ class _InventoryItemFormScreenState
               AppTextField(
                 controller: _nameArController,
                 label: context.l10n.labelNameAr,
-                validator: (v) =>
-                    v?.isEmpty ?? true ? context.l10n.errEmptyField : null,
+                validator: (v) => v?.trim().isEmpty ?? true
+                    ? context.l10n.errEmptyField
+                    : null,
               ),
               const SizedBox(height: Spacing.md),
               AppTextField(
                 controller: _nameEnController,
                 label: context.l10n.labelNameEn,
-                validator: (v) =>
-                    v?.isEmpty ?? true ? context.l10n.errEmptyField : null,
+                validator: (v) => v?.trim().isEmpty ?? true
+                    ? context.l10n.errEmptyField
+                    : null,
               ),
               const SizedBox(height: Spacing.md),
               AppTextField(
                 controller: _skuController,
                 label: context.l10n.labelSKU,
+              ),
+              const SizedBox(height: Spacing.md),
+              AppTextField(
+                controller: _barcodeController,
+                label: context.l10n.labelBarcode,
+                keyboardType: TextInputType.number,
               ),
               const SizedBox(height: Spacing.md),
               Row(
@@ -140,10 +148,16 @@ class _InventoryItemFormScreenState
                   ),
                   const SizedBox(width: Spacing.md),
                   Expanded(
-                    child: AppTextField(
-                      controller: _quantityController,
-                      label: context.l10n.labelQuantity,
-                      keyboardType: TextInputType.number,
+                    child: Semantics(
+                      label: '${context.l10n.labelQuantity}: '
+                          '${widget.item?.currentQuantity ?? 0}. '
+                          '${context.l10n.inventoryItemQuantityMustUseMovement}',
+                      child: AppTextField(
+                        label: context.l10n.labelQuantity,
+                        initialValue:
+                            (widget.item?.currentQuantity ?? 0).toString(),
+                        isEnabled: false,
+                      ),
                     ),
                   ),
                 ],
@@ -183,10 +197,11 @@ class _InventoryItemFormScreenState
       nameAr: _nameArController.text,
       nameEn: _nameEnController.text,
       sku: _skuController.text.isEmpty ? null : _skuController.text,
+      barcode: _barcodeController.text.isEmpty ? null : _barcodeController.text,
       purchasePrice: double.tryParse(_purchasePriceController.text),
       salePrice: double.tryParse(_salePriceController.text),
       unit: _unitController.text.isEmpty ? null : _unitController.text,
-      currentQuantity: double.tryParse(_quantityController.text) ?? 0,
+      currentQuantity: widget.item?.currentQuantity ?? 0,
       description: _descriptionController.text.isEmpty
           ? null
           : _descriptionController.text,
@@ -198,18 +213,37 @@ class _InventoryItemFormScreenState
       updatedAt: DateTime.now(),
     );
 
-    if (widget.item == null) {
-      await ref.read(inventoryActionProvider.notifier).addItem(item);
-    } else {
-      await ref.read(inventoryActionProvider.notifier).updateItem(item);
-    }
+    final result = widget.item == null
+        ? await ref.read(inventoryActionProvider.notifier).addItem(item)
+        : await ref.read(inventoryActionProvider.notifier).updateItem(item);
 
-    if (mounted) {
-      if (ref.read(inventoryActionProvider).hasError) {
-        AppSnackbar.showError(context, context.l10n.errGeneric(''));
-      } else {
-        Navigator.pop(context, true);
-      }
+    if (!mounted) return;
+    if (!result.success) {
+      AppSnackbar.showError(context, _operationMessage(result.message));
+      return;
+    }
+    AppSnackbar.showSuccess(context, context.l10n.inventoryItemSaved);
+    Navigator.pop(context, true);
+  }
+
+  String _operationMessage(String? code) {
+    switch (code) {
+      case InventoryItemService.emptyArabicNameCode:
+        return context.l10n.inventoryItemNameArRequired;
+      case InventoryItemService.emptyEnglishNameCode:
+        return context.l10n.inventoryItemNameEnRequired;
+      case InventoryItemService.invalidPriceCode:
+        return context.l10n.inventoryItemInvalidPrice;
+      case InventoryItemService.quantityMutationForbiddenCode:
+        return context.l10n.inventoryItemQuantityMustUseMovement;
+      case InventoryItemService.duplicateSkuCode:
+        return context.l10n.inventoryItemDuplicateSku;
+      case InventoryItemService.duplicateBarcodeCode:
+        return context.l10n.inventoryItemDuplicateBarcode;
+      case InventoryItemService.itemNotFoundCode:
+        return context.l10n.inventoryItemNotFound;
+      default:
+        return context.l10n.inventoryItemSaveFailed;
     }
   }
 
