@@ -16,6 +16,7 @@ void main() {
     setUp(() {
       mockSecureStorage = MockFlutterSecureStorage();
       authService = AuthService(secureStorage: mockSecureStorage);
+      addTearDown(authService.dispose);
     });
 
     test('initialize emits correct initial state', () async {
