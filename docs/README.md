@@ -1,89 +1,78 @@
-# 📚 Basir Accounting Documentation Hub
+# Basir Accounting System Documentation
 
-**Project:** Basir Accounting System - Professional High-Fidelity FinTech Infrastructure  
-**Revision:** 1.1.0  
-**Status:** 💎 Diamond Purity Verified (100% Technical English)
+## Quick Navigation
 
----
-
-## 🎯 Platform Archetype
-
-The **Basir Accounting System** is an institutional-grade, local-first financial orchestration platform designed to rival international ERP solutions (Oracle NetSuite, SAP, Sage). It is engineered for the MENA region with native Arabic ergonomics and global accounting precision.
-
-### Strategic Capabilities
-
-- **🧮 Pure Accounting**: General Ledger (GL), Journal Entries, IFRS 18 Compliance, Balance Sheets, and P&L.
-- **💰 Treasury Management**: High-precision Cash Flow, Multi-Currency support, and Bank Reconciliation.
-- **📄 Electronic Invoicing**: Native ZATCA Phase 2 compliance (QR, Cryptographic Signing, XML/UBL 2.1).
-- **🤝 Ledger Core**: Integrated Accounts Receivable (AR) and Accounts Payable (AP).
-- **📦 Inventory & Assets**: Itemized tracking, Depreciation, and Lifecycle management.
-- **📊 Cognitive Analytics**: Real-time financial KPIs and multi-agent AI diagnostics.
+| Category | Description | Path |
+|----------|-------------|------|
+| **Steering** | Product vision, tech stack, philosophy | [guides/steering/](./guides/steering/) |
+| **Standards** | Coding standards, naming, architecture | [standards/](./standards/) |
+| **Specs** | Active and completed specifications | [specs/](./specs/) |
+| **Templates** | Code and document templates | [templates/](./templates/) |
 
 ---
 
-## 🚀 Rapid Onboarding
+## Steering Documents (The Core Truth)
 
-### Engineering Entry Node
+These documents define the project identity and must be followed:
 
-1. **Mission Alignment**: [`Core/01_Product_Charter.md`](./Core/01_Product_Charter.md).
-2. **Architectural Blueprint**: [`Core/02_Technical_Design_Document.md`](./Core/02_Technical_Design_Document.md) (Flutter/Dart/Rust Stack).
-3. **Engineering Standard**: [`Core/CODING_STANDARDS.md`](./Core/CODING_STANDARDS.md) (SOLID & Clean Architecture).
-
-### Management & Insight
-
-1. **Strategic Intent**: [`Core/00_Strategic_Master_Blueprint.md`](./Core/00_Strategic_Master_Blueprint.md) (Vision & Roadmap).
-2. **Status Pulse**: [`reports/project-status/`](./reports/project-status/) (Latest Implementation Metrics).
-3. **Audit Trail**: [`Archive/2026/01/99_FORENSIC_FILES_LIST.md`](./Archive/2026/01/99_FORENSIC_FILES_LIST.md) (Logic verification).
+| Document | Purpose |
+|----------|---------|
+| [product.md](./guides/steering/product.md) | Product vision and team identity |
+| [tech.md](./guides/steering/tech.md) | Technology stack and coding standards |
+| [philosophy.md](./guides/steering/philosophy.md) | PPP: Purity, Precision, Professionalism |
+| [roadmap.md](./guides/steering/roadmap.md) | Strategic roadmap 2025-2030 |
+| [AGENTS.md](./guides/steering/AGENTS.md) | Agent directives and persona |
 
 ---
 
-## 📁 Repository Documentation Matrix
+## Standards (Mandatory Compliance)
 
-### 🏛️ Foundational Blueprints (Core/)
+All code must adhere to these standards:
 
-| Blueprint                             | Objective                          | Complexity |
-| :------------------------------------ | :--------------------------------- | :--------- |
-| `00_Strategic_Master_Blueprint.md`    | Long-term evolution and scaling.   | Level 5    |
-| `01_Product_Charter.md`               | MVP boundaries and mission.        | Level 3    |
-| `02_Technical_Design_Document.md`     | Technical stack (Isar, Riverpod).  | Level 5    |
-| `03_Product_Requirements_Document.md` | Functional stories and acceptance. | Level 4    |
-| `04_Design_System.md`                 | Visual tokens and RTL ergonomics.  | Level 4    |
-| `ARCHITECTURE.md`                     | Clean Architecture implementation. | Level 5    |
-
-### 📊 Advanced Reporting (reports/)
-
-- **Engineering Context**: [`reports/engineering/`](./reports/engineering/) - Deep logic reviews.
-- **Workflow Optimization**: [`reports/workflows/`](./reports/workflows/) - Process analysis.
-- **Git & CI/CD**: [`reports/git-github/`](./reports/git-github/) - Governance and automation.
-- **UI/UX Audit**: [`reports/ui-ux/`](./reports/ui-ux/) - Brand fidelity and identity.
+| Standard | Enforcement |
+|----------|-------------|
+| [flutter.md](./standards/flutter.md) | Flutter/Dart best practices |
+| [engineering.md](./standards/engineering.md) | Clean Architecture rules |
+| [accounting.md](./standards/accounting.md) | IFRS/ZATCA compliance |
+| [naming.md](./standards/naming.md) | Naming conventions |
+| [code-quality.md](./standards/code-quality.md) | Quality gates |
 
 ---
 
-## 🔧 Engineering Standards
+## Git Hooks (Automated Quality)
 
-### 1. Architectural Integrity
+The `.githooks/` directory contains automated checks:
 
-We adhere to **Clean Architecture**. The `lib/` directory must reflect the strict separation of `Presentation`, `Domain`, and `Data` layers. No direct dependencies are permitted from Data/Domain to Presentation.
+```bash
+# Activate git hooks
+git config core.hooksPath .githooks
 
-### 2. Localization Purity
-
-The application is **Arabic-First** but documented **English-First**. All technical specifications, comments, and project metadata MUST be in professional technical English to ensure global maintainability.
-
-### 3. Continuous Verification
-
-- **Static Analysis**: Zero tolerance for `flutter analyze` warnings.
-- **Test Density**: Targeting >80% coverage for core accounting services.
-- **Security**: Hardware-anchored secure storage for all sensitive credentials.
+# Hooks run automatically:
+# - pre-commit: Format, analyze, security check
+# - pre-push: Run tests
+# - commit-msg: Validate message format
+```
 
 ---
 
-## 🔍 Navigation Support
+## Team Identity
 
-Utilize the **[`INDEX.md`](./INDEX.md)** for a granular, searchable registry of all project documentation. It includes categorical tagging and persona-based routing to accelerate information retrieval.
+> **Author/Developer:** Basir Accounting System Development Agents Team
+
+**Forbidden Terms:**
+- Kiro AI Agent
+- AI Assistant
+- Generic AI terms
+- "MVP" references (use "accounting system")
 
 ---
 
-**Stewardship:** Basir Project Agentic Development Team  
-**Deployment Date:** January 11, 2026  
-**Certification:** 💎 Diamond Purity Achieved  
-**Health Check:** `flutter analyze` -> ✅ Clean
+## Compliance Checklist
+
+Before any commit, ensure:
+
+- [ ] `flutter analyze` passes with 0 errors
+- [ ] Code follows naming conventions in `standards/naming.md`
+- [ ] Architecture follows `guides/steering/architecture-mapping.md`
+- [ ] No hardcoded secrets (security check runs in pre-commit)
+- [ ] Commit message follows Conventional Commits format

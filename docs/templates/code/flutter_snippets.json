@@ -1,0 +1,120 @@
+{
+  "Consumer Widget": {
+    "prefix": "consumerw",
+    "body": [
+      "class ${1:WidgetName} extends ConsumerWidget {",
+      "  const ${1:WidgetName}({super.key});",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context, WidgetRef ref) {",
+      "    ${2:// TODO: Implement widget}",
+      "    return ${3:Container}();",
+      "  }",
+      "}"
+    ],
+    "description": "إنشاء ConsumerWidget"
+  },
+  "Stateless Widget": {
+    "prefix": "stless",
+    "body": [
+      "class ${1:WidgetName} extends StatelessWidget {",
+      "  const ${1:WidgetName}({super.key});",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context) {",
+      "    return ${2:Container}();",
+      "  }",
+      "}"
+    ],
+    "description": "إنشاء StatelessWidget"
+  },
+  "Riverpod Provider": {
+    "prefix": "riverpod",
+    "body": [
+      "@riverpod",
+      "class ${1:ProviderName} extends _$${1:ProviderName} {",
+      "  @override",
+      "  Future<${2:ReturnType}> build() async {",
+      "    ${3:// TODO: Implement provider}",
+      "    throw UnimplementedError();",
+      "  }",
+      "}"
+    ],
+    "description": "إنشاء Riverpod Provider"
+  },
+  "Test Group": {
+    "prefix": "testgroup",
+    "body": [
+      "group('${1:GroupName}', () {",
+      "  setUp(() {",
+      "    ${2:// Arrange}",
+      "  });",
+      "",
+      "  test('should ${3:description}', () {",
+      "    // Arrange",
+      "    ${4}",
+      "",
+      "    // Act",
+      "    ${5}",
+      "",
+      "    // Assert",
+      "    expect(${6:actual}, ${7:expected});",
+      "  });",
+      "});"
+    ],
+    "description": "إنشاء مجموعة اختبارات"
+  },
+  "AppButton": {
+    "prefix": "appbutton",
+    "body": [
+      "AppButton(",
+      "  text: '${1:Button Text}',",
+      "  onPressed: ${2:() {}},",
+      "  ${3:// isLoading: false,}",
+      ")"
+    ],
+    "description": "إنشاء AppButton"
+  },
+  "AppCard": {
+    "prefix": "appcard",
+    "body": [
+      "AppCard(",
+      "  title: '${1:Title}',",
+      "  subtitle: '${2:Subtitle}',",
+      "  onTap: ${3:() {}},",
+      "  ${4:// trailing: Icon(Icons.arrow_forward),}",
+      ")"
+    ],
+    "description": "إنشاء AppCard"
+  },
+  "AppTextField": {
+    "prefix": "apptextfield",
+    "body": [
+      "AppTextField(",
+      "  label: '${1:Label}',",
+      "  controller: ${2:controller},",
+      "  ${3:// validator: (value) => value?.isEmpty ?? true ? 'Required' : null,}",
+      ")"
+    ],
+    "description": "إنشاء AppTextField"
+  },
+  "DartDoc Comment": {
+    "prefix": "dartdoc",
+    "body": [
+      "/// ${1:Description}",
+      "///",
+      "/// ${2:Additional details}",
+      "///",
+      "/// **Parameters:**",
+      "/// - `${3:param}`: ${4:description}",
+      "///",
+      "/// **Returns:** ${5:return description}",
+      "///",
+      "/// **Example:**",
+      "/// ```dart",
+      "/// ${6:example code}",
+      "/// ```"
+    ],
+    "description": "إنشاء تعليق DartDoc"
+  }
+}
