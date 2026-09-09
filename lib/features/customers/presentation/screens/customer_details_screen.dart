@@ -195,7 +195,7 @@ class CustomerDetailsScreen extends ConsumerWidget {
   Future<void> _editCustomer(BuildContext context) async {
     final result = await Navigator.push<bool>(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<bool>(
         builder: (context) => CustomerFormScreen(customer: customer),
       ),
     );

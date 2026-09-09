@@ -1,6 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/expenses/application/expense_service.dart';
 import 'package:basir_accounting_system/features/expenses/presentation/providers/expense_provider.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
@@ -49,7 +50,34 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
   }
 
   Future<void> _loadExpense() async {
-    // TODO(basir): Load expense for editing.
+    setState(() => _isLoading = true);
+    try {
+      final service = ref.read(expenseServiceProvider);
+      final expense = await service.getExpenseById(widget.expenseId!);
+      if (expense != null && mounted) {
+        setState(() {
+          _descriptionController.text = expense.description;
+          _amountController.text = expense.amount.toString();
+          _vendorController.text = expense.vendorName ?? '';
+          _notesController.text = expense.notes ?? '';
+          _selectedDate = expense.expenseDate;
+          _selectedCategoryId = expense.categoryId;
+        });
+      }
+    } on Exception catch (e) {
+      if (mounted) {
+        AppSnackbar.showError(
+          context,
+          context.isArabic
+              ? 'تعذر تحميل بيانات المصروف: $e'
+              : 'Failed to load expense: $e',
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/accounting_agent.dart';
+import 'package:basir_accounting_system/features/inventory/application/inventory_service.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -39,6 +40,7 @@ class OperationalIntelService extends _$OperationalIntelService
         'readiness for sales transaction.',
       );
 
+<<<<<<< HEAD
       // Integration with InventoryService (resolved lazily so that
       // sales flows without item-level quantities never touch the
       // inventory provider dependency chain).
@@ -46,6 +48,22 @@ class OperationalIntelService extends _$OperationalIntelService
 
       if (items != null && items.isNotEmpty) {
         final inventoryService = ref.read(inventoryServiceProvider);
+=======
+      // Integration with InventoryService
+      InventoryService? inventoryService;
+      try {
+        inventoryService = ref.read(inventoryServiceProvider);
+      } on Object catch (_) {
+        inventoryService = null;
+        rationale.add(
+          'Note: Inventory service unavailable; skipped stock verification.',
+        );
+        confidenceScore = 0.6;
+      }
+      final items = context.metadata['items'] as List<dynamic>?;
+
+      if (inventoryService != null && items != null && items.isNotEmpty) {
+>>>>>>> origin/develop
         for (final item in items) {
           try {
             final itemMap = item as Map<String, dynamic>;

@@ -101,11 +101,22 @@ class SettingsScreen extends ConsumerWidget {
               title: context.l10n.accountTitle,
               icon: appIcons.security,
             ),
-            const SettingsGroupCard(
+            SettingsGroupCard(
               children: [
-                AccountSettingsTile(),
-                Divider(height: 1),
-                _UsersSettingsTile(),
+                const AccountSettingsTile(),
+                const Divider(height: 1),
+                ListTile(
+                  leading: Icon(
+                    appIcons.security,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: const Text('مركز الأمان'),
+                  subtitle: const Text('قفل التطبيق وربط الجوال'),
+                  trailing: Icon(appIcons.chevronRight),
+                  onTap: () => Navigator.pushNamed(context, '/mfa-security'),
+                ),
+                const Divider(height: 1),
+                const _UsersSettingsTile(),
               ],
             ),
             const SizedBox(height: Spacing.xl),

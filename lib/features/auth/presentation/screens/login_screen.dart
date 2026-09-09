@@ -79,7 +79,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       // الانتقال إلى لوحة التحكم
       if (!mounted) return;
-      await Navigator.of(context).pushReplacementNamed('/dashboard');
+      await Navigator.of(context).pushReplacementNamed('/mfa-gate');
     } on Exception catch (e) {
       if (!mounted) return;
 

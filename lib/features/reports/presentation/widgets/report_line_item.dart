@@ -5,16 +5,36 @@ import 'package:flutter/material.dart';
 /// ودجيت لعرض سطر واحد في التقرير المالي (قائمة الدخل، الميزانية العمومية، إلخ)
 class ReportLineItem extends StatelessWidget {
   /// إنشاء سطر تقرير جديد.
-  const ReportLineItem({required this.line, super.key});
+  const ReportLineItem({
+    required this.line,
+    super.key,
+    this.fromDate,
+    this.toDate,
+  });
 
   /// بيانات سطر التقرير (DTO) القادمة من محرك التقارير.
   final FinancialReportLineDto line;
+
+  /// بداية الفترة الزمنية للعرض التفصيلي (Drill Down).
+  /// إذا لم يُحدد، يتم افتراض آخر 12 شهراً من تاريخ اليوم.
+  final DateTime? fromDate;
+
+  /// نهاية الفترة الزمنية للعرض التفصيلي (Drill Down).
+  /// إذا لم يُحدد، يتم افتراض تاريخ اليوم الحالي.
+  final DateTime? toDate;
 
   @override
   Widget build(BuildContext context) {
     // Parse the decimal string to double for formatting.
     // Note: Use double for display formatting only; Core math is in Rust.
     final amount = double.tryParse(line.amount) ?? 0.0;
+
+    // Resolve the period for General Ledger drill-down.
+    // إذا مررت منDates من الشاشة الأم نستخدمها، وإلا نستخدم آخر 12 شهراً.
+    final now = DateTime.now();
+    final resolvedFromDate =
+        fromDate ?? DateTime(now.year - 1, now.month, now.day);
+    final resolvedToDate = toDate ?? now;
 
     // Determine styles based on line type
     final isHeader = line.isTitle;
@@ -53,8 +73,8 @@ class ReportLineItem extends StatelessWidget {
                 arguments: {
                   'accountId': probableAccountId,
                   'accountName': line.label.substring(codeMatch!.end),
-                  'fromDate': DateTime(2025), // TODO(basir): Get from parent
-                  'toDate': DateTime.now(),
+                  'fromDate': resolvedFromDate,
+                  'toDate': resolvedToDate,
                 },
               );
             }

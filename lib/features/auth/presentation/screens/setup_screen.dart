@@ -58,7 +58,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
 
       // الانتقال إلى شاشة الإعدادات الإضافية أو لوحة التحكم
       if (!mounted) return;
-      await Navigator.of(context).pushReplacementNamed('/dashboard');
+      await Navigator.of(context).pushReplacementNamed('/mfa-gate');
     } on Exception catch (e) {
       if (!mounted) return;
 

@@ -1,0 +1,1265 @@
+--------- beginning of main
+07-28 19:48:58.839  4710  4710 D ProcessState: Binder ioctl to enable oneway spam detection failed: Invalid argument
+--------- beginning of system
+07-28 19:48:58.843  1130  2249 I ActivityManager: Force stopping com.basir.accounting appid=10618 user=0: from pid 4710
+07-28 19:48:58.853  1130  2249 I ActivityManager: Force stopping com.basir.accounting appid=10618 user=150: from pid 4710
+07-28 19:48:58.865  1130  1130 D SamsungAlarmManager: Remove alarm for next reason : android.intent.action.PACKAGE_RESTARTED : package: com.basir.accounting
+07-28 19:48:58.869  1130  1488 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_RESTARTED dat=package:com.basir.accounting flg=0x10 (has extras) } to android/com.kddi.android.CpaNotiReceiver
+07-28 19:48:58.871  1130  1130 D SamsungAlarmManager: Remove alarm for next reason : android.intent.action.PACKAGE_RESTARTED : package: com.basir.accounting
+07-28 19:48:58.873  2573  2573 D RegisteredNfcFServicesCache: Service unchanged, not updating
+07-28 19:48:58.874  2573  2573 D RegisteredServicesCache: invalidateCache
+07-28 19:48:58.874  2117  2117 D CarrierSvcBindHelper: No carrier app for: 0
+07-28 19:48:58.876  2117  2117 D CarrierSvcBindHelper: No carrier app for: 0
+07-28 19:48:58.877  2573  2573 I NfcKnoxUtil: isNFCAllowed is called for userId - 150
+07-28 19:48:58.878  2573  2573 D NfcKnoxUtil: NFC checking for 150
+07-28 19:48:58.879  2573  2573 I ContainerConfigurationPolicy: Bluetooth And NFC caller permission check
+07-28 19:48:58.879  2573  2573 D ContainerConfigurationPolicy: current version : KNOX_ENTERPRISE_SDK_VERSION_3_8, Required version : KNOX_ENTERPRISE_SDK_VERSION_2_4
+07-28 19:48:58.880  2573  2573 D NfcKnoxUtil: NFC enabled ? true
+07-28 19:48:58.880  2573  2573 I NfcKnoxUtil: allow NFC for 150
+07-28 19:48:58.888  2573  2573 E ApduServiceInfo: Not adding <aid-group> with empty or invalid AIDs
+07-28 19:48:58.889  2573  2573 D RegisteredOtherServicesCache: invalidate
+07-28 19:48:58.893  2610  2644 I SecureElementService: SEReader getReaders()
+07-28 19:48:58.893  2610  2644 I SecureElementService: SEReader getReaders()
+07-28 19:48:58.893  2610  2644 I SecureElement-Terminal-eSE1: isNfcEventAllowed: No access rules for checking.
+07-28 19:48:58.951  4715  4715 D ProcessState: Binder ioctl to enable oneway spam detection failed: Invalid argument
+07-28 19:48:58.955  1130  1488 I SemDvfsHyPerManager: acquire hyper - APP_LAUNCH/1130@35, type = -999
+07-28 19:48:58.955  1130  5991 D ActivityTaskManager: startActivityAsUser: callingPid=4715, callingUid=2000, caller=com.android.server.wm.ActivityTaskManagerService.startActivityAsUser:1743 com.android.server.am.ActivityManagerService.startActivityAsUserWithFeature:3541 com.android.server.am.ActivityManagerShellCommand.runStartActivity:621 com.android.server.am.ActivityManagerShellCommand.onCommand:201 com.android.modules.utils.BasicShellCommandHandler.exec:97 android.os.ShellCommand.exec:38 com.android.server.am.ActivityManagerService.onShellCommand:10500 
+07-28 19:48:58.956   870   894 I HYPER-HAL: [RequestManager.cpp]acquire(): Acquired ID : 679230  [1130 / 35]    HINT : APP_LAUNCH    list : 
+07-28 19:48:58.957  1130  5991 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=com.basir.accounting/.MainActivity} from uid 2000
+07-28 19:48:58.957  4985  4985 I SemDvfsHyPerManager: acquire hyper - APP_START_SHORT/4985@14, type = -999
+07-28 19:48:58.958  4985  4985 I I0      : limitGPUFreq:: freq = -1
+07-28 19:48:58.959  4985  4985 I I0      : limitCPUFreq:: freq = -1
+07-28 19:48:58.959  1130  5991 D ActivityTaskManager: TaskLaunchParamsModifier:task=null activity=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity display-id=0 display-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@243913044
+07-28 19:48:58.959  1130  5991 D [secipm]: mSecIpmManager Preload com.basir.accounting dex files
+07-28 19:48:58.960  1130  5991 D ActivityTaskManager: TaskLaunchParamsModifier:task=null activity=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t-1} display-id=0 display-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@243913044 non-freeform-display display-area=DefaultTaskDisplayArea@243913044 maximized-bounds
+07-28 19:48:58.960  1130  2909 I SemDvfsHyPerManager: acquire hyper - AMS_APP_SWITCH/1130@31, type = -999
+07-28 19:48:58.960  1130  3284 D PkgPredictorService-IpmAdcpController: create a new DexPreloadTask pkg:com.basir.accounting  path:/data/app/~~428mfhtJ2obPVy32_s9d7Q==/com.basir.accounting-7PBHb6oeVCC0n-K2nfJ50Q==
+07-28 19:48:58.960  1130  5991 W ActivityTaskManager: Can't find TaskDisplayArea to determine support for multi window. Task id=2772 attached=false
+07-28 19:48:58.961  1130  2909 D ActivityManagerPerformance: AMP_acquire() APP_SWITCH
+07-28 19:48:58.961   964  1024 I SurfaceFlinger: id=7520 createSurf (0x0),-1 flag=24004, Task=2772#0
+07-28 19:48:58.963  1130  5991 D ActivityTaskManager: TaskLaunchParamsModifier:task=Task{b1c6844 #2772 type=standard I=com.basir.accounting/.MainActivity U=0 visible=false mode=fullscreen translucent=true sz=0} activity=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t-1} display-from-task=0 display-id=0 display-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@243913044 non-freeform-display display-area=DefaultTaskDisplayArea@243913044 maximized-bounds
+07-28 19:48:58.964  4985  4985 I SemDvfsHyPerManager: acquire hyper - APP_START_SHORT/4985@14, type = -999
+07-28 19:48:58.964  1130  5991 D CompatibilityChangeReporter: Compat change id reported: 174042980; UID 10618; state: DISABLED
+07-28 19:48:58.965   870   894 I HYPER-HAL: [RequestManager.cpp]acquire(): Acquired ID : 12497514  [4985 / 14]    HINT : APP_START    list : [TIMEOUT / 1500] 
+07-28 19:48:58.965  1130  5991 D CompatibilityChangeReporter: Compat change id reported: 184838306; UID 10618; state: DISABLED
+07-28 19:48:58.966   870   894 I HYPER-HAL: [RequestManager.cpp]releaseLocked(): Released ID : 12447559
+07-28 19:48:58.966  1130  5991 D CompatibilityChangeReporter: Compat change id reported: 185004937; UID 10618; state: DISABLED
+07-28 19:48:58.966   870   894 I HYPER-HAL: [RequestManager.cpp]releaseLocked(): Released ID : 12437580
+07-28 19:48:58.966   870   894 I HYPER-HAL: [RequestManager.cpp]acquire(): Acquired ID : 674572  [1130 / 31]    HINT : AMS_APP_SWITCH    list : 
+07-28 19:48:58.967   964  1024 I SurfaceFlinger: id=7521 createSurf (0x0),-1 flag=80004, ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t2772}#0
+07-28 19:48:58.968  1130  5991 W WindowManager: Prepare app transition: mNextAppTransitionRequests=[TRANSIT_OPEN], mNextAppTransitionFlags=, displayId: 0 Callers=com.android.server.wm.DisplayContent.prepareAppTransition:6365 com.android.server.wm.DisplayContent.prepareAppTransition:6360 com.android.server.wm.Task.startActivityLocked:8783 com.android.server.wm.ActivityStarter.startActivityInner:2912 com.android.server.wm.ActivityStarter.startActivityUnchecked:2325 
+07-28 19:48:58.969  1130  5991 D ActivityTaskManager: Add starting com.android.server.wm.ActivityRecord$AddStartingWindow@b754d2d: typeParam=43
+07-28 19:48:58.969  2135  2135 D ShellTaskOrganizer: addStartingWindow: info=StartingWindowInfo{taskId=2772 targetActivityInfo=null displayId=0 topActivityType=1 preferredStartingWindowType=2b insetsState=null topWindowLayoutParams=null mainWindowLayoutParams=null splashScreenThemeResId 7f0f00a3
+07-28 19:48:58.969  2135  2296 D StartingSurfaceDrawer: addSplashScreen com.basir.accounting theme=7f0f00a3 task=2772 suggestType=3
+07-28 19:48:58.970   870   894 I HYPER-HAL: [RequestManager.cpp]acquire(): Acquired ID : 12497514  [4985 / 14]    HINT : APP_START    list : [TIMEOUT / 1500] 
+07-28 19:48:58.972   784   789 E statsd  : Predicate -7037417284711607308 dropping data for dimension key (10)0x2010101->10618[I] (10)0x30000->*launch*[S] 
+07-28 19:48:58.974  1130  5991 I SemDvfsHyPerManager: acquire hyper - AMS_APP_LAUNCH/1130@18, type = -999
+07-28 19:48:58.974   870   894 I HYPER-HAL: [RequestManager.cpp]acquire(): Acquired ID : 659544  [1130 / 18]    HINT : AMS_APP_LAUNCH    list : 
+07-28 19:48:58.980  2795  2795 I BaseActivity: removeActivityFlags, flags : 16
+07-28 19:48:58.980  2795  2795 I BaseActivity: removeActivityFlags, flags : 6
+07-28 19:48:58.980  2795  2795 I DragController: endDrag
+07-28 19:48:58.980  2795  2795 W LauncherAppWidgetHost: setShouldListenFlag, mFlags:15 flag:resume on:false isFront:false
+07-28 19:48:58.980  2795  2795 I DecorView: notifyKeepScreenOnChanged: keepScreenOn=false
+07-28 19:48:58.981  2795  2795 I SPayUpdater: updateSpayHandler launcher activity is paused false
+07-28 19:48:58.981  2795  2795 I BlurOperator: progress = 1.0, mBlurProgress = 1.0, forced = true, mForced = false
+07-28 19:48:58.981  2795  2795 I BlurOperator: mSetTime = 1785256912158, currentTimeMs = 1785257338981
+07-28 19:48:58.981  2795  2795 I BlurOperator: blurAmount = 0.125, mBgBlurAmount = 0.125, show = true, mPreBlur = 0.125, mDuration = 1
+07-28 19:48:58.981  1130  1445 D CompatibilityChangeReporter: Compat change id reported: 135634846; UID 10618; state: DISABLED
+07-28 19:48:58.981  1130  1445 D CompatibilityChangeReporter: Compat change id reported: 177438394; UID 10618; state: DISABLED
+07-28 19:48:58.981  1130  1445 D CompatibilityChangeReporter: Compat change id reported: 135772972; UID 10618; state: DISABLED
+07-28 19:48:58.981  1130  1445 D CompatibilityChangeReporter: Compat change id reported: 135754954; UID 10618; state: ENABLED
+07-28 19:48:58.982  1130  1489 D CompatibilityChangeReporter: Compat change id reported: 143937733; UID 10618; state: ENABLED
+07-28 19:48:58.983  1130  5991 D MARsPolicyManager: onPackageResumedFG pkgName = com.basir.accounting, userId = 0
+07-28 19:48:58.984  4985  4985 I SemDvfsHyPerManager: acquire hyper - APP_START/4985@15, type = -999
+07-28 19:48:58.984   870   894 I HYPER-HAL: [RequestManager.cpp]acquire(): Acquired ID : 12502515  [4985 / 15]    HINT : APP_START    list : 
+07-28 19:48:58.984  1130  5991 W WindowManager: Prepare app transition: mNextAppTransitionRequests=[TRANSIT_OPEN, TRANSIT_OPEN], mNextAppTransitionFlags=, displayId: 0 Callers=com.android.server.wm.DisplayContent.prepareAppTransition:6365 com.android.server.wm.Task.resumeTopActivityInnerLocked:8465 com.android.server.wm.Task.resumeTopActivityInnerLocked:8184 com.android.server.wm.Task.resumeTopActivityUncheckedLocked:8082 com.android.server.wm.RootWindowContainer.resumeFocusedTasksTopActivities:2804 
+07-28 19:48:58.989   786   786 D Zygote  : Forked child process 4723
+07-28 19:48:58.992  1130  1445 V ActivityManager: Changed top to null
+07-28 19:48:58.992  1130  1445 D SGM:GameManager: notePauseComponent(), received pkgName: com.sec.android.app.launcher, userId: 0
+07-28 19:48:58.992  1130  2250 D InputTransport: Input channel constructed: '4c73bba', fd=788
+07-28 19:48:58.992  1130  2250 D InputTransport: Input channel constructed: '4c73bba', fd=978
+07-28 19:48:58.992  1130  2250 D InputTransport: Input channel constructed: '4c73bba', fd=979
+07-28 19:48:58.992  1130  1130 I CocktailBarManagerServiceContainer: handleMessage: entry what = 6
+07-28 19:48:58.993   964  1024 I SurfaceFlinger: id=7522 createSurf (0x0),-1 flag=80004, 4c73bba Splash Screen com.basir.accounting#0
+07-28 19:48:58.994  1130  2250 V WindowManager: rotationForOrientation(orient=SCREEN_ORIENTATION_UNSPECIFIED (-1), last=ROTATION_0 (0)); user=ROTATION_0 (0) 
+07-28 19:48:58.994  1130  2250 D WindowManager: rotationForOrientation, orientationSource=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t2772}
+07-28 19:48:58.994  1130  2250 V WindowManager: rotationForOrientation(orient=SCREEN_ORIENTATION_UNSPECIFIED (-1), last=ROTATION_0 (0)); user=ROTATION_0 (0) 
+07-28 19:48:58.994  1130  2250 D WindowManager: rotationForOrientation, orientationSource=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t2772}
+07-28 19:48:58.994  1130  2250 V WindowManager: Computed rotation=ROTATION_0 (0) for display id=0 based on lastOrientation=SCREEN_ORIENTATION_UNSPECIFIED (-1) and oldRotation=ROTATION_0 (0), caller=com.android.server.wm.DisplayRotation.updateOrientation:407 com.android.server.wm.DisplayContent.updateOrientation:1939 com.android.server.wm.DisplayContent.updateOrientation:1854 com.android.server.wm.WindowManagerService.addWindow:2073 com.android.server.wm.Session.addToDisplayAsUser:211 android.view.IWindowSession$Stub.onTransact:691 
+07-28 19:48:58.994  1130  2250 D InputTransport: Input channel destroyed: '4c73bba', fd=979
+07-28 19:48:58.995  1130  1489 I ActivityManager: Start proc 4723:com.basir.accounting/u0a618 for pre-top-activity {com.basir.accounting/com.basir.accounting.MainActivity}
+07-28 19:48:58.995  1130  1489 D ActivityManager: [SecIpm] it's a ML_TYPE_EMPTYPROCESS protected process com.basir.accounting
+07-28 19:48:58.995  2135  2296 I ViewRootImpl@95f74ae[accounting]: setView = android.widget.FrameLayout@b22dba TM=true
+07-28 19:48:58.995  1130  5991 V WindowManager: Relayout Window{9383193 u0 com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity}: viewVisibility=0 req=1080x2280 d0
+07-28 19:48:58.996  1130  5991 V WindowManager: rotationForOrientation(orient=SCREEN_ORIENTATION_UNSPECIFIED (-1), last=ROTATION_0 (0)); user=ROTATION_0 (0) 
+07-28 19:48:58.996  1130  5991 D WindowManager: rotationForOrientation, orientationSource=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t2772}
+07-28 19:48:58.997  1130  5991 V WindowManager: Relayout hash=9383193, pid=2795: mAttrs={(0,0)(fillxfill) sim={adjust=nothing} layoutInDisplayCutoutMode=shortEdges ty=BASE_APPLICATION fmt=TRANSPARENT wanim=0x10302f2
+07-28 19:48:58.997  1130  5991 V WindowManager:   fl=81910100
+07-28 19:48:58.997  1130  5991 V WindowManager:   pfl=1e020040
+07-28 19:48:58.997  1130  5991 V WindowManager:   vsysui=1700
+07-28 19:48:58.997  1130  5991 V WindowManager:   bhv=SHOW_TRANSIENT_BARS_BY_SWIPE
+07-28 19:48:58.997  1130  5991 V WindowManager:   fitSides= naviIconColor=0}
+07-28 19:48:58.998  2795  2795 I ViewRootImpl@342f8ee[LauncherActivity]: Relayout returned: old=(0,0,1080,2280) new=(0,0,1080,2280) req=(1080,2280)0 dur=6 res=0x1 s={true -5476376639894063136} ch=false fn=35
+07-28 19:48:59.000  1130  1445 D PowerManagerService: [api] setScreenDimDurationOverrideFromWindowManagerInternal: timeoutMillis: -1
+07-28 19:48:59.001  1130  1445 D PowerManagerService: UserActivityState : 2 -> 1 groupId=0
+07-28 19:48:59.001  1130  2250 D InputDispatcher: Focus left window (0): 9383193 com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity
+07-28 19:48:59.002  1130  1445 D PowerManagerService: displayReady: false groupId=0
+07-28 19:48:59.002  1130  1565 D DisplayPowerController[0]: animateScreenStateChange: target=2, mLogicalDisplay.isEnabled()=true
+07-28 19:48:59.002  1130  1565 D DisplayPowerController[0]: getFinalBrightness: lowPowerMode: 163 (0.64) -> 147 (0.58)
+07-28 19:48:59.002  1130  1565 D DisplayPowerController[0]: getFinalBrightness : Summary is 163 (0.64) -> 147 (0.58)
+07-28 19:48:59.002  1130  1565 D DisplayPowerController[0]: Animating brightness: target=147 (0.58), sdrTarget=0.57529414, rate=0.7058823 mDisplayId=0, (PSM:, AB limit:( -1 (NaN) ~  -1 (NaN)) MB Limit:( -1 (NaN) ~ 201 (0.79)), sf=1.0
+07-28 19:48:59.002  1130  1443 D NetworkPolicy: onUidStateChanged() uid: 10618, isForeground(false, 19)
+07-28 19:48:59.004  2795  2795 I ViewRootImpl@342f8ee[LauncherActivity]: MSG_WINDOW_FOCUS_CHANGED 0 1
+07-28 19:48:59.004  2795  2795 I BaseActivity: removeActivityFlags, flags : 8
+07-28 19:48:59.004  1130  1565 D AdaptiveBrightnessLongtermModelBuilder: notifyBrightnessChanged(brightness=215.734207, userInitiated=false)
+07-28 19:48:59.004  1130  1565 V DisplayPowerController[0]: Brightness [0.57529414] reason changing to: 'automatic [ low_pwr ]', previous reason: 'automatic [ low_pwr dim ]'.
+07-28 19:48:59.005  1130  1565 D PowerManagerService: displayReady: true groupId=0
+07-28 19:48:59.005  1130  1485 D AdaptiveBrightnessLongtermModelBuilder: handleBrightnessChanged: brightness: 215.7342 userInitiated: false
+07-28 19:48:59.005  1130  1485 D AdaptiveBrightnessLongtermModelBuilder: updateAdaptiveBrightnessStats: l:113.0 b:215.7342 u: false
+07-28 19:48:59.009  1130  1130 D PowerManagerService: [api] setScreenDimDurationOverrideFromSqdInternal: mScreenDimDurationOverrideFromSQD: -1
+07-28 19:48:59.009  1130  1130 I MdnieScenarioControlService: action  :  com.samsung.server.PowerManagerService.action.USER_ACTIVITY
+07-28 19:48:59.009  4723  4723 I asir.accountin: Late-enabling -Xcheck:jni
+07-28 19:48:59.014  1130  5991 V WindowManager: Relayout Window{4c73bba u0 Splash Screen com.basir.accounting}: viewVisibility=0 req=1080x2280 d0
+07-28 19:48:59.014   964  1171 I SurfaceFlinger: id=7523 createSurf (1080x2280),-3 flag=40004, Splash Screen com.basir.accounting$_2135#0
+07-28 19:48:59.015  1130  5991 D WindowManager: makeSurface duration=1 name=Splash Screen com.basir.accounting$_2135
+07-28 19:48:59.016  1130  5991 V WindowManager: Changing focus from Window{9383193 u0 com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity} to null displayId=0 Callers=com.android.server.wm.RootWindowContainer.updateFocusedWindowLocked:583 com.android.server.wm.WindowManagerService.updateFocusedWindowLocked:6485 com.android.server.wm.WindowManagerService.relayoutWindow:2750 com.android.server.wm.Session.relayout:242 
+07-28 19:48:59.016  1130  5991 D MARsPolicyManager: onPackageResumedFG pkgName = com.sec.android.app.launcher, userId = 0
+07-28 19:48:59.016  1130  5991 D StatusBarManagerService: notifyRequestedSystemKey recent=false home=false
+07-28 19:48:59.016  1130  5991 V WindowManager: rotationForOrientation(orient=SCREEN_ORIENTATION_UNSPECIFIED (-1), last=ROTATION_0 (0)); user=ROTATION_0 (0) 
+07-28 19:48:59.016  1130  5991 D WindowManager: rotationForOrientation, orientationSource=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t2772}
+07-28 19:48:59.017  1130  5991 V WindowManager: Relayout hash=4c73bba, pid=2135: mAttrs={(0,0)(fillxfill) sim={adjust=pan} layoutInDisplayCutoutMode=shortEdges ty=APPLICATION_STARTING fmt=TRANSLUCENT wanim=0x1030001
+07-28 19:48:59.017  1130  5991 V WindowManager:   fl=81030118
+07-28 19:48:59.017  1130  5991 V WindowManager:   pfl=36000010
+07-28 19:48:59.017  1130  5991 V WindowManager:   apr=LIGHT_STATUS_BARS LIGHT_NAVIGATION_BARS
+07-28 19:48:59.017  1130  5991 V WindowManager:   bhv=DEFAULT
+07-28 19:48:59.017  1130  5991 V WindowManager:   fitSides= naviIconColor=0}
+07-28 19:48:59.017   872   872 I SehLight: lcd : 5395+
+07-28 19:48:59.018  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.018  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.018  2135  2296 I ViewRootImpl@95f74ae[accounting]: Relayout returned: old=(0,0,1080,2280) new=(0,0,1080,2280) req=(1080,2280)0 dur=17 res=0x7 s={true -5476376639894438096} ch=true fn=-1
+07-28 19:48:59.019  2135  2360 D OpenGLRenderer: eglCreateWindowSurface
+07-28 19:48:59.019  2135  2296 I ViewRootImpl@95f74ae[accounting]: [DP] dp(1) 0 android.view.ViewRootImpl.reportNextDraw:11420 android.view.ViewRootImpl.performTraversals:4193 android.view.ViewRootImpl.doTraversal:2919 
+07-28 19:48:59.021  2135  2360 I BufferQueueProducer: [ViewRootImpl@95f74ae[accounting]#206(BLAST Consumer)206](id:857000000ce,api:1,p:2135,c:2135) queueBuffer: queued for the first time.
+07-28 19:48:59.022  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.022  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.022  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.022  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.022  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.022  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.022  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.022  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.022  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.022  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.023  2795  2795 I BadgeRenderer: Invalid count : 0
+07-28 19:48:59.024  2135  2296 I ViewRootImpl@95f74ae[accounting]: [DP] pdf(0) 0 android.view.ViewRootImpl.lambda$addFrameCompleteCallbackIfNeeded$3$ViewRootImpl:4995 android.view.ViewRootImpl$$ExternalSyntheticLambda16.run:6 android.os.Handler.handleCallback:938 
+07-28 19:48:59.024  2135  2296 I ViewRootImpl@95f74ae[accounting]: [DP] rdf()
+07-28 19:48:59.024  2135  2296 D ViewRootImpl@95f74ae[accounting]: reportDrawFinished (fn: -1) 
+07-28 19:48:59.024  1130  5991 D WindowManager: finishDrawingWindow: Window{4c73bba u0 Splash Screen com.basir.accounting} mDrawState=DRAW_PENDING
+07-28 19:48:59.025  1130  1446 W WindowManager: Execute app transition: mNextAppTransitionRequests=[TRANSIT_OPEN, TRANSIT_OPEN], mNextAppTransitionFlags=, displayId: 0 Callers=com.android.server.wm.ActivityRecord.onStartingWindowDrawn:6828 com.android.server.wm.WindowState.performShowLocked:5607 com.android.server.wm.WindowStateAnimator.commitFinishDrawingLocked:323 com.android.server.wm.DisplayContent.lambda$new$10$DisplayContent:1214 com.android.server.wm.DisplayContent$$ExternalSyntheticLambda26.accept:4 
+07-28 19:48:59.025  1130  1446 D WindowManager: performShow logReadyForDisplay  mToken.waitingToShow:true isTransitionSet:true
+07-28 19:48:59.025   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.026   872   872 I SehLight: lcd : 5395-
+07-28 19:48:59.026  1130  1446 D TaskOrganizerController: Task appeared taskId=2772
+07-28 19:48:59.026  1130  1446 D WindowManager: Loading animation for app transition. transit=TRANSIT_OLD_WALLPAPER_CLOSE enter=false frame=Rect(0, 0 - 1080, 2069) insets=Rect(0, 0 - 0, 0) surfaceInsets=Rect(0, 0 - 0, 0)
+07-28 19:48:59.027  2135  2135 D FullscreenTaskListener: Fullscreen Task Appeared: #2772, caller=com.android.wm.shell.ShellTaskOrganizer.onTaskAppeared:387 com.android.wm.shell.ShellTaskOrganizer.onTaskAppeared:376 android.window.TaskOrganizer$1.lambda$onTaskAppeared$4$TaskOrganizer$1:297 
+07-28 19:48:59.027 21848 21858 I adbd    : jdwp connection from 4723
+07-28 19:48:59.027  1130  1446 I WindowManager: Reparenting to leash, surface=Surface(name=Task=1)/@0x7499df2, leashParent=Surface(name=DefaultTaskDisplayArea)/@0x4c49796
+07-28 19:48:59.028   964  1024 I SurfaceFlinger: id=7524 createSurf (0x0),-1 flag=24000, Surface(name=Task=1)/@0x7499df2 - animation-leash of app_transition#0
+07-28 19:48:59.028  4723  4723 E USNET   : USNET: appName: com.basir.accounting
+07-28 19:48:59.028  1130  1446 D WindowManager: makeSurface duration=1 leash=Surface(name=Surface(name=Task=1)/@0x7499df2 - animation-leash of app_transition)/@0xabb3dd1
+07-28 19:48:59.028  1130  1446 D WindowManager: Loading animation for app transition. transit=TRANSIT_OLD_WALLPAPER_CLOSE enter=true frame=Rect(0, 0 - 1080, 2280) insets=Rect(0, 85 - 0, 126) surfaceInsets=Rect(0, 0 - 0, 0)
+07-28 19:48:59.029   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.029  1130  1446 I WindowManager: Reparenting to leash, surface=Surface(name=Task=2772)/@0xa55b10, leashParent=Surface(name=DefaultTaskDisplayArea)/@0x4c49796
+07-28 19:48:59.029  4723  4723 D ProcessState: Binder ioctl to enable oneway spam detection failed: Invalid argument
+07-28 19:48:59.029   964  1171 I SurfaceFlinger: id=7525 createSurf (0x0),-1 flag=24004, Surface(name=Task=2772)/@0xa55b10 - animation-leash of app_transition#0
+07-28 19:48:59.030  1130  1446 D WindowManager: makeSurface duration=1 leash=Surface(name=Surface(name=Task=2772)/@0xa55b10 - animation-leash of app_transition)/@0x686d609
+07-28 19:48:59.031  1130  1446 I WindowManager: Cancelling animation restarting=true, leash=Surface(name=Surface(name=466818a StatusBar)/@0xbacb2d6 - animation-leash of insets_animation)/@0xfbe8136
+07-28 19:48:59.031  1130  1446 I WindowManager: Reparenting to original parent: Surface(name=WindowToken{a8c6ff5 android.os.BinderProxy@1c218df})/@0xe898957, destroy=false, surface=Surface(name=466818a StatusBar)/@0xbacb2d6
+07-28 19:48:59.031  1130  1446 I WindowManager: Reparenting to leash, surface=Surface(name=466818a StatusBar)/@0xbacb2d6, leashParent=Surface(name=WindowToken{a8c6ff5 android.os.BinderProxy@1c218df})/@0xe898957
+07-28 19:48:59.031   964  1171 I SurfaceFlinger: id=7526 createSurf (0x0),-1 flag=24000, Surface(name=466818a StatusBar)/@0xbacb2d6 - animation-leash of insets_animation#0
+07-28 19:48:59.031  1130  1446 D WindowManager: makeSurface duration=1 leash=Surface(name=Surface(name=466818a StatusBar)/@0xbacb2d6 - animation-leash of insets_animation)/@0x19d4a2f
+07-28 19:48:59.031  1130  1446 I WindowManager: Cancelling animation restarting=true, leash=Surface(name=Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0 - animation-leash of insets_animation)/@0xcbc2410
+07-28 19:48:59.031  1130  1446 I WindowManager: Reparenting to original parent: Surface(name=WindowToken{c9c8a51 android.os.BinderProxy@f8ffcdb})/@0xf564329, destroy=false, surface=Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0
+07-28 19:48:59.031  1130  1446 I WindowManager: Reparenting to leash, surface=Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0, leashParent=Surface(name=WindowToken{c9c8a51 android.os.BinderProxy@f8ffcdb})/@0xf564329
+07-28 19:48:59.032  4723  4723 D ActivityThread: setConscryptValidator
+07-28 19:48:59.032  4723  4723 D ActivityThread: setConscryptValidator - put
+07-28 19:48:59.032   964  1171 I SurfaceFlinger: id=7527 createSurf (0x0),-1 flag=24000, Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0 - animation-leash of insets_animation#1
+07-28 19:48:59.032  1130  1446 D WindowManager: makeSurface duration=0 leash=Surface(name=Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0 - animation-leash of insets_animation)/@0xbbdc9c5
+07-28 19:48:59.033  2135  2135 D NavigationBar: onSystemBarAttributesChanged() -  displayId:0, appearance:24 (APPEARANCE_LIGHT_STATUS_BARS APPEARANCE_LIGHT_NAVIGATION_BARS ), navbarColorManagedByIme:false
+07-28 19:48:59.033  2135  2135 V Navbar.Store: handleEvent [EventType] GET_BOOL_REGION_SAMPLING_ENABLED [Module] LightBarController  KEYS_DEFAULT=false
+07-28 19:48:59.033  2135  2135 V Navbar.Store: --[Band]COLOR_PACK_GET_REGION_SAMPLING_ENABLED
+07-28 19:48:59.033  2135  2135 V Navbar.Store: ----getValue(BOOL_REGION_SAMPLING_ENABLED)=false
+07-28 19:48:59.034   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:48:59.034   964   964 I Layer   : id=7515 removedFromDrawingState Surface(name=466818a StatusBar)/@0xbacb2d6 - animation-leash of insets_animation#1 (110)
+07-28 19:48:59.034   964   964 I Layer   : id=76 removedFromDrawingState 466818a StatusBar#0 (110)
+07-28 19:48:59.034   964   964 I Layer   : id=87 removedFromDrawingState StatusBar$_2135#0 (110)
+07-28 19:48:59.035   872   872 I SehLight: lcd : 5695+
+07-28 19:48:59.035   964   964 I Layer   : id=76 addToCurrentState 466818a StatusBar#0 (110)
+07-28 19:48:59.035   964   964 I Layer   : id=87 addToCurrentState StatusBar$_2135#0 (110)
+07-28 19:48:59.035   964   964 I Layer   : id=7516 removedFromDrawingState Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0 - animation-leash of insets_animation#0 (110)
+07-28 19:48:59.036   964  4670 I SurfaceFlinger: id=7516 Removed Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0 - animation-leash of insets_animation#0 (110)
+07-28 19:48:59.036  1130  2250 I ActivityManager: DSS OFF for com.basir.accounting
+07-28 19:48:59.036   964  1028 I SurfaceFlinger: id=7515 Removed Surface(name=466818a StatusBar)/@0xbacb2d6 - animation-leash of insets_animation#1 (110)
+07-28 19:48:59.040  2795  4663 I TouchInteractionService: onSystemUiStateChanged, stateFlags : 131072
+07-28 19:48:59.040  2795  2795 I TouchInteractionService: onSystemUiFlagsChanged, userUnlocked
+07-28 19:48:59.041  2135  2135 D SecLightBarControlHelper: updateStatus(BLACK icon) NumLightStacks:1, NumStacks:1, IndexLightStack:0, StatusBarMode:0, StatusBarState:SHD, NeedDarkFontFromWallpaper:true, isWhiteKeyguardStatusBarBySettings:true
+07-28 19:48:59.042   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.042   872   872 I SehLight: lcd : 5695-
+07-28 19:48:59.043  1130  2250 I DexController: getTaskHasActivityIsWaitingToRun: r=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t2772}, app=ProcessRecord{c43c262 4723:com.basir.accounting/u0a618}
+07-28 19:48:59.043  1130  2250 D ActivityManager: attachApplicationLocked() app=ProcessRecord{c43c262 4723:com.basir.accounting/u0a618} app.isolatedEntryPoint=null instr2=null
+07-28 19:48:59.044  1130  2250 V WindowManager: rotationForOrientation(orient=SCREEN_ORIENTATION_UNSPECIFIED (-1), last=ROTATION_0 (0)); user=ROTATION_0 (0) 
+07-28 19:48:59.044  1130  2250 D WindowManager: rotationForOrientation, orientationSource=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t2772}
+07-28 19:48:59.044  1130  2250 V WindowManager: Computed rotation=ROTATION_0 (0) for display id=0 based on lastOrientation=SCREEN_ORIENTATION_UNSPECIFIED (-1) and oldRotation=ROTATION_0 (0), caller=com.android.server.wm.DisplayRotation.updateOrientation:407 com.android.server.wm.DisplayContent.updateOrientation:1939 com.android.server.wm.DisplayContent.updateOrientation:1877 com.android.server.wm.RootWindowContainer.ensureVisibilityAndConfig:2207 com.android.server.wm.ActivityTaskSupervisor.realStartActivityLocked:939 com.android.server.wm.RootWindowContainer.startActivityForAttachedApplicationIfNeeded:2356 
+07-28 19:48:59.044  1130  2250 D TspStateManager: updateCustomValue customSetting=
+07-28 19:48:59.044  1130  2250 D TspStateManager: updateCustomValue customSetting=
+07-28 19:48:59.045   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.045  1130  2250 D SGM:PkgDataHelper: notifyAppCreate(), pkgName: com.basir.accounting, userId: 0, sendRet: true
+07-28 19:48:59.045  1130  1862 D SGM:GameManager: onLooperPrepared(), msg: MSG_APP_CREATE, pkgName: com.basir.accounting, userId: 0
+07-28 19:48:59.046  1130  2250 D MARsPolicyManager: onPackageResumedFG pkgName = com.basir.accounting, userId = 0
+07-28 19:48:59.046  1130  2250 D InputDispatcher: Focused application set to (0): 3873557
+07-28 19:48:59.046  1130  2250 D SGM:GameManager: TaskStackListener.onTaskFocusChanged(), taskId=2684, focused=false
+07-28 19:48:59.046  1130  2250 D SGM:GameManager: TaskStackListener.onTaskFocusChanged(), taskId=2772, focused=true
+07-28 19:48:59.046  1130  2250 D SGM:GameManager:   sendRunningComponentFocus(), pkgName: com.basir.accounting, userId: 0
+07-28 19:48:59.046  1130  1862 D SGM:GameManager: onLooperPrepared(), msg: MSG_TASK_FOCUSED, pkgName: com.basir.accounting, userId: 0
+07-28 19:48:59.046  1130  1862 D SGM:GameManager: handleTaskFocused().
+07-28 19:48:59.046  1130  1862 D SGM:GameManager:   handleTaskFocused(), pkgName: com.basir.accounting, userID:0
+07-28 19:48:59.046  1130  1862 D SGM:GameManager: handleResume().
+07-28 19:48:59.046  1130  1862 D SGM:GameManager: sendFocusOutConditionally() - mPrevNotiPkg: (unknown), userId: 0
+07-28 19:48:59.046  1130  1862 D SGM:GameManager:   handleResume(). pkgName: com.basir.accounting, userId: 0, isTunableApp: null
+07-28 19:48:59.046  1130  1862 D SGM:GameManager: notifyFocusInOut(). of pkg: com.basir.accounting, type: 4, isMinimized: false, isTunableApp: false, userId: 0
+07-28 19:48:59.046  1130  1862 D SGM:GameManager:   notifyFocusInOut(). unexpected mPrevNotiType: -1
+07-28 19:48:59.046  1130  1862 D SGM:NetworkLimit: callRelease
+07-28 19:48:59.046  1130  1862 D SGM:SystemHelper: callReleaseBlock needReleaseBlock:false
+07-28 19:48:59.047  1130  5991 V WindowManager: Relayout Window{b93d082 u0 NotificationShade}: viewVisibility=4 req=1080x2280 d0
+07-28 19:48:59.049  1130  5991 V WindowManager: Relayout hash=b93d082, pid=2135: mAttrs={(0,0)(fillxfill) gr=TOP CENTER_VERTICAL sim={adjust=resize} layoutInDisplayCutoutMode=always ty=2040 fmt=TRANSLUCENT
+07-28 19:48:59.049  1130  5991 V WindowManager:   fl=81840048
+07-28 19:48:59.049  1130  5991 V WindowManager:   pfl=1b000000
+07-28 19:48:59.049  1130  5991 V WindowManager:   vsysui=2010
+07-28 19:48:59.049  1130  5991 V WindowManager:   apr=LIGHT_STATUS_BARS LIGHT_NAVIGATION_BARS
+07-28 19:48:59.049  1130  5991 V WindowManager:   bhv=SHOW_TRANSIENT_BARS_BY_SWIPE naviIconColor=0
+07-28 19:48:59.049  1130  5991 V WindowManager:   sfl=42000}
+07-28 19:48:59.049  1130  1861 V ActivityManager: Changed top to ProcessRecord{c43c262 4723:com.basir.accounting/u0a618}
+07-28 19:48:59.050  1130  1445 I ActivityManager: Changes in 10618 19 to 2, 0 to 15
+07-28 19:48:59.050  1130  1445 I AppOps  : updateUidProcState uid: 10618 procState: 2 capability:15
+07-28 19:48:59.050  1130  1445 I AppOps  : commitUidPendingStateLocked() :: UID - 10618, 700 > 200, 0 > 15
+07-28 19:48:59.050  1130  1443 D NetworkPolicy: onUidStateChanged() uid: 10618, isForeground(true, 2)
+07-28 19:48:59.051   964   964 I Layer   : id=7515 Destroyed Surface(name=466818a StatusBar)/@0xbacb2d6 - animation-leash of insets_animation#1
+07-28 19:48:59.051   964   964 I Layer   : id=7516 Destroyed Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0 - animation-leash of insets_animation#0
+07-28 19:48:59.052  1130  1445 I SemPersonaManager: SecureFolder personaId = 150
+07-28 19:48:59.052  1130  1443 D SSRM:LoadDetectMonitor: PID = 4723, UID = 10618
+07-28 19:48:59.055  2135  2135 I ViewRootImpl@c28d5b0[NotificationShade]: Relayout returned: old=(0,0,1080,2280) new=(0,0,1080,2280) req=(1080,2280)4 dur=9 res=0x1 s={false 0} ch=false fn=-1
+07-28 19:48:59.056  7147  7882 I Rubin   : [167] LoggingEventHelper.notifyUpdatedWithValue(:1) : Notify AppUsageLogger's database is updated.
+07-28 19:48:59.056  2135  2135 D KeyguardBottomAreaShortcutView: updateCameraVisibility isCameraDisabled:false visible:true
+07-28 19:48:59.056  2135  2135 D KeyguardBottomAreaShortcutView: mIndicationArea margin start : 163, end : 163, bottom : 150
+07-28 19:48:59.057  1130  1445 D EnterpriseDeviceManagerService: isMdmAdminPresentInternal() : MDM Admin Found - com.samsung.knox.securefolder
+07-28 19:48:59.057  1130  1445 I GameSDK@LifeCycle: noteResumeComponent(): package name  : com.basir.accounting
+07-28 19:48:59.057  1130  1130 I CocktailBarManagerServiceContainer: handleMessage: entry what = 5
+07-28 19:48:59.058   964   964 D SurfaceFlinger: Display 4630947232161729153 HWC layers:
+07-28 19:48:59.058   964   964 D SurfaceFlinger:      CLIENT | 0xb400006e37f3caa0 | 0100 | RGBx_8888    |    0.0    1.0 1079.0 2279.0 |    0    0 1080 2280 | Wallpaper BBQ wrapper#0
+07-28 19:48:59.058   964   964 D SurfaceFlinger:      CLIENT |              | 0000 |  Unknown  |    0.0    0.0    0.0    0.0 |    0    0 1080 2280 | OneUiHome-BlurLayer#0 (backgroundBlurRadius)
+07-28 19:48:59.058   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f41330 | 0100 | RGBA_8888    |    0.0    0.0 1080.0 2280.0 |    0    0 1080 2280 | com.sec.android.app.launcher/com.sec[...].activities.LauncherActivity$_2795#0
+07-28 19:48:59.058   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f429b0 | 0100 | RGBA_8888    |    0.0    0.0 1080.0 2280.0 |   76  159 1004 2121 | Splash Screen com.basir.accounting$_2135#0
+07-28 19:48:59.058   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f2f4e0 | 0100 | RGBA_8888    |    0.0    0.0 1080.0   85.0 |    0    0 1080   85 | StatusBar$_2135#0
+07-28 19:48:59.058   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f1eb60 | 0100 | RGBA_8888    |    0.0    0.0   67.0  342.0 |    0  382   67  724 | com.samsung.android.app.cocktailbars[...]arservice.CocktailBarService$_8984#0
+07-28 19:48:59.058   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f32390 | 0100 | RGBA_8888 
+07-28 19:48:59.058   964   964 D SurfaceFlinger:    |    0.0    0.0 1080.0  126.0 |    0 2154 1080 2280 | NavigationBar0$_2135#0
+07-28 19:48:59.058   964   964 D SurfaceFlinger: 
+07-28 19:48:59.058  4723  4723 D ActivityThread: handleBindApplication()++ app=com.basir.accounting
+07-28 19:48:59.058  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:48:59.058  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:48:59.059  4723  4723 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10618; state: ENABLED
+07-28 19:48:59.059  1130  5991 D SGM:GameManager: identifyForegroundApp. com.basir.accounting, mCurrentUserId: 0, callerUserId: 0
+07-28 19:48:59.059  1130  5991 D SGM:PkgDataHelper: getGamePkgData(). com.basir.accounting
+07-28 19:48:59.059   872   872 I SehLight: lcd : 5996+
+07-28 19:48:59.060  1130  1445 D SGM:GameManager: noteResumeComponent(), received pkgName: com.basir.accounting, userId: 0
+07-28 19:48:59.060  1130  1862 D SGM:GameManager: onLooperPrepared(), msg: MSG_APP_RESUME, pkgName: com.basir.accounting, userid: 0
+07-28 19:48:59.060  1130  1862 D SGM:GameManager: handleResume().
+07-28 19:48:59.060  1130  1862 D SGM:GameManager: sendFocusOutConditionally() - mPrevNotiPkg: (unknown), userId: 0
+07-28 19:48:59.060  1130  1862 D SGM:GameManager:   handleResume(). pkgName: com.basir.accounting, userId: 0, isTunableApp: null
+07-28 19:48:59.060  1130  1862 D SGM:GameManager: notifyFocusInOut(). of pkg: com.basir.accounting, type: 4, isMinimized: false, isTunableApp: false, userId: 0
+07-28 19:48:59.060  1130  1862 D SGM:GameManager:   notifyFocusInOut(). unexpected mPrevNotiType: -1
+07-28 19:48:59.060   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.060  1130  1862 D SGM:NetworkLimit: callRelease
+07-28 19:48:59.060  1130  1862 D SGM:SystemHelper: callReleaseBlock needReleaseBlock:false
+07-28 19:48:59.061   872   872 I SehLight: lcd : 5996-
+07-28 19:48:59.061  2135  2135 W Looper  : Slow dispatch took 20ms main h=android.view.Choreographer$FrameHandler c=android.view.Choreographer$FrameDisplayEventReceiver@3db898c m=0
+07-28 19:48:59.061  1130  5991 D SGM:GameManager: identifyGamePackage. com.basir.accounting, mCurrentUserId: 0, callerUserId: 0, callingMethodInfo: com.samsung.android.game.IGameManagerService$Stub.onTransact(IGameManagerService.java:242)
+07-28 19:48:59.061  1130  5991 D SGM:PkgDataHelper: getGamePkgData(). com.basir.accounting
+07-28 19:48:59.063  8984  8984 I Utils   : HomePackage : com.sec.android.app.launcher, resumePackageName : com.basir.accounting
+07-28 19:48:59.063  7147  7882 I Rubin   : [167] ExercisingWithCmhMonitor.isSatisfiedByCmh(:6) : isSatisfiedByCmh is false
+07-28 19:48:59.063  1130  1445 D SGM:GameManager: identifyGamePackage. com.basir.accounting, mCurrentUserId: 0, callerUserId: 0, callingMethodInfo: com.android.server.ssrm.fgapps.GameAppUtils.isGame(GameAppUtils.java:84)
+07-28 19:48:59.063  1130  1445 D SGM:PkgDataHelper: getGamePkgData(). com.basir.accounting
+07-28 19:48:59.064   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.066  1130  1445 D SGM:GameManager: identifyGamePackage. com.basir.accounting, mCurrentUserId: 0, callerUserId: 0, callingMethodInfo: com.android.server.ssrm.SortingMachine.isGame(SortingMachine.java:162)
+07-28 19:48:59.066  1130  1445 D SGM:PkgDataHelper: getGamePkgData(). com.basir.accounting
+07-28 19:48:59.066  2135  2135 D IndicatorGardenInputProperty: updateRotation() prv:-1 >> new:0
+07-28 19:48:59.066  2135  2135 D DeviceState: getDeviceResolutionPixelSize - currentDensity = 420 deviceDensity = 420 initialDisplaySizeFactor = 1440 currentDisplaySizeFactor = 1080 initialDisplayDensity = 560 proportionalDensity = 420 proportionalPixel = 54
+07-28 19:48:59.066  2135  2135 D DeviceState: getDeviceResolutionPixelSize - currentDensity = 420 deviceDensity = 420 initialDisplaySizeFactor = 1440 currentDisplaySizeFactor = 1080 initialDisplayDensity = 560 proportionalDensity = 420 proportionalPixel = 27
+07-28 19:48:59.067  2135  2135 D DeviceState: getDeviceResolutionPixelSize - currentDensity = 420 deviceDensity = 420 initialDisplaySizeFactor = 1440 currentDisplaySizeFactor = 1080 initialDisplayDensity = 560 proportionalDensity = 420 proportionalPixel = 17
+07-28 19:48:59.068   872   872 I SehLight: lcd : 6296+
+07-28 19:48:59.069  1130  1445 D SGM:GameManager: identifyGamePackage. com.basir.accounting, mCurrentUserId: 0, callerUserId: 0, callingMethodInfo: com.samsung.android.game.SemGameManager.isGamePackage(SemGameManager.java:104)
+07-28 19:48:59.069  1130  1445 D SGM:PkgDataHelper: getGamePkgData(). com.basir.accounting
+07-28 19:48:59.069  1130  1445 D SGM:SemGameManager: isGamePackage(), pkgName=com.basir.accounting, ret=false
+07-28 19:48:59.075   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.075   872   872 I SehLight: lcd : 6296-
+07-28 19:48:59.078   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.084   872   872 I SehLight: lcd : 6597+
+07-28 19:48:59.085  2795  4663 I RecentModel: onTaskStackChangedBackground
+07-28 19:48:59.086  2795  4663 I RecentTasksList: getTaskKeys, numTasks :3 callback : com.android.quickstep.-$$Lambda$RecentsModel$k1Mm-BV64Bc89eJHYugywZmW_Js@c549bca
+07-28 19:48:59.086  1130  2250 D ActivityTaskManager: getRecentPairTasks() maxNum :3 from 10146
+07-28 19:48:59.086  1130  2250 D RecentTaskItemController: getRecentPairTasksImpl() maxNum :3 from 10146
+07-28 19:48:59.086  2795  2968 I RecentTasksList: loadTasksInBackground() task id : 2770
+07-28 19:48:59.087  2795  2968 I RecentTasksList: loadTasksInBackground() task id : 2772
+07-28 19:48:59.092   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.092   872   872 I SehLight: lcd : 6597-
+07-28 19:48:59.092  1130  1985 D NetdEventListenerService: DNS Requested by : 103, 1000, 0
+07-28 19:48:59.095   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.101   872   872 I SehLight: lcd : 6898+
+07-28 19:48:59.108   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.109   872   872 I SehLight: lcd : 6898-
+07-28 19:48:59.112   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.117   872   872 I SehLight: lcd : 7198+
+07-28 19:48:59.125   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.126   872   872 I SehLight: lcd : 7198-
+07-28 19:48:59.128   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.128   863  2963 I sensors-hal: handle_sns_client_event:660, [0][51643] accel_sample [ 0.364,  0.134,  9.734] 90431908357974
+07-28 19:48:59.134   872   872 I SehLight: lcd : 7498+
+07-28 19:48:59.142   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.142   872   872 I SehLight: lcd : 7498-
+07-28 19:48:59.145   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.151   872   872 I SehLight: lcd : 7799+
+07-28 19:48:59.159   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.159   872   872 I SehLight: lcd : 7799-
+07-28 19:48:59.162   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.168   872   872 I SehLight: lcd : 8100+
+07-28 19:48:59.175   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.176   872   872 I SehLight: lcd : 8100-
+07-28 19:48:59.178   686   686 D io_stats: !@   8,0 r 2747273 63553396 w 2462154 212802852 d 0 0 f 0 0 iot 1080620 0 th 0 0 0 pt 0 inp 0 0 62014.804
+07-28 19:48:59.178   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.182  1130  2179 D MdnieScenarioControlService:  packageName : com.basir.accounting    className : com.basir.accounting.MainActivity
+07-28 19:48:59.182  1130  2179 V MdnieScenarioControlService: setUIMode from UI function(3)
+07-28 19:48:59.184   872   872 I SehLight: lcd : 8400+
+07-28 19:48:59.192   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.192   872   872 I SehLight: lcd : 8400-
+07-28 19:48:59.195   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.201   872   872 I SehLight: lcd : 8701+
+07-28 19:48:59.209   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.209   872   872 I SehLight: lcd : 8701-
+07-28 19:48:59.212   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.218   872   872 I SehLight: lcd : 9001+
+07-28 19:48:59.225   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.226   872   872 I SehLight: lcd : 9001-
+07-28 19:48:59.235   872   872 I SehLight: lcd : 9302+
+07-28 19:48:59.235   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.242   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.242   872   872 I SehLight: lcd : 9302-
+07-28 19:48:59.245   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.251   872   872 I SehLight: lcd : 9602+
+07-28 19:48:59.259   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.259   872   872 I SehLight: lcd : 9602-
+07-28 19:48:59.261   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.268   872   872 I SehLight: lcd : 9903+
+07-28 19:48:59.275   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.276   872   872 I SehLight: lcd : 9903-
+07-28 19:48:59.278   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.283  1130  2179 V MdnieScenarioControlService: mAclOffEnabled : false mAclPreviewState : false mAclCompensationState : false
+07-28 19:48:59.284   872   872 I SehLight: lcd : 10203+
+07-28 19:48:59.292   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.293   872   872 I SehLight: lcd : 10203-
+07-28 19:48:59.295   863  2951 I sensors-hal: handle_sns_std_sensor_event:319, [SSC_LIGHT] P lux:108 mode:1 copr:178 br:99
+07-28 19:48:59.296   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.301   872   872 I SehLight: lcd : 10504+
+07-28 19:48:59.309   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.309   872   872 I SehLight: lcd : 10504-
+07-28 19:48:59.312   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.318   872   872 I SehLight: lcd : 10804+
+07-28 19:48:59.319  4723  4723 V GraphicsEnvironment: ANGLE Developer option for 'com.basir.accounting' set to: 'default'
+07-28 19:48:59.319  4723  4723 V GraphicsEnvironment: App is not on the allowlist for updatable production driver.
+07-28 19:48:59.321  4723  4723 D LoadedApk: LoadedApk::makeApplication() appContext.mOpPackageName=com.basir.accounting appContext.mBasePackageName=com.basir.accounting
+07-28 19:48:59.321  4723  4723 D NetworkSecurityConfig: Using Network Security Config from resource network_security_config debugBuild: true
+07-28 19:48:59.326   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.326   872   872 I SehLight: lcd : 10804-
+07-28 19:48:59.328   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.332  4723  4723 D NetworkSecurityConfig: Using Network Security Config from resource network_security_config debugBuild: true
+07-28 19:48:59.334   872   872 I SehLight: lcd : 11105+
+07-28 19:48:59.343   872   872 I SehLight: lcd : 11105-
+07-28 19:48:59.343   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.345   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.351   872   872 I SehLight: lcd : 11405+
+07-28 19:48:59.359   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.359   872   872 I SehLight: lcd : 11405-
+07-28 19:48:59.361  4723  4723 D ActivityThread: handleBindApplication() --
+07-28 19:48:59.362   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.363  8984  8984 I Utils   : isCurrentUser current = 0, ownerId = 0
+07-28 19:48:59.364  8984  8984 I TrayVisibilityController: getComputedTrayVisible : keyguardState = 1
+07-28 19:48:59.364  8984  8984 I TrayVisibilityController: updateTrayVisible: State=1 visible=1 mCurrentVisible=1 specificMode=0
+07-28 19:48:59.364  8984  8984 I TrayStateController: onNotifyUpdateTray: state=0
+07-28 19:48:59.368   872   872 I SehLight: lcd : 11706+
+07-28 19:48:59.373  4723  4749 D OpenGLRenderer: RenderThread::requireGlContext()
+07-28 19:48:59.374  4723  4749 I AdrenoGLES-0: QUALCOMM build                   : 3dad7f8ed7, I593c16c433
+07-28 19:48:59.374  4723  4749 I AdrenoGLES-0: Build Date                       : 10/01/21
+07-28 19:48:59.374  4723  4749 I AdrenoGLES-0: OpenGL ES Shader Compiler Version: EV031.32.02.02
+07-28 19:48:59.374  4723  4749 I AdrenoGLES-0: Local Branch                     : 
+07-28 19:48:59.374  4723  4749 I AdrenoGLES-0: Remote Branch                    : refs/tags/AU_LINUX_ANDROID_LA.UM.9.1.R1.11.00.00.604.073
+07-28 19:48:59.374  4723  4749 I AdrenoGLES-0: Remote Branch                    : NONE
+07-28 19:48:59.374  4723  4749 I AdrenoGLES-0: Reconstruct Branch               : NOTHING
+07-28 19:48:59.374  4723  4749 I AdrenoGLES-0: Build Config                     : S P 10.0.7 AArch64
+07-28 19:48:59.374  4723  4749 I AdrenoGLES-0: Driver Path                      : /vendor/lib64/egl/libGLESv2_adreno.so
+07-28 19:48:59.376   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.376   872   872 I SehLight: lcd : 11706-
+07-28 19:48:59.377  4723  4749 I AdrenoGLES-0: PFP: 0x016ee190, ME: 0x00000000
+07-28 19:48:59.379   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.383  4723  4749 D OpenGLRenderer: RenderThread::setGrContext()
+07-28 19:48:59.385  1130  1446 I WindowManager: Reparenting to original parent: Surface(name=DefaultTaskDisplayArea)/@0x4c49796, destroy=true, surface=Surface(name=Task=1)/@0x7499df2
+07-28 19:48:59.385  1130  1446 V WindowManager: Setting visibility of Window{9383193 u0 com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity}: false, caller=com.android.server.wm.WindowContainer.sendAppVisibilityToClients:1110 com.android.server.wm.WindowToken.setClientVisible:448 com.android.server.wm.ActivityRecord.setClientVisible:6997 com.android.server.wm.ActivityRecord.onAnimationFinished:7884 com.android.server.wm.WindowContainer.doAnimationFinished:3107 
+07-28 19:48:59.385  2795  2795 I ViewRootImpl@342f8ee[LauncherActivity]: handleAppVisibility mAppVisible=true visible=false
+07-28 19:48:59.385  1130  1446 V WindowManager: Setting visibility of Window{a50dcf7 u0 com.android.systemui.ImageWallpaper}: false, caller=com.android.server.wm.WindowContainer.sendAppVisibilityToClients:1110 com.android.server.wm.WindowToken.setClientVisible:448 com.android.server.wm.WallpaperWindowToken.setVisible:162 com.android.server.wm.WallpaperWindowToken.updateWallpaperWindows:157 com.android.server.wm.WallpaperController.updateWallpaperTokens:672 
+07-28 19:48:59.385  2135  7618 D WallpaperService: dispatchAppVisibility onVisibilityChanged(): false
+07-28 19:48:59.385  2135  2135 D WallpaperService: reportVisibility onVisibilityChanged visible: false
+07-28 19:48:59.385  2135  2356 I ImageWallpaper:  onVisibilityChanged false , 0
+07-28 19:48:59.386   872   872 I SehLight: lcd : 12006+
+07-28 19:48:59.386  1130  1446 I WindowManager: Reparenting to original parent: Surface(name=DefaultTaskDisplayArea)/@0x4c49796, destroy=true, surface=Surface(name=Task=2772)/@0xa55b10
+07-28 19:48:59.392   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.393   872   872 I SehLight: lcd : 12006-
+07-28 19:48:59.395   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.401   964   964 I Layer   : id=7524 removedFromDrawingState Surface(name=Task=1)/@0x7499df2 - animation-leash of app_transition#0 (108)
+07-28 19:48:59.401   964   964 I Layer   : id=7525 removedFromDrawingState Surface(name=Task=2772)/@0xa55b10 - animation-leash of app_transition#0 (108)
+07-28 19:48:59.401   964   964 I SurfaceFlinger: id=7525 Removed Surface(name=Task=2772)/@0xa55b10 - animation-leash of app_transition#0 (108)
+07-28 19:48:59.401   964   964 I SurfaceFlinger: id=7524 Removed Surface(name=Task=1)/@0x7499df2 - animation-leash of app_transition#0 (108)
+07-28 19:48:59.402   872   872 I SehLight: lcd : 12307+
+07-28 19:48:59.402   964   964 I Layer   : id=7524 Destroyed Surface(name=Task=1)/@0x7499df2 - animation-leash of app_transition#0
+07-28 19:48:59.402   964   964 I Layer   : id=7525 Destroyed Surface(name=Task=2772)/@0xa55b10 - animation-leash of app_transition#0
+07-28 19:48:59.404  1130  2250 V WindowManager: Relayout Window{9383193 u0 com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity}: viewVisibility=8 req=1080x2280 d0
+07-28 19:48:59.406   964   964 D SurfaceFlinger: Display 4630947232161729153 HWC layers:
+07-28 19:48:59.406   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f429b0 | 0100 | RGBA_8888    |    0.0    0.0 1080.0 2280.0 |    0    0 1080 2280 | Splash Screen com.basir.accounting$_2135#0
+07-28 19:48:59.406   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f39410 | 0100 | RGBA_8888    |    0.0    0.0 1080.0   85.0 |    0    0 1080   85 | StatusBar$_2135#0
+07-28 19:48:59.406   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f1eb60 | 0100 | RGBA_8888    |    0.0    0.0   67.0  342.0 |    0  382   67  724 | com.samsung.android.app.cocktailbars[...]arservice.CocktailBarService$_8984#0
+07-28 19:48:59.406   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f35a20 | 0100 | RGBA_8888    |    0.0    0.0 1080.0  126.0 |    0 2154 1080 2280 | NavigationBar0$_2135#0
+07-28 19:48:59.406   964   964 D SurfaceFlinger: 
+07-28 19:48:59.406  1130  2250 V WindowManager: Relayout hash=9383193, pid=2795: mAttrs={(0,0)(fillxfill) sim={adjust=nothing} layoutInDisplayCutoutMode=shortEdges ty=BASE_APPLICATION fmt=TRANSPARENT wanim=0x10302f2
+07-28 19:48:59.406  1130  2250 V WindowManager:   fl=81910100
+07-28 19:48:59.406  1130  2250 V WindowManager:   pfl=1e020040
+07-28 19:48:59.406  1130  2250 V WindowManager:   vsysui=1700
+07-28 19:48:59.406  1130  2250 V WindowManager:   bhv=SHOW_TRANSIENT_BARS_BY_SWIPE
+07-28 19:48:59.406  1130  2250 V WindowManager:   fitSides= naviIconColor=0}
+07-28 19:48:59.408  2795  2795 I ViewRootImpl@342f8ee[LauncherActivity]: Relayout returned: old=(0,0,1080,2280) new=(0,0,1080,2280) req=(1080,2280)8 dur=4 res=0x5 s={false 0} ch=true fn=36
+07-28 19:48:59.409   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.409   872   872 I SehLight: lcd : 12307-
+07-28 19:48:59.410  1130  2250 I GenerationRegistry: mBackingStore.isClosed() : false
+07-28 19:48:59.417  1130  2250 I GenerationRegistry: mBackingStore.isClosed() : false
+07-28 19:48:59.418   872   872 I SehLight: lcd : 12607+
+07-28 19:48:59.422   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.423  4723  4723 I DecorView: [INFO] isPopOver=false, config=true
+07-28 19:48:59.423  4723  4723 I DecorView: updateCaptionType >> DecorView@3ad0925[], isFloating=false, isApplication=true, hasWindowControllerCallback=true, hasWindowDecorCaption=false
+07-28 19:48:59.423  4723  4723 D DecorView: setCaptionType = 0, this = DecorView@3ad0925[]
+07-28 19:48:59.426   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.426   872   872 I SehLight: lcd : 12607-
+07-28 19:48:59.426  4723  4723 I DecorView: getCurrentDensityDpi: from real metrics. densityDpi=420 msg=resources_loaded
+07-28 19:48:59.428   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.435   872   872 I SehLight: lcd : 12908+
+07-28 19:48:59.440  4723  4752 D FlutterJNI: Beginning load of flutter...
+07-28 19:48:59.440  4723  4753 I ResourceExtractor: Found extracted resources res_timestamp-1-1785256864314
+07-28 19:48:59.440  4723  4753 I ResourceExtractor: Resource version mismatch res_timestamp-1-1785257331498
+07-28 19:48:59.443   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.443   872   872 I SehLight: lcd : 12908-
+07-28 19:48:59.445  4723  4752 D FlutterJNI: flutter (null) was loaded normally!
+07-28 19:48:59.446   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.452   872   872 I SehLight: lcd : 13225+
+07-28 19:48:59.453   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.453   872   872 I SehLight: lcd : 13225-
+07-28 19:48:59.456   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.469   872   872 I SehLight: lcd : 13525+
+07-28 19:48:59.470   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.470   872   872 I SehLight: lcd : 13525-
+07-28 19:48:59.472   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.481 14734 14734 I cbss    : onPause
+07-28 19:48:59.486   872   872 I SehLight: lcd : 13826+
+07-28 19:48:59.486   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.486   872   872 I SehLight: lcd : 13826-
+07-28 19:48:59.488   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.502   872   872 I SehLight: lcd : 14126+
+07-28 19:48:59.503   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.503   872   872 I SehLight: lcd : 14126-
+07-28 19:48:59.505   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.519   872   872 I SehLight: lcd : 14427+
+07-28 19:48:59.525   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.526   872   872 I SehLight: lcd : 14427-
+07-28 19:48:59.528   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.535  1130  1565 D DisplayPowerController[0]: animateScreenStateChange: target=2, mLogicalDisplay.isEnabled()=true
+07-28 19:48:59.536  1130  1565 D DisplayPowerController[0]: getFinalBrightness: lowPowerMode: 163 (0.64) -> 147 (0.58)
+07-28 19:48:59.536  1130  1565 D DisplayPowerController[0]: getFinalBrightness : Summary is 163 (0.64) -> 147 (0.58)
+07-28 19:48:59.536   872   872 I SehLight: lcd : 14670+
+07-28 19:48:59.542   955   955 I SSC_DAEMON: physical_sensor_test_req_msg Sensor type :4, Msg type:11
+07-28 19:48:59.543   872   872 I SehLight: lcd : 14670-
+07-28 19:48:59.550   955  1769 I SSC_DAEMON: aor_event done
+07-28 19:48:59.550  1130  1784 I SensorService: [REARLIGHT] lux value : 107, code value : 144
+07-28 19:48:59.636  1130  5991 D SamsungAlarmManager: Cancel Alarm calling from uid:10080 pid :27631 / OP:PendingIntent{3e7f8b1: PendingIntentRecord{625b85b com.google.android.gms/com.google.android.gms.container startService}}
+07-28 19:48:59.637  1130  5991 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90432789, now=90432426
+07-28 19:48:59.666   870  4718 I HYPER-HAL: [RequestManager.cpp]releaseLocked(): Released ID : 679230
+07-28 19:48:59.781  1130  1949 W SemWifiTransportLayerUtils: getApplicationCategory - IOException com.basir.accounting
+07-28 19:48:59.782  1130  1949 W System.err: java.io.FileNotFoundException: https://play.google.com/store/apps/details?id=com.basir.accounting&hl=en
+07-28 19:48:59.782  1130  1949 W System.err: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getInputStream(HttpURLConnectionImpl.java:255)
+07-28 19:48:59.782  1130  1949 W System.err: 	at com.android.okhttp.internal.huc.DelegatingHttpsURLConnection.getInputStream(DelegatingHttpsURLConnection.java:211)
+07-28 19:48:59.782  1130  1949 W System.err: 	at com.android.okhttp.internal.huc.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:30)
+07-28 19:48:59.782  1130  1949 W System.err: 	at com.samsung.android.server.wifi.tcp.SemWifiTransportLayerUtils.getApplicationCategory(SemWifiTransportLayerUtils.java:104)
+07-28 19:48:59.782  1130  1949 W System.err: 	at com.samsung.android.server.wifi.tcp.SemWifiTransportLayerMonitor$TcpMonitorHandler.handleMessage(SemWifiTransportLayerMonitor.java:241)
+07-28 19:48:59.782  1130  1949 W System.err: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+07-28 19:48:59.782  1130  1949 W System.err: 	at android.os.Looper.loopOnce(Looper.java:226)
+07-28 19:48:59.782  1130  1949 W System.err: 	at android.os.Looper.loop(Looper.java:313)
+07-28 19:48:59.782  1130  1949 W System.err: 	at android.os.HandlerThread.run(HandlerThread.java:67)
+07-28 19:48:59.782  1130  1949 D SemWifiTransportLayerMonitor.TcpMonitorHandler: MSG_SAVE_PACKAGE_INFO
+07-28 19:48:59.782  1130  1949 D SemWifiTransportLayerFileManager: saveWifiPackageInfoToFile
+07-28 19:48:59.782  1130  1949 D SemWifiTransportLayerFileManager: writeWifiPackageInfoList
+07-28 19:48:59.978   870  4721 I HYPER-HAL: [RequestManager.cpp]releaseLocked(): Released ID : 659544
+07-28 19:48:59.999  1130  1811 D SamsungAlarmManager: Expired : 8
+07-28 19:48:59.999  1130  1811 V SamsungAlarmManager: Sending to uid : 1000 L=81b0b97:TIME_TICK alarm=Alarm{315f904 type 3 origWhen 90432789 whenElapsed 90432789 android}
+07-28 19:48:59.999  1130  1811 D SamsungAlarmManager: setExact (T:3/F:9/AC:false) 20260728T194900 now=90432789 - CU:1000/CP:1130/L:81b0b97:TIME_TICK
+07-28 19:49:00.000  1130  1811 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90432790, now=90432789
+07-28 19:49:00.000  1130  1811 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90432790, now=90432789
+07-28 19:49:00.000  1130  1130 I EyeComfortSolutionService: action  :  android.intent.action.TIME_TICK
+07-28 19:49:00.001  1130  2181 I EyeComfortSolutionService: Week : Tue , Hour : 19 , Minute : 49 , TimeValue : 1189 , wakeup state, defaultBedTime : 12 , start sleep : -348
+07-28 19:49:00.001  2135  2135 D KeyguardUpdateMonitor: received broadcast android.intent.action.TIME_TICK
+07-28 19:49:00.001  2135  2135 D KeyguardUpdateMonitor: handleTimeUpdate
+07-28 19:49:00.001  2135  2135 D FaceWidgetPagesController: onTimeChanged()
+07-28 19:49:00.002  2135  2833 D QSClockBellTower: onReceive(android.intent.action.TIME_TICK) mTimeZoneString:null
+07-28 19:49:00.002  1130  1811 D SamsungAlarmManager: Expired : 8
+07-28 19:49:00.002  1130  1811 V SamsungAlarmManager: Sending to uid : 1000 L=81b0b97:TIME_TICK alarm=Alarm{f526eed type 3 origWhen 90432790 whenElapsed 90432790 android}
+07-28 19:49:00.002  1130  1811 D SamsungAlarmManager: setExact (T:3/F:9/AC:false) 20260728T195000 now=90432791 - CU:1000/CP:1130/L:81b0b97:TIME_TICK
+07-28 19:49:00.002  1130  1811 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90435450, now=90432792
+07-28 19:49:00.003  1130  1811 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90435450, now=90432792
+07-28 19:49:00.003  1130  1130 I EyeComfortSolutionService: action  :  android.intent.action.TIME_TICK
+07-28 19:49:00.003  2135  2833 D QSClockBellTower: onReceive(android.intent.action.TIME_TICK) mTimeZoneString:null
+07-28 19:49:00.003  1130  2181 I EyeComfortSolutionService: Week : Tue , Hour : 19 , Minute : 49 , TimeValue : 1189 , wakeup state, defaultBedTime : 12 , start sleep : -348
+07-28 19:49:00.007  2135  2135 D QSClockBellTower: He is ready to ring the bell. (((QSClockBellSound - TimeText:7:49, TimeContentDescription:7:49 PM, DateText:الثلاثاء, يوليو ٢٨, ShortDateText:الثلاثاء, يوليو ٢٨, Demofalse)))
+07-28 19:49:00.007  2135  2135 D QSClockHomeIndicatorView: Home Indicator status_bar_clock notifyTimeChanged(QSClockBellSound - TimeText:7:49, TimeContentDescription:7:49 PM, DateText:الثلاثاء, يوليو ٢٨, ShortDateText:الثلاثاء, يوليو ٢٨, Demofalse) ClockVisibleByPolicy:true, ClockVisibleByUser:true, visible?true, parent:android.widget.LinearLayout{25daef3 V.E...... ......ID 364,0-439,68 #7f0b0472 app:id/left_clock_container}
+07-28 19:49:00.007  2135  2135 D QSClockBellTower: Everyone heard the bell. run(currentTime:1785257340007,   getTime():Tue Jul 28 19:49:00 GMT+03:00 2026,   getTimeZone():libcore.util.ZoneInfo[mDstSavings=0,mUseDst=false,mDelegate=[id="Asia/Aden",mRawOffset=10800000,mEarliestRawOffset=11212000,transitions=2]])
+07-28 19:49:00.007  2135  2135 D KeyguardUpdateMonitor: received broadcast android.intent.action.TIME_TICK
+07-28 19:49:00.011  2135  2135 D QSClockBellTower: He is ready to ring the bell. (((QSClockBellSound - TimeText:7:49, TimeContentDescription:7:49 PM, DateText:الثلاثاء, يوليو ٢٨, ShortDateText:الثلاثاء, يوليو ٢٨, Demofalse)))
+07-28 19:49:00.011  2135  2135 D QSClockHomeIndicatorView: Home Indicator status_bar_clock notifyTimeChanged(QSClockBellSound - TimeText:7:49, TimeContentDescription:7:49 PM, DateText:الثلاثاء, يوليو ٢٨, ShortDateText:الثلاثاء, يوليو ٢٨, Demofalse) ClockVisibleByPolicy:true, ClockVisibleByUser:true, visible?true, parent:android.widget.LinearLayout{25daef3 V.E...... ......ID 364,0-439,68 #7f0b0472 app:id/left_clock_container}
+07-28 19:49:00.011  2135  2135 D QSClockBellTower: Everyone heard the bell. run(currentTime:1785257340010,   getTime():Tue Jul 28 19:49:00 GMT+03:00 2026,   getTimeZone():libcore.util.ZoneInfo[mDstSavings=0,mUseDst=false,mDelegate=[id="Asia/Aden",mRawOffset=10800000,mEarliestRawOffset=11212000,transitions=2]])
+07-28 19:49:00.024  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:49:00.025  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:49:00.025  2135  2135 V SecQSFragmentAnimatorBase: setQsExpansionPosition 0.0
+07-28 19:49:00.025  2135  2135 V QsExpandAnimator: setQsExpansionPosition 0.0 0
+07-28 19:49:00.025  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:49:00.026  2135  2135 D IndicatorGardenInputProperty: updateRotation() prv:-1 >> new:0
+07-28 19:49:00.026  2135  2135 D DeviceState: getDeviceResolutionPixelSize - currentDensity = 420 deviceDensity = 420 initialDisplaySizeFactor = 1440 currentDisplaySizeFactor = 1080 initialDisplayDensity = 560 proportionalDensity = 420 proportionalPixel = 54
+07-28 19:49:00.026  2135  2135 D DeviceState: getDeviceResolutionPixelSize - currentDensity = 420 deviceDensity = 420 initialDisplaySizeFactor = 1440 currentDisplaySizeFactor = 1080 initialDisplayDensity = 560 proportionalDensity = 420 proportionalPixel = 27
+07-28 19:49:00.026  2135  2135 D DeviceState: getDeviceResolutionPixelSize - currentDensity = 420 deviceDensity = 420 initialDisplaySizeFactor = 1440 currentDisplaySizeFactor = 1080 initialDisplayDensity = 560 proportionalDensity = 420 proportionalPixel = 17
+07-28 19:49:00.026  2135  2135 D KeyguardUpdateMonitor: handleTimeUpdate
+07-28 19:49:00.027  2135  2135 D FaceWidgetPagesController: onTimeChanged()
+07-28 19:49:00.027  2135  2135 V QsExpandAnimator: updateAnimators
+07-28 19:49:00.027  2135  2135 V QsExpandAnimator: clearAnimationState 
+07-28 19:49:00.028  2135  2135 V QsExpandAnimator: setQsExpansionPosition 0.0 0
+07-28 19:49:00.065  1130  5991 D SamsungAlarmManager: Cancel Alarm calling from uid:5010 pid :7147 / OP:PendingIntent{c33a122: PendingIntentRecord{4a4888d com.samsung.android.rubin.app broadcastIntent}}
+07-28 19:49:00.066  1130  5991 D SamsungAlarmManager: Cancel Alarm calling from uid:5010 pid :7147 / OP:PendingIntent{f6027b3: PendingIntentRecord{8b6ea53 com.samsung.android.rubin.app broadcastIntent}}
+07-28 19:49:00.068  1130  5991 D SamsungAlarmManager: Cancel Alarm calling from uid:5010 pid :7147 / OP:PendingIntent{f7ba170: PendingIntentRecord{e5e2089 com.samsung.android.rubin.app broadcastIntent}}
+07-28 19:49:00.094  4723  4753 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/kernel_blob.bin
+07-28 19:49:00.095  4723  4753 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/vm_snapshot_data
+07-28 19:49:00.105  1130  5991 D SamsungAlarmManager: Cancel Alarm calling from uid:10080 pid :25648 / OP:PendingIntent{f740ce9: PendingIntentRecord{bc5ebe4 com.google.android.gms/com.google.android.gms.container startService}}
+07-28 19:49:00.105  1130  5991 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90435450, now=90432895
+07-28 19:49:00.150  4723  4753 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
+07-28 19:49:00.173  4723  4723 W asir.accountin: Accessing hidden method Landroid/view/SurfaceControl$Builder;->setHidden(Z)Landroid/view/SurfaceControl$Builder; (blocked, linking, denied)
+07-28 19:49:00.177   754   754 E audit   : type=1400 audit(1785257340.172:18431): avc:  denied  { read } for  pid=4723 comm="asir.accounting" name="max_map_count" dev="proc" ino=1548194 scontext=u:r:untrusted_app:s0:c106,c258,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0 SEPF_SM-N975U_12_0001 audit_filtered
+07-28 19:49:00.177   754   754 E audit   : type=1300 audit(1785257340.172:18431): arch=c00000b7 syscall=56 success=no exit=-13 a0=ffffff9c a1=73fd826910 a2=0 a3=0 items=0 ppid=786 pid=4723 auid=4294967295 uid=10618 gid=10618 euid=10618 suid=10618 fsuid=10618 egid=10618 sgid=10618 fsgid=10618 tty=(none) ses=4294967295 comm="asir.accounting" exe="/system/bin/app_process64" subj=u:r:untrusted_app:s0:c106,c258,c512,c768 key=(null)
+07-28 19:49:00.177   754   754 E audit   : type=1327 audit(1785257340.172:18431): proctitle="com.basir.accounting"
+07-28 19:49:00.189  4723  4755 D vulkan  : searching for layers in '/data/app/~~428mfhtJ2obPVy32_s9d7Q==/com.basir.accounting-7PBHb6oeVCC0n-K2nfJ50Q==/lib/arm64'
+07-28 19:49:00.190  4723  4755 D vulkan  : searching for layers in '/data/app/~~428mfhtJ2obPVy32_s9d7Q==/com.basir.accounting-7PBHb6oeVCC0n-K2nfJ50Q==/base.apk!/lib/arm64-v8a'
+07-28 19:49:00.194  4723  4755 D vulkan  : added global layer 'VK_LAYER_KHRONOS_validation' from library '/data/app/~~428mfhtJ2obPVy32_s9d7Q==/com.basir.accounting-7PBHb6oeVCC0n-K2nfJ50Q==/base.apk!/lib/arm64-v8a/libVkLayer_khronos_validation.so'
+07-28 19:49:00.197  4723  4755 I AdrenoVK-0: ===== BEGIN DUMP OF OVERRIDDEN SETTINGS =====
+07-28 19:49:00.197  4723  4755 I AdrenoVK-0: ===== END DUMP OF OVERRIDDEN SETTINGS =====
+07-28 19:49:00.198  4723  4755 I AdrenoVK-0: QUALCOMM build          : 3dad7f8ed7, I593c16c433
+07-28 19:49:00.198  4723  4755 I AdrenoVK-0: Build Date              : 10/01/21
+07-28 19:49:00.198  4723  4755 I AdrenoVK-0: Shader Compiler Version : EV031.32.02.02
+07-28 19:49:00.198  4723  4755 I AdrenoVK-0: Local Branch            : 
+07-28 19:49:00.198  4723  4755 I AdrenoVK-0: Remote Branch           : refs/tags/AU_LINUX_ANDROID_LA.UM.9.1.R1.11.00.00.604.073
+07-28 19:49:00.198  4723  4755 I AdrenoVK-0: Remote Branch           : NONE
+07-28 19:49:00.198  4723  4755 I AdrenoVK-0: Reconstruct Branch      : NOTHING
+07-28 19:49:00.198  4723  4755 I AdrenoVK-0: Build Config            : S P 10.0.7 AArch64
+07-28 19:49:00.198  4723  4755 I AdrenoVK-0: Driver Path             : /vendor/lib64/hw/vulkan.adreno.so
+07-28 19:49:00.207  4723  4755 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+07-28 19:49:00.289  1130  1945 I SemWifiServiceDetector: Traff. tracking resumed
+07-28 19:49:00.292  4723  4774 I flutter : The Dart VM service is listening on http://127.0.0.1:40585/XG61wyRi2Wg=/
+07-28 19:49:00.408  2135  2135 D NetworkController.WifiSignalController: notifyListener: visible=true, enabled=true, connected=true, inetCondition=1, isDefault=true, receivedCR=true, receivedIC=-1, shouldForceHide=false, emptyConnected=false
+07-28 19:49:00.471   870  4719 I HYPER-HAL: [RequestManager.cpp]releaseLocked(): Released ID : 12497514
+07-28 19:49:00.547  1130  1784 I SensorService: [REARLIGHT] lux value : 105, code value : 146
+07-28 19:49:00.660  4723  4723 D com.llfbandit.app_links: Intent { flg=0x10000000 cmp=com.basir.accounting/.MainActivity }
+07-28 19:49:00.705  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (com.llfbandit.app_links.AppLinksPlugin@e61f9e3) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.705  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (dev.fluttercommunity.plus.device_info.DeviceInfoPlusPlugin@2042299) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.705  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (com.mr.flutter.plugin.filepicker.FilePickerPlugin@9a3895e) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.705  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (co.quis.flutter_contacts.FlutterContactsPlugin@b30513f) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.705  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin@20dfa0c) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.705  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (io.flutter.plugins.flutter_plugin_android_lifecycle.FlutterAndroidLifecyclePlugin@36b4f55) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.705  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (com.it_nomads.fluttersecurestorage.FlutterSecureStoragePlugin@79add6a) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.705  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (com.google_mlkit_commons.GoogleMlKitCommonsPlugin@662c25b) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.705  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (com.google_mlkit_text_recognition.GoogleMlKitTextRecognitionPlugin@ca6aaf8) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.706  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (io.flutter.plugins.googlesignin.GoogleSignInPlugin@ede8bd1) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.706  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (io.flutter.plugins.imagepicker.ImagePickerPlugin@8016636) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.706  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (dev.isar.isar_flutter_libs.IsarFlutterLibsPlugin@9812937) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.706  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (dev.fluttercommunity.plus.packageinfo.PackageInfoPlugin@e177ea4) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.706  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (io.flutter.plugins.pathprovider.PathProviderPlugin@f6f140d) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.706  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (com.baseflow.permissionhandler.PermissionHandlerPlugin@975afc2) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.706  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (net.nfet.flutter.printing.PrintingPlugin@4b521d3) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.706  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (dev.fluttercommunity.plus.share.SharePlusPlugin@d9fe110) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.706  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin@605e409) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.706  4723  4723 W FlutterEngineCxnRegstry: Attempted to register plugin (io.flutter.plugins.urllauncher.UrlLauncherPlugin@3f3060e) but it was already registered with this FlutterEngine (io.flutter.embedding.engine.FlutterEngine@26cbfe0).
+07-28 19:49:00.706  4723  4723 I BasirPluginRegistrant: All plugins registered successfully
+07-28 19:49:00.706  4723  4723 I BasirMainActivity: Automatic + Fallback plugin registration: OK
+07-28 19:49:00.730  4723  4723 W asir.accountin: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+07-28 19:49:00.730  4723  4723 W asir.accountin: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+07-28 19:49:00.730  4723  4723 W asir.accountin: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+07-28 19:49:00.730  4723  4723 W asir.accountin: Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+07-28 19:49:00.754  4723  4723 I DecorView: notifyKeepScreenOnChanged: keepScreenOn=false
+07-28 19:49:00.756  1130  5991 D InputTransport: Input channel constructed: '7ebab34', fd=1011
+07-28 19:49:00.756  1130  5991 D InputTransport: Input channel constructed: '7ebab34', fd=1012
+07-28 19:49:00.756  1130  5991 D InputTransport: Input channel constructed: '7ebab34', fd=1014
+07-28 19:49:00.757   964  1024 I SurfaceFlinger: id=7528 createSurf (0x0),-1 flag=80004, 7ebab34 com.basir.accounting/com.basir.accounting.MainActivity#0
+07-28 19:49:00.757  1130  5991 D RestrictionPolicy: isScreenCaptureEnabled : ret=true userId=0
+07-28 19:49:00.757  1130  5991 D InputTransport: Input channel destroyed: '7ebab34', fd=1014
+07-28 19:49:00.759  4723  4723 I ViewRootImpl@5a9d8d4[MainActivity]: setView = com.android.internal.policy.DecorView@3ad0925 TM=true
+07-28 19:49:00.761  1130  1576 D AnalyticsContainerHandler: handleMessage : { when=-1ms what=1 target=com.android.server.knox.KnoxAnalyticsContainer$AnalyticsHandler }
+07-28 19:49:00.800  1130  1945 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0033024002]
+07-28 19:49:00.800  1130  1945 D SemNscXgbMsL1: Probability - Real time: [0.026282012]
+07-28 19:49:00.800  1130  1945 D SemNscXgbMsL1: Probability - Non real time: [0.9872476]
+07-28 19:49:00.800  1130  1945 D SemNscXgbMsL1: 1 sample inference time: 0.339479 msecs
+07-28 19:49:00.800  1130  1945 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 0.323698 msecs
+07-28 19:49:00.801  1130  1945 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 0.265677 msecs
+07-28 19:49:00.994  4985  5173 I I0      : limitGPUFreq:: freq = 427
+07-28 19:49:00.994  4985  5173 I SemDvfsHyPerManager: acquire hyper - SIOP_GPU_FREQ_MAX/4985@4, type = 536875010
+07-28 19:49:00.994  4985  5173 I I0      : limitCPUFreq:: freq = 1708800
+07-28 19:49:00.994  4985  5173 I SemDvfsHyPerManager: acquire hyper - SIOP_ARM_MAX/4985@2, type = 301993986
+07-28 19:49:00.994   870   894 I HYPER-HAL: [RequestManager.cpp]acquire(): Acquired ID : 12447559  [4985 / 4]    HINT :      list : [GPUMaxFreq / 427] 
+07-28 19:49:00.995   870   894 I HYPER-HAL: [RequestManager.cpp]acquire(): Acquired ID : 12437580  [4985 / 2]    HINT :      list : [CPUMaxFreq / 1708800] 
+07-28 19:49:01.033  4723  4723 I flutter : supabase.supabase_flutter: INFO: ***** Supabase init completed ***** 
+07-28 19:49:01.061  4723  4723 I SurfaceView@509fe3c: onWindowVisibilityChanged(0) true io.flutter.embedding.android.FlutterSurfaceView{509fe3c V.E...... ......I. 0,0-0,0} of ViewRootImpl@5a9d8d4[MainActivity]
+07-28 19:49:01.064  1130  5991 V WindowManager: Relayout Window{7ebab34 u0 com.basir.accounting/com.basir.accounting.MainActivity}: viewVisibility=0 req=1080x2280 d0
+07-28 19:49:01.064  1130  5991 D RestrictionPolicy: isScreenCaptureEnabled : ret=true userId=0
+07-28 19:49:01.065   964  1028 I SurfaceFlinger: id=7529 createSurf (1x1),-3 flag=40004, com.basir.accounting/com.basir.accounting.MainActivity$_4723#0
+07-28 19:49:01.066  1130  5991 D WindowManager: makeSurface duration=1 name=com.basir.accounting/com.basir.accounting.MainActivity$_4723
+07-28 19:49:01.067  1130  5991 V WindowManager: Changing focus from null to Window{7ebab34 u0 com.basir.accounting/com.basir.accounting.MainActivity} displayId=0 Callers=com.android.server.wm.RootWindowContainer.updateFocusedWindowLocked:583 com.android.server.wm.WindowManagerService.updateFocusedWindowLocked:6485 com.android.server.wm.WindowManagerService.relayoutWindow:2750 com.android.server.wm.Session.relayout:242 
+07-28 19:49:01.067  1130  5991 D MARsPolicyManager: onPackageResumedFG pkgName = com.basir.accounting, userId = 0
+07-28 19:49:01.067  1130  5991 I WindowManager: Cancelling animation restarting=true, leash=Surface(name=Surface(name=466818a StatusBar)/@0xbacb2d6 - animation-leash of insets_animation)/@0x19d4a2f
+07-28 19:49:01.067  1130  5991 I WindowManager: Reparenting to original parent: Surface(name=WindowToken{a8c6ff5 android.os.BinderProxy@1c218df})/@0xe898957, destroy=false, surface=Surface(name=466818a StatusBar)/@0xbacb2d6
+07-28 19:49:01.067  1130  5991 I WindowManager: Reparenting to leash, surface=Surface(name=466818a StatusBar)/@0xbacb2d6, leashParent=Surface(name=WindowToken{a8c6ff5 android.os.BinderProxy@1c218df})/@0xe898957
+07-28 19:49:01.067   964  1028 I SurfaceFlinger: id=7530 createSurf (0x0),-1 flag=24000, Surface(name=466818a StatusBar)/@0xbacb2d6 - animation-leash of insets_animation#1
+07-28 19:49:01.068  1130  5991 D WindowManager: makeSurface duration=1 leash=Surface(name=Surface(name=466818a StatusBar)/@0xbacb2d6 - animation-leash of insets_animation)/@0x23246a0
+07-28 19:49:01.068  1130  5991 I WindowManager: Cancelling animation restarting=true, leash=Surface(name=Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0 - animation-leash of insets_animation)/@0xbbdc9c5
+07-28 19:49:01.068  1130  5991 I WindowManager: Reparenting to original parent: Surface(name=WindowToken{c9c8a51 android.os.BinderProxy@f8ffcdb})/@0xf564329, destroy=false, surface=Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0
+07-28 19:49:01.068  1130  5991 I WindowManager: Reparenting to leash, surface=Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0, leashParent=Surface(name=WindowToken{c9c8a51 android.os.BinderProxy@f8ffcdb})/@0xf564329
+07-28 19:49:01.068   964  1028 I SurfaceFlinger: id=7531 createSurf (0x0),-1 flag=24000, Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0 - animation-leash of insets_animation#0
+07-28 19:49:01.068  1130  5991 D WindowManager: makeSurface duration=0 leash=Surface(name=Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0 - animation-leash of insets_animation)/@0xa374e1e
+07-28 19:49:01.068  1130  5991 D StatusBarManagerService: notifyRequestedSystemKey recent=false home=false
+07-28 19:49:01.069  2135  2135 D NavigationBar: onSystemBarAttributesChanged() -  displayId:0, appearance:16 (APPEARANCE_LIGHT_NAVIGATION_BARS ), navbarColorManagedByIme:false
+07-28 19:49:01.069  1130  5991 V WindowManager: Relayout hash=7ebab34, pid=4723: mAttrs={(0,0)(fillxfill) sim={adjust=resize forwardNavigation} layoutInDisplayCutoutMode=shortEdges ty=BASE_APPLICATION fmt=TRANSLUCENT wanim=0x1030001
+07-28 19:49:01.069  1130  5991 V WindowManager:   fl=81810100
+07-28 19:49:01.069  1130  5991 V WindowManager:   pfl=12020040
+07-28 19:49:01.069  1130  5991 V WindowManager:   vsysui=500
+07-28 19:49:01.069  1130  5991 V WindowManager:   bhv=DEFAULT
+07-28 19:49:01.069  1130  5991 V WindowManager:   fitSides= naviIconColor=0}
+07-28 19:49:01.069  1130  1446 D CompatibilityChangeReporter: Compat change id reported: 158002302; UID 10618; state: ENABLED
+07-28 19:49:01.071  4723  4723 I ViewRootImpl@5a9d8d4[MainActivity]: Relayout returned: old=(0,0,1080,2280) new=(0,0,1080,2280) req=(1080,2280)0 dur=6 res=0x7 s={true -5476376639895719936} ch=true fn=-1
+07-28 19:49:01.073   858   960 I SDM     : HWCDisplay::GetColorModeCount: Supported color mode count = 3
+07-28 19:49:01.073   858   960 I SDM     : HWCDisplay::GetColorModes: Color mode = 0 is supported
+07-28 19:49:01.073   858   960 I SDM     : HWCDisplay::GetColorModes: Color mode = 7 is supported
+07-28 19:49:01.073   858   960 I SDM     : HWCDisplay::GetColorModes: Color mode = 9 is supported
+07-28 19:49:01.073  4723  4749 D hw-ProcessState: Binder ioctl to enable oneway spam detection failed: Invalid argument
+07-28 19:49:01.074  4723  4749 D OpenGLRenderer: eglCreateWindowSurface
+07-28 19:49:01.077  4723  4723 I SurfaceView@509fe3c: windowStopped(false) true io.flutter.embedding.android.FlutterSurfaceView{509fe3c V.E...... ......ID 0,0-1080,2280} of ViewRootImpl@5a9d8d4[MainActivity]
+07-28 19:49:01.077  4723  4723 I ViewRootImpl@5a9d8d4[MainActivity]: [DP] dp(1) 1 android.view.ViewRootImpl.reportNextDraw:11420 android.view.ViewRootImpl.performTraversals:4193 android.view.ViewRootImpl.doTraversal:2919 
+07-28 19:49:01.078   964  1028 I SurfaceFlinger: id=7532 createSurf (0x0),-1 flag=20004, Bounds for - com.basir.accounting/com.basir.accounting.MainActivity@0#0
+07-28 19:49:01.079   964  1028 I SurfaceFlinger: id=7533 createSurf (0x0),-1 flag=80004, SurfaceView - com.basir.accounting/com.basir.accounting.MainActivity@509fe3c@0#0
+07-28 19:49:01.079   964  1028 I SurfaceFlinger: id=7534 createSurf (0x0),-1 flag=40400, SurfaceView - com.basir.accounting/com.basir.accounting.MainActivity@509fe3c@0(BLAST)#0
+07-28 19:49:01.080   964  1028 I SurfaceFlinger: id=7535 createSurf (0x0),-1 flag=20404, Background for SurfaceView - com.basir.accounting/com.basir.accounting.MainActivity@509fe3c@0#0
+07-28 19:49:01.081  4723  4723 I SurfaceView@509fe3c: pST: sr = Rect(0, 0 - 1080, 2280) sw = 1080 sh = 2280
+07-28 19:49:01.081  4723  4723 I SurfaceView@509fe3c: onSSPAndSRT: pl = 0 pt = 0 sx = 1.0 sy = 1.0
+07-28 19:49:01.081  4723  4723 I SurfaceView@509fe3c: pST: mTmpTransaction.apply, mTmpTransaction = android.view.SurfaceControl$Transaction@7e7488
+07-28 19:49:01.081  4723  4723 I SurfaceView@509fe3c: updateSurface: mVisible = true mSurface.isValid() = true
+07-28 19:49:01.081  4723  4723 I SurfaceView@509fe3c: updateSurface: mSurfaceCreated = false surfaceChanged = true visibleChanged = true
+07-28 19:49:01.082  4723  4723 I SurfaceView@509fe3c: surfaceCreated 1 #8 io.flutter.embedding.android.FlutterSurfaceView{509fe3c V.E...... ......ID 0,0-1080,2280}
+07-28 19:49:01.082  4723  4755 I BufferQueueProducer: [SurfaceView - com.basir.accounting/com.basir.accounting.MainActivity@509fe3c@0#1(BLAST Consumer)1](id:127300000001,api:1,p:4723,c:4723) FrameBooster: VULKAN surface was catched
+07-28 19:49:01.082  4723  4755 D asir.accountin: FrameBooster: InterpolationGui: UID 10618 detected as using Vulkan
+07-28 19:49:01.088   964   964 I Layer   : id=7526 removedFromDrawingState Surface(name=466818a StatusBar)/@0xbacb2d6 - animation-leash of insets_animation#0 (114)
+07-28 19:49:01.088   964   964 I Layer   : id=7527 removedFromDrawingState Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0 - animation-leash of insets_animation#1 (114)
+07-28 19:49:01.088   964   964 I SurfaceFlinger: id=7526 Removed Surface(name=466818a StatusBar)/@0xbacb2d6 - animation-leash of insets_animation#0 (114)
+07-28 19:49:01.089   964   964 I SurfaceFlinger: id=7527 Removed Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0 - animation-leash of insets_animation#1 (114)
+07-28 19:49:01.089   964   964 I Layer   : id=7526 Destroyed Surface(name=466818a StatusBar)/@0xbacb2d6 - animation-leash of insets_animation#0
+07-28 19:49:01.089   964   964 I Layer   : id=7527 Destroyed Surface(name=4878bb7 NavigationBar0)/@0xfc7c8b0 - animation-leash of insets_animation#1
+07-28 19:49:01.091  4723  4723 I SurfaceView@509fe3c: surfaceChanged (1080,2280) 1 #8 io.flutter.embedding.android.FlutterSurfaceView{509fe3c V.E...... ......ID 0,0-1080,2280}
+07-28 19:49:01.092  4723  4723 I ViewRootImpl@5a9d8d4[MainActivity]: [DP] dp(2) 1 android.view.SurfaceView.updateSurface:1375 android.view.SurfaceView.lambda$new$1$SurfaceView:254 android.view.SurfaceView$$ExternalSyntheticLambda2.onPreDraw:2 
+07-28 19:49:01.094  1130  5991 D InputDispatcher: Focus request (0): 7ebab34 com.basir.accounting/com.basir.accounting.MainActivity but waiting because NOT_VISIBLE
+07-28 19:49:01.101  1130  5991 V WindowManager: rotationForOrientation(orient=SCREEN_ORIENTATION_USER_PORTRAIT (12), last=ROTATION_0 (0)); user=ROTATION_0 (0) 
+07-28 19:49:01.101  1130  5991 D WindowManager: rotationForOrientation, orientationSource=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t2772}
+07-28 19:49:01.101  1130  5991 V WindowManager: Computed rotation=ROTATION_0 (0) for display id=0 based on lastOrientation=SCREEN_ORIENTATION_USER_PORTRAIT (12) and oldRotation=ROTATION_0 (0), caller=com.android.server.wm.DisplayRotation.updateOrientation:407 com.android.server.wm.DisplayContent.updateOrientation:1939 com.android.server.wm.DisplayContent.updateOrientation:1877 com.android.server.wm.DisplayContent.onDescendantOrientationChanged:1814 com.android.server.wm.WindowContainer.onDescendantOrientationChanged:1290 com.android.server.wm.DisplayArea.onDescendantOrientationChanged:167 
+07-28 19:49:01.101  1130  5991 D TspStateManager: updateCustomValue customSetting=
+07-28 19:49:01.178   686   686 D io_stats: !@   8,0 r 2747276 63553408 w 2462394 212923156 d 0 0 f 0 0 iot 1080900 0 th 0 0 0 pt 0 inp 0 0 62016.804
+07-28 19:49:01.240  4723  4723 I flutter : Provider Added: AsyncNotifierProviderImpl<ThemeController, ThemeMode>
+07-28 19:49:01.255  4723  4723 I flutter : Provider Added: StateProvider<BasirUser?>
+07-28 19:49:01.275  4723  4723 I flutter : Provider Added: StreamProvider<bool>
+07-28 19:49:01.280  4723  4723 I flutter : Provider Added: supabaseAuthProvider
+07-28 19:49:01.284  4723  4723 I flutter : Provider Added: authStateProvider
+07-28 19:49:01.285  4723  4723 I flutter : Provider Added: currentUserProvider
+07-28 19:49:01.285  4723  4723 I flutter : Provider Added: Provider<BasirUser?>
+07-28 19:49:01.286  4723  4723 I flutter : Provider Added: AsyncNotifierProviderImpl<ColorCustomizationService, Color?>
+07-28 19:49:01.289  4723  4723 I flutter : Provider Added: AsyncNotifierProviderImpl<FontCustomizationService, FontCustomizationState>
+07-28 19:49:01.291  4723  4723 I flutter : Provider Added: Provider<LocaleRepository>
+07-28 19:49:01.292  4723  4723 I flutter : Provider Added: AsyncNotifierProviderImpl<LocaleNotifier, Locale>
+07-28 19:49:01.298  1130  1784 I SensorService: [REARLIGHT] lux value : 104, code value : 146
+07-28 19:49:01.298   863  2963 I sensors-hal: handle_sns_client_event:660, [0][51846] accel_sample [ 0.381,  0.113,  9.739] 90433911597141
+07-28 19:49:01.302  1130  1945 D SemNscXgbMsL1: Probability - Cloud gaming: [0.003235682]
+07-28 19:49:01.302  1130  1945 D SemNscXgbMsL1: Probability - Real time: [0.028241951]
+07-28 19:49:01.302  1130  1945 D SemNscXgbMsL1: Probability - Non real time: [0.9893941]
+07-28 19:49:01.302  1130  1945 D SemNscXgbMsL1: 1 sample inference time: 0.36375 msecs
+07-28 19:49:01.302  1130  1945 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 0.319063 msecs
+07-28 19:49:01.303  1130  1945 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 0.265729 msecs
+07-28 19:49:01.305  1130  1502 D BatteryExternalStatsWorker: update stats : update-network-download (6)
+07-28 19:49:01.305  1130  1502 D BatteryExternalStatsWorker: WifiActivityEnergyInfo was updated
+07-28 19:49:01.310  1130  5991 D TelephonyManager: requestModemActivityInfo: Sending result to app: ModemActivityInfo{ mTimestamp=90434099 mSleepTimeMs=87681498 mIdleTimeMs=446286 mTxTimeMs[]=[11501, 4120, 788, 323, 47019] mRxTimeMs=2209850}
+07-28 19:49:01.310  1130  1502 D BatteryExternalStatsWorker: ModemActivityInfo was updated
+07-28 19:49:01.310  1130  1502 D BatteryExternalStatsWorker: done updateExternalStatsLocked
+07-28 19:49:01.314   785   814 D IptablesRestoreController: [iptables debug]iptables-restore execute *filter
+07-28 19:49:01.314   785   814 D IptablesRestoreController: -nvx -L tetherctrl_counters
+07-28 19:49:01.314   785   814 D IptablesRestoreController: COMMIT
+07-28 19:49:01.314   785   814 D IptablesRestoreController: [iptables debug]iptables-restore execute done, res : 0
+07-28 19:49:01.314   785   814 D IptablesRestoreController: [iptables debug]iptables-restore execute *filter
+07-28 19:49:01.314   785   814 D IptablesRestoreController: -nvx -L tetherctrl_counters
+07-28 19:49:01.314   785   814 D IptablesRestoreController: COMMIT
+07-28 19:49:01.315   785   814 D IptablesRestoreController: [iptables debug]iptables-restore execute done, res : 0
+07-28 19:49:01.569  1130  1445 D SGM:GameManager: identifyForegroundApp. com.basir.accounting, mCurrentUserId: 0, callerUserId: 0
+07-28 19:49:01.569  1130  1445 D SGM:PkgDataHelper: getGamePkgData(). com.basir.accounting
+07-28 19:49:01.569  1130  1445 D SGM:SemGameManager: isForegroundGame(), ret=false
+07-28 19:49:01.570  1130  4816 D TspStateManager: update cmd=set_grip_data,1,60,10,20,912
+07-28 19:49:01.800  1130  1784 I SensorService: [REARLIGHT] lux value : 105, code value : 146
+07-28 19:49:01.804  1130  1945 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0029934605]
+07-28 19:49:01.804  1130  1945 D SemNscXgbMsL1: Probability - Real time: [0.018854104]
+07-28 19:49:01.804  1130  1945 D SemNscXgbMsL1: Probability - Non real time: [0.98754483]
+07-28 19:49:01.804  1130  1945 D SemNscXgbMsL1: 1 sample inference time: 0.336614 msecs
+07-28 19:49:01.804  1130  1945 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 0.321042 msecs
+07-28 19:49:01.805  1130  1945 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 0.270417 msecs
+07-28 19:49:01.963  1130  2909 I SemDvfsHyPerManager: acquire hyper - AMS_RESUME_TAIL/1130@19, type = -999
+07-28 19:49:01.963  1130  2909 I SemDvfsHyPerManager: acquire hyper - AMS_ACT_LAZY/1130@20, type = -999
+07-28 19:49:01.963  1130  2909 D ActivityManagerPerformance: AMP_acquire() TAIL
+07-28 19:49:01.963  1130  2909 D ActivityManagerPerformance: AMP_release() APP_SWITCH
+07-28 19:49:01.964   870   894 I HYPER-HAL: [RequestManager.cpp]acquire(): Acquired ID : 660694  [1130 / 19]    HINT : AMS_RESUME_TAIL    list : 
+07-28 19:49:01.965   870   894 I HYPER-HAL: [RequestManager.cpp]acquire(): Acquired ID : 661845  [1130 / 20]    HINT : AMS_ACT_LAZY    list : 
+07-28 19:49:01.968   870   894 I HYPER-HAL: [RequestManager.cpp]releaseLocked(): Released ID : 674572
+07-28 19:49:01.987  1130  1584 W PackageSettings: Skipping PackageSetting{54b9935 com.samsung.android.messaging.ar/10312} due to missing metadata
+07-28 19:49:01.987  1130  1584 W PackageSettings: Skipping PackageSetting{ddc91ca com.samsung.android.messaging.en/10286} due to missing metadata
+07-28 19:49:02.036  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<ThemeController, ThemeMode>
+07-28 19:49:02.040  4723  4723 I flutter : Provider Added: Provider<FlutterSecureStorage>
+07-28 19:49:02.041  4723  4723 I flutter : Provider Added: Provider<AuthService>
+07-28 19:49:02.048  4723  4723 I flutter : Provider Updated: authStateProvider
+07-28 19:49:02.049  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<ColorCustomizationService, Color?>
+07-28 19:49:02.049  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<FontCustomizationService, FontCustomizationState>
+07-28 19:49:02.050  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<LocaleNotifier, Locale>
+07-28 19:49:02.086  1130  3276 I PkgPredictorService-NapClassifier: it's ready to run
+07-28 19:49:02.116  2063  2063 I wpa_supplicant: Heartbeat 6211
+07-28 19:49:02.184   754   754 E audit   : type=1400 audit(1785257342.182:18432): avc:  denied  { write } for  pid=25648 comm="ThreadPoolForeg" name="traced_producer" dev="tmpfs" ino=35511 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:traced_producer_socket:s0 tclass=sock_file permissive=0 SEPF_SM-N975U_12_0001 audit_filtered
+07-28 19:49:02.184   754   754 E audit   : type=1300 audit(1785257342.182:18432): arch=c00000b7 syscall=203 success=no exit=-13 a0=170 a1=b4000074aad116d0 a2=1e a3=ffffffff959814c3 items=0 ppid=786 pid=25648 auid=4294967295 uid=10080 gid=10080 euid=10080 suid=10080 fsuid=10080 egid=10080 sgid=10080 fsgid=10080 tty=(none) ses=4294967295 comm="ThreadPoolForeg" exe="/system/bin/app_process64" subj=u:r:gmscore_app:s0:c512,c768 key=(null)
+07-28 19:49:02.184   754   754 E audit   : type=1327 audit(1785257342.182:18432): proctitle="com.google.android.gms"
+07-28 19:49:02.204  1130  1582 D PackageSettings: ++ writeStateForUserSyncLPr(0)
+07-28 19:49:02.255  1130  1582 W PackageSettings: -- writeStateForUserSyncLPr(0)
+07-28 19:49:02.255  1130  1582 D PackageSettings: ++ writeStateForUserSyncLPr(150)
+07-28 19:49:02.266   870  4821 I HYPER-HAL: [RequestManager.cpp]releaseLocked(): Released ID : 660694
+07-28 19:49:02.276  4723  4755 I BufferQueueProducer: [SurfaceView - com.basir.accounting/com.basir.accounting.MainActivity@509fe3c@0#1(BLAST Consumer)1](id:127300000001,api:1,p:4723,c:4723) queueBuffer: queued for the first time.
+07-28 19:49:02.276  4723  4723 I flutter : 🚀 [SYSTEM] Institutional Initialization Started...
+07-28 19:49:02.290   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.307  1130  1945 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0033926084]
+07-28 19:49:02.307  1130  1945 D SemNscXgbMsL1: Probability - Real time: [0.017365636]
+07-28 19:49:02.308  1130  1945 D SemNscXgbMsL1: Probability - Non real time: [0.9875496]
+07-28 19:49:02.308  1130  1945 D SemNscXgbMsL1: 1 sample inference time: 1.693333 msecs
+07-28 19:49:02.310  1130  1945 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.255156 msecs
+07-28 19:49:02.311  1130  1945 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 0.898698 msecs
+07-28 19:49:02.324  1130  1582 W PackageSettings: -- writeStateForUserSyncLPr(150)
+07-28 19:49:02.340  1130  1179 W System  : A resource failed to call end. 
+07-28 19:49:02.342  1130  1179 W System  : A resource failed to call release. 
+07-28 19:49:02.418  4723  4723 I flutter : Provider Added: FutureProvider<Isar>
+07-28 19:49:02.445  4723  4723 I ViewRootImpl@5a9d8d4[MainActivity]: [DP] pdf(1) 1 android.view.SurfaceView.notifyDrawFinished:599 android.view.SurfaceView.performDrawFinished:586 android.view.SurfaceView.$r8$lambda$st27mCkd9jfJkTrN_P3qIGKX6NY:0 
+07-28 19:49:02.473   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.517   754   754 E audit   : type=1400 audit(1785257342.512:18433): avc:  denied  { getattr } for  pid=4723 comm="isarworker" path="/vendor/firmware_mnt" dev="sda16" ino=1 scontext=u:r:untrusted_app:s0:c106,c258,c512,c768 tcontext=u:object_r:firmware_file:s0 tclass=dir permissive=0 SEPF_SM-N975U_12_0001 audit_filtered
+07-28 19:49:02.517   754   754 E audit   : type=1300 audit(1785257342.512:18433): arch=c00000b7 syscall=79 success=no exit=-13 a0=ffffff9c a1=746d91fec6 a2=746d91fdf8 a3=0 items=0 ppid=786 pid=4723 auid=4294967295 uid=10618 gid=10618 euid=10618 suid=10618 fsuid=10618 egid=10618 sgid=10618 fsgid=10618 tty=(none) ses=4294967295 comm="isarworker" exe="/system/bin/app_process64" subj=u:r:untrusted_app:s0:c106,c258,c512,c768 key=(null)
+07-28 19:49:02.517   754   754 E audit   : type=1327 audit(1785257342.512:18433): proctitle="com.basir.accounting"
+07-28 19:49:02.518  4723  4723 I flutter : ╔══════════════════════════════════════════════════════╗
+07-28 19:49:02.519  4723  4723 I flutter : ║                 ISAR CONNECT STARTED                 ║
+07-28 19:49:02.519  4723  4723 I flutter : ╟──────────────────────────────────────────────────────╢
+07-28 19:49:02.519  4723  4723 I flutter : ║         Open the link to connect to the Isar         ║
+07-28 19:49:02.519  4723  4723 I flutter : ║        Inspector while this build is running.        ║
+07-28 19:49:02.519  4723  4723 I flutter : ╟──────────────────────────────────────────────────────╢
+07-28 19:49:02.519  4723  4723 I flutter : ║ https://inspect.isar.dev/3.1.0+1/#/40585/XG61wyRi2Wg ║
+07-28 19:49:02.519  4723  4723 I flutter : ╚══════════════════════════════════════════════════════╝
+07-28 19:49:02.582  4723  4723 I Choreographer: Skipped 88 frames!  The application may be doing too much work on its main thread.
+07-28 19:49:02.582  4723  4723 I DecorView: notifyKeepScreenOnChanged: keepScreenOn=false
+07-28 19:49:02.583  1130  2249 V WindowManager: Relayout Window{7ebab34 u0 com.basir.accounting/com.basir.accounting.MainActivity}: viewVisibility=0 req=1080x2280 d0
+07-28 19:49:02.586  1130  2249 V WindowManager: Relayout hash=7ebab34, pid=4723: mAttrs={(0,0)(fillxfill) sim={adjust=resize forwardNavigation} layoutInDisplayCutoutMode=shortEdges ty=BASE_APPLICATION fmt=TRANSLUCENT wanim=0x1030001
+07-28 19:49:02.586  1130  2249 V WindowManager:   fl=81810100
+07-28 19:49:02.586  1130  2249 V WindowManager:   pfl=12020040
+07-28 19:49:02.586  1130  2249 V WindowManager:   vsysui=700
+07-28 19:49:02.586  1130  2249 V WindowManager:   bhv=DEFAULT
+07-28 19:49:02.586  1130  2249 V WindowManager:   fitSides= naviIconColor=0}
+07-28 19:49:02.590  4723  4723 I ViewRootImpl@5a9d8d4[MainActivity]: Relayout returned: old=(0,0,1080,2280) new=(0,0,1080,2280) req=(1080,2280)0 dur=6 res=0x3 s={true -5476376639895719936} ch=false fn=1
+07-28 19:49:02.597  4723  4834 I SurfaceView@509fe3c: uSP: rtp = Rect(0, 0 - 1080, 2280) rtsw = 1080 rtsh = 2280
+07-28 19:49:02.597  4723  4834 I SurfaceView@509fe3c: onSSPAndSRT: pl = 0 pt = 0 sx = 1.0 sy = 1.0
+07-28 19:49:02.597  4723  4834 I SurfaceView@509fe3c: aOrMT: uB = true t = android.view.SurfaceControl$Transaction@6893e21 fN = 1 android.view.SurfaceView.access$500:124 android.view.SurfaceView$SurfaceViewPositionUpdateListener.positionChanged:1728 android.graphics.RenderNode$CompositePositionUpdateListener.positionChanged:319 
+07-28 19:49:02.597  4723  4834 I SurfaceView@509fe3c: aOrMT: vR.mWNT, vR = ViewRootImpl@5a9d8d4[MainActivity]
+07-28 19:49:02.597  4723  4834 I ViewRootImpl@5a9d8d4[MainActivity]: mWNT: t = android.view.SurfaceControl$Transaction@6893e21 fN = 1 android.view.SurfaceView.applyOrMergeTransaction:1628 android.view.SurfaceView.access$500:124 android.view.SurfaceView$SurfaceViewPositionUpdateListener.positionChanged:1728 
+07-28 19:49:02.597  4723  4834 I ViewRootImpl@5a9d8d4[MainActivity]: mWNT: merge t to BBQ
+07-28 19:49:02.631  4723  4749 I BufferQueueProducer: [ViewRootImpl@5a9d8d4[MainActivity]#0(BLAST Consumer)0](id:127300000000,api:1,p:4723,c:4723) queueBuffer: queued for the first time.
+07-28 19:49:02.638  4723  4723 I flutter : Provider Updated: FutureProvider<Isar>
+07-28 19:49:02.638  4723  4723 I flutter : 📊 [ISAR] Database initialized successfully
+07-28 19:49:02.640   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.646  4723  4740 I OpenGLRenderer: Davey! duration=1528ms; Flags=1, FrameTimelineVsyncId=3820773, IntendedVsync=62016730853556, Vsync=62018197520164, InputEventId=0, HandleInputStart=62018208891913, AnimationStart=62018208896392, PerformTraversalsStart=62018208898215, DrawStart=62018221018371, FrameDeadline=62016747520222, FrameInterval=62018208773058, FrameStartTime=16666666, SyncQueued=62018221964204, SyncStart=62018222096913, IssueDrawCommandsStart=62018223528058, SwapBuffers=62018256273423, FrameCompleted=62018259148423, DequeueBufferDuration=3522135, QueueBufferDuration=1605938, GpuCompleted=62018257981548, SwapBuffersCompleted=62018259148423, DisplayPresentTime=-5476376646069858960, 
+07-28 19:49:02.648  4723  4723 I ViewRootImpl@5a9d8d4[MainActivity]: [DP] pdf(0) 1 android.view.ViewRootImpl.lambda$addFrameCompleteCallbackIfNeeded$3$ViewRootImpl:4995 android.view.ViewRootImpl$$ExternalSyntheticLambda16.run:6 android.os.Handler.handleCallback:938 
+07-28 19:49:02.648  4723  4723 I ViewRootImpl@5a9d8d4[MainActivity]: [DP] rdf()
+07-28 19:49:02.648  4723  4723 D ViewRootImpl@5a9d8d4[MainActivity]: reportDrawFinished (fn: 1) 
+07-28 19:49:02.649  1130  2249 D WindowManager: finishDrawingWindow: Window{7ebab34 u0 com.basir.accounting/com.basir.accounting.MainActivity} mDrawState=DRAW_PENDING
+07-28 19:49:02.652  1130  1446 I WindowManager: Reparenting to leash, surface=Surface(name=7ebab34 com.basir.accounting/com.basir.accounting.MainActivity)/@0xd80918f, leashParent=Surface(name=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t2772})/@0xfb1bc1c
+07-28 19:49:02.652   964  1028 I SurfaceFlinger: id=7536 createSurf (0x0),-1 flag=24000, Surface(name=7ebab34 com.basir.accounting/com.basir.accounting.MainActivity)/@0xd80918f - animation-leash of starting_reveal#0
+07-28 19:49:02.653  1130  1446 D WindowManager: makeSurface duration=1 leash=Surface(name=Surface(name=7ebab34 com.basir.accounting/com.basir.accounting.MainActivity)/@0xd80918f - animation-leash of starting_reveal)/@0xfa5d025
+07-28 19:49:02.655  1130  1442 D [secipm]: mSecIpmManager report to nap
+07-28 19:49:02.655  1130  1442 I PkgPredictorService-SecIpmManagerServiceImpl: reportToNAP uid:10618 com.basir.accounting/com.basir.accounting.MainActivity thisTime:3696
+07-28 19:49:02.658  2135  3080 I ViewRootImpl@95f74ae[accounting]: mWNT: t = android.view.SurfaceControl$Transaction@97cba12 fN = 2 android.view.SyncRtSurfaceTransactionApplier.applyTransaction:94 android.view.SyncRtSurfaceTransactionApplier.lambda$scheduleApply$0$SyncRtSurfaceTransactionApplier:71 android.view.SyncRtSurfaceTransactionApplier$$ExternalSyntheticLambda0.onFrameDraw:4 
+07-28 19:49:02.658  2135  3080 I ViewRootImpl@95f74ae[accounting]: mWNT: merge t to BBQ
+07-28 19:49:02.658  2135  3080 I ViewRootImpl@95f74ae[accounting]: mWNT: t = android.view.SurfaceControl$Transaction@6b8e5e3 fN = 2 android.view.SyncRtSurfaceTransactionApplier.applyTransaction:94 android.view.SyncRtSurfaceTransactionApplier.lambda$scheduleApply$0$SyncRtSurfaceTransactionApplier:71 android.view.SyncRtSurfaceTransactionApplier$$ExternalSyntheticLambda0.onFrameDraw:4 
+07-28 19:49:02.658  2135  3080 I ViewRootImpl@95f74ae[accounting]: mWNT: merge t to BBQ
+07-28 19:49:02.660  1130  1442 I ActivityTaskManager: Displayed com.basir.accounting/.MainActivity: +3s696ms
+07-28 19:49:02.660  1130  1442 I Pageboost: Launch time gathered : pid 4723 com.basir.accounting 3696
+07-28 19:49:02.660  1130  1442 I ActivityTaskManager: Fully drawn com.basir.accounting/.MainActivity: +3s696ms
+07-28 19:49:02.661  1130  1811 D SamsungAlarmManager: Expired : 8
+07-28 19:49:02.661  1130  1811 V SamsungAlarmManager: Sending to uid : 10146 action=com.samsung.action.EVERY_MINUTE_CLOCK_UPDATE alarm=Alarm{98849a1 type 1 origWhen 1785257340000 whenElapsed 90432789 com.sec.android.app.launcher}
+07-28 19:49:02.662  3373  3373 E pageboostd: Received HALT command code 2
+07-28 19:49:02.663  1130  2249 D InputDispatcher: Focus entered window (0): 7ebab34 com.basir.accounting/com.basir.accounting.MainActivity
+07-28 19:49:02.663   964   964 D SurfaceFlinger: Display 4630947232161729153 HWC layers:
+07-28 19:49:02.663   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f2efd0 | 0102 | RGBA_8888    |    0.0    0.0 1080.0 2280.0 |    0    0 1080 2280 | SurfaceView - com.basir.accounting/c[...]ting.MainActivity@509fe3c@0(BLAST)#0
+07-28 19:49:02.663   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f38210 | 0100 | RGBA_8888    |    0.0    0.0 1080.0 2280.0 |    0    0 1080 2280 | com.basir.accounting/com.basir.accounting.MainActivity$_4723#0
+07-28 19:49:02.663   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f429b0 | 0100 | RGBA_8888    |    0.0    0.0 1080.0 2280.0 |    0    0 1080 2280 | Splash Screen com.basir.accounting$_2135#0
+07-28 19:49:02.663   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f36170 | 0100 | RGBA_8888    |    0.0    0.0 1080.0   85.0 |    0    0 1080   85 | StatusBar$_2135#0
+07-28 19:49:02.663   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f1eb60 | 0100 | RGBA_8888    |    0.0    0.0   67.0  342.0 |    0  382   67  724 | com.samsung.android.app.cocktailbars[...]arservice.CocktailBarService$_8984#0
+07-28 19:49:02.663   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f081b0 | 0100 | RGBA_8888    |    0.0    0.0 1080.0  126.0 |    0 2154 1080 2280 | NavigationBar0$_2135#0
+07-28 19:49:02.663   964   964 D SurfaceFlinger: 
+07-28 19:49:02.664  1130  1811 D ActivityManager: Received BROADCAST intent 0x6fcebce Key{broadcastIntent pkg=com.sec.android.app.launcher intent=act=com.samsung.action.EVERY_MINUTE_CLOCK_UPDATE flags=0x4000000 u=0} requestCode=0 sent=0 from uid 1000
+07-28 19:49:02.664  4985  4985 I SDHMS:a : SLUG, 120
+07-28 19:49:02.668  1130  1811 V SamsungAlarmManager: Sending to uid : 10080 action=com.google.android.gms.gcm.ACTION_CHECK_QUEUE alarm=Alarm{e0f72b4 type 3 origWhen 90435450 whenElapsed 90435450 com.google.android.gms}
+07-28 19:49:02.668  2795  2795 I LiveIconUpdateEventHandler: onReceive: com.samsung.action.EVERY_MINUTE_CLOCK_UPDATE
+07-28 19:49:02.669  2795  2968 I LiveIconUpdateEventHandler: LiveIcon DateChanged
+07-28 19:49:02.669  2795  2968 I LiveIconUpdateEventHandler: updateLiveIcon type:0
+07-28 19:49:02.669  1130  1811 D ActivityManager: Received BROADCAST intent 0xa1183ec Key{broadcastIntent pkg=com.google.android.gms/com.google.android.gms.scheduler intent=act=com.google.android.gms.gcm.ACTION_CHECK_QUEUE pkg=com.google.android.gms cmp=com.google.android.gms/.gcm.nts.SchedulerInternalReceiver flags=0x2000000 u=0} requestCode=0 sent=0 from uid 1000
+07-28 19:49:02.670  2795  2968 I LiveIconUpdateEventHandler: cancelMinuteChangeAlarm
+07-28 19:49:02.670  1130  2250 D SamsungAlarmManager: Cancel Alarm calling from uid:10146 pid :2795 / OP:PendingIntent{11a6a52: PendingIntentRecord{6fcebce com.sec.android.app.launcher broadcastIntent}}
+07-28 19:49:02.674   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.676  1130  1811 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435465
+07-28 19:49:02.681  2795  2968 I LiveIconUpdateEventHandler: setMinuteChangeAlarm
+07-28 19:49:02.681  2135  3081 I ViewRootImpl@95f74ae[accounting]: mWNT: t = android.view.SurfaceControl$Transaction@3573be0 fN = 3 android.view.SyncRtSurfaceTransactionApplier.applyTransaction:94 android.view.SyncRtSurfaceTransactionApplier.lambda$scheduleApply$0$SyncRtSurfaceTransactionApplier:71 android.view.SyncRtSurfaceTransactionApplier$$ExternalSyntheticLambda0.onFrameDraw:4 
+07-28 19:49:02.681  2135  3081 I ViewRootImpl@95f74ae[accounting]: mWNT: merge t to BBQ
+07-28 19:49:02.691  4723  4723 I ViewRootImpl@5a9d8d4[MainActivity]: MSG_WINDOW_FOCUS_CHANGED 1 1
+07-28 19:49:02.692  4723  4723 D InputMethodManager: startInputInner - Id : 0
+07-28 19:49:02.692  4723  4723 I InputMethodManager: startInputInner - mService.startInputOrWindowGainedFocus
+07-28 19:49:02.692  1130  2249 D InputMethodManagerService: mSecureKeypadEnabled = false
+07-28 19:49:02.693  2135  3080 I ViewRootImpl@95f74ae[accounting]: mWNT: t = android.view.SurfaceControl$Transaction@fa2ee99 fN = 4 android.view.SyncRtSurfaceTransactionApplier.applyTransaction:94 android.view.SyncRtSurfaceTransactionApplier.lambda$scheduleApply$0$SyncRtSurfaceTransactionApplier:71 android.view.SyncRtSurfaceTransactionApplier$$ExternalSyntheticLambda0.onFrameDraw:4 
+07-28 19:49:02.693  2135  3080 I ViewRootImpl@95f74ae[accounting]: mWNT: merge t to BBQ
+07-28 19:49:02.704  1130  2249 V InputMethodManagerService: Unspecified window will hide input
+07-28 19:49:02.704  1130  2249 V InputMethodManagerService: hideCurrentInputLocked : shouldHideSoftInput is false
+07-28 19:49:02.704  1130  2249 D InputMethodManagerService: DESKTOP MODE! : 2
+07-28 19:49:02.704  1130  2249 D InputMethodManagerService: NOT IN KNOX DESKTOP MODE!
+07-28 19:49:02.704  1130  2249 V InputMethodManagerService: getDisplayIdOfInputMethodWindowToBeAdded : 0
+07-28 19:49:02.705  1130  2249 V InputMethodManagerService: Creating new session for client ClientState{ecf8bd9 uid=10618 pid=4723 displayId=0}
+07-28 19:49:02.705  1130  2249 D InputTransport: Input channel constructed: 'ClientS', fd=948
+07-28 19:49:02.705  1130  2249 D InputTransport: Input channel constructed: 'ClientS', fd=979
+07-28 19:49:02.706  1130  2249 D InputTransport: Input channel destroyed: 'ClientS', fd=979
+07-28 19:49:02.707   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.708  1130  2793 W InputMethodManagerService: onSessionCreated
+07-28 19:49:02.711  1130  2793 D InputMethodManagerService: checkDisplayOfStartInputAndUpdateKeyboard display Id 0last 0
+07-28 19:49:02.711  1130  2793 D InputTransport: Input channel constructed: 'ClientS', fd=979
+07-28 19:49:02.712  1130  2793 D InputTransport: Input channel destroyed: 'ClientS', fd=979
+07-28 19:49:02.713  4723  4723 D InputMethodManager: startInputInner - Id : 0
+07-28 19:49:02.713  2135  2360 D OpenGLRenderer: setSurface called with nullptr
+07-28 19:49:02.713  2135  2360 D OpenGLRenderer: setSurface() destroyed EGLSurface
+07-28 19:49:02.714  2135  2360 D OpenGLRenderer: destroyEglSurface
+07-28 19:49:02.716   784   789 E statsd  : Predicate -7037417284711607308 dropping data for dimension key (10)0x2010101->10618[I] (10)0x30000->*launch*[S] 
+07-28 19:49:02.716  5583  5583 D InputMethodService: checkDisplayOfStartInputAndUpdateKeyboard display Id 0last 0
+07-28 19:49:02.718  1130  2250 D SamsungAlarmManager: setInexact (T:1/F:0/AC:false) 20260728T195000 now=90435507 - CU:10146/CP:2795/OP:PendingIntent{26efc7f: PendingIntentRecord{6fcebce com.sec.android.app.launcher broadcastIntent}}
+07-28 19:49:02.718  1130  2250 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435507
+07-28 19:49:02.718  1130  2249 D CompatibilityChangeReporter: Compat change id reported: 181136395; UID 10618; state: DISABLED
+07-28 19:49:02.722  1130  2249 D CompatibilityChangeReporter: Compat change id reported: 174042936; UID 10618; state: DISABLED
+07-28 19:49:02.724   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.724   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.723  1130  1202 V WindowManager: Relayout Window{4c73bba u0 Splash Screen com.basir.accounting}: viewVisibility=8 req=1080x2280 d0
+07-28 19:49:02.727  1130  1202 I WindowManager: Reparenting to leash, surface=Surface(name=4c73bba Splash Screen com.basir.accounting)/@0xaecf1aa, leashParent=Surface(name=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t2772})/@0xfb1bc1c
+07-28 19:49:02.728   964  1028 I SurfaceFlinger: id=7537 createSurf (0x0),-1 flag=24000, Surface(name=4c73bba Splash Screen com.basir.accounting)/@0xaecf1aa - animation-leash of window_animation#0
+07-28 19:49:02.729  2795  2795 I ViewRootImpl@342f8ee[LauncherActivity]: stopped(true) old=false
+07-28 19:49:02.729  1130  1202 D WindowManager: makeSurface duration=3 leash=Surface(name=Surface(name=4c73bba Splash Screen com.basir.accounting)/@0xaecf1aa - animation-leash of window_animation)/@0xc00e19b
+07-28 19:49:02.730  2795  2795 I BaseActivity: removeActivityFlags, flags : 17
+07-28 19:49:02.733  1130  2246 D RestrictionPolicy: isScreenCaptureEnabled : ret=true userId=0
+07-28 19:49:02.733  1130  2246 I WindowManager: Cancelling animation restarting=true, leash=Surface(name=Surface(name=504539 InputMethod)/@0xe7ec4df - animation-leash of insets_animation)/@0x9f8c893
+07-28 19:49:02.734  1130  2246 I WindowManager: Reparenting to original parent: Surface(name=WindowToken{ff006ee android.os.Binder@ccd466d})/@0xf6ff52c, destroy=false, surface=Surface(name=504539 InputMethod)/@0xe7ec4df
+07-28 19:49:02.734  1130  2246 I WindowManager: Reparenting to leash, surface=Surface(name=504539 InputMethod)/@0xe7ec4df, leashParent=Surface(name=WindowToken{ff006ee android.os.Binder@ccd466d})/@0xf6ff52c
+07-28 19:49:02.734   964  2041 I SurfaceFlinger: id=7538 createSurf (0x0),-1 flag=24004, Surface(name=504539 InputMethod)/@0xe7ec4df - animation-leash of insets_animation#0
+07-28 19:49:02.734  1130  1202 V WindowManager: Relayout hash=4c73bba, pid=2135: mAttrs={(0,0)(fillxfill) sim={adjust=pan} layoutInDisplayCutoutMode=shortEdges ty=APPLICATION_STARTING fmt=TRANSLUCENT wanim=0x1030001
+07-28 19:49:02.734  1130  1202 V WindowManager:   fl=81030118
+07-28 19:49:02.734  1130  1202 V WindowManager:   pfl=36000010
+07-28 19:49:02.734  1130  1202 V WindowManager:   apr=LIGHT_STATUS_BARS LIGHT_NAVIGATION_BARS
+07-28 19:49:02.734  1130  1202 V WindowManager:   bhv=DEFAULT
+07-28 19:49:02.734  1130  1202 V WindowManager:   fitSides= naviIconColor=0}
+07-28 19:49:02.734  2795  2795 W LauncherAppWidgetHost: setShouldListenFlag, mFlags:7 flag:start on:false isFront:false
+07-28 19:49:02.735  1130  2249 I AppWidgetServiceImpl: stopListening callbacks : null
+07-28 19:49:02.735  2795  2968 I IMM_LC  : hsifw() - flags=0, caller=android.view.inputmethod.InputMethodManager.hideSoftInputFromWindow:1846 android.view.inputmethod.InputMethodManager.hideSoftInputFromWindow:1815 com.android.launcher3.util.UiThreadHelper$UiCallbacks.handleMessage:103 android.os.Handler.dispatchMessage:102 android.os.Looper.loopOnce:226 
+07-28 19:49:02.735  2795  2968 I IMM_LC  : hideSoftInputFromWindow - mService.hideSoftInput
+07-28 19:49:02.735  2795  2795 W LauncherAppWidgetHost: stopListening, mFlags:2 isFront:false
+07-28 19:49:02.735  2795  2795 W Launcher.NotificationListener: removeNotificationsChangedListener
+07-28 19:49:02.735  2795  2795 I BadgeCountUpdaterImpl: onNotificationsChangedDisConnected
+07-28 19:49:02.735  2795  2795 I Launcher.NotificationListener: unregisterObserver, this is not notificationService!!
+07-28 19:49:02.735  1130  2246 D WindowManager: makeSurface duration=1 leash=Surface(name=Surface(name=504539 InputMethod)/@0xe7ec4df - animation-leash of insets_animation)/@0x205dd11
+07-28 19:49:02.735  1130  4964 D InputMethodManagerService: hideSoftInput
+07-28 19:49:02.736  2135  2296 I ViewRootImpl@95f74ae[accounting]: Relayout returned: old=(0,0,1080,2280) new=(0,0,1080,2280) req=(1080,2280)8 dur=16 res=0x5 s={false 0} ch=true fn=5
+07-28 19:49:02.736  1130  4964 W InputMethodManagerService: Ignoring hideSoftInput of uid 10146: com.android.internal.view.IInputMethodClient$Stub$Proxy@2007e76
+07-28 19:49:02.736  2795  2968 I LiveIconUpdateEventHandler: LiveIcon onStop
+07-28 19:49:02.736  2135  2296 I ViewRootImpl@95f74ae[accounting]: dispatchDetachedFromWindow
+07-28 19:49:02.737  2795  2968 I LiveIconUpdateEventHandler: cancelMinuteChangeAlarm
+07-28 19:49:02.737  1130  2246 D SamsungAlarmManager: Cancel Alarm calling from uid:10146 pid :2795 / OP:PendingIntent{601fc77: PendingIntentRecord{6fcebce com.sec.android.app.launcher broadcastIntent}}
+07-28 19:49:02.739  1130  2249 I WindowManager: Cancelling animation restarting=false, leash=Surface(name=Surface(name=7ebab34 com.basir.accounting/com.basir.accounting.MainActivity)/@0xd80918f - animation-leash of starting_reveal)/@0xfa5d025
+07-28 19:49:02.739  1130  2249 I WindowManager: Reparenting to original parent: Surface(name=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t2772})/@0xfb1bc1c, destroy=false, surface=Surface(name=7ebab34 com.basir.accounting/com.basir.accounting.MainActivity)/@0xd80918f
+07-28 19:49:02.739  1130  2249 D InputTransport: Input channel destroyed: '4c73bba', fd=788
+07-28 19:49:02.739  1130  2249 W InputManager-JNI: Input channel object '4c73bba Splash Screen com.basir.accounting (client)' was disposed without first being removed with the input manager!
+07-28 19:49:02.739  1130  2249 D InputTransport: Input channel destroyed: '4c73bba', fd=978
+07-28 19:49:02.741   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.741   964   964 D Layer   : setBackgroundBlurRadius ## OneUiHome-BlurLayer#0, backgroundBlurRadius=0
+07-28 19:49:02.741   964  3252 D NativeSemDvfsManager: acquire:: timeout = 2000 mIsAcquired = 1  mTagName : SurfaceFlinger 
+07-28 19:49:02.741   964   964 I Layer   : id=7519 removedFromDrawingState Surface(name=504539 InputMethod)/@0xe7ec4df - animation-leash of insets_animation#1 (115)
+07-28 19:49:02.742   964   964 I SurfaceFlinger: id=7517 Removed OneUiHome-BlurLayer#0 (115)
+07-28 19:49:02.742   964  3252 E NativeCustomFrequencyManager: [NativeCFMS] BpCustomFrequencyManager::acquire()
+07-28 19:49:02.742   870   894 I HYPER-HAL: [RequestManager.cpp]acquire(): Acquired ID : 1930630  [964 / 1000]    HINT : SF_GPU_MINLOCK    list : [TIMEOUT / 2000] 
+07-28 19:49:02.744  2135  2296 D InputTransport: Input channel destroyed: '4c73bba', fd=279
+07-28 19:49:02.744   964  2041 I SurfaceFlinger: id=7519 Removed Surface(name=504539 InputMethod)/@0xe7ec4df - animation-leash of insets_animation#1 (115)
+07-28 19:49:02.746  1130  4964 E WindowManager: win=Window{9383193 u0 com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity} destroySurfaces: appStopped=true win.mWindowRemovalAllowed=false win.mRemoveOnExit=false win.mViewVisibility=8 caller=com.android.server.wm.ActivityRecord.destroySurfaces:5854 com.android.server.wm.ActivityRecord.destroySurfaces:5835 com.android.server.wm.ActivityRecord.notifyAppStopped:5899 com.android.server.wm.ActivityRecord.activityStopped:6525 com.android.server.wm.ActivityClientController.activityStopped:253 android.app.IActivityClientController$Stub.onTransact:596 com.android.server.wm.ActivityClientController.onTransact:129 
+07-28 19:49:02.746  1130  4964 I WindowManager: Destroying surface Surface(name=com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity$_2795)/@0xdda394d called by com.android.server.wm.WindowStateAnimator.destroySurface:987 com.android.server.wm.WindowStateAnimator.destroySurfaceLocked:518 com.android.server.wm.WindowState.destroySurfaceUnchecked:4229 com.android.server.wm.WindowState.destroySurface:4203 com.android.server.wm.ActivityRecord.destroySurfaces:5854 com.android.server.wm.ActivityRecord.destroySurfaces:5835 com.android.server.wm.ActivityRecord.notifyAppStopped:5899 com.android.server.wm.ActivityRecord.activityStopped:6525 
+07-28 19:49:02.748  1130  2249 D InputMethodManagerServicePhysicalKey: isConnectedDexOnPC false
+07-28 19:49:02.749  1130  2249 D InputMethodManagerService: isImeSwitcherDisabledPackage : false
+07-28 19:49:02.754  1126  2004 I CameraService: onUidStateChanged: uid=10154, procState is changed. (3 -> 5)
+07-28 19:49:02.756  1130  2793 I AppOps  : updateUidProcState uid: 10154 procState: 5 capability:15
+07-28 19:49:02.757   964   964 I Layer   : id=7536 removedFromDrawingState Surface(name=7ebab34 com.basir.accounting/com.basir.accounting.MainActivity)/@0xd80918f - animation-leash of starting_reveal#0 (115)
+07-28 19:49:02.757   964   964 I Layer   : id=7514 removedFromDrawingState com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity$_2795#0 (115)
+07-28 19:49:02.757  1130  2793 I ActivityManager: Changes in 10146 2 to 5, 15 to 8
+07-28 19:49:02.757   964   964 I Layer   : id=7517 removedFromDrawingState OneUiHome-BlurLayer#0 (115)
+07-28 19:49:02.758   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.758  1130  2793 I AppOps  : updateUidProcState uid: 10080 procState: 5 capability:15
+07-28 19:49:02.758   964   964 I Layer   : id=7519 Destroyed Surface(name=504539 InputMethod)/@0xe7ec4df - animation-leash of insets_animation#1
+07-28 19:49:02.758  1130  1443 D NetworkPolicy: onUidStateChanged() uid: 10146, isForeground(true, 5)
+07-28 19:49:02.759  1130  4965 I AppOps  : updateUidProcState uid: 10080 procState: 3 capability:15
+07-28 19:49:02.763 27631 27818 I FontLog : (REDACTED) Received query %s, URI %s
+07-28 19:49:02.763 27631 27818 I FontLog : (REDACTED) Query [%s] resolved to %s
+07-28 19:49:02.768 27631 27818 I FontLog : (REDACTED) Fetch %s end status %s
+07-28 19:49:02.769   964  1028 I SurfaceFlinger: id=7514 Removed com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity$_2795#0 (114)
+07-28 19:49:02.770  1130  2250 D SamsungAlarmManager: setInexact (T:3/F:0/AC:false) 20360725T194902 now=90435560 - CU:10080/CP:27631/OP:PendingIntent{efc3750: PendingIntentRecord{21e1d49 com.google.android.gms/com.google.android.gms.container startService}}
+07-28 19:49:02.770  1130  2250 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435560
+07-28 19:49:02.771 27631 27818 I FontLog : (REDACTED) Pulling font file for id = %d, cache size = %d
+07-28 19:49:02.771  1130  2246 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435560
+07-28 19:49:02.774   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.775   964   964 I Layer   : id=7514 Destroyed com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity$_2795#0
+07-28 19:49:02.775   964   964 I Layer   : id=7517 Destroyed OneUiHome-BlurLayer#0
+07-28 19:49:02.775 27631 27818 I FontLog : (REDACTED) Pulling font file for id = %d, cache size = %d
+07-28 19:49:02.777  2795  2968 I LiveIconUpdateEventHandler: cancelDateChangeAlarm
+07-28 19:49:02.778  1130  2857 D SamsungAlarmManager: Cancel Alarm calling from uid:10146 pid :2795 / OP:PendingIntent{334e64e: PendingIntentRecord{6509891 com.sec.android.app.launcher broadcastIntent}}
+07-28 19:49:02.778  1130  2857 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435567
+07-28 19:49:02.780  2795  2968 I LiveIconUpdateEventHandler: unregisterReceiver
+07-28 19:49:02.780  1130  2250 D SamsungAlarmManager: Cancel Alarm calling from uid:10080 pid :27631 / OP:PendingIntent{a06036f: PendingIntentRecord{a1183ec com.google.android.gms/com.google.android.gms.scheduler broadcastIntent}}
+07-28 19:49:02.788  1130  2250 D DARUtil : Device owner status not updated yet...
+07-28 19:49:02.788  1130  2250 D DARUtil : Not an enterprise user : 0
+07-28 19:49:02.788  1130  2250 D DARUtil : Device owner status not updated yet...
+07-28 19:49:02.788  1130  2250 D DARUtil : Not an enterprise user : 0
+07-28 19:49:02.790   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.791  1130  1446 I WindowManager: Reparenting to original parent: Surface(name=ActivityRecord{3873557 u0 com.basir.accounting/.MainActivity t2772})/@0xfb1bc1c, destroy=true, surface=Surface(name=4c73bba Splash Screen com.basir.accounting)/@0xaecf1aa
+07-28 19:49:02.791  1130  1446 E WindowManager: win=Window{4c73bba u0 Splash Screen com.basir.accounting EXITING} destroySurfaces: appStopped=false win.mWindowRemovalAllowed=true win.mRemoveOnExit=true win.mViewVisibility=8 caller=com.android.server.wm.ActivityRecord.destroySurfaces:5854 com.android.server.wm.ActivityRecord.destroySurfaces:5835 com.android.server.wm.WindowState.onExitAnimationDone:5968 com.android.server.wm.WindowStateAnimator.onAnimationFinished:242 com.android.server.wm.WindowState.onAnimationFinished:6221 com.android.server.wm.WindowContainer$$ExternalSyntheticLambda0.onAnimationFinished:2 com.android.server.wm.SurfaceAnimator.lambda$getFinishedCallback$0$SurfaceAnimator:113 
+07-28 19:49:02.791  1130  1446 I WindowManager: Destroying surface Surface(name=Splash Screen com.basir.accounting$_2135)/@0x4fd195a called by com.android.server.wm.WindowStateAnimator.destroySurface:987 com.android.server.wm.WindowStateAnimator.destroySurfaceLocked:518 com.android.server.wm.WindowState.destroySurfaceUnchecked:4229 com.android.server.wm.WindowState.destroySurface:4203 com.android.server.wm.ActivityRecord.destroySurfaces:5854 com.android.server.wm.ActivityRecord.destroySurfaces:5835 com.android.server.wm.WindowState.onExitAnimationDone:5968 com.android.server.wm.WindowStateAnimator.onAnimationFinished:242 
+07-28 19:49:02.797  2135  2135 D NavigationBar: onSystemBarAttributesChanged() -  displayId:0, appearance:0, navbarColorManagedByIme:false
+07-28 19:49:02.797  2135  2135 V Navbar.Store: handleEvent [EventType] GET_BOOL_REGION_SAMPLING_ENABLED [Module] LightBarController  KEYS_DEFAULT=false
+07-28 19:49:02.797  2135  2135 V Navbar.Store: --[Band]COLOR_PACK_GET_REGION_SAMPLING_ENABLED
+07-28 19:49:02.797  2135  2135 V Navbar.Store: ----getValue(BOOL_REGION_SAMPLING_ENABLED)=false
+07-28 19:49:02.798   703   703 W keymaster_tee: [WRN]begin req PARAMS: A1 P2 D4 
+07-28 19:49:02.800  2135  2135 D SecLightBarControlHelper: updateStatus(WHITE icon) NumLightStacks:0, NumStacks:1, IndexLightStack:-1, StatusBarMode:0, StatusBarState:SHD, NeedDarkFontFromWallpaper:true, isWhiteKeyguardStatusBarBySettings:true
+07-28 19:49:02.802   703   703 D keymaster_swd: keymaster_swd [WRN] (swd_run_cb:251) swd_begin() returns 0
+07-28 19:49:02.802   701 12321 I keystore2: keystore2::security_level: In create_operation. Success to create IKeystoreOperation. 10618, None
+07-28 19:49:02.805   703   703 D keymaster_swd: keymaster_swd [WRN] (swd_run_cb:251) swd_update() returns 0
+07-28 19:49:02.807   964   964 I Layer   : id=7523 removedFromDrawingState Splash Screen com.basir.accounting$_2135#0 (112)
+07-28 19:49:02.807   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.808   964   964 I Layer   : id=7522 removedFromDrawingState 4c73bba Splash Screen com.basir.accounting#0 (112)
+07-28 19:49:02.808   964   964 I Layer   : id=7537 removedFromDrawingState Surface(name=4c73bba Splash Screen com.basir.accounting)/@0xaecf1aa - animation-leash of window_animation#0 (112)
+07-28 19:49:02.808   964   964 I SurfaceFlinger: id=7522 Removed 4c73bba Splash Screen com.basir.accounting#0 (112)
+07-28 19:49:02.808   964   964 I SurfaceFlinger: id=7523 Removed Splash Screen com.basir.accounting$_2135#0 (112)
+07-28 19:49:02.808   964   964 I SurfaceFlinger: id=7537 Removed Surface(name=4c73bba Splash Screen com.basir.accounting)/@0xaecf1aa - animation-leash of window_animation#0 (112)
+07-28 19:49:02.808   964   964 I Layer   : id=7537 Destroyed Surface(name=4c73bba Splash Screen com.basir.accounting)/@0xaecf1aa - animation-leash of window_animation#0
+07-28 19:49:02.808   964   964 I Layer   : id=7522 Destroyed 4c73bba Splash Screen com.basir.accounting#0
+07-28 19:49:02.810   964   964 I Layer   : id=7523 Destroyed Splash Screen com.basir.accounting$_2135#0
+07-28 19:49:02.812   703   703 D keymaster_swd: keymaster_swd [WRN] (swd_run_cb:251) swd_finish() returns 0
+07-28 19:49:02.813  1130  1945 D SemNscXgbMsL1: Probability - Cloud gaming: [0.002978725]
+07-28 19:49:02.813  1130  1945 D SemNscXgbMsL1: Probability - Real time: [0.02022091]
+07-28 19:49:02.814   964   964 D SurfaceFlinger: Display 4630947232161729153 HWC layers:
+07-28 19:49:02.814   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f383c0 | 0102 | RGBA_8888    |    0.0    0.0 1080.0 2280.0 |    0    0 1080 2280 | SurfaceView - com.basir.accounting/c[...]ting.MainActivity@509fe3c@0(BLAST)#0
+07-28 19:49:02.814   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f3cfb0 | 0100 | RGBA_8888    |    0.0    0.0 1080.0 2280.0 |    0    0 1080 2280 | com.basir.accounting/com.basir.accounting.MainActivity$_4723#0
+07-28 19:49:02.814   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f36170 | 0100 | RGBA_8888    |    0.0    0.0 1080.0   85.0 |    0    0 1080   85 | StatusBar$_2135#0
+07-28 19:49:02.814   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f1eb60 | 0100 | RGBA_8888    |    0.0    0.0   67.0  342.0 |    0  382   67  724 | com.samsung.android.app.cocktailbars[...]arservice.CocktailBarService$_8984#0
+07-28 19:49:02.814   964   964 D SurfaceFlinger:      DEVICE | 0xb400006e37f081b0 | 0100 | RGBA_8888    |    0.0    0.0 1080.0  126.0 |    0 2154 1080 2280 | NavigationBar0$_2135#0
+07-28 19:49:02.814   964   964 D SurfaceFlinger: 
+07-28 19:49:02.815  1130  1945 D SemNscXgbMsL1: Probability - Non real time: [0.98903966]
+07-28 19:49:02.815  1130  1945 D SemNscXgbMsL1: 1 sample inference time: 2.50026 msecs
+07-28 19:49:02.816  4723  4723 I flutter : Provider Updated: StreamProvider<bool>
+07-28 19:49:02.816  1130  1945 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.25125 msecs
+07-28 19:49:02.817  1130  1945 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 0.899635 msecs
+07-28 19:49:02.822  1130  2857 V WindowManager: Relayout Window{b93d082 u0 NotificationShade}: viewVisibility=4 req=1080x2280 d0
+07-28 19:49:02.824   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.827  4723  4723 I flutter : Provider Updated: Provider<BasirUser?>
+07-28 19:49:02.829  1130  2857 V WindowManager: Relayout hash=b93d082, pid=2135: mAttrs={(0,0)(fillxfill) gr=TOP CENTER_VERTICAL sim={adjust=resize} layoutInDisplayCutoutMode=always ty=2040 fmt=TRANSLUCENT
+07-28 19:49:02.829  1130  2857 V WindowManager:   fl=81840048
+07-28 19:49:02.829  1130  2857 V WindowManager:   pfl=1b000000
+07-28 19:49:02.829  1130  2857 V WindowManager:   vsysui=10
+07-28 19:49:02.829  1130  2857 V WindowManager:   apr=LIGHT_NAVIGATION_BARS
+07-28 19:49:02.829  1130  2857 V WindowManager:   bhv=SHOW_TRANSIENT_BARS_BY_SWIPE naviIconColor=0
+07-28 19:49:02.829  1130  2857 V WindowManager:   sfl=42000}
+07-28 19:49:02.829  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<ColorCustomizationService, Color?>
+07-28 19:49:02.830  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<FontCustomizationService, FontCustomizationState>
+07-28 19:49:02.835  2135  2135 I ViewRootImpl@c28d5b0[NotificationShade]: Relayout returned: old=(0,0,1080,2280) new=(0,0,1080,2280) req=(1080,2280)4 dur=13 res=0x1 s={false 0} ch=false fn=-1
+07-28 19:49:02.836  1130  2857 D SamsungAlarmManager: setInexact (T:3/F:0/AC:false) 20260728T195432 now=90435625 - CU:10080/CP:27631/OP:PendingIntent{ee37126: PendingIntentRecord{a1183ec com.google.android.gms/com.google.android.gms.scheduler broadcastIntent}}
+07-28 19:49:02.836  1130  2857 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435625
+07-28 19:49:02.838  2135  2135 D KeyguardBottomAreaShortcutView: updateCameraVisibility isCameraDisabled:false visible:true
+07-28 19:49:02.838  2135  2135 D KeyguardBottomAreaShortcutView: mIndicationArea margin start : 163, end : 163, bottom : 150
+07-28 19:49:02.839  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:49:02.839  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:49:02.839  2135  2135 W Looper  : Slow dispatch took 32ms main h=android.view.Choreographer$FrameHandler c=android.view.Choreographer$FrameDisplayEventReceiver@3db898c m=0
+07-28 19:49:02.845 27631  4679 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+07-28 19:49:02.846 27631  4679 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+07-28 19:49:02.846  2135  2135 D IndicatorGardenInputProperty: updateRotation() prv:-1 >> new:0
+07-28 19:49:02.847  2135  2135 D DeviceState: getDeviceResolutionPixelSize - currentDensity = 420 deviceDensity = 420 initialDisplaySizeFactor = 1440 currentDisplaySizeFactor = 1080 initialDisplayDensity = 560 proportionalDensity = 420 proportionalPixel = 54
+07-28 19:49:02.847  2135  2135 D DeviceState: getDeviceResolutionPixelSize - currentDensity = 420 deviceDensity = 420 initialDisplaySizeFactor = 1440 currentDisplaySizeFactor = 1080 initialDisplayDensity = 560 proportionalDensity = 420 proportionalPixel = 27
+07-28 19:49:02.847  2135  2135 D DeviceState: getDeviceResolutionPixelSize - currentDensity = 420 deviceDensity = 420 initialDisplaySizeFactor = 1440 currentDisplaySizeFactor = 1080 initialDisplayDensity = 560 proportionalDensity = 420 proportionalPixel = 17
+07-28 19:49:02.847  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<ColorCustomizationService, Color?>
+07-28 19:49:02.847  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<FontCustomizationService, FontCustomizationState>
+07-28 19:49:02.852 25648  4682 I PlayGamesServices[GamesSyncAdapter]: Starting sync for 4c0ba976
+07-28 19:49:02.852 25648 27783 I PlayGamesServices[GamesSyncAdapter]: Starting sync for 5b6ef434
+07-28 19:49:02.855 25648  4682 I PlayGamesServices[GamesSyncAdapter]: Sync duration for 4c0ba976: 3
+07-28 19:49:02.855 25648 27783 I PlayGamesServices[GamesSyncAdapter]: Sync duration for 5b6ef434: 3
+07-28 19:49:02.857   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.858  4723  4723 I flutter : ⚙️ [SYSTEM] Core Services Ready in 581ms
+07-28 19:49:02.866 27631  4562 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+07-28 19:49:02.879 25648 26015 W PlayGamesServices[UiUtils]: AppVersion: Cannot find the installed destination app.
+07-28 19:49:02.879 25648 26015 I GetServiceValidatorImpl: (REDACTED) onGetService() from Client SDK version [%s], Module version [%s], PGA version [%s], Account [%s], Calling package [%s], Game package [%s]
+07-28 19:49:02.881  1130  2179 D MdnieScenarioControlService:  packageName : com.basir.accounting    className : com.basir.accounting.MainActivity
+07-28 19:49:02.882  1130  2179 V MdnieScenarioControlService: setUIMode from UI function(3)
+07-28 19:49:02.884 25648 26015 I GetGamesServiceReqFacto: (REDACTED) Parsing request with ignored arguments. signInOptionsBundle [%s], isRetryingSignIn [%s], skipWelcomePopup [%s], requireGooglePlus [%s]
+07-28 19:49:02.884 25648 26015 I GetGamesServiceReqFacto: Replacing request for `games` scope with `games_lite`
+07-28 19:49:02.885  1130  2857 D SamsungAlarmManager: Cancel Alarm calling from uid:10080 pid :27631 / OP:PendingIntent{5abeab9: PendingIntentRecord{a1183ec com.google.android.gms/com.google.android.gms.scheduler broadcastIntent}}
+07-28 19:49:02.885  1130  2857 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435674
+07-28 19:49:02.887  4723  4723 I flutter : Provider Updated: StreamProvider<bool>
+07-28 19:49:02.891   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.901  4723  4723 I flutter : Provider Updated: StateProvider<BasirUser?>
+07-28 19:49:02.901  4723  4723 I flutter : 🔑 [AUTH] Account: true, LoggedIn: true, Guest: true
+07-28 19:49:02.902 25648  4853 I SignInPerformer-23: (REDACTED) Handling request [%s], isFirstPartyCaller [%s]
+07-28 19:49:02.904  2135  2135 W Looper  : Slow dispatch took 11ms main h=android.view.Choreographer$FrameHandler c=android.view.Choreographer$FrameDisplayEventReceiver@3db898c m=0
+07-28 19:49:02.904 25648  4853 I SignInPerformer-23: Successfully brokered first-party unauthenticated GamesService [CONTEXT service_id=1 ]
+07-28 19:49:02.907 25648  4853 I GetGamesServiceV2Op: (REDACTED) Successfully brokered GamesService for request %s
+07-28 19:49:02.907   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:02.909 25648 26015 W PlayGamesServices[UiUtils]: AppVersion: Cannot find the installed destination app.
+07-28 19:49:02.910 25648 26015 W PlayGamesServices[UiUtils]: AppVersionName: Cannot find the installed destination app.
+07-28 19:49:02.916 25648 26015 W PlayGamesServices[UiUtils]: AppVersion: Cannot find the installed destination app.
+07-28 19:49:02.917 25648 26015 W PlayGamesServices[UiUtils]: AppVersionName: Cannot find the installed destination app.
+07-28 19:49:02.920  4723  4723 I flutter : Provider Updated: Provider<BasirUser?>
+07-28 19:49:02.921  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<ColorCustomizationService, Color?>
+07-28 19:49:02.921  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<FontCustomizationService, FontCustomizationState>
+07-28 19:49:02.933  1130  2857 D SamsungAlarmManager: setInexact (T:3/F:0/AC:false) 20260728T195432 now=90435722 - CU:10080/CP:27631/OP:PendingIntent{36ff398: PendingIntentRecord{a1183ec com.google.android.gms/com.google.android.gms.scheduler broadcastIntent}}
+07-28 19:49:02.933  1130  2857 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435723
+07-28 19:49:02.935 27631  4562 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+07-28 19:49:02.938 27631  4562 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+07-28 19:49:02.943  1130  2857 D SamsungAlarmManager: Cancel Alarm calling from uid:10080 pid :27631 / OP:PendingIntent{3cb144: PendingIntentRecord{a1183ec com.google.android.gms/com.google.android.gms.scheduler broadcastIntent}}
+07-28 19:49:02.944  1130  2857 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435733
+07-28 19:49:02.944  4723  4723 I flutter : Provider Added: AsyncNotifierProviderImpl<IconCustomizationService, IconCustomizationState>
+07-28 19:49:02.945  4723  4723 I flutter : Provider Added: Provider<AppIconsBase>
+07-28 19:49:02.945 25648 27783 I PlayGamesServices[GamesSyncAdapter]: Starting sync for 6be2a73c
+07-28 19:49:02.948 25648 27783 I PlayGamesServices[GamesSyncAdapter]: Sync duration for 6be2a73c: 2
+07-28 19:49:02.953 25648 26015 W PlayGamesServices[UiUtils]: AppVersion: Cannot find the installed destination app.
+07-28 19:49:02.954 25648 26015 W PlayGamesServices[UiUtils]: AppVersionName: Cannot find the installed destination app.
+07-28 19:49:02.961  1130  2857 D SamsungAlarmManager: setInexact (T:3/F:0/AC:false) 20260728T195432 now=90435751 - CU:10080/CP:27631/OP:PendingIntent{46bb362: PendingIntentRecord{a1183ec com.google.android.gms/com.google.android.gms.scheduler broadcastIntent}}
+07-28 19:49:02.961  1130  2857 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435751
+07-28 19:49:02.963 27631  4562 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+07-28 19:49:02.964  1130  1857 I HqmInfo::HqmManagerService: MSG_TYPE:MSG_TYPE_PROCESS_LOG_BY_HQM
+07-28 19:49:02.965 27631  4562 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+07-28 19:49:02.971 25648  4682 I PlayGamesServices[GamesSyncAdapter]: Starting sync for 2854418a
+07-28 19:49:02.974 25648  4682 I PlayGamesServices[GamesSyncAdapter]: Sync duration for 2854418a: 4
+07-28 19:49:02.976  1130  2793 D SamsungAlarmManager: Cancel Alarm calling from uid:10080 pid :27631 / OP:PendingIntent{5f59db0: PendingIntentRecord{a1183ec com.google.android.gms/com.google.android.gms.scheduler broadcastIntent}}
+07-28 19:49:02.976  1130  2793 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435765
+07-28 19:49:02.976  4723  4723 I flutter : Provider Added: AutoDisposeProvider<InvoiceRepository>
+07-28 19:49:02.977  4723  4723 I flutter : Provider Added: AutoDisposeProvider<CustomerRepository>
+07-28 19:49:02.982  1130  2179 V MdnieScenarioControlService: mAclOffEnabled : false mAclPreviewState : false mAclCompensationState : false
+07-28 19:49:02.983 25648 26015 W PlayGamesServices[UiUtils]: AppVersion: Cannot find the installed destination app.
+07-28 19:49:02.984 25648 26015 W PlayGamesServices[UiUtils]: AppVersionName: Cannot find the installed destination app.
+07-28 19:49:02.986   870  4722 I HYPER-HAL: [RequestManager.cpp]releaseLocked(): Released ID : 12502515
+07-28 19:49:02.994  1130  4866 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+07-28 19:49:02.995  1130  4866 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+07-28 19:49:02.996  1130  1202 D SamsungAlarmManager: setInexact (T:3/F:0/AC:false) 20260728T195432 now=90435786 - CU:10080/CP:27631/OP:PendingIntent{70ee4dc: PendingIntentRecord{a1183ec com.google.android.gms/com.google.android.gms.scheduler broadcastIntent}}
+07-28 19:49:02.996  1130  1202 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435786
+07-28 19:49:02.996 27631  4562 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+07-28 19:49:03.001 25648 17654 I PlayGamesServices[GamesSyncAdapter]: Starting sync for 67df0bb
+07-28 19:49:03.005 27631  4850 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+07-28 19:49:03.008 25648 17654 I PlayGamesServices[GamesSyncAdapter]: Sync duration for 67df0bb: 3
+07-28 19:49:03.011  4723  4723 I flutter : Provider Added: AsyncNotifierProviderImpl<DashboardController, DashboardData>
+07-28 19:49:03.013 25648 26015 W PlayGamesServices[UiUtils]: AppVersion: Cannot find the installed destination app.
+07-28 19:49:03.013  1130  2857 D SamsungAlarmManager: Cancel Alarm calling from uid:10080 pid :27631 / OP:PendingIntent{93aa9e5: PendingIntentRecord{a1183ec com.google.android.gms/com.google.android.gms.scheduler broadcastIntent}}
+07-28 19:49:03.013  1130  2857 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435803
+07-28 19:49:03.014 25648 26015 W PlayGamesServices[UiUtils]: AppVersionName: Cannot find the installed destination app.
+07-28 19:49:03.015  1130  2857 D SamsungAlarmManager: setInexact (T:3/F:0/AC:false) 20260728T195432 now=90435805 - CU:10080/CP:27631/OP:PendingIntent{9dc4cba: PendingIntentRecord{a1183ec com.google.android.gms/com.google.android.gms.scheduler broadcastIntent}}
+07-28 19:49:03.015  1130  2857 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435805
+07-28 19:49:03.019 27631  4851 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+07-28 19:49:03.025  1130  2793 D SamsungAlarmManager: Cancel Alarm calling from uid:10080 pid :27631 / OP:PendingIntent{409876b: PendingIntentRecord{a1183ec com.google.android.gms/com.google.android.gms.scheduler broadcastIntent}}
+07-28 19:49:03.025  1130  2793 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435815
+07-28 19:49:03.028  1130  2793 D SamsungAlarmManager: setInexact (T:3/F:0/AC:false) 20260728T195432 now=90435818 - CU:10080/CP:27631/OP:PendingIntent{71372c8: PendingIntentRecord{a1183ec com.google.android.gms/com.google.android.gms.scheduler broadcastIntent}}
+07-28 19:49:03.028  1130  2793 V SamsungAlarmManager: setLocked to kernel - W:90492789 / NW:90459408, now=90435818
+07-28 19:49:03.137 14734 14734 I cbss    : onStop
+07-28 19:49:03.180   686   686 D io_stats: !@   8,0 r 2747276 63553408 w 2462762 213312088 d 0 0 f 0 0 iot 1081000 0 th 0 0 0 pt 0 inp 0 0 62018.806
+07-28 19:49:03.225  4723  4723 I flutter : Provider Added: StateProvider<String>
+07-28 19:49:03.226  4723  4723 I flutter : Provider Added: StateProvider<String>
+07-28 19:49:03.228  4723  4723 I flutter : Provider Added: FutureProvider<List<Invoice>>
+07-28 19:49:03.228  4723  4723 I flutter : Provider Added: Provider<AsyncValue<List<Invoice>>>
+07-28 19:49:03.229  4723  4723 I flutter : Provider Added: Provider<AsyncValue<InvoiceStatistics>>
+07-28 19:49:03.231  4723  4723 I flutter : Provider Added: AsyncNotifierProviderImpl<CalendarNotifier, CalendarType>
+07-28 19:49:03.237  1130  1445 D SGM:GameManager: identifyForegroundApp. com.basir.accounting, mCurrentUserId: 0, callerUserId: 0
+07-28 19:49:03.237  1130  1445 D SGM:PkgDataHelper: getGamePkgData(). com.basir.accounting
+07-28 19:49:03.237  1130  1445 D SGM:SemGameManager: isForegroundGame(), ret=false
+07-28 19:49:03.289  4723  4723 I flutter : Provider Added: StateProvider<String>
+07-28 19:49:03.291  1130  1945 I SemWifiServiceDetector: Traff. tracking suspended
+07-28 19:49:03.297  4723  4723 I flutter : Provider Added: Provider<VendorRepository>
+07-28 19:49:03.299  4723  4723 I flutter : Provider Added: vendorsProvider
+07-28 19:49:03.300  4723  4723 I flutter : Provider Added: Provider<AsyncValue<List<Vendor>>>
+07-28 19:49:03.302   863  2951 I sensors-hal: handle_sns_std_sensor_event:319, [SSC_LIGHT] P lux:104 mode:2 copr:147 br:146
+07-28 19:49:03.302  1130  1784 I SensorService: [REARLIGHT] lux value : 104, code value : 146
+07-28 19:49:03.302   863  2963 I sensors-hal: handle_sns_client_event:660, [0][52049] accel_sample [ 0.381,  0.136,  9.720] 90435914867453
+07-28 19:49:03.303  4723  4723 I flutter : Provider Added: Provider<double>
+07-28 19:49:03.330  4723  4723 I flutter : Provider Added: StateProvider<String>
+07-28 19:49:03.331  4723  4723 I flutter : Provider Added: FutureProvider<List<Customer>>
+07-28 19:49:03.331  4723  4723 I flutter : Provider Added: Provider<AsyncValue<List<Customer>>>
+07-28 19:49:03.361  4723  4723 I flutter : Provider Added: Provider<InventoryRepository>
+07-28 19:49:03.366  4723  4723 I flutter : Provider Added: FutureProvider<List<InventoryItem>>
+07-28 19:49:03.367  4723  4723 I flutter : Provider Added: StateProvider<String>
+07-28 19:49:03.367  4723  4723 I flutter : Provider Added: Provider<AsyncValue<List<InventoryItem>>>
+07-28 19:49:03.403  4723  4723 I flutter : Provider Added: AutoDisposeProvider<AssetRepository>
+07-28 19:49:03.405  4723  4723 I flutter : Provider Added: FutureProvider<List<FixedAsset>>
+07-28 19:49:03.405  4723  4723 I flutter : Provider Added: StateProvider<String>
+07-28 19:49:03.406  4723  4723 I flutter : Provider Added: Provider<AsyncValue<List<FixedAsset>>>
+07-28 19:49:03.457  4723  4723 I flutter : Provider Added: StateNotifierProvider<SettingsController, SettingsState>
+07-28 19:49:03.486  2135  2135 D NetworkController.WifiSignalController: notifyListener: visible=true, enabled=true, connected=true, inetCondition=1, isDefault=true, receivedCR=true, receivedIC=-1, shouldForceHide=false, emptyConnected=false
+07-28 19:49:04.380  4723  4723 I flutter : Provider Added: Provider<BusinessSettingsRepository>
+07-28 19:49:04.382  4723  4723 I flutter : Provider Added: Provider<ProfileRepository>
+07-28 19:49:04.382  4723  4723 I flutter : Provider Added: Provider<SettingsService>
+07-28 19:49:04.387  4723  4723 I flutter : Provider Added: FutureProvider<Map<String, String?>>
+07-28 19:49:04.463  4723  4723 I flutter : Provider Added: StateProvider<String?>
+07-28 19:49:04.748   870  4844 I HYPER-HAL: [RequestManager.cpp]releaseLocked(): Released ID : 1930630
+07-28 19:49:04.844   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:04.917  4723  4723 I flutter : Provider Added: analyticsServiceProvider
+07-28 19:49:04.936  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<ColorCustomizationService, Color?>
+07-28 19:49:04.936  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<FontCustomizationService, FontCustomizationState>
+07-28 19:49:04.939  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<IconCustomizationService, IconCustomizationState>
+07-28 19:49:04.941  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<CalendarNotifier, CalendarType>
+07-28 19:49:05.013  4723  4723 I flutter : Provider Updated: AsyncNotifierProviderImpl<DashboardController, DashboardData>
+07-28 19:49:05.015  4723  4723 I flutter : Provider Updated: FutureProvider<List<Invoice>>
+07-28 19:49:05.018  4723  4723 I flutter : Provider Updated: vendorsProvider
+07-28 19:49:05.019  4723  4723 I flutter : Provider Updated: FutureProvider<List<Customer>>
+07-28 19:49:05.021  4723  4723 I flutter : Provider Updated: FutureProvider<List<InventoryItem>>
+07-28 19:49:05.024  4723  4723 I flutter : Provider Updated: FutureProvider<List<FixedAsset>>
+07-28 19:49:05.044  4723  4723 I flutter : Provider Updated: Provider<AsyncValue<List<Invoice>>>
+07-28 19:49:05.046  4723  4723 I flutter : Provider Updated: Provider<AsyncValue<InvoiceStatistics>>
+07-28 19:49:05.047  4723  4723 I flutter : Provider Updated: Provider<AsyncValue<List<Vendor>>>
+07-28 19:49:05.048  4723  4723 I flutter : Provider Updated: Provider<AsyncValue<List<Customer>>>
+07-28 19:49:05.049  4723  4723 I flutter : Provider Updated: Provider<AsyncValue<List<InventoryItem>>>
+07-28 19:49:05.050  4723  4723 I flutter : Provider Updated: Provider<AsyncValue<List<FixedAsset>>>
+07-28 19:49:05.053  1130  1784 I SensorService: [REARLIGHT] lux value : 104, code value : 146
+07-28 19:49:05.095  1130  8256 D SGM:GameManager: identifyGamePackage. com.basir.accounting, mCurrentUserId: 0, callerUserId: 0, callingMethodInfo: com.android.server.ssrm.SortingMachine.isGame(SortingMachine.java:162)
+07-28 19:49:05.095  1130  8256 D SGM:PkgDataHelper: getGamePkgData(). com.basir.accounting
+07-28 19:49:05.297   863  2963 I sensors-hal: handle_sns_client_event:660, [0][52252] accel_sample [ 0.397,  0.122,  9.761] 90437918130578
+07-28 19:49:05.347   859   859 I android.hardware.health@2.1-service-samsung: updateLrpSysfs: write: 414
+07-28 19:49:05.348  1130  1856 D BatteryService: Sending ACTION_BATTERY_CHANGED. scale:100, info:{.chargerAcOnline = false, .chargerUsbOnline = true, .chargerWirelessOnline = false, .maxChargingCurrent = 0, .maxChargingVoltage = 0, .batteryStatus = CHARGING, .batteryHealth = GOOD, .batteryPresent = true, .batteryLevel = 50, .batteryVoltage = 3881, .batteryTemperature = 403, .batteryCurrent = 560, .batteryCycleCount = 0, .batteryFullCharge = 4300000, .batteryChargeCounter = 846690, .batteryTechnology = Li-ion}
+07-28 19:49:05.348  1130  1856 D BatteryService: online:5, current avg:584, charge type:1, POGO powered:false, power sharing:false, high voltage charger:false, charger_type:0, capacity:280000, misc_event:0xf0000, current_event:0x8000, current_now:560
+07-28 19:49:05.350  1130  1836 D MotionRecognitionService: [SAR]  onReceive : ACTION_BATTERY_CHANGED, Plugged: 2
+07-28 19:49:05.350  1130  1836 I MotionRecognitionService: [TA] In/out: true, curr state: 1
+07-28 19:49:05.352  2117  2117 D SemBigDataInfoController: Intent : android.intent.action.BATTERY_CHANGED
+07-28 19:49:05.352  2117  2117 D Telephony: SamsungBatteryBroadcastReceiver: onReceive: action=android.intent.action.BATTERY_CHANGED
+07-28 19:49:05.354  1130  1202 V AS.AudioDeviceBroker: requestedCommunicationDevice, device: null mode owner pid: 0
+07-28 19:49:05.356  1130  1130 D PhoneWindowManagerExt: ACTION_BATTERY_CHANGED - Level=50, status=2
+07-28 19:49:05.356  1130  1130 D SemWifiApBroadcastReceiver: Received : android.intent.action.BATTERY_CHANGED
+07-28 19:49:05.357  1130  1130 D AdaptiveBrightnessLongtermModelBuilder: Received android.intent.action.BATTERY_CHANGED
+07-28 19:49:05.357  2135  2135 D KeyguardUpdateMonitor: received broadcast android.intent.action.BATTERY_CHANGED
+07-28 19:49:05.357  2135  2135 I PowerUI : mBootCompleted = true |  mFullyConnected = true
+07-28 19:49:05.357  2135  2135 I PowerUI : BATTERY_HEALTH_CHECK extraHealth=2 mBatteryMiscEvent=983040
+07-28 19:49:05.358  2135  2135 D PowerUI : priorPlugType = 2 mPlugType = 2 priorBatteryStatus = 2 mBatteryStatus = 2
+07-28 19:49:05.358  2135  2135 I PowerUI : oldMisalign : false, curMisalign : false
+07-28 19:49:05.359  2135  4409 D PowerUI.Notification: 1. restoreScreenTimeOut - saved_value : :
+07-28 19:49:05.359  2135  4409 E PowerUI.Notification: no saved value, so we do nothing !!
+07-28 19:49:05.360  2117  2117 D Telephony: SamsungLowBatteryTonePlayer: registerLowBatteryAlarmIfPossible: isSpeakerOn=false isLowBatterySoundScheduled=false isActiveCall=false
+07-28 19:49:05.362  1130  1202 D SamsungAlarmManager: Cancel Alarm calling from uid:1001 pid :2117 / OP:PendingIntent{bed1df8: PendingIntentRecord{8e782d1 com.android.phone broadcastIntent}}
+07-28 19:49:05.362  2135  2135 D PowerUI.Notification: showChargingNotice oldChargingType : 1 currentChargingType : 1 oldChargingTime : 4268000 mChargingTime : 4257000
+07-28 19:49:05.362  2135  2135 D PowerUI.Notification: showChargingNotification()
+07-28 19:49:05.363  2117  2117 D Telephony: SamsungLowBatteryTonePlayer: registerLowBatteryAlarmIfPossible: canceled alarm.
+07-28 19:49:05.366  1130  4964 D ApplicationPolicy: isStatusBarNotificationAllowedAsUser: packageName = com.android.systemui,userId = 0
+07-28 19:49:05.366  1130  4964 D ApplicationPolicy: isStatusBarNotificationAllowedAsUser: packageName = com.android.systemui,userId = -1
+07-28 19:49:05.366  1130  4964 D ApplicationPolicy: isStatusBarNotificationAllowedAsUser: converting userId from USER_ALLto 0
+07-28 19:49:05.367  2135  2135 D PowerUI : Battery swelling mode - priorBatterySwellingMode = 0 mBatterySwellingMode = 0 mBatteryStatus = 2
+07-28 19:49:05.368  2135  2135 I PowerUI : mBatteryMiscEvent = 983040
+07-28 19:49:05.369  2135  2135 W Looper  : Slow dispatch took 11ms main h=android.os.Handler c=com.android.systemui.broadcast.ActionReceiver$onReceive$1$1$1@a2adb55 m=0
+07-28 19:49:05.378  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:49:05.380  4723  4723 I flutter : Provider Added: StateNotifierProvider<LedgerIntegrityService, LedgerHealth>
+07-28 19:49:05.381  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:49:05.381  2135  2135 V SecQSFragmentAnimatorBase: setQsExpansionPosition 0.0
+07-28 19:49:05.381  2135  2135 V QsExpandAnimator: setQsExpansionPosition 0.0 0
+07-28 19:49:05.381  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:49:05.385  2135  2135 D IndicatorGardenInputProperty: updateRotation() prv:-1 >> new:0
+07-28 19:49:05.385  2135  2135 D DeviceState: getDeviceResolutionPixelSize - currentDensity = 420 deviceDensity = 420 initialDisplaySizeFactor = 1440 currentDisplaySizeFactor = 1080 initialDisplayDensity = 560 proportionalDensity = 420 proportionalPixel = 54
+07-28 19:49:05.385  2135  2135 D DeviceState: getDeviceResolutionPixelSize - currentDensity = 420 deviceDensity = 420 initialDisplaySizeFactor = 1440 currentDisplaySizeFactor = 1080 initialDisplayDensity = 560 proportionalDensity = 420 proportionalPixel = 27
+07-28 19:49:05.385  2135  2135 D DeviceState: getDeviceResolutionPixelSize - currentDensity = 420 deviceDensity = 420 initialDisplaySizeFactor = 1440 currentDisplaySizeFactor = 1080 initialDisplayDensity = 560 proportionalDensity = 420 proportionalPixel = 17
+07-28 19:49:05.386  2135  2135 W Looper  : Slow dispatch took 18ms main h=android.view.Choreographer$FrameHandler c=android.view.Choreographer$FrameDisplayEventReceiver@3db898c m=0
+07-28 19:49:05.387  2135  2135 D KeyguardUpdateMonitor: handleBatteryUpdate
+07-28 19:49:05.389  2135  2135 D KeyguardSecIndicationController: addIndicationTimeout() returned - unlocking
+07-28 19:49:05.389  2135  2135 D KeyguardSecIndicationController: addIndication() returned - unlocking
+07-28 19:49:05.389  2135  2135 D KeyguardSecIndicationController: addBatteryIndication() status = BatteryStatus{status=2,level=50,plugged=2,health=2,maxChargingWattage=-1,remaining=4257000ultraFastCharger=0}
+07-28 19:49:05.389  2135  2135 W Looper  : Slow delivery took 29ms main h=com.android.keyguard.KeyguardUpdateMonitor$17 c=null m=302
+07-28 19:49:05.390  2135  2135 I AODBatteryManager: updateBatteryData: ACTION_BATTERY_CHANGED
+07-28 19:49:05.390  2135  2135 I AODBatteryManager: saveBatteryData : AOD BatteryData [mBatteryLevel=50, mBatteryStatus=CHARGING, mBatteryPlugType=USB, mBatteryPlugged=true, mRemainingChargeTime=4257000, mBatteryChargingType=1, mBatteryChargerType=NORMAL, mBatteryOnline=NOT_DEFINED, mBatterySwellingMode=NONE, mBatteryProtectMode=false]
+07-28 19:49:05.391  2135  2135 I ChargingInfoManager: updateChargingInfo: newState = AOD ChargingInfo [mState=BATTERY_AND_REMAIN_TIME, mIsCharging=true, mIsFullyCharged=false, mIsBatteryProtectMode=false], oldState = AOD ChargingInfo [mState=BATTERY_AND_REMAIN_TIME, mIsCharging=true, mIsFullyCharged=false, mIsBatteryProtectMode=false]
+07-28 19:49:05.391  2135  2135 W Looper  : Drained
+07-28 19:49:05.396  4723  4723 I flutter : Provider Added: accountingRepositoryProvider
+07-28 19:49:05.442  4723  4723 I flutter : Provider Added: financialReportingServiceProvider
+07-28 19:49:05.521   863  2956 I sensors-hal: handle_sns_client_event:217, auto_rotation_event_2: mode:255, type:1:0/0.352,0.136,9.754, ar:0
+07-28 19:49:05.579  1130  1130 W NotificationHistory: Attempted to add notif for locked/gone/disabled user 0
+07-28 19:49:05.583  8984  8984 I Edge.badge: updateBadge item = com.android.systemui:-1 1
+07-28 19:49:05.585  2795  2795 I Launcher.NotificationListener: onNotificationPosted : com.android.systemui number : 0
+07-28 19:49:05.588  2135  2135 D InterruptionStateProvider: No bubble up: not allowed to bubble: -1|com.android.systemui|2131428820|charging_state|10038
+07-28 19:49:05.590  2135  2135 D InterruptionStateProvider:  no Heads up : edgelighting enabled app. -1|com.android.systemui|2131428820|charging_state|10038
+07-28 19:49:05.599  2135  2135 W Looper  : Slow dispatch took 13ms main h=android.os.Handler c=com.android.systemui.statusbar.NotificationListener$$ExternalSyntheticLambda1@8e4a6f8 m=0
+07-28 19:49:05.599  2135  2325 D PeopleSpaceWidgetMgr: Sbn doesn't contain valid PeopleTileKey: null/-1/com.android.systemui
+07-28 19:49:05.607  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:49:05.608  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:49:05.631  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:49:05.631  2135  2135 D QS      : setQSExpansion 0.0 -114.62499
+07-28 19:49:05.669  1130  2118 I Pageboost: Launcher App Execution
+07-28 19:49:06.122   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.297   863  2951 I sensors-hal: handle_sns_std_sensor_event:319, [SSC_LIGHT] P lux:104 mode:2 copr:1 br:146
+07-28 19:49:06.297  1130  1784 I SensorService: [REARLIGHT] lux value : 104, code value : 146
+07-28 19:49:06.429   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.557  1130  1788 D PowerManagerService: [api] setDeviceIdleTempWhitelist: appids: [0]1000 [1]10080  (uid: 1000 pid: 1130)
+07-28 19:49:06.628  4723  4723 I flutter : Provider Updated: StateNotifierProvider<SettingsController, SettingsState>
+07-28 19:49:06.663   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.679  1130  1956 D WifiConnectivityMonitor: Stop WCM Poll. cnt : 5
+07-28 19:49:06.713   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.714   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.734  4723  4723 I flutter : Provider Updated: FutureProvider<Map<String, String?>>
+07-28 19:49:06.747   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.797   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.814   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.847   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.897   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.906  4723  4859 D ProfileInstaller: Installing profile for com.basir.accounting
+07-28 19:49:06.914   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.947   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.980   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:06.994 25648 25648 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.safetynet.service.START pkg=com.google.android.gms }
+07-28 19:49:06.997   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:07.031   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER
+07-28 19:49:07.056  1130  4964 D SGM:GameManager: identifyForegroundApp. com.basir.accounting, mCurrentUserId: 0, callerUserId: 0
+07-28 19:49:07.056  1130  4964 D SGM:PkgDataHelper: getGamePkgData(). com.basir.accounting
+07-28 19:49:07.056  9518  9551 I a       : [#CMH#] Is foreground game app: false
+07-28 19:49:07.057  1130  4964 D SGM:GameManager: identifyForegroundApp. com.basir.accounting, mCurrentUserId: 0, callerUserId: 150
+07-28 19:49:07.057  1130  4964 D SGM:PkgDataHelper: getGamePkgData(). com.basir.accounting
+07-28 19:49:07.057 23270 23386 I a       : [#CMH#] Is foreground game app: false
+07-28 19:49:07.064   964   964 E SurfaceFlinger: Attempt to update InputPolicyFlags without permission ACCESS_SURFACE_FLINGER

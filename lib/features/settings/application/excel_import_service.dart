@@ -1,11 +1,14 @@
 // ignore_for_file: lines_longer_than_80_chars
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
+import 'package:basir_accounting_system/features/forensics/application/ledger_integrity_service.dart';
 import 'package:basir_accounting_system/features/settings/domain/entities/import_row.dart';
+import 'package:crypto/crypto.dart';
 import 'package:decimal/decimal.dart';
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
@@ -129,6 +132,10 @@ class ExcelImportService extends _$ExcelImportService {
   }
 
   /// تنفيذ عملية الاستيراد وحفظ البيانات في القاعدة
+  ///
+  /// بعد إتمام الاستيراد، يقوم بمزامنة خدمة سلامة الدفاتر
+  /// عبر [LedgerIntegrityService] للتأكد من استمرارية السلسلة
+  /// الهاشية وعدم وجود اختلالات في القيود المحاسبية.
   Future<void> commitImport() async {
     final rows = state.valueOrNull;
     if (rows == null || rows.isEmpty) return;
@@ -137,8 +144,18 @@ class ExcelImportService extends _$ExcelImportService {
     try {
       final customerRepo = ref.read(customerRepositoryProvider);
       final accountRepo = ref.read(accountingRepositoryProvider);
+      final integrityService =
+          ref.read(ledgerIntegrityServiceProvider.notifier);
       final now = DateTime.now();
       const uuid = Uuid();
+
+      // جلب آخر قيد محاسبي لإكمال السلسلة الهاشية
+      final existingEntries = await accountRepo.getJournalEntries();
+      existingEntries.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+      var lastHash = existingEntries.isEmpty
+          ? null
+          : existingEntries.last.hash ??
+              _computeEntryHash(existingEntries.last);
 
       for (final row in rows) {
         if (!row.isValid) continue;
@@ -176,11 +193,36 @@ class ExcelImportService extends _$ExcelImportService {
 
         // 3. إنشاء قيد الرصيد الافتتاحي (Opening Balance)
         if (row.balance != Decimal.zero) {
+          final entryId = uuid.v4();
+          final previousHash = lastHash;
+
+          final lines = [
+            JournalEntryLine(
+              accountId: accountId,
+              accountName: row.name,
+              debit: row.nature == AccountNature.debit
+                  ? row.balance
+                  : Decimal.zero,
+              credit: row.nature == AccountNature.credit
+                  ? row.balance
+                  : Decimal.zero,
+            ),
+            JournalEntryLine(
+              accountId: 'opening_balance_equity',
+              accountName: 'الأرصدة الافتتاحية',
+              debit: row.nature == AccountNature.credit
+                  ? row.balance
+                  : Decimal.zero,
+              credit: row.nature == AccountNature.debit
+                  ? row.balance
+                  : Decimal.zero,
+            ),
+          ];
+
           final entry = JournalEntry(
-            id: uuid.v4(),
+            id: entryId,
             referenceNumber: 'OB-${now.millisecondsSinceEpoch}',
             date: now,
-            // TODO(basir): Integrate with LedgerIntegrityService
             temporal: TemporalJustification(
               transactionDate: now,
               effectiveDate: now,
@@ -197,37 +239,63 @@ class ExcelImportService extends _$ExcelImportService {
             createdBy: 'system_import',
             createdAt: now,
             updatedAt: now,
-            lines: [
-              JournalEntryLine(
-                accountId: accountId,
-                accountName: row.name,
-                debit: row.nature == AccountNature.debit
-                    ? row.balance
-                    : Decimal.zero,
-                credit: row.nature == AccountNature.credit
-                    ? row.balance
-                    : Decimal.zero,
-              ),
-              // القيد المقابل: أرصدة افتتاحية
-              JournalEntryLine(
-                accountId: 'opening_balance_equity',
-                accountName: 'الأرصدة الافتتاحية',
-                debit: row.nature == AccountNature.credit
-                    ? row.balance
-                    : Decimal.zero,
-                credit: row.nature == AccountNature.debit
-                    ? row.balance
-                    : Decimal.zero,
+            previousHash: previousHash,
+            lines: lines,
+            auditLogs: [
+              AuditLogEntry(
+                timestamp: now,
+                action: 'EXCEL_IMPORT_COMMIT',
+                actor: 'ExcelImportService',
+                rationale: 'Ledger integrity chain attached '
+                    '(prev_hash: ${previousHash ?? 'genesis'})',
               ),
             ],
           );
-          await accountRepo.addJournalEntry(entry);
+
+          // إرفاق السلسلة الهاشية: hash = SHA-256(id|previous|lines)
+          final computedHash = _computeEntryHash(entry);
+          final linkedEntry = entry.copyWith(hash: computedHash);
+          await accountRepo.addJournalEntry(linkedEntry);
+          lastHash = computedHash;
         }
+      }
+
+      // 4. مزامنة خدمة سلامة الدفاتر للتحقق من السلسلة الكاملة
+      try {
+        await integrityService.verifyLedger();
+      } on Exception catch (e) {
+        // لا نبطل الاستيراد لو فشل التحقق الخلفي؛ نكتفي بالتسجيل
+        // يمكن للمستخدم تفقد نتيجة الفحص لاحقاً في شاشة Forensic Guardian
+        // ignore: avoid_print
+        print(
+          '⚠️ Ledger integrity verification after import: $e '
+          '(non-critical, see Forensic Guardian screen)',
+        );
       }
 
       state = const AsyncValue.data([]);
     } on Exception catch (e, st) {
       state = AsyncValue.error(e, st);
     }
+  }
+
+  /// حساب هاش قيد محاسبي وفقاً لمعايير CP-011
+  /// (سلسلة سلامة الدفاتر - Ledger Integrity Chain)
+  String _computeEntryHash(JournalEntry entry) {
+    final buffer = StringBuffer()
+      ..write(entry.id)
+      ..write(entry.referenceNumber)
+      ..write(entry.previousHash ?? '')
+      ..write(entry.totalDebit.toString())
+      ..write(entry.totalCredit.toString());
+
+    for (final l in entry.lines) {
+      buffer
+        ..write(l.accountId)
+        ..write(l.debit.toString())
+        ..write(l.credit.toString());
+    }
+    final bytes = utf8.encode(buffer.toString());
+    return sha256.convert(bytes).toString();
   }
 }

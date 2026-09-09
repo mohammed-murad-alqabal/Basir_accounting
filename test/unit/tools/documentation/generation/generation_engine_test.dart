@@ -102,6 +102,7 @@ void main() {
           ),
         ],
         coveragePercentage: 50,
+        totalElements: 2,
       );
 
       // Act & Assert
@@ -117,6 +118,7 @@ void main() {
         filePath: 'empty.dart',
         undocumentedElements: [],
         coveragePercentage: 100,
+        totalElements: 0,
       );
 
       // Act & Assert
@@ -151,6 +153,7 @@ void main() {
           ),
         ],
         coveragePercentage: 25,
+        totalElements: 4,
       );
 
       // Act & Assert
@@ -354,6 +357,7 @@ void main() {
         filePath: 'workflow.dart',
         undocumentedElements: [element],
         coveragePercentage: 0,
+        totalElements: 1,
       );
 
       // Act & Assert - All should throw UnimplementedError
