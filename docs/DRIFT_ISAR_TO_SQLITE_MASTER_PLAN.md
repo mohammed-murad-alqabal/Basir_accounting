@@ -26,6 +26,7 @@
 | الأمان | رمز GitHub المكشوف سابقًا يجب تدويره، وإصلاح workflow الذي يحتاج صلاحية `workflow` ما يزال بندًا مستقلًا؛ بوابة الأمان المحلية نجحت بعد إصلاحات harness/sanitizer/.gitignore |
 | العقد المشترك | `DRIFT_STORAGE_SYNC_CONTRACT.md` و`storage_contract.dart` يثبتان scope المركب وUTC وsync enum؛ تم دمجهما في حدود كتابة Warehouses/InventoryItems/StockMovements دون تفعيل Providers |
 | Shadow-read للمخزون | comparator وdecorators وflags مستقلة لـWarehouses/InventoryItems/StockMovements موجودة ومختبرة؛ flags مغلقة افتراضيًا، والقراءة المرئية والكتابة ما تزال Isar |
+| Real snapshot parity | `DRIFT_REAL_SNAPSHOT_PARITY_INTAKE.md` يحدد مسار استقبال snapshot واقعية معقمة وفحوص الخصوصية والعقد؛ لم تُقدّم snapshot واقعية بعد، لذلك البوابة غير مكتملة ولا يوجد تفعيل |
 
 ## 3. مبادئ غير قابلة للتفاوض
 
@@ -109,6 +110,8 @@
 ### بوابة القبول
 
 لا توجد raw أو derived mismatches، لا duplicate scoped keys، كل balances تتطابق عبر as-of boundaries، ولا يمر standalone transfer أو adjustment غير معتمد.
+
+**حالة intake الواقعية (2026-08-23):** أُضيف `DRIFT_REAL_SNAPSHOT_PARITY_INTAKE.md` كمسار آمن لاستقبال snapshot معقمة خارج Git وCI. لم تُشغّل بيانات واقعية ولم تُقدّم snapshot معقمة بعد؛ لذلك لا تزال هذه البوابة محجوبة، ولا يجوز تفعيل shadow-read أو canary أو Drift writes.
 
 ## 9. المرحلة السادسة: الكيانات المحاسبية الحرجة
 
