@@ -72,6 +72,13 @@ class MockAccountingRepository implements AccountingRepository {
   }
 
   @override
+  Future<void> cacheAuthoritativeJournalEntry(JournalEntry entry) async {
+    if (shouldThrowError) throw Exception('Test error');
+    _journalEntries.removeWhere((current) => current.id == entry.id);
+    _journalEntries.add(entry);
+  }
+
+  @override
   Future<Decimal> getAccountBalance(String accountId) async {
     if (shouldThrowError) throw Exception('Test error');
     final account = await getAccountById(accountId);
